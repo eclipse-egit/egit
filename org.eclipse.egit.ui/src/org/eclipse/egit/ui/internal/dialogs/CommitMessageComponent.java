@@ -45,6 +45,7 @@ import org.eclipse.jface.text.IDocument;
 import org.eclipse.jface.text.IDocumentListener;
 import org.eclipse.jface.text.IRegion;
 import org.eclipse.jgit.lib.Constants;
+import org.eclipse.jgit.lib.GpgConfig;
 import org.eclipse.jgit.lib.ObjectId;
 import org.eclipse.jgit.lib.Ref;
 import org.eclipse.jgit.lib.Repository;
@@ -60,17 +61,19 @@ import org.eclipse.ui.PlatformUI;
 
 /**
  * This class provides a reusable UI component for the UI logic around commit
- * message, author, committer, signed off toggle, amend toggle and change id
- * toggle. Controls for commit message, author and committer are created by the
- * component host and attached via method <code>attachControls</code>. The
- * toggles (signed off, amend, change id) are provided by the host and can be of
- * any widget type (check box, tool bar item etc.). The host must notify the
- * commit message component when a toggle state changes by calling the methods
- * <code>setSignedOffButtonSelection</code>,
- * <code>setChangeIdButtonSelection</code> and
- * <code>setAmendingButtonSelection</code>. The component notifies the host via
- * interface {@link ICommitMessageComponentNotifications} about required changes
- * of the toggle selections.
+ * message, author, committer, signed off toggle, amend toggle, sign commit
+ * toggle and change id toggle. Controls for commit message, author and
+ * committer are created by the component host and attached via method
+ * <code>attachControls</code>. The toggles (signed off, amend, change id, sign
+ * commit) are provided by the host and can be of any widget type (check box,
+ * tool bar item etc.). The host must notify the commit message component when a
+ * toggle state changes by calling the methods
+ * {@link #setSignedOffButtonSelection(boolean)},
+ * {@link #setSignCommitButtonSelection(boolean)},
+ * {@link #setChangeIdButtonSelection(boolean)} and
+ * {@link #setAmendingButtonSelection(boolean)}. The component notifies the host
+ * via interface {@link ICommitMessageComponentNotifications} about required
+ * changes of the toggle selections.
  */
 public class CommitMessageComponent {
 
@@ -148,6 +151,8 @@ public class CommitMessageComponent {
 
 	private boolean amending = false;
 
+	private boolean signCommit = false;
+
 	private boolean commitAllowed = true;
 
 	private String cannotCommitMessage = null;
@@ -202,6 +207,7 @@ public class CommitMessageComponent {
 		previousAuthor = null;
 		committer = null;
 		signedOff = false;
+		signCommit = false;
 		amending = false;
 		amendAllowed = false;
 		createChangeId = false;
@@ -265,6 +271,14 @@ public class CommitMessageComponent {
 	}
 
 	/**
+	 * @param signCommit
+	 *            whether commit should be signed
+	 */
+	public void setSignCommit(boolean signCommit) {
+		this.signCommit = signCommit;
+	}
+
+	/**
 	 * @param createChangeId
 	 */
 	public void setCreateChangeId(boolean createChangeId) {
@@ -300,6 +314,14 @@ public class CommitMessageComponent {
 	 */
 	public boolean isSignedOff() {
 		return signedOff;
+	}
+
+	/**
+	 * @return <code>true</code> if the commit should be signed,
+	 *         <code>false</code> otherwise
+	 */
+	public boolean isSignCommit() {
+		return signCommit;
 	}
 
 	/**
@@ -427,6 +449,7 @@ public class CommitMessageComponent {
 		state.setCommitMessage(commitText.getText());
 		state.setCommitter(getCommitter());
 		state.setHeadCommit(getHeadCommit());
+		state.setSign(isSignCommit());
 		return state;
 	}
 
@@ -437,8 +460,10 @@ public class CommitMessageComponent {
 	 */
 	public void enableListeners(boolean enable) {
 		this.listenersEnabled = enable;
-		if (enable)
+		if (enable) {
 			listener.statusUpdated();
+			listener.updateSignCommitToggleSelection(isSignCommit());
+		}
 	}
 
 	/**
@@ -557,6 +582,7 @@ public class CommitMessageComponent {
 	 * @param authorText
 	 * @param committerText
 	 */
+	@SuppressWarnings("hiding")
 	public void attachControls(SpellcheckableMessageArea commitText,
 			Text authorText, Text committerText) {
 		this.commitText = commitText;
@@ -639,9 +665,11 @@ public class CommitMessageComponent {
 	 * Sets the defaults for change id and signed off
 	 */
 	public void setDefaults() {
-		if (repository != null)
+		if (repository != null) {
 			createChangeId = GerritUtil.getCreateChangeId(repository
 					.getConfig());
+			signCommit = new GpgConfig(repository.getConfig()).isSignCommits();
+		}
 		signedOff = Activator.getDefault()
 				.getPreferenceStore()
 				.getBoolean(UIPreferences.COMMIT_DIALOG_SIGNED_OFF_BY);
@@ -921,6 +949,14 @@ public class CommitMessageComponent {
 	public void setSignedOffButtonSelection(boolean signedOffButtonSelection) {
 		signedOff = signedOffButtonSelection;
 		refreshSignedOffBy();
+	}
+
+	/**
+	 * @param signCommitButtonSelection
+	 */
+	public void setSignCommitButtonSelection(
+			boolean signCommitButtonSelection) {
+		signCommit = signCommitButtonSelection;
 	}
 
 	/**

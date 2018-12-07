@@ -710,6 +710,8 @@ public class StagingView extends ViewPart
 
 	private Action amendPreviousCommitAction;
 
+	private Action signCommitAction;
+
 	private Action openNewCommitsAction;
 
 	private Action columnLayoutAction;
@@ -1004,6 +1006,18 @@ public class StagingView extends ViewPart
 		signedOffByAction.setImageDescriptor(UIIcons.SIGNED_OFF);
 		commitMessageToolBarManager.add(signedOffByAction);
 
+		signCommitAction = new Action(UIText.StagingView_Sign_Commit,
+				IAction.AS_CHECK_BOX) {
+
+			@Override
+			public void run() {
+				commitMessageComponent
+						.setSignCommitButtonSelection(isChecked());
+			}
+		};
+		signCommitAction.setImageDescriptor(UIIcons.SIGN_COMMIT);
+		commitMessageToolBarManager.add(signCommitAction);
+
 		addChangeIdAction = new Action(UIText.StagingView_Add_Change_ID,
 				IAction.AS_CHECK_BOX) {
 
@@ -1248,6 +1262,11 @@ public class StagingView extends ViewPart
 				commitAndPushButton
 						.setImage(getImage(
 								selection ? UIIcons.GERRIT : UIIcons.PUSH));
+			}
+
+			@Override
+			public void updateSignCommitToggleSelection(boolean selection) {
+				signCommitAction.setChecked(selection);
 			}
 
 			@Override
@@ -1746,6 +1765,7 @@ public class StagingView extends ViewPart
 		enableAuthorText(enabled);
 		amendPreviousCommitAction.setEnabled(enabled);
 		signedOffByAction.setEnabled(enabled);
+		signCommitAction.setEnabled(enabled);
 		addChangeIdAction.setEnabled(enabled);
 		commitButton.setEnabled(enabled);
 		commitAndPushButton.setEnabled(enabled);
@@ -4025,6 +4045,7 @@ public class StagingView extends ViewPart
 		amendPreviousCommitAction.setChecked(false);
 		addChangeIdAction.setChecked(false);
 		signedOffByAction.setChecked(false);
+		signCommitAction.setChecked(false);
 	}
 
 	void updateCommitMessageComponent(boolean repositoryChanged, boolean indexDiffAvailable) {
@@ -4120,6 +4141,7 @@ public class StagingView extends ViewPart
 			commitMessageComponent.setAmending(true);
 		else
 			commitMessageComponent.setAmending(false);
+		commitMessageComponent.setSignCommit(oldState.getSign());
 		commitMessageComponent.updateUIFromState();
 		commitMessageComponent.updateSignedOffAndChangeIdButton();
 		commitMessageComponent.enableListeners(true);
@@ -4254,6 +4276,7 @@ public class StagingView extends ViewPart
 			commitOperation.setAmending(true);
 		final boolean gerritMode = addChangeIdAction.isChecked();
 		commitOperation.setComputeChangeId(gerritMode);
+		commitOperation.setSign(signCommitAction.isChecked());
 
 		PushMode pushMode = null;
 		if (pushUpstream) {

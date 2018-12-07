@@ -26,9 +26,6 @@ public class CommitMessageComponentStateManager {
 
 	private static final String EMPTY = "empty"; //$NON-NLS-1$
 
-	private static final int MEMBER_COUNT = 6; // number of members in
-												// CommitMessageComponentState
-
 	// number of members in CommitMessageComponentState, before caret
 	// positioning was introduced
 	private static final int MEMBER_COUNT_WITHOUT_CARET_POSITION = 5;
@@ -44,7 +41,8 @@ public class CommitMessageComponentStateManager {
 				state.getAuthor(), state.getCommitMessage(),
 				state.getCommitter(),
 				state.getHeadCommit().getName().toString(),
-				String.valueOf(state.getCaretPosition()) };
+				String.valueOf(state.getCaretPosition()),
+				Boolean.toString(state.getSign()) };
 		dialogSettings.put(repository.getDirectory().getAbsolutePath(), values);
 	}
 
@@ -67,11 +65,14 @@ public class CommitMessageComponentStateManager {
 		state.setCommitMessage(values[2]);
 		state.setCommitter(values[3]);
 		state.setHeadCommit(ObjectId.fromString(values[4]));
-		if (values.length >= MEMBER_COUNT) {
+		if (values.length >= 5) {
 			state.setCaretPosition(Integer.parseInt(values[5]));
 		} else {
 			state.setCaretPosition(
 					CommitMessageComponentState.CARET_DEFAULT_POSITION);
+		}
+		if (values.length >= 6) {
+			state.setSign(Boolean.parseBoolean(values[6]));
 		}
 		return state;
 	}
