@@ -67,6 +67,15 @@ public class UIIcons {
 	/** Decoration for symlink **/
 	public final static ImageDescriptor OVR_SYMLINK;
 
+	/** Decoration for signed commits **/
+	public final static ImageDescriptor OVR_SIGNED;
+
+	/** Decoration for commits signed with a known or trusted certificate. **/
+	public final static ImageDescriptor OVR_TRUSTED;
+
+	/** Decoration for commits signed with an invalid certificate. **/
+	public final static ImageDescriptor OVR_SIGNED_INVALID;
+
 	/** Find icon */
 	public final static ImageDescriptor ELCL16_FIND;
 	/** Compare / View icon */
@@ -358,6 +367,12 @@ public class UIIcons {
 	/** go to input icon */
 	public final static ImageDescriptor GOTO_INPUT;
 
+	/** Icon for "sign with GPG" */
+	public final static ImageDescriptor SIGN_COMMIT;
+
+	/** {@link #CHANGESET} overlaid with {@link #OVR_SIGNED}. */
+	public final static ImageDescriptor SIGNED_COMMIT;
+
 	/** base URL */
 	public final static URL base;
 
@@ -372,6 +387,9 @@ public class UIIcons {
 		OVR_CONFLICT = map("ovr/conflict.png"); //$NON-NLS-1$
 		OVR_ASSUMEUNCHANGED = map("ovr/assume_unchanged.png"); //$NON-NLS-1$
 		OVR_DIRTY = map("ovr/dirty.png"); //$NON-NLS-1$
+		OVR_SIGNED = map("ovr/signed.png"); //$NON-NLS-1$
+		OVR_TRUSTED = map("ovr/signed_trusted.png"); //$NON-NLS-1$
+		OVR_SIGNED_INVALID = map("ovr/signed_invalid.png"); //$NON-NLS-1$
 		OVR_SYMLINK = map("ovr/symlink_ovr.png"); //$NON-NLS-1$
 		ELCL16_FIND = map("elcl16/find.png"); //$NON-NLS-1$
 		ELCL16_COMPARE_VIEW = map("elcl16/compare_view.png"); //$NON-NLS-1$
@@ -479,7 +497,9 @@ public class UIIcons {
 		GOTO_INPUT = map("elcl16/goto_input.png"); //$NON-NLS-1$
 		CHECKED_OUT_BRANCH = new DecorationOverlayDescriptor(BRANCH,
 				OVR_CHECKEDOUT, IDecoration.TOP_LEFT);
-
+		SIGN_COMMIT = map("obj16/sign-commit.png"); //$NON-NLS-1$
+		SIGNED_COMMIT = new DecorationOverlayDescriptor(CHANGESET, OVR_SIGNED,
+				IDecoration.BOTTOM_RIGHT);
 		IProgressService service = PlatformUI.getWorkbench()
 				.getProgressService();
 
