@@ -14,7 +14,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<parent>
 		<groupId>org.eclipse.egit</groupId>
-		<version>5.2.0.201812061821-r</version>
+		<version>5.2.1-SNAPSHOT</version>
 		<artifactId>egit-parent</artifactId>
 	</parent>
 	<artifactId>org.eclipse.egit.ui.importer.tests</artifactId>
