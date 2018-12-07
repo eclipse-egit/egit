@@ -32,6 +32,13 @@ public interface ICommitMessageComponentNotifications {
 	void updateChangeIdToggleSelection(boolean selection);
 
 	/**
+	 * The component host must update its sign commit toggle
+	 *
+	 * @param selection
+	 */
+	void updateSignCommitToggleSelection(boolean selection);
+
+	/**
 	 * The component host may have to update its status message (e.g.
 	 * author/committer text changed).
 	 */

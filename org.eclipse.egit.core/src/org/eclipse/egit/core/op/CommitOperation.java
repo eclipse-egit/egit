@@ -15,6 +15,9 @@
  *******************************************************************************/
 package org.eclipse.egit.core.op;
 
+import static java.lang.Boolean.FALSE;
+import static java.lang.Boolean.TRUE;
+
 import java.io.IOException;
 import java.util.Arrays;
 import java.util.Collection;
@@ -73,6 +76,8 @@ public class CommitOperation implements IEGitOperation {
 
 	private boolean commitAll = false;
 
+	private boolean sign = false;
+
 	private Repository repo;
 
 	Collection<String> notTracked;
@@ -130,9 +135,9 @@ public class CommitOperation implements IEGitOperation {
 		this.committer = committer;
 		this.message = stripLeadingWhitespace(message);
 		if (filesToCommit != null)
-			commitFileList = new HashSet<String>(filesToCommit);
+			commitFileList = new HashSet<>(filesToCommit);
 		if (notTracked != null)
-			this.notTracked = new HashSet<String>(notTracked);
+			this.notTracked = new HashSet<>(notTracked);
 	}
 
 	/**
@@ -174,7 +179,7 @@ public class CommitOperation implements IEGitOperation {
 	}
 
 	private Collection<String> buildFileList(Collection<IFile> files) throws CoreException {
-		Collection<String> result = new HashSet<String>();
+		Collection<String> result = new HashSet<>();
 		for (IFile file : files) {
 			RepositoryMapping mapping = RepositoryMapping.getMapping(file);
 			if (mapping == null)
@@ -263,6 +268,14 @@ public class CommitOperation implements IEGitOperation {
 	}
 
 	/**
+	 * @param sign
+	 *            (see {@link CommitCommand#setSign(Boolean)}
+	 */
+	public void setSign(boolean sign) {
+		this.sign = sign;
+	}
+
+	/**
 	 *
 	 * @param commitAll
 	 */
@@ -344,5 +357,6 @@ public class CommitOperation implements IEGitOperation {
 
 		commitCommand.setAuthor(authorIdent);
 		commitCommand.setCommitter(committerIdent);
+		commitCommand.setSign(sign ? TRUE : FALSE);
 	}
 }
