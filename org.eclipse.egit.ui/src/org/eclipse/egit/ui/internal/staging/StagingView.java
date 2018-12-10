@@ -835,7 +835,7 @@ public class StagingView extends ViewPart
 				UIIcons.UNSTAGE) {
 			@Override
 			public void run() {
-				unstage((IStructuredSelection) stagedViewer.getSelection());
+				unstage(stagedViewer.getStructuredSelection());
 			}
 		};
 		unstageAction.setToolTipText(UIText.StagingView_UnstageItemTooltip);
@@ -843,7 +843,7 @@ public class StagingView extends ViewPart
 				UIIcons.ELCL16_ADD) {
 			@Override
 			public void run() {
-				stage((IStructuredSelection) unstagedViewer.getSelection());
+				stage(unstagedViewer.getStructuredSelection());
 			}
 		};
 		stageAction.setToolTipText(UIText.StagingView_StageItemTooltip);
@@ -857,7 +857,7 @@ public class StagingView extends ViewPart
 			@Override
 			public void run() {
 				stagedViewer.getTree().selectAll();
-				unstage((IStructuredSelection) stagedViewer.getSelection());
+				unstage(stagedViewer.getStructuredSelection());
 			}
 		};
 		unstageAllAction
@@ -867,7 +867,7 @@ public class StagingView extends ViewPart
 			@Override
 			public void run() {
 				unstagedViewer.getTree().selectAll();
-				stage((IStructuredSelection) unstagedViewer.getSelection());
+				stage(unstagedViewer.getStructuredSelection());
 			}
 		};
 		stageAllAction.setToolTipText(UIText.StagingView_StageAllItemTooltip);
@@ -1679,7 +1679,7 @@ public class StagingView extends ViewPart
 	}
 
 	private ShowInContext getShowInContext(TreeViewer treeViewer) {
-		IStructuredSelection selection = (IStructuredSelection) treeViewer.getSelection();
+		IStructuredSelection selection = treeViewer.getStructuredSelection();
 		List<Object> elements = new ArrayList<>();
 		for (Object selectedElement : selection.toList()) {
 			if (selectedElement instanceof StagingEntry) {
@@ -2164,8 +2164,7 @@ public class StagingView extends ViewPart
 	}
 
 	private IAction createSelectionPathCopyAction(final TreeViewer viewer) {
-		IStructuredSelection selection = (IStructuredSelection) viewer
-				.getSelection();
+		IStructuredSelection selection = viewer.getStructuredSelection();
 		String copyPathActionText = (selection.size() <= 1) ? UIText.StagingView_CopyPath
 						: UIText.StagingView_CopyPaths;
 		IAction copyAction = ActionUtils.createGlobalAction(ActionFactory.COPY,
@@ -2760,8 +2759,8 @@ public class StagingView extends ViewPart
 			@Override
 			public void menuAboutToShow(IMenuManager manager) {
 				control.setFocus();
-				final IStructuredSelection selection = (IStructuredSelection) treeViewer
-						.getSelection();
+				final IStructuredSelection selection = treeViewer
+						.getStructuredSelection();
 				if (selection.isEmpty())
 					return;
 
