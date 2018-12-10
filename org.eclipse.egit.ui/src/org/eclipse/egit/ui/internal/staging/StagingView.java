@@ -814,7 +814,7 @@ public class StagingView extends ViewPart
 		form.setText(UIText.StagingView_NoSelectionTitle);
 		GridDataFactory.fillDefaults().grab(true, true).applyTo(form);
 		toolkit.decorateFormHeading(form);
-		GridLayoutFactory.swtDefaults().applyTo(form.getBody());
+		GridLayoutFactory.fillDefaults().applyTo(form.getBody());
 
 		mainSashForm = new SashForm(form.getBody(), SWT.HORIZONTAL);
 		saveSashFormWeightsOnDisposal(mainSashForm,
