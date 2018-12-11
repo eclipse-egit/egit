@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7d2eca2d_e9ffd5ac",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/internal/Utils.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 169,
+      "author": {
+        "id": 440
+      },
+      "writtenOn": "2018-12-11T15:25:56Z",
+      "side": 0,
+      "message": "there are 657 callers of that method. I\u0027m wondering if there are more that would benefit from this change.",
+      "range": {
+        "startLine": 169,
+        "startChar": 12,
+        "endLine": 169,
+        "endChar": 19
+      },
+      "revId": "f18f09c3ab05671855975c67f7185e3982f00f2f",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
