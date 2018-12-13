@@ -78,7 +78,6 @@ import org.eclipse.egit.ui.UIPreferences;
 import org.eclipse.egit.ui.UIUtils;
 import org.eclipse.egit.ui.internal.ActionUtils;
 import org.eclipse.egit.ui.internal.CommonUtils;
-import org.eclipse.egit.ui.internal.GitLabels;
 import org.eclipse.egit.ui.internal.UIIcons;
 import org.eclipse.egit.ui.internal.UIText;
 import org.eclipse.egit.ui.internal.actions.ActionCommands;
@@ -106,6 +105,8 @@ import org.eclipse.egit.ui.internal.dialogs.SpellcheckableMessageArea;
 import org.eclipse.egit.ui.internal.operations.DeletePathsOperationUI;
 import org.eclipse.egit.ui.internal.operations.IgnoreOperationUI;
 import org.eclipse.egit.ui.internal.push.PushMode;
+import org.eclipse.egit.ui.internal.repository.RepositoryTreeNodeLabelProvider;
+import org.eclipse.egit.ui.internal.repository.tree.RepositoryNode;
 import org.eclipse.egit.ui.internal.repository.tree.RepositoryTreeNode;
 import org.eclipse.egit.ui.internal.selection.MultiViewerSelectionProvider;
 import org.eclipse.egit.ui.internal.selection.RepositorySelectionProvider;
@@ -267,6 +268,10 @@ public class StagingView extends ViewPart
 	private FormToolkit toolkit;
 
 	private Form form;
+
+	private RepositoryNode titleNode;
+
+	private RepositoryTreeNodeLabelProvider titleLabelProvider;
 
 	private SashForm mainSashForm;
 
@@ -770,6 +775,14 @@ public class StagingView extends ViewPart
 	public void createPartControl(final Composite parent) {
 		GridLayoutFactory.fillDefaults().applyTo(parent);
 
+		titleNode = null;
+		titleLabelProvider = new RepositoryTreeNodeLabelProvider(false);
+		titleLabelProvider.addListener(e -> {
+			if (titleNode != null && form != null && !form.isDisposed()) {
+				form.setText(titleLabelProvider.getStyledText(titleNode)
+						.getString());
+			}
+		});
 		toolkit = new FormToolkit(parent.getDisplay());
 		parent.addDisposeListener(new DisposeListener() {
 
@@ -3651,6 +3664,7 @@ public class StagingView extends ViewPart
 		enableCommitWidgets(false);
 		refreshAction.setEnabled(false);
 		updateSectionText();
+		titleNode = null;
 		if (repository != null && repository.isBare()) {
 			form.setText(UIText.StagingView_BareRepoSelection);
 		} else {
@@ -3734,6 +3748,9 @@ public class StagingView extends ViewPart
 			boolean indexDiffAvailable = indexDiffAvailable(indexDiff);
 			boolean noConflicts = noConflicts(indexDiff);
 
+			titleNode = new RepositoryNode(null, repository);
+			form.setText(
+					titleLabelProvider.getStyledText(titleNode).getString());
 			if (repositoryChanged) {
 				// Reset paths, they're from the old repository
 				resetPathsToExpand();
@@ -3817,7 +3834,6 @@ public class StagingView extends ViewPart
 					Activator.logError(e.getLocalizedMessage(), e);
 				}
 			}
-			form.setText(GitLabels.getStyledLabelSafe(repository).toString());
 			updateCommitMessageComponent(repositoryChanged, indexDiffAvailable);
 			enableCommitWidgets(indexDiffAvailable && noConflicts);
 
@@ -4338,6 +4354,10 @@ public class StagingView extends ViewPart
 
 		getDialogSettings().put(STORE_SORT_STATE, sortAction.isChecked());
 
+		if (titleLabelProvider != null) {
+			titleLabelProvider.dispose();
+			titleLabelProvider = null;
+		}
 		currentRepository = null;
 		lastSelection = null;
 		disposed = true;

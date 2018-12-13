@@ -42,6 +42,8 @@ public class RepositoryTreeNodeLabelProvider
 
 	private final WorkbenchLabelProvider labelProvider;
 
+	private final boolean showPaths;
+
 	/**
 	 * Keeps the last label. If the label we originally get is undecorated, we
 	 * return this last decorated label instead to prevent flickering. When the
@@ -58,17 +60,30 @@ public class RepositoryTreeNodeLabelProvider
 	private final WeakHashMap<Object, StyledString> previousDecoratedLabels = new WeakHashMap<>();
 
 	/**
-	 * Creates a new {@link RepositoryTreeNodeLabelProvider}.
+	 * Creates a new {@link RepositoryTreeNodeLabelProvider} that shows the
+	 * paths for repositories and working tree nodes.
 	 */
 	public RepositoryTreeNodeLabelProvider() {
-		this(new WorkbenchLabelProvider());
+		this(true);
+	}
+
+	/**
+	 * Creates a new {@link RepositoryTreeNodeLabelProvider}.
+	 *
+	 * @param showPaths
+	 *            whether to show the file system paths for repositories and
+	 *            working tree nodes
+	 */
+	public RepositoryTreeNodeLabelProvider(boolean showPaths) {
+		this(new WorkbenchLabelProvider(), showPaths);
 	}
 
 	private RepositoryTreeNodeLabelProvider(
-			WorkbenchLabelProvider labelProvider) {
+			WorkbenchLabelProvider labelProvider, boolean showPaths) {
 		super(labelProvider, PlatformUI.getWorkbench()
 				.getDecoratorManager().getLabelDecorator(), null);
 		this.labelProvider = labelProvider;
+		this.showPaths = showPaths;
 	}
 
 	@Override
@@ -94,19 +109,23 @@ public class RepositoryTreeNodeLabelProvider
 			// No decoration...
 			decoratedLabel = labelProvider.getStyledText(element);
 		}
-		if (element instanceof RepositoryNode) {
-			Repository repository = ((RepositoryNode) element).getRepository();
-			if (repository != null) {
-				decoratedLabel.append(" - ", StyledString.QUALIFIER_STYLER) //$NON-NLS-1$
-						.append(repository.getDirectory().getAbsolutePath(),
-								StyledString.QUALIFIER_STYLER);
-			}
-		} else if (element instanceof WorkingDirNode) {
-			Repository repository = ((WorkingDirNode) element).getRepository();
-			if (repository != null) {
-				decoratedLabel.append(" - ", StyledString.QUALIFIER_STYLER) //$NON-NLS-1$
-						.append(repository.getWorkTree().getAbsolutePath(),
-								StyledString.QUALIFIER_STYLER);
+		if (showPaths) {
+			if (element instanceof RepositoryNode) {
+				Repository repository = ((RepositoryNode) element)
+						.getRepository();
+				if (repository != null) {
+					decoratedLabel.append(" - ", StyledString.QUALIFIER_STYLER) //$NON-NLS-1$
+							.append(repository.getDirectory().getAbsolutePath(),
+									StyledString.QUALIFIER_STYLER);
+				}
+			} else if (element instanceof WorkingDirNode) {
+				Repository repository = ((WorkingDirNode) element)
+						.getRepository();
+				if (repository != null) {
+					decoratedLabel.append(" - ", StyledString.QUALIFIER_STYLER) //$NON-NLS-1$
+							.append(repository.getWorkTree().getAbsolutePath(),
+									StyledString.QUALIFIER_STYLER);
+				}
 			}
 		}
 		previousDecoratedLabels.put(element, decoratedLabel);
