@@ -810,8 +810,8 @@ public class StagingView extends ViewPart
 				// ignore
 			}
 		});
-		form.setImage(getImage(UIIcons.REPOSITORY));
-		form.setText(UIText.StagingView_NoSelectionTitle);
+		// form.setImage(getImage(UIIcons.REPOSITORY));
+		// form.setText(UIText.StagingView_NoSelectionTitle);
 		GridDataFactory.fillDefaults().grab(true, true).applyTo(form);
 		toolkit.decorateFormHeading(form);
 		GridLayoutFactory.swtDefaults().applyTo(form.getBody());
@@ -2672,7 +2672,7 @@ public class StagingView extends ViewPart
 						getSectionCount(stagedViewer)));
 		unstagedSection.setText(MessageFormat.format(
 				UIText.StagingView_UnstagedChanges,
-				getSectionCount(unstagedViewer)));
+				getSectionCount(unstagedViewer), "Unknown repository")); //$NON-NLS-1$
 	}
 
 	private String getSectionCount(TreeViewer viewer) {
