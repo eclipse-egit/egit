@@ -22,6 +22,30 @@
       "revId": "7d93ca94cc609a6d6b2a6476828649ad879e67eb",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7cf51c7d_9531a17c",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/repository/RepositoryTreeNodeLabelProvider.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2018-12-15T16:31:00Z",
+      "side": 1,
+      "message": "Right. And EGit UI has _no_ public API at all.",
+      "parentUuid": "7f65bad2_5beb5f4c",
+      "range": {
+        "startLine": 77,
+        "startChar": 1,
+        "endLine": 77,
+        "endChar": 60
+      },
+      "revId": "7d93ca94cc609a6d6b2a6476828649ad879e67eb",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
     }
   ]
 }
