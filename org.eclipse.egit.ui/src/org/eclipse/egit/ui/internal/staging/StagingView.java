@@ -4358,6 +4358,12 @@ public class StagingView extends ViewPart
 			titleLabelProvider.dispose();
 			titleLabelProvider = null;
 		}
+		RepositoryNode tmp = titleNode;
+		titleNode = null;
+		if (tmp != null) {
+			tmp.clear();
+			tmp = null;
+		}
 		currentRepository = null;
 		lastSelection = null;
 		disposed = true;
