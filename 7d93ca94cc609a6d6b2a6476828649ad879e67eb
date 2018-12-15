@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7f65bad2_5beb5f4c",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/repository/RepositoryTreeNodeLabelProvider.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 440
+      },
+      "writtenOn": "2018-12-15T15:53:29Z",
+      "side": 1,
+      "message": "Just for myself learning something: When the code is in an internal package like here, then we don\u0027t need @since tags for the API tooling, right?",
+      "range": {
+        "startLine": 77,
+        "startChar": 1,
+        "endLine": 77,
+        "endChar": 60
+      },
+      "revId": "7d93ca94cc609a6d6b2a6476828649ad879e67eb",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
