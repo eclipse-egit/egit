@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c7b2e821_b131eb52",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/dialogs/CompareTreeView.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 952,
+      "author": {
+        "id": 440
+      },
+      "writtenOn": "2018-12-16T20:48:59Z",
+      "side": 1,
+      "message": "I just thought that your (complete) code change looks like a perfect candidate for Java streams, since it is effectively a huge mapping and filtering. However, when I tried to write that code, I failed at the selected part. If I start with Stream.of(resources)..., then this instanceof-check seems impossible, since it would require an object from much earlier of my .filter.map.filter.map chain. Any ideas about that?\n\nNevertheless we can just merge your change, if you don\u0027t want to explore that territory. :)",
+      "range": {
+        "startLine": 948,
+        "startChar": 0,
+        "endLine": 952,
+        "endChar": 6
+      },
+      "revId": "a820fa0aa6a69073aee402293a83e08c52f873da",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
