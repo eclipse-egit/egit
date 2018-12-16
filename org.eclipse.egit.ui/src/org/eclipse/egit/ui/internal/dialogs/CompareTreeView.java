@@ -933,19 +933,31 @@ public class CompareTreeView extends ViewPart implements IMenuListener, IShowInS
 
 			if (input instanceof IResource[]) {
 				IResource[] resources = (IResource[]) input;
-				PathNode[] nodes = new PathNode[resources.length];
-				for (int i = 0; i < resources.length; i++) {
-					IResource resource = resources[i];
-					IPath path = new Path(repositoryMapping
-							.getRepoRelativePath(resource));
-					if (resource instanceof IFile)
-						nodes[i] = fileNodes.get(path);
-					else
-						nodes[i] = containerNodes.get(path);
+				List<PathNode> nodes = new ArrayList<>(resources.length);
+				for (IResource resource : resources) {
+					if (resource == null) {
+						continue;
+					}
+					String repoRelative = repositoryMapping
+							.getRepoRelativePath(resource);
+					if (repoRelative == null) {
+						continue;
+					}
+					IPath path = new Path(repoRelative);
+					PathNode node;
+					if (resource instanceof IFile) {
+						node = fileNodes.get(path);
+					} else {
+						node = containerNodes.get(path);
+					}
+					if (node != null) {
+						nodes.add(node);
+					}
 				}
-				return nodes;
-			} else
+				return nodes.toArray(new PathNode[0]);
+			} else {
 				return new PathNode[] { rootContainer };
+			}
 		}
 
 		@Override
