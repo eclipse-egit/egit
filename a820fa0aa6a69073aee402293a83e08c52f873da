@@ -22,6 +22,30 @@
       "revId": "a820fa0aa6a69073aee402293a83e08c52f873da",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "d8504467_3d1d4a33",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/dialogs/CompareTreeView.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 952,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2018-12-17T11:47:58Z",
+      "side": 1,
+      "message": "I didn\u0027t analyze _why_ we get a null entry in that \"nodes\" array. Maybe we should do so. Off-hand, I don\u0027t see why there are two different maps for files and containers. Is that for file-folder conflicts? Otherwise how could there ever be a file and a folder with the same path? If we really can\u0027t have that, a single map would be sufficient, and then this distinction wouldn\u0027t be necessary, and a streams-based implementation would be straight-forward.\n\nBut while streams are sometimes nice I don\u0027t see any pressing need to rewrite this using streams. The code is clear enough as it is, and I don\u0027t think a stream would be more efficient.",
+      "parentUuid": "c7b2e821_b131eb52",
+      "range": {
+        "startLine": 948,
+        "startChar": 0,
+        "endLine": 952,
+        "endChar": 6
+      },
+      "revId": "a820fa0aa6a69073aee402293a83e08c52f873da",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
     }
   ]
 }
