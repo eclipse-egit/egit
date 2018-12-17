@@ -112,8 +112,8 @@ public class SshPreferencesMirror {
 			defaultIdentities = null;
 			return;
 		}
-		defaultIdentities = Arrays.asList(defaultKeys.trim().split("\\s*,\\s*")) //$NON-NLS-1$
-				.stream().map(s -> {
+		defaultIdentities = Arrays.stream(defaultKeys.trim().split("\\s*,\\s*")) //$NON-NLS-1$
+				.map(s -> {
 					if (s.isEmpty()) {
 						return null;
 					}
@@ -134,8 +134,9 @@ public class SshPreferencesMirror {
 		String mechanisms = get("CVSSSH2PreferencePage.PREF_AUTH_METHODS"); //$NON-NLS-1$
 		if (mechanisms == null || mechanisms.isEmpty()) {
 			defaultMechanisms = null;
+		} else {
+			defaultMechanisms = mechanisms;
 		}
-		defaultMechanisms = mechanisms;
 	}
 
 	/**
