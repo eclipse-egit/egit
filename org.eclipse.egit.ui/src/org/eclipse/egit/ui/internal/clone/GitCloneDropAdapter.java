@@ -69,27 +69,29 @@ public class GitCloneDropAdapter implements IStartup {
 
 	@Override
 	public void earlyStartup() {
-		UIJob registerJob = new UIJob(Display.getDefault(),
-				"Git Clone DND Initialization") { //$NON-NLS-1$
-			{
-				setPriority(Job.SHORT);
-				setSystem(true);
-			}
-
-			@Override
-			public IStatus runInUIThread(IProgressMonitor monitor) {
-				IWorkbench workbench = PlatformUI.getWorkbench();
-				workbench.addWindowListener(workbenchListener);
-				IWorkbenchWindow[] workbenchWindows = workbench
-						.getWorkbenchWindows();
-				for (IWorkbenchWindow window : workbenchWindows) {
-					workbenchListener.hookWindow(window);
+		if (PlatformUI.isWorkbenchRunning()) {
+			UIJob registerJob = new UIJob(Display.getDefault(),
+					"Git Clone DND Initialization") { //$NON-NLS-1$
+				{
+					setPriority(Job.SHORT);
+					setSystem(true);
 				}
-				return Status.OK_STATUS;
-			}
 
-		};
-		registerJob.schedule();
+				@Override
+				public IStatus runInUIThread(IProgressMonitor monitor) {
+					IWorkbench workbench = PlatformUI.getWorkbench();
+					workbench.addWindowListener(workbenchListener);
+					IWorkbenchWindow[] workbenchWindows = workbench
+							.getWorkbenchWindows();
+					for (IWorkbenchWindow window : workbenchWindows) {
+						workbenchListener.hookWindow(window);
+					}
+					return Status.OK_STATUS;
+				}
+
+			};
+			registerJob.schedule();
+		}
 	}
 
 	private void installDropTarget(final Shell shell) {
