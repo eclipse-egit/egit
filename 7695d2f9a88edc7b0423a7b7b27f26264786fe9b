@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "becf1c91_9dfa096d",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2018-12-20T18:19:39Z",
+      "side": 1,
+      "message": "Sounds good to me. I suppose they were just never updated to match our minimum version out of laziness.",
+      "revId": "7695d2f9a88edc7b0423a7b7b27f26264786fe9b",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3e2606ef_994d2959",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2018-12-20T18:19:39Z",
+      "side": 1,
+      "message": "But that is not good. For instance you got jface 3.11.1. But Mars.0 had 3.11.0.",
+      "range": {
+        "startLine": 20,
+        "startChar": 17,
+        "endLine": 20,
+        "endChar": 65
+      },
+      "revId": "7695d2f9a88edc7b0423a7b7b27f26264786fe9b",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
