@@ -29,6 +29,7 @@ import org.eclipse.jgit.api.MergeResult.MergeStatus;
 import org.eclipse.jgit.api.PullResult;
 import org.eclipse.jgit.api.RebaseResult;
 import org.eclipse.jgit.api.RebaseResult.Status;
+import org.eclipse.jgit.lib.BranchConfig;
 import org.eclipse.jgit.lib.Repository;
 import org.eclipse.jgit.transport.FetchResult;
 import org.eclipse.osgi.util.NLS;
@@ -112,7 +113,7 @@ public class PullResultDialog extends Dialog {
 		} else {
 			GridLayoutFactory.swtDefaults().applyTo(fetchResultGroup);
 			Label noResult = new Label(fetchResultGroup, SWT.NONE);
-			if (result.getFetchedFrom().equals(".")) //$NON-NLS-1$
+			if (BranchConfig.LOCAL_REPOSITORY.equals(result.getFetchedFrom()))
 				noResult
 						.setText(UIText.PullResultDialog_NothingToFetchFromLocal);
 			else
