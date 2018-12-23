@@ -23,6 +23,7 @@ import org.eclipse.egit.ui.internal.UIText;
 import org.eclipse.jface.dialogs.IDialogSettings;
 import org.eclipse.jface.dialogs.IMessageProvider;
 import org.eclipse.jface.layout.GridDataFactory;
+import org.eclipse.jface.layout.GridLayoutFactory;
 import org.eclipse.jface.viewers.ISelectionChangedListener;
 import org.eclipse.jface.viewers.SelectionChangedEvent;
 import org.eclipse.jface.window.Window;
@@ -87,7 +88,7 @@ public class ResetTargetSelectionDialog extends AbstractBranchSelectionDialog {
 	@Override
 	protected void createCustomArea(Composite parent) {
 		Composite main = new Composite(parent, SWT.NONE);
-		main.setLayout(new GridLayout(1, false));
+		GridLayoutFactory.fillDefaults().applyTo(main);
 		GridDataFactory.fillDefaults().grab(true, false).applyTo(main);
 
 		Group g2 = new Group(main, SWT.NONE);

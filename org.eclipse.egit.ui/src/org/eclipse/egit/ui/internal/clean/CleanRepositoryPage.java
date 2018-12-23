@@ -26,6 +26,7 @@ import org.eclipse.egit.core.internal.util.ProjectUtil;
 import org.eclipse.egit.ui.Activator;
 import org.eclipse.egit.ui.internal.UIText;
 import org.eclipse.jface.layout.GridDataFactory;
+import org.eclipse.jface.layout.GridLayoutFactory;
 import org.eclipse.jface.operation.IRunnableWithProgress;
 import org.eclipse.jface.viewers.ArrayContentProvider;
 import org.eclipse.jface.viewers.CheckStateChangedEvent;
@@ -128,7 +129,7 @@ public class CleanRepositoryPage extends WizardPage {
 
 		Composite lowerComp = new Composite(main, SWT.NONE);
 		GridDataFactory.fillDefaults().grab(true, false).applyTo(lowerComp);
-		lowerComp.setLayout(new GridLayout(3, false));
+		GridLayoutFactory.fillDefaults().numColumns(3).applyTo(lowerComp);
 
 		final Button checkIncludeIgnored = new Button(lowerComp, SWT.CHECK);
 		checkIncludeIgnored.setText(UIText.CleanRepositoryPage_includeIgnored);
