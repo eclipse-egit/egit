@@ -39,6 +39,30 @@
       "revId": "7695d2f9a88edc7b0423a7b7b27f26264786fe9b",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "8ed60d91_163259e2",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 440
+      },
+      "writtenOn": "2018-12-23T08:51:59Z",
+      "side": 1,
+      "message": "\u003e But that is not good. For instance you got jface 3.11.1. But Mars.0\n \u003e had 3.11.0.\n\nTrouble is, if we use the version numbers from X.0, but only test/develop with X.2 in the target platform, then we still have some untested range.\n\nI can understand that some users cannot upgrade between major versions due to restrictions on other plugins they require. However, I would want users to always upgrade to the latest service release available for their major version. If they don\u0027t even manage that (and sit on the lowest major version we support), I\u0027m okay with not supporting them.\n\nIf we want to officially support all the X.0 releases, then we should rewrite our TPD files, since they fetch the latest bundles.\n\nI should probably move this discussion to a bug, to enable everyone to expression his/her opinion about the support level.",
+      "parentUuid": "3e2606ef_994d2959",
+      "range": {
+        "startLine": 20,
+        "startChar": 17,
+        "endLine": 20,
+        "endChar": 65
+      },
+      "revId": "7695d2f9a88edc7b0423a7b7b27f26264786fe9b",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
     }
   ]
 }
