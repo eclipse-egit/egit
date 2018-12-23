@@ -21,6 +21,7 @@ import java.text.MessageFormat;
 
 import org.eclipse.egit.ui.internal.UIText;
 import org.eclipse.jface.layout.GridDataFactory;
+import org.eclipse.jface.layout.GridLayoutFactory;
 import org.eclipse.jface.window.Window;
 import org.eclipse.jgit.api.MergeCommand.FastForwardMode;
 import org.eclipse.jgit.lib.Constants;
@@ -117,7 +118,7 @@ public class MergeTargetSelectionDialog extends AbstractBranchSelectionDialog {
 	@Override
 	protected void createCustomArea(Composite parent) {
 		Composite main = new Composite(parent, SWT.NONE);
-		main.setLayout(new GridLayout(1, false));
+		GridLayoutFactory.fillDefaults().applyTo(main);
 		GridDataFactory.fillDefaults().grab(true, false).applyTo(main);
 		Group mergeTypeGroup = new Group(main, SWT.NONE);
 		mergeTypeGroup
