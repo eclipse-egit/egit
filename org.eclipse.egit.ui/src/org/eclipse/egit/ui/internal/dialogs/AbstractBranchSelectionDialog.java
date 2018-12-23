@@ -53,6 +53,7 @@ import org.eclipse.jface.viewers.StructuredSelection;
 import org.eclipse.jface.viewers.TreeViewer;
 import org.eclipse.jface.viewers.ViewerComparator;
 import org.eclipse.jface.window.Window;
+import org.eclipse.jgit.lib.BranchConfig;
 import org.eclipse.jgit.lib.ConfigConstants;
 import org.eclipse.jgit.lib.Constants;
 import org.eclipse.jgit.lib.Ref;
@@ -102,7 +103,7 @@ public abstract class AbstractBranchSelectionDialog extends TitleAreaDialog {
 		if (remote == null)
 			return null;
 
-		if (".".equals(remote)) //$NON-NLS-1$
+		if (BranchConfig.LOCAL_REPOSITORY.equals(remote))
 			return merge;
 		else
 			return Constants.R_REMOTES + remote + "/" //$NON-NLS-1$

@@ -29,6 +29,7 @@ import org.eclipse.jface.dialogs.IDialogConstants;
 import org.eclipse.jface.dialogs.TitleAreaDialog;
 import org.eclipse.jface.layout.GridDataFactory;
 import org.eclipse.jgit.api.PullCommand;
+import org.eclipse.jgit.lib.BranchConfig;
 import org.eclipse.jgit.lib.BranchConfig.BranchRebaseMode;
 import org.eclipse.jgit.lib.ConfigConstants;
 import org.eclipse.jgit.lib.Constants;
@@ -98,8 +99,7 @@ public class BranchConfigurationDialog extends TitleAreaDialog {
 		branchText = new Combo(main, SWT.BORDER);
 		GridDataFactory.fillDefaults().grab(true, false).applyTo(branchText);
 
-		// TODO do we have a constant somewhere?
-		remoteText.add("."); //$NON-NLS-1$
+		remoteText.add(BranchConfig.LOCAL_REPOSITORY);
 		for (String remote : myConfig
 				.getSubsections(ConfigConstants.CONFIG_REMOTE_SECTION))
 			remoteText.add(remote);
@@ -149,7 +149,8 @@ public class BranchConfigurationDialog extends TitleAreaDialog {
 	private void addBranchItems() {
 		String remote = remoteText.getText();
 		try {
-			if (remote.equals(".") || remote.length() == 0) //$NON-NLS-1$
+			if (remote.equals(BranchConfig.LOCAL_REPOSITORY)
+					|| remote.length() == 0)
 				// Add local branches only. Fetching from "." and then merging a
 				// remote ref does not make much sense, so don't offer it. If
 				// the user wants that, it can be entered manually.
