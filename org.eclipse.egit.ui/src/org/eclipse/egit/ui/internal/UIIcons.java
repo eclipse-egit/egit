@@ -361,6 +361,11 @@ public class UIIcons {
 	/** Icon for "sign with GPG" */
 	public final static ImageDescriptor SIGN_COMMIT;
 
+	/**
+	 * Icon for merge tool. Don't confuse with {@link #MERGE} commit label icon.
+	 */
+	public final static ImageDescriptor MERGE_TOOL;
+
 	/** base URL */
 	public final static URL base;
 
@@ -483,6 +488,7 @@ public class UIIcons {
 		CHECKED_OUT_BRANCH = new DecorationOverlayDescriptor(BRANCH,
 				OVR_CHECKEDOUT, IDecoration.TOP_LEFT);
 		SIGN_COMMIT = map("obj16/sign-commit.png"); //$NON-NLS-1$
+		MERGE_TOOL = map("obj16/mergetool.png"); //$NON-NLS-1$
 		IProgressService service = PlatformUI.getWorkbench()
 				.getProgressService();
 

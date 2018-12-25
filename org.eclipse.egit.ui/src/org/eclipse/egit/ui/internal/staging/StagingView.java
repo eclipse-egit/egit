@@ -2910,9 +2910,13 @@ public class StagingView extends ViewPart
 					menuMgr.add(new DeleteAction(fileSelection));
 				}
 				if (addLaunchMergeTool) {
-					menuMgr.add(createItem(UIText.StagingView_MergeTool,
-							ActionCommands.MERGE_TOOL_ACTION,
-							fileSelection));
+					menuMgr.add(new Action(UIText.StagingView_MergeTool,
+							UIIcons.MERGE_TOOL) {
+						@Override
+						public void run() {
+							CommonUtils.runCommand(ActionCommands.MERGE_TOOL_ACTION, fileSelection);
+						}
+					});
 				}
 				if (addReplaceWithOursTheirsMenu) {
 					MenuManager replaceWithMenu = new MenuManager(
