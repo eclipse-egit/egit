@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "bbbd6fb8_11474304",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/uitext.properties",
+        "patchSetId": 9
+      },
+      "lineNbr": 1943,
+      "author": {
+        "id": 440
+      },
+      "writtenOn": "2018-12-25T08:24:33Z",
+      "side": 1,
+      "message": "This one doesn\u0027t look good in practice, now that I see it working. I will remove the numbers and leave only \"Copy Path/Copy Paths\".",
+      "range": {
+        "startLine": 1943,
+        "startChar": 40,
+        "endLine": 1943,
+        "endChar": 59
+      },
+      "revId": "b9bab247c50794d146e89a03b9aef2f050a35f96",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
