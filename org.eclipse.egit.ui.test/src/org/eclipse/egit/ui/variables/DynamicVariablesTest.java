@@ -156,7 +156,8 @@ public class DynamicVariablesTest extends EGitTestCase {
 
 	@Test
 	public void testGitPath() throws CoreException {
-		assertVariable(TEST_PROJECT + File.separatorChar + TEST_FILE, "git_repo_relative_path", null);
+		assertVariable(TEST_PROJECT + "/" + TEST_FILE, "git_repo_relative_path",
+				null);
 		assertVariable(TEST_FILE2, "git_repo_relative_path", TEST_PROJECT2 + "/" + TEST_FILE2);
 	}
 
