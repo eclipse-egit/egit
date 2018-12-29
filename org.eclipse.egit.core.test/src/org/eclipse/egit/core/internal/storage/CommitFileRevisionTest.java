@@ -19,6 +19,7 @@ import java.io.OutputStream;
 import java.nio.ByteBuffer;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
+import java.nio.file.Path;
 import java.util.List;
 
 import org.eclipse.core.resources.IProject;
@@ -113,8 +114,7 @@ public class CommitFileRevisionTest extends GitTestCase {
 			assertEquals(1, content.size());
 			assertEquals("x", content.get(0));
 			// All right. Now get a CommitFileRevision and check its contents.
-			String relativePath = repository.getWorkTree().toPath()
-					.relativize(filePath).toString();
+			String relativePath = getRevisionPath(filePath);
 			CommitFileRevision fileRevision = new CommitFileRevision(repository,
 					head, relativePath);
 			ByteBuffer rawContent = null;
@@ -158,8 +158,7 @@ public class CommitFileRevisionTest extends GitTestCase {
 			assertEquals(1, content.size());
 			assertEquals("x", content.get(0));
 			// All right. Now get a CommitFileRevision and check its contents.
-			String relativePath = repository.getWorkTree().toPath()
-					.relativize(filePath).toString();
+			String relativePath = getRevisionPath(filePath);
 			CommitFileRevision fileRevision = new CommitFileRevision(repository,
 					head, relativePath);
 			ByteBuffer rawContent = null;
@@ -183,6 +182,15 @@ public class CommitFileRevisionTest extends GitTestCase {
 		} finally {
 			FilterCommandRegistry.unregister("egit://builtin/test/smudge");
 		}
+	}
+
+	/**
+	 * @param filePath
+	 * @return path with {@code /} as separator
+	 */
+	private String getRevisionPath(Path filePath) {
+		return repository.getWorkTree().toPath().relativize(filePath).toString()
+				.replace('\\', '/');
 	}
 
 	@Test
@@ -222,8 +230,7 @@ public class CommitFileRevisionTest extends GitTestCase {
 			assertEquals(1, content.size());
 			assertEquals("x", content.get(0));
 			// All right. Now get a CommitFileRevision and check its contents.
-			String relativePath = repository.getWorkTree().toPath()
-					.relativize(filePath).toString();
+			String relativePath = getRevisionPath(filePath);
 			CommitFileRevision fileRevision = new CommitFileRevision(repository,
 					head, relativePath);
 			ByteBuffer rawContent = null;
@@ -281,8 +288,7 @@ public class CommitFileRevisionTest extends GitTestCase {
 			assertEquals(1, content.size());
 			assertEquals("x", content.get(0));
 			// All right. Now get a CommitFileRevision and check its contents.
-			String relativePath = repository.getWorkTree().toPath()
-					.relativize(filePath).toString();
+			String relativePath = getRevisionPath(filePath);
 			CommitFileRevision fileRevision = new CommitFileRevision(repository,
 					head, relativePath);
 			ByteBuffer rawContent = null;
