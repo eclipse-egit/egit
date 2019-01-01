@@ -31,7 +31,6 @@ import org.eclipse.jgit.lib.Repository;
 import org.eclipse.jgit.storage.file.FileRepositoryBuilder;
 import org.junit.After;
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 
 /**
@@ -76,7 +75,6 @@ public class ResourceUtilTest extends GitTestCase {
 		assertThat(resource, nullValue());
 	}
 
-	@Ignore
 	@Test
 	public void getFileForLocationShouldReturnExistingFileInCaseOfNestedProject()
 			throws Exception {
@@ -88,7 +86,7 @@ public class ResourceUtilTest extends GitTestCase {
 		IFile result = ResourceUtil.getFileForLocation(location, false);
 		assertThat(result, notNullValue());
 		assertTrue("Returned IFile should exist", result.exists());
-		assertThat(result.getProject(), is(project.getProject()));
+		assertThat(result.getProject(), is(nested.getProject()));
 
 		result = ResourceUtil.getFileForLocation(location, true);
 		assertThat(result, notNullValue());
@@ -96,7 +94,6 @@ public class ResourceUtilTest extends GitTestCase {
 		assertThat(result.getProject(), is(nested.getProject()));
 	}
 
-	@Ignore
 	@Test
 	public void getFileForLocationShouldReturnExistingFileInCaseOfNestedNotClosedProject()
 			throws Exception {
@@ -111,7 +108,7 @@ public class ResourceUtilTest extends GitTestCase {
 		IFile result = ResourceUtil.getFileForLocation(location, false);
 		assertThat(result, notNullValue());
 		assertTrue("Returned IFile should exist", result.exists());
-		assertThat(result.getProject(), is(project.getProject()));
+		assertThat(result.getProject(), is(nested.getProject()));
 
 		result = ResourceUtil.getFileForLocation(location, true);
 		assertThat(result, notNullValue());
@@ -119,7 +116,6 @@ public class ResourceUtilTest extends GitTestCase {
 		assertThat(result.getProject(), is(nested.getProject()));
 	}
 
-	@Ignore
 	@Test
 	public void getFileForLocationShouldNotUseFilesWithoutRepositoryMapping()
 			throws Exception {
@@ -142,7 +138,7 @@ public class ResourceUtilTest extends GitTestCase {
 		result = ResourceUtil.getFileForLocation(location, false);
 		assertThat(result, notNullValue());
 		assertTrue("Returned IFile should exist", result.exists());
-		assertThat(result.getProject(), is(project.getProject()));
+		assertThat(result.getProject(), is(nested.getProject()));
 
 		result = ResourceUtil.getFileForLocation(location, true);
 		assertThat(result, notNullValue());
