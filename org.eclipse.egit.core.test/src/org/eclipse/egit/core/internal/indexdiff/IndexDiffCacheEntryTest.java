@@ -37,7 +37,7 @@ public class IndexDiffCacheEntryTest extends GitTestCase {
 	// trigger reload if more than one file is changed
 	private static final int MAX_FILES_FOR_UPDATE = 1;
 
-	private static final int MAX_WAIT_TIME = 10 * 1000;
+	private static final long MAX_WAIT_TIME = 10 * 1000;
 
 
 	private TestRepository testRepository;
@@ -51,7 +51,7 @@ public class IndexDiffCacheEntryTest extends GitTestCase {
 		prepareCacheEntry();
 
 		entry.refresh();
-		waitForJobs(MAX_WAIT_TIME, JobFamilies.INDEX_DIFF_CACHE_UPDATE);
+		TestUtils.waitForJobs(MAX_WAIT_TIME, JobFamilies.INDEX_DIFF_CACHE_UPDATE);
 
 		// on refresh, full reload is triggered
 		assertTrue(entry.reloadScheduled);
@@ -59,7 +59,7 @@ public class IndexDiffCacheEntryTest extends GitTestCase {
 		cleanEntryFlags();
 
 		entry.refreshFiles(Arrays.asList("a"));
-		waitForJobs(MAX_WAIT_TIME, JobFamilies.INDEX_DIFF_CACHE_UPDATE);
+		TestUtils.waitForJobs(MAX_WAIT_TIME, JobFamilies.INDEX_DIFF_CACHE_UPDATE);
 
 		// one single file: no reload
 		assertFalse(entry.reloadScheduled);
@@ -67,7 +67,7 @@ public class IndexDiffCacheEntryTest extends GitTestCase {
 		cleanEntryFlags();
 
 		entry.refreshFiles(Arrays.asList("a", "b"));
-		waitForJobs(MAX_WAIT_TIME, JobFamilies.INDEX_DIFF_CACHE_UPDATE);
+		TestUtils.waitForJobs(MAX_WAIT_TIME, JobFamilies.INDEX_DIFF_CACHE_UPDATE);
 
 		// two files: update is triggered, but decides to run full reload
 		assertTrue(entry.reloadScheduled);
@@ -76,7 +76,7 @@ public class IndexDiffCacheEntryTest extends GitTestCase {
 
 		entry.getUpdateJob().addChanges(Arrays.asList("a", "b"),
 				Collections.<IResource> emptyList());
-		waitForJobs(MAX_WAIT_TIME, JobFamilies.INDEX_DIFF_CACHE_UPDATE);
+		TestUtils.waitForJobs(MAX_WAIT_TIME, JobFamilies.INDEX_DIFF_CACHE_UPDATE);
 
 		// two files: update is not triggered (we call through the job directly)
 		// but this calls full reload
@@ -90,7 +90,7 @@ public class IndexDiffCacheEntryTest extends GitTestCase {
 		prepareCacheEntry();
 
 		testRepository.connect(project.project);
-		waitForJobs(MAX_WAIT_TIME, JobFamilies.INDEX_DIFF_CACHE_UPDATE);
+		TestUtils.waitForJobs(MAX_WAIT_TIME, JobFamilies.INDEX_DIFF_CACHE_UPDATE);
 
 		// Should have something from the project
 		String projectName = project.project.getName();
@@ -98,7 +98,7 @@ public class IndexDiffCacheEntryTest extends GitTestCase {
 				entry.getIndexDiff().getUntracked(), projectName + '/'));
 
 		project.project.delete(true, null);
-		waitForJobs(MAX_WAIT_TIME, JobFamilies.INDEX_DIFF_CACHE_UPDATE);
+		TestUtils.waitForJobs(MAX_WAIT_TIME, JobFamilies.INDEX_DIFF_CACHE_UPDATE);
 		assertFalse(containsItemsStartingWith(
 				entry.getIndexDiff().getUntracked(), projectName + '/'));
 	}
@@ -108,7 +108,7 @@ public class IndexDiffCacheEntryTest extends GitTestCase {
 		prepareCacheEntry();
 
 		testRepository.connect(project.project);
-		waitForJobs(MAX_WAIT_TIME, JobFamilies.INDEX_DIFF_CACHE_UPDATE);
+		TestUtils.waitForJobs(MAX_WAIT_TIME, JobFamilies.INDEX_DIFF_CACHE_UPDATE);
 
 		// on a simple connect, nothing should be called
 		assertFalse(entry.reloadScheduled);
@@ -118,14 +118,14 @@ public class IndexDiffCacheEntryTest extends GitTestCase {
 		// adds .project and .classpath files: more than limit of 1,
 		// so update redirects to reload
 		testRepository.addToIndex(project.project);
-		waitForJobs(MAX_WAIT_TIME, JobFamilies.INDEX_DIFF_CACHE_UPDATE);
+		TestUtils.waitForJobs(MAX_WAIT_TIME, JobFamilies.INDEX_DIFF_CACHE_UPDATE);
 
 		assertTrue(entry.reloadScheduled);
 		assertTrue(entry.updateScheduled);
 		cleanEntryFlags();
 
 		testRepository.createInitialCommit("first commit\n");
-		waitForJobs(MAX_WAIT_TIME, JobFamilies.INDEX_DIFF_CACHE_UPDATE);
+		TestUtils.waitForJobs(MAX_WAIT_TIME, JobFamilies.INDEX_DIFF_CACHE_UPDATE);
 
 		// RefsChangedEvent causes always full update
 		assertTrue(entry.reloadScheduled);
@@ -145,7 +145,7 @@ public class IndexDiffCacheEntryTest extends GitTestCase {
 
 			}
 		}, null);
-		waitForJobs(MAX_WAIT_TIME, JobFamilies.INDEX_DIFF_CACHE_UPDATE);
+		TestUtils.waitForJobs(MAX_WAIT_TIME, JobFamilies.INDEX_DIFF_CACHE_UPDATE);
 
 		// adds 2 files: more than limit of 1,
 		// so update redirects to reload
@@ -164,7 +164,7 @@ public class IndexDiffCacheEntryTest extends GitTestCase {
 
 			}
 		}, null);
-		waitForJobs(MAX_WAIT_TIME, JobFamilies.INDEX_DIFF_CACHE_UPDATE);
+		TestUtils.waitForJobs(MAX_WAIT_TIME, JobFamilies.INDEX_DIFF_CACHE_UPDATE);
 
 		// adds 1 file: less than limit of 1, so no reload
 		assertFalse(entry.reloadScheduled);
@@ -182,24 +182,12 @@ public class IndexDiffCacheEntryTest extends GitTestCase {
 
 			}
 		}, null);
-		waitForJobs(MAX_WAIT_TIME, JobFamilies.INDEX_DIFF_CACHE_UPDATE);
+		TestUtils.waitForJobs(MAX_WAIT_TIME, JobFamilies.INDEX_DIFF_CACHE_UPDATE);
 
 		// adds .gitignore file: always full reload
 		assertTrue(entry.reloadScheduled);
 		assertFalse(entry.updateScheduled);
 		cleanEntryFlags();
-	}
-
-	/**
-	 * Waits at least 50 milliseconds until no jobs of given family are running
-	 *
-	 * @param maxWaitTime
-	 * @param family
-	 * @throws InterruptedException
-	 */
-	private void waitForJobs(long maxWaitTime, Object family)
-			throws InterruptedException {
-		TestUtils.waitForJobs(maxWaitTime, family);
 	}
 
 	private void cleanEntryFlags() {
@@ -209,7 +197,7 @@ public class IndexDiffCacheEntryTest extends GitTestCase {
 
 	private IndexDiffCacheEntry2 prepareCacheEntry() throws Exception {
 		entry = new IndexDiffCacheEntry2(repository);
-		waitForJobs(MAX_WAIT_TIME, JobFamilies.INDEX_DIFF_CACHE_UPDATE);
+		TestUtils.waitForJobs(MAX_WAIT_TIME, JobFamilies.INDEX_DIFF_CACHE_UPDATE);
 
 		// on creation, full reload is triggered
 		assertTrue(entry.reloadScheduled);

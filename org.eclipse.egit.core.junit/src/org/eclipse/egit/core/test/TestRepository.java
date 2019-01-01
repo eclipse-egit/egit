@@ -537,7 +537,7 @@ public class TestRepository {
 		ConnectProviderOperation op = new ConnectProviderOperation(project,
 				this.getRepository().getDirectory());
 		op.execute(null);
-		TestUtils.waitForJobs(50, 5000, null);
+		TestUtils.waitForJobs(50, 10000, null);
 	}
 
 	/**
@@ -557,7 +557,7 @@ public class TestRepository {
 				disconnect.execute(null);
 			}
 		}, project, IWorkspace.AVOID_UPDATE, null);
-		TestUtils.waitForJobs(5000, null);
+		TestUtils.waitForJobs(10000, null);
 	}
 
 	public URIish getUri() throws URISyntaxException {
