@@ -23,8 +23,8 @@ import org.eclipse.egit.core.op.RebaseOperation;
 import org.eclipse.egit.core.test.GitTestCase;
 import org.eclipse.egit.core.test.TestRepository;
 import org.eclipse.jgit.api.Git;
-import org.eclipse.jgit.api.RebaseResult;
 import org.eclipse.jgit.api.RebaseCommand.Operation;
+import org.eclipse.jgit.api.RebaseResult;
 import org.eclipse.jgit.api.RebaseResult.Status;
 import org.eclipse.jgit.api.errors.WrongRepositoryStateException;
 import org.eclipse.jgit.lib.Constants;
@@ -32,7 +32,6 @@ import org.eclipse.jgit.lib.Repository;
 import org.eclipse.jgit.revwalk.RevCommit;
 import org.eclipse.jgit.revwalk.RevWalk;
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 
 public class RebaseOperationTest extends GitTestCase {
@@ -60,8 +59,6 @@ public class RebaseOperationTest extends GitTestCase {
 	}
 
 	@Test
-	@Ignore
-	// currently not working as expected; see also TODO in RebaseCommand
 	public void testUpToDate() throws Exception {
 		IFile file = project.createFile("theFile.txt", "Hello, world"
 				.getBytes("UTF-8"));
