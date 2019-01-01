@@ -313,7 +313,7 @@ public class TestUtils {
 	}
 
 	/**
-	 * Waits at least 50 milliseconds until no jobs of given family are running
+	 * Waits at least 100 milliseconds until no jobs of given family are running
 	 *
 	 * @param maxWaitTime
 	 * @param family
