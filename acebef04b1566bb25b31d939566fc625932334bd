@@ -45,6 +45,30 @@
       "revId": "acebef04b1566bb25b31d939566fc625932334bd",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "eb12a15a_e70020da",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/synchronize/compare/LocalNonWorkspaceTypedElement.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 209,
+      "author": {
+        "id": 440
+      },
+      "writtenOn": "2019-01-03T19:47:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b63e97af_b3d7e8c1",
+      "range": {
+        "startLine": 207,
+        "startChar": 6,
+        "endLine": 209,
+        "endChar": 7
+      },
+      "revId": "acebef04b1566bb25b31d939566fc625932334bd",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
     }
   ]
 }
