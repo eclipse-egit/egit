@@ -18,6 +18,8 @@
  *******************************************************************************/
 package org.eclipse.egit.ui.internal.history;
 
+import static java.nio.charset.StandardCharsets.UTF_8;
+
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileOutputStream;
@@ -72,7 +74,6 @@ import org.eclipse.jgit.revwalk.RevCommit;
 import org.eclipse.jgit.revwalk.RevFlag;
 import org.eclipse.jgit.revwalk.RevWalk;
 import org.eclipse.jgit.util.FileUtils;
-import org.eclipse.jgit.util.RawParseUtils;
 import org.eclipse.osgi.util.NLS;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.SWTException;
@@ -742,7 +743,7 @@ class CommitGraphTable {
 		private void writeToFile(final String fileName, String content)
 				throws IOException {
 			Writer output = new BufferedWriter(new OutputStreamWriter(
-					new FileOutputStream(fileName), RawParseUtils.UTF8_CHARSET));
+					new FileOutputStream(fileName), UTF_8));
 			try {
 				output.write(content);
 			} finally {

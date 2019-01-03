@@ -16,6 +16,7 @@
  *******************************************************************************/
 package org.eclipse.egit.core.op;
 
+import static java.nio.charset.StandardCharsets.UTF_8;
 import static org.eclipse.jgit.lib.Constants.encodeASCII;
 
 import java.io.ByteArrayOutputStream;
@@ -58,7 +59,6 @@ import org.eclipse.jgit.lib.Repository;
 import org.eclipse.jgit.revwalk.RevCommit;
 import org.eclipse.jgit.treewalk.FileTreeIterator;
 import org.eclipse.jgit.treewalk.filter.TreeFilter;
-import org.eclipse.jgit.util.RawParseUtils;
 import org.eclipse.osgi.util.NLS;
 
 /**
@@ -256,7 +256,7 @@ public class CreatePatchOperation implements IEGitOperation {
 			final ByteArrayOutputStream outputStream) {
 		try {
 			String encoding = currentEncoding != null ? currentEncoding
-					: RawParseUtils.UTF8_CHARSET.name();
+					: UTF_8.name();
 			sb.append(outputStream.toString(encoding));
 		} catch (UnsupportedEncodingException e) {
 			sb.append(outputStream.toString());
