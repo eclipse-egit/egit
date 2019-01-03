@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "099ec4d2_a6ea2779",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2019-01-03T02:10:12Z",
+      "side": 1,
+      "message": "add footer to link to corresponding bug\n\nBug: 382212",
+      "revId": "75ced15221940324e8759675d990121bc12e4ebe",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
