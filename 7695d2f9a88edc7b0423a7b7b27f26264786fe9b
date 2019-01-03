@@ -63,6 +63,30 @@
       "revId": "7695d2f9a88edc7b0423a7b7b27f26264786fe9b",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "77fce16c_7c12d9f4",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2019-01-03T01:05:23Z",
+      "side": 1,
+      "message": "Yes, this is caused by laziness and I agree we should fix this. Please fix it in a single commit if possible.\n\nI would assume that all platform bundles follow semantic versioning and that they don\u0027t do breaking changes in service releases, hence I don\u0027t see a reason why we should insist on 4.5.2 instead of 4.5.0 as the baseline for the lowest version we accept.\nI also would assume that anybody who wants a platform fix for 4.5 is probably the one who has to implement the fix.\n\nMaintenance statement for EGit [1] says that we support at least the last two platform releases and try to avoid breaking older releases if there is no good reason to do so. This means we do not promise to test releases older than the last 2 platform releases.\n\n[1] https://wiki.eclipse.org/EGit/FAQ#What_versions_of_Eclipse_does_EGit_target.3F",
+      "parentUuid": "8ed60d91_163259e2",
+      "range": {
+        "startLine": 20,
+        "startChar": 17,
+        "endLine": 20,
+        "endChar": 65
+      },
+      "revId": "7695d2f9a88edc7b0423a7b7b27f26264786fe9b",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
     }
   ]
 }
