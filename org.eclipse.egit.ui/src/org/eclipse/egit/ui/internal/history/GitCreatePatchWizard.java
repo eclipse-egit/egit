@@ -17,6 +17,8 @@
  *******************************************************************************/
 package org.eclipse.egit.ui.internal.history;
 
+import static java.nio.charset.StandardCharsets.UTF_8;
+
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.IOException;
@@ -62,7 +64,6 @@ import org.eclipse.jgit.revwalk.RevCommit;
 import org.eclipse.jgit.treewalk.filter.PathFilter;
 import org.eclipse.jgit.treewalk.filter.PathFilterGroup;
 import org.eclipse.jgit.treewalk.filter.TreeFilter;
-import org.eclipse.jgit.util.RawParseUtils;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.dnd.Clipboard;
 import org.eclipse.swt.dnd.TextTransfer;
@@ -250,9 +251,8 @@ public class GitCreatePatchWizard extends Wizard {
 
 	private void writeToFile(final File file, String content)
 			throws IOException {
-		try (Writer output = new BufferedWriter(
-				new OutputStreamWriter(Files.newOutputStream(file.toPath()),
-						RawParseUtils.UTF8_CHARSET))) {
+		try (Writer output = new BufferedWriter(new OutputStreamWriter(
+				Files.newOutputStream(file.toPath()), UTF_8))) {
 			// FileWriter always assumes default encoding is OK!
 			output.write(content);
 		}
