@@ -231,6 +231,9 @@ public class GitCreatePatchWizard extends Wizard {
 			return null;
 		final List<PathFilter> filters = new ArrayList<>();
 		for (IResource r : rs) {
+			if (r == null) {
+				continue;
+			}
 			RepositoryMapping rm = RepositoryMapping.getMapping(r);
 			if (rm != null) {
 				String repoRelativePath = rm.getRepoRelativePath(r);
