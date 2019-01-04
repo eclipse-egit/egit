@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "bc9c1603_909d4881",
+        "filename": "org.eclipse.egit.core.junit/src/org/eclipse/egit/core/test/GitTestCase.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2019-01-04T01:28:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f5c68a2b_3fc9879d",
+      "revId": "982b1d5f3a09a24e016d53e25da8eac45e890a3d",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7b5e42a1_11f5a935",
         "filename": "org.eclipse.egit.core.test/src/org/eclipse/egit/core/test/internal/mapping/HistoryTest.java",
         "patchSetId": 4
@@ -30,6 +48,24 @@
       "writtenOn": "2019-01-04T01:27:13Z",
       "side": 1,
       "message": "use try with resource",
+      "revId": "982b1d5f3a09a24e016d53e25da8eac45e890a3d",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "d6fa320e_d3ac60e4",
+        "filename": "org.eclipse.egit.core.test/src/org/eclipse/egit/core/test/internal/mapping/HistoryTest.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2019-01-04T01:28:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7b5e42a1_11f5a935",
       "revId": "982b1d5f3a09a24e016d53e25da8eac45e890a3d",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
