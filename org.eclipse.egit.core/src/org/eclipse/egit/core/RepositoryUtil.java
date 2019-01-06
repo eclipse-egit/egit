@@ -271,7 +271,7 @@ public class RepositoryUtil {
 									RevCommit commit = rw.parseCommit(tag.getObject());
 									timestamp = commit.getCommitterIdent().getWhen();
 								} catch (IncorrectObjectTypeException e) {
-									// not referencing a comit.
+									// not referencing a commit
 									timestamp = null;
 								}
 							}
