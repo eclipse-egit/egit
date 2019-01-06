@@ -19,9 +19,9 @@ import static org.eclipse.egit.ui.internal.UIIcons.PUSH;
 import static org.eclipse.egit.ui.internal.UIText.GitActionContributor_ExpandAll;
 import static org.eclipse.egit.ui.internal.actions.ActionCommands.ADD_TO_INDEX;
 import static org.eclipse.egit.ui.internal.actions.ActionCommands.COMMIT_ACTION;
+import static org.eclipse.egit.ui.internal.actions.ActionCommands.CREATE_PATCH;
 import static org.eclipse.egit.ui.internal.actions.ActionCommands.IGNORE_ACTION;
 import static org.eclipse.egit.ui.internal.actions.ActionCommands.MERGE_TOOL_ACTION;
-import static org.eclipse.egit.ui.internal.actions.ActionCommands.CREATE_PATCH;
 import static org.eclipse.egit.ui.internal.actions.ActionCommands.PUSH_ACTION;
 import static org.eclipse.egit.ui.internal.actions.ActionCommands.REMOVE_FROM_INDEX;
 import static org.eclipse.egit.ui.internal.synchronize.model.SupportedContextActionsHelper.canPush;
@@ -156,6 +156,7 @@ class GitActionContributor extends SynchronizePageActionGroup {
 		return new CommandContributionItem(itemParam);
 	}
 
+	@SuppressWarnings("restriction")
 	@Override
 	public void initialize(ISynchronizePageConfiguration configuration) {
 		super.initialize(configuration);

@@ -52,6 +52,7 @@ import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
+@SuppressWarnings("restriction")
 @Ignore
 @RunWith(SWTBotJunit4ClassRunner.class)
 public class SmartImportWizardTest {

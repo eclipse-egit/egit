@@ -33,6 +33,7 @@ import org.eclipse.team.ui.mapping.SaveableComparison;
 /**
  * Git specific implementation of {@link ISynchronizationCompareInput}
  */
+@SuppressWarnings("restriction")
 public class GitCompareInput implements ISynchronizationCompareInput {
 
 	private final String name;

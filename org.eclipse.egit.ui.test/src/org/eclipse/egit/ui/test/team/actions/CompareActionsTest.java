@@ -65,6 +65,7 @@ import org.junit.runner.RunWith;
 /**
  * Tests for the Compare With actions
  */
+@SuppressWarnings("restriction")
 @RunWith(SWTBotJunit4ClassRunner.class)
 public class CompareActionsTest extends LocalRepositoryTestCase {
 	private File repositoryFile;
@@ -103,7 +104,6 @@ public class CompareActionsTest extends LocalRepositoryTestCase {
 				new ITeamContentProviderDescriptor[] { descriptor });
 	}
 
-	@SuppressWarnings("restriction")
 	private static void disablePerspectiveSwitchPrompt() {
 		// disable perspective synchronize selection
 		TeamUIPlugin.getPlugin().getPreferenceStore()

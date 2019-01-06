@@ -38,10 +38,11 @@ import org.eclipse.ui.internal.wizards.datatransfer.SmartImportWizard;
 /**
  * Alternative Git clone wizard using auto import framework incubating in e4
  */
+@SuppressWarnings("restriction")
 public class SmartImportGitWizard extends AbstractGitCloneWizard
 		implements IImportWizard, IPageChangedListener {
 
-	private SmartImportWizard easymportWizard;
+	private SmartImportWizard smartImportWizard;
 
 	private GitSelectRepositoryPage selectRepoPage = new GitSelectRepositoryPage(
 			false);
@@ -58,7 +59,7 @@ public class SmartImportGitWizard extends AbstractGitCloneWizard
 			setDialogSettings(dialogSettings);
 		}
 		setDefaultPageImageDescriptor(UIIcons.WIZBAN_IMPORT_REPO);
-		this.easymportWizard = new SmartImportWizard();
+		this.smartImportWizard = new SmartImportWizard();
 		setWindowTitle(UIText.GitImportWizard_WizardTitle);
 	}
 
@@ -71,19 +72,19 @@ public class SmartImportGitWizard extends AbstractGitCloneWizard
 
 	@Override
 	protected void addPostClonePages() {
-		this.easymportWizard.addPages();
+		this.smartImportWizard.addPages();
 	}
 
 	@Override
 	public boolean performFinish() {
-		return true; // delegated to EasymportWizard
+		return true; // delegated to SmartImportWizard
 	}
 
 	@Override
 	public boolean canFinish() {
 		return getContainer().getCurrentPage()
-				.getWizard() == this.easymportWizard
-				&& this.easymportWizard.canFinish();
+				.getWizard() == this.smartImportWizard
+				&& this.smartImportWizard.canFinish();
 	}
 
 	@Override
@@ -108,7 +109,7 @@ public class SmartImportGitWizard extends AbstractGitCloneWizard
 	@Override
 	public IWizardPage getNextPage(IWizardPage page) {
 		if (page == selectRepoPage || page == this.cloneDestination) {
-			return this.easymportWizard.getPages()[0];
+			return this.smartImportWizard.getPages()[0];
 		}
 		return super.getNextPage(page);
 	}
@@ -151,7 +152,7 @@ public class SmartImportGitWizard extends AbstractGitCloneWizard
 
 	@Override
 	public void pageChanged(PageChangedEvent event) {
-		SmartImportRootWizardPage selectRootPage = (SmartImportRootWizardPage) this.easymportWizard
+		SmartImportRootWizardPage selectRootPage = (SmartImportRootWizardPage) this.smartImportWizard
 				.getPages()[0];
 		if (event.getSelectedPage() == selectRootPage) {
 			Repository existingRepo = selectRepoPage.getRepository();

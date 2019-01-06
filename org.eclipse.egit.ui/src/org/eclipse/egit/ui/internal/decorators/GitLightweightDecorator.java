@@ -79,6 +79,7 @@ import org.eclipse.ui.themes.ITheme;
  * when compared to <code>HEAD</code>, as well as the index in the relevant
  * repository.
  */
+@SuppressWarnings("restriction")
 public class GitLightweightDecorator extends GitDecorator
 		implements IPropertyChangeListener {
 
@@ -244,7 +245,6 @@ public class GitLightweightDecorator extends GitDecorator
 	 * @throws CoreException
 	 */
 	private void decorateResourceMapping(Object element, IDecoration decoration) throws CoreException {
-		@SuppressWarnings("restriction")
 		ResourceMapping mapping = Utils.getResourceMapping(element);
 		if (mapping == null) {
 			return;
