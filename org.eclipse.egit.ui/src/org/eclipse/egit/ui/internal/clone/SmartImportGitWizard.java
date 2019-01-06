@@ -38,6 +38,7 @@ import org.eclipse.ui.internal.wizards.datatransfer.SmartImportWizard;
 /**
  * Alternative Git clone wizard using auto import framework incubating in e4
  */
+@SuppressWarnings("restriction") // SmartImportWizard not public
 public class SmartImportGitWizard extends AbstractGitCloneWizard
 		implements IImportWizard, IPageChangedListener {
 

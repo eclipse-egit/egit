@@ -43,6 +43,7 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.TemporaryFolder;
 
+@SuppressWarnings("restriction")
 public class SmartImportWizardTest extends LocalRepositoryTestCase {
 
 	private static final String PROJECT_FILE = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n"

@@ -26,6 +26,7 @@ import org.eclipse.mylyn.tasks.ui.TasksUi;
  * A BranchNameProvider using description and title of the currently active task
  * to suggest a branch name.
  */
+@SuppressWarnings("restriction")
 public class ActiveTaskBranchNameProvider implements IBranchNameProvider {
 
 	/**

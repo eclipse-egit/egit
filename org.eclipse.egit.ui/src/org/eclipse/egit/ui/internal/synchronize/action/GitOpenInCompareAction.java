@@ -45,6 +45,7 @@ import org.eclipse.ui.IWorkbenchWindow;
 /**
  * Action to open a compare editor from a SyncInfo object.
  */
+@SuppressWarnings("restriction")
 public class GitOpenInCompareAction extends Action {
 
 	private final Action oldAction;

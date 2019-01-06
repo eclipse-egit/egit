@@ -21,6 +21,7 @@ import org.eclipse.search.internal.core.text.PatternConstructor;
  * Pattern constructor utilities to localize warnings from using internal
  * {@link PatternConstructor} class.
  */
+@SuppressWarnings("restriction")
 public abstract class PatternUtils {
 
 	/**

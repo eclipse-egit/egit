@@ -95,6 +95,7 @@ import org.osgi.framework.BundleContext;
 /**
  * This is a plugin singleton mostly controlling logging.
  */
+@SuppressWarnings("restriction")
 public class Activator extends AbstractUIPlugin implements DebugOptionsListener {
 
 	/**

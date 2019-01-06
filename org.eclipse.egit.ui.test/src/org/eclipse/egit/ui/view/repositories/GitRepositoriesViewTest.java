@@ -81,6 +81,7 @@ import org.junit.runner.RunWith;
  * import wizard outside the "golden path"
  * </pre>
  */
+@SuppressWarnings("restriction")
 @RunWith(SWTBotJunit4ClassRunner.class)
 public class GitRepositoriesViewTest extends GitRepositoriesViewTestBase {
 
