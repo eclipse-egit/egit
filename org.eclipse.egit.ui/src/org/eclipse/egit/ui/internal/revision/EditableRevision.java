@@ -15,6 +15,7 @@ import java.io.ByteArrayInputStream;
 import java.io.InputStream;
 import java.io.UnsupportedEncodingException;
 import java.text.MessageFormat;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 import org.eclipse.compare.IContentChangeListener;
 import org.eclipse.compare.IContentChangeNotifier;
@@ -25,7 +26,6 @@ import org.eclipse.core.resources.IEncodedStorage;
 import org.eclipse.core.resources.IStorage;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IPath;
-import org.eclipse.core.runtime.ListenerList;
 import org.eclipse.egit.core.internal.SafeRunnable;
 import org.eclipse.egit.core.internal.storage.IndexFileRevision;
 import org.eclipse.egit.ui.Activator;
@@ -48,75 +48,9 @@ import org.eclipse.ui.texteditor.IDocumentProvider;
 public class EditableRevision extends FileRevisionTypedElement implements
 		IEditableContent, IContentChangeNotifier {
 
-	private final static class ContentChangeNotifier implements IContentChangeNotifier {
-
-			private ListenerList fListenerList;
-			private final IContentChangeNotifier element;
-
-			public ContentChangeNotifier(IContentChangeNotifier element) {
-				this.element = element;
-			}
-
-			/* (non-Javadoc)
-			 * see IContentChangeNotifier.addChangeListener
-			 */
-			@Override
-			public void addContentChangeListener(IContentChangeListener listener) {
-				if (fListenerList == null)
-					fListenerList= new ListenerList();
-				fListenerList.add(listener);
-			}
-
-			/* (non-Javadoc)
-			 * see IContentChangeNotifier.removeChangeListener
-			 */
-			@Override
-			public void removeContentChangeListener(IContentChangeListener listener) {
-				if (fListenerList != null) {
-					fListenerList.remove(listener);
-					if (fListenerList.isEmpty())
-						fListenerList= null;
-				}
-			}
-
-			/**
-			 * Notifies all registered <code>IContentChangeListener</code>s of a content change.
-			 */
-			public void fireContentChanged() {
-				if (isEmpty()) {
-					return;
-				}
-				// Legacy listeners may expect to be notified in the UI thread.
-				Runnable runnable = new Runnable() {
-					@Override
-					public void run() {
-						Object[] listeners= fListenerList.getListeners();
-						for (int i= 0; i < listeners.length; i++) {
-							final IContentChangeListener contentChangeListener = (IContentChangeListener)listeners[i];
-						SafeRunnable.run(() -> (contentChangeListener)
-								.contentChanged(element));
-						}
-					}
-				};
-				if (Display.getCurrent() == null) {
-					Display.getDefault().syncExec(runnable);
-				} else {
-					runnable.run();
-				}
-			}
-
-			/**
-			 * Return whether this notifier is empty (i.e. has no listeners).
-			 * @return whether this notifier is empty
-			 */
-			public boolean isEmpty() {
-				return fListenerList == null || fListenerList.isEmpty();
-			}
-	}
-
 	private byte[] modifiedContent;
 
-	private ContentChangeNotifier fChangeNotifier;
+	private CopyOnWriteArrayList<IContentChangeListener> listeners = new CopyOnWriteArrayList<>();
 
 	private IStorageEditorInput input;
 
@@ -252,18 +186,12 @@ public class EditableRevision extends FileRevisionTypedElement implements
 
 	@Override
 	public void addContentChangeListener(IContentChangeListener listener) {
-		if (fChangeNotifier == null)
-			fChangeNotifier = new ContentChangeNotifier(this);
-		fChangeNotifier.addContentChangeListener(listener);
+		listeners.addIfAbsent(listener);
 	}
 
 	@Override
 	public void removeContentChangeListener(IContentChangeListener listener) {
-		if (fChangeNotifier != null) {
-			fChangeNotifier.removeContentChangeListener(listener);
-			if (fChangeNotifier.isEmpty())
-				fChangeNotifier = null;
-		}
+		listeners.remove(listener);
 	}
 
 	/**
@@ -271,10 +199,21 @@ public class EditableRevision extends FileRevisionTypedElement implements
 	 * change.
 	 */
 	protected void fireContentChanged() {
-		if (fChangeNotifier == null || fChangeNotifier.isEmpty()) {
+		if (listeners.isEmpty()) {
 			return;
 		}
-		fChangeNotifier.fireContentChanged();
+		// Legacy listeners may expect to be notified in the UI thread.
+		Runnable runnable = () -> {
+			for (IContentChangeListener listener : listeners) {
+				SafeRunnable.run(
+						() -> listener.contentChanged(EditableRevision.this));
+			}
+		};
+		if (Display.getCurrent() == null) {
+			Display.getDefault().syncExec(runnable);
+		} else {
+			runnable.run();
+		}
 	}
 
 	@Override
