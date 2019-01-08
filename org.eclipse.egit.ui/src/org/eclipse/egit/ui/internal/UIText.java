@@ -5806,6 +5806,9 @@ public class UIText extends NLS {
 	/** */
 	public static String ShowInSystemExplorerActionHandler_JobTitle;
 
+	/** */
+	public static String EditableRevision_CannotSave;
+
 	static {
 		initializeMessages(BUNDLE_NAME, UIText.class);
 	}
