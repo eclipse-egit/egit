@@ -64,8 +64,7 @@ public class RepositoryLocationPage extends WizardPage {
 	public void createControl(Composite parent) {
 		Composite main = new Composite(parent, SWT.NONE);
 
-		GridLayoutFactory.fillDefaults().numColumns(2).margins(0, 0)
-				.applyTo(main);
+		GridLayoutFactory.fillDefaults().applyTo(main);
 
 		GridDataFactory.fillDefaults().grab(true, true).applyTo(main);
 		// use a filtered tree
