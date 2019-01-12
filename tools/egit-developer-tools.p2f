@@ -92,9 +92,9 @@
         <repository location='http://download.eclipse.org/tools/orbit/downloads/drops/R20150519210750/repository/'/>
       </repositories>
     </iu>
-    <iu id='org.eclipse.jetty.bundles.f.feature.group' name='Jetty - Bundles: all the jetty bundles' version='9.4.8.v20171121'>
+    <iu id='org.eclipse.jetty.bundles.f.feature.group' name='Jetty - Bundles: all the jetty bundles' version='0.0.0'>
       <repositories size='1'>
-        <repository location='http://download.eclipse.org/jetty/updates/jetty-bundles-9.x/9.4.8.v20171121/'/>
+        <repository location='http://download.eclipse.org/jetty/updates/jetty-bundles-9.x/9.4.14.v20181114/'/>
       </repositories>
     </iu>
     <iu id='org.eclipse.egit.feature.group' name='Eclipse EGit' version='0.0.0'>
