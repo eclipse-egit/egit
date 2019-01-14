@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6eae2417_e1287354",
+        "filename": "org.eclipse.egit.target/projects/jetty-9.4.14.tpd",
+        "patchSetId": 2
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2019-01-14T16:51:34Z",
+      "side": 1,
+      "message": "this version doesn\u0027t match the one of the maven artefact used in pom.xml, see https://bugs.eclipse.org/bugs/show_bug.cgi?id\u003d541072",
+      "range": {
+        "startLine": 3,
+        "startChar": 83,
+        "endLine": 3,
+        "endChar": 99
+      },
+      "revId": "d99cf2e3f4d025f365d276dce43d9e5967bdd7fb",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
