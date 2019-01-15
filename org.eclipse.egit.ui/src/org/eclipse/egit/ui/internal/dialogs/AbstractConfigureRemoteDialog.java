@@ -252,8 +252,10 @@ public abstract class AbstractConfigureRemoteDialog
 				.applyTo(sameUriDetails);
 		Label commonUriLabel = new Label(sameUriDetails, SWT.NONE);
 		commonUriLabel.setText(UIText.AbstractConfigureRemoteDialog_UriLabel);
-		commonUriText = new Text(sameUriDetails, SWT.BORDER | SWT.READ_ONLY);
-		GridDataFactory.fillDefaults().grab(true, false).applyTo(commonUriText);
+		commonUriText = new Text(sameUriDetails, SWT.READ_ONLY);
+		commonUriText.setBackground(sameUriDetails.getBackground());
+		GridDataFactory.fillDefaults().grab(true, false)
+				.align(SWT.FILL, SWT.CENTER).applyTo(commonUriText);
 		changeCommonUriAction = new Action(
 				UIText.AbstractConfigureRemoteDialog_ChangeUriLabel) {
 
