@@ -27,7 +27,6 @@ import org.eclipse.core.resources.IStorage;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.egit.core.internal.SafeRunnable;
-import org.eclipse.egit.core.internal.storage.IndexFileRevision;
 import org.eclipse.egit.ui.Activator;
 import org.eclipse.egit.ui.internal.UIText;
 import org.eclipse.jface.resource.ImageDescriptor;
@@ -96,7 +95,7 @@ public class EditableRevision extends FileRevisionTypedElement implements
 
 	@Override
 	public IEditorInput getDocumentKey(Object element) {
-		if (element == this && getFileRevision() instanceof IndexFileRevision) {
+		if (element == this) {
 			if (input == null) {
 				input = new IStorageEditorInput() {
 
