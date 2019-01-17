@@ -14,6 +14,7 @@ import static org.eclipse.egit.core.internal.storage.GitFileRevision.INDEX;
 import static org.eclipse.jgit.lib.ObjectId.zeroId;
 
 import org.eclipse.compare.CompareConfiguration;
+import org.eclipse.compare.IResourceProvider;
 import org.eclipse.compare.ITypedElement;
 import org.eclipse.compare.structuremergeviewer.ICompareInputChangeListener;
 import org.eclipse.core.runtime.CoreException;
@@ -26,7 +27,6 @@ import org.eclipse.jgit.lib.Repository;
 import org.eclipse.jgit.revwalk.RevCommit;
 import org.eclipse.osgi.util.NLS;
 import org.eclipse.swt.graphics.Image;
-import org.eclipse.team.internal.ui.synchronize.LocalResourceTypedElement;
 import org.eclipse.team.ui.mapping.ISynchronizationCompareInput;
 import org.eclipse.team.ui.mapping.SaveableComparison;
 
@@ -185,11 +185,11 @@ public class GitCompareInput implements ISynchronizationCompareInput {
 	public static String getFileRevisionLabel(ITypedElement element) {
 		if (element instanceof FileRevisionTypedElement) {
 			FileRevisionTypedElement castElement = (FileRevisionTypedElement) element;
-			if (INDEX.equals(castElement.getContentIdentifier()))
+			if (INDEX.equals(castElement.getContentIdentifier())) {
 				return NLS.bind(
 						UIText.GitCompareFileRevisionEditorInput_StagedVersion,
 						element.getName());
-			else
+			} else {
 				return NLS.bind(
 						UIText.GitCompareFileRevisionEditorInput_RevisionLabel,
 						new Object[] {
@@ -197,13 +197,13 @@ public class GitCompareInput implements ISynchronizationCompareInput {
 								CompareUtils.truncatedRevision(castElement
 										.getContentIdentifier()),
 								castElement.getAuthor() });
-
-		} else if (element instanceof LocalResourceTypedElement)
+			}
+		} else if (element instanceof IResourceProvider) {
 			return NLS.bind(
 					UIText.GitCompareFileRevisionEditorInput_LocalVersion,
 					element.getName());
-		else
-			return element.getName();
+		}
+		return element.getName();
 	}
 
 }
