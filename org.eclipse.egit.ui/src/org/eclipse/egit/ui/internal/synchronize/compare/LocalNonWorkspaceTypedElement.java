@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (C) 2011, 2012, 2015 Dariusz Luksza <dariusz@luksza.org> and others.
+ * Copyright (C) 2011, 2019 Dariusz Luksza <dariusz@luksza.org> and others.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License 2.0
@@ -10,7 +10,7 @@
  *
  * Contributors:
  *     IBM Corporation - initial implementation of some methods
- *     Thomas Wolf <thomas.wolf@paranor.ch> - Bugs 474981, 481682
+ *     Thomas Wolf <thomas.wolf@paranor.ch> - Bugs 474981, 481682, 543495
  *******************************************************************************/
 package org.eclipse.egit.ui.internal.synchronize.compare;
 
@@ -24,7 +24,11 @@ import java.nio.file.Files;
 import java.util.Collections;
 
 import org.eclipse.compare.ISharedDocumentAdapter;
+import org.eclipse.compare.internal.Utilities;
+import org.eclipse.core.filesystem.EFS;
+import org.eclipse.core.filesystem.IFileStore;
 import org.eclipse.core.resources.IContainer;
+import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IResource;
 import org.eclipse.core.resources.IWorkspaceRoot;
 import org.eclipse.core.resources.ResourcesPlugin;
@@ -49,6 +53,9 @@ import org.eclipse.jgit.revwalk.RevCommit;
 import org.eclipse.jgit.util.FileUtils;
 import org.eclipse.team.internal.ui.synchronize.EditableSharedDocumentAdapter;
 import org.eclipse.team.internal.ui.synchronize.LocalResourceTypedElement;
+import org.eclipse.ui.IEditorInput;
+import org.eclipse.ui.ide.FileStoreEditorInput;
+import org.eclipse.ui.texteditor.IDocumentProvider;
 
 /**
  * Specialized resource node for non-workspace files
@@ -61,6 +68,10 @@ public class LocalNonWorkspaceTypedElement extends LocalResourceTypedElement {
 
 	@NonNull
 	private final Repository repository;
+
+	private final boolean isSymlink;
+
+	private final boolean isFile;
 
 	private boolean exists;
 
@@ -76,6 +87,12 @@ public class LocalNonWorkspaceTypedElement extends LocalResourceTypedElement {
 
 	private static final IWorkspaceRoot ROOT = ResourcesPlugin.getWorkspace().getRoot();
 
+	// We cannot rely on the implementation in BufferedContent and just override
+	// createStream() because that fake IResource we pass to our super class
+	// doesn't exist, which confuses the super implementations of related
+	// operations.
+	private byte[] modifiedContent;
+
 	/**
 	 * @param repository
 	 *            the file belongs to
@@ -89,7 +106,9 @@ public class LocalNonWorkspaceTypedElement extends LocalResourceTypedElement {
 		this.repository = repository;
 
 		File file = path.toFile();
-		exists = file.exists() || Files.isSymbolicLink(file.toPath());
+		isSymlink = Files.isSymbolicLink(file.toPath());
+		isFile = file.isFile();
+		exists = isFile || isSymlink || file.exists();
 		if (exists) {
 			timestamp = file.lastModified();
 		}
@@ -97,11 +116,48 @@ public class LocalNonWorkspaceTypedElement extends LocalResourceTypedElement {
 
 	@Override
 	public InputStream getContents() throws CoreException {
+		if (modifiedContent != null) {
+			return new ByteArrayInputStream(modifiedContent);
+		}
+		return createStream();
+	}
+
+	@Override
+	public void setContent(byte[] contents) {
+		fDirty = true;
+		modifiedContent = contents;
+		fireContentChanged();
+	}
+
+	@Override
+	public byte[] getContent() {
+		if (modifiedContent == null) {
+			try {
+				InputStream is = createStream();
+				modifiedContent = Utilities.readBytes(is);
+			} catch (CoreException e) {
+				Activator.handleStatus(e.getStatus(), false);
+			}
+		}
+		return modifiedContent;
+	}
+
+	@Override
+	public void discardBuffer() {
+		super.discardBuffer();
+		if (sharedDocumentAdapter != null) {
+			sharedDocumentAdapter.releaseBuffer();
+		}
+		modifiedContent = null;
+	}
+
+	@Override
+	protected InputStream createStream() throws CoreException {
 		if (exists) {
 			try {
 				File file = path.toFile();
 				timestamp = file.lastModified();
-				if (Files.isSymbolicLink(file.toPath())) {
+				if (isSymlink) {
 					String symLink = FileUtils.readSymLink(file);
 					return new ByteArrayInputStream(Constants.encode(symLink));
 				}
@@ -129,8 +185,7 @@ public class LocalNonWorkspaceTypedElement extends LocalResourceTypedElement {
 	/** {@inheritDoc} */
 	@Override
 	public boolean isEditable() {
-		IResource resource = getResource();
-		return resource.getType() == IResource.FILE && exists;
+		return exists && (isFile || isSymlink);
 	}
 
 	@Override
@@ -158,20 +213,13 @@ public class LocalNonWorkspaceTypedElement extends LocalResourceTypedElement {
 	/** {@inheritDoc} */
 	@Override
 	public boolean isSharedDocumentsEnable() {
-		return useSharedDocument && getResource().getType() == IResource.FILE && exists;
+		return useSharedDocument && !isSymlink && isEditable();
 	}
 
 	/** {@inheritDoc} */
 	@Override
 	public void enableSharedDocument(boolean enablement) {
 		this.useSharedDocument = enablement;
-	}
-
-	/** {@inheritDoc} */
-	@Override
-	public void setContent(byte[] contents) {
-		fDirty = true;
-		super.setContent(contents);
 	}
 
 	private void refreshTimestamp() {
@@ -187,9 +235,9 @@ public class LocalNonWorkspaceTypedElement extends LocalResourceTypedElement {
 			} else {
 				File file = path.toFile();
 				try {
-					java.nio.file.Path fp = file.toPath();
-					if (Files.isSymbolicLink(fp)) {
-						String sp = new String(getContent(),
+					byte[] contents = getContent();
+					if (isSymlink) {
+						String sp = new String(contents,
 								StandardCharsets.UTF_8)
 								.trim();
 						if (sp.indexOf('\n') > 0) {
@@ -206,7 +254,7 @@ public class LocalNonWorkspaceTypedElement extends LocalResourceTypedElement {
 					} else {
 						try (OutputStream out = Files
 								.newOutputStream(file.toPath())) {
-							out.write(getContent());
+							out.write(contents);
 						}
 					}
 					fDirty = false;
@@ -218,7 +266,8 @@ public class LocalNonWorkspaceTypedElement extends LocalResourceTypedElement {
 									UIText.LocalNonWorkspaceTypedElement_errorWritingContents,
 									e));
 				} finally {
-					fireChanges();
+					fireContentChanged();
+					updateGitState();
 				}
 			}
 			refreshTimestamp();
@@ -254,8 +303,7 @@ public class LocalNonWorkspaceTypedElement extends LocalResourceTypedElement {
 		}
 	}
 
-	private void fireChanges() {
-		fireContentChanged();
+	private void updateGitState() {
 		// external file change must be reported explicitly, see bug 481682
 		Repository myRepository = repository;
 		boolean updated = false;
@@ -287,6 +335,25 @@ public class LocalNonWorkspaceTypedElement extends LocalResourceTypedElement {
 	@Override
 	public synchronized boolean isDirty() {
 		return fDirty || (sharedDocumentAdapter != null && sharedDocumentAdapter.hasBufferedContents());
+	}
+
+	@Override
+	public boolean isConnected() {
+		return sharedDocumentAdapter != null
+				&& sharedDocumentAdapter.isConnected();
+	}
+
+	@Override
+	public boolean saveDocument(boolean overwrite, IProgressMonitor monitor)
+			throws CoreException {
+		if (isConnected()) {
+			IEditorInput input = sharedDocumentAdapter.getDocumentKey(this);
+			sharedDocumentAdapter.saveDocument(input, overwrite, monitor);
+			updateGitState();
+			refreshTimestamp();
+			return true;
+		}
+		return false;
 	}
 
 	@Override
@@ -333,39 +400,130 @@ public class LocalNonWorkspaceTypedElement extends LocalResourceTypedElement {
 	 * yet, it will be created.
 	 */
 	private synchronized ISharedDocumentAdapter getSharedDocumentAdapter() {
-		if (sharedDocumentAdapter == null)
-			sharedDocumentAdapter = new EditableSharedDocumentAdapter(new EditableSharedDocumentAdapter.ISharedDocumentAdapterListener() {
-				@Override
-				public void handleDocumentConnected() {
+		if (sharedDocumentAdapter == null) {
+			sharedDocumentAdapter = new EditableSharedDocumentAdapter(
+					new EditableSharedDocumentAdapter.ISharedDocumentAdapterListener() {
+						@Override
+						public void handleDocumentConnected() {
 							refreshTimestamp();
-					if (sharedDocumentListener != null)
-						sharedDocumentListener.handleDocumentConnected();
-				}
-				@Override
-				public void handleDocumentFlushed() {
-					fireContentChanged();
-					if (sharedDocumentListener != null)
-						sharedDocumentListener.handleDocumentFlushed();
-				}
-				@Override
-				public void handleDocumentDeleted() {
-					LocalNonWorkspaceTypedElement.this.update();
-					if (sharedDocumentListener != null)
-						sharedDocumentListener.handleDocumentDeleted();
-				}
-				@Override
-				public void handleDocumentSaved() {
+							if (sharedDocumentListener != null) {
+								sharedDocumentListener
+										.handleDocumentConnected();
+							}
+						}
+
+						@Override
+						public void handleDocumentFlushed() {
+							fireContentChanged();
+							if (sharedDocumentListener != null) {
+								sharedDocumentListener.handleDocumentFlushed();
+							}
+						}
+
+						@Override
+						public void handleDocumentDeleted() {
+							update();
+							if (sharedDocumentListener != null) {
+								sharedDocumentListener.handleDocumentDeleted();
+							}
+						}
+
+						@Override
+						public void handleDocumentSaved() {
+							updateGitState();
 							refreshTimestamp();
-					if (sharedDocumentListener != null)
-						sharedDocumentListener.handleDocumentSaved();
-				}
+							if (sharedDocumentListener != null) {
+								sharedDocumentListener.handleDocumentSaved();
+							}
+						}
+
+						@Override
+						public void handleDocumentDisconnected() {
+							if (sharedDocumentListener != null) {
+								sharedDocumentListener
+										.handleDocumentDisconnected();
+							}
+						}
+					}) {
+
 				@Override
-				public void handleDocumentDisconnected() {
-					if (sharedDocumentListener != null)
-						sharedDocumentListener.handleDocumentDisconnected();
+				public IEditorInput getDocumentKey(Object element) {
+					if (element == LocalNonWorkspaceTypedElement.this) {
+						IFileStore store = EFS.getLocalFileSystem().getStore(
+								LocalNonWorkspaceTypedElement.this.path);
+						if (store != null) {
+							return new FakeResourceFileStoreEditorInput(store,
+									LocalNonWorkspaceTypedElement.this
+											.getResource());
+						}
+					}
+					return super.getDocumentKey(element);
 				}
-			});
+
+				@Override
+				public void connect(IDocumentProvider provider,
+						IEditorInput documentKey) throws CoreException {
+					if (documentKey instanceof FakeResourceFileStoreEditorInput) {
+						// When we connect, our editor input shouldn't adapt to
+						// that (non-existing) resource, otherwise we'll confuse
+						// other parts of Eclipse.
+						FakeResourceFileStoreEditorInput input = (FakeResourceFileStoreEditorInput) documentKey;
+						try {
+							input.setResource(null);
+							super.connect(provider, input);
+						} finally {
+							// Once we _are_ connected, there are other places
+							// where SharedDocumentAdapter.getDocumentProvider()
+							// is called again during the life of the document,
+							// so the documentKey must again adapt to IFile.
+							input.setResource(LocalNonWorkspaceTypedElement.this
+									.getResource());
+						}
+					} else {
+						super.connect(provider, documentKey);
+					}
+				}
+			};
+		}
 		return sharedDocumentAdapter;
 	}
 
+	private static class FakeResourceFileStoreEditorInput
+			extends FileStoreEditorInput {
+
+		// This class and the connect() override above are a work-around for bug
+		// 544315: the file extension is used to find the document provider only
+		// if the editor input adapts to IFile.
+
+		private IResource resource;
+
+		public FakeResourceFileStoreEditorInput(IFileStore store, IResource resource) {
+			super(store);
+			this.resource = resource;
+		}
+
+		@Override
+		public <T> T getAdapter(Class<T> adapter) {
+			if (adapter == IFile.class || adapter == IResource.class) {
+				if (resource != null && adapter.isInstance(resource)) {
+					return adapter.cast(resource);
+				}
+			}
+			return super.getAdapter(adapter);
+		}
+
+		public void setResource(IResource resource) {
+			this.resource = resource;
+		}
+
+		@Override
+		public int hashCode() {
+			return super.hashCode();
+		}
+
+		@Override
+		public boolean equals(Object o) {
+			return super.equals(o);
+		}
+	}
 }
