@@ -3873,16 +3873,7 @@ public class UIText extends NLS {
 	public static String GitCompareFileRevisionEditorInput_CompareTooltip;
 
 	/** */
-	public static String GitCompareFileRevisionEditorInput_CurrentRevision;
-
-	/** */
 	public static String GitCompareFileRevisionEditorInput_CurrentTitle;
-
-	/** */
-	public static String GitCompareFileRevisionEditorInput_contentIdentifier;
-
-	/** */
-	public static String GitCompareFileRevisionEditorInput_LocalHistoryLabel;
 
 	/** */
 	public static String GitCompareFileRevisionEditorInput_LocalLabel;
@@ -3892,9 +3883,6 @@ public class UIText extends NLS {
 
 	/** */
 	public static String GitCompareFileRevisionEditorInput_IndexEditableLabel;
-
-	/** */
-	public static String GitCompareFileRevisionEditorInput_LocalRevision;
 
 	/** */
 	public static String GitCompareFileRevisionEditorInput_RevisionLabel;
@@ -4764,12 +4752,6 @@ public class UIText extends NLS {
 
 	/** */
 	public static String InteractiveRebaseView_this_partName;
-
-	/** */
-	public static String LocalFileRevision_CurrentVersion;
-
-	/** */
-	public static String LocalFileRevision_currentVersionTag;
 
 	/** */
 	public static String LocalNonWorkspaceTypedElement_errorWritingContents;
