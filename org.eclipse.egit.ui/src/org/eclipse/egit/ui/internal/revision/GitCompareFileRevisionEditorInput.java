@@ -3,6 +3,7 @@
  * Copyright (C) 2008, Roger C. Soares <rogersoares@intelinet.com.br>
  * Copyright (C) 2013, Robin Stocker <robin@nibor.org>
  * Copyright (C) 2016, Daniel Megert <daniel_megert@ch.ibm.com>
+ * Copyright (C) 2019, Thomas Wolf <thomas.wolf@paranor.ch>
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License 2.0
@@ -28,13 +29,10 @@ import org.eclipse.compare.structuremergeviewer.ICompareInput;
 import org.eclipse.compare.structuremergeviewer.IDiffElement;
 import org.eclipse.compare.structuremergeviewer.IStructureComparator;
 import org.eclipse.core.resources.IFile;
-import org.eclipse.core.resources.IFileState;
 import org.eclipse.core.resources.IResource;
-import org.eclipse.core.resources.IStorage;
 import org.eclipse.core.runtime.Assert;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IProgressMonitor;
-import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.egit.core.Activator;
 import org.eclipse.egit.core.AdapterUtils;
 import org.eclipse.egit.core.internal.storage.IndexFileRevision;
@@ -43,6 +41,7 @@ import org.eclipse.egit.ui.internal.CommonUtils;
 import org.eclipse.egit.ui.internal.CompareUtils;
 import org.eclipse.egit.ui.internal.EgitUiEditorUtils;
 import org.eclipse.egit.ui.internal.UIText;
+import org.eclipse.egit.ui.internal.synchronize.compare.LocalNonWorkspaceTypedElement;
 import org.eclipse.jface.action.Action;
 import org.eclipse.jface.action.IMenuListener;
 import org.eclipse.jface.action.IMenuManager;
@@ -320,9 +319,7 @@ public class GitCompareFileRevisionEditorInput extends SaveableCompareEditorInpu
 
 	private String getFileRevisionLabel(FileRevisionTypedElement element) {
 		Object fileObject = element.getFileRevision();
-		if (fileObject instanceof LocalFileRevision){
-			return NLS.bind(UIText.GitCompareFileRevisionEditorInput_LocalHistoryLabel, new Object[]{element.getName(), element.getTimestamp()});
-		} else if (fileObject instanceof IndexFileRevision) {
+		if (fileObject instanceof IndexFileRevision) {
 			if (isEditable(element))
 				return NLS.bind(
 						UIText.GitCompareFileRevisionEditorInput_IndexEditableLabel,
@@ -367,6 +364,9 @@ public class GitCompareFileRevisionEditorInput extends SaveableCompareEditorInpu
 	@Override
 	public Object getAdapter(Class adapter) {
 		if (adapter == IFile.class || adapter == IResource.class) {
+			if (left instanceof LocalNonWorkspaceTypedElement) {
+				return null;
+			}
 			return getResource();
 		} else if (adapter == Repository.class && left != null) {
 			return AdapterUtils.adapt(left, Repository.class);
@@ -400,26 +400,7 @@ public class GitCompareFileRevisionEditorInput extends SaveableCompareEditorInpu
 	private String getContentIdentifier(ITypedElement element){
 		if (element instanceof FileRevisionTypedElement){
 			FileRevisionTypedElement fileRevisionElement = (FileRevisionTypedElement) element;
-			Object fileObject = fileRevisionElement.getFileRevision();
-			if (fileObject instanceof LocalFileRevision){
-				try {
-					IStorage storage = ((LocalFileRevision) fileObject).getStorage(new NullProgressMonitor());
-					if (AdapterUtils.adapt(storage, IFileState.class) != null) {
-						//local revision
-						return UIText.GitCompareFileRevisionEditorInput_LocalRevision;
-					} else if (AdapterUtils.adapt(storage, IFile.class) != null) {
-						//current revision
-						return UIText.GitCompareFileRevisionEditorInput_CurrentRevision;
-					}
-				} catch (CoreException e) {
-					Activator
-							.logError(
-									UIText.GitCompareFileRevisionEditorInput_contentIdentifier,
-									e);
-				}
-			} else {
-				return fileRevisionElement.getContentIdentifier();
-			}
+			return fileRevisionElement.getContentIdentifier();
 		}
 		return UIText.GitCompareFileRevisionEditorInput_CurrentTitle;
 	}

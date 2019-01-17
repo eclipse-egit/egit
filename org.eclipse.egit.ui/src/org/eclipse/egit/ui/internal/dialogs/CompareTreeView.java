@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2011, 2017 SAP AG and others.
+ * Copyright (c) 2011, 2019 SAP AG and others.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License 2.0
@@ -40,6 +40,7 @@ import org.eclipse.core.runtime.Path;
 import org.eclipse.egit.core.internal.CompareCoreUtils;
 import org.eclipse.egit.core.internal.storage.GitFileRevision;
 import org.eclipse.egit.core.internal.storage.WorkingTreeFileRevision;
+import org.eclipse.egit.core.internal.storage.WorkspaceFileRevision;
 import org.eclipse.egit.core.internal.util.ResourceUtil;
 import org.eclipse.egit.core.project.RepositoryMapping;
 import org.eclipse.egit.ui.Activator;
@@ -53,8 +54,7 @@ import org.eclipse.egit.ui.internal.commit.DiffViewer;
 import org.eclipse.egit.ui.internal.dialogs.CompareTreeView.PathNode.Type;
 import org.eclipse.egit.ui.internal.revision.FileRevisionTypedElement;
 import org.eclipse.egit.ui.internal.revision.GitCompareFileRevisionEditorInput;
-import org.eclipse.egit.ui.internal.revision.LocalFileRevision;
-import org.eclipse.egit.ui.internal.revision.ResourceEditableRevision;
+import org.eclipse.egit.ui.internal.synchronize.compare.LocalNonWorkspaceTypedElement;
 import org.eclipse.jface.action.Action;
 import org.eclipse.jface.action.IAction;
 import org.eclipse.jface.action.IMenuListener;
@@ -103,6 +103,7 @@ import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Menu;
 import org.eclipse.team.core.history.IFileRevision;
+import org.eclipse.team.ui.synchronize.SaveableCompareEditorInput;
 import org.eclipse.ui.ISharedImages;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.actions.ActionFactory.IWorkbenchAction;
@@ -290,9 +291,13 @@ public class CompareTreeView extends ViewPart implements IMenuListener, IShowInS
 	}
 
 	private ITypedElement getTypedElement(FileNode node, IFileRevision fileRevision, String versionName) {
-		if (fileRevision instanceof LocalFileRevision) {
-			LocalFileRevision localFileRevision = (LocalFileRevision) fileRevision;
-			return new ResourceEditableRevision(fileRevision, localFileRevision.getFile(), PlatformUI.getWorkbench().getProgressService());
+		if (fileRevision instanceof WorkspaceFileRevision) {
+			return SaveableCompareEditorInput.createFileElement(node.getFile());
+		} else if (fileRevision instanceof WorkingTreeFileRevision) {
+			IPath path = Path
+					.fromPortableString(((WorkingTreeFileRevision) fileRevision)
+							.getURI().getPath());
+			return new LocalNonWorkspaceTypedElement(getRepository(), path);
 		} else if (fileRevision == null) {
 			return new GitCompareFileRevisionEditorInput.EmptyTypedElement(
 					NLS.bind(
@@ -630,7 +635,7 @@ public class CompareTreeView extends ViewPart implements IMenuListener, IShowInS
 				if (baseVersionIterator != null) {
 					if (baseCommit == null) {
 						if (file != null)
-							left = new LocalFileRevision(file);
+							left = new WorkspaceFileRevision(file);
 						else {
 							IPath path = getRepositoryPath().append(
 									repoRelativePath);

@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (C) 2011, Robin Stocker <robin@nibor.org>
+ * Copyright (C) 2011, 2019 Robin Stocker <robin@nibor.org> and others.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License 2.0
@@ -12,27 +12,29 @@ package org.eclipse.egit.ui.internal.revision;
 
 import java.io.ByteArrayInputStream;
 import java.lang.reflect.InvocationTargetException;
+import java.util.Objects;
 
+import org.eclipse.compare.IResourceProvider;
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IResource;
-import org.eclipse.core.runtime.Assert;
 import org.eclipse.core.runtime.CoreException;
-import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.jobs.ISchedulingRule;
 import org.eclipse.core.runtime.jobs.Job;
 import org.eclipse.egit.core.internal.CompareCoreUtils;
 import org.eclipse.egit.ui.Activator;
 import org.eclipse.jface.operation.IRunnableContext;
-import org.eclipse.jface.operation.IRunnableWithProgress;
+import org.eclipse.jgit.annotations.NonNull;
 import org.eclipse.team.core.history.IFileRevision;
 
 /**
- * Editable revision backed by an {@link IFile}.
+ * Editable revision backed by an {@link IFile}. Used for conflict resolutions
+ * with stage 2 (previous HEAD) as input; updating the working tree file.
  * <p>
  * Use {@link LocationEditableRevision} if you just have a path (for
  * non-workspace files).
  */
-public class ResourceEditableRevision extends EditableRevision {
+public class ResourceEditableRevision extends EditableRevision
+		implements IResourceProvider {
 
 	private final IFile file;
 
@@ -47,11 +49,10 @@ public class ResourceEditableRevision extends EditableRevision {
 	 * @param runnableContext
 	 *            the context to use for the file write operation
 	 */
-	public ResourceEditableRevision(IFileRevision fileRevision, IFile file,
-			IRunnableContext runnableContext) {
+	public ResourceEditableRevision(IFileRevision fileRevision,
+			@NonNull IFile file, @NonNull IRunnableContext runnableContext) {
 		super(fileRevision, CompareCoreUtils.getResourceEncoding(file));
 		this.file = file;
-		Assert.isNotNull(runnableContext);
 		this.runnableContext = runnableContext;
 	}
 
@@ -64,19 +65,16 @@ public class ResourceEditableRevision extends EditableRevision {
 			ISchedulingRule rule = Job.getJobManager().currentRule();
 			boolean fork = true;
 			if (rule instanceof IResource) {
-				if (file.exists() && ((IResource) rule).isConflicting(file))
+				if (file.exists() && ((IResource) rule).isConflicting(file)) {
 					fork = false;
+				}
 			}
-			runnableContext.run(fork, false, new IRunnableWithProgress() {
-				@Override
-				public void run(IProgressMonitor myMonitor)
-						throws InvocationTargetException, InterruptedException {
-					try {
-						file.setContents(new ByteArrayInputStream(newContent),
-								false, true, myMonitor);
-					} catch (CoreException e) {
-						throw new InvocationTargetException(e);
-					}
+			runnableContext.run(fork, false, monitor -> {
+				try {
+					file.setContents(new ByteArrayInputStream(newContent),
+							false, true, monitor);
+				} catch (CoreException e) {
+					throw new InvocationTargetException(e);
 				}
 			});
 		} catch (InvocationTargetException e) {
@@ -92,43 +90,27 @@ public class ResourceEditableRevision extends EditableRevision {
 		}
 	}
 
-	/**
-	 * @return the resource of this revision
-	 */
-	public IFile getFile() {
+	@Override
+	public IResource getResource() {
 		return file;
 	}
 
 	@Override
 	public int hashCode() {
-		final int prime = 31;
-		int result = super.hashCode();
-		result = prime * result + ((file == null) ? 0 : file.hashCode());
-		result = prime * result
-				+ ((runnableContext == null) ? 0 : runnableContext.hashCode());
-		return result;
+		return 31 * super.hashCode() + Objects.hash(file, runnableContext);
 	}
 
 	@Override
 	public boolean equals(Object obj) {
-		if (this == obj)
+		if (this == obj) {
 			return true;
-		if (!super.equals(obj))
+		}
+		if (obj == null || !super.equals(obj) || getClass() != obj.getClass()) {
 			return false;
-		if (getClass() != obj.getClass())
-			return false;
+		}
 		ResourceEditableRevision other = (ResourceEditableRevision) obj;
-		if (file == null) {
-			if (other.file != null)
-				return false;
-		} else if (!file.equals(other.file))
-			return false;
-		if (runnableContext == null) {
-			if (other.runnableContext != null)
-				return false;
-		} else if (!runnableContext.equals(other.runnableContext))
-			return false;
-		return true;
+		return Objects.equals(file, other.file)
+				&& Objects.equals(runnableContext, other.runnableContext);
 	}
 
 }
