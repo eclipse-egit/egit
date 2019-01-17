@@ -21,6 +21,7 @@ import java.io.InputStream;
 import java.util.Arrays;
 
 import org.eclipse.core.resources.IEncodedStorage;
+import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.Path;
@@ -225,6 +226,9 @@ public class GitBlobStorage implements IEncodedStorage {
 	public String getCharset() throws CoreException {
 		if (charset == null) {
 			charset = CompareCoreUtils.getResourceEncoding(db, path);
+			if (charset == null) {
+				charset = ResourcesPlugin.getEncoding();
+			}
 		}
 		return charset;
 	}
