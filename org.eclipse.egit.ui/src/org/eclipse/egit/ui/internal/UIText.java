@@ -2578,6 +2578,12 @@ public class UIText extends NLS {
 	public static String CommitMessageComponent_MessageSecondLineNotEmpty;
 
 	/** */
+	public static String CommitMessageComponent_ErrorMissingSigningKey;
+
+	/** */
+	public static String CommitMessageComponent_ErrorNoSigningKeyFound;
+
+	/** */
 	public static String CommitMessageEditorDialog_EditCommitMessageTitle;
 
 	/** */
