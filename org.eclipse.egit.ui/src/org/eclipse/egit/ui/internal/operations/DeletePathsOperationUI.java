@@ -75,7 +75,7 @@ public class DeletePathsOperationUI {
 
 	private boolean openConfirm(Shell parent, String title, String message) {
 		MessageDialog dialog = new MessageDialog(parent, title, null, message,
-				MessageDialog.CONFIRM, 0, getButtonLabels());
+				MessageDialog.CONFIRM, getButtonLabels(), 0);
 		return dialog.open() == 0;
 	}
 
