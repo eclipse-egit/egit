@@ -94,7 +94,7 @@ public class TestProject {
 		project = root.getProject(description.getName());
 		if (remove)
 			project.delete(true, null);
-		IPath locationBefore = description.getLocation();
+		IPath locationBefore = URIUtil.toPath(description.getLocationURI());
 		if (locationBefore == null)
 			locationBefore = root.getRawLocation().append(path);
 		location = locationBefore.toOSString();
