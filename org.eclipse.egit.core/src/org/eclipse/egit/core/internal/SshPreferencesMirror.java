@@ -96,6 +96,7 @@ public class SshPreferencesMirror {
 		if (sshDir != null) {
 			try {
 				sshDirectory = Paths.get(sshDir).toFile();
+				return;
 			} catch (InvalidPathException e) {
 				Activator.logWarning(
 						format(CoreText.SshPreferencesMirror_invalidDirectory,
