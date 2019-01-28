@@ -7020,6 +7020,9 @@
             icon="icons/etool16/createRepository.png"
             id="org.eclipse.egit.ui.CreateRepositoryWizard"
             name="%CreateRepositoryWizard.name">
+         <description>
+            %CreateRepositoryWizard.description
+         </description>
       </wizard>
       <category
             id="org.eclipse.egit.ui.wizardCategory"
