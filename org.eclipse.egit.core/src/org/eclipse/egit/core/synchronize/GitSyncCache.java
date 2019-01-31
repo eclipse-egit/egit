@@ -11,7 +11,6 @@
 package org.eclipse.egit.core.synchronize;
 
 import java.io.File;
-import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
@@ -37,8 +36,7 @@ import org.eclipse.jgit.treewalk.FileTreeIterator;
 import org.eclipse.jgit.treewalk.TreeWalk;
 import org.eclipse.jgit.treewalk.filter.AndTreeFilter;
 import org.eclipse.jgit.treewalk.filter.NotIgnoredFilter;
-import org.eclipse.jgit.treewalk.filter.OrTreeFilter;
-import org.eclipse.jgit.treewalk.filter.PathFilter;
+import org.eclipse.jgit.treewalk.filter.PathFilterGroup;
 import org.eclipse.jgit.treewalk.filter.TreeFilter;
 
 /**
@@ -50,7 +48,7 @@ class GitSyncCache {
 
 	public static GitSyncCache getAllData(GitSynchronizeDataSet gsds,
 			IProgressMonitor monitor) {
-		Map<GitSynchronizeData, Collection<String>> updateRequests = new HashMap<GitSynchronizeData, Collection<String>>();
+		Map<GitSynchronizeData, Collection<String>> updateRequests = new HashMap<>();
 		for (GitSynchronizeData data : gsds)
 			updateRequests.put(data, Collections.<String> emptyList());
 		return getAllData(updateRequests, monitor);
@@ -73,7 +71,7 @@ class GitSyncCache {
 				.entrySet()) {
 			Collection<String> paths = entry.getValue();
 			GitSyncCache partialCache = getAllData(entry.getKey(), paths);
-			cache.merge(partialCache, new HashSet<String>(paths));
+			cache.merge(partialCache, new HashSet<>(paths));
 			m.worked(1);
 		}
 
@@ -83,7 +81,8 @@ class GitSyncCache {
 	private static GitSyncCache getAllData(GitSynchronizeData gsd,
 			Collection<String> paths) {
 		GitSyncCache cache = new GitSyncCache();
-		TreeFilter filter = paths.isEmpty() ? null : createPathFilter(paths);
+		TreeFilter filter = paths.isEmpty() ? null
+				: PathFilterGroup.createFromStrings(paths);
 
 		Repository repo = gsd.getRepository();
 		ObjectId baseTree = getTree(gsd.getSrcRevCommit());
@@ -91,27 +90,15 @@ class GitSyncCache {
 		GitSyncObjectCache repoCache = cache.put(repo, baseTree, remoteTree);
 
 		TreeFilter gsdFilter = gsd.getPathFilter();
-		if (filter == null)
+		if (filter == null) {
 			loadDataFromGit(gsd, gsdFilter, repoCache);
-		else if (gsdFilter == null)
+		} else if (gsdFilter == null) {
 			loadDataFromGit(gsd, filter, repoCache);
-		else
+		} else {
 			loadDataFromGit(gsd, AndTreeFilter.create(filter, gsdFilter),
 					repoCache);
-		return cache;
-	}
-
-	private static TreeFilter createPathFilter(Collection<String> paths) {
-		// do not use PathFilterGroup to create the filter, see bug 362430
-		List<TreeFilter> filters = new ArrayList<TreeFilter>(paths.size());
-		for (String path : paths) {
-			if (path.length() == 0)
-				return null;
-			filters.add(PathFilter.create(path));
 		}
-		if (filters.size() == 1)
-			return filters.get(0);
-		return OrTreeFilter.create(filters);
+		return cache;
 	}
 
 	static boolean loadDataFromGit(GitSynchronizeData gsd,
@@ -174,7 +161,7 @@ class GitSyncCache {
 	}
 
 	private GitSyncCache() {
-		cache = new HashMap<File, GitSyncObjectCache>();
+		cache = new HashMap<>();
 	}
 
 	/**

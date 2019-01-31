@@ -64,9 +64,7 @@ import org.eclipse.jgit.treewalk.FileTreeIterator;
 import org.eclipse.jgit.treewalk.TreeWalk;
 import org.eclipse.jgit.treewalk.filter.AndTreeFilter;
 import org.eclipse.jgit.treewalk.filter.NotIgnoredFilter;
-import org.eclipse.jgit.treewalk.filter.OrTreeFilter;
-import org.eclipse.jgit.treewalk.filter.PathFilter;
-import org.eclipse.jgit.treewalk.filter.TreeFilter;
+import org.eclipse.jgit.treewalk.filter.PathFilterGroup;
 import org.eclipse.jgit.util.IO;
 import org.eclipse.jgit.util.RawParseUtils;
 import org.eclipse.osgi.util.NLS;
@@ -270,9 +268,9 @@ public class GitMergeEditorInput extends CompareEditorInput {
 
 	@SuppressWarnings("unused")
 	private IDiffContainer buildDiffContainer(Repository repository,
-			RevCommit headCommit,
-			RevCommit ancestorCommit, List<String> filterPaths, RevWalk rw,
-			IProgressMonitor monitor) throws IOException, InterruptedException {
+			RevCommit headCommit, RevCommit ancestorCommit,
+			List<String> filterPaths, RevWalk rw, IProgressMonitor monitor)
+			throws IOException, InterruptedException {
 
 		monitor.setTaskName(UIText.GitMergeEditorInput_CalculatingDiffTaskName);
 		IDiffContainer result = new DiffNode(Differencer.CONFLICTING);
@@ -289,21 +287,21 @@ public class GitMergeEditorInput extends CompareEditorInput {
 					fileTreeIndex);
 			// filter by selected resources
 			if (filterPaths.size() > 1) {
-				List<TreeFilter> suffixFilters = new ArrayList<>();
-				for (String filterPath : filterPaths)
-					suffixFilters.add(PathFilter.create(filterPath));
-				TreeFilter otf = OrTreeFilter.create(suffixFilters);
-				tw.setFilter(AndTreeFilter.create(otf, notIgnoredFilter));
+				tw.setFilter(AndTreeFilter.create(
+						PathFilterGroup.createFromStrings(filterPaths),
+						notIgnoredFilter));
 			} else if (filterPaths.size() > 0) {
 				String path = filterPaths.get(0);
-				if (path.length() == 0)
+				if (path.isEmpty()) {
 					tw.setFilter(notIgnoredFilter);
-				else
-					tw.setFilter(AndTreeFilter.create(PathFilter.create(path),
+				} else {
+					tw.setFilter(AndTreeFilter.create(
+							PathFilterGroup.createFromStrings(path),
 							notIgnoredFilter));
-			} else
+				}
+			} else {
 				tw.setFilter(notIgnoredFilter);
-
+			}
 			tw.setRecursive(true);
 
 			while (tw.next()) {
