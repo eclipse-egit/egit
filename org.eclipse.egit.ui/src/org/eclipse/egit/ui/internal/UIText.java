@@ -1417,6 +1417,9 @@ public class UIText extends NLS {
 	public static String RepositorySearchDialog_errorOccurred;
 
 	/** */
+	public static String RepositorySearchDialog_InvalidDirectoryMessage;
+
+	/** */
 	public static String RepositorySearchDialog_NoSearchAvailableMessage;
 
 	/** */
