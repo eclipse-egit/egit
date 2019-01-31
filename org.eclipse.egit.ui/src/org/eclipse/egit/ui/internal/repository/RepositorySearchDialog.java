@@ -62,8 +62,6 @@ import org.eclipse.jgit.lib.RepositoryCache.FileKey;
 import org.eclipse.jgit.util.FS;
 import org.eclipse.jgit.util.FileUtils;
 import org.eclipse.swt.SWT;
-import org.eclipse.swt.events.ModifyEvent;
-import org.eclipse.swt.events.ModifyListener;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.graphics.Color;
@@ -255,12 +253,6 @@ public class RepositorySearchDialog extends WizardPage {
 				.minSize(100, SWT.DEFAULT).applyTo(dir);
 		dir.setToolTipText(UIText.RepositorySearchDialog_EnterDirectoryToolTip);
 
-		String defaultRepoPath = RepositoryUtil.getDefaultRepositoryDir();
-
-		String initialPath = prefs.get(PREF_PATH, defaultRepoPath);
-
-		dir.setText(initialPath);
-
 		Button browse = new Button(searchGroup, SWT.PUSH);
 		browse.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false,
 				1, 1));
@@ -426,29 +418,24 @@ public class RepositorySearchDialog extends WizardPage {
 		// should have some type of delay
 		// if we could use databinding an observeDelayedValue would totally work
 		// here
-		dir.addModifyListener(new ModifyListener() {
-
-			@Override
-			public void modifyText(ModifyEvent e) {
-				setNeedsSearch();
-			}
-
-		});
+		dir.addModifyListener(e -> setNeedsSearch());
 
 		fTreeViewer.setContentProvider(new ContentProvider());
 		fTreeViewer.setLabelProvider(new RepositoryLabelProvider());
 
+		String initialPath = prefs.get(PREF_PATH,
+				RepositoryUtil.getDefaultRepositoryDir());
+		dir.setText(initialPath);
+
 		setControl(main);
 		enableOk();
-		if (fillSearch)
-			PlatformUI.getWorkbench().getDisplay().asyncExec(new Runnable() {
-
-				@Override
-				public void run() {
-					if (!getControl().isDisposed())
-						doSearch();
+		if (fillSearch && searchButton.isEnabled()) {
+			PlatformUI.getWorkbench().getDisplay().asyncExec(() -> {
+				if (!getControl().isDisposed()) {
+					doSearch();
 				}
 			});
+		}
 	}
 
 	private String findGitDirsRecursive(Path root, final Set<Path> gitDirs,
@@ -606,7 +593,7 @@ public class RepositorySearchDialog extends WizardPage {
 		final Path file = Paths.get(dir.getText());
 		final boolean lookForNested = lookForNestedButton.getSelection();
 		final boolean skipHidden = skipHiddenButton.getSelection();
-		if (!Files.exists(file)) {
+		if (!Files.isDirectory(file)) {
 			return;
 		}
 
@@ -692,11 +679,13 @@ public class RepositorySearchDialog extends WizardPage {
 	private void setNeedsSearch() {
 		fTreeViewer.setInput(null);
 		final File file = new File(dir.getText());
-		if (!file.exists()) {
+		if (!file.isDirectory()) {
 			setErrorMessage(MessageFormat.format(
 					UIText.RepositorySearchDialog_DirectoryNotFoundMessage, dir
 							.getText()));
+			searchButton.setEnabled(false);
 		} else {
+			searchButton.setEnabled(true);
 			setErrorMessage(null);
 			setMessage(UIText.RepositorySearchDialog_NoSearchAvailableMessage,
 					IMessageProvider.INFORMATION);
