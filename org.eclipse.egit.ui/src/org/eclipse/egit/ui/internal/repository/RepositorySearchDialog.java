@@ -20,6 +20,7 @@ import java.lang.reflect.InvocationTargetException;
 import java.nio.file.FileVisitOption;
 import java.nio.file.FileVisitResult;
 import java.nio.file.Files;
+import java.nio.file.InvalidPathException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.SimpleFileVisitor;
@@ -678,17 +679,25 @@ public class RepositorySearchDialog extends WizardPage {
 
 	private void setNeedsSearch() {
 		fTreeViewer.setInput(null);
-		final File file = new File(dir.getText());
-		if (!file.isDirectory()) {
+		try {
+			Path file = Paths.get(dir.getText());
+			if (!Files.isDirectory(file)) {
+				setErrorMessage(MessageFormat.format(
+						UIText.RepositorySearchDialog_DirectoryNotFoundMessage,
+						dir.getText()));
+				searchButton.setEnabled(false);
+			} else {
+				searchButton.setEnabled(true);
+				setErrorMessage(null);
+				setMessage(
+						UIText.RepositorySearchDialog_NoSearchAvailableMessage,
+						IMessageProvider.INFORMATION);
+			}
+		} catch (InvalidPathException e) {
 			setErrorMessage(MessageFormat.format(
-					UIText.RepositorySearchDialog_DirectoryNotFoundMessage, dir
-							.getText()));
+					UIText.RepositorySearchDialog_InvalidDirectoryMessage,
+					e.getLocalizedMessage()));
 			searchButton.setEnabled(false);
-		} else {
-			searchButton.setEnabled(true);
-			setErrorMessage(null);
-			setMessage(UIText.RepositorySearchDialog_NoSearchAvailableMessage,
-					IMessageProvider.INFORMATION);
 		}
 		enableOk();
 	}
