@@ -48,9 +48,7 @@ import org.eclipse.jgit.treewalk.CanonicalTreeParser;
 import org.eclipse.jgit.treewalk.FileTreeIterator;
 import org.eclipse.jgit.treewalk.TreeWalk;
 import org.eclipse.jgit.treewalk.WorkingTreeIterator;
-import org.eclipse.jgit.treewalk.filter.OrTreeFilter;
-import org.eclipse.jgit.treewalk.filter.PathFilter;
-import org.eclipse.jgit.treewalk.filter.TreeFilter;
+import org.eclipse.jgit.treewalk.filter.PathFilterGroup;
 import org.eclipse.osgi.util.NLS;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.ui.ISharedImages;
@@ -249,15 +247,13 @@ public class GitCompareEditorInput extends CompareEditorInput {
 
 			// filter by selected resources
 			if (filterPathStrings.size() > 1) {
-				List<TreeFilter> suffixFilters = new ArrayList<>();
-				for (String filterPath : filterPathStrings)
-					suffixFilters.add(PathFilter.create(filterPath));
-				TreeFilter otf = OrTreeFilter.create(suffixFilters);
-				tw.setFilter(otf);
+				tw.setFilter(
+						PathFilterGroup.createFromStrings(filterPathStrings));
 			} else if (filterPathStrings.size() > 0) {
 				String path = filterPathStrings.get(0);
-				if (path.length() != 0)
-					tw.setFilter(PathFilter.create(path));
+				if (!path.isEmpty()) {
+					tw.setFilter(PathFilterGroup.createFromStrings(path));
+				}
 			}
 
 			tw.setRecursive(true);

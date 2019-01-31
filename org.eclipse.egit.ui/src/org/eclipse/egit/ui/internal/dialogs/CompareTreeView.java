@@ -22,10 +22,13 @@ import java.io.File;
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 import org.eclipse.compare.ITypedElement;
 import org.eclipse.core.resources.IContainer;
@@ -92,8 +95,7 @@ import org.eclipse.jgit.treewalk.FileTreeIterator;
 import org.eclipse.jgit.treewalk.TreeWalk;
 import org.eclipse.jgit.treewalk.filter.AndTreeFilter;
 import org.eclipse.jgit.treewalk.filter.NotIgnoredFilter;
-import org.eclipse.jgit.treewalk.filter.OrTreeFilter;
-import org.eclipse.jgit.treewalk.filter.PathFilter;
+import org.eclipse.jgit.treewalk.filter.PathFilterGroup;
 import org.eclipse.jgit.treewalk.filter.TreeFilter;
 import org.eclipse.osgi.util.NLS;
 import org.eclipse.swt.SWT;
@@ -550,32 +552,20 @@ public class CompareTreeView extends ViewPart implements IMenuListener, IShowInS
 
 			if (input instanceof IResource[]) {
 				IResource[] resources = (IResource[]) input;
-				List<TreeFilter> orFilters = new ArrayList<>(
-						resources.length);
-
-				for (IResource resource : resources) {
-					String relPath = repositoryMapping
-							.getRepoRelativePath(resource);
-					if (relPath != null && relPath.length() > 0) {
-						orFilters.add(PathFilter.create(relPath));
-					}
-				}
+				TreeFilter pathFilter = filterPaths(Arrays.stream(resources)
+						.map(r -> repositoryMapping.getRepoRelativePath(r))
+						.filter(p -> p != null && !p.isEmpty())
+						.collect(Collectors.toList()));
 				if (checkIgnored) {
-					if (orFilters.size() > 1) {
-						TreeFilter andFilter = AndTreeFilter.create(new NotIgnoredFilter(baseTreeIndex),
-								OrTreeFilter.create(orFilters));
-						tw.setFilter(andFilter);
-					} else if (orFilters.size() == 1) {
-						TreeFilter andFilter = AndTreeFilter.create(new NotIgnoredFilter(baseTreeIndex),
-								orFilters.get(0));
-						tw.setFilter(andFilter);
-					} else
+					if (pathFilter != null) {
+						tw.setFilter(AndTreeFilter.create(pathFilter,
+								new NotIgnoredFilter(baseTreeIndex)));
+					} else {
 						tw.setFilter(new NotIgnoredFilter(baseTreeIndex));
-
-				} else if (orFilters.size() > 1)
-					tw.setFilter(OrTreeFilter.create(orFilters));
-				else if (orFilters.size() == 1)
-					tw.setFilter(orFilters.get(0));
+					}
+				} else if (pathFilter != null) {
+					tw.setFilter(pathFilter);
+				}
 			}
 
 			tw.setRecursive(true);
@@ -701,6 +691,13 @@ public class CompareTreeView extends ViewPart implements IMenuListener, IShowInS
 		} finally {
 			monitor.done();
 		}
+	}
+
+	private TreeFilter filterPaths(Collection<String> paths) {
+		if (paths.isEmpty()) {
+			return null;
+		}
+		return PathFilterGroup.createFromStrings(paths);
 	}
 
 	private long getEntrySize(TreeWalk tw, AbstractTreeIterator iterator)
