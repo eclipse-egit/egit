@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "4e1ddf41_7d62ba0b",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/revision/LocationEditableRevision.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2019-02-02T17:43:31Z",
+      "side": 1,
+      "message": "I never had problems with xor-ing hashes. Don\u0027t know if something like (super.hashCode * 31) + Objects.hash(...) is\nany better.",
+      "parentUuid": "2b250370_fd86562f",
+      "range": {
+        "startLine": 92,
+        "startChar": 26,
+        "endLine": 92,
+        "endChar": 27
+      },
+      "revId": "9ee4610e969f13bb97c980d6fe93e7fa43686b89",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0b69e0bf_07cc9203",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/revision/ResourceEditableRevision.java",
         "patchSetId": 3
@@ -36,6 +60,30 @@
       "writtenOn": "2019-02-02T16:56:11Z",
       "side": 1,
       "message": "using an annotation on one argument, and an assertion on another looks slightly confusing :)",
+      "range": {
+        "startLine": 54,
+        "startChar": 3,
+        "endLine": 57,
+        "endChar": 36
+      },
+      "revId": "9ee4610e969f13bb97c980d6fe93e7fa43686b89",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "b2d026e7_21ff7ffa",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/revision/ResourceEditableRevision.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2019-02-02T17:43:31Z",
+      "side": 1,
+      "message": "Yes, perhaps I should just leave this as it was. I\u0027ll have to check why I didn\u0027t use @NonNull on the runnableContext. Probably because it caused null-warnings at the call sites.",
+      "parentUuid": "0b69e0bf_07cc9203",
       "range": {
         "startLine": 54,
         "startChar": 3,
