@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2b250370_fd86562f",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/revision/LocationEditableRevision.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 440
+      },
+      "writtenOn": "2019-02-02T16:56:11Z",
+      "side": 1,
+      "message": "I\u0027ve seen the use of the new Objects.hash method before, but never like this, or-ed with the super value. Is there some documentation available about this pattern?\n\n(I typically generate those methods using the 3rd and 4th option of the eclipse wizard, and that produces different code)",
+      "range": {
+        "startLine": 92,
+        "startChar": 26,
+        "endLine": 92,
+        "endChar": 27
+      },
+      "revId": "9ee4610e969f13bb97c980d6fe93e7fa43686b89",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "0b69e0bf_07cc9203",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/revision/ResourceEditableRevision.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 440
+      },
+      "writtenOn": "2019-02-02T16:56:11Z",
+      "side": 1,
+      "message": "using an annotation on one argument, and an assertion on another looks slightly confusing :)",
+      "range": {
+        "startLine": 54,
+        "startChar": 3,
+        "endLine": 57,
+        "endChar": 36
+      },
+      "revId": "9ee4610e969f13bb97c980d6fe93e7fa43686b89",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
