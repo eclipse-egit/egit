@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "0a6083f8_cd2dffa1",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/revision/LocationEditableRevision.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2019-02-03T13:05:30Z",
+      "side": 1,
+      "message": "Xor would only be a problem if the two values could ever be the same. (a\u003d\u003db \u003d\u003e a^b\u003d\u003d0)\n\nWe have other places where we use xor to combine hashes. Maybe changing them all to 31*a + b would be safer...\n\nBut if so, we should do it for all in a follow-up commit.",
+      "parentUuid": "4e1ddf41_7d62ba0b",
+      "range": {
+        "startLine": 92,
+        "startChar": 26,
+        "endLine": 92,
+        "endChar": 27
+      },
+      "revId": "9ee4610e969f13bb97c980d6fe93e7fa43686b89",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0b69e0bf_07cc9203",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/revision/ResourceEditableRevision.java",
         "patchSetId": 3
