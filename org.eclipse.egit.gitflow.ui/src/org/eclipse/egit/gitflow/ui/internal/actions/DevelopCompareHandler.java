@@ -50,10 +50,10 @@ public class DevelopCompareHandler extends AbstractHandler {
 			throw new ExecutionException(e.getMessage(), e);
 		}
 
-		IWorkbenchPage workBenchPage = getWorkbench().getActiveWorkbenchWindow().getActivePage();
+		IWorkbenchPage workbenchPage = getWorkbench().getActiveWorkbenchWindow().getActivePage();
 		try {
 			CompareUtils.compare(selectedResources, gfRepo.getRepository(),
-					HEAD, revision, true, workBenchPage);
+					HEAD, revision, true, workbenchPage);
 		} catch (IOException e) {
 			handleError(CompareWithRefAction_errorOnSynchronize, e, true);
 		}

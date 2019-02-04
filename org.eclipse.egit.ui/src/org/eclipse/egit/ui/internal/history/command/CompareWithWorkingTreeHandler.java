@@ -45,7 +45,7 @@ public class CompareWithWorkingTreeHandler extends
 		// Even if there's more than one element, only consider the first
 		RevCommit commit = (RevCommit) selection.getFirstElement();
 		Object input = getPage(event).getInputInternal().getSingleFile();
-		IWorkbenchPage workBenchPage = HandlerUtil
+		IWorkbenchPage workbenchPage = HandlerUtil
 				.getActiveWorkbenchWindowChecked(event).getActivePage();
 		if (input instanceof IFile) {
 			IFile file = (IFile) input;
@@ -59,7 +59,7 @@ public class CompareWithWorkingTreeHandler extends
 				final GitCompareFileRevisionEditorInput in = new GitCompareFileRevisionEditorInput(
 						SaveableCompareEditorInput.createFileElement(file),
 						right, null);
-				CompareUtils.openInCompare(workBenchPage, in);
+				CompareUtils.openInCompare(workbenchPage, in);
 			}
 		} else if (input instanceof File) {
 			File file = (File) input;
@@ -76,7 +76,7 @@ public class CompareWithWorkingTreeHandler extends
 			final String rightCommitPath = getRenamedPath(leftCommitPath,
 					commit);
 			CompareUtils.openInCompare(leftCommit, commit, leftCommitPath,
-					rightCommitPath, repo, workBenchPage);
+					rightCommitPath, repo, workbenchPage);
 		}
 		return null;
 	}

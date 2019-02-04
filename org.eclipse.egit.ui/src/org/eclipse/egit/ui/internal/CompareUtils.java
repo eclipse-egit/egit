@@ -275,44 +275,44 @@ public class CompareUtils {
 	 *            path to the file within commit2's tree
 	 * @param repository
 	 *            the repository this commit was loaded out of
-	 * @param workBenchPage
+	 * @param workbenchPage
 	 *            the page to open the compare editor in
 	 */
 	public static void openInCompare(RevCommit commit1, RevCommit commit2,
 			String commit1Path, String commit2Path, Repository repository,
-			IWorkbenchPage workBenchPage) {
+			IWorkbenchPage workbenchPage) {
 		final ITypedElement base = CompareUtils.getFileRevisionTypedElement(
 				commit1Path, commit1, repository);
 		final ITypedElement next = CompareUtils.getFileRevisionTypedElement(
 				commit2Path, commit2, repository);
 		CompareEditorInput in = new GitCompareFileRevisionEditorInput(base,
 				next, null);
-		CompareUtils.openInCompare(workBenchPage, in);
+		CompareUtils.openInCompare(workbenchPage, in);
 	}
 
 	/**
-	 * @param workBenchPage
+	 * @param workbenchPage
 	 * @param input
 	 */
-	public static void openInCompare(IWorkbenchPage workBenchPage,
+	public static void openInCompare(IWorkbenchPage workbenchPage,
 			CompareEditorInput input) {
-		IEditorPart editor = findReusableCompareEditor(input, workBenchPage);
+		IEditorPart editor = findReusableCompareEditor(input, workbenchPage);
 		if (editor != null) {
 			IEditorInput otherInput = editor.getEditorInput();
 			if (otherInput.equals(input)) {
 				// simply provide focus to editor
 				if (OpenStrategy.activateOnOpen())
-					workBenchPage.activate(editor);
+					workbenchPage.activate(editor);
 				else
-					workBenchPage.bringToTop(editor);
+					workbenchPage.bringToTop(editor);
 			} else {
 				// if editor is currently not open on that input either re-use
 				// existing
 				CompareUI.reuseCompareEditor(input, (IReusableEditor) editor);
 				if (OpenStrategy.activateOnOpen())
-					workBenchPage.activate(editor);
+					workbenchPage.activate(editor);
 				else
-					workBenchPage.bringToTop(editor);
+					workbenchPage.bringToTop(editor);
 			}
 		} else {
 			CompareUI.openCompareEditor(input);

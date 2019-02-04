@@ -38,11 +38,11 @@ public class CompareWithHeadActionHandler extends RepositoryActionHandler {
 			return null;
 		final IResource[] resources = getSelectedResources(event);
 
-		IWorkbenchPage workBenchPage = HandlerUtil
+		IWorkbenchPage workbenchPage = HandlerUtil
 				.getActiveWorkbenchWindowChecked(event).getActivePage();
 		try {
 			CompareUtils.compare(resources, repository, Constants.HEAD,
-					Constants.HEAD, true, workBenchPage);
+					Constants.HEAD, true, workbenchPage);
 		} catch (IOException e) {
 			Activator.handleError(
 					UIText.CompareWithRefAction_errorOnSynchronize, e, true);
