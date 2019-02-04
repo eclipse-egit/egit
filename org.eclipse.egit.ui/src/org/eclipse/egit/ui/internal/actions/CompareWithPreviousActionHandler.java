@@ -57,13 +57,13 @@ public class CompareWithPreviousActionHandler extends RepositoryActionHandler {
 		final IResource[] resources = getSelectedResources(event);
 		if (resources != null && resources.length > 0) {
 			try {
-				IWorkbenchPage workBenchPage = HandlerUtil
+				IWorkbenchPage workbenchPage = HandlerUtil
 						.getActiveWorkbenchWindowChecked(event).getActivePage();
 				final RevCommit previous = getPreviousRevision(event,
 						resources);
 				if (previous != null) {
 					CompareUtils.compare(resources, repository, Constants.HEAD,
-							previous.getName(), true, workBenchPage);
+							previous.getName(), true, workbenchPage);
 				} else {
 					showNotFoundDialog(event, resources);
 				}

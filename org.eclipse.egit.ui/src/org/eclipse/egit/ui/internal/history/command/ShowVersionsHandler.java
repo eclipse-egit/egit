@@ -70,7 +70,7 @@ public class ShowVersionsHandler extends AbstractHistoryCommandHandler {
 		Object input = getPage().getInputInternal().getSingleFile();
 		if (input == null)
 			return null;
-		IWorkbenchPage workBenchPage = HandlerUtil
+		IWorkbenchPage workbenchPage = HandlerUtil
 				.getActiveWorkbenchWindowChecked(event).getActivePage();
 		boolean errorOccurred = false;
 		List<ObjectId> ids = new ArrayList<>();
@@ -105,7 +105,7 @@ public class ShowVersionsHandler extends AbstractHistoryCommandHandler {
 											.createFileElement(resource),
 									right, null);
 							try {
-								CompareUtils.openInCompare(workBenchPage, in);
+								CompareUtils.openInCompare(workbenchPage, in);
 							} catch (Exception e) {
 								errorOccurred = true;
 							}
@@ -156,7 +156,7 @@ public class ShowVersionsHandler extends AbstractHistoryCommandHandler {
 											commit, repo);
 							final GitCompareFileRevisionEditorInput in = new GitCompareFileRevisionEditorInput(
 									left, right, null);
-							CompareUtils.openInCompare(workBenchPage, in);
+							CompareUtils.openInCompare(workbenchPage, in);
 						} catch (IOException e) {
 							errorOccurred = true;
 						}

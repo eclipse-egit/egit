@@ -52,11 +52,11 @@ public class CompareWithRefActionHandler extends RepositoryActionHandler {
 
 		final String refName = dlg.getRefName();
 
-		IWorkbenchPage workBenchPage = PlatformUI.getWorkbench()
+		IWorkbenchPage workbenchPage = PlatformUI.getWorkbench()
 				.getActiveWorkbenchWindow().getActivePage();
 		try {
 			CompareUtils
-					.compare(resources, repo, Constants.HEAD, refName, true, workBenchPage);
+					.compare(resources, repo, Constants.HEAD, refName, true, workbenchPage);
 		} catch (IOException e) {
 			Activator.handleError(
 					UIText.CompareWithRefAction_errorOnSynchronize, e, true);
