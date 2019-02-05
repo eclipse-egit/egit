@@ -68,7 +68,7 @@ public class MockLogicalResourceMapping extends ResourceMapping {
 	public ResourceTraversal[] getTraversals(ResourceMappingContext context,
 			IProgressMonitor monitor) throws CoreException {
 		SubMonitor sm = SubMonitor.convert(monitor, 3);
-		Set<IFile> result = new LinkedHashSet<IFile>();
+		Set<IFile> result = new LinkedHashSet<>();
 		result.add(file);
 		try {
 			List<IFile> dependencies = getDependencies(file, file.getParent());
@@ -103,9 +103,9 @@ public class MockLogicalResourceMapping extends ResourceMapping {
 	private List<IFile> getDependencies(IStorage storage, IContainer c)
 			throws CoreException, IOException {
 		List<IFile> result = new ArrayList<>();
-		try (InputStream contents = storage.getContents();) {
-			BufferedReader r = new BufferedReader(
-					new InputStreamReader(contents, Charset.forName("UTF-8")));
+		try (InputStream contents = storage.getContents();
+				BufferedReader r = new BufferedReader(new InputStreamReader(
+						contents, Charset.forName("UTF-8")))) {
 			try {
 				while (true) {
 					String line = r.readLine();
