@@ -73,6 +73,30 @@
     },
     {
       "key": {
+        "uuid": "c9e82fa4_8bf31552",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/revision/LocationEditableRevision.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2019-02-06T17:37:20Z",
+      "side": 1,
+      "message": "Done in these two classes (LocationEditableRevision and ResourceEditableRevision) in PS 4.",
+      "parentUuid": "0a6083f8_cd2dffa1",
+      "range": {
+        "startLine": 92,
+        "startChar": 26,
+        "endLine": 92,
+        "endChar": 27
+      },
+      "revId": "9ee4610e969f13bb97c980d6fe93e7fa43686b89",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0b69e0bf_07cc9203",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/revision/ResourceEditableRevision.java",
         "patchSetId": 3
@@ -132,6 +156,30 @@
       "side": 1,
       "message": "@NonNull IFile file resolves a null warning on the super call (getResourceEncoding(file) in line 55).\n\nAdding a @NonNull on IRunnableContext gives indeed null warnings at the call sites.\n\nNot sure what the best approach would be:\n* Leave as it was and accept the null warning on line 55.\n* Leave as is.\n* Add @NonNull to IRunnableContext and add (actually unnecessary) null checks at call sites.",
       "parentUuid": "b2d026e7_21ff7ffa",
+      "range": {
+        "startLine": 54,
+        "startChar": 3,
+        "endLine": 57,
+        "endChar": 36
+      },
+      "revId": "9ee4610e969f13bb97c980d6fe93e7fa43686b89",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "8b3e8864_3bec467e",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/revision/ResourceEditableRevision.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2019-02-06T17:37:20Z",
+      "side": 1,
+      "message": "Done (third option) in PS 4.",
+      "parentUuid": "d2c0f135_3f148759",
       "range": {
         "startLine": 54,
         "startChar": 3,
