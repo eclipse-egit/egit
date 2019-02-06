@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d72370c8_a11e61d2",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/synchronize/compare/LocalNonWorkspaceTypedElement.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 470,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2019-02-06T19:49:16Z",
+      "side": 1,
+      "message": "This is not good. While it does fix comparing non-workspace Xtext resources by ensuring the right Xtext document provider is found by the framework, it now confuses the TextFileDocumentProvider, resulting in a CoreException being logged. Though comparisons seem to work, concurrent editing is not detected. Yuck. Looks like this needs still more work.",
+      "range": {
+        "startLine": 455,
+        "startChar": 0,
+        "endLine": 470,
+        "endChar": 9
+      },
+      "revId": "bb1302ad0d8d72999d3f417dfcef4e02b008261e",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
