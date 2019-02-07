@@ -1432,14 +1432,14 @@ public class GitHistoryPage extends HistoryPage implements RefsChangedListener,
 				final ISelection s = event.getSelection();
 				if (s.isEmpty() || !(s instanceof IStructuredSelection)) {
 					commentViewer.setInput(null);
-					fileViewer.setInput(null);
+					fileViewer.newInput(null);
 					return;
 				}
 
 				final IStructuredSelection sel = ((IStructuredSelection) s);
 				if (sel.size() > 1) {
 					commentViewer.setInput(null);
-					fileViewer.setInput(null);
+					fileViewer.newInput(null);
 					return;
 				}
 				if (input == null) {
@@ -1454,12 +1454,12 @@ public class GitHistoryPage extends HistoryPage implements RefsChangedListener,
 					final RevCommit unfilteredCommit = walk.parseCommit(c);
 					for (RevCommit parent : unfilteredCommit.getParents())
 						walk.parseBody(parent);
-					fileViewer.setInput(new FileDiffInput(input.getRepository(),
+					fileViewer.newInput(new FileDiffInput(input.getRepository(),
 							fileDiffWalker, unfilteredCommit,
 							fileViewerInterestingPaths,
 							input.getSingleFile() != null));
 				} catch (IOException e) {
-					fileViewer.setInput(new FileDiffInput(input.getRepository(),
+					fileViewer.newInput(new FileDiffInput(input.getRepository(),
 							fileDiffWalker, c, fileViewerInterestingPaths,
 							input.getSingleFile() != null));
 				}
@@ -1666,7 +1666,7 @@ public class GitHistoryPage extends HistoryPage implements RefsChangedListener,
 		name = ""; //$NON-NLS-1$
 		input = null;
 		commentViewer.setInput(null);
-		fileViewer.setInput(null);
+		fileViewer.newInput(null);
 		setInput(null);
 	}
 

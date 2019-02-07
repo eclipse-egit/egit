@@ -21,6 +21,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Objects;
 
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IResource;
@@ -48,7 +49,6 @@ import org.eclipse.jface.viewers.ColumnViewerToolTipSupport;
 import org.eclipse.jface.viewers.IOpenListener;
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.ISelectionChangedListener;
-import org.eclipse.jface.viewers.IStructuredContentProvider;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.viewers.OpenEvent;
 import org.eclipse.jface.viewers.SelectionChangedEvent;
@@ -126,7 +126,7 @@ public class CommitFileDiffViewer extends TableViewer {
 	public CommitFileDiffViewer(final Composite parent,
 			final IWorkbenchSite site) {
 		this(parent, site, SWT.MULTI | SWT.H_SCROLL | SWT.V_SCROLL | SWT.BORDER
-				| SWT.FULL_SELECTION);
+				| SWT.VIRTUAL | SWT.FULL_SELECTION);
 	}
 
 	/**
@@ -396,6 +396,47 @@ public class CommitFileDiffViewer extends TableViewer {
 	}
 
 	/**
+	 * A variant of
+	 * {@link org.eclipse.jface.viewers.StructuredViewer#setInput(Object)
+	 * setInput(Object)} that clears the selection before setting the new input
+	 * if it is known that it cannot be reset after the input has been changed.
+	 *
+	 * @param input
+	 *            to set
+	 */
+	public void newInput(Object input) {
+		if (input == null) {
+			setSelection(StructuredSelection.EMPTY);
+		} else {
+			Object currentInput = getInput();
+			if (input instanceof FileDiffInput
+					&& currentInput instanceof FileDiffInput) {
+				FileDiffInput oldInput = (FileDiffInput) currentInput;
+				FileDiffInput newInput = (FileDiffInput) input;
+				if (!Objects.equals(oldInput.getRepository(),
+						newInput.getRepository())
+						|| !oldInput.getCommit().equals(newInput.getCommit())) {
+					setSelection(StructuredSelection.EMPTY);
+				}
+			}
+		}
+		setInput(input);
+	}
+
+	@Override
+	protected void setSelectionToWidget(List list, boolean reveal) {
+		// setSelection(StructuredSelection.EMPTY) is not the same
+		// as setSelection(null). However, the latter is undocumented.
+		// Ensure here that we do take all possible shortcuts and just
+		// clear the selection (normally via doDeselectAll()) if the
+		// list is non-null but empty.
+		if (list != null && list.isEmpty()) {
+			list = null;
+		}
+		super.setSelectionToWidget(list, reveal);
+	}
+
+	/**
 	 * @return the show in context or null
 	 * @see IShowInSource#getShowInContext()
 	 */
@@ -512,16 +553,12 @@ public class CommitFileDiffViewer extends TableViewer {
 	}
 
 	private void doSelectAll() {
-		final IStructuredContentProvider cp;
-		final Object in = getInput();
-		if (in == null)
-			return;
-
-		cp = ((IStructuredContentProvider) getContentProvider());
-		final Object[] el = cp.getElements(in);
-		if (el == null || el.length == 0)
-			return;
-		setSelection(new StructuredSelection(el));
+		if (getInput() != null) {
+			Table table = getTable();
+			if (table != null) {
+				table.selectAll();
+			}
+		}
 	}
 
 	private void doCopy() {

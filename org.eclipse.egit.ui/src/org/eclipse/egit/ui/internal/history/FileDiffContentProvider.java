@@ -181,7 +181,7 @@ public class FileDiffContentProvider implements IStructuredContentProvider {
 
 	private class UpdateJob extends UIJob {
 
-		FileDiffLoader loadJob;
+		private final FileDiffLoader loadJob;
 
 		public UpdateJob(String name, FileDiffLoader loadJob) {
 			super(name);
