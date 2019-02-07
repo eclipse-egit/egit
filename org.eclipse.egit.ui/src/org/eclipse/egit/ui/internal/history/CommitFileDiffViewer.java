@@ -21,6 +21,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Objects;
 
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IResource;
@@ -48,7 +49,6 @@ import org.eclipse.jface.viewers.ColumnViewerToolTipSupport;
 import org.eclipse.jface.viewers.IOpenListener;
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.ISelectionChangedListener;
-import org.eclipse.jface.viewers.IStructuredContentProvider;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.viewers.OpenEvent;
 import org.eclipse.jface.viewers.SelectionChangedEvent;
@@ -126,7 +126,7 @@ public class CommitFileDiffViewer extends TableViewer {
 	public CommitFileDiffViewer(final Composite parent,
 			final IWorkbenchSite site) {
 		this(parent, site, SWT.MULTI | SWT.H_SCROLL | SWT.V_SCROLL | SWT.BORDER
-				| SWT.FULL_SELECTION);
+				| SWT.VIRTUAL | SWT.FULL_SELECTION);
 	}
 
 	/**
@@ -151,6 +151,7 @@ public class CommitFileDiffViewer extends TableViewer {
 
 		ColumnViewerToolTipSupport.enableFor(this);
 
+		setUseHashlookup(true);
 		setLabelProvider(new FileDiffLabelProvider(dimmedForegroundRgb));
 		setContentProvider(new FileDiffContentProvider());
 		setComparator(new ViewerComparator() {
@@ -395,6 +396,51 @@ public class CommitFileDiffViewer extends TableViewer {
 		}
 	}
 
+	@Override
+	protected void inputChanged(Object input, Object oldInput) {
+		// preservingSelection() in super.inputChanged() can be expensive and
+		// may cause UI freezes, especially if the selection has many items.
+		// Therefore remove the selection up front if we know that it cannot be
+		// restored anyway.
+		if (input == null) {
+			doDeselectAll();
+		} else if (input instanceof FileDiffInput
+				&& oldInput instanceof FileDiffInput) {
+			FileDiffInput old = (FileDiffInput) oldInput;
+			FileDiffInput newInput = (FileDiffInput) input;
+			if (!Objects.equals(old.getRepository(), newInput.getRepository())
+					|| !old.getCommit().equals(newInput.getCommit())) {
+				doDeselectAll();
+			}
+		}
+		super.inputChanged(input, oldInput);
+	}
+
+	@Override
+	protected void doSetItemCount(int count) {
+		// Take a more efficient shortcut if we remove all items.
+		// Compare bug 544282. While that was for GTK, it's valid
+		// for the other platforms, too.
+		if (count == 0) {
+			doRemoveAll();
+		} else {
+			super.doSetItemCount(count);
+		}
+	}
+
+	@Override
+	protected void setSelectionToWidget(List list, boolean reveal) {
+		// setSelection(StructuredSelection.EMPTY) is not the same
+		// as setSelection(null). However, the latter is undocumented.
+		// Ensure here that we do take all possible shortcuts and just
+		// clear the selection (normally via doDeselectAll()) if the
+		// list is non-null but empty.
+		if (list != null && list.isEmpty()) {
+			list = null;
+		}
+		super.setSelectionToWidget(list, reveal);
+	}
+
 	/**
 	 * @return the show in context or null
 	 * @see IShowInSource#getShowInContext()
@@ -512,16 +558,12 @@ public class CommitFileDiffViewer extends TableViewer {
 	}
 
 	private void doSelectAll() {
-		final IStructuredContentProvider cp;
-		final Object in = getInput();
-		if (in == null)
-			return;
-
-		cp = ((IStructuredContentProvider) getContentProvider());
-		final Object[] el = cp.getElements(in);
-		if (el == null || el.length == 0)
-			return;
-		setSelection(new StructuredSelection(el));
+		if (getInput() != null) {
+			Table table = getTable();
+			if (table != null) {
+				table.selectAll();
+			}
+		}
 	}
 
 	private void doCopy() {
