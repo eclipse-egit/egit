@@ -14,6 +14,7 @@ package org.eclipse.egit.ui.internal.history;
 
 import java.io.IOException;
 import java.text.MessageFormat;
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.Objects;
 
@@ -165,6 +166,7 @@ public class FileDiffContentProvider implements IStructuredContentProvider {
 			if (monitor.isCanceled()) {
 				return Status.CANCEL_STATUS;
 			}
+			Arrays.sort(diffs, 0, diffs.length, FileDiff.PATH_COMPARATOR);
 			return Status.OK_STATUS;
 		}
 
@@ -181,7 +183,7 @@ public class FileDiffContentProvider implements IStructuredContentProvider {
 
 	private class UpdateJob extends UIJob {
 
-		FileDiffLoader loadJob;
+		private final FileDiffLoader loadJob;
 
 		public UpdateJob(String name, FileDiffLoader loadJob) {
 			super(name);

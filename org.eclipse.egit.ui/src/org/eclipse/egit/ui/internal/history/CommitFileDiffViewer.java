@@ -54,8 +54,6 @@ import org.eclipse.jface.viewers.OpenEvent;
 import org.eclipse.jface.viewers.SelectionChangedEvent;
 import org.eclipse.jface.viewers.StructuredSelection;
 import org.eclipse.jface.viewers.TableViewer;
-import org.eclipse.jface.viewers.Viewer;
-import org.eclipse.jface.viewers.ViewerComparator;
 import org.eclipse.jgit.diff.DiffEntry;
 import org.eclipse.jgit.diff.DiffEntry.ChangeType;
 import org.eclipse.jgit.lib.Constants;
@@ -126,7 +124,7 @@ public class CommitFileDiffViewer extends TableViewer {
 	public CommitFileDiffViewer(final Composite parent,
 			final IWorkbenchSite site) {
 		this(parent, site, SWT.MULTI | SWT.H_SCROLL | SWT.V_SCROLL | SWT.BORDER
-				| SWT.FULL_SELECTION);
+				| SWT.VIRTUAL | SWT.FULL_SELECTION);
 	}
 
 	/**
@@ -153,17 +151,6 @@ public class CommitFileDiffViewer extends TableViewer {
 
 		setLabelProvider(new FileDiffLabelProvider(dimmedForegroundRgb));
 		setContentProvider(new FileDiffContentProvider());
-		setComparator(new ViewerComparator() {
-
-			@Override
-			public int compare(Viewer viewer, Object left, Object right) {
-				if (left instanceof FileDiff && right instanceof FileDiff) {
-					return FileDiff.PATH_COMPARATOR.compare((FileDiff) left,
-							(FileDiff) right);
-				}
-				return super.compare(viewer, left, right);
-			}
-		});
 		addOpenListener(new IOpenListener() {
 			@Override
 			public void open(final OpenEvent event) {
