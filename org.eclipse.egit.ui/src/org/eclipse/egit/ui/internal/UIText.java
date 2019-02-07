@@ -3085,13 +3085,13 @@ public class UIText extends NLS {
 	public static String FetchWizard_windowTitleWithSource;
 
 	/** */
-	public static String FileDiffContentProvider_computingFileDiffs;
+	public static String CommitFileDiffViewer_computingFileDiffs;
 
 	/** */
-	public static String FileDiffContentProvider_errorGettingDifference;
+	public static String CommitFileDiffViewer_errorGettingDifference;
 
 	/** */
-	public static String FileDiffContentProvider_updatingFileDiffs;
+	public static String CommitFileDiffViewer_updatingFileDiffs;
 
 	/** */
 	public static String FileDiffLabelProvider_RenamedFromToolTip;
@@ -4611,6 +4611,9 @@ public class UIText extends NLS {
 
 	/** */
 	public static String CommitFileDiffViewer_CopyFilePathMenuLabel;
+
+	/** */
+	public static String CommitFileDiffViewer_CopyAllFilePathsMenuLabel;
 
 	/** */
 	public static String CommitFileDiffViewer_MergeCommitMultiAncestorMessage;
