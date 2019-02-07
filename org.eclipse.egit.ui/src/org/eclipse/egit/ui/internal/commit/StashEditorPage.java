@@ -102,7 +102,7 @@ public class StashEditorPage extends CommitEditorPage {
 				stagedDiffSection, toolkit);
 
 		stagedDiffViewer = new CommitFileDiffViewer(unstagedChangesArea,
-				getSite(), SWT.MULTI | SWT.H_SCROLL | SWT.V_SCROLL
+				getSite(), SWT.MULTI | SWT.H_SCROLL | SWT.V_SCROLL | SWT.VIRTUAL
 						| SWT.FULL_SELECTION | toolkit.getBorderStyle());
 		Control control = stagedDiffViewer.getControl();
 		control.setData(FormToolkit.KEY_DRAW_BORDER, FormToolkit.TREE_BORDER);

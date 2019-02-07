@@ -40,11 +40,17 @@ public class FileDiffLabelProvider extends ColumnLabelProvider {
 
 	@Override
 	public String getText(final Object element) {
+		if (element == null) {
+			return null;
+		}
 		return ((FileDiff) element).getLabel(element);
 	}
 
 	@Override
 	public Image getImage(final Object element) {
+		if (element == null) {
+			return null;
+		}
 		final FileDiff c = (FileDiff) element;
 		return (Image) resourceManager.get(c.getImageDescriptor(c));
 	}
@@ -57,15 +63,23 @@ public class FileDiffLabelProvider extends ColumnLabelProvider {
 
 	@Override
 	public Color getForeground(Object element) {
-		final FileDiff c = (FileDiff) element;
-		if (!c.isMarked(FileDiffContentProvider.INTERESTING_MARK_TREE_FILTER_INDEX))
-			return dimmedForegroundColor;
-		else
+		if (element == null) {
 			return null;
+		}
+		final FileDiff c = (FileDiff) element;
+		if (!c.isMarked(
+				FileDiffContentProvider.INTERESTING_MARK_TREE_FILTER_INDEX)) {
+			return dimmedForegroundColor;
+		} else {
+			return null;
+		}
 	}
 
 	@Override
 	public String getToolTipText(final Object element) {
+		if (element == null) {
+			return null;
+		}
 		final FileDiff c = (FileDiff) element;
 		if (c.getChange() == ChangeType.RENAME) {
 			return MessageFormat.format(
