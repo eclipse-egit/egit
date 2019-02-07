@@ -27,10 +27,8 @@ import org.eclipse.core.runtime.SubMonitor;
 import org.eclipse.egit.core.EclipseGitProgressTransformer;
 import org.eclipse.egit.core.internal.util.ResourceUtil;
 import org.eclipse.egit.ui.UIUtils;
-import org.eclipse.egit.ui.internal.DecorationOverlayDescriptor;
 import org.eclipse.egit.ui.internal.UIIcons;
 import org.eclipse.jface.resource.ImageDescriptor;
-import org.eclipse.jface.viewers.IDecoration;
 import org.eclipse.jgit.annotations.Nullable;
 import org.eclipse.jgit.diff.DiffEntry;
 import org.eclipse.jgit.diff.DiffEntry.ChangeType;
@@ -56,13 +54,12 @@ import org.eclipse.jgit.treewalk.TreeWalk;
 import org.eclipse.jgit.treewalk.filter.TreeFilter;
 import org.eclipse.jgit.treewalk.filter.TreeFilterMarker;
 import org.eclipse.jgit.util.LfsFactory;
-import org.eclipse.ui.model.WorkbenchAdapter;
 
 /**
  * A class with information about the changes to a file introduced in a
  * commit.
  */
-public class FileDiff extends WorkbenchAdapter {
+public class FileDiff {
 
 	/**
 	 * Comparator for sorting FileDiffs based on getPath(). Compares first the
@@ -482,31 +479,33 @@ public class FileDiff extends WorkbenchAdapter {
 				|| diffEntry.getNewMode() == FileMode.GITLINK;
 	}
 
-	@Override
-	public ImageDescriptor getImageDescriptor(Object object) {
-		final ImageDescriptor base;
-		if (!isSubmodule())
-			base = UIUtils.getEditorImage(getPath());
-		else
-			base = UIIcons.REPOSITORY;
-		switch (getChange()) {
-		case ADD:
-			return new DecorationOverlayDescriptor(base,
-					UIIcons.OVR_STAGED_ADD, IDecoration.BOTTOM_RIGHT);
-		case DELETE:
-			return new DecorationOverlayDescriptor(base,
-					UIIcons.OVR_STAGED_REMOVE, IDecoration.BOTTOM_RIGHT);
-		case RENAME:
-			return new DecorationOverlayDescriptor(base,
-					UIIcons.OVR_STAGED_RENAME, IDecoration.BOTTOM_RIGHT);
-		default:
-			return base;
+	/**
+	 * @return an {@link ImageDescriptor} for display of this {@link FileDiff}
+	 *         in the UI, or {@code null} if no image is available
+	 */
+	public ImageDescriptor getBaseImageDescriptor() {
+		if (!isSubmodule()) {
+			return UIUtils.getEditorImage(getPath());
+		} else {
+			return UIIcons.REPOSITORY;
 		}
 	}
 
-	@Override
-	public String getLabel(Object object) {
-		return getPath();
+	/**
+	 * @return an {@link ImageDescriptor} for a decoration (to be applied
+	 *         bottom-right), or {@code null} if no decoration to apply
+	 */
+	public ImageDescriptor getImageDcoration() {
+		switch (getChange()) {
+		case ADD:
+			return UIIcons.OVR_STAGED_ADD;
+		case DELETE:
+			return UIIcons.OVR_STAGED_REMOVE;
+		case RENAME:
+			return UIIcons.OVR_STAGED_RENAME;
+		default:
+			return null;
+		}
 	}
 
 	private static class FileDiffForMerges extends FileDiff {
