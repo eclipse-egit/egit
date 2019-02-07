@@ -40,6 +40,9 @@ public class FileDiffLabelProvider extends ColumnLabelProvider {
 
 	@Override
 	public String getText(final Object element) {
+		if (element == null) {
+			return ""; //$NON-NLS-1$
+		}
 		return ((FileDiff) element).getLabel(element);
 	}
 
