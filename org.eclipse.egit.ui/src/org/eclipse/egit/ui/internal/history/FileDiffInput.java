@@ -29,7 +29,7 @@ public class FileDiffInput {
 
 	private final RevCommit commit;
 
-	private final Collection<String> interestingPaths;
+	private Collection<String> interestingPaths;
 
 	private final boolean selectMarked;
 
@@ -84,5 +84,15 @@ public class FileDiffInput {
 	 */
 	public @Nullable Collection<String> getInterestingPaths() {
 		return interestingPaths;
+	}
+
+	/**
+	 * Sets the interesting paths.
+	 * 
+	 * @param interestingPaths
+	 *            to set; may be {@code null} or empty
+	 */
+	public void setInterestingPaths(Collection<String> interestingPaths) {
+		this.interestingPaths = interestingPaths;
 	}
 }
