@@ -37,6 +37,8 @@ import org.eclipse.egit.core.AdapterUtils;
 import org.eclipse.egit.core.internal.util.ProjectUtil;
 import org.eclipse.egit.core.internal.util.ResourceUtil;
 import org.eclipse.egit.core.project.RepositoryMapping;
+import org.eclipse.egit.ui.internal.history.FileDiff;
+import org.eclipse.egit.ui.internal.history.FileDiffWorkbenchAdapter;
 import org.eclipse.egit.ui.internal.history.GitHistoryPage;
 import org.eclipse.egit.ui.internal.history.GitHistoryPageSource;
 import org.eclipse.egit.ui.internal.repository.RepositoryTreeNodeWorkbenchAdapter;
@@ -79,6 +81,8 @@ public class GitAdapterFactory implements IAdapterFactory {
 		if (IWorkbenchAdapter.class == adapterType) {
 			if (adaptableObject instanceof RepositoryTreeNode) {
 				return RepositoryTreeNodeWorkbenchAdapter.INSTANCE;
+			} else if (adaptableObject instanceof FileDiff) {
+				return FileDiffWorkbenchAdapter.INSTANCE;
 			}
 
 			if (gitModelWorkbenchAdapter == null) {
