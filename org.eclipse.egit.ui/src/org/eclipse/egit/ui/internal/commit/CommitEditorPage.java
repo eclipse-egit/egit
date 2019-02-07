@@ -404,7 +404,7 @@ public class CommitEditorPage extends FormPage
 	}
 
 	void fillDiffs(FileDiff[] diffs) {
-		diffViewer.setInput(diffs);
+		diffViewer.newInput(diffs);
 		diffSection.setText(getDiffSectionTitle(Integer.valueOf(diffs.length)));
 		setSectionExpanded(diffSection, diffs.length != 0);
 	}
@@ -538,7 +538,7 @@ public class CommitEditorPage extends FormPage
 		Composite filesArea = createSectionClient(diffSection, toolkit);
 
 		diffViewer = new CommitFileDiffViewer(filesArea, getSite(), SWT.MULTI
-				| SWT.H_SCROLL | SWT.V_SCROLL | SWT.FULL_SELECTION
+				| SWT.H_SCROLL | SWT.V_SCROLL | SWT.VIRTUAL | SWT.FULL_SELECTION
 				| toolkit.getBorderStyle());
 		Control control = diffViewer.getControl();
 		control.setData(FormToolkit.KEY_DRAW_BORDER, FormToolkit.TREE_BORDER);
