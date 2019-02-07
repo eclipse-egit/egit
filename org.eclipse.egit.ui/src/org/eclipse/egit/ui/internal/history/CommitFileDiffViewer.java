@@ -17,15 +17,24 @@ package org.eclipse.egit.ui.internal.history;
 
 import java.io.File;
 import java.io.IOException;
+import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Objects;
 
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IResource;
 import org.eclipse.core.runtime.IPath;
+import org.eclipse.core.runtime.IProgressMonitor;
+import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Path;
+import org.eclipse.core.runtime.Status;
+import org.eclipse.core.runtime.jobs.IJobChangeEvent;
+import org.eclipse.core.runtime.jobs.ISchedulingRule;
+import org.eclipse.core.runtime.jobs.Job;
+import org.eclipse.core.runtime.jobs.JobChangeAdapter;
 import org.eclipse.egit.core.internal.job.JobUtil;
 import org.eclipse.egit.core.internal.storage.CommitFileRevision;
 import org.eclipse.egit.core.internal.util.ResourceUtil;
@@ -44,11 +53,11 @@ import org.eclipse.jface.action.IAction;
 import org.eclipse.jface.action.MenuManager;
 import org.eclipse.jface.action.Separator;
 import org.eclipse.jface.dialogs.MessageDialog;
+import org.eclipse.jface.viewers.ArrayContentProvider;
 import org.eclipse.jface.viewers.ColumnViewerToolTipSupport;
 import org.eclipse.jface.viewers.IOpenListener;
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.ISelectionChangedListener;
-import org.eclipse.jface.viewers.IStructuredContentProvider;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.viewers.OpenEvent;
 import org.eclipse.jface.viewers.SelectionChangedEvent;
@@ -61,6 +70,9 @@ import org.eclipse.jgit.diff.DiffEntry.ChangeType;
 import org.eclipse.jgit.lib.Constants;
 import org.eclipse.jgit.lib.Repository;
 import org.eclipse.jgit.revwalk.RevCommit;
+import org.eclipse.jgit.treewalk.TreeWalk;
+import org.eclipse.jgit.treewalk.filter.PathFilterGroup;
+import org.eclipse.jgit.treewalk.filter.TreeFilter;
 import org.eclipse.osgi.util.NLS;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.dnd.Clipboard;
@@ -85,12 +97,16 @@ import org.eclipse.ui.actions.ActionFactory;
 import org.eclipse.ui.part.IShowInSource;
 import org.eclipse.ui.part.IShowInTarget;
 import org.eclipse.ui.part.ShowInContext;
+import org.eclipse.ui.progress.UIJob;
 import org.eclipse.ui.themes.ColorUtil;
 
 /**
  * Viewer to display {@link FileDiff} objects in a table.
  */
 public class CommitFileDiffViewer extends TableViewer {
+
+	static final int INTERESTING_MARK_TREE_FILTER_INDEX = 0;
+
 	private static final String LINESEP = System.getProperty("line.separator"); //$NON-NLS-1$
 
 	private Clipboard clipboard;
@@ -113,6 +129,10 @@ public class CommitFileDiffViewer extends TableViewer {
 
 	private IAction showInHistory;
 
+	private FileDiffInput realInput;
+
+	private FileDiffLoader loader;
+
 	private final IWorkbenchSite site;
 
 	/**
@@ -126,7 +146,7 @@ public class CommitFileDiffViewer extends TableViewer {
 	public CommitFileDiffViewer(final Composite parent,
 			final IWorkbenchSite site) {
 		this(parent, site, SWT.MULTI | SWT.H_SCROLL | SWT.V_SCROLL | SWT.BORDER
-				| SWT.FULL_SELECTION);
+				| SWT.VIRTUAL | SWT.FULL_SELECTION);
 	}
 
 	/**
@@ -152,7 +172,7 @@ public class CommitFileDiffViewer extends TableViewer {
 		ColumnViewerToolTipSupport.enableFor(this);
 
 		setLabelProvider(new FileDiffLabelProvider(dimmedForegroundRgb));
-		setContentProvider(new FileDiffContentProvider());
+		setContentProvider(ArrayContentProvider.getInstance());
 		setComparator(new ViewerComparator() {
 
 			@Override
@@ -395,6 +415,62 @@ public class CommitFileDiffViewer extends TableViewer {
 		}
 	}
 
+	@Override
+	protected void handleDispose(DisposeEvent event) {
+		cancelJob();
+		realInput = null;
+		super.handleDispose(event);
+	}
+
+	/**
+	 * A variant of
+	 * {@link org.eclipse.jface.viewers.StructuredViewer#setInput(Object)
+	 * setInput(Object)} that clears the selection before setting the new input
+	 * if it is known that it cannot be reset after the input has been changed.
+	 *
+	 * @param input
+	 *            to set
+	 */
+	public void newInput(Object input) {
+		cancelJob();
+		if (input == null) {
+			setSelection(StructuredSelection.EMPTY);
+		} else {
+			if (realInput != null) {
+				if (input instanceof FileDiffInput) {
+					FileDiffInput newInput = (FileDiffInput) input;
+					if (!Objects.equals(realInput.getRepository(),
+							newInput.getRepository())
+							|| !realInput.getCommit()
+									.equals(newInput.getCommit())) {
+						setSelection(StructuredSelection.EMPTY);
+						setInput(null);
+					}
+				}
+			}
+		}
+		if (input instanceof FileDiffInput) {
+			realInput = (FileDiffInput) input;
+			startJob((FileDiffInput) input);
+		} else {
+			realInput = null;
+			setInput(input);
+		}
+	}
+
+	@Override
+	protected void setSelectionToWidget(List list, boolean reveal) {
+		// setSelection(StructuredSelection.EMPTY) is not the same
+		// as setSelection(null). However, the latter is undocumented.
+		// Ensure here that we do take all possible shortcuts and just
+		// clear the selection (normally via doDeselectAll()) if the
+		// list is non-null but empty.
+		if (list != null && list.isEmpty()) {
+			list = null;
+		}
+		super.setSelectionToWidget(list, reveal);
+	}
+
 	/**
 	 * @return the show in context or null
 	 * @see IShowInSource#getShowInContext()
@@ -512,16 +588,12 @@ public class CommitFileDiffViewer extends TableViewer {
 	}
 
 	private void doSelectAll() {
-		final IStructuredContentProvider cp;
-		final Object in = getInput();
-		if (in == null)
-			return;
-
-		cp = ((IStructuredContentProvider) getContentProvider());
-		final Object[] el = cp.getElements(in);
-		if (el == null || el.length == 0)
-			return;
-		setSelection(new StructuredSelection(el));
+		if (getInput() != null) {
+			Table table = getTable();
+			if (table != null) {
+				table.selectAll();
+			}
+		}
 	}
 
 	private void doCopy() {
@@ -543,11 +615,180 @@ public class CommitFileDiffViewer extends TableViewer {
 	}
 
 	/**
-	 * @see FileDiffContentProvider#setInterestingPaths(Collection)
+	 * Set the interesting paths to be marked and re-compute and update the UI.
+	 *
 	 * @param interestingPaths
+	 *            to be marked
 	 */
 	void setInterestingPaths(Collection<String> interestingPaths) {
-		((FileDiffContentProvider) getContentProvider())
-				.setInterestingPaths(interestingPaths);
+		if (realInput != null) {
+			cancelJob();
+			realInput.setInterestingPaths(interestingPaths);
+			startJob(realInput);
+		}
 	}
+
+	private TreeFilter toFilter(Collection<String> paths) {
+		if (paths != null && !paths.isEmpty()) {
+			return PathFilterGroup.createFromStrings(paths);
+		} else {
+			return TreeFilter.ALL;
+		}
+	}
+
+	private void startJob(FileDiffInput input) {
+		FileDiffLoader job = new FileDiffLoader(input,
+				toFilter(input.getInterestingPaths()));
+		job.addJobChangeListener(new JobChangeAdapter() {
+			@Override
+			public void done(IJobChangeEvent event) {
+				if (!event.getResult().isOK()) {
+					return;
+				}
+				UIJob updater = new UpdateJob(MessageFormat.format(
+						UIText.CommitFileDiffViewer_updatingFileDiffs,
+						input.getCommit().getName()), job);
+				updater.schedule();
+			}
+		});
+		job.setUser(false);
+		job.setSystem(true);
+		loader = job;
+		loader.schedule();
+	}
+
+	private void cancelJob() {
+		if (loader != null) {
+			loader.cancel();
+			loader = null;
+		}
+	}
+
+	private static class FileDiffLoader extends Job {
+
+		private FileDiff[] diffs;
+
+		private final FileDiffInput input;
+
+		private final TreeFilter filter;
+
+		public FileDiffLoader(FileDiffInput input, TreeFilter filter) {
+			super(MessageFormat.format(
+					UIText.CommitFileDiffViewer_computingFileDiffs,
+					input.getCommit().getName()));
+			this.input = input;
+			this.filter = filter;
+			setRule(new TreeWalkSchedulingRule(input.getTreeWalk()));
+		}
+
+		@Override
+		protected IStatus run(IProgressMonitor monitor) {
+			try {
+				if (monitor.isCanceled()) {
+					return Status.CANCEL_STATUS;
+				}
+				diffs = FileDiff.compute(input.getRepository(),
+						input.getTreeWalk(), input.getCommit(), monitor,
+						filter);
+			} catch (IOException err) {
+				Activator.handleError(MessageFormat.format(
+						UIText.CommitFileDiffViewer_errorGettingDifference,
+						input.getCommit().getId()), err, false);
+			}
+			if (monitor.isCanceled()) {
+				return Status.CANCEL_STATUS;
+			}
+			return Status.OK_STATUS;
+		}
+
+		public FileDiff[] getDiffs() {
+			return diffs;
+		}
+
+		public FileDiffInput getInput() {
+			return input;
+		}
+
+		@Override
+		public boolean belongsTo(Object family) {
+			return family == JobFamilies.HISTORY_FILE_DIFF
+					|| super.belongsTo(family);
+		}
+	}
+
+	private class UpdateJob extends UIJob {
+
+		private final FileDiffLoader loadJob;
+
+		public UpdateJob(String name, FileDiffLoader loadJob) {
+			super(name);
+			this.loadJob = loadJob;
+		}
+
+		@Override
+		public IStatus runInUIThread(IProgressMonitor monitor) {
+			Control control = getControl();
+			if (control == null || control.isDisposed() || loader != loadJob) {
+				return Status.CANCEL_STATUS;
+			}
+			FileDiff[] diffs = loadJob.getDiffs();
+			try {
+				control.setRedraw(false);
+				setInput(diffs);
+				FileDiff interesting = getFirstInterestingElement(diffs);
+				if (interesting != null) {
+					if (loadJob.getInput().isSelectMarked()) {
+						setSelection(new StructuredSelection(interesting),
+								true);
+					} else {
+						reveal(interesting);
+					}
+				}
+			} finally {
+				control.setRedraw(true);
+			}
+			return Status.OK_STATUS;
+		}
+
+		private FileDiff getFirstInterestingElement(FileDiff[] diffs) {
+			if (diffs != null) {
+				for (FileDiff d : diffs) {
+					if (d.isMarked(INTERESTING_MARK_TREE_FILTER_INDEX)) {
+						return d;
+					}
+				}
+			}
+			return null;
+		}
+
+	}
+
+	/**
+	 * Serializes all load jobs using the same tree walk. Tree walks are not
+	 * thread safe.
+	 */
+	private static class TreeWalkSchedulingRule implements ISchedulingRule {
+
+		private final TreeWalk treeWalk;
+
+		public TreeWalkSchedulingRule(TreeWalk treeWalk) {
+			this.treeWalk = treeWalk;
+		}
+
+		@Override
+		public boolean contains(ISchedulingRule rule) {
+			if (rule instanceof TreeWalkSchedulingRule) {
+				return Objects.equals(treeWalk,
+						((TreeWalkSchedulingRule) rule).treeWalk);
+			}
+			return false;
+		}
+
+		@Override
+		public boolean isConflicting(ISchedulingRule rule) {
+			return contains(rule);
+		}
+
+	}
+
 }

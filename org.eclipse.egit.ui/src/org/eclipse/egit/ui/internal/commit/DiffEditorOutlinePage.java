@@ -21,17 +21,21 @@ import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.stream.Collectors;
 
 import org.eclipse.core.runtime.Path;
+import org.eclipse.egit.ui.internal.UIIcons;
 import org.eclipse.egit.ui.internal.UIText;
 import org.eclipse.egit.ui.internal.commit.DiffRegionFormatter.FileDiffRegion;
 import org.eclipse.egit.ui.internal.history.FileDiff;
 import org.eclipse.jface.action.Action;
 import org.eclipse.jface.action.MenuManager;
 import org.eclipse.jface.action.Separator;
+import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.jface.resource.JFaceResources;
 import org.eclipse.jface.resource.LocalResourceManager;
 import org.eclipse.jface.resource.ResourceManager;
 import org.eclipse.jface.text.IDocument;
 import org.eclipse.jface.util.SafeRunnable;
+import org.eclipse.jface.viewers.DecorationOverlayIcon;
+import org.eclipse.jface.viewers.IDecoration;
 import org.eclipse.jface.viewers.IOpenListener;
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.IStructuredSelection;
@@ -362,8 +366,18 @@ public class DiffEditorOutlinePage extends NestedContentOutlinePage {
 			}
 			if (element instanceof FileDiffRegion) {
 				FileDiff diff = ((FileDiffRegion) element).getDiff();
-				return (Image) resourceManager
-						.get(diff.getImageDescriptor(diff));
+				ImageDescriptor desc = diff.getBaseImageDescriptor();
+				if (desc == null) {
+					return null;
+				}
+				Image image = UIIcons.getImage(resourceManager, desc);
+				desc = diff.getImageDcoration();
+				if (desc != null) {
+					image = UIIcons.getImage(resourceManager,
+							new DecorationOverlayIcon(image, desc,
+									IDecoration.BOTTOM_RIGHT));
+				}
+				return image;
 			}
 			return super.getImage(element);
 		}
