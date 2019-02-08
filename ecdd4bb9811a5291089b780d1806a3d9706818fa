@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2bceb815_e3a253c7",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/history/CommitFileDiffViewer.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 566,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2019-02-08T23:25:32Z",
+      "side": 1,
+      "message": "This is not good yet; it confuses the virtual table. But the old code is too slow.",
+      "revId": "ecdd4bb9811a5291089b780d1806a3d9706818fa",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
