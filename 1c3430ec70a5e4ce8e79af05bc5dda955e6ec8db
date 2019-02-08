@@ -16,6 +16,24 @@
       "revId": "1c3430ec70a5e4ce8e79af05bc5dda955e6ec8db",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "2f7f01bb_488c69c4",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/history/FileDiffLabelProvider.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1179
+      },
+      "writtenOn": "2019-02-08T15:00:36Z",
+      "side": 1,
+      "message": "The super() returns \"\" on null. Why should we differ?",
+      "parentUuid": "731cc102_21b1ab3b",
+      "revId": "1c3430ec70a5e4ce8e79af05bc5dda955e6ec8db",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
     }
   ]
 }
