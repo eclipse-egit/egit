@@ -287,7 +287,7 @@ public class RepositoriesView extends CommonNavigator implements IShowInSource, 
 		GridLayoutFactory.fillDefaults().applyTo(emptyArea);
 		Composite infoArea = new Composite(emptyArea, SWT.NONE);
 		infoArea.setMenu(menu);
-		GridDataFactory.swtDefaults().align(SWT.CENTER, SWT.CENTER)
+		GridDataFactory.swtDefaults().align(SWT.LEFT, SWT.TOP)
 				.grab(true, true).applyTo(infoArea);
 		GridLayoutFactory.swtDefaults().applyTo(infoArea);
 		Label messageLabel = new Label(infoArea, SWT.WRAP);
@@ -298,8 +298,8 @@ public class RepositoriesView extends CommonNavigator implements IShowInSource, 
 		Composite optionsArea = new Composite(infoArea, SWT.NONE);
 		optionsArea.setMenu(menu);
 		GridLayoutFactory.swtDefaults().numColumns(2).applyTo(optionsArea);
-		GridDataFactory.swtDefaults().align(SWT.CENTER, SWT.CENTER)
-				.grab(true, true).applyTo(optionsArea);
+		GridDataFactory.swtDefaults().indent(5, 0).grab(true, true)
+				.applyTo(optionsArea);
 
 		final FormToolkit toolkit = new FormToolkit(emptyArea.getDisplay());
 		emptyArea.addDisposeListener(new DisposeListener() {
