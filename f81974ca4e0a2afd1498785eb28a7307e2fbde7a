@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d87bc353_32df007e",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/history/FileDiffContentProvider.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1179
+      },
+      "writtenOn": "2019-02-08T09:18:27Z",
+      "side": 1,
+      "message": "This needs to be now ILazyContentProvider. Otherwise we get gazillions of NPE\u0027s while switching from commit to commit.\n\nThe point of interest is the line 82 in AbstractTableViewer (\n\norg.eclipse.jface.viewers.AbstractTableViewer.VirtualManager.addTableListener()) where it asks if (contentProvider instanceof ILazyContentProvider) and currently it then simply return null, which causes this:\n\njava.lang.NullPointerException\n\tat org.eclipse.egit.ui.internal.history.FileDiffLabelProvider.getText(FileDiffLabelProvider.java:43)\n\tat org.eclipse.jface.viewers.ColumnLabelProvider.update(ColumnLabelProvider.java:37)\n\tat org.eclipse.jface.viewers.ViewerColumn.refresh(ViewerColumn.java:144)\n\tat org.eclipse.jface.viewers.AbstractTableViewer.doUpdateItem(AbstractTableViewer.java:394)\n\tat org.eclipse.jface.viewers.StructuredViewer$UpdateItemSafeRunnable.run(StructuredViewer.java:478)\n\tat org.eclipse.core.runtime.SafeRunner.run(SafeRunner.java:45)\n\tat org.eclipse.ui.internal.JFaceUtil.lambda$0(JFaceUtil.java:47)\n\tat org.eclipse.jface.util.SafeRunnable.run(SafeRunnable.java:176)\n\tat org.eclipse.jface.viewers.StructuredViewer.updateItem(StructuredViewer.java:2161)\n\tat org.eclipse.jface.viewers.AbstractTableViewer$VirtualManager.lambda$0(AbstractTableViewer.java:102)\n\tat org.eclipse.swt.widgets.EventTable.sendEvent(EventTable.java:89)\n\tat org.eclipse.swt.widgets.Display.sendEvent(Display.java:5770)\n\tat org.eclipse.swt.widgets.Widget.sendEvent(Widget.java:1401)\n\tat org.eclipse.swt.widgets.Widget.sendEvent(Widget.java:1427)\n\tat org.eclipse.swt.widgets.Widget.sendEvent(Widget.java:1410)\n\tat org.eclipse.swt.widgets.Table.checkData(Table.java:282)\n\tat org.eclipse.swt.widgets.Table.cellDataProc(Table.java:221)\n\tat org.eclipse.swt.widgets.Display.cellDataProc(Display.java:888)\n\tat org.eclipse.swt.internal.gtk.GTK._gtk_list_store_remove(Native Method)\n\tat org.eclipse.swt.internal.gtk.GTK.gtk_list_store_remove(GTK.java:4000)\n\tat org.eclipse.swt.widgets.Table.remove(Table.java:2659)\n\tat org.eclipse.swt.widgets.Table.setItemCount(Table.java:3613)\n\tat org.eclipse.jface.viewers.TableViewer.doSetItemCount(TableViewer.java:231)\n\tat org.eclipse.jface.viewers.AbstractTableViewer.internalVirtualRefreshAll(AbstractTableViewer.java:643)\n\tat org.eclipse.jface.viewers.AbstractTableViewer.internalRefresh(AbstractTableViewer.java:617)\n\tat org.eclipse.jface.viewers.AbstractTableViewer.internalRefresh(AbstractTableViewer.java:607)\n\tat org.eclipse.jface.viewers.AbstractTableViewer.lambda$0(AbstractTableViewer.java:569)\n\tat org.eclipse.jface.viewers.StructuredViewer.preservingSelection(StructuredViewer.java:1449)\n\tat org.eclipse.jface.viewers.StructuredViewer.preservingSelection(StructuredViewer.java:1410)\n\tat org.eclipse.jface.viewers.AbstractTableViewer.inputChanged(AbstractTableViewer.java:569)\n\tat org.eclipse.jface.viewers.ContentViewer.setInput(ContentViewer.java:289)\n\tat org.eclipse.jface.viewers.StructuredViewer.setInput(StructuredViewer.java:1687)\n\tat org.eclipse.egit.ui.internal.history.GitHistoryPage$8.selectionChanged(GitHistoryPage.java:1457)\n\tat org.eclipse.jface.viewers.StructuredViewer$3.run(StructuredViewer.java:874)",
+      "range": {
+        "startLine": 43,
+        "startChar": 48,
+        "endLine": 43,
+        "endChar": 74
+      },
+      "revId": "f81974ca4e0a2afd1498785eb28a7307e2fbde7a",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
