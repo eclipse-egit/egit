@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "731cc102_21b1ab3b",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/history/FileDiffLabelProvider.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2019-02-08T14:58:37Z",
+      "side": 1,
+      "message": "Return null, and make the other operations null-safe, too.",
+      "revId": "1c3430ec70a5e4ce8e79af05bc5dda955e6ec8db",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
