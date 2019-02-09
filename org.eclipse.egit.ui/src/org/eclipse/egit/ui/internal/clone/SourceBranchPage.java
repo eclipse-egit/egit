@@ -29,6 +29,7 @@ import org.eclipse.egit.core.op.ListRemoteOperation;
 import org.eclipse.egit.core.securestorage.UserPasswordCredentials;
 import org.eclipse.egit.ui.Activator;
 import org.eclipse.egit.ui.UIPreferences;
+import org.eclipse.egit.ui.internal.CommonUtils;
 import org.eclipse.egit.ui.internal.UIIcons;
 import org.eclipse.egit.ui.internal.UIText;
 import org.eclipse.egit.ui.internal.components.CachedCheckboxTreeViewer;
@@ -377,8 +378,8 @@ class SourceBranchPage extends WizardPage {
 		}
 		Collections.sort(availableRefs, new Comparator<Ref>() {
 			@Override
-			public int compare(final Ref o1, final Ref o2) {
-				return o1.getName().compareToIgnoreCase(o2.getName());
+			public int compare(final Ref ref1, final Ref ref2) {
+				return CommonUtils.REF_ASCENDING_COMPARATOR.compare(ref1, ref2);
 			}
 		});
 		if (idHEAD != null && head == null) {

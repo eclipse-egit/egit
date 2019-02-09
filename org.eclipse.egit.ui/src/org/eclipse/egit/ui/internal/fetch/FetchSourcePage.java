@@ -21,6 +21,7 @@ import org.eclipse.egit.core.op.ListRemoteOperation;
 import org.eclipse.egit.ui.Activator;
 import org.eclipse.egit.ui.UIPreferences;
 import org.eclipse.egit.ui.UIUtils;
+import org.eclipse.egit.ui.internal.CommonUtils;
 import org.eclipse.egit.ui.internal.UIText;
 import org.eclipse.jface.dialogs.IMessageProvider;
 import org.eclipse.jface.dialogs.ProgressMonitorDialog;
@@ -159,8 +160,9 @@ public class FetchSourcePage extends WizardPage {
 				}
 				Collections.sort(proposals, new Comparator<Ref>() {
 					@Override
-					public int compare(Ref o1, Ref o2) {
-						return o1.getName().compareTo(o2.getName());
+					public int compare(Ref ref1, Ref ref2) {
+						return CommonUtils.REF_ASCENDING_COMPARATOR
+								.compare(ref1, ref2);
 					}
 				});
 				this.remoteRefs = proposals;
