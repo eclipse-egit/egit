@@ -139,6 +139,11 @@ public abstract class AbstractConfigureRemoteDialog
 	protected IAction addRefSpecAdvancedAction;
 
 	/**
+	 * button for changing the URI
+	 */
+	protected Button changeButton;
+
+	/**
 	 * Create a new {@link AbstractConfigureRemoteDialog}.
 	 *
 	 * @param parent
@@ -293,7 +298,8 @@ public abstract class AbstractConfigureRemoteDialog
 				updateControls();
 			}
 		};
-		createActionButton(sameUriDetails, SWT.PUSH, changeCommonUriAction);
+		changeButton = createActionButton(sameUriDetails, SWT.PUSH,
+				changeCommonUriAction);
 		createActionButton(sameUriDetails, SWT.PUSH, deleteCommonUriAction)
 				.setEnabled(false);
 
@@ -493,6 +499,15 @@ public abstract class AbstractConfigureRemoteDialog
 	 * Validate and enable/disable controls depending on the current state.
 	 */
 	protected abstract void updateControls();
+
+	/**
+	 * Set the initial focus in the dialog after creating all controls.
+	 */
+	protected void setInitialFocus() {
+		if (commonUriText.getText().isEmpty()) {
+			changeButton.setFocus();
+		}
+	}
 
 	@Override
 	protected final void createButtonsForButtonBar(Composite parent) {

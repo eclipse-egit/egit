@@ -268,6 +268,7 @@ public class SimpleConfigurePushDialog extends AbstractConfigureRemoteDialog {
 				getConfig().getName()));
 		setMessage(UIText.SimpleConfigurePushDialog_DialogMessage);
 		updateControls();
+		setInitialFocus();
 	}
 
 	@Override

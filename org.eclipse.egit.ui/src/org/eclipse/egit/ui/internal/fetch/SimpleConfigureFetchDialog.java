@@ -177,6 +177,7 @@ public class SimpleConfigureFetchDialog extends AbstractConfigureRemoteDialog {
 				getConfig().getName()));
 		setMessage(UIText.SimpleConfigureFetchDialog_DialogMessage);
 		updateControls();
+		setInitialFocus();
 	}
 
 	@Override
