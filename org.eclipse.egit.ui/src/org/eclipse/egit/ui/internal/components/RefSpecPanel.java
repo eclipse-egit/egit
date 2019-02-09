@@ -28,6 +28,7 @@ import java.util.TreeSet;
 import java.util.regex.Pattern;
 
 import org.eclipse.egit.ui.Activator;
+import org.eclipse.egit.ui.internal.CommonUtils;
 import org.eclipse.egit.ui.internal.UIIcons;
 import org.eclipse.egit.ui.internal.UIText;
 import org.eclipse.jface.fieldassist.ComboContentAdapter;
@@ -1745,9 +1746,8 @@ public class RefSpecPanel {
 			final Collection<Ref> refs, final Ref head) {
 		final TreeSet<Ref> set = new TreeSet<>(new Comparator<Ref>() {
 			@Override
-			public int compare(Ref o1, Ref o2) {
-				// lexicographical ordering by name seems to be fine
-				return o1.getName().compareTo(o2.getName());
+			public int compare(Ref ref1, Ref ref2) {
+				return CommonUtils.REF_ASCENDING_COMPARATOR.compare(ref1, ref2);
 			}
 		});
 		set.addAll(refs);

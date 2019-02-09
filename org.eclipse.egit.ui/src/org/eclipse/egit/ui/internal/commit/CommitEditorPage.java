@@ -33,6 +33,7 @@ import org.eclipse.egit.ui.Activator;
 import org.eclipse.egit.ui.UIPreferences;
 import org.eclipse.egit.ui.UIUtils;
 import org.eclipse.egit.ui.internal.ClipboardUtils;
+import org.eclipse.egit.ui.internal.CommonUtils;
 import org.eclipse.egit.ui.internal.GitLabelProvider;
 import org.eclipse.egit.ui.internal.PreferenceBasedDateFormatter;
 import org.eclipse.egit.ui.internal.UIIcons;
@@ -380,9 +381,9 @@ public class CommitEditorPage extends FormPage
 
 			@Override
 			public int compare(Ref r1, Ref r2) {
-				return Repository.shortenRefName(r1.getName())
-						.compareToIgnoreCase(
-								Repository.shortenRefName(r2.getName()));
+				return CommonUtils.STRING_ASCENDING_COMPARATOR.compare(
+						Repository.shortenRefName(r1.getName()),
+						Repository.shortenRefName(r2.getName()));
 			}
 		});
 		return tags;

@@ -316,8 +316,9 @@ public class StagingViewContentProvider extends WorkbenchContentProvider {
 		Set<StagingEntry> nodes = new TreeSet<>(
 				new Comparator<StagingEntry>() {
 					@Override
-					public int compare(StagingEntry o1, StagingEntry o2) {
-						return o1.getPath().compareTo(o2.getPath());
+					public int compare(StagingEntry entry1, StagingEntry entry2) {
+						return String.CASE_INSENSITIVE_ORDER
+								.compare(entry1.getPath(), entry2.getPath());
 					}
 				});
 
@@ -409,14 +410,17 @@ public class StagingViewContentProvider extends WorkbenchContentProvider {
 					StagingEntry e1 = (StagingEntry) o1;
 					StagingEntry e2 = (StagingEntry) o2;
 					if (fileNameMode) {
-						int result = e1.getName().compareTo(e2.getName());
+						int result = String.CASE_INSENSITIVE_ORDER
+								.compare(e1.getName(), e2.getName());
 						if (result != 0)
 							return result;
 						else
-							return e1.getParentPath().toString()
-									.compareTo(e2.getParentPath().toString());
+							return String.CASE_INSENSITIVE_ORDER.compare(
+									e1.getParentPath().toString(),
+									e2.getParentPath().toString());
 					}
-					return e1.getPath().compareTo(e2.getPath());
+					return String.CASE_INSENSITIVE_ORDER.compare(e1.getPath(),
+							e2.getPath());
 				} else {
 					// Files should come after folders
 					return 1;
