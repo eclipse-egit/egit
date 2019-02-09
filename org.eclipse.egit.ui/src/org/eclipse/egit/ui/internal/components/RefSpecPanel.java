@@ -384,9 +384,9 @@ public class RefSpecPanel {
 		for (final RefContentProposal p : remoteProposals)
 			remoteRefNames.add(p.getContent());
 
-		Ref HEAD = null;
+		Ref head = null;
 		try {
-			HEAD = localDb.exactRef(Constants.HEAD);
+			head = localDb.exactRef(Constants.HEAD);
 		} catch (IOException e) {
 			Activator.logError("Couldn't read HEAD from local repository", e); //$NON-NLS-1$
 		}
@@ -397,7 +397,7 @@ public class RefSpecPanel {
 			refs = Collections.emptyList();
 		}
 		final List<RefContentProposal> localProposals = createContentProposals(
-				refs, HEAD);
+				refs, head);
 		localProposalProvider.setProposals(localProposals);
 		localRefNames = new HashSet<>();
 		for (final RefContentProposal ref : localProposals)
@@ -1742,7 +1742,7 @@ public class RefSpecPanel {
 	}
 
 	private List<RefContentProposal> createContentProposals(
-			final Collection<Ref> refs, final Ref HEAD) {
+			final Collection<Ref> refs, final Ref head) {
 		final TreeSet<Ref> set = new TreeSet<>(new Comparator<Ref>() {
 			@Override
 			public int compare(Ref o1, Ref o2) {
@@ -1751,14 +1751,14 @@ public class RefSpecPanel {
 			}
 		});
 		set.addAll(refs);
-		if (HEAD != null) {
-			set.add(HEAD);
+		if (head != null) {
+			set.add(head);
 		}
 
 		final List<RefContentProposal> result = new ArrayList<>(
 				set.size());
 		for (final Ref r : set) {
-			result.add(new RefContentProposal(localDb, r, HEAD == null));
+			result.add(new RefContentProposal(localDb, r, head == null));
 		}
 		return result;
 	}
