@@ -18,6 +18,7 @@ import java.util.WeakHashMap;
 
 import org.eclipse.egit.ui.internal.GitLabels;
 import org.eclipse.egit.ui.internal.repository.tree.AdditionalRefNode;
+import org.eclipse.egit.ui.internal.repository.tree.RefNode;
 import org.eclipse.egit.ui.internal.repository.tree.RepositoryNode;
 import org.eclipse.egit.ui.internal.repository.tree.RepositoryTreeNode;
 import org.eclipse.egit.ui.internal.repository.tree.RepositoryTreeNodeType;
@@ -160,6 +161,12 @@ public class RepositoryTreeNodeLabelProvider
 	@Override
 	public String getDescription(Object element) {
 		StringBuilder result = new StringBuilder(getText(element));
+		// for branches use the complete name, even with hierarchical layout
+		if (element instanceof RefNode) {
+			Ref ref = ((RefNode) element).getObject();
+			String branchName = Repository.shortenRefName(ref.getName());
+			result = new StringBuilder(branchName);
+		}
 		if (element instanceof RepositoryTreeNode) {
 			if (((RepositoryTreeNode) element)
 					.getType() != RepositoryTreeNodeType.REPO) {
