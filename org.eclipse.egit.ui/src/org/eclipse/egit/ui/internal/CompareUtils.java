@@ -918,8 +918,8 @@ public class CompareUtils {
 	 * the last commit that modified the file in order to have more useful
 	 * author information.
 	 * <p>
-	 * Returns an empty typed element if there is not yet a head (initial import
-	 * case).
+	 * Returns an empty typed element if there is not yet a HEAD (initial import
+	 * case) or the file does not exist in HEAD.
 	 * <p>
 	 * If there is an error getting the HEAD commit, it is handled and null
 	 * returned.
@@ -932,13 +932,23 @@ public class CompareUtils {
 	public static ITypedElement getHeadTypedElement(Repository repository, String repoRelativePath) {
 		try {
 			Ref head = repository.exactRef(Constants.HEAD);
-			if (head == null || head.getObjectId() == null)
+			if (head == null || head.getObjectId() == null) {
 				// Initial import, not yet a HEAD commit
 				return new EmptyTypedElement(""); //$NON-NLS-1$
-
+			}
 			RevCommit latestFileCommit;
 			try (RevWalk rw = new RevWalk(repository)) {
 				RevCommit headCommit = rw.parseCommit(head.getObjectId());
+				// Check if the path exists at all in HEAD
+				try (TreeWalk tw = TreeWalk.forPath(repository,
+						repoRelativePath, headCommit.getTree())) {
+					if (tw == null) {
+						return new GitCompareFileRevisionEditorInput.EmptyTypedElement(
+								NLS.bind(UIText.GitHistoryPage_FileNotInCommit,
+										getName(repoRelativePath),
+										Constants.HEAD));
+					}
+				}
 				rw.markStart(headCommit);
 				rw.setTreeFilter(AndTreeFilter.create(
 						PathFilterGroup.createFromStrings(repoRelativePath),
@@ -946,8 +956,9 @@ public class CompareUtils {
 				rw.setRewriteParents(false);
 				latestFileCommit = rw.next();
 				// Fall back to HEAD
-				if (latestFileCommit == null)
+				if (latestFileCommit == null) {
 					latestFileCommit = headCommit;
+				}
 			}
 
 			return CompareUtils.getFileRevisionTypedElement(repoRelativePath, latestFileCommit, repository);
