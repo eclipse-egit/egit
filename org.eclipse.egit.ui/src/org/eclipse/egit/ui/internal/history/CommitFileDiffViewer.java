@@ -24,6 +24,7 @@ import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Objects;
+import java.util.function.Consumer;
 
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IResource;
@@ -246,12 +247,8 @@ public class CommitFileDiffViewer extends TableViewer {
 				UIText.CommitFileDiffViewer_OpenInEditorMenuLabel) {
 			@Override
 			public void run() {
-				final ISelection s = getSelection();
-				if (s.isEmpty() || !(s instanceof IStructuredSelection))
-					return;
-				final IStructuredSelection iss = (IStructuredSelection) s;
-				for (Object element : iss.toList())
-					openThisVersionInEditor((FileDiff) element);
+				withSelection(
+						CommitFileDiffViewer.this::openThisVersionInEditor);
 			}
 		};
 
@@ -259,12 +256,8 @@ public class CommitFileDiffViewer extends TableViewer {
 				UIText.CommitFileDiffViewer_OpenPreviousInEditorMenuLabel) {
 			@Override
 			public void run() {
-				final ISelection s = getSelection();
-				if (s.isEmpty() || !(s instanceof IStructuredSelection))
-					return;
-				final IStructuredSelection iss = (IStructuredSelection) s;
-				for (Object element : iss.toList())
-					openPreviousVersionInEditor((FileDiff) element);
+				withSelection(
+						CommitFileDiffViewer.this::openPreviousVersionInEditor);
 			}
 		};
 
@@ -272,12 +265,7 @@ public class CommitFileDiffViewer extends TableViewer {
 				UIIcons.ANNOTATE) {
 			@Override
 			public void run() {
-				final ISelection s = getSelection();
-				if (s.isEmpty() || !(s instanceof IStructuredSelection))
-					return;
-				final IStructuredSelection iss = (IStructuredSelection) s;
-				for (Iterator<FileDiff> it = iss.iterator(); it.hasNext();)
-					showAnnotations(it.next());
+				withSelection(CommitFileDiffViewer.this::showAnnotations);
 			}
 		};
 
@@ -285,19 +273,14 @@ public class CommitFileDiffViewer extends TableViewer {
 				UIText.CommitFileDiffViewer_OpenWorkingTreeVersionInEditorMenuLabel) {
 			@Override
 			public void run() {
-				final ISelection s = getSelection();
-				if (s.isEmpty() || !(s instanceof IStructuredSelection))
-					return;
-				final IStructuredSelection iss = (IStructuredSelection) s;
-				for (Iterator<FileDiff> it = iss.iterator(); it.hasNext();) {
-					FileDiff diff = it.next();
-					String relativePath = diff.getPath();
+				withSelection(d -> {
+					String relativePath = d.getPath();
 					File file = new Path(
-							diff.getRepository().getWorkTree()
+							d.getRepository().getWorkTree()
 									.getAbsolutePath())
 									.append(relativePath).toFile();
 					DiffViewer.openFileInEditor(file, -1);
-				}
+				});
 			}
 		};
 
@@ -305,13 +288,8 @@ public class CommitFileDiffViewer extends TableViewer {
 				UIText.CommitFileDiffViewer_CompareMenuLabel) {
 			@Override
 			public void run() {
-				ISelection s = getSelection();
-				if (s.isEmpty() || !(s instanceof IStructuredSelection)) {
-					return;
-				}
-				IStructuredSelection iss = (IStructuredSelection) s;
-				FileDiff d = (FileDiff) iss.getFirstElement();
-				showTwoWayFileDiff(d);
+				withFirstSelected(
+						CommitFileDiffViewer.this::showTwoWayFileDiff);
 			}
 		};
 
@@ -319,11 +297,8 @@ public class CommitFileDiffViewer extends TableViewer {
 				UIText.CommitFileDiffViewer_CompareWorkingDirectoryMenuLabel) {
 			@Override
 			public void run() {
-				final ISelection s = getSelection();
-				if (s.isEmpty() || !(s instanceof IStructuredSelection))
-					return;
-				final IStructuredSelection iss = (IStructuredSelection) s;
-				showWorkingDirectoryFileDiff((FileDiff) iss.getFirstElement());
+				withFirstSelected(
+						CommitFileDiffViewer.this::showWorkingDirectoryFileDiff);
 			}
 		};
 
@@ -394,6 +369,30 @@ public class CommitFileDiffViewer extends TableViewer {
 		};
 		mgr.add(copyAll);
 		mgr.addMenuListener(manager -> getControl().setFocus());
+	}
+
+	private void withSelection(Consumer<FileDiff> consumer) {
+		IStructuredSelection selection = getStructuredSelection();
+		if (selection == null || selection.isEmpty()) {
+			return;
+		}
+		Iterator<?> items = selection.iterator();
+		items.forEachRemaining(o -> {
+			if (o instanceof FileDiff) {
+				consumer.accept((FileDiff) o);
+			}
+		});
+	}
+
+	private void withFirstSelected(Consumer<FileDiff> consumer) {
+		IStructuredSelection selection = getStructuredSelection();
+		if (selection == null || selection.isEmpty()) {
+			return;
+		}
+		Object o = selection.getFirstElement();
+		if (o instanceof FileDiff) {
+			consumer.accept((FileDiff) o);
+		}
 	}
 
 	@Override
@@ -525,7 +524,7 @@ public class CommitFileDiffViewer extends TableViewer {
 	 * @see IShowInSource#getShowInContext()
 	 */
 	public ShowInContext getShowInContext() {
-		IStructuredSelection selection = (IStructuredSelection) getSelection();
+		IStructuredSelection selection = getStructuredSelection();
 		List<Object> elements = new ArrayList<>();
 		List<File> files = new ArrayList<>();
 		Repository repo = null;
