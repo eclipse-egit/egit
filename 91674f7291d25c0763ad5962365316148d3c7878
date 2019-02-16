@@ -16,6 +16,24 @@
       "revId": "91674f7291d25c0763ad5962365316148d3c7878",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "81413e73_50c286a0",
+        "filename": "org.eclipse.egit.ui/plugin.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 6456,
+      "author": {
+        "id": 440
+      },
+      "writtenOn": "2019-02-16T18:21:04Z",
+      "side": 1,
+      "message": "You are right. Looks like I didn\u0027t notice it\u0027s not ours, when copying one of the Remove Branch/Remote/... commands from menu spy.",
+      "parentUuid": "9e807f34_7d7d14c3",
+      "revId": "91674f7291d25c0763ad5962365316148d3c7878",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
     }
   ]
 }
