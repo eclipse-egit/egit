@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9e807f34_7d7d14c3",
+        "filename": "org.eclipse.egit.ui/plugin.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 6456,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2019-02-16T15:52:10Z",
+      "side": 1,
+      "message": "Why this? It\u0027s not one of our commands, so we shouldn\u0027t bind an image to it. Platform UI should have bound an image to it already.",
+      "revId": "91674f7291d25c0763ad5962365316148d3c7878",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
