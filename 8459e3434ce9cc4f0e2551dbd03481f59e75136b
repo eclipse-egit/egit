@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f8eb8097_4ab4d66d",
+        "filename": "org.eclipse.egit.gitflow/src/org/eclipse/egit/gitflow/BranchNameValidator.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2019-02-16T19:09:54Z",
+      "side": 1,
+      "message": "I\u0027d add here @deprecated with an explanation what should be used instead. If there is no reasonable public replacement, maybe the class should not be deprecated then? Third-party users might use it since it\u0027s public API.",
+      "revId": "8459e3434ce9cc4f0e2551dbd03481f59e75136b",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "fc675dd1_da378243",
+        "filename": "org.eclipse.egit.gitflow/src/org/eclipse/egit/gitflow/BranchNameValidator.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2019-02-16T19:09:54Z",
+      "side": 1,
+      "message": "I think if the whole class id @Deprecated you don\u0027t need to mark all public methods indiviually.",
+      "revId": "8459e3434ce9cc4f0e2551dbd03481f59e75136b",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
