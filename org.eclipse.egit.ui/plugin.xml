@@ -5442,7 +5442,6 @@
                </command>
                <command
                      commandId="org.eclipse.egit.ui.team.Untrack"
-                     icon="$nl$/icons/obj16/untrack.png"
                      label="%UntrackAction_label"
                      style="push">
                   <visibleWhen
@@ -5623,7 +5622,6 @@
             <command
                   commandId="org.eclipse.egit.ui.team.ShowBlame"
                   label="%ShowBlameAction_label"
-                  icon="icons/etool16/annotate.png"
                   style="push">
                <visibleWhen checkEnabled="true" />
             </command>
@@ -6433,6 +6431,10 @@
             icon="icons/etool16/annotate.png">
       </image>
       <image
+            commandId="org.eclipse.egit.ui.team.ShowBlame"
+            icon="icons/etool16/annotate.png">
+      </image>
+      <image
             commandId="org.eclipse.egit.ui.PushHeadToGerrit"
             icon="icons/obj16/gerrit_push.png">
       </image>
@@ -6447,6 +6449,34 @@
       <image
             commandId="org.eclipse.egit.ui.team.Disconnect"
             icon="icons/obj16/disconnect_co.png">
+      </image>
+      <image
+            commandId="org.eclipse.egit.ui.team.stash.drop"
+            icon="icons/obj16/delete_obj.png">
+      </image>
+      <image
+            commandId="org.eclipse.egit.ui.RepositoriesViewRemoveRemote"
+            icon="icons/obj16/delete_obj.png">
+      </image>
+      <image
+            commandId="org.eclipse.egit.ui.team.Untrack"
+            icon="icons/obj16/untrack.png">
+      </image>
+      <image
+            commandId="org.eclipse.egit.ui.team.OpenCommit"
+            icon="icons/obj16/open-commit.png">
+      </image>
+      <image
+            commandId="org.eclipse.egit.ui.RepositoriesViewOpenInEditor"
+            icon="icons/elcl16/goto_input.png">
+      </image>
+      <image
+            commandId="org.eclipse.egit.ui.team.CompareWithCommit"
+            icon="icons/obj16/changelog_obj.png">
+      </image>
+      <image
+            commandId="org.eclipse.egit.ui.team.ReplaceWithCommit"
+            icon="icons/obj16/changelog_obj.png">
       </image>
    </extension>
    <extension
