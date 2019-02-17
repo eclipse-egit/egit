@@ -1654,7 +1654,7 @@ public class UIText extends NLS {
 	public static String ReflogView_CommitMessageColumnHeader;
 
 	/** */
-	public static String RefSelectionDialog_Messsage;
+	public static String RefSelectionDialog_Message;
 
 	/** */
 	public static String RefSelectionDialog_Title;
@@ -3741,7 +3741,7 @@ public class UIText extends NLS {
 	public static String RepositoriesView_linkCreate;
 
 	/** */
-	public static String RepositoriesView_messsageEmpty;
+	public static String RepositoriesView_messageEmpty;
 
 	/** */
 	public static String RepositoriesView_NothingToPasteMessage;

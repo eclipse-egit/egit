@@ -105,7 +105,7 @@ public class GitRepositoriesViewRepoHandlingTest extends
 		refreshAndWait();
 		final Exception[] exceptions = new Exception[1];
 		final SWTBotLabel label = getOrOpenView().bot().label(
-				UIText.RepositoriesView_messsageEmpty);
+				UIText.RepositoriesView_messageEmpty);
 		Display.getDefault().syncExec(new Runnable() {
 
 			@Override

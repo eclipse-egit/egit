@@ -133,7 +133,7 @@ public abstract class GitRepositoriesViewTestBase extends
 
 	protected void assertEmpty() throws Exception {
 		final SWTBotView view = getOrOpenView();
-		view.bot().label(UIText.RepositoriesView_messsageEmpty);
+		view.bot().label(UIText.RepositoriesView_messageEmpty);
 	}
 
 	protected void refreshAndWait() throws Exception {

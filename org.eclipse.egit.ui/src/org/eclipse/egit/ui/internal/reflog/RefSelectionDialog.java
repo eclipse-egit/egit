@@ -73,6 +73,6 @@ public class RefSelectionDialog extends AbstractBranchSelectionDialog {
 
 	@Override
 	protected String getMessageText() {
-		return UIText.RefSelectionDialog_Messsage;
+		return UIText.RefSelectionDialog_Message;
 	}
 }
