@@ -291,7 +291,7 @@ public class RepositoriesView extends CommonNavigator implements IShowInSource, 
 				.grab(true, true).applyTo(infoArea);
 		GridLayoutFactory.swtDefaults().applyTo(infoArea);
 		Label messageLabel = new Label(infoArea, SWT.WRAP);
-		messageLabel.setText(UIText.RepositoriesView_messsageEmpty);
+		messageLabel.setText(UIText.RepositoriesView_messageEmpty);
 		messageLabel.setMenu(menu);
 		GridDataFactory.swtDefaults().align(SWT.FILL, SWT.FILL)
 				.grab(true, false).applyTo(messageLabel);

@@ -84,7 +84,7 @@ public class FeatureRebaseHandler extends AbstractGitFlowHandler {
 		RebaseResult.Status status = operationResult.getStatus();
 		String pluginId = Activator.getPluginId();
 		MultiStatus info = new MultiStatus(pluginId, 1,
-				UIText.FeatureRebaseHandler_problemsOcccurredDuringRebase, null);
+				UIText.FeatureRebaseHandler_problemsOccurredDuringRebase, null);
 		info.add(new Status(IStatus.WARNING, pluginId, NLS.bind(
 				UIText.FeatureRebaseHandler_statusWas, status.name())));
 		if (operationResult.getConflicts() != null && !operationResult.getConflicts().isEmpty()) {
