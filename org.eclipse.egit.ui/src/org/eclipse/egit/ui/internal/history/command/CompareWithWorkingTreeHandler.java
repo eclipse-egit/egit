@@ -14,19 +14,20 @@ package org.eclipse.egit.ui.internal.history.command;
 
 import java.io.File;
 
+import org.eclipse.compare.CompareEditorInput;
 import org.eclipse.compare.ITypedElement;
 import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.commands.ExecutionException;
 import org.eclipse.core.resources.IFile;
+import org.eclipse.core.runtime.Path;
 import org.eclipse.egit.core.project.RepositoryMapping;
 import org.eclipse.egit.ui.internal.CompareUtils;
 import org.eclipse.egit.ui.internal.history.GitHistoryPage;
 import org.eclipse.egit.ui.internal.revision.GitCompareFileRevisionEditorInput;
+import org.eclipse.egit.ui.internal.synchronize.compare.LocalNonWorkspaceTypedElement;
 import org.eclipse.jface.viewers.IStructuredSelection;
-import org.eclipse.jgit.lib.Constants;
 import org.eclipse.jgit.lib.Repository;
 import org.eclipse.jgit.revwalk.RevCommit;
-import org.eclipse.jgit.revwalk.RevWalk;
 import org.eclipse.team.ui.synchronize.SaveableCompareEditorInput;
 import org.eclipse.ui.IWorkbenchPage;
 import org.eclipse.ui.handlers.HandlerUtil;
@@ -56,27 +57,26 @@ public class CompareWithWorkingTreeHandler extends
 				final String commitPath = getRenamedPath(gitPath, commit);
 				ITypedElement right = CompareUtils.getFileRevisionTypedElement(
 						commitPath, commit, mapping.getRepository());
-				final GitCompareFileRevisionEditorInput in = new GitCompareFileRevisionEditorInput(
+				CompareEditorInput in = new GitCompareFileRevisionEditorInput(
 						SaveableCompareEditorInput.createFileElement(file),
 						right, null);
 				CompareUtils.openInCompare(workbenchPage, in);
 			}
 		} else if (input instanceof File) {
 			File file = (File) input;
-			// TODO can we create a ITypedElement from the local file?
 			Repository repo = getRepository(event);
-			RevCommit leftCommit;
-			try (RevWalk rw = new RevWalk(repo)) {
-				leftCommit = rw.parseCommit(repo
-						.resolve(Constants.HEAD));
-			} catch (Exception e) {
-				throw new ExecutionException(e.getMessage(), e);
+			if (repo != null) {
+				final String leftCommitPath = getRepoRelativePath(repo, file);
+				final String rightCommitPath = getRenamedPath(leftCommitPath,
+						commit);
+				ITypedElement right = CompareUtils.getFileRevisionTypedElement(
+						rightCommitPath, commit, repo);
+				CompareEditorInput in = new GitCompareFileRevisionEditorInput(
+						new LocalNonWorkspaceTypedElement(repo,
+								new Path(file.getAbsolutePath())),
+						right, null);
+				CompareUtils.openInCompare(workbenchPage, in);
 			}
-			final String leftCommitPath = getRepoRelativePath(repo, file);
-			final String rightCommitPath = getRenamedPath(leftCommitPath,
-					commit);
-			CompareUtils.openInCompare(leftCommit, commit, leftCommitPath,
-					rightCommitPath, repo, workbenchPage);
 		}
 		return null;
 	}
