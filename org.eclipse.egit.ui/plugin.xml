@@ -2745,24 +2745,7 @@
                   <adapt type="org.eclipse.egit.core.internal.IRepositoryCommit" />
                </iterate>
                <with variable="activePart">
-                  <test property="GitHistory.isSingleFileHistory" value="resource" />
-               </with>
-            </and>
-         </activeWhen>
-      </handler>
-      <handler
-            commandId="org.eclipse.egit.ui.history.CompareWithHead">
-         <class
-               class="org.eclipse.egit.ui.internal.history.command.CompareWithWorkingTreeHandler">
-         </class>
-         <activeWhen>
-            <and>
-               <count value="1" />
-               <iterate>
-                  <adapt type="org.eclipse.egit.core.internal.IRepositoryCommit" />
-               </iterate>
-               <with variable="activePart">
-                  <test property="GitHistory.isSingleFileHistory" value="file" />
+                  <test property="GitHistory.isSingleFileHistory" />
                </with>
             </and>
          </activeWhen>
@@ -3344,13 +3327,7 @@
             locationURI="popup:org.eclipse.egit.ui.historyPageContributions?after=history.group">
          <command
               commandId="org.eclipse.egit.ui.history.CompareWithWorkingTree"
-              label="%HistoryCompareWithWorkspace.label"
-              style="push">
-            <visibleWhen checkEnabled="true" />
-         </command>
-         <command
-              commandId="org.eclipse.egit.ui.history.CompareWithHead"
-              label="%HistoryCompareWithHead.label"
+              label="%HistoryCompareWithWorkingTree.label"
               style="push">
             <visibleWhen checkEnabled="true" />
          </command>
@@ -6863,10 +6840,6 @@
       <command
             id="org.eclipse.egit.ui.history.CompareWithWorkingTree"
             name="%CompareWithWorkTreeCommand.name">
-      </command>
-      <command
-            id="org.eclipse.egit.ui.history.CompareWithHead"
-            name="%CompareWithHeadCommand.name">
       </command>
       <command
             id="org.eclipse.egit.ui.history.ShowVersions"
