@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "34e3237c_c4f23d67",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/RepositoryCache.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2019-02-18T21:03:30Z",
+      "side": 1,
+      "message": "Right. Need to remove a stale IndexDiffCache here. Only problem is that I cannot do so inside the synchronized block, we might get deadlocks due to lock inversion.\n\nDone.",
+      "parentUuid": "b1e5179f_3902033e",
+      "range": {
+        "startLine": 57,
+        "startChar": 22,
+        "endLine": 58,
+        "endChar": 60
+      },
+      "revId": "72fa6d8881d2a4392da1998f10cfc2d221d3eeaa",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fdf0efdf_bbc81ffc",
         "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/RepositoryCache.java",
         "patchSetId": 1
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "ebb1542c_e6f946c6",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/RepositoryCache.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2019-02-18T21:03:30Z",
+      "side": 1,
+      "message": "Don\u0027t think so. But if r \u003d\u003d null, we can return null right away.",
+      "parentUuid": "fdf0efdf_bbc81ffc",
+      "range": {
+        "startLine": 85,
+        "startChar": 3,
+        "endLine": 89,
+        "endChar": 34
+      },
+      "revId": "72fa6d8881d2a4392da1998f10cfc2d221d3eeaa",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "aaffb174_95d6a5c6",
         "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/RepositoryCache.java",
         "patchSetId": 1
@@ -59,6 +107,30 @@
       "writtenOn": "2019-02-18T17:05:21Z",
       "side": 1,
       "message": "can\u0027t we move this to the very beginning of the method as an early exit? (should already have been in the old version)",
+      "range": {
+        "startLine": 162,
+        "startChar": 8,
+        "endLine": 162,
+        "endChar": 24
+      },
+      "revId": "72fa6d8881d2a4392da1998f10cfc2d221d3eeaa",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "b604df7c_5cca73ef",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/RepositoryCache.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 162,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2019-02-18T21:03:30Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "aaffb174_95d6a5c6",
       "range": {
         "startLine": 162,
         "startChar": 8,
