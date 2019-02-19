@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "20241709_9cff5cb0",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/internal/util/RepositoryPathChecker.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2019-02-19T21:51:55Z",
+      "side": 1,
+      "message": "I think this is a cosmetic change since we check if the file exists and ensure it\u0027s a directory in line 74, according to the javadoc list() returns null if file is not a directory or if an IO error occurred. hence we could as well just suppress this warning",
+      "revId": "0e95a7b35d814e2c7eade8179c0abcdb46680798",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
