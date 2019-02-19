@@ -16,6 +16,24 @@
       "revId": "0e95a7b35d814e2c7eade8179c0abcdb46680798",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5abec730_fba032e9",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/internal/util/RepositoryPathChecker.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 440
+      },
+      "writtenOn": "2019-02-19T22:08:07Z",
+      "side": 1,
+      "message": "I don\u0027t really know what kind of exotic file systems have what kinds of access restrictions. Therefore I would not assume that I get a valid list() after a successful call of isDirectory().\n\nFor this specific piece of code I also cannot imagine that this would really be a problem. Nevertheless I\u0027d rather add one more null check for clarity than trying to suppress a warning here (which would be even harder, given it is not the compiler, but spotbugs). Or did I get you wrong about the warning?",
+      "parentUuid": "20241709_9cff5cb0",
+      "revId": "0e95a7b35d814e2c7eade8179c0abcdb46680798",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
     }
   ]
 }
