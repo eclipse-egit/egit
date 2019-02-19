@@ -172,7 +172,7 @@ public class GitCreateGeneralProjectPage extends WizardPage {
 				return;
 			}
 			// make sure there is not already a .project file
-			if (myDirectory.list(new FilenameFilter() {
+			String[] dotProjectFiles = myDirectory.list(new FilenameFilter() {
 
 				@Override
 				public boolean accept(File dir, String name) {
@@ -180,7 +180,8 @@ public class GitCreateGeneralProjectPage extends WizardPage {
 						return true;
 					return false;
 				}
-			}).length > 0) {
+			});
+			if (dotProjectFiles != null && dotProjectFiles.length > 0) {
 				setErrorMessage(NLS
 						.bind(
 								UIText.GitCreateGeneralProjectPage_FileExistsInDirMessage,

@@ -75,7 +75,8 @@ public class RepositoryPathChecker {
 			errorMessage = NLS.bind(CoreText.RepositoryPathChecker_errNoDirectory, dir);
 			return false;
 		}
-		hasContent = testFile.exists() && testFile.list().length > 0;
+		String[] files = testFile.list();
+		hasContent = testFile.exists() && files != null && files.length > 0;
 		return true;
 	}
 
