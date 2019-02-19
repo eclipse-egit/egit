@@ -734,7 +734,7 @@ public class CommitDialog extends TitleAreaDialog {
 		applyDialogFont(container);
 		container.pack();
 		commitText.setFocus();
-		Image titleImage = UIIcons.WIZBAN_CONNECT_REPO.createImage();
+		Image titleImage = UIIcons.WIZBAN_COMMIT.createImage();
 		UIUtils.hookDisposal(parent, titleImage);
 		setTitleImage(titleImage);
 		setTitle(UIText.CommitDialog_Title);
