@@ -5809,6 +5809,12 @@ public class UIText extends NLS {
 	/** */
 	public static String EditableRevision_CannotSave;
 
+	/** */
+	public static String GitProjectPropertyPage_GroupAttributes;
+
+	/**	 */
+	public static String GitProjectPropertyPage_LabelNone;
+
 	static {
 		initializeMessages(BUNDLE_NAME, UIText.class);
 	}
