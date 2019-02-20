@@ -28,6 +28,7 @@ import org.eclipse.jface.viewers.DelegatingStyledCellLabelProvider.IStyledLabelP
 import org.eclipse.jface.viewers.StyledString;
 import org.eclipse.jgit.lib.Ref;
 import org.eclipse.jgit.lib.Repository;
+import org.eclipse.swt.graphics.Image;
 import org.eclipse.ui.IMemento;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.model.WorkbenchLabelProvider;
@@ -136,6 +137,13 @@ public class RepositoryTreeNodeLabelProvider
 	@Override
 	public String getText(Object element) {
 		return labelProvider.getText(element);
+	}
+
+	@Override
+	public Image getImage(Object element) {
+		// We know that the decorator for RepositoryTreeNodes will not decorate
+		// the image; our label provider will do so already.
+		return labelProvider.getImage(element);
 	}
 
 	@Override
