@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "c1727b96_e8075702",
+        "filename": "org.eclipse.egit.gitflow/src/org/eclipse/egit/gitflow/BranchNameValidator.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1638
+      },
+      "writtenOn": "2019-02-20T07:21:18Z",
+      "side": 1,
+      "message": "I don\u0027t know of any replacements third-parties could use. Utils is internal. But honestly, I don\u0027t think it is worth the effort. Third parties could write a replacement without much effort. In case somebody complains in Bugzilla, we can still change it.",
+      "parentUuid": "f8eb8097_4ab4d66d",
+      "revId": "8459e3434ce9cc4f0e2551dbd03481f59e75136b",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fc675dd1_da378243",
         "filename": "org.eclipse.egit.gitflow/src/org/eclipse/egit/gitflow/BranchNameValidator.java",
         "patchSetId": 8
@@ -30,6 +48,24 @@
       "writtenOn": "2019-02-16T19:09:54Z",
       "side": 1,
       "message": "I think if the whole class id @Deprecated you don\u0027t need to mark all public methods indiviually.",
+      "revId": "8459e3434ce9cc4f0e2551dbd03481f59e75136b",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3d12d668_6b2b887e",
+        "filename": "org.eclipse.egit.gitflow/src/org/eclipse/egit/gitflow/BranchNameValidator.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1638
+      },
+      "writtenOn": "2019-02-20T07:21:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fc675dd1_da378243",
       "revId": "8459e3434ce9cc4f0e2551dbd03481f59e75136b",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
