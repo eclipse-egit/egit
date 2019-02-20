@@ -113,6 +113,24 @@
     },
     {
       "key": {
+        "uuid": "b8f9ffd9_d029115a",
+        "filename": "org.eclipse.egit.gitflow/src/org/eclipse/egit/gitflow/BranchNameValidator.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1638
+      },
+      "writtenOn": "2019-02-20T07:21:18Z",
+      "side": 1,
+      "message": "After the bugfix and refactoring, that would be an enhancement for egit.core\u0027s Utils. I assume we should do that separately, no?",
+      "parentUuid": "bf2a2531_f7005a3b",
+      "revId": "62201177b05f077fc182a9fb4bacc9c8e2a6d3bb",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "939c656d_5729448b",
         "filename": "org.eclipse.egit.gitflow/src/org/eclipse/egit/gitflow/BranchNameValidator.java",
         "patchSetId": 2
