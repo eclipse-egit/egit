@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ec4d154c_7a29d75f",
+        "filename": "org.eclipse.egit.target/egit-4.11-staging.target",
+        "patchSetId": 1
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 440
+      },
+      "writtenOn": "2019-02-20T06:17:46Z",
+      "side": 1,
+      "message": "Just in case someone else is wondering about these differences: The target files are reformatted when reloading a target platform. Therefore I\u0027ve gotten to a procedure of always staging newly generated .target files first, and only then to test them by reloading. That way they are always nicely formatted in git.",
+      "range": {
+        "startLine": 1,
+        "startChar": 0,
+        "endLine": 5,
+        "endChar": 13
+      },
+      "revId": "cd22038cf437a719a5676b0cccb393325e201dab",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
