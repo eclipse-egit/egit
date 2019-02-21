@@ -16,6 +16,24 @@
       "revId": "6d93ae82cbeb216f41ddd9a79fd3ab9c69116393",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "b57a5d53_734ccc06",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/actions/SwitchToMenu.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 294,
+      "author": {
+        "id": 440
+      },
+      "writtenOn": "2019-02-21T13:25:23Z",
+      "side": 1,
+      "message": "We don\u0027t need to delay this. It\u0027s the selection listener, i.e. what happens when the menu is clicked, not when the menu is created. Moving it to BranchOperationUI would be virtually the same point in time.",
+      "parentUuid": "f661a479_a2884794",
+      "revId": "6d93ae82cbeb216f41ddd9a79fd3ab9c69116393",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
     }
   ]
 }
