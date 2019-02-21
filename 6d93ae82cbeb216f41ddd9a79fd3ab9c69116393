@@ -34,6 +34,24 @@
       "revId": "6d93ae82cbeb216f41ddd9a79fd3ab9c69116393",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "750a02da_69a0d6a4",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/actions/SwitchToMenu.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 294,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2019-02-21T13:31:12Z",
+      "side": 1,
+      "message": "I know. Here it will run in the UI thread. Doing it in the background job inside BranchOperationUI would do it on a background thread.\n\nBut I didn\u0027t look at how complicated doing this might get, or whether BranchOperationUI is going to do lots of costly stuff on the UI thread anyway whence my question.",
+      "parentUuid": "b57a5d53_734ccc06",
+      "revId": "6d93ae82cbeb216f41ddd9a79fd3ab9c69116393",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
     }
   ]
 }
