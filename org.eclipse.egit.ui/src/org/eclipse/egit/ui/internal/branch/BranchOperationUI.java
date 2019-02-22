@@ -14,6 +14,7 @@
 package org.eclipse.egit.ui.internal.branch;
 
 import java.io.File;
+import java.io.IOException;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
@@ -61,7 +62,7 @@ import org.eclipse.ui.PlatformUI;
  */
 public class BranchOperationUI {
 
-	private final Repository[] repositories;
+	private Repository[] repositories;
 
 	private String target;
 
@@ -77,7 +78,7 @@ public class BranchOperationUI {
 	 * once.
 	 * </p>
 	 */
-	private final boolean showQuestionsBeforeCheckout;
+	private boolean showQuestionsBeforeCheckout;
 
 	/**
 	 * Create an operation for checking out a branch on multiple repositories.
@@ -139,15 +140,7 @@ public class BranchOperationUI {
 			boolean showQuestionsBeforeCheckout) {
 		this.repositories = repositories;
 		this.target = target;
-		/*
-		 * We do not have support for CreateBranchWizards when performing
-		 * checkout on multiple repositories at once, thus, the
-		 * showQuestionsBeforeCheckout is forced to false in this case
-		 */
-		this.isSingleRepositoryOperation = repositories.length == 1;
-		this.showQuestionsBeforeCheckout = isSingleRepositoryOperation
-				? showQuestionsBeforeCheckout
-				: false;
+		this.showQuestionsBeforeCheckout = showQuestionsBeforeCheckout;
 	}
 
 	private String confirmTarget(IProgressMonitor monitor) {
@@ -213,6 +206,7 @@ public class BranchOperationUI {
 	 * Starts the operation asynchronously
 	 */
 	public void start() {
+		removeRepositoriesAlreadySwitched();
 		if (repositories == null || repositories.length == 0) {
 			return;
 		}
@@ -305,6 +299,7 @@ public class BranchOperationUI {
 	 *
 	 */
 	public void run(IProgressMonitor monitor) throws CoreException {
+		removeRepositoriesAlreadySwitched();
 		SubMonitor progress = SubMonitor.convert(monitor, 100);
 		target = confirmTarget(progress.newChild(20));
 		if (target == null) {
@@ -316,6 +311,34 @@ public class BranchOperationUI {
 				!restore);
 		doCheckout(bop, restore, progress.newChild(80));
 		show(bop.getResults());
+	}
+
+	/**
+	 * When multiple repositories are selected, some of them may already be on
+	 * the target branch. Filter them out to avoid side effects like opening
+	 * projects.
+	 */
+	private void removeRepositoriesAlreadySwitched() {
+		repositories = Stream.of(repositories)
+				.filter(r -> !target.equals(getBranch(r)))
+				.toArray(Repository[]::new);
+		/*
+		 * We do not have support for CreateBranchWizards when performing
+		 * checkout on multiple repositories at once, thus, the
+		 * showQuestionsBeforeCheckout is forced to false in this case
+		 */
+		this.isSingleRepositoryOperation = repositories.length == 1;
+		if (!isSingleRepositoryOperation) {
+			showQuestionsBeforeCheckout = false;
+		}
+	}
+
+	private String getBranch(Repository repo) {
+		try {
+			return repo.getBranch();
+		} catch (IOException e) {
+			return ""; //$NON-NLS-1$
+		}
 	}
 
 	private void askForTargetIfNecessary() {
