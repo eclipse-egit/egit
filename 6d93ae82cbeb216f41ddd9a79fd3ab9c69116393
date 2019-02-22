@@ -52,6 +52,24 @@
       "revId": "6d93ae82cbeb216f41ddd9a79fd3ab9c69116393",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3290ec5f_c2874767",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/actions/SwitchToMenu.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 294,
+      "author": {
+        "id": 440
+      },
+      "writtenOn": "2019-02-22T15:12:45Z",
+      "side": 1,
+      "message": "Moved into BranchOperation according to your suggestion.",
+      "parentUuid": "750a02da_69a0d6a4",
+      "revId": "6d93ae82cbeb216f41ddd9a79fd3ab9c69116393",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
     }
   ]
 }
