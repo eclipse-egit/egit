@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "674bd6c8_60d3ea0b",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/branch/BranchOperationUI.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 209,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2019-02-23T09:31:36Z",
+      "side": 1,
+      "message": "This call is still on the UI thread, I think. But so is the confirmTarget() below, which may do more potentially expensive things. Can we do this preamble (lines 209-216) inside the CheckoutJob? Or use run() inside that job directly?",
+      "revId": "5f503d36ca8cf12a0a8aae7ef7a8a3c61191b9f1",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
