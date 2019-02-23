@@ -35,7 +35,7 @@
 		href="/org.eclipse.egit.doc/help/EGit/User_Guide/User-Guide.html#Eclipse_SSH_Configuration"
 		title="Using SSH" skip="true" dialog="true">
 		<description>
-			If you connect to the repository via SSH for the first time, you have to accept the <b>host key</b> of the repository before proceeding<br /><br />
+			If you connect to the repository via SSH for the first time, you have to accept the <b>host key</b> of the repository before proceeding.<br /><br />
 			In case your SSH key is protected by a <b>passphrase</b>, you have to enter it in a dialog that opens automatically.
 		</description>
 	</item>
