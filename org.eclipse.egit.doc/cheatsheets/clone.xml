@@ -23,6 +23,14 @@
 		</description>
 		<command required="false" serialization="org.eclipse.egit.ui.RepositoriesViewClone" />
 	</item>
+	<item title="Repository Source (Optional)" dialog="true" skip="true">
+		<description>
+			Depending on which additional plug-ins have been installed, you may need to choose between different sources for cloning the repository.<br /><br />
+			If you are not sure, choose &quot;Clone URI&quot; from the list of available sources.<br /><br />
+			If the wizard is already asking your for repository details like a URI, then you can skip to the next item in the cheat sheet.
+		</description>
+		<command required="false" serialization="org.eclipse.egit.ui.RepositoriesViewClone" />
+	</item>
 	<item
 		href="/org.eclipse.egit.doc/help/EGit/User_Guide/Tasks.html#Repository_Selection"
 		title="Repository Selection" dialog="true">
