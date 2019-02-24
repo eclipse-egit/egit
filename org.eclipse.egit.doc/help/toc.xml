@@ -487,7 +487,7 @@
 			<topic href="help/EGit/Contributor_Guide/Manual-Developer-Setup.html#Obtaining_Sources" label="Obtaining Sources">
 				<topic href="help/EGit/Contributor_Guide/Manual-Developer-Setup.html#Cloning" label="Cloning">
 					<topic href="help/EGit/Contributor_Guide/Manual-Developer-Setup.html#On_the_command_line" label="On the command line"></topic>
-					<topic href="help/EGit/Contributor_Guide/Manual-Developer-Setup.html#Using_EGit_.28see_.5Bhttp:.2F.2Fwww.eclipse.org.2Fegit.2Fdownload.2F_download_page.5D.29" label="Using EGit (see [http://www.eclipse.org/egit/download/ download page])"></topic>
+					<topic href="help/EGit/Contributor_Guide/Manual-Developer-Setup.html#Using_EGit_.28see_.5Bhttp:.2F.2Fwww.eclipse.org.2Fegit.2Fdownload.2F_download_page.5D.29" label="Using EGit (see [https://www.eclipse.org/egit/download/ download page])"></topic>
 				</topic>
 				<topic href="help/EGit/Contributor_Guide/Manual-Developer-Setup.html#Repositories" label="Repositories">
 					<topic href="help/EGit/Contributor_Guide/Manual-Developer-Setup.html#EGit" label="EGit"></topic>

@@ -26,10 +26,10 @@ public class TestRepositoryServerProvider implements IRepositoryServerProvider {
 
 	@Override
 	public Collection<RepositoryServerInfo> getRepositoryServerInfos() {
-		List<RepositoryServerInfo> info = new ArrayList<RepositoryServerInfo>();
+		List<RepositoryServerInfo> info = new ArrayList<>();
 		try {
 			info.add(new RepositoryServerInfo("EGit Gerrit", new URI(
-					"http://egit.eclipse.org/r")));
+					"https://egit.eclipse.org/r")));
 			info.add(new RepositoryServerInfo("Local Gerrit", new URI(
 					"http://localhost:8080")));
 		} catch (URISyntaxException e) {

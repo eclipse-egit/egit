@@ -187,7 +187,8 @@ public class BranchAndResetActionTest extends LocalRepositoryTestCase {
 
 			SWTBotToolbarDropDownButton pathButton = showUndeleted.bot().toolbarDropDownButton();
 			pathButton.menuItem(UIText.NonDeletedFilesTree_FileSystemPathsButton).click();
-			// see http://www.eclipse.org/forums/index.php/t/159133/ why we need this
+			// see https://www.eclipse.org/forums/index.php/t/159133/ why we
+			// need this
 			pathButton.pressShortcut(KeyStroke.getInstance("ESC"));
 			// fs path
 			IPath path = new Path(lookupRepository(repositoryFile)
@@ -205,7 +206,8 @@ public class BranchAndResetActionTest extends LocalRepositoryTestCase {
 				assertTrue(found);
 			}
 			pathButton.menuItem(UIText.NonDeletedFilesTree_ResourcePathsButton).click();
-			// see http://www.eclipse.org/forums/index.php/t/159133/ why we need this
+			// see https://www.eclipse.org/forums/index.php/t/159133/ why we
+			// need this
 			pathButton.pressShortcut(KeyStroke.getInstance("ESC"));
 			// resource path
 			assertEquals("ToBeDeleted", showUndeleted.bot().tree()

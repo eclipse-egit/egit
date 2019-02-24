@@ -30,8 +30,8 @@ import org.eclipse.jgit.lib.StoredConfig;
 /**
  * Resolves Git variables within templates
  *
- * @see <a
- *      href="http://help.eclipse.org/topic/org.eclipse.jdt.doc.user/concepts/concept-template-variables.htm">http://help.eclipse.org/topic/org.eclipse.jdt.doc.user/concepts/concept-template-variables.htm</a>
+ * @see <a href=
+ *      "https://help.eclipse.org/topic/org.eclipse.jdt.doc.user/concepts/concept-template-variables.htm">https://help.eclipse.org/topic/org.eclipse.jdt.doc.user/concepts/concept-template-variables.htm</a>
  */
 public class GitTemplateVariableResolver extends TemplateVariableResolver {
 

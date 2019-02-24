@@ -1,6 +1,6 @@
 target "4.8-photon" with source configurePhase
 
-location "http://download.eclipse.org/releases/photon/" {
+location "https://download.eclipse.org/releases/photon/" {
 	// Eclipse platform
 	org.eclipse.sdk.ide lazy
 	org.eclipse.ecf.console.feature.feature.group lazy

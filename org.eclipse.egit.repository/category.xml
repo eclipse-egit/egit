@@ -53,5 +53,5 @@
       </description>
    </category-def>
    <category-def name="EGit.experimental" label="Git integration for Eclipse - experimental features  (incubation)"/>
-   <repository-reference location="http://download.eclipse.org/e4/snapshots/org.eclipse.e4.ui" enabled="true" />
+   <repository-reference location="https://download.eclipse.org/e4/snapshots/org.eclipse.e4.ui" enabled="true" />
 </site>

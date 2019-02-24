@@ -1,6 +1,6 @@
 target "swtbot-snapshot" with source configurePhase
 
-location swtbot-snapshot "http://download.eclipse.org/technology/swtbot/snapshots/" {
+location swtbot-snapshot "https://download.eclipse.org/technology/swtbot/snapshots/" {
 	org.eclipse.swtbot.eclipse.feature.group lazy
 	org.eclipse.swtbot.feature.group lazy
 	org.eclipse.swtbot.eclipse.test.junit.feature.group lazy

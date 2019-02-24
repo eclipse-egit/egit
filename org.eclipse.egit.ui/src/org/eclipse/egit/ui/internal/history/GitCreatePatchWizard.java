@@ -10,10 +10,10 @@
  *
  * Contributors:
  *    Stefan Lay (SAP AG) - initial implementation
- *    Daniel Megert <daniel_megert@ch.ibm.com> - Create Patch... dialog should not set file location - http://bugs.eclipse.org/361405
+ *    Daniel Megert <daniel_megert@ch.ibm.com> - Create Patch... dialog should not set file location - https://bugs.eclipse.org/361405
  *    Tomasz Zarna <Tomasz.Zarna@pl.ibm.com> - Allow to save patches in Workspace
  *    Tomasz Zarna <Tomasz.Zarna@pl.ibm.com> - Team > Create Patch... doesn't observe selection, bug 370332
- *    Daniel Megert <daniel_megert@ch.ibm.com> - Create Patch wizard's options page should remember values - http://bugs.eclipse.org/377390
+ *    Daniel Megert <daniel_megert@ch.ibm.com> - Create Patch wizard's options page should remember values - https://bugs.eclipse.org/377390
  *******************************************************************************/
 package org.eclipse.egit.ui.internal.history;
 

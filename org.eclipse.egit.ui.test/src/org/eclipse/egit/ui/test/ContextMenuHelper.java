@@ -10,7 +10,7 @@
  *
  * Contributors:
  *    Stefan Seelmann - initial implementation posted to
- *    http://www.eclipse.org/forums/index.php?t=msg&th=11863&start=2
+ *    https://www.eclipse.org/forums/index.php?t=msg&th=11863&start=2
  *******************************************************************************/
 package org.eclipse.egit.ui.test;
 

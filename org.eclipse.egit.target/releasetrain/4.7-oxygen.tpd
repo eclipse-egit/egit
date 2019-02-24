@@ -1,6 +1,6 @@
 target "4.7-oxygen" with source configurePhase
 
-location "http://download.eclipse.org/releases/oxygen/" {
+location "https://download.eclipse.org/releases/oxygen/" {
 	// Eclipse platform
 	org.eclipse.sdk.ide lazy
 	org.eclipse.emf.sdk.feature.group lazy

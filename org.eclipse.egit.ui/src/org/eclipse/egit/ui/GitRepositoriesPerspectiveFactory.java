@@ -9,7 +9,7 @@
  *
  * Contributors:
  *    Mathias Kinzler (SAP AG) - initial implementation
- *    Daniel Megert <daniel_megert@ch.ibm.com> - EGit must not pollute toolbars of perspectives it doesn't own - http://bugs.eclipse.org/356554
+ *    Daniel Megert <daniel_megert@ch.ibm.com> - EGit must not pollute toolbars of perspectives it doesn't own - https://bugs.eclipse.org/356554
  *******************************************************************************/
 package org.eclipse.egit.ui;
 

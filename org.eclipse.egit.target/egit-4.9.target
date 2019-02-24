@@ -20,13 +20,13 @@
       <unit id="org.eclipse.jetty.servlet.source" version="9.4.14.v20181114"/>
       <unit id="org.eclipse.jetty.util" version="9.4.14.v20181114"/>
       <unit id="org.eclipse.jetty.util.source" version="9.4.14.v20181114"/>
-      <repository id="jetty-9.4.14" location="http://download.eclipse.org/jetty/updates/jetty-bundles-9.x/9.4.14.v20181114"/>
+      <repository id="jetty-9.4.14" location="https://download.eclipse.org/jetty/updates/jetty-bundles-9.x/9.4.14.v20181114"/>
     </location>
     <location includeMode="slicer" includeAllPlatforms="false" includeSource="true" includeConfigurePhase="true" type="InstallableUnit">
       <unit id="org.eclipse.swtbot.eclipse.feature.group" version="0.0.0"/>
       <unit id="org.eclipse.swtbot.feature.group" version="0.0.0"/>
       <unit id="org.eclipse.swtbot.eclipse.test.junit.feature.group" version="0.0.0"/>
-      <repository id="swtbot-snapshot" location="http://download.eclipse.org/technology/swtbot/snapshots/"/>
+      <repository id="swtbot-snapshot" location="https://download.eclipse.org/technology/swtbot/snapshots/"/>
     </location>
     <location includeMode="slicer" includeAllPlatforms="false" includeSource="true" includeConfigurePhase="true" type="InstallableUnit">
       <unit id="com.google.gson" version="2.8.2.v20180104-1110"/>
@@ -97,7 +97,7 @@
       <unit id="org.apache.sshd.core.source" version="2.0.0.v20181102-1323"/>
       <unit id="org.apache.sshd.sftp" version="2.0.0.v20181102-1323"/>
       <unit id="org.apache.sshd.sftp.source" version="2.0.0.v20181102-1323"/>
-      <repository location="http://download.eclipse.org/tools/orbit/downloads/drops/S20190219190953/repository"/>
+      <repository location="https://download.eclipse.org/tools/orbit/downloads/drops/S20190219190953/repository"/>
     </location>
     <location includeMode="slicer" includeAllPlatforms="false" includeSource="true" includeConfigurePhase="true" type="InstallableUnit">
       <unit id="org.eclipse.sdk.ide" version="0.0.0"/>
@@ -112,7 +112,7 @@
       <unit id="org.eclipse.mylyn.context_feature.feature.group" version="0.0.0"/>
       <unit id="org.eclipse.mylyn.bugzilla_feature.feature.group" version="0.0.0"/>
       <unit id="org.eclipse.tools.layout.spy" version="0.0.0"/>
-      <repository location="http://download.eclipse.org/releases/2018-09/"/>
+      <repository location="https://download.eclipse.org/releases/2018-09/"/>
     </location>
     <location includeMode="slicer" includeAllPlatforms="false" includeSource="true" includeConfigurePhase="true" type="InstallableUnit">
       <unit id="javax.xml" version="0.0.0"/>
@@ -122,7 +122,7 @@
       <unit id="org.apache.xerces" version="0.0.0"/>
       <unit id="org.apache.xml.resolver" version="0.0.0"/>
       <unit id="org.apache.xml.serializer" version="0.0.0"/>
-      <repository location="http://download.eclipse.org/mylyn/releases/latest"/>
+      <repository location="https://download.eclipse.org/mylyn/releases/latest"/>
     </location>
   </locations>
 </target>

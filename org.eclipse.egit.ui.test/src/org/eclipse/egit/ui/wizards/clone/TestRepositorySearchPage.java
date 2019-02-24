@@ -38,7 +38,7 @@ public class TestRepositorySearchPage extends WizardPage implements
 	@Override
 	public GitRepositoryInfo getGitRepositoryInfo() {
 			return new GitRepositoryInfo(
-					"http://egit.eclipse.org/r/p/egit-training");
+				"https://egit.eclipse.org/r/p/egit-training");
 	}
 
 }

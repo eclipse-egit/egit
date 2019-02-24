@@ -1,6 +1,6 @@
 target "staging" with source configurePhase
 
-location "http://download.eclipse.org/releases/2018-09/" {
+location "https://download.eclipse.org/releases/2018-09/" {
 	// Eclipse platform
 	org.eclipse.sdk.ide lazy
 	org.eclipse.ecf.core.feature.feature.group lazy
@@ -20,7 +20,7 @@ location "http://download.eclipse.org/releases/2018-09/" {
 	org.eclipse.tools.layout.spy lazy
 }
 
-location "http://download.eclipse.org/mylyn/releases/latest" {
+location "https://download.eclipse.org/mylyn/releases/latest" {
 	// some Mylyn dependencies as bundles, to avoid mylyn.trac, which would lead to conflicts
 	javax.xml lazy
 	org.apache.lucene.analyzers-common [6.1.0,6.2.0)
