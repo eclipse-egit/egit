@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0093ea6a_0b08916e",
+        "filename": "org.eclipse.egit.doc/help/JGit/New_and_Noteworthy/5.1/Updating-This-Document.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2019-02-24T17:53:54Z",
+      "side": 1,
+      "message": "These Updating-This-Document.html files are generated during the build in the build-help.xml Ant task. The URL must be fixed there; I presume the edit you did there would also fix this URL.\n\nAnd why do we have the 5.1 N\u0026N here? Last release was 5.2, and I\u0027d expect this to contain the 5.3 N\u0026N when we do the 5.3 release.\n\nBTW, looks like your script missed the corresponding files in the EGit subfolder.",
+      "revId": "38339bff1c2ac2738cb9e14037ffc03437cc877f",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
