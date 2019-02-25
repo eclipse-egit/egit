@@ -16,6 +16,24 @@
       "revId": "7b7ca039f8af4b38354255cf3d548856ae81c0da",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "4d4cb30c_3228fdf9",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/repository/tree/command/RemoveCommand.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 324,
+      "author": {
+        "id": 440
+      },
+      "writtenOn": "2019-02-25T20:28:42Z",
+      "side": 1,
+      "message": "I was to much in a hurry. Changed now.",
+      "parentUuid": "1b7a061b_3ad4632f",
+      "revId": "7b7ca039f8af4b38354255cf3d548856ae81c0da",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
     }
   ]
 }
