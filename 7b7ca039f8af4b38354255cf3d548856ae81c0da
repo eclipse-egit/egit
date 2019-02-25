@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1b7a061b_3ad4632f",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/repository/tree/command/RemoveCommand.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 324,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2019-02-25T14:14:49Z",
+      "side": 1,
+      "message": "if (repository \u003d\u003d null || repository.isBare()) {\n\nis more concise and gets rid of the {}-less block below.",
+      "revId": "7b7ca039f8af4b38354255cf3d548856ae81c0da",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
