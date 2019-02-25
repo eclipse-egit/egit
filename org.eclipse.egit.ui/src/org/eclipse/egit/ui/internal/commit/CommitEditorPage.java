@@ -509,7 +509,12 @@ public class CommitEditorPage extends FormPage
 		GridDataFactory.fillDefaults().grab(true, true).hint(SWT.DEFAULT, 50)
 				.applyTo(control);
 		addToFocusTracking(control);
-		branchViewer.setComparator(new ViewerComparator());
+		branchViewer.setComparator(new ViewerComparator() {
+			@Override
+			protected Comparator<? super String> getComparator() {
+				return CommonUtils.STRING_ASCENDING_COMPARATOR;
+			}
+		});
 		branchViewer.setLabelProvider(new GitLabelProvider() {
 
 			@Override
