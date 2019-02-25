@@ -369,6 +369,9 @@ public class PullWizardPage extends WizardPage {
 	}
 
 	private boolean hasDifferentUpstreamConfiguration() {
+		if (fullBranch == null) {
+			return false;
+		}
 		String branchName = Repository.shortenRefName(this.fullBranch);
 		BranchConfig branchConfig = new BranchConfig(repository.getConfig(),
 				branchName);
@@ -392,6 +395,9 @@ public class PullWizardPage extends WizardPage {
 	}
 
 	private void setDefaultUpstreamConfig() {
+		if (fullBranch == null) {
+			return;
+		}
 		String branchName = Repository.shortenRefName(this.fullBranch);
 		BranchConfig branchConfig = new BranchConfig(repository.getConfig(),
 				branchName);
