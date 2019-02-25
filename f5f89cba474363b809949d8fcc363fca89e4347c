@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6f7febc8_cb41005a",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/pull/PullWizardPage.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 398,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2019-02-25T14:18:10Z",
+      "side": 1,
+      "message": "Don\u0027t we have the same problem here?",
+      "range": {
+        "startLine": 398,
+        "startChar": 22,
+        "endLine": 398,
+        "endChar": 65
+      },
+      "revId": "f5f89cba474363b809949d8fcc363fca89e4347c",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
