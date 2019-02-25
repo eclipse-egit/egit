@@ -119,7 +119,7 @@ public class GitFlowRepository {
 	}
 
 	/**
-	 * @return current branchs has release-prefix?
+	 * @return current branch has release prefix?
 	 * @throws IOException
 	 */
 	public boolean isRelease() throws IOException {
@@ -129,7 +129,7 @@ public class GitFlowRepository {
 	}
 
 	/**
-	 * @return current branchs has hotfix-prefix?
+	 * @return current branch has hotfix prefix?
 	 * @throws IOException
 	 */
 	public boolean isHotfix() throws IOException {
@@ -226,7 +226,7 @@ public class GitFlowRepository {
 	private List<Ref> getPrefixBranches(String prefix) {
 		try {
 			List<Ref> branches = Git.wrap(repository).branchList().call();
-			List<Ref> prefixBranches = new ArrayList<Ref>();
+			List<Ref> prefixBranches = new ArrayList<>();
 			for (Ref ref : branches) {
 				if (ref.getName().startsWith(prefix)) {
 					prefixBranches.add(ref);
