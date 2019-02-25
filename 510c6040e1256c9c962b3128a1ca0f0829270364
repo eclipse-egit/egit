@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "901d0e68_28047612",
+        "filename": "org.eclipse.egit.doc/cheatsheets/clone.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 440
+      },
+      "writtenOn": "2019-02-25T13:09:48Z",
+      "side": 1,
+      "message": "copy paste error, remove this",
+      "range": {
+        "startLine": 32,
+        "startChar": 2,
+        "endLine": 32,
+        "endChar": 88
+      },
+      "revId": "510c6040e1256c9c962b3128a1ca0f0829270364",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
