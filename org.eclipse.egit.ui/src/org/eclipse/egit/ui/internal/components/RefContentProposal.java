@@ -14,6 +14,7 @@ package org.eclipse.egit.ui.internal.components;
 import java.io.IOException;
 
 import org.eclipse.egit.ui.Activator;
+import org.eclipse.egit.ui.internal.PreferenceBasedDateFormatter;
 import org.eclipse.egit.ui.internal.UIText;
 import org.eclipse.jface.fieldassist.IContentProposal;
 import org.eclipse.jgit.errors.MissingObjectException;
@@ -60,13 +61,15 @@ public class RefContentProposal implements IContentProposal {
 	private static void appendObjectSummary(final StringBuilder sb,
 			final String type, final PersonIdent author, final String message) {
 		sb.append(type);
+		PreferenceBasedDateFormatter dateFormatter = PreferenceBasedDateFormatter
+				.create();
 		if (author != null) {
 			sb.append(" "); //$NON-NLS-1$
 			sb.append(UIText.RefContentProposal_by);
 			sb.append(" "); //$NON-NLS-1$
 			sb.append(author.getName());
 			sb.append("\n"); //$NON-NLS-1$
-			sb.append(author.getWhen());
+			sb.append(dateFormatter.formatDate(author));
 		}
 		sb.append("\n\n");  //$NON-NLS-1$
 		final int newLine = message.indexOf('\n');
