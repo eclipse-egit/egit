@@ -272,7 +272,8 @@ public class RebaseInteractiveStepActionToolBarProvider {
 
 	void mapActionItemsToSelection(ISelection selection) {
 		setMoveItemsEnabled(false);
-		if (selection == null || selection.isEmpty()) {
+		if (selection == null || selection.isEmpty()
+				|| !view.getCurrentPlan().isRebasingInteractive()) {
 			if (theToolbar.isEnabled())
 				theToolbar.setEnabled(false);
 

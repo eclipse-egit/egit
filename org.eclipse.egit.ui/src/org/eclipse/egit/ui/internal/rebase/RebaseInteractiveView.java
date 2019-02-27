@@ -26,6 +26,8 @@ import org.eclipse.core.runtime.preferences.IEclipsePreferences.PreferenceChange
 import org.eclipse.core.runtime.preferences.InstanceScope;
 import org.eclipse.egit.core.AdapterUtils;
 import org.eclipse.egit.core.RepositoryUtil;
+import org.eclipse.egit.core.internal.indexdiff.IndexDiffCacheEntry;
+import org.eclipse.egit.core.internal.indexdiff.IndexDiffData;
 import org.eclipse.egit.core.internal.rebase.RebaseInteractivePlan;
 import org.eclipse.egit.core.internal.rebase.RebaseInteractivePlan.ElementAction;
 import org.eclipse.egit.core.internal.rebase.RebaseInteractivePlan.ElementType;
@@ -36,6 +38,7 @@ import org.eclipse.egit.ui.UIPreferences;
 import org.eclipse.egit.ui.UIUtils;
 import org.eclipse.egit.ui.internal.CommonUtils;
 import org.eclipse.egit.ui.internal.PreferenceBasedDateFormatter;
+import org.eclipse.egit.ui.internal.ResourcePropertyTester;
 import org.eclipse.egit.ui.internal.UIIcons;
 import org.eclipse.egit.ui.internal.UIText;
 import org.eclipse.egit.ui.internal.actions.BooleanPrefAction;
@@ -975,11 +978,28 @@ public class RebaseInteractiveView extends ViewPart implements
 
 		actionToolBarProvider.getTheToolbar().setEnabled(false);
 
-		if (currentPlan == null || !currentPlan.isRebasingInteractive()) {
-			if (currentRepository == null)
+		Repository repo = currentRepository;
+		if (currentPlan == null || repo == null
+				|| !repo.getRepositoryState().isRebasing()) {
+			if (repo == null)
 				form.setText(UIText.RebaseInteractiveView_NoSelection);
 			else
-				form.setText(getRepositoryName(currentRepository));
+				form.setText(getRepositoryName(repo));
+			return;
+		}
+		IndexDiffCacheEntry entry = org.eclipse.egit.core.Activator.getDefault()
+				.getIndexDiffCache().getIndexDiffCacheEntry(repo);
+		IndexDiffData data = entry == null ? null : entry.getIndexDiff();
+		boolean hasConflicts = data != null && !data.getConflicting().isEmpty();
+		if (!currentPlan.isRebasingInteractive()) {
+			// The view can also be opened in some other rebase state when
+			// a normal rebase stops on a conflict.
+			RepositoryState state = repo.getRepositoryState();
+			continueItem.setEnabled(!hasConflicts
+					&& ResourcePropertyTester.canContinueRebase(state));
+			boolean canAbort = ResourcePropertyTester.canAbortRebase(state);
+			skipItem.setEnabled(canAbort);
+			abortItem.setEnabled(canAbort);
 			return;
 		}
 
@@ -993,7 +1013,7 @@ public class RebaseInteractiveView extends ViewPart implements
 			abortItem.setEnabled(true);
 			dndEnabled = true;
 		} else {
-			continueItem.setEnabled(true);
+			continueItem.setEnabled(!hasConflicts);
 			skipItem.setEnabled(true);
 			abortItem.setEnabled(true);
 		}
@@ -1018,6 +1038,7 @@ public class RebaseInteractiveView extends ViewPart implements
 			c.setFocus();
 			boolean selectionNotEmpty = !planViewer.getSelection().isEmpty();
 			boolean rebaseNotStarted = currentPlan != null
+					&& currentPlan.isRebasingInteractive()
 					&& !currentPlan.hasRebaseBeenStartedYet();
 			boolean menuEnabled = selectionNotEmpty && rebaseNotStarted;
 			if (menuEnabled) {
