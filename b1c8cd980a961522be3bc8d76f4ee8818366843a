@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "95082dc0_3076b54f",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/rebase/RebaseInteractiveView.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 1000,
+      "author": {
+        "id": 440
+      },
+      "writtenOn": "2019-02-28T10:14:25Z",
+      "side": 1,
+      "message": "Maybe this would become slightly more fail safe and readable by extracting the switch-case-parts in the property tester into separate methods canContinueRebase(repo) and canAbortRebase(repo), and really just calling these methods instead of dispatching via the property name?",
+      "range": {
+        "startLine": 997,
+        "startChar": 41,
+        "endLine": 1000,
+        "endChar": 37
+      },
+      "revId": "b1c8cd980a961522be3bc8d76f4ee8818366843a",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
