@@ -22,6 +22,30 @@
       "revId": "b1c8cd980a961522be3bc8d76f4ee8818366843a",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "d574390c_f2da9129",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/rebase/RebaseInteractiveView.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 1000,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2019-02-28T16:27:39Z",
+      "side": 1,
+      "message": "Of course. Didn\u0027t think. Done.\n\nI guess I\u0027ll have to give all this property test stuff a serious huge refactoring for bug 544600. But not for 5.3.0.",
+      "parentUuid": "95082dc0_3076b54f",
+      "range": {
+        "startLine": 997,
+        "startChar": 41,
+        "endLine": 1000,
+        "endChar": 37
+      },
+      "revId": "b1c8cd980a961522be3bc8d76f4ee8818366843a",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
     }
   ]
 }
