@@ -109,7 +109,8 @@ public class NoteDetailsPage implements IDetailsPage, IDetailsPageProvider {
 		GridLayoutFactory.fillDefaults().extendedMargins(2, 2, 2, 2)
 				.applyTo(notesArea);
 
-		notesText = new SpellcheckableMessageArea(notesArea, "", SWT.NONE) { //$NON-NLS-1$
+		notesText = new SpellcheckableMessageArea(notesArea, "", true, //$NON-NLS-1$
+				SWT.NONE) {
 
 			@Override
 			protected void createMarginPainter() {
@@ -119,7 +120,6 @@ public class NoteDetailsPage implements IDetailsPage, IDetailsPageProvider {
 		};
 		notesText.setData(FormToolkit.KEY_DRAW_BORDER, FormToolkit.TEXT_BORDER);
 		StyledText text = notesText.getTextWidget();
-		text.setEditable(false);
 		text.setFont(JFaceResources.getFont(JFaceResources.TEXT_FONT));
 		text.setForeground(text.getDisplay().getSystemColor(
 				SWT.COLOR_INFO_FOREGROUND));

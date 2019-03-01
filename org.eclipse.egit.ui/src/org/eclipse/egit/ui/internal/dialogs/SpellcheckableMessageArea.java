@@ -183,6 +183,10 @@ public class SpellcheckableMessageArea extends Composite {
 		}
 
 		protected void synchronizeWithPreference() {
+			// start read-only components without visible whitespace
+			if (!viewer.getTextWidget().getEditable()) {
+				return;
+			}
 			boolean checked = false;
 			if (store != null)
 				checked = store.getBoolean(getPreferenceKey());
