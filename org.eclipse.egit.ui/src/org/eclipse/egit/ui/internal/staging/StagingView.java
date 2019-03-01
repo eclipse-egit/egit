@@ -4059,12 +4059,17 @@ public class StagingView extends ViewPart
 			return; // only try to restore the stored repo commit message if
 					// indexDiff is ready
 
+		Repository repository = currentRepository;
+		if (repository == null) {
+			// the update runs asynchronously
+			return;
+		}
 		CommitHelper helper = new CommitHelper(currentRepository);
 		CommitMessageComponentState oldState = null;
 		if (repositoryChanged
-				|| commitMessageComponent.getRepository() != currentRepository) {
+				|| commitMessageComponent.getRepository() != repository) {
 			oldState = loadCommitMessageComponentState();
-			commitMessageComponent.setRepository(currentRepository);
+			commitMessageComponent.setRepository(repository);
 			if (oldState == null)
 				loadInitialState(helper);
 			else
