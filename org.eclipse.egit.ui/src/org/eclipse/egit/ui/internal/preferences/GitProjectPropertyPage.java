@@ -113,8 +113,10 @@ public class GitProjectPropertyPage extends PropertyPage {
 	}
 
 	private void createHeadLink(final Repository repository, Composite composite) throws IOException {
-		final ObjectId objectId = repository
-				.resolve(repository.getFullBranch());
+		String fullBranch = repository.getFullBranch();
+		final ObjectId objectId = (fullBranch != null)
+				? repository.resolve(fullBranch)
+				: null;
 		if (objectId == null) {
 			Text headLabel = createLabeledReadOnlyText(composite, UIText.GitProjectPropertyPage_LabelId);
 			if (repository.getRefDatabase().getRefsByPrefix(RefDatabase.ALL)
@@ -132,7 +134,8 @@ public class GitProjectPropertyPage extends PropertyPage {
 			headLink.addHyperlinkListener(new HyperlinkAdapter() {
 				@Override
 				public void linkActivated(HyperlinkEvent e) {
-					RepositoryCommit commit = getCommit(repository, objectId);
+					RepositoryCommit commit = getCommit(repository,
+							objectId);
 					if(commit != null)
 						CommitEditor.openQuiet(commit);
 				}
