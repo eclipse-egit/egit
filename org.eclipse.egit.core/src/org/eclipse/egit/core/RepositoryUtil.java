@@ -741,7 +741,11 @@ public class RepositoryUtil {
 	 */
 	public static boolean isDetachedHead(Repository repository) {
 		try {
-			return ObjectId.isId(repository.getFullBranch());
+			String fullBranch = repository.getFullBranch();
+			if (fullBranch == null) {
+				return false;
+			}
+			return ObjectId.isId(fullBranch);
 		} catch (IOException e) {
 			Activator.logError(e.getMessage(), e);
 		}
