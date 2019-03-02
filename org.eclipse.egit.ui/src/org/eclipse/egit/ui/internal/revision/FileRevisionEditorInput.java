@@ -32,6 +32,7 @@ import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.Path;
 import org.eclipse.core.runtime.PlatformObject;
 import org.eclipse.egit.core.AdapterUtils;
+import org.eclipse.egit.core.internal.storage.CommitFileRevision;
 import org.eclipse.egit.ui.Activator;
 import org.eclipse.egit.ui.internal.PreferenceBasedDateFormatter;
 import org.eclipse.egit.ui.internal.UIText;
@@ -202,9 +203,17 @@ public class FileRevisionEditorInput extends PlatformObject implements
 	public String getName() {
 		IFileRevision rev = AdapterUtils.adapt(this, IFileRevision.class);
 		if (rev != null) {
+			String identifier;
+			if (rev instanceof CommitFileRevision) {
+				// 7 characters as in Utils.getShortObjectId(), used in the
+				// window title
+				identifier = rev.getContentIdentifier().substring(0, 7);
+			} else {
+				identifier = rev.getContentIdentifier();
+			}
 			return MessageFormat.format(
 					UIText.FileRevisionEditorInput_NameAndRevisionTitle,
-					rev.getName(), rev.getContentIdentifier());
+					rev.getName(), identifier);
 		}
 		IFileState state = AdapterUtils.adapt(this, IFileState.class);
 		if (state != null) {

@@ -406,7 +406,8 @@ public class HistoryViewTest extends LocalRepositoryTestCase {
 				.click();
 
 		// Editor for old file version should be opened
-		bot.editorByTitle(FILE1 + " " + commit.getParent(0).getName());
+		bot.editorByTitle(
+				FILE1 + " " + commit.getParent(0).getName().substring(0, 7));
 	}
 
 	@Test
