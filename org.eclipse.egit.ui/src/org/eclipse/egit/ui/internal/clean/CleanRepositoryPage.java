@@ -21,10 +21,13 @@ import org.eclipse.core.resources.IWorkspace;
 import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IProgressMonitor;
+import org.eclipse.core.runtime.IStatus;
+import org.eclipse.core.runtime.Status;
 import org.eclipse.core.runtime.SubMonitor;
 import org.eclipse.egit.core.internal.util.ProjectUtil;
 import org.eclipse.egit.ui.Activator;
 import org.eclipse.egit.ui.internal.UIText;
+import org.eclipse.egit.ui.internal.repository.RepositoriesView;
 import org.eclipse.jface.layout.GridDataFactory;
 import org.eclipse.jface.layout.GridLayoutFactory;
 import org.eclipse.jface.operation.IRunnableWithProgress;
@@ -47,6 +50,7 @@ import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.ui.ISharedImages;
 import org.eclipse.ui.PlatformUI;
+import org.eclipse.ui.progress.UIJob;
 
 /**
  * A page for the Clean wizard presenting all things to be cleaned to the user.
@@ -288,11 +292,31 @@ public class CleanRepositoryPage extends WizardPage {
 					} catch (CoreException e) {
 						// could not refresh... not a "real" problem
 					}
+
+					refreshRepositoriesView();
 				}
 			});
 		} catch (Exception e) {
 			Activator.logError("Unexpected exception while cleaning", e); //$NON-NLS-1$
 		}
+	}
+
+	private void refreshRepositoriesView() {
+		UIJob job = new UIJob(
+				UIText.CleanRepositoryPage_RefreshingRepositories) {
+
+			@Override
+			public IStatus runInUIThread(IProgressMonitor monitor) {
+				RepositoriesView view = (RepositoriesView) PlatformUI
+						.getWorkbench().getActiveWorkbenchWindow()
+						.getActivePage().findView(RepositoriesView.VIEW_ID);
+				if (view != null) {
+					view.refresh();
+				}
+				return Status.OK_STATUS;
+			}
+		};
+		job.schedule();
 	}
 
 }
