@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "944fdf50_a56a7dc8",
+        "filename": "org.eclipse.egit.doc/help/JGit/New_and_Noteworthy/5.1/Updating-This-Document.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 440
+      },
+      "writtenOn": "2019-03-02T10:27:34Z",
+      "side": 1,
+      "message": "No script involved. I\u0027m unclear about the documentation. I thought that the files in the egit subfolder are created from the wiki, so I thought we either need to fix some links there or we just need to adapt the baseUrl property in the transformation script. I did neither, and wanted to clarify that first.\n\nTo my believe this change should be complete, except for egit documentation. And I would like to do that one independently, when I know better how to do that transformation.",
+      "parentUuid": "0093ea6a_0b08916e",
+      "revId": "38339bff1c2ac2738cb9e14037ffc03437cc877f",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "aeba00fa_0e5b3796",
         "filename": "org.eclipse.egit.ui.test/src/org/eclipse/egit/ui/wizards/clone/TestRepositoryServerProvider.java",
         "patchSetId": 1
@@ -30,6 +48,24 @@
       "writtenOn": "2019-02-24T17:57:22Z",
       "side": 1,
       "message": "Looks like this doesn\u0027t exist at all?? Seems to be a very old link.",
+      "revId": "38339bff1c2ac2738cb9e14037ffc03437cc877f",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "534154a0_288e0af6",
+        "filename": "org.eclipse.egit.ui.test/src/org/eclipse/egit/ui/wizards/clone/TestRepositoryServerProvider.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 440
+      },
+      "writtenOn": "2019-03-02T10:27:34Z",
+      "side": 1,
+      "message": "That\u0027s the one I mentioned in the commit message. All other links seem reasonable, this is not browsable with http or https.",
+      "parentUuid": "aeba00fa_0e5b3796",
       "revId": "38339bff1c2ac2738cb9e14037ffc03437cc877f",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
