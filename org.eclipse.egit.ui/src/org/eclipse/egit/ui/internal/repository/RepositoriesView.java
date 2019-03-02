@@ -894,9 +894,13 @@ public class RepositoriesView extends CommonNavigator implements IShowInSource, 
 		IStructuredSelection selection = (IStructuredSelection) getCommonViewer()
 				.getSelection();
 		for (Object element : selection.toList())
-			if (element instanceof RepositoryNode)
+			if (element instanceof RepositoryNode) {
 				return new String[] { IHistoryView.VIEW_ID, ReflogView.VIEW_ID,
 						StagingView.VIEW_ID };
+			} else if (element instanceof RefNode) {
+				return new String[] { IHistoryView.VIEW_ID,
+						ReflogView.VIEW_ID };
+			}
 
 		// Make sure History view is always listed, regardless of perspective
 		return new String[] { IHistoryView.VIEW_ID };

@@ -34,6 +34,7 @@ import org.eclipse.egit.ui.internal.commit.CommitEditor;
 import org.eclipse.egit.ui.internal.commit.RepositoryCommit;
 import org.eclipse.egit.ui.internal.components.RepositoryMenuUtil.RepositoryToolbarAction;
 import org.eclipse.egit.ui.internal.reflog.ReflogViewContentProvider.ReflogInput;
+import org.eclipse.egit.ui.internal.repository.tree.RefNode;
 import org.eclipse.egit.ui.internal.repository.tree.RepositoryTreeNode;
 import org.eclipse.egit.ui.internal.selection.RepositorySelectionProvider;
 import org.eclipse.jface.action.ControlContribution;
@@ -64,6 +65,7 @@ import org.eclipse.jgit.events.RefsChangedListener;
 import org.eclipse.jgit.lib.Constants;
 import org.eclipse.jgit.lib.ObjectId;
 import org.eclipse.jgit.lib.PersonIdent;
+import org.eclipse.jgit.lib.Ref;
 import org.eclipse.jgit.lib.ReflogEntry;
 import org.eclipse.jgit.lib.Repository;
 import org.eclipse.jgit.lib.RepositoryState;
@@ -530,7 +532,13 @@ public class ReflogView extends ViewPart implements RefsChangedListener, IShowIn
 		if (selection instanceof IStructuredSelection) {
 			IStructuredSelection structuredSelection = (IStructuredSelection) selection;
 			for (Object element : structuredSelection.toList()) {
-				if (element instanceof RepositoryTreeNode) {
+				if (element instanceof RefNode) {
+					RefNode node = (RefNode) element;
+					Ref ref = node.getObject();
+					showReflogFor(node.getRepository(),
+							Repository.shortenRefName(ref.getName()));
+					return true;
+				} else if (element instanceof RepositoryTreeNode) {
 					RepositoryTreeNode node = (RepositoryTreeNode) element;
 					showReflogFor(node.getRepository());
 					return true;
