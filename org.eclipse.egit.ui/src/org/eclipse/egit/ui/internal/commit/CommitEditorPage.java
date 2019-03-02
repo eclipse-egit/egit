@@ -359,6 +359,7 @@ public class CommitEditorPage extends FormPage
 
 		final MenuItem copySHA1MenuItem = new MenuItem(contextMenu, SWT.PUSH);
 		copySHA1MenuItem.setText(UIText.Header_contextMenu_copy_SHA1);
+		copySHA1MenuItem.setImage(getImage(UIIcons.ELCL16_ID));
 		final Shell shell = link.getShell();
 		copySHA1MenuItem.addSelectionListener(new SelectionAdapter() {
 			@Override

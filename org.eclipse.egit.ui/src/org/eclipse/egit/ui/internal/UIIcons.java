@@ -33,7 +33,7 @@ import org.eclipse.ui.progress.IProgressService;
 import org.osgi.framework.Version;
 
 /**
- * Icons for the the Eclipse plugin. Mostly decorations.
+ * Icons for the Eclipse plugin. Mostly decorations.
  */
 public class UIIcons {
 
