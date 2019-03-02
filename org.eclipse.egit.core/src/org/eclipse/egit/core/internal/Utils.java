@@ -38,10 +38,10 @@ public class Utils {
 
 	/**
 	 * @param id
-	 * @return a shortened ObjectId (first 6 digits)
+	 * @return a shortened ObjectId (first 7 digits)
 	 */
 	public static String getShortObjectId(ObjectId id) {
-		return id.abbreviate(6).name();
+		return id.abbreviate(7).name();
 	}
 
 	/**
