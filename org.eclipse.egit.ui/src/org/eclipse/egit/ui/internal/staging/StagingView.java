@@ -1478,6 +1478,9 @@ public class StagingView extends ViewPart
 	}
 
 	private static StructuredSelection getSelectionOfPart(IWorkbenchPart part) {
+		if (part == null) {
+			return null;
+		}
 		StructuredSelection sel = null;
 		if (part instanceof IEditorPart) {
 			IResource resource = getResource((IEditorPart) part);
