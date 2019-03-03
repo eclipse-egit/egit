@@ -10,6 +10,8 @@
  *******************************************************************************/
 package org.eclipse.egit.ui.internal.sharing;
 
+import java.net.URI;
+
 import org.eclipse.core.resources.IProject;
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.jface.viewers.BaseLabelProvider;
@@ -41,7 +43,15 @@ public class MoveProjectsLabelProvider extends BaseLabelProvider implements
 		case 0:
 			return prj.getName();
 		case 1:
-			return prj.getLocation().toString();
+			IPath location = prj.getLocation();
+			if (location != null) {
+				return location.toString();
+			}
+			URI locationURI = prj.getLocationURI();
+			if (locationURI != null) {
+				return locationURI.toString();
+			}
+			return null;
 		case 2:
 			if (targetFolder != null)
 				return targetFolder.append(prj.getName()).toString();
