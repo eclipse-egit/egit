@@ -67,6 +67,6 @@ public class CompareTargetSelectionDialog extends AbstractBranchSelectionDialog 
 
 	@Override
 	protected void refNameSelected(String refName) {
-		getButton(Window.OK).setEnabled(refName != null);
+		setOkButtonEnabled(refName != null);
 	}
 }

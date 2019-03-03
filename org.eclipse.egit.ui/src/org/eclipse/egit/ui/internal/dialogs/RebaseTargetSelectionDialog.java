@@ -107,8 +107,7 @@ public class RebaseTargetSelectionDialog extends AbstractBranchSelectionDialog {
 			currentSelected = false;
 		}
 
-		getButton(Window.OK).setEnabled(
-				!currentSelected && (branchSelected || tagSelected));
+		setOkButtonEnabled(!currentSelected && (branchSelected || tagSelected));
 	}
 
 	@Override

@@ -115,6 +115,6 @@ public class RenameBranchDialog extends AbstractBranchSelectionDialog {
 				&& (refName.startsWith(Constants.R_HEADS) || refName
 						.startsWith(Constants.R_REMOTES));
 
-		getButton(Window.OK).setEnabled(branchSelected);
+		setOkButtonEnabled(branchSelected);
 	}
 }
