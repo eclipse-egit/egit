@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1a092a49_386e0757",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/clean/CleanRepositoryPage.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 296,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2019-03-03T19:11:36Z",
+      "side": 1,
+      "message": "The CleanCommand fires a WorkingTreeModifiedEvent with all the deleted paths. The repo view could react on that and refresh. It could even refresh selectively.",
+      "revId": "f45b668dad534b08f56e5669a38d96d4a33a958f",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
