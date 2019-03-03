@@ -86,7 +86,7 @@ public class DeleteBranchDialog extends AbstractBranchSelectionDialog {
 
 		boolean enabled = !selected.isEmpty()
 				&& !selected.contains(currentBranch);
-		getButton(Window.OK).setEnabled(enabled);
+		setOkButtonEnabled(enabled);
 
 		return null;
 	}

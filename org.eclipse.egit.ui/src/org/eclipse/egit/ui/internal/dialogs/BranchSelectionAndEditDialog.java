@@ -153,7 +153,7 @@ public class BranchSelectionAndEditDialog extends
 		super.createButtonsForButtonBar(parent);
 
 		// can't advance without a selection
-		getButton(Window.OK).setEnabled(!branchTree.getSelection().isEmpty());
+		setOkButtonEnabled(!branchTree.getSelection().isEmpty());
 	}
 
 	/**
