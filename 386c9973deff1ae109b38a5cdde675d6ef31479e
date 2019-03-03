@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b92a0b3b_d36947dc",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/fetch/FetchGerritChangePage.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 678,
+      "author": {
+        "id": 440
+      },
+      "writtenOn": "2019-03-03T19:54:06Z",
+      "side": 1,
+      "message": "what about this one? does the flag need to be set here, too?",
+      "range": {
+        "startLine": 678,
+        "startChar": 5,
+        "endLine": 678,
+        "endChar": 18
+      },
+      "revId": "386c9973deff1ae109b38a5cdde675d6ef31479e",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
