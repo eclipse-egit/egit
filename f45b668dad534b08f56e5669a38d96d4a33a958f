@@ -34,6 +34,24 @@
       "revId": "f45b668dad534b08f56e5669a38d96d4a33a958f",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9affdf6e_bc697d41",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/clean/CleanRepositoryPage.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 296,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2019-03-03T19:39:56Z",
+      "side": 1,
+      "message": "It\u0027s fine by me. Just wanted to point out that if a selective refresh was needed, we had the means to implement it.",
+      "parentUuid": "411f7b51_23ec31b4",
+      "revId": "f45b668dad534b08f56e5669a38d96d4a33a958f",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
     }
   ]
 }
