@@ -230,9 +230,9 @@ public class ConfigurationEditorComponent {
 
 			@Override
 			public String isValid(Object value) {
-				String editedValue = value.toString();
-				return editedValue.length() > 0 ? null
-						: UIText.ConfigurationEditorComponent_EmptyStringNotAllowed;
+				return value == null || value.toString().isEmpty()
+						? UIText.ConfigurationEditorComponent_EmptyStringNotAllowed
+						: null;
 			}
 		});
 		editor.addListener(new ICellEditorListener() {
