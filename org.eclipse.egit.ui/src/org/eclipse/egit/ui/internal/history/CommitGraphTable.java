@@ -68,6 +68,8 @@ import org.eclipse.jface.viewers.OpenEvent;
 import org.eclipse.jface.viewers.SelectionChangedEvent;
 import org.eclipse.jface.viewers.StructuredSelection;
 import org.eclipse.jface.viewers.TableViewer;
+import org.eclipse.jgit.annotations.NonNull;
+import org.eclipse.jgit.annotations.Nullable;
 import org.eclipse.jgit.lib.Repository;
 import org.eclipse.jgit.revplot.PlotCommit;
 import org.eclipse.jgit.revwalk.RevCommit;
@@ -648,7 +650,7 @@ class CommitGraphTable {
 		@Override
 		public void dragStart(DragSourceEvent event) {
 			RevCommit commit = getSelectedCommit();
-			event.doit = commit.getParentCount() == 1;
+			event.doit = commit != null && commit.getParentCount() == 1;
 		}
 
 		@Override
@@ -659,6 +661,9 @@ class CommitGraphTable {
 					.isSupportedType(event.dataType);
 			if (isFileTransfer || isTextTransfer) {
 				RevCommit commit = getSelectedCommit();
+				if (commit == null) {
+					return;
+				}
 				String patchContent = createPatch(commit);
 				if (isTextTransfer) {
 					event.data = patchContent;
@@ -681,7 +686,8 @@ class CommitGraphTable {
 			}
 		}
 
-		private File createTempFile(RevCommit commit) throws IOException {
+		private File createTempFile(@NonNull RevCommit commit)
+				throws IOException {
 			String tmpDir = System.getProperty("java.io.tmpdir"); //$NON-NLS-1$
 			String patchName = "egit-patch" + commit.getId().name(); //$NON-NLS-1$
 			File patchDir = new File(tmpDir, patchName);
@@ -716,10 +722,14 @@ class CommitGraphTable {
 			return patchContent;
 		}
 
+		@Nullable
 		private RevCommit getSelectedCommit() {
 			IStructuredSelection selection = (IStructuredSelection) table
 					.getSelection();
 			RevCommit commit = (RevCommit) selection.getFirstElement();
+			if (commit == null) {
+				return null;
+			}
 			try (RevWalk walk = new org.eclipse.jgit.revwalk.RevWalk(
 					input.getRepository())) {
 				return walk.parseCommit(commit.getId());
