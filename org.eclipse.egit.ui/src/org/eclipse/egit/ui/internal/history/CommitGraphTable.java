@@ -659,7 +659,7 @@ class CommitGraphTable {
 		@Override
 		public void dragStart(DragSourceEvent event) {
 			RevCommit commit = getSelectedCommit();
-			event.doit = commit.getParentCount() == 1;
+			event.doit = commit != null && commit.getParentCount() == 1;
 		}
 
 		@Override
@@ -731,6 +731,9 @@ class CommitGraphTable {
 			IStructuredSelection selection = (IStructuredSelection) table
 					.getSelection();
 			RevCommit commit = (RevCommit) selection.getFirstElement();
+			if (commit == null) {
+				return null;
+			}
 			try (RevWalk walk = new org.eclipse.jgit.revwalk.RevWalk(
 					input.getRepository())) {
 				return walk.parseCommit(commit.getId());
