@@ -16,6 +16,24 @@
       "revId": "f45b668dad534b08f56e5669a38d96d4a33a958f",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "411f7b51_23ec31b4",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/clean/CleanRepositoryPage.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 296,
+      "author": {
+        "id": 440
+      },
+      "writtenOn": "2019-03-03T19:32:03Z",
+      "side": 1,
+      "message": "Do you think it is worth that effort? I only noticed an outdated repositories view twice as long as I work with egit. In my testing the view refreshes so fast (and basically immediately), that I\u0027m happy with the current implementation.",
+      "parentUuid": "1a092a49_386e0757",
+      "revId": "f45b668dad534b08f56e5669a38d96d4a33a958f",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
     }
   ]
 }
