@@ -22,6 +22,30 @@
       "revId": "386c9973deff1ae109b38a5cdde675d6ef31479e",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c4a8d735_c5d2d45c",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/fetch/FetchGerritChangePage.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 678,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2019-03-03T20:50:09Z",
+      "side": 1,
+      "message": "No. Here the paste replaces only a part of the text; I don\u0027t think auto-filling in that case is a good idea. In line 670, the complete text gets replaced; there it does make sense.",
+      "parentUuid": "b92a0b3b_d36947dc",
+      "range": {
+        "startLine": 678,
+        "startChar": 5,
+        "endLine": 678,
+        "endChar": 18
+      },
+      "revId": "386c9973deff1ae109b38a5cdde675d6ef31479e",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
     }
   ]
 }
