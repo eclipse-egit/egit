@@ -31,8 +31,6 @@ import org.eclipse.jgit.revwalk.RevCommit;
 import org.eclipse.jgit.revwalk.RevFlag;
 import org.eclipse.jgit.revwalk.RevWalk;
 import org.eclipse.osgi.util.NLS;
-import org.eclipse.swt.widgets.Control;
-import org.eclipse.swt.widgets.Display;
 
 class GenerateHistoryJob extends Job {
 	private static final int BATCH_SIZE = 256;
@@ -57,8 +55,7 @@ class GenerateHistoryJob extends Job {
 
 	private int forcedRedrawsAfterListIsCompleted = 0;
 
-	GenerateHistoryJob(final GitHistoryPage ghp, Control control,
-			@NonNull RevWalk walk,
+	GenerateHistoryJob(final GitHistoryPage ghp, @NonNull RevWalk walk,
 			ResourceManager resources) {
 		super(NLS.bind(UIText.HistoryPage_refreshJob, Activator.getDefault()
 				.getRepositoryUtil().getRepositoryName(
@@ -66,7 +63,7 @@ class GenerateHistoryJob extends Job {
 		page = ghp;
 		this.walk = walk;
 		highlightFlag = walk.newFlag("highlight"); //$NON-NLS-1$
-		loadedCommits = new SWTCommitList(control, resources);
+		loadedCommits = new SWTCommitList(resources);
 		loadedCommits.source(walk);
 		trace = GitTraceLocation.HISTORYVIEW.isActive();
 	}
@@ -182,14 +179,8 @@ class GenerateHistoryJob extends Job {
 	}
 
 	private void dispose() {
+		loadedCommits.clear();
 		walk.close();
-		Display.getDefault().asyncExec(new Runnable() {
-
-			@Override
-			public void run() {
-				loadedCommits.dispose();
-			}
-		});
 	}
 
 	@Override

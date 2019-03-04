@@ -135,7 +135,8 @@ public class CommitSelectionDialog extends TitleAreaDialog {
 		// allow for some room here
 		GridDataFactory.fillDefaults().grab(true, true).minSize(SWT.DEFAULT,
 				400).applyTo(table.getControl());
-		allCommits = new SWTCommitList(table.getControl(), resources);
+		allCommits = new SWTCommitList(resources);
+		table.getControl().addDisposeListener(e -> allCommits.clear());
 		return main;
 	}
 
@@ -156,64 +157,51 @@ public class CommitSelectionDialog extends TitleAreaDialog {
 						public void run(IProgressMonitor monitor)
 								throws InvocationTargetException,
 								InterruptedException {
-							try {
-								monitor
-										.beginTask(
-												UIText.CommitSelectionDialog_BuildingCommitListMessage,
-												IProgressMonitor.UNKNOWN);
-								SWTWalk currentWalk = new SWTWalk(repository);
+							monitor.beginTask(
+									UIText.CommitSelectionDialog_BuildingCommitListMessage,
+									IProgressMonitor.UNKNOWN);
+							try (SWTWalk currentWalk = new SWTWalk(
+									repository)) {
 								currentWalk.setTreeFilter(createTreeFilter());
-								currentWalk
-										.sort(RevSort.COMMIT_TIME_DESC, true);
+								currentWalk.sort(RevSort.COMMIT_TIME_DESC,
+										true);
 								currentWalk.sort(RevSort.BOUNDARY, true);
 								highlightFlag = currentWalk
 										.newFlag("highlight"); //$NON-NLS-1$
 								allCommits.source(currentWalk);
 
-								try {
-
-									if (Activator
-											.getDefault()
-											.getPreferenceStore()
-											.getBoolean(
-													UIPreferences.RESOURCEHISTORY_SHOW_ALL_BRANCHES)) {
-										markStartAllRefs(currentWalk,
-												Constants.R_HEADS);
-										markStartAllRefs(currentWalk,
-												Constants.R_REMOTES);
-									} else
-										currentWalk
-												.markStart(currentWalk
-														.parseCommit(repository
-																.resolve(Constants.HEAD)));
-									for (;;) {
-										final int oldsz = allCommits.size();
-										allCommits.fillTo(oldsz + BATCH_SIZE
-												- 1);
-
-										if (monitor.isCanceled()
-												|| oldsz == allCommits.size())
-											break;
-										String taskName = MessageFormat.format(
-														UIText.CommitSelectionDialog_FoundCommitsMessage,
-														Integer
-																.valueOf(allCommits
-																		.size()));
-										monitor.setTaskName(taskName);
-
-									}
-								} catch (IOException e) {
-									throw new InvocationTargetException(e);
+								if (Activator.getDefault().getPreferenceStore()
+										.getBoolean(
+												UIPreferences.RESOURCEHISTORY_SHOW_ALL_BRANCHES)) {
+									markStartAllRefs(currentWalk,
+											Constants.R_HEADS);
+									markStartAllRefs(currentWalk,
+											Constants.R_REMOTES);
+								} else {
+									currentWalk
+											.markStart(currentWalk.parseCommit(
+													repository.resolve(
+															Constants.HEAD)));
 								}
-								getShell().getDisplay().asyncExec(
-										new Runnable() {
-											@Override
-											public void run() {
-												updateUi();
-											}
-										});
-								if (monitor.isCanceled())
+								for (;;) {
+									final int oldsz = allCommits.size();
+									allCommits.fillTo(oldsz + BATCH_SIZE - 1);
+
+									if (monitor.isCanceled()
+											|| oldsz == allCommits.size()) {
+										break;
+									}
+									String taskName = MessageFormat.format(
+											UIText.CommitSelectionDialog_FoundCommitsMessage,
+											Integer.valueOf(allCommits.size()));
+									monitor.setTaskName(taskName);
+								}
+								if (monitor.isCanceled()) {
 									throw new InterruptedException();
+								}
+								getShell().getDisplay().asyncExec(() -> updateUi());
+							} catch (IOException e) {
+								throw new InvocationTargetException(e);
 							} finally {
 								monitor.done();
 							}

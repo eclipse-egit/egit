@@ -1634,10 +1634,6 @@ public class GitHistoryPage extends HistoryPage implements RefsChangedListener,
 					((IWorkbenchAction) i).dispose();
 		}
 		renameTracker.reset(null);
-		if (job != null) {
-			job.cancel();
-			job = null;
-		}
 		Job.getJobManager().cancel(JobFamilies.HISTORY_DIFF);
 		super.dispose();
 	}
@@ -2203,7 +2199,7 @@ public class GitHistoryPage extends HistoryPage implements RefsChangedListener,
 		if (trace)
 			GitTraceLocation.getTrace().traceEntry(
 					GitTraceLocation.HISTORYVIEW.getLocation(),
-					new Object[] { list.size()});
+					new Object[] { asArray.length });
 		if (job != j || graph.getControl().isDisposed())
 			return;
 
@@ -2732,7 +2728,7 @@ public class GitHistoryPage extends HistoryPage implements RefsChangedListener,
 	 *            the revwalk, non null
 	 */
 	private void loadInitialHistory(@NonNull RevWalk walk) {
-		job = new GenerateHistoryJob(this, graph.getControl(), walk, resources);
+		job = new GenerateHistoryJob(this, walk, resources);
 		job.setRule(pageSchedulingRule);
 		job.setLoadHint(INITIAL_ITEM);
 		if (trace)
