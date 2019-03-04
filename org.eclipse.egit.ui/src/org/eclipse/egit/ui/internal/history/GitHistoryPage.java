@@ -2203,7 +2203,7 @@ public class GitHistoryPage extends HistoryPage implements RefsChangedListener,
 		if (trace)
 			GitTraceLocation.getTrace().traceEntry(
 					GitTraceLocation.HISTORYVIEW.getLocation(),
-					new Object[] { list.size()});
+					new Object[] { asArray.length });
 		if (job != j || graph.getControl().isDisposed())
 			return;
 
