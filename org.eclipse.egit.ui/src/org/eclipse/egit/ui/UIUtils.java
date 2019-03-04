@@ -185,7 +185,7 @@ public class UIUtils {
 	}
 
 	/**
-	 * A factory for creating {@link IContentProposal}s for {@link Ref}s.
+	 * A factory for creating {@link IContentProposal}s for the given elements.
 	 *
 	 * @param <T>
 	 *            type of elements to create proposals for

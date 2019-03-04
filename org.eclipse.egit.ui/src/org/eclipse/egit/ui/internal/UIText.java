@@ -127,6 +127,12 @@ public class UIText extends NLS {
 	public static String AddConfigEntryDialog_ButtonOK;
 
 	/** */
+	public static String AddConfigEntryDialog_ContentProposalHoverText;
+
+	/** */
+	public static String AddConfigEntryDialog_ContentProposalStartTypingText;
+
+	/** */
 	public static String AddRemotePage_EnterRemoteNameMessage;
 
 	/** */

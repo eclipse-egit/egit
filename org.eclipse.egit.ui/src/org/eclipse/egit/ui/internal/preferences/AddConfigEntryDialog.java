@@ -13,14 +13,24 @@
  *******************************************************************************/
 package org.eclipse.egit.ui.internal.preferences;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
+import java.util.Map;
 import java.util.StringTokenizer;
 import java.util.regex.Pattern;
+import java.util.stream.Collectors;
 
+import org.eclipse.egit.ui.UIUtils;
 import org.eclipse.egit.ui.internal.UIText;
 import org.eclipse.jface.dialogs.IDialogConstants;
 import org.eclipse.jface.dialogs.TitleAreaDialog;
+import org.eclipse.jface.fieldassist.ContentProposal;
 import org.eclipse.jface.layout.GridDataFactory;
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.events.FocusAdapter;
+import org.eclipse.swt.events.FocusEvent;
 import org.eclipse.swt.events.ModifyEvent;
 import org.eclipse.swt.events.ModifyListener;
 import org.eclipse.swt.layout.GridLayout;
@@ -48,9 +58,8 @@ public class AddConfigEntryDialog extends TitleAreaDialog {
 	 * Note that we allow arbitrary whitespace before and after; we'll trim that
 	 * away in {@link #okPressed}.
 	 */
-	private static final Pattern VALID_KEY = Pattern
-			.compile(
-					"(\\h|\\v)*[-\\p{Alnum}]+(?:\\..*)?\\.\\p{Alpha}[-\\p{Alnum}]*(\\h|\\v)*"); //$NON-NLS-1$
+	private static final Pattern VALID_KEY = Pattern.compile(
+			"(\\h|\\v)*[-\\p{Alnum}]+(?:\\..*)?\\.\\p{Alpha}[-\\p{Alnum}]*(\\h|\\v)*"); //$NON-NLS-1$
 
 	private Text keyText;
 
@@ -98,6 +107,13 @@ public class AddConfigEntryDialog extends TitleAreaDialog {
 				check();
 			}
 		});
+		keyText.addFocusListener(new FocusAdapter() {
+
+			@Override
+			public void focusLost(FocusEvent e) {
+				addValueContentProposal(valueText, keyText.getText());
+			}
+		});
 		GridDataFactory.fillDefaults().grab(true, false).applyTo(keyText);
 		new Label(main, SWT.NONE)
 				.setText(UIText.AddConfigEntryDialog_ValueLabel);
@@ -111,6 +127,8 @@ public class AddConfigEntryDialog extends TitleAreaDialog {
 		GridDataFactory.fillDefaults().grab(true, false).applyTo(valueText);
 
 		applyDialogFont(main);
+
+		addKeyContentProposal(keyText);
 		return main;
 	}
 
@@ -134,13 +152,15 @@ public class AddConfigEntryDialog extends TitleAreaDialog {
 		boolean hasError = false;
 		try {
 			if (keyText.getText().length() == 0) {
-				setErrorMessage(UIText.AddConfigEntryDialog_MustEnterKeyMessage);
+				setErrorMessage(
+						UIText.AddConfigEntryDialog_MustEnterKeyMessage);
 				hasError = true;
 				return;
 			}
 			StringTokenizer st = new StringTokenizer(keyText.getText(), "."); //$NON-NLS-1$
 			if (st.countTokens() < 2) {
-				setErrorMessage(UIText.AddConfigEntryDialog_KeyComponentsMessage);
+				setErrorMessage(
+						UIText.AddConfigEntryDialog_KeyComponentsMessage);
 				hasError = true;
 				return;
 			}
@@ -186,5 +206,76 @@ public class AddConfigEntryDialog extends TitleAreaDialog {
 				UIText.AddConfigEntryDialog_ButtonOK, true);
 		createButton(parent, IDialogConstants.CANCEL_ID,
 				IDialogConstants.CANCEL_LABEL, false);
+	}
+
+	private void addKeyContentProposal(final Text textField) {
+		Map<String, ConfigProposal> configProposals = createAllProposals();
+		List<String> keys = new ArrayList<>(configProposals.keySet());
+		Collections.sort(keys, String.CASE_INSENSITIVE_ORDER);
+		UIUtils.<String> addContentProposalToText(textField, () -> keys,
+				(pattern, possibleKey) -> {
+					if (pattern != null && !pattern.matcher(possibleKey).matches()) {
+						return null;
+					}
+					ConfigProposal configProposal = configProposals.get(possibleKey);
+					return new ContentProposal(configProposal.key,
+							configProposal.description);
+				}, null,
+				UIText.AddConfigEntryDialog_ContentProposalStartTypingText,
+				UIText.AddConfigEntryDialog_ContentProposalHoverText);
+	}
+
+	private void addValueContentProposal(final Text textField,
+			final String selectedKey) {
+		ConfigProposal configProposal = createAllProposals().get(selectedKey);
+		List<String> values;
+		if (configProposal != null) {
+			values = configProposal.values;
+		} else {
+			values = Collections.emptyList();
+		}
+		UIUtils.<String> addContentProposalToText(textField, () -> values,
+				(pattern, possibleValue) -> {
+					if (pattern != null && !pattern.matcher(possibleValue).matches()) {
+						return null;
+					}
+					return new ContentProposal(possibleValue);
+				}, null,
+				UIText.AddConfigEntryDialog_ContentProposalStartTypingText,
+				UIText.AddConfigEntryDialog_ContentProposalHoverText);
+	}
+
+	private static Map<String, ConfigProposal> createAllProposals() {
+		List<ConfigProposal> proposals = Arrays.asList(new ConfigProposal(
+				"branch.autosetuprebase", //$NON-NLS-1$
+				"When a new branch is created, this configures the branch to use rebase instead of merge, when pulling.", //$NON-NLS-1$
+				Arrays.asList("always", "never", "local", "remote")), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$
+				new ConfigProposal("user.email", //$NON-NLS-1$
+						"Your email address. Will be used as author email address and committer email address in new commits.", //$NON-NLS-1$
+						Collections.emptyList()),
+				new ConfigProposal("user.name", //$NON-NLS-1$
+						"Your user name. Will be used as author and committer in new commits.", //$NON-NLS-1$
+						Collections.emptyList()),
+				new ConfigProposal("fetch.prune", //$NON-NLS-1$
+						"Always prune the repository when fetching or pulling.", //$NON-NLS-1$
+						Arrays.asList("true"))); //$NON-NLS-1$
+		return proposals.stream()
+				.collect(Collectors.toMap(configProposal -> configProposal.key,
+						configProposal -> configProposal));
+	}
+
+	private static class ConfigProposal {
+		public ConfigProposal(String key, String description,
+				List<String> values) {
+			this.key = key;
+			this.description = description;
+			this.values = values;
+		}
+
+		private final String key;
+
+		private final String description;
+
+		private final List<String> values;
 	}
 }
