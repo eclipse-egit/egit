@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4405f8c0_1aaec474",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/merge/MergeResultDialog.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 312,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2019-03-04T08:43:49Z",
+      "side": 1,
+      "message": "I don\u0027t want to change JGit\u0027s MergeCommand (simply removing the null from the ObjectId[]) because of backwards compatibility. Other clients might already handle this and do something meaningful with such a null, and would have to be adapted if JGit changed in that respect. So I prefer to simply ignore such nulls here.",
+      "revId": "7b63f51870c2817d03d5dd08466f97cd1768da6d",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
