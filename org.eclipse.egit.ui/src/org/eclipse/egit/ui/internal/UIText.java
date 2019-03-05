@@ -1207,6 +1207,9 @@ public class UIText extends NLS {
 	public static String CleanRepositoryPage_title;
 
 	/** */
+	public static String CleanRepositoryPage_RefreshingRepositories;
+
+	/** */
 	public static String CleanWizard_title;
 
 	/** */
