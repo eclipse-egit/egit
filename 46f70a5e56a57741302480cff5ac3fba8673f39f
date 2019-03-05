@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4149a87d_c55e8a43",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/staging/StagingView.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 4064,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2019-03-05T21:46:21Z",
+      "side": 1,
+      "message": "if multiple threads access currentRepository then it should be implemented as AtomicReference or declared volatile otherwise there is no guarantee that updates from another thread are visible",
+      "revId": "46f70a5e56a57741302480cff5ac3fba8673f39f",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "061888e6_c38fae00",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/staging/StagingView.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 4067,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2019-03-05T21:46:21Z",
+      "side": 1,
+      "message": "repository ?",
+      "range": {
+        "startLine": 4067,
+        "startChar": 41,
+        "endLine": 4067,
+        "endChar": 58
+      },
+      "revId": "46f70a5e56a57741302480cff5ac3fba8673f39f",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
