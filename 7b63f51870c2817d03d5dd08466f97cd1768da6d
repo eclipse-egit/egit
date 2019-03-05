@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "372996c1_b517b585",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/history/CommitGraphTable.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 438,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2019-03-05T13:03:20Z",
+      "side": 0,
+      "message": "No longer. As mentioned in the commit message, clearing the list is done correctly when new jobs are started, or in the dialog when the dialog is diposed. The only reason we still pass in the SWTCommitList into the CommitGraphTable is the check in line 445 (determine whether the list itself has changed).",
+      "parentUuid": "0c096a93_e100232d",
+      "range": {
+        "startLine": 438,
+        "startChar": 3,
+        "endLine": 438,
+        "endChar": 20
+      },
+      "revId": "7b63f51870c2817d03d5dd08466f97cd1768da6d",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1c656afa_bdc29d6c",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/history/GitHistoryPage.java",
         "patchSetId": 2
@@ -36,6 +60,30 @@
       "writtenOn": "2019-03-05T12:50:13Z",
       "side": 0,
       "message": "Why this? The job has different family (GENERATE_HISTORY)",
+      "range": {
+        "startLine": 1638,
+        "startChar": 3,
+        "endLine": 1638,
+        "endChar": 15
+      },
+      "revId": "7b63f51870c2817d03d5dd08466f97cd1768da6d",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3076760a_5da23516",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/history/GitHistoryPage.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 1638,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2019-03-05T13:03:20Z",
+      "side": 0,
+      "message": "It\u0027s already canceled via releaseGenerateHistoryJob() in line 1626 above.",
+      "parentUuid": "1c656afa_bdc29d6c",
       "range": {
         "startLine": 1638,
         "startChar": 3,

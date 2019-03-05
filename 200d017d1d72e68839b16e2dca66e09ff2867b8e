@@ -22,6 +22,30 @@
       "revId": "200d017d1d72e68839b16e2dca66e09ff2867b8e",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a9c8b755_25247512",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/history/CommitSelectionDialog.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 163,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2019-03-05T13:03:20Z",
+      "side": 1,
+      "message": "Basically yes. I used a try-with-resource for the SWTWalk to ensure it\u0027s closed, and collapsed the nested try-statements of the original.",
+      "parentUuid": "8904e8f4_09df70b7",
+      "range": {
+        "startLine": 163,
+        "startChar": 7,
+        "endLine": 163,
+        "endChar": 10
+      },
+      "revId": "200d017d1d72e68839b16e2dca66e09ff2867b8e",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
     }
   ]
 }
