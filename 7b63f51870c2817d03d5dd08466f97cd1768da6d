@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0c096a93_e100232d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/history/CommitGraphTable.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 438,
+      "author": {
+        "id": 1179
+      },
+      "writtenOn": "2019-03-05T12:50:13Z",
+      "side": 0,
+      "message": "Shouldn\u0027t we clear() that list?",
+      "range": {
+        "startLine": 438,
+        "startChar": 3,
+        "endLine": 438,
+        "endChar": 20
+      },
+      "revId": "7b63f51870c2817d03d5dd08466f97cd1768da6d",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1c656afa_bdc29d6c",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/history/GitHistoryPage.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 1638,
+      "author": {
+        "id": 1179
+      },
+      "writtenOn": "2019-03-05T12:50:13Z",
+      "side": 0,
+      "message": "Why this? The job has different family (GENERATE_HISTORY)",
+      "range": {
+        "startLine": 1638,
+        "startChar": 3,
+        "endLine": 1638,
+        "endChar": 15
+      },
+      "revId": "7b63f51870c2817d03d5dd08466f97cd1768da6d",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
