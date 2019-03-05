@@ -16,6 +16,24 @@
       "revId": "432aae96de9a2e0a578bcb32485c07802a7248ac",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a0d6b1f_26231e9f",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/preferences/GitProjectPropertyPage.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 116,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2019-03-05T20:08:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "83570266_5e49ad9c",
+      "revId": "432aae96de9a2e0a578bcb32485c07802a7248ac",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
     }
   ]
 }
