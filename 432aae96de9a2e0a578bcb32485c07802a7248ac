@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "83570266_5e49ad9c",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/preferences/GitProjectPropertyPage.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 116,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2019-03-05T20:05:20Z",
+      "side": 1,
+      "message": "use ternary operator and keep this variable final then you don\u0027t need to define another variable below.",
+      "revId": "432aae96de9a2e0a578bcb32485c07802a7248ac",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
