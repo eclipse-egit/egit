@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0bee682d_8c4813fa",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2019-03-05T21:56:42Z",
+      "side": 1,
+      "message": "Fix NPE...",
+      "revId": "abab452d0d59f5073bad33c3431fecfb1e6e0735",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "57597e86_9c063991",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/RepositoryUtil.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 748,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2019-03-05T21:56:42Z",
+      "side": 1,
+      "message": "we could instead change isId to return false if the argument is null, there are multiple callers of this method which would benefit",
+      "revId": "abab452d0d59f5073bad33c3431fecfb1e6e0735",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
