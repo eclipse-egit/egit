@@ -16,6 +16,24 @@
       "revId": "156ef04f07890daecb734bbe8bcc06ee7f4f0303",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9c26a555_e11d582e",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/revision/FileRevisionEditorInput.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 210,
+      "author": {
+        "id": 440
+      },
+      "writtenOn": "2019-03-06T12:26:33Z",
+      "side": 1,
+      "message": "I\u0027m aware of that. But I see several other callers of getContentIdentifier(), which might break. Example: org.eclipse.egit.core.internal.storage.GitFileHistory.getFileRevision(String) calls equals() on getContentIdentifier. I don\u0027t have the knowledge to clearly assess that these other callers still work. If you can help verifying that, we can move this shortening directly into the method.",
+      "parentUuid": "6046a8b0_955e1f0c",
+      "revId": "156ef04f07890daecb734bbe8bcc06ee7f4f0303",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
     }
   ]
 }
