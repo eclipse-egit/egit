@@ -15,6 +15,7 @@ package org.eclipse.egit.ui.internal.repository.tree.command;
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -52,7 +53,8 @@ public class DeleteBranchCommand extends
 	public Object execute(final ExecutionEvent event) throws ExecutionException {
 		final List<RepositoryTreeNode> nodes = getSelectedNodes(event);
 		final Map<Ref, Repository> refs = getRefsToDelete(nodes);
-		final AtomicReference<Map<Ref, Repository>> unmergedNodesRef = new AtomicReference<>();
+		final AtomicReference<Map<Ref, Repository>> unmergedNodesRef = new AtomicReference<>(
+				Collections.emptyMap());
 		final Shell shell = getShell(event);
 
 		try {

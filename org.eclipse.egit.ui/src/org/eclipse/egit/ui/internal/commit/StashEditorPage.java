@@ -25,7 +25,6 @@ import org.eclipse.egit.ui.internal.UIText;
 import org.eclipse.egit.ui.internal.history.CommitFileDiffViewer;
 import org.eclipse.egit.ui.internal.history.FileDiff;
 import org.eclipse.jface.layout.GridDataFactory;
-import org.eclipse.jface.viewers.ArrayContentProvider;
 import org.eclipse.jgit.revwalk.RevCommit;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Composite;
@@ -102,15 +101,12 @@ public class StashEditorPage extends CommitEditorPage {
 				stagedDiffSection, toolkit);
 
 		stagedDiffViewer = new CommitFileDiffViewer(unstagedChangesArea,
-				getSite(), SWT.MULTI | SWT.H_SCROLL | SWT.V_SCROLL
+				getSite(), SWT.MULTI | SWT.H_SCROLL | SWT.V_SCROLL | SWT.VIRTUAL
 						| SWT.FULL_SELECTION | toolkit.getBorderStyle());
 		Control control = stagedDiffViewer.getControl();
 		control.setData(FormToolkit.KEY_DRAW_BORDER, FormToolkit.TREE_BORDER);
 		GridDataFactory.fillDefaults().grab(true, true).applyTo(control);
 		addToFocusTracking(control);
-		stagedDiffViewer.setContentProvider(ArrayContentProvider
-				.getInstance());
-
 		updateSectionClient(stagedDiffSection, unstagedChangesArea, toolkit);
 	}
 
@@ -188,7 +184,7 @@ public class StashEditorPage extends CommitEditorPage {
 	private void fillStagedDiffs(FileDiff[] diffs) {
 		if (diffs == null)
 			return;
-		stagedDiffViewer.setInput(diffs);
+		stagedDiffViewer.newInput(diffs);
 		stagedDiffSection.setText(MessageFormat.format(
 				UIText.StashEditorPage_StagedChanges,
 				Integer.valueOf(diffs.length)));

@@ -513,9 +513,9 @@ public class CommitSearchPage extends DialogPage implements ISearchPage {
 		if (text == null || text.length() == 0)
 			return ""; //$NON-NLS-1$
 		StringBuilder sbIn = new StringBuilder(text);
-		BufferedReader reader = new BufferedReader(new StringReader(text));
 		int lengthOfFirstLine = 0;
-		try {
+		try (BufferedReader reader = new BufferedReader(
+				new StringReader(text))) {
 			String l = reader.readLine();
 			if (l != null)
 				lengthOfFirstLine = l.length();

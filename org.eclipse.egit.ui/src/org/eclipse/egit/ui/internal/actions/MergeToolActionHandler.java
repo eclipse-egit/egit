@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2010, 2013 SAP AG and others.
+ * Copyright (c) 2010, 2019 SAP AG and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License 2.0
  * which accompanies this distribution, and is available at
@@ -9,6 +9,7 @@
  *
  * Contributors:
  *    Stefan Lay (SAP AG) - initial implementation
+ *    Christian W. Damus - bug 544395
  *******************************************************************************/
 
 package org.eclipse.egit.ui.internal.actions;
@@ -96,5 +97,16 @@ public class MergeToolActionHandler extends RepositoryActionHandler {
 		}
 
 		return false;
+	}
+
+	/**
+	 * Git status of a selected resource can change independently of the
+	 * workbench selection, so always check enabled.
+	 *
+	 * @return {@code true}, always
+	 */
+	@Override
+	protected boolean alwaysCheckEnabled() {
+		return true;
 	}
 }

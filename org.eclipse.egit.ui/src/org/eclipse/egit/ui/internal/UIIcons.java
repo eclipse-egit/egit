@@ -33,7 +33,7 @@ import org.eclipse.ui.progress.IProgressService;
 import org.osgi.framework.Version;
 
 /**
- * Icons for the the Eclipse plugin. Mostly decorations.
+ * Icons for the Eclipse plugin. Mostly decorations.
  */
 public class UIIcons {
 
@@ -121,10 +121,7 @@ public class UIIcons {
 	/** Connect Wizard banner */
 	public final static ImageDescriptor WIZBAN_CONNECT_REPO;
 
-	/**
-	 * Commit Wizard banner
-	 * @TODO make use of this wizban
-	 */
+	/** Commit Wizard banner */
 	public final static ImageDescriptor WIZBAN_COMMIT;
 
 	/** Fetch from Gerrit Wizard banner */
@@ -133,10 +130,7 @@ public class UIIcons {
 	/** Fetch Wizard banner */
 	public final static ImageDescriptor WIZBAN_FETCH;
 
-	/**
-	 * Pull Wizard banner
-	 * @TODO make use of this wizban
-	 */
+	/** Pull Wizard banner */
 	public final static ImageDescriptor WIZBAN_PULL;
 
 	/** Push to Gerrit Wizard banner */

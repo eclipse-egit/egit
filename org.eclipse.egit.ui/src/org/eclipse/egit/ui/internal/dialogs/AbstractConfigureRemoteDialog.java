@@ -56,6 +56,7 @@ import org.eclipse.jgit.transport.RemoteConfig;
 import org.eclipse.jgit.transport.URIish;
 import org.eclipse.osgi.util.NLS;
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.custom.StyledText;
 import org.eclipse.swt.dnd.Clipboard;
 import org.eclipse.swt.dnd.TextTransfer;
 import org.eclipse.swt.events.SelectionAdapter;
@@ -108,8 +109,8 @@ public abstract class AbstractConfigureRemoteDialog
 
 	// UI components
 
-	/** A {@link Text} field for the URI. */
-	protected Text commonUriText;
+	/** A {@link StyledText} field for the URI. */
+	protected StyledText commonUriText;
 
 	/** A {@link TableViewer} showing {@link RefSpec}s. */
 	protected TableViewer specViewer;
@@ -136,6 +137,11 @@ public abstract class AbstractConfigureRemoteDialog
 	 * An {@link IAction} opening an advanced {@link RefSpec} dialog.
 	 */
 	protected IAction addRefSpecAdvancedAction;
+
+	/**
+	 * button for changing the URI
+	 */
+	protected Button changeButton;
 
 	/**
 	 * Create a new {@link AbstractConfigureRemoteDialog}.
@@ -252,8 +258,12 @@ public abstract class AbstractConfigureRemoteDialog
 				.applyTo(sameUriDetails);
 		Label commonUriLabel = new Label(sameUriDetails, SWT.NONE);
 		commonUriLabel.setText(UIText.AbstractConfigureRemoteDialog_UriLabel);
-		commonUriText = new Text(sameUriDetails, SWT.BORDER | SWT.READ_ONLY);
-		GridDataFactory.fillDefaults().grab(true, false).applyTo(commonUriText);
+		commonUriText = new StyledText(sameUriDetails,
+				SWT.SINGLE | SWT.READ_ONLY);
+		commonUriText.setBackground(sameUriDetails.getBackground());
+		commonUriText.setCaret(null);
+		GridDataFactory.fillDefaults().grab(true, false)
+				.align(SWT.FILL, SWT.CENTER).applyTo(commonUriText);
 		changeCommonUriAction = new Action(
 				UIText.AbstractConfigureRemoteDialog_ChangeUriLabel) {
 
@@ -288,7 +298,8 @@ public abstract class AbstractConfigureRemoteDialog
 				updateControls();
 			}
 		};
-		createActionButton(sameUriDetails, SWT.PUSH, changeCommonUriAction);
+		changeButton = createActionButton(sameUriDetails, SWT.PUSH,
+				changeCommonUriAction);
 		createActionButton(sameUriDetails, SWT.PUSH, deleteCommonUriAction)
 				.setEnabled(false);
 
@@ -488,6 +499,15 @@ public abstract class AbstractConfigureRemoteDialog
 	 * Validate and enable/disable controls depending on the current state.
 	 */
 	protected abstract void updateControls();
+
+	/**
+	 * Set the initial focus in the dialog after creating all controls.
+	 */
+	protected void setInitialFocus() {
+		if (commonUriText.getText().isEmpty()) {
+			changeButton.setFocus();
+		}
+	}
 
 	@Override
 	protected final void createButtonsForButtonBar(Composite parent) {

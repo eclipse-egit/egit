@@ -146,7 +146,7 @@ public class ResetTargetSelectionDialog extends AbstractBranchSelectionDialog {
 						setMessage(
 								UIText.ResetTargetSelectionDialog_UnresolvableExpressionError,
 								IMessageProvider.ERROR);
-						getButton(OK).setEnabled(false);
+						setOkButtonEnabled(false);
 						parsedCommitish = null;
 						sha1.setText(""); //$NON-NLS-1$
 						subject.setText(""); //$NON-NLS-1$
@@ -162,7 +162,7 @@ public class ResetTargetSelectionDialog extends AbstractBranchSelectionDialog {
 							setMessage(""); //$NON-NLS-1$
 						}
 						parsedCommitish = text;
-						getButton(OK).setEnabled(true);
+						setOkButtonEnabled(true);
 						try (RevWalk rw = new RevWalk(repo)) {
 							RevCommit commit = rw.parseCommit(resolved);
 							sha1.setText(AbbreviatedObjectId
@@ -237,7 +237,7 @@ public class ResetTargetSelectionDialog extends AbstractBranchSelectionDialog {
 	@Override
 	protected void refNameSelected(String refName) {
 		boolean enabled = refName != null || parsedCommitish != null;
-		getButton(Window.OK).setEnabled(enabled);
+		setOkButtonEnabled(enabled);
 	}
 
 	@Override

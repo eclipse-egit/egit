@@ -19,6 +19,7 @@ package org.eclipse.egit.ui.internal.history;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
@@ -122,6 +123,8 @@ public class CommitInfoBuilder {
 				UIPreferences.HISTORY_SHOW_BRANCH_SEQUENCE)) {
 			try (RevWalk rw = new RevWalk(db)) {
 				List<Ref> branches = getBranches(commit, allRefs, db);
+				Collections.sort(branches,
+						CommonUtils.REF_ASCENDING_COMPARATOR);
 				if (!branches.isEmpty()) {
 					d.append(UIText.CommitMessageViewer_branches);
 					d.append(": "); //$NON-NLS-1$

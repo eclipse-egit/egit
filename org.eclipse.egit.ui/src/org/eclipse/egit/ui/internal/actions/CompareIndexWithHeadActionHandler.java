@@ -62,13 +62,13 @@ public class CompareIndexWithHeadActionHandler extends RepositoryActionHandler {
 
 	private void runCompare(ExecutionEvent event, @NonNull final Repository repository)
 			throws Exception {
-		IWorkbenchPage workBenchPage = HandlerUtil
+		IWorkbenchPage workbenchPage = HandlerUtil
 				.getActiveWorkbenchWindowChecked(event).getActivePage();
 		IResource[] resources = getSelectedResources(event);
 
 		if (resources.length > 0) {
 			CompareUtils.compare(resources, repository, GitFileRevision.INDEX,
-					Constants.HEAD, false, workBenchPage);
+					Constants.HEAD, false, workbenchPage);
 		} else {
 			IPath[] locations = getSelectedLocations(event);
 			if (locations.length == 0) {
@@ -80,7 +80,7 @@ public class CompareIndexWithHeadActionHandler extends RepositoryActionHandler {
 			}
 			CompareUtils.compare(location, repository,
 					GitFileRevision.INDEX, Constants.HEAD, false,
-					workBenchPage);
+					workbenchPage);
 		}
 	}
 

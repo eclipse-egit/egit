@@ -3,7 +3,7 @@
  * Copyright (C) 2008, Robin Rosenberg <robin.rosenberg@dewire.com>
  * Copyright (C) 2008, Shawn O. Pearce <spearce@spearce.org>
  * Copyright (C) 2008, Google Inc.
- * Copyright (C) 2016, Thomas Wolf <thomas.wolf@paranor.ch>
+ * Copyright (C) 2016, 2019 Thomas Wolf <thomas.wolf@paranor.ch>
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License 2.0
@@ -35,7 +35,7 @@ import org.eclipse.jgit.storage.file.FileRepositoryBuilder;
  * Central cache for Repository instances.
  */
 public class RepositoryCache {
-	private final Map<File, Reference<Repository>> repositoryCache = new HashMap<File, Reference<Repository>>();
+	private final Map<File, Reference<Repository>> repositoryCache = new HashMap<>();
 
 	/**
 	 * Looks in the cache for a {@link Repository} matching the given git
@@ -49,19 +49,34 @@ public class RepositoryCache {
 	 * @throws IOException
 	 */
 	public Repository lookupRepository(final File gitDir) throws IOException {
-		prune();
 		// Make sure we have a normalized path without .. segments here.
 		File normalizedGitDir = new Path(gitDir.getAbsolutePath()).toFile();
 		synchronized (repositoryCache) {
 			Reference<Repository> r = repositoryCache.get(normalizedGitDir);
-			Repository d = r != null ? r.get() : null;
-			if (d == null) {
-				d = FileRepositoryBuilder.create(normalizedGitDir);
+			if (r == null) {
+				Repository result = FileRepositoryBuilder
+						.create(normalizedGitDir);
 				repositoryCache.put(normalizedGitDir,
-						new WeakReference<Repository>(d));
+						new WeakReference<>(result));
+				return result;
+			} else {
+				Repository result = r.get();
+				if (result != null && result.getDirectory().exists()) {
+					return result;
+				} else {
+					repositoryCache.remove(normalizedGitDir);
+				}
 			}
-			return d;
 		}
+		// If we get here, we found a stale repository. We must remove
+		// a possibly still existing IndexDiffCache outside the synchronized
+		// block, otherwise we may run into a deadlock due to lock inversion
+		// between our repositoryCache and IndexDiffCache.entries.
+		IndexDiffCache cache = Activator.getDefault().getIndexDiffCache();
+		if (cache != null) {
+			cache.remove(normalizedGitDir);
+		}
+		return lookupRepository(gitDir);
 	}
 
 	/**
@@ -76,28 +91,45 @@ public class RepositoryCache {
 		if (gitDir == null) {
 			return null;
 		}
-		prune();
 		File normalizedGitDir = new Path(gitDir.getAbsolutePath()).toFile();
 		synchronized (repositoryCache) {
 			Reference<Repository> r = repositoryCache.get(normalizedGitDir);
-			return r != null ? r.get() : null;
+			if (r == null) {
+				return null;
+			}
+			Repository result = r.get();
+			if (result != null && result.getDirectory().exists()) {
+				return result;
+			}
+			repositoryCache.remove(normalizedGitDir);
 		}
+		IndexDiffCache cache = Activator.getDefault().getIndexDiffCache();
+		if (cache != null) {
+			cache.remove(normalizedGitDir);
+		}
+		return null;
 	}
 
 	/**
 	 * @return all Repository instances contained in the cache
 	 */
 	public Repository[] getAllRepositories() {
-		prune();
-		List<Repository> repositories = new ArrayList<Repository>();
+		List<Repository> repositories = new ArrayList<>();
+		List<File> toRemove = new ArrayList<>();
 		synchronized (repositoryCache) {
-			for (Reference<Repository> reference : repositoryCache.values()) {
-				Repository repository = reference.get();
-				if (repository != null) {
+			for (Iterator<Map.Entry<File, Reference<Repository>>> i = repositoryCache
+					.entrySet().iterator(); i.hasNext();) {
+				Map.Entry<File, Reference<Repository>> entry = i.next();
+				Repository repository = entry.getValue().get();
+				if (repository == null || !repository.getDirectory().exists()) {
+					i.remove();
+					toRemove.add(entry.getKey());
+				} else {
 					repositories.add(repository);
 				}
 			}
 		}
+		removeIndexDiffCaches(toRemove);
 		return repositories.toArray(new Repository[0]);
 	}
 
@@ -114,9 +146,7 @@ public class RepositoryCache {
 	 */
 	public Repository getRepository(final IResource resource) {
 		IPath location = resource.getLocation();
-		if (location == null)
-			return null;
-		return getRepository(location);
+		return location == null ? null : getRepository(location);
 	}
 
 	/**
@@ -131,43 +161,42 @@ public class RepositoryCache {
 	 * @since 3.2
 	 */
 	public Repository getRepository(final IPath location) {
-		Repository[] repositories = getAllRepositories();
+		if (location == null) {
+			return null;
+		}
 		Repository repository = null;
 		int largestSegmentCount = 0;
-		for (Repository r : repositories) {
-			if (!r.isBare()) {
-				IPath repoPath = new Path(r.getWorkTree().getAbsolutePath());
-				if (location != null && repoPath.isPrefixOf(location)) {
-					if (repository == null
-							|| repoPath.segmentCount() > largestSegmentCount) {
-						repository = r;
-						largestSegmentCount = repoPath.segmentCount();
-					}
-				}
-			}
-		}
-		return repository;
-	}
-
-	private void prune() {
 		List<File> toRemove = new ArrayList<>();
 		synchronized (repositoryCache) {
 			for (Iterator<Map.Entry<File, Reference<Repository>>> i = repositoryCache
 					.entrySet().iterator(); i.hasNext();) {
 				Map.Entry<File, Reference<Repository>> entry = i.next();
-				Repository repository = entry.getValue().get();
-				if (repository == null || !repository.getDirectory().exists()) {
+				Repository repo = entry.getValue().get();
+				if (repo == null) {
 					i.remove();
 					toRemove.add(entry.getKey());
+					continue;
+				}
+				if (repo.isBare()) {
+					continue;
+				}
+				IPath repoPath = new Path(repo.getWorkTree().getAbsolutePath());
+				if (repoPath.isPrefixOf(location)) {
+					if (repository == null
+							|| repoPath.segmentCount() > largestSegmentCount) {
+						if (!repo.getDirectory().exists()) {
+							i.remove();
+							toRemove.add(entry.getKey());
+							continue;
+						}
+						repository = repo;
+						largestSegmentCount = repoPath.segmentCount();
+					}
 				}
 			}
 		}
-		IndexDiffCache cache = Activator.getDefault().getIndexDiffCache();
-		if (cache != null) {
-			for (File f : toRemove) {
-				cache.remove(f);
-			}
-		}
+		removeIndexDiffCaches(toRemove);
+		return repository;
 	}
 
 	/**
@@ -179,12 +208,17 @@ public class RepositoryCache {
 			gitDirs = new ArrayList<>(repositoryCache.keySet());
 			repositoryCache.clear();
 		}
-		IndexDiffCache cache = Activator.getDefault().getIndexDiffCache();
-		if (cache != null) {
-			for (File f : gitDirs) {
-				cache.remove(f);
+		removeIndexDiffCaches(gitDirs);
+	}
+
+	private void removeIndexDiffCaches(List<File> gitDirs) {
+		if (!gitDirs.isEmpty()) {
+			IndexDiffCache cache = Activator.getDefault().getIndexDiffCache();
+			if (cache != null) {
+				for (File f : gitDirs) {
+					cache.remove(f);
+				}
 			}
 		}
 	}
-
 }

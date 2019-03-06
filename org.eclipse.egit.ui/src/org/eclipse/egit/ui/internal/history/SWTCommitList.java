@@ -13,20 +13,13 @@ package org.eclipse.egit.ui.internal.history;
 import java.util.ArrayList;
 import java.util.LinkedList;
 
-import org.eclipse.core.runtime.IProgressMonitor;
-import org.eclipse.core.runtime.IStatus;
-import org.eclipse.core.runtime.Status;
-import org.eclipse.core.runtime.jobs.Job;
 import org.eclipse.jface.resource.ResourceManager;
 import org.eclipse.jgit.revplot.PlotCommitList;
 import org.eclipse.jgit.revplot.PlotLane;
-import org.eclipse.swt.events.DisposeEvent;
-import org.eclipse.swt.events.DisposeListener;
 import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.graphics.RGB;
-import org.eclipse.swt.widgets.Control;
 
-class SWTCommitList extends PlotCommitList<SWTCommitList.SWTLane> implements DisposeListener {
+class SWTCommitList extends PlotCommitList<SWTCommitList.SWTLane> {
 
 	private static final RGB[] COMMIT_RGB = new RGB[] { new RGB(133, 166, 214),
 			new RGB(221, 205, 93), new RGB(199, 134, 57),
@@ -45,34 +38,12 @@ class SWTCommitList extends PlotCommitList<SWTCommitList.SWTLane> implements Dis
 
 	private final LinkedList<Color> availableColors;
 
-	private final Control control;
-
-	SWTCommitList(final Control control, final ResourceManager resources) {
-		this.control = control;
+	SWTCommitList(final ResourceManager resources) {
 		allColors = new ArrayList<>(COMMIT_RGB.length);
 		for (RGB rgb : COMMIT_RGB)
 			allColors.add(resources.createColor(rgb));
 		availableColors = new LinkedList<>();
 		repackColors();
-		control.addDisposeListener(this);
-	}
-
-	public void dispose() {
-		Job clearJob = new Job("Clearing commit list") { //$NON-NLS-1$
-
-			@Override
-			protected IStatus run(IProgressMonitor monitor) {
-				synchronized (SWTCommitList.this) {
-					clear();
-				}
-				return Status.OK_STATUS;
-			}
-		};
-		clearJob.setSystem(true);
-		clearJob.schedule();
-
-		if (!control.isDisposed())
-			control.removeDisposeListener(this);
 	}
 
 	private void repackColors() {
@@ -89,11 +60,6 @@ class SWTCommitList extends PlotCommitList<SWTCommitList.SWTLane> implements Dis
 	@Override
 	protected void recycleLane(final SWTLane lane) {
 		availableColors.add(lane.color);
-	}
-
-	@Override
-	public void widgetDisposed(DisposeEvent e) {
-		dispose();
 	}
 
 	static class SWTLane extends PlotLane {

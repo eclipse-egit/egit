@@ -12,11 +12,15 @@ package org.eclipse.egit.ui.internal.history;
 
 import java.text.MessageFormat;
 
+import org.eclipse.egit.ui.internal.UIIcons;
 import org.eclipse.egit.ui.internal.UIText;
+import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.jface.resource.JFaceResources;
 import org.eclipse.jface.resource.LocalResourceManager;
 import org.eclipse.jface.resource.ResourceManager;
 import org.eclipse.jface.viewers.ColumnLabelProvider;
+import org.eclipse.jface.viewers.DecorationOverlayIcon;
+import org.eclipse.jface.viewers.IDecoration;
 import org.eclipse.jgit.diff.DiffEntry.ChangeType;
 import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.graphics.Image;
@@ -40,13 +44,29 @@ public class FileDiffLabelProvider extends ColumnLabelProvider {
 
 	@Override
 	public String getText(final Object element) {
-		return ((FileDiff) element).getLabel(element);
+		if (element == null) {
+			return null;
+		}
+		return ((FileDiff) element).getPath();
 	}
 
 	@Override
 	public Image getImage(final Object element) {
+		if (element == null) {
+			return null;
+		}
 		final FileDiff c = (FileDiff) element;
-		return (Image) resourceManager.get(c.getImageDescriptor(c));
+		ImageDescriptor desc = c.getBaseImageDescriptor();
+		if (desc == null) {
+			return null;
+		}
+		Image image = UIIcons.getImage(resourceManager, desc);
+		desc = c.getImageDcoration();
+		if (desc != null) {
+			image = UIIcons.getImage(resourceManager, new DecorationOverlayIcon(
+					image, desc, IDecoration.BOTTOM_RIGHT));
+		}
+		return image;
 	}
 
 	@Override
@@ -57,15 +77,23 @@ public class FileDiffLabelProvider extends ColumnLabelProvider {
 
 	@Override
 	public Color getForeground(Object element) {
-		final FileDiff c = (FileDiff) element;
-		if (!c.isMarked(FileDiffContentProvider.INTERESTING_MARK_TREE_FILTER_INDEX))
-			return dimmedForegroundColor;
-		else
+		if (element == null) {
 			return null;
+		}
+		final FileDiff c = (FileDiff) element;
+		if (!c.isMarked(
+				CommitFileDiffViewer.INTERESTING_MARK_TREE_FILTER_INDEX)) {
+			return dimmedForegroundColor;
+		} else {
+			return null;
+		}
 	}
 
 	@Override
 	public String getToolTipText(final Object element) {
+		if (element == null) {
+			return null;
+		}
 		final FileDiff c = (FileDiff) element;
 		if (c.getChange() == ChangeType.RENAME) {
 			return MessageFormat.format(

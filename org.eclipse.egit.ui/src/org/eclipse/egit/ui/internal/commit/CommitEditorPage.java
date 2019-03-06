@@ -33,6 +33,7 @@ import org.eclipse.egit.ui.Activator;
 import org.eclipse.egit.ui.UIPreferences;
 import org.eclipse.egit.ui.UIUtils;
 import org.eclipse.egit.ui.internal.ClipboardUtils;
+import org.eclipse.egit.ui.internal.CommonUtils;
 import org.eclipse.egit.ui.internal.GitLabelProvider;
 import org.eclipse.egit.ui.internal.PreferenceBasedDateFormatter;
 import org.eclipse.egit.ui.internal.UIIcons;
@@ -358,6 +359,7 @@ public class CommitEditorPage extends FormPage
 
 		final MenuItem copySHA1MenuItem = new MenuItem(contextMenu, SWT.PUSH);
 		copySHA1MenuItem.setText(UIText.Header_contextMenu_copy_SHA1);
+		copySHA1MenuItem.setImage(getImage(UIIcons.ELCL16_ID));
 		final Shell shell = link.getShell();
 		copySHA1MenuItem.addSelectionListener(new SelectionAdapter() {
 			@Override
@@ -380,9 +382,9 @@ public class CommitEditorPage extends FormPage
 
 			@Override
 			public int compare(Ref r1, Ref r2) {
-				return Repository.shortenRefName(r1.getName())
-						.compareToIgnoreCase(
-								Repository.shortenRefName(r2.getName()));
+				return CommonUtils.STRING_ASCENDING_COMPARATOR.compare(
+						Repository.shortenRefName(r1.getName()),
+						Repository.shortenRefName(r2.getName()));
 			}
 		});
 		return tags;
@@ -404,7 +406,7 @@ public class CommitEditorPage extends FormPage
 	}
 
 	void fillDiffs(FileDiff[] diffs) {
-		diffViewer.setInput(diffs);
+		diffViewer.newInput(diffs);
 		diffSection.setText(getDiffSectionTitle(Integer.valueOf(diffs.length)));
 		setSectionExpanded(diffSection, diffs.length != 0);
 	}
@@ -508,7 +510,12 @@ public class CommitEditorPage extends FormPage
 		GridDataFactory.fillDefaults().grab(true, true).hint(SWT.DEFAULT, 50)
 				.applyTo(control);
 		addToFocusTracking(control);
-		branchViewer.setComparator(new ViewerComparator());
+		branchViewer.setComparator(new ViewerComparator() {
+			@Override
+			protected Comparator<? super String> getComparator() {
+				return CommonUtils.STRING_ASCENDING_COMPARATOR;
+			}
+		});
 		branchViewer.setLabelProvider(new GitLabelProvider() {
 
 			@Override
@@ -538,15 +545,13 @@ public class CommitEditorPage extends FormPage
 		Composite filesArea = createSectionClient(diffSection, toolkit);
 
 		diffViewer = new CommitFileDiffViewer(filesArea, getSite(), SWT.MULTI
-				| SWT.H_SCROLL | SWT.V_SCROLL | SWT.FULL_SELECTION
+				| SWT.H_SCROLL | SWT.V_SCROLL | SWT.VIRTUAL | SWT.FULL_SELECTION
 				| toolkit.getBorderStyle());
 		Control control = diffViewer.getControl();
 		control.setData(FormToolkit.KEY_DRAW_BORDER, FormToolkit.TREE_BORDER);
 		GridDataFactory.fillDefaults().hint(SWT.DEFAULT, 50).minSize(1, 50)
 				.grab(true, true).applyTo(control);
 		addToFocusTracking(control);
-		diffViewer.setContentProvider(ArrayContentProvider.getInstance());
-
 		updateSectionClient(diffSection, filesArea, toolkit);
 	}
 

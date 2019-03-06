@@ -296,15 +296,7 @@ class CommitGraphTable {
 				table, renderer);
 		hoverManager.install(table.getTable());
 
-		table.getTable().addDisposeListener(new DisposeListener() {
-
-			@Override
-			public void widgetDisposed(DisposeEvent e) {
-				if (allCommits != null)
-					allCommits.dispose();
-				hoverManager.dispose();
-			}
-		});
+		table.getTable().addDisposeListener(e -> hoverManager.dispose());
 
 		Transfer[] transferTypes = new Transfer[] {TextTransfer.getInstance(), FileTransfer.getInstance()};
 		table.addDragSupport(DND.DROP_DEFAULT | DND.DROP_COPY, transferTypes,
@@ -434,9 +426,6 @@ class CommitGraphTable {
 		}
 		setHistoryPageInput(input);
 		final SWTCommitList oldList = allCommits;
-		if (oldList != null && oldList != list) {
-			oldList.dispose();
-		}
 		highlight = hFlag;
 		allCommits = list;
 		int newAllCommitsLength = asArray == null ? 0 : asArray.length;

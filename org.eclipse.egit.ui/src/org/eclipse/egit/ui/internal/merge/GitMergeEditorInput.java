@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (C) 2010, 2013 Mathias Kinzler <mathias.kinzler@sap.com> and others.
+ * Copyright (C) 2010, 2019 Mathias Kinzler <mathias.kinzler@sap.com> and others.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License 2.0
@@ -22,6 +22,7 @@ import java.util.Map.Entry;
 
 import org.eclipse.compare.CompareConfiguration;
 import org.eclipse.compare.CompareEditorInput;
+import org.eclipse.compare.IResourceProvider;
 import org.eclipse.compare.ITypedElement;
 import org.eclipse.compare.structuremergeviewer.DiffNode;
 import org.eclipse.compare.structuremergeviewer.Differencer;
@@ -37,7 +38,6 @@ import org.eclipse.core.runtime.Path;
 import org.eclipse.egit.core.internal.CompareCoreUtils;
 import org.eclipse.egit.core.internal.CoreText;
 import org.eclipse.egit.core.internal.storage.GitFileRevision;
-import org.eclipse.egit.core.internal.storage.WorkingTreeFileRevision;
 import org.eclipse.egit.core.internal.util.ResourceUtil;
 import org.eclipse.egit.ui.Activator;
 import org.eclipse.egit.ui.internal.CompareUtils;
@@ -45,9 +45,9 @@ import org.eclipse.egit.ui.internal.UIText;
 import org.eclipse.egit.ui.internal.revision.EditableRevision;
 import org.eclipse.egit.ui.internal.revision.FileRevisionTypedElement;
 import org.eclipse.egit.ui.internal.revision.GitCompareFileRevisionEditorInput.EmptyTypedElement;
-import org.eclipse.egit.ui.internal.revision.LocalFileRevision;
 import org.eclipse.egit.ui.internal.revision.LocationEditableRevision;
 import org.eclipse.egit.ui.internal.revision.ResourceEditableRevision;
+import org.eclipse.egit.ui.internal.synchronize.compare.LocalNonWorkspaceTypedElement;
 import org.eclipse.jface.operation.IRunnableContext;
 import org.eclipse.jgit.api.RebaseCommand;
 import org.eclipse.jgit.dircache.DirCacheEntry;
@@ -64,15 +64,14 @@ import org.eclipse.jgit.treewalk.FileTreeIterator;
 import org.eclipse.jgit.treewalk.TreeWalk;
 import org.eclipse.jgit.treewalk.filter.AndTreeFilter;
 import org.eclipse.jgit.treewalk.filter.NotIgnoredFilter;
-import org.eclipse.jgit.treewalk.filter.OrTreeFilter;
-import org.eclipse.jgit.treewalk.filter.PathFilter;
-import org.eclipse.jgit.treewalk.filter.TreeFilter;
+import org.eclipse.jgit.treewalk.filter.PathFilterGroup;
 import org.eclipse.jgit.util.IO;
 import org.eclipse.jgit.util.RawParseUtils;
 import org.eclipse.osgi.util.NLS;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.team.core.history.IFileRevision;
+import org.eclipse.team.ui.synchronize.SaveableCompareEditorInput;
 import org.eclipse.ui.ISharedImages;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.ide.IDE.SharedImages;
@@ -117,9 +116,12 @@ public class GitMergeEditorInput extends CompareEditorInput {
 			if (selectedEdition instanceof DiffNode) {
 				DiffNode diffNode = (DiffNode) selectedEdition;
 				ITypedElement element = diffNode.getLeft();
-				if (element instanceof ResourceEditableRevision) {
-					ResourceEditableRevision resourceRevision = (ResourceEditableRevision) element;
-					return resourceRevision.getFile();
+				if (element instanceof IResourceProvider) {
+					IResource resource = ((IResourceProvider) element)
+							.getResource();
+					if (adapter.isInstance(resource)) {
+						return resource;
+					}
 				}
 			}
 		}
@@ -270,9 +272,9 @@ public class GitMergeEditorInput extends CompareEditorInput {
 
 	@SuppressWarnings("unused")
 	private IDiffContainer buildDiffContainer(Repository repository,
-			RevCommit headCommit,
-			RevCommit ancestorCommit, List<String> filterPaths, RevWalk rw,
-			IProgressMonitor monitor) throws IOException, InterruptedException {
+			RevCommit headCommit, RevCommit ancestorCommit,
+			List<String> filterPaths, RevWalk rw, IProgressMonitor monitor)
+			throws IOException, InterruptedException {
 
 		monitor.setTaskName(UIText.GitMergeEditorInput_CalculatingDiffTaskName);
 		IDiffContainer result = new DiffNode(Differencer.CONFLICTING);
@@ -289,21 +291,21 @@ public class GitMergeEditorInput extends CompareEditorInput {
 					fileTreeIndex);
 			// filter by selected resources
 			if (filterPaths.size() > 1) {
-				List<TreeFilter> suffixFilters = new ArrayList<>();
-				for (String filterPath : filterPaths)
-					suffixFilters.add(PathFilter.create(filterPath));
-				TreeFilter otf = OrTreeFilter.create(suffixFilters);
-				tw.setFilter(AndTreeFilter.create(otf, notIgnoredFilter));
+				tw.setFilter(AndTreeFilter.create(
+						PathFilterGroup.createFromStrings(filterPaths),
+						notIgnoredFilter));
 			} else if (filterPaths.size() > 0) {
 				String path = filterPaths.get(0);
-				if (path.length() == 0)
+				if (path.isEmpty()) {
 					tw.setFilter(notIgnoredFilter);
-				else
-					tw.setFilter(AndTreeFilter.create(PathFilter.create(path),
+				} else {
+					tw.setFilter(AndTreeFilter.create(
+							PathFilterGroup.createFromStrings(path),
 							notIgnoredFilter));
-			} else
+				}
+			} else {
 				tw.setFilter(notIgnoredFilter);
-
+			}
 			tw.setRecursive(true);
 
 			while (tw.next()) {
@@ -353,6 +355,7 @@ public class GitMergeEditorInput extends CompareEditorInput {
 				if (right instanceof EmptyTypedElement)
 					continue;
 
+				ITypedElement left;
 				IFileRevision rev;
 				// if the file is not conflicting (as it was auto-merged)
 				// we will show the auto-merged (local) version
@@ -361,33 +364,38 @@ public class GitMergeEditorInput extends CompareEditorInput {
 						.getAbsolutePath());
 				IPath location = repositoryPath
 						.append(fit.getEntryPathString());
+				assert location != null;
 				IFile file = ResourceUtil.getFileForLocation(location, false);
 				if (!conflicting || useWorkspace) {
-					if (file != null)
-						rev = new LocalFileRevision(file);
-					else
-						rev = new WorkingTreeFileRevision(location.toFile());
+					if (file != null) {
+						left = SaveableCompareEditorInput
+								.createFileElement(file);
+					} else {
+						left = new LocalNonWorkspaceTypedElement(repository,
+								location);
+					}
 				} else {
 					rev = GitFileRevision.inIndex(repository, gitPath,
 							DirCacheEntry.STAGE_2);
-				}
-
-				IRunnableContext runnableContext = getContainer();
-				if (runnableContext == null)
-					runnableContext = PlatformUI.getWorkbench().getProgressService();
-
-				EditableRevision leftEditable;
-				if (file != null)
-					leftEditable = new ResourceEditableRevision(rev, file,
-							runnableContext);
-				else
-					leftEditable = new LocationEditableRevision(rev, location,
-							runnableContext);
-				// make sure we don't need a round trip later
-				try {
-					leftEditable.cacheContents(monitor);
-				} catch (CoreException e) {
-					throw new IOException(e.getMessage());
+					IRunnableContext runnableContext = getContainer();
+					if (runnableContext == null) {
+						runnableContext = PlatformUI.getWorkbench()
+								.getProgressService();
+						assert runnableContext != null;
+					}
+					if (file != null) {
+						left = new ResourceEditableRevision(rev, file,
+								runnableContext);
+					} else {
+						left = new LocationEditableRevision(rev, location,
+								runnableContext);
+					}
+					// make sure we don't need a round trip later
+					try {
+						((EditableRevision) left).cacheContents(monitor);
+					} catch (CoreException e) {
+						throw new IOException(e.getMessage());
+					}
 				}
 
 				int kind = Differencer.NO_CHANGE;
@@ -399,18 +407,18 @@ public class GitMergeEditorInput extends CompareEditorInput {
 				IDiffContainer fileParent = getFileParent(result,
 						repositoryPath, file, location);
 
-				ITypedElement anc;
-				if (ancestorCommit != null)
-					anc = CompareUtils.getFileRevisionTypedElement(gitPath,
+				ITypedElement ancestor = null;
+				if (ancestorCommit != null) {
+					ancestor = CompareUtils.getFileRevisionTypedElement(gitPath,
 							ancestorCommit, repository);
-				else
-					anc = null;
-				// we get an ugly black icon if we have an EmptyTypedElement
-				// instead of null
-				if (anc instanceof EmptyTypedElement)
-					anc = null;
+					// we get an ugly black icon if we have an EmptyTypedElement
+					// instead of null
+					if (ancestor instanceof EmptyTypedElement) {
+						ancestor = null;
+					}
+				}
 				// create the node as child
-				new DiffNode(fileParent, kind, anc, leftEditable, right);
+				new DiffNode(fileParent, kind, ancestor, left, right);
 			}
 			return result;
 		}

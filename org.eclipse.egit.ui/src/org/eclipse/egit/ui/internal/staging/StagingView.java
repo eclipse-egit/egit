@@ -1478,6 +1478,9 @@ public class StagingView extends ViewPart
 	}
 
 	private static StructuredSelection getSelectionOfPart(IWorkbenchPart part) {
+		if (part == null) {
+			return null;
+		}
 		StructuredSelection sel = null;
 		if (part instanceof IEditorPart) {
 			IResource resource = getResource((IEditorPart) part);
@@ -3034,9 +3037,19 @@ public class StagingView extends ViewPart
 		syncExec(new Runnable() {
 			@Override
 			public void run() {
-				refreshViewersInternal();
+				setRedraw(false);
+				try {
+					refreshViewersInternal();
+				} finally {
+					setRedraw(true);
+				}
 			}
 		});
+	}
+
+	private void setRedraw(boolean redraw) {
+		unstagedViewer.getControl().setRedraw(redraw);
+		stagedViewer.getControl().setRedraw(redraw);
 	}
 
 	/**
@@ -3048,9 +3061,14 @@ public class StagingView extends ViewPart
 			public void run() {
 				Object[] unstagedExpanded = unstagedViewer.getVisibleExpandedElements();
 				Object[] stagedExpanded = stagedViewer.getVisibleExpandedElements();
-				refreshViewersInternal();
-				unstagedViewer.setExpandedElements(unstagedExpanded);
-				stagedViewer.setExpandedElements(stagedExpanded);
+				setRedraw(false);
+				try {
+					refreshViewersInternal();
+					unstagedViewer.setExpandedElements(unstagedExpanded);
+					stagedViewer.setExpandedElements(stagedExpanded);
+				} finally {
+					setRedraw(true);
+				}
 			}
 		});
 	}

@@ -60,7 +60,7 @@
         name="AnyEditTools.feature.group"
         optional="true"/>
     <requirement
-        name="fr.obeo.releng.targetplatform-feature.feature.group"
+        name="org.eclipse.cbi.targetplatform-feature.feature.group"
         optional="true"/>
     <requirement
         name="com.github.spotbugs.plugin.eclipse.feature.group"
@@ -70,7 +70,7 @@
     <repository
         url="http://download.eclipse.org/technology/swtbot/releases/latest"/>
     <repository
-        url="https://dl.bintray.com/mbarbero/fr.obeo.releng.targetplatform/latest"/>
+        url="https://download.eclipse.org/cbi/tpd/3.0.0-SNAPSHOT"/>
     <repository
         url="http://download.eclipse.org/modeling/tmf/xtext/updates/composite/latest/"/>
     <repository

@@ -71,171 +71,153 @@
 
    <extension
          point="org.eclipse.core.runtime.adapters">
-         <factory
-               adaptableType="org.eclipse.ui.IURIEditorInput"
-               class="org.eclipse.egit.ui.internal.factories.GitAdapterFactory">
-            <adapter type="java.io.File" />
-            <adapter type="org.eclipse.jgit.lib.Repository" />
-            <adapter type="org.eclipse.team.ui.history.IHistoryPageSource" />
-         </factory>
-         <factory
-               adaptableType="org.eclipse.egit.core.internal.storage.GitFileHistoryProvider"
-               class="org.eclipse.egit.ui.internal.factories.GitAdapterFactory">
-            <adapter
-                  type="org.eclipse.team.ui.history.IHistoryPageSource">
-            </adapter>
-         </factory>
-         <factory
-               adaptableType="org.eclipse.core.resources.IResource"
-               class="org.eclipse.egit.ui.internal.factories.GitAdapterFactory">
-            <adapter
-                  type="org.eclipse.team.ui.history.IHistoryPageSource">
-            </adapter>
-         </factory>
-         <factory
-               adaptableType="org.eclipse.core.runtime.Path"
-               class="org.eclipse.egit.ui.internal.factories.GitAdapterFactory">
-            <adapter
-                  type="org.eclipse.team.ui.history.IHistoryPageSource">
-            </adapter>
-         </factory>
-         <factory
-               adaptableType="org.eclipse.ui.IWorkingSet"
-               class="org.eclipse.egit.ui.internal.factories.GitAdapterFactory">
-            <adapter type="org.eclipse.team.ui.history.IHistoryPageSource" />
-            <adapter type="org.eclipse.jgit.lib.Repository" />
-         </factory>
-         <factory
-               adaptableType="org.eclipse.egit.ui.internal.repository.tree.RepositoryTreeNode"
-               class="org.eclipse.egit.ui.internal.factories.GitAdapterFactory">
-            <adapter
-                  type="org.eclipse.team.ui.history.IHistoryPageSource">
-            </adapter>
-         </factory>
-         <factory
-               adaptableType="org.eclipse.egit.ui.internal.commit.RepositoryCommit"
-               class="org.eclipse.egit.ui.internal.factories.GitAdapterFactory">
-            <adapter
-                  type="org.eclipse.team.ui.history.IHistoryPageSource">
-            </adapter>
-         </factory>
-         <factory
-               adaptableType="org.eclipse.egit.ui.internal.history.HistoryPageInput"
-               class="org.eclipse.egit.ui.internal.factories.GitAdapterFactory">
-            <adapter
-                  type="org.eclipse.team.ui.history.IHistoryPageSource">
-            </adapter>
-         </factory>
-         <factory
-               adaptableType="org.eclipse.egit.ui.internal.reflog.ReflogItem"
-               class="org.eclipse.egit.ui.internal.factories.GitAdapterFactory">
-            <adapter
-                  type="org.eclipse.team.ui.history.IHistoryPageSource">
-            </adapter>
-         </factory>
-         <factory
-               adaptableType="org.eclipse.egit.core.internal.rebase.RebaseInteractivePlan$PlanElement"
-               class="org.eclipse.egit.ui.internal.factories.GitAdapterFactory">
-            <adapter
-                  type="org.eclipse.team.ui.history.IHistoryPageSource">
-            </adapter>
-         </factory>
-         <factory
-	       adaptableType="org.eclipse.egit.ui.internal.synchronize.model.GitModelRoot"
-               class="org.eclipse.egit.ui.internal.factories.GitAdapterFactory">
-            <adapter
-                  type="org.eclipse.ui.model.IWorkbenchAdapter"/>
-         </factory>
-         <factory
-	       adaptableType="org.eclipse.egit.ui.internal.synchronize.model.GitModelRepository"
-               class="org.eclipse.egit.ui.internal.factories.GitAdapterFactory">
-            <adapter
-                  type="org.eclipse.ui.model.IWorkbenchAdapter"/>
-         </factory>
-         <factory
-	       adaptableType="org.eclipse.egit.ui.internal.synchronize.model.GitModelCommit"
-               class="org.eclipse.egit.ui.internal.factories.GitAdapterFactory">
-            <adapter
-                  type="org.eclipse.ui.model.IWorkbenchAdapter"/>
-         </factory>
-         <factory
-	       adaptableType="org.eclipse.egit.ui.internal.synchronize.model.GitModelCache"
-               class="org.eclipse.egit.ui.internal.factories.GitAdapterFactory">
-            <adapter
-                  type="org.eclipse.ui.model.IWorkbenchAdapter"/>
-         </factory>
-         <factory
-	       adaptableType="org.eclipse.egit.ui.internal.synchronize.model.GitModelWorkingTree"
-               class="org.eclipse.egit.ui.internal.factories.GitAdapterFactory">
-            <adapter
-                  type="org.eclipse.ui.model.IWorkbenchAdapter"/>
-         </factory>
-         <factory
-	       adaptableType="org.eclipse.egit.ui.internal.synchronize.model.GitModelTree"
-               class="org.eclipse.egit.ui.internal.factories.GitAdapterFactory">
-            <adapter
-                  type="org.eclipse.ui.model.IWorkbenchAdapter"/>
-         </factory>
-         <factory
-	       adaptableType="org.eclipse.egit.ui.internal.synchronize.model.GitModelBlob"
-               class="org.eclipse.egit.ui.internal.factories.GitAdapterFactory">
-            <adapter
-                  type="org.eclipse.ui.model.IWorkbenchAdapter"/>
-         </factory>
-         <factory
-            adaptableType="org.eclipse.egit.ui.internal.synchronize.model.GitModelObject"
+      <factory
+            adaptableType="org.eclipse.ui.IURIEditorInput"
             class="org.eclipse.egit.ui.internal.factories.GitAdapterFactory">
-         <adapter type="org.eclipse.core.resources.mapping.ResourceMapping"/>
-         <adapter type="org.eclipse.core.resources.IResource"/>
+         <adapter type="java.io.File" />
+         <adapter type="org.eclipse.jgit.lib.Repository" />
+         <adapter type="org.eclipse.team.ui.history.IHistoryPageSource" />
       </factory>
       <factory
-            adaptableType="org.eclipse.egit.ui.internal.synchronize.model.GitModelRepository"
+            adaptableType="org.eclipse.egit.core.internal.storage.GitFileHistoryProvider"
             class="org.eclipse.egit.ui.internal.factories.GitAdapterFactory">
-         <adapter type="org.eclipse.core.resources.mapping.ResourceMapping"/>
+         <adapter type="org.eclipse.team.ui.history.IHistoryPageSource" />
       </factory>
       <factory
-            adaptableType="org.eclipse.egit.ui.internal.synchronize.model.GitModelCommit"
+            adaptableType="org.eclipse.core.resources.IResource"
             class="org.eclipse.egit.ui.internal.factories.GitAdapterFactory">
-         <adapter type="org.eclipse.core.resources.mapping.ResourceMapping"/>
+         <adapter type="org.eclipse.team.ui.history.IHistoryPageSource" />
       </factory>
       <factory
-            adaptableType="org.eclipse.egit.ui.internal.synchronize.model.GitModelCache"
+            adaptableType="org.eclipse.core.runtime.Path"
             class="org.eclipse.egit.ui.internal.factories.GitAdapterFactory">
-         <adapter type="org.eclipse.core.resources.mapping.ResourceMapping"/>
+         <adapter type="org.eclipse.team.ui.history.IHistoryPageSource" />
       </factory>
       <factory
-            adaptableType="org.eclipse.egit.ui.internal.synchronize.model.GitModelWorkingTree"
+            adaptableType="org.eclipse.ui.IWorkingSet"
             class="org.eclipse.egit.ui.internal.factories.GitAdapterFactory">
-         <adapter type="org.eclipse.core.resources.mapping.ResourceMapping"/>
-      </factory>
-      <factory
-            adaptableType="org.eclipse.egit.ui.internal.synchronize.model.GitModelTree"
-            class="org.eclipse.egit.ui.internal.factories.GitAdapterFactory">
-         <adapter type="org.eclipse.core.resources.mapping.ResourceMapping"/>
-         <adapter type="org.eclipse.core.resources.IResource"/>
-      </factory>
-      <factory
-            adaptableType="org.eclipse.egit.ui.internal.synchronize.model.GitModelBlob"
-            class="org.eclipse.egit.ui.internal.factories.GitAdapterFactory">
-         <adapter type="org.eclipse.core.resources.mapping.ResourceMapping"/>
-         <adapter type="org.eclipse.core.resources.IResource"/>
+         <adapter type="org.eclipse.team.ui.history.IHistoryPageSource" />
+         <adapter type="org.eclipse.jgit.lib.Repository" />
       </factory>
       <factory
             adaptableType="org.eclipse.egit.ui.internal.repository.tree.RepositoryTreeNode"
             class="org.eclipse.egit.ui.internal.factories.GitAdapterFactory">
-         <adapter type="org.eclipse.ui.model.IWorkbenchAdapter"/>
+         <adapter type="org.eclipse.team.ui.history.IHistoryPageSource" />
+      </factory>
+      <factory
+            adaptableType="org.eclipse.egit.ui.internal.commit.RepositoryCommit"
+            class="org.eclipse.egit.ui.internal.factories.GitAdapterFactory">
+         <adapter type="org.eclipse.team.ui.history.IHistoryPageSource" />
+      </factory>
+      <factory
+            adaptableType="org.eclipse.egit.ui.internal.history.HistoryPageInput"
+            class="org.eclipse.egit.ui.internal.factories.GitAdapterFactory">
+         <adapter type="org.eclipse.team.ui.history.IHistoryPageSource" />
+      </factory>
+      <factory
+            adaptableType="org.eclipse.egit.ui.internal.reflog.ReflogItem"
+            class="org.eclipse.egit.ui.internal.factories.GitAdapterFactory">
+         <adapter type="org.eclipse.team.ui.history.IHistoryPageSource" />
+      </factory>
+      <factory
+            adaptableType="org.eclipse.egit.core.internal.rebase.RebaseInteractivePlan$PlanElement"
+            class="org.eclipse.egit.ui.internal.factories.GitAdapterFactory">
+         <adapter type="org.eclipse.team.ui.history.IHistoryPageSource" />
+      </factory>
+      <factory
+            adaptableType="org.eclipse.egit.ui.internal.synchronize.model.GitModelRoot"
+            class="org.eclipse.egit.ui.internal.factories.GitAdapterFactory">
+         <adapter type="org.eclipse.ui.model.IWorkbenchAdapter" />
+      </factory>
+      <factory
+            adaptableType="org.eclipse.egit.ui.internal.synchronize.model.GitModelRepository"
+            class="org.eclipse.egit.ui.internal.factories.GitAdapterFactory">
+         <adapter type="org.eclipse.ui.model.IWorkbenchAdapter" />
+      </factory>
+      <factory
+            adaptableType="org.eclipse.egit.ui.internal.synchronize.model.GitModelCommit"
+            class="org.eclipse.egit.ui.internal.factories.GitAdapterFactory">
+         <adapter type="org.eclipse.ui.model.IWorkbenchAdapter" />
+      </factory>
+      <factory
+            adaptableType="org.eclipse.egit.ui.internal.synchronize.model.GitModelCache"
+            class="org.eclipse.egit.ui.internal.factories.GitAdapterFactory">
+         <adapter type="org.eclipse.ui.model.IWorkbenchAdapter" />
+      </factory>
+      <factory
+            adaptableType="org.eclipse.egit.ui.internal.synchronize.model.GitModelWorkingTree"
+            class="org.eclipse.egit.ui.internal.factories.GitAdapterFactory">
+         <adapter type="org.eclipse.ui.model.IWorkbenchAdapter" />
+      </factory>
+      <factory
+            adaptableType="org.eclipse.egit.ui.internal.synchronize.model.GitModelTree"
+            class="org.eclipse.egit.ui.internal.factories.GitAdapterFactory">
+         <adapter type="org.eclipse.ui.model.IWorkbenchAdapter" />
+      </factory>
+      <factory
+            adaptableType="org.eclipse.egit.ui.internal.synchronize.model.GitModelBlob"
+            class="org.eclipse.egit.ui.internal.factories.GitAdapterFactory">
+         <adapter type="org.eclipse.ui.model.IWorkbenchAdapter" />
+      </factory>
+      <factory
+            adaptableType="org.eclipse.egit.ui.internal.history.FileDiff"
+            class="org.eclipse.egit.ui.internal.factories.GitAdapterFactory">
+         <adapter type="org.eclipse.ui.model.IWorkbenchAdapter" />
+      </factory>
+      <factory
+            adaptableType="org.eclipse.egit.ui.internal.synchronize.model.GitModelObject"
+            class="org.eclipse.egit.ui.internal.factories.GitAdapterFactory">
+         <adapter type="org.eclipse.core.resources.mapping.ResourceMapping" />
+         <adapter type="org.eclipse.core.resources.IResource" />
+      </factory>
+      <factory
+            adaptableType="org.eclipse.egit.ui.internal.synchronize.model.GitModelRepository"
+            class="org.eclipse.egit.ui.internal.factories.GitAdapterFactory">
+         <adapter type="org.eclipse.core.resources.mapping.ResourceMapping" />
+      </factory>
+      <factory
+            adaptableType="org.eclipse.egit.ui.internal.synchronize.model.GitModelCommit"
+            class="org.eclipse.egit.ui.internal.factories.GitAdapterFactory">
+         <adapter type="org.eclipse.core.resources.mapping.ResourceMapping" />
+      </factory>
+      <factory
+            adaptableType="org.eclipse.egit.ui.internal.synchronize.model.GitModelCache"
+            class="org.eclipse.egit.ui.internal.factories.GitAdapterFactory">
+         <adapter type="org.eclipse.core.resources.mapping.ResourceMapping" />
+      </factory>
+      <factory
+            adaptableType="org.eclipse.egit.ui.internal.synchronize.model.GitModelWorkingTree"
+            class="org.eclipse.egit.ui.internal.factories.GitAdapterFactory">
+         <adapter type="org.eclipse.core.resources.mapping.ResourceMapping" />
+      </factory>
+      <factory
+            adaptableType="org.eclipse.egit.ui.internal.synchronize.model.GitModelTree"
+            class="org.eclipse.egit.ui.internal.factories.GitAdapterFactory">
+         <adapter type="org.eclipse.core.resources.mapping.ResourceMapping" />
+         <adapter type="org.eclipse.core.resources.IResource" />
+      </factory>
+      <factory
+            adaptableType="org.eclipse.egit.ui.internal.synchronize.model.GitModelBlob"
+            class="org.eclipse.egit.ui.internal.factories.GitAdapterFactory">
+         <adapter type="org.eclipse.core.resources.mapping.ResourceMapping" />
+         <adapter type="org.eclipse.core.resources.IResource" />
+      </factory>
+      <factory
+            adaptableType="org.eclipse.egit.ui.internal.repository.tree.RepositoryTreeNode"
+            class="org.eclipse.egit.ui.internal.factories.GitAdapterFactory">
+         <adapter type="org.eclipse.ui.model.IWorkbenchAdapter" />
       </factory>
       <factory
             adaptableType="org.eclipse.team.ui.history.IHistoryView"
             class="org.eclipse.egit.ui.internal.factories.GitAdapterFactory">
-         <adapter type="org.eclipse.ui.part.IShowInSource"/>
+         <adapter type="org.eclipse.ui.part.IShowInSource" />
       </factory>
       <factory
             adaptableType="org.eclipse.egit.ui.internal.staging.StagingEntry"
             class="org.eclipse.egit.ui.internal.staging.StagingEntryAdapterFactory">
-         <adapter type="org.eclipse.core.resources.IResource"/>
-         <adapter type="org.eclipse.core.runtime.IPath"/>
-         <adapter type="org.eclipse.jgit.lib.Repository"/>
+         <adapter type="org.eclipse.core.resources.IResource" />
+         <adapter type="org.eclipse.core.runtime.IPath" />
+         <adapter type="org.eclipse.jgit.lib.Repository" />
       </factory>
    </extension>
 
@@ -482,45 +464,45 @@
          </keywordReference>
       </page>
       <page name="%GitPreferences_ProjectPreferencePage_name"
-	    category="org.eclipse.egit.ui.GitPreferences"
+            category="org.eclipse.egit.ui.GitPreferences"
             class="org.eclipse.egit.ui.internal.preferences.ProjectsPreferencePage"
-	        id="org.eclipse.egit.ui.internal.preferences.ProjectsPreferencePage" >
-	    <keywordReference
-		  id="org.eclipse.egit.ui.internal.preferences.ProjectsPreferencePage">
-	    </keywordReference>
+            id="org.eclipse.egit.ui.internal.preferences.ProjectsPreferencePage" >
+         <keywordReference
+               id="org.eclipse.egit.ui.internal.preferences.ProjectsPreferencePage">
+         </keywordReference>
       </page>
       <page name="%GitPreferences_WindowCachePreferencePage_name"
-	    category="org.eclipse.egit.ui.GitPreferences"
+            category="org.eclipse.egit.ui.GitPreferences"
             class="org.eclipse.egit.ui.internal.preferences.WindowCachePreferencePage"
-	    id="org.eclipse.egit.ui.internal.preferences.WindowCachePreferencePage" >
-	    <keywordReference
-		  id="org.eclipse.egit.ui.internal.preferences.WindowCachePreferencePage">
-	    </keywordReference>
+            id="org.eclipse.egit.ui.internal.preferences.WindowCachePreferencePage" >
+         <keywordReference
+               id="org.eclipse.egit.ui.internal.preferences.WindowCachePreferencePage">
+         </keywordReference>
       </page>
       <page name="%GitPreferences_DateFormatPreferencePage_name"
-	    category="org.eclipse.egit.ui.GitPreferences"
+            category="org.eclipse.egit.ui.GitPreferences"
             class="org.eclipse.egit.ui.internal.preferences.DateFormatPreferencePage"
-	    id="org.eclipse.egit.ui.internal.preferences.DateFormatPreferencePage" >
-	    <keywordReference
-		  id="org.eclipse.egit.ui.internal.preferences.DateFormatPreferencePage">
-	    </keywordReference>
+            id="org.eclipse.egit.ui.internal.preferences.DateFormatPreferencePage" >
+         <keywordReference
+               id="org.eclipse.egit.ui.internal.preferences.DateFormatPreferencePage">
+         </keywordReference>
       </page>
-	  <page name="%GitPreferences_DecoratorPreferencePage_name"
-	    category="org.eclipse.egit.ui.GitPreferences"
+      <page name="%GitPreferences_DecoratorPreferencePage_name"
+            category="org.eclipse.egit.ui.GitPreferences"
             class="org.eclipse.egit.ui.internal.preferences.GitDecoratorPreferencePage"
-	    id="org.eclipse.egit.ui.internal.preferences.GitDecoratorPreferencePage" >
-	    <keywordReference
-		  id="org.eclipse.egit.ui.internal.preferences.GitDecoratorPreferencePage">
-	    </keywordReference>
+            id="org.eclipse.egit.ui.internal.preferences.GitDecoratorPreferencePage" >
+         <keywordReference
+               id="org.eclipse.egit.ui.internal.preferences.GitDecoratorPreferencePage">
+         </keywordReference>
       </page>
       <page
-         category="org.eclipse.egit.ui.GitPreferences"
-         class="org.eclipse.egit.ui.internal.preferences.GlobalConfigurationPreferencePage"
-         id="org.eclipse.egit.ui.internal.preferences.GlobalConfigurationPreferencePage"
-         name="%ConfigurationPage.name">
-      <keywordReference
-            id="org.eclipse.egit.ui.internal.preferences.GlobalConfigurationPreferencePage">
-      </keywordReference>
+            category="org.eclipse.egit.ui.GitPreferences"
+            class="org.eclipse.egit.ui.internal.preferences.GlobalConfigurationPreferencePage"
+            id="org.eclipse.egit.ui.internal.preferences.GlobalConfigurationPreferencePage"
+            name="%ConfigurationPage.name">
+         <keywordReference
+               id="org.eclipse.egit.ui.internal.preferences.GlobalConfigurationPreferencePage">
+         </keywordReference>
       </page>
       <page
             category="org.eclipse.egit.ui.GitPreferences"
@@ -2763,24 +2745,7 @@
                   <adapt type="org.eclipse.egit.core.internal.IRepositoryCommit" />
                </iterate>
                <with variable="activePart">
-                  <test property="GitHistory.isSingleFileHistory" value="resource" />
-               </with>
-            </and>
-         </activeWhen>
-      </handler>
-      <handler
-            commandId="org.eclipse.egit.ui.history.CompareWithHead">
-         <class
-               class="org.eclipse.egit.ui.internal.history.command.CompareWithWorkingTreeHandler">
-         </class>
-         <activeWhen>
-            <and>
-               <count value="1" />
-               <iterate>
-                  <adapt type="org.eclipse.egit.core.internal.IRepositoryCommit" />
-               </iterate>
-               <with variable="activePart">
-                  <test property="GitHistory.isSingleFileHistory" value="file" />
+                  <test property="GitHistory.isSingleFileHistory" />
                </with>
             </and>
          </activeWhen>
@@ -3362,13 +3327,7 @@
             locationURI="popup:org.eclipse.egit.ui.historyPageContributions?after=history.group">
          <command
               commandId="org.eclipse.egit.ui.history.CompareWithWorkingTree"
-              label="%HistoryCompareWithWorkspace.label"
-              style="push">
-            <visibleWhen checkEnabled="true" />
-         </command>
-         <command
-              commandId="org.eclipse.egit.ui.history.CompareWithHead"
-              label="%HistoryCompareWithHead.label"
+              label="%HistoryCompareWithWorkingTree.label"
               style="push">
             <visibleWhen checkEnabled="true" />
          </command>
@@ -4776,6 +4735,9 @@
                </and>
             </visibleWhen>
          </command>
+      </menuContribution>
+      <menuContribution
+            locationURI="popup:org.eclipse.egit.ui.RepositoriesView?after=group.show">
          <command
                commandId="org.eclipse.egit.ui.RepositoriesViewShowInSystemExplorer"
                label="%ShowInSystemExplorer.label"
@@ -5460,7 +5422,6 @@
                </command>
                <command
                      commandId="org.eclipse.egit.ui.team.Untrack"
-                     icon="$nl$/icons/obj16/untrack.png"
                      label="%UntrackAction_label"
                      style="push">
                   <visibleWhen
@@ -5641,7 +5602,6 @@
             <command
                   commandId="org.eclipse.egit.ui.team.ShowBlame"
                   label="%ShowBlameAction_label"
-                  icon="icons/etool16/annotate.png"
                   style="push">
                <visibleWhen checkEnabled="true" />
             </command>
@@ -6451,6 +6411,10 @@
             icon="icons/etool16/annotate.png">
       </image>
       <image
+            commandId="org.eclipse.egit.ui.team.ShowBlame"
+            icon="icons/etool16/annotate.png">
+      </image>
+      <image
             commandId="org.eclipse.egit.ui.PushHeadToGerrit"
             icon="icons/obj16/gerrit_push.png">
       </image>
@@ -6465,6 +6429,34 @@
       <image
             commandId="org.eclipse.egit.ui.team.Disconnect"
             icon="icons/obj16/disconnect_co.png">
+      </image>
+      <image
+            commandId="org.eclipse.egit.ui.team.stash.drop"
+            icon="icons/obj16/delete_obj.png">
+      </image>
+      <image
+            commandId="org.eclipse.egit.ui.RepositoriesViewRemoveRemote"
+            icon="icons/obj16/delete_obj.png">
+      </image>
+      <image
+            commandId="org.eclipse.egit.ui.team.Untrack"
+            icon="icons/obj16/untrack.png">
+      </image>
+      <image
+            commandId="org.eclipse.egit.ui.team.OpenCommit"
+            icon="icons/obj16/open-commit.png">
+      </image>
+      <image
+            commandId="org.eclipse.egit.ui.RepositoriesViewOpenInEditor"
+            icon="icons/elcl16/goto_input.png">
+      </image>
+      <image
+            commandId="org.eclipse.egit.ui.team.CompareWithCommit"
+            icon="icons/obj16/changelog_obj.png">
+      </image>
+      <image
+            commandId="org.eclipse.egit.ui.team.ReplaceWithCommit"
+            icon="icons/obj16/changelog_obj.png">
       </image>
    </extension>
    <extension
@@ -6853,10 +6845,6 @@
             name="%CompareWithWorkTreeCommand.name">
       </command>
       <command
-            id="org.eclipse.egit.ui.history.CompareWithHead"
-            name="%CompareWithHeadCommand.name">
-      </command>
-      <command
             id="org.eclipse.egit.ui.history.ShowVersions"
             name="%ShowVersionsCommand.name">
          <commandParameter
@@ -7020,6 +7008,9 @@
             icon="icons/etool16/createRepository.png"
             id="org.eclipse.egit.ui.CreateRepositoryWizard"
             name="%CreateRepositoryWizard.name">
+         <description>
+            %CreateRepositoryWizard.description
+         </description>
       </wizard>
       <category
             id="org.eclipse.egit.ui.wizardCategory"

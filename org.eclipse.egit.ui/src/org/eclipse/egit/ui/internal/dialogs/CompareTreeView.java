@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2011, 2017 SAP AG and others.
+ * Copyright (c) 2011, 2019 SAP AG and others.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License 2.0
@@ -22,10 +22,13 @@ import java.io.File;
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 import org.eclipse.compare.ITypedElement;
 import org.eclipse.core.resources.IContainer;
@@ -37,6 +40,7 @@ import org.eclipse.core.runtime.Path;
 import org.eclipse.egit.core.internal.CompareCoreUtils;
 import org.eclipse.egit.core.internal.storage.GitFileRevision;
 import org.eclipse.egit.core.internal.storage.WorkingTreeFileRevision;
+import org.eclipse.egit.core.internal.storage.WorkspaceFileRevision;
 import org.eclipse.egit.core.internal.util.ResourceUtil;
 import org.eclipse.egit.core.project.RepositoryMapping;
 import org.eclipse.egit.ui.Activator;
@@ -50,8 +54,7 @@ import org.eclipse.egit.ui.internal.commit.DiffViewer;
 import org.eclipse.egit.ui.internal.dialogs.CompareTreeView.PathNode.Type;
 import org.eclipse.egit.ui.internal.revision.FileRevisionTypedElement;
 import org.eclipse.egit.ui.internal.revision.GitCompareFileRevisionEditorInput;
-import org.eclipse.egit.ui.internal.revision.LocalFileRevision;
-import org.eclipse.egit.ui.internal.revision.ResourceEditableRevision;
+import org.eclipse.egit.ui.internal.synchronize.compare.LocalNonWorkspaceTypedElement;
 import org.eclipse.jface.action.Action;
 import org.eclipse.jface.action.IAction;
 import org.eclipse.jface.action.IMenuListener;
@@ -92,8 +95,7 @@ import org.eclipse.jgit.treewalk.FileTreeIterator;
 import org.eclipse.jgit.treewalk.TreeWalk;
 import org.eclipse.jgit.treewalk.filter.AndTreeFilter;
 import org.eclipse.jgit.treewalk.filter.NotIgnoredFilter;
-import org.eclipse.jgit.treewalk.filter.OrTreeFilter;
-import org.eclipse.jgit.treewalk.filter.PathFilter;
+import org.eclipse.jgit.treewalk.filter.PathFilterGroup;
 import org.eclipse.jgit.treewalk.filter.TreeFilter;
 import org.eclipse.osgi.util.NLS;
 import org.eclipse.swt.SWT;
@@ -101,6 +103,7 @@ import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Menu;
 import org.eclipse.team.core.history.IFileRevision;
+import org.eclipse.team.ui.synchronize.SaveableCompareEditorInput;
 import org.eclipse.ui.ISharedImages;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.actions.ActionFactory.IWorkbenchAction;
@@ -288,9 +291,13 @@ public class CompareTreeView extends ViewPart implements IMenuListener, IShowInS
 	}
 
 	private ITypedElement getTypedElement(FileNode node, IFileRevision fileRevision, String versionName) {
-		if (fileRevision instanceof LocalFileRevision) {
-			LocalFileRevision localFileRevision = (LocalFileRevision) fileRevision;
-			return new ResourceEditableRevision(fileRevision, localFileRevision.getFile(), PlatformUI.getWorkbench().getProgressService());
+		if (fileRevision instanceof WorkspaceFileRevision) {
+			return SaveableCompareEditorInput.createFileElement(node.getFile());
+		} else if (fileRevision instanceof WorkingTreeFileRevision) {
+			IPath path = Path
+					.fromPortableString(((WorkingTreeFileRevision) fileRevision)
+							.getURI().getPath());
+			return new LocalNonWorkspaceTypedElement(getRepository(), path);
 		} else if (fileRevision == null) {
 			return new GitCompareFileRevisionEditorInput.EmptyTypedElement(
 					NLS.bind(
@@ -550,32 +557,20 @@ public class CompareTreeView extends ViewPart implements IMenuListener, IShowInS
 
 			if (input instanceof IResource[]) {
 				IResource[] resources = (IResource[]) input;
-				List<TreeFilter> orFilters = new ArrayList<>(
-						resources.length);
-
-				for (IResource resource : resources) {
-					String relPath = repositoryMapping
-							.getRepoRelativePath(resource);
-					if (relPath != null && relPath.length() > 0) {
-						orFilters.add(PathFilter.create(relPath));
-					}
-				}
+				TreeFilter pathFilter = filterPaths(Arrays.stream(resources)
+						.map(r -> repositoryMapping.getRepoRelativePath(r))
+						.filter(p -> p != null && !p.isEmpty())
+						.collect(Collectors.toList()));
 				if (checkIgnored) {
-					if (orFilters.size() > 1) {
-						TreeFilter andFilter = AndTreeFilter.create(new NotIgnoredFilter(baseTreeIndex),
-								OrTreeFilter.create(orFilters));
-						tw.setFilter(andFilter);
-					} else if (orFilters.size() == 1) {
-						TreeFilter andFilter = AndTreeFilter.create(new NotIgnoredFilter(baseTreeIndex),
-								orFilters.get(0));
-						tw.setFilter(andFilter);
-					} else
+					if (pathFilter != null) {
+						tw.setFilter(AndTreeFilter.create(pathFilter,
+								new NotIgnoredFilter(baseTreeIndex)));
+					} else {
 						tw.setFilter(new NotIgnoredFilter(baseTreeIndex));
-
-				} else if (orFilters.size() > 1)
-					tw.setFilter(OrTreeFilter.create(orFilters));
-				else if (orFilters.size() == 1)
-					tw.setFilter(orFilters.get(0));
+					}
+				} else if (pathFilter != null) {
+					tw.setFilter(pathFilter);
+				}
 			}
 
 			tw.setRecursive(true);
@@ -640,7 +635,7 @@ public class CompareTreeView extends ViewPart implements IMenuListener, IShowInS
 				if (baseVersionIterator != null) {
 					if (baseCommit == null) {
 						if (file != null)
-							left = new LocalFileRevision(file);
+							left = new WorkspaceFileRevision(file);
 						else {
 							IPath path = getRepositoryPath().append(
 									repoRelativePath);
@@ -701,6 +696,13 @@ public class CompareTreeView extends ViewPart implements IMenuListener, IShowInS
 		} finally {
 			monitor.done();
 		}
+	}
+
+	private TreeFilter filterPaths(Collection<String> paths) {
+		if (paths.isEmpty()) {
+			return null;
+		}
+		return PathFilterGroup.createFromStrings(paths);
 	}
 
 	private long getEntrySize(TreeWalk tw, AbstractTreeIterator iterator)

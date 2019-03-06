@@ -72,7 +72,7 @@ public class UIText extends NLS {
 	public static String FeatureRebaseHandler_rebasingFeature;
 
 	/**	 */
-	public static String FeatureRebaseHandler_problemsOcccurredDuringRebase;
+	public static String FeatureRebaseHandler_problemsOccurredDuringRebase;
 
 	/**	 */
 	public static String FeatureRebaseHandler_statusWas;

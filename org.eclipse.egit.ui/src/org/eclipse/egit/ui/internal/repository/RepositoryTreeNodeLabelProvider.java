@@ -18,6 +18,7 @@ import java.util.WeakHashMap;
 
 import org.eclipse.egit.ui.internal.GitLabels;
 import org.eclipse.egit.ui.internal.repository.tree.AdditionalRefNode;
+import org.eclipse.egit.ui.internal.repository.tree.RefNode;
 import org.eclipse.egit.ui.internal.repository.tree.RepositoryNode;
 import org.eclipse.egit.ui.internal.repository.tree.RepositoryTreeNode;
 import org.eclipse.egit.ui.internal.repository.tree.RepositoryTreeNodeType;
@@ -27,6 +28,7 @@ import org.eclipse.jface.viewers.DelegatingStyledCellLabelProvider.IStyledLabelP
 import org.eclipse.jface.viewers.StyledString;
 import org.eclipse.jgit.lib.Ref;
 import org.eclipse.jgit.lib.Repository;
+import org.eclipse.swt.graphics.Image;
 import org.eclipse.ui.IMemento;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.model.WorkbenchLabelProvider;
@@ -138,6 +140,13 @@ public class RepositoryTreeNodeLabelProvider
 	}
 
 	@Override
+	public Image getImage(Object element) {
+		// We know that the decorator for RepositoryTreeNodes will not decorate
+		// the image; our label provider will do so already.
+		return labelProvider.getImage(element);
+	}
+
+	@Override
 	public String getToolTipText(Object element) {
 		if (element instanceof AdditionalRefNode) {
 			AdditionalRefNode additionalRefNode = (AdditionalRefNode) element;
@@ -160,6 +169,12 @@ public class RepositoryTreeNodeLabelProvider
 	@Override
 	public String getDescription(Object element) {
 		StringBuilder result = new StringBuilder(getText(element));
+		// for branches use the complete name, even with hierarchical layout
+		if (element instanceof RefNode) {
+			Ref ref = ((RefNode) element).getObject();
+			String branchName = Repository.shortenRefName(ref.getName());
+			result = new StringBuilder(branchName);
+		}
 		if (element instanceof RepositoryTreeNode) {
 			if (((RepositoryTreeNode) element)
 					.getType() != RepositoryTreeNodeType.REPO) {

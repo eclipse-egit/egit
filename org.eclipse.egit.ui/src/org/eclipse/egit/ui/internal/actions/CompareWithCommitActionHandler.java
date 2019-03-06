@@ -47,11 +47,11 @@ public class CompareWithCommitActionHandler extends RepositoryActionHandler {
 
 		final String commitId = dlg.getCommitId().getName();
 
-		IWorkbenchPage workBenchPage = PlatformUI.getWorkbench()
+		IWorkbenchPage workbenchPage = PlatformUI.getWorkbench()
 				.getActiveWorkbenchWindow().getActivePage();
 		try {
 			CompareUtils.compare(resources, repo, Constants.HEAD, commitId,
-					true, workBenchPage);
+					true, workbenchPage);
 		} catch (IOException e) {
 			Activator.handleError(
 					UIText.CompareWithRefAction_errorOnSynchronize, e, true);

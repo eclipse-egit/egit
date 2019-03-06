@@ -22,6 +22,7 @@ import org.eclipse.core.commands.ExecutionException;
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.NullProgressMonitor;
+import org.eclipse.core.runtime.Path;
 import org.eclipse.egit.core.project.RepositoryMapping;
 import org.eclipse.egit.ui.Activator;
 import org.eclipse.egit.ui.internal.CompareUtils;
@@ -29,13 +30,12 @@ import org.eclipse.egit.ui.internal.EgitUiEditorUtils;
 import org.eclipse.egit.ui.internal.UIText;
 import org.eclipse.egit.ui.internal.history.GitHistoryPage;
 import org.eclipse.egit.ui.internal.revision.GitCompareFileRevisionEditorInput;
+import org.eclipse.egit.ui.internal.synchronize.compare.LocalNonWorkspaceTypedElement;
 import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.viewers.IStructuredSelection;
-import org.eclipse.jgit.lib.Constants;
 import org.eclipse.jgit.lib.ObjectId;
 import org.eclipse.jgit.lib.Repository;
 import org.eclipse.jgit.revwalk.RevCommit;
-import org.eclipse.jgit.revwalk.RevWalk;
 import org.eclipse.osgi.util.NLS;
 import org.eclipse.team.core.history.IFileRevision;
 import org.eclipse.team.ui.synchronize.SaveableCompareEditorInput;
@@ -70,7 +70,7 @@ public class ShowVersionsHandler extends AbstractHistoryCommandHandler {
 		Object input = getPage().getInputInternal().getSingleFile();
 		if (input == null)
 			return null;
-		IWorkbenchPage workBenchPage = HandlerUtil
+		IWorkbenchPage workbenchPage = HandlerUtil
 				.getActiveWorkbenchWindowChecked(event).getActivePage();
 		boolean errorOccurred = false;
 		List<ObjectId> ids = new ArrayList<>();
@@ -105,11 +105,11 @@ public class ShowVersionsHandler extends AbstractHistoryCommandHandler {
 											.createFileElement(resource),
 									right, null);
 							try {
-								CompareUtils.openInCompare(workBenchPage, in);
+								CompareUtils.openInCompare(workbenchPage, in);
 							} catch (Exception e) {
 								errorOccurred = true;
 							}
-						} else
+						} else {
 							try {
 								EgitUiEditorUtils.openEditor(
 										getPart(event).getSite().getPage(), rev,
@@ -119,6 +119,7 @@ public class ShowVersionsHandler extends AbstractHistoryCommandHandler {
 										UIText.GitHistoryPage_openFailed, e);
 								errorOccurred = true;
 							}
+						}
 					} else {
 						ids.add(commit.getId());
 					}
@@ -144,23 +145,16 @@ public class ShowVersionsHandler extends AbstractHistoryCommandHandler {
 					errorOccurred = true;
 				}
 				if (rev != null) {
-					if (compareMode)
-						try (RevWalk rw = new RevWalk(repo)) {
-							ITypedElement left = CompareUtils
-									.getFileRevisionTypedElement(gitPath,
-											rw.parseCommit(repo
-													.resolve(Constants.HEAD)),
-											repo);
-							ITypedElement right = CompareUtils
-									.getFileRevisionTypedElement(commitPath,
-											commit, repo);
-							final GitCompareFileRevisionEditorInput in = new GitCompareFileRevisionEditorInput(
-									left, right, null);
-							CompareUtils.openInCompare(workBenchPage, in);
-						} catch (IOException e) {
-							errorOccurred = true;
-						}
-					else
+					if (compareMode) {
+						ITypedElement right = CompareUtils
+								.getFileRevisionTypedElement(commitPath, commit,
+										repo);
+						GitCompareFileRevisionEditorInput in = new GitCompareFileRevisionEditorInput(
+								new LocalNonWorkspaceTypedElement(repo,
+										new Path(fileInput.getAbsolutePath())),
+								right, null);
+						CompareUtils.openInCompare(workbenchPage, in);
+					} else {
 						try {
 							EgitUiEditorUtils.openEditor(getPart(event)
 									.getSite().getPage(), rev,
@@ -170,12 +164,15 @@ public class ShowVersionsHandler extends AbstractHistoryCommandHandler {
 									UIText.GitHistoryPage_openFailed, e);
 							errorOccurred = true;
 						}
-				} else
+					}
+				} else {
 					ids.add(commit.getId());
+				}
 			}
 		}
-		if (errorOccurred)
+		if (errorOccurred) {
 			Activator.showError(UIText.GitHistoryPage_openFailed, null);
+		}
 		if (ids.size() > 0) {
 			StringBuilder idList = new StringBuilder(""); //$NON-NLS-1$
 			for (ObjectId objectId : ids)

@@ -117,28 +117,12 @@ public class ResourcePropertyTester extends PropertyTester {
 			}
 			RepositoryState state = repository.getRepositoryState();
 
-			if ("canAbortRebase".equals(property)) //$NON-NLS-1$
-				switch (state) {
-				case REBASING_INTERACTIVE:
-					return true;
-				case REBASING_REBASING:
-					return true;
-				case REBASING_MERGE:
-					return true;
-				default:
-					return false;
-				}
-
-			if ("canContinueRebase".equals(property)) //$NON-NLS-1$
-				switch (state) {
-				case REBASING_INTERACTIVE:
-					return true;
-				case REBASING_MERGE:
-					return true;
-				default:
-					return false;
-				}
-
+			if ("canAbortRebase".equals(property)) { //$NON-NLS-1$
+				return canAbortRebase(state);
+			}
+			if ("canContinueRebase".equals(property)) { //$NON-NLS-1$
+				return canContinueRebase(state);
+			}
 			// isSTATE checks repository state where STATE is the CamelCase version
 			// of the RepositoryState enum values.
 			if (property.length() > 3 && property.startsWith("is")) { //$NON-NLS-1$
@@ -230,4 +214,37 @@ public class ResourcePropertyTester extends PropertyTester {
 		return false;
 	}
 
+	/**
+	 * @param state
+	 * @return {@code true} if the repository state permits a rebase to be
+	 *         aborted
+	 */
+	public static boolean canAbortRebase(@NonNull RepositoryState state) {
+		switch (state) {
+		case REBASING_INTERACTIVE:
+			return true;
+		case REBASING_REBASING:
+			return true;
+		case REBASING_MERGE:
+			return true;
+		default:
+			return false;
+		}
+	}
+
+	/**
+	 * @param state
+	 * @return {@code true} if the repository state permits a rebase to be
+	 *         continued
+	 */
+	public static boolean canContinueRebase(@NonNull RepositoryState state) {
+		switch (state) {
+		case REBASING_INTERACTIVE:
+			return true;
+		case REBASING_MERGE:
+			return true;
+		default:
+			return false;
+		}
+	}
 }

@@ -320,9 +320,11 @@ public class RemoveCommand extends
 	private List<IProject> findProjectsToDelete(final List<RepositoryNode> selectedNodes) {
 		final List<IProject> projectsToDelete = new ArrayList<>();
 		for (RepositoryNode node : selectedNodes) {
-			if (node.getRepository().isBare())
+			Repository repository = node.getRepository();
+			if (repository == null || repository.isBare()) {
 				continue;
-			File workDir = node.getRepository().getWorkTree();
+			}
+			File workDir = repository.getWorkTree();
 			final IPath wdPath = new Path(workDir.getAbsolutePath());
 			for (IProject prj : ResourcesPlugin.getWorkspace()
 					.getRoot().getProjects()) {

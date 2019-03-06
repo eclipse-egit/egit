@@ -47,7 +47,7 @@ public class CompareVersionsInTreeHandler extends
 			HistoryPageInput pageInput = getPage(event).getInputInternal();
 			Object input = pageInput.getSingleItem();
 			Repository repository = pageInput.getRepository();
-			IWorkbenchPage workBenchPage = HandlerUtil
+			IWorkbenchPage workbenchPage = HandlerUtil
 					.getActiveWorkbenchWindowChecked(event).getActivePage();
 			// IFile and File just for compatibility; the action should not be
 			// available in this case in the UI
@@ -61,7 +61,7 @@ public class CompareVersionsInTreeHandler extends
 					final String commit2Path = getRenamedPath(gitPath, commit2);
 
 					CompareUtils.openInCompare(commit1, commit2, commit1Path,
-							commit2Path, map.getRepository(), workBenchPage);
+							commit2Path, map.getRepository(), workbenchPage);
 				}
 			} else if (input instanceof File) {
 				File fileInput = (File) input;
@@ -71,7 +71,7 @@ public class CompareVersionsInTreeHandler extends
 				final String commit2Path = getRenamedPath(gitPath, commit2);
 
 				CompareUtils.openInCompare(commit1, commit2, commit1Path,
-						commit2Path, repo, workBenchPage);
+						commit2Path, repo, workbenchPage);
 			} else if (input instanceof IResource) {
 				CompareTreeView view;
 				try {

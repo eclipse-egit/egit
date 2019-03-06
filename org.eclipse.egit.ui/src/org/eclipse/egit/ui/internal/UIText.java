@@ -1207,6 +1207,9 @@ public class UIText extends NLS {
 	public static String CleanRepositoryPage_title;
 
 	/** */
+	public static String CleanRepositoryPage_RefreshingRepositories;
+
+	/** */
 	public static String CleanWizard_title;
 
 	/** */
@@ -1415,6 +1418,9 @@ public class UIText extends NLS {
 
 	/** */
 	public static String RepositorySearchDialog_errorOccurred;
+
+	/** */
+	public static String RepositorySearchDialog_InvalidDirectoryMessage;
 
 	/** */
 	public static String RepositorySearchDialog_NoSearchAvailableMessage;
@@ -1651,7 +1657,7 @@ public class UIText extends NLS {
 	public static String ReflogView_CommitMessageColumnHeader;
 
 	/** */
-	public static String RefSelectionDialog_Messsage;
+	public static String RefSelectionDialog_Message;
 
 	/** */
 	public static String RefSelectionDialog_Title;
@@ -2578,6 +2584,12 @@ public class UIText extends NLS {
 	public static String CommitMessageComponent_MessageSecondLineNotEmpty;
 
 	/** */
+	public static String CommitMessageComponent_ErrorMissingSigningKey;
+
+	/** */
+	public static String CommitMessageComponent_ErrorNoSigningKeyFound;
+
+	/** */
 	public static String CommitMessageEditorDialog_EditCommitMessageTitle;
 
 	/** */
@@ -3076,13 +3088,13 @@ public class UIText extends NLS {
 	public static String FetchWizard_windowTitleWithSource;
 
 	/** */
-	public static String FileDiffContentProvider_computingFileDiffs;
+	public static String CommitFileDiffViewer_computingFileDiffs;
 
 	/** */
-	public static String FileDiffContentProvider_errorGettingDifference;
+	public static String CommitFileDiffViewer_errorGettingDifference;
 
 	/** */
-	public static String FileDiffContentProvider_updatingFileDiffs;
+	public static String CommitFileDiffViewer_updatingFileDiffs;
 
 	/** */
 	public static String FileDiffLabelProvider_RenamedFromToolTip;
@@ -3732,7 +3744,7 @@ public class UIText extends NLS {
 	public static String RepositoriesView_linkCreate;
 
 	/** */
-	public static String RepositoriesView_messsageEmpty;
+	public static String RepositoriesView_messageEmpty;
 
 	/** */
 	public static String RepositoriesView_NothingToPasteMessage;
@@ -3873,16 +3885,7 @@ public class UIText extends NLS {
 	public static String GitCompareFileRevisionEditorInput_CompareTooltip;
 
 	/** */
-	public static String GitCompareFileRevisionEditorInput_CurrentRevision;
-
-	/** */
 	public static String GitCompareFileRevisionEditorInput_CurrentTitle;
-
-	/** */
-	public static String GitCompareFileRevisionEditorInput_contentIdentifier;
-
-	/** */
-	public static String GitCompareFileRevisionEditorInput_LocalHistoryLabel;
 
 	/** */
 	public static String GitCompareFileRevisionEditorInput_LocalLabel;
@@ -3892,9 +3895,6 @@ public class UIText extends NLS {
 
 	/** */
 	public static String GitCompareFileRevisionEditorInput_IndexEditableLabel;
-
-	/** */
-	public static String GitCompareFileRevisionEditorInput_LocalRevision;
 
 	/** */
 	public static String GitCompareFileRevisionEditorInput_RevisionLabel;
@@ -4604,6 +4604,9 @@ public class UIText extends NLS {
 	public static String CommitFileDiffViewer_CopyFilePathMenuLabel;
 
 	/** */
+	public static String CommitFileDiffViewer_CopyAllFilePathsMenuLabel;
+
+	/** */
 	public static String CommitFileDiffViewer_MergeCommitMultiAncestorMessage;
 
 	/** */
@@ -4764,12 +4767,6 @@ public class UIText extends NLS {
 
 	/** */
 	public static String InteractiveRebaseView_this_partName;
-
-	/** */
-	public static String LocalFileRevision_CurrentVersion;
-
-	/** */
-	public static String LocalFileRevision_currentVersionTag;
 
 	/** */
 	public static String LocalNonWorkspaceTypedElement_errorWritingContents;

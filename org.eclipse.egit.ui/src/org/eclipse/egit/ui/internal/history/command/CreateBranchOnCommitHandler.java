@@ -18,6 +18,7 @@ import java.util.List;
 
 import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.commands.ExecutionException;
+import org.eclipse.egit.ui.internal.CommonUtils;
 import org.eclipse.egit.ui.internal.history.GitHistoryPage;
 import org.eclipse.egit.ui.internal.repository.CreateBranchWizard;
 import org.eclipse.jface.viewers.IStructuredSelection;
@@ -58,12 +59,14 @@ public class CreateBranchOnCommitHandler extends AbstractHistoryCommandHandler {
 						if (refName2.startsWith(Constants.R_HEADS))
 							return -1;
 						else
-							return refName1.compareTo(refName2);
+							return CommonUtils.STRING_ASCENDING_COMPARATOR
+									.compare(refName1, refName2);
 					} else {
 						if (refName2.startsWith(Constants.R_REMOTES))
 							return 1;
 						else
-							return refName1.compareTo(refName2);
+							return CommonUtils.STRING_ASCENDING_COMPARATOR
+									.compare(refName1, refName2);
 					}
 				}
 			});

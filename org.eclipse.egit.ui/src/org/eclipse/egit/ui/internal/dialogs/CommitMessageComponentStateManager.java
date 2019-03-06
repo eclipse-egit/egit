@@ -65,13 +65,13 @@ public class CommitMessageComponentStateManager {
 		state.setCommitMessage(values[2]);
 		state.setCommitter(values[3]);
 		state.setHeadCommit(ObjectId.fromString(values[4]));
-		if (values.length >= 5) {
+		if (values.length > 5) {
 			state.setCaretPosition(Integer.parseInt(values[5]));
 		} else {
 			state.setCaretPosition(
 					CommitMessageComponentState.CARET_DEFAULT_POSITION);
 		}
-		if (values.length >= 6) {
+		if (values.length > 6) {
 			state.setSign(Boolean.parseBoolean(values[6]));
 		}
 		return state;

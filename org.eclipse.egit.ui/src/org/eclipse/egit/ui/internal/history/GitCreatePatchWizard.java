@@ -61,7 +61,6 @@ import org.eclipse.jface.wizard.WizardDialog;
 import org.eclipse.jface.wizard.WizardPage;
 import org.eclipse.jgit.lib.Repository;
 import org.eclipse.jgit.revwalk.RevCommit;
-import org.eclipse.jgit.treewalk.filter.PathFilter;
 import org.eclipse.jgit.treewalk.filter.PathFilterGroup;
 import org.eclipse.jgit.treewalk.filter.TreeFilter;
 import org.eclipse.swt.SWT;
@@ -229,7 +228,7 @@ public class GitCreatePatchWizard extends Wizard {
 	private TreeFilter createPathFilter(final Collection<? extends IResource> rs) {
 		if (rs == null || rs.isEmpty())
 			return null;
-		final List<PathFilter> filters = new ArrayList<>();
+		final List<String> filters = new ArrayList<>();
 		for (IResource r : rs) {
 			if (r == null) {
 				continue;
@@ -242,14 +241,13 @@ public class GitCreatePatchWizard extends Wizard {
 						// repository selected
 						return TreeFilter.ALL;
 					else
-						filters.add(PathFilter.create(repoRelativePath));
+						filters.add(repoRelativePath);
 			}
 		}
-		if (filters.size() == 0)
+		if (filters.isEmpty()) {
 			return null;
-		if (filters.size() == 1)
-			return filters.get(0);
-		return PathFilterGroup.create(filters);
+		}
+		return PathFilterGroup.createFromStrings(filters);
 	}
 
 	private void writeToFile(final File file, String content)

@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (C) 2009, 2013 Yann Simon <yann.simon.fr@gmail.com> and others.
+ * Copyright (C) 2009, 2019 Yann Simon <yann.simon.fr@gmail.com> and others.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License 2.0
@@ -27,14 +27,12 @@ import org.eclipse.core.resources.IStorage;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.egit.core.internal.SafeRunnable;
-import org.eclipse.egit.core.internal.storage.IndexFileRevision;
 import org.eclipse.egit.ui.Activator;
 import org.eclipse.egit.ui.internal.UIText;
 import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.jface.text.IDocument;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.team.core.history.IFileRevision;
-import org.eclipse.team.internal.ui.synchronize.EditableSharedDocumentAdapter;
 import org.eclipse.ui.IEditorInput;
 import org.eclipse.ui.IPersistableElement;
 import org.eclipse.ui.IStorageEditorInput;
@@ -42,15 +40,14 @@ import org.eclipse.ui.texteditor.IDocumentProvider;
 
 /**
  * Editable revision which supports listening to content changes by adding
- * {@link IContentChangeListener}.
+ * {@link IContentChangeListener}. Used for comparisons with editable index.
  */
-@SuppressWarnings("restriction")
 public class EditableRevision extends FileRevisionTypedElement implements
 		IEditableContent, IContentChangeNotifier {
 
-	private byte[] modifiedContent;
+	private final CopyOnWriteArrayList<IContentChangeListener> listeners = new CopyOnWriteArrayList<>();
 
-	private CopyOnWriteArrayList<IContentChangeListener> listeners = new CopyOnWriteArrayList<>();
+	private byte[] modifiedContent;
 
 	private IStorageEditorInput input;
 
@@ -96,7 +93,7 @@ public class EditableRevision extends FileRevisionTypedElement implements
 
 	@Override
 	public IEditorInput getDocumentKey(Object element) {
-		if (element == this && getFileRevision() instanceof IndexFileRevision) {
+		if (element == this) {
 			if (input == null) {
 				input = new IStorageEditorInput() {
 
@@ -226,8 +223,10 @@ public class EditableRevision extends FileRevisionTypedElement implements
 		return super.hashCode();
 	}
 
+	@SuppressWarnings("restriction")
 	private static class EditableRevisionSharedDocumentAdapter
-			extends EditableSharedDocumentAdapter {
+			extends
+			org.eclipse.team.internal.ui.synchronize.EditableSharedDocumentAdapter {
 
 		private final EditableRevision editable;
 
@@ -270,8 +269,12 @@ public class EditableRevision extends FileRevisionTypedElement implements
 			super.flushDocument(provider, documentKey, document, overwrite);
 			if (document != null && editable.input != null) {
 				try {
-					editable.setContent(
-							document.get().getBytes(editable.getCharset()));
+					String charset = editable.getCharset();
+					if (charset == null) {
+						editable.setContent(document.get().getBytes());
+					} else {
+						editable.setContent(document.get().getBytes(charset));
+					}
 					// We _know_ that the document provider _cannot_ really save
 					// the IStorage. Nevertheless calling its save operation is
 					// necessary because otherwise an internal "modified" flag

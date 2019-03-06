@@ -21,12 +21,14 @@ import org.eclipse.egit.gitflow.ui.internal.UIText;
 import org.eclipse.egit.ui.Activator;
 import org.eclipse.egit.ui.internal.repository.RepositoriesView;
 import org.eclipse.egit.ui.test.TestUtil;
-import org.eclipse.swtbot.eclipse.finder.widgets.SWTBotCommand;
 import org.eclipse.swtbot.eclipse.finder.widgets.SWTBotView;
+import org.eclipse.swtbot.swt.finder.finders.UIThreadRunnable;
 import org.eclipse.swtbot.swt.finder.junit.SWTBotJunit4ClassRunner;
+import org.eclipse.swtbot.swt.finder.results.VoidResult;
 import org.eclipse.swtbot.swt.finder.widgets.SWTBotTree;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.commands.ICommandService;
+import org.eclipse.ui.handlers.IHandlerService;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
@@ -112,9 +114,19 @@ public class CommandEnablementTest extends AbstractGitflowHandlerTest {
 
 
 	private void runCommand(String commandId) throws Exception {
-		final Command command = getCommandService().getCommand(commandId);
-		SWTBotCommand swtBotCommand = new SWTBotCommand(command);
-		swtBotCommand.click();
+		IHandlerService handlerService = PlatformUI.getWorkbench()
+				.getService(IHandlerService.class);
+		UIThreadRunnable.asyncExec(new VoidResult() {
+			@Override
+			public void run() {
+				try {
+					handlerService.executeCommand(commandId, null);
+				} catch (Exception e) {
+					throw new RuntimeException(
+							"Failed to execute the command - " + commandId, e); //$NON-NLS-1$
+				}
+			}
+		});
 	}
 
 	@SuppressWarnings("boxing")

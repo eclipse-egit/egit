@@ -485,7 +485,7 @@ public class CommitDialog extends TitleAreaDialog {
 				int diff = o1.status.ordinal() - o2.status.ordinal();
 				if (diff != 0)
 					return diff;
-				return o1.path.compareTo(o2.path);
+				return o1.path.compareToIgnoreCase(o2.path);
 			}
 		});
 	}
@@ -734,7 +734,7 @@ public class CommitDialog extends TitleAreaDialog {
 		applyDialogFont(container);
 		container.pack();
 		commitText.setFocus();
-		Image titleImage = UIIcons.WIZBAN_CONNECT_REPO.createImage();
+		Image titleImage = UIIcons.WIZBAN_COMMIT.createImage();
 		UIUtils.hookDisposal(parent, titleImage);
 		setTitleImage(titleImage);
 		setTitle(UIText.CommitDialog_Title);
@@ -1533,7 +1533,7 @@ class CommitItem implements IProblemDecoratable {
 
 			@Override
 			public int compare(CommitItem o1, CommitItem o2) {
-				return o1.path.compareTo(
+				return o1.path.compareToIgnoreCase(
 						o2.path);
 			}
 

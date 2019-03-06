@@ -305,8 +305,11 @@ public class MergeResultDialog extends Dialog {
 			walk.setRetainBody(true);
 			for (ObjectId merge : merges)
 				try {
-					commits.add(new RepositoryCommit(repository,
-							walk.parseCommit(merge)));
+					// Might be null after a merge onto an unborn branch
+					if (merge != null) {
+						commits.add(new RepositoryCommit(repository,
+								walk.parseCommit(merge)));
+					}
 				} catch (IOException e) {
 					Activator.logError(MessageFormat.format(
 							UIText.MergeResultDialog_couldNotFindCommit,
