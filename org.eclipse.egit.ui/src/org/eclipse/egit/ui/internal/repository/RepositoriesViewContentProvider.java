@@ -112,6 +112,8 @@ public class RepositoriesViewContentProvider implements ITreeContentProvider {
 
 	private boolean showUnbornHead = false;
 
+	private AtomicBoolean showRemoteBranches = new AtomicBoolean(true);
+
 	private AtomicBoolean showTags = new AtomicBoolean(true);
 
 	private AtomicBoolean showRefs = new AtomicBoolean(true);
@@ -148,6 +150,9 @@ public class RepositoriesViewContentProvider implements ITreeContentProvider {
 		ICommandService srv = CommonUtils.getService(PlatformUI.getWorkbench(), ICommandService.class);
 		initToggleStateListener(srv, ToggleBranchHierarchyCommand.ID,
 				branchHierarchyMode);
+		initToggleStateListener(srv,
+				ToggleRepositoryViewFilterCommand.TOGGLE_REMOTE_BRANCHES_ID,
+				showRemoteBranches);
 		initToggleStateListener(srv,
 				ToggleRepositoryViewFilterCommand.TOGGLE_TAGS_ID, showTags);
 		initToggleStateListener(srv,
@@ -254,10 +259,16 @@ public class RepositoriesViewContentProvider implements ITreeContentProvider {
 		switch (node.getType()) {
 
 		case BRANCHES: {
-			List<RepositoryTreeNode> nodes = new ArrayList<>();
-			nodes.add(new LocalNode(node, repo));
-			nodes.add(new RemoteTrackingNode(node, repo));
-			return nodes.toArray();
+			LocalNode localBranches = new LocalNode(node, repo);
+			if (showRemoteBranches.get()) {
+				List<RepositoryTreeNode> nodes = new ArrayList<>();
+				nodes.add(localBranches);
+				nodes.add(new RemoteTrackingNode(node, repo));
+				return nodes.toArray();
+			} else {
+				return getBranchChildren(localBranches, repo,
+						Constants.R_HEADS);
+			}
 		}
 
 		case LOCAL:

@@ -22,6 +22,11 @@ public class ToggleRepositoryViewFilterCommand extends AbstractToggleCommand {
 	/**
 	 * The toggle show tags
 	 */
+	public static final String TOGGLE_REMOTE_BRANCHES_ID = "org.eclipse.egit.ui.RepositoriesToggleShowRemoteBranches"; //$NON-NLS-1$
+
+	/**
+	 * The toggle show tags
+	 */
 	public static final String TOGGLE_TAGS_ID = "org.eclipse.egit.ui.RepositoriesToggleShowTags"; //$NON-NLS-1$
 
 	/**

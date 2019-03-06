@@ -5059,6 +5059,12 @@
                visible="true">
          </separator>
          <command
+               commandId="org.eclipse.egit.ui.RepositoriesToggleShowRemoteBranches"
+               helpContextId="TODO - Show Remote Branches"
+               style="toggle"
+               tooltip="%RepoViewToggleShowRemoteBranches.tooltip">
+         </command>
+         <command
                commandId="org.eclipse.egit.ui.RepositoriesToggleShowTags"
                helpContextId="TODO - Show Tags"
                style="toggle"
@@ -6065,6 +6071,16 @@
             defaultHandler="org.eclipse.egit.ui.internal.repository.tree.command.ToggleBranchCommitCommand"
             id="org.eclipse.egit.ui.RepositoriesToggleBranchCommit"
             name="%ToggleBranchCommitCommand.name">
+         <state
+               class="org.eclipse.ui.handlers.RegistryToggleState:true"
+               id="org.eclipse.ui.commands.toggleState">
+         </state>
+      </command>
+      <command
+            categoryId="org.eclipse.egit.ui.commandCategory"
+            defaultHandler="org.eclipse.egit.ui.internal.repository.tree.command.ToggleRepositoryViewFilterCommand"
+            id="org.eclipse.egit.ui.RepositoriesToggleShowRemoteBranches"
+            name="%RepoViewToggleShowRemoteBranches.name">
          <state
                class="org.eclipse.ui.handlers.RegistryToggleState:true"
                id="org.eclipse.ui.commands.toggleState">
