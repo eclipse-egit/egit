@@ -1918,6 +1918,7 @@ public class StagingView extends ViewPart
 						: SWT.VERTICAL);
 			}
 		};
+		columnLayoutAction.setImageDescriptor(UIIcons.ELCL16_COLUMN_LAYOUT);
 		columnLayoutAction.setChecked(getPreferenceStore().getBoolean(
 				UIPreferences.STAGING_VIEW_COLUMN_LAYOUT));
 

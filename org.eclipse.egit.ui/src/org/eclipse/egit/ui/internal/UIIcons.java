@@ -102,6 +102,9 @@ public class UIIcons {
 	/** Filter icon */
 	public final static ImageDescriptor ELCL16_FILTER;
 
+	/** Filter icon */
+	public final static ImageDescriptor ELCL16_COLUMN_LAYOUT;
+
 	/** Enabled, checked, checkbox image */
 	public final static ImageDescriptor CHECKBOX_ENABLED_CHECKED;
 	/** Enabled, unchecked, checkbox image */
@@ -406,6 +409,7 @@ public class UIIcons {
 		ELCL16_SYNCED = map("elcl16/synced.png"); //$NON-NLS-1$
 		ELCL16_FILTER = map("elcl16/filter_ps.png"); //$NON-NLS-1$
 		ELCL16_ID = map("elcl16/sha1.png"); //$NON-NLS-1$
+		ELCL16_COLUMN_LAYOUT = map("elcl16/horizontal_view.png"); //$NON-NLS-1$
 		CHECKBOX_ENABLED_CHECKED = map("checkboxes/enabled_checked.png"); //$NON-NLS-1$
 		CHECKBOX_ENABLED_UNCHECKED = map("checkboxes/enabled_unchecked.png"); //$NON-NLS-1$
 		CHECKBOX_DISABLED_CHECKED = map("checkboxes/disabled_checked.png"); //$NON-NLS-1$
