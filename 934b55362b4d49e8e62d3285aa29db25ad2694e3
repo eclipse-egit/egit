@@ -1,0 +1,119 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5edc5f99_5666b0b3",
+        "filename": "org.eclipse.egit.ui/plugin.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 3222,
+      "author": {
+        "id": 440
+      },
+      "writtenOn": "2019-03-08T20:26:04Z",
+      "side": 1,
+      "message": "Please externalize the names and add a description to each filter. I suggest to follow the pattern established in the navigator filters. Those all have the description \"Hides xyz\".",
+      "range": {
+        "startLine": 3222,
+        "startChar": 9,
+        "endLine": 3222,
+        "endChar": 41
+      },
+      "revId": "934b55362b4d49e8e62d3285aa29db25ad2694e3",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a3e8d01d_414590cd",
+        "filename": "org.eclipse.egit.ui/plugin.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 3234,
+      "author": {
+        "id": 440
+      },
+      "writtenOn": "2019-03-08T20:26:04Z",
+      "side": 1,
+      "message": "typo, should be Stashed",
+      "range": {
+        "startLine": 3234,
+        "startChar": 19,
+        "endLine": 3234,
+        "endChar": 20
+      },
+      "revId": "934b55362b4d49e8e62d3285aa29db25ad2694e3",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "8b3a666e_14bc614d",
+        "filename": "org.eclipse.egit.ui/plugin.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 3248,
+      "author": {
+        "id": 440
+      },
+      "writtenOn": "2019-03-08T20:26:04Z",
+      "side": 1,
+      "message": "please delete",
+      "range": {
+        "startLine": 3248,
+        "startChar": 89,
+        "endLine": 3248,
+        "endChar": 93
+      },
+      "revId": "934b55362b4d49e8e62d3285aa29db25ad2694e3",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "88ecaa1b_a3eeac2a",
+        "filename": "org.eclipse.egit.ui/plugin.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 3251,
+      "author": {
+        "id": 440
+      },
+      "writtenOn": "2019-03-08T20:26:04Z",
+      "side": 1,
+      "message": "Do you happen to know if the \"Contents\" tab can be hidden in the dialog? An end user disabling the \"Git Repositories\" content basically destroys the view.",
+      "range": {
+        "startLine": 3249,
+        "startChar": 0,
+        "endLine": 3251,
+        "endChar": 30
+      },
+      "revId": "934b55362b4d49e8e62d3285aa29db25ad2694e3",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a3d3ee3d_370d49bf",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/repository/tree/filter/NodeFilterFactory.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 440
+      },
+      "writtenOn": "2019-03-08T20:26:04Z",
+      "side": 1,
+      "message": "Please finish the first sentence with a dot and wrap the XML into a code or pre tag.",
+      "range": {
+        "startLine": 20,
+        "startChar": 3,
+        "endLine": 23,
+        "endChar": 86
+      },
+      "revId": "934b55362b4d49e8e62d3285aa29db25ad2694e3",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
