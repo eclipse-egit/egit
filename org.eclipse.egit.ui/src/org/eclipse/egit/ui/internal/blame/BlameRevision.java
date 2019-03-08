@@ -18,6 +18,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import org.eclipse.egit.core.internal.CompareCoreUtils;
+import org.eclipse.egit.core.internal.Utils;
 import org.eclipse.jface.text.revisions.Revision;
 import org.eclipse.jface.text.source.LineRange;
 import org.eclipse.jgit.diff.DiffAlgorithm;
@@ -69,7 +70,7 @@ public class BlameRevision extends Revision {
 
 	@Override
 	public String getId() {
-		return commit.abbreviate(7).name();
+		return Utils.getShortObjectId(commit);
 	}
 
 	@Override

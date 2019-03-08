@@ -32,16 +32,18 @@ import org.eclipse.jgit.lib.Repository;
  */
 public class Utils {
 
+	private static final int SHORT_OBJECT_ID_LENGTH = 7;
 	private static final String EMPTY_STRING = ""; //$NON-NLS-1$
 	private static final char CR_CHAR = '\r';
 	private static final char LF_CHAR = '\n';
 
 	/**
 	 * @param id
-	 * @return a shortened ObjectId (first 6 digits)
+	 * @return a shortened ObjectId (first {@value #SHORT_OBJECT_ID_LENGTH}
+	 *         digits)
 	 */
 	public static String getShortObjectId(ObjectId id) {
-		return id.abbreviate(6).name();
+		return id.abbreviate(SHORT_OBJECT_ID_LENGTH).name();
 	}
 
 	/**

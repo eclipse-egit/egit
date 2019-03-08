@@ -161,7 +161,7 @@ public class ReplaceWithOursTheirsMenu extends CompoundContributionItem
 
 	private static String formatCommit(String format, RevCommit commit) {
 		String message = Utils.shortenText(commit.getShortMessage(), 60);
-		return NLS.bind(format, commit.abbreviate(7).name(), message);
+		return NLS.bind(format, Utils.getShortObjectId(commit), message);
 	}
 
 	private static class ReplaceAction extends Action {

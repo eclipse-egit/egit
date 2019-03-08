@@ -12,6 +12,7 @@ package org.eclipse.egit.gitflow.ui.internal.dialogs;
 
 import java.util.List;
 
+import org.eclipse.egit.core.internal.Utils;
 import org.eclipse.egit.gitflow.GitFlowRepository;
 import org.eclipse.egit.gitflow.ui.internal.UIText;
 import org.eclipse.egit.ui.internal.PreferenceBasedDateFormatter;
@@ -90,7 +91,7 @@ public class FilteredBranchesWidget {
 					if (objectId == null) {
 						return ""; //$NON-NLS-1$
 					}
-					return objectId.abbreviate(7).name();
+					return Utils.getShortObjectId(objectId);
 				}
 				return super.getText(element);
 			}});

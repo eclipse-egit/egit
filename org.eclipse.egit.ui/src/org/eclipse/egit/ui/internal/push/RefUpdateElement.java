@@ -15,6 +15,7 @@ import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.eclipse.egit.core.internal.Utils;
 import org.eclipse.egit.core.op.PushOperationResult;
 import org.eclipse.egit.ui.Activator;
 import org.eclipse.egit.ui.internal.DecorationOverlayDescriptor;
@@ -260,10 +261,11 @@ class RefUpdateElement extends WorkbenchAdapter {
 					String separator = update.isFastForward() ? ".." : "..."; //$NON-NLS-1$ //$NON-NLS-2$
 					ObjectId objectId = oldRef.getObjectId();
 					Object oldName = objectId != null
-							? objectId.abbreviate(7).name() : "?"; //$NON-NLS-1$
+							? Utils.getShortObjectId(objectId)
+							: "?"; //$NON-NLS-1$
 					styled.append(MessageFormat.format(
 							UIText.RefUpdateElement_CommitRangeDecoration,
-							update.getNewObjectId().abbreviate(7).name(),
+							Utils.getShortObjectId(update.getNewObjectId()),
 									separator, oldName),
 							StyledString.DECORATIONS_STYLER);
 					styled.append(' ');

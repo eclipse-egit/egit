@@ -16,6 +16,7 @@ import java.text.MessageFormat;
 import org.eclipse.core.commands.IStateListener;
 import org.eclipse.core.commands.State;
 import org.eclipse.egit.core.RepositoryUtil;
+import org.eclipse.egit.core.internal.Utils;
 import org.eclipse.egit.ui.Activator;
 import org.eclipse.egit.ui.internal.CommonUtils;
 import org.eclipse.egit.ui.internal.GitLabels;
@@ -285,9 +286,9 @@ public class RepositoryTreeNodeDecorator extends GitDecorator
 
 	private String abbreviate(final ObjectId id) {
 		if (id != null) {
-			return id.abbreviate(7).name();
+			return Utils.getShortObjectId(id);
 		} else {
-			return ObjectId.zeroId().abbreviate(7).name();
+			return Utils.getShortObjectId(ObjectId.zeroId());
 		}
 	}
 

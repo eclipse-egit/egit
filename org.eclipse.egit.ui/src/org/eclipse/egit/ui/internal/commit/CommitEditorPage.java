@@ -29,6 +29,7 @@ import org.eclipse.core.runtime.Status;
 import org.eclipse.core.runtime.jobs.ISchedulingRule;
 import org.eclipse.core.runtime.jobs.Job;
 import org.eclipse.egit.core.AdapterUtils;
+import org.eclipse.egit.core.internal.Utils;
 import org.eclipse.egit.ui.Activator;
 import org.eclipse.egit.ui.UIPreferences;
 import org.eclipse.egit.ui.UIUtils;
@@ -111,11 +112,6 @@ public class CommitEditorPage extends FormPage
 	private static final int BRANCH_LIMIT_FOR_SYNC_LOAD = 42;
 
 	private static final String SIGNED_OFF_BY = "Signed-off-by: {0} <{1}>"; //$NON-NLS-1$
-
-	/**
-	 * Abbreviated length of parent id links displayed
-	 */
-	public static final int PARENT_LENGTH = 7;
 
 	private LocalResourceManager resources = new LocalResourceManager(
 			JFaceResources.getResources());
@@ -331,7 +327,7 @@ public class CommitEditorPage extends FormPage
 							toolkit.getColors().getColor(IFormColors.TB_TOGGLE));
 			final Hyperlink link = toolkit
 					.createHyperlink(parents,
-							parentCommit.abbreviate(PARENT_LENGTH).name(),
+							Utils.getShortObjectId(parentCommit),
 							SWT.NONE);
 			link.addHyperlinkListener(new HyperlinkAdapter() {
 				@Override

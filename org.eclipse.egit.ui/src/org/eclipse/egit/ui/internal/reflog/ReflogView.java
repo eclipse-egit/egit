@@ -20,6 +20,7 @@ import java.io.IOException;
 
 import org.eclipse.core.resources.IResource;
 import org.eclipse.egit.core.AdapterUtils;
+import org.eclipse.egit.core.internal.Utils;
 import org.eclipse.egit.core.project.RepositoryMapping;
 import org.eclipse.egit.ui.Activator;
 import org.eclipse.egit.ui.UIPreferences;
@@ -195,7 +196,7 @@ public class ReflogView extends ViewPart implements RefsChangedListener, IShowIn
 			public String getText(Object element) {
 				if (element instanceof ReflogEntry) {
 					final ReflogEntry entry = (ReflogEntry) element;
-					return entry.getNewId().abbreviate(7).name();
+					return Utils.getShortObjectId(entry.getNewId());
 				}
 				return null;
 			}

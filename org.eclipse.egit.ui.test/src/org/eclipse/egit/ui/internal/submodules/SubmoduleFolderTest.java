@@ -33,6 +33,7 @@ import org.eclipse.core.runtime.QualifiedName;
 import org.eclipse.core.runtime.jobs.Job;
 import org.eclipse.egit.core.Activator;
 import org.eclipse.egit.core.JobFamilies;
+import org.eclipse.egit.core.internal.Utils;
 import org.eclipse.egit.core.internal.indexdiff.IndexDiffCacheEntry;
 import org.eclipse.egit.core.project.GitProjectData;
 import org.eclipse.egit.core.project.RepositoryMapping;
@@ -250,7 +251,7 @@ public class SubmoduleFolderTest extends LocalRepositoryTestCase {
 				file.getFullPath().segments());
 		node.select();
 		Ref headRef = subRepository.findRef(Constants.HEAD);
-		final String headId = headRef.getObjectId().abbreviate(6).name();
+		final String headId = Utils.getShortObjectId(headRef.getObjectId());
 		ContextMenuHelper.clickContextMenuSync(projectExplorerTree,
 				"Compare With",
 				util.getPluginLocalizedValue("CompareWithHeadAction_label"));
