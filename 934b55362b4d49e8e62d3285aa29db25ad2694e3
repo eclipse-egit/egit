@@ -94,6 +94,30 @@
     },
     {
       "key": {
+        "uuid": "14f2335c_a2984cbb",
+        "filename": "org.eclipse.egit.ui/plugin.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 3251,
+      "author": {
+        "id": 440
+      },
+      "writtenOn": "2019-03-08T20:34:49Z",
+      "side": 1,
+      "message": "Just found it myself. Please add the following property to your change:\n\n     \u003c!-- Hide the \"Content\" tab of the \"Available Customizations\" dialog --\u003e\n     \u003cproperty               name\u003d\"org.eclipse.ui.navigator.hideAvailableExtensionsTab\"\n         value\u003d\"true\"/\u003e",
+      "parentUuid": "88ecaa1b_a3eeac2a",
+      "range": {
+        "startLine": 3249,
+        "startChar": 0,
+        "endLine": 3251,
+        "endChar": 30
+      },
+      "revId": "934b55362b4d49e8e62d3285aa29db25ad2694e3",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a3d3ee3d_370d49bf",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/repository/tree/filter/NodeFilterFactory.java",
         "patchSetId": 1
