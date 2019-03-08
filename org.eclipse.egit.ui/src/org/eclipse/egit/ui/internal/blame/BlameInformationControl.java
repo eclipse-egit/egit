@@ -19,6 +19,7 @@ import java.io.IOException;
 import java.text.MessageFormat;
 
 import org.eclipse.egit.core.internal.CompareCoreUtils;
+import org.eclipse.egit.core.internal.Utils;
 import org.eclipse.egit.core.internal.job.JobUtil;
 import org.eclipse.egit.core.internal.storage.CommitFileRevision;
 import org.eclipse.egit.ui.Activator;
@@ -265,8 +266,8 @@ public class BlameInformationControl extends AbstractInformationControl
 		RevCommit commit = this.revision.getCommit();
 
 		String linkText = MessageFormat.format(
-				UIText.BlameInformationControl_Commit, commit.abbreviate(7)
-						.name());
+				UIText.BlameInformationControl_Commit,
+				Utils.getShortObjectId(commit));
 		commitLabel.setText(linkText);
 
 		PreferenceBasedDateFormatter dateFormatter = PreferenceBasedDateFormatter
@@ -338,7 +339,7 @@ public class BlameInformationControl extends AbstractInformationControl
 
 	private void createDiffLinkAndText(final RevCommit parent, final Diff diff)
 			throws IOException {
-		String parentId = parent.toObjectId().abbreviate(7).name();
+		String parentId = Utils.getShortObjectId(parent.toObjectId());
 		String parentMessage = parent.getShortMessage();
 
 		EditList interestingDiff = getInterestingDiff(diff.getEditList());

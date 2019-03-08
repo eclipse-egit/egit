@@ -68,7 +68,7 @@ public class DynamicHistoryMenu extends ContributionItem {
 	}
 
 	private String abbreviate(RevCommit selectedCommit) {
-		return selectedCommit.getId().abbreviate(7).name();
+		return Utils.getShortObjectId(selectedCommit.getId());
 	}
 
 	/**

@@ -15,6 +15,7 @@
  *******************************************************************************/
 package org.eclipse.egit.ui.internal.dialogs;
 
+import org.eclipse.egit.core.internal.Utils;
 import org.eclipse.egit.ui.Activator;
 import org.eclipse.egit.ui.UIPreferences;
 import org.eclipse.egit.ui.internal.PreferenceBasedDateFormatter;
@@ -107,7 +108,7 @@ public class CommitLabelProvider extends BaseLabelProvider implements
 	public String getColumnText(final Object element, final int columnIndex) {
 		final RevCommit c = (RevCommit) element;
 		if (columnIndex == 0)
-			return c.getId().abbreviate(7).name();
+			return Utils.getShortObjectId(c.getId());
 		if (columnIndex == 1)
 			return c.getShortMessage();
 		if (columnIndex == 2 || columnIndex == 3) {

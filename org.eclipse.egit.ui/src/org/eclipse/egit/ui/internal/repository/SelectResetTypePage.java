@@ -15,6 +15,7 @@ package org.eclipse.egit.ui.internal.repository;
 
 import java.io.IOException;
 
+import org.eclipse.egit.core.internal.Utils;
 import org.eclipse.egit.ui.UIUtils;
 import org.eclipse.egit.ui.internal.UIIcons;
 import org.eclipse.egit.ui.internal.UIText;
@@ -88,7 +89,8 @@ public class SelectResetTypePage extends WizardPage {
 	}
 
 	private String formatCommit(final RevCommit commit) {
-		return commit.abbreviate(7).name() + ":  " + commit.getShortMessage(); //$NON-NLS-1$
+		return Utils.getShortObjectId(commit) + ":  " //$NON-NLS-1$
+				+ commit.getShortMessage();
 	}
 
 	private RevCommit getLatestCommit(String branch) {

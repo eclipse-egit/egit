@@ -31,6 +31,7 @@ import org.eclipse.core.runtime.MultiStatus;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.core.runtime.jobs.Job;
 import org.eclipse.debug.core.ILaunchConfiguration;
+import org.eclipse.egit.core.internal.Utils;
 import org.eclipse.egit.core.op.CherryPickOperation;
 import org.eclipse.egit.ui.Activator;
 import org.eclipse.egit.ui.JobFamilies;
@@ -114,7 +115,7 @@ public class CherryPickUI {
 			selectCommit.setTitle(UIText.CommitSelectDialog_ChooseParentTitle);
 			selectCommit.setMessage(MessageFormat.format(
 					UIText.CherryPickHandler_CherryPickMergeMessage,
-					commit.abbreviate(7).name(), branch));
+					Utils.getShortObjectId(commit), branch));
 			if (selectCommit.open() != Window.OK) {
 				return;
 			}

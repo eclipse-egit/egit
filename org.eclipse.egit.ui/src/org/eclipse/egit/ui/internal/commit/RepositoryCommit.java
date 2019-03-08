@@ -23,6 +23,7 @@ import org.eclipse.core.runtime.Assert;
 import org.eclipse.core.runtime.IAdaptable;
 import org.eclipse.core.runtime.Platform;
 import org.eclipse.egit.core.internal.IRepositoryCommit;
+import org.eclipse.egit.core.internal.Utils;
 import org.eclipse.egit.ui.Activator;
 import org.eclipse.egit.ui.internal.PreferenceBasedDateFormatter;
 import org.eclipse.egit.ui.internal.UIIcons;
@@ -51,11 +52,6 @@ import org.eclipse.ui.model.WorkbenchAdapter;
  */
 public class RepositoryCommit extends WorkbenchAdapter
 		implements IAdaptable, IRepositoryCommit {
-
-	/**
-	 * NAME_LENGTH
-	 */
-	public static final int NAME_LENGTH = 8;
 
 	private Repository repository;
 
@@ -95,12 +91,12 @@ public class RepositoryCommit extends WorkbenchAdapter
 	}
 
 	/**
-	 * Abbreviate commit id to {@link #NAME_LENGTH} size.
+	 * Abbreviate commit id.
 	 *
 	 * @return abbreviated commit id
 	 */
 	public String abbreviate() {
-		return commit.abbreviate(NAME_LENGTH).name();
+		return Utils.getShortObjectId(commit);
 	}
 
 	/**

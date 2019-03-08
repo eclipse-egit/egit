@@ -13,6 +13,7 @@ package org.eclipse.egit.ui.internal.components;
 
 import java.io.IOException;
 
+import org.eclipse.egit.core.internal.Utils;
 import org.eclipse.egit.ui.Activator;
 import org.eclipse.egit.ui.internal.PreferenceBasedDateFormatter;
 import org.eclipse.egit.ui.internal.UIText;
@@ -150,7 +151,7 @@ public class RefContentProposal implements IContentProposal {
 				loader = reader.open(objectId);
 			} catch (MissingObjectException e) {
 				if (upstream) {
-					return refName + '\n' + objectId.abbreviate(7).name()
+					return refName + '\n' + Utils.getShortObjectId(objectId)
 							+ " - " //$NON-NLS-1$
 							+ UIText.RefContentProposal_unknownRemoteObject;
 				}

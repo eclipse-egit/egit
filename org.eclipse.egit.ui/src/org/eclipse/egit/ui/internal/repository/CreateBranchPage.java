@@ -30,6 +30,7 @@ import org.eclipse.core.runtime.Status;
 import org.eclipse.core.runtime.SubMonitor;
 import org.eclipse.core.runtime.jobs.Job;
 import org.eclipse.egit.core.Activator;
+import org.eclipse.egit.core.internal.Utils;
 import org.eclipse.egit.core.op.CreateLocalBranchOperation;
 import org.eclipse.egit.ui.IBranchNameProvider;
 import org.eclipse.egit.ui.UIUtils;
@@ -342,7 +343,7 @@ class CreateBranchPage extends WizardPage {
 	}
 
 	private void setSourceCommit(RevCommit commit) {
-		sourceNameLabel.setText(commit.abbreviate(7).name());
+		sourceNameLabel.setText(Utils.getShortObjectId(commit));
 		sourceIcon.setImage(UIIcons
 				.getImage(resourceManager, UIIcons.CHANGESET));
 

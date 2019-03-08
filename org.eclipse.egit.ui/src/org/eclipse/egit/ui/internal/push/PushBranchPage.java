@@ -232,8 +232,8 @@ public class PushBranchPage extends WizardPage {
 				commitIcon.getBounds().height));
 
 		Label commit = new Label(sourceComposite, SWT.NONE);
-		StringBuilder commitBuilder = new StringBuilder(this.commitToPush
-				.abbreviate(7).name());
+		StringBuilder commitBuilder = new StringBuilder(
+				Utils.getShortObjectId(commitToPush));
 		StringBuilder commitTooltipBuilder = new StringBuilder(
 				this.commitToPush.getName());
 		try (RevWalk revWalk = new RevWalk(repository)) {

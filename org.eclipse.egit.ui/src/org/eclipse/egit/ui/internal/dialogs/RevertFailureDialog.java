@@ -20,6 +20,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 
+import org.eclipse.egit.core.internal.Utils;
 import org.eclipse.egit.ui.internal.UIText;
 import org.eclipse.egit.ui.internal.WorkbenchStyledLabelProvider;
 import org.eclipse.jface.dialogs.IDialogConstants;
@@ -63,11 +64,11 @@ public class RevertFailureDialog extends MessageDialog {
 				.getFailingPaths() : null;
 		if (reasons != null && !reasons.isEmpty())
 			message = MessageFormat.format(UIText.RevertFailureDialog_Message,
-					commit.abbreviate(7).name());
+					Utils.getShortObjectId(commit));
 		else
 			message = MessageFormat.format(
-					UIText.RevertFailureDialog_MessageNoFiles, commit
-							.abbreviate(7).name());
+					UIText.RevertFailureDialog_MessageNoFiles,
+					Utils.getShortObjectId(commit));
 
 		RevertFailureDialog dialog = new RevertFailureDialog(shell, message,
 				reasons);

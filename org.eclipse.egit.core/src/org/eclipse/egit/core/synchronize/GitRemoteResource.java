@@ -14,6 +14,7 @@ import static org.eclipse.jgit.lib.ObjectId.zeroId;
 
 import java.io.UnsupportedEncodingException;
 
+import org.eclipse.egit.core.internal.Utils;
 import org.eclipse.jgit.lib.ObjectId;
 import org.eclipse.jgit.lib.PersonIdent;
 import org.eclipse.jgit.revwalk.RevCommit;
@@ -51,7 +52,7 @@ public abstract class GitRemoteResource extends CachedResourceVariant {
 			return ""; //$NON-NLS-1$
 
 		StringBuilder s = new StringBuilder();
-		s.append(commitId.abbreviate(7).name());
+		s.append(Utils.getShortObjectId(commitId));
 		s.append("..."); //$NON-NLS-1$
 
 		PersonIdent authorIdent = commitId.getAuthorIdent();

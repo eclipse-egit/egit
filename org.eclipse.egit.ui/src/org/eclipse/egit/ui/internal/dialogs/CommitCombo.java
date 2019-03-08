@@ -15,6 +15,7 @@ import java.util.List;
 import java.util.regex.Pattern;
 
 import org.eclipse.core.runtime.Assert;
+import org.eclipse.egit.core.internal.Utils;
 import org.eclipse.egit.ui.UIUtils;
 import org.eclipse.egit.ui.internal.UIText;
 import org.eclipse.jface.fieldassist.ComboContentAdapter;
@@ -157,7 +158,7 @@ public class CommitCombo extends Composite {
 		Assert.isNotNull(revCommit);
 		checkWidget();
 
-		String shortSha1 = revCommit.abbreviate(8).name();
+		String shortSha1 = Utils.getShortObjectId(revCommit);
 		String message = shortSha1 + ": " + revCommit.getShortMessage(); //$NON-NLS-1$
 		combo.add(message);
 		commits.add(new ComboCommitEnt(revCommit.getId(), message));
