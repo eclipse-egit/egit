@@ -3218,17 +3218,37 @@
                class="org.eclipse.egit.ui.internal.repository.RepositoriesViewActionProvider">
          </actionProvider>
       </navigatorContent>
+      <commonFilter id="org.eclipse.egit.ui.repositoriesView.filters.remoteBranches"
+          name="Remote Tracking Branches" activeByDefault="false"
+          class="org.eclipse.egit.ui.internal.repository.tree.filter.NodeFilterFactory:REMOTETRACKING"/>
+      <commonFilter id="org.eclipse.egit.ui.repositoriesView.filters.tags"
+          name="Tags" activeByDefault="false"
+          class="org.eclipse.egit.ui.internal.repository.tree.filter.NodeFilterFactory:TAGS"/>
+      <commonFilter id="org.eclipse.egit.ui.repositoriesView.filters.references"
+          name="References" activeByDefault="false"
+          class="org.eclipse.egit.ui.internal.repository.tree.filter.NodeFilterFactory:ADDITIONALREFS"/>
+      <commonFilter id="org.eclipse.egit.ui.repositoriesView.filters.remotes"
+          name="Remotes" activeByDefault="false"
+          class="org.eclipse.egit.ui.internal.repository.tree.filter.NodeFilterFactory:REMOTES"/>
+      <commonFilter id="org.eclipse.egit.ui.repositoriesView.filters.stashes"
+          name="Stached Commits" activeByDefault="false"
+          class="org.eclipse.egit.ui.internal.repository.tree.filter.NodeFilterFactory:STASH"/>
+      <commonFilter id="org.eclipse.egit.ui.repositoriesView.filters.submodules"
+          name="Submodules" activeByDefault="false"
+          class="org.eclipse.egit.ui.internal.repository.tree.filter.NodeFilterFactory:SUBMODULES"/>
+      <commonFilter id="org.eclipse.egit.ui.repositoriesView.filters.worktree"
+          name="Working Tree" activeByDefault="false"
+          class="org.eclipse.egit.ui.internal.repository.tree.filter.NodeFilterFactory:WORKINGDIR"/>
    </extension>
    <extension
          point="org.eclipse.ui.navigator.viewer">
       <viewer
             viewerId="org.eclipse.egit.ui.RepositoriesView">
          <options>
-            <!-- Hide the "Available Customizations" dialog completely. This includes hiding the
-            filters and the available content extensions. -->
+            <!-- Do not hide the "Available Customizations" dialog, as filters should be are available. -->
             <property
                name="org.eclipse.ui.navigator.hideAvailableCustomizationsDialog"
-               value="true"/>
+               value="false"/>
             <!-- Hide the "Link with Editor" action from the toolbar of the viewer -->
             <property
                name="org.eclipse.ui.navigator.hideLinkWithEditorAction"
@@ -3305,6 +3325,27 @@
             </contentExtension>
             <contentExtension
                   pattern="org.eclipse.egit.ui.RepositoriesViewLinkHelper">
+            </contentExtension>
+            <contentExtension
+                  pattern="org.eclipse.egit.ui.repositoriesView.filters.remoteBranches">
+            </contentExtension>
+            <contentExtension
+                  pattern="org.eclipse.egit.ui.repositoriesView.filters.tags">
+            </contentExtension>
+            <contentExtension
+                  pattern="org.eclipse.egit.ui.repositoriesView.filters.references">
+            </contentExtension>
+            <contentExtension
+                  pattern="org.eclipse.egit.ui.repositoriesView.filters.remotes">
+            </contentExtension>
+            <contentExtension
+                  pattern="org.eclipse.egit.ui.repositoriesView.filters.stashes">
+            </contentExtension>
+            <contentExtension
+                  pattern="org.eclipse.egit.ui.repositoriesView.filters.submodules">
+            </contentExtension>
+            <contentExtension
+                  pattern="org.eclipse.egit.ui.repositoriesView.filters.worktree">
             </contentExtension>
          </includes>
       </viewerContentBinding>
