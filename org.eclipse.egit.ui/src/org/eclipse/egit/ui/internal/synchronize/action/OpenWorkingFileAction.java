@@ -18,10 +18,10 @@ import org.eclipse.core.runtime.IPath;
 import org.eclipse.egit.core.AdapterUtils;
 import org.eclipse.egit.ui.internal.UIText;
 import org.eclipse.egit.ui.internal.synchronize.model.GitModelObject;
-import org.eclipse.jgit.annotations.Nullable;
 import org.eclipse.jface.dialogs.ErrorDialog;
 import org.eclipse.jface.util.OpenStrategy;
 import org.eclipse.jface.viewers.IStructuredSelection;
+import org.eclipse.jgit.annotations.Nullable;
 import org.eclipse.ui.IEditorDescriptor;
 import org.eclipse.ui.IWorkbenchPage;
 import org.eclipse.ui.PartInitException;
@@ -95,7 +95,8 @@ public class OpenWorkingFileAction extends SelectionListenerAction {
 	protected void openExternalFile(File file) {
 		try {
 			boolean activate = OpenStrategy.activateOnOpen();
-			IEditorDescriptor desc = IDE.getEditorDescriptor(file.getName());
+			IEditorDescriptor desc = IDE.getEditorDescriptor(file.getName(),
+					true, true);
 			IDE.openEditor(getWorkbenchPage(), file.toURI(), desc.getId(),
 					activate);
 		} catch (PartInitException e) {
