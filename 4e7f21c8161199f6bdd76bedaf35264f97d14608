@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b051ca98_9f00950e",
+        "filename": "org.eclipse.egit.ui/plugin.properties",
+        "patchSetId": 2
+      },
+      "lineNbr": 259,
+      "author": {
+        "id": 440
+      },
+      "writtenOn": "2019-03-09T08:22:15Z",
+      "side": 1,
+      "message": "typo",
+      "range": {
+        "startLine": 259,
+        "startChar": 47,
+        "endLine": 259,
+        "endChar": 49
+      },
+      "revId": "4e7f21c8161199f6bdd76bedaf35264f97d14608",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
