@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "bd0e19f9_921b7711",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2019-03-09T11:53:19Z",
+      "side": 1,
+      "message": "remove this blank line, by convention key: value pairs are put in the last paragraph",
+      "revId": "b13346a1403575c93e24a7506b02f45d3b5fb761",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
