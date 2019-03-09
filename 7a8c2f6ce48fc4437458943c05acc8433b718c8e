@@ -16,6 +16,24 @@
       "revId": "7a8c2f6ce48fc4437458943c05acc8433b718c8e",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "060a7072_c0c7854e",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/history/CommitGraphTable.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 730,
+      "author": {
+        "id": 440
+      },
+      "writtenOn": "2019-03-09T11:49:53Z",
+      "side": 1,
+      "message": "Good catch, I had only checked the one from the stacktrace.\n\nI\u0027m happy to use more null annotations. I just wasn\u0027t sure about official policy, since there are not so many annotations in the code base yet, and I typically don\u0027t see annotations in changes of you or Thomas.",
+      "parentUuid": "79743ac6_3c07015d",
+      "revId": "7a8c2f6ce48fc4437458943c05acc8433b718c8e",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
     }
   ]
 }
