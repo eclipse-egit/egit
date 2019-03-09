@@ -4136,7 +4136,8 @@
             </visibleWhen>
          </command>
          <menu
-               label="%StashesMenu.label">
+               label="%StashesMenu.label"
+               icon="icons/obj16/stash.png">
             <dynamic
                   class="org.eclipse.egit.ui.internal.actions.StashesMenu"
                   id="org.eclipse.egit.ui.stashedChanges">
@@ -5077,7 +5078,8 @@
             </command>
             <menu
                   id="egit.menu.stashes"
-                  label="%StashesMenu.label">
+                  label="%StashesMenu.label"
+                  icon="icons/obj16/stash.png">
                <dynamic
                      class="org.eclipse.egit.ui.internal.actions.StashesMenu"
                      id="org.eclipse.egit.ui.stashedChanges">
