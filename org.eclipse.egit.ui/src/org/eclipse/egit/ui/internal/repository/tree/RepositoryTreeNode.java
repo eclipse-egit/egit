@@ -329,8 +329,10 @@ public abstract class RepositoryTreeNode<T> extends PlatformObject implements Co
 			return ((StashedCommitNode) this).getIndex()
 					- ((StashedCommitNode) otherNode).getIndex();
 		case TAG:
-			return -CommonUtils.REF_ASCENDING_COMPARATOR.compare((Ref) myObject,
-					(Ref) otherNode.getObject());
+			int tagCompare = CommonUtils.REF_ASCENDING_COMPARATOR.compare(
+					(Ref) myObject, (Ref) otherNode.getObject());
+			return ((TagNode) this).isSortAscending() ? tagCompare
+					: -tagCompare;
 		case ADDITIONALREF:
 			// fall through
 		case REF:

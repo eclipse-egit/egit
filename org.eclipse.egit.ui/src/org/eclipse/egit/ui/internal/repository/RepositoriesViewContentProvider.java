@@ -33,6 +33,7 @@ import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
 import java.util.WeakHashMap;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 import org.eclipse.core.commands.IStateListener;
 import org.eclipse.core.commands.State;
@@ -72,6 +73,7 @@ import org.eclipse.egit.ui.internal.repository.tree.TagNode;
 import org.eclipse.egit.ui.internal.repository.tree.TagsNode;
 import org.eclipse.egit.ui.internal.repository.tree.WorkingDirNode;
 import org.eclipse.egit.ui.internal.repository.tree.command.ToggleBranchHierarchyCommand;
+import org.eclipse.egit.ui.internal.repository.tree.command.ToggleTagSortingCommand;
 import org.eclipse.jface.viewers.ITreeContentProvider;
 import org.eclipse.jface.viewers.Viewer;
 import org.eclipse.jgit.api.Git;
@@ -97,17 +99,18 @@ import org.eclipse.ui.commands.ICommandService;
 /**
  * Content Provider for the Git Repositories View
  */
-public class RepositoriesViewContentProvider implements ITreeContentProvider,
-		IStateListener {
+public class RepositoriesViewContentProvider implements ITreeContentProvider {
 
 	private static final Object[] NO_CHILDREN = new Object[0];
 
 	private final RepositoryCache repositoryCache = org.eclipse.egit.core.Activator
 			.getDefault().getRepositoryCache();
 
-	private final State commandState;
+	private final Map<State, IStateListener> commandStates = new HashMap<>();
 
-	private boolean branchHierarchyMode = false;
+	private AtomicBoolean branchHierarchyMode = new AtomicBoolean(false);
+
+	private AtomicBoolean ascendingTagSorting = new AtomicBoolean(false);
 
 	private boolean showUnbornHead = false;
 
@@ -133,13 +136,32 @@ public class RepositoriesViewContentProvider implements ITreeContentProvider,
 		super();
 		this.showUnbornHead = showUnbornHead;
 		ICommandService srv = CommonUtils.getService(PlatformUI.getWorkbench(), ICommandService.class);
-		commandState = srv.getCommand(
-				ToggleBranchHierarchyCommand.ID)
-				.getState(ToggleBranchHierarchyCommand.TOGGLE_STATE);
-		commandState.addListener(this);
+		registerState(srv,
+				ToggleBranchHierarchyCommand.ID,
+				ToggleBranchHierarchyCommand.TOGGLE_STATE, branchHierarchyMode);
+		registerState(srv,
+				ToggleTagSortingCommand.ID,
+				ToggleTagSortingCommand.TOGGLE_STATE, ascendingTagSorting);
+	}
+
+	private void registerState(ICommandService srv, String commandId,
+			String stateId, final AtomicBoolean booleanToSet) {
+		State state = srv.getCommand(commandId).getState(stateId);
+		IStateListener l = new IStateListener() {
+
+			@Override
+			public void handleStateChange(State changedState, Object oldValue) {
+				setValueFromState(changedState, booleanToSet);
+			}
+		};
+		state.addListener(l);
+		commandStates.put(state, l);
+		setValueFromState(state, booleanToSet);
+	}
+
+	private void setValueFromState(State state, AtomicBoolean booleanToSet) {
 		try {
-			this.branchHierarchyMode = ((Boolean) commandState.getValue())
-					.booleanValue();
+			booleanToSet.set(((Boolean) state.getValue()).booleanValue());
 		} catch (Exception e) {
 			Activator.handleError(e.getMessage(), e, false);
 		}
@@ -186,7 +208,9 @@ public class RepositoriesViewContentProvider implements ITreeContentProvider,
 
 	@Override
 	public void dispose() {
-		commandState.removeListener(this);
+		for (Entry<State, IStateListener> entry : commandStates.entrySet()) {
+			entry.getKey().removeListener(entry.getValue());
+		}
 		for (ListenerHandle handle : refsChangedListeners.values())
 			handle.remove();
 		refsChangedListeners.clear();
@@ -391,7 +415,7 @@ public class RepositoriesViewContentProvider implements ITreeContentProvider,
 
 	private Object[] getBranchChildren(RepositoryTreeNode node, Repository repo,
 			String prefix) {
-		if (branchHierarchyMode) {
+		if (branchHierarchyMode.get()) {
 			return getBranchHierarchyChildren(
 					new BranchHierarchyNode(node, repo, new Path(prefix)), repo,
 					node);
@@ -472,6 +496,9 @@ public class RepositoriesViewContentProvider implements ITreeContentProvider,
 				RevObject peeledObject = walk.peel(revObject);
 				TagNode tagNode = createTagNode(parentNode, repo, tagRef,
 						revObject, peeledObject);
+				if (ascendingTagSorting.get()) {
+					tagNode.setAscendingSorting();
+				}
 				nodes.add(tagNode);
 			}
 		} catch (IOException e) {
@@ -586,16 +613,6 @@ public class RepositoriesViewContentProvider implements ITreeContentProvider,
 		}
 	}
 
-	@Override
-	public void handleStateChange(State state, Object oldValue) {
-		try {
-			this.branchHierarchyMode = ((Boolean) state.getValue())
-					.booleanValue();
-		} catch (Exception e) {
-			Activator.handleError(e.getMessage(), e, false);
-		}
-	}
-
 	private synchronized Map<String, Ref> getRefs(final Repository repo, final String prefix) throws IOException {
 		Map<String, Ref> allRefs = branchRefs.get(repo);
 		if (allRefs == null) {
@@ -668,6 +685,6 @@ public class RepositoriesViewContentProvider implements ITreeContentProvider,
 	 *         layout; {@code false} otherwise
 	 */
 	public boolean isHierarchical() {
-		return branchHierarchyMode;
+		return branchHierarchyMode.get();
 	}
 }
