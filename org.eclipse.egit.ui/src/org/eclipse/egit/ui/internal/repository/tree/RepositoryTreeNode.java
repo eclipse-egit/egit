@@ -311,7 +311,6 @@ public abstract class RepositoryTreeNode<T> extends PlatformObject implements Co
 			// fall through
 		case WORKINGDIR:
 			return 0;
-
 		case FETCH:
 			// fall through
 		case PUSH:
@@ -330,7 +329,8 @@ public abstract class RepositoryTreeNode<T> extends PlatformObject implements Co
 			return ((StashedCommitNode) this).getIndex()
 					- ((StashedCommitNode) otherNode).getIndex();
 		case TAG:
-			// fall through
+			return -CommonUtils.REF_ASCENDING_COMPARATOR.compare((Ref) myObject,
+					(Ref) otherNode.getObject());
 		case ADDITIONALREF:
 			// fall through
 		case REF:
