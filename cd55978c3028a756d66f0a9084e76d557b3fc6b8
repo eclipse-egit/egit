@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d05211c5_7291ef48",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/repository/tree/RepositoryTreeNode.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 332,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2019-03-10T19:33:05Z",
+      "side": 1,
+      "message": "This results in a new spotbugs warning. Please invert the order of the arguments instead.",
+      "range": {
+        "startLine": 332,
+        "startChar": 10,
+        "endLine": 332,
+        "endChar": 11
+      },
+      "revId": "cd55978c3028a756d66f0a9084e76d557b3fc6b8",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
