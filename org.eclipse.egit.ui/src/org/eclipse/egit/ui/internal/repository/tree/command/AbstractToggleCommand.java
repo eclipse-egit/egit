@@ -29,6 +29,7 @@ public abstract class AbstractToggleCommand
 	@Override
 	public Object execute(ExecutionEvent event) throws ExecutionException {
 		HandlerUtil.toggleCommandState(event.getCommand());
+		preReviewerRefresh(event);
 		IWorkbenchWindow window = PlatformUI.getWorkbench()
 				.getActiveWorkbenchWindow();
 		if (window != null) {
@@ -41,6 +42,17 @@ public abstract class AbstractToggleCommand
 			}
 		}
 		return null;
+	}
+
+	/**
+	 * @param event
+	 *            event holding the application state
+	 *
+	 *            commands override this method executing code before the
+	 *            Repositories view is refreshed
+	 */
+	protected void preReviewerRefresh(ExecutionEvent event) {
+		// override if necessary
 	}
 
 }
