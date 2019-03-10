@@ -27,11 +27,15 @@ import java.util.regex.Pattern;
 
 import org.eclipse.core.commands.Command;
 import org.eclipse.core.commands.ParameterizedCommand;
+import org.eclipse.core.commands.State;
 import org.eclipse.core.commands.common.CommandException;
 import org.eclipse.core.expressions.EvaluationContext;
 import org.eclipse.core.resources.IResource;
+import org.eclipse.egit.ui.Activator;
+import org.eclipse.egit.ui.internal.repository.tree.command.ToggleTagSortingCommand;
 import org.eclipse.jface.util.Policy;
 import org.eclipse.jface.viewers.IStructuredSelection;
+import org.eclipse.jgit.lib.Constants;
 import org.eclipse.jgit.lib.Ref;
 import org.eclipse.jgit.util.StringUtils;
 import org.eclipse.swt.graphics.GC;
@@ -63,8 +67,25 @@ public class CommonUtils {
 	 */
 	private static final int TABLE_INSET = 5;
 
+	private static boolean sortTagsAscending;
+
 	private CommonUtils() {
 		// non-instantiable utility class
+	}
+
+	static {
+		try {
+			ICommandService srv = CommonUtils.getService(
+					PlatformUI.getWorkbench(), ICommandService.class);
+			State currentToggleState = srv
+					.getCommand(ToggleTagSortingCommand.ID)
+					.getState(ToggleTagSortingCommand.TOGGLE_STATE);
+			sortTagsAscending = ((Boolean) currentToggleState.getValue())
+					.booleanValue();
+		} catch (Exception e) {
+			Activator.logError(
+					"exception while restoring tag sort toggle state", e); //$NON-NLS-1$
+		}
 	}
 
 	/**
@@ -150,9 +171,25 @@ public class CommonUtils {
 	public static final Comparator<Ref> REF_ASCENDING_COMPARATOR = new Comparator<Ref>() {
 		@Override
 		public int compare(Ref o1, Ref o2) {
-			return STRING_ASCENDING_COMPARATOR.compare(o1.getName(), o2.getName());
+			String name1 = o1.getName();
+			String name2 = o2.getName();
+			if (name1.startsWith(Constants.R_TAGS)
+					&& o2.getName().startsWith(Constants.R_TAGS)
+					&& !sortTagsAscending) {
+				name1 = o2.getName();
+				name2 = o1.getName();
+			}
+			return STRING_ASCENDING_COMPARATOR.compare(name1, name2);
 		}
 	};
+
+	/**
+	 * @param sortAscending
+	 *            should tags be sorted ascending
+	 */
+	public static final void setSortTagsAscending(boolean sortAscending) {
+		sortTagsAscending = sortAscending;
+	}
 
 	/**
 	 * Comparator for comparing {@link IResource} by the result of

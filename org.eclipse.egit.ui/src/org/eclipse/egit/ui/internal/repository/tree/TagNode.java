@@ -24,6 +24,8 @@ public class TagNode extends RepositoryTreeNode<Ref> {
 	private String commitId;
 	private String shortMessage;
 
+	private boolean sortAscending;
+
 	/**
 	 * Constructs the node.
 	 *
@@ -81,5 +83,19 @@ public class TagNode extends RepositoryTreeNode<Ref> {
 	 */
 	public String getCommitShortMessage() {
 		return shortMessage;
+	}
+
+	/**
+	 * mark node for ascending sorting
+	 */
+	public void setAscendingSorting() {
+		sortAscending = true;
+	}
+
+	/**
+	 * @return should node be sorted ascending
+	 */
+	public boolean isSortAscending() {
+		return sortAscending;
 	}
 }
