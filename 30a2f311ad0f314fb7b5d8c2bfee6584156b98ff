@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "833c3a02_9ab2216b",
+        "filename": "org.eclipse.egit.ui/plugin.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 5100,
+      "author": {
+        "id": 440
+      },
+      "writtenOn": "2019-03-11T17:18:03Z",
+      "side": 1,
+      "message": "Many users remember menus by position, not by text. Adding a new menu in between existing menus should therefore only be done if there is a good reason. Otherwise it should go to the end, if it does not really matter.",
+      "range": {
+        "startLine": 5096,
+        "startChar": 0,
+        "endLine": 5100,
+        "endChar": 19
+      },
+      "revId": "30a2f311ad0f314fb7b5d8c2bfee6584156b98ff",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "0342e0af_15e25036",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/repository/tree/RepositoryTreeNode.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 335,
+      "author": {
+        "id": 440
+      },
+      "writtenOn": "2019-03-11T17:18:03Z",
+      "side": 1,
+      "message": "As mentioned in the other change, it is a bad practice to negate the result of compare(). According to the contract, compare() can return any integer value. Negating the minimum integer value leads to an overflow. Even though that is not a problem here, we try hard to avoid any new static code analysis warnings, therefore please call the comparator two times instead.",
+      "revId": "30a2f311ad0f314fb7b5d8c2bfee6584156b98ff",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
