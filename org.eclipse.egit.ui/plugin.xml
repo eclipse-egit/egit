@@ -3140,6 +3140,9 @@
             icon="icons/obj16/gitrepository.png"
             id="org.eclipse.egit.ui.GitRepositoryExploring"
             name="%GitRepositoryPerspective_name">
+         <description>
+            %GitRepositoryPerspective_description
+         </description>
       </perspective>
    </extension>
    <extension
