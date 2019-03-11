@@ -16,6 +16,24 @@
       "revId": "62f983cbf5a8ec66cfa26aba9b5c6c5e1f71f837",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "527fc99b_b9a68e38",
+        "filename": "org.eclipse.egit.ui/plugin.properties",
+        "patchSetId": 1
+      },
+      "lineNbr": 148,
+      "author": {
+        "id": 440
+      },
+      "writtenOn": "2019-03-11T16:35:06Z",
+      "side": 1,
+      "message": "Done\n\nFully agreed. Had taken one of the other perspective descriptions and just modified it a bit. Yours is better.",
+      "parentUuid": "d99f6f86_63ea944f",
+      "revId": "62f983cbf5a8ec66cfa26aba9b5c6c5e1f71f837",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
     }
   ]
 }
