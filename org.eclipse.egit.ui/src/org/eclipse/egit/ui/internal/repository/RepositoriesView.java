@@ -441,6 +441,10 @@ public class RepositoriesView extends CommonNavigator implements IShowInSource, 
 				} else if (element instanceof TagNode) {
 					executeOpenCommandWithConfirmation(element,
 							((TagNode) element).getObject().getName());
+				} else if (element instanceof FetchNode) {
+					executeFetchCommand(((FetchNode) element));
+				} else if (element instanceof PushNode) {
+					executePushCommand(((PushNode) element));
 				}
 			}
 		});
@@ -516,6 +520,16 @@ public class RepositoriesView extends CommonNavigator implements IShowInSource, 
 	private void executeOpenCommand(RepositoryTreeNode element) {
 		CommonUtils.runCommand("org.eclipse.egit.ui.RepositoriesViewOpen", //$NON-NLS-1$
 				new StructuredSelection(element));
+	}
+
+	private void executeFetchCommand(FetchNode node) {
+		CommonUtils.runCommand("org.eclipse.egit.ui.team.SimpleFetch", //$NON-NLS-1$
+				new StructuredSelection(node));
+	}
+
+	private void executePushCommand(PushNode node) {
+		CommonUtils.runCommand("org.eclipse.egit.ui.team.SimplePush", //$NON-NLS-1$
+				new StructuredSelection(node));
 	}
 
 	private void activateContextService() {
