@@ -52,6 +52,7 @@ import org.eclipse.egit.ui.UIUtils;
 import org.eclipse.egit.ui.internal.CommonUtils;
 import org.eclipse.egit.ui.internal.UIIcons;
 import org.eclipse.egit.ui.internal.UIText;
+import org.eclipse.egit.ui.internal.actions.ActionCommands;
 import org.eclipse.egit.ui.internal.branch.BranchOperationUI;
 import org.eclipse.egit.ui.internal.history.HistoryPageInput;
 import org.eclipse.egit.ui.internal.reflog.ReflogView;
@@ -440,6 +441,8 @@ public class RepositoriesView extends CommonNavigator implements IShowInSource, 
 				} else if (element instanceof TagNode) {
 					executeOpenCommandWithConfirmation(element,
 							((TagNode) element).getObject().getName());
+				} else if (element instanceof FetchNode) {
+					executeFetchCommand(((FetchNode) element));
 				}
 			}
 		});
@@ -515,6 +518,11 @@ public class RepositoriesView extends CommonNavigator implements IShowInSource, 
 	private void executeOpenCommand(RepositoryTreeNode element) {
 		CommonUtils.runCommand("org.eclipse.egit.ui.RepositoriesViewOpen", //$NON-NLS-1$
 				new StructuredSelection(element));
+	}
+
+	private void executeFetchCommand(FetchNode node) {
+		CommonUtils.runCommand(ActionCommands.SIMPLE_FETCH_ACTION,
+				new StructuredSelection(node));
 	}
 
 	private void activateContextService() {
