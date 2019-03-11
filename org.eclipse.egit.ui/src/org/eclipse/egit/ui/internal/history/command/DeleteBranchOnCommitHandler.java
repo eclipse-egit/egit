@@ -126,7 +126,7 @@ public class DeleteBranchOnCommitHandler extends AbstractHistoryCommandHandler {
 		}
 
 		if (!unmergedBranches.isEmpty()) {
-			MessageDialog messageDialog = new UnmergedBranchDialog<>(shell,
+			MessageDialog messageDialog = new UnmergedBranchDialog(shell,
 					unmergedBranches);
 			if (messageDialog.open() == Window.OK) {
 				try {

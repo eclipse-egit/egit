@@ -78,7 +78,7 @@ public class DeleteBranchCommand extends
 		}
 		if (unmergedNodesRef.get().isEmpty())
 			return null;
-		MessageDialog messageDialog = new UnmergedBranchDialog<>(
+		MessageDialog messageDialog = new UnmergedBranchDialog(
 					shell, new ArrayList<>(unmergedNodesRef.get().keySet()));
 		if (messageDialog.open() != Window.OK)
 			return null;

@@ -102,10 +102,10 @@ public class DeleteBranchDialog extends AbstractBranchSelectionDialog {
 			try {
 				int result = deleteBranch(selectedRefs, false);
 				if (result == DeleteBranchOperation.REJECTED_UNMERGED) {
-					List<RefNode> nodes = extractSelectedRefNodes();
+					List<Ref> refs = extractSelectedRefs();
 
-					MessageDialog messageDialog = new UnmergedBranchDialog<>(
-							getShell(), nodes);
+					MessageDialog messageDialog = new UnmergedBranchDialog(
+							getShell(), refs);
 
 					if (messageDialog.open() == Window.OK)
 						deleteBranch(selectedRefs, true);
@@ -130,16 +130,16 @@ public class DeleteBranchDialog extends AbstractBranchSelectionDialog {
 		return dbop.getStatus();
 	}
 
-	private List<RefNode> extractSelectedRefNodes() {
-		List<RefNode> nodes = new ArrayList<>();
+	private List<Ref> extractSelectedRefs() {
+		List<Ref> refs = new ArrayList<>();
 		Object[] array = ((IStructuredSelection) super.branchTree
 				.getSelection()).toArray();
 
 		for (Object selected : array)
 			if (selected instanceof RefNode)
-				nodes.add((RefNode) selected);
+				refs.add(((RefNode) selected).getObject());
 
-		return nodes;
+		return refs;
 	}
 
 }

@@ -12,9 +12,11 @@
  *******************************************************************************/
 package org.eclipse.egit.ui.internal.dialogs;
 
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
-import org.eclipse.core.runtime.IAdaptable;
+import org.eclipse.egit.ui.internal.CommonUtils;
 import org.eclipse.egit.ui.internal.GitLabelProvider;
 import org.eclipse.egit.ui.internal.UIText;
 import org.eclipse.jface.dialogs.IDialogConstants;
@@ -30,24 +32,22 @@ import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Shell;
 
 /**
- * Used to display unmerged branches for confirmation during delete
- *
- * @param <T>
- *            either {@link Ref} or {@link IAdaptable} to {@link Ref}
+ * Used to display unmerged branches for confirmation during delete.
  */
-public class UnmergedBranchDialog<T> extends MessageDialog {
-	private final List<T> nodes;
+public class UnmergedBranchDialog extends MessageDialog {
+	private final List<Ref> refs;
 
 	/**
 	 * @param parentShell
-	 * @param nodes
+	 * @param refs
 	 */
-	public UnmergedBranchDialog(Shell parentShell, List<T> nodes) {
+	public UnmergedBranchDialog(Shell parentShell, List<Ref> refs) {
 		super(parentShell, UIText.UnmergedBranchDialog_Title, null,
 				UIText.UnmergedBranchDialog_Message, MessageDialog.QUESTION,
 				new String[] { UIText.UnmergedBranchDialog_deleteButtonLabel,
 						IDialogConstants.CANCEL_LABEL }, 0);
-		this.nodes = nodes;
+		this.refs = new ArrayList<>(refs);
+		Collections.sort(this.refs, CommonUtils.REF_ASCENDING_COMPARATOR);
 	}
 
 	@Override
@@ -58,11 +58,11 @@ public class UnmergedBranchDialog<T> extends MessageDialog {
 		TableViewer branchesList = new TableViewer(area);
 		branchesList.setContentProvider(ArrayContentProvider.getInstance());
 		branchesList.setLabelProvider(new GitLabelProvider());
-		branchesList.setInput(nodes);
+		branchesList.setInput(refs);
 
 		// restrict height to 20 items
 		GridData layoutData = new GridData(GridData.FILL_BOTH);
-		layoutData.heightHint = Math.min(20, nodes.size() + 1)
+		layoutData.heightHint = Math.min(20, refs.size() + 1)
 				* branchesList.getTable().getItemHeight();
 		area.setLayoutData(layoutData);
 
