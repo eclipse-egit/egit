@@ -18,6 +18,7 @@ import java.util.List;
 import org.eclipse.core.expressions.PropertyTester;
 import org.eclipse.egit.core.AdapterUtils;
 import org.eclipse.egit.core.internal.IRepositoryCommit;
+import org.eclipse.egit.ui.internal.commit.RepositoryCommit;
 import org.eclipse.jgit.lib.Constants;
 import org.eclipse.jgit.lib.ObjectId;
 import org.eclipse.jgit.lib.Ref;
@@ -53,6 +54,9 @@ import org.eclipse.jgit.revwalk.RevCommit;
  * <dt>IRepositoryCommit.hasMultipleRefs [args="&lt;ref prefixes&gt;"]</dt>
  * <dd>Like <code>hasRef</code>, but evaluates to <code>true</code> only if
  * there are more than one ref pointing to the commit.</dd>
+ * <dt>IRepositoryCommit.isStash</dt>
+ * <dd>Evaluates to <code>true</code> only if the object is a
+ * {@link RepositoryCommit} that has been marked as being a stash commit.</dd>
  * </dl>
  * <p>
  * The <code>hasRef</code> and <code>hasMultipleRefs</code> tests may be
@@ -112,6 +116,11 @@ public class GitPropertyTester extends AbstractPropertyTester {
 				return computeResult(expectedValue,
 						hasRef(commit, toRefNames(args)));
 			}
+		} else if ("isStash".equals(property)) { //$NON-NLS-1$
+			RepositoryCommit commit = AdapterUtils.adapt(receiver,
+					RepositoryCommit.class);
+			return computeResult(expectedValue,
+					commit != null && commit.isStash());
 		}
 		return false;
 	}
