@@ -112,6 +112,9 @@ public class ActionCommands {
 	/** "Apply Stash" command id */
 	public static final String STASH_APPLY = "org.eclipse.egit.ui.team.stash.apply"; //$NON-NLS-1$
 
+	/** "Drop Stash" command id */
+	public static final String STASH_DROP = "org.eclipse.egit.ui.team.stash.drop"; //$NON-NLS-1$
+
 	/** "Synchronize with" action command id */
 	public static final String SYNC_WITH_ACTION = "org.eclipse.egit.ui.team.SyncWith"; //$NON-NLS-1$
 

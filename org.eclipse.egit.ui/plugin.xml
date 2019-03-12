@@ -2620,12 +2620,26 @@
          </activeWhen>
       </handler>
       <handler
-            commandId="org.eclipse.egit.ui.commit.StashDrop">
+            commandId="org.eclipse.egit.ui.team.stash.drop">
          <class
                class="org.eclipse.egit.ui.internal.commit.command.StashDropHandler">
          </class>
          <activeWhen>
-            <reference definitionId="org.eclipse.egit.ui.singleRepositoryCommit" />
+            <and>
+               <with variable="activePart">
+                  <instanceof value="org.eclipse.egit.ui.internal.commit.CommitEditor" />
+               </with>
+               <count value="1" />
+               <iterate>
+                  <adapt type="org.eclipse.egit.core.internal.IRepositoryCommit">
+                     <test property="Git.isStash" />
+                     <not>
+                        <test property="Git.isBare" />
+                     </not>
+                     <test property="Git.isSafe" />
+                  </adapt>
+               </iterate>
+            </and>
          </activeWhen>
       </handler>
       <handler
@@ -6164,7 +6178,7 @@
             icon="icons/obj16/stash-apply.png">
       </image>
       <image
-            commandId="org.eclipse.egit.ui.commit.StashDrop"
+            commandId="org.eclipse.egit.ui.team.stash.drop"
             icon="icons/obj16/delete_obj.png">
       </image>
       <image
@@ -6450,10 +6464,6 @@
       <image
             commandId="org.eclipse.egit.ui.team.Disconnect"
             icon="icons/obj16/disconnect_co.png">
-      </image>
-      <image
-            commandId="org.eclipse.egit.ui.team.stash.drop"
-            icon="icons/obj16/delete_obj.png">
       </image>
       <image
             commandId="org.eclipse.egit.ui.RepositoriesViewRemoveRemote"
@@ -7010,10 +7020,6 @@
       <command
             id="org.eclipse.egit.ui.history.ShowBlame"
             name="%ShowBlameCommand.name">
-      </command>
-      <command
-            id="org.eclipse.egit.ui.commit.StashDrop"
-            name="%StashDropCommand.name">
       </command>
    </extension>
    <extension
