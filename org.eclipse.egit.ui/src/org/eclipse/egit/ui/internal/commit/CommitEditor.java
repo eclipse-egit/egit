@@ -31,7 +31,6 @@ import org.eclipse.egit.ui.internal.commit.command.CreateBranchHandler;
 import org.eclipse.egit.ui.internal.commit.command.CreateTagHandler;
 import org.eclipse.egit.ui.internal.commit.command.RevertHandler;
 import org.eclipse.egit.ui.internal.commit.command.ShowInHistoryHandler;
-import org.eclipse.egit.ui.internal.commit.command.StashDropHandler;
 import org.eclipse.egit.ui.internal.repository.RepositoriesView;
 import org.eclipse.jface.action.Action;
 import org.eclipse.jface.action.ActionContributionItem;
@@ -345,7 +344,7 @@ public class CommitEditor extends SharedHeaderFormEditor implements
 			toolbar.add(createActionContributionItem(ActionCommands.STASH_APPLY,
 					UIText.CommitEditor_toolbarApplyStash,
 					UIIcons.STASH_APPLY));
-			toolbar.add(createActionContributionItem(StashDropHandler.ID,
+			toolbar.add(createActionContributionItem(ActionCommands.STASH_DROP,
 					UIText.CommitEditor_toolbarDeleteStash,
 					PlatformUI.getWorkbench().getSharedImages()
 							.getImageDescriptor(

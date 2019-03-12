@@ -44,11 +44,6 @@ import org.eclipse.ui.IWorkbenchPart;
  */
 public class StashDropHandler extends SelectionHandler {
 
-	/**
-	 * Command id
-	 */
-	public static final String ID = "org.eclipse.egit.ui.commit.StashDrop"; //$NON-NLS-1$
-
 	@Override
 	public Object execute(ExecutionEvent event) throws ExecutionException {
 		final RevCommit commit = getSelectedItem(RevCommit.class, event);
