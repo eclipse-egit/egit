@@ -33,11 +33,6 @@ import org.eclipse.jgit.revwalk.RevCommit;
  */
 public class StashApplyHandler extends SelectionHandler {
 
-	/**
-	 * Command id
-	 */
-	public static final String ID = "org.eclipse.egit.ui.commit.StashApply"; //$NON-NLS-1$
-
 	@Override
 	public Object execute(ExecutionEvent event) throws ExecutionException {
 		final RevCommit commit = getSelectedItem(RevCommit.class, event);

@@ -2072,34 +2072,6 @@
          </activeWhen>
       </handler>
       <handler
-            commandId="org.eclipse.egit.ui.team.stash.apply">
-         <class
-               class="org.eclipse.egit.ui.internal.repository.tree.command.StashApplyCommand">
-         </class>
-         <activeWhen>
-             <and>
-                  <count
-                        value="1">
-                  </count>
-                  <iterate>
-                     <and>
-                        <instanceof
-                              value="org.eclipse.egit.ui.internal.repository.tree.StashedCommitNode">
-                        </instanceof>
-                        <not>
-                           <test
-                                 property="GitRepository.isBare">
-                           </test>
-                        </not>
-                        <test
-                              property="GitRepository.isSafe">
-                        </test>
-                     </and>
-                  </iterate>
-               </and>
-         </activeWhen>
-      </handler>
-      <handler
             commandId="org.eclipse.ui.edit.delete">
          <class
                class="org.eclipse.egit.ui.internal.repository.tree.command.StashDropCommand">
@@ -2613,12 +2585,38 @@
          </activeWhen>
       </handler>
       <handler
-            commandId="org.eclipse.egit.ui.commit.StashApply">
+            commandId="org.eclipse.egit.ui.team.stash.apply">
          <class
                class="org.eclipse.egit.ui.internal.commit.command.StashApplyHandler">
          </class>
          <activeWhen>
-            <reference definitionId="org.eclipse.egit.ui.singleRepositoryCommit" />
+            <or>
+               <and>
+                  <count value="1" />
+                  <iterate>
+                     <instanceof value="org.eclipse.egit.ui.internal.repository.tree.StashedCommitNode" />
+                     <not>
+                        <test property="GitRepository.isBare" />
+                     </not>
+                     <test property="GitRepository.isSafe" />
+                  </iterate>
+               </and>
+               <and>
+                  <with variable="activePart">
+                     <instanceof value="org.eclipse.egit.ui.internal.commit.CommitEditor" />
+                  </with>
+                  <count value="1" />
+                  <iterate>
+                     <adapt type="org.eclipse.egit.core.internal.IRepositoryCommit">
+                        <test property="Git.isStash" />
+                        <not>
+                           <test property="Git.isBare" />
+                        </not>
+                        <test property="Git.isSafe" />
+                     </adapt>
+                  </iterate>
+               </and>
+            </or>
          </activeWhen>
       </handler>
       <handler
@@ -4225,29 +4223,7 @@
                commandId="org.eclipse.egit.ui.team.stash.apply"
                label="%StashApplyCommand.label"
                style="push">
-            <visibleWhen
-                  checkEnabled="false">
-               <and>
-                  <count
-                        value="1">
-                  </count>
-                  <iterate>
-                     <and>
-                        <instanceof
-                              value="org.eclipse.egit.ui.internal.repository.tree.StashedCommitNode">
-                        </instanceof>
-                        <not>
-                           <test
-                                 property="GitRepository.isBare">
-                           </test>
-                        </not>
-                        <test
-                              property="GitRepository.isSafe">
-                        </test>
-                     </and>
-                  </iterate>
-               </and>
-            </visibleWhen>
+            <visibleWhen checkEnabled="true" />
          </command>
          <command
                commandId="org.eclipse.ui.edit.delete"
@@ -6188,10 +6164,6 @@
             icon="icons/obj16/stash-apply.png">
       </image>
       <image
-            commandId="org.eclipse.egit.ui.commit.StashApply"
-            icon="icons/obj16/stash-apply.png">
-      </image>
-      <image
             commandId="org.eclipse.egit.ui.commit.StashDrop"
             icon="icons/obj16/delete_obj.png">
       </image>
@@ -6542,7 +6514,7 @@
             class="org.eclipse.egit.ui.internal.expressions.GitPropertyTester"
             id="org.eclipse.egit.ui.GitRepositoryCommitTester"
             namespace="Git"
-            properties="parentCount,isBare,isSafe,canCommit,hasMultipleRefs,hasRef"
+            properties="parentCount,isBare,isSafe,canCommit,hasMultipleRefs,hasRef,isStash"
             type="org.eclipse.egit.core.internal.IRepositoryCommit">
       </propertyTester>
       <propertyTester
@@ -7038,10 +7010,6 @@
       <command
             id="org.eclipse.egit.ui.history.ShowBlame"
             name="%ShowBlameCommand.name">
-      </command>
-      <command
-            id="org.eclipse.egit.ui.commit.StashApply"
-            name="%StashApplyCommand.name">
       </command>
       <command
             id="org.eclipse.egit.ui.commit.StashDrop"

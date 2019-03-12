@@ -109,6 +109,9 @@ public class ActionCommands {
 	/** "Stash Changes" action command id */
 	public static final String STASH_CREATE = "org.eclipse.egit.ui.team.stash.create"; //$NON-NLS-1$
 
+	/** "Apply Stash" command id */
+	public static final String STASH_APPLY = "org.eclipse.egit.ui.team.stash.apply"; //$NON-NLS-1$
+
 	/** "Synchronize with" action command id */
 	public static final String SYNC_WITH_ACTION = "org.eclipse.egit.ui.team.SyncWith"; //$NON-NLS-1$
 

@@ -24,13 +24,13 @@ import org.eclipse.egit.ui.Activator;
 import org.eclipse.egit.ui.internal.CommonUtils;
 import org.eclipse.egit.ui.internal.UIIcons;
 import org.eclipse.egit.ui.internal.UIText;
+import org.eclipse.egit.ui.internal.actions.ActionCommands;
 import org.eclipse.egit.ui.internal.commit.command.CheckoutHandler;
 import org.eclipse.egit.ui.internal.commit.command.CherryPickHandler;
 import org.eclipse.egit.ui.internal.commit.command.CreateBranchHandler;
 import org.eclipse.egit.ui.internal.commit.command.CreateTagHandler;
 import org.eclipse.egit.ui.internal.commit.command.RevertHandler;
 import org.eclipse.egit.ui.internal.commit.command.ShowInHistoryHandler;
-import org.eclipse.egit.ui.internal.commit.command.StashApplyHandler;
 import org.eclipse.egit.ui.internal.commit.command.StashDropHandler;
 import org.eclipse.egit.ui.internal.repository.RepositoriesView;
 import org.eclipse.jface.action.Action;
@@ -342,7 +342,7 @@ public class CommitEditor extends SharedHeaderFormEditor implements
 		CommonUtils.getService(getSite(), IPartService.class)
 				.addPartListener(activationListener);
 		if (commit.isStash()) {
-			toolbar.add(createActionContributionItem(StashApplyHandler.ID,
+			toolbar.add(createActionContributionItem(ActionCommands.STASH_APPLY,
 					UIText.CommitEditor_toolbarApplyStash,
 					UIIcons.STASH_APPLY));
 			toolbar.add(createActionContributionItem(StashDropHandler.ID,
