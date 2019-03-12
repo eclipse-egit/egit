@@ -31,6 +31,12 @@ public class ActionCommands {
 	/** "Branch" action command id */
 	public static final String BRANCH_ACTION = "org.eclipse.egit.ui.team.Branch"; //$NON-NLS-1$
 
+	/**
+	 * "Create Branch" command id. Because of bug 415382 we use a legacy command
+	 * id here.
+	 */
+	public static final String BRANCH_CREATE = "org.eclipse.egit.ui.RepositoriesViewCreateBranch"; //$NON-NLS-1$
+
 	/** "Commit" action command id */
 	public static final String COMMIT_ACTION = "org.eclipse.egit.ui.team.Commit"; //$NON-NLS-1$
 

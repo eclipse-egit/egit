@@ -2398,6 +2398,24 @@
          </activeWhen>
       </handler>
       <handler
+            commandId="org.eclipse.egit.ui.RepositoriesViewCreateBranch">
+         <class
+               class="org.eclipse.egit.ui.internal.commit.command.CreateBranchHandler">
+         </class>
+         <activeWhen>
+            <and>
+               <count value="1" />
+               <iterate>
+                  <adapt type="org.eclipse.egit.core.internal.IRepositoryCommit">
+                     <not>
+                        <test property="Git.isStash" />
+                     </not>
+                  </adapt>
+               </iterate>
+            </and>
+         </activeWhen>
+      </handler>
+      <handler
             commandId="org.eclipse.egit.ui.RepositoriesViewNewRemote">
          <class
                class="org.eclipse.egit.ui.internal.repository.tree.command.ConfigureRemoteCommand">
@@ -2543,15 +2561,6 @@
             commandId="org.eclipse.egit.ui.commit.CreateTag">
          <class
                class="org.eclipse.egit.ui.internal.commit.command.CreateTagHandler">
-         </class>
-         <activeWhen>
-            <reference definitionId="org.eclipse.egit.ui.singleRepositoryCommit" />
-         </activeWhen>
-      </handler>
-      <handler
-            commandId="org.eclipse.egit.ui.commit.CreateBranch">
-         <class
-               class="org.eclipse.egit.ui.internal.commit.command.CreateBranchHandler">
          </class>
          <activeWhen>
             <reference definitionId="org.eclipse.egit.ui.singleRepositoryCommit" />
@@ -2804,20 +2813,6 @@
                <count value="1" />
                <iterate>
                   <instanceof value="org.eclipse.egit.ui.internal.history.SWTCommit" />
-               </iterate>
-            </and>
-         </activeWhen>
-      </handler>
-      <handler
-            commandId="org.eclipse.egit.ui.history.CreateBranch">
-         <class
-               class="org.eclipse.egit.ui.internal.history.command.CreateBranchOnCommitHandler">
-         </class>
-         <activeWhen>
-            <and>
-               <count value="1" />
-               <iterate>
-                  <adapt type="org.eclipse.egit.core.internal.IRepositoryCommit" />
                </iterate>
             </and>
          </activeWhen>
@@ -3465,7 +3460,7 @@
          </command>
          <separator name="##Refs" visible="true" />
          <command
-              commandId="org.eclipse.egit.ui.history.CreateBranch"
+              commandId="org.eclipse.egit.ui.RepositoriesViewCreateBranch"
               label="%HistoryCreateBranch.label"
               style="push">
             <visibleWhen checkEnabled="true" />
@@ -3723,7 +3718,6 @@
          </command>
          <command
                commandId="org.eclipse.egit.ui.RepositoriesViewCreateBranch"
-               icon="icons/obj16/new_branch_obj.png"
                label="%RepoViewCreateBranch.label"
                style="push">
             <visibleWhen checkEnabled="true" />
@@ -6154,16 +6148,8 @@
             icon="icons/obj16/history.png">
       </image>
       <image
-            commandId="org.eclipse.egit.ui.history.CreateBranch"
-            icon="icons/obj16/new_branch_obj.png">
-      </image>
-      <image
             commandId="org.eclipse.egit.ui.commit.CreateTag"
             icon="icons/obj16/new_tag_obj.png">
-      </image>
-      <image
-            commandId="org.eclipse.egit.ui.commit.CreateBranch"
-            icon="icons/obj16/new_branch_obj.png">
       </image>
       <image
             commandId="org.eclipse.egit.ui.history.CherryPick"
@@ -6889,10 +6875,6 @@
             name="%CreatePatchCommand.name">
       </command>
       <command
-            id="org.eclipse.egit.ui.history.CreateBranch"
-            name="%CreateBranchCommand.name">
-      </command>
-      <command
             id="org.eclipse.egit.ui.history.DeleteBranch"
             name="%DeleteBranchCommand.name">
       </command>
@@ -7008,10 +6990,6 @@
       <command
             id="org.eclipse.egit.ui.commit.CreateTag"
             name="%CreateTagCommand.name">
-      </command>
-      <command
-            id="org.eclipse.egit.ui.commit.CreateBranch"
-            name="%CreateBranchCommand">
       </command>
       <command
             id="org.eclipse.egit.ui.commit.Checkout"

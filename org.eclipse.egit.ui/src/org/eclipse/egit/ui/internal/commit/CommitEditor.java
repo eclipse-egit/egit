@@ -27,7 +27,6 @@ import org.eclipse.egit.ui.internal.UIText;
 import org.eclipse.egit.ui.internal.actions.ActionCommands;
 import org.eclipse.egit.ui.internal.commit.command.CheckoutHandler;
 import org.eclipse.egit.ui.internal.commit.command.CherryPickHandler;
-import org.eclipse.egit.ui.internal.commit.command.CreateBranchHandler;
 import org.eclipse.egit.ui.internal.commit.command.CreateTagHandler;
 import org.eclipse.egit.ui.internal.commit.command.RevertHandler;
 import org.eclipse.egit.ui.internal.commit.command.ShowInHistoryHandler;
@@ -352,7 +351,8 @@ public class CommitEditor extends SharedHeaderFormEditor implements
 		} else {
 			toolbar.add(createActionContributionItem(CreateTagHandler.ID,
 					UIText.CommitEditor_toolbarCreateTag, UIIcons.CREATE_TAG));
-			toolbar.add(createActionContributionItem(CreateBranchHandler.ID,
+			toolbar.add(
+					createActionContributionItem(ActionCommands.BRANCH_CREATE,
 					UIText.CommitEditor_toolbarCreateBranch,
 					UIIcons.CREATE_BRANCH));
 			toolbar.add(createActionContributionItem(CheckoutHandler.ID,
