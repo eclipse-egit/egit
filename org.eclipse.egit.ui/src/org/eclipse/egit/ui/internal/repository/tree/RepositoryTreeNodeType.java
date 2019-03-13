@@ -25,6 +25,9 @@ public enum RepositoryTreeNodeType {
 	/**	 */
 	REPO(UIIcons.REPOSITORY), //
 	/**	 */
+	REPOGROUP(PlatformUI.getWorkbench().getSharedImages()
+			.getImageDescriptor(ISharedImages.IMG_OBJ_FOLDER)), //
+	/**	 */
 	BRANCHES(UIIcons.BRANCHES), //
 	/** */
 	REF(UIIcons.BRANCH), //

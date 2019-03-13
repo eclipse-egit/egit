@@ -5003,6 +5003,47 @@
          </command>
       </menuContribution>
       <menuContribution
+            locationURI="popup:org.eclipse.egit.ui.RepositoriesView?after=repo-1">
+         <command
+               commandId="org.eclipse.egit.ui.RepositoriesDeleteGroup"
+               style="push">
+            <visibleWhen
+                  checkEnabled="false">
+               <and>
+                  <count
+                        value="+">
+                  </count>
+                  <iterate ifEmpty="false"
+                        operator="and">
+                     <instanceof
+                           value="org.eclipse.egit.ui.internal.repository.tree.RepositoryGroupNode">
+                     </instanceof>
+                  </iterate>
+               </and>
+            </visibleWhen>
+         </command>
+      </menuContribution>
+      <menuContribution
+            locationURI="popup:org.eclipse.egit.ui.RepositoriesView?after=repo-1">
+         <command
+               commandId="org.eclipse.egit.ui.RepositoriesAssignGroup"
+               style="push">
+            <visibleWhen
+                  checkEnabled="false">
+               <and>
+                  <count
+                        value="1">
+                  </count>
+                  <iterate>
+                     <instanceof
+                           value="org.eclipse.egit.ui.internal.repository.tree.RepositoryGroupNode">
+                     </instanceof>
+                  </iterate>
+               </and>
+            </visibleWhen>
+         </command>
+      </menuContribution>
+      <menuContribution
             locationURI="toolbar:org.eclipse.egit.ui.RepositoriesView">
          <separator
                name="org.eclipse.egit.ui.repositoryActions"
@@ -5068,6 +5109,11 @@
          <command
                commandId="org.eclipse.egit.ui.RepositoriesViewCreateRepository"
                label="%RepoCreateRepositoryViewMenu.label"
+               style="push">
+         </command>
+         <command
+               commandId="org.eclipse.egit.ui.RepositoriesAddGroup"
+               label="Add Repository Group"
                style="push">
          </command>
          <separator
@@ -6053,6 +6099,24 @@
             categoryId="org.eclipse.egit.ui.commandCategory"
             id="org.eclipse.egit.ui.RepositoriesViewDelete"
             name="%DeleteRepositoryCommand.name">
+      </command>
+      <command
+            categoryId="org.eclipse.egit.ui.commandCategory"
+            defaultHandler="org.eclipse.egit.ui.internal.repository.tree.command.AddRepositoryGroupCommand"
+            id="org.eclipse.egit.ui.RepositoriesAddGroup"
+            name="Add Repository Group">
+      </command>
+      <command
+            categoryId="org.eclipse.egit.ui.commandCategory"
+            defaultHandler="org.eclipse.egit.ui.internal.repository.tree.command.DeleteRepositoryGroupCommand"
+            id="org.eclipse.egit.ui.RepositoriesDeleteGroup"
+            name="Delete Repository Group">
+      </command>
+      <command
+            categoryId="org.eclipse.egit.ui.commandCategory"
+            defaultHandler="org.eclipse.egit.ui.internal.repository.tree.command.AssignRepositoryGroupCommand"
+            id="org.eclipse.egit.ui.RepositoriesAssignGroup"
+            name="Assign Repositorie To Group">
       </command>
       <command
             categoryId="org.eclipse.egit.ui.commandCategory"

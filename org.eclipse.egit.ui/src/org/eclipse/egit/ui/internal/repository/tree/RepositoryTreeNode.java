@@ -288,6 +288,8 @@ public abstract class RepositoryTreeNode<T> extends PlatformObject implements Co
 
 		switch (myType) {
 
+		case REPOGROUP:
+			// fall through
 		case BRANCHES:
 			// fall through
 		case LOCAL:
