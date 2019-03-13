@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2010, 2012 SAP AG and others.
+ * Copyright (c) 2010, 2012, 2019 SAP AG and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License 2.0
  * which accompanies this distribution, and is available at
@@ -9,6 +9,7 @@
  *
  * Contributors:
  *    Mathias Kinzler (SAP AG) - initial implementation
+ *    Alexander Nittka <alex@nittka.de> - Bug 545123
  *******************************************************************************/
 package org.eclipse.egit.ui.internal.repository.tree;
 
@@ -180,6 +181,11 @@ public abstract class RepositoryTreeNode<T> extends PlatformObject implements Co
 					+ ((myObject == null) ? 0 : ((Repository) myObject)
 							.getDirectory().hashCode());
 			break;
+		case REPOGROUP:
+			RepositoryGroup group = ((RepositoryGroupNode) this).getGroup();
+			result = prime * result + group.getUuid().hashCode();
+			result = prime * result + group.getName().hashCode();
+			break;
 		case REF:
 			// fall through
 		case TAG:
@@ -247,6 +253,10 @@ public abstract class RepositoryTreeNode<T> extends PlatformObject implements Co
 				return false;
 		} else if (!myParent.equals(other.myParent))
 			return false;
+		if (myType == RepositoryTreeNodeType.REPOGROUP
+				&& other.myType == RepositoryTreeNodeType.REPOGROUP) {
+			return hashCode() == other.hashCode();
+		}
 		if (myRepository == null) {
 			if (other.myRepository != null) {
 				return false;
@@ -288,6 +298,8 @@ public abstract class RepositoryTreeNode<T> extends PlatformObject implements Co
 
 		switch (myType) {
 
+		case REPOGROUP:
+			// fall through
 		case BRANCHES:
 			// fall through
 		case LOCAL:
@@ -409,6 +421,8 @@ public abstract class RepositoryTreeNode<T> extends PlatformObject implements Co
 			// fall through
 		case TAGS:
 			return myObject.equals(otherObject);
+		case REPOGROUP:
+			// fall through - comparison not by label alone
 		}
 		return false;
 	}

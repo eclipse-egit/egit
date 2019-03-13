@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2010, 2013 SAP AG and others.
+ * Copyright (c) 2010, 2013, 2019 SAP AG and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License 2.0
  * which accompanies this distribution, and is available at
@@ -10,6 +10,7 @@
  * Contributors:
  *    Mathias Kinzler (SAP AG) - initial implementation
  *    Laurent Goubet <laurent.goubet@obeo.fr - 404121
+ *    Alexander Nittka <alex@nittka.de> - 545123
  *******************************************************************************/
 package org.eclipse.egit.ui.internal.repository;
 
@@ -64,6 +65,9 @@ import org.eclipse.egit.ui.internal.repository.tree.RefNode;
 import org.eclipse.egit.ui.internal.repository.tree.RemoteNode;
 import org.eclipse.egit.ui.internal.repository.tree.RemoteTrackingNode;
 import org.eclipse.egit.ui.internal.repository.tree.RemotesNode;
+import org.eclipse.egit.ui.internal.repository.tree.RepositoryGroup;
+import org.eclipse.egit.ui.internal.repository.tree.RepositoryGroupNode;
+import org.eclipse.egit.ui.internal.repository.tree.RepositoryGroups;
 import org.eclipse.egit.ui.internal.repository.tree.RepositoryNode;
 import org.eclipse.egit.ui.internal.repository.tree.RepositoryTreeNode;
 import org.eclipse.egit.ui.internal.repository.tree.StashNode;
@@ -154,6 +158,8 @@ public class RepositoriesViewContentProvider implements ITreeContentProvider,
 		List<String> directories = new ArrayList<>();
 		RepositoryUtil repositoryUtil = Activator.getDefault()
 				.getRepositoryUtil();
+		boolean useRepositoryGroups = showUnbornHead;
+		RepositoryGroups groups = new RepositoryGroups();
 
 		if (inputElement instanceof Collection) {
 			for (Object next : ((Collection) inputElement)) {
@@ -171,13 +177,21 @@ public class RepositoriesViewContentProvider implements ITreeContentProvider,
 			try {
 				File gitDir = new File(directory);
 				if (gitDir.exists()) {
-					RepositoryNode rNode = new RepositoryNode(null,
-							repositoryCache.lookupRepository(gitDir));
-					nodes.add(rNode);
+					if (!useRepositoryGroups
+							|| !groups.belongsToGroup(directory)) {
+						RepositoryNode rNode = new RepositoryNode(null,
+								repositoryCache.lookupRepository(gitDir));
+						nodes.add(rNode);
+					}
 				} else
 					repositoryUtil.removeDir(gitDir);
 			} catch (IOException e) {
 				// ignore for now
+			}
+		}
+		if (useRepositoryGroups) {
+			for (RepositoryGroup group : groups.getGroups()) {
+				nodes.add(new RepositoryGroupNode(null, group));
 			}
 		}
 
@@ -281,6 +295,25 @@ public class RepositoriesViewContentProvider implements ITreeContentProvider,
 			if (!bare && hasConfiguredSubmodules(repo))
 				nodeList.add(new SubmodulesNode(node, repo));
 
+			return nodeList.toArray();
+		}
+
+		case REPOGROUP: {
+			List<RepositoryTreeNode<? extends Object>> nodeList = new ArrayList<>();
+
+			for (String repoDir : ((RepositoryGroupNode) node).getGroup()
+					.getRepositories()) {
+				RepositoryNode rNode;
+				try {
+					// TODO extract common code from getElements - check repo
+					// existence
+					rNode = new RepositoryNode(node, repositoryCache
+							.lookupRepository(new File(repoDir)));
+					nodeList.add(rNode);
+				} catch (IOException e) {
+					// ignore
+				}
+			}
 			return nodeList.toArray();
 		}
 
@@ -528,6 +561,8 @@ public class RepositoriesViewContentProvider implements ITreeContentProvider,
 		RepositoryTreeNode node = (RepositoryTreeNode) element;
 		Repository repo = node.getRepository();
 		switch (node.getType()) {
+		case REPOGROUP:
+			return ((RepositoryGroupNode) element).hasChildren();
 		case BRANCHES:
 		case REPO:
 		case ADDITIONALREFS:

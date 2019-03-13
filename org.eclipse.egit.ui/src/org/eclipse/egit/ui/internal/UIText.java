@@ -18,6 +18,7 @@
  * Copyright (C) 2015, Denis Zygann <d.zygann@web.de>
  * Copyright (C) 2016, Lars Vogel <Lars.Vogel@vogella.com>
  * Copyright (C) 2017, Wim Jongman <wim.jongman@remainsoftware.com> bug 358152
+ * Copyright (C) 2019, Alexander Nittka <alex@nittka.de> bug 545123
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License 2.0
@@ -3775,6 +3776,21 @@ public class UIText extends NLS {
 
 	/** */
 	public static String RepositoriesView_WorkingDir_treenode;
+
+	/** */
+	public static String RepositoriesView_AddRepoGroup_title;
+
+	/** */
+	public static String RepositoriesView_RenameRepoGroup_title;
+
+	/** */
+	public static String RepositoriesView_RepoGroup_enterName;
+
+	/** */
+	public static String RepositoriesView_RepoGroup_validateEmptyName;
+
+	/** */
+	public static String RepositoriesView_RepoGroup_validateGroupExists;
 
 	/** */
 	public static String RepositoriesViewActionProvider_OpenWithMenu;
