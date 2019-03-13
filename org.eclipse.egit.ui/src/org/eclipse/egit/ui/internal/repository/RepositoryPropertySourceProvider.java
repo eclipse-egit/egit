@@ -87,11 +87,15 @@ public class RepositoryPropertySourceProvider implements
 	@Override
 	public IPropertySource getPropertySource(Object object) {
 
-		if (object == lastObject)
+		if (object == lastObject) {
 			return lastRepositorySource;
+		}
 
-		if (!(object instanceof RepositoryTreeNode))
+		if (!(object instanceof RepositoryTreeNode)) {
 			return null;
+		} else if (((RepositoryTreeNode) object).getRepository() == null) {
+			return null;
+		}
 
 		registerDisposal();
 		removeListener();
