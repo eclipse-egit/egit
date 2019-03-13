@@ -468,8 +468,7 @@ public class RepositoryUtil {
 		Set<String> configuredStrings = new HashSet<>();
 		StringTokenizer tok = new StringTokenizer(dirs, File.pathSeparator);
 		while (tok.hasMoreTokens()) {
-			configuredStrings
-					.add(workspacePath.resolve(tok.nextToken()).toString());
+			configuredStrings.add(getAbsoluteRepositoryPath(tok.nextToken()));
 		}
 		return configuredStrings;
 	}
@@ -565,7 +564,8 @@ public class RepositoryUtil {
 	 * </p>
 	 * <p>
 	 * This enables moving or copying the workspace, when saving this path and
-	 * later resolving it relative to the workspace path.
+	 * later resolving it relative to the workspace path
+	 * ({@link #getAbsoluteRepositoryPath}).
 	 * </p>
 	 * <p>
 	 * It is required, that the given pathString is absolute
@@ -605,6 +605,25 @@ public class RepositoryUtil {
 			return null;
 		}
 		return relativizeToWorkspace(dir.getAbsolutePath());
+	}
+
+	/**
+	 * Make a potentially relative path absolute.
+	 * <p>
+	 * The result is the absolute path of {@code pathString} resolved against
+	 * the workspace root.
+	 * This allows retrieving a path saved using {@link #relativizeToWorkspace}.
+	 * </p>
+	 *
+	 * @param pathString
+	 *            a potentially workspace relative path String.
+	 * @return the absolute path String
+	 * @throws java.nio.file.InvalidPathException
+	 *             if the path string cannot be converted to a Path
+	 */
+	public @NonNull String getAbsoluteRepositoryPath(
+			@NonNull String pathString) {
+		return workspacePath.resolve(pathString).toString();
 	}
 
 	/**
