@@ -8,6 +8,7 @@
  * Copyright (C) 2014, Axel Richard <axel.richard@obeo.fr>
  * Copyright (C) 2015, Denis Zygann <d.zygann@web.de>
  * Copyright (C) 2016, 2019 Thomas Wolf <thomas.wolf@paranor.ch>
+ * Copyright (C) 2019 Alexander Nittka <alex@nittka.de>
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License 2.0
@@ -355,6 +356,11 @@ public class UIIcons {
 	 */
 	public final static ImageDescriptor MERGE_TOOL;
 
+	/**
+	 * Icon for removing repositories from groups.
+	 */
+	public final static ImageDescriptor REMOVE_FROM_REPO_GROUP;
+
 	/** base URL */
 	public final static URL base;
 
@@ -486,6 +492,7 @@ public class UIIcons {
 				OVR_CHECKEDOUT, IDecoration.TOP_LEFT);
 		SIGN_COMMIT = map("obj16/sign-commit.png"); //$NON-NLS-1$
 		MERGE_TOOL = map("obj16/mergetool.png"); //$NON-NLS-1$
+		REMOVE_FROM_REPO_GROUP = map("obj16/clear.png"); //$NON-NLS-1$
 	}
 
 	private static ImageDescriptor map(final String icon) {

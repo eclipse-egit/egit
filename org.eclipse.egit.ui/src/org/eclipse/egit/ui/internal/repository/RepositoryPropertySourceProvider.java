@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2010, 2015 SAP AG and others.
+ * Copyright (c) 2010, 2019 SAP AG and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License 2.0
  * which accompanies this distribution, and is available at
@@ -9,6 +9,7 @@
  *
  * Contributors:
  *    Mathias Kinzler (SAP AG) - initial implementation
+ *    Alexander Nittka <alex@nittka.de> - Bug 545123
  *******************************************************************************/
 package org.eclipse.egit.ui.internal.repository;
 
@@ -87,11 +88,15 @@ public class RepositoryPropertySourceProvider implements
 	@Override
 	public IPropertySource getPropertySource(Object object) {
 
-		if (object == lastObject)
+		if (object == lastObject) {
 			return lastRepositorySource;
+		}
 
-		if (!(object instanceof RepositoryTreeNode))
+		if (!(object instanceof RepositoryTreeNode)) {
 			return null;
+		} else if (((RepositoryTreeNode) object).getRepository() == null) {
+			return null;
+		}
 
 		registerDisposal();
 		removeListener();
