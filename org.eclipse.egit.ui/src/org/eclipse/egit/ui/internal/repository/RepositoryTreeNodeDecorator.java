@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2018 Thomas Wolf <thomas.wolf@paranor.ch>
+ * Copyright (c) 2018, 2019 Thomas Wolf <thomas.wolf@paranor.ch> and others.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License 2.0
@@ -7,14 +7,21 @@
  * https://www.eclipse.org/legal/epl-2.0/
  *
  * SPDX-License-Identifier: EPL-2.0
+ *
+ * Contributors:
+ *    Alexander Nittka <alex@nittka.de> - Bug 545123
  *******************************************************************************/
 package org.eclipse.egit.ui.internal.repository;
 
+import java.io.File;
 import java.io.IOException;
 import java.text.MessageFormat;
+import java.util.HashSet;
+import java.util.Set;
 
 import org.eclipse.core.commands.IStateListener;
 import org.eclipse.core.commands.State;
+import org.eclipse.egit.core.RepositoryCache;
 import org.eclipse.egit.core.RepositoryUtil;
 import org.eclipse.egit.core.internal.Utils;
 import org.eclipse.egit.ui.Activator;
@@ -24,6 +31,8 @@ import org.eclipse.egit.ui.internal.UIText;
 import org.eclipse.egit.ui.internal.decorators.GitDecorator;
 import org.eclipse.egit.ui.internal.repository.tree.AdditionalRefNode;
 import org.eclipse.egit.ui.internal.repository.tree.RefNode;
+import org.eclipse.egit.ui.internal.repository.tree.RepositoryGroup;
+import org.eclipse.egit.ui.internal.repository.tree.RepositoryGroupNode;
 import org.eclipse.egit.ui.internal.repository.tree.RepositoryTreeNode;
 import org.eclipse.egit.ui.internal.repository.tree.RepositoryTreeNodeType;
 import org.eclipse.egit.ui.internal.repository.tree.StashedCommitNode;
@@ -53,6 +62,10 @@ import org.eclipse.ui.handlers.RegistryToggleState;
  */
 public class RepositoryTreeNodeDecorator extends GitDecorator
 		implements IStateListener {
+
+	private static final String HAS_CHANGES_PREFIX = "> "; //$NON-NLS-1$
+
+	private static final String OPEN_BRACKET = " ["; //$NON-NLS-1$
 
 	private final State verboseBranchModeState;
 
@@ -99,14 +112,16 @@ public class RepositoryTreeNodeDecorator extends GitDecorator
 	public void decorate(Object element, IDecoration decoration) {
 		RepositoryTreeNode<?> node = (RepositoryTreeNode) element;
 		Repository repository = node.getRepository();
-		if (repository != null) {
-			try {
+		try {
+			if (repository != null) {
 				decorateText(node, repository, decoration);
-			} catch (IOException e) {
-				Activator.logError(MessageFormat.format(
-						UIText.GitLabelProvider_UnableToRetrieveLabel,
-						element.toString()), e);
+			} else if (node.getType() == RepositoryTreeNodeType.REPOGROUP) {
+				decorateRepositoryGroup(node, decoration);
 			}
+		} catch (IOException e) {
+			Activator.logError(MessageFormat.format(
+					UIText.GitLabelProvider_UnableToRetrieveLabel,
+					element.toString()), e);
 		}
 	}
 
@@ -138,9 +153,7 @@ public class RepositoryTreeNodeDecorator extends GitDecorator
 			return;
 		}
 		if (!decorated) {
-			// Ensure the caching of last labels in
-			// RepositoryTreeNodeLabelProvider works
-			decoration.addSuffix(" "); //$NON-NLS-1$
+			ensureCorrectLabelCaching(decoration);
 		}
 	}
 
@@ -149,7 +162,8 @@ public class RepositoryTreeNodeDecorator extends GitDecorator
 		Ref ref = node.getObject();
 		StringBuilder suffix = new StringBuilder();
 		if (ref.isSymbolic()) {
-			suffix.append(" [").append(ref.getLeaf().getName()).append(']'); //$NON-NLS-1$
+			suffix.append(OPEN_BRACKET).append(ref.getLeaf().getName())
+					.append(']');
 		}
 		ObjectId refId = ref.getObjectId();
 		suffix.append(' ');
@@ -185,7 +199,7 @@ public class RepositoryTreeNodeDecorator extends GitDecorator
 		boolean isSubModule = node.getParent() != null && node.getParent()
 				.getType() == RepositoryTreeNodeType.SUBMODULES;
 		if (RepositoryUtil.hasChanges(repository)) {
-			decoration.addPrefix("> "); //$NON-NLS-1$
+			decoration.addPrefix(HAS_CHANGES_PREFIX);
 		}
 		StringBuilder suffix = new StringBuilder();
 		if (isSubModule) {
@@ -193,7 +207,7 @@ public class RepositoryTreeNodeDecorator extends GitDecorator
 			if (head == null) {
 				return false;
 			}
-			suffix.append(" ["); //$NON-NLS-1$
+			suffix.append(OPEN_BRACKET);
 			if (head.isSymbolic()) {
 				suffix.append(
 						Repository.shortenRefName(head.getLeaf().getName()));
@@ -216,7 +230,7 @@ public class RepositoryTreeNodeDecorator extends GitDecorator
 			if (branch == null) {
 				return false;
 			}
-			suffix.append(" ["); //$NON-NLS-1$
+			suffix.append(OPEN_BRACKET);
 			suffix.append(branch);
 
 			BranchTrackingStatus trackingStatus = BranchTrackingStatus
@@ -239,18 +253,61 @@ public class RepositoryTreeNodeDecorator extends GitDecorator
 		return true;
 	}
 
+	private void decorateRepositoryGroup(RepositoryTreeNode<?> node,
+			IDecoration decoration) throws IOException {
+		RepositoryCache cache = org.eclipse.egit.core.Activator.getDefault()
+				.getRepositoryCache();
+		RepositoryGroup group = ((RepositoryGroupNode) node).getGroup();
+		boolean markGroupDirty = false;
+		Set<String> branches = new HashSet<>();
+		for (File repoDir : group.getRepositoryDirectories()) {
+			Repository repo = cache.getRepository(repoDir);
+			if (repo != null) {
+				if (RepositoryUtil.hasChanges(repo)) {
+					markGroupDirty = true;
+				}
+				branches.add(repo.getBranch());
+				if (markGroupDirty && branches.size() > 1) {
+					break;
+				}
+			}
+		}
+		boolean decorate = false;
+		if (markGroupDirty) {
+			decorate = true;
+			decoration.addPrefix(HAS_CHANGES_PREFIX);
+		}
+		if (branches.size() == 1) {
+			decorate = true;
+			StringBuilder suffix = new StringBuilder();
+			suffix.append(OPEN_BRACKET).append(branches.iterator().next())
+					.append(']');
+			decoration.addSuffix(suffix.toString());
+		}
+		if (!decorate) {
+			ensureCorrectLabelCaching(decoration);
+		}
+	}
+
+	private void ensureCorrectLabelCaching(IDecoration decoration) {
+		// Ensure the caching of last labels in
+		// RepositoryTreeNodeLabelProvider works
+		decoration.addSuffix(" ");//$NON-NLS-1$
+	}
+
 	private boolean decorateStash(StashedCommitNode node,
 			IDecoration decoration) {
 		RevCommit commit = node.getObject();
 		decoration.addSuffix(
-				" [" + abbreviate(commit) + "] " + commit.getShortMessage()); //$NON-NLS-1$ //$NON-NLS-2$
+				OPEN_BRACKET + abbreviate(commit) + "] " //$NON-NLS-1$
+				+ commit.getShortMessage());
 		return true;
 	}
 
 	private boolean decorateSubmodules(@NonNull Repository repository,
 			IDecoration decoration) throws IOException {
 		if (haveSubmoduleChanges(repository)) {
-			decoration.addPrefix("> "); //$NON-NLS-1$
+			decoration.addPrefix(HAS_CHANGES_PREFIX);
 			return true;
 		}
 		return false;
