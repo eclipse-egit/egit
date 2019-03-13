@@ -21,6 +21,7 @@ import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.commands.ExecutionException;
@@ -42,6 +43,7 @@ import org.eclipse.egit.ui.Activator;
 import org.eclipse.egit.ui.JobFamilies;
 import org.eclipse.egit.ui.internal.CommonUtils;
 import org.eclipse.egit.ui.internal.UIText;
+import org.eclipse.egit.ui.internal.repository.tree.RepositoryGroups;
 import org.eclipse.egit.ui.internal.repository.tree.RepositoryNode;
 import org.eclipse.egit.ui.internal.repository.tree.RepositoryTreeNodeType;
 import org.eclipse.jface.dialogs.IDialogConstants;
@@ -166,9 +168,11 @@ public class RemoveCommand extends
 					deleteProjects(deleteWorkDir, projectsToDelete,
 							monitor);
 				}
-				for (RepositoryNode node : selectedNodes) {
-					util.removeDir(node.getRepository().getDirectory());
-				}
+				List<File> repoDirs = selectedNodes.stream()
+						.map(node -> node.getRepository().getDirectory())
+						.collect(Collectors.toList());
+				repoDirs.stream().forEach(repodir -> util.removeDir(repodir));
+				RepositoryGroups.getInstance().removeFromGroups(repoDirs);
 
 				if (delete) {
 					try {
