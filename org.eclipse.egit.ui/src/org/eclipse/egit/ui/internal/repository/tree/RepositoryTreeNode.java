@@ -9,6 +9,7 @@
  *
  * Contributors:
  *    Mathias Kinzler (SAP AG) - initial implementation
+ *    Alexander Nittka <alex@nittka.de> - Bug 545123
  *******************************************************************************/
 package org.eclipse.egit.ui.internal.repository.tree;
 
@@ -145,12 +146,21 @@ public abstract class RepositoryTreeNode<T> extends PlatformObject implements Co
 	 * <td>{@link RepositoryTreeNodeType#REPO}</td>
 	 * <td>{@link Repository}</td>
 	 * </tr>
+	 * <tr>
+	 * <td>{@link RepositoryTreeNodeType#REPOGROUP}</td>
+	 * <td>{@link String}</td>
+	 * </tr>
 	 * </table>
 	 *
 	 * @return the type-specific object
 	 */
 	public T getObject() {
 		return myObject;
+	}
+
+	// should the node parent considered when calculating equals/hashcode
+	private boolean considerParent(RepositoryTreeNodeType nodeType) {
+		return nodeType != RepositoryTreeNodeType.REPO;
 	}
 
 	@Override
@@ -179,6 +189,11 @@ public abstract class RepositoryTreeNode<T> extends PlatformObject implements Co
 					* result
 					+ ((myObject == null) ? 0 : ((Repository) myObject)
 							.getDirectory().hashCode());
+			break;
+		case REPOGROUP:
+			RepositoryGroup group = ((RepositoryGroupNode) this).getGroup();
+			result = prime * result + group.getGroupId().hashCode();
+			result = prime * result + group.getName().hashCode();
 			break;
 		case REF:
 			// fall through
@@ -216,8 +231,10 @@ public abstract class RepositoryTreeNode<T> extends PlatformObject implements Co
 
 		}
 
-		result = prime * result
-				+ ((myParent == null) ? 0 : myParent.hashCode());
+		if (considerParent(myType)) {
+			result = prime * result
+					+ ((myParent == null) ? 0 : myParent.hashCode());
+		}
 		result = prime
 				* result
 				+ ((myRepository == null) ? 0 : myRepository.getDirectory()
@@ -242,11 +259,22 @@ public abstract class RepositoryTreeNode<T> extends PlatformObject implements Co
 				return false;
 		} else if (!myType.equals(other.myType))
 			return false;
-		if (myParent == null) {
-			if (other.myParent != null)
+		if (considerParent(myType)) {
+			if (myParent == null) {
+				if (other.myParent != null) {
+					return false;
+				}
+			} else if (!myParent.equals(other.myParent)) {
 				return false;
-		} else if (!myParent.equals(other.myParent))
-			return false;
+			}
+		}
+		if (myType == RepositoryTreeNodeType.REPOGROUP
+				&& other.myType == RepositoryTreeNodeType.REPOGROUP) {
+			RepositoryGroup myGroup = ((RepositoryGroupNode)this).getGroup();
+			RepositoryGroup otherGroup = ((RepositoryGroupNode)other).getGroup();
+			return myGroup.getGroupId().equals(otherGroup.getGroupId())
+					&& myGroup.getName().equals(otherGroup.getName());
+		}
 		if (myRepository == null) {
 			if (other.myRepository != null) {
 				return false;
@@ -288,6 +316,8 @@ public abstract class RepositoryTreeNode<T> extends PlatformObject implements Co
 
 		switch (myType) {
 
+		case REPOGROUP:
+			// fall through
 		case BRANCHES:
 			// fall through
 		case LOCAL:
@@ -409,6 +439,8 @@ public abstract class RepositoryTreeNode<T> extends PlatformObject implements Co
 			// fall through
 		case TAGS:
 			return myObject.equals(otherObject);
+		case REPOGROUP:
+			// fall through - comparison not by label alone
 		}
 		return false;
 	}
