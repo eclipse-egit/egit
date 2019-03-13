@@ -180,6 +180,11 @@ public abstract class RepositoryTreeNode<T> extends PlatformObject implements Co
 					+ ((myObject == null) ? 0 : ((Repository) myObject)
 							.getDirectory().hashCode());
 			break;
+		case REPOGROUP:
+			RepositoryGroup group = ((RepositoryGroupNode) this).getGroup();
+			result = prime * result + group.getUuid().hashCode();
+			result = prime * result + group.getName().hashCode();
+			break;
 		case REF:
 			// fall through
 		case TAG:
@@ -247,6 +252,10 @@ public abstract class RepositoryTreeNode<T> extends PlatformObject implements Co
 				return false;
 		} else if (!myParent.equals(other.myParent))
 			return false;
+		if (myType == RepositoryTreeNodeType.REPOGROUP
+				&& other.myType == RepositoryTreeNodeType.REPOGROUP) {
+			return hashCode() == other.hashCode();
+		}
 		if (myRepository == null) {
 			if (other.myRepository != null) {
 				return false;
@@ -288,6 +297,8 @@ public abstract class RepositoryTreeNode<T> extends PlatformObject implements Co
 
 		switch (myType) {
 
+		case REPOGROUP:
+			// fall through
 		case BRANCHES:
 			// fall through
 		case LOCAL:
@@ -409,6 +420,8 @@ public abstract class RepositoryTreeNode<T> extends PlatformObject implements Co
 			// fall through
 		case TAGS:
 			return myObject.equals(otherObject);
+		case REPOGROUP:
+			// fall through - comparison not by label alone
 		}
 		return false;
 	}

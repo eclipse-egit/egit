@@ -3777,6 +3777,21 @@ public class UIText extends NLS {
 	public static String RepositoriesView_WorkingDir_treenode;
 
 	/** */
+	public static String RepositoriesView_AddRepoGroup_title;
+
+	/** */
+	public static String RepositoriesView_RenameRepoGroup_title;
+
+	/** */
+	public static String RepositoriesView_RepoGroup_enterName;
+
+	/** */
+	public static String RepositoriesView_RepoGroup_validateEmptyName;
+
+	/** */
+	public static String RepositoriesView_RepoGroup_validateGroupExists;
+
+	/** */
 	public static String RepositoriesViewActionProvider_OpenWithMenu;
 
 	/** */

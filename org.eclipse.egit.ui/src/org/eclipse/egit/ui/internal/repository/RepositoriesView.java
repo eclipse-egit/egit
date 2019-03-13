@@ -63,6 +63,7 @@ import org.eclipse.egit.ui.internal.repository.tree.FolderNode;
 import org.eclipse.egit.ui.internal.repository.tree.PushNode;
 import org.eclipse.egit.ui.internal.repository.tree.RefNode;
 import org.eclipse.egit.ui.internal.repository.tree.RemoteNode;
+import org.eclipse.egit.ui.internal.repository.tree.RepositoryGroupNode;
 import org.eclipse.egit.ui.internal.repository.tree.RepositoryNode;
 import org.eclipse.egit.ui.internal.repository.tree.RepositoryTreeNode;
 import org.eclipse.egit.ui.internal.repository.tree.RepositoryTreeNodeType;
@@ -432,6 +433,9 @@ public class RepositoriesView extends CommonNavigator implements IShowInSource, 
 				TreeSelection sel = (TreeSelection) event.getSelection();
 				RepositoryTreeNode element = (RepositoryTreeNode) sel
 						.getFirstElement();
+				if (element instanceof RepositoryGroupNode) {
+					return;
+				}
 				// Disable checkout for bare repositories
 				if (element.getRepository().isBare()) {
 					return;
@@ -674,7 +678,9 @@ public class RepositoriesView extends CommonNavigator implements IShowInSource, 
 				.getContentProvider();
 		for (Object repo : cp.getElements(getCommonViewer().getInput())) {
 			RepositoryTreeNode node = (RepositoryTreeNode) repo;
-			if (repositoryToShow.getDirectory().equals(node.getRepository().getDirectory()))
+			boolean hasRepo = node.getRepository() != null;
+			if (hasRepo && repositoryToShow.getDirectory()
+					.equals(node.getRepository().getDirectory()))
 				selectReveal(new StructuredSelection(node));
 		}
 	}
@@ -1026,6 +1032,13 @@ public class RepositoriesView extends CommonNavigator implements IShowInSource, 
 			Repository repository) {
 		for (Object repo : roots) {
 			RepositoryTreeNode node = (RepositoryTreeNode) repo;
+			if (node instanceof RepositoryGroupNode) {
+				RepositoryTreeNode candidate = findRepositoryNode(cp,
+						cp.getChildren(node), repository);
+				if (candidate != null) {
+					return candidate;
+				}
+			}
 			// TODO equals implementation of Repository?
 			if (repository.getDirectory().equals(
 					((Repository) node.getObject()).getDirectory())) {
