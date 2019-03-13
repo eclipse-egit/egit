@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2010, 2018 SAP AG and others.
+ * Copyright (c) 2010, 2019 SAP AG and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License 2.0
  * which accompanies this distribution, and is available at
@@ -11,6 +11,7 @@
  *    Mathias Kinzler (SAP AG) - initial implementation
  *    Chris Aniszczyk <caniszczyk@gmail.com> - added styled label support
  *    Thomas Wolf <thomas.wolf@paranor.ch> - bug 536814: completely refactored
+ *    Alexander Nittka <alex@nittka.de> - bug 545123: repository groups
  *******************************************************************************/
 package org.eclipse.egit.ui.internal.repository;
 
@@ -19,6 +20,8 @@ import java.util.WeakHashMap;
 import org.eclipse.egit.ui.internal.GitLabels;
 import org.eclipse.egit.ui.internal.repository.tree.AdditionalRefNode;
 import org.eclipse.egit.ui.internal.repository.tree.RefNode;
+import org.eclipse.egit.ui.internal.repository.tree.RepositoryGroup;
+import org.eclipse.egit.ui.internal.repository.tree.RepositoryGroupNode;
 import org.eclipse.egit.ui.internal.repository.tree.RepositoryNode;
 import org.eclipse.egit.ui.internal.repository.tree.RepositoryTreeNode;
 import org.eclipse.egit.ui.internal.repository.tree.RepositoryTreeNodeType;
@@ -175,7 +178,11 @@ public class RepositoryTreeNodeLabelProvider
 			String branchName = Repository.shortenRefName(ref.getName());
 			result = new StringBuilder(branchName);
 		}
-		if (element instanceof RepositoryTreeNode) {
+		if (element instanceof RepositoryGroupNode) {
+			RepositoryGroup group = ((RepositoryGroupNode) element).getGroup();
+			result.append(" (").append(group.getRepositoryDirectories().size()) //$NON-NLS-1$
+					.append(')');
+		} else if (element instanceof RepositoryTreeNode) {
 			if (((RepositoryTreeNode) element)
 					.getType() != RepositoryTreeNodeType.REPO) {
 				Repository repo = ((RepositoryTreeNode) element)

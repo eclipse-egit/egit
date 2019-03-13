@@ -11,6 +11,7 @@
  * Contributors:
  *    Mathias Kinzler (SAP AG) - initial implementation
  *    Laurent Goubet <laurent.goubet@obeo.fr - 404121
+ *    Alexander Nittka <alex@nittka.de> - 545123
  *******************************************************************************/
 package org.eclipse.egit.ui.internal.repository;
 
@@ -36,6 +37,7 @@ import java.util.Map.Entry;
 import java.util.Objects;
 import java.util.Set;
 import java.util.WeakHashMap;
+import java.util.stream.Collectors;
 
 import org.eclipse.core.commands.State;
 import org.eclipse.core.resources.IWorkspaceRoot;
@@ -64,6 +66,9 @@ import org.eclipse.egit.ui.internal.repository.tree.RefNode;
 import org.eclipse.egit.ui.internal.repository.tree.RemoteNode;
 import org.eclipse.egit.ui.internal.repository.tree.RemoteTrackingNode;
 import org.eclipse.egit.ui.internal.repository.tree.RemotesNode;
+import org.eclipse.egit.ui.internal.repository.tree.RepositoryGroup;
+import org.eclipse.egit.ui.internal.repository.tree.RepositoryGroupNode;
+import org.eclipse.egit.ui.internal.repository.tree.RepositoryGroups;
 import org.eclipse.egit.ui.internal.repository.tree.RepositoryNode;
 import org.eclipse.egit.ui.internal.repository.tree.RepositoryTreeNode;
 import org.eclipse.egit.ui.internal.repository.tree.StashNode;
@@ -110,6 +115,8 @@ public class RepositoriesViewContentProvider implements ITreeContentProvider {
 
 	private boolean showUnbornHead = false;
 
+	private boolean showRepositoryGroups = false;
+
 	private Map<Repository, Map<String, Ref>> branchRefs = new WeakHashMap<>();
 
 	private Map<Repository, ListenerHandle> refsChangedListeners = new WeakHashMap<>();
@@ -136,38 +143,49 @@ public class RepositoriesViewContentProvider implements ITreeContentProvider {
 				.getState(RegistryToggleState.STATE_ID);
 	}
 
+	/**
+	 * Fluent API for configuring the content provider to show repository groups
+	 * or not.
+	 *
+	 * @param showGroups
+	 *            whether to show repository groups
+	 * @return the content provider itself
+	 */
+	public RepositoriesViewContentProvider showingRepositoryGroups(
+			boolean showGroups) {
+		this.showRepositoryGroups = showGroups;
+		return this;
+	}
+
 	@Override
 	@SuppressWarnings("unchecked")
 	public Object[] getElements(Object inputElement) {
 
 		List<RepositoryTreeNode> nodes = new ArrayList<>();
-		List<String> directories = new ArrayList<>();
+		List<File> directories = new ArrayList<>();
 		RepositoryUtil repositoryUtil = Activator.getDefault()
 				.getRepositoryUtil();
+		RepositoryGroups groupsUtil = RepositoryGroups.getInstance();
 
 		if (inputElement instanceof Collection) {
 			for (Object next : ((Collection) inputElement)) {
 				if (next instanceof RepositoryTreeNode) {
 					nodes.add((RepositoryTreeNode) next);
 				} else if (next instanceof String) {
-					directories.add((String) next);
+					directories.add(new File((String) next));
 				}
 			}
 		} else if (inputElement instanceof IWorkspaceRoot) {
-			directories.addAll(repositoryUtil.getConfiguredRepositories());
+			directories.addAll(repositoryUtil.getConfiguredRepositories()
+					.stream().map(File::new).collect(Collectors.toList()));
 		}
 
-		for (String directory : directories) {
-			try {
-				File gitDir = new File(directory);
-				if (gitDir.exists()) {
-					RepositoryNode rNode = new RepositoryNode(null,
-							repositoryCache.lookupRepository(gitDir));
-					nodes.add(rNode);
-				} else
-					repositoryUtil.removeDir(gitDir);
-			} catch (IOException e) {
-				// ignore for now
+		nodes.addAll(
+				getRepositoryNodes(repositoryUtil, groupsUtil, null,
+						directories));
+		if (showRepositoryGroups) {
+			for (RepositoryGroup group : groupsUtil.getGroups()) {
+				nodes.add(new RepositoryGroupNode(group));
 			}
 		}
 
@@ -270,6 +288,14 @@ public class RepositoriesViewContentProvider implements ITreeContentProvider {
 				nodeList.add(new SubmodulesNode(node, repo));
 
 			return nodeList.toArray();
+		}
+
+		case REPOGROUP: {
+			List<File> repoDirs = ((RepositoryGroupNode) node).getGroup()
+					.getRepositoryDirectories();
+			return getRepositoryNodes(
+					Activator.getDefault().getRepositoryUtil(), null, node,
+					repoDirs).toArray();
 		}
 
 		case WORKINGDIR:
@@ -375,6 +401,31 @@ public class RepositoriesViewContentProvider implements ITreeContentProvider {
 
 		return null;
 
+	}
+
+	private List<RepositoryNode> getRepositoryNodes(RepositoryUtil util,
+			RepositoryGroups groupsUtil, RepositoryTreeNode<?> parent,
+			List<File> directories) {
+		List<RepositoryNode> result = new ArrayList<>();
+		for (File gitDir : directories) {
+			try {
+				if (gitDir.exists()) {
+					boolean addRepo = (groupsUtil == null
+							|| !showRepositoryGroups
+							|| !groupsUtil.belongsToGroup(gitDir));
+					if (addRepo) {
+						RepositoryNode rNode = new RepositoryNode(parent,
+								repositoryCache.lookupRepository(gitDir));
+						result.add(rNode);
+					}
+				} else {
+					util.removeDir(gitDir);
+				}
+			} catch (IOException e) {
+				// ignore for now
+			}
+		}
+		return result;
 	}
 
 	private Object[] getBranchChildren(RepositoryTreeNode node, Repository repo,
@@ -515,6 +566,8 @@ public class RepositoriesViewContentProvider implements ITreeContentProvider {
 		RepositoryTreeNode node = (RepositoryTreeNode) element;
 		Repository repo = node.getRepository();
 		switch (node.getType()) {
+		case REPOGROUP:
+			return ((RepositoryGroupNode) element).hasChildren();
 		case BRANCHES:
 		case REPO:
 		case ADDITIONALREFS:

@@ -3,6 +3,7 @@
  * Copyright (C) 2012, Robin Stocker <robin@nibor.org>
  * Copyright (C) 2013, Laurent Goubet <laurent.goubet@obeo.fr>
  * Copyright (C) 2015, IBM Corporation (Dani Megert <daniel_megert@ch.ibm.com>)
+ * Copyright (C) 2019, Alexander Nittka <alex@nittka.de>
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License 2.0
@@ -89,7 +90,11 @@ abstract class AbstractHistoryCommandHandler extends AbstractHandler {
 			return ((HistoryPageInput) input).getRepository();
 		}
 		if (input instanceof RepositoryTreeNode) {
-			return ((RepositoryTreeNode) input).getRepository();
+			Repository repository = ((RepositoryTreeNode) input)
+					.getRepository();
+			if (repository != null) {
+				return repository;
+			}
 		}
 		Repository repo = Adapters.adapt(input, Repository.class);
 		if (repo != null) {
