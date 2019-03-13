@@ -3195,9 +3195,15 @@
                class="org.eclipse.egit.ui.internal.repository.DropAdapterAssistant"
                id="org.eclipse.egit.ui.repositoriesView.dropAssistant">
             <possibleDropTargets>
-               <instanceof
-                     value="org.eclipse.core.resources.IWorkspaceRoot">
-               </instanceof></possibleDropTargets>
+               <or>
+                 <instanceof
+                       value="org.eclipse.core.resources.IWorkspaceRoot">
+                 </instanceof>
+                 <instanceof
+                       value="org.eclipse.egit.ui.internal.repository.tree.RepositoryGroupNode">
+                 </instanceof>
+               </or>
+            </possibleDropTargets>
          </dropAssistant>
          <actionProvider
                class="org.eclipse.egit.ui.internal.repository.RepositoriesViewActionProvider">
@@ -4751,10 +4757,44 @@
             <visibleWhen checkEnabled="true" />
          </command>
          <command
+               commandId="org.eclipse.egit.ui.RepositoriesAddGroup"
+               label="%AddRepositoryGroupCommand.label"
+               style="push">
+            <visibleWhen checkEnabled="false">
+             <and>
+                  <count
+                        value="*">
+                  </count>
+                  <iterate>
+                     <instanceof
+                           value="org.eclipse.egit.ui.internal.repository.tree.RepositoryNode">
+                     </instanceof>
+                  </iterate>
+               </and>
+            </visibleWhen>
+         </command>
+         <command
+               commandId="org.eclipse.egit.ui.RepositoriesRemoveFromGroup"
+               label="%RemoveRepositoryFromGroupCommand.label"
+               style="push">
+            <visibleWhen checkEnabled="false">
+             <and>
+                  <count
+                        value="+">
+                  </count>
+                  <iterate>
+                     <instanceof
+                           value="org.eclipse.egit.ui.internal.repository.tree.RepositoryNode">
+                     </instanceof>
+                  </iterate>
+               </and>
+            </visibleWhen>
+         </command>
+         <command
                commandId="org.eclipse.egit.ui.RepositoriesViewDelete"
                label="%RepoViewDeleteRepository.label"
                style="push">
-            <visibleWhen checkEnabled="true" />
+            <visibleWhen checkEnabled="true"/>
          </command>
       </menuContribution>
       <menuContribution
@@ -4883,6 +4923,50 @@
          </command>
       </menuContribution>
       <menuContribution
+            locationURI="popup:org.eclipse.egit.ui.RepositoriesView?after=repo-1">
+         <command
+               commandId="org.eclipse.egit.ui.RepositoriesDeleteGroup"
+               label="%DeleteRepositoryGroupCommand.label"
+               style="push">
+            <visibleWhen
+                  checkEnabled="false">
+               <and>
+                  <count
+                        value="+">
+                  </count>
+                  <iterate ifEmpty="false"
+                        operator="and">
+                     <instanceof
+                           value="org.eclipse.egit.ui.internal.repository.tree.RepositoryGroupNode">
+                     </instanceof>
+                  </iterate>
+               </and>
+            </visibleWhen>
+         </command>
+      </menuContribution>
+      <menuContribution
+            locationURI="popup:org.eclipse.egit.ui.RepositoriesView?after=repo-1">
+         <command
+               commandId="org.eclipse.egit.ui.RepositoriesRenameGroup"
+               label="%RenameRepositoryGroupCommand.label"
+               style="push">
+            <visibleWhen
+                  checkEnabled="false">
+               <and>
+                  <count
+                        value="1">
+                  </count>
+                  <iterate ifEmpty="false"
+                        operator="and">
+                     <instanceof
+                           value="org.eclipse.egit.ui.internal.repository.tree.RepositoryGroupNode">
+                     </instanceof>
+                  </iterate>
+               </and>
+            </visibleWhen>
+         </command>
+      </menuContribution>
+      <menuContribution
             locationURI="toolbar:org.eclipse.egit.ui.RepositoriesView">
          <separator
                name="org.eclipse.egit.ui.repositoryActions"
@@ -4948,6 +5032,11 @@
          <command
                commandId="org.eclipse.egit.ui.RepositoriesViewCreateRepository"
                label="%RepoCreateRepositoryViewMenu.label"
+               style="push">
+         </command>
+         <command
+               commandId="org.eclipse.egit.ui.RepositoriesAddGroup"
+               label="%AddRepositoryGroupCommand.label"
                style="push">
          </command>
          <separator
@@ -5929,6 +6018,30 @@
       </command>
       <command
             categoryId="org.eclipse.egit.ui.commandCategory"
+            defaultHandler="org.eclipse.egit.ui.internal.repository.tree.command.AddRepositoryGroupCommand"
+            id="org.eclipse.egit.ui.RepositoriesAddGroup"
+            name="%AddRepositoryGroupCommand.name">
+      </command>
+      <command
+            categoryId="org.eclipse.egit.ui.commandCategory"
+            defaultHandler="org.eclipse.egit.ui.internal.repository.tree.command.RemoveFromRepositoryGroupCommand"
+            id="org.eclipse.egit.ui.RepositoriesRemoveFromGroup"
+            name="%RemoveRepositoryFromGroupCommand.name">
+      </command>
+      <command
+            categoryId="org.eclipse.egit.ui.commandCategory"
+            defaultHandler="org.eclipse.egit.ui.internal.repository.tree.command.DeleteRepositoryGroupCommand"
+            id="org.eclipse.egit.ui.RepositoriesDeleteGroup"
+            name="%DeleteRepositoryGroupCommand.name">
+      </command>
+      <command
+            categoryId="org.eclipse.egit.ui.commandCategory"
+            defaultHandler="org.eclipse.egit.ui.internal.repository.tree.command.RenameRepositoryGroupCommand"
+            id="org.eclipse.egit.ui.RepositoriesRenameGroup"
+            name="%RenameRepositoryGroupCommand.name">
+      </command>
+      <command
+            categoryId="org.eclipse.egit.ui.commandCategory"
             defaultHandler="org.eclipse.egit.ui.internal.repository.tree.command.ToggleBranchHierarchyCommand"
             id="org.eclipse.egit.ui.RepositoriesToggleBranchHierarchy"
             name="%ToggleLayoutCommand.name">
@@ -6338,6 +6451,10 @@
       <image
             commandId="org.eclipse.egit.ui.team.CompareWithRef"
             icon="icons/obj16/branches_obj.png">
+      </image>
+      <image
+            commandId="org.eclipse.egit.ui.RepositoriesAddGroup"
+            icon="icons/etool16/newgroup_wiz.png">
       </image>
    </extension>
    <extension
