@@ -1,0 +1,85 @@
+<?xml version='1.0' encoding='utf-8' ?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+		<title>EGit 5.3 New and Noteworthy</title>
+		<link type="text/css" rel="stylesheet" href="../../../book.css"/>
+	</head>
+	<body>
+		<table class="navigation" style="width: 100%;" border="0" summary="navigation">
+			<tr>
+				<th style="width: 100%" align="center" colspan="3">EGit 5.3 New and Noteworthy</th>
+			</tr>
+			<tr>
+				<td style="width: 20%" align="left"></td>
+				<td style="width: 60%" align="center"></td>
+				<td style="width: 20%" align="right">
+					<a href="Contributors.html" title="Contributors">
+						<img alt="Next" border="0" src="../../../images/next.gif"/>
+					</a>
+				</td>
+			</tr>
+			<tr>
+				<td style="width: 20%" align="left" valign="top"></td>
+				<td style="width: 60%" align="center"></td>
+				<td style="width: 20%" align="right" valign="top">Contributors</td>
+			</tr>
+		</table><hr class="navigation-separator"/>
+		<h1 id="EGit">EGit</h1>
+		<h2 id="Requires_Eclipse_Neon">Requires Eclipse Neon</h2>
+		<p>EGit 5.3.0 requires Eclipse Neon (4.6) or better. If you use an older version of Eclipse, you are recommended to upgrade the complete Eclipse IDE.</p>
+		<h2 id="GPG-signing_Commits">GPG-signing Commits</h2>
+		<p>EGit 5.3.0 can sign commits with GPG.</p>
+		<p>
+			<img alt="Screenshot of the EGit Staging View with the new &quot;Sign commit&quot; icon" border="0" src="images/Egit-commit-sign.png"/>
+		</p>
+		<p>The new icon in the upper right will allow you to toggle commit signing on or off. The default is read from the Git configuration. If the config option <code>commit.gpgsign</code> is set to <code>true</code>, the button will be selected by default. The value of <code>user.signingkey</code> will be used to determine the signing key. If the value is unset, the email address of the committer will be used to lookup the key. If no key can be found a commit will fail.</p>
+		<p>Keys will be looked up from your GPG keyring (either <code>~/.gnupg/pubring.kbx</code> or <code>~/.gnupg/secring.gpg</code>; on Windows the directory <code>%APPDATA%\gnupg</code> is used&mdash;if it exists&mdash;instead of <code>~/.gnupg</code>). </p>
+		<p>See the following GitHub help pages for help on GPG signing keys:</p>
+		<ul>
+			<li>
+				<a href="https://help.github.com/articles/generating-a-new-gpg-key/" target="egit_external">Generating a new GPG key</a>
+			</li>
+			<li>
+				<a href="https://help.github.com/articles/telling-git-about-your-signing-key/" target="egit_external">Telling Git about your signing key</a>
+			</li>
+			<li>
+				<a href="https://help.github.com/articles/associating-an-email-with-your-gpg-key/" target="egit_external">Associating an email with your GPG key</a>
+			</li>
+		</ul>
+		<h2 id="SSH_Library">SSH Library</h2>
+		<p>In the last release we had introduced a new SSH client based on the 
+			<a href="https://mina.apache.org/sshd-project/" target="egit_external">Apache MINA sshd</a> library as an alternative to the JSch-based client. In EGit 5.3.0 the default settings are switched: by default, the Apache MINA implementation is used.
+		</p>
+		<p>We plan to remove the old JSch SSH implementation completely in a future release of EGit.</p>
+		<h2 id="Compare_and_Merge_Editors">Compare and Merge Editors</h2>
+		<p>Text comparisons in Eclipse have been improved to make "Show Whitespace" work in more cases.</p>
+		<p>Also, concurrent editing of a file in a merge editor and in another editor open on the same file has been improved and works now better and even for files not in the Eclipse workspace.</p>
+		<p>
+			<img alt="Screenshot of a Java comparison in Eclipse (workspace against index) showing whitespace on the index side" border="0" src="images/EGit_Compare_Editor_Show_Whitespace.png"/>
+		</p>
+		<p>Note that both showing whitespace and concurrent editing depend not only on the way EGit sets up the comparison (which is what we improved) but also on the actual editors being used. These editors are beyond the control of EGit. With files not in the Eclipse workspace, one may encounter Platform 
+			<a href="https://bugs.eclipse.org/bugs/show_bug.cgi?id=214351" target="egit_external">bug 214351</a> when a file is open in another editor.
+		</p>
+		<h2 id="Other_Changes">Other Changes</h2>
+		<p>EGit 5.3.0 includes lots of less noticeable improvements in the UI, plus a number of bug fixes. We also made a number of performance improvements. The complete list of new features and bug fixes is available in the 
+			<a href="https://projects.eclipse.org/projects/technology.egit/releases/5.3.0/" target="egit_external">release notes</a>.
+		</p><hr class="navigation-separator"/>
+		<table class="navigation" style="width: 100%;" border="0" summary="navigation">
+			<tr>
+				<td style="width: 20%" align="left"></td>
+				<td style="width: 60%" align="center"></td>
+				<td style="width: 20%" align="right">
+					<a href="Contributors.html" title="Contributors">
+						<img alt="Next" border="0" src="../../../images/next.gif"/>
+					</a>
+				</td>
+			</tr>
+			<tr>
+				<td style="width: 20%" align="left" valign="top"></td>
+				<td style="width: 60%" align="center"></td>
+				<td style="width: 20%" align="right" valign="top">Contributors</td>
+			</tr>
+		</table>
+	</body>
+</html>
