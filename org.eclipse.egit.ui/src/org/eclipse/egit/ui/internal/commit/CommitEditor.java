@@ -27,7 +27,6 @@ import org.eclipse.egit.ui.internal.UIText;
 import org.eclipse.egit.ui.internal.actions.ActionCommands;
 import org.eclipse.egit.ui.internal.commit.command.CheckoutHandler;
 import org.eclipse.egit.ui.internal.commit.command.CherryPickHandler;
-import org.eclipse.egit.ui.internal.commit.command.CreateTagHandler;
 import org.eclipse.egit.ui.internal.commit.command.RevertHandler;
 import org.eclipse.egit.ui.internal.commit.command.ShowInHistoryHandler;
 import org.eclipse.egit.ui.internal.repository.RepositoriesView;
@@ -349,7 +348,7 @@ public class CommitEditor extends SharedHeaderFormEditor implements
 							.getImageDescriptor(
 									ISharedImages.IMG_TOOL_DELETE)));
 		} else {
-			toolbar.add(createActionContributionItem(CreateTagHandler.ID,
+			toolbar.add(createActionContributionItem(ActionCommands.TAG_ACTION,
 					UIText.CommitEditor_toolbarCreateTag, UIIcons.CREATE_TAG));
 			toolbar.add(
 					createActionContributionItem(ActionCommands.BRANCH_CREATE,

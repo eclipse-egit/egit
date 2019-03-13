@@ -2558,15 +2558,6 @@
          </activeWhen>
       </handler>
       <handler
-            commandId="org.eclipse.egit.ui.commit.CreateTag">
-         <class
-               class="org.eclipse.egit.ui.internal.commit.command.CreateTagHandler">
-         </class>
-         <activeWhen>
-            <reference definitionId="org.eclipse.egit.ui.singleRepositoryCommit" />
-         </activeWhen>
-      </handler>
-      <handler
             commandId="org.eclipse.egit.ui.commit.ShowInHistory">
          <class
                class="org.eclipse.egit.ui.internal.commit.command.ShowInHistoryHandler">
@@ -2649,6 +2640,33 @@
                   </adapt>
                </iterate>
             </and>
+         </activeWhen>
+      </handler>
+      <handler
+            commandId="org.eclipse.egit.ui.team.Tag">
+         <class
+               class="org.eclipse.egit.ui.internal.actions.TagActionHandler">
+         </class>
+         <activeWhen>
+            <or>
+               <test property="GitSelection.projectsSingleRepository" args="canCheckout" />
+               <and>
+                  <count value="1" />
+                  <iterate>
+                     <or>
+                        <and>
+                           <instanceof value="org.eclipse.egit.ui.internal.repository.tree.TagsNode" />
+                           <test property="GitRepository.canCheckout" />
+                        </and>
+                        <adapt type="org.eclipse.egit.core.internal.IRepositoryCommit">
+                           <not>
+                              <test property="Git.isStash" />
+                           </not>
+                        </adapt>
+                     </or>
+                  </iterate>
+               </and>
+            </or>
          </activeWhen>
       </handler>
       <handler
@@ -2829,20 +2847,6 @@
                   <adapt type="org.eclipse.egit.core.internal.IRepositoryCommit">
                      <test property="Git.hasRef" args="refs/heads/,refs/remotes/" />
                   </adapt>
-               </iterate>
-            </and>
-         </activeWhen>
-      </handler>
-      <handler
-            commandId="org.eclipse.egit.ui.history.CreateTag">
-         <class
-               class="org.eclipse.egit.ui.internal.history.command.CreateTagOnCommitHandler">
-         </class>
-         <activeWhen>
-            <and>
-               <count value="1" />
-               <iterate>
-                  <adapt type="org.eclipse.egit.core.internal.IRepositoryCommit" />
                </iterate>
             </and>
          </activeWhen>
@@ -3479,7 +3483,7 @@
             <visibleWhen checkEnabled="true" />
          </command>
          <command
-              commandId="org.eclipse.egit.ui.history.CreateTag"
+              commandId="org.eclipse.egit.ui.team.Tag"
               label="%HistoryCreateTag.label"
               style="push">
             <visibleWhen checkEnabled="true" />
@@ -3930,24 +3934,9 @@
             locationURI="popup:org.eclipse.egit.ui.RepositoriesView?after=tag">
          <command
                commandId="org.eclipse.egit.ui.team.Tag"
-               icon="icons/obj16/new_tag_obj.png"
                label="%RepoViewCreateTag.label"
                style="push">
-            <visibleWhen
-                  checkEnabled="false">
-               <and>
-                  <count
-                        value="1">
-                  </count>
-                  <iterate>
-                     <or>
-                        <instanceof
-                              value="org.eclipse.egit.ui.internal.repository.tree.TagsNode">
-                        </instanceof>
-                     </or>
-                  </iterate>
-               </and>
-            </visibleWhen>
+            <visibleWhen checkEnabled="true" />
          </command>
          <command
                commandId="org.eclipse.egit.ui.team.PushTags"
@@ -5408,12 +5397,7 @@
                      commandId="org.eclipse.egit.ui.team.Tag"
                      label="%TagAction_label"
                      style="push">
-                  <visibleWhen
-                        checkEnabled="false">
-                     <test
-                           property="GitSelection.projectsSingleRepository">
-                     </test>
-                  </visibleWhen>
+                  <visibleWhen checkEnabled="true" />
                </command>
                <separator
                      name="org.eclipse.egit.ui.separator2"
@@ -6148,10 +6132,6 @@
             icon="icons/obj16/history.png">
       </image>
       <image
-            commandId="org.eclipse.egit.ui.commit.CreateTag"
-            icon="icons/obj16/new_tag_obj.png">
-      </image>
-      <image
             commandId="org.eclipse.egit.ui.history.CherryPick"
             icon="icons/obj16/cherry-pick.png">
       </image>
@@ -6206,10 +6186,6 @@
       <image
             commandId="org.eclipse.egit.ui.RepositoriesViewNewRemote"
             icon="icons/obj16/synchronize.png">
-      </image>
-      <image
-            commandId="org.eclipse.egit.ui.history.CreateTag"
-            icon="icons/obj16/new_tag_obj.png">
       </image>
       <image
             commandId="org.eclipse.egit.ui.history.PushCommit"
@@ -6482,14 +6458,14 @@
             class="org.eclipse.egit.ui.internal.repository.tree.RepositoriesViewPropertyTester"
             id="org.eclipse.egit.ui.RepositoryTester"
             namespace="GitRepository"
-            properties="isBare,isSafe,canCommit,canAmend,canResetHead,canStash,isRefCheckedOut,isLocalBranch,fetchExists,pushExists,canMerge,canAbortRebase,canContinueRebase,isSubmodule,containsHead,hasGerritConfiguration,canFetchFromGerrit,canPushToGerrit,canEnableLfs"
+            properties="isBare,isSafe,canCheckout,canCommit,canAmend,canResetHead,canStash,isRefCheckedOut,isLocalBranch,fetchExists,pushExists,canMerge,canAbortRebase,canContinueRebase,isSubmodule,containsHead,hasGerritConfiguration,canFetchFromGerrit,canPushToGerrit,canEnableLfs"
             type="org.eclipse.egit.ui.internal.repository.tree.RepositoryTreeNode">
       </propertyTester>
       <propertyTester
             class="org.eclipse.egit.ui.internal.ResourcePropertyTester"
             id="org.eclipse.egit.ui.ResourceTester"
             namespace="GitResource"
-            properties="isShared,isContainer,isSafe,canCommit,canAmend,canResetHead,canAbortRebase,canContinueRebase,hasGerritConfiguration,canFetchFromGerrit,canPushToGerrit"
+            properties="isShared,isContainer,isSafe,canCheckout,canCommit,canAmend,canResetHead,canAbortRebase,canContinueRebase,hasGerritConfiguration,canFetchFromGerrit,canPushToGerrit"
             type="org.eclipse.core.resources.IResource">
       </propertyTester>
       <propertyTester
@@ -6731,7 +6707,6 @@
       </command>
       <command
             categoryId="org.eclipse.egit.ui.commandCategory"
-            defaultHandler="org.eclipse.egit.ui.internal.actions.TagActionHandler"
             id="org.eclipse.egit.ui.team.Tag"
             name="%TagCommand.name">
       </command>
@@ -6879,10 +6854,6 @@
             name="%DeleteBranchCommand.name">
       </command>
       <command
-            id="org.eclipse.egit.ui.history.CreateTag"
-            name="%CreateTagCommand.name">
-      </command>
-      <command
             id="org.eclipse.egit.ui.history.DeleteTag"
             name="%DeleteTagCommand.name">
       </command>
@@ -6987,10 +6958,6 @@
    <extension
          name="%CommitViewerCommands.extension.name"
          point="org.eclipse.ui.commands">
-      <command
-            id="org.eclipse.egit.ui.commit.CreateTag"
-            name="%CreateTagCommand.name">
-      </command>
       <command
             id="org.eclipse.egit.ui.commit.Checkout"
             name="%CheckoutCommand">
