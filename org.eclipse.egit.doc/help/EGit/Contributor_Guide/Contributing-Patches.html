@@ -321,7 +321,8 @@ git config remote.review.push HEAD:refs/for/master
 		<h2 id="Commit_message_guidelines">Commit message guidelines</h2>
 		<ul>
 			<li>The commit message header should fit on one line and should start with an uppercase letter. A blank line separates it from the body of the message.</li>
-			<li>The first line should be a clear and concise description about the change and should not end with a dot. </li>
+			<li>The first line should be a clear and concise description about the change and should not end with a dot.</li>
+			<li>In case of release engineering tasks without bugzilla entries the commit message header may look like "[findbugs] Fix warning XYZ for String constructor". The prefix in brackets is an indication why this comes without a corresponding bug. </li>
 			<li>Enter a newline before providing a more detailed description about the change.</li>
 			<li>Format the commit message to have newline characters after every 60-70 characters. </li>
 			<li>Find more reasoning about commit message formatting in 
@@ -344,7 +345,7 @@ git config remote.review.push HEAD:refs/for/master
 						<a href="Gerrit-Code-Review-Cheatsheet.html#Install_the_commit-msg_hook_in_your_repository" title="EGit/Contributor_Guide#Install_the_commit-msg_hook_in_your_repository">Gerrit commit message hook or EGit</a> to add the 
 						<i>Change-Id</i>.
 					</li>
-					<li>A "Signed-off-by" can be added at the end of the commit message (see example below). Note: at the moment this is not required but may be used to list all who modified (amended, rebased, cherry-picked) this change.</li>
+					<li>A "Signed-off-by" can be added at the end of the commit message (see example below). Note: At the moment this footer is not required for committers, but for non-committer contributors. It may be used to list all who modified (amended, rebased, cherry-picked) this change.</li>
 				</ul>
 			</li>
 		</ul>
@@ -361,6 +362,7 @@ CQ: 6031
 Change-Id: I71ac4844ab9d2f848352eba9252090c586b4146a
 Signed-off-by: Your Name &lt;your.email@example.org&gt;
 </pre>
+		<p>If you use Mylyn to fetch a bug from bugzilla, and then activate the task, the commit message will automatically be formatted exactly like requested above.</p>
 		<h2 id="Copyright">Copyright</h2>
 		<p>When contributing patches, you have to update the copyright section at the beginning of the file if there is one. Please follow the style that is already present in the file. Some examples follow.</p>
 		<p>When there is only one copyright present (from a person or a company), like this:</p>

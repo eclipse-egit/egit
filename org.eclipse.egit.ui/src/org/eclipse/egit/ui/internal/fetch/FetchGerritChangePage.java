@@ -30,8 +30,10 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.SortedSet;
 import java.util.TreeSet;
+import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import java.util.regex.PatternSyntaxException;
 
 import org.eclipse.core.resources.IWorkspace;
 import org.eclipse.core.resources.IWorkspaceRunnable;
@@ -129,6 +131,11 @@ public class FetchGerritChangePage extends WizardPage {
 	private static final Pattern GERRIT_CHANGE_REF_PATTERN = Pattern
 			.compile("refs/changes/(\\d\\d)/([1-9][0-9]*)(?:/([1-9][0-9]*)?)?"); //$NON-NLS-1$
 
+	private static final Pattern DIGITS = Pattern
+			.compile("\\d+(?:/\\d+)?"); //$NON-NLS-1$
+
+	private static final String WILDCARD = ".*"; //$NON-NLS-1$
+
 	private static final SimpleDateFormat SIMPLE_TIMESTAMP = new SimpleDateFormat(
 			"yyyyMMddHHmmss"); //$NON-NLS-1$
 
@@ -184,11 +191,11 @@ public class FetchGerritChangePage extends WizardPage {
 
 	private boolean branchTextEdited;
 
+	private boolean refTextEdited;
+
 	private boolean tagTextEdited;
 
 	private boolean fetching;
-
-	private boolean doAutoFill = true;
 
 	/**
 	 * @param repository
@@ -449,6 +456,7 @@ public class FetchGerritChangePage extends WizardPage {
 		refText.addModifyListener(new ModifyListener() {
 			@Override
 			public void modifyText(ModifyEvent e) {
+				refTextEdited = true;
 				Change change = determineChangeFromString(refText.getText());
 				String suggestion = ""; //$NON-NLS-1$
 				if (change != null) {
@@ -480,6 +488,7 @@ public class FetchGerritChangePage extends WizardPage {
 				refText.setText(candidateChange.getChangeNumber().toString());
 			}
 		}
+		refTextEdited = false;
 
 		// get all available Gerrit URIs from the repository
 		SortedSet<String> uris = new TreeSet<>();
@@ -659,6 +668,7 @@ public class FetchGerritChangePage extends WizardPage {
 							new Transfer[] { TextTransfer.getInstance() });
 					try {
 						text.paste();
+						refTextEdited = false;
 					} finally {
 						clipboard.setContents(new Object[] { clipText },
 								new Transfer[] { TextTransfer.getInstance() });
@@ -788,7 +798,7 @@ public class FetchGerritChangePage extends WizardPage {
 		}
 	}
 
-	private Collection<Change> getRefsForContentAssist(String originalRefText)
+	private Collection<Change> getRefsForContentAssist()
 			throws InvocationTargetException, InterruptedException {
 		String uriText = uriCombo.getText();
 		if (!changeRefs.containsKey(uriText)) {
@@ -796,6 +806,10 @@ public class FetchGerritChangePage extends WizardPage {
 		}
 		ChangeList list = changeRefs.get(uriText);
 		if (!list.isFinished()) {
+			if (!list.mark()) {
+				// We're already getting it
+				return null;
+			}
 			IWizardContainer container = getContainer();
 			IRunnableWithProgress operation = monitor -> {
 				monitor.beginTask(MessageFormat.format(
@@ -815,11 +829,6 @@ public class FetchGerritChangePage extends WizardPage {
 						UIText.AsynchronousRefProposalProvider_ShowingProposalsJobName) {
 
 					@Override
-					public boolean shouldRun() {
-						return super.shouldRun() && !fetching;
-					}
-
-					@Override
 					public IStatus runInUIThread(IProgressMonitor uiMonitor) {
 						// But only if we're not disposed, the focus is still
 						// (or again) in the Change field, and the uri is still
@@ -837,25 +846,17 @@ public class FetchGerritChangePage extends WizardPage {
 								}
 								if (refText != refText.getDisplay()
 										.getFocusControl()) {
-									fillInPatchSet(result, null);
+									refTextEdited = false;
+									fillInPatchSet(result);
 									return Status.CANCEL_STATUS;
 								}
-								// Try not to interfere with the user's typing.
-								// Only fill in the patch set number if the text
-								// is still the same.
-								fillInPatchSet(result, originalRefText);
-								doAutoFill = false;
-							} else {
-								// Dialog was blocked
-								fillInPatchSet(result, null);
-								doAutoFill = false;
 							}
+							fillInPatchSet(result);
 							contentProposer.openProposalPopup();
 						} catch (SWTException e) {
 							// Disposed already
 							return Status.CANCEL_STATUS;
 						} finally {
-							doAutoFill = true;
 							uiMonitor.done();
 						}
 						return Status.OK_STATUS;
@@ -879,27 +880,23 @@ public class FetchGerritChangePage extends WizardPage {
 		}
 		// ChangeList is already here, so get() won't block
 		Collection<Change> changes = list.get();
-		if (doAutoFill) {
-			fillInPatchSet(changes, originalRefText);
-		}
+		fillInPatchSet(changes);
 		return changes;
 	}
 
-	private void fillInPatchSet(Collection<Change> changes,
-			String originalText) {
-		String currentText = refText.getText();
-		if (contentProposer.isProposalPopupOpen()
-				|| originalText != null && !originalText.equals(currentText)) {
+	private void fillInPatchSet(Collection<Change> changes) {
+		if (refTextEdited || contentProposer.isProposalPopupOpen()) {
 			// User has modified the text: don't interfere
 			return;
 		}
-		Change change = determineChangeFromString(currentText);
+		Change change = determineChangeFromString(refText.getText());
 		if (change != null && change.getPatchSetNumber() == null) {
 			Change fromGerrit = findHighestPatchSet(changes,
 					change.getChangeNumber().intValue());
 			if (fromGerrit != null) {
 				String fullRef = fromGerrit.getRefName();
 				refText.setText(fullRef);
+				refTextEdited = false;
 				refText.setSelection(fullRef.length());
 			}
 		}
@@ -1199,24 +1196,41 @@ public class FetchGerritChangePage extends WizardPage {
 			final Text textField) {
 		return UIUtils.addContentProposalToText(textField, () -> {
 			try {
-				return getRefsForContentAssist(textField.getText());
+				return getRefsForContentAssist();
 			} catch (InvocationTargetException e) {
 				Activator.handleError(e.getMessage(), e, true);
 				return null;
 			} catch (InterruptedException e) {
 				return null;
 			}
-		}, (pattern, ref) -> {
-			if (pattern == null || pattern
-					.matcher(ref.getChangeNumber().toString()).matches()) {
-				return new ChangeContentProposal(ref);
+		}, (pattern, change) -> {
+			if (pattern == null
+					|| pattern.matcher(change.getRefName()).matches()) {
+				return new ChangeContentProposal(change);
 			}
 			return null;
-		}, s -> {
-			String input = s;
-			Matcher matcher = GERRIT_CHANGE_REF_PATTERN.matcher(input);
-			if (matcher.find()) {
-				input = matcher.group(2);
+		}, input -> {
+			Change change = determineChangeFromString(input);
+			int changeNumber = -1;
+			try {
+				if (change == null) {
+					Matcher matcher = DIGITS.matcher(input);
+					if (matcher.find()) {
+						return Pattern.compile(GERRIT_CHANGE_REF_PREFIX
+								+ "(../)?" + matcher.group() + WILDCARD); //$NON-NLS-1$
+					} else if (input.startsWith(GERRIT_CHANGE_REF_PREFIX)
+							|| GERRIT_CHANGE_REF_PREFIX.startsWith(input)) {
+						return null; // Match all
+					}
+				} else {
+					changeNumber = change.getChangeNumber().intValue();
+				}
+				if (changeNumber > 0) {
+					return Pattern.compile(GERRIT_CHANGE_REF_PREFIX + "../" //$NON-NLS-1$
+							+ changeNumber + WILDCARD);
+				}
+			} catch (PatternSyntaxException e) {
+				// Ignore and return default pattern below.
 			}
 			return UIUtils.createProposalPattern(input);
 		}, null, UIText.FetchGerritChangePage_ContentAssistTooltip);
@@ -1367,6 +1381,8 @@ public class FetchGerritChangePage extends WizardPage {
 	 */
 	private static class ChangeList extends AsynchronousListOperation<Change> {
 
+		private AtomicBoolean getting = new AtomicBoolean();
+
 		public ChangeList(Repository repository, String uriText) {
 			super(repository, uriText);
 		}
@@ -1382,6 +1398,10 @@ public class FetchGerritChangePage extends WizardPage {
 			}
 			Collections.sort(changes, Collections.reverseOrder());
 			return new LinkedHashSet<>(changes);
+		}
+
+		public boolean mark() {
+			return getting.compareAndSet(false, true);
 		}
 	}
 }
