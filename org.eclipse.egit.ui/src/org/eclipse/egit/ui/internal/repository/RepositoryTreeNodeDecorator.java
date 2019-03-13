@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2018 Thomas Wolf <thomas.wolf@paranor.ch>
+ * Copyright (c) 2018, 2019 Thomas Wolf <thomas.wolf@paranor.ch> and others.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License 2.0
@@ -7,14 +7,19 @@
  * https://www.eclipse.org/legal/epl-2.0/
  *
  * SPDX-License-Identifier: EPL-2.0
+ *
+ * Contributors:
+ *    Alexander Nittka <alex@nittka.de> - 545123
  *******************************************************************************/
 package org.eclipse.egit.ui.internal.repository;
 
+import java.io.File;
 import java.io.IOException;
 import java.text.MessageFormat;
 
 import org.eclipse.core.commands.IStateListener;
 import org.eclipse.core.commands.State;
+import org.eclipse.egit.core.RepositoryCache;
 import org.eclipse.egit.core.RepositoryUtil;
 import org.eclipse.egit.core.internal.Utils;
 import org.eclipse.egit.ui.Activator;
@@ -24,6 +29,8 @@ import org.eclipse.egit.ui.internal.UIText;
 import org.eclipse.egit.ui.internal.decorators.GitDecorator;
 import org.eclipse.egit.ui.internal.repository.tree.AdditionalRefNode;
 import org.eclipse.egit.ui.internal.repository.tree.RefNode;
+import org.eclipse.egit.ui.internal.repository.tree.RepositoryGroup;
+import org.eclipse.egit.ui.internal.repository.tree.RepositoryGroupNode;
 import org.eclipse.egit.ui.internal.repository.tree.RepositoryTreeNode;
 import org.eclipse.egit.ui.internal.repository.tree.RepositoryTreeNodeType;
 import org.eclipse.egit.ui.internal.repository.tree.StashedCommitNode;
@@ -52,6 +59,8 @@ import org.eclipse.ui.commands.ICommandService;
  */
 public class RepositoryTreeNodeDecorator extends GitDecorator
 		implements IStateListener {
+
+	private static final String HAS_CHANGES_PREFIX = "> "; //$NON-NLS-1$
 
 	private final State verboseBranchModeState;
 
@@ -106,6 +115,8 @@ public class RepositoryTreeNodeDecorator extends GitDecorator
 						UIText.GitLabelProvider_UnableToRetrieveLabel,
 						element.toString()), e);
 			}
+		} else if (node.getType() == RepositoryTreeNodeType.REPOGROUP) {
+			decorateRepositoryGroup(node, decoration);
 		}
 	}
 
@@ -137,9 +148,7 @@ public class RepositoryTreeNodeDecorator extends GitDecorator
 			return;
 		}
 		if (!decorated) {
-			// Ensure the caching of last labels in
-			// RepositoryTreeNodeLabelProvider works
-			decoration.addSuffix(" "); //$NON-NLS-1$
+			ensureCorrectLabelCaching(decoration);
 		}
 	}
 
@@ -184,7 +193,7 @@ public class RepositoryTreeNodeDecorator extends GitDecorator
 		boolean isSubModule = node.getParent() != null && node.getParent()
 				.getType() == RepositoryTreeNodeType.SUBMODULES;
 		if (RepositoryUtil.hasChanges(repository)) {
-			decoration.addPrefix("> "); //$NON-NLS-1$
+			decoration.addPrefix(HAS_CHANGES_PREFIX);
 		}
 		StringBuilder suffix = new StringBuilder();
 		if (isSubModule) {
@@ -238,6 +247,32 @@ public class RepositoryTreeNodeDecorator extends GitDecorator
 		return true;
 	}
 
+	private void decorateRepositoryGroup(RepositoryTreeNode<?> node,
+			IDecoration decoration) {
+		RepositoryCache cache = org.eclipse.egit.core.Activator.getDefault()
+				.getRepositoryCache();
+		RepositoryGroup group = ((RepositoryGroupNode) node).getGroup();
+		boolean markGroupDirty = false;
+		for (String repoDir : group.getRepositoryDirectories()) {
+			Repository repo = cache.getRepository(new File(repoDir));
+			if (repo != null && RepositoryUtil.hasChanges(repo)) {
+				markGroupDirty = true;
+				break;
+			}
+		}
+		if (markGroupDirty) {
+			decoration.addPrefix(HAS_CHANGES_PREFIX);
+		} else {
+			ensureCorrectLabelCaching(decoration);
+		}
+	}
+
+	private void ensureCorrectLabelCaching(IDecoration decoration) {
+		// Ensure the caching of last labels in
+		// RepositoryTreeNodeLabelProvider works
+		decoration.addSuffix(" ");//$NON-NLS-1$
+	}
+
 	private boolean decorateStash(StashedCommitNode node,
 			IDecoration decoration) {
 		RevCommit commit = node.getObject();
@@ -249,7 +284,7 @@ public class RepositoryTreeNodeDecorator extends GitDecorator
 	private boolean decorateSubmodules(@NonNull Repository repository,
 			IDecoration decoration) throws IOException {
 		if (haveSubmoduleChanges(repository)) {
-			decoration.addPrefix("> "); //$NON-NLS-1$
+			decoration.addPrefix(HAS_CHANGES_PREFIX);
 			return true;
 		}
 		return false;
