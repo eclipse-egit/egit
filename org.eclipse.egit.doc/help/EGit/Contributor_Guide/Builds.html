@@ -148,6 +148,13 @@
 		</ul>
 		<pre>bazel test --test_tag_filters=api,dfs,revplot,treewalk //...
 </pre>
+		<ul>
+			<li>to run build with 
+				<a href="https://github.com/google/error-prone" target="egit_external">the errorprone static analyzer</a> execute
+			</li>
+		</ul>
+		<pre>bazel build --java_toolchain //tools:error_prone_warnings_toolchain :all
+</pre>
 		<p>Note that the Bazel build does not yet support building JGit OSGi bundles, Eclipse features and the p2 repository which are required to install JGit in Eclipse.</p>
 		<h2 id="FindBugs_and_PMD">FindBugs and PMD</h2>
 		<p>As part of the build, JGit and EGit run FindBugs and PMD to find issues.</p>
