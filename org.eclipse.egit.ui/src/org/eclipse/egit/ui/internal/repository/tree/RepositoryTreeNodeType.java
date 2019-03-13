@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2010, 2018 SAP AG and others
+ * Copyright (c) 2010, 2019 SAP AG and others
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License 2.0
  * which accompanies this distribution, and is available at
@@ -10,6 +10,7 @@
  * Contributors:
  *    Mathias Kinzler (SAP AG) - initial implementation
  *    Thomas Wolf <thomas.wolf@paranor.ch> - change from Image to ImageDescriptor
+ *    Alexander Nittka <alex@nittka.de> - Bug 545123
  *******************************************************************************/
 package org.eclipse.egit.ui.internal.repository.tree;
 
@@ -24,6 +25,9 @@ import org.eclipse.ui.PlatformUI;
 public enum RepositoryTreeNodeType {
 	/**	 */
 	REPO(UIIcons.REPOSITORY), //
+	/**	 */
+	REPOGROUP(PlatformUI.getWorkbench().getSharedImages()
+			.getImageDescriptor(ISharedImages.IMG_OBJ_FOLDER)), //
 	/**	 */
 	BRANCHES(UIIcons.BRANCHES), //
 	/** */

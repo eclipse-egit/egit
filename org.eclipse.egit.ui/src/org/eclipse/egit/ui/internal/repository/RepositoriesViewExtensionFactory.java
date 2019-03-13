@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2018 Thomas Wolf <thomas.wolf@paranor.ch>
+ * Copyright (c) 2018, 2019 Thomas Wolf <thomas.wolf@paranor.ch> and others.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License 2.0
@@ -7,6 +7,9 @@
  * https://www.eclipse.org/legal/epl-2.0/
  *
  * SPDX-License-Identifier: EPL-2.0
+ *
+ * Contributors:
+ *    Alexander Nittka <alex@nittka.de> - Bug 545123
  *******************************************************************************/
 package org.eclipse.egit.ui.internal.repository;
 
@@ -21,7 +24,8 @@ public class RepositoriesViewExtensionFactory
 
 	@Override
 	public Object create() throws CoreException {
-		return new RepositoriesViewContentProvider(true);
+		return new RepositoriesViewContentProvider(true)
+				.showingRepositoryGroups(true);
 	}
 
 }

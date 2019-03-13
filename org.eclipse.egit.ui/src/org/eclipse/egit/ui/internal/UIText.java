@@ -18,6 +18,7 @@
  * Copyright (C) 2015, Denis Zygann <d.zygann@web.de>
  * Copyright (C) 2016, Lars Vogel <Lars.Vogel@vogella.com>
  * Copyright (C) 2017, Wim Jongman <wim.jongman@remainsoftware.com> bug 358152
+ * Copyright (C) 2019, Alexander Nittka <alex@nittka.de> bug 545123
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License 2.0
@@ -3826,6 +3827,45 @@ public class UIText extends NLS {
 
 	/** */
 	public static String RepositoriesView_WorkingDir_treenode;
+
+	/** */
+	public static String RepositoriesView_RepoGroup_Create_MenuItemLabel;
+
+	/** */
+	public static String RepositoriesView_RepoGroup_Create_Title;
+
+	/** */
+	public static String RepositoriesView_RepoGroup_Assign;
+
+	/** */
+	public static String RepositoriesView_RepoGroup_Remove_Title;
+
+	/** */
+	public static String RepositoriesView_RepoGroup_Delete_Title;
+
+	/** */
+	public static String RepositoriesView_RepoGroup_Delete_Confirm;
+
+	/** */
+	public static String RepositoriesView_RepoGroup_Rename_Title;
+
+	/** */
+	public static String RepositoriesView_RepoGroup_Rename_IllegalSelection;
+
+	/** */
+	public static String RepositoriesView_RepoGroup_EnterName;
+
+	/** */
+	public static String RepositoriesView_RepoGroup_EmptyNameError;
+
+	/** */
+	public static String RepositoriesView_RepoGroup_InvalidNameException;
+
+	/** */
+	public static String RepositoriesView_RepoGroup_GroupExists;
+
+	/** */
+	public static String RepositoriesView_RepoGroup_ErrorSavePreferences;
 
 	/** */
 	public static String RepositoriesViewActionProvider_OpenWithMenu;
