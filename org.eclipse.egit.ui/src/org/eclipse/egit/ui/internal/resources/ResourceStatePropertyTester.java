@@ -13,9 +13,9 @@ package org.eclipse.egit.ui.internal.resources;
 import java.util.ArrayList;
 import java.util.Collection;
 
-import org.eclipse.core.expressions.PropertyTester;
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.egit.core.internal.util.ResourceUtil;
+import org.eclipse.egit.ui.internal.expressions.AbstractPropertyTester;
 import org.eclipse.egit.ui.internal.selection.SelectionUtils;
 import org.eclipse.jface.text.ITextSelection;
 import org.eclipse.jface.viewers.IStructuredSelection;
@@ -28,7 +28,7 @@ import org.eclipse.jgit.annotations.Nullable;
  * Assumes a {@link Collection} of elements, typically a selection. Skips any
  * resources not in a repository.
  */
-public class ResourceStatePropertyTester extends PropertyTester {
+public class ResourceStatePropertyTester extends AbstractPropertyTester {
 
 	private enum Property {
 		/**
@@ -63,12 +63,7 @@ public class ResourceStatePropertyTester extends PropertyTester {
 		if (prop == null || receiver == null) {
 			return false;
 		}
-		boolean result = internalTest(receiver, prop);
-		if (expectedValue != null) {
-			return expectedValue.equals(Boolean.valueOf(result));
-		} else {
-			return result;
-		}
+		return computeResult(expectedValue, internalTest(receiver, prop));
 	}
 
 	private boolean internalTest(@NonNull Object receiver,

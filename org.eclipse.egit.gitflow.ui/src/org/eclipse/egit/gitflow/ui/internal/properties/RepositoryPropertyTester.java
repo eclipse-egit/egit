@@ -18,15 +18,15 @@ import static org.eclipse.egit.gitflow.ui.Activator.error;
 import java.io.File;
 import java.io.IOException;
 
-import org.eclipse.core.expressions.PropertyTester;
 import org.eclipse.egit.gitflow.Activator;
 import org.eclipse.egit.gitflow.GitFlowRepository;
+import org.eclipse.egit.ui.internal.expressions.AbstractPropertyTester;
 import org.eclipse.jgit.lib.Repository;
 
 /**
  * Testing Git Flow states.
  */
-public class RepositoryPropertyTester extends PropertyTester {
+public class RepositoryPropertyTester extends AbstractPropertyTester {
 	private static final String IS_MASTER = "isMaster"; //$NON-NLS-1$
 
 	private static final String IS_DEVELOP = "isDevelop"; //$NON-NLS-1$
@@ -58,6 +58,10 @@ public class RepositoryPropertyTester extends PropertyTester {
 		if (repository == null || repository.isBare()) {
 			return false;
 		}
+		return computeResult(expectedValue, internalTest(repository, property));
+	}
+
+	private boolean internalTest(Repository repository, String property) {
 		GitFlowRepository gitFlowRepository = new GitFlowRepository(repository);
 		try {
 			if (IS_INITIALIZED.equals(property)) {
