@@ -22,6 +22,30 @@
       "revId": "c3888aaf3d6cd3d71f1ffe8c1dc8eb29e7a65448",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c2b10e43_5d8b6943",
+        "filename": "org.eclipse.egit-feature/feature.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2019-03-14T08:59:52Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "799ee854_2a865a7f",
+      "range": {
+        "startLine": 44,
+        "startChar": 61,
+        "endLine": 44,
+        "endChar": 66
+      },
+      "revId": "c3888aaf3d6cd3d71f1ffe8c1dc8eb29e7a65448",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
     }
   ]
 }
