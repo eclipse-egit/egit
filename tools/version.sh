@@ -121,6 +121,18 @@ perl -pi~ -e '
 		$seen_version = 1 if (!/<\?xml/ &&
 		s/(version=")[^"]*(")/${1}'"$OSGI_V"'${2}/);
 	}
+	s/(feature="org.eclipse.jgit.ssh.apache" version=")[^"]*(")/${1}'"$JGIT_V"'${2}/;
+	' org.eclipse.egit-feature/feature.xml
+
+perl -pi~ -e '
+	if ($ARGV ne $old_argv) {
+		$seen_version = 0;
+		$old_argv = $ARGV;
+	}
+	if (!$seen_version) {
+		$seen_version = 1 if (!/<\?xml/ &&
+		s/(version=")[^"]*(")/${1}'"$OSGI_V"'${2}/);
+	}
 	s/(feature="org.eclipse.egit" version=")[^"]*(")/${1}'"$EGIT_V"'${2}/;
 	' org.eclipse.egit.mylyn-feature/feature.xml
 
