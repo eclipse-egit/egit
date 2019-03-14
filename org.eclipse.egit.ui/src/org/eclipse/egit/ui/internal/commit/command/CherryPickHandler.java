@@ -26,11 +26,6 @@ import org.eclipse.jgit.revwalk.RevCommit;
  */
 public class CherryPickHandler extends SelectionHandler {
 
-	/**
-	 * Command id
-	 */
-	public static final String ID = "org.eclipse.egit.ui.commit.CherryPick"; //$NON-NLS-1$
-
 	@Override
 	public Object execute(ExecutionEvent event) throws ExecutionException {
 		RevCommit commit = getSelectedItem(RevCommit.class, event);

@@ -1134,6 +1134,11 @@
             id="org.eclipse.egit.ui.team.Disconnect"
             name="%DisconnectCommand.name">
       </command>
+      <command
+            categoryId="org.eclipse.egit.ui.commandCategory"
+            id="org.eclipse.egit.ui.team.CherryPick"
+            name="%CherryPickCommand.name">
+      </command>
    </extension>
    <extension
          point="org.eclipse.ui.handlers">
@@ -2576,12 +2581,22 @@
          </activeWhen>
       </handler>
       <handler
-            commandId="org.eclipse.egit.ui.commit.CherryPick">
+            commandId="org.eclipse.egit.ui.team.CherryPick">
          <class
                class="org.eclipse.egit.ui.internal.commit.command.CherryPickHandler">
          </class>
          <activeWhen>
-            <reference definitionId="org.eclipse.egit.ui.singleRepositoryCommit" />
+            <and>
+               <count value="1" />
+               <iterate>
+                  <adapt type="org.eclipse.egit.core.internal.IRepositoryCommit">
+                     <not>
+                        <test property="Git.isStash" />
+                     </not>
+                     <test property="Git.isSafe" />
+                  </adapt>
+               </iterate>
+            </and>
          </activeWhen>
       </handler>
       <handler
@@ -2891,21 +2906,6 @@
                         <test property="Git.parentCount" value="0" />
                      </or>
                   </adapt>
-               </iterate>
-            </and>
-         </activeWhen>
-      </handler>
-      <handler
-            commandId="org.eclipse.egit.ui.history.CherryPick">
-         <class
-               class="org.eclipse.egit.ui.internal.history.command.CherryPickHandler">
-         </class>
-         <activeWhen>
-            <and>
-               <count value="1" />
-               <iterate>
-                  <instanceof value="org.eclipse.egit.ui.internal.history.SWTCommit" />
-                  <test property="Git.isSafe" />
                </iterate>
             </and>
          </activeWhen>
@@ -3511,7 +3511,7 @@
             <visibleWhen checkEnabled="true" />
          </command>
          <command
-              commandId="org.eclipse.egit.ui.history.CherryPick"
+              commandId="org.eclipse.egit.ui.team.CherryPick"
               label="%HistoryCherryPick.label"
               style="push">
             <visibleWhen checkEnabled="true" />
@@ -6139,11 +6139,7 @@
             icon="icons/obj16/history.png">
       </image>
       <image
-            commandId="org.eclipse.egit.ui.history.CherryPick"
-            icon="icons/obj16/cherry-pick.png">
-      </image>
-      <image
-            commandId="org.eclipse.egit.ui.commit.CherryPick"
+            commandId="org.eclipse.egit.ui.team.CherryPick"
             icon="icons/obj16/cherry-pick.png">
       </image>
       <image
@@ -6881,14 +6877,6 @@
       <command
             id="org.eclipse.egit.ui.history.OpenInTextEditorCommand"
             name="%OpenInTextEditorCommand.name">
-      </command>
-      <command
-            id="org.eclipse.egit.ui.history.CherryPick"
-            name="%CherryPickCommand.name">
-      </command>
-      <command
-            id="org.eclipse.egit.ui.commit.CherryPick"
-            name="%CherryPickCommand.name">
       </command>
       <command
             id="org.eclipse.egit.ui.history.Squash"
