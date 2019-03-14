@@ -22,7 +22,6 @@ import java.util.Set;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-import org.eclipse.core.expressions.PropertyTester;
 import org.eclipse.core.resources.IContainer;
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IFolder;
@@ -32,6 +31,7 @@ import org.eclipse.core.runtime.IAdaptable;
 import org.eclipse.egit.core.AdapterUtils;
 import org.eclipse.egit.core.project.RepositoryMapping;
 import org.eclipse.egit.ui.internal.ResourcePropertyTester;
+import org.eclipse.egit.ui.internal.expressions.AbstractPropertyTester;
 import org.eclipse.jface.text.ITextSelection;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.viewers.StructuredSelection;
@@ -42,14 +42,21 @@ import org.eclipse.ui.IWorkingSet;
 /**
  * Property tester for whole selections.
  */
-public class SelectionPropertyTester extends PropertyTester {
+public class SelectionPropertyTester extends AbstractPropertyTester {
 
 	@Override
 	public boolean test(Object receiver, String property, Object[] args,
 			Object expectedValue) {
 		Collection<?> collection = (Collection<?>) receiver;
-		if (collection.isEmpty())
+		if (collection.isEmpty()) {
 			return false;
+		}
+		return computeResult(expectedValue,
+				internalTest(collection, property, args));
+	}
+
+	private boolean internalTest(Collection<?> collection, String property,
+			Object[] args) {
 		if ("projectsSingleRepository".equals(property)) { //$NON-NLS-1$
 
 			Repository repository = getRepositoryOfProjects(collection, true);

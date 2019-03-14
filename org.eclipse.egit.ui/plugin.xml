@@ -244,11 +244,7 @@
                      <instanceof
                            value="org.eclipse.egit.ui.internal.repository.tree.WorkingDirNode">
                      </instanceof>
-                     <not>
-                        <test
-                              property="GitRepository.isBare">
-                        </test>
-                     </not>
+                     <test property="GitRepository.isBare" value="false" />
                   </and>
                </or>
             </iterate>
@@ -284,11 +280,7 @@
                      <instanceof
                            value="org.eclipse.egit.ui.internal.repository.tree.RemoteNode">
                      </instanceof>
-                     <not>
-                        <test
-                              property="GitRepository.fetchExists">
-                        </test>
-                     </not>
+                     <test property="GitRepository.fetchExists" value="false" />
                   </and>
                   <instanceof
                         value="org.eclipse.egit.ui.internal.repository.tree.FetchNode">
@@ -308,11 +300,7 @@
                      <instanceof
                            value="org.eclipse.egit.ui.internal.repository.tree.RemoteNode">
                      </instanceof>
-                     <not>
-                        <test
-                              property="GitRepository.pushExists">
-                        </test>
-                     </not>
+                     <test property="GitRepository.pushExists" value="false" />
                   </and>
                   <instanceof
                         value="org.eclipse.egit.ui.internal.repository.tree.PushNode">
@@ -1220,11 +1208,7 @@
                               value="org.eclipse.egit.ui.internal.selection.RepositoryVirtualNode">
                         </instanceof>
                      </not>
-                     <not>
-                        <test
-                              property="GitRepository.isBare">
-                        </test>
-                     </not>
+                     <test property="GitRepository.isBare" value="false" />
                   </iterate>
                </and>
             </or>
@@ -1354,11 +1338,7 @@
                               value="org.eclipse.egit.ui.internal.selection.RepositoryVirtualNode">
                         </instanceof>
                      </not>
-                     <not>
-                        <test
-                              property="GitRepository.isBare">
-                        </test>
-                     </not>
+                     <test property="GitRepository.isBare" value="false" />
                   </iterate>
                </and>
             </or>
@@ -1617,11 +1597,7 @@
                                  property="GitRepository.isLocalBranch">
                            </test>
                         </or>
-                        <not>
-                           <test
-                                 property="GitRepository.isRefCheckedOut">
-                           </test>
-                        </not>
+                        <test property="GitRepository.isRefCheckedOut" value="false" />
                      </and>
                   </iterate>
                </and>
@@ -2058,16 +2034,8 @@
                            <instanceof
                                  value="org.eclipse.egit.ui.internal.repository.tree.RepositoryNode">
                            </instanceof>
-                           <not>
-                              <test
-                                    property="GitRepository.isSubmodule">
-                              </test>
-                           </not>
-                           <not>
-                              <test
-                                    property="GitRepository.isBare">
-                              </test>
-                           </not>
+                           <test property="GitRepository.isSubmodule" value="false" />
+                           <test property="GitRepository.isBare" value="false" />
                         </and>
                         <instanceof
                               value="org.eclipse.egit.ui.internal.repository.tree.SubmodulesNode">
@@ -2092,14 +2060,8 @@
                         <instanceof
                               value="org.eclipse.egit.ui.internal.repository.tree.StashedCommitNode">
                         </instanceof>
-                        <not>
-                           <test
-                                 property="GitRepository.isBare">
-                           </test>
-                        </not>
-                        <test
-                              property="GitRepository.isSafe">
-                        </test>
+                        <test property="GitRepository.isBare" value="false" />
+                        <test property="GitRepository.isSafe" />
                      </and>
                   </iterate>
                </and>
@@ -2358,11 +2320,7 @@
                               value="org.eclipse.egit.ui.internal.repository.tree.WorkingDirNode">
                         </instanceof>
                      </or>
-                     <not>
-                        <test
-                              property="GitRepository.isBare">
-                        </test>
-                     </not>
+                     <test property="GitRepository.isBare" value="false" />
                   </iterate>
                </and>
                <and>
@@ -2375,11 +2333,7 @@
                               value="org.eclipse.egit.ui.internal.repository.tree.FolderNode">
                         </instanceof>
                      </or>
-                     <not>
-                        <test
-                              property="GitRepository.isBare">
-                        </test>
-                     </not>
+                     <test property="GitRepository.isBare" value="false" />
                   </iterate>
                </and>
             </or>
@@ -2413,9 +2367,7 @@
                <count value="1" />
                <iterate>
                   <adapt type="org.eclipse.egit.core.internal.IRepositoryCommit">
-                     <not>
-                        <test property="Git.isStash" />
-                     </not>
+                     <test property="Git.isStash" value="false" />
                   </adapt>
                </iterate>
             </and>
@@ -2518,12 +2470,8 @@
                      <instanceof value="org.eclipse.egit.ui.internal.repository.tree.RefNode" />
                      <instanceof value="org.eclipse.egit.ui.internal.repository.tree.AdditionalRefNode" />
                   </or>
-                  <not>
-                     <test property="GitRepository.isRefCheckedOut" />
-                  </not>
-                  <not>
-                     <test property="GitRepository.isBare" />
-                  </not>
+                  <test property="GitRepository.isRefCheckedOut" value="false" />
+                  <test property="GitRepository.isBare" value="false" />
                </iterate>
             </and>
          </activeWhen>
@@ -2567,9 +2515,7 @@
                <count value="1" />
                <iterate>
                   <adapt type="org.eclipse.egit.core.internal.IRepositoryCommit">
-                     <not>
-                        <test property="Git.isStash" />
-                     </not>
+                     <test property="Git.isStash" value="false" />
                      <test property="Git.canCommit" />
                   </adapt>
                </iterate>
@@ -2589,9 +2535,7 @@
                <count value="1" />
                <iterate>
                   <adapt type="org.eclipse.egit.core.internal.IRepositoryCommit">
-                     <not>
-                        <test property="Git.isStash" />
-                     </not>
+                     <test property="Git.isStash" value="false" />
                   </adapt>
                </iterate>
             </and>
@@ -2607,9 +2551,7 @@
                <count value="1" />
                <iterate>
                   <adapt type="org.eclipse.egit.core.internal.IRepositoryCommit">
-                     <not>
-                        <test property="Git.isStash" />
-                     </not>
+                     <test property="Git.isStash" value="false" />
                      <test property="Git.isSafe" />
                   </adapt>
                </iterate>
@@ -2641,9 +2583,7 @@
                   <count value="1" />
                   <iterate>
                      <instanceof value="org.eclipse.egit.ui.internal.repository.tree.StashedCommitNode" />
-                     <not>
-                        <test property="GitRepository.isBare" />
-                     </not>
+                     <test property="GitRepository.isBare" value="false" />
                      <test property="GitRepository.isSafe" />
                   </iterate>
                </and>
@@ -2655,9 +2595,7 @@
                   <iterate>
                      <adapt type="org.eclipse.egit.core.internal.IRepositoryCommit">
                         <test property="Git.isStash" />
-                        <not>
-                           <test property="Git.isBare" />
-                        </not>
+                        <test property="Git.isBare" value="false" />
                         <test property="Git.isSafe" />
                      </adapt>
                   </iterate>
@@ -2679,9 +2617,7 @@
                <iterate>
                   <adapt type="org.eclipse.egit.core.internal.IRepositoryCommit">
                      <test property="Git.isStash" />
-                     <not>
-                        <test property="Git.isBare" />
-                     </not>
+                     <test property="Git.isBare" value="false" />
                      <test property="Git.isSafe" />
                   </adapt>
                </iterate>
@@ -2705,9 +2641,7 @@
                            <test property="GitRepository.canCheckout" />
                         </and>
                         <adapt type="org.eclipse.egit.core.internal.IRepositoryCommit">
-                           <not>
-                              <test property="Git.isStash" />
-                           </not>
+                           <test property="Git.isStash" value="false" />
                         </adapt>
                      </or>
                   </iterate>
@@ -2798,9 +2732,7 @@
                         <instanceof value="org.eclipse.egit.ui.internal.repository.tree.RepositoryNode" />
                         <instanceof value="org.eclipse.egit.ui.internal.repository.tree.WorkingDirNode" />
                      </or>
-                     <not>
-                        <test property="GitRepository.isBare" />
-                     </not>
+                     <test property="GitRepository.isBare" value="false" />
                   </iterate>
                </and>
                <test property="GitSelection.projectsSingleRepository" />
@@ -3787,15 +3719,9 @@
                            <instanceof
                                  value="org.eclipse.egit.ui.internal.repository.tree.BranchHierarchyNode">
                            </instanceof>
-                           <test
-                                 property="GitRepository.isLocalBranch">
-                           </test>
+                           <test property="GitRepository.isLocalBranch" />
                         </or>
-                        <not>
-                           <test
-                                 property="GitRepository.isRefCheckedOut">
-                           </test>
-                        </not>
+                        <test property="GitRepository.isRefCheckedOut" value="false" />
                      </and>
                   </iterate>
                </and>
@@ -3844,11 +3770,7 @@
                                  value="org.eclipse.egit.ui.internal.repository.tree.RefNode">
                            </instanceof>
                         </or>
-                        <not>
-                           <test
-                                 property="GitRepository.isBare">
-                           </test>
-                        </not>
+                        <test property="GitRepository.isBare" value="false" />
                      </and>
                   </iterate>
                </and>
@@ -3875,11 +3797,7 @@
                                  value="org.eclipse.egit.ui.internal.repository.tree.RefNode">
                            </instanceof>
                         </or>
-                        <not>
-                           <test
-                                 property="GitRepository.isBare">
-                           </test>
-                        </not>
+                        <test property="GitRepository.isBare" value="false" />
                      </and>
                   </iterate>
                </and>
@@ -4112,11 +4030,7 @@
                                  value="org.eclipse.egit.ui.internal.repository.tree.LocalNode">
                            </instanceof>
                         </or>
-                        <not>
-                           <test
-                                 property="GitRepository.isBare">
-                           </test>
-                        </not>
+                        <test property="GitRepository.isBare" value="false" />
                      </and>
                   </iterate>
                   <test
@@ -4153,11 +4067,7 @@
                                  value="org.eclipse.egit.ui.internal.repository.tree.LocalNode">
                            </instanceof>
                         </or>
-                        <not>
-                           <test
-                                 property="GitRepository.isBare">
-                           </test>
-                        </not>
+                        <test property="GitRepository.isBare" value="false" />
                      </and>
                   </iterate>
                </and>
@@ -4184,11 +4094,7 @@
                         <instanceof
                               value="org.eclipse.egit.ui.internal.repository.tree.RepositoryNode">
                         </instanceof>
-                        <not>
-                           <test
-                                 property="GitRepository.isBare">
-                           </test>
-                        </not>
+                        <test property="GitRepository.isBare" value="false" />
                      </and>
                   </iterate>
                </and>
@@ -4208,27 +4114,13 @@
                         value="1">
                   </count>
                   <iterate>
-                     <and>
-                        <instanceof
-                              value="org.eclipse.egit.ui.internal.repository.tree.RepositoryNode">
-                        </instanceof>
-                        <not>
-                           <test
-                                 property="GitRepository.isSubmodule">
-                           </test>
-                        </not>
-                        <not>
-                           <test
-                                 property="GitRepository.isBare">
-                           </test>
-                        </not>
-                        <test
-                              property="GitRepository.canStash">
-                        </test>
-                        <test
-                              property="GitRepository.containsHead">
-                        </test>
-                     </and>
+                     <instanceof
+                           value="org.eclipse.egit.ui.internal.repository.tree.RepositoryNode">
+                     </instanceof>
+                     <test property="GitRepository.isSubmodule" value="false" />
+                     <test property="GitRepository.isBare" value="false" />
+                     <test property="GitRepository.canStash" />
+                     <test property="GitRepository.containsHead" />
                   </iterate>
                </and>
             </visibleWhen>
@@ -4250,19 +4142,11 @@
                         value="+">
                   </count>
                   <iterate>
-                     <and>
-                        <instanceof
-                              value="org.eclipse.egit.ui.internal.repository.tree.StashedCommitNode">
-                        </instanceof>
-                        <not>
-                           <test
-                                 property="GitRepository.isBare">
-                           </test>
-                        </not>
-                        <test
-                              property="GitRepository.isSafe">
-                        </test>
-                     </and>
+                     <instanceof
+                           value="org.eclipse.egit.ui.internal.repository.tree.StashedCommitNode">
+                     </instanceof>
+                     <test property="GitRepository.isBare" value="false" />
+                     <test property="GitRepository.isSafe" />
                   </iterate>
                </and>
             </visibleWhen>
@@ -4510,14 +4394,8 @@
                                  value="org.eclipse.egit.ui.internal.repository.tree.RefNode">
                            </instanceof>
                         </or>
-                        <test
-                              property="GitRepository.canMerge">
-                        </test>
-                        <not>
-                           <test
-                                 property="GitRepository.isRefCheckedOut">
-                           </test>
-                        </not>
+                        <test property="GitRepository.canMerge" />
+                        <test property="GitRepository.isRefCheckedOut" value="false" />
                      </and>
                   </iterate>
                </and>
@@ -4576,11 +4454,7 @@
                            <instanceof
                                  value="org.eclipse.egit.ui.internal.repository.tree.RefNode">
                            </instanceof>
-                           <not>
-                              <test
-                                    property="GitRepository.isRefCheckedOut">
-                              </test>
-                           </not>
+                           <test property="GitRepository.isRefCheckedOut" value="false" />
                         </and>
                      </and>
                   </iterate>
@@ -4881,16 +4755,8 @@
                            <instanceof
                                  value="org.eclipse.egit.ui.internal.repository.tree.RepositoryNode">
                            </instanceof>
-                           <not>
-                              <test
-                                    property="GitRepository.isSubmodule">
-                              </test>
-                           </not>
-                           <not>
-                              <test
-                                    property="GitRepository.isBare">
-                              </test>
-                           </not>
+                           <test property="GitRepository.isSubmodule" value="false" />
+                           <test property="GitRepository.isBare" value="false" />
                         </and>
                         <instanceof
                               value="org.eclipse.egit.ui.internal.repository.tree.SubmodulesNode">

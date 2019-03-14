@@ -19,10 +19,10 @@ import java.net.URISyntaxException;
 import java.util.List;
 import java.util.Locale;
 
-import org.eclipse.core.expressions.PropertyTester;
 import org.eclipse.core.resources.IResource;
 import org.eclipse.egit.core.internal.gerrit.GerritUtil;
 import org.eclipse.egit.core.project.RepositoryMapping;
+import org.eclipse.egit.ui.internal.expressions.AbstractPropertyTester;
 import org.eclipse.egit.ui.internal.trace.GitTraceLocation;
 import org.eclipse.jgit.annotations.NonNull;
 import org.eclipse.jgit.lib.Config;
@@ -64,25 +64,25 @@ import org.eclipse.jgit.transport.RemoteConfig;
  * </ul>
  * </ul>
  */
-public class ResourcePropertyTester extends PropertyTester {
+public class ResourcePropertyTester extends AbstractPropertyTester {
 
 	@Override
 	public boolean test(Object receiver, String property, Object[] args,
 			Object expectedValue) {
-		boolean value = internalTest(receiver, property);
+		if (!(receiver instanceof IResource)) {
+			return false;
+		}
+		boolean value = internalTest((IResource) receiver, property);
 		boolean trace = GitTraceLocation.PROPERTIESTESTER.isActive();
 		if (trace)
 			GitTraceLocation
 					.getTrace()
 					.trace(GitTraceLocation.PROPERTIESTESTER.getLocation(),
 							"prop "	+ property + " of " + receiver + " = " + value + ", expected = " + expectedValue); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$
-		return value;
+		return computeResult(expectedValue, value);
 	}
 
-	private boolean internalTest(Object receiver, String property) {
-		if (!(receiver instanceof IResource))
-			return false;
-		IResource res = (IResource) receiver;
+	private boolean internalTest(@NonNull IResource res, String property) {
 		if ("isContainer".equals(property)) { //$NON-NLS-1$
 			int type = res.getType();
 			return type == IResource.FOLDER || type == IResource.PROJECT;

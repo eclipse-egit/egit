@@ -15,8 +15,8 @@ package org.eclipse.egit.ui.internal.repository.tree;
 import java.io.IOException;
 import java.net.URISyntaxException;
 
-import org.eclipse.core.expressions.PropertyTester;
 import org.eclipse.egit.ui.internal.ResourcePropertyTester;
+import org.eclipse.egit.ui.internal.expressions.AbstractPropertyTester;
 import org.eclipse.egit.ui.internal.trace.GitTraceLocation;
 import org.eclipse.jgit.lib.Constants;
 import org.eclipse.jgit.lib.ObjectId;
@@ -30,32 +30,32 @@ import org.eclipse.jgit.util.LfsFactory;
  * Property Tester used for enabling/disabling of context menus in the Git
  * Repositories View.
  */
-public class RepositoriesViewPropertyTester extends PropertyTester {
+public class RepositoriesViewPropertyTester extends AbstractPropertyTester {
 
 	@Override
 	public boolean test(Object receiver, String property, Object[] args,
 			Object expectedValue) {
-		boolean value = internalTest(receiver, property);
-		boolean trace = GitTraceLocation.PROPERTIESTESTER.isActive();
-		if (trace)
-			GitTraceLocation
-					.getTrace()
-					.trace(GitTraceLocation.PROPERTIESTESTER.getLocation(),
-							"prop "	+ property + " of " + receiver + " = " + value + ", expected = " + expectedValue); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$
-		return value;
-	}
-
-	private boolean internalTest(Object receiver, String property) {
-
-		if (!(receiver instanceof RepositoryTreeNode))
+		if (!(receiver instanceof RepositoryTreeNode)) {
 			return false;
+		}
 		RepositoryTreeNode node = (RepositoryTreeNode) receiver;
 
 		Repository repository = node.getRepository();
 		if (repository == null) {
 			return false;
 		}
+		boolean value = internalTest(node, repository, property);
+		boolean trace = GitTraceLocation.PROPERTIESTESTER.isActive();
+		if (trace)
+			GitTraceLocation
+					.getTrace()
+					.trace(GitTraceLocation.PROPERTIESTESTER.getLocation(),
+							"prop "	+ property + " of " + receiver + " = " + value + ", expected = " + expectedValue); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$
+		return computeResult(expectedValue, value);
+	}
 
+	private boolean internalTest(RepositoryTreeNode node, Repository repository,
+			String property) {
 		if (property.equals("isBare")) { //$NON-NLS-1$
 			return repository.isBare();
 		}
