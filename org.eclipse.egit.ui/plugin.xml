@@ -2572,12 +2572,24 @@
          </activeWhen>
       </handler>
       <handler
-            commandId="org.eclipse.egit.ui.commit.ShowInHistory">
+            commandId="org.eclipse.egit.ui.team.ShowHistory">
          <class
                class="org.eclipse.egit.ui.internal.commit.command.ShowInHistoryHandler">
          </class>
          <activeWhen>
-            <reference definitionId="org.eclipse.egit.ui.singleRepositoryCommit" />
+            <and>
+               <with variable="activePart">
+                  <instanceof value="org.eclipse.egit.ui.internal.commit.CommitEditor" />
+               </with>
+               <count value="1" />
+               <iterate>
+                  <adapt type="org.eclipse.egit.core.internal.IRepositoryCommit">
+                     <not>
+                        <test property="Git.isStash" />
+                     </not>
+                  </adapt>
+               </iterate>
+            </and>
          </activeWhen>
       </handler>
       <handler
@@ -5601,12 +5613,7 @@
                   commandId="org.eclipse.egit.ui.team.ShowHistory"
                   label="%ShowResourceInHistoryAction_label"
                   style="push">
-               <visibleWhen
-                     checkEnabled="false">
-                  <reference
-                        definitionId="org.eclipse.egit.ui.resourcesSingleRepository">
-                  </reference>
-               </visibleWhen>
+               <visibleWhen checkEnabled="true" />
             </command>
             <command
                   commandId="org.eclipse.egit.ui.team.ShowRepositoriesView"
@@ -6383,10 +6390,6 @@
             icon="icons/obj16/revert.png">
       </image>
       <image
-            commandId="org.eclipse.egit.ui.commit.ShowInHistory"
-            icon="icons/obj16/history.png">
-      </image>
-      <image
             commandId="org.eclipse.egit.ui.team.clean"
             icon="icons/obj16/clean_obj.png">
       </image>
@@ -6912,10 +6915,6 @@
       <command
             id="org.eclipse.egit.ui.commit.Revert"
             name="%RevertCommand.name">
-      </command>
-      <command
-            id="org.eclipse.egit.ui.commit.ShowInHistory"
-            name="%ShowInHistoryCommand.name">
       </command>
       <command
             id="org.eclipse.egit.ui.history.Merge"

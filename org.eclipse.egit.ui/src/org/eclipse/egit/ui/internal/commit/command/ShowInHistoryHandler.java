@@ -24,11 +24,6 @@ import org.eclipse.ui.PlatformUI;
  */
 public class ShowInHistoryHandler extends CommitCommandHandler {
 
-	/**
-	 * Command id
-	 */
-	public static final String ID = "org.eclipse.egit.ui.commit.ShowInHistory"; //$NON-NLS-1$
-
 	@Override
 	public Object execute(final ExecutionEvent event) throws ExecutionException {
 		List<RepositoryCommit> commits = getCommits(event);

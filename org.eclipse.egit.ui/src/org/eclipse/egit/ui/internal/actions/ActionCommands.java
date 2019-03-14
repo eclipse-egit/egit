@@ -118,6 +118,13 @@ public class ActionCommands {
 	/** "Rebase" action command id */
 	public static final String REBASE_ACTION = "org.eclipse.egit.ui.team.Rebase"; //$NON-NLS-1$
 
+	/**
+	 * "Show in History" action command id. Normally, this is dealt with through
+	 * the platform's "Show In" sub-menu, but EGit has this action also in the
+	 * Team sub-menu and in the commit editor.
+	 */
+	public static final String SHOW_IN_HISTORY = "org.eclipse.egit.ui.team.ShowHistory"; //$NON-NLS-1$
+
 	/** "Stash Changes" action command id */
 	public static final String STASH_CREATE = "org.eclipse.egit.ui.team.stash.create"; //$NON-NLS-1$
 
