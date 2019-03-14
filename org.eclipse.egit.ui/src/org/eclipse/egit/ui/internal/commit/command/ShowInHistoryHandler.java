@@ -14,7 +14,7 @@ import java.util.List;
 
 import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.commands.ExecutionException;
-import org.eclipse.egit.ui.internal.commit.RepositoryCommit;
+import org.eclipse.egit.core.internal.IRepositoryCommit;
 import org.eclipse.team.ui.history.IHistoryView;
 import org.eclipse.ui.PartInitException;
 import org.eclipse.ui.PlatformUI;
@@ -26,9 +26,9 @@ public class ShowInHistoryHandler extends CommitCommandHandler {
 
 	@Override
 	public Object execute(final ExecutionEvent event) throws ExecutionException {
-		List<RepositoryCommit> commits = getCommits(event);
+		List<IRepositoryCommit> commits = getCommits(event);
 		if (commits.size() == 1) {
-			RepositoryCommit repoCommit = commits.get(0);
+			IRepositoryCommit repoCommit = commits.get(0);
 
 			try {
 				IHistoryView view = (IHistoryView) PlatformUI.getWorkbench()

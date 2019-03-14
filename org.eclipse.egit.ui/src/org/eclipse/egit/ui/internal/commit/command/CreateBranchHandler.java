@@ -36,8 +36,7 @@ public class CreateBranchHandler extends CommitCommandHandler {
 
 	@Override
 	public Object execute(ExecutionEvent event) throws ExecutionException {
-		List<IRepositoryCommit> commits = getSelectedItems(
-				IRepositoryCommit.class, event);
+		List<IRepositoryCommit> commits = getCommits(event);
 		if (commits.size() == 1) {
 			IRepositoryCommit commit = commits.get(0);
 

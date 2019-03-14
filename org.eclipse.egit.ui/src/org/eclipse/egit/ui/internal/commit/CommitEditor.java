@@ -25,7 +25,6 @@ import org.eclipse.egit.ui.internal.CommonUtils;
 import org.eclipse.egit.ui.internal.UIIcons;
 import org.eclipse.egit.ui.internal.UIText;
 import org.eclipse.egit.ui.internal.actions.ActionCommands;
-import org.eclipse.egit.ui.internal.commit.command.RevertHandler;
 import org.eclipse.egit.ui.internal.repository.RepositoriesView;
 import org.eclipse.jface.action.Action;
 import org.eclipse.jface.action.ActionContributionItem;
@@ -356,7 +355,7 @@ public class CommitEditor extends SharedHeaderFormEditor implements
 			toolbar.add(createActionContributionItem(ActionCommands.CHERRY_PICK,
 					UIText.CommitEditor_toolbarCherryPick,
 					UIIcons.CHERRY_PICK));
-			toolbar.add(createActionContributionItem(RevertHandler.ID,
+			toolbar.add(createActionContributionItem(ActionCommands.REVERT,
 					UIText.CommitEditor_toolbarRevert, UIIcons.REVERT));
 			toolbar.add(createActionContributionItem(
 					ActionCommands.SHOW_IN_HISTORY,

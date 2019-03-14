@@ -1139,6 +1139,11 @@
             id="org.eclipse.egit.ui.team.CherryPick"
             name="%CherryPickCommand.name">
       </command>
+      <command
+            categoryId="org.eclipse.egit.ui.commandCategory"
+            id="org.eclipse.egit.ui.team.Revert"
+            name="%RevertCommand.name">
+      </command>
    </extension>
    <extension
          point="org.eclipse.ui.handlers">
@@ -2612,12 +2617,17 @@
          </activeWhen>
       </handler>
       <handler
-            commandId="org.eclipse.egit.ui.commit.Revert">
+            commandId="org.eclipse.egit.ui.team.Revert">
          <class
                class="org.eclipse.egit.ui.internal.commit.command.RevertHandler">
          </class>
          <activeWhen>
-            <reference definitionId="org.eclipse.egit.ui.singleRepositoryCommit" />
+            <iterate ifEmpty="false">
+               <adapt type="org.eclipse.egit.core.internal.IRepositoryCommit">
+                  <test property="Git.isStash" value="false" />
+                  <test property="Git.isBare" value="false" />
+               </adapt>
+            </iterate>
          </activeWhen>
       </handler>
       <handler
@@ -2979,18 +2989,6 @@
                   <instanceof value="org.eclipse.egit.ui.internal.history.SWTCommit" />
                </iterate>
             </and>
-         </activeWhen>
-      </handler>
-      <handler
-            commandId="org.eclipse.egit.ui.history.Revert">
-         <class
-               class="org.eclipse.egit.ui.internal.history.command.RevertHandler">
-         </class>
-         <activeWhen>
-            <iterate ifEmpty="false">
-               <instanceof value="org.eclipse.egit.ui.internal.history.SWTCommit" />
-               <test property="Git.isBare" value="false" />
-            </iterate>
          </activeWhen>
       </handler>
       <handler
@@ -3583,7 +3581,7 @@
             </command>
          </menu>
          <command
-              commandId="org.eclipse.egit.ui.history.Revert"
+              commandId="org.eclipse.egit.ui.team.Revert"
               label="%HistoryRevert.label"
               style="push">
             <visibleWhen checkEnabled="true" />
@@ -6382,11 +6380,7 @@
             icon="icons/obj16/open-commit.png">
       </image>
       <image
-            commandId="org.eclipse.egit.ui.history.Revert"
-            icon="icons/obj16/revert.png">
-      </image>
-      <image
-            commandId="org.eclipse.egit.ui.commit.Revert"
+            commandId="org.eclipse.egit.ui.team.Revert"
             icon="icons/obj16/revert.png">
       </image>
       <image
@@ -6907,14 +6901,6 @@
             defaultHandler="org.eclipse.egit.ui.internal.commit.command.EditHandler"
             id="org.eclipse.egit.ui.commit.Edit"
             name="%EditCommitCommand.name">
-      </command>
-      <command
-            id="org.eclipse.egit.ui.history.Revert"
-            name="%RevertCommand.name">
-      </command>
-      <command
-            id="org.eclipse.egit.ui.commit.Revert"
-            name="%RevertCommand.name">
       </command>
       <command
             id="org.eclipse.egit.ui.history.Merge"

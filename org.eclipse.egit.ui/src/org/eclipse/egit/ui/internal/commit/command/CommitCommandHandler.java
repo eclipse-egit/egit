@@ -15,7 +15,7 @@ package org.eclipse.egit.ui.internal.commit.command;
 import java.util.List;
 
 import org.eclipse.core.commands.ExecutionEvent;
-import org.eclipse.egit.ui.internal.commit.RepositoryCommit;
+import org.eclipse.egit.core.internal.IRepositoryCommit;
 import org.eclipse.egit.ui.internal.handler.SelectionHandler;
 
 /**
@@ -29,7 +29,7 @@ public abstract class CommitCommandHandler extends SelectionHandler {
 	 * @param event
 	 * @return non-null but possibly empty list of commits
 	 */
-	protected List<RepositoryCommit> getCommits(ExecutionEvent event) {
-		return getSelectedItems(RepositoryCommit.class, event);
+	protected List<IRepositoryCommit> getCommits(ExecutionEvent event) {
+		return getSelectedItems(IRepositoryCommit.class, event);
 	}
 }
