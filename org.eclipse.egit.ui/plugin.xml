@@ -1138,19 +1138,15 @@
    <extension
          point="org.eclipse.ui.handlers">
       <handler
-            commandId="org.eclipse.egit.ui.internal.reflog.CheckoutCommand">
+            commandId="org.eclipse.egit.ui.CheckoutCommand">
          <class
                class="org.eclipse.egit.ui.internal.reflog.command.CheckoutHandler">
          </class>
          <activeWhen>
             <and>
-               <count
-                     value="1">
-               </count>
+               <count value="1" />
                <iterate>
-                  <adapt
-                        type="org.eclipse.jgit.lib.ReflogEntry">
-                  </adapt>
+                  <adapt type="org.eclipse.jgit.lib.ReflogEntry" />
                </iterate>
             </and>
          </activeWhen>
@@ -2534,7 +2530,7 @@
          </activeWhen>
       </handler>
       <handler
-            commandId="org.eclipse.egit.ui.history.CheckoutCommand">
+            commandId="org.eclipse.egit.ui.CheckoutCommand">
          <class
                class="org.eclipse.egit.ui.internal.history.command.CheckoutCommitHandler">
          </class>
@@ -2549,12 +2545,25 @@
          </activeWhen>
       </handler>
       <handler
-            commandId="org.eclipse.egit.ui.commit.Checkout">
+            commandId="org.eclipse.egit.ui.CheckoutCommand">
          <class
                class="org.eclipse.egit.ui.internal.commit.command.CheckoutHandler">
          </class>
          <activeWhen>
-            <reference definitionId="org.eclipse.egit.ui.singleRepositoryCommit" />
+            <and>
+               <with variable="activePart">
+                  <instanceof value="org.eclipse.egit.ui.internal.commit.CommitEditor" />
+               </with>
+               <count value="1" />
+               <iterate>
+                  <adapt type="org.eclipse.egit.core.internal.IRepositoryCommit">
+                     <not>
+                        <test property="Git.isStash" />
+                     </not>
+                     <test property="Git.canCommit" />
+                  </adapt>
+               </iterate>
+            </and>
          </activeWhen>
       </handler>
       <handler
@@ -3427,7 +3436,7 @@
          </command>
          <separator name="##Checkout" visible="true" />
          <command
-              commandId="org.eclipse.egit.ui.history.CheckoutCommand"
+              commandId="org.eclipse.egit.ui.CheckoutCommand"
               label="%HistoryCheckoutCommand.label"
               style="push">
             <visibleWhen>
@@ -3442,7 +3451,7 @@
             </visibleWhen>
          </command>
          <command
-              commandId="org.eclipse.egit.ui.history.CheckoutCommand"
+              commandId="org.eclipse.egit.ui.CheckoutCommand"
               label="%HistoryCheckoutCommand.label2"
               style="push">
             <visibleWhen>
@@ -3662,8 +3671,7 @@
                name="##Checkout" visible="true">
          </separator>
          <command
-               commandId="org.eclipse.egit.ui.internal.reflog.CheckoutCommand"
-               icon="icons/obj16/checkout.png"
+               commandId="org.eclipse.egit.ui.CheckoutCommand"
                label="%RefLogViewCheckout.label"
                style="push">
          </command>
@@ -3677,7 +3685,6 @@
             locationURI="popup:org.eclipse.egit.ui.RepositoriesView?after=branch">
          <command
                commandId="org.eclipse.egit.ui.CheckoutCommand"
-               icon="icons/obj16/checkout.png"
                label="%RepoViewCheckout.label"
                style="push">
             <visibleWhen checkEnabled="true" />
@@ -6172,10 +6179,6 @@
             icon="icons/obj16/editconfig.png">
       </image>
       <image
-            commandId="org.eclipse.egit.ui.commit.Checkout"
-            icon="icons/obj16/checkout.png">
-      </image>
-      <image
             commandId="org.eclipse.egit.ui.CheckoutCommand"
             icon="icons/obj16/checkout.png">
       </image>
@@ -6190,14 +6193,6 @@
       <image
             commandId="org.eclipse.egit.ui.history.PushCommit"
             icon="icons/obj16/push.png">
-      </image>
-      <image
-            commandId="org.eclipse.egit.ui.history.CheckoutCommand"
-            icon="icons/obj16/checkout.png">
-      </image>
-      <image
-            commandId="org.eclipse.egit.ui.internal.reflog.CheckoutCommand"
-            icon="icons/obj16/checkout.png">
       </image>
       <image
             commandId="org.eclipse.egit.ui.ImportChangedProjectsCommandId"
@@ -6884,10 +6879,6 @@
             name="%SetQuickdiffBaselineCommand.name">
       </command>
       <command
-            id="org.eclipse.egit.ui.history.CheckoutCommand"
-            name="%CheckoutCommand.name">
-      </command>
-      <command
             id="org.eclipse.egit.ui.history.OpenInTextEditorCommand"
             name="%OpenInTextEditorCommand.name">
       </command>
@@ -6958,10 +6949,6 @@
    <extension
          name="%CommitViewerCommands.extension.name"
          point="org.eclipse.ui.commands">
-      <command
-            id="org.eclipse.egit.ui.commit.Checkout"
-            name="%CheckoutCommand">
-      </command>
       <command
             id="org.eclipse.egit.ui.history.ShowBlame"
             name="%ShowBlameCommand.name">
@@ -7299,10 +7286,6 @@
      <command
            id="org.eclipse.egit.ui.internal.reflog.OpenInCommitViewerCommand"
            name="%OpenInCommitViewerCommand.name">
-     </command>
-     <command
-           id="org.eclipse.egit.ui.internal.reflog.CheckoutCommand"
-           name="%CheckoutCommand.name">
      </command>
      <command
            id="org.eclipse.egit.ui.internal.reflog.CopyCommand"

@@ -25,7 +25,6 @@ import org.eclipse.egit.ui.internal.CommonUtils;
 import org.eclipse.egit.ui.internal.UIIcons;
 import org.eclipse.egit.ui.internal.UIText;
 import org.eclipse.egit.ui.internal.actions.ActionCommands;
-import org.eclipse.egit.ui.internal.commit.command.CheckoutHandler;
 import org.eclipse.egit.ui.internal.commit.command.CherryPickHandler;
 import org.eclipse.egit.ui.internal.commit.command.RevertHandler;
 import org.eclipse.egit.ui.internal.commit.command.ShowInHistoryHandler;
@@ -354,7 +353,7 @@ public class CommitEditor extends SharedHeaderFormEditor implements
 					createActionContributionItem(ActionCommands.BRANCH_CREATE,
 					UIText.CommitEditor_toolbarCreateBranch,
 					UIIcons.CREATE_BRANCH));
-			toolbar.add(createActionContributionItem(CheckoutHandler.ID,
+			toolbar.add(createActionContributionItem(ActionCommands.CHECK_OUT,
 					UIText.CommitEditor_toolbarCheckOut, UIIcons.CHECKOUT));
 			toolbar.add(createActionContributionItem(CherryPickHandler.ID,
 					UIText.CommitEditor_toolbarCherryPick,
