@@ -118,6 +118,9 @@ public class ActionCommands {
 	/** "Rebase" action command id */
 	public static final String REBASE_ACTION = "org.eclipse.egit.ui.team.Rebase"; //$NON-NLS-1$
 
+	/** "Revert" action command id */
+	public static final String REVERT = "org.eclipse.egit.ui.team.Revert"; //$NON-NLS-1$
+
 	/**
 	 * "Show in History" action command id. Normally, this is dealt with through
 	 * the platform's "Show In" sub-menu, but EGit has this action also in the
