@@ -37,6 +37,9 @@ public class ActionCommands {
 	 */
 	public static final String BRANCH_CREATE = "org.eclipse.egit.ui.RepositoriesViewCreateBranch"; //$NON-NLS-1$
 
+	/** "Check out" command id. */
+	public static final String CHECK_OUT = "org.eclipse.egit.ui.CheckoutCommand"; //$NON-NLS-1$
+
 	/** "Commit" action command id */
 	public static final String COMMIT_ACTION = "org.eclipse.egit.ui.team.Commit"; //$NON-NLS-1$
 
