@@ -40,6 +40,9 @@ public class ActionCommands {
 	/** "Check out" command id. */
 	public static final String CHECK_OUT = "org.eclipse.egit.ui.CheckoutCommand"; //$NON-NLS-1$
 
+	/** "Cherry-pick" command id. */
+	public static final String CHERRY_PICK = "org.eclipse.egit.ui.team.CherryPick"; //$NON-NLS-1$
+
 	/** "Commit" action command id */
 	public static final String COMMIT_ACTION = "org.eclipse.egit.ui.team.Commit"; //$NON-NLS-1$
 

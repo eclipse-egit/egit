@@ -25,7 +25,6 @@ import org.eclipse.egit.ui.internal.CommonUtils;
 import org.eclipse.egit.ui.internal.UIIcons;
 import org.eclipse.egit.ui.internal.UIText;
 import org.eclipse.egit.ui.internal.actions.ActionCommands;
-import org.eclipse.egit.ui.internal.commit.command.CherryPickHandler;
 import org.eclipse.egit.ui.internal.commit.command.RevertHandler;
 import org.eclipse.egit.ui.internal.commit.command.ShowInHistoryHandler;
 import org.eclipse.egit.ui.internal.repository.RepositoriesView;
@@ -355,7 +354,7 @@ public class CommitEditor extends SharedHeaderFormEditor implements
 					UIIcons.CREATE_BRANCH));
 			toolbar.add(createActionContributionItem(ActionCommands.CHECK_OUT,
 					UIText.CommitEditor_toolbarCheckOut, UIIcons.CHECKOUT));
-			toolbar.add(createActionContributionItem(CherryPickHandler.ID,
+			toolbar.add(createActionContributionItem(ActionCommands.CHERRY_PICK,
 					UIText.CommitEditor_toolbarCherryPick,
 					UIIcons.CHERRY_PICK));
 			toolbar.add(createActionContributionItem(RevertHandler.ID,
