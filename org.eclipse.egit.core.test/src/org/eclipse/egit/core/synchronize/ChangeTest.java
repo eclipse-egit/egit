@@ -25,7 +25,7 @@ public class ChangeTest {
 			.fromString("63448b851ae8831a1ad007f588508d3246ec7ace");
 
 	@Test
-	public void shouldNotBeEqualWithNullRefference() {
+	public void shouldNotBeEqualWithNullReference() {
 		// given
 		Change change = new Change();
 
