@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2016 Red Hat Inc. and others.
+ * Copyright (c) 2016, 2019 Red Hat Inc. and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License 2.0
  * which accompanies this distribution, and is available at
@@ -10,23 +10,29 @@
 package org.eclipse.egit.ui.internal.pull;
 
 import java.io.IOException;
+import java.lang.reflect.InvocationTargetException;
 import java.net.URISyntaxException;
 import java.text.MessageFormat;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.eclipse.egit.core.op.CreateLocalBranchOperation;
 import org.eclipse.egit.ui.Activator;
 import org.eclipse.egit.ui.UIUtils;
 import org.eclipse.egit.ui.internal.UIIcons;
 import org.eclipse.egit.ui.internal.UIText;
+import org.eclipse.egit.ui.internal.components.AsynchronousBranchList;
+import org.eclipse.egit.ui.internal.components.AsynchronousRefProposalProvider;
 import org.eclipse.egit.ui.internal.components.BranchRebaseModeCombo;
-import org.eclipse.egit.ui.internal.components.RefContentAssistProvider;
 import org.eclipse.egit.ui.internal.components.RemoteSelectionCombo;
 import org.eclipse.egit.ui.internal.components.RemoteSelectionCombo.IRemoteSelectionListener;
 import org.eclipse.egit.ui.internal.components.RemoteSelectionCombo.SelectionType;
+import org.eclipse.egit.ui.internal.dialogs.CancelableFuture;
 import org.eclipse.egit.ui.internal.push.AddRemoteWizard;
 import org.eclipse.egit.ui.internal.push.PushBranchPage;
 import org.eclipse.jface.dialogs.IMessageProvider;
@@ -72,8 +78,6 @@ public class PullWizardPage extends WizardPage {
 	private List<RemoteConfig> remoteConfigs;
 	private RemoteConfig remoteConfig;
 
-	private RefContentAssistProvider assist;
-
 	private Repository repository;
 
 	private String fullBranch;
@@ -91,6 +95,8 @@ public class PullWizardPage extends WizardPage {
 	private ControlDecoration missingBranchDecorator;
 
 	private boolean configureUpstream;
+
+	private Map<String, AsynchronousBranchList> refs = new HashMap<>();
 
 	/**
 	 * Create the page.
@@ -113,6 +119,12 @@ public class PullWizardPage extends WizardPage {
 
 	@Override
 	public void createControl(Composite parent) {
+		parent.addDisposeListener(event -> {
+			for (CancelableFuture<Collection<Ref>> l : refs.values()) {
+				l.cancel(CancelableFuture.CancelMode.INTERRUPT);
+			}
+			refs.clear();
+		});
 		try {
 			this.remoteConfigs = RemoteConfig
 					.getAllRemoteConfigs(repository.getConfig());
@@ -167,15 +179,31 @@ public class PullWizardPage extends WizardPage {
 		remoteBranchNameText = new Text(res, SWT.BORDER);
 		GridDataFactory.fillDefaults().grab(true, false).span(2, 1)
 				.applyTo(remoteBranchNameText);
-		UIUtils.addRefContentProposalToText(remoteBranchNameText,
-				this.repository, () -> {
-					if (PullWizardPage.this.assist != null) {
-						return PullWizardPage.this.assist
-								.getRefsForContentAssist(false, true);
-					}
-					return Collections.emptyList();
-				}, true);
 		remoteBranchNameText.setText(getSuggestedBranchName());
+		AsynchronousRefProposalProvider candidateProvider = new AsynchronousRefProposalProvider(
+				getContainer(), remoteBranchNameText, () -> {
+					RemoteConfig config = remoteSelectionCombo
+							.getSelectedRemote();
+					if (config == null) {
+						return null;
+					}
+					List<URIish> uris = config.getURIs();
+					if (uris == null || uris.isEmpty()) {
+						return null;
+					}
+					return uris.get(0).toString();
+				}, uri -> {
+					AsynchronousBranchList list = refs.get(uri);
+					if (list == null) {
+						list = new AsynchronousBranchList(repository, uri,
+								null);
+						refs.put(uri, list);
+					}
+					return list;
+				});
+		candidateProvider.setContentProposalAdapter(
+				UIUtils.addRefContentProposalToText(remoteBranchNameText,
+						this.repository, candidateProvider, true));
 		remoteBranchNameText.addModifyListener(new ModifyListener() {
 			@Override
 			public void modifyText(ModifyEvent e) {
@@ -278,9 +306,21 @@ public class PullWizardPage extends WizardPage {
 
 	private void setRefAssist(RemoteConfig config) {
 		if (config != null && config.getURIs().size() > 0) {
-			this.assist = new RefContentAssistProvider(
-					PullWizardPage.this.repository, config.getURIs().get(0),
-					getContainer());
+			String uriText = config.getURIs().get(0).toString();
+			AsynchronousBranchList list = refs.get(uriText);
+			if (list == null) {
+				list = new AsynchronousBranchList(repository, uriText, null);
+				refs.put(uriText, list);
+				preFetch(list);
+			}
+		}
+	}
+
+	private void preFetch(AsynchronousBranchList list) {
+		try {
+			list.start();
+		} catch (InvocationTargetException e) {
+			Activator.handleError(e.getLocalizedMessage(), e.getCause(), true);
 		}
 	}
 

@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2013, 2018 Robin Stocker <robin@nibor.org> and others.
+ * Copyright (c) 2013, 2019 Robin Stocker <robin@nibor.org> and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License 2.0
  * which accompanies this distribution, and is available at
@@ -28,10 +28,9 @@ import org.eclipse.egit.core.internal.Utils;
 import org.eclipse.egit.core.op.CreateLocalBranchOperation;
 import org.eclipse.egit.ui.Activator;
 import org.eclipse.egit.ui.UIUtils;
-import org.eclipse.egit.ui.internal.CommonUtils;
 import org.eclipse.egit.ui.internal.UIIcons;
 import org.eclipse.egit.ui.internal.UIText;
-import org.eclipse.egit.ui.internal.components.AsynchronousListOperation;
+import org.eclipse.egit.ui.internal.components.AsynchronousBranchList;
 import org.eclipse.egit.ui.internal.components.AsynchronousRefProposalProvider;
 import org.eclipse.egit.ui.internal.components.BranchNameNormalizer;
 import org.eclipse.egit.ui.internal.components.RemoteSelectionCombo;
@@ -52,9 +51,7 @@ import org.eclipse.jgit.lib.BranchConfig;
 import org.eclipse.jgit.lib.BranchConfig.BranchRebaseMode;
 import org.eclipse.jgit.lib.Constants;
 import org.eclipse.jgit.lib.ObjectId;
-import org.eclipse.jgit.lib.ObjectIdRef;
 import org.eclipse.jgit.lib.Ref;
-import org.eclipse.jgit.lib.Ref.Storage;
 import org.eclipse.jgit.lib.Repository;
 import org.eclipse.jgit.lib.StoredConfig;
 import org.eclipse.jgit.revwalk.RevCommit;
@@ -113,7 +110,7 @@ public class PushBranchPage extends WizardPage {
 
 	private Set<Resource> disposables = new HashSet<>();
 
-	private Map<String, FutureRefs> refs = new HashMap<>();
+	private Map<String, AsynchronousBranchList> refs = new HashMap<>();
 
 	/**
 	 * Create the page.
@@ -318,9 +315,9 @@ public class PushBranchPage extends WizardPage {
 					}
 					return uris.get(0).toString();
 				}, uri -> {
-					FutureRefs list = refs.get(uri);
+					AsynchronousBranchList list = refs.get(uri);
 					if (list == null) {
-						list = new FutureRefs(repository, uri,
+						list = new AsynchronousBranchList(repository, uri,
 								getLocalBranchName());
 						refs.put(uri, list);
 					}
@@ -523,9 +520,9 @@ public class PushBranchPage extends WizardPage {
 	private void setRefAssist(RemoteConfig config) {
 		if (config != null && config.getURIs().size() > 0) {
 			String uriText = config.getURIs().get(0).toString();
-			FutureRefs list = refs.get(uriText);
+			AsynchronousBranchList list = refs.get(uriText);
 			if (list == null) {
-				list = new FutureRefs(repository, uriText,
+				list = new AsynchronousBranchList(repository, uriText,
 						getLocalBranchName());
 				refs.put(uriText, list);
 				preFetch(list);
@@ -533,7 +530,7 @@ public class PushBranchPage extends WizardPage {
 		}
 	}
 
-	private void preFetch(FutureRefs list) {
+	private void preFetch(AsynchronousBranchList list) {
 		try {
 			list.start();
 		} catch (InvocationTargetException e) {
@@ -575,51 +572,4 @@ public class PushBranchPage extends WizardPage {
 		for (Resource disposable : this.disposables)
 			disposable.dispose();
 	}
-
-	/**
-	 * {@code FutureRefs} are loaded asynchronously from the upstream
-	 * repository.
-	 */
-	private static class FutureRefs extends AsynchronousListOperation<Ref> {
-
-		private final String localBranchName;
-
-		public FutureRefs(Repository repository, String uriText,
-				String localBranchName) {
-			super(repository, uriText);
-			this.localBranchName = localBranchName;
-		}
-
-		@Override
-		protected Collection<Ref> convert(Collection<Ref> refs) {
-			List<Ref> filtered = new ArrayList<>();
-			String localFullName = localBranchName != null
-					? Constants.R_HEADS + localBranchName : null;
-			boolean localBranchFound = false;
-			// Restrict to branches
-			for (Ref ref : refs) {
-				String name = ref.getName();
-				if (name.startsWith(Constants.R_HEADS)) {
-					filtered.add(ref);
-					if (localFullName != null
-							&& localFullName.equalsIgnoreCase(name)) {
-						localBranchFound = true;
-					}
-				}
-			}
-			// Sort them
-			Collections.sort(filtered, CommonUtils.REF_ASCENDING_COMPARATOR);
-			// Add a new remote ref for localBranchName in front if it doesn't
-			// exist
-			if (localFullName != null && !localBranchFound) {
-				List<Ref> newRefs = new ArrayList<>(filtered.size() + 1);
-				newRefs.add(new ObjectIdRef.Unpeeled(Storage.NEW, localFullName,
-						ObjectId.zeroId()));
-				newRefs.addAll(filtered);
-				filtered = newRefs;
-			}
-			return filtered;
-		}
-	}
-
 }
