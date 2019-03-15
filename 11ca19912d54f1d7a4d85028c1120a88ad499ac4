@@ -34,6 +34,24 @@
       "revId": "11ca19912d54f1d7a4d85028c1120a88ad499ac4",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c885193e_21309d5d",
+        "filename": "org.eclipse.egit.ui.importer.tests/plugin.properties",
+        "patchSetId": 1
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 440
+      },
+      "writtenOn": "2019-03-15T19:29:26Z",
+      "side": 0,
+      "message": "I was similarly confused. Looks like some copy-paste when creating the test.\n\nWe should generally think about moving this fragment to the main UI bundle in the near future, therefore I\u0027d avoid any more real cleanup here.",
+      "parentUuid": "afb0348f_3191664d",
+      "revId": "11ca19912d54f1d7a4d85028c1120a88ad499ac4",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
     }
   ]
 }
