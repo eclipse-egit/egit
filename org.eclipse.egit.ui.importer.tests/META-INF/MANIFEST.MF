@@ -1,12 +1,11 @@
 Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
-Bundle-Name: %plugin_name
+Bundle-Name: Tests for EGit Smart Import integration
 Automatic-Module-Name: org.eclipse.egit.ui.importer.tests
 Bundle-SymbolicName: org.eclipse.egit.ui.importer.tests
 Bundle-Version: 5.4.0.qualifier
-Bundle-Vendor: %provider_name
+Bundle-Vendor: Eclipse EGit
 Bundle-RequiredExecutionEnvironment: JavaSE-1.8
-Bundle-Localization: plugin
 Require-Bundle: org.junit,
  org.apache.log4j;bundle-version="[1.0.0,2.0.0)",
  org.eclipse.swtbot.swt.finder,
