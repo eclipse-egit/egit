@@ -16,6 +16,24 @@
       "revId": "11ca19912d54f1d7a4d85028c1120a88ad499ac4",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "afb0348f_3191664d",
+        "filename": "org.eclipse.egit.ui.importer.tests/plugin.properties",
+        "patchSetId": 1
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2019-03-15T19:01:25Z",
+      "side": 0,
+      "message": "ok, it\u0027s in the test bundle",
+      "parentUuid": "7e0b6f49_29fc11ef",
+      "revId": "11ca19912d54f1d7a4d85028c1120a88ad499ac4",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
     }
   ]
 }
