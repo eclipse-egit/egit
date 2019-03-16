@@ -68,6 +68,24 @@
       "revId": "11d1d507bf4b36eb9d8b6440ad9b634eeb7354ae",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "df6a9d0b_dd6869c3",
+        "filename": "org.eclipse.egit.ui.test/src/org/eclipse/egit/ui/wizards/share/SharingWizardTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 266,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2019-03-16T09:58:54Z",
+      "side": 1,
+      "message": "There\u0027s actually another problem in the UI, unrelated to what this test tests: the error message shown in the dialog is actually \"Cannot move project {0} to target location {1}, as this location overlaps with location {2}, which contains a .project\", but the dialog does not adapt to show it fully. Which may or may not be related to there not being a window manager.\n\nThe display problem on the repo combo is a JFace/SWT(GTK) problem; nothing we could fix.\n\nhttps://ci-staging.eclipse.org/egit/job/egit.gerrit/11533/artifact/org.eclipse.egit.ui.test/target/screenshots/shareProjectWithExternalRepo(org.eclipse.egit.ui.wizards.share.SharingWizardTest).jpeg",
+      "parentUuid": "c4aa7175_84ae72fb",
+      "revId": "11d1d507bf4b36eb9d8b6440ad9b634eeb7354ae",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
     }
   ]
 }
