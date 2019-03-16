@@ -73,22 +73,23 @@ public class GitAdapterFactory implements IAdapterFactory {
 			.getRoot();
 
 	@Override
-	public Object getAdapter(Object adaptableObject, Class adapterType) {
+	public <T> T getAdapter(Object adaptableObject, Class<T> adapterType) {
 		if (adapterType.isAssignableFrom(IHistoryPageSource.class)) {
-			return GitHistoryPageSource.INSTANCE;
+			return adapterType.cast(GitHistoryPageSource.INSTANCE);
 		}
 
 		if (IWorkbenchAdapter.class == adapterType) {
 			if (adaptableObject instanceof RepositoryTreeNode) {
-				return RepositoryTreeNodeWorkbenchAdapter.INSTANCE;
+				return adapterType
+						.cast(RepositoryTreeNodeWorkbenchAdapter.INSTANCE);
 			} else if (adaptableObject instanceof FileDiff) {
-				return FileDiffWorkbenchAdapter.INSTANCE;
+				return adapterType.cast(FileDiffWorkbenchAdapter.INSTANCE);
 			}
 
 			if (gitModelWorkbenchAdapter == null) {
 				gitModelWorkbenchAdapter = new GitModelWorkbenchAdapter();
 			}
-			return gitModelWorkbenchAdapter;
+			return adapterType.cast(gitModelWorkbenchAdapter);
 		}
 
 		if (adaptableObject instanceof IHistoryView
@@ -96,23 +97,25 @@ public class GitAdapterFactory implements IAdapterFactory {
 			IHistoryView historyView = (IHistoryView) adaptableObject;
 			IHistoryPage historyPage = historyView.getHistoryPage();
 			if (historyPage instanceof GitHistoryPage) {
-				return historyPage;
+				return adapterType.cast(historyPage);
 			}
 		}
 
 		if (adaptableObject instanceof IURIEditorInput
 				&& adapterType == Repository.class) {
-			return getRepository((IURIEditorInput) adaptableObject);
+			return adapterType
+					.cast(getRepository((IURIEditorInput) adaptableObject));
 		}
 
 		if (adaptableObject instanceof IURIEditorInput
 				&& adapterType == File.class) {
-			return getFile((IURIEditorInput) adaptableObject);
+			return adapterType.cast(getFile((IURIEditorInput) adaptableObject));
 		}
 
 		if (adaptableObject instanceof GitModelObject
 				&& adapterType == ResourceMapping.class) {
-			return GitObjectMapping.create((GitModelObject) adaptableObject);
+			return adapterType.cast(
+					GitObjectMapping.create((GitModelObject) adaptableObject));
 		}
 
 		if (adaptableObject instanceof GitModelObject
@@ -127,7 +130,7 @@ public class GitAdapterFactory implements IAdapterFactory {
 					res = getWorkspaceResourceFromGitPath(obj.getLocation());
 				}
 
-				return res;
+				return adapterType.cast(res);
 			}
 
 			if (obj instanceof GitModelTree) {
@@ -136,7 +139,7 @@ public class GitAdapterFactory implements IAdapterFactory {
 					res = root.getFolder(obj.getLocation());
 				}
 
-				return res;
+				return adapterType.cast(res);
 			}
 		}
 
@@ -144,7 +147,8 @@ public class GitAdapterFactory implements IAdapterFactory {
 			ResourceMapping m = AdapterUtils.adapt(adaptableObject,
 					ResourceMapping.class);
 			if (m != null) {
-				return SelectionUtils.getRepository(new StructuredSelection(m));
+				return adapterType.cast(SelectionUtils
+						.getRepository(new StructuredSelection(m)));
 			}
 		}
 
@@ -208,8 +212,8 @@ public class GitAdapterFactory implements IAdapterFactory {
 	}
 
 	@Override
-	public Class[] getAdapterList() {
-		return new Class[] { IHistoryPageSource.class,
+	public Class<?>[] getAdapterList() {
+		return new Class<?>[] { IHistoryPageSource.class,
 				ISynchronizationCompareAdapter.class, ResourceMapping.class,
 				IResource.class, IWorkbenchAdapter.class, IShowInSource.class,
 				Repository.class, File.class, IHistoryPageSource.class};

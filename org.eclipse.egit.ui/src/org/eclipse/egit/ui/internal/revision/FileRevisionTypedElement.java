@@ -57,13 +57,13 @@ public class FileRevisionTypedElement extends StorageTypedElement {
 	}
 
 	@Override
-	public Object getAdapter(Class adapter) {
+	public <T> T getAdapter(Class<T> adapter) {
 		Object result = super.getAdapter(adapter);
 		if (result != null && adapter.isInstance(result)) {
-			return result;
+			return adapter.cast(result);
 		}
 		if (adapter == Repository.class) {
-			return AdapterUtils.adapt(fileRevision, Repository.class);
+			return AdapterUtils.adapt(fileRevision, adapter);
 		}
 		return null;
 	}

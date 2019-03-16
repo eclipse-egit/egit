@@ -49,11 +49,11 @@ class SWTCommit extends PlotCommit<SWTCommitList.SWTLane>
 	}
 
 	@Override
-	public Object getAdapter(Class adapter) {
+	public <T> T getAdapter(Class<T> adapter) {
 		if (adapter != Repository.class) {
 			return null;
 		}
-		return getRepository();
+		return adapter.cast(getRepository());
 	}
 
 	@Override

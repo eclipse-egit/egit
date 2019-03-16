@@ -78,7 +78,7 @@ public class FileRevisionEditorInput extends PlatformObject implements
 		if (storage instanceof IFileState) {
 			return new IFileState() {
 				@Override
-				public Object getAdapter(Class adapter) {
+				public <T> T getAdapter(Class<T> adapter) {
 					return AdapterUtils.adapt(storage, adapter);
 				}
 
@@ -121,7 +121,7 @@ public class FileRevisionEditorInput extends PlatformObject implements
 
 		return new IEncodedStorage() {
 			@Override
-			public Object getAdapter(Class adapter) {
+			public <T> T getAdapter(Class<T> adapter) {
 				return AdapterUtils.adapt(storage, adapter);
 			}
 
@@ -226,16 +226,16 @@ public class FileRevisionEditorInput extends PlatformObject implements
 	}
 
 	@Override
-	public Object getAdapter(Class adapter) {
+	public <T> T getAdapter(Class<T> adapter) {
 		if (adapter == IWorkbenchAdapter.class) {
-			return this;
+			return adapter.cast(this);
 		}
 		if (adapter == IStorage.class) {
-			return storage;
+			return adapter.cast(storage);
 		}
 		Object object = super.getAdapter(adapter);
 		if (object != null) {
-			return object;
+			return adapter.cast(object);
 		}
 		return AdapterUtils.adapt(fileRevision, adapter);
 	}

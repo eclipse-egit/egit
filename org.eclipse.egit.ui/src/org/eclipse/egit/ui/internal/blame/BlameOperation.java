@@ -88,9 +88,10 @@ public class BlameOperation implements IEGitOperation {
 		}
 
 		@Override
-		public Object getAdapter(Class adapter) {
-			if (RevCommit.class == adapter)
-				return commit;
+		public <T> T getAdapter(Class<T> adapter) {
+			if (RevCommit.class == adapter) {
+				return adapter.cast(commit);
+			}
 			return Platform.getAdapterManager().getAdapter(this, adapter);
 		}
 
