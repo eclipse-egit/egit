@@ -36,6 +36,24 @@
     },
     {
       "key": {
+        "uuid": "601b8a8c_cda334db",
+        "filename": "org.eclipse.egit.ui.test/src/org/eclipse/egit/ui/test/team/actions/DisconnectConnectTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2019-03-16T09:10:53Z",
+      "side": 1,
+      "message": "Or maybe moving the temp directory inside the workspace wasn\u0027t the right choice. Perhaps this one also fails because of that.",
+      "parentUuid": "6e1b91db_81397cf2",
+      "revId": "11d1d507bf4b36eb9d8b6440ad9b634eeb7354ae",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c4aa7175_84ae72fb",
         "filename": "org.eclipse.egit.ui.test/src/org/eclipse/egit/ui/wizards/share/SharingWizardTest.java",
         "patchSetId": 1
