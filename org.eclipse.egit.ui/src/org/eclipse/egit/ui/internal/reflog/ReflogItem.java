@@ -39,14 +39,12 @@ public class ReflogItem implements ReflogEntry, IAdaptable, IRepositoryObject {
 		this.commitMessage = commitMessage;
 	}
 
-	@SuppressWarnings("unchecked")
 	@Override
-	public Object getAdapter(Class adapter) {
-		// TODO generify once EGit base version is Eclipse 4.5
+	public <T> T getAdapter(Class<T> adapter) {
 		if (adapter.isInstance(this)) {
-			return this;
+			return adapter.cast(this);
 		} else if (Repository.class.equals(adapter)) {
-			return getRepository();
+			return adapter.cast(getRepository());
 		}
 		return null;
 	}

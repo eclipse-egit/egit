@@ -69,11 +69,11 @@ public class StagingFolderEntry implements IAdaptable, IProblemDecoratable {
 	}
 
 	@Override
-	public Object getAdapter(Class adapter) {
+	public <T> T getAdapter(Class<T> adapter) {
 		if (adapter == IResource.class || adapter == IContainer.class)
-			return getContainer();
+			return adapter.cast(getContainer());
 		else if (adapter == IPath.class)
-			return getLocation();
+			return adapter.cast(getLocation());
 		return null;
 	}
 

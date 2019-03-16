@@ -466,7 +466,7 @@ public class CommitEditorPage extends FormPage
 			protected IAdaptable getDefaultTarget() {
 				return new PlatformObject() {
 					@Override
-					public Object getAdapter(Class adapter) {
+					public <T> T getAdapter(Class<T> adapter) {
 						return Platform.getAdapterManager().getAdapter(
 								getEditorInput(), adapter);
 					}

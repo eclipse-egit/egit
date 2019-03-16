@@ -19,22 +19,19 @@ import org.eclipse.jgit.lib.Repository;
  */
 public class AdapterFactory implements IAdapterFactory {
 
-	// TODO: Generify once baseline is Eclipse Neon
 	@Override
-	@SuppressWarnings("unchecked")
-	public Object getAdapter(Object adaptableObject, Class adapterType) {
+	public <T> T getAdapter(Object adaptableObject, Class<T> adapterType) {
 		if (adapterType == Repository.class) {
 			if (adaptableObject instanceof GitFileRevision) {
-				return ((GitFileRevision) adaptableObject).getRepository();
+				return adapterType.cast(
+						((GitFileRevision) adaptableObject).getRepository());
 			}
 		}
 		return null;
 	}
 
-	// TODO: Generify once baseline is Eclipse Neon
 	@Override
-	@SuppressWarnings("unchecked")
-	public Class[] getAdapterList() {
-		return new Class[] { Repository.class };
+	public Class<?>[] getAdapterList() {
+		return new Class<?>[] { Repository.class };
 	}
 }

@@ -125,13 +125,13 @@ abstract class StorageTypedElement implements ITypedElement,
 	}
 
 	@Override
-	public Object getAdapter(Class adapter) {
+	public <T> T getAdapter(Class<T> adapter) {
 		if (adapter == ISharedDocumentAdapter.class) {
 			synchronized (this) {
 				if (sharedDocumentAdapter == null) {
 					sharedDocumentAdapter = createSharedDocumentAdapter();
 				}
-				return sharedDocumentAdapter;
+				return adapter.cast(sharedDocumentAdapter);
 			}
 		}
 		return Platform.getAdapterManager().getAdapter(this, adapter);

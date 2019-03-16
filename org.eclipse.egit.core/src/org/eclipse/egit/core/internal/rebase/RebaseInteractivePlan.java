@@ -109,7 +109,7 @@ public class RebaseInteractivePlan implements IndexDiffChangedListener,
 		public void planWasUpdatedFromRepository(RebaseInteractivePlan plan);
 	}
 
-	private CopyOnWriteArrayList<RebaseInteractivePlanChangeListener> planChangeListeners = new CopyOnWriteArrayList<RebaseInteractivePlanChangeListener>();
+	private CopyOnWriteArrayList<RebaseInteractivePlanChangeListener> planChangeListeners = new CopyOnWriteArrayList<>();
 
 	private List<PlanElement> todoList;
 
@@ -123,7 +123,7 @@ public class RebaseInteractivePlan implements IndexDiffChangedListener,
 
 	private ListenerHandle refsChangedListener;
 
-	private static final Map<File, RebaseInteractivePlan> planRegistry = new HashMap<File, RebaseInteractivePlan>();
+	private static final Map<File, RebaseInteractivePlan> planRegistry = new HashMap<>();
 
 	private static final String REBASE_TODO = "rebase-merge/git-rebase-todo"; //$NON-NLS-1$
 
@@ -296,7 +296,7 @@ public class RebaseInteractivePlan implements IndexDiffChangedListener,
 		try {
 			rebaseTodoLines = repository.readRebaseTodo(REBASE_TODO, true);
 		} catch (IOException e) {
-			rebaseTodoLines = new LinkedList<RebaseTodoLine>();
+			rebaseTodoLines = new LinkedList<>();
 		}
 		List<PlanElement> todoElements = createElementList(rebaseTodoLines,
 				walk);
@@ -308,7 +308,7 @@ public class RebaseInteractivePlan implements IndexDiffChangedListener,
 		try {
 			rebaseDoneLines = repository.readRebaseTodo(REBASE_DONE, false);
 		} catch (IOException e) {
-			rebaseDoneLines = new LinkedList<RebaseTodoLine>();
+			rebaseDoneLines = new LinkedList<>();
 		}
 		List<PlanElement> doneElements = createElementList(rebaseDoneLines,
 				walk);
@@ -317,7 +317,7 @@ public class RebaseInteractivePlan implements IndexDiffChangedListener,
 
 	private List<PlanElement> createElementList(
 			List<RebaseTodoLine> rebaseTodoLines, RevWalk walk) {
-		List<PlanElement> planElements = new ArrayList<PlanElement>(
+		List<PlanElement> planElements = new ArrayList<>(
 				rebaseTodoLines.size());
 		for (RebaseTodoLine todoLine : rebaseTodoLines) {
 			PlanElement element = createElement(todoLine, walk);
@@ -432,7 +432,7 @@ public class RebaseInteractivePlan implements IndexDiffChangedListener,
 				.getRepositoryState() != RepositoryState.REBASING_INTERACTIVE) {
 			return false;
 		}
-		List<RebaseTodoLine> todoLines = new LinkedList<RebaseTodoLine>();
+		List<RebaseTodoLine> todoLines = new LinkedList<>();
 		for (PlanElement element : planList.getSecondList())
 			todoLines.add(element.getRebaseTodoLine());
 		try {
@@ -684,14 +684,12 @@ public class RebaseInteractivePlan implements IndexDiffChangedListener,
 			return line.toString();
 		}
 
-		@SuppressWarnings("unchecked")
 		@Override
-		public Object getAdapter(Class adapter) {
-			// TODO generify once EGit baseline is Eclipse 4.5
+		public <T> T getAdapter(Class<T> adapter) {
 			if (Repository.class.equals(adapter)) {
-				return getRepository();
+				return adapter.cast(getRepository());
 			} else if (RevCommit.class.equals(adapter)) {
-				return getRevCommit();
+				return adapter.cast(getRevCommit());
 			}
 			return null;
 		}
@@ -1010,7 +1008,7 @@ public class RebaseInteractivePlan implements IndexDiffChangedListener,
 		 */
 		public static <L extends List<T>, T> JoinedList<L, T> wrap(L first,
 				L second) {
-			return new JoinedList<L, T>(first, second);
+			return new JoinedList<>(first, second);
 		}
 
 		private static class RelativeIndex<T> {
@@ -1035,8 +1033,8 @@ public class RebaseInteractivePlan implements IndexDiffChangedListener,
 
 		private RelativeIndex<T> mapAbsolutIndex(int index) {
 			if (index < firstList.size())
-				return new RelativeIndex<T>(index, firstList);
-			return new RelativeIndex<T>(index - firstList.size(), secondList);
+				return new RelativeIndex<>(index, firstList);
+			return new RelativeIndex<>(index - firstList.size(), secondList);
 		}
 
 		/**
