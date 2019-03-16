@@ -73,6 +73,9 @@ public class CoreText extends NLS {
 	public static String CommitFileRevision_errorLookingUpPath;
 
 	/** */
+	public static String CommitFileRevision_errorLookingUpTags;
+
+	/** */
 	public static String CommitFileRevision_pathNotIn;
 
 	/** */

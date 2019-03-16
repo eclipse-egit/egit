@@ -13,9 +13,9 @@
 package org.eclipse.egit.core.internal.storage;
 
 import java.io.IOException;
+import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Map;
 
 import org.eclipse.core.resources.IStorage;
 import org.eclipse.core.runtime.CoreException;
@@ -30,6 +30,7 @@ import org.eclipse.jgit.lib.CoreConfig.EolStreamType;
 import org.eclipse.jgit.lib.ObjectId;
 import org.eclipse.jgit.lib.PersonIdent;
 import org.eclipse.jgit.lib.Ref;
+import org.eclipse.jgit.lib.RefDatabase;
 import org.eclipse.jgit.lib.Repository;
 import org.eclipse.jgit.revwalk.RevCommit;
 import org.eclipse.jgit.treewalk.TreeWalk;
@@ -118,14 +119,23 @@ public class CommitFileRevision extends GitFileRevision implements
 	@Override
 	public ITag[] getTags() {
 		final Collection<GitTag> ret = new ArrayList<>();
-		for (final Map.Entry<String, Ref> tag : db.getTags().entrySet()) {
-			Ref ref = db.peel(tag.getValue());
-			ObjectId refId = ref.getPeeledObjectId();
-			if (refId == null)
-				refId = ref.getObjectId();
-			if (!AnyObjectId.equals(refId, commit))
-				continue;
-			ret.add(new GitTag(tag.getKey()));
+		RefDatabase refs = db.getRefDatabase();
+		try {
+			for (Ref tag : refs.getRefsByPrefix(Constants.R_TAGS)) {
+				Ref ref = refs.peel(tag);
+				ObjectId refId = ref.getPeeledObjectId();
+				if (refId == null)
+					refId = ref.getObjectId();
+				if (AnyObjectId.equals(refId, commit)) {
+					String tagName = tag.getName()
+							.substring(Constants.R_TAGS.length());
+					ret.add(new GitTag(tagName));
+				}
+			}
+		} catch (IOException e) {
+			Activator.logError(MessageFormat.format(
+					CoreText.CommitFileRevision_errorLookingUpTags,
+					db.getDirectory().getAbsolutePath()), e);
 		}
 		return ret.toArray(new ITag[0]);
 	}

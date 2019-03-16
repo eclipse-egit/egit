@@ -375,9 +375,10 @@ public class CommitEditorPage extends FormPage
 		return UIText.CommitEditorPage_LabelParent;
 	}
 
-	private List<Ref> getTags() {
+	private List<Ref> getTags() throws IOException {
 		Repository repository = getCommit().getRepository();
-		List<Ref> tags = new ArrayList<>(repository.getTags().values());
+		List<Ref> tags = new ArrayList<>(
+				repository.getRefDatabase().getRefsByPrefix(Constants.R_TAGS));
 		Collections.sort(tags, new Comparator<Ref>() {
 
 			@Override
@@ -614,14 +615,22 @@ public class CommitEditorPage extends FormPage
 		RevCommit commit = repoCommit.getRevCommit();
 		Repository repository = repoCommit.getRepository();
 		List<Ref> tags = new ArrayList<>();
-		for (Ref tag : getTags()) {
-			tag = repository.peel(tag);
-			ObjectId id = tag.getPeeledObjectId();
-			if (id == null)
-				id = tag.getObjectId();
-			if (!commit.equals(id))
-				continue;
-			tags.add(tag);
+		try {
+			for (Ref tag : getTags()) {
+				tag = repository.getRefDatabase().peel(tag);
+				ObjectId id = tag.getPeeledObjectId();
+				if (id == null) {
+					id = tag.getObjectId();
+				}
+				if (commit.equals(id)) {
+					tags.add(tag);
+				}
+			}
+		} catch (IOException e) {
+			Activator.logError(MessageFormat.format(
+					UIText.CommitEditor_couldNotGetTags,
+					commit.getName(),
+					repository.getDirectory().getAbsolutePath()), e);
 		}
 		return tags;
 	}

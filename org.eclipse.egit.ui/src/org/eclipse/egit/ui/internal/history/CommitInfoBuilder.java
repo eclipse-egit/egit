@@ -22,8 +22,6 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
-import java.util.Map;
-import java.util.Map.Entry;
 
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.OperationCanceledException;
@@ -288,17 +286,18 @@ public class CommitInfoBuilder {
 		return name;
 	}
 
-	private String getTagsString() {
+	private String getTagsString() throws IOException {
 		StringBuilder sb = new StringBuilder();
-		Map<String, Ref> tagsMap = db.getTags();
-		for (Entry<String, Ref> tagEntry : tagsMap.entrySet()) {
-			ObjectId target = tagEntry.getValue().getPeeledObjectId();
-			if (target == null)
-				target = tagEntry.getValue().getObjectId();
+		for (Ref ref : db.getRefDatabase().getRefsByPrefix(Constants.R_TAGS)) {
+			ObjectId target = ref.getPeeledObjectId();
+			if (target == null) {
+				target = ref.getObjectId();
+			}
 			if (target != null && target.equals(commit)) {
-				if (sb.length() > 0)
+				if (sb.length() > 0) {
 					sb.append(", "); //$NON-NLS-1$
-				sb.append(tagEntry.getKey());
+				}
+				sb.append(formatTagRef(ref));
 			}
 		}
 		return sb.toString();
@@ -322,15 +321,14 @@ public class CommitInfoBuilder {
 			throw new OperationCanceledException();
 		try (RevWalk revWalk = new RevWalk(db)) {
 			revWalk.setRetainBody(false);
-			Map<String, Ref> tagsMap = db.getTags();
 			Ref tagRef = null;
 
-			for (Ref ref : tagsMap.values()) {
+			for (Ref ref : db.getRefDatabase()
+					.getRefsByPrefix(Constants.R_TAGS)) {
 				if (monitor.isCanceled())
 					throw new OperationCanceledException();
 				// both RevCommits must be allocated using same RevWalk
-				// instance,
-				// otherwise isMergedInto returns wrong result!
+				// instance, otherwise isMergedInto returns wrong result!
 				RevCommit current = revWalk.parseCommit(commit);
 				// tags can point to any object, we only want tags pointing at
 				// commits
@@ -351,8 +349,7 @@ public class CommitInfoBuilder {
 								.parseCommit(tagRef.getObjectId());
 
 						// both oldTag and newTag satisfy search criteria, so
-						// taking
-						// the closest one
+						// taking the closest one
 						if (isMergedInto(revWalk, oldTag, newTag,
 								searchDescendant))
 							tagRef = ref;

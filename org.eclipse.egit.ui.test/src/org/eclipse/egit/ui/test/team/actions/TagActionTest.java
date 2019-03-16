@@ -15,7 +15,7 @@ package org.eclipse.egit.ui.test.team.actions;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.assertNotNull;
 
 import java.io.File;
 
@@ -86,8 +86,8 @@ public class TagActionTest extends LocalRepositoryTestCase {
 				.setText("Here's the message text");
 		tagDialog.bot().button(UIText.CreateTagDialog_CreateTagButton).click();
 		waitInUI();
-		assertTrue(lookupRepository(repositoryFile).getTags().keySet()
-				.contains("AnotherTag"));
+		assertNotNull(lookupRepository(repositoryFile)
+				.exactRef(Constants.R_TAGS + "AnotherTag"));
 	}
 
 	@Test
@@ -136,8 +136,8 @@ public class TagActionTest extends LocalRepositoryTestCase {
 				.setText("Here's the first message");
 		tagDialog.bot().button(UIText.CreateTagDialog_CreateTagButton).click();
 		waitInUI();
-		assertTrue(lookupRepository(repositoryFile).getTags().keySet()
-				.contains("MessageChangeTag"));
+		assertNotNull(lookupRepository(repositoryFile)
+				.exactRef(Constants.R_TAGS + "MessageChangeTag"));
 		tagDialog = openTagDialog();
 		tagDialog.bot().tableWithLabel(UIText.CreateTagDialog_existingTags)
 				.getTableItem("MessageChangeTag").select();

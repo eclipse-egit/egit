@@ -24,7 +24,6 @@ import org.eclipse.egit.core.test.DualRepositoryTestCase;
 import org.eclipse.egit.core.test.TestRepository;
 import org.eclipse.egit.core.test.TestUtils;
 import org.eclipse.jgit.lib.Constants;
-import org.eclipse.jgit.lib.Ref;
 import org.eclipse.jgit.lib.TagBuilder;
 import org.eclipse.jgit.revwalk.RevTag;
 import org.eclipse.jgit.revwalk.RevWalk;
@@ -68,7 +67,7 @@ public class TagOperationTest extends DualRepositoryTestCase {
 	@Test
 	public void addTag() throws Exception {
 		assertTrue("Tags should be empty", repository1.getRepository()
-				.getTags().isEmpty());
+				.getRefDatabase().getRefsByPrefix(Constants.R_TAGS).isEmpty());
 		TagBuilder newTag = new TagBuilder();
 		newTag.setTag("TheNewTag");
 		newTag.setMessage("Well, I'm the tag");
@@ -79,7 +78,7 @@ public class TagOperationTest extends DualRepositoryTestCase {
 				newTag, false);
 		top.execute(new NullProgressMonitor());
 		assertFalse("Tags should not be empty", repository1.getRepository()
-				.getTags().isEmpty());
+				.getRefDatabase().getRefsByPrefix(Constants.R_TAGS).isEmpty());
 
 		try {
 			top.execute(null);
@@ -95,17 +94,16 @@ public class TagOperationTest extends DualRepositoryTestCase {
 		} catch (CoreException e) {
 			// expected
 		}
-		Ref tagRef = repository1.getRepository().getTags().get("TheNewTag");
 		try (RevWalk walk = new RevWalk(repository1.getRepository())) {
 			RevTag tag = walk.parseTag(repository1.getRepository().resolve(
-					tagRef.getName()));
+					Constants.R_TAGS + "TheNewTag"));
 
 			newTag.setMessage("Another message");
 			assertFalse("Messages should differ",
 					tag.getFullMessage().equals(newTag.getMessage()));
 			top.execute(null);
 			tag = walk.parseTag(repository1.getRepository().resolve(
-					tagRef.getName()));
+					Constants.R_TAGS + "TheNewTag"));
 			assertTrue("Messages be same",
 					tag.getFullMessage().equals(newTag.getMessage()));
 			walk.dispose();

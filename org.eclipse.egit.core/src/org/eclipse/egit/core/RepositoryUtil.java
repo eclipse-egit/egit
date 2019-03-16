@@ -223,7 +223,7 @@ public class RepositoryUtil {
 											.equals(commitId)) {
 										return checkoutEntry.getToBranch();
 									}
-									ref = repository.peel(ref);
+									ref = repository.getRefDatabase().peel(ref);
 								}
 								if (ref != null) {
 									ObjectId id = ref.getPeeledObjectId();

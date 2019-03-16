@@ -4471,6 +4471,9 @@ public class UIText extends NLS {
 	public static String CommitEditor_couldNotGetStashIndex;
 
 	/** */
+	public static String CommitEditor_couldNotGetTags;
+
+	/** */
 	public static String CommitEditor_showGitRepo;
 
 	/** */
