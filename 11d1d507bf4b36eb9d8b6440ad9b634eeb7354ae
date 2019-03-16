@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "95c9bdab_860b6c2b",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2019-03-16T09:00:12Z",
+      "side": 1,
+      "message": "Either that or these failures have something to do with there still not being a window manager. The dialog at [1] doesn\u0027t have any window decorations (border, title bar).\n\nDon\u0027t know why; it\u0027s an open question in bug 544389.\n\nIf it\u0027s really because of these GTK warnings, then we need a completely different setup. We need to be able to build Neon. If the old SWT in Neon doesn\u0027t work reliably on Fedora/GTK 3.24 then maybe we need a CentOS container with a somewhat older GTK.\n\n[1] https://ci-staging.eclipse.org/egit/job/egit.gerrit/11533/artifact/org.eclipse.egit.ui.test/target/screenshots/testDecorations(org.eclipse.egit.ui.test.team.actions.DisconnectConnectTest).jpeg",
+      "revId": "11d1d507bf4b36eb9d8b6440ad9b634eeb7354ae",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "6e1b91db_81397cf2",
+        "filename": "org.eclipse.egit.ui.test/src/org/eclipse/egit/ui/test/team/actions/DisconnectConnectTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2019-03-16T09:00:12Z",
+      "side": 1,
+      "message": "Maybe these timeouts are not long enough on that super-slow build infrastructure?",
+      "revId": "11d1d507bf4b36eb9d8b6440ad9b634eeb7354ae",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c4aa7175_84ae72fb",
+        "filename": "org.eclipse.egit.ui.test/src/org/eclipse/egit/ui/wizards/share/SharingWizardTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 266,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2019-03-16T09:00:12Z",
+      "side": 1,
+      "message": "No, this one actually has uncovered a bug.\n\nNewly the temporary location is at ${WORKSPACE}/tools/bin/tmp/egit.tmp. ExistingOrNewPage refuses to move the project because that is \"inside\" the top-level Egit project ${WORKSPACE}/.project. The loop at ExistingOrNewPage.java:611 walks up the whole directory tree until root! It should stop at selectedRepository.getWorkTree().getPath() instead.\n\nPlease fix ExistingOrNewPage instead of ignoring the test.",
+      "revId": "11d1d507bf4b36eb9d8b6440ad9b634eeb7354ae",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
