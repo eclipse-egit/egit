@@ -34,6 +34,7 @@ import org.eclipse.swtbot.swt.finder.widgets.SWTBotShell;
 import org.eclipse.swtbot.swt.finder.widgets.SWTBotTree;
 import org.eclipse.swtbot.swt.finder.widgets.SWTBotTreeItem;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
@@ -79,6 +80,7 @@ public class DisconnectConnectTest extends LocalRepositoryTestCase {
 	}
 
 	@Test
+	@Ignore("Fails on new kubernetes based Jenkins: Sharing wizard 'Finish' button does not get enabled.")
 	public void testDecorations() throws Exception {
 		IProject project = ResourcesPlugin.getWorkspace().getRoot()
 				.getProject(PROJ1);
