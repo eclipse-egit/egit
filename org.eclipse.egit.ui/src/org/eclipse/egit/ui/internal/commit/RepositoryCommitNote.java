@@ -81,13 +81,13 @@ public class RepositoryCommitNote extends PlatformObject implements
 	}
 
 	@Override
-	public Object getAdapter(Class adapter) {
-		if (RepositoryCommit.class == adapter)
-			return this.commit;
-
-		if (Repository.class == adapter)
-			return this.commit.getRepository();
-
+	public <T> T getAdapter(Class<T> adapter) {
+		if (RepositoryCommit.class == adapter) {
+			return adapter.cast(commit);
+		}
+		if (Repository.class == adapter) {
+			return adapter.cast(commit.getRepository());
+		}
 		return super.getAdapter(adapter);
 	}
 

@@ -58,7 +58,7 @@ public class GitChangeSetLabelProvider extends SynchronizationLabelProvider impl
 
 	private GitLabelProvider delegateLabelProvider;
 
-	private final ListenerList listeners = new ListenerList(
+	private final ListenerList<ILabelProviderListener> listeners = new ListenerList<>(
 			ListenerList.IDENTITY);
 
 	private final IPreferenceStore store = Activator.getDefault()
