@@ -79,12 +79,10 @@ public class GitProjectData {
 
 	private static Set<RepositoryMappingChangeListener> repositoryChangeListeners = new HashSet<>();
 
-	@SuppressWarnings("synthetic-access")
 	private static final IResourceChangeListener rcl = new RCL();
 
 	private static class RCL implements IResourceChangeListener {
 		@Override
-		@SuppressWarnings("synthetic-access")
 		public void resourceChanged(final IResourceChangeEvent event) {
 			switch (event.getType()) {
 			case IResourceChangeEvent.PRE_CLOSE:

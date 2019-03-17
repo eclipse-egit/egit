@@ -16,8 +16,8 @@ import static org.eclipse.swtbot.swt.finder.SWTBotAssert.assertNotEnabled;
 import static org.eclipse.swtbot.swt.finder.matchers.WidgetMatcherFactory.allOf;
 import static org.eclipse.swtbot.swt.finder.matchers.WidgetMatcherFactory.widgetOfType;
 import static org.eclipse.swtbot.swt.finder.matchers.WidgetMatcherFactory.withText;
-import static org.eclipse.swtbot.swt.finder.waits.Conditions.widgetIsEnabled;
 import static org.eclipse.swtbot.swt.finder.waits.Conditions.waitForWidget;
+import static org.eclipse.swtbot.swt.finder.waits.Conditions.widgetIsEnabled;
 
 import org.eclipse.swt.widgets.Text;
 import org.eclipse.swtbot.eclipse.finder.SWTWorkbenchBot;
@@ -59,7 +59,7 @@ public class RepoRemoteBranchesPage {
 		}
 	}
 
-	@SuppressWarnings({ "unchecked", "rawtypes" })
+	@SuppressWarnings({ "unchecked" })
 	public void assertErrorMessage(String errorMessage) {
 		bot.waitUntil(
 				waitForWidget(allOf(widgetOfType(Text.class), withText(" "
