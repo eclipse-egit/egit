@@ -38,6 +38,7 @@ import org.eclipse.egit.core.op.BranchOperation;
 import org.eclipse.egit.ui.Activator;
 import org.eclipse.egit.ui.JobFamilies;
 import org.eclipse.egit.ui.UIPreferences;
+import org.eclipse.egit.ui.internal.UIRepositoryUtils;
 import org.eclipse.egit.ui.internal.UIText;
 import org.eclipse.egit.ui.internal.decorators.GitLightweightDecorator;
 import org.eclipse.egit.ui.internal.dialogs.NonDeletedFilesDialog;
@@ -424,14 +425,10 @@ public class BranchOperationUI {
 			PlatformUI.getWorkbench().getDisplay().asyncExec(() -> {
 				Shell shell = PlatformUI.getWorkbench()
 						.getActiveWorkbenchWindow().getShell();
-				CleanupUncomittedChangesDialog cleanupUncomittedChangesDialog = new CleanupUncomittedChangesDialog(
-						shell, UIText.BranchResultDialog_CheckoutConflictsTitle,
-						NLS.bind(
-								UIText.BranchResultDialog_CheckoutConflictsMessage,
-								Repository.shortenRefName(target)),
-						repository, result.getConflictList());
-				cleanupUncomittedChangesDialog.open();
-				if (cleanupUncomittedChangesDialog.shouldContinue()) {
+				if (UIRepositoryUtils.showCleanupDialog(repository,
+						result.getConflictList(),
+						UIText.BranchResultDialog_CheckoutConflictsTitle,
+						shell)) {
 					BranchOperationUI.checkout(repository, target, false)
 							.start();
 				}

@@ -28,8 +28,8 @@ import org.eclipse.egit.core.internal.rebase.RebaseInteractivePlan;
 import org.eclipse.egit.core.op.RebaseOperation;
 import org.eclipse.egit.ui.Activator;
 import org.eclipse.egit.ui.JobFamilies;
+import org.eclipse.egit.ui.internal.UIRepositoryUtils;
 import org.eclipse.egit.ui.internal.UIText;
-import org.eclipse.egit.ui.internal.branch.CleanupUncomittedChangesDialog;
 import org.eclipse.egit.ui.internal.rebase.RebaseResultDialog;
 import org.eclipse.egit.ui.internal.staging.StagingView;
 import org.eclipse.jface.dialogs.MessageDialog;
@@ -199,15 +199,11 @@ public abstract class AbstractRebaseCommandHandler extends AbstractSharedCommand
 						.getActiveWorkbenchWindow().getShell();
 				String repoName = Activator.getDefault().getRepositoryUtil()
 						.getRepositoryName(repository);
-				CleanupUncomittedChangesDialog cleanupUncomittedChangesDialog = new CleanupUncomittedChangesDialog(
-						shell,
-						MessageFormat
-								.format(UIText.AbstractRebaseCommandHandler_cleanupDialog_title,
-										repoName),
-						UIText.AbstractRebaseCommandHandler_cleanupDialog_text,
-						repository, files);
-				cleanupUncomittedChangesDialog.open();
-				if (cleanupUncomittedChangesDialog.shouldContinue()) {
+				String title = MessageFormat.format(
+						UIText.AbstractRebaseCommandHandler_cleanupDialog_title,
+						repoName);
+				if (UIRepositoryUtils.showCleanupDialog(repository, files,
+						title, shell)) {
 					try {
 						execute(repository);
 					} catch (ExecutionException e) {

@@ -14,8 +14,6 @@ import static org.eclipse.egit.gitflow.ui.Activator.error;
 import static org.eclipse.egit.gitflow.ui.internal.JobFamilies.GITFLOW_FAMILY;
 
 import java.text.MessageFormat;
-import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 import org.eclipse.core.commands.AbstractHandler;
@@ -31,14 +29,13 @@ import org.eclipse.egit.gitflow.op.FeatureCheckoutOperation;
 import org.eclipse.egit.gitflow.ui.internal.JobFamilies;
 import org.eclipse.egit.gitflow.ui.internal.UIText;
 import org.eclipse.egit.gitflow.ui.internal.dialogs.FeatureBranchSelectionDialog;
-import org.eclipse.egit.ui.internal.branch.CleanupUncomittedChangesDialog;
+import org.eclipse.egit.ui.Activator;
+import org.eclipse.egit.ui.internal.UIRepositoryUtils;
 import org.eclipse.jface.window.Window;
 import org.eclipse.jgit.api.CheckoutResult;
-import org.eclipse.jgit.api.Git;
 import org.eclipse.jgit.api.errors.GitAPIException;
 import org.eclipse.jgit.lib.Constants;
 import org.eclipse.jgit.lib.Ref;
-import org.eclipse.jgit.lib.Repository;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.ui.handlers.HandlerUtil;
 
@@ -52,8 +49,6 @@ public class FeatureCheckoutHandler extends AbstractHandler {
 		if (gfRepo == null) {
 			return error(UIText.Handlers_noGitflowRepositoryFound);
 		}
-
-		Repository repository = gfRepo.getRepository();
 
 		final List<Ref> refs = gfRepo.getFeatureBranches();
 
@@ -88,8 +83,13 @@ public class FeatureCheckoutHandler extends AbstractHandler {
 			CheckoutResult result = checkoutOperation.getResult();
 			if (!CheckoutResult.Status.OK.equals(result.getStatus())) {
 				Shell shell = HandlerUtil.getActiveShell(event);
-				if (!handleUncommittedFiles(gfRepo.getRepository(), shell,
-						repository.getWorkTree().getName())) {
+				String repoName = Activator.getDefault().getRepositoryUtil()
+						.getRepositoryName(gfRepo.getRepository());
+				if (!UIRepositoryUtils.handleUncommittedFiles(
+						gfRepo.getRepository(), shell,
+						MessageFormat.format(
+								UIText.FeatureCheckoutHandler_cleanupDialog_title,
+								repoName))) {
 					return Status.CANCEL_STATUS;
 				} else {
 					JobUtil.scheduleUserWorkspaceJob(checkoutOperation,
@@ -102,29 +102,5 @@ public class FeatureCheckoutHandler extends AbstractHandler {
 		}
 
 		return null;
-	}
-
-	private boolean handleUncommittedFiles(Repository repo, Shell shell,
-			String repoName) throws GitAPIException {
-		try (Git git = new Git(repo)) {
-			org.eclipse.jgit.api.Status status = git.status().call();
-
-			if (status.hasUncommittedChanges()) {
-				List<String> files = new ArrayList<String>(
-						status.getUncommittedChanges());
-				Collections.sort(files);
-				CleanupUncomittedChangesDialog cleanupUncomittedChangesDialog = new CleanupUncomittedChangesDialog(
-						shell,
-						MessageFormat
-								.format(UIText.FeatureCheckoutHandler_cleanupDialog_title,
-										repoName),
-						UIText.FeatureCheckoutHandler_cleanupDialog_text,
-						repo, files);
-				cleanupUncomittedChangesDialog.open();
-				return cleanupUncomittedChangesDialog.shouldContinue();
-			} else {
-				return true;
-			}
-		}
 	}
 }

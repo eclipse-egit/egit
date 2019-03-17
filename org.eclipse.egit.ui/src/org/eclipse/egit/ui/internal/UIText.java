@@ -3301,9 +3301,6 @@ public class UIText extends NLS {
 	public static String BranchResultDialog_buttonStash;
 
 	/** */
-	public static String BranchResultDialog_CheckoutConflictsMessage;
-
-	/** */
 	public static String BranchResultDialog_CheckoutConflictsTitle;
 
 	/** */

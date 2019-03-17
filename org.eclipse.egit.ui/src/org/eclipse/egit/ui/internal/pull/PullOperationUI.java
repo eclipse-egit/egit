@@ -38,8 +38,8 @@ import org.eclipse.egit.core.op.PullOperation.PullReferenceConfig;
 import org.eclipse.egit.ui.Activator;
 import org.eclipse.egit.ui.JobFamilies;
 import org.eclipse.egit.ui.UIPreferences;
+import org.eclipse.egit.ui.internal.UIRepositoryUtils;
 import org.eclipse.egit.ui.internal.UIText;
-import org.eclipse.egit.ui.internal.branch.CleanupUncomittedChangesDialog;
 import org.eclipse.egit.ui.internal.branch.LaunchFinder;
 import org.eclipse.egit.ui.internal.credentials.EGitCredentialsProvider;
 import org.eclipse.jface.dialogs.ErrorDialog;
@@ -235,15 +235,11 @@ public class PullOperationUI extends JobChangeAdapter {
 			final List<String> files, Shell shell) {
 		String repoName = Activator.getDefault().getRepositoryUtil()
 				.getRepositoryName(repository);
-		CleanupUncomittedChangesDialog cleanupUncomittedChangesDialog = new CleanupUncomittedChangesDialog(
-				shell,
-				MessageFormat
-						.format(UIText.AbstractRebaseCommandHandler_cleanupDialog_title,
-								repoName),
-				UIText.AbstractRebaseCommandHandler_cleanupDialog_text,
-				repository, files);
-		cleanupUncomittedChangesDialog.open();
-		if (cleanupUncomittedChangesDialog.shouldContinue()) {
+		String title = MessageFormat.format(
+				UIText.AbstractRebaseCommandHandler_cleanupDialog_title,
+				repoName);
+		if (UIRepositoryUtils.showCleanupDialog(repository, files, title,
+				shell)) {
 			final PullOperationUI parentOperation = this;
 			final PullOperationUI pullOperationUI = new PullOperationUI(
 					Collections.singleton(repository));

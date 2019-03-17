@@ -228,9 +228,6 @@ public class UIText extends NLS {
 	public static String FeatureCheckoutHandler_cleanupDialog_title;
 
 	/** */
-	public static String FeatureCheckoutHandler_cleanupDialog_text;
-
-	/** */
 	public static String FinishFeatureDialog_ButtonOK;
 
 	/** */
