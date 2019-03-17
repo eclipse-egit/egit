@@ -90,7 +90,7 @@ public class TestProject {
 		this.workspaceSupplement = workspaceSupplement;
 		IWorkspaceRoot root = ResourcesPlugin.getWorkspace().getRoot();
 		IProjectDescription description = createDescription(path, insidews,
-				root, workspaceSupplement);
+				root);
 		project = root.getProject(description.getName());
 		if (remove)
 			project.delete(true, null);
@@ -122,7 +122,7 @@ public class TestProject {
 	}
 
 	private IProjectDescription createDescription(String path,
-			boolean insidews, IWorkspaceRoot root, File workspaceSupplement) {
+			boolean insidews, IWorkspaceRoot root) {
 		Path ppath = new Path(path);
 		String projectName = ppath.lastSegment();
 		URI locationURI;
@@ -214,9 +214,9 @@ public class TestProject {
 	}
 
 	private IFolder createBinFolder() throws CoreException {
-		IFolder binFolder = project.getFolder("bin");
-		binFolder.create(false, true, null);
-		return binFolder;
+		IFolder folder = project.getFolder("bin");
+		folder.create(false, true, null);
+		return folder;
 	}
 
 	private void setJavaNature() throws CoreException {
@@ -225,9 +225,9 @@ public class TestProject {
 		project.setDescription(description, null);
 	}
 
-	private void createOutputFolder(IFolder binFolder)
+	private void createOutputFolder(IFolder folder)
 			throws JavaModelException {
-		IPath outputLocation = binFolder.getFullPath();
+		IPath outputLocation = folder.getFullPath();
 		javaProject.setOutputLocation(outputLocation, null);
 	}
 

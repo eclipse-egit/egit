@@ -111,10 +111,10 @@ public class AssumeUnchangedOperation implements IEGitOperation {
 
 			progress.setWorkRemaining(caches.size());
 			for (Map.Entry<Repository, DirCache> e : caches.entrySet()) {
-				final Repository db = e.getKey();
+				final Repository repo = e.getKey();
 				final DirCache editor = e.getValue();
 				progress.setTaskName(NLS.bind(
-						CoreText.AssumeUnchangedOperation_writingIndex, db
+						CoreText.AssumeUnchangedOperation_writingIndex, repo
 								.getDirectory()));
 				editor.write();
 				editor.commit();
