@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "67292531_61938e09",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/repository/RepositoriesView.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 523,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2019-03-17T09:24:42Z",
+      "side": 1,
+      "message": "ActionCommands.SIMPLE_FETCH_ACTION",
+      "range": {
+        "startLine": 523,
+        "startChar": 25,
+        "endLine": 523,
+        "endChar": 63
+      },
+      "revId": "d6d051f55bb7c91e40ffab935e3aa33f64f55529",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
