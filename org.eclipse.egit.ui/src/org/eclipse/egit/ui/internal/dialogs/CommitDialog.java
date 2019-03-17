@@ -759,19 +759,19 @@ public class CommitDialog extends TitleAreaDialog {
 	}
 
 	private Section createFileSection(Composite container) {
-		Section filesSection = toolkit.createSection(container,
+		Section section = toolkit.createSection(container,
 				ExpandableComposite.TITLE_BAR
 						| ExpandableComposite.CLIENT_INDENT);
-		GridDataFactory.fillDefaults().grab(true, true).applyTo(filesSection);
-		Composite filesArea = toolkit.createComposite(filesSection);
-		filesSection.setClient(filesArea);
+		GridDataFactory.fillDefaults().grab(true, true).applyTo(section);
+		Composite filesArea = toolkit.createComposite(section);
+		section.setClient(filesArea);
 		toolkit.paintBordersFor(filesArea);
 		GridLayoutFactory.fillDefaults().extendedMargins(2, 2, 2, 2)
 				.applyTo(filesArea);
 
-		ToolBar filesToolbar = new ToolBar(filesSection, SWT.FLAT);
+		ToolBar filesToolbar = new ToolBar(section, SWT.FLAT);
 
-		filesSection.setTextClient(filesToolbar);
+		section.setTextClient(filesToolbar);
 
 		PatternFilter patternFilter = new PatternFilter() {
 			@Override
@@ -967,7 +967,7 @@ public class CommitDialog extends TitleAreaDialog {
 		}
 		statCol.pack();
 		resourceCol.pack();
-		return filesSection;
+		return section;
 	}
 
 	private void updateCommitButtons(boolean enable) {
@@ -1434,12 +1434,12 @@ public class CommitDialog extends TitleAreaDialog {
 	private int getProblemsSeverity() {
 		int result = IProblemDecoratable.SEVERITY_NONE;
 		Object[] checkedElements = filesViewer.getCheckedElements();
-		ArrayList<String> selectedFiles = new ArrayList<>();
+		ArrayList<String> selectedFilePaths = new ArrayList<>();
 		for (Object obj : checkedElements)
-			selectedFiles.add(((CommitItem) obj).path);
+			selectedFilePaths.add(((CommitItem) obj).path);
 		for (final CommitItem item : items) {
 			if (item.getProblemSeverity() >= IMarker.SEVERITY_WARNING
-					&& selectedFiles.contains(item.path)) {
+					&& selectedFilePaths.contains(item.path)) {
 				if (result < item.getProblemSeverity()) {
 					result = item.getProblemSeverity();
 				}
