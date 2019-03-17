@@ -403,10 +403,10 @@ class CommitGraphTable {
 		if (s.isEmpty() || !(s instanceof IStructuredSelection))
 			return;
 		final IStructuredSelection iss = (IStructuredSelection) s;
-		final Iterator<PlotCommit> itr = iss.iterator();
+		final Iterator itr = iss.iterator();
 		final StringBuilder r = new StringBuilder();
 		while (itr.hasNext()) {
-			final PlotCommit d = itr.next();
+			final PlotCommit d = (PlotCommit) itr.next();
 			if (r.length() > 0)
 				r.append(LINESEP);
 			r.append(d.getId().name());

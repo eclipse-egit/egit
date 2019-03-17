@@ -84,13 +84,13 @@ public class RepositoryCommit extends WorkbenchAdapter
 	}
 
 	@Override
-	public Object getAdapter(Class adapter) {
-		if (Repository.class == adapter)
-			return repository;
-
-		if (RevCommit.class == adapter)
-			return commit;
-
+	public <T> T getAdapter(Class<T> adapter) {
+		if (Repository.class == adapter) {
+			return adapter.cast(repository);
+		}
+		if (RevCommit.class == adapter) {
+			return adapter.cast(commit);
+		}
 		return Platform.getAdapterManager().getAdapter(this, adapter);
 	}
 

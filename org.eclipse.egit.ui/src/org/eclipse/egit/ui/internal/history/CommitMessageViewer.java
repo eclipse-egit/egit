@@ -81,7 +81,7 @@ class CommitMessageViewer extends HyperlinkSourceViewer {
 	static final String FOOTER_CONTENT_TYPE = "__egit_commit_msg_footer"; //$NON-NLS-1$
 
 	// notified when clicking on a link in the message (branch, commit...)
-	private final ListenerList navListeners = new ListenerList();
+	private final ListenerList<CommitNavigationListener> navListeners = new ListenerList<>();
 
 	// listener to detect changes in the wrap and fill preferences
 	private final IPropertyChangeListener listener;

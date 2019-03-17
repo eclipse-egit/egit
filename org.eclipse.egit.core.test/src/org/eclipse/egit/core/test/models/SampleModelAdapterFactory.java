@@ -16,17 +16,17 @@ import org.eclipse.team.core.mapping.IResourceMappingMerger;
 
 public class SampleModelAdapterFactory implements IAdapterFactory {
 	@Override
-	public Object getAdapter(Object adaptableObject, Class adapterType) {
+	public <T> T getAdapter(Object adaptableObject, Class<T> adapterType) {
 		if (adaptableObject instanceof SampleModelProvider
 				&& IResourceMappingMerger.class.isAssignableFrom(adapterType)) {
-			return new SampleResourceMappingMerger(
-					(ModelProvider) adaptableObject);
+			return adapterType.cast(new SampleResourceMappingMerger(
+					(ModelProvider) adaptableObject));
 		}
 		return null;
 	}
 
 	@Override
-	public Class[] getAdapterList() {
+	public Class<?>[] getAdapterList() {
 		return new Class[] { IResourceMappingMerger.class, };
 	}
 }
