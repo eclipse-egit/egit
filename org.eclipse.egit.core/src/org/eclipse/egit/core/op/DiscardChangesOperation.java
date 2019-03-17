@@ -17,6 +17,7 @@
 package org.eclipse.egit.core.op;
 
 import java.util.Collection;
+import java.util.Collections;
 import java.util.Map;
 import java.util.Map.Entry;
 
@@ -106,6 +107,20 @@ public class DiscardChangesOperation implements IEGitOperation {
 	 */
 	public DiscardChangesOperation(Collection<IPath> paths) {
 		this(ResourceUtil.splitPathsByRepository(paths));
+	}
+
+	/**
+	 * A {@link DiscardChangesOperation} that resets the given repo-relative
+	 * paths in the given repository.
+	 *
+	 * @param repository
+	 *            to work on
+	 * @param paths
+	 *            collection of repository-relative paths to reset
+	 */
+	public DiscardChangesOperation(Repository repository,
+			Collection<String> paths) {
+		this(Collections.singletonMap(repository, paths));
 	}
 
 	private DiscardChangesOperation(

@@ -16,11 +16,13 @@ package org.eclipse.egit.ui.internal.dialogs;
 
 import java.util.List;
 
+import org.eclipse.egit.core.internal.job.JobUtil;
+import org.eclipse.egit.core.op.DiscardChangesOperation;
+import org.eclipse.egit.ui.JobFamilies;
 import org.eclipse.egit.ui.internal.CommonUtils;
 import org.eclipse.egit.ui.internal.UIText;
 import org.eclipse.egit.ui.internal.actions.ActionCommands;
 import org.eclipse.egit.ui.internal.repository.tree.RepositoryNode;
-import org.eclipse.egit.ui.internal.repository.tree.command.ResetCommand;
 import org.eclipse.jface.dialogs.IDialogConstants;
 import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.layout.GridDataFactory;
@@ -80,8 +82,11 @@ public class CheckoutConflictDialog extends MessageDialog {
 					new StructuredSelection(repository));
 			break;
 		case IDialogConstants.ABORT_ID:
-			CommonUtils.runCommand(ResetCommand.ID, new StructuredSelection(
-					new RepositoryNode(null, repository)));
+			DiscardChangesOperation operation = new DiscardChangesOperation(
+					repository, this.conflicts);
+			JobUtil.scheduleUserWorkspaceJob(operation,
+					UIText.DiscardChangesAction_discardChanges,
+					JobFamilies.DISCARD_CHANGES);
 			break;
 		case IDialogConstants.SKIP_ID:
 			CommonUtils.runCommand(ActionCommands.STASH_CREATE,
@@ -98,7 +103,7 @@ public class CheckoutConflictDialog extends MessageDialog {
 	protected void createButtonsForButtonBar(Composite parent) {
 		super.createButtonsForButtonBar(parent);
 		createButton(parent, IDialogConstants.ABORT_ID,
-				UIText.BranchResultDialog_buttonReset, false);
+				UIText.BranchResultDialog_buttonDiscardChanges, false);
 		createButton(parent, IDialogConstants.PROCEED_ID,
 				UIText.BranchResultDialog_buttonCommit, false);
 		createButton(parent, IDialogConstants.SKIP_ID,

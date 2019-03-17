@@ -14,7 +14,7 @@ import java.util.List;
 
 import org.eclipse.core.resources.IResource;
 import org.eclipse.egit.core.internal.job.JobUtil;
-import org.eclipse.egit.core.op.ResetOperation;
+import org.eclipse.egit.core.op.DiscardChangesOperation;
 import org.eclipse.egit.ui.JobFamilies;
 import org.eclipse.egit.ui.internal.UIText;
 import org.eclipse.egit.ui.internal.commit.CommitUI;
@@ -23,10 +23,7 @@ import org.eclipse.egit.ui.internal.stash.StashCreateUI;
 import org.eclipse.jface.dialogs.IDialogConstants;
 import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.layout.GridDataFactory;
-import org.eclipse.jgit.api.ResetCommand.ResetType;
-import org.eclipse.jgit.lib.Constants;
 import org.eclipse.jgit.lib.Repository;
-import org.eclipse.osgi.util.NLS;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.layout.GridLayout;
@@ -88,11 +85,11 @@ public class CleanupUncomittedChangesDialog extends MessageDialog {
 			shouldContinue = commitUI.commit();
 			break;
 		case IDialogConstants.ABORT_ID:
-			final ResetOperation operation = new ResetOperation(repository,
-					Constants.HEAD, ResetType.HARD);
-			String jobname = NLS.bind(UIText.ResetAction_reset, Constants.HEAD);
-			JobUtil.scheduleUserWorkspaceJob(operation, jobname,
-					JobFamilies.RESET);
+			DiscardChangesOperation operation = new DiscardChangesOperation(
+					repository, fileList);
+			JobUtil.scheduleUserWorkspaceJob(operation,
+					UIText.DiscardChangesAction_discardChanges,
+					JobFamilies.DISCARD_CHANGES);
 			shouldContinue = true;
 			break;
 		case IDialogConstants.SKIP_ID:
@@ -114,7 +111,7 @@ public class CleanupUncomittedChangesDialog extends MessageDialog {
 		createButton(parent, IDialogConstants.SKIP_ID,
 				UIText.BranchResultDialog_buttonStash, false);
 		createButton(parent, IDialogConstants.ABORT_ID,
-				UIText.BranchResultDialog_buttonReset, false);
+				UIText.BranchResultDialog_buttonDiscardChanges, false);
 		createButton(parent, IDialogConstants.CANCEL_ID,
 				IDialogConstants.CANCEL_LABEL, true);
 	}

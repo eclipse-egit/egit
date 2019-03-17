@@ -756,13 +756,17 @@ public abstract class LocalRepositoryTestCase extends EGitTestCase {
 	}
 
 	protected String getTestFileContent() throws Exception {
+		return getTestFileContent(FILE1);
+	}
+
+	protected String getTestFileContent(String fileName) throws Exception {
 		IFile file = ResourcesPlugin.getWorkspace().getRoot().getProject(PROJ1)
-				.getFile(new Path("folder/test.txt"));
+				.getFolder(FOLDER).getFile(fileName);
 		if (file.exists()) {
 			byte[] bytes = IO.readFully(file.getLocation().toFile());
 			return new String(bytes, file.getCharset());
-		} else
-			return "";
+		}
+		return "";
 	}
 
 	/**

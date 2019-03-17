@@ -3295,7 +3295,7 @@ public class UIText extends NLS {
 	public static String BranchResultDialog_buttonCommit;
 
 	/** */
-	public static String BranchResultDialog_buttonReset;
+	public static String BranchResultDialog_buttonDiscardChanges;
 
 	/** */
 	public static String BranchResultDialog_buttonStash;
