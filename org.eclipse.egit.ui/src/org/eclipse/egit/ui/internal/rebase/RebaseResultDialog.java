@@ -41,7 +41,7 @@ import org.eclipse.egit.ui.internal.UIText;
 import org.eclipse.egit.ui.internal.commands.shared.AbortRebaseCommand;
 import org.eclipse.egit.ui.internal.commands.shared.AbstractRebaseCommandHandler;
 import org.eclipse.egit.ui.internal.commands.shared.SkipRebaseCommand;
-import org.eclipse.egit.ui.internal.dialogs.CheckoutConflictDialog;
+import org.eclipse.egit.ui.internal.dialogs.CleanupUncomittedChangesDialog;
 import org.eclipse.egit.ui.internal.merge.GitMergeEditorInput;
 import org.eclipse.egit.ui.internal.merge.MergeModeDialog;
 import org.eclipse.jface.dialogs.IDialogConstants;
@@ -119,8 +119,11 @@ public class RebaseResultDialog extends MessageDialog {
 			PlatformUI.getWorkbench().getDisplay().asyncExec(() -> {
 				Shell shell = PlatformUI.getWorkbench()
 						.getActiveWorkbenchWindow().getShell();
-				new CheckoutConflictDialog(shell, repository,
-						result.getConflicts()).open();
+				MessageDialog dialog = new CleanupUncomittedChangesDialog(shell,
+						UIText.BranchResultDialog_CheckoutConflictsTitle,
+						UIText.AbstractRebaseCommandHandler_cleanupDialog_text,
+						repository, result.getConflicts(), false);
+				dialog.open();
 			});
 			return;
 		case STOPPED:

@@ -19,7 +19,7 @@ import java.util.Collections;
 import java.util.List;
 
 import org.eclipse.egit.ui.Activator;
-import org.eclipse.egit.ui.internal.branch.CleanupUncomittedChangesDialog;
+import org.eclipse.egit.ui.internal.dialogs.CleanupUncomittedChangesDialog;
 import org.eclipse.jgit.api.Git;
 import org.eclipse.jgit.api.Status;
 import org.eclipse.jgit.api.errors.GitAPIException;

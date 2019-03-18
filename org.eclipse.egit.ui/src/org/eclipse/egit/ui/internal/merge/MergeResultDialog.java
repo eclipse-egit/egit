@@ -22,7 +22,7 @@ import org.eclipse.egit.ui.UIUtils;
 import org.eclipse.egit.ui.internal.UIText;
 import org.eclipse.egit.ui.internal.commit.CommitEditor;
 import org.eclipse.egit.ui.internal.commit.RepositoryCommit;
-import org.eclipse.egit.ui.internal.dialogs.CheckoutConflictDialog;
+import org.eclipse.egit.ui.internal.dialogs.CleanupUncomittedChangesDialog;
 import org.eclipse.jface.dialogs.Dialog;
 import org.eclipse.jface.dialogs.IDialogConstants;
 import org.eclipse.jface.dialogs.IDialogSettings;
@@ -80,10 +80,14 @@ public class MergeResultDialog extends Dialog {
 	 * @return the created dialog
 	 */
 	public static Dialog getDialog(Shell parentShell, Repository repository, MergeResult mergeResult) {
-		if(mergeResult.getMergeStatus() == MergeStatus.CHECKOUT_CONFLICT)
-			return new CheckoutConflictDialog(parentShell, repository, mergeResult.getCheckoutConflicts());
-		else
+		if (mergeResult.getMergeStatus() == MergeStatus.CHECKOUT_CONFLICT) {
+			return new CleanupUncomittedChangesDialog(parentShell,
+					UIText.BranchResultDialog_CheckoutConflictsTitle,
+					UIText.AbstractRebaseCommandHandler_cleanupDialog_text,
+					repository, mergeResult.getCheckoutConflicts(), false);
+		} else {
 			return new MergeResultDialog(parentShell, repository, mergeResult);
+		}
 	}
 
 	/**

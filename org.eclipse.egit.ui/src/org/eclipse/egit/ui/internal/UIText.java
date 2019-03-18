@@ -1222,9 +1222,6 @@ public class UIText extends NLS {
 	public static String CheckoutCommand_CheckoutLabelWithQuestion;
 
 	/** */
-	public static String CheckoutConflictDialog_conflictMessage;
-
-	/** */
 	public static String CheckoutDialog_OkCheckout;
 
 	/** */
