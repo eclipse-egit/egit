@@ -249,20 +249,24 @@ public class GitCloneWizardTest extends GitCloneWizardTestBase {
 		// the integrity of the repository here. Only a few basic properties
 		// we'd expect from a clone made this way, that would possibly
 		// not hold true given other parameters in the GUI.
-		Repository repository = FileRepositoryBuilder.create(new File(destRepo,
-				Constants.DOT_GIT));
-		assertNotNull(repository.resolve("src/" + SampleTestRepository.FIX));
-		// we didn't clone that one
-		assertNull(repository.resolve("src/master"));
-		// and a local master initialized from origin/master (default!)
-		assertEquals(repository.resolve("stable"), repository
-				.resolve("src/stable"));
-		// A well known tag
-		assertNotNull(repository.resolve(Constants.R_TAGS + SampleTestRepository.v2_0_name).name());
-		// lots of refs
-		assertTrue(repository.getRefDatabase().getRefsByPrefix(RefDatabase.ALL)
-				.size() >= 4);
-		bot.button("Cancel").click();
+		try (Repository repository = FileRepositoryBuilder
+				.create(new File(destRepo, Constants.DOT_GIT))) {
+			assertNotNull(
+					repository.resolve("src/" + SampleTestRepository.FIX));
+			// we didn't clone that one
+			assertNull(repository.resolve("src/master"));
+			// and a local master initialized from origin/master (default!)
+			assertEquals(repository.resolve("stable"),
+					repository.resolve("src/stable"));
+			// A well known tag
+			assertNotNull(repository
+					.resolve(Constants.R_TAGS + SampleTestRepository.v2_0_name)
+					.name());
+			// lots of refs
+			assertTrue(repository.getRefDatabase()
+					.getRefsByPrefix(RefDatabase.ALL).size() >= 4);
+			bot.button("Cancel").click();
+		}
 	}
 
 	// TODO network timeouts seem to be longer on central EGit build
