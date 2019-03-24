@@ -176,7 +176,7 @@ public class GitRepositoriesViewRepoDeletionTest extends
 				new File(repositoryFile.getParentFile(), PROJ1).isDirectory());
 		TestUtil.waitForDecorations();
 		closeGitViews();
-		TestUtil.waitForJobs(500, 5000);
+		TestUtil.waitForJobs(500, 7000);
 		// Session properties are stored in the Eclipse resource tree as part of
 		// the resource info. org.eclipse.core.internal.dtree.DataTreeLookup has
 		// a static LRU cache of lookup instances to avoid excessive strain on
@@ -219,7 +219,7 @@ public class GitRepositoriesViewRepoDeletionTest extends
 			}
 			project.delete(true, true, null);
 		}
-		TestUtil.waitForJobs(500, 5000);
+		TestUtil.waitForJobs(500, 7000);
 		// And we may have the RepositoryChangeScanner running: use a job
 		// with a scheduling rule that ensures we have exclusive access.
 		final String[] results = { null, null };
@@ -249,7 +249,7 @@ public class GitRepositoriesViewRepoDeletionTest extends
 				// Finally... Java does not give any guarantees about when
 				// exactly an only weakly reachable object is finalized and
 				// garbage collected.
-				waitForFinalization(10000);
+				waitForFinalization(15000);
 				// Experience shows that an explicit garbage collection run very
 				// often does reclaim only weakly reachable objects and set the
 				// weak references' referents to null, but not even that can be
