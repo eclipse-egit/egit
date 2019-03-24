@@ -47,6 +47,7 @@ import org.eclipse.swtbot.swt.finder.widgets.SWTBotShell;
 import org.eclipse.swtbot.swt.finder.widgets.SWTBotTree;
 import org.eclipse.swtbot.swt.finder.widgets.SWTBotTreeItem;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
@@ -147,6 +148,7 @@ public class GitRepositoriesViewRepoDeletionTest extends
 				new File(repositoryFile.getParentFile(), PROJ1).isDirectory());
 	}
 
+	@Ignore("This test is too unstable on the new Kubernetes infrastructure")
 	@Test
 	public void testRemoveRepositoryRemoveFromCachesBug483664()
 			throws Exception {
