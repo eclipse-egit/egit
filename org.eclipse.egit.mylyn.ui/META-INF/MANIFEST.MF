@@ -6,16 +6,16 @@ Bundle-SymbolicName: org.eclipse.egit.mylyn.ui;singleton:=true
 Bundle-Version: 5.4.0.qualifier
 Bundle-Activator: org.eclipse.egit.internal.mylyn.ui.EGitMylynUI
 Bundle-Vendor: %Bundle-Vendor
-Require-Bundle: org.eclipse.jface,
- org.eclipse.core.resources,
- org.eclipse.core.runtime,
- org.eclipse.ui.workbench,
- org.eclipse.mylyn.tasks.core;bundle-version="[3.21.0,4.0.0)",
- org.eclipse.mylyn.tasks.ui;bundle-version="[3.21.0,4.0.0)",
- org.eclipse.mylyn.team.ui;bundle-version="[3.21.0,4.0.0)",
- org.eclipse.mylyn.context.core;bundle-version="[3.21.0,4.0.0)",
- org.eclipse.jface.text,
- org.eclipse.team.core
+Require-Bundle: org.eclipse.jface;bundle-version="[3.12.0,4.0.0)",
+ org.eclipse.core.resources;bundle-version="[3.11.0,4.0.0)",
+ org.eclipse.core.runtime;bundle-version="[3.12.0,4.0.0)",
+ org.eclipse.ui.workbench;bundle-version="[3.108.0,4.0.0)",
+ org.eclipse.mylyn.tasks.core;bundle-version="[3.20.0,4.0.0)",
+ org.eclipse.mylyn.tasks.ui;bundle-version="[3.20.0,4.0.0)",
+ org.eclipse.mylyn.team.ui;bundle-version="[3.20.0,4.0.0)",
+ org.eclipse.mylyn.context.core;bundle-version="[3.20.0,4.0.0)",
+ org.eclipse.jface.text;bundle-version="[3.11.0,4.0.0)",
+ org.eclipse.team.core;bundle-version="[3.8.0,4.0.0)"
 Bundle-RequiredExecutionEnvironment: JavaSE-1.8
 Bundle-ActivationPolicy: lazy
 Bundle-Localization: plugin
@@ -31,4 +31,4 @@ Import-Package: org.eclipse.egit.core;version="[5.4.0,5.5.0)",
  org.eclipse.jgit.lib;version="[5.4.0,5.5.0)",
  org.eclipse.jgit.revwalk;version="[5.4.0,5.5.0)",
  org.eclipse.jgit.transport;version="[5.4.0,5.5.0)",
- org.eclipse.ui.plugin
+ org.eclipse.ui.plugin;bundle-version="[3.108.0,4.0.0)"
