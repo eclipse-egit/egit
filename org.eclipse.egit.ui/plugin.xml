@@ -18,6 +18,14 @@
 	    category="org.eclipse.egit.ui.internal.clone.gitclonecategory">
 	    <description>%Git_clone_description</description>
       </wizard>
+      <wizard
+            category="org.eclipse.egit.ui.internal.clone.gitclonecategory"
+            icon="icons/obj16/import_prj.png"
+            class="org.eclipse.egit.ui.internal.clone.SmartImportGitWizard"
+            id="org.eclipse.egit.ui.internal.clone.SmartImportGitWizard"
+            name="%SmartImportGitWizard_label">
+            <description>%SmartImportGitWizard_description</description>
+      </wizard>
    </extension>
 
    <extension point="org.eclipse.team.ui.configurationWizards">

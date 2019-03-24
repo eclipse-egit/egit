@@ -1,3 +1,6 @@
 provides.0.namespace = org.eclipse.equinox.p2.iu
 provides.0.name = org.eclipse.egit.import.feature.group
 provides.0.version = $version$
+
+update.matchExp=providedCapabilities.exists(pc | pc.namespace == 'org.eclipse.equinox.p2.iu' && (pc.name == 'org.eclipse.egit.ui.smartimport' || pc.name == 'org.eclipse.egit.ui.importer') )
+update.severity=0
