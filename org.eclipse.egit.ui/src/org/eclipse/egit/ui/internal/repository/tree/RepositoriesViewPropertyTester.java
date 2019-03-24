@@ -46,11 +46,12 @@ public class RepositoriesViewPropertyTester extends AbstractPropertyTester {
 		}
 		boolean value = internalTest(node, repository, property);
 		boolean trace = GitTraceLocation.PROPERTIESTESTER.isActive();
-		if (trace)
+		if (trace) {
 			GitTraceLocation
 					.getTrace()
 					.trace(GitTraceLocation.PROPERTIESTESTER.getLocation(),
 							"prop "	+ property + " of " + receiver + " = " + value + ", expected = " + expectedValue); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$
+		}
 		return computeResult(expectedValue, value);
 	}
 
@@ -81,14 +82,16 @@ public class RepositoriesViewPropertyTester extends AbstractPropertyTester {
 					return false;
 				}
 			}
-			if (!(node.getObject() instanceof Ref))
+			if (!(node.getObject() instanceof Ref)) {
 				return false;
+			}
 			Ref ref = (Ref) node.getObject();
 			return isRefCheckedOut(repository, ref);
 		}
 		if (property.equals("isLocalBranch")) { //$NON-NLS-1$
-			if (!(node.getObject() instanceof Ref))
+			if (!(node.getObject() instanceof Ref)) {
 				return false;
+			}
 			Ref ref = (Ref) node.getObject();
 			return ref.getName().startsWith(Constants.R_HEADS);
 		}
@@ -129,12 +132,14 @@ public class RepositoriesViewPropertyTester extends AbstractPropertyTester {
 			return repository.getRepositoryState().canCommit();
 		}
 		if (property.equals("canMerge")) { //$NON-NLS-1$
-			if (repository.getRepositoryState() != RepositoryState.SAFE)
+			if (repository.getRepositoryState() != RepositoryState.SAFE) {
 				return false;
+			}
 			try {
 				String branch = repository.getFullBranch();
-				if (branch == null)
+				if (branch == null) {
 					return false; // fail gracefully...
+				}
 				return branch.startsWith(Constants.R_HEADS);
 			} catch (IOException e) {
 				return false;
