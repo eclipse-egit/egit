@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "98a6c366_e986a99d",
+        "filename": "org.eclipse.egit.ui/META-INF/p2.inf",
+        "patchSetId": 3
+      },
+      "lineNbr": 6,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2019-03-25T21:25:08Z",
+      "side": 1,
+      "message": "Darn. That doesn\u0027t work. Maybe because this is a bundle and smartimport is a fragment? In any case my eclipse still has the fragment after updating, and shows now two smart import wizards under File-\u003eImport...",
+      "revId": "85433fcecbce2bc42c809e20778427c05c0ab28c",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
