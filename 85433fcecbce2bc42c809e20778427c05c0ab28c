@@ -16,6 +16,24 @@
       "revId": "85433fcecbce2bc42c809e20778427c05c0ab28c",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "49cfdd5e_e14764cf",
+        "filename": "org.eclipse.egit.ui/META-INF/p2.inf",
+        "patchSetId": 3
+      },
+      "lineNbr": 6,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2019-03-25T23:11:10Z",
+      "side": 1,
+      "message": "Correction: it works if EGit 5.3.0 is installed. But in that case it works even without this because p2 searches for alternate solutions and then comes to the conclusion that EGit 5.4.0 can be installed only if the 5.3.0 smartimport is uninstalled. Looks like this clause would only help the \"check for updates\"...\n\nIt doesn\u0027t work if one already has an EGit 5.4.0 installed.\n\nAdding \"provides\" entries for the fragment(s) doesn\u0027t help either.\n\nSo I suggest to leave this in; it certainly doesn\u0027t harm. But it apparently doesn\u0027t help uninstalling the fragment. Anyone who already has an EGit 5.4.0 may need to uninstall the fragment manually.",
+      "parentUuid": "98a6c366_e986a99d",
+      "revId": "85433fcecbce2bc42c809e20778427c05c0ab28c",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
     }
   ]
 }
