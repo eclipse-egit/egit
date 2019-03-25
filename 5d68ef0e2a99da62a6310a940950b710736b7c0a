@@ -22,6 +22,30 @@
       "revId": "5d68ef0e2a99da62a6310a940950b710736b7c0a",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a8f24049_3c26e54e",
+        "filename": "org.eclipse.egit.ui/META-INF/p2.inf",
+        "patchSetId": 2
+      },
+      "lineNbr": 6,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2019-03-25T20:03:30Z",
+      "side": 1,
+      "message": "Of course you\u0027re right. Completely forgot that. Done.",
+      "parentUuid": "d524a2f6_60fabec5",
+      "range": {
+        "startLine": 5,
+        "startChar": 0,
+        "endLine": 6,
+        "endChar": 17
+      },
+      "revId": "5d68ef0e2a99da62a6310a940950b710736b7c0a",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
     }
   ]
 }
