@@ -34,6 +34,24 @@
       "revId": "85433fcecbce2bc42c809e20778427c05c0ab28c",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7df4adb9_1e484d2b",
+        "filename": "org.eclipse.egit.ui/META-INF/p2.inf",
+        "patchSetId": 3
+      },
+      "lineNbr": 6,
+      "author": {
+        "id": 440
+      },
+      "writtenOn": "2019-03-26T06:18:30Z",
+      "side": 1,
+      "message": "We could also release a 5.3.1 which explicitly checks for the smartimport being there, and triggers the uninstall of the feature from inside eclipse (of course with a message dialog for the user explaining what is going on).\n\nI\u0027m not sure how many people use the alternative solutions of P2, since they often suggest wrong things (like partial downgrades) and take a long time to be computed. Those users would otherwise not be able to update to 5.4.0.",
+      "parentUuid": "49cfdd5e_e14764cf",
+      "revId": "85433fcecbce2bc42c809e20778427c05c0ab28c",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
     }
   ]
 }
