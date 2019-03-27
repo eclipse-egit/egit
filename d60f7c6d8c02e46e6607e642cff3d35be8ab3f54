@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5465d294_3e0266d5",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/search/CommitSearchQuery.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 270,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2019-03-27T22:36:41Z",
+      "side": 1,
+      "message": "Would need to take into account character encoding here, and of course CR/LF and smudge filters.",
+      "revId": "d60f7c6d8c02e46e6607e642cff3d35be8ab3f54",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
