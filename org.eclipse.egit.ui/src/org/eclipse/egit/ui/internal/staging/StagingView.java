@@ -191,8 +191,6 @@ import org.eclipse.swt.events.DisposeEvent;
 import org.eclipse.swt.events.DisposeListener;
 import org.eclipse.swt.events.FocusEvent;
 import org.eclipse.swt.events.FocusListener;
-import org.eclipse.swt.events.ModifyEvent;
-import org.eclipse.swt.events.ModifyListener;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.events.VerifyEvent;
@@ -205,7 +203,6 @@ import org.eclipse.swt.layout.RowLayout;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
-import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Text;
 import org.eclipse.swt.widgets.Tree;
@@ -1788,41 +1785,30 @@ public class StagingView extends ViewPart
 
 		ControlContribution controlContribution = new ControlContribution(
 				"StagingView.searchText") { //$NON-NLS-1$
+
 			@Override
 			protected Control createControl(Composite parent) {
-				Composite toolbarComposite = toolkit.createComposite(parent,
+				Composite toolbarComposite = new Composite(parent,
 						SWT.NONE);
 				toolbarComposite.setBackground(null);
 				GridLayout headLayout = new GridLayout();
-				headLayout.numColumns = 2;
 				headLayout.marginHeight = 0;
+				headLayout.marginBottom = 1;
 				headLayout.marginWidth = 0;
-				headLayout.marginTop = 0;
-				headLayout.marginBottom = 0;
-				headLayout.marginLeft = 0;
-				headLayout.marginRight = 0;
 				toolbarComposite.setLayout(headLayout);
 
 				filterText = new Text(toolbarComposite, SWT.SEARCH
 						| SWT.ICON_CANCEL | SWT.ICON_SEARCH);
 				filterText.setMessage(UIText.StagingView_Find);
-				GridData data = new GridData(GridData.FILL_HORIZONTAL);
-				data.widthHint = 150;
+				GridData data = new GridData(SWT.LEFT, SWT.TOP, true, false);
+				data.minimumWidth = 150;
 				filterText.setLayoutData(data);
-				final Display display = Display.getCurrent();
-				filterText.addModifyListener(new ModifyListener() {
-					@Override
-					public void modifyText(ModifyEvent e) {
-						filterPattern = wildcardToRegex(filterText.getText());
-						final StagingViewSearchThread searchThread = new StagingViewSearchThread(
-								StagingView.this);
-						display.timerExec(200, new Runnable() {
-							@Override
-							public void run() {
-								searchThread.start();
-							}
-						});
-					}
+				filterText.addModifyListener(e -> {
+					filterPattern = wildcardToRegex(filterText.getText());
+					StagingViewSearchThread searchThread = new StagingViewSearchThread(
+							StagingView.this);
+					filterText.getDisplay().timerExec(200,
+							() -> searchThread.start());
 				});
 				return toolbarComposite;
 			}
