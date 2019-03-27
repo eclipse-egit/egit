@@ -17,6 +17,7 @@ import java.io.IOException;
 import java.text.MessageFormat;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Optional;
 import java.util.regex.Pattern;
 
 import org.eclipse.core.runtime.IProgressMonitor;
@@ -26,14 +27,19 @@ import org.eclipse.core.runtime.Status;
 import org.eclipse.egit.core.Activator;
 import org.eclipse.egit.ui.internal.UIText;
 import org.eclipse.egit.ui.internal.commit.RepositoryCommit;
+import org.eclipse.jgit.errors.CorruptObjectException;
+import org.eclipse.jgit.errors.IncorrectObjectTypeException;
+import org.eclipse.jgit.errors.MissingObjectException;
 import org.eclipse.jgit.lib.Constants;
 import org.eclipse.jgit.lib.ObjectId;
+import org.eclipse.jgit.lib.ObjectLoader;
 import org.eclipse.jgit.lib.PersonIdent;
 import org.eclipse.jgit.lib.Ref;
 import org.eclipse.jgit.lib.Repository;
 import org.eclipse.jgit.revwalk.RevCommit;
 import org.eclipse.jgit.revwalk.RevTree;
 import org.eclipse.jgit.revwalk.RevWalk;
+import org.eclipse.jgit.treewalk.TreeWalk;
 import org.eclipse.search.ui.ISearchQuery;
 import org.eclipse.search.ui.ISearchResult;
 
@@ -229,6 +235,46 @@ public class CommitSearchQuery implements ISearchQuery {
 									commit));
 							break;
 						}
+				}
+				walkWorkingTree(repository, commits, pattern, monitor);
+			}
+		}
+	}
+
+	private void walkWorkingTree(Repository repository, List<RevCommit> commits,
+			Pattern pattern, IProgressMonitor monitor)
+			throws MissingObjectException, IncorrectObjectTypeException,
+			CorruptObjectException, IOException {
+		String repositoryName=repository.getWorkTree().getName();
+		List<Ref> refs = repository.getRefDatabase().getRefs();
+		for (RevCommit commit : commits) {
+			Optional<Ref> ref = refs.stream()
+					.filter(r -> commit.getId().equals(r.getObjectId()))
+					.findFirst();
+			if (ref.isPresent()) {
+				String branchName = Repository
+						.shortenRefName(ref.get().getTarget().getName());
+				try (RevWalk walk = new RevWalk(repository);
+						TreeWalk treeWalk = new TreeWalk(repository,
+						walk.getObjectReader())) {
+					treeWalk.addTree(commit.getTree());
+					while (treeWalk.next()) {
+						if (monitor.isCanceled()) {
+							throw new OperationCanceledException();
+						} else if (treeWalk.isSubtree()) {
+							treeWalk.enterSubtree();
+						} else {
+							ObjectLoader loader = walk.getObjectReader()
+									.open(treeWalk.getObjectId(0));
+							String content = new String(
+									loader.getCachedBytes());
+							if (pattern.matcher(content).find()) {
+								System.out.println(String.format("%s [%s] - %s", //$NON-NLS-1$
+										repositoryName, branchName,
+										treeWalk.getPathString()));
+							}
+						}
+					}
 				}
 			}
 		}
