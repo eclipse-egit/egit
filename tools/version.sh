@@ -112,17 +112,9 @@ perl -pi~ -e '
 	s/(org.eclipse.jgit;bundle-version="\[)[^"]*(\)")/${1}'"$JGIT_V,$JGIT_N"'${2}/;
 	' $(git ls-files | grep META-INF/MANIFEST.MF)
 
-perl -pi~ -e '
-	if ($ARGV ne $old_argv) {
-		$seen_version = 0;
-		$old_argv = $ARGV;
-	}
-	if (!$seen_version) {
-		$seen_version = 1 if (!/<\?xml/ &&
-		s/(version=")[^"]*(")/${1}'"$OSGI_V"'${2}/);
-	}
-	s/(feature="org.eclipse.jgit.ssh.apache" version=")[^"]*(")/${1}'"$JGIT_V"'${2}/;
-	' org.eclipse.egit-feature/feature.xml
+# Replace version numbers in feature.xml files. The first version is replaced by the full OSGi version.
+# Versions in dependencies in the <requires> section for EGit/JGit features or plugins are set to the
+# simple version numbers.
 
 perl -pi~ -e '
 	if ($ARGV ne $old_argv) {
@@ -133,32 +125,10 @@ perl -pi~ -e '
 		$seen_version = 1 if (!/<\?xml/ &&
 		s/(version=")[^"]*(")/${1}'"$OSGI_V"'${2}/);
 	}
-	s/(feature="org.eclipse.egit" version=")[^"]*(")/${1}'"$EGIT_V"'${2}/;
-	' org.eclipse.egit.mylyn-feature/feature.xml
-
-perl -pi~ -e '
-	if ($ARGV ne $old_argv) {
-		$seen_version = 0;
-		$old_argv = $ARGV;
-	}
-	if (!$seen_version) {
-		$seen_version = 1 if (!/<\?xml/ &&
-		s/(version=")[^"]*(")/${1}'"$OSGI_V"'${2}/);
-	}
-	s/(plugin="org.eclipse.egit.core" version=")[^"]*(")/${1}'"$EGIT_V"'${2}/;
-	s/(plugin="org.eclipse.egit.ui" version=")[^"]*(")/${1}'"$EGIT_V"'${2}/;
-	' org.eclipse.egit.gitflow-feature/feature.xml
-
-perl -pi~ -e '
-	if ($ARGV ne $old_argv) {
-		$seen_version = 0;
-		$old_argv = $ARGV;
-	}
-	if (!$seen_version) {
-		$seen_version = 1 if (!/<\?xml/ &&
-		s/(version=")[^"]*(")/${1}'"$OSGI_V"'${2}/);
-	}
-	s/(feature="org.eclipse.jgit" version=")[^"]*(")/${1}'"$JGIT_V"'${2}/;
+	s/(feature="org.eclipse.jgit[^"]*" version=")[^"]*(")/${1}'"$JGIT_V"'${2}/;
+	s/(plugin="org.eclipse.jgit[^"]*" version=")[^"]*(")/${1}'"$JGIT_V"'${2}/;
+	s/(feature="org.eclipse.egit[^"]*" version=")[^"]*(")/${1}'"$EGIT_V"'${2}/;
+	s/(plugin="org.eclipse.egit[^"]*" version=")[^"]*(")/${1}'"$EGIT_V"'${2}/;
 	' $(git ls-files | grep feature.xml)
 
 perl -pi~ -e '
