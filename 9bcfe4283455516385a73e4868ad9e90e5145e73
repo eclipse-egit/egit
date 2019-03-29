@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6bf962af_9903640b",
+        "filename": "org.eclipse.egit.source-feature/feature.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2019-03-29T07:04:37Z",
+      "side": 1,
+      "message": "This is certainly better than before, but actually I wonder if we can specify \"5.4.0.qualifier\" and match\u003d\"perfect\" here. Would \"qualifier\" get replaced correctly when the update site gets built?",
+      "range": {
+        "startLine": 29,
+        "startChar": 51,
+        "endLine": 29,
+        "endChar": 56
+      },
+      "revId": "9bcfe4283455516385a73e4868ad9e90e5145e73",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
