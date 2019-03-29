@@ -70,6 +70,30 @@
       "revId": "9bcfe4283455516385a73e4868ad9e90e5145e73",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "2b626925_092ae56f",
+        "filename": "org.eclipse.egit.source-feature/feature.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2019-03-29T19:44:12Z",
+      "side": 1,
+      "message": "\u003e Any matching different from greaterOrEqual would need us to revisit\n \u003e this dependency in the future and to update the number with each\n \u003e new version, without any additional benefit.\n\nOther features, for instance gitflow, already have versions with match\u003d\"equivalent\" here, and these get updated -- I presume by our normal version update script. If not, that script could be adapted to do it.",
+      "parentUuid": "d43bbf9f_2ecd5f7c",
+      "range": {
+        "startLine": 29,
+        "startChar": 51,
+        "endLine": 29,
+        "endChar": 56
+      },
+      "revId": "9bcfe4283455516385a73e4868ad9e90e5145e73",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
     }
   ]
 }
