@@ -94,6 +94,30 @@
       "revId": "9bcfe4283455516385a73e4868ad9e90e5145e73",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "8cf45889_cf698174",
+        "filename": "org.eclipse.egit.source-feature/feature.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2019-03-29T20:28:39Z",
+      "side": 1,
+      "message": "yes, these versions are updated by ./tools/version.sh\nCan you immediately patch it here to update this version as well? I hate when I have to patch this script while and after preparing a release (and perl is not my favourite language).",
+      "parentUuid": "2b626925_092ae56f",
+      "range": {
+        "startLine": 29,
+        "startChar": 51,
+        "endLine": 29,
+        "endChar": 56
+      },
+      "revId": "9bcfe4283455516385a73e4868ad9e90e5145e73",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
     }
   ]
 }
