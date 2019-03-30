@@ -118,6 +118,30 @@
       "revId": "9bcfe4283455516385a73e4868ad9e90e5145e73",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "d522659d_3ab7b7df",
+        "filename": "org.eclipse.egit.source-feature/feature.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2019-03-30T09:20:53Z",
+      "side": 1,
+      "message": "\u003e Can you immediately patch it here to update this version as well?\n\nYup, done.",
+      "parentUuid": "8cf45889_cf698174",
+      "range": {
+        "startLine": 29,
+        "startChar": 51,
+        "endLine": 29,
+        "endChar": 56
+      },
+      "revId": "9bcfe4283455516385a73e4868ad9e90e5145e73",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
     }
   ]
 }
