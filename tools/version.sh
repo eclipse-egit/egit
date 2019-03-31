@@ -136,6 +136,10 @@ perl -pi~ -e '
 	' org.eclipse.egit-feature/pom.xml
 
 perl -pi~ -e '
+	s{<(version)>[^<\$]*</\1>}{<${1}>'"$POM_V"'</${1}>};
+	' org.eclipse.egit.source-feature/pom.xml
+
+perl -pi~ -e '
 	if ($ARGV ne $old_argv) {
 		$seen_version = 0;
 		$old_argv = $ARGV;
