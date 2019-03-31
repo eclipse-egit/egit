@@ -27,4 +27,11 @@
 
   <name>Eclipse EGit Source Feature</name>
 
+  <dependencies>
+    <dependency>
+      <groupId>org.eclipse.egit.feature</groupId>
+      <artifactId>org.eclipse.egit</artifactId>
+      <version>5.4.0-SNAPSHOT</version>
+    </dependency>
+  </dependencies>
 </project>
