@@ -25,6 +25,10 @@
       <discovery label="%updateSiteName" url="http://download.eclipse.org/egit/updates"/>
    </url>
 
+   <requires>
+      <import feature="org.eclipse.egit" version="5.4.0" match="equivalent"/>
+   </requires>
+
    <plugin
          id="org.eclipse.egit.core.source"
          download-size="0"
