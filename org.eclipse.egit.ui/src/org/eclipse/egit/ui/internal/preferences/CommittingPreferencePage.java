@@ -282,6 +282,12 @@ public class CommittingPreferencePage extends DoublePreferencesPreferencePage
 
 	private void handleBlockCheckboxSelection(boolean selection) {
 		blockCombo.setEnabled(selection, buildProblemsGroup);
+		if (selection) {
+			warnCheckbox.setSelection(true);
+			warnCheckbox.setEnabled(false);
+		} else {
+			warnCheckbox.setEnabled(true);
+		}
 	}
 
 	private void handleWarnCheckboxSelection(boolean selection) {
