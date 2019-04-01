@@ -44,7 +44,6 @@ import org.eclipse.core.commands.ExecutionException;
 import org.eclipse.core.commands.operations.IUndoContext;
 import org.eclipse.core.resources.IContainer;
 import org.eclipse.core.resources.IFile;
-import org.eclipse.core.resources.IMarker;
 import org.eclipse.core.resources.IResource;
 import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.CoreException;
@@ -94,7 +93,6 @@ import org.eclipse.egit.ui.internal.commit.CommitMessageHistory;
 import org.eclipse.egit.ui.internal.commit.CommitProposalProcessor;
 import org.eclipse.egit.ui.internal.commit.DiffViewer;
 import org.eclipse.egit.ui.internal.components.RepositoryMenuUtil.RepositoryToolbarAction;
-import org.eclipse.egit.ui.internal.decorators.IProblemDecoratable;
 import org.eclipse.egit.ui.internal.decorators.ProblemLabelDecorator;
 import org.eclipse.egit.ui.internal.dialogs.CommitMessageArea;
 import org.eclipse.egit.ui.internal.dialogs.CommitMessageComponent;
@@ -1374,19 +1372,16 @@ public class StagingView extends ViewPart
 		mainSashForm.layout();
 	}
 
-	private int getProblemsSeverity() {
-		int result = IProblemDecoratable.SEVERITY_NONE;
+	private boolean hasProblemSeverity(int severity) {
 		StagingViewContentProvider stagedContentProvider = getContentProvider(
 				stagedViewer);
 		StagingEntry[] entries = stagedContentProvider.getStagingEntries();
 		for (StagingEntry entry : entries) {
-			if (entry.getProblemSeverity() >= IMarker.SEVERITY_WARNING) {
-				if (result < entry.getProblemSeverity()) {
-					result = entry.getProblemSeverity();
-				}
+			if (entry.getProblemSeverity() >= severity) {
+				return true;
 			}
 		}
-		return result;
+		return false;
 	}
 
 	private void updateCommitButtons() {
@@ -1404,8 +1399,8 @@ public class StagingView extends ViewPart
 		boolean indexDiffAvailable = indexDiffAvailable(indexDiff);
 		boolean noConflicts = noConflicts(indexDiff);
 
-		boolean commitEnabled = !isCommitBlocked() && noConflicts
-				&& indexDiffAvailable;
+		boolean commitEnabled = noConflicts && indexDiffAvailable
+				&& !isCommitBlocked();
 
 		boolean commitAndPushEnabled = commitAndPushEnabled(commitEnabled);
 
@@ -3956,21 +3951,19 @@ public class StagingView extends ViewPart
 	private boolean hasErrorsOrWarnings() {
 		return getPreferenceStore()
 				.getBoolean(UIPreferences.WARN_BEFORE_COMMITTING)
-						? (getProblemsSeverity() >= Integer
-								.parseInt(getPreferenceStore()
-						.getString(UIPreferences.WARN_BEFORE_COMMITTING_LEVEL))
-				&& !ignoreErrors.getSelection()) : false;
+				&& !ignoreErrors.getSelection()
+				&& hasProblemSeverity(
+						Integer.parseInt(getPreferenceStore().getString(
+										UIPreferences.WARN_BEFORE_COMMITTING_LEVEL)));
 	}
 
 	private boolean isCommitBlocked() {
 		return getPreferenceStore()
 				.getBoolean(UIPreferences.WARN_BEFORE_COMMITTING)
 				&& getPreferenceStore().getBoolean(UIPreferences.BLOCK_COMMIT)
-						? (getProblemsSeverity() >= Integer
+				&& !ignoreErrors.getSelection() && hasProblemSeverity(Integer
 								.parseInt(getPreferenceStore().getString(
-										UIPreferences.BLOCK_COMMIT_LEVEL))
-								&& !ignoreErrors.getSelection())
-						: false;
+								UIPreferences.BLOCK_COMMIT_LEVEL)));
 	}
 
 	private IndexDiffData doReload(@NonNull	final Repository repository) {
