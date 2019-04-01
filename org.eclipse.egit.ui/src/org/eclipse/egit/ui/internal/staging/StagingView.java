@@ -3958,9 +3958,7 @@ public class StagingView extends ViewPart
 	}
 
 	private boolean isCommitBlocked() {
-		return getPreferenceStore()
-				.getBoolean(UIPreferences.WARN_BEFORE_COMMITTING)
-				&& getPreferenceStore().getBoolean(UIPreferences.BLOCK_COMMIT)
+		return getPreferenceStore().getBoolean(UIPreferences.BLOCK_COMMIT)
 				&& !ignoreErrors.getSelection() && hasProblemSeverity(Integer
 								.parseInt(getPreferenceStore().getString(
 								UIPreferences.BLOCK_COMMIT_LEVEL)));
