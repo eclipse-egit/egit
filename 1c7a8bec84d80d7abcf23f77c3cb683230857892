@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d0ce56cc_d193dd6a",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/preferences/CommittingPreferencePage.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 285,
+      "author": {
+        "id": 440
+      },
+      "writtenOn": "2019-04-03T11:55:52Z",
+      "side": 1,
+      "message": "Great. I shortly had such a confusing setup while doing my performance change, but forgot about it during the implementation again. Thanks for catching this.",
+      "revId": "1c7a8bec84d80d7abcf23f77c3cb683230857892",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
