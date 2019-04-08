@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (C) 2010, 2013 Mathias Kinzler <mathias.kinzler@sap.com> and others.
+ * Copyright (C) 2010, 2013, 2019 Mathias Kinzler <mathias.kinzler@sap.com> and others.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License 2.0
@@ -7,6 +7,9 @@
  * https://www.eclipse.org/legal/epl-2.0/
  *
  * SPDX-License-Identifier: EPL-2.0
+ *
+ * Contributors:
+ *    Andre Bossert <andre.bossert@siemens.com> - external merge and diff tools
  *******************************************************************************/
 package org.eclipse.egit.ui.internal.history.command;
 
@@ -66,11 +69,11 @@ public class CompareVersionsHandler extends AbstractHistoryCommandHandler {
 				GitCompareEditorInput compareInput = new GitCompareEditorInput(
 						commit1.name(), commit2.name(), repo,
 						(IResource) input);
-				CompareUtils.openInCompare(workbenchPage, compareInput);
+				CompareUtils.openInCompare(workbenchPage, repo, compareInput);
 			} else if (input == null) {
 				GitCompareEditorInput compareInput = new GitCompareEditorInput(
 						commit1.name(), commit2.name(), repo);
-				CompareUtils.openInCompare(workbenchPage, compareInput);
+				CompareUtils.openInCompare(workbenchPage, repo, compareInput);
 			}
 		}
 		return null;
