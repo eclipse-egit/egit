@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2010, 2017 SAP AG and others.
+ * Copyright (c) 2010, 2019 SAP AG and others.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License 2.0
@@ -16,6 +16,7 @@
  *    Laurent Goubet <laurent.goubet@obeo.fr>
  *    Gunnar Wagenknecht <gunnar@wagenknecht.org>
  *    Thomas Wolf <thomas.wolf@paranor.ch> - git attributes
+ *    Andre Bossert <andre.bossert@siemens.com> - external merge and diff tools
  *******************************************************************************/
 package org.eclipse.egit.ui.internal;
 
@@ -57,6 +58,7 @@ import org.eclipse.egit.core.project.RepositoryMapping;
 import org.eclipse.egit.ui.Activator;
 import org.eclipse.egit.ui.UIPreferences;
 import org.eclipse.egit.ui.internal.merge.GitCompareEditorInput;
+import org.eclipse.egit.ui.internal.preferences.GitPreferenceRoot;
 import org.eclipse.egit.ui.internal.revision.EditableRevision;
 import org.eclipse.egit.ui.internal.revision.FileRevisionTypedElement;
 import org.eclipse.egit.ui.internal.revision.GitCompareFileRevisionEditorInput;
@@ -68,6 +70,10 @@ import org.eclipse.egit.ui.internal.synchronize.compare.LocalNonWorkspaceTypedEl
 import org.eclipse.jface.action.Action;
 import org.eclipse.jface.util.OpenStrategy;
 import org.eclipse.jgit.annotations.NonNull;
+import org.eclipse.jgit.diffmergetool.BooleanOption;
+import org.eclipse.jgit.diffmergetool.DiffToolManager;
+import org.eclipse.jgit.diffmergetool.FileElement;
+import org.eclipse.jgit.diffmergetool.ToolException;
 import org.eclipse.jgit.dircache.DirCache;
 import org.eclipse.jgit.dircache.DirCacheCheckout.CheckoutMetadata;
 import org.eclipse.jgit.dircache.DirCacheEditor;
@@ -94,6 +100,7 @@ import org.eclipse.jgit.treewalk.filter.TreeFilter;
 import org.eclipse.jgit.util.IO;
 import org.eclipse.jgit.util.io.EolStreamTypeUtil;
 import org.eclipse.osgi.util.NLS;
+import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.team.core.history.IFileRevision;
 import org.eclipse.team.ui.synchronize.SaveableCompareEditorInput;
@@ -287,14 +294,24 @@ public class CompareUtils {
 				commit2Path, commit2, repository);
 		CompareEditorInput in = new GitCompareFileRevisionEditorInput(base,
 				next, null);
-		CompareUtils.openInCompare(workbenchPage, in);
+		CompareUtils.openInCompare(workbenchPage, repository, in);
 	}
 
 	/**
 	 * @param workbenchPage
+	 * @param repository
 	 * @param input
 	 */
 	public static void openInCompare(IWorkbenchPage workbenchPage,
+			Repository repository, CompareEditorInput input) {
+		if (GitPreferenceRoot.useExternalDiffTool()) {
+			openCompareToolExternal(repository, input);
+		} else {
+			openCompareToolInternal(workbenchPage, input);
+		}
+	}
+
+	private static void openCompareToolInternal(IWorkbenchPage workbenchPage,
 			CompareEditorInput input) {
 		IEditorPart editor = findReusableCompareEditor(input, workbenchPage);
 		if (editor != null) {
@@ -316,6 +333,78 @@ public class CompareUtils {
 			}
 		} else {
 			CompareUI.openCompareEditor(input);
+		}
+	}
+
+	private static void openCompareToolExternal(Repository repository,
+			CompareEditorInput input) {
+		BooleanOption prompt = BooleanOption.NOT_DEFINED_FALSE;
+		BooleanOption gui = BooleanOption.NOT_DEFINED_FALSE;
+		BooleanOption trustExitCode = BooleanOption.NOT_DEFINED_FALSE;
+		GitCompareFileRevisionEditorInput gitCompareInput = (GitCompareFileRevisionEditorInput) input;
+		FileRevisionTypedElement leftRevision = gitCompareInput
+				.getLeftRevision();
+		IFile leftResource = (IFile) gitCompareInput.getAdapter(IFile.class);
+		FileRevisionTypedElement rightRevision = gitCompareInput
+				.getRightRevision();
+		// get the relative project path from right revision here
+		String mergedFilePath = null;
+		if (leftResource != null) {
+			mergedFilePath = leftResource.getName();
+		} else if (leftRevision != null) {
+			mergedFilePath = leftRevision.getPath();
+		}
+		try {
+			// create the diff tool manager
+			DiffToolManager diffToolMgr = new DiffToolManager(repository);
+			// get the selected tool name
+			String toolNameToUse = GitPreferenceRoot.getDiffToolName();
+			// fallback: get the default tool name
+			if ((toolNameToUse == null) || toolNameToUse.isEmpty()) {
+				toolNameToUse = diffToolMgr
+						.getDefaultToolName(gui);
+			}
+			// fallback: get the first available tool name
+			if ((toolNameToUse == null) || toolNameToUse.isEmpty()) {
+				toolNameToUse = diffToolMgr.getFirstAvailableTool();
+			}
+			if ((toolNameToUse == null) || toolNameToUse.isEmpty()) {
+				throw new ToolException(
+						"Unknown diff tool '" + toolNameToUse + "'"); //$NON-NLS-1$ //$NON-NLS-2$
+			}
+			// first check if we should ask user
+			boolean showPrompt = diffToolMgr.isPrompt();
+			if (showPrompt) {
+				int response = ToolsUtils.askUserAboutToolExecution("difftool", //$NON-NLS-1$
+						"Comparing file: " //$NON-NLS-1$
+								+ mergedFilePath + "\n\nLaunch '" //$NON-NLS-1$
+								+ toolNameToUse + "' ?"); //$NON-NLS-1$
+				if (response != SWT.YES) {
+					return;
+				}
+			}
+			FileElement local = null;
+			if (leftRevision != null) {
+				local = new FileElement(mergedFilePath, FileElement.Type.LOCAL,
+						null, null, leftRevision.getContents());
+			} else {
+				local = new FileElement(mergedFilePath, FileElement.Type.LOCAL, repository.getWorkTree());
+			}
+			FileElement remote = new FileElement(mergedFilePath,
+					FileElement.Type.REMOTE, null, null,
+					rightRevision.getContents());
+			FileElement merged = new FileElement(mergedFilePath,
+					FileElement.Type.MERGED, repository.getWorkTree());
+			/* ExecutionResult result = */
+			diffToolMgr.compare(local, remote, merged, toolNameToUse, prompt,
+					gui, trustExitCode);
+		} catch (ToolException e) {
+			e.printStackTrace();
+			ToolsUtils.informUserAboutError(
+					"external diff died, stopping at " + mergedFilePath, //$NON-NLS-1$
+					e.getResultStdout() + e.getMessage());
+		} catch (CoreException e) {
+			e.printStackTrace();
 		}
 	}
 
@@ -496,7 +585,7 @@ public class CompareUtils {
 				if (monitor.isCanceled()) {
 					return Status.CANCEL_STATUS;
 				}
-				openCompareEditorRunnable(page, in);
+				openCompareEditorRunnable(page, repository, in);
 				return Status.OK_STATUS;
 			}
 		};
@@ -511,25 +600,28 @@ public class CompareUtils {
 	 *
 	 * @param page
 	 *            can be null
+	 * @param repository
+	 *            non null
 	 * @param in
 	 *            non null
 	 */
 	private static void openCompareEditorRunnable(
 			final IWorkbenchPage page,
+			final Repository repository,
 			final CompareEditorInput in) {
 		// safety check: make sure we open compare editor from UI thread
 		if (Display.getCurrent() == null) {
 			PlatformUI.getWorkbench().getDisplay().asyncExec(new Runnable() {
 				@Override
 				public void run() {
-					openCompareEditorRunnable(page, in);
+					openCompareEditorRunnable(page, repository, in);
 				}
 			});
 			return;
 		}
 
 		if (page != null) {
-			openInCompare(page, in);
+			openInCompare(page, repository, in);
 		} else {
 			CompareUI.openCompareEditor(in);
 		}
@@ -578,7 +670,7 @@ public class CompareUtils {
 				if (monitor.isCanceled()) {
 					return Status.CANCEL_STATUS;
 				}
-				openCompareEditorRunnable(page, in);
+				openCompareEditorRunnable(page, repository, in);
 				return Status.OK_STATUS;
 			}
 		};
@@ -840,7 +932,7 @@ public class CompareUtils {
 				if (monitor.isCanceled()) {
 					return Status.CANCEL_STATUS;
 				}
-				openCompareEditorRunnable(page, in);
+				openCompareEditorRunnable(page, repository, in);
 				return Status.OK_STATUS;
 			}
 		};
