@@ -76,7 +76,7 @@ public class CompareCommand extends
 			String compareCommit, String baseCommit) throws ExecutionException {
 		GitCompareEditorInput compareInput = new GitCompareEditorInput(
 				compareCommit, baseCommit, repo);
-		CompareUtils.openInCompare(workbenchPage, compareInput);
+		CompareUtils.openInCompare(workbenchPage, repo, compareInput);
 	}
 
 	private Ref getRef(RepositoryTreeNode node) {
