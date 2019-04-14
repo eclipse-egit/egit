@@ -57,80 +57,86 @@ public class SelectionPropertyTester extends AbstractPropertyTester {
 
 	private boolean internalTest(Collection<?> collection, String property,
 			Object[] args) {
-		if ("projectsSingleRepository".equals(property)) { //$NON-NLS-1$
+		if (null != property) switch (property) {
+			case "projectsSingleRepository": //$NON-NLS-1$
+			{
+		    Repository repository = getRepositoryOfProjects(collection, true);
+		    return testRepositoryProperties(repository, args);
 
-			Repository repository = getRepositoryOfProjects(collection, true);
-			return testRepositoryProperties(repository, args);
-
-		} else if ("projectsWithRepositories".equals(property)) { //$NON-NLS-1$
-			Repository repository = getRepositoryOfProjects(collection, false);
-			return repository != null;
-
-		} else if ("selectionSingleRepository".equals(property)) { //$NON-NLS-1$
-			return SelectionUtils
-					.getRepository(getStructuredSelection(collection)) != null;
-
-		} else if ("resourcesMultipleRepositories".equals(property)) { //$NON-NLS-1$
-			return resourceSelectionContainsMoreThanOneRepository(collection,
-					args);
-
-		} else if ("selectionMultipleRepositories".equals(property)) { //$NON-NLS-1$
-			return selectionContainsMoreThanOneRepository(collection,
-					args);
-
-		} else if ("resourcesSingleRepository".equals(property)) { //$NON-NLS-1$
-			IStructuredSelection selection = getStructuredSelection(collection);
-
-			// It may seem like we could just use SelectionUtils.getRepository
-			// here. The problem: It would also return a repository for a node
-			// in the repo view. But this property is just for resources.
-			IResource[] resources = SelectionUtils
-					.getSelectedResources(selection);
-			Repository repository = getRepositoryOfResources(resources);
-			return testRepositoryProperties(repository, args);
-
-		} else if ("fileOrFolderInRepository".equals(property)) { //$NON-NLS-1$
-			if (collection.size() != 1)
-				return false;
-
-			IStructuredSelection selection = getStructuredSelection(collection);
-			if (selection.size() != 1)
-				return false;
-
-			Object firstElement = selection.getFirstElement();
-
-			IResource resource = AdapterUtils.adaptToAnyResource(firstElement);
-			if ((resource != null) && (resource instanceof IFile
-					|| resource instanceof IFolder)) {
-				RepositoryMapping m = RepositoryMapping.getMapping(resource);
-				if (m != null) {
-					if ((resource instanceof IFolder)
-							&& resource.equals(m.getContainer())) {
-						return false;
-					} else {
-						return testRepositoryProperties(m.getRepository(),
-								args);
-					}
-				}
-			}
-		} else if ("resourcesAllInRepository".equals(property)) { //$NON-NLS-1$
-			IStructuredSelection selection = getStructuredSelection(collection);
-
-			IResource[] resources = SelectionUtils
-					.getSelectedResources(selection);
-			Collection<Repository> repositories = getRepositories(resources);
-			if (repositories.isEmpty()) {
-				return false;
-			}
-			if (args != null && args.length > 0) {
-				for (Repository repository : repositories) {
-					if (!testRepositoryProperties(repository, args)) {
-						return false;
-					}
-				}
-			}
-			return true;
 		}
+			case "projectsWithRepositories": //$NON-NLS-1$
+			{
+		    Repository repository = getRepositoryOfProjects(collection, false);
+		    return repository != null;
+
+		}
+			case "selectionSingleRepository": //$NON-NLS-1$
+		    return SelectionUtils
+			    .getRepository(getStructuredSelection(collection)) != null;
+			case "resourcesMultipleRepositories": //$NON-NLS-1$
+		    return resourceSelectionContainsMoreThanOneRepository(collection,
+			    args);
+			case "selectionMultipleRepositories": //$NON-NLS-1$
+				return selectionContainsMoreThanOneRepository(collection,
+			    args);
+			case "resourcesSingleRepository": //$NON-NLS-1$
+			{
+		    IStructuredSelection selection = getStructuredSelection(collection);
+
+		    // It may seem like we could just use SelectionUtils.getRepository
+		    // here. The problem: It would also return a repository for a node
+		    // in the repo view. But this property is just for resources.
+		    IResource[] resources = SelectionUtils
+			    .getSelectedResources(selection);
+		    Repository repository = getRepositoryOfResources(resources);
+		    return testRepositoryProperties(repository, args);
+
+		}
+			case "fileOrFolderInRepository": { //$NON-NLS-1$
+		    if (collection.size() != 1)
+			return false;
+		    IStructuredSelection selection = getStructuredSelection(collection);
+		    if (selection.size() != 1)
+			return false;
+		    Object firstElement = selection.getFirstElement();
+		    IResource resource = AdapterUtils.adaptToAnyResource(firstElement);
+		    if ((resource != null) && (resource instanceof IFile
+			    || resource instanceof IFolder)) {
+			RepositoryMapping m = RepositoryMapping.getMapping(resource);
+			if (m != null) {
+			    if ((resource instanceof IFolder)
+				    && resource.equals(m.getContainer())) {
+				return false;
+			    } else {
+				return testRepositoryProperties(m.getRepository(),
+					args);
+			    }
+			}
+		    }
+			break;
+		    }
+			case "resourcesAllInRepository": //$NON-NLS-1$
+			{
+		    IStructuredSelection selection = getStructuredSelection(collection);
+
+		    IResource[] resources = SelectionUtils
+			    .getSelectedResources(selection);
+		    Collection<Repository> repositories = getRepositories(resources);
+		    if (repositories.isEmpty()) {
+			return false;
+		    }
+		    if (args != null && args.length > 0) {
+			for (Repository repository : repositories) {
+			    if (!testRepositoryProperties(repository, args)) {
+				return false;
+			    }
+			}
+		    }
+		    return true;
+		}
+	    	default:
+		    break;
+	    }
 		return false;
 	}
 
