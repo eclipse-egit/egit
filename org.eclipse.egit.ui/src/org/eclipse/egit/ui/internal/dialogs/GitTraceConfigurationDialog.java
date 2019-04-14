@@ -486,11 +486,8 @@ public class GitTraceConfigurationDialog extends TitleAreaDialog {
 				URL resource = Platform.getBundle(plugin.getPlugin())
 						.getResource(".options"); //$NON-NLS-1$
 				if (resource != null) {
-					InputStream is = resource.openStream();
-					try {
+					try (InputStream is = resource.openStream()) {
 						props.load(is);
-					} finally {
-						is.close();
 					}
 				}
 			} catch (IOException e) {
@@ -533,11 +530,8 @@ public class GitTraceConfigurationDialog extends TitleAreaDialog {
 				URL resource = Platform.getBundle(plugin.getPlugin())
 						.getResource(".options"); //$NON-NLS-1$
 				if (resource != null) {
-					InputStream is = resource.openStream();
-					try {
+					try (InputStream is = resource.openStream()) {
 						props.load(is);
-					} finally {
-						is.close();
 					}
 				}
 			} catch (IOException e) {

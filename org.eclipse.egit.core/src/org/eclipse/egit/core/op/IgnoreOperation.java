@@ -326,11 +326,8 @@ public class IgnoreOperation implements IEGitOperation {
 				ignoreLine = getEntry(gitIgnore, ignoreLine);
 			}
 
-			FileOutputStream os = new FileOutputStream(gitIgnore, true);
-			try {
+			try (FileOutputStream os = new FileOutputStream(gitIgnore, true)) {
 				os.write(ignoreLine.getBytes(StandardCharsets.UTF_8));
-			} finally {
-				os.close();
 			}
 		} catch (IOException e) {
 			String error = NLS.bind(CoreText.IgnoreOperation_updatingFailed,
