@@ -153,14 +153,11 @@ public class PullWizardPage extends WizardPage {
 				.applyTo(remoteSelectionCombo);
 		setRemoteConfigs();
 		remoteSelectionCombo
-				.addRemoteSelectionListener(new IRemoteSelectionListener() {
-					@Override
-					public void remoteSelected(RemoteConfig rc) {
-						remoteConfig = rc;
-						setRefAssist(rc);
-						checkPage();
-					}
-				});
+				.addRemoteSelectionListener((RemoteConfig rc) -> {
+				    remoteConfig = rc;
+				    setRefAssist(rc);
+				    checkPage();
+		});
 
 		Button newRemoteButton = new Button(res, SWT.PUSH);
 		newRemoteButton.setText(UIText.PushBranchPage_NewRemoteButton);
