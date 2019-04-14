@@ -74,7 +74,7 @@ public class GitMoveDeleteHookTest {
 
 	Repository repository;
 
-	Set<File> testDirs = new HashSet<File>();
+	Set<File> testDirs = new HashSet<>();
 
 	File workspaceSupplement;
 

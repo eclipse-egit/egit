@@ -41,7 +41,7 @@ public class FileChecker {
 
 		private boolean containsNotSharedResources = false;
 
-		private Map<String, CheckResultEntry> problems = new HashMap<String, FileChecker.CheckResultEntry>();
+		private Map<String, CheckResultEntry> problems = new HashMap<>();
 
 		/**
 		 * @return true if there are no problems

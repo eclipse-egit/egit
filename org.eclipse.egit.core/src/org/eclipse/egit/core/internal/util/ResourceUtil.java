@@ -609,7 +609,7 @@ public class ResourceUtil {
 		if (path != null) {
 			Collection<String> resourcesList = result.get(repository);
 			if (resourcesList == null) {
-				resourcesList = new ArrayList<String>();
+				resourcesList = new ArrayList<>();
 				result.put(repository, resourcesList);
 			}
 			resourcesList.add(path);

@@ -110,7 +110,7 @@ public class SharingWizardTest extends LocalRepositoryTestCase {
 
 	@After
 	public void after() throws Exception {
-		Set<File> d = new TreeSet<File>();
+		Set<File> d = new TreeSet<>();
 		erase(projectName0, d);
 		erase(projectName1, d);
 		erase(projectName2, d);

@@ -44,7 +44,7 @@ public class WorkingTreeChangeCache {
 			tw.setFilter(new IndexDiffFilter(cacheNth, fileNth));
 			tw.setRecursive(true);
 
-			Map<String, Change> result = new HashMap<String, Change>();
+			Map<String, Change> result = new HashMap<>();
 			MutableObjectId idBuf = new MutableObjectId();
 			while (tw.next()) {
 				Change change = new Change();
@@ -61,7 +61,7 @@ public class WorkingTreeChangeCache {
 			return result;
 		} catch (IOException e) {
 			Activator.logError(e.getMessage(), e);
-			return new HashMap<String, GitCommitsModelCache.Change>(0);
+			return new HashMap<>(0);
 		}
 	}
 

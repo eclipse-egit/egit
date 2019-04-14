@@ -78,34 +78,34 @@ public class IndexDiffData {
 	 * @param indexDiff
 	 */
 	public IndexDiffData(IndexDiff indexDiff) {
-		added = Collections.unmodifiableSet(new HashSet<String>(indexDiff
+		added = Collections.unmodifiableSet(new HashSet<>(indexDiff
 				.getAdded()));
 		assumeUnchanged = Collections.unmodifiableSet(
-				new HashSet<String>(indexDiff.getAssumeUnchanged()));
-		changed = Collections.unmodifiableSet(new HashSet<String>(indexDiff
+				new HashSet<>(indexDiff.getAssumeUnchanged()));
+		changed = Collections.unmodifiableSet(new HashSet<>(indexDiff
 				.getChanged()));
-		removed = Collections.unmodifiableSet(new HashSet<String>(indexDiff
+		removed = Collections.unmodifiableSet(new HashSet<>(indexDiff
 				.getRemoved()));
-		missing = Collections.unmodifiableSet(new HashSet<String>(indexDiff
+		missing = Collections.unmodifiableSet(new HashSet<>(indexDiff
 				.getMissing()));
-		modified = Collections.unmodifiableSet(new HashSet<String>(indexDiff
+		modified = Collections.unmodifiableSet(new HashSet<>(indexDiff
 				.getModified()));
-		untracked = Collections.unmodifiableSet(new HashSet<String>(indexDiff
+		untracked = Collections.unmodifiableSet(new HashSet<>(indexDiff
 				.getUntracked()));
 		untrackedFolders = Collections.unmodifiableSet(getUntrackedFolders(indexDiff));
-		conflicts = Collections.unmodifiableSet(new HashSet<String>(indexDiff
+		conflicts = Collections.unmodifiableSet(new HashSet<>(indexDiff
 				.getConflicting()));
-		ignored = Collections.unmodifiableSet(new HashSet<String>(indexDiff
+		ignored = Collections.unmodifiableSet(new HashSet<>(indexDiff
 				.getIgnoredNotInIndex()));
-		symlinks = Collections.unmodifiableSet(new HashSet<String>(indexDiff
+		symlinks = Collections.unmodifiableSet(new HashSet<>(indexDiff
 				.getPathsWithIndexMode(FileMode.SYMLINK)));
-		submodules = Collections.unmodifiableSet(new HashSet<String>(indexDiff
+		submodules = Collections.unmodifiableSet(new HashSet<>(indexDiff
 				.getPathsWithIndexMode(FileMode.GITLINK)));
 		changedResources = Collections.emptySet();
 	}
 
 	private Set<String> getUntrackedFolders(IndexDiff indexDiff) {
-		HashSet<String> result = new HashSet<String>();
+		HashSet<String> result = new HashSet<>();
 		for (String folder:indexDiff.getUntrackedFolders())
 			result.add(folder + "/"); //$NON-NLS-1$
 		return result;
@@ -128,17 +128,17 @@ public class IndexDiffData {
 			IndexDiff diffForChangedFiles) {
 		this.changedResources = Collections
 				.unmodifiableCollection(new HashSet<IResource>(changedResources));
-		Set<String> added2 = new HashSet<String>(baseDiff.getAdded());
-		Set<String> assumeUnchanged2 = new HashSet<String>(
+		Set<String> added2 = new HashSet<>(baseDiff.getAdded());
+		Set<String> assumeUnchanged2 = new HashSet<>(
 				baseDiff.getAssumeUnchanged());
-		Set<String> changed2 = new HashSet<String>(baseDiff.getChanged());
-		Set<String> removed2 = new HashSet<String>(baseDiff.getRemoved());
-		Set<String> missing2 = new HashSet<String>(baseDiff.getMissing());
-		Set<String> modified2 = new HashSet<String>(baseDiff.getModified());
-		Set<String> untracked2 = new HashSet<String>(baseDiff.getUntracked());
-		Set<String> conflicts2 = new HashSet<String>(baseDiff.getConflicting());
-		Set<String> symlinks2 = new HashSet<String>(baseDiff.getSymlinks());
-		Set<String> submodules2 = new HashSet<String>(baseDiff.getSubmodules());
+		Set<String> changed2 = new HashSet<>(baseDiff.getChanged());
+		Set<String> removed2 = new HashSet<>(baseDiff.getRemoved());
+		Set<String> missing2 = new HashSet<>(baseDiff.getMissing());
+		Set<String> modified2 = new HashSet<>(baseDiff.getModified());
+		Set<String> untracked2 = new HashSet<>(baseDiff.getUntracked());
+		Set<String> conflicts2 = new HashSet<>(baseDiff.getConflicting());
+		Set<String> symlinks2 = new HashSet<>(baseDiff.getSymlinks());
+		Set<String> submodules2 = new HashSet<>(baseDiff.getSubmodules());
 
 		mergeList(added2, changedFiles, diffForChangedFiles.getAdded());
 		mergeList(assumeUnchanged2, changedFiles,
@@ -189,7 +189,7 @@ public class IndexDiffData {
 
 	private static Set<String> mergeUntrackedFolders(Set<String> oldUntrackedFolders,
 			Collection<String> changedFiles, Set<String> newUntrackedFolders) {
-		Set<String> merged = new HashSet<String>();
+		Set<String> merged = new HashSet<>();
 		for (String oldUntrackedFolder : oldUntrackedFolders) {
 			boolean changeInUntrackedFolder = isAnyFileContainedInFolder(
 					oldUntrackedFolder, changedFiles);
@@ -218,7 +218,7 @@ public class IndexDiffData {
 	 */
 	protected static Set<String> mergeIgnored(Set<String> oldIgnoredPaths,
 			Collection<String> changedPaths, Set<String> newIgnoredPaths) {
-		Set<String> merged = new HashSet<String>();
+		Set<String> merged = new HashSet<>();
 		for (String oldIgnoredPath : oldIgnoredPaths) {
 			boolean changed = isAnyPrefixOf(oldIgnoredPath, changedPaths);
 			if (!changed) {

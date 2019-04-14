@@ -331,7 +331,7 @@ public class GitCommitsModelCache {
 	public static List<Commit> build(Repository repo, ObjectId srcId,
 			ObjectId dstId, TreeFilter pathFilter) throws IOException {
 		if (dstId.equals(srcId))
-			return new ArrayList<Commit>(0);
+			return new ArrayList<>(0);
 
 		try (RevWalk rw = new RevWalk(repo)) {
 
@@ -355,7 +355,7 @@ public class GitCommitsModelCache {
 			if (pathFilter != null)
 				rw.setTreeFilter(pathFilter);
 
-			List<Commit> result = new ArrayList<Commit>();
+			List<Commit> result = new ArrayList<>();
 			for (RevCommit revCommit : rw) {
 				if (revCommit.hasAll(allFlags))
 					break;
@@ -398,7 +398,7 @@ public class GitCommitsModelCache {
 	private static Map<String, Change> getChangedObjects(Repository repo,
 			RevCommit commit, RevCommit parentCommit,
 			TreeFilter pathFilter, final int direction) throws IOException {
-		final Map<String, Change> result = new HashMap<String, GitCommitsModelCache.Change>();
+		final Map<String, Change> result = new HashMap<>();
 		try (final TreeWalk tw = new TreeWalk(repo)) {
 			int commitIndex = addTree(tw, commit);
 			int parentCommitIndex = addTree(tw, parentCommit);

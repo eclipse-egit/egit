@@ -88,7 +88,7 @@ public class GitResourceDeltaVisitor implements IResourceDeltaVisitor {
 			Map<IProject, IPath> deletedProjects) {
 		this.repository = repository;
 
-		filesToUpdate = new HashSet<String>();
+		filesToUpdate = new HashSet<>();
 		resourcesToUpdate = new HashSet<IResource>();
 		this.deletedProjects = deletedProjects;
 	}

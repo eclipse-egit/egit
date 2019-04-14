@@ -50,10 +50,10 @@ public class IndexDiffDataTest extends GitTestCase {
 	@Test
 	public void testMergeIgnored() {
 		Set<String> result;
-		Set<String> expected = new HashSet<String>();
-		Set<String> oldIgnoredPaths = new HashSet<String>();
-		Collection<String> changedPaths = new HashSet<String>();
-		Set<String> newIgnoredPaths = new HashSet<String>();
+		Set<String> expected = new HashSet<>();
+		Set<String> oldIgnoredPaths = new HashSet<>();
+		Collection<String> changedPaths = new HashSet<>();
+		Set<String> newIgnoredPaths = new HashSet<>();
 
 		result = mergeIgnored(oldIgnoredPaths, changedPaths, newIgnoredPaths);
 		assertEquals(expected, result);

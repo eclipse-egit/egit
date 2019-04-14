@@ -57,10 +57,10 @@ import org.eclipse.jgit.util.SystemReader;
 public class RepositoryFinder {
 	private final IProject proj;
 
-	private final List<RepositoryMapping> results = new ArrayList<RepositoryMapping>();
-	private final Set<File> gitdirs = new HashSet<File>();
+	private final List<RepositoryMapping> results = new ArrayList<>();
+	private final Set<File> gitdirs = new HashSet<>();
 
-	private final Set<File> ceilingDirectories = new HashSet<File>();
+	private final Set<File> ceilingDirectories = new HashSet<>();
 
 	private boolean findInChildren = true;
 
