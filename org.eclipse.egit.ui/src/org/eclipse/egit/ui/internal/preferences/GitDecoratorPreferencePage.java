@@ -585,9 +585,9 @@ public class GitDecoratorPreferencePage extends PreferencePage implements
 
 			Object[] result = dialog.getResult();
 
-			for (int i = 0; i < result.length; i++) {
-				text.insert("{" + ((Map.Entry) result[i]).getKey() + "}"); //$NON-NLS-1$ //$NON-NLS-2$
-			}
+		    for (Object result1 : result) {
+			text.insert("{" + ((Map.Entry) result1).getKey() + "}"); //$NON-NLS-1$ //$NON-NLS-2$
+		    }
 		}
 
 		public void performOk(IPreferenceStore store) {
@@ -970,13 +970,13 @@ public class GitDecoratorPreferencePage extends PreferencePage implements
 		}
 
 		private void setColorsAndFonts(TreeItem[] items) {
-			for (int i = 0; i < items.length; i++) {
-				DecorationResult decoration = getDecoration(items[i].getData());
-				items[i].setBackground(decoration.getBackgroundColor());
-				items[i].setForeground(decoration.getForegroundColor());
-				items[i].setFont(decoration.getFont());
-				setColorsAndFonts(items[i].getItems());
-			}
+		    for (TreeItem item : items) {
+			DecorationResult decoration = getDecoration(item.getData());
+			item.setBackground(decoration.getBackgroundColor());
+			item.setForeground(decoration.getForegroundColor());
+			item.setFont(decoration.getFont());
+			setColorsAndFonts(item.getItems());
+		    }
 		}
 
 		@Override
