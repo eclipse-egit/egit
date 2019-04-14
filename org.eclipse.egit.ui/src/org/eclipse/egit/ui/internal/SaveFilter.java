@@ -57,16 +57,15 @@ class SaveFilter implements ISaveableFilter {
 		if (isDescendantOfRoots(saveable)) {
 			return true;
 		}
-		// For backwards compatibility, we need to check the parts
-		for (int i = 0; i < containingParts.length; i++) {
-			IWorkbenchPart workbenchPart = containingParts[i];
-			if (workbenchPart instanceof IEditorPart) {
-				IEditorPart editorPart = (IEditorPart) workbenchPart;
-				if (isEditingDescendantOf(editorPart)) {
-					return true;
-				}
-			}
+	    // For backwards compatibility, we need to check the parts
+	    for (IWorkbenchPart workbenchPart : containingParts) {
+		if (workbenchPart instanceof IEditorPart) {
+		    IEditorPart editorPart = (IEditorPart) workbenchPart;
+		    if (isEditingDescendantOf(editorPart)) {
+			return true;
+		    }
 		}
+	    }
 		return false;
 	}
 
@@ -84,16 +83,14 @@ class SaveFilter implements ISaveableFilter {
 			try {
 				ResourceTraversal[] traversals = mapping.getTraversals(
 						ResourceMappingContext.LOCAL_CONTEXT, null);
-				for (int i = 0; i < traversals.length; i++) {
-					ResourceTraversal traversal = traversals[i];
-					IResource[] resources = traversal.getResources();
-					for (int j = 0; j < resources.length; j++) {
-						IResource resource = resources[j];
-						if (isDescendantOfRoots(resource)) {
-							return true;
-						}
-					}
+			    for (ResourceTraversal traversal : traversals) {
+				IResource[] resources = traversal.getResources();
+				for (IResource resource : resources) {
+				    if (isDescendantOfRoots(resource)) {
+					return true;
+				    }
 				}
+			    }
 			} catch (CoreException e) {
 				Activator
 						.logError(
@@ -120,12 +117,11 @@ class SaveFilter implements ISaveableFilter {
 	 *         one of the given roots
 	 */
 	private boolean isDescendantOfRoots(IResource resource) {
-		for (int l = 0; l < roots.length; l++) {
-			IResource root = roots[l];
-			if (root.getFullPath().isPrefixOf(resource.getFullPath())) {
-				return true;
-			}
+	    for (IResource root : roots) {
+		if (root.getFullPath().isPrefixOf(resource.getFullPath())) {
+		    return true;
 		}
+	    }
 		return false;
 	}
 
