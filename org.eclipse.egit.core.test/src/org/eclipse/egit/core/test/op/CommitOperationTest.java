@@ -239,7 +239,7 @@ public class CommitOperationTest extends GitTestCase {
 	}
 
 	private String[] getRepoRelativePaths(IFile[] files) {
-		ArrayList<String> result = new ArrayList<String>();
+		ArrayList<String> result = new ArrayList<>();
 		for (IFile file:files)
 			result.add(file.getProjectRelativePath().toString());
 		return result.toArray(new String[0]);

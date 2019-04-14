@@ -48,8 +48,8 @@ public class GitSynchronizeDataSet implements Iterable<GitSynchronizeData> {
 	 */
 	public GitSynchronizeDataSet(boolean forceFetch) {
 		this.forceFetch = forceFetch;
-		gsdSet = new HashSet<GitSynchronizeData>();
-		projectMapping = new HashMap<String, GitSynchronizeData>();
+		gsdSet = new HashSet<>();
+		projectMapping = new HashMap<>();
 	}
 
 	/**

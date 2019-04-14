@@ -67,7 +67,7 @@ public class StagedChangeCache {
 			headCommit = null;
 
 			MutableObjectId idBuf = new MutableObjectId();
-			Map<String, Change> result = new HashMap<String, Change>();
+			Map<String, Change> result = new HashMap<>();
 			while(tw.next()) {
 				if (!shouldIncludeEntry(tw))
 					continue;
@@ -89,7 +89,7 @@ public class StagedChangeCache {
 			return result;
 		} catch (IOException e) {
 			Activator.logError(e.getMessage(), e);
-			return new HashMap<String, Change>(0);
+			return new HashMap<>(0);
 		}
 	}
 
