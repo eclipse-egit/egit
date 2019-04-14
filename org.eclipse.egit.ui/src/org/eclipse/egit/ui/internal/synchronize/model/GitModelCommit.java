@@ -98,13 +98,7 @@ public class GitModelCommit extends GitModelObjectContainer implements
 				return false;
 			}
 		};
-		TreeModelFactory treeModelFactory = new TreeModelFactory() {
-			@Override
-			public GitModelTree createTreeModel(GitModelObjectContainer parent,
-					IPath fullPath, int kind) {
-				return new GitModelTree(parent, fullPath, kind);
-			}
-		};
+		TreeModelFactory treeModelFactory = GitModelTree::new;
 		return TreeBuilder.build(this, repo, commit.getChildren(),
 				fileModelFactory, treeModelFactory);
 	}

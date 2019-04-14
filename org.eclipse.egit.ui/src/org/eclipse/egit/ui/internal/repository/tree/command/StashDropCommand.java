@@ -14,7 +14,6 @@ package org.eclipse.egit.ui.internal.repository.tree.command;
 
 import java.text.MessageFormat;
 import java.util.Collections;
-import java.util.Comparator;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicBoolean;
 
@@ -103,14 +102,7 @@ public class StashDropCommand extends
 				// Sort by highest to lowest stash commit index.
 				// This avoids shifting problems that cause the indices of the
 				// selected nodes not match the indices in the repository
-				Collections.sort(nodes, new Comparator<StashedCommitNode>() {
-
-					@Override
-					public int compare(StashedCommitNode n1,
-							StashedCommitNode n2) {
-						return n1.getIndex() < n2.getIndex() ? 1 : -1;
-					}
-				});
+				Collections.sort(nodes, (StashedCommitNode n1, StashedCommitNode n2) -> n1.getIndex() < n2.getIndex() ? 1 : -1);
 
 				for (StashedCommitNode node : nodes) {
 					final int index = node.getIndex();

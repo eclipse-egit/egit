@@ -3015,16 +3015,13 @@ public class StagingView extends ViewPart
 	 * elements
 	 */
 	public void refreshViewers() {
-		syncExec(new Runnable() {
-			@Override
-			public void run() {
-				setRedraw(false);
-				try {
-					refreshViewersInternal();
-				} finally {
-					setRedraw(true);
-				}
-			}
+		syncExec(() -> {
+		    setRedraw(false);
+		    try {
+			refreshViewersInternal();
+		    } finally {
+			setRedraw(true);
+		    }
 		});
 	}
 
@@ -3037,20 +3034,17 @@ public class StagingView extends ViewPart
 	 * Refresh the unstaged and staged viewers, preserving expanded elements
 	 */
 	public void refreshViewersPreservingExpandedElements() {
-		syncExec(new Runnable() {
-			@Override
-			public void run() {
-				Object[] unstagedExpanded = unstagedViewer.getVisibleExpandedElements();
-				Object[] stagedExpanded = stagedViewer.getVisibleExpandedElements();
-				setRedraw(false);
-				try {
-					refreshViewersInternal();
-					unstagedViewer.setExpandedElements(unstagedExpanded);
-					stagedViewer.setExpandedElements(stagedExpanded);
-				} finally {
-					setRedraw(true);
-				}
-			}
+		syncExec(() -> {
+		    Object[] unstagedExpanded = unstagedViewer.getVisibleExpandedElements();
+		    Object[] stagedExpanded = stagedViewer.getVisibleExpandedElements();
+		    setRedraw(false);
+		    try {
+			refreshViewersInternal();
+			unstagedViewer.setExpandedElements(unstagedExpanded);
+			stagedViewer.setExpandedElements(stagedExpanded);
+		    } finally {
+			setRedraw(true);
+		    }
 		});
 	}
 
