@@ -172,14 +172,10 @@ public class GitCreateGeneralProjectPage extends WizardPage {
 				return;
 			}
 			// make sure there is not already a .project file
-			String[] dotProjectFiles = myDirectory.list(new FilenameFilter() {
-
-				@Override
-				public boolean accept(File dir, String name) {
-					if (name.equals(".project")) //$NON-NLS-1$
-						return true;
-					return false;
-				}
+			String[] dotProjectFiles = myDirectory.list((File dir, String name) -> {
+			    if (name.equals(".project")) //$NON-NLS-1$
+				return true;
+			    return false;
 			});
 			if (dotProjectFiles != null && dotProjectFiles.length > 0) {
 				setErrorMessage(NLS

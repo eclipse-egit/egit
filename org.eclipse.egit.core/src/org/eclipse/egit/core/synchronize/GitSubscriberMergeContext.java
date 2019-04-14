@@ -64,12 +64,8 @@ public class GitSubscriberMergeContext extends SubscriberMergeContext {
 		this.gsds = gsds;
 
 
-		indexChangeListener = new IndexDiffChangedListener() {
-			@Override
-			public void indexDiffChanged(Repository repository,
-					IndexDiffData indexDiffData) {
-				handleRepositoryChange(repository);
-			}
+		indexChangeListener = (Repository repository, IndexDiffData indexDiffData) -> {
+		    handleRepositoryChange(repository);
 		};
 		resourceChangeListener = new IResourceChangeListener() {
 
