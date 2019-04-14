@@ -130,7 +130,7 @@ public class ProjectReferenceImporter {
 			if (repositoryAlreadyExistsForUrl(repositoryPath, gitUrl))
 				return repositoryPath;
 			else {
-				final Collection<String> projectNames = new LinkedList<String>();
+				final Collection<String> projectNames = new LinkedList<>();
 				for (final ProjectReference projectReference : projects)
 					projectNames.add(projectReference.getProjectDir());
 				throw new TeamException(
@@ -168,14 +168,14 @@ public class ProjectReferenceImporter {
 				Map<String, Set<ProjectReference>> repositoryBranches = repositories
 						.get(projectReference.getRepository());
 				if (repositoryBranches == null) {
-					repositoryBranches = new HashMap<String, Set<ProjectReference>>();
+					repositoryBranches = new HashMap<>();
 					repositories.put(projectReference.getRepository(),
 							repositoryBranches);
 				}
 				Set<ProjectReference> projectReferences = repositoryBranches
 						.get(projectReference.getBranch());
 				if (projectReferences == null) {
-					projectReferences = new LinkedHashSet<ProjectReference>();
+					projectReferences = new LinkedHashSet<>();
 					repositoryBranches.put(projectReference.getBranch(),
 							projectReferences);
 				}

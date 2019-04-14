@@ -74,7 +74,7 @@ class GitSyncObjectCache {
 		String memberPath = entry.getPath();
 
 		if (members == null)
-			members = new HashMap<String, GitSyncObjectCache>();
+			members = new HashMap<>();
 
 		int start = -1;
 		Map<String, GitSyncObjectCache> parent = members;
@@ -89,7 +89,7 @@ class GitSyncObjectCache {
 			start = separatorIdx;
 			separatorIdx = memberPath.indexOf("/", separatorIdx + 1); //$NON-NLS-1$
 			if (cacheObject.members == null)
-				cacheObject.members = new HashMap<String, GitSyncObjectCache>();
+				cacheObject.members = new HashMap<>();
 
 			parent = cacheObject.members;
 		}
@@ -171,7 +171,7 @@ class GitSyncObjectCache {
 	void merge(GitSyncObjectCache other, Set<String> filterPaths) {
 		if (other.members != null) {
 			if (members == null)
-				members = new HashMap<String, GitSyncObjectCache>();
+				members = new HashMap<>();
 
 			for (Entry<String, GitSyncObjectCache> entry : members.entrySet()) {
 				String key = entry.getKey();

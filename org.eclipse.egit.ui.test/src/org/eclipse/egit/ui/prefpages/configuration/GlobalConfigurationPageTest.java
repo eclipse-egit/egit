@@ -378,7 +378,7 @@ public class GlobalConfigurationPageTest {
 
 	@Test
 	public void testRemoveValue() throws Exception {
-		List<String> values = new ArrayList<String>(2);
+		List<String> values = new ArrayList<>(2);
 		values.add("true");
 		values.add("false");
 		config.setStringList(TESTSECTION, null, TESTNAME, values);
@@ -401,7 +401,7 @@ public class GlobalConfigurationPageTest {
 
 	@Test
 	public void testRemoveSubSection() throws Exception {
-		List<String> values = new ArrayList<String>(2);
+		List<String> values = new ArrayList<>(2);
 		values.add("true");
 		values.add("false");
 		config.setStringList(TESTSECTION, null, TESTNAME, values);
@@ -427,7 +427,7 @@ public class GlobalConfigurationPageTest {
 
 	@Test
 	public void testRemoveSection() throws Exception {
-		List<String> values = new ArrayList<String>(2);
+		List<String> values = new ArrayList<>(2);
 		values.add("true");
 		values.add("false");
 		config.setStringList(TESTSECTION, null, TESTNAME, values);

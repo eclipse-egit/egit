@@ -102,14 +102,14 @@ public class CommonUtilsTest {
 	 */
 	private void assertSortedLike(String... inputs) {
 		List<String> expected = Arrays.asList(inputs);
-		List<String> tmp = new ArrayList<String>(expected);
+		List<String> tmp = new ArrayList<>(expected);
 		Collections.shuffle(tmp, new Random(1));
 		Collections.sort(tmp, CommonUtils.STRING_ASCENDING_COMPARATOR);
 		assertEquals(expected, tmp);
 
-		List<String> expectedWithoutDuplicates = new ArrayList<String>(
-				new LinkedHashSet<String>(expected));
-		List<String> shuffeled = new ArrayList<String>(expected);
+		List<String> expectedWithoutDuplicates = new ArrayList<>(
+				new LinkedHashSet<>(expected));
+		List<String> shuffeled = new ArrayList<>(expected);
 		Collections.shuffle(shuffeled, new Random(1));
 		TreeSet<String> sortedSet = new TreeSet<String>(
 				CommonUtils.STRING_ASCENDING_COMPARATOR);

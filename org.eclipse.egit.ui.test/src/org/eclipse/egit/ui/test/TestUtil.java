@@ -473,7 +473,7 @@ public class TestUtil {
 	 */
 	public static void assertRepositoryContainsFiles(Repository repository,
 			String[] paths) throws Exception {
-		Set<String> expectedfiles = new HashSet<String>();
+		Set<String> expectedfiles = new HashSet<>();
 		for (String path : paths)
 			expectedfiles.add(path);
 		try (TreeWalk treeWalk = new TreeWalk(repository)) {
@@ -546,7 +546,7 @@ public class TestUtil {
 	private static HashMap<String, String> mkmap(String... args) {
 		if ((args.length % 2) > 0)
 			throw new IllegalArgumentException("needs to be pairs");
-		HashMap<String, String> map = new HashMap<String, String>();
+		HashMap<String, String> map = new HashMap<>();
 		for (int i = 0; i < args.length; i += 2)
 			map.put(args[i], args[i+1]);
 		return map;
@@ -695,7 +695,7 @@ public class TestUtil {
 	 * @return node containing the text
 	 */
 	public static SWTBotTreeItem getNode(SWTBotTreeItem[] nodes, String searchText) {
-		List<String> texts = new ArrayList<String>();
+		List<String> texts = new ArrayList<>();
 		List<SWTBotTreeItem> matchingItems = new ArrayList<SWTBotTreeItem>();
 
 		for (SWTBotTreeItem item : nodes) {

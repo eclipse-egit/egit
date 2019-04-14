@@ -171,7 +171,7 @@ public class CloneOperation {
 				cloneRepository.setCallback(callback);
 			}
 			if (selectedBranches != null) {
-				List<String> branches = new ArrayList<String>();
+				List<String> branches = new ArrayList<>();
 				for (Ref branch : selectedBranches) {
 					branches.add(branch.getName());
 				}

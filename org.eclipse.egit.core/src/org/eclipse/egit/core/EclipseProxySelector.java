@@ -34,7 +34,7 @@ class EclipseProxySelector extends ProxySelector {
 
 	@Override
 	public List<Proxy> select(final URI uri) {
-		final ArrayList<Proxy> r = new ArrayList<Proxy>();
+		final ArrayList<Proxy> r = new ArrayList<>();
 		final String host = uri.getHost();
 
 		if (host != null) {

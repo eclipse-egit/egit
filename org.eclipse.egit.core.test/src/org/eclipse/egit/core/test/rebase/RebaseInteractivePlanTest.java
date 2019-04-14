@@ -172,11 +172,11 @@ public class RebaseInteractivePlanTest extends GitTestCase {
 
 		@Before
 		public void beforeTest() {
-			testData1 = new LinkedList<Integer>();
+			testData1 = new LinkedList<>();
 			for (int i = 1; i <= 4; i++) {
 				testData1.add(Integer.valueOf(i));
 			}
-			testData2 = new LinkedList<Integer>();
+			testData2 = new LinkedList<>();
 			for (int i = 5; i <= 10; i++) {
 				testData2.add(Integer.valueOf(i));
 			}

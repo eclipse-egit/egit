@@ -292,7 +292,7 @@ public class CreatePatchOperation implements IEGitOperation {
 	private void writeGitPatchHeader(StringBuilder sb) {
 		String template = headerFormat.getTemplate();
 		String[] segments = template.split("\\$\\{"); //$NON-NLS-1$
-		Stack<String> evaluated = new Stack<String>();
+		Stack<String> evaluated = new Stack<>();
 		evaluated.add(segments[0]);
 
 		for (int i = 1; i < segments.length; i++) {
