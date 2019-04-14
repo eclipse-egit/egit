@@ -114,14 +114,17 @@ public class ResourceStatePropertyTester extends AbstractPropertyTester {
 
 	@Nullable
 	private Property toProperty(@NonNull String value) {
-		if ("hasStagedChanges".equals(value)) { //$NON-NLS-1$
+		switch (value) {
+		case "hasStagedChanges": //$NON-NLS-1$
 			return Property.HAS_STAGED_CHANGES;
-		} else if ("hasUnstagedChanges".equals(value)) { //$NON-NLS-1$
+		case "hasUnstagedChanges": //$NON-NLS-1$
 			return Property.HAS_UNSTAGED_CHANGES;
-		} else if ("hasNotIgnoredResources".equals(value)) { //$NON-NLS-1$
+		case "hasNotIgnoredResources": //$NON-NLS-1$
 			return Property.HAS_NOT_IGNORED_RESOURCES;
-		} else if ("hasTrackedResources".equals(value)) { //$NON-NLS-1$
+		case "hasTrackedResources": //$NON-NLS-1$
 			return Property.HAS_TRACKED_RESOURCES;
+		default:
+			break;
 		}
 		return null;
 	}
