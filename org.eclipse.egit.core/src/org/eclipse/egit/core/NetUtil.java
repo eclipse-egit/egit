@@ -50,13 +50,8 @@ public class NetUtil {
 		}
 	} };
 
-	private static HostnameVerifier trustAllHostNames = new HostnameVerifier() {
-		@Override
-		public boolean verify(String hostname, SSLSession session) {
-			// always accept
-			return true;
-		}
-	};
+	private static HostnameVerifier trustAllHostNames = (String hostname, SSLSession session) -> true // always accept
+	;
 
 	/**
 	 * Configures a {@link HttpURLConnection} according to the value of the

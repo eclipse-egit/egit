@@ -13,6 +13,7 @@
 package org.eclipse.egit.ui;
 
 import java.lang.ref.SoftReference;
+import java.sql.Ref;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
@@ -58,7 +59,6 @@ import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.StructuredSelection;
 import org.eclipse.jface.viewers.Viewer;
 import org.eclipse.jgit.annotations.Nullable;
-import org.eclipse.jgit.lib.Ref;
 import org.eclipse.jgit.lib.Repository;
 import org.eclipse.osgi.util.NLS;
 import org.eclipse.swt.SWT;
@@ -456,46 +456,42 @@ public class UIUtils {
 		adapter.setProposalAcceptanceStyle(
 				ContentProposalAdapter.PROPOSAL_REPLACE);
 
-		return new IPreviousValueProposalHandler() {
-			@Override
-			public void updateProposals() {
-				String value = textField.getText();
-				// don't store empty values
-				if (value.length() > 0) {
-					// we don't want to save too much in the preferences
-					if (value.length() > 2000) {
-						value = value.substring(0, 1999);
-					}
-					// now we need to mix the value into the list
-					IDialogSettings settings = org.eclipse.egit.ui.Activator
-							.getDefault().getDialogSettings();
-					String[] existingValues = settings.getArray(preferenceKey);
-					if (existingValues == null) {
-						existingValues = new String[] { value };
-						settings.put(preferenceKey, existingValues);
-					} else {
+		return () -> {
+			String value = textField.getText();
+			// don't store empty values
+			if (value.length() > 0) {
+				// we don't want to save too much in the preferences
+				if (value.length() > 2000) {
+					value = value.substring(0, 1999);
+				}
+				// now we need to mix the value into the list
+				IDialogSettings settings = org.eclipse.egit.ui.Activator
+						.getDefault().getDialogSettings();
+				String[] existingValues = settings.getArray(preferenceKey);
+				if (existingValues == null) {
+					existingValues = new String[] { value };
+					settings.put(preferenceKey, existingValues);
+				} else {
 
-						List<String> values = new ArrayList<>(
-								existingValues.length + 1);
+					List<String> values = new ArrayList<>(
+							existingValues.length + 1);
 
-						for (String existingValue : existingValues)
-							values.add(existingValue);
-						// if it is already the first value, we don't need to do
-						// anything
-						if (values.indexOf(value) == 0)
-							return;
+					for (String existingValue : existingValues)
+						values.add(existingValue);
+					// if it is already the first value, we don't need to do
+					// anything
+					if (values.indexOf(value) == 0)
+						return;
 
-						values.remove(value);
-						// we insert at the top
-						values.add(0, value);
-						// make sure to not store more than the maximum number
-						// of values
-						while (values.size() > 10)
-							values.remove(values.size() - 1);
+					values.remove(value);
+					// we insert at the top
+					values.add(0, value);
+					// make sure to not store more than the maximum number
+					// of values
+					while (values.size() > 10)
+						values.remove(values.size() - 1);
 
-						settings.put(preferenceKey, values
-								.toArray(new String[0]));
-					}
+					settings.put(preferenceKey, values.toArray(new String[0]));
 				}
 			}
 		};
