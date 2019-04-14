@@ -482,30 +482,30 @@ public class ProjectUtil {
 		// first look for project description files
 		boolean foundProject = false;
 		final String dotProject = IProjectDescription.DESCRIPTION_FILE_NAME;
-		for (int i = 0; i < contents.length; i++) {
-			File file = contents[i];
-			if (file.isFile() && file.getName().equals(dotProject)) {
-				files.add(file);
-				foundProject = true;
-			}
+	    for (File file : contents) {
+		if (file.isFile() && file.getName().equals(dotProject)) {
+		    files.add(file);
+		    foundProject = true;
 		}
+	    }
 		if (foundProject && !searchNested)
 			return true;
-		// recurse into sub-directories (even when project was found above, for nested projects)
-		for (int i = 0; i < contents.length; i++) {
-			// Skip non-directories
-			if (!contents[i].isDirectory())
-				continue;
-			// Skip .metadata folders
-			if (contents[i].getName().equals(METADATA_FOLDER))
-				continue;
-			String path = contents[i].getAbsolutePath();
-			if (!directoriesVisited.add(path))
-				// already been here --> do not recurse
-				continue;
-			findProjectFiles(files, contents[i], searchNested,
-					directoriesVisited, pm);
+	    // recurse into sub-directories (even when project was found above, for nested projects)
+	    for (File content : contents) {
+		// Skip non-directories
+		if (!content.isDirectory()) {
+		    continue;
 		}
+		// Skip .metadata folders
+		if (content.getName().equals(METADATA_FOLDER)) {
+		    continue;
+		}
+		String path = content.getAbsolutePath();
+		if (!directoriesVisited.add(path))
+		    // already been here --> do not recurse
+		    continue;
+		findProjectFiles(files, content, searchNested, directoriesVisited, pm);
+	    }
 		return true;
 	}
 }
