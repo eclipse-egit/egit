@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "d8c8d279_8678e394",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2019-04-15T17:12:10Z",
+      "side": 1,
+      "message": "Missing period at end of sentence; missing empty line before footer lines.",
+      "revId": "266e632fd704640d45d7edc7269c1b5a2e0d44b3",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d909e89a_3b6777b8",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/UIUtils.java",
         "patchSetId": 1
