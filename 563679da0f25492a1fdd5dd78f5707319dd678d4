@@ -1,0 +1,106 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c37e5567_3ab17f57",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/EclipseProxySelector.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2019-04-15T17:09:31Z",
+      "side": 1,
+      "message": "Wrong indentation. Also, I do NOT find this easier to read, and anyway the comparisons here should probably be case-insensitive, which would preclude using a switch.",
+      "revId": "563679da0f25492a1fdd5dd78f5707319dd678d4",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "75cc688b_017ec3f1",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/securestorage/EGitSecureStore.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 113,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2019-04-15T17:09:31Z",
+      "side": 1,
+      "message": "Same as in EclipseProxySelector.",
+      "revId": "563679da0f25492a1fdd5dd78f5707319dd678d4",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "00eed9e3_6d0aa5db",
+        "filename": "org.eclipse.egit.gitflow.ui/src/org/eclipse/egit/gitflow/ui/internal/properties/RepositoryPropertyTester.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2019-04-15T17:09:31Z",
+      "side": 1,
+      "message": "\"Switch\" should be on new line, and \"if\" should have {}.",
+      "revId": "563679da0f25492a1fdd5dd78f5707319dd678d4",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "479a758c_fde559cd",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/expressions/GitPropertyTester.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2019-04-15T17:09:31Z",
+      "side": 1,
+      "message": "What has happened here? This has become completely unreadable.",
+      "revId": "563679da0f25492a1fdd5dd78f5707319dd678d4",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "43be1af0_3e5d742c",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/resources/ResourceStatePropertyTester.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 129,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2019-04-15T17:09:31Z",
+      "side": 1,
+      "message": "Indentation wrong.",
+      "revId": "563679da0f25492a1fdd5dd78f5707319dd678d4",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "64f34f58_d2a956f1",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/selection/SelectionPropertyTester.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2019-04-15T17:09:31Z",
+      "side": 1,
+      "message": "Indentation wrong, and this one-line if-switch construct is not to be used.",
+      "revId": "563679da0f25492a1fdd5dd78f5707319dd678d4",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
