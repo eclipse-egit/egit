@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "bed42da0_95140b08",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2019-04-15T17:17:44Z",
+      "side": 1,
+      "message": "Missing empty line before footer.",
+      "revId": "39e24a844e983e639a304b14bc45944567c62144",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "d2d93a3e_b39b1828",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/internal/util/ProjectUtil.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 490,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2019-04-15T17:17:44Z",
+      "side": 1,
+      "message": "Indentation wrong.",
+      "revId": "39e24a844e983e639a304b14bc45944567c62144",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
