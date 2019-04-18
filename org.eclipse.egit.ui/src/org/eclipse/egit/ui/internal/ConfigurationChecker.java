@@ -133,7 +133,7 @@ public class ConfigurationChecker {
 		} catch (RuntimeException e) {
 			return false;
 		}
-		return os.indexOf("Windows") != -1; //$NON-NLS-1$
+		return os.contains("Windows"); //$NON-NLS-1$
 	}
 
 }
