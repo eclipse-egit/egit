@@ -93,11 +93,10 @@ public final class LaunchFinder {
 				ModalContext.run(operation, true, progress,
 						PlatformUI.getWorkbench().getDisplay());
 			}
-		} catch (InvocationTargetException e) {
-			// ignore
-		} catch (InterruptedException e) {
+		} catch (InvocationTargetException | InterruptedException e) {
 			// ignore
 		}
+	    // ignore
 		return result[0];
 	}
 
