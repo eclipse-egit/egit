@@ -91,7 +91,7 @@ public class CompareWithPreviousActionHandler extends RepositoryActionHandler {
 
 		final AtomicReference<RevCommit> previous = new AtomicReference<>();
 
-		if (previousList.size() == 0) {
+		if (previousList.isEmpty()) {
 			return null;
 		} else if (previousList.size() == 1)
 			previous.set(previousList.get(0));

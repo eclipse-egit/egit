@@ -117,7 +117,7 @@ public class RuleUtil {
 					rules.add(rule);
 			}
 		}
-		if (rules.size() == 0)
+		if (rules.isEmpty())
 			return null;
 		else
 			return new MultiRule(rules.toArray(new ISchedulingRule[0]));

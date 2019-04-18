@@ -218,7 +218,7 @@ public class CommitOperation implements IEGitOperation {
 	}
 
 	private void addUntracked() throws CoreException {
-		if (notTracked == null || notTracked.size() == 0) {
+		if (notTracked == null || notTracked.isEmpty()) {
 			return;
 		}
 		try (Git git = new Git(repo)) {

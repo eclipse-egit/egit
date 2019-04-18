@@ -215,7 +215,7 @@ class CommitMessageBuilder {
 				resources.add(file.getProject());
 			}
 		}
-		if (resources.size() == 0) {
+		if (resources.isEmpty()) {
 			resources
 					.addAll(Arrays
 							.asList(ProjectUtil.getProjects(repository)));
