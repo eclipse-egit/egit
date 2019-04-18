@@ -58,7 +58,6 @@ import org.eclipse.core.runtime.jobs.JobChangeAdapter;
 import org.eclipse.core.runtime.preferences.IEclipsePreferences.IPreferenceChangeListener;
 import org.eclipse.core.runtime.preferences.IEclipsePreferences.PreferenceChangeEvent;
 import org.eclipse.core.runtime.preferences.InstanceScope;
-import org.eclipse.debug.core.ILaunchConfiguration;
 import org.eclipse.egit.core.AdapterUtils;
 import org.eclipse.egit.core.RepositoryUtil;
 import org.eclipse.egit.core.internal.gerrit.GerritUtil;
@@ -3128,7 +3127,7 @@ public class StagingView extends ViewPart
 		@Override
 		public void run() {
 			String question = UIText.DiscardChangesAction_confirmActionMessage;
-			ILaunchConfiguration launch = LaunchFinder
+			String launch = LaunchFinder
 					.getRunningLaunchConfiguration(
 							Collections.singleton(getCurrentRepository()),
 							null);
@@ -3136,7 +3135,7 @@ public class StagingView extends ViewPart
 				question = MessageFormat.format(question,
 						"\n\n" + MessageFormat.format( //$NON-NLS-1$
 								UIText.LaunchFinder_RunningLaunchMessage,
-								launch.getName()));
+								launch));
 			} else {
 				question = MessageFormat.format(question, ""); //$NON-NLS-1$
 			}
