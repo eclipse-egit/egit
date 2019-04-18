@@ -744,14 +744,14 @@ public class GitMoveDeleteHookTest {
 
 
 	private void registerWorkspaceRelativeTestDirProject(String parent, String projName) {
-		if ((parent != null) && !parent.equals(""))
+		if ((parent != null) && !parent.isEmpty())
 			registerWorkspaceRelativeTestDir(parent);
 		else
 			registerWorkspaceRelativeTestDir(projName);
 	}
 
 	private void registerWorkspaceRelativeTestDir(String relativeDir) {
-		if ((relativeDir != null) && !relativeDir.equals("")) {
+		if ((relativeDir != null) && !relativeDir.isEmpty()) {
 			File d = new File(workspace, relativeDir);
 			testDirs.add(d);
 		}

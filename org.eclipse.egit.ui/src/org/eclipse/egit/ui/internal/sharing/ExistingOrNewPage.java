@@ -51,7 +51,6 @@ import org.eclipse.jface.viewers.ViewerComparator;
 import org.eclipse.jface.window.Window;
 import org.eclipse.jface.wizard.WizardDialog;
 import org.eclipse.jface.wizard.WizardPage;
-import org.eclipse.jgit.lib.Constants;
 import org.eclipse.jgit.lib.ObjectId;
 import org.eclipse.jgit.lib.Repository;
 import org.eclipse.jgit.lib.RepositoryBuilder;
@@ -301,7 +300,7 @@ class ExistingOrNewPage extends WizardPage {
 					for (TreeItem ti : tree.getItems()) {
 						if (ti.getItemCount() > 0
 								|| ((ProjectAndRepo) ti.getData()).getRepo()
-										.equals("")) //$NON-NLS-1$
+										.isEmpty())
 							ti.setChecked(false);
 						for (TreeItem subTi : ti.getItems()) {
 							IProject project = ((ProjectAndRepo) subTi
@@ -645,7 +644,7 @@ class ExistingOrNewPage extends WizardPage {
 			for (Object checkedElement : viewer.getCheckedElements()) {
 				String path = ((ProjectAndRepo) checkedElement).getRepo();
 				if (((ProjectAndRepo) checkedElement).getRepo() != null
-						&& path.equals("")) { //$NON-NLS-1$
+						&& path.isEmpty()) {
 					pageComplete = false;
 				}
 			}
@@ -680,7 +679,7 @@ class ExistingOrNewPage extends WizardPage {
 		IPath p = null;
 		for (TreeItem ti : treeItems) {
 			String gitDirParentCandidate = ti.getText(1);
-			if (gitDirParentCandidate.equals("")) //$NON-NLS-1$
+			if (gitDirParentCandidate.isEmpty())
 				continue;
 			if (ti.getItemCount() > 0)
 				if (hasRepositoryInOwnDirectory(ti.getItems()))

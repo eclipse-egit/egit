@@ -14,6 +14,7 @@ package org.eclipse.egit.core;
 
 import java.io.File;
 import java.io.IOException;
+import java.sql.Ref;
 import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -45,10 +46,8 @@ import org.eclipse.jgit.annotations.NonNull;
 import org.eclipse.jgit.annotations.Nullable;
 import org.eclipse.jgit.errors.IncorrectObjectTypeException;
 import org.eclipse.jgit.lib.CheckoutEntry;
-import org.eclipse.jgit.lib.Constants;
 import org.eclipse.jgit.lib.FileMode;
 import org.eclipse.jgit.lib.ObjectId;
-import org.eclipse.jgit.lib.Ref;
 import org.eclipse.jgit.lib.ReflogEntry;
 import org.eclipse.jgit.lib.ReflogReader;
 import org.eclipse.jgit.lib.Repository;
@@ -415,7 +414,7 @@ public class RepositoryUtil {
 		Set<String> dirs;
 		synchronized (prefs) {
 			dirString = prefs.get(PREFS_DIRECTORIES_REL, ""); //$NON-NLS-1$
-			if (dirString.equals("")) { //$NON-NLS-1$
+			if (dirString.isEmpty()) {
 				dirs = migrateAbsolutePaths();
 			} else {
 				dirs = toDirSet(dirString);

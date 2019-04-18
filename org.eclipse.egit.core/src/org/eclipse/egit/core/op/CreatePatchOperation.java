@@ -45,8 +45,8 @@ import org.eclipse.egit.core.EclipseGitProgressTransformer;
 import org.eclipse.egit.core.internal.CompareCoreUtils;
 import org.eclipse.egit.core.internal.CoreText;
 import org.eclipse.egit.core.project.RepositoryMapping;
+import org.eclipse.egit.core.synchronize.ThreeWayDiffEntry.ChangeType;
 import org.eclipse.jgit.diff.DiffEntry;
-import org.eclipse.jgit.diff.DiffEntry.ChangeType;
 import org.eclipse.jgit.diff.DiffEntry.Side;
 import org.eclipse.jgit.diff.DiffFormatter;
 import org.eclipse.jgit.diff.RawText;
@@ -292,7 +292,7 @@ public class CreatePatchOperation implements IEGitOperation {
 	private void writeGitPatchHeader(StringBuilder sb) {
 		String template = headerFormat.getTemplate();
 		String[] segments = template.split("\\$\\{"); //$NON-NLS-1$
-		Stack<String> evaluated = new Stack<String>();
+		Stack<String> evaluated = new Stack<>();
 		evaluated.add(segments[0]);
 
 		for (int i = 1; i < segments.length; i++) {
@@ -419,7 +419,7 @@ public class CreatePatchOperation implements IEGitOperation {
 		if (repoRelativePath == null)
 			return path;
 		// repository and project at the same level
-		if (repoRelativePath.equals("")) //$NON-NLS-1$
+		if (repoRelativePath.isEmpty())
 			return path;
 		return path.removeFirstSegments(path.matchingFirstSegments(new Path(
 				repoRelativePath)));
