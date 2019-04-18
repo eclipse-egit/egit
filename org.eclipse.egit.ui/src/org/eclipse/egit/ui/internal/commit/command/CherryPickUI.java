@@ -30,7 +30,6 @@ import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.MultiStatus;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.core.runtime.jobs.Job;
-import org.eclipse.debug.core.ILaunchConfiguration;
 import org.eclipse.egit.core.internal.Utils;
 import org.eclipse.egit.core.op.CherryPickOperation;
 import org.eclipse.egit.ui.Activator;
@@ -212,12 +211,12 @@ public class CherryPickUI {
 	}
 
 	private String getLaunchMessage(Repository repository) {
-		ILaunchConfiguration launch = LaunchFinder
+		String launch = LaunchFinder
 				.getRunningLaunchConfiguration(
 						Collections.singleton(repository), null);
 		if (launch != null) {
 			return MessageFormat.format(
-					UIText.LaunchFinder_RunningLaunchMessage, launch.getName());
+					UIText.LaunchFinder_RunningLaunchMessage, launch);
 		}
 		return null;
 	}
