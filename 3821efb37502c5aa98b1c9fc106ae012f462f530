@@ -1,0 +1,90 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "97c26c90_66e2558b",
+        "filename": "org.eclipse.egit.ui/META-INF/MANIFEST.MF",
+        "patchSetId": 1
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 440
+      },
+      "writtenOn": "2019-04-18T17:24:22Z",
+      "side": 1,
+      "message": "I guess this has been restored from history? We meanwhile require resources 3.11.0 in an attempt to restrict users from installing on old unsupported versions.",
+      "range": {
+        "startLine": 12,
+        "startChar": 45,
+        "endLine": 12,
+        "endChar": 50
+      },
+      "revId": "3821efb37502c5aa98b1c9fc106ae012f462f530",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1b1a9176_a7152a09",
+        "filename": "org.eclipse.egit.ui/META-INF/MANIFEST.MF",
+        "patchSetId": 1
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 440
+      },
+      "writtenOn": "2019-04-18T17:24:22Z",
+      "side": 1,
+      "message": "3.5.100. details are in 69a3b3126cc0b1aa9689ebf4e1fdc53985f2e947, if you are interested",
+      "range": {
+        "startLine": 14,
+        "startChar": 47,
+        "endLine": 14,
+        "endChar": 52
+      },
+      "revId": "3821efb37502c5aa98b1c9fc106ae012f462f530",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "b0e702c0_7317ca4e",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/branch/DebugUIPlugin.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 440
+      },
+      "writtenOn": "2019-04-18T17:24:22Z",
+      "side": 1,
+      "message": "I\u0027m not so happy about having 2 DebugUIPlugin classes in my Open Type dialog now. Would you be okay with IDebugUIPluginFacade or IDebugUIPluginWrapper and related class names?",
+      "range": {
+        "startLine": 42,
+        "startChar": 6,
+        "endLine": 42,
+        "endChar": 19
+      },
+      "revId": "3821efb37502c5aa98b1c9fc106ae012f462f530",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a07b02b5_80c11e23",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/branch/LaunchFinder.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 440
+      },
+      "writtenOn": "2019-04-18T17:24:22Z",
+      "side": 1,
+      "message": "our coding guidelines say that all optional block braces are mandatory. It looks like you are not using the recommended egit Oomph setup, which automatically configures the java formatter and on-save actions.",
+      "revId": "3821efb37502c5aa98b1c9fc106ae012f462f530",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
