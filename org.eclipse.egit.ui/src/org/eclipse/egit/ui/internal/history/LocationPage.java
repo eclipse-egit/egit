@@ -215,7 +215,7 @@ public class LocationPage extends WizardPage {
 		private void validateDialog() {
 			String fileName = wsFilenameText.getText();
 
-			if (fileName.equals("")) //$NON-NLS-1$
+			if (fileName.isEmpty())
 				if (modified) {
 					setErrorMessage(UIText.GitCreatePatchWizard_WorkspacePatchDialogEnterFileName);
 					getButton(IDialogConstants.OK_ID).setEnabled(false);

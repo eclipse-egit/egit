@@ -88,7 +88,7 @@ public final class GitProjectSetCapability extends ProjectSetCapability {
 		if (projectPath == null) {
 			return null;
 		}
-		if (projectPath.equals("")) //$NON-NLS-1$
+		if (projectPath.isEmpty())
 			projectPath = "."; //$NON-NLS-1$
 
 		return asReference(url, branch, projectPath);
@@ -112,7 +112,7 @@ public final class GitProjectSetCapability extends ProjectSetCapability {
 	public IProject[] addToWorkspace(final String[] referenceStrings,
 			final ProjectSetSerializationContext context,
 			final IProgressMonitor monitor) throws TeamException {
-		final ArrayList<IProject> importedProjects = new ArrayList<IProject>();
+		final ArrayList<IProject> importedProjects = new ArrayList<>();
 
 		try{
 			ResourcesPlugin.getWorkspace().run(new IWorkspaceRunnable() {

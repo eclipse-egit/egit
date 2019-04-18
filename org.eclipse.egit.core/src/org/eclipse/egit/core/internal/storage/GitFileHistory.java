@@ -246,7 +246,7 @@ class GitFileHistory extends FileHistory implements IAdaptable {
 
 	@Override
 	public IFileRevision getFileRevision(final String id) {
-		if (id == null || id.equals("") //$NON-NLS-1$
+		if (id == null || id.isEmpty()
 				|| GitFileRevision.WORKSPACE.equals(id))
 			return new WorkspaceFileRevision(resource);
 		if (GitFileRevision.INDEX.equals(id))

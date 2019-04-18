@@ -237,7 +237,7 @@ public class GitCreatePatchWizard extends Wizard {
 			if (rm != null) {
 				String repoRelativePath = rm.getRepoRelativePath(r);
 				if (repoRelativePath != null)
-					if (repoRelativePath.equals("")) //$NON-NLS-1$
+					if (repoRelativePath.isEmpty())
 						// repository selected
 						return TreeFilter.ALL;
 					else

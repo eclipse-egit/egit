@@ -415,7 +415,7 @@ public class RepositoryUtil {
 		Set<String> dirs;
 		synchronized (prefs) {
 			dirString = prefs.get(PREFS_DIRECTORIES_REL, ""); //$NON-NLS-1$
-			if (dirString.equals("")) { //$NON-NLS-1$
+			if (dirString.isEmpty()) {
 				dirs = migrateAbsolutePaths();
 			} else {
 				dirs = toDirSet(dirString);
