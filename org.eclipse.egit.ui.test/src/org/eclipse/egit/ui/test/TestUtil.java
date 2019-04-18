@@ -474,8 +474,7 @@ public class TestUtil {
 	public static void assertRepositoryContainsFiles(Repository repository,
 			String[] paths) throws Exception {
 		Set<String> expectedfiles = new HashSet<String>();
-		for (String path : paths)
-			expectedfiles.add(path);
+		expectedfiles.addAll(Arrays.asList(paths));
 		try (TreeWalk treeWalk = new TreeWalk(repository)) {
 			treeWalk.addTree(repository.resolve("HEAD^{tree}"));
 			treeWalk.setRecursive(true);

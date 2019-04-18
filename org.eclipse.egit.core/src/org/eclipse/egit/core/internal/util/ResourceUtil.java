@@ -648,8 +648,7 @@ public class ResourceUtil {
 					}
 					final ResourceMapping[] modelMappings = model.getMappings(
 							resource, context, new NullProgressMonitor());
-					for (ResourceMapping mapping : modelMappings)
-						mappings.add(mapping);
+					mappings.addAll(Arrays.asList(modelMappings));
 				}
 			} catch (CoreException e) {
 				Activator.logError(e.getMessage(), e);
