@@ -213,8 +213,7 @@ public class StagingViewTest extends AbstractStagingViewTestCase {
 				commitMessage.indexOf("Signed-off-by") > 0);
 		stagingViewTester.setSignedOff(false);
 		commitMessage = stagingViewTester.getCommitMessage();
-		assertTrue("Should not have a signed-off footer",
-				commitMessage.indexOf("Signed-off-by") < 0);
+		assertTrue("Should not have a signed-off footer", !commitMessage.contains("Signed-off-by"));
 		StoredConfig cfg = repository.getConfig();
 		cfg.load();
 		cfg.setString(ConfigConstants.CONFIG_USER_SECTION, null,

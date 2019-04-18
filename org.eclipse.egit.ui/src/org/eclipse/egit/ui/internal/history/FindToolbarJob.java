@@ -87,9 +87,9 @@ public class FindToolbarJob extends Job {
 			return false;
 		}
 		if (ignoreCase) {
-			return text.toLowerCase().indexOf(needle) >= 0;
+			return text.toLowerCase().contains(needle);
 		}
-		return text.indexOf(needle) >= 0;
+		return text.contains(needle);
 	}
 
 	@Override
