@@ -74,7 +74,7 @@ public class GitVariableResolver implements IDynamicVariableResolver {
 			if (repoRelativePath == null) {
 				return ""; //$NON-NLS-1$
 			}
-			if (repoRelativePath.equals("")) //$NON-NLS-1$
+			if (repoRelativePath.isEmpty())
 				return "."; //$NON-NLS-1$
 			else
 				return repoRelativePath;

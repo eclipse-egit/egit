@@ -301,7 +301,7 @@ class ExistingOrNewPage extends WizardPage {
 					for (TreeItem ti : tree.getItems()) {
 						if (ti.getItemCount() > 0
 								|| ((ProjectAndRepo) ti.getData()).getRepo()
-										.equals("")) //$NON-NLS-1$
+										.isEmpty())
 							ti.setChecked(false);
 						for (TreeItem subTi : ti.getItems()) {
 							IProject project = ((ProjectAndRepo) subTi
@@ -645,7 +645,7 @@ class ExistingOrNewPage extends WizardPage {
 			for (Object checkedElement : viewer.getCheckedElements()) {
 				String path = ((ProjectAndRepo) checkedElement).getRepo();
 				if (((ProjectAndRepo) checkedElement).getRepo() != null
-						&& path.equals("")) { //$NON-NLS-1$
+						&& path.isEmpty()) {
 					pageComplete = false;
 				}
 			}
@@ -680,7 +680,7 @@ class ExistingOrNewPage extends WizardPage {
 		IPath p = null;
 		for (TreeItem ti : treeItems) {
 			String gitDirParentCandidate = ti.getText(1);
-			if (gitDirParentCandidate.equals("")) //$NON-NLS-1$
+			if (gitDirParentCandidate.isEmpty())
 				continue;
 			if (ti.getItemCount() > 0)
 				if (hasRepositoryInOwnDirectory(ti.getItems()))

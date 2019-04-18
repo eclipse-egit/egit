@@ -254,7 +254,7 @@ public class GitScmUrlImportWizardPage extends WizardPage implements
 					// ignore
 				} else if (params[k].startsWith("version=")) { //$NON-NLS-1$
 					// ignore
-				} else if (params[k]!=null && !params[k].equals("")) //$NON-NLS-1$
+				} else if (params[k] != null && !params[k].isEmpty())
 					sb.append(";").append(params[k]); //$NON-NLS-1$
 		} else
 			sb.append(ssp);

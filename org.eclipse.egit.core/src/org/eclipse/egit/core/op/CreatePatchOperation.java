@@ -419,7 +419,7 @@ public class CreatePatchOperation implements IEGitOperation {
 		if (repoRelativePath == null)
 			return path;
 		// repository and project at the same level
-		if (repoRelativePath.equals("")) //$NON-NLS-1$
+		if (repoRelativePath.isEmpty())
 			return path;
 		return path.removeFirstSegments(path.matchingFirstSegments(new Path(
 				repoRelativePath)));
