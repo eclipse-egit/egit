@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a5612492_3f1e7248",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/branch/LaunchFinder.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 440
+      },
+      "writtenOn": "2019-04-19T09:54:38Z",
+      "side": 1,
+      "message": "please remove",
+      "range": {
+        "startLine": 99,
+        "startChar": 0,
+        "endLine": 99,
+        "endChar": 14
+      },
+      "revId": "7a8df529168cb8c62013d6523582205491ea7c88",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1de3b06f_ab26f5b3",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/fetch/FetchGerritChangePage.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1267,
+      "author": {
+        "id": 440
+      },
+      "writtenOn": "2019-04-19T09:54:38Z",
+      "side": 1,
+      "message": "remove",
+      "range": {
+        "startLine": 1266,
+        "startChar": 0,
+        "endLine": 1267,
+        "endChar": 6
+      },
+      "revId": "7a8df529168cb8c62013d6523582205491ea7c88",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3c10e746_bf1b2491",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/synchronize/GitTreeCompareNavigator.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 440
+      },
+      "writtenOn": "2019-04-19T09:54:38Z",
+      "side": 1,
+      "message": "no",
+      "range": {
+        "startLine": 49,
+        "startChar": 0,
+        "endLine": 52,
+        "endChar": 27
+      },
+      "revId": "7a8df529168cb8c62013d6523582205491ea7c88",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
