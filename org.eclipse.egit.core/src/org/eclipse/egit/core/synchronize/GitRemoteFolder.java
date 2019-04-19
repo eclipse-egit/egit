@@ -77,7 +77,7 @@ class GitRemoteFolder extends GitRemoteResource {
 
 	GitRemoteResource[] members(IProgressMonitor monitor) {
 		Collection<GitSyncObjectCache> members = cachedData.members();
-		if (members == null || members.size() == 0)
+		if (members == null || members.isEmpty())
 			return new GitRemoteResource[0];
 
 		List<IResourceVariant> result = new ArrayList<IResourceVariant>();
