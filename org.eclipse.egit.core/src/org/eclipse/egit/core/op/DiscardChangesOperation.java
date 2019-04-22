@@ -18,6 +18,7 @@ package org.eclipse.egit.core.op;
 
 import java.util.Collection;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.Map;
 import java.util.Map.Entry;
 
@@ -128,6 +129,21 @@ public class DiscardChangesOperation implements IEGitOperation {
 		this.pathsByRepository = pathsByRepository;
 		this.schedulingRule = RuleUtil.getRuleForRepositories(pathsByRepository
 				.keySet());
+	}
+
+	/**
+	 * Retrieves the paths that will be reset.
+	 *
+	 * @return an unmodifiable map containing the paths per repository.
+	 */
+	public Map<Repository, Collection<String>> getPathsPerRepository() {
+		Map<Repository, Collection<String>> result = new HashMap<>();
+		for (Map.Entry<Repository, Collection<String>> entry : pathsByRepository
+				.entrySet()) {
+			result.put(entry.getKey(),
+					Collections.unmodifiableCollection(entry.getValue()));
+		}
+		return Collections.unmodifiableMap(result);
 	}
 
 	/**
