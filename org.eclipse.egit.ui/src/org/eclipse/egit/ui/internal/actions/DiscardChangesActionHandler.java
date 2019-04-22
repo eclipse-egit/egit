@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (C) 2010, 2016 Roland Grunberg <rgrunber@redhat.com> and others
+ * Copyright (C) 2010, 2019 Roland Grunberg <rgrunber@redhat.com> and others
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License 2.0
@@ -11,25 +11,27 @@
  * Contributors:
  *   Benjamin Muskalla (Tasktop Technologies Inc.) - support for model scoping
  *   François Rey <eclipse.org_@_francois_._rey_._name> - handling of linked resources
- *   Thomas Wolf <thomas.wolf@paranor.ch> - Bug 495777
+ *   Thomas Wolf <thomas.wolf@paranor.ch> - Bug 495777, 546194
  *******************************************************************************/
 package org.eclipse.egit.ui.internal.actions;
 
 import java.text.MessageFormat;
-import java.util.Arrays;
+import java.util.Collection;
+import java.util.HashSet;
+import java.util.Map;
+import java.util.Set;
 
 import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.commands.ExecutionException;
 import org.eclipse.core.resources.IResource;
-import org.eclipse.core.resources.WorkspaceJob;
-import org.eclipse.core.runtime.CoreException;
-import org.eclipse.core.runtime.IProgressMonitor;
-import org.eclipse.core.runtime.IStatus;
+import org.eclipse.core.runtime.Assert;
 import org.eclipse.core.runtime.OperationCanceledException;
-import org.eclipse.core.runtime.Status;
-import org.eclipse.core.runtime.jobs.Job;
+import org.eclipse.egit.core.Activator;
+import org.eclipse.egit.core.internal.indexdiff.IndexDiffCache;
+import org.eclipse.egit.core.internal.indexdiff.IndexDiffCacheEntry;
+import org.eclipse.egit.core.internal.indexdiff.IndexDiffData;
+import org.eclipse.egit.core.internal.job.JobUtil;
 import org.eclipse.egit.core.op.DiscardChangesOperation;
-import org.eclipse.egit.ui.Activator;
 import org.eclipse.egit.ui.JobFamilies;
 import org.eclipse.egit.ui.internal.UIText;
 import org.eclipse.egit.ui.internal.branch.LaunchFinder;
@@ -37,6 +39,7 @@ import org.eclipse.egit.ui.internal.operations.GitScopeUtil;
 import org.eclipse.jface.dialogs.IDialogConstants;
 import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.window.Window;
+import org.eclipse.jgit.annotations.NonNull;
 import org.eclipse.jgit.lib.Repository;
 import org.eclipse.jgit.lib.RepositoryState;
 import org.eclipse.ui.IWorkbenchPart;
@@ -52,57 +55,80 @@ public class DiscardChangesActionHandler extends RepositoryActionHandler {
 		mySelection = getSelection(event);
 		try {
 			IWorkbenchPart part = getPart(event);
-			String question = UIText.DiscardChangesAction_confirmActionMessage;
-			String launch = LaunchFinder
-					.getRunningLaunchConfiguration(
-							Arrays.asList(getRepositories()), null);
-			if (launch != null) {
-				question = MessageFormat.format(question,
-						"\n\n" + MessageFormat.format( //$NON-NLS-1$
-								UIText.LaunchFinder_RunningLaunchMessage,
-								launch));
-			} else {
-				question = MessageFormat.format(question, ""); //$NON-NLS-1$
-			}
-			boolean performAction = openConfirmationDialog(event, question);
-			if (!performAction) {
-				return null;
-			}
+
 			final DiscardChangesOperation operation = createOperation(part,
 					event);
-
 			if (operation == null) {
 				return null;
 			}
-			String jobname = UIText.DiscardChangesAction_discardChanges;
-			Job job = new WorkspaceJob(jobname) {
-				@Override
-				public IStatus runInWorkspace(IProgressMonitor monitor) {
-					try {
-						operation.execute(monitor);
-					} catch (CoreException e) {
-						return Activator.createErrorStatus(
-								e.getStatus().getMessage(), e);
-					}
-					return Status.OK_STATUS;
+			Map<Repository, Collection<String>> paths = operation
+					.getPathsPerRepository();
+			if (haveChanges(paths)) {
+				String question = UIText.DiscardChangesAction_confirmActionMessage;
+				String launch = LaunchFinder
+						.getRunningLaunchConfiguration(paths.keySet(), null);
+				if (launch != null) {
+					question = MessageFormat.format(question,
+							"\n\n" + MessageFormat.format( //$NON-NLS-1$
+									UIText.LaunchFinder_RunningLaunchMessage,
+									launch));
+				} else {
+					question = MessageFormat.format(question, ""); //$NON-NLS-1$
 				}
-
-				@Override
-				public boolean belongsTo(Object family) {
-					if (JobFamilies.DISCARD_CHANGES.equals(family)) {
-						return true;
-					}
-					return super.belongsTo(family);
+				if (!openConfirmationDialog(event, question)) {
+					return null;
 				}
-			};
-			job.setUser(true);
-			job.setRule(operation.getSchedulingRule());
-			job.schedule();
+			} else if (LaunchFinder.shouldCancelBecauseOfRunningLaunches(
+					paths.keySet(), null)) {
+				return null;
+			}
+			JobUtil.scheduleUserWorkspaceJob(operation,
+					UIText.DiscardChangesAction_discardChanges,
+					JobFamilies.DISCARD_CHANGES);
 			return null;
 		} finally {
 			// cleanup mySelection to avoid side effects later after execution
 			mySelection = null;
 		}
+	}
+
+	private boolean haveChanges(Map<Repository, Collection<String>> paths) {
+		IndexDiffCache cache = Activator.getDefault().getIndexDiffCache();
+		for (Map.Entry<Repository, Collection<String>> entry : paths
+				.entrySet()) {
+			Repository repo = entry.getKey();
+			Assert.isNotNull(repo);
+			IndexDiffCacheEntry indexDiff = cache.getIndexDiffCacheEntry(repo);
+			if (indexDiff == null) {
+				return true; // No info, assume worst case
+			}
+			IndexDiffData diff = indexDiff.getIndexDiff();
+			if (diff == null || hasChanges(diff, entry.getValue())) {
+				return true;
+			}
+		}
+		return false;
+	}
+
+	private boolean hasChanges(@NonNull IndexDiffData diff,
+			Collection<String> paths) {
+		Set<String> repoPaths = new HashSet<>(paths);
+		int n = repoPaths.size();
+		repoPaths.removeAll(diff.getAdded());
+		if (repoPaths.size() != n) {
+			return true;
+		}
+		repoPaths.removeAll(diff.getChanged());
+		if (repoPaths.size() != n) {
+			return true;
+		}
+		repoPaths.removeAll(diff.getModified());
+		if (repoPaths.size() != n) {
+			return true;
+		}
+		repoPaths.removeAll(diff.getRemoved());
+		// Untracked files are ignored and won't be removed.
+		return repoPaths.size() != n;
 	}
 
 	private boolean openConfirmationDialog(ExecutionEvent event,
@@ -131,7 +157,6 @@ public class DiscardChangesActionHandler extends RepositoryActionHandler {
 
 	private DiscardChangesOperation createOperation(IWorkbenchPart part,
 			ExecutionEvent event) throws ExecutionException {
-
 		IResource[] selectedResources = gatherResourceToOperateOn(event);
 		String revision;
 		try {
@@ -149,9 +174,7 @@ public class DiscardChangesActionHandler extends RepositoryActionHandler {
 			// cancels the scope operation
 			return null;
 		}
-
 		return new DiscardChangesOperation(resourcesInScope, revision);
-
 	}
 
 	/**
