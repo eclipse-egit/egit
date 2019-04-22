@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2012, 2013 SAP AG and others.
+ * Copyright (c) 2012, 2019 SAP AG and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License 2.0
  * which accompanies this distribution, and is available at
@@ -53,8 +53,28 @@ public class ReplaceActionsTest extends LocalRepositoryTestCase {
 
 	@Test
 	public void testReplaceWithPrevious() throws Exception {
-		touchAndSubmit(null);
 		String initialContent = getTestFileContent();
+		touchAndSubmit(null);
+		assertThat(getTestFileContent(), not(initialContent));
+		String menuLabel = util.getPluginLocalizedValue(
+				"ReplaceWithPreviousVersionAction.label");
+		JobJoiner jobJoiner = JobJoiner.startListening(
+				JobFamilies.DISCARD_CHANGES, 30, TimeUnit.SECONDS);
+		clickReplaceWith(menuLabel);
+		jobJoiner.join();
+		assertEquals(initialContent, getTestFileContent());
+	}
+
+	@Test
+	public void testReplaceWithPreviousChanged() throws Exception {
+		String initialContent = getTestFileContent();
+		touchAndSubmit(null);
+		String newContent = getTestFileContent();
+		assertThat(newContent, not(initialContent));
+		touch("Something else");
+		String changedContent = getTestFileContent();
+		assertThat(changedContent, not(initialContent));
+		assertThat(changedContent, not(newContent));
 		String menuLabel = util
 				.getPluginLocalizedValue(
 						"ReplaceWithPreviousVersionAction.label");
@@ -63,8 +83,28 @@ public class ReplaceActionsTest extends LocalRepositoryTestCase {
 				.shell(UIText.DiscardChangesAction_confirmActionTitle);
 		executeReplace(confirm,
 				UIText.DiscardChangesAction_discardChangesButtonText);
-		String replacedContent = getTestFileContent();
-		assertThat(replacedContent, not(initialContent));
+		assertEquals(initialContent, getTestFileContent());
+	}
+
+	@Test
+	public void testReplaceWithPreviousChangedClosed() throws Exception {
+		String initialContent = getTestFileContent();
+		touchAndSubmit(null);
+		String newContent = getTestFileContent();
+		assertThat(newContent, not(initialContent));
+		touch("Something else");
+		String changedContent = getTestFileContent();
+		assertThat(changedContent, not(initialContent));
+		assertThat(changedContent, not(newContent));
+		String menuLabel = util.getPluginLocalizedValue(
+				"ReplaceWithPreviousVersionAction.label");
+		clickReplaceWith(menuLabel);
+		SWTBotShell confirm = bot
+				.shell(UIText.DiscardChangesAction_confirmActionTitle);
+		confirm.close();
+		TestUtil.processUIEvents();
+		// Confirmation closed, nothing should have changed
+		assertEquals(changedContent, getTestFileContent());
 	}
 
 	@Test
@@ -104,9 +144,6 @@ public class ReplaceActionsTest extends LocalRepositoryTestCase {
 				.getPluginLocalizedValue(
 						"ReplaceWithPreviousVersionAction.label");
 		clickReplaceWith(menuLabel);
-		bot.shell(UIText.DiscardChangesAction_confirmActionTitle).bot()
-				.button(UIText.DiscardChangesAction_discardChangesButtonText)
-				.click();
 		SWTBotShell selectDialog = bot
 				.shell(UIText.CommitSelectDialog_WindowTitle);
 		assertEquals(2, selectDialog.bot().table().rowCount());
@@ -118,11 +155,6 @@ public class ReplaceActionsTest extends LocalRepositoryTestCase {
 		assertEquals(contentAfterMerge, contentAfterClose);
 
 		clickReplaceWith(menuLabel);
-		bot.shell(UIText.DiscardChangesAction_confirmActionTitle).bot()
-				.button(UIText.DiscardChangesAction_discardChangesButtonText)
-				.click();
-		TestUtil.waitForJobs(100, 5000);
-
 		selectDialog = bot.shell(UIText.CommitSelectDialog_WindowTitle);
 		// Select first parent, which should be the master commit
 		SWTBotTable table = selectDialog.bot().table();
