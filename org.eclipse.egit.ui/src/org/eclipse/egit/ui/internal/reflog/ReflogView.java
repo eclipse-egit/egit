@@ -124,7 +124,7 @@ public class ReflogView extends ViewPart implements RefsChangedListener, IShowIn
 
 	private Form form;
 
-	private TreeViewer refLogTableTreeViewer;
+	private TreeViewer refLogTreeViewer;
 
 	private ISelectionListener selectionChangedListener;
 
@@ -180,13 +180,13 @@ public class ReflogView extends ViewPart implements RefsChangedListener, IShowIn
 		};
 
 		toolkit.adapt(filteredTree);
-		refLogTableTreeViewer = filteredTree.getViewer();
-		refLogTableTreeViewer.getTree().setLinesVisible(true);
-		refLogTableTreeViewer.getTree().setHeaderVisible(true);
-		refLogTableTreeViewer
+		refLogTreeViewer = filteredTree.getViewer();
+		refLogTreeViewer.getTree().setLinesVisible(true);
+		refLogTreeViewer.getTree().setHeaderVisible(true);
+		refLogTreeViewer
 				.setContentProvider(new ReflogViewContentProvider());
 
-		ColumnViewerToolTipSupport.enableFor(refLogTableTreeViewer);
+		ColumnViewerToolTipSupport.enableFor(refLogTreeViewer);
 
 		TreeViewerColumn toColumn = createColumn(layout,
 				UIText.ReflogView_CommitColumnHeader, 10, SWT.LEFT);
@@ -310,7 +310,7 @@ public class ReflogView extends ViewPart implements RefsChangedListener, IShowIn
 			}
 		});
 
-		new OpenAndLinkWithEditorHelper(refLogTableTreeViewer) {
+		new OpenAndLinkWithEditorHelper(refLogTreeViewer) {
 			@Override
 			protected void linkToEditor(ISelection selection) {
 				// Not supported
@@ -354,7 +354,7 @@ public class ReflogView extends ViewPart implements RefsChangedListener, IShowIn
 				if (UIPreferences.DATE_FORMAT.equals(property)
 						|| UIPreferences.DATE_FORMAT_CHOICE.equals(property)) {
 					dateFormatter = PreferenceBasedDateFormatter.create();
-					refLogTableTreeViewer.refresh();
+					refLogTreeViewer.refresh();
 				}
 			}
 		};
@@ -389,7 +389,7 @@ public class ReflogView extends ViewPart implements RefsChangedListener, IShowIn
 				selectionChangedListener, site);
 
 		site.setSelectionProvider(new RepositorySelectionProvider(
-				refLogTableTreeViewer, () -> getRepository()));
+				refLogTreeViewer, () -> getRepository()));
 
 		addRefsChangedListener = Repository.getGlobalListenerList()
 				.addRefsChangedListener(this);
@@ -405,18 +405,18 @@ public class ReflogView extends ViewPart implements RefsChangedListener, IShowIn
 		// register context menu
 		MenuManager menuManager = new MenuManager();
 		menuManager.add(new Separator(IWorkbenchActionConstants.MB_ADDITIONS));
-		Tree tree = refLogTableTreeViewer.getTree();
+		Tree tree = refLogTreeViewer.getTree();
 		tree.setMenu(menuManager.createContextMenu(tree));
 
 		MenuManager resetManager = ResetMenu.createMenu(getSite());
 		menuManager.add(resetManager);
 
-		getSite().registerContextMenu(POPUP_MENU_ID, menuManager, refLogTableTreeViewer);
+		getSite().registerContextMenu(POPUP_MENU_ID, menuManager, refLogTreeViewer);
 	}
 
 	@Override
 	public void setFocus() {
-		refLogTableTreeViewer.getControl().setFocus();
+		refLogTreeViewer.getControl().setFocus();
 		activateContextService();
 	}
 
@@ -521,7 +521,7 @@ public class ReflogView extends ViewPart implements RefsChangedListener, IShowIn
 	 * @return the repository the view is showing the reflog for
 	 */
 	public Repository getRepository() {
-		Object input = refLogTableTreeViewer.getInput();
+		Object input = refLogTreeViewer.getInput();
 		if (input instanceof ReflogInput)
 			return ((ReflogInput) input).getRepository();
 		return null;
@@ -566,7 +566,7 @@ public class ReflogView extends ViewPart implements RefsChangedListener, IShowIn
 	 */
 	private void showReflogFor(Repository repository, String ref) {
 		if (repository != null && ref != null) {
-			refLogTableTreeViewer.setInput(new ReflogInput(repository, ref));
+			refLogTreeViewer.setInput(new ReflogInput(repository, ref));
 			updateRefLink(ref);
 			form.setText(getRepositoryName(repository));
 		}
@@ -576,7 +576,7 @@ public class ReflogView extends ViewPart implements RefsChangedListener, IShowIn
 			final TreeColumnLayout columnLayout, final String text,
 			final int weight, final int style) {
 		final TreeViewerColumn viewerColumn = new TreeViewerColumn(
-				refLogTableTreeViewer, style);
+				refLogTreeViewer, style);
 		final TreeColumn column = viewerColumn.getColumn();
 		column.setText(text);
 		columnLayout.setColumnData(column, new ColumnWeightData(weight, 10));
@@ -596,7 +596,7 @@ public class ReflogView extends ViewPart implements RefsChangedListener, IShowIn
 	@Override
 	public void onRefsChanged(RefsChangedEvent event) {
 		PlatformUI.getWorkbench().getDisplay().syncExec(() -> {
-			Object currentInput = refLogTableTreeViewer.getInput();
+			Object currentInput = refLogTreeViewer.getInput();
 			if (currentInput instanceof ReflogInput) {
 				ReflogInput oldInput = (ReflogInput) currentInput;
 				Repository repo = oldInput.getRepository();
@@ -604,7 +604,7 @@ public class ReflogView extends ViewPart implements RefsChangedListener, IShowIn
 						.equals(event.getRepository().getDirectory())) {
 					try {
 						if (repo.findRef(oldInput.getRef()) != null) {
-							refLogTableTreeViewer.setInput(
+							refLogTreeViewer.setInput(
 									new ReflogInput(oldInput.getRepository(),
 											oldInput.getRef()));
 							return;

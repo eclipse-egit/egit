@@ -639,10 +639,10 @@ class CommitGraphTable {
 	private static class CommitGraphTableLayout extends TableColumnLayout {
 
 		@Override
-		protected ColumnLayoutData getLayoutData(Scrollable tableTree,
+		protected ColumnLayoutData getLayoutData(Scrollable table,
 				int columnIndex) {
 			// Make this method accessible here
-			return super.getLayoutData(tableTree, columnIndex);
+			return super.getLayoutData(table, columnIndex);
 		}
 	}
 
