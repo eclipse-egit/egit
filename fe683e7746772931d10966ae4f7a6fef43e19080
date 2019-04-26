@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "434d6b35_70fbd717",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/actions/DiscardChangesActionHandler.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 85,
+      "author": {
+        "id": 440
+      },
+      "writtenOn": "2019-04-26T08:00:06Z",
+      "side": 1,
+      "message": "independent of your change: maybe we need to create a ConfirmationUtil (as a wrapper around LaunchFinder) later to make this a bit more easy to use",
+      "range": {
+        "startLine": 68,
+        "startChar": 3,
+        "endLine": 85,
+        "endChar": 4
+      },
+      "revId": "fe683e7746772931d10966ae4f7a6fef43e19080",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
