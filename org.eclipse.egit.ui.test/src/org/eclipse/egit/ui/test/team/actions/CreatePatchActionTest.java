@@ -35,6 +35,7 @@ import org.eclipse.swt.dnd.TextTransfer;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swtbot.swt.finder.waits.Conditions;
 import org.eclipse.swtbot.swt.finder.widgets.SWTBotShell;
+import org.eclipse.ui.PlatformUI;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -236,7 +237,7 @@ public class CreatePatchActionTest extends LocalRepositoryTestCase {
 
 	private static void assertClipboard(final String expected) {
 		final String[] value = { null };
-		Display.getDefault().syncExec(new Runnable() {
+		PlatformUI.getWorkbench().getDisplay().syncExec(new Runnable() {
 			@Override
 			public void run() {
 				Clipboard clp = new Clipboard(Display.getCurrent());

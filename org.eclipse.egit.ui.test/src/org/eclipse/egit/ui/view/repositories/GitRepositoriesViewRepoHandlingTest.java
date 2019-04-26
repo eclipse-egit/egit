@@ -45,6 +45,7 @@ import org.eclipse.swtbot.swt.finder.widgets.SWTBotShell;
 import org.eclipse.swtbot.swt.finder.widgets.SWTBotText;
 import org.eclipse.swtbot.swt.finder.widgets.SWTBotTree;
 import org.eclipse.swtbot.swt.finder.widgets.SWTBotTreeItem;
+import org.eclipse.ui.PlatformUI;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -74,7 +75,7 @@ public class GitRepositoriesViewRepoHandlingTest extends
 		final SWTBotTree tree = getOrOpenView().bot().tree();
 		tree.getAllItems()[0].select();
 		waitInUI();
-		Display.getDefault().syncExec(new Runnable() {
+		PlatformUI.getWorkbench().getDisplay().syncExec(new Runnable() {
 
 			@Override
 			public void run() {
@@ -106,13 +107,13 @@ public class GitRepositoriesViewRepoHandlingTest extends
 		final Exception[] exceptions = new Exception[1];
 		final SWTBotLabel label = getOrOpenView().bot().label(
 				UIText.RepositoriesView_messageEmpty);
-		Display.getDefault().syncExec(new Runnable() {
+		PlatformUI.getWorkbench().getDisplay().syncExec(new Runnable() {
 
 			@Override
 			public void run() {
 				Clipboard clip = null;
 				try {
-					clip = new Clipboard(Display.getDefault());
+					clip = new Clipboard(PlatformUI.getWorkbench().getDisplay());
 					clip.setContents(new Object[] { repositoryFile.getPath() },
 							new Transfer[] { TextTransfer.getInstance() });
 

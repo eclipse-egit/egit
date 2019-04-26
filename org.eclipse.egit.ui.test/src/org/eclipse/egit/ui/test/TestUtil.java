@@ -803,7 +803,7 @@ public class TestUtil {
 	}
 
 	public static SWTBotView showView(final String viewId) {
-		Display.getDefault().syncExec(new Runnable() {
+		PlatformUI.getWorkbench().getDisplay().syncExec(new Runnable() {
 			@Override
 			public void run() {
 				IWorkbenchWindow workbenchWindow = PlatformUI.getWorkbench()
@@ -827,7 +827,7 @@ public class TestUtil {
 	}
 
 	public static void hideView(final String viewId) {
-		Display.getDefault().syncExec(new Runnable() {
+		PlatformUI.getWorkbench().getDisplay().syncExec(new Runnable() {
 			@Override
 			public void run() {
 				IWorkbenchWindow[] windows = PlatformUI.getWorkbench()

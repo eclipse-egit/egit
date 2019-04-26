@@ -46,13 +46,13 @@ import org.eclipse.egit.ui.test.TestUtil;
 import org.eclipse.jgit.api.Git;
 import org.eclipse.jgit.api.Status;
 import org.eclipse.jgit.lib.Repository;
-import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swtbot.swt.finder.SWTBot;
 import org.eclipse.swtbot.swt.finder.widgets.SWTBotLabel;
 import org.eclipse.swtbot.swt.finder.widgets.SWTBotTree;
 import org.eclipse.swtbot.swt.finder.widgets.SWTBotTreeItem;
 import org.eclipse.team.ui.synchronize.ISynchronizeView;
+import org.eclipse.ui.PlatformUI;
 import org.hamcrest.Matcher;
 import org.junit.Before;
 import org.junit.Ignore;
@@ -312,7 +312,7 @@ public class SynchronizeViewGitChangeSetModelTest extends
 				FILE1, true);
 
 		// when
-		Display.getDefault().syncExec(new Runnable() {
+		PlatformUI.getWorkbench().getDisplay().syncExec(new Runnable() {
 			@Override
 			public void run() {
 				CommonUtils.runCommand("org.eclipse.compare.copyLeftToRight",
@@ -343,7 +343,7 @@ public class SynchronizeViewGitChangeSetModelTest extends
 				FILE1, true);
 
 		// when
-		Display.getDefault().syncExec(new Runnable() {
+		PlatformUI.getWorkbench().getDisplay().syncExec(new Runnable() {
 			@Override
 			public void run() {
 				CommonUtils.runCommand("org.eclipse.compare.copyRightToLeft",

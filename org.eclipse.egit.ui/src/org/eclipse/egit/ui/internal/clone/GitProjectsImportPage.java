@@ -56,7 +56,6 @@ import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
-import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.TreeItem;
 import org.eclipse.ui.IWorkingSet;
@@ -442,7 +441,7 @@ public class GitProjectsImportPage extends WizardPage {
 
 						if (selectedProjects.length == 0) {
 							// run in UI thread
-							Display.getDefault().syncExec(() -> setErrorMessage(
+							PlatformUI.getWorkbench().getDisplay().syncExec(() -> setErrorMessage(
 									UIText.GitProjectsImportPage_NoProjectsMessage));
 						}
 					}

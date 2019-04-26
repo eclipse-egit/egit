@@ -22,6 +22,7 @@ import org.eclipse.swt.widgets.Event;
 import org.eclipse.swtbot.eclipse.finder.SWTWorkbenchBot;
 import org.eclipse.swtbot.swt.finder.widgets.SWTBotShell;
 import org.eclipse.swtbot.swt.finder.widgets.SWTBotTable;
+import org.eclipse.ui.PlatformUI;
 
 public class GitImportRepoWizard {
 
@@ -107,7 +108,7 @@ public class GitImportRepoWizard {
 
 	// TODO: move this to some utility class
 	private void pressAltAndChar(final SWTBotShell shell, final char charToPress) {
-		final Display display = Display.getDefault();
+		final Display display = PlatformUI.getWorkbench().getDisplay();
 		display.syncExec(new Runnable() {
 			@Override
 			public void run() {

@@ -36,7 +36,6 @@ import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.window.Window;
 import org.eclipse.jgit.lib.Repository;
 import org.eclipse.jgit.revwalk.RevCommit;
-import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.ui.IEditorInput;
 import org.eclipse.ui.IEditorReference;
@@ -138,7 +137,7 @@ public class StashDropCommand extends
 			}
 
 			private void tryToCloseEditor(final StashedCommitNode node) {
-				Display.getDefault().asyncExec(new Runnable() {
+				PlatformUI.getWorkbench().getDisplay().asyncExec(new Runnable() {
 
 					@Override
 					public void run() {
