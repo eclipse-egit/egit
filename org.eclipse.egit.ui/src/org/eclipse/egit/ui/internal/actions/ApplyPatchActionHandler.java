@@ -21,7 +21,7 @@ import org.eclipse.core.resources.IResource;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.egit.ui.Activator;
 import org.eclipse.swt.custom.BusyIndicator;
-import org.eclipse.swt.widgets.Display;
+import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.handlers.HandlerUtil;
 
 /**
@@ -53,7 +53,7 @@ public class ApplyPatchActionHandler extends RepositoryActionHandler {
 			op = new ApplyPatchOperation(HandlerUtil.getActivePart(event),
 					resource);
 		}
-		BusyIndicator.showWhile(Display.getDefault(), op);
+		BusyIndicator.showWhile(PlatformUI.getWorkbench().getDisplay(), op);
 		return null;
 	}
 }

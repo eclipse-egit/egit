@@ -41,6 +41,7 @@ import org.eclipse.jgit.api.errors.GitAPIException;
 import org.eclipse.jgit.lib.Repository;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Shell;
+import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.handlers.HandlerUtil;
 
 /**
@@ -107,12 +108,12 @@ public class FeatureFinishHandler extends AbstractGitFlowHandler {
 	private void postMerge(final GitFlowRepository gfRepo,
 			final String featureBranch, final boolean squash,
 			final MergeResult mergeResult) {
-		Display display = Display.getDefault();
+		Display display = PlatformUI.getWorkbench().getDisplay();
 
 		display.asyncExec(new Runnable() {
 			@Override
 			public void run() {
-				Shell activeShell = Display.getDefault().getActiveShell();
+				Shell activeShell = PlatformUI.getWorkbench().getDisplay().getActiveShell();
 
 				if (squash && mergeResult.getMergedCommits().length > 1) {
 					try {

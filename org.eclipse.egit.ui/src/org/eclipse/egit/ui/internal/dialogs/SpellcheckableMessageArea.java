@@ -88,7 +88,6 @@ import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.graphics.Rectangle;
 import org.eclipse.swt.layout.FillLayout;
 import org.eclipse.swt.widgets.Composite;
-import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Layout;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.actions.ActionFactory;
@@ -798,7 +797,7 @@ public class SpellcheckableMessageArea extends Composite {
 	protected void createMarginPainter() {
 		MarginPainter marginPainter = new MarginPainter(sourceViewer);
 		marginPainter.setMarginRulerColumn(MAX_LINE_WIDTH);
-		marginPainter.setMarginRulerColor(Display.getDefault().getSystemColor(
+		marginPainter.setMarginRulerColor(PlatformUI.getWorkbench().getDisplay().getSystemColor(
 				SWT.COLOR_GRAY));
 		sourceViewer.addPainter(marginPainter);
 	}

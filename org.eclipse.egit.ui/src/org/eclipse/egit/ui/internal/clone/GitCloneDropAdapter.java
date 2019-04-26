@@ -69,7 +69,7 @@ public class GitCloneDropAdapter implements IStartup {
 
 	@Override
 	public void earlyStartup() {
-		UIJob registerJob = new UIJob(Display.getDefault(),
+		UIJob registerJob = new UIJob(PlatformUI.getWorkbench().getDisplay(),
 				"Git Clone DND Initialization") { //$NON-NLS-1$
 			{
 				setPriority(Job.SHORT);

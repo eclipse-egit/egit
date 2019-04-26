@@ -36,6 +36,7 @@ import org.eclipse.team.core.history.IFileRevision;
 import org.eclipse.ui.IEditorInput;
 import org.eclipse.ui.IPersistableElement;
 import org.eclipse.ui.IStorageEditorInput;
+import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.texteditor.IDocumentProvider;
 
 /**
@@ -207,7 +208,7 @@ public class EditableRevision extends FileRevisionTypedElement implements
 			}
 		};
 		if (Display.getCurrent() == null) {
-			Display.getDefault().syncExec(runnable);
+			PlatformUI.getWorkbench().getDisplay().syncExec(runnable);
 		} else {
 			runnable.run();
 		}

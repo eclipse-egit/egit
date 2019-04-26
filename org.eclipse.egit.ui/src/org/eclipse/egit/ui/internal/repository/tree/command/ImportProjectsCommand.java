@@ -31,7 +31,6 @@ import org.eclipse.jface.dialogs.IDialogSettings;
 import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.viewers.StructuredSelection;
 import org.eclipse.jface.wizard.WizardDialog;
-import org.eclipse.swt.widgets.Display;
 import org.eclipse.ui.IWorkbenchWizard;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.wizards.IWizardDescriptor;
@@ -45,13 +44,13 @@ public class ImportProjectsCommand
 	public Object execute(ExecutionEvent event) throws ExecutionException {
 		List<RepositoryTreeNode> selectedNodes = getSelectedNodes(event);
 		if (selectedNodes == null || selectedNodes.isEmpty()) {
-			MessageDialog.openError(Display.getDefault().getActiveShell(),
+			MessageDialog.openError(PlatformUI.getWorkbench().getDisplay().getActiveShell(),
 					UIText.ImportProjectsWrongSelection,
 					UIText.ImportProjectsSelectionInRepositoryRequired);
 			return null;
 		}
 		if (!(((List) selectedNodes).get(0) instanceof RepositoryTreeNode)) {
-			MessageDialog.openError(Display.getDefault().getActiveShell(),
+			MessageDialog.openError(PlatformUI.getWorkbench().getDisplay().getActiveShell(),
 					UIText.ImportProjectsWrongSelection,
 					UIText.ImportProjectsSelectionInRepositoryRequired);
 			return null;
@@ -119,7 +118,7 @@ public class ImportProjectsCommand
 		case FOLDER:
 			return ((FolderNode) node).getObject().getPath().toString();
 		default:
-			MessageDialog.openError(Display.getDefault().getActiveShell(),
+			MessageDialog.openError(PlatformUI.getWorkbench().getDisplay().getActiveShell(),
 					UIText.ImportProjectsWrongSelection,
 					UIText.ImportProjectsSelectionInRepositoryRequired);
 			return null;

@@ -38,7 +38,6 @@ import org.eclipse.jgit.lib.ObjectId;
 import org.eclipse.jgit.lib.Ref;
 import org.eclipse.jgit.lib.Repository;
 import org.eclipse.jgit.revwalk.RevCommit;
-import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.TableItem;
 import org.eclipse.swtbot.eclipse.finder.widgets.SWTBotView;
 import org.eclipse.swtbot.swt.finder.SWTBot;
@@ -307,7 +306,7 @@ public class HistoryViewTest extends LocalRepositoryTestCase {
 		table.getTableItem(0).select();
 		final RevCommit[] commit = new RevCommit[1];
 
-		Display.getDefault().syncExec(new Runnable() {
+		PlatformUI.getWorkbench().getDisplay().syncExec(new Runnable() {
 
 			@Override
 			public void run() {
@@ -365,7 +364,7 @@ public class HistoryViewTest extends LocalRepositoryTestCase {
 		table.getTableItem(0).select();
 		final RevCommit[] commit = new RevCommit[1];
 
-		Display.getDefault().syncExec(new Runnable() {
+		PlatformUI.getWorkbench().getDisplay().syncExec(new Runnable() {
 
 			@Override
 			public void run() {
@@ -427,7 +426,7 @@ public class HistoryViewTest extends LocalRepositoryTestCase {
 		table.getTableItem(line).select();
 		final RevCommit[] commit = new RevCommit[1];
 
-		Display.getDefault().syncExec(new Runnable() {
+		PlatformUI.getWorkbench().getDisplay().syncExec(new Runnable() {
 
 			@Override
 			public void run() {

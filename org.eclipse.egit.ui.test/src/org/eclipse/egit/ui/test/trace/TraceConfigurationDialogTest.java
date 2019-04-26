@@ -20,7 +20,6 @@ import org.eclipse.egit.ui.common.EGitTestCase;
 import org.eclipse.egit.ui.internal.UIText;
 import org.eclipse.egit.ui.internal.dialogs.GitTraceConfigurationDialog;
 import org.eclipse.jface.dialogs.IDialogConstants;
-import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swtbot.eclipse.finder.SWTWorkbenchBot;
 import org.eclipse.swtbot.swt.finder.junit.SWTBotJunit4ClassRunner;
@@ -28,6 +27,7 @@ import org.eclipse.swtbot.swt.finder.widgets.SWTBotCheckBox;
 import org.eclipse.swtbot.swt.finder.widgets.SWTBotShell;
 import org.eclipse.swtbot.swt.finder.widgets.SWTBotTree;
 import org.eclipse.swtbot.swt.finder.widgets.SWTBotTreeItem;
+import org.eclipse.ui.PlatformUI;
 import org.junit.AfterClass;
 import org.junit.Before;
 import org.junit.BeforeClass;
@@ -154,14 +154,14 @@ public class TraceConfigurationDialogTest {
 	}
 
 	private void getDialog() {
-		Display.getDefault().syncExec(new Runnable() {
+		PlatformUI.getWorkbench().getDisplay().syncExec(new Runnable() {
 			@Override
 			public void run() {
 				if (configurationDialog != null)
 					configurationDialog.close();
 
 				GitTraceConfigurationDialog dlg = new GitTraceConfigurationDialog(
-						new Shell(Display.getDefault()));
+						new Shell(PlatformUI.getWorkbench().getDisplay()));
 				dlg.setBlockOnOpen(false);
 				dlg.open();
 				configurationDialog = bot.shell(

@@ -52,7 +52,6 @@ import org.eclipse.jgit.lib.TagBuilder;
 import org.eclipse.jgit.util.FileUtils;
 import org.eclipse.jgit.util.RawParseUtils;
 import org.eclipse.swt.graphics.Image;
-import org.eclipse.swt.widgets.Display;
 import org.eclipse.swtbot.swt.finder.SWTBot;
 import org.eclipse.swtbot.swt.finder.junit.SWTBotJunit4ClassRunner;
 import org.eclipse.swtbot.swt.finder.utils.TableCollection;
@@ -211,7 +210,7 @@ public class BranchAndResetActionTest extends LocalRepositoryTestCase {
 			// repo relative path
 			assertEquals("ToBeDeleted", showUndeleted.bot().tree()
 					.getAllItems()[0].getItems()[0].getItems()[0].getText());
-			Display.getDefault().syncExec(new Runnable() {
+			PlatformUI.getWorkbench().getDisplay().syncExec(new Runnable() {
 				@Override
 				public void run() {
 					assertSame(folderImage, showUndeleted.bot().tree()
@@ -244,7 +243,7 @@ public class BranchAndResetActionTest extends LocalRepositoryTestCase {
 			// resource path
 			assertEquals("ToBeDeleted", showUndeleted.bot().tree()
 					.getAllItems()[0].getItems()[0].getItems()[0].getText());
-			Display.getDefault().syncExec(new Runnable() {
+			PlatformUI.getWorkbench().getDisplay().syncExec(new Runnable() {
 				@Override
 				public void run() {
 					assertSame(projectImage, showUndeleted.bot().tree()

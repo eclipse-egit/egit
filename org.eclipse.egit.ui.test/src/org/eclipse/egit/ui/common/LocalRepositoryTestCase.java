@@ -85,6 +85,7 @@ import org.eclipse.swtbot.swt.finder.widgets.SWTBotTreeItem;
 import org.eclipse.team.core.RepositoryProvider;
 import org.eclipse.team.ui.history.IHistoryView;
 import org.eclipse.team.ui.synchronize.ISynchronizeView;
+import org.eclipse.ui.PlatformUI;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
@@ -781,7 +782,7 @@ public abstract class LocalRepositoryTestCase extends EGitTestCase {
 	}
 
 	protected void pressAltAndChar(SWTBotShell shell, char charToPress) {
-		Display display = Display.getDefault();
+		Display display = PlatformUI.getWorkbench().getDisplay();
 		Event evt = new Event();
 		// Alt down
 		evt.type = SWT.KeyDown;

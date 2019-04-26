@@ -26,9 +26,9 @@ import org.eclipse.egit.ui.internal.repository.tree.TagsNode;
 import org.eclipse.egit.ui.internal.repository.tree.WorkingDirNode;
 import org.eclipse.egit.ui.test.TestUtil;
 import org.eclipse.jgit.lib.Repository;
-import org.eclipse.swt.widgets.Display;
 import org.eclipse.swtbot.swt.finder.widgets.SWTBotTree;
 import org.eclipse.swtbot.swt.finder.widgets.SWTBotTreeItem;
+import org.eclipse.ui.PlatformUI;
 
 public class GitRepositoriesViewTestUtils {
 
@@ -39,7 +39,7 @@ public class GitRepositoriesViewTestUtils {
 	 */
 	public static RepositoryTreeNodeLabelProvider createLabelProvider() {
 		final AtomicReference<RepositoryTreeNodeLabelProvider> providerRef = new AtomicReference<>();
-		Display.getDefault().syncExec(new Runnable() {
+		PlatformUI.getWorkbench().getDisplay().syncExec(new Runnable() {
 
 			@Override
 			public void run() {
@@ -62,7 +62,7 @@ public class GitRepositoriesViewTestUtils {
 	}
 
 	public void dispose() {
-		Display.getDefault().syncExec(() -> labelProvider.dispose());
+		PlatformUI.getWorkbench().getDisplay().syncExec(() -> labelProvider.dispose());
 	}
 
 	public SWTBotTreeItem getLocalBranchesItem(SWTBotTree tree, File repo)

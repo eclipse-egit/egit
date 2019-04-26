@@ -34,12 +34,12 @@ import org.eclipse.jgit.api.Git;
 import org.eclipse.jgit.lib.Constants;
 import org.eclipse.jgit.lib.Repository;
 import org.eclipse.swt.SWT;
-import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Menu;
 import org.eclipse.swt.widgets.MenuItem;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swtbot.swt.finder.widgets.SWTBotTree;
 import org.eclipse.ui.ISources;
+import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.handlers.IHandlerService;
 import org.eclipse.ui.services.IServiceLocator;
 import org.junit.Before;
@@ -269,10 +269,10 @@ public class SwitchToMenuTest extends LocalRepositoryTestCase {
 
 	private MenuItem[] fillMenu() {
 		final MenuItem[][] items = new MenuItem[1][];
-		Display.getDefault().syncExec(new Runnable() {
+		PlatformUI.getWorkbench().getDisplay().syncExec(new Runnable() {
 			@Override
 			public void run() {
-				Menu menu = new Menu(new Shell(Display.getDefault()));
+				Menu menu = new Menu(new Shell(PlatformUI.getWorkbench().getDisplay()));
 				switchToMenu.fill(menu, 0 /* index */);
 				items[0] = menu.getItems();
 			}
@@ -289,7 +289,7 @@ public class SwitchToMenuTest extends LocalRepositoryTestCase {
 
 	private static void assertTextEquals(final String expectedText,
 			final MenuItem item) {
-		Display.getDefault().syncExec(new Runnable() {
+		PlatformUI.getWorkbench().getDisplay().syncExec(new Runnable() {
 			@Override
 			public void run() {
 				assertEquals(expectedText, item.getText());
@@ -299,7 +299,7 @@ public class SwitchToMenuTest extends LocalRepositoryTestCase {
 
 	private static void assertStyleEquals(final int expectedStyle,
 			final MenuItem item) {
-		Display.getDefault().syncExec(new Runnable() {
+		PlatformUI.getWorkbench().getDisplay().syncExec(new Runnable() {
 			@Override
 			public void run() {
 				assertEquals(expectedStyle, item.getStyle());

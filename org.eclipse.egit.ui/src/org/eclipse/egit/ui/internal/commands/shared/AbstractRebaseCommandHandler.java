@@ -38,7 +38,6 @@ import org.eclipse.jgit.api.RebaseCommand.Operation;
 import org.eclipse.jgit.api.RebaseResult.Status;
 import org.eclipse.jgit.lib.Repository;
 import org.eclipse.jgit.lib.RepositoryState;
-import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.ui.IViewPart;
 import org.eclipse.ui.PartInitException;
@@ -112,7 +111,7 @@ public abstract class AbstractRebaseCommandHandler extends AbstractSharedCommand
 								&& result.getSeverity() == IStatus.ERROR) {
 							handleBeginError(repository, result);
 						} else if (result.getSeverity() == IStatus.CANCEL)
-							Display.getDefault().asyncExec(new Runnable() {
+							PlatformUI.getWorkbench().getDisplay().asyncExec(new Runnable() {
 								@Override
 								public void run() {
 									// don't use getShell(event) here since
@@ -146,7 +145,7 @@ public abstract class AbstractRebaseCommandHandler extends AbstractSharedCommand
 
 					private void setAmending(final boolean amending,
 							final boolean openStagingView) {
-						Display.getDefault().asyncExec(new Runnable() {
+						PlatformUI.getWorkbench().getDisplay().asyncExec(new Runnable() {
 							@Override
 							public void run() {
 								try {
@@ -165,7 +164,7 @@ public abstract class AbstractRebaseCommandHandler extends AbstractSharedCommand
 									if (view instanceof StagingView) {
 										final StagingView sv = (StagingView) view;
 										sv.reload(repository);
-										Display.getDefault().asyncExec(
+										PlatformUI.getWorkbench().getDisplay().asyncExec(
 												new Runnable() {
 													@Override
 													public void run() {
