@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6457a7cc_13fc0200",
+        "filename": "org.eclipse.egit.target/egit-4.10.target",
+        "patchSetId": 1
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 440
+      },
+      "writtenOn": "2019-04-26T07:45:55Z",
+      "side": 1,
+      "message": "Just in case someone is wondering about the formatting changes: For .target files you always have to stage them before opening them the first time with the target editor (since that one reformats the file).\n\nOld version was opened first, new version was staged first.",
+      "range": {
+        "startLine": 1,
+        "startChar": 0,
+        "endLine": 3,
+        "endChar": 73
+      },
+      "revId": "24be8bb6bbd055678ce1e0c93a6a624da09582dd",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
