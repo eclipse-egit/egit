@@ -22,6 +22,30 @@
       "revId": "fe683e7746772931d10966ae4f7a6fef43e19080",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5ee2d1b8_611dbd40",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/actions/DiscardChangesActionHandler.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 85,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2019-04-26T17:47:29Z",
+      "side": 1,
+      "message": "There is already CommandComfirmation, but that is hard-wired for reset --hard. You\u0027re right, we should unify this somehow, but I didn\u0027t want to do so in this change, where the focus is more on haveChanges.",
+      "parentUuid": "434d6b35_70fbd717",
+      "range": {
+        "startLine": 68,
+        "startChar": 3,
+        "endLine": 85,
+        "endChar": 4
+      },
+      "revId": "fe683e7746772931d10966ae4f7a6fef43e19080",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
     }
   ]
 }
