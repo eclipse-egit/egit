@@ -487,16 +487,26 @@ public class UIIcons {
 				OVR_CHECKEDOUT, IDecoration.TOP_LEFT);
 		SIGN_COMMIT = map("obj16/sign-commit.png"); //$NON-NLS-1$
 		MERGE_TOOL = map("obj16/mergetool.png"); //$NON-NLS-1$
-		IProgressService service = PlatformUI.getWorkbench()
-				.getProgressService();
 
-		service.registerIconForFamily(PULL, JobFamilies.PULL);
-		service.registerIconForFamily(REPOSITORY, JobFamilies.AUTO_IGNORE);
-		service.registerIconForFamily(REPOSITORY, JobFamilies.AUTO_SHARE);
-		service.registerIconForFamily(REPOSITORY,
-				JobFamilies.INDEX_DIFF_CACHE_UPDATE);
-		service.registerIconForFamily(REPOSITORY,
-				JobFamilies.REPOSITORY_CHANGED);
+		// this may be executed from decorator jobs, therefore sync on UI thread
+		PlatformUI.getWorkbench().getDisplay().syncExec(new Runnable() {
+
+			@Override
+			public void run() {
+				IProgressService service = PlatformUI.getWorkbench()
+						.getProgressService();
+
+				service.registerIconForFamily(PULL, JobFamilies.PULL);
+				service.registerIconForFamily(REPOSITORY,
+						JobFamilies.AUTO_IGNORE);
+				service.registerIconForFamily(REPOSITORY,
+						JobFamilies.AUTO_SHARE);
+				service.registerIconForFamily(REPOSITORY,
+						JobFamilies.INDEX_DIFF_CACHE_UPDATE);
+				service.registerIconForFamily(REPOSITORY,
+						JobFamilies.REPOSITORY_CHANGED);
+			}
+		});
 	}
 
 	private static ImageDescriptor map(final String icon) {
