@@ -22,14 +22,11 @@ import java.net.MalformedURLException;
 import java.net.URL;
 
 import org.eclipse.core.runtime.Platform;
-import org.eclipse.egit.core.JobFamilies;
 import org.eclipse.egit.ui.Activator;
 import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.jface.resource.ResourceManager;
 import org.eclipse.jface.viewers.IDecoration;
 import org.eclipse.swt.graphics.Image;
-import org.eclipse.ui.PlatformUI;
-import org.eclipse.ui.progress.IProgressService;
 import org.osgi.framework.Version;
 
 /**
@@ -487,16 +484,6 @@ public class UIIcons {
 				OVR_CHECKEDOUT, IDecoration.TOP_LEFT);
 		SIGN_COMMIT = map("obj16/sign-commit.png"); //$NON-NLS-1$
 		MERGE_TOOL = map("obj16/mergetool.png"); //$NON-NLS-1$
-		IProgressService service = PlatformUI.getWorkbench()
-				.getProgressService();
-
-		service.registerIconForFamily(PULL, JobFamilies.PULL);
-		service.registerIconForFamily(REPOSITORY, JobFamilies.AUTO_IGNORE);
-		service.registerIconForFamily(REPOSITORY, JobFamilies.AUTO_SHARE);
-		service.registerIconForFamily(REPOSITORY,
-				JobFamilies.INDEX_DIFF_CACHE_UPDATE);
-		service.registerIconForFamily(REPOSITORY,
-				JobFamilies.REPOSITORY_CHANGED);
 	}
 
 	private static ImageDescriptor map(final String icon) {
