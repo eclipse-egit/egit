@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5b4d62fb_8e27a62d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/Activator.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 474,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2019-04-27T09:59:02Z",
+      "side": 1,
+      "message": "Lambda?",
+      "range": {
+        "startLine": 474,
+        "startChar": 17,
+        "endLine": 474,
+        "endChar": 31
+      },
+      "revId": "e3db7789b82555324fe233d6d7ed50ef572b1c53",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
