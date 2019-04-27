@@ -50,6 +50,7 @@ import org.eclipse.core.runtime.Platform;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.core.runtime.SubMonitor;
 import org.eclipse.core.runtime.jobs.Job;
+import org.eclipse.egit.core.JobFamilies;
 import org.eclipse.egit.core.RepositoryCache;
 import org.eclipse.egit.core.RepositoryUtil;
 import org.eclipse.egit.core.internal.job.RuleUtil;
@@ -58,6 +59,7 @@ import org.eclipse.egit.core.project.RepositoryMapping;
 import org.eclipse.egit.ui.internal.ConfigurationChecker;
 import org.eclipse.egit.ui.internal.KnownHosts;
 import org.eclipse.egit.ui.internal.RepositoryCacheRule;
+import org.eclipse.egit.ui.internal.UIIcons;
 import org.eclipse.egit.ui.internal.UIText;
 import org.eclipse.egit.ui.internal.credentials.EGitCredentialsProvider;
 import org.eclipse.egit.ui.internal.trace.GitTraceLocation;
@@ -87,6 +89,7 @@ import org.eclipse.ui.IWindowListener;
 import org.eclipse.ui.IWorkbenchWindow;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.plugin.AbstractUIPlugin;
+import org.eclipse.ui.progress.IProgressService;
 import org.eclipse.ui.progress.WorkbenchJob;
 import org.eclipse.ui.statushandlers.StatusManager;
 import org.eclipse.ui.themes.ITheme;
@@ -454,11 +457,35 @@ public class Activator extends AbstractUIPlugin implements DebugOptionsListener 
 		Job job = new Job(UIText.Activator_setupFocusListener) {
 			@Override
 			protected IStatus run(IProgressMonitor monitor) {
-				if (PlatformUI.isWorkbenchRunning())
+				if (PlatformUI.isWorkbenchRunning()) {
 					PlatformUI.getWorkbench().addWindowListener(focusListener);
-				else
+					registerCoreJobFamilyIcons();
+				} else {
 					schedule(1000L);
+				}
 				return Status.OK_STATUS;
+			}
+
+			/**
+			 * register progress icons for jobs from core plugin
+			 */
+			private void registerCoreJobFamilyIcons() {
+				PlatformUI.getWorkbench().getDisplay()
+						.asyncExec(() -> {
+							IProgressService service = PlatformUI.getWorkbench()
+									.getProgressService();
+
+							service.registerIconForFamily(UIIcons.PULL,
+									JobFamilies.PULL);
+							service.registerIconForFamily(UIIcons.REPOSITORY,
+									JobFamilies.AUTO_IGNORE);
+							service.registerIconForFamily(UIIcons.REPOSITORY,
+									JobFamilies.AUTO_SHARE);
+							service.registerIconForFamily(UIIcons.REPOSITORY,
+									JobFamilies.INDEX_DIFF_CACHE_UPDATE);
+							service.registerIconForFamily(UIIcons.REPOSITORY,
+									JobFamilies.REPOSITORY_CHANGED);
+						});
 			}
 		};
 		job.setSystem(true);
