@@ -1,0 +1,142 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "edf0bbe5_a4770b8f",
+        "filename": "org.eclipse.egit.core.test/src/org/eclipse/egit/core/test/models/ModelTestCase.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 440
+      },
+      "writtenOn": "2019-04-27T17:44:35Z",
+      "side": 1,
+      "message": "Indentation is wrong, we use tabs. Really please use the IDE setup I mentioned with my last review: https://wiki.eclipse.org/EGit/Contributor_Guide#Automated_Developer_Setup\n\nThat setup configures all the necessary formatting, cleanup and similar automatisms to use the same settings for everyone in the team. If you use that, such wrong indentation cannot occur.",
+      "range": {
+        "startLine": 84,
+        "startChar": 1,
+        "endLine": 94,
+        "endChar": 6
+      },
+      "revId": "276a8dc0cbca39186b5862c00e534592cb06b756",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "80ad402e_04c1a2b5",
+        "filename": "org.eclipse.egit.ui.test/src/org/eclipse/egit/ui/test/team/actions/CompareActionsTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 212,
+      "author": {
+        "id": 440
+      },
+      "writtenOn": "2019-04-27T17:44:35Z",
+      "side": 1,
+      "message": "tabs",
+      "range": {
+        "startLine": 207,
+        "startChar": 2,
+        "endLine": 212,
+        "endChar": 7
+      },
+      "revId": "276a8dc0cbca39186b5862c00e534592cb06b756",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "e972788d_83d9cf64",
+        "filename": "org.eclipse.egit.ui.test/src/org/eclipse/egit/ui/view/synchronize/SynchronizeViewGitChangeSetModelTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 262,
+      "author": {
+        "id": 440
+      },
+      "writtenOn": "2019-04-27T17:44:35Z",
+      "side": 1,
+      "message": "tabs",
+      "range": {
+        "startLine": 259,
+        "startChar": 1,
+        "endLine": 262,
+        "endChar": 6
+      },
+      "revId": "276a8dc0cbca39186b5862c00e534592cb06b756",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "cf284e11_f63c4c62",
+        "filename": "org.eclipse.egit.ui.test/src/org/eclipse/egit/ui/view/synchronize/SynchronizeViewGitChangeSetModelTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 287,
+      "author": {
+        "id": 440
+      },
+      "writtenOn": "2019-04-27T17:44:35Z",
+      "side": 1,
+      "message": "tabs",
+      "range": {
+        "startLine": 284,
+        "startChar": 1,
+        "endLine": 287,
+        "endChar": 6
+      },
+      "revId": "276a8dc0cbca39186b5862c00e534592cb06b756",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "fbc4152d_bb41018b",
+        "filename": "org.eclipse.egit.ui.test/src/org/eclipse/egit/ui/view/synchronize/SynchronizeViewWorkspaceModelTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 302,
+      "author": {
+        "id": 440
+      },
+      "writtenOn": "2019-04-27T17:44:35Z",
+      "side": 1,
+      "message": "tabs",
+      "range": {
+        "startLine": 299,
+        "startChar": 1,
+        "endLine": 302,
+        "endChar": 6
+      },
+      "revId": "276a8dc0cbca39186b5862c00e534592cb06b756",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "88e94959_b8184f66",
+        "filename": "org.eclipse.egit.ui.test/src/org/eclipse/egit/ui/view/synchronize/SynchronizeViewWorkspaceModelTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 325,
+      "author": {
+        "id": 440
+      },
+      "writtenOn": "2019-04-27T17:44:35Z",
+      "side": 1,
+      "message": "tabs",
+      "range": {
+        "startLine": 322,
+        "startChar": 1,
+        "endLine": 325,
+        "endChar": 6
+      },
+      "revId": "276a8dc0cbca39186b5862c00e534592cb06b756",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
