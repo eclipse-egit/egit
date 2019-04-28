@@ -324,15 +324,18 @@ public class RepositorySelectionPage extends WizardPage implements IRepositorySe
 		String preset = presetUri;
 		if (presetUri == null) {
 			Clipboard clipboard = new Clipboard(Display.getCurrent());
-			String text = (String) clipboard
-					.getContents(TextTransfer.getInstance());
-			if (text != null) {
-				text = GitUrlChecker.sanitizeAsGitUrl(text);
-				if (GitUrlChecker.isValidGitUrl(text)) {
-					preset = text;
+			try {
+				String text = (String) clipboard
+						.getContents(TextTransfer.getInstance());
+				if (text != null) {
+					text = GitUrlChecker.sanitizeAsGitUrl(text);
+					if (GitUrlChecker.isValidGitUrl(text)) {
+						preset = text;
+					}
 				}
+			} finally {
+				clipboard.dispose();
 			}
-			clipboard.dispose();
 		}
 		this.presetUri = preset;
 

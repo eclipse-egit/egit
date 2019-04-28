@@ -2193,10 +2193,10 @@ public class StagingView extends ViewPart
 
 	private void copyPathOfSelectionToClipboard(final TreeViewer viewer) {
 		Clipboard cb = new Clipboard(viewer.getControl().getDisplay());
-		TextTransfer t = TextTransfer.getInstance();
-		String text = getTextFrom(
-				(IStructuredSelection) viewer.getSelection());
 		try {
+			TextTransfer t = TextTransfer.getInstance();
+			String text = getTextFrom(
+				(IStructuredSelection) viewer.getSelection());
 			if (text != null) {
 				cb.setContents(new Object[] { text }, new Transfer[] { t });
 			}
