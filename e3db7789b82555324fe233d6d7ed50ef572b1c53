@@ -22,6 +22,30 @@
       "revId": "e3db7789b82555324fe233d6d7ed50ef572b1c53",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "d8e22f30_ab0fbf73",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/Activator.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 474,
+      "author": {
+        "id": 440
+      },
+      "writtenOn": "2019-04-28T15:37:13Z",
+      "side": 1,
+      "message": "I forget this all the time. I\u0027m in favor of adding this to the auto-save actions of our projects. Any objections?",
+      "parentUuid": "5b4d62fb_8e27a62d",
+      "range": {
+        "startLine": 474,
+        "startChar": 17,
+        "endLine": 474,
+        "endChar": 31
+      },
+      "revId": "e3db7789b82555324fe233d6d7ed50ef572b1c53",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
     }
   ]
 }
