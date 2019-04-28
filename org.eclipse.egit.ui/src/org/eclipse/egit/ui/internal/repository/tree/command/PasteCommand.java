@@ -55,9 +55,8 @@ public class PasteCommand extends
 		// repository location and try to add this
 		String errorMessage = null;
 
-		Clipboard clip = null;
+		Clipboard clip = new Clipboard(getShell(event).getDisplay());
 		try {
-			clip = new Clipboard(getShell(event).getDisplay());
 			String content = (String) clip.getContents(TextTransfer
 					.getInstance());
 			if (content == null) {
@@ -99,10 +98,7 @@ public class PasteCommand extends
 			}
 			return null;
 		} finally {
-			if (clip != null) {
-				// we must dispose ourselves
-				clip.dispose();
-			}
+			clip.dispose();
 			if (errorMessage != null) {
 				Activator.showError(errorMessage, null);
 			}

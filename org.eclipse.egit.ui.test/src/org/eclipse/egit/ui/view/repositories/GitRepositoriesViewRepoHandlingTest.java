@@ -110,9 +110,8 @@ public class GitRepositoriesViewRepoHandlingTest extends
 
 			@Override
 			public void run() {
-				Clipboard clip = null;
+				Clipboard clip = new Clipboard(Display.getDefault());
 				try {
-					clip = new Clipboard(Display.getDefault());
 					clip.setContents(new Object[] { repositoryFile.getPath() },
 							new Transfer[] { TextTransfer.getInstance() });
 
@@ -121,8 +120,7 @@ public class GitRepositoriesViewRepoHandlingTest extends
 				} catch (Exception e) {
 					exceptions[0] = e;
 				} finally {
-					if (clip != null)
-						clip.dispose();
+					clip.dispose();
 				}
 			}
 		});
