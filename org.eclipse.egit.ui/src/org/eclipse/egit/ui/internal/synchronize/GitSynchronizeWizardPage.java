@@ -128,6 +128,7 @@ class GitSynchronizeWizardPage extends WizardPage {
 			public void update(ViewerCell cell) {
 				Object element = cell.getElement();
 				if (element instanceof Repository) {
+					@SuppressWarnings("resource")
 					Repository repo = (Repository) element;
 					String descr = ""; //$NON-NLS-1$
 					try {
