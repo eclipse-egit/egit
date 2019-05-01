@@ -1,0 +1,356 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "54609765_f4039416",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/NetUtil.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2019-05-01T14:54:26Z",
+      "side": 1,
+      "message": "\";\" should be after \"true\", and I think the argument types can be omitted, too.",
+      "revId": "93f76921ed0bb62a2f72bc084c66ee47c1cd68e8",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "576ea1d7_20e78ffe",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/synchronize/GitSubscriberMergeContext.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2019-05-01T14:54:26Z",
+      "side": 1,
+      "message": "Inconsistent indentation; we use TABs. How about\n\n  indexChangeListener \u003d (repository, indexDiffData) -\u003e handleRepositoryChange(repository);",
+      "revId": "93f76921ed0bb62a2f72bc084c66ee47c1cd68e8",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "4e2430b7_f69d1726",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/synchronize/GitSubscriberMergeContext.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2019-05-01T14:54:26Z",
+      "side": 1,
+      "message": "Lambda-fy this one, too?\n\n  resourceChangeListener \u003d event -\u003e {\n    IResourceDelta delta \u003d event.getDelta();\n    if (delta !\u003d null) {\n      handleResourceChange(delta);\n    }\n  };",
+      "range": {
+        "startLine": 70,
+        "startChar": 2,
+        "endLine": 80,
+        "endChar": 4
+      },
+      "revId": "93f76921ed0bb62a2f72bc084c66ee47c1cd68e8",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "04b71f47_4a11710a",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/CommonUtils.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 165,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2019-05-01T14:54:26Z",
+      "side": 1,
+      "message": "Please run this through Eclipse\u0027s code formatter. change exceeds maximum line length.",
+      "revId": "93f76921ed0bb62a2f72bc084c66ee47c1cd68e8",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3c0d92ee_6f8761e3",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/clone/GitCreateGeneralProjectPage.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 177,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2019-05-01T14:54:26Z",
+      "side": 1,
+      "message": "Inconsistent indentation.",
+      "revId": "93f76921ed0bb62a2f72bc084c66ee47c1cd68e8",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "92a9e69d_c684c890",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/commit/CommitSelectionDialog.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 183,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2019-05-01T14:54:26Z",
+      "side": 1,
+      "message": "Inconsistent indentation, and with the cast I don\u0027t find it any clearer than the original. Please revert this change in this file.",
+      "revId": "93f76921ed0bb62a2f72bc084c66ee47c1cd68e8",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "2f2300bf_10cc8a6c",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/components/RefSpecPanel.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 879,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2019-05-01T14:54:26Z",
+      "side": 1,
+      "message": "Inconsistent indentation.",
+      "revId": "93f76921ed0bb62a2f72bc084c66ee47c1cd68e8",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "f171f2f2_f0ab598d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/components/RepositorySelectionPage.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 439,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2019-05-01T14:54:26Z",
+      "side": 1,
+      "message": "Inconsistent indentation.",
+      "revId": "93f76921ed0bb62a2f72bc084c66ee47c1cd68e8",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "36b8f8f0_d50de368",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/dialogs/CommitDialog.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 486,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2019-05-01T14:54:26Z",
+      "side": 1,
+      "message": "Inconsistent indentation.",
+      "revId": "93f76921ed0bb62a2f72bc084c66ee47c1cd68e8",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "78fa3915_8b0b56ac",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/history/FileDiff.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2019-05-01T14:54:26Z",
+      "side": 1,
+      "message": "Inconsistent indentation.",
+      "revId": "93f76921ed0bb62a2f72bc084c66ee47c1cd68e8",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "cb8adab4_5c4eb67f",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/history/GitHistoryPage.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 1722,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2019-05-01T14:54:26Z",
+      "side": 1,
+      "message": "Inconsistent indentation.",
+      "revId": "93f76921ed0bb62a2f72bc084c66ee47c1cd68e8",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "70933f68_9ac3d316",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/pull/PullWizardPage.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 158,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2019-05-01T14:54:26Z",
+      "side": 1,
+      "message": "Inconsistent indentation.",
+      "revId": "93f76921ed0bb62a2f72bc084c66ee47c1cd68e8",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "74eecaf6_125335d9",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/push/PushBranchPage.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 278,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2019-05-01T14:54:26Z",
+      "side": 1,
+      "message": "Inconsistent indentation.",
+      "revId": "93f76921ed0bb62a2f72bc084c66ee47c1cd68e8",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "0dfa4ee6_a831d901",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/push/PushBranchPage.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 333,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2019-05-01T14:54:26Z",
+      "side": 1,
+      "message": "Inconsistent indentation.",
+      "revId": "93f76921ed0bb62a2f72bc084c66ee47c1cd68e8",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "8da8fd3a_4432a1a1",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/push/PushTagsPage.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2019-05-01T14:54:26Z",
+      "side": 1,
+      "message": "Inconsistent indentation.",
+      "revId": "93f76921ed0bb62a2f72bc084c66ee47c1cd68e8",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "33407cad_3e8401cb",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/repository/tree/command/StashDropCommand.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2019-05-01T14:54:26Z",
+      "side": 1,
+      "message": "Please re-format with the Eclipse code formatter: line too long.",
+      "revId": "93f76921ed0bb62a2f72bc084c66ee47c1cd68e8",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "8961e71c_822165e4",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/staging/StagingView.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 3024,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2019-05-01T14:54:26Z",
+      "side": 1,
+      "message": "Inconsistent indentation.",
+      "revId": "93f76921ed0bb62a2f72bc084c66ee47c1cd68e8",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3d837869_bd30bcd9",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/staging/StagingView.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 3047,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2019-05-01T14:54:26Z",
+      "side": 1,
+      "message": "Inconsistent indentation.",
+      "revId": "93f76921ed0bb62a2f72bc084c66ee47c1cd68e8",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "6461b553_170cbf03",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/staging/StagingViewContentProvider.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 318,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2019-05-01T14:54:26Z",
+      "side": 1,
+      "message": "Continuations are indented by 2 TABs, so it looks as if there\u0027s one TAB missing here.",
+      "revId": "93f76921ed0bb62a2f72bc084c66ee47c1cd68e8",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "e802a3f5_5f9e858b",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/synchronize/model/GitModelCommit.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2019-05-01T14:54:26Z",
+      "side": 1,
+      "message": "Use GitModelTree::new here directly and remove the local variable treeModelFactory altogether.",
+      "range": {
+        "startLine": 103,
+        "startChar": 22,
+        "endLine": 103,
+        "endChar": 38
+      },
+      "revId": "93f76921ed0bb62a2f72bc084c66ee47c1cd68e8",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
