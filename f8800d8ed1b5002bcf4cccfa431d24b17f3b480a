@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "585bddf0_5b6d91e6",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/internal/Utils.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 126,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2019-05-02T16:27:50Z",
+      "side": 0,
+      "message": "So we don\u0027t need this sanity check anymore?\n\nSee bug 515993.\n\nIf we don\u0027t want this check, then the CoreText.Utils_InvalidAdapterError message can also be removed I think.",
+      "revId": "f8800d8ed1b5002bcf4cccfa431d24b17f3b480a",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
