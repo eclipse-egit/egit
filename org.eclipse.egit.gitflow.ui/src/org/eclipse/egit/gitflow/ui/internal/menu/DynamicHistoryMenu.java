@@ -96,7 +96,7 @@ public class DynamicHistoryMenu extends ContributionItem {
 	private GitFlowRepository getRepository() {
 		IWorkbenchPart activePart = PlatformUI.getWorkbench()
 				.getActiveWorkbenchWindow().getActivePage().getActivePart();
-		Repository repository = Utils.getAdapter(activePart, Repository.class);
+		Repository repository = activePart.getAdapter(Repository.class);
 		if (repository == null) {
 			return null;
 		}

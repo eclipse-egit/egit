@@ -32,7 +32,6 @@ import org.eclipse.core.runtime.Platform;
 import org.eclipse.core.runtime.content.IContentType;
 import org.eclipse.core.runtime.jobs.Job;
 import org.eclipse.egit.core.AdapterUtils;
-import org.eclipse.egit.core.internal.Utils;
 import org.eclipse.egit.core.op.MergeOperation;
 import org.eclipse.egit.core.synchronize.GitResourceVariantTreeSubscriber;
 import org.eclipse.egit.core.synchronize.GitSubscriberMergeContext;
@@ -110,7 +109,7 @@ public abstract class ModelTestCase extends GitTestCase {
 				.getModelProviderDescriptor(
 						SampleModelProvider.SAMPLE_PROVIDER_ID)
 				.getModelProvider();
-		return Utils.getAdapter(provider, IResourceMappingMerger.class);
+		return provider.getAdapter(IResourceMappingMerger.class);
 	}
 
 	protected IMergeContext prepareContext(Repository repository,
