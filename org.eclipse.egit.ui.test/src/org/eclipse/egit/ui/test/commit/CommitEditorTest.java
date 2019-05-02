@@ -21,7 +21,6 @@ import java.io.File;
 import java.util.concurrent.atomic.AtomicReference;
 
 import org.eclipse.egit.core.Activator;
-import org.eclipse.egit.core.internal.Utils;
 import org.eclipse.egit.ui.JobFamilies;
 import org.eclipse.egit.ui.common.LocalRepositoryTestCase;
 import org.eclipse.egit.ui.internal.UIText;
@@ -81,8 +80,7 @@ public class CommitEditorTest extends LocalRepositoryTestCase {
 		assertNotNull(editorRef.get());
 		IEditorPart editor = editorRef.get();
 		assertTrue(editor instanceof CommitEditor);
-		RepositoryCommit adaptedCommit = Utils.getAdapter(editor,
-				RepositoryCommit.class);
+		RepositoryCommit adaptedCommit = editor.getAdapter(RepositoryCommit.class);
 		assertNotNull(adaptedCommit);
 		assertEquals(commit, adaptedCommit.getRevCommit());
 		assertEquals(repository.getDirectory(), adaptedCommit.getRepository()
