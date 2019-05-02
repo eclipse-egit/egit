@@ -502,9 +502,6 @@ public class CoreText extends NLS {
 	public static String SubmoduleUpdateOperation_cloning;
 
 	/** */
-	public static String Utils_InvalidAdapterError;
-
-	/** */
 	public static String ValidationUtils_CanNotResolveRefMessage;
 
 	/** */
