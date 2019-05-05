@@ -111,12 +111,14 @@ public class TagActionHandler extends RepositoryActionHandler {
 		String tagJobName = MessageFormat.format(UIText.TagAction_creating,
 				tagName);
 		final boolean shouldMoveTag = dialog.shouldOverWriteTag();
+		final boolean isAnnotated = dialog.isAnnotated();
 
 		Job tagJob = new Job(tagJobName) {
 			@Override
 			protected IStatus run(IProgressMonitor monitor) {
 				try {
-					new TagOperation(repo, tag, shouldMoveTag).execute(monitor);
+					new TagOperation(repo, tag, shouldMoveTag, isAnnotated)
+							.execute(monitor);
 				} catch (CoreException e) {
 					return Activator.createErrorStatus(
 							UIText.TagAction_taggingFailed, e);
