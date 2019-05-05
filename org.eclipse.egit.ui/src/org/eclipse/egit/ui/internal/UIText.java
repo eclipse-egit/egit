@@ -4386,6 +4386,9 @@ public class UIText extends NLS {
 	public static String CreateTagDialog_overwriteTagToolTip;
 
 	/** */
+	public static String CreateTagDialog_tagMessageToolTip;
+
+	/** */
 	public static String CreateTagDialog_existingTags;
 
 	/** */
@@ -4420,9 +4423,6 @@ public class UIText extends NLS {
 
 	/** */
 	public static String CreateTagDialog_GetTagJobName;
-
-	/** */
-	public static String CreateTagDialog_LightweightTagMessage;
 
 	/** */
 	public static String CreateTagDialog_LoadingMessageText;

@@ -79,9 +79,6 @@ public class TagActionTest extends LocalRepositoryTestCase {
 				.click();
 		tagDialog.bot().textWithLabel(UIText.CreateTagDialog_tagName).setText(
 				"AnotherTag");
-		assertFalse("Ok should be disabled",
-				tagDialog.bot().button(UIText.CreateTagDialog_CreateTagButton)
-						.isEnabled());
 		tagDialog.bot().styledTextWithLabel(UIText.CreateTagDialog_tagMessage)
 				.setText("Here's the message text");
 		tagDialog.bot().button(UIText.CreateTagDialog_CreateTagButton).click();
@@ -129,9 +126,6 @@ public class TagActionTest extends LocalRepositoryTestCase {
 						.isEnabled());
 		tagDialog.bot().textWithLabel(UIText.CreateTagDialog_tagName).setText(
 				"MessageChangeTag");
-		assertFalse("Ok should be disabled",
-				tagDialog.bot().button(UIText.CreateTagDialog_CreateTagButton)
-						.isEnabled());
 		tagDialog.bot().styledTextWithLabel(UIText.CreateTagDialog_tagMessage)
 				.setText("Here's the first message");
 		tagDialog.bot().button(UIText.CreateTagDialog_CreateTagButton).click();
