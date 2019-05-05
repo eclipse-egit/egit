@@ -15,7 +15,9 @@ package org.eclipse.egit.ui.test.team.actions;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotEquals;
 import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertTrue;
 
 import java.io.File;
 
@@ -25,6 +27,8 @@ import org.eclipse.egit.ui.internal.UIText;
 import org.eclipse.egit.ui.test.ContextMenuHelper;
 import org.eclipse.egit.ui.test.TestUtil;
 import org.eclipse.jgit.lib.Constants;
+import org.eclipse.jgit.lib.ObjectId;
+import org.eclipse.jgit.lib.Ref;
 import org.eclipse.jgit.lib.Repository;
 import org.eclipse.jgit.lib.TagBuilder;
 import org.eclipse.jgit.util.RawParseUtils;
@@ -53,41 +57,58 @@ public class TagActionTest extends LocalRepositoryTestCase {
 		tag.setTag("SomeTag");
 		tag.setTagger(RawParseUtils.parsePersonIdent(TestUtil.TESTAUTHOR));
 		tag.setMessage("I'm just a little tag");
-		tag.setObjectId(repo.resolve(repo.getFullBranch()), Constants.OBJ_COMMIT);
-		TagOperation top = new TagOperation(repo, tag, false);
+		tag.setObjectId(repo.resolve(repo.getFullBranch()),
+				Constants.OBJ_COMMIT);
+		TagOperation top = new TagOperation(repo, tag, false, true);
 		top.execute(null);
+
+		tag = new TagBuilder();
+		tag.setTag("SomeLightTag");
+		tag.setTagger(RawParseUtils.parsePersonIdent(TestUtil.TESTAUTHOR));
+		tag.setObjectId(repo.resolve(repo.getFullBranch()),
+				Constants.OBJ_COMMIT);
+		top = new TagOperation(repo, tag, false, false);
+		top.execute(null);
+
 		touchAndSubmit(null);
 	}
 
 	@Test
 	public void testTagDialogShowExistingTags() throws Exception {
 		SWTBotShell tagDialog = openTagDialog();
-		SWTBotTable table = tagDialog.bot().tableWithLabel(
-				UIText.CreateTagDialog_existingTags);
-		TestUtil.waitUntilTableHasRowWithText(tagDialog.bot(), table, "SomeTag", 10000);
+		SWTBotTable table = tagDialog.bot()
+				.tableWithLabel(UIText.CreateTagDialog_existingTags);
+		TestUtil.waitUntilTableHasRowWithText(tagDialog.bot(), table, "SomeTag",
+				10000);
 	}
 
 	@Test
 	public void testCreateTag() throws Exception {
 		SWTBotShell tagDialog = openTagDialog();
-		tagDialog.bot().textWithLabel(UIText.CreateTagDialog_tagName).setText(
-				"SomeTag");
-		assertFalse("Ok should be disabled",
-				tagDialog.bot().button(UIText.CreateTagDialog_CreateTagButton)
-						.isEnabled());
-		tagDialog.bot().button(UIText.CreateTagDialog_clearButton)
-				.click();
-		tagDialog.bot().textWithLabel(UIText.CreateTagDialog_tagName).setText(
-				"AnotherTag");
-		assertFalse("Ok should be disabled",
-				tagDialog.bot().button(UIText.CreateTagDialog_CreateTagButton)
-						.isEnabled());
+		tagDialog.bot().textWithLabel(UIText.CreateTagDialog_tagName)
+				.setText("SomeTag");
+		assertFalse("Ok should be disabled", tagDialog.bot()
+				.button(UIText.CreateTagDialog_CreateTagButton).isEnabled());
+		tagDialog.bot().button(UIText.CreateTagDialog_clearButton).click();
+		tagDialog.bot().textWithLabel(UIText.CreateTagDialog_tagName)
+				.setText("AnotherTag");
 		tagDialog.bot().styledTextWithLabel(UIText.CreateTagDialog_tagMessage)
 				.setText("Here's the message text");
 		tagDialog.bot().button(UIText.CreateTagDialog_CreateTagButton).click();
 		waitInUI();
 		assertNotNull(lookupRepository(repositoryFile)
 				.exactRef(Constants.R_TAGS + "AnotherTag"));
+	}
+
+	@Test
+	public void testCreateLightWeigthTag() throws Exception {
+		SWTBotShell tagDialog = openTagDialog();
+		tagDialog.bot().textWithLabel(UIText.CreateTagDialog_tagName)
+				.setText("AnotherLightTag");
+		tagDialog.bot().button(UIText.CreateTagDialog_CreateTagButton).click();
+		waitInUI();
+		assertNotNull(lookupRepository(repositoryFile)
+				.exactRef(Constants.R_TAGS + "AnotherLightTag"));
 	}
 
 	@Test
@@ -124,14 +145,10 @@ public class TagActionTest extends LocalRepositoryTestCase {
 	@Test
 	public void testChangeTagMessage() throws Exception {
 		SWTBotShell tagDialog = openTagDialog();
-		assertFalse("Ok should be disabled",
-				tagDialog.bot().button(UIText.CreateTagDialog_CreateTagButton)
-						.isEnabled());
-		tagDialog.bot().textWithLabel(UIText.CreateTagDialog_tagName).setText(
-				"MessageChangeTag");
-		assertFalse("Ok should be disabled",
-				tagDialog.bot().button(UIText.CreateTagDialog_CreateTagButton)
-						.isEnabled());
+		assertFalse("Ok should be disabled", tagDialog.bot()
+				.button(UIText.CreateTagDialog_CreateTagButton).isEnabled());
+		tagDialog.bot().textWithLabel(UIText.CreateTagDialog_tagName)
+				.setText("MessageChangeTag");
 		tagDialog.bot().styledTextWithLabel(UIText.CreateTagDialog_tagMessage)
 				.setText("Here's the first message");
 		tagDialog.bot().button(UIText.CreateTagDialog_CreateTagButton).click();
@@ -141,11 +158,11 @@ public class TagActionTest extends LocalRepositoryTestCase {
 		tagDialog = openTagDialog();
 		tagDialog.bot().tableWithLabel(UIText.CreateTagDialog_existingTags)
 				.getTableItem("MessageChangeTag").select();
-		assertFalse("Ok should be disabled",
-				tagDialog.bot().button(UIText.CreateTagDialog_CreateTagButton)
-						.isEnabled());
-		String oldText = tagDialog.bot().styledTextWithLabel(
-				UIText.CreateTagDialog_tagMessage).getText();
+		assertFalse("Ok should be disabled", tagDialog.bot()
+				.button(UIText.CreateTagDialog_CreateTagButton).isEnabled());
+		String oldText = tagDialog.bot()
+				.styledTextWithLabel(UIText.CreateTagDialog_tagMessage)
+				.getText();
 		assertEquals("Wrong message text", "Here's the first message", oldText);
 		tagDialog.bot().checkBox(UIText.CreateTagDialog_overwriteTag).click();
 		tagDialog.bot().styledTextWithLabel(UIText.CreateTagDialog_tagMessage)
@@ -154,10 +171,86 @@ public class TagActionTest extends LocalRepositoryTestCase {
 		tagDialog = openTagDialog();
 		tagDialog.bot().tableWithLabel(UIText.CreateTagDialog_existingTags)
 				.getTableItem("MessageChangeTag").select();
-		String newText = tagDialog.bot().styledTextWithLabel(
-				UIText.CreateTagDialog_tagMessage).getText();
+		String newText = tagDialog.bot()
+				.styledTextWithLabel(UIText.CreateTagDialog_tagMessage)
+				.getText();
 		assertEquals("Wrong message text", "New message", newText);
 		tagDialog.close();
 	}
 
+	@Test
+	public void testForceOverwriteLightWeigthTag() throws Exception {
+		SWTBotShell tagDialog = openTagDialog();
+		tagDialog.bot().tableWithLabel(UIText.CreateTagDialog_existingTags)
+				.getTableItem("SomeLightTag").select();
+		assertFalse("Ok should be disabled", tagDialog.bot()
+				.button(UIText.CreateTagDialog_CreateTagButton).isEnabled());
+		tagDialog.bot().checkBox(UIText.CreateTagDialog_overwriteTag).click();
+		tagDialog.bot().button(UIText.CreateTagDialog_CreateTagButton).click();
+		waitInUI();
+		assertNotNull(lookupRepository(repositoryFile)
+				.exactRef(Constants.R_TAGS + "SomeLightTag"));
+	}
+
+	@Test
+	public void testMoveLightWeigthTag() throws Exception {
+		Repository repo = lookupRepository(repositoryFile);
+		touchAndSubmit(null);
+		ObjectId currId = repo.resolve(repo.getFullBranch());
+
+		SWTBotShell tagDialog = openTagDialog();
+		tagDialog.bot().tableWithLabel(UIText.CreateTagDialog_existingTags)
+				.getTableItem("SomeLightTag").select();
+		assertFalse("Ok should be disabled", tagDialog.bot()
+				.button(UIText.CreateTagDialog_CreateTagButton).isEnabled());
+		tagDialog.bot().checkBox(UIText.CreateTagDialog_overwriteTag).click();
+		tagDialog.bot().button(UIText.CreateTagDialog_CreateTagButton).click();
+		waitInUI();
+		Ref ref = repo.exactRef(Constants.R_TAGS + "SomeLightTag");
+		assertNotNull(ref);
+		assertEquals(ref.getObjectId(), currId);
+	}
+
+	@Test
+	public void testConvertLightWeigthIntoAnnotatedTag() throws Exception {
+		Repository repo = lookupRepository(repositoryFile);
+		ObjectId currId = repo.resolve(repo.getFullBranch());
+
+		SWTBotShell tagDialog = openTagDialog();
+		tagDialog.bot().tableWithLabel(UIText.CreateTagDialog_existingTags)
+				.getTableItem("SomeLightTag").select();
+		assertFalse("Ok should be disabled", tagDialog.bot()
+				.button(UIText.CreateTagDialog_CreateTagButton).isEnabled());
+		tagDialog.bot().styledTextWithLabel(UIText.CreateTagDialog_tagMessage)
+				.setText("New message");
+		tagDialog.bot().checkBox(UIText.CreateTagDialog_overwriteTag).click();
+		tagDialog.bot().button(UIText.CreateTagDialog_CreateTagButton).click();
+		waitInUI();
+		Ref ref = repo.exactRef(Constants.R_TAGS + "SomeLightTag");
+		assertNotNull(ref);
+		assertNotEquals(ref.getObjectId(), currId);
+	}
+
+	@Test
+	public void testConvertAnnotatedTagIntoLightWeigth() throws Exception {
+		Repository repo = lookupRepository(repositoryFile);
+		Ref ref = repo.exactRef(Constants.R_TAGS + "SomeTag");
+		ref = repo.getRefDatabase().peel(ref);
+		assertTrue(ref.isPeeled());
+		ObjectId commit = ref.getPeeledObjectId();
+
+		SWTBotShell tagDialog = openTagDialog();
+		tagDialog.bot().tableWithLabel(UIText.CreateTagDialog_existingTags)
+				.getTableItem("SomeTag").select();
+		assertFalse("Ok should be disabled", tagDialog.bot()
+				.button(UIText.CreateTagDialog_CreateTagButton).isEnabled());
+		tagDialog.bot().checkBox(UIText.CreateTagDialog_overwriteTag).click();
+		tagDialog.bot().styledTextWithLabel(UIText.CreateTagDialog_tagMessage)
+				.setText("");
+		tagDialog.bot().button(UIText.CreateTagDialog_CreateTagButton).click();
+		waitInUI();
+		ref = repo.exactRef(Constants.R_TAGS + "SomeTag");
+		assertNotNull(ref);
+		assertEquals(ref.getObjectId(), commit);
+	}
 }
