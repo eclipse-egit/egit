@@ -36,26 +36,45 @@ public class TagOperation implements IEGitOperation {
 	private final Repository repo;
 	private final boolean shouldMoveTag;
 
+	private final boolean annotated;
+
 	/**
 	 * Construct TagOperation
 	 *
 	 * @param repo
 	 * @param tag
-	 * @param shouldMoveTag if <code>true</code> it will replace tag with same name
+	 * @param shouldMoveTag
+	 *            if <code>true</code> it will replace tag with same name
+	 * @param annotated
+	 *            <code>true</code> if tag is annotated
 	 */
-	public TagOperation(Repository repo, TagBuilder tag, boolean shouldMoveTag) {
+	public TagOperation(Repository repo, TagBuilder tag, boolean shouldMoveTag,
+			boolean annotated) {
 		this.tag = tag;
 		this.repo = repo;
 		this.shouldMoveTag = shouldMoveTag;
+		this.annotated = annotated;
 	}
 
+	/**
+	 * Construct TagOperation
+	 *
+	 * @param repo
+	 * @param tag
+	 * @param shouldMoveTag
+	 *            if <code>true</code> it will replace tag with same name
+	 */
+	public TagOperation(Repository repo, TagBuilder tag,
+			boolean shouldMoveTag) {
+		this(repo, tag, shouldMoveTag, true);
+	}
 
 	@Override
 	public void execute(IProgressMonitor monitor) throws CoreException {
 		SubMonitor progress = SubMonitor.convert(monitor, 2);
 		progress.setTaskName(NLS.bind(CoreText.TagOperation_performingTagging,
 				tag.getTag()));
-		ObjectId tagId = updateTagObject();
+		ObjectId tagId = annotated ? updateTagObject() : tag.getObjectId();
 		progress.worked(1);
 		updateRepo(tagId);
 		progress.worked(1);
