@@ -17,6 +17,7 @@ import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.SubMonitor;
 import org.eclipse.core.runtime.jobs.ISchedulingRule;
 import org.eclipse.egit.core.internal.CoreText;
+import org.eclipse.jgit.annotations.NonNull;
 import org.eclipse.jgit.lib.Constants;
 import org.eclipse.jgit.lib.ObjectId;
 import org.eclipse.jgit.lib.ObjectInserter;
@@ -34,31 +35,63 @@ public class TagOperation implements IEGitOperation {
 
 	private final TagBuilder tag;
 	private final Repository repo;
+
+	private Result result;
+
 	private final boolean shouldMoveTag;
+
+	private final boolean annotated;
 
 	/**
 	 * Construct TagOperation
 	 *
 	 * @param repo
 	 * @param tag
-	 * @param shouldMoveTag if <code>true</code> it will replace tag with same name
+	 * @param shouldMoveTag
+	 *            if <code>true</code> it will replace tag with same name
+	 * @param annotated
+	 *            <code>true</code> if tag is annotated
 	 */
-	public TagOperation(Repository repo, TagBuilder tag, boolean shouldMoveTag) {
+	public TagOperation(Repository repo, TagBuilder tag, boolean shouldMoveTag,
+			boolean annotated) {
 		this.tag = tag;
 		this.repo = repo;
 		this.shouldMoveTag = shouldMoveTag;
+		this.annotated = annotated;
 	}
 
+	/**
+	 * Construct TagOperation
+	 *
+	 * @param repo
+	 * @param tag
+	 * @param shouldMoveTag
+	 *            if <code>true</code> it will replace tag with same name
+	 */
+	public TagOperation(Repository repo, TagBuilder tag,
+			boolean shouldMoveTag) {
+		this(repo, tag, shouldMoveTag, true);
+	}
 
 	@Override
 	public void execute(IProgressMonitor monitor) throws CoreException {
 		SubMonitor progress = SubMonitor.convert(monitor, 2);
 		progress.setTaskName(NLS.bind(CoreText.TagOperation_performingTagging,
 				tag.getTag()));
-		ObjectId tagId = updateTagObject();
+		ObjectId tagId = annotated ? updateTagObject() : tag.getObjectId();
 		progress.worked(1);
 		updateRepo(tagId);
 		progress.worked(1);
+	}
+
+	/**
+	 * Obtains the result of the operation.
+	 *
+	 * @return the result
+	 */
+	public @NonNull Result getResult() {
+		Result r = result;
+		return r == null ? Result.NOT_ATTEMPTED : r;
 	}
 
 	private void updateRepo(ObjectId tagId) throws TeamException {
@@ -71,9 +104,16 @@ public class TagOperation implements IEGitOperation {
 			tagRef.setForceUpdate(shouldMoveTag);
 			Result updateResult = tagRef.update();
 
-			if (updateResult != Result.NEW && updateResult != Result.FORCED)
+			result = updateResult;
+			switch (updateResult) {
+			case NEW:
+			case FORCED:
+			case NO_CHANGE:
+				break; // OK
+			default:
 				throw new TeamException(NLS.bind(CoreText.TagOperation_taggingFailure,
 						tag.getTag(), updateResult));
+			}
 		} catch (IOException e) {
 			throw new TeamException(NLS.bind(CoreText.TagOperation_taggingFailure,
 					tag.getTag(), e.getMessage()), e);
