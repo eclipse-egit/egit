@@ -119,8 +119,10 @@ public class CreateTagDialog extends TitleAreaDialog {
 
 	private boolean overwriteTag;
 
+	private boolean annotated;
+
 	/** Tag object in case an existing annotated tag was entered */
-	private RevTag existingTag;
+	private TagWrapper existingTag;
 
 	private Repository repo;
 
@@ -143,6 +145,41 @@ public class CreateTagDialog extends TitleAreaDialog {
 	private final IInputValidator tagNameValidator;
 
 	private final RevWalk rw;
+
+	private static class TagWrapper {
+		RevTag annotatedTag;
+
+		Ref lightweightTag;
+
+		TagWrapper(RevTag t) {
+			annotatedTag = t;
+			lightweightTag = null;
+		}
+
+		TagWrapper(Ref l) {
+			annotatedTag = null;
+			lightweightTag = l;
+		}
+
+		public String getName() {
+			if (annotatedTag != null)
+				return annotatedTag.getTagName();
+			return lightweightTag.getName().replaceFirst("^" + Constants.R_TAGS, //$NON-NLS-1$
+					""); //$NON-NLS-1$
+		}
+
+		public ObjectId getId() {
+			if (annotatedTag != null)
+				return annotatedTag.getObject();
+			return lightweightTag.getObjectId();
+		}
+
+		public String getMessage() {
+			if (annotatedTag != null)
+				return annotatedTag.getFullMessage();
+			return null;
+		}
+	}
 
 	private static class TagLabelProvider extends LabelProvider {
 		private final Image IMG_TAG;
@@ -253,6 +290,15 @@ public class CreateTagDialog extends TitleAreaDialog {
 	}
 
 	/**
+	 * Indicates if the tag is annotated
+	 *
+	 * @return <code>true</code> if annotated, <code>false</code> otherwise
+	 */
+	public boolean isAnnotated() {
+		return annotated;
+	}
+
+	/**
 	 * @return true if the user wants to start the push wizard after creating
 	 *         the tag, false otherwise
 	 */
@@ -281,8 +327,8 @@ public class CreateTagDialog extends TitleAreaDialog {
 	@Override
 	protected void createButtonsForButtonBar(Composite parent) {
 		parent.setLayout(GridLayoutFactory.swtDefaults().create());
-		parent.setLayoutData(GridDataFactory.fillDefaults().grab(true, false)
-				.create());
+		parent.setLayoutData(
+				GridDataFactory.fillDefaults().grab(true, false).create());
 
 		Button clearButton = createButton(parent, CLEAR_ID,
 				UIText.CreateTagDialog_clearButton, false);
@@ -290,18 +336,20 @@ public class CreateTagDialog extends TitleAreaDialog {
 		setButtonLayoutData(clearButton);
 
 		Composite margin = new Composite(parent, SWT.NONE);
-		margin.setLayoutData(GridDataFactory.fillDefaults().grab(true, false)
-				.create());
+		margin.setLayoutData(
+				GridDataFactory.fillDefaults().grab(true, false).create());
 
 		Button createTagAndStartPushButton = createButton(parent,
-				CREATE_AND_START_PUSH_ID, UIText.CreateTagDialog_CreateTagAndStartPushButton, false);
-		createTagAndStartPushButton
-				.setToolTipText(UIText.CreateTagDialog_CreateTagAndStartPushToolTip);
+				CREATE_AND_START_PUSH_ID,
+				UIText.CreateTagDialog_CreateTagAndStartPushButton, false);
+		createTagAndStartPushButton.setToolTipText(
+				UIText.CreateTagDialog_CreateTagAndStartPushToolTip);
 		setButtonLayoutData(createTagAndStartPushButton);
 
 		super.createButtonsForButtonBar(parent);
 
 		getButton(OK).setText(UIText.CreateTagDialog_CreateTagButton);
+		getButton(OK).setToolTipText(UIText.CreateTagDialog_tagMessageToolTip);
 
 		validateInput();
 	}
@@ -334,7 +382,8 @@ public class CreateTagDialog extends TitleAreaDialog {
 								}
 							});
 				} catch (IOException e) {
-					setErrorMessage(UIText.CreateTagDialog_ExceptionRetrievingTagsMessage);
+					setErrorMessage(
+							UIText.CreateTagDialog_ExceptionRetrievingTagsMessage);
 					return Activator.createErrorStatus(e.getMessage(), e);
 				}
 				return Status.OK_STATUS;
@@ -360,10 +409,10 @@ public class CreateTagDialog extends TitleAreaDialog {
 
 		Composite composite = (Composite) super.createDialogArea(parent);
 
-		final SashForm mainForm = new SashForm(composite, SWT.HORIZONTAL
-				| SWT.FILL);
-		mainForm.setLayoutData(GridDataFactory.fillDefaults().grab(true, true)
-				.create());
+		final SashForm mainForm = new SashForm(composite,
+				SWT.HORIZONTAL | SWT.FILL);
+		mainForm.setLayoutData(
+				GridDataFactory.fillDefaults().grab(true, true).create());
 
 		createLeftSection(mainForm);
 		createExistingTagsSection(mainForm);
@@ -398,6 +447,7 @@ public class CreateTagDialog extends TitleAreaDialog {
 						.replaceFirst(""); //$NON-NLS-1$
 			}
 			overwriteTag = overwriteButton.getSelection();
+			annotated = !tagMessageText.getCommitMessage().isEmpty();
 			okPressed();
 		} else {
 			super.buttonPressed(buttonId);
@@ -412,22 +462,23 @@ public class CreateTagDialog extends TitleAreaDialog {
 	private void createLeftSection(SashForm mainForm) {
 		Composite left = new Composite(mainForm, SWT.RESIZE);
 		left.setLayout(GridLayoutFactory.swtDefaults().margins(10, 5).create());
-		left.setLayoutData(GridDataFactory.fillDefaults().grab(true, true)
-				.create());
+		left.setLayoutData(
+				GridDataFactory.fillDefaults().grab(true, true).create());
 
 		Label label = new Label(left, SWT.WRAP);
 		label.setText(UIText.CreateTagDialog_tagName);
-		GridData data = new GridData(GridData.GRAB_HORIZONTAL
-				| GridData.HORIZONTAL_ALIGN_FILL
-				| GridData.VERTICAL_ALIGN_CENTER);
-		data.widthHint = convertHorizontalDLUsToPixels(IDialogConstants.MINIMUM_MESSAGE_AREA_WIDTH / 2);
+		GridData data = new GridData(
+				GridData.GRAB_HORIZONTAL | GridData.HORIZONTAL_ALIGN_FILL
+						| GridData.VERTICAL_ALIGN_CENTER);
+		data.widthHint = convertHorizontalDLUsToPixels(
+				IDialogConstants.MINIMUM_MESSAGE_AREA_WIDTH / 2);
 		label.setLayoutData(data);
 		label.setFont(left.getFont());
 
-		tagNameText = new Text(left, SWT.SINGLE | SWT.BORDER | SWT.SEARCH
-				| SWT.ICON_CANCEL);
-		tagNameText.setLayoutData(new GridData(GridData.GRAB_HORIZONTAL
-				| GridData.HORIZONTAL_ALIGN_FILL));
+		tagNameText = new Text(left,
+				SWT.SINGLE | SWT.BORDER | SWT.SEARCH | SWT.ICON_CANCEL);
+		tagNameText.setLayoutData(new GridData(
+				GridData.GRAB_HORIZONTAL | GridData.HORIZONTAL_ALIGN_FILL));
 		tagNameText.addModifyListener(new ModifyListener() {
 
 			@Override
@@ -439,7 +490,7 @@ public class CreateTagDialog extends TitleAreaDialog {
 				// Only parse/set tag once (otherwise it would be set twice when
 				// selecting from the existing tags)
 				if (existingTag == null
-						|| !tagNameValue.equals(existingTag.getTagName()))
+						|| !tagNameValue.equals(existingTag.getName()))
 					setExistingTagFromText(tagNameValue);
 				validateInput();
 			}
@@ -448,7 +499,6 @@ public class CreateTagDialog extends TitleAreaDialog {
 		normalizer.setVisible(false);
 
 		new Label(left, SWT.WRAP).setText(UIText.CreateTagDialog_tagMessage);
-
 
 		tagMessageText = new SpellcheckableMessageArea(left, tagMessage);
 		Point size = tagMessageText.getTextWidget().getSize();
@@ -499,18 +549,18 @@ public class CreateTagDialog extends TitleAreaDialog {
 
 		advanced.setText(UIText.CreateTagDialog_advanced);
 		advanced.setToolTipText(UIText.CreateTagDialog_advancedToolTip);
-		advanced.setLayoutData(GridDataFactory.fillDefaults().grab(true, false)
-				.create());
+		advanced.setLayoutData(
+				GridDataFactory.fillDefaults().grab(true, false).create());
 
 		Composite advancedComposite = new Composite(advanced, SWT.WRAP);
 		advancedComposite.setLayout(GridLayoutFactory.swtDefaults().create());
-		advancedComposite.setLayoutData(GridDataFactory.fillDefaults()
-				.grab(true, true).create());
+		advancedComposite.setLayoutData(
+				GridDataFactory.fillDefaults().grab(true, true).create());
 
 		Label advancedLabel = new Label(advancedComposite, SWT.WRAP);
 		advancedLabel.setText(UIText.CreateTagDialog_advancedMessage);
-		advancedLabel.setLayoutData(GridDataFactory.fillDefaults()
-				.grab(true, false).create());
+		advancedLabel.setLayoutData(
+				GridDataFactory.fillDefaults().grab(true, false).create());
 
 		commitCombo = new CommitCombo(advancedComposite, SWT.NORMAL);
 		commitCombo.setLayoutData(GridDataFactory.fillDefaults()
@@ -545,7 +595,7 @@ public class CreateTagDialog extends TitleAreaDialog {
 
 					// Set combo selection if a tag is selected
 					if (existingTag != null)
-						commitCombo.setSelectedElement(existingTag.getObject());
+						commitCombo.setSelectedElement(existingTag.getId());
 				}
 				composite.layout(true);
 				composite.getShell().pack();
@@ -560,8 +610,8 @@ public class CreateTagDialog extends TitleAreaDialog {
 
 		new Label(right, SWT.WRAP).setText(UIText.CreateTagDialog_existingTags);
 
-		Table table = new Table(right, SWT.H_SCROLL | SWT.V_SCROLL | SWT.BORDER
-				| SWT.SINGLE);
+		Table table = new Table(right,
+				SWT.H_SCROLL | SWT.V_SCROLL | SWT.BORDER | SWT.SINGLE);
 		table.setLayoutData(GridDataFactory.fillDefaults().grab(true, true)
 				.hint(80, 100).create());
 
@@ -609,8 +659,8 @@ public class CreateTagDialog extends TitleAreaDialog {
 		// let's set the table inactive initially and display a "Loading..."
 		// message and fill the list asynchronously during create() in order to
 		// improve UI responsiveness
-		tagViewer
-				.setInput(new String[] { UIText.CreateTagDialog_LoadingMessageText });
+		tagViewer.setInput(
+				new String[] { UIText.CreateTagDialog_LoadingMessageText });
 		tagViewer.getTable().setEnabled(false);
 		applyDialogFont(parent);
 	}
@@ -627,14 +677,19 @@ public class CreateTagDialog extends TitleAreaDialog {
 
 		String tagMessageVal = tagMessageText.getText().trim();
 
+		boolean isLightWeight = tagMessageVal.isEmpty();
 		Control button = getButton(IDialogConstants.OK_ID);
 		if (button != null) {
-			boolean containsTagNameAndMessage = (tagNameMessage == null || tagMessageVal
-					.length() == 0) && tagMessageVal.length() != 0;
-			boolean shouldOverwriteTag = (overwriteButton.getSelection() && Repository
-					.isValidRefName(Constants.R_TAGS + tagNameText.getText()));
+			boolean containsTagNameAndMessage = (tagNameMessage == null
+					|| tagMessageVal.length() == 0)
+					&& tagMessageVal.length() != 0;
+			boolean shouldOverwriteTag = (overwriteButton.getSelection()
+					&& Repository.isValidRefName(
+							Constants.R_TAGS + tagNameText.getText()));
 
-			boolean enabled = containsTagNameAndMessage || shouldOverwriteTag;
+			boolean enabled = containsTagNameAndMessage || shouldOverwriteTag
+					|| (isLightWeight && tagNameMessage == null
+							&& !tagNameText.getText().isEmpty());
 			button.setEnabled(enabled);
 
 			Button createTagAndStartPush = getButton(CREATE_AND_START_PUSH_ID);
@@ -643,10 +698,9 @@ public class CreateTagDialog extends TitleAreaDialog {
 		}
 
 		boolean existingTagSelected = existingTag != null;
-		if (existingTagSelected && !overwriteButton.getSelection())
-			tagMessageText.getTextWidget().setEditable(false);
-		else
-			tagMessageText.getTextWidget().setEditable(true);
+		boolean readOnly = (existingTagSelected
+				&& !overwriteButton.getSelection());
+		tagMessageText.getTextWidget().setEditable(!readOnly);
 
 		overwriteButton.setEnabled(existingTagSelected);
 		if (!existingTagSelected)
@@ -683,21 +737,22 @@ public class CreateTagDialog extends TitleAreaDialog {
 
 	private void setExistingTag(Object tagObject) {
 		if (tagObject instanceof RevTag)
-			existingTag = (RevTag) tagObject;
-		else {
+			existingTag = new TagWrapper((RevTag) tagObject);
+		else if (tagObject instanceof Ref) {
+			existingTag = new TagWrapper((Ref) tagObject);
+		} else {
 			setNoExistingTag();
-			setErrorMessage(UIText.CreateTagDialog_LightweightTagMessage);
 			return;
 		}
 
-		if (!tagNameText.getText().equals(existingTag.getTagName()))
-			tagNameText.setText(existingTag.getTagName());
+		if (!tagNameText.getText().equals(existingTag.getName()))
+			tagNameText.setText(existingTag.getName());
 		if (commitCombo != null)
-			commitCombo.setSelectedElement(existingTag.getObject());
+			commitCombo.setSelectedElement(existingTag.getId());
 
 		// handle un-annotated tags
-		String message = existingTag.getFullMessage();
-		tagMessageText.setText(null != message ? message : ""); //$NON-NLS-1$
+		String message = existingTag.getMessage();
+		tagMessageText.setText(message != null ? message : ""); //$NON-NLS-1$
 	}
 
 	private void getRevCommits(Collection<RevCommit> commits) {
