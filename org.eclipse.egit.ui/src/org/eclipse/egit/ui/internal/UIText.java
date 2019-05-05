@@ -4386,6 +4386,12 @@ public class UIText extends NLS {
 	public static String CreateTagDialog_overwriteTagToolTip;
 
 	/** */
+	public static String CreateTagDialog_lightweightTag;
+
+	/** */
+	public static String CreateTagDialog_lightweightTagToolTip;
+
+	/** */
 	public static String CreateTagDialog_existingTags;
 
 	/** */
