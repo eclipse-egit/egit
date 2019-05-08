@@ -3510,7 +3510,18 @@ public class StagingView extends ViewPart
 		case REMOVED:
 			// already staged
 			break;
-		case CONFLICTING:
+		case CONFLICTING: {
+			// In a delete-modify conflict, we do have the file in the working
+			// tree. If it has been deleted, the user resolved the conflict in
+			// favour of the deletion. In other conflicts, if the user removes
+			// the file, we also should remove it from the index.
+			if (!entry.getLocation().toFile().exists()) {
+				rmPaths.add(entry.getPath());
+			} else {
+				addPaths.add(entry.getPath());
+			}
+			break;
+		}
 		case MODIFIED:
 		case MODIFIED_AND_CHANGED:
 		case MODIFIED_AND_ADDED:
