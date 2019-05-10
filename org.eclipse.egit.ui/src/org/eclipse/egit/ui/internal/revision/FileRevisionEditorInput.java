@@ -52,11 +52,11 @@ public class FileRevisionEditorInput extends PlatformObject implements
 	private static final SimpleDateFormat DATE_FORMAT = new SimpleDateFormat(
 			"yyyyMMdd_HHmmss"); //$NON-NLS-1$
 
-	private final Object fileRevision;
+	private final IFileRevision fileRevision;
 
 	private final IStorage storage;
 
-	private IPath tmpFile = null;
+	private IPath tmpFile;
 
 	/**
 	 * @param revision
@@ -159,7 +159,7 @@ public class FileRevisionEditorInput extends PlatformObject implements
 	 * @param storage
 	 *            the contents of the file revision
 	 */
-	public FileRevisionEditorInput(Object revision, IStorage storage) {
+	public FileRevisionEditorInput(IFileRevision revision, IStorage storage) {
 		Assert.isNotNull(revision);
 		Assert.isNotNull(storage);
 		this.fileRevision = revision;
@@ -167,19 +167,11 @@ public class FileRevisionEditorInput extends PlatformObject implements
 	}
 
 	/**
-	 * @param state
-	 *            the file state
-	 */
-	public FileRevisionEditorInput(IFileState state) {
-		this(state, state);
-	}
-
-	/**
 	 * @param revision
 	 * @param storage
 	 * @param charset
 	 */
-	public FileRevisionEditorInput(Object revision, IStorage storage,
+	public FileRevisionEditorInput(IFileRevision revision, IStorage storage,
 			String charset) {
 		this(revision, wrapStorage(storage, charset));
 	}
@@ -199,15 +191,22 @@ public class FileRevisionEditorInput extends PlatformObject implements
 		return null;
 	}
 
+	private String abbreviate(String id) {
+		if (id.length() > 7) {
+			// 7 characters as in Utils.getShortObjectId()
+			return id.substring(0, 7);
+		}
+		return id;
+	}
+
 	@Override
 	public String getName() {
 		IFileRevision rev = AdapterUtils.adapt(this, IFileRevision.class);
 		if (rev != null) {
 			String identifier;
 			if (rev instanceof CommitFileRevision) {
-				// 7 characters as in Utils.getShortObjectId(), used in the
-				// window title
-				identifier = rev.getContentIdentifier().substring(0, 7);
+				// Used in the window title
+				identifier = abbreviate(rev.getContentIdentifier());
 			} else {
 				identifier = rev.getContentIdentifier();
 			}
@@ -293,21 +292,14 @@ public class FileRevisionEditorInput extends PlatformObject implements
 	 * @return the revision
 	 */
 	public IFileRevision getFileRevision() {
-		if (fileRevision instanceof IFileRevision) {
-			return (IFileRevision) fileRevision;
-		}
-		return null;
+		return fileRevision;
 	}
 
 	/**
 	 * @return the revision
 	 */
 	public URI getURI() {
-		if (fileRevision instanceof IFileRevision) {
-			IFileRevision fr = (IFileRevision) fileRevision;
-			return fr.getURI();
-		}
-		return null;
+		return fileRevision.getURI();
 	}
 
 	@Override
@@ -326,7 +318,9 @@ public class FileRevisionEditorInput extends PlatformObject implements
 			if (tempName.length() > 200) {
 				tempName = storage.getName();
 			}
-			path = Files.createTempDirectory("egit") //$NON-NLS-1$
+			path = Files
+					.createTempDirectory(Activator.getDefault()
+							.getStateLocation().toFile().toPath(), "egit") //$NON-NLS-1$
 					.resolve(tempName);
 			try (InputStream in = storage.getContents()) {
 				Files.copy(in, path);
@@ -356,7 +350,7 @@ public class FileRevisionEditorInput extends PlatformObject implements
 	private String getRevisionPrefix() {
 		IFileRevision rev = AdapterUtils.adapt(this, IFileRevision.class);
 		if (rev != null) {
-			return rev.getContentIdentifier() + '_';
+			return abbreviate(rev.getContentIdentifier()) + '_';
 		}
 		IFileState state = AdapterUtils.adapt(this, IFileState.class);
 		if (state != null) {
