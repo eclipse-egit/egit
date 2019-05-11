@@ -64,21 +64,10 @@ public class GitSubscriberMergeContext extends SubscriberMergeContext {
 		this.gsds = gsds;
 
 
-		indexChangeListener = new IndexDiffChangedListener() {
-			@Override
-			public void indexDiffChanged(Repository repository,
-					IndexDiffData indexDiffData) {
-				handleRepositoryChange(repository);
-			}
-		};
-		resourceChangeListener = new IResourceChangeListener() {
-
-			@Override
-			public void resourceChanged(IResourceChangeEvent event) {
-				IResourceDelta delta = event.getDelta();
-				if (delta == null)
-					return;
-
+		indexChangeListener = (repository, indexDiffData) -> handleRepositoryChange(repository);
+		resourceChangeListener = event -> {
+			IResourceDelta delta = event.getDelta();
+			if (delta != null) {
 				handleResourceChange(delta);
 			}
 		};

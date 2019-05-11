@@ -31,7 +31,6 @@ import org.eclipse.egit.ui.UIUtils.IPreviousValueProposalHandler;
 import org.eclipse.egit.ui.internal.SecureStoreUtils;
 import org.eclipse.egit.ui.internal.UIText;
 import org.eclipse.egit.ui.internal.clone.GitUrlChecker;
-import org.eclipse.egit.ui.internal.components.RemoteSelectionCombo.IRemoteSelectionListener;
 import org.eclipse.egit.ui.internal.components.RemoteSelectionCombo.SelectionType;
 import org.eclipse.egit.ui.internal.provisional.wizards.GitRepositoryInfo;
 import org.eclipse.egit.ui.internal.provisional.wizards.IRepositorySearchResult;
@@ -435,12 +434,9 @@ public class RepositorySelectionPage extends WizardPage implements IRepositorySe
 		SelectionType selectionType = sourceSelection ? SelectionType.FETCH : SelectionType.PUSH;
 		remoteCombo = new RemoteSelectionCombo(remotePanel, SWT.NULL, selectionType);
 		remoteConfig = remoteCombo.setItems(configuredRemotes);
-		remoteCombo.addRemoteSelectionListener(new IRemoteSelectionListener() {
-			@Override
-			public void remoteSelected(RemoteConfig rc) {
-				remoteConfig = rc;
-				checkPage();
-			}
+		remoteCombo.addRemoteSelectionListener((RemoteConfig rc) -> {
+			remoteConfig = rc;
+			checkPage();
 		});
 	}
 

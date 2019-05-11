@@ -314,13 +314,8 @@ public class StagingViewContentProvider extends WorkbenchContentProvider {
 		repository = update.repository;
 
 		Set<StagingEntry> nodes = new TreeSet<>(
-				new Comparator<StagingEntry>() {
-					@Override
-					public int compare(StagingEntry entry1, StagingEntry entry2) {
-						return String.CASE_INSENSITIVE_ORDER
-								.compare(entry1.getPath(), entry2.getPath());
-					}
-				});
+				(StagingEntry entry1, StagingEntry entry2) -> String.CASE_INSENSITIVE_ORDER
+				.compare(entry1.getPath(), entry2.getPath()));
 
 		if (update.changedResources != null
 				&& !update.changedResources.isEmpty()) {

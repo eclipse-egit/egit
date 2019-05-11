@@ -99,12 +99,9 @@ public class PushTagsPage extends WizardPage {
 		selectedRemoteConfig = remoteSelectionCombo
 				.setItems(getRemoteConfigs());
 		remoteSelectionCombo
-				.addRemoteSelectionListener(new RemoteSelectionCombo.IRemoteSelectionListener() {
-					@Override
-					public void remoteSelected(RemoteConfig remoteConfig) {
-						selectedRemoteConfig = remoteConfig;
-					}
-				});
+		.addRemoteSelectionListener((RemoteConfig remoteConfig) -> {
+			selectedRemoteConfig = remoteConfig;
+		});
 
 		tagsLabel = new Label(main, SWT.NONE);
 		tagsLabel.setText(UIText.PushTagsPage_TagsLabelNoneSelected);
