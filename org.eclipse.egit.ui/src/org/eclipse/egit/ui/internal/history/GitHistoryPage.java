@@ -1466,12 +1466,7 @@ public class GitHistoryPage extends HistoryPage implements RefsChangedListener,
 			}
 		});
 		commentViewer
-				.addCommitNavigationListener(new CommitNavigationListener() {
-					@Override
-					public void showCommit(final RevCommit c) {
-						graph.selectCommit(c);
-					}
-				});
+				.addCommitNavigationListener(graph::selectCommit);
 	}
 
 	/**
@@ -1712,21 +1707,18 @@ public class GitHistoryPage extends HistoryPage implements RefsChangedListener,
 
 		synchronized (this) {
 			if (refschangedRunnable == null) {
-				refschangedRunnable = new Runnable() {
-					@Override
-					public void run() {
-						if (!getControl().isDisposed()) {
-							if (GitTraceLocation.HISTORYVIEW.isActive())
-								GitTraceLocation
-										.getTrace()
-										.trace(
-												GitTraceLocation.HISTORYVIEW
-														.getLocation(),
-												"Executing async repository changed event"); //$NON-NLS-1$
-							refschangedRunnable = null;
-							initAndStartRevWalk(
-									!(e instanceof FetchHeadChangedEvent));
-						}
+				refschangedRunnable = () -> {
+					if (!getControl().isDisposed()) {
+						if (GitTraceLocation.HISTORYVIEW.isActive())
+							GitTraceLocation
+							.getTrace()
+							.trace(
+									GitTraceLocation.HISTORYVIEW
+									.getLocation(),
+									"Executing async repository changed event"); //$NON-NLS-1$
+						refschangedRunnable = null;
+						initAndStartRevWalk(
+								!(e instanceof FetchHeadChangedEvent));
 					}
 				};
 				getControl().getDisplay().asyncExec(refschangedRunnable);
