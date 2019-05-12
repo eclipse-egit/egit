@@ -30,7 +30,6 @@ import org.eclipse.egit.ui.internal.components.AsynchronousBranchList;
 import org.eclipse.egit.ui.internal.components.AsynchronousRefProposalProvider;
 import org.eclipse.egit.ui.internal.components.BranchRebaseModeCombo;
 import org.eclipse.egit.ui.internal.components.RemoteSelectionCombo;
-import org.eclipse.egit.ui.internal.components.RemoteSelectionCombo.IRemoteSelectionListener;
 import org.eclipse.egit.ui.internal.components.RemoteSelectionCombo.SelectionType;
 import org.eclipse.egit.ui.internal.dialogs.CancelableFuture;
 import org.eclipse.egit.ui.internal.push.AddRemoteWizard;
@@ -153,14 +152,11 @@ public class PullWizardPage extends WizardPage {
 				.applyTo(remoteSelectionCombo);
 		setRemoteConfigs();
 		remoteSelectionCombo
-				.addRemoteSelectionListener(new IRemoteSelectionListener() {
-					@Override
-					public void remoteSelected(RemoteConfig rc) {
-						remoteConfig = rc;
-						setRefAssist(rc);
-						checkPage();
-					}
-				});
+		.addRemoteSelectionListener((RemoteConfig rc) -> {
+			remoteConfig = rc;
+			setRefAssist(rc);
+			checkPage();
+		});
 
 		Button newRemoteButton = new Button(res, SWT.PUSH);
 		newRemoteButton.setText(UIText.PushBranchPage_NewRemoteButton);
