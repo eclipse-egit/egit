@@ -343,12 +343,7 @@ public class RefSpecPanel {
 		createPredefinedCreationPanel();
 		createTableGroup();
 
-		addRefSpecTableListener(new SelectionChangeListener() {
-			@Override
-			public void selectionChanged() {
-				validateSpecs();
-			}
-		});
+		addRefSpecTableListener(this::validateSpecs);
 		setEnable(false);
 	}
 
@@ -877,14 +872,11 @@ public class RefSpecPanel {
 				.setToolTipText(UIText.RefSpecPanel_predefinedTagsDescription);
 		updateAddPredefinedButton(addTagsButton, Transport.REFSPEC_TAGS);
 
-		addRefSpecTableListener(new SelectionChangeListener() {
-			@Override
-			public void selectionChanged() {
-				updateAddPredefinedButton(addConfiguredButton,
-						predefinedConfigured);
-				updateAddPredefinedButton(addBranchesButton, predefinedBranches);
-				updateAddPredefinedButton(addTagsButton, Transport.REFSPEC_TAGS);
-			}
+		addRefSpecTableListener(() -> {
+			updateAddPredefinedButton(addConfiguredButton,
+					predefinedConfigured);
+			updateAddPredefinedButton(addBranchesButton, predefinedBranches);
+			updateAddPredefinedButton(addTagsButton, Transport.REFSPEC_TAGS);
 		});
 	}
 
@@ -1359,12 +1351,9 @@ public class RefSpecPanel {
 				.setToolTipText(UIText.RefSpecPanel_removeAllDescription);
 		updateRemoveAllSpecButton();
 
-		addRefSpecTableListener(new SelectionChangeListener() {
-			@Override
-			public void selectionChanged() {
-				updateForceUpdateAllButton();
-				updateRemoveAllSpecButton();
-			}
+		addRefSpecTableListener(() -> {
+			updateForceUpdateAllButton();
+			updateRemoveAllSpecButton();
 		});
 	}
 

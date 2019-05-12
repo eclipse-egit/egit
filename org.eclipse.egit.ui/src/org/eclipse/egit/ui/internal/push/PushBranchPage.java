@@ -34,10 +34,8 @@ import org.eclipse.egit.ui.internal.components.AsynchronousBranchList;
 import org.eclipse.egit.ui.internal.components.AsynchronousRefProposalProvider;
 import org.eclipse.egit.ui.internal.components.BranchNameNormalizer;
 import org.eclipse.egit.ui.internal.components.RemoteSelectionCombo;
-import org.eclipse.egit.ui.internal.components.RemoteSelectionCombo.IRemoteSelectionListener;
 import org.eclipse.egit.ui.internal.components.RemoteSelectionCombo.SelectionType;
 import org.eclipse.egit.ui.internal.components.UpstreamConfigComponent;
-import org.eclipse.egit.ui.internal.components.UpstreamConfigComponent.UpstreamConfigSelectionListener;
 import org.eclipse.egit.ui.internal.dialogs.CancelableFuture;
 import org.eclipse.jface.dialogs.IMessageProvider;
 import org.eclipse.jface.layout.GridDataFactory;
@@ -274,14 +272,11 @@ public class PushBranchPage extends WizardPage {
 				.applyTo(remoteSelectionCombo);
 		setRemoteConfigs();
 		remoteSelectionCombo
-				.addRemoteSelectionListener(new IRemoteSelectionListener() {
-					@Override
-					public void remoteSelected(RemoteConfig rc) {
-						remoteConfig = rc;
-						setRefAssist(rc);
-						checkPage();
-					}
-				});
+		.addRemoteSelectionListener((RemoteConfig rc) -> {
+			remoteConfig = rc;
+			setRefAssist(rc);
+			checkPage();
+		});
 
 		if (showNewRemoteButton) {
 			Button newRemoteButton = new Button(remoteGroup, SWT.PUSH);
@@ -333,14 +328,10 @@ public class PushBranchPage extends WizardPage {
 					GridDataFactory.fillDefaults().grab(true, false).span(3, 1)
 							.indent(SWT.NONE, 20).create());
 			upstreamConfigComponent
-					.addUpstreamConfigSelectionListener(new UpstreamConfigSelectionListener() {
-						@Override
-						public void upstreamConfigSelected(
-										BranchRebaseMode newUpstreamConfig) {
-							upstreamConfig = newUpstreamConfig;
-							checkPage();
-						}
-					});
+			.addUpstreamConfigSelectionListener((BranchRebaseMode newUpstreamConfig) -> {
+				upstreamConfig = newUpstreamConfig;
+				checkPage();
+			});
 			setDefaultUpstreamConfig();
 		}
 

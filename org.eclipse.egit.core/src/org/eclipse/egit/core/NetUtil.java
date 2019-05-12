@@ -20,7 +20,6 @@ import java.security.cert.X509Certificate;
 import javax.net.ssl.HostnameVerifier;
 import javax.net.ssl.HttpsURLConnection;
 import javax.net.ssl.SSLContext;
-import javax.net.ssl.SSLSession;
 import javax.net.ssl.TrustManager;
 import javax.net.ssl.X509TrustManager;
 
@@ -50,13 +49,8 @@ public class NetUtil {
 		}
 	} };
 
-	private static HostnameVerifier trustAllHostNames = new HostnameVerifier() {
-		@Override
-		public boolean verify(String hostname, SSLSession session) {
-			// always accept
-			return true;
-		}
-	};
+	private static HostnameVerifier trustAllHostNames = (hostname,
+			session) -> true; // always accept
 
 	/**
 	 * Configures a {@link HttpURLConnection} according to the value of the
