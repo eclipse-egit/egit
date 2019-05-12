@@ -117,11 +117,7 @@ public class HeaderText {
 				}
 			});
 			updateSizeAndLocations();
-		} catch (NoSuchFieldException e) {
-			form.setText(text);
-		} catch (IllegalArgumentException e) {
-			form.setText(text);
-		} catch (IllegalAccessException e) {
+		} catch (NoSuchFieldException | IllegalArgumentException | IllegalAccessException e) {
 			form.setText(text);
 		}
 	}

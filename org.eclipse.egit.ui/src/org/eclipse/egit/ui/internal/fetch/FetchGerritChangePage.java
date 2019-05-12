@@ -1259,10 +1259,7 @@ public class FetchGerritChangePage extends WizardPage {
 				}
 				Integer patchSetNumber = Integer.valueOf(m.group(3));
 				return new Change(refName, changeNumber, patchSetNumber);
-			} catch (NumberFormatException e) {
-				// if we can't parse this, just return null
-				return null;
-			} catch (IndexOutOfBoundsException e) {
+			} catch (NumberFormatException | IndexOutOfBoundsException e) {
 				// if we can't parse this, just return null
 				return null;
 			}

@@ -111,9 +111,7 @@ public class UntrackOperation implements IEGitOperation {
 				editor.commit();
 				progress.worked(1);
 			}
-		} catch (RuntimeException e) {
-			throw new CoreException(Activator.error(CoreText.UntrackOperation_failed, e));
-		} catch (IOException e) {
+		} catch (RuntimeException | IOException e) {
 			throw new CoreException(Activator.error(CoreText.UntrackOperation_failed, e));
 		} finally {
 			for (DirCacheEditor editor : edits.values()) {

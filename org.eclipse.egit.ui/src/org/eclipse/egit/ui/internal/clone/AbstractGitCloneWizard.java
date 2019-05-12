@@ -416,9 +416,7 @@ public abstract class AbstractGitCloneWizard extends Wizard {
 				try {
 					ProjectUtils.createProjects(records, sets,
 							progress.newChild(1));
-				} catch (InvocationTargetException e) {
-					Activator.logError(e.getLocalizedMessage(), e);
-				} catch (InterruptedException e) {
+				} catch (InvocationTargetException | InterruptedException e) {
 					Activator.logError(e.getLocalizedMessage(), e);
 				}
 				return Status.OK_STATUS;
