@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7a63e6f3_76eb6c3c",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/revision/FileRevisionEditorInput.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 345,
+      "author": {
+        "id": 440
+      },
+      "writtenOn": "2019-05-12T13:51:44Z",
+      "side": 1,
+      "message": "I think we also need to change this code. If _one_ temp file could not be deleted for some obscure reason in the past, then deleting the parent temp folder will probably fail for every file in the future (due to the read-only flag at the end).\nI\u0027d shorten this to just\n\ntry {\nfile.setWritable(true)\nfile.delete()\nfile.getParent().delete()\n}\ncatch(...) {...}",
+      "range": {
+        "startLine": 340,
+        "startChar": 0,
+        "endLine": 345,
+        "endChar": 4
+      },
+      "revId": "2f3404915066454614939def28005effe9249a5e",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
