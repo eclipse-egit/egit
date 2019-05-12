@@ -264,8 +264,7 @@ class ExistingOrNewPage extends WizardPage {
 			}
 		});
 		TableItem[] children = projectMoveViewer.getTable().getItems();
-		for (int i = 0; i < children.length; i++) {
-			TableItem item = children[i];
+		for (TableItem item : children) {
 			IProject data = (IProject) item.getData();
 			RepositoryFinder repositoryFinder = new RepositoryFinder(data);
 			repositoryFinder.setFindInChildren(false);

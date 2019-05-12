@@ -58,8 +58,7 @@ class SaveFilter implements ISaveableFilter {
 			return true;
 		}
 		// For backwards compatibility, we need to check the parts
-		for (int i = 0; i < containingParts.length; i++) {
-			IWorkbenchPart workbenchPart = containingParts[i];
+		for (IWorkbenchPart workbenchPart : containingParts) {
 			if (workbenchPart instanceof IEditorPart) {
 				IEditorPart editorPart = (IEditorPart) workbenchPart;
 				if (isEditingDescendantOf(editorPart)) {
@@ -84,11 +83,9 @@ class SaveFilter implements ISaveableFilter {
 			try {
 				ResourceTraversal[] traversals = mapping.getTraversals(
 						ResourceMappingContext.LOCAL_CONTEXT, null);
-				for (int i = 0; i < traversals.length; i++) {
-					ResourceTraversal traversal = traversals[i];
+				for (ResourceTraversal traversal : traversals) {
 					IResource[] resources = traversal.getResources();
-					for (int j = 0; j < resources.length; j++) {
-						IResource resource = resources[j];
+					for (IResource resource : resources) {
 						if (isDescendantOfRoots(resource)) {
 							return true;
 						}
@@ -96,10 +93,10 @@ class SaveFilter implements ISaveableFilter {
 				}
 			} catch (CoreException e) {
 				Activator
-						.logError(
-								NLS
-										.bind(
-												"An internal error occurred while determining the resources for {0}", saveable.getName()), e); //$NON-NLS-1$
+				.logError(
+						NLS
+						.bind(
+								"An internal error occurred while determining the resources for {0}", saveable.getName()), e); //$NON-NLS-1$
 			}
 		} else {
 			// If there is no mapping, try to adapt to a resource or file directly
@@ -120,8 +117,7 @@ class SaveFilter implements ISaveableFilter {
 	 *         one of the given roots
 	 */
 	private boolean isDescendantOfRoots(IResource resource) {
-		for (int l = 0; l < roots.length; l++) {
-			IResource root = roots[l];
+		for (IResource root : roots) {
 			if (root.getFullPath().isPrefixOf(resource.getFullPath())) {
 				return true;
 			}

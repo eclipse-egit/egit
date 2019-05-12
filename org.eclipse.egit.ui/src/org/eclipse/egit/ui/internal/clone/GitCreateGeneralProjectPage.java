@@ -232,8 +232,8 @@ public class GitCreateGeneralProjectPage extends WizardPage {
 			return false;
 		}
 		IProject[] workspaceProjects = getProjectsInWorkspace();
-		for (int i = 0; i < workspaceProjects.length; i++) {
-			if (projectName.equals(workspaceProjects[i].getName())) {
+		for (IProject workspaceProject : workspaceProjects) {
+			if (projectName.equals(workspaceProject.getName())) {
 				return true;
 			}
 		}

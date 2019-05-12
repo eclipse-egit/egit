@@ -517,9 +517,9 @@ public class GitProjectsImportPage extends WizardPage {
 	 */
 	public ProjectRecord[] getValidProjects() {
 		List<ProjectRecord> validProjects = new ArrayList<>();
-		for (int i = 0; i < selectedProjects.length; i++) {
-			if (!isProjectInWorkspace(selectedProjects[i].getProjectName())) {
-				validProjects.add(selectedProjects[i]);
+		for (ProjectRecord selectedProject : selectedProjects) {
+			if (!isProjectInWorkspace(selectedProject.getProjectName())) {
+				validProjects.add(selectedProject);
 			}
 		}
 		return validProjects.toArray(new ProjectRecord[0]);
@@ -538,8 +538,8 @@ public class GitProjectsImportPage extends WizardPage {
 			return false;
 		}
 		IProject[] workspaceProjects = getProjectsInWorkspace();
-		for (int i = 0; i < workspaceProjects.length; i++) {
-			if (projectName.equals(workspaceProjects[i].getName())) {
+		for (IProject workspaceProject : workspaceProjects) {
+			if (projectName.equals(workspaceProject.getName())) {
 				return true;
 			}
 		}

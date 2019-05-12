@@ -968,8 +968,9 @@ public class ConfigurationEditorComponent {
 			if (boldFont != null)
 				return boldFont;
 			FontData[] data = defaultFont.getFontData();
-			for (int i = 0; i < data.length; i++)
-				data[i].setStyle(data[i].getStyle() | SWT.BOLD);
+			for (FontData d : data) {
+				d.setStyle(d.getStyle() | SWT.BOLD);
+			}
 
 			boldFont = new Font(PlatformUI.getWorkbench().getDisplay(), data);
 			return boldFont;
