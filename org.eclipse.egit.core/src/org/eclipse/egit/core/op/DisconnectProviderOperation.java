@@ -74,17 +74,16 @@ public class DisconnectProviderOperation implements IEGitOperation {
 		final IResource[] c;
 		c = p.members(IContainer.INCLUDE_TEAM_PRIVATE_MEMBERS);
 		if (c != null) {
-			for (int k = 0; k < c.length; k++) {
-				if (c[k] instanceof IContainer) {
-					unmarkTeamPrivate((IContainer) c[k]);
+			for (IResource container : c) {
+				if (container instanceof IContainer) {
+					unmarkTeamPrivate((IContainer) container);
 				}
-				if (c[k].isTeamPrivateMember()) {
+				if (container.isTeamPrivateMember()) {
 					// TODO is this the right location?
-					if (GitTraceLocation.CORE.isActive())
-						GitTraceLocation.getTrace().trace(
-								GitTraceLocation.CORE.getLocation(),
-								"notTeamPrivate " + c[k]); //$NON-NLS-1$
-					c[k].setTeamPrivateMember(false);
+					if (GitTraceLocation.CORE.isActive()) {
+						GitTraceLocation.getTrace().trace(GitTraceLocation.CORE.getLocation(), "notTeamPrivate " + container); //$NON-NLS-1$
+					}
+					container.setTeamPrivateMember(false);
 				}
 			}
 		}

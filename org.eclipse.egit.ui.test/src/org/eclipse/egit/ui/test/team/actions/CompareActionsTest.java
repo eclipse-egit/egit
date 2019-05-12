@@ -337,8 +337,7 @@ public class CompareActionsTest extends LocalRepositoryTestCase {
 	private void closeFirstEmptySynchronizeDialog() {
 		// Do not use bot.shell(String) : we don't want to fail if not present.
 		SWTBotShell[] shells = bot.shells();
-		for (int i = 0; i < shells.length; i++) {
-			SWTBotShell shell = shells[i];
+		for (SWTBotShell shell : shells) {
 			if ("Synchronize Complete - Git".equals(shell.getText()))
 				shell.close();
 		}

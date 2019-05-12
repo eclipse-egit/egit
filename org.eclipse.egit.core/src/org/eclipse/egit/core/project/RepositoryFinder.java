@@ -156,8 +156,7 @@ public class RepositoryFinder {
 			final IResource[] children = c.members();
 			if (children != null && children.length > 0) {
 				progress.setWorkRemaining(children.length);
-				for (int k = 0; k < children.length; k++) {
-					final IResource o = children[k];
+				for (IResource o : children) {
 					if (o instanceof IContainer
 							&& !o.getName().equals(Constants.DOT_GIT)) {
 						find(progress.newChild(1), (IContainer) o,
