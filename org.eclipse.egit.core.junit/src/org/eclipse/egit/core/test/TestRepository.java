@@ -437,14 +437,9 @@ public class TestRepository {
 	 */
 	public void appendFileContent(File file, String content, boolean append)
 			throws IOException {
-		Writer fw = null;
-		try {
-			fw = new OutputStreamWriter(new FileOutputStream(file, append),
-					"UTF-8");
+		try (Writer fw = new OutputStreamWriter(new FileOutputStream(file, append),
+				"UTF-8")) {
 			fw.append(content);
-		} finally {
-			if (fw != null)
-				fw.close();
 		}
 	}
 
