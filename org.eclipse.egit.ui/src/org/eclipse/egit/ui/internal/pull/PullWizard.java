@@ -75,10 +75,7 @@ public class PullWizard extends Wizard {
 			}
 			startPull();
 			return true;
-		} catch (IOException e) {
-			Activator.logError(e.getMessage(), e);
-			return false;
-		} catch (URISyntaxException e) {
+		} catch (IOException | URISyntaxException e) {
 			Activator.logError(e.getMessage(), e);
 			return false;
 		}
