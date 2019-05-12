@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9d54cfd2_0a2c9ce3",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/components/RefSpecPanel.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 1356,
+      "author": {
+        "id": 440
+      },
+      "writtenOn": "2019-05-12T13:56:00Z",
+      "side": 1,
+      "message": "wrong indentation (must be tab, not space)",
+      "range": {
+        "startLine": 875,
+        "startChar": 0,
+        "endLine": 1356,
+        "endChar": 34
+      },
+      "revId": "f167b2b83aed90a8479308fb7dd24af35a4f3086",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
