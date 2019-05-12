@@ -323,8 +323,8 @@ public class CompareUtils {
 			CompareEditorInput input, IWorkbenchPage page) {
 		IEditorReference[] editorRefs = page.getEditorReferences();
 		// first loop looking for an editor with the same input
-		for (int i = 0; i < editorRefs.length; i++) {
-			IEditorPart part = editorRefs[i].getEditor(false);
+		for (IEditorReference editorRef : editorRefs) {
+			IEditorPart part = editorRef.getEditor(false);
 			if (part != null
 					&& (part.getEditorInput() instanceof GitCompareFileRevisionEditorInput || part.getEditorInput() instanceof GitCompareEditorInput)
 					&& part instanceof IReusableEditor
@@ -335,8 +335,8 @@ public class CompareUtils {
 		// if none found and "Reuse open compare editors" preference is on use
 		// a non-dirty editor
 		if (isReuseOpenEditor()) {
-			for (int i = 0; i < editorRefs.length; i++) {
-				IEditorPart part = editorRefs[i].getEditor(false);
+			for (IEditorReference editorRef : editorRefs) {
+				IEditorPart part = editorRef.getEditor(false);
 				if (part != null
 						&& (part.getEditorInput() instanceof SaveableCompareEditorInput)
 						&& part instanceof IReusableEditor && !part.isDirty()) {

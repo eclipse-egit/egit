@@ -192,9 +192,9 @@ public class GitScmUrlImportWizardPage extends WizardPage implements
 
 		if (head && descriptions != null)
 			// modify tags on bundle import descriptions
-			for (int i = 0; i < descriptions.length; i++) {
-				URI scmUri = descriptions[i].getUri();
-				descriptions[i].setUrl(removeTag(scmUri));
+			for (ScmUrlImportDescription description : descriptions) {
+				URI scmUri = description.getUri();
+				description.setUrl(removeTag(scmUri));
 			}
 
 		return true;
@@ -248,14 +248,16 @@ public class GitScmUrlImportWizardPage extends WizardPage implements
 		if (j != -1) {
 			sb.append(ssp.substring(0, j));
 			String[] params = ssp.substring(j).split(";"); //$NON-NLS-1$
-			for (int k = 0; k < params.length; k++)
+			for (String param : params) {
 				// PDE way of providing tags
-				if (params[k].startsWith("tag=")) { //$NON-NLS-1$
+				if (param.startsWith("tag=")) {//$NON-NLS-1$
 					// ignore
-				} else if (params[k].startsWith("version=")) { //$NON-NLS-1$
+				} else if (param.startsWith("version=")) {//$NON-NLS-1$
 					// ignore
-				} else if (params[k] != null && !params[k].isEmpty())
-					sb.append(";").append(params[k]); //$NON-NLS-1$
+				} else if (!param.isEmpty()) {
+					sb.append(";").append(param); //$NON-NLS-1$
+				}
+			}
 		} else
 			sb.append(ssp);
 		return sb.toString();

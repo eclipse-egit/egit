@@ -60,9 +60,9 @@ public class RepositoryStatisticsPage extends PropertyPage {
 		String[] titles = { UIText.RepositoryStatistics_Description,
 				UIText.RepositoryStatistics_LooseObjects,
 				UIText.RepositoryStatistics_PackedObjects };
-		for (int i = 0; i < titles.length; i++) {
+		for (String title : titles) {
 			TableColumn column = new TableColumn(table, SWT.NONE);
-			column.setText(titles[i]);
+			column.setText(title);
 		}
 
 		Repository repo = AdapterUtils.adapt(getElement(), Repository.class);

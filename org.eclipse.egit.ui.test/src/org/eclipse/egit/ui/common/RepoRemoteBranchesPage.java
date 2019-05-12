@@ -54,8 +54,8 @@ public class RepoRemoteBranchesPage {
 		bot.waitUntil(widgetIsEnabled(tree), 60000);
 
 		SWTBotTreeItem[] items = tree.getAllItems();
-		for (int i = 0; i < items.length; i++) {
-			items[i].uncheck();
+		for (SWTBotTreeItem item : items) {
+			item.uncheck();
 		}
 	}
 
