@@ -11,6 +11,7 @@
 package org.eclipse.egit.ui.internal.dialogs;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.Iterator;
@@ -304,9 +305,7 @@ public class HyperlinkTokenScanner implements ITokenScanner {
 		IHyperlinkDetector[] configuredDetectors = configuration
 				.getHyperlinkDetectors(viewer);
 		if (configuredDetectors != null && configuredDetectors.length > 0) {
-			for (IHyperlinkDetector detector : configuredDetectors) {
-				allDetectors.add(detector);
-			}
+			allDetectors.addAll(Arrays.asList(configuredDetectors));
 			if (preferenceStore.getBoolean(URL_HYPERLINK_DETECTOR_KEY)
 					|| !preferenceStore.getBoolean(
 							AbstractTextEditor.PREFERENCE_HYPERLINKS_ENABLED)) {
