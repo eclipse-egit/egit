@@ -741,12 +741,9 @@ class CommitGraphTable {
 
 		private void writeToFile(final String fileName, String content)
 				throws IOException {
-			Writer output = new BufferedWriter(new OutputStreamWriter(
-					new FileOutputStream(fileName), UTF_8));
-			try {
+			try (Writer output = new BufferedWriter(new OutputStreamWriter(
+					new FileOutputStream(fileName), UTF_8))) {
 				output.write(content);
-			} finally {
-				output.close();
 			}
 		}
 	}

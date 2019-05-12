@@ -256,11 +256,10 @@ public class SynchronizeViewGitChangeSetModelTest extends
 		String name = "non-workspace.txt";
 		File root = new File(getTestDirectory(), REPO1);
 		File nonWorkspace = new File(root, name);
-		BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(
-				Files.newOutputStream(nonWorkspace.toPath()), "UTF-8"));
-
-		writer.append("file content");
-		writer.close();
+		try (BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(
+				Files.newOutputStream(nonWorkspace.toPath()), "UTF-8"))) {
+			writer.append("file content");
+		}
 		// TODO Synchronize currently shows "No changes" when the only thing that has
 		// changed is a non-workspace file, so add another change so that this
 		// does not happen. When the bug is fixed, this should be removed.
@@ -282,10 +281,10 @@ public class SynchronizeViewGitChangeSetModelTest extends
 		String name = "non-workspace.txt";
 		File root = new File(getTestDirectory(), REPO1);
 		File nonWorkspace = new File(root, name);
-		BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(
-				Files.newOutputStream(nonWorkspace.toPath()), "UTF-8"));
-		writer.append(content);
-		writer.close();
+		try (BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(
+				Files.newOutputStream(nonWorkspace.toPath()), "UTF-8"))) {
+			writer.append(content);
+		}
 		// TODO Synchronize currently shows "No changes" when the only thing that has
 		// changed is a non-workspace file, so add another change so that this
 		// does not happen. When the bug is fixed, this should be removed.
