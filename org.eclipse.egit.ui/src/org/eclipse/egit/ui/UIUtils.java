@@ -14,6 +14,7 @@ package org.eclipse.egit.ui;
 
 import java.lang.ref.SoftReference;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
@@ -476,8 +477,7 @@ public class UIUtils {
 					List<String> values = new ArrayList<>(
 							existingValues.length + 1);
 
-					for (String existingValue : existingValues)
-						values.add(existingValue);
+					values.addAll(Arrays.asList(existingValues));
 					// if it is already the first value, we don't need to do
 					// anything
 					if (values.indexOf(value) == 0)
