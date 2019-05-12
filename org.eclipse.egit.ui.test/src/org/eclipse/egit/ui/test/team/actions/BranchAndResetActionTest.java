@@ -202,8 +202,7 @@ public class BranchAndResetActionTest extends LocalRepositoryTestCase {
 				"Add to stable");
 		op.execute(null);
 
-		InputStream is = toBeDeleted.getContents();
-		try {
+		try (InputStream is = toBeDeleted.getContents()) {
 			checkout(new String[] { LOCAL_BRANCHES, "master" });
 			final SWTBotShell showUndeleted = bot
 					.shell(UIText.NonDeletedFilesDialog_NonDeletedFilesTitle);
@@ -282,8 +281,6 @@ public class BranchAndResetActionTest extends LocalRepositoryTestCase {
 					UIText.NonDeletedFilesDialog_RetryDeleteButton).click();
 			showUndeleted.bot().waitUntil(treeEmpty, 1000, 100);
 			showUndeleted.close();
-		} finally {
-			is.close();
 		}
 	}
 
