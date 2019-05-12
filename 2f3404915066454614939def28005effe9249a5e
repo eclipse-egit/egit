@@ -22,6 +22,30 @@
       "revId": "2f3404915066454614939def28005effe9249a5e",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "40006968_df971591",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/revision/FileRevisionEditorInput.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 345,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2019-05-12T14:50:57Z",
+      "side": 1,
+      "message": "Each file is in its own folder.",
+      "parentUuid": "7a63e6f3_76eb6c3c",
+      "range": {
+        "startLine": 340,
+        "startChar": 0,
+        "endLine": 345,
+        "endChar": 4
+      },
+      "revId": "2f3404915066454614939def28005effe9249a5e",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
     }
   ]
 }
