@@ -1,0 +1,142 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6a6b4876_8e7404ba",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/op/TagOperation.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 440
+      },
+      "writtenOn": "2019-05-15T09:21:29Z",
+      "side": 1,
+      "message": "while that pattern can be found quite often in the egit sources, it\u0027s code duplication for me. I\u0027m a big fan of just one implemented constructor and constructor chaining. Call the other constructor from this one please.",
+      "range": {
+        "startLine": 69,
+        "startChar": 0,
+        "endLine": 72,
+        "endChar": 24
+      },
+      "revId": "12bc865fda59ed9f8f197941128e7c4d2a44dc3f",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "22367dac_9a432c9e",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/op/TagOperation.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 440
+      },
+      "writtenOn": "2019-05-15T09:21:29Z",
+      "side": 1,
+      "message": "please invert the conditional operator to get rid of the negation",
+      "range": {
+        "startLine": 80,
+        "startChar": 19,
+        "endLine": 80,
+        "endChar": 69
+      },
+      "revId": "12bc865fda59ed9f8f197941128e7c4d2a44dc3f",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "4ca2a926_97c78178",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/dialogs/CreateTagDialog.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 262,
+      "author": {
+        "id": 440
+      },
+      "writtenOn": "2019-05-15T09:21:29Z",
+      "side": 1,
+      "message": "please use code tags and make \"true\" lowercase",
+      "range": {
+        "startLine": 262,
+        "startChar": 12,
+        "endLine": 262,
+        "endChar": 36
+      },
+      "revId": "12bc865fda59ed9f8f197941128e7c4d2a44dc3f",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "e0f191bf_290ce3c0",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/dialogs/CreateTagDialog.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 517,
+      "author": {
+        "id": 440
+      },
+      "writtenOn": "2019-05-15T09:21:29Z",
+      "side": 1,
+      "message": "in new code we are trying to use lambdas. I\u0027m aware that is not consistent, however.",
+      "range": {
+        "startLine": 512,
+        "startChar": 41,
+        "endLine": 517,
+        "endChar": 3
+      },
+      "revId": "12bc865fda59ed9f8f197941128e7c4d2a44dc3f",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "cfd3e354_9305b9e7",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/dialogs/CreateTagDialog.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 679,
+      "author": {
+        "id": 440
+      },
+      "writtenOn": "2019-05-15T09:21:29Z",
+      "side": 1,
+      "message": "while this has been an if-else previously, can we please convert this to simple statements\n\neditable \u003d ...\nsetEditable(...)",
+      "range": {
+        "startLine": 678,
+        "startChar": 0,
+        "endLine": 679,
+        "endChar": 23
+      },
+      "revId": "12bc865fda59ed9f8f197941128e7c4d2a44dc3f",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "df60ab2a_0137f860",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/uitext.properties",
+        "patchSetId": 2
+      },
+      "lineNbr": 1511,
+      "author": {
+        "id": 440
+      },
+      "writtenOn": "2019-05-15T09:21:29Z",
+      "side": 1,
+      "message": "remove",
+      "range": {
+        "startLine": 1511,
+        "startChar": 44,
+        "endLine": 1511,
+        "endChar": 47
+      },
+      "revId": "12bc865fda59ed9f8f197941128e7c4d2a44dc3f",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
