@@ -271,8 +271,7 @@ public class PushBranchPage extends WizardPage {
 		GridDataFactory.fillDefaults().grab(true, false).span(remoteSelectionSpan, 1)
 				.applyTo(remoteSelectionCombo);
 		setRemoteConfigs();
-		remoteSelectionCombo
-		.addRemoteSelectionListener((RemoteConfig rc) -> {
+		remoteSelectionCombo.addRemoteSelectionListener(rc -> {
 			remoteConfig = rc;
 			setRefAssist(rc);
 			checkPage();
@@ -327,9 +326,8 @@ public class PushBranchPage extends WizardPage {
 			upstreamConfigComponent.getContainer().setLayoutData(
 					GridDataFactory.fillDefaults().grab(true, false).span(3, 1)
 							.indent(SWT.NONE, 20).create());
-			upstreamConfigComponent
-			.addUpstreamConfigSelectionListener((BranchRebaseMode newUpstreamConfig) -> {
-				upstreamConfig = newUpstreamConfig;
+			upstreamConfigComponent.addUpstreamConfigSelectionListener(cfg -> {
+				upstreamConfig = cfg;
 				checkPage();
 			});
 			setDefaultUpstreamConfig();

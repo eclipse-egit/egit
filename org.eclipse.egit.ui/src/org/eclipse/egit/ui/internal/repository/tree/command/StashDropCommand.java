@@ -101,12 +101,8 @@ public class StashDropCommand
 				// Sort by highest to lowest stash commit index.
 				// This avoids shifting problems that cause the indices of the
 				// selected nodes not match the indices in the repository
-				Collections
-						.sort(nodes,
-								(StashedCommitNode n1,
-										StashedCommitNode n2) -> n1
-												.getIndex() < n2.getIndex() ? 1
-														: -1);
+				Collections.sort(nodes,
+						(a, b) -> a.getIndex() < b.getIndex() ? 1 : -1);
 
 				for (StashedCommitNode node : nodes) {
 					final int index = node.getIndex();
@@ -134,41 +130,29 @@ public class StashDropCommand
 			}
 
 			private void tryToCloseEditor(final StashedCommitNode node) {
-				PlatformUI.getWorkbench().getDisplay()
-						.asyncExec(new Runnable() {
-
-							@Override
-							public void run() {
-								IWorkbenchPage activePage = PlatformUI
-										.getWorkbench()
-										.getActiveWorkbenchWindow()
-										.getActivePage();
-								IEditorReference[] editorReferences = activePage
-										.getEditorReferences();
-								for (IEditorReference editorReference : editorReferences) {
-									IEditorInput editorInput = null;
-									try {
-										editorInput = editorReference
-												.getEditorInput();
-									} catch (PartInitException e) {
-										Activator.handleError(e.getMessage(), e,
-												true);
-									}
-									if (editorInput instanceof CommitEditorInput) {
-										CommitEditorInput comEditorInput = (CommitEditorInput) editorInput;
-										if (comEditorInput.getCommit()
-												.getRevCommit()
-												.equals(node.getObject())) {
-											activePage.closeEditor(
-													editorReference.getEditor(
-															false),
-													false);
-										}
-									}
-								}
+				PlatformUI.getWorkbench().getDisplay().asyncExec(() -> {
+					IWorkbenchPage activePage = PlatformUI.getWorkbench()
+							.getActiveWorkbenchWindow().getActivePage();
+					IEditorReference[] editorReferences = activePage
+							.getEditorReferences();
+					for (IEditorReference editorReference : editorReferences) {
+						IEditorInput editorInput = null;
+						try {
+							editorInput = editorReference.getEditorInput();
+						} catch (PartInitException e) {
+							Activator.handleError(e.getMessage(), e, true);
+						}
+						if (editorInput instanceof CommitEditorInput) {
+							CommitEditorInput comEditorInput = (CommitEditorInput) editorInput;
+							if (comEditorInput.getCommit().getRevCommit()
+									.equals(node.getObject())) {
+								activePage.closeEditor(
+										editorReference.getEditor(false),
+										false);
 							}
-						});
-
+						}
+					}
+				});
 			}
 
 			@Override

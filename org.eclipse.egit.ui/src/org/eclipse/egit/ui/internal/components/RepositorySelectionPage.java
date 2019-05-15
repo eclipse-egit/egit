@@ -434,7 +434,7 @@ public class RepositorySelectionPage extends WizardPage implements IRepositorySe
 		SelectionType selectionType = sourceSelection ? SelectionType.FETCH : SelectionType.PUSH;
 		remoteCombo = new RemoteSelectionCombo(remotePanel, SWT.NULL, selectionType);
 		remoteConfig = remoteCombo.setItems(configuredRemotes);
-		remoteCombo.addRemoteSelectionListener((RemoteConfig rc) -> {
+		remoteCombo.addRemoteSelectionListener(rc -> {
 			remoteConfig = rc;
 			checkPage();
 		});
