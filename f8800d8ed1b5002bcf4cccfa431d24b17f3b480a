@@ -34,6 +34,24 @@
       "revId": "f8800d8ed1b5002bcf4cccfa431d24b17f3b480a",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5deae512_b346b907",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/internal/Utils.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 126,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2019-05-15T11:49:59Z",
+      "side": 0,
+      "message": "But if we replace calls to Util.getAdapter(object, type) by\nobject.getAdapter(type), then we may not get the sanity check in Adapters.adapt(). (Except for PlatformObjects.) Or am I misunderstanding something?\n\nI have no strong opinion on it; for me, it\u0027s also OK if we crash hard with spurious CCEs if there are such buggy adaptables. My Eclipse doesn\u0027t have them, so I won\u0027t be affected.",
+      "parentUuid": "574b3f2d_beed33c7",
+      "revId": "f8800d8ed1b5002bcf4cccfa431d24b17f3b480a",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
     }
   ]
 }
