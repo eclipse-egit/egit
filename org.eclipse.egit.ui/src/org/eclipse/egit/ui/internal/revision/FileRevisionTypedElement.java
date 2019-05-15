@@ -18,10 +18,10 @@ import java.util.Date;
 
 import org.eclipse.compare.ITypedElement;
 import org.eclipse.core.resources.IStorage;
+import org.eclipse.core.runtime.Adapters;
 import org.eclipse.core.runtime.Assert;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IProgressMonitor;
-import org.eclipse.egit.core.AdapterUtils;
 import org.eclipse.egit.ui.internal.PreferenceBasedDateFormatter;
 import org.eclipse.jgit.lib.Repository;
 import org.eclipse.team.core.history.IFileRevision;
@@ -63,7 +63,7 @@ public class FileRevisionTypedElement extends StorageTypedElement {
 			return adapter.cast(result);
 		}
 		if (adapter == Repository.class) {
-			return AdapterUtils.adapt(fileRevision, adapter);
+			return Adapters.adapt(fileRevision, adapter);
 		}
 		return null;
 	}

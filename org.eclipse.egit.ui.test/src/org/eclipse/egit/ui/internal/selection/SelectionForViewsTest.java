@@ -20,7 +20,7 @@ import static org.junit.Assert.assertTrue;
 
 import java.io.File;
 
-import org.eclipse.egit.core.AdapterUtils;
+import org.eclipse.core.runtime.Adapters;
 import org.eclipse.egit.core.RepositoryUtil;
 import org.eclipse.egit.core.op.CloneOperation;
 import org.eclipse.egit.ui.Activator;
@@ -152,7 +152,7 @@ public class SelectionForViewsTest extends GitRepositoriesViewTestBase {
 		Object firstElement = ((IStructuredSelection) selection)
 				.getFirstElement();
 		assertNotNull("Null in selection " + viewId, firstElement);
-		Repository repo = AdapterUtils.adapt(firstElement, Repository.class);
+		Repository repo = Adapters.adapt(firstElement, Repository.class);
 		assertNotNull("Expected a repository " + viewId + ", but "
 				+ firstElement.getClass().getName()
 				+ " doesn't adapt to Repository", repo);

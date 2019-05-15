@@ -14,6 +14,7 @@ import static org.eclipse.egit.gitflow.ui.Activator.error;
 
 import java.io.IOException;
 
+import org.eclipse.core.runtime.Adapters;
 import org.eclipse.egit.core.internal.Utils;
 import org.eclipse.egit.gitflow.Activator;
 import org.eclipse.egit.gitflow.GitFlowRepository;
@@ -96,7 +97,7 @@ public class DynamicHistoryMenu extends ContributionItem {
 	private GitFlowRepository getRepository() {
 		IWorkbenchPart activePart = PlatformUI.getWorkbench()
 				.getActiveWorkbenchWindow().getActivePage().getActivePart();
-		Repository repository = Utils.getAdapter(activePart, Repository.class);
+		Repository repository = Adapters.adapt(activePart, Repository.class);
 		if (repository == null) {
 			return null;
 		}

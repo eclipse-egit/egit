@@ -27,6 +27,7 @@ import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IFolder;
 import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.IResource;
+import org.eclipse.core.runtime.Adapters;
 import org.eclipse.core.runtime.IAdaptable;
 import org.eclipse.egit.core.AdapterUtils;
 import org.eclipse.egit.core.project.RepositoryMapping;
@@ -194,13 +195,12 @@ public class SelectionPropertyTester extends AbstractPropertyTester {
 			boolean single) {
 		Repository repo = null;
 		for (Object element : collection) {
-			IContainer container = AdapterUtils.adapt(element,
-					IProject.class);
+			IContainer container = Adapters.adapt(element, IProject.class);
 			RepositoryMapping mapping = null;
 			if (container != null) {
 				mapping = RepositoryMapping.getMapping(container);
 			} else {
-				container = AdapterUtils.adapt(element, IContainer.class);
+				container = Adapters.adapt(element, IContainer.class);
 				if (container != null) {
 					mapping = RepositoryMapping.getMapping(container);
 				}
@@ -214,7 +214,7 @@ public class SelectionPropertyTester extends AbstractPropertyTester {
 					repo = r;
 				}
 			} else {
-				IWorkingSet workingSet = AdapterUtils.adapt(element,
+				IWorkingSet workingSet = Adapters.adapt(element,
 						IWorkingSet.class);
 				if (workingSet != null) {
 					for (IAdaptable adaptable : workingSet.getElements()) {
@@ -270,7 +270,7 @@ public class SelectionPropertyTester extends AbstractPropertyTester {
 	}
 
 	private static Repository getRepositoryOfProject(Object object) {
-		IProject project = AdapterUtils.adapt(object, IProject.class);
+		IProject project = Adapters.adapt(object, IProject.class);
 		if (project != null)
 			return getRepositoryOfMapping(project);
 		return null;

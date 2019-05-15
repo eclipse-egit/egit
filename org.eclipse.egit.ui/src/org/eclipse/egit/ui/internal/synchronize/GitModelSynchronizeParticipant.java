@@ -31,6 +31,7 @@ import org.eclipse.core.resources.IResource;
 import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.resources.mapping.ModelProvider;
 import org.eclipse.core.resources.mapping.ResourceMapping;
+import org.eclipse.core.runtime.Adapters;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.NullProgressMonitor;
@@ -38,7 +39,6 @@ import org.eclipse.core.runtime.Path;
 import org.eclipse.core.runtime.jobs.IJobChangeEvent;
 import org.eclipse.core.runtime.jobs.Job;
 import org.eclipse.core.runtime.jobs.JobChangeAdapter;
-import org.eclipse.egit.core.AdapterUtils;
 import org.eclipse.egit.core.internal.storage.WorkspaceFileRevision;
 import org.eclipse.egit.core.internal.util.ResourceUtil;
 import org.eclipse.egit.core.project.GitProjectData;
@@ -221,7 +221,7 @@ public class GitModelSynchronizeParticipant extends ModelSynchronizeParticipant 
 
 		// in Java Workspace model Java source files are passed as type
 		// CompilationUnit which can be adapted to IResource
-		IResource res = AdapterUtils.adapt(object, IResource.class);
+		IResource res = Adapters.adapt(object, IResource.class);
 		if (res != null && res.getType() == IResource.FILE)
 			return true;
 

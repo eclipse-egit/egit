@@ -16,7 +16,7 @@ import java.util.Collection;
 import java.util.List;
 
 import org.eclipse.core.expressions.PropertyTester;
-import org.eclipse.egit.core.AdapterUtils;
+import org.eclipse.core.runtime.Adapters;
 import org.eclipse.egit.core.internal.IRepositoryCommit;
 import org.eclipse.egit.ui.internal.commit.RepositoryCommit;
 import org.eclipse.jgit.lib.Constants;
@@ -71,7 +71,7 @@ public class GitPropertyTester extends AbstractPropertyTester {
 	public boolean test(Object receiver, String property, Object[] args,
 			Object expectedValue) {
 		if ("parentCount".equals(property)) { //$NON-NLS-1$
-			RevCommit commit = AdapterUtils.adapt(receiver, RevCommit.class);
+			RevCommit commit = Adapters.adapt(receiver, RevCommit.class);
 			if (commit == null) {
 				return false;
 			}
@@ -83,41 +83,38 @@ public class GitPropertyTester extends AbstractPropertyTester {
 						commit.getParentCount() > 0);
 			}
 		} else if ("isBare".equals(property)) { //$NON-NLS-1$
-			Repository repository = AdapterUtils.adapt(receiver,
-					Repository.class);
+			Repository repository = Adapters.adapt(receiver, Repository.class);
 			if (repository != null) {
 				return computeResult(expectedValue, repository.isBare());
 			}
 		} else if ("isSafe".equals(property)) { //$NON-NLS-1$
-			Repository repository = AdapterUtils.adapt(receiver,
-					Repository.class);
+			Repository repository = Adapters.adapt(receiver, Repository.class);
 			if (repository != null) {
 				return computeResult(expectedValue, repository
 						.getRepositoryState().equals(RepositoryState.SAFE));
 			}
 		} else if ("canCommit".equals(property)) { //$NON-NLS-1$
-			Repository repository = AdapterUtils.adapt(receiver,
-					Repository.class);
+			Repository repository = Adapters.adapt(receiver, Repository.class);
 			if (repository != null) {
 				return computeResult(expectedValue,
 						repository.getRepositoryState().canCommit());
 			}
 		} else if ("hasMultipleRefs".equals(property)) { //$NON-NLS-1$
-			IRepositoryCommit commit = AdapterUtils.adapt(receiver,
+			IRepositoryCommit commit = Adapters.adapt(receiver,
 					IRepositoryCommit.class);
 			if (commit != null) {
 				return computeResult(expectedValue,
 						hasMultipleRefs(commit, toRefNames(args)));
 			}
 		} else if ("hasRef".equals(property)) { //$NON-NLS-1$
-			IRepositoryCommit commit = AdapterUtils.adapt(receiver,
+			IRepositoryCommit commit = Adapters.adapt(receiver,
 					IRepositoryCommit.class);
 			if (commit != null) {
 				return computeResult(expectedValue,
 						hasRef(commit, toRefNames(args)));
 			}
 		} else if ("isStash".equals(property)) { //$NON-NLS-1$
-			RepositoryCommit commit = AdapterUtils.adapt(receiver,
+			RepositoryCommit commit = Adapters.adapt(receiver,
 					RepositoryCommit.class);
 			return computeResult(expectedValue,
 					commit != null && commit.isStash());

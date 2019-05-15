@@ -27,13 +27,13 @@ import org.eclipse.core.resources.IResource;
 import org.eclipse.core.resources.IWorkspaceRoot;
 import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.resources.mapping.ResourceMapping;
+import org.eclipse.core.runtime.Adapters;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IAdapterFactory;
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.core.runtime.Path;
 import org.eclipse.egit.core.Activator;
-import org.eclipse.egit.core.AdapterUtils;
 import org.eclipse.egit.core.internal.util.ProjectUtil;
 import org.eclipse.egit.core.internal.util.ResourceUtil;
 import org.eclipse.egit.core.project.RepositoryMapping;
@@ -144,7 +144,7 @@ public class GitAdapterFactory implements IAdapterFactory {
 		}
 
 		if (adapterType == Repository.class) {
-			ResourceMapping m = AdapterUtils.adapt(adaptableObject,
+			ResourceMapping m = Adapters.adapt(adaptableObject,
 					ResourceMapping.class);
 			if (m != null) {
 				return adapterType.cast(SelectionUtils

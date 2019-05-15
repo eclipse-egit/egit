@@ -26,13 +26,12 @@ import org.eclipse.core.resources.mapping.ModelProvider;
 import org.eclipse.core.resources.mapping.ResourceMapping;
 import org.eclipse.core.resources.mapping.ResourceMappingContext;
 import org.eclipse.core.resources.mapping.ResourceTraversal;
+import org.eclipse.core.runtime.Adapters;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.core.runtime.Platform;
 import org.eclipse.core.runtime.content.IContentType;
 import org.eclipse.core.runtime.jobs.Job;
-import org.eclipse.egit.core.AdapterUtils;
-import org.eclipse.egit.core.internal.Utils;
 import org.eclipse.egit.core.op.MergeOperation;
 import org.eclipse.egit.core.synchronize.GitResourceVariantTreeSubscriber;
 import org.eclipse.egit.core.synchronize.GitSubscriberMergeContext;
@@ -111,7 +110,7 @@ public abstract class ModelTestCase extends GitTestCase {
 				.getModelProviderDescriptor(
 						SampleModelProvider.SAMPLE_PROVIDER_ID)
 				.getModelProvider();
-		return Utils.getAdapter(provider, IResourceMappingMerger.class);
+		return Adapters.adapt(provider, IResourceMappingMerger.class);
 	}
 
 	protected IMergeContext prepareContext(Repository repository,
@@ -123,7 +122,7 @@ public abstract class ModelTestCase extends GitTestCase {
 				gsds);
 		subscriber.init(new NullProgressMonitor());
 
-		ResourceMapping mapping = AdapterUtils.adapt(workspaceFile,
+		ResourceMapping mapping = Adapters.adapt(workspaceFile,
 				ResourceMapping.class);
 		SubscriberScopeManager manager = new SubscriberScopeManager(
 				subscriber.getName(), new ResourceMapping[] { mapping, },
@@ -139,16 +138,16 @@ public abstract class ModelTestCase extends GitTestCase {
 
 	protected IMergeContext prepareModelContext(Repository repository,
 			IFile workspaceFile, String srcRev, String dstRev) throws Exception {
-		Set<IResource> includedResources = new HashSet<IResource>(
+		Set<IResource> includedResources = new HashSet<>(
 				Arrays.asList(workspaceFile));
-		Set<IResource> newResources = new HashSet<IResource>(includedResources);
-		Set<ResourceMapping> allMappings = new HashSet<ResourceMapping>();
+		Set<IResource> newResources = new HashSet<>(includedResources);
+		Set<ResourceMapping> allMappings = new HashSet<>();
 		ResourceMappingContext mappingContext = ResourceMappingContext.LOCAL_CONTEXT;
 		ModelProvider provider = ModelProvider.getModelProviderDescriptor(
 				SampleModelProvider.SAMPLE_PROVIDER_ID).getModelProvider();
 		do {
 			Set<IResource> copy = newResources;
-			newResources = new HashSet<IResource>();
+			newResources = new HashSet<>();
 			for (IResource resource : copy) {
 				ResourceMapping[] mappings = provider.getMappings(resource,
 						mappingContext, new NullProgressMonitor());
@@ -183,7 +182,7 @@ public abstract class ModelTestCase extends GitTestCase {
 
 	private static Set<IResource> collectResources(ResourceMapping[] mappings,
 			ResourceMappingContext mappingContext) throws Exception {
-		final Set<IResource> resources = new HashSet<IResource>();
+		final Set<IResource> resources = new HashSet<>();
 		for (ResourceMapping mapping : mappings) {
 			ResourceTraversal[] traversals = mapping.getTraversals(
 					mappingContext, new NullProgressMonitor());

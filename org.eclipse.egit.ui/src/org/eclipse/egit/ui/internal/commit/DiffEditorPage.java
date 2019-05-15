@@ -26,13 +26,13 @@ import java.util.Map;
 import java.util.Objects;
 
 import org.eclipse.core.resources.IMarker;
+import org.eclipse.core.runtime.Adapters;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.core.runtime.SubMonitor;
 import org.eclipse.core.runtime.jobs.Job;
-import org.eclipse.egit.core.AdapterUtils;
 import org.eclipse.egit.ui.Activator;
 import org.eclipse.egit.ui.UIUtils;
 import org.eclipse.egit.ui.internal.UIText;
@@ -429,7 +429,7 @@ public class DiffEditorPage extends TextEditor
 
 	@Override
 	public ShowInContext getShowInContext() {
-		RepositoryCommit commit = AdapterUtils.adapt(getEditorInput(),
+		RepositoryCommit commit = Adapters.adapt(getEditorInput(),
 				RepositoryCommit.class);
 		if (commit != null) {
 			return new ShowInContext(getEditorInput(),
@@ -563,7 +563,7 @@ public class DiffEditorPage extends TextEditor
 	 * cause this document to be shown.
 	 */
 	private void formatDiff() {
-		RepositoryCommit commit = AdapterUtils.adapt(getEditor(),
+		RepositoryCommit commit = Adapters.adapt(getEditor(),
 				RepositoryCommit.class);
 		if (commit == null) {
 			return;

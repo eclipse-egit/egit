@@ -21,11 +21,11 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.eclipse.core.runtime.Adapters;
 import org.eclipse.core.runtime.ListenerList;
 import org.eclipse.core.runtime.jobs.IJobChangeEvent;
 import org.eclipse.core.runtime.jobs.Job;
 import org.eclipse.core.runtime.jobs.JobChangeAdapter;
-import org.eclipse.egit.core.AdapterUtils;
 import org.eclipse.egit.ui.Activator;
 import org.eclipse.egit.ui.UIPreferences;
 import org.eclipse.egit.ui.UIUtils;
@@ -339,7 +339,8 @@ class CommitMessageViewer extends HyperlinkSourceViewer {
 	}
 
 	private void scheduleFormatJob() {
-		IWorkbenchSiteProgressService siteService = AdapterUtils.adapt(partSite, IWorkbenchSiteProgressService.class);
+		IWorkbenchSiteProgressService siteService = Adapters.adapt(partSite,
+				IWorkbenchSiteProgressService.class);
 		if (siteService == null) {
 			return;
 		}

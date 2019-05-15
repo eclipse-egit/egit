@@ -31,6 +31,7 @@ import java.util.regex.Pattern;
 
 import org.eclipse.core.resources.IResource;
 import org.eclipse.core.resources.IWorkspaceRoot;
+import org.eclipse.core.runtime.Adapters;
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
@@ -891,7 +892,7 @@ public class GitHistoryPage extends HistoryPage implements RefsChangedListener,
 		if (resource != null && typeOk(resource))
 			return true;
 
-		return AdapterUtils.adapt(object, Repository.class) != null;
+		return Adapters.adapt(object, Repository.class) != null;
 	}
 
 	private static boolean typeOk(final IResource object) {
@@ -1923,9 +1924,9 @@ public class GitHistoryPage extends HistoryPage implements RefsChangedListener,
 				}
 			}
 			if (repo == null) {
-				repo = AdapterUtils.adapt(o, Repository.class);
+				repo = Adapters.adapt(o, Repository.class);
 				if (repo != null) {
-					File file = AdapterUtils.adapt(o, File.class);
+					File file = Adapters.adapt(o, File.class);
 					if (file == null) {
 						input = new HistoryPageInput(repo);
 					} else {
@@ -1933,7 +1934,7 @@ public class GitHistoryPage extends HistoryPage implements RefsChangedListener,
 					}
 				}
 			}
-			selection = AdapterUtils.adapt(o, RevCommit.class);
+			selection = Adapters.adapt(o, RevCommit.class);
 
 			if (input == null || repo == null) {
 				this.name = ""; //$NON-NLS-1$
@@ -2788,7 +2789,7 @@ public class GitHistoryPage extends HistoryPage implements RefsChangedListener,
 		IWorkbenchPartSite site = getPartSite();
 		if (site != null) {
 			final IWorkbenchSiteProgressService p;
-			p = AdapterUtils.adapt(site, IWorkbenchSiteProgressService.class);
+			p = Adapters.adapt(site, IWorkbenchSiteProgressService.class);
 			if (p != null) {
 				p.schedule(j, 0, true /* use half-busy cursor */);
 				return;

@@ -20,6 +20,7 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
+import org.eclipse.core.runtime.Adapters;
 import org.eclipse.core.runtime.IAdaptable;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
@@ -30,7 +31,6 @@ import org.eclipse.core.runtime.Status;
 import org.eclipse.core.runtime.SubMonitor;
 import org.eclipse.core.runtime.jobs.ISchedulingRule;
 import org.eclipse.core.runtime.jobs.Job;
-import org.eclipse.egit.core.AdapterUtils;
 import org.eclipse.egit.core.EclipseGitProgressTransformer;
 import org.eclipse.egit.core.internal.Utils;
 import org.eclipse.egit.ui.Activator;
@@ -552,7 +552,7 @@ public class CommitEditorPage extends FormPage
 	}
 
 	RepositoryCommit getCommit() {
-		return AdapterUtils.adapt(getEditor(), RepositoryCommit.class);
+		return Adapters.adapt(getEditor(), RepositoryCommit.class);
 	}
 
 	@Override

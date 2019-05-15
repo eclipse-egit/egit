@@ -30,11 +30,11 @@ import org.eclipse.compare.structuremergeviewer.IDiffElement;
 import org.eclipse.compare.structuremergeviewer.IStructureComparator;
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IResource;
+import org.eclipse.core.runtime.Adapters;
 import org.eclipse.core.runtime.Assert;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.egit.core.Activator;
-import org.eclipse.egit.core.AdapterUtils;
 import org.eclipse.egit.core.internal.storage.IndexFileRevision;
 import org.eclipse.egit.core.internal.storage.OpenWorkspaceVersionEnabled;
 import org.eclipse.egit.ui.internal.CommonUtils;
@@ -369,7 +369,7 @@ public class GitCompareFileRevisionEditorInput extends SaveableCompareEditorInpu
 			}
 			return getResource();
 		} else if (adapter == Repository.class && left != null) {
-			return AdapterUtils.adapt(left, Repository.class);
+			return Adapters.adapt(left, Repository.class);
 		}
 		return super.getAdapter(adapter);
 	}
@@ -623,7 +623,7 @@ public class GitCompareFileRevisionEditorInput extends SaveableCompareEditorInpu
 
 		private ISaveablesLifecycleListener getSaveablesLifecycleListener(
 				IWorkbenchPart part) {
-			ISaveablesLifecycleListener listener = AdapterUtils.adapt(part,
+			ISaveablesLifecycleListener listener = Adapters.adapt(part,
 					ISaveablesLifecycleListener.class);
 			if (listener == null)
 				listener = CommonUtils.getService(part.getSite(), ISaveablesLifecycleListener.class);

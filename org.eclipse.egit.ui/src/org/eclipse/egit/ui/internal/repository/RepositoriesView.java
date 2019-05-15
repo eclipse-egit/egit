@@ -33,6 +33,7 @@ import java.util.Set;
 import org.eclipse.core.commands.Command;
 import org.eclipse.core.resources.IResource;
 import org.eclipse.core.resources.ResourcesPlugin;
+import org.eclipse.core.runtime.Adapters;
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
@@ -873,7 +874,7 @@ public class RepositoriesView extends CommonNavigator implements IShowInSource, 
 			showResource(input.getFile());
 			return true;
 		}
-		Repository repository = AdapterUtils.adapt(context.getInput(),
+		Repository repository = Adapters.adapt(context.getInput(),
 				Repository.class);
 		if (repository != null) {
 			showRepository(repository);
@@ -985,13 +986,13 @@ public class RepositoriesView extends CommonNavigator implements IShowInSource, 
 				showResource(adapted);
 				return;
 			}
-			File file = AdapterUtils.adapt(ssel.getFirstElement(), File.class);
+			File file = Adapters.adapt(ssel.getFirstElement(), File.class);
 			if (file != null) {
 				IPath path = new Path(file.getAbsolutePath());
 				showPaths(Arrays.asList(path));
 				return;
 			}
-			Repository repository = AdapterUtils.adapt(ssel.getFirstElement(),
+			Repository repository = Adapters.adapt(ssel.getFirstElement(),
 					Repository.class);
 			if (repository != null) {
 				showRepository(repository);

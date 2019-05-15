@@ -20,13 +20,13 @@ import org.eclipse.core.resources.IResource;
 import org.eclipse.core.resources.WorkspaceJob;
 import org.eclipse.core.resources.mapping.RemoteResourceMappingContext;
 import org.eclipse.core.resources.mapping.ResourceMapping;
+import org.eclipse.core.runtime.Adapters;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.core.runtime.jobs.IJobChangeEvent;
 import org.eclipse.core.runtime.jobs.Job;
 import org.eclipse.core.runtime.jobs.JobChangeAdapter;
-import org.eclipse.egit.core.AdapterUtils;
 import org.eclipse.egit.core.internal.util.ResourceUtil;
 import org.eclipse.egit.core.synchronize.GitResourceVariantTreeSubscriber;
 import org.eclipse.egit.core.synchronize.GitSubscriberMergeContext;
@@ -98,7 +98,7 @@ public class GitModelSynchronize {
 		List<ResourceMapping> gitMappings = new ArrayList<>();
 
 		for (IResource element : elements) {
-			ResourceMapping mapping = AdapterUtils.adapt(element,
+			ResourceMapping mapping = Adapters.adapt(element,
 					ResourceMapping.class);
 			if (mapping != null && isMappedToGitProvider(mapping))
 				gitMappings.add(mapping);

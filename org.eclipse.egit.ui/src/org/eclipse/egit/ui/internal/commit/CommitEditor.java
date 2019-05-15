@@ -16,10 +16,10 @@ package org.eclipse.egit.ui.internal.commit;
 
 import java.text.MessageFormat;
 
+import org.eclipse.core.runtime.Adapters;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Status;
-import org.eclipse.egit.core.AdapterUtils;
 import org.eclipse.egit.ui.Activator;
 import org.eclipse.egit.ui.internal.CommonUtils;
 import org.eclipse.egit.ui.internal.UIIcons;
@@ -461,7 +461,7 @@ public class CommitEditor extends SharedHeaderFormEditor implements
 	@Override
 	public <T> T getAdapter(Class<T> adapter) {
 		if (RepositoryCommit.class == adapter) {
-			return AdapterUtils.adapt(getEditorInput(), adapter);
+			return Adapters.adapt(getEditorInput(), adapter);
 		} else if (IContentOutlinePage.class == adapter) {
 			return adapter.cast(getOutlinePage());
 		}
@@ -475,7 +475,7 @@ public class CommitEditor extends SharedHeaderFormEditor implements
 	@Override
 	public void init(IEditorSite site, IEditorInput input)
 			throws PartInitException {
-		if (AdapterUtils.adapt(input, RepositoryCommit.class) == null)
+		if (Adapters.adapt(input, RepositoryCommit.class) == null)
 			throw new PartInitException(
 					"Input could not be adapted to commit object"); //$NON-NLS-1$
 		super.init(site, input);
@@ -543,7 +543,7 @@ public class CommitEditor extends SharedHeaderFormEditor implements
 	@Override
 	public ShowInContext getShowInContext() {
 		IFormPage currentPage = getActivePageInstance();
-		IShowInSource showInSource = AdapterUtils.adapt(currentPage,
+		IShowInSource showInSource = Adapters.adapt(currentPage,
 				IShowInSource.class);
 		if (showInSource != null) {
 			return showInSource.getShowInContext();
@@ -554,7 +554,7 @@ public class CommitEditor extends SharedHeaderFormEditor implements
 	@Override
 	public String[] getShowInTargetIds() {
 		IFormPage currentPage = getActivePageInstance();
-		IShowInTargetList targetList = AdapterUtils.adapt(currentPage,
+		IShowInTargetList targetList = Adapters.adapt(currentPage,
 				IShowInTargetList.class);
 		if (targetList != null) {
 			return targetList.getShowInTargetIds();

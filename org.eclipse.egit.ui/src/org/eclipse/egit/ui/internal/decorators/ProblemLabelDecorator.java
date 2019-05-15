@@ -23,9 +23,9 @@ import org.eclipse.core.resources.IResource;
 import org.eclipse.core.resources.IResourceChangeEvent;
 import org.eclipse.core.resources.IResourceChangeListener;
 import org.eclipse.core.resources.ResourcesPlugin;
+import org.eclipse.core.runtime.Adapters;
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.Path;
-import org.eclipse.egit.core.AdapterUtils;
 import org.eclipse.egit.core.project.RepositoryMapping;
 import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.jface.resource.JFaceResources;
@@ -174,10 +174,9 @@ public class ProblemLabelDecorator extends BaseLabelProvider implements
 	private void getAffectedElements(Set<IPath> paths, Object[] elements,
 			IStructuredContentProvider contentProvider, List<Object> result) {
 		for (Object element : elements) {
-			IPath path = AdapterUtils.adapt(element, IPath.class);
+			IPath path = Adapters.adapt(element, IPath.class);
 			if (path == null) {
-				IResource resource = AdapterUtils.adapt(element,
-						IResource.class);
+				IResource resource = Adapters.adapt(element, IResource.class);
 				if (resource != null) {
 					path = resource.getLocation();
 				}

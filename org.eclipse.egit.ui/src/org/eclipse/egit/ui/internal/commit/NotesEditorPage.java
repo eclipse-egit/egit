@@ -12,7 +12,7 @@
  *****************************************************************************/
 package org.eclipse.egit.ui.internal.commit;
 
-import org.eclipse.egit.core.AdapterUtils;
+import org.eclipse.core.runtime.Adapters;
 import org.eclipse.egit.ui.internal.UIText;
 import org.eclipse.jface.layout.GridLayoutFactory;
 import org.eclipse.swt.widgets.Composite;
@@ -47,7 +47,7 @@ public class NotesEditorPage extends FormPage {
 	 * @return commit
 	 */
 	protected RepositoryCommit getCommit() {
-		return AdapterUtils.adapt(getEditor(), RepositoryCommit.class);
+		return Adapters.adapt(getEditor(), RepositoryCommit.class);
 	}
 
 	@Override

@@ -19,6 +19,7 @@ package org.eclipse.egit.ui.internal.reflog;
 import java.io.IOException;
 
 import org.eclipse.core.resources.IResource;
+import org.eclipse.core.runtime.Adapters;
 import org.eclipse.egit.core.AdapterUtils;
 import org.eclipse.egit.core.internal.Utils;
 import org.eclipse.egit.core.project.RepositoryMapping;
@@ -369,7 +370,7 @@ public class ReflogView extends ViewPart implements RefsChangedListener, IShowIn
 				}
 				if (part instanceof IEditorPart) {
 					IEditorInput input = ((IEditorPart) part).getEditorInput();
-					Repository repository = AdapterUtils.adapt(input,
+					Repository repository = Adapters.adapt(input,
 							Repository.class);
 					if (repository != null) {
 						reactOnSelection(new StructuredSelection(repository));
@@ -461,7 +462,7 @@ public class ReflogView extends ViewPart implements RefsChangedListener, IShowIn
 			}
 		}
 		if (selectedRepo == null) {
-			selectedRepo = AdapterUtils.adapt(first, Repository.class);
+			selectedRepo = Adapters.adapt(first, Repository.class);
 		}
 		if (selectedRepo == null) {
 			return;

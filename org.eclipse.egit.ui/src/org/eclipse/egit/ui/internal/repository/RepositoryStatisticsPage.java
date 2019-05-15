@@ -15,7 +15,7 @@ package org.eclipse.egit.ui.internal.repository;
 import java.text.NumberFormat;
 import java.util.Properties;
 
-import org.eclipse.egit.core.AdapterUtils;
+import org.eclipse.core.runtime.Adapters;
 import org.eclipse.egit.ui.Activator;
 import org.eclipse.egit.ui.internal.UIText;
 import org.eclipse.jgit.api.GarbageCollectCommand;
@@ -65,7 +65,7 @@ public class RepositoryStatisticsPage extends PropertyPage {
 			column.setText(title);
 		}
 
-		Repository repo = AdapterUtils.adapt(getElement(), Repository.class);
+		Repository repo = Adapters.adapt(getElement(), Repository.class);
 		if (repo == null) {
 			return table;
 		}
