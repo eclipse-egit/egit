@@ -52,6 +52,24 @@
       "revId": "f8800d8ed1b5002bcf4cccfa431d24b17f3b480a",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9c77f751_16932ac0",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/internal/Utils.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 126,
+      "author": {
+        "id": 440
+      },
+      "writtenOn": "2019-05-15T12:46:11Z",
+      "side": 0,
+      "message": "I finally got your comment. Just inlining the existing call is not sufficient. Therefore I now replaced the call by Adapters.adapt() and then inlined the method call. That way we have the built-in sanity check.\n\nThanks for taking the time to explain twice.",
+      "parentUuid": "5deae512_b346b907",
+      "revId": "f8800d8ed1b5002bcf4cccfa431d24b17f3b480a",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
     }
   ]
 }
