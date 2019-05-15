@@ -31,8 +31,8 @@ import java.util.List;
 import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.IResource;
 import org.eclipse.core.resources.ResourcesPlugin;
+import org.eclipse.core.runtime.Adapters;
 import org.eclipse.core.runtime.IAdaptable;
-import org.eclipse.egit.core.internal.Utils;
 import org.eclipse.egit.core.project.RepositoryMapping;
 import org.eclipse.egit.ui.Activator;
 import org.eclipse.egit.ui.JobFamilies;
@@ -471,7 +471,7 @@ public class GitRepositoriesViewTest extends GitRepositoriesViewTestBase {
 		IAdaptable[] elements = workingSet.getElements();
 		assertEquals("Wrong number of projects in working set", 1,
 				elements.length);
-		IProject project = Utils.getAdapter(elements[0], IProject.class);
+		IProject project = Adapters.adapt(elements[0], IProject.class);
 		assertEquals("Wrong project in working set", projectName,
 				project.getName());
 	}

@@ -16,10 +16,10 @@ import org.eclipse.core.resources.IContainer;
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.IResource;
+import org.eclipse.core.runtime.Adapters;
 import org.eclipse.core.runtime.IAdaptable;
 import org.eclipse.core.runtime.Platform;
 import org.eclipse.core.runtime.PlatformObject;
-import org.eclipse.egit.core.internal.Utils;
 import org.eclipse.jgit.annotations.Nullable;
 
 /**
@@ -48,7 +48,7 @@ public class AdapterUtils {
 			return target.cast(object);
 		}
 		if (object instanceof IAdaptable) {
-			V adapter = Utils.getAdapter(((IAdaptable) object), target);
+			V adapter = Adapters.adapt(((IAdaptable) object), target);
 			if (adapter != null || object instanceof PlatformObject) {
 				return adapter;
 			}
