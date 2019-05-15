@@ -94,6 +94,30 @@
     },
     {
       "key": {
+        "uuid": "a837c123_88c9d986",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/dialogs/CreateTagDialog.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 517,
+      "author": {
+        "id": 13743
+      },
+      "writtenOn": "2019-05-15T16:33:32Z",
+      "side": 1,
+      "message": "Not applicable in this case.",
+      "parentUuid": "e0f191bf_290ce3c0",
+      "range": {
+        "startLine": 512,
+        "startChar": 41,
+        "endLine": 517,
+        "endChar": 3
+      },
+      "revId": "12bc865fda59ed9f8f197941128e7c4d2a44dc3f",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "cfd3e354_9305b9e7",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/dialogs/CreateTagDialog.java",
         "patchSetId": 2
