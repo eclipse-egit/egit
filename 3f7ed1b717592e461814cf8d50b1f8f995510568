@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6eba58ad_a28944d8",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/AdapterUtils.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2019-05-15T12:48:30Z",
+      "side": 1,
+      "message": "Seems to me that this whole method is a re-implementation of Adapters.adapt(). So probably we should remove it and replace all calls to AdapterUtils.adapt() by Adapters.adapt().",
+      "revId": "3f7ed1b717592e461814cf8d50b1f8f995510568",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
