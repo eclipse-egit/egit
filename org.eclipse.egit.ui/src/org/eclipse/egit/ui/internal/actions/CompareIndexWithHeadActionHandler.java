@@ -18,8 +18,8 @@ import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.commands.ExecutionException;
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IResource;
+import org.eclipse.core.runtime.Adapters;
 import org.eclipse.core.runtime.IPath;
-import org.eclipse.egit.core.AdapterUtils;
 import org.eclipse.egit.core.internal.storage.GitFileRevision;
 import org.eclipse.egit.ui.Activator;
 import org.eclipse.egit.ui.internal.CompareUtils;
@@ -111,13 +111,13 @@ public class CompareIndexWithHeadActionHandler extends RepositoryActionHandler {
 		}
 
 		Object selected = selection.getFirstElement();
-		IResource resource = AdapterUtils.adapt(selected, IResource.class);
+		IResource resource = Adapters.adapt(selected, IResource.class);
 		if (resource instanceof IFile) {
 			// action is only working on files. Avoid calculation
 			// of unnecessary expensive IndexDiff on a folder
 			return ResourceStateFactory.getInstance().get(resource).isStaged();
 		} else if (resource == null) {
-			IPath location = AdapterUtils.adapt(selected, IPath.class);
+			IPath location = Adapters.adapt(selected, IPath.class);
 			if (location != null) {
 				return ResourceStateFactory.getInstance().get(location.toFile())
 						.isStaged();

@@ -13,7 +13,7 @@
 package org.eclipse.egit.ui.internal;
 
 import org.eclipse.core.resources.IResource;
-import org.eclipse.egit.core.AdapterUtils;
+import org.eclipse.core.runtime.Adapters;
 import org.eclipse.egit.ui.internal.clone.ProjectRecord;
 import org.eclipse.egit.ui.internal.commit.RepositoryCommit;
 import org.eclipse.egit.ui.internal.repository.tree.RefNode;
@@ -70,7 +70,7 @@ public class GitLabelProvider extends LabelProvider implements
 		}
 
 		if (element instanceof GitModelBlob || element instanceof GitModelTree) {
-			Object adapter = AdapterUtils.adapt(element, IResource.class);
+			Object adapter = Adapters.adapt(element, IResource.class);
 			return getWorkbenchLabelProvider().getImage(adapter);
 		}
 

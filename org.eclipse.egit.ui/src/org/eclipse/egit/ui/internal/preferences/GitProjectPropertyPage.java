@@ -17,8 +17,8 @@ import java.io.IOException;
 
 import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.IResource;
+import org.eclipse.core.runtime.Adapters;
 import org.eclipse.core.runtime.IAdaptable;
-import org.eclipse.egit.core.AdapterUtils;
 import org.eclipse.egit.core.project.RepositoryMapping;
 import org.eclipse.egit.ui.Activator;
 import org.eclipse.egit.ui.UIUtils;
@@ -87,7 +87,7 @@ public class GitProjectPropertyPage extends PropertyPage {
 		if (element instanceof IResource) {
 			project = ((IResource) element).getProject();
 		} else {
-			IResource adapter = AdapterUtils.adapt(element, IResource.class);
+			IResource adapter = Adapters.adapt(element, IResource.class);
 			if (adapter != null) {
 				project = adapter.getProject();
 			}

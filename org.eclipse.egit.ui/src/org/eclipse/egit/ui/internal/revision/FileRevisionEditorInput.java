@@ -25,13 +25,13 @@ import java.util.Date;
 import org.eclipse.core.resources.IEncodedStorage;
 import org.eclipse.core.resources.IFileState;
 import org.eclipse.core.resources.IStorage;
+import org.eclipse.core.runtime.Adapters;
 import org.eclipse.core.runtime.Assert;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.Path;
 import org.eclipse.core.runtime.PlatformObject;
-import org.eclipse.egit.core.AdapterUtils;
 import org.eclipse.egit.core.internal.storage.CommitFileRevision;
 import org.eclipse.egit.ui.Activator;
 import org.eclipse.egit.ui.internal.PreferenceBasedDateFormatter;
@@ -80,7 +80,7 @@ public class FileRevisionEditorInput extends PlatformObject implements
 			return new IFileState() {
 				@Override
 				public <T> T getAdapter(Class<T> adapter) {
-					return AdapterUtils.adapt(storage, adapter);
+					return Adapters.adapt(storage, adapter);
 				}
 
 				@Override
@@ -123,7 +123,7 @@ public class FileRevisionEditorInput extends PlatformObject implements
 		return new IEncodedStorage() {
 			@Override
 			public <T> T getAdapter(Class<T> adapter) {
-				return AdapterUtils.adapt(storage, adapter);
+				return Adapters.adapt(storage, adapter);
 			}
 
 			@Override
@@ -201,7 +201,7 @@ public class FileRevisionEditorInput extends PlatformObject implements
 
 	@Override
 	public String getName() {
-		IFileRevision rev = AdapterUtils.adapt(this, IFileRevision.class);
+		IFileRevision rev = Adapters.adapt(this, IFileRevision.class);
 		if (rev != null) {
 			String identifier;
 			if (rev instanceof CommitFileRevision) {
@@ -214,7 +214,7 @@ public class FileRevisionEditorInput extends PlatformObject implements
 					UIText.FileRevisionEditorInput_NameAndRevisionTitle,
 					rev.getName(), identifier);
 		}
-		IFileState state = AdapterUtils.adapt(this, IFileState.class);
+		IFileState state = Adapters.adapt(this, IFileState.class);
 		if (state != null) {
 			return state.getName() + ' ' + PreferenceBasedDateFormatter.create()
 					.formatDate(new Date(state.getModificationTime()));
@@ -245,7 +245,7 @@ public class FileRevisionEditorInput extends PlatformObject implements
 		if (object != null) {
 			return adapter.cast(object);
 		}
-		return AdapterUtils.adapt(fileRevision, adapter);
+		return Adapters.adapt(fileRevision, adapter);
 	}
 
 	@Override
@@ -260,7 +260,7 @@ public class FileRevisionEditorInput extends PlatformObject implements
 
 	@Override
 	public String getLabel(Object o) {
-		IFileRevision rev = AdapterUtils.adapt(this, IFileRevision.class);
+		IFileRevision rev = Adapters.adapt(this, IFileRevision.class);
 		if (rev != null)
 			return rev.getName();
 		return storage.getName();
@@ -348,11 +348,11 @@ public class FileRevisionEditorInput extends PlatformObject implements
 	}
 
 	private String getRevisionPrefix() {
-		IFileRevision rev = AdapterUtils.adapt(this, IFileRevision.class);
+		IFileRevision rev = Adapters.adapt(this, IFileRevision.class);
 		if (rev != null) {
 			return abbreviate(rev.getContentIdentifier()) + '_';
 		}
-		IFileState state = AdapterUtils.adapt(this, IFileState.class);
+		IFileState state = Adapters.adapt(this, IFileState.class);
 		if (state != null) {
 			return DATE_FORMAT.format(new Date(state.getModificationTime()))
 					+ '_';

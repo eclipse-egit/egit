@@ -15,8 +15,8 @@ import java.lang.reflect.Method;
 import java.util.List;
 
 import org.eclipse.core.resources.IProject;
+import org.eclipse.core.runtime.Adapters;
 import org.eclipse.core.runtime.IAdaptable;
-import org.eclipse.egit.core.AdapterUtils;
 import org.eclipse.egit.core.project.RepositoryMapping;
 import org.eclipse.egit.ui.Activator;
 import org.eclipse.jdt.core.IJavaProject;
@@ -147,7 +147,7 @@ public class GitTemplateVariableResolver extends TemplateVariableResolver {
 		// We can't use instanceof here because of the compiler error on 4.10
 		// platform saying that TemplateContext is always IAdaptable
 		if (IAdaptable.class.isInstance(context)) {
-			return AdapterUtils.adapt(context, IProject.class);
+			return Adapters.adapt(context, IProject.class);
 		}
 		// Note: block below can be removed after EGit minimum target platform
 		// will be 4.10, see bug 539095 for details

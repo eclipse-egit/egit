@@ -15,7 +15,7 @@ package org.eclipse.egit.ui.internal.repository;
 import java.io.File;
 import java.io.IOException;
 
-import org.eclipse.egit.core.AdapterUtils;
+import org.eclipse.core.runtime.Adapters;
 import org.eclipse.egit.ui.Activator;
 import org.eclipse.egit.ui.internal.preferences.ConfigurationEditorComponent;
 import org.eclipse.jface.layout.GridDataFactory;
@@ -43,7 +43,7 @@ public class RepositoryPropertyPage extends PropertyPage {
 		GridLayoutFactory.fillDefaults().applyTo(displayArea);
 		GridDataFactory.fillDefaults().applyTo(displayArea);
 
-		final Repository repo = AdapterUtils.adapt(getElement(), Repository.class);
+		final Repository repo = Adapters.adapt(getElement(), Repository.class);
 		if (repo == null)
 			return displayArea;
 

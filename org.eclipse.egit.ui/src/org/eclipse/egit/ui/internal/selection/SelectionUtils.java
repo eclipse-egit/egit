@@ -26,6 +26,7 @@ import org.eclipse.core.expressions.IEvaluationContext;
 import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.IResource;
 import org.eclipse.core.resources.mapping.ResourceMapping;
+import org.eclipse.core.runtime.Adapters;
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.egit.core.AdapterUtils;
 import org.eclipse.egit.core.internal.util.ResourceUtil;
@@ -102,7 +103,7 @@ public class SelectionUtils {
 
 		Set<Repository> repos = new LinkedHashSet<>();
 		for (Object o : selection.toArray()) {
-			Repository repo = AdapterUtils.adapt(o, Repository.class);
+			Repository repo = Adapters.adapt(o, Repository.class);
 			if (repo != null) {
 				repos.add(repo);
 			} else {
@@ -200,7 +201,7 @@ public class SelectionUtils {
 				if (location != null)
 					result.add(location);
 			} else {
-				IPath location = AdapterUtils.adapt(o, IPath.class);
+				IPath location = Adapters.adapt(o, IPath.class);
 				if (location != null)
 					result.add(location);
 				else
@@ -248,7 +249,7 @@ public class SelectionUtils {
 	}
 
 	private static List<IResource> extractResourcesFromMapping(Object o) {
-		ResourceMapping mapping = AdapterUtils.adapt(o, ResourceMapping.class);
+		ResourceMapping mapping = Adapters.adapt(o, ResourceMapping.class);
 		return ResourceUtil.extractResourcesFromMapping(mapping);
 	}
 
@@ -316,7 +317,7 @@ public class SelectionUtils {
 			@NonNull IStructuredSelection selection) {
 		Set<Object> result = new HashSet<>();
 		for (Object o : selection.toList()) {
-			Repository r = AdapterUtils.adapt(o, Repository.class);
+			Repository r = Adapters.adapt(o, Repository.class);
 			if (r != null) {
 				result.add(r);
 				continue;
@@ -326,12 +327,11 @@ public class SelectionUtils {
 				result.add(resource);
 				continue;
 			}
-			ResourceMapping mapping = AdapterUtils.adapt(o,
-					ResourceMapping.class);
+			ResourceMapping mapping = Adapters.adapt(o, ResourceMapping.class);
 			if (mapping != null) {
 				result.addAll(extractResourcesFromMapping(mapping));
 			} else {
-				IPath location = AdapterUtils.adapt(o, IPath.class);
+				IPath location = Adapters.adapt(o, IPath.class);
 				if (location != null) {
 					result.add(location);
 				}
@@ -394,7 +394,7 @@ public class SelectionUtils {
 
 		if (result == null) {
 			for (Object o : selection.toArray()) {
-				Repository nextRepo = AdapterUtils.adapt(o, Repository.class);
+				Repository nextRepo = Adapters.adapt(o, Repository.class);
 				if (nextRepo != null && result != null && result != nextRepo) {
 					if (warn)
 						MessageDialog
@@ -533,7 +533,7 @@ public class SelectionUtils {
 			result = new ArrayList<>();
 			Iterator elements = ((IStructuredSelection) selection).iterator();
 			while (elements.hasNext()) {
-				T adapter = AdapterUtils.adapt(elements.next(), c);
+				T adapter = Adapters.adapt(elements.next(), c);
 				if (adapter != null) {
 					result.add(adapter);
 				}

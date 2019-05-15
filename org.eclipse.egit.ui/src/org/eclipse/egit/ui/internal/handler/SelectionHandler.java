@@ -18,7 +18,7 @@ import java.util.List;
 import org.eclipse.core.commands.AbstractHandler;
 import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.commands.ExecutionException;
-import org.eclipse.egit.core.AdapterUtils;
+import org.eclipse.core.runtime.Adapters;
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.viewers.StructuredSelection;
@@ -56,7 +56,7 @@ public abstract class SelectionHandler extends AbstractHandler {
 	protected <V> V getSelectedItem(final Class<V> itemClass,
 			final ExecutionEvent event) {
 		final Object selected = getSelection(event).getFirstElement();
-		return AdapterUtils.adapt(selected, itemClass);
+		return Adapters.adapt(selected, itemClass);
 	}
 
 	/**
@@ -71,7 +71,7 @@ public abstract class SelectionHandler extends AbstractHandler {
 			ExecutionEvent event) {
 		final List<V> items = new LinkedList<>();
 		for (Object selected : getSelection(event).toArray()) {
-			V adapted = AdapterUtils.adapt(selected, itemClass);
+			V adapted = Adapters.adapt(selected, itemClass);
 			if (adapted != null)
 				items.add(adapted);
 		}

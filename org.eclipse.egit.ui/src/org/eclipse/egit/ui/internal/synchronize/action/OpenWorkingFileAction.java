@@ -14,8 +14,8 @@ import java.io.File;
 
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IResource;
+import org.eclipse.core.runtime.Adapters;
 import org.eclipse.core.runtime.IPath;
-import org.eclipse.egit.core.AdapterUtils;
 import org.eclipse.egit.ui.internal.UIText;
 import org.eclipse.egit.ui.internal.synchronize.model.GitModelObject;
 import org.eclipse.jface.dialogs.ErrorDialog;
@@ -133,7 +133,7 @@ public class OpenWorkingFileAction extends SelectionListenerAction {
 	@Nullable
 	private IResource getExistingResource(IStructuredSelection selection) {
 		Object element = selection.getFirstElement();
-		IResource resource = AdapterUtils.adapt(element, IResource.class);
+		IResource resource = Adapters.adapt(element, IResource.class);
 		if (resource != null && resource.exists()) {
 			return resource;
 		}

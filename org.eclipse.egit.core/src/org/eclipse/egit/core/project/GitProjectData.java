@@ -38,6 +38,7 @@ import org.eclipse.core.resources.IResourceChangeListener;
 import org.eclipse.core.resources.IResourceDelta;
 import org.eclipse.core.resources.IResourceDeltaVisitor;
 import org.eclipse.core.resources.ResourcesPlugin;
+import org.eclipse.core.runtime.Adapters;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.IProgressMonitor;
@@ -52,7 +53,6 @@ import org.eclipse.egit.core.Activator;
 import org.eclipse.egit.core.GitCorePreferences;
 import org.eclipse.egit.core.JobFamilies;
 import org.eclipse.egit.core.internal.CoreText;
-import org.eclipse.egit.core.internal.Utils;
 import org.eclipse.egit.core.internal.trace.GitTraceLocation;
 import org.eclipse.egit.core.internal.util.ResourceUtil;
 import org.eclipse.jgit.annotations.NonNull;
@@ -667,7 +667,7 @@ public class GitProjectData {
 		if (r instanceof IContainer) {
 			c = (IContainer) r;
 		} else if (r != null) {
-			c = Utils.getAdapter(r, IContainer.class);
+			c = Adapters.adapt(r, IContainer.class);
 		}
 
 		if (c == null) {

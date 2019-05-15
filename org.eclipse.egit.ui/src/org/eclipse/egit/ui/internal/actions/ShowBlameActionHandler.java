@@ -19,7 +19,7 @@ import org.eclipse.core.commands.ExecutionException;
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IResource;
 import org.eclipse.core.resources.IStorage;
-import org.eclipse.egit.core.AdapterUtils;
+import org.eclipse.core.runtime.Adapters;
 import org.eclipse.egit.core.internal.job.JobUtil;
 import org.eclipse.egit.core.internal.storage.CommitFileRevision;
 import org.eclipse.egit.core.project.RepositoryMapping;
@@ -44,7 +44,7 @@ public class ShowBlameActionHandler extends RepositoryActionHandler {
 			return null;
 		}
 		Object element = selection.getFirstElement();
-		IResource resource = AdapterUtils.adapt(element, IResource.class);
+		IResource resource = Adapters.adapt(element, IResource.class);
 		if (resource instanceof IFile) {
 			RepositoryMapping mapping = RepositoryMapping.getMapping(resource);
 			if (mapping != null) {
@@ -76,7 +76,7 @@ public class ShowBlameActionHandler extends RepositoryActionHandler {
 			return false;
 		}
 		Object element = selection.getFirstElement();
-		IResource resource = AdapterUtils.adapt(element, IResource.class);
+		IResource resource = Adapters.adapt(element, IResource.class);
 		if (resource instanceof IStorage) {
 			return RepositoryMapping.getMapping(resource) != null;
 		}
