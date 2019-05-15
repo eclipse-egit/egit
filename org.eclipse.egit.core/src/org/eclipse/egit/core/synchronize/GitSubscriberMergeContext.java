@@ -62,7 +62,8 @@ public class GitSubscriberMergeContext extends SubscriberMergeContext {
 		this.gsds = gsds;
 
 
-		indexChangeListener = (repository, indexDiffData) -> handleRepositoryChange(repository);
+		indexChangeListener = (repository,
+				indexDiffData) -> handleRepositoryChange(repository);
 		resourceChangeListener = event -> {
 			IResourceDelta delta = event.getDelta();
 			if (delta != null) {

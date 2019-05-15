@@ -148,26 +148,25 @@ public class CommonUtils {
 	 * Instance of comparator which sorts {@link Ref} names using
 	 * {@link CommonUtils#STRING_ASCENDING_COMPARATOR}.
 	 */
-	public static final Comparator<Ref> REF_ASCENDING_COMPARATOR = (Ref o1,
-			Ref o2) -> STRING_ASCENDING_COMPARATOR.compare(o1.getName(),
-					o2.getName());
+	public static final Comparator<Ref> REF_ASCENDING_COMPARATOR = //
+			(a, b) -> STRING_ASCENDING_COMPARATOR.compare(a.getName(),
+					b.getName());
 
 	/**
 	 * Comparator for comparing {@link IResource} by the result of
 	 * {@link IResource#getName()}.
 	 */
-	public static final Comparator<IResource> RESOURCE_NAME_COMPARATOR = (
-			IResource r1, IResource r2) -> Policy.getComparator()
-					.compare(r1.getName(), r2.getName());
+	public static final Comparator<IResource> RESOURCE_NAME_COMPARATOR = //
+			(a, b) -> Policy.getComparator().compare(a.getName(), b.getName());
 
 	/**
 	 * Comparator for comparing (@link Path} by the result of
 	 * {@link Path#toAbsolutePath()}
 	 */
-	public static final Comparator<Path> PATH_STRING_COMPARATOR = (Path p1,
-			Path p2) -> STRING_ASCENDING_COMPARATOR.compare(
-					p1.toAbsolutePath().toString(),
-					p2.toAbsolutePath().toString());
+	public static final Comparator<Path> PATH_STRING_COMPARATOR = //
+			(a, b) -> STRING_ASCENDING_COMPARATOR.compare(
+					a.toAbsolutePath().toString(),
+					b.toAbsolutePath().toString());
 
 	/**
 	 * Programmatically run command based on its id and given selection
