@@ -16,6 +16,24 @@
       "revId": "f8800d8ed1b5002bcf4cccfa431d24b17f3b480a",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "574b3f2d_beed33c7",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/internal/Utils.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 126,
+      "author": {
+        "id": 440
+      },
+      "writtenOn": "2019-05-15T11:39:36Z",
+      "side": 0,
+      "message": "Judging by your own comment from the bug, the eclipse core Adapter implementation checks this already, so I will remove the string.",
+      "parentUuid": "585bddf0_5b6d91e6",
+      "revId": "f8800d8ed1b5002bcf4cccfa431d24b17f3b480a",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
     }
   ]
 }
