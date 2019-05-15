@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "04ec2ddd_4a3b5b17",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/CommonUtils.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 151,
+      "author": {
+        "id": 440
+      },
+      "writtenOn": "2019-05-15T09:28:52Z",
+      "side": 1,
+      "message": "what is this comment for?\n\nif that is for making the lambda start on a new line, shouldn\u0027t we investigate all the new formatter settings instead?",
+      "range": {
+        "startLine": 151,
+        "startChar": 64,
+        "endLine": 151,
+        "endChar": 66
+      },
+      "revId": "2b5d27f65957c6e0957c3571edc808ff76f2ddd7",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
