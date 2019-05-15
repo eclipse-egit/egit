@@ -92,11 +92,9 @@ class SaveFilter implements ISaveableFilter {
 					}
 				}
 			} catch (CoreException e) {
-				Activator
-				.logError(
-						NLS
-						.bind(
-								"An internal error occurred while determining the resources for {0}", saveable.getName()), e); //$NON-NLS-1$
+				Activator.logError(NLS.bind(
+						"An internal error occurred while determining the resources for {0}", //$NON-NLS-1$
+						saveable.getName()), e);
 			}
 		} else {
 			// If there is no mapping, try to adapt to a resource or file directly

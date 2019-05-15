@@ -549,7 +549,8 @@ public class ConfigurationEditorComponent {
 					Set<String> sectionNames = config.getSections();
 					for (String sectionName : sectionNames)
 						sections.add(new Section(this, sectionName));
-					Collections.sort(sections, (Section o1, Section o2) -> o1.name.compareTo(o2.name));
+					Collections.sort(sections,
+							(a, b) -> a.name.compareTo(b.name));
 					children = sections.toArray(new Section[0]);
 				} else
 					children = new Section[0];

@@ -81,7 +81,9 @@ public class DisconnectProviderOperation implements IEGitOperation {
 				if (container.isTeamPrivateMember()) {
 					// TODO is this the right location?
 					if (GitTraceLocation.CORE.isActive()) {
-						GitTraceLocation.getTrace().trace(GitTraceLocation.CORE.getLocation(), "notTeamPrivate " + container); //$NON-NLS-1$
+						GitTraceLocation.getTrace().trace(
+								GitTraceLocation.CORE.getLocation(),
+								"notTeamPrivate " + container); //$NON-NLS-1$
 					}
 					container.setTeamPrivateMember(false);
 				}

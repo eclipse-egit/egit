@@ -151,8 +151,7 @@ public class PullWizardPage extends WizardPage {
 		GridDataFactory.fillDefaults().grab(true, false)
 				.applyTo(remoteSelectionCombo);
 		setRemoteConfigs();
-		remoteSelectionCombo
-		.addRemoteSelectionListener((RemoteConfig rc) -> {
+		remoteSelectionCombo.addRemoteSelectionListener(rc -> {
 			remoteConfig = rc;
 			setRefAssist(rc);
 			checkPage();
