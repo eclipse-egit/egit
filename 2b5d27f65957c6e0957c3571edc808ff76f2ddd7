@@ -22,6 +22,30 @@
       "revId": "2b5d27f65957c6e0957c3571edc808ff76f2ddd7",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c211c286_9dbfc97a",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/CommonUtils.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 151,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2019-05-15T09:32:30Z",
+      "side": 1,
+      "message": "Yes, that was the reason. Otherwise one gets\n\n  public static final Comparator\u003cRef\u003e REF_ASCENDING_COMPARATOR \u003d (a,\n      b) -\u003e ...\n\nwhich I find really annoying. Don\u0027t know if there\u0027s a\nsetting that might improve this.",
+      "parentUuid": "04ec2ddd_4a3b5b17",
+      "range": {
+        "startLine": 151,
+        "startChar": 64,
+        "endLine": 151,
+        "endChar": 66
+      },
+      "revId": "2b5d27f65957c6e0957c3571edc808ff76f2ddd7",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
     }
   ]
 }
