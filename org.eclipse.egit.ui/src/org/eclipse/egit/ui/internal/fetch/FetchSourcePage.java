@@ -13,7 +13,6 @@ package org.eclipse.egit.ui.internal.fetch;
 import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Comparator;
 import java.util.List;
 
 import org.eclipse.core.runtime.IProgressMonitor;
@@ -158,13 +157,8 @@ public class FetchSourcePage extends WizardPage {
 							|| ref.getName().startsWith(Constants.R_TAGS))
 						proposals.add(ref);
 				}
-				Collections.sort(proposals, new Comparator<Ref>() {
-					@Override
-					public int compare(Ref ref1, Ref ref2) {
-						return CommonUtils.REF_ASCENDING_COMPARATOR
-								.compare(ref1, ref2);
-					}
-				});
+				Collections.sort(proposals,
+						CommonUtils.REF_ASCENDING_COMPARATOR);
 				this.remoteRefs = proposals;
 			} catch (IllegalStateException e) {
 				setErrorMessage(e.getMessage());

@@ -148,9 +148,8 @@ public class CommonUtils {
 	 * Instance of comparator which sorts {@link Ref} names using
 	 * {@link CommonUtils#STRING_ASCENDING_COMPARATOR}.
 	 */
-	public static final Comparator<Ref> REF_ASCENDING_COMPARATOR = //
-			(a, b) -> STRING_ASCENDING_COMPARATOR.compare(a.getName(),
-					b.getName());
+	public static final Comparator<Ref> REF_ASCENDING_COMPARATOR = Comparator
+			.comparing(Ref::getName, STRING_ASCENDING_COMPARATOR);
 
 	/**
 	 * Comparator for comparing {@link IResource} by the result of
@@ -163,10 +162,9 @@ public class CommonUtils {
 	 * Comparator for comparing (@link Path} by the result of
 	 * {@link Path#toAbsolutePath()}
 	 */
-	public static final Comparator<Path> PATH_STRING_COMPARATOR = //
-			(a, b) -> STRING_ASCENDING_COMPARATOR.compare(
-					a.toAbsolutePath().toString(),
-					b.toAbsolutePath().toString());
+	public static final Comparator<Path> PATH_STRING_COMPARATOR = Comparator
+			.comparing(p -> p.toAbsolutePath().toString(),
+					STRING_ASCENDING_COMPARATOR);
 
 	/**
 	 * Programmatically run command based on its id and given selection

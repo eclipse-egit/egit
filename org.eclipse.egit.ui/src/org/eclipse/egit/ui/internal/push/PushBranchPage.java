@@ -175,14 +175,8 @@ public class PushBranchPage extends WizardPage {
 		});
 		try {
 			this.remoteConfigs = RemoteConfig.getAllRemoteConfigs(repository.getConfig());
-			Collections.sort(remoteConfigs, new Comparator<RemoteConfig>() {
-
-				@Override
-				public int compare(RemoteConfig first, RemoteConfig second) {
-					return String.CASE_INSENSITIVE_ORDER.compare(
-							first.getName(), second.getName());
-				}
-			});
+			Collections.sort(remoteConfigs, Comparator.comparing(
+					RemoteConfig::getName, String.CASE_INSENSITIVE_ORDER));
 		} catch (URISyntaxException e) {
 			this.remoteConfigs = new ArrayList<>();
 			handleError(e);
