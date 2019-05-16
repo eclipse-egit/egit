@@ -17,7 +17,6 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
-import java.util.Comparator;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.LinkedList;
@@ -1733,12 +1732,8 @@ public class RefSpecPanel {
 
 	private List<RefContentProposal> createContentProposals(
 			final Collection<Ref> refs, final Ref head) {
-		final TreeSet<Ref> set = new TreeSet<>(new Comparator<Ref>() {
-			@Override
-			public int compare(Ref ref1, Ref ref2) {
-				return CommonUtils.REF_ASCENDING_COMPARATOR.compare(ref1, ref2);
-			}
-		});
+		final TreeSet<Ref> set = new TreeSet<>(
+				CommonUtils.REF_ASCENDING_COMPARATOR);
 		set.addAll(refs);
 		if (head != null) {
 			set.add(head);

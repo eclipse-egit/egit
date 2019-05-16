@@ -287,15 +287,8 @@ class GitSynchronizeWizardPage extends WizardPage {
 
 		List<Repository> repositoriesList = new ArrayList<>(
 				resources.keySet());
-		Collections.sort(repositoriesList, new Comparator<Repository>() {
-			@Override
-			public int compare(Repository o1, Repository o2) {
-				String name1 = o1.getWorkTree().getName();
-				String name2 = o2.getWorkTree().getName();
-
-				return name1.compareToIgnoreCase(name2);
-			}
-		});
+		Collections.sort(repositoriesList, Comparator.comparing(
+				r -> r.getWorkTree().getName(), String.CASE_INSENSITIVE_ORDER));
 
 		treeViewer.setInput(repositoriesList
 				.toArray(new Repository[0]));
