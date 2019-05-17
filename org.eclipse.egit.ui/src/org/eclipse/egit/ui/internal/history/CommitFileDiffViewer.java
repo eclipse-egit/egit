@@ -23,11 +23,15 @@ import java.util.Arrays;
 import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
 import java.util.function.Consumer;
+import java.util.function.Supplier;
+import java.util.stream.Collectors;
 
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IResource;
+import org.eclipse.core.runtime.Adapters;
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
@@ -40,6 +44,7 @@ import org.eclipse.core.runtime.jobs.JobChangeAdapter;
 import org.eclipse.egit.core.internal.job.JobUtil;
 import org.eclipse.egit.core.internal.storage.CommitFileRevision;
 import org.eclipse.egit.core.internal.util.ResourceUtil;
+import org.eclipse.egit.core.op.DiscardChangesOperation;
 import org.eclipse.egit.ui.Activator;
 import org.eclipse.egit.ui.JobFamilies;
 import org.eclipse.egit.ui.UIPreferences;
@@ -50,6 +55,7 @@ import org.eclipse.egit.ui.internal.UIIcons;
 import org.eclipse.egit.ui.internal.UIText;
 import org.eclipse.egit.ui.internal.blame.BlameOperation;
 import org.eclipse.egit.ui.internal.commit.DiffViewer;
+import org.eclipse.egit.ui.internal.dialogs.CommandConfirmation;
 import org.eclipse.jface.action.Action;
 import org.eclipse.jface.action.IAction;
 import org.eclipse.jface.action.MenuManager;
@@ -72,6 +78,7 @@ import org.eclipse.jgit.diff.DiffEntry;
 import org.eclipse.jgit.diff.DiffEntry.ChangeType;
 import org.eclipse.jgit.lib.Constants;
 import org.eclipse.jgit.lib.Repository;
+import org.eclipse.jgit.lib.RepositoryState;
 import org.eclipse.jgit.revwalk.RevCommit;
 import org.eclipse.jgit.treewalk.TreeWalk;
 import org.eclipse.jgit.treewalk.filter.PathFilterGroup;
@@ -132,6 +139,8 @@ public class CommitFileDiffViewer extends TableViewer {
 	private IAction copy;
 
 	private IAction copyAll;
+
+	private IAction checkOutThisVersion;
 
 	private IAction openThisVersion;
 
@@ -243,6 +252,8 @@ public class CommitFileDiffViewer extends TableViewer {
 		final MenuManager mgr = new MenuManager();
 		rawTable.setMenu(mgr.createContextMenu(rawTable));
 
+		checkOutThisVersion = new CheckoutAction(this::getStructuredSelection);
+
 		openThisVersion = new Action(
 				UIText.CommitFileDiffViewer_OpenInEditorMenuLabel) {
 			@Override
@@ -325,6 +336,8 @@ public class CommitFileDiffViewer extends TableViewer {
 		mgr.add(openWorkingTreeVersion);
 		mgr.add(openThisVersion);
 		mgr.add(openPreviousVersion);
+		mgr.add(new Separator());
+		mgr.add(checkOutThisVersion);
 		mgr.add(new Separator());
 		mgr.add(compareWithPrevious);
 		mgr.add(compareWorkingTreeVersion);
@@ -412,8 +425,12 @@ public class CommitFileDiffViewer extends TableViewer {
 		boolean submoduleSelected = false;
 		boolean addSelected = false;
 		boolean deleteSelected = false;
+		Repository repository = null;
 		for (Object item : sel.toList()) {
 			FileDiff fileDiff = (FileDiff) item;
+			if (repository == null) {
+				repository = fileDiff.getRepository();
+			}
 			if (fileDiff.isSubmodule()) {
 				submoduleSelected = true;
 			}
@@ -432,6 +449,9 @@ public class CommitFileDiffViewer extends TableViewer {
 
 		if (!submoduleSelected) {
 			boolean oneOrMoreSelected = !sel.isEmpty();
+			checkOutThisVersion.setEnabled(
+					oneOrMoreSelected && repository != null && repository
+							.getRepositoryState().equals(RepositoryState.SAFE));
 			openThisVersion.setEnabled(oneOrMoreSelected && !deleteSelected);
 			openPreviousVersion.setEnabled(oneOrMoreSelected && !addSelected);
 			compareWithPrevious.setEnabled(
@@ -453,6 +473,7 @@ public class CommitFileDiffViewer extends TableViewer {
 				openWorkingTreeVersion.setEnabled(oneOrMoreSelected);
 			}
 		} else {
+			checkOutThisVersion.setEnabled(false);
 			openThisVersion.setEnabled(false);
 			openPreviousVersion.setEnabled(false);
 			openWorkingTreeVersion.setEnabled(false);
@@ -836,4 +857,65 @@ public class CommitFileDiffViewer extends TableViewer {
 
 	}
 
+	/**
+	 * An action to check out selected {@link FileDiff}s from the commit.
+	 */
+	public static class CheckoutAction extends Action {
+
+		private final Supplier<IStructuredSelection> selectionProvider;
+
+		/**
+		 * Creates a new {@link CheckoutAction}.
+		 *
+		 * @param selectionProvider
+		 *            to get the selection from
+		 */
+		public CheckoutAction(
+				Supplier<IStructuredSelection> selectionProvider) {
+			super(UIText.CommitFileDiffViewer_CheckoutThisVersionMenuLabel);
+			this.selectionProvider = selectionProvider;
+		}
+
+		@Override
+		public void run() {
+			DiscardChangesOperation operation = createOperation();
+			if (operation == null) {
+				return;
+			}
+			Map<Repository, Collection<String>> paths = operation
+					.getPathsPerRepository();
+			if (!CommandConfirmation.confirmCheckout(null, paths, true)) {
+				return;
+			}
+			JobUtil.scheduleUserWorkspaceJob(operation,
+					UIText.DiscardChangesAction_discardChanges,
+					JobFamilies.DISCARD_CHANGES);
+		}
+
+		private DiscardChangesOperation createOperation() {
+			Collection<FileDiff> diffs = getFileDiffs(selectionProvider.get());
+			if (diffs.isEmpty()) {
+				return null;
+			}
+			FileDiff first = diffs.iterator().next();
+			Repository repository = first.getRepository();
+			String revision = first.getCommit().getName();
+			List<String> paths = diffs.stream().map(d -> d.getNewPath())
+					.collect(Collectors.toList());
+			return new DiscardChangesOperation(repository, paths, revision);
+		}
+
+		private Collection<FileDiff> getFileDiffs(
+				IStructuredSelection selection) {
+			List<FileDiff> result = new ArrayList<>();
+			for (Object obj : selection.toList()) {
+				FileDiff diff = Adapters.adapt(obj, FileDiff.class);
+				if (diff != null && diff.getChange() != ChangeType.DELETE
+						&& !diff.isSubmodule()) {
+					result.add(diff);
+				}
+			}
+			return result;
+		}
+	}
 }

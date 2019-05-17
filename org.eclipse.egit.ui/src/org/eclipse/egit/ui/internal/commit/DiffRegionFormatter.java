@@ -19,6 +19,7 @@ import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.eclipse.core.runtime.IAdaptable;
 import org.eclipse.egit.core.internal.CompareCoreUtils;
 import org.eclipse.egit.ui.internal.UIText;
 import org.eclipse.egit.ui.internal.commit.DiffRegionFormatter.DiffRegion.Type;
@@ -143,7 +144,7 @@ public class DiffRegionFormatter extends DiffFormatter {
 	/**
 	 * Region giving access to the {@link FileDiff} that generated the content.
 	 */
-	public static class FileDiffRegion extends Region {
+	public static class FileDiffRegion extends Region implements IAdaptable {
 
 		private final @NonNull FileDiff diff;
 
@@ -187,6 +188,14 @@ public class DiffRegionFormatter extends DiffFormatter {
 		public String toString() {
 			return "[FileDiffRange " + diff.getPath() //$NON-NLS-1$
 					+ ' ' + super.toString() + ']';
+		}
+
+		@Override
+		public <T> T getAdapter(Class<T> adapter) {
+			if (FileDiff.class.equals(adapter)) {
+				return adapter.cast(diff);
+			}
+			return null;
 		}
 	}
 

@@ -26,7 +26,6 @@ import java.io.IOException;
 import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Collections;
 import java.util.Comparator;
 import java.util.EnumSet;
 import java.util.HashSet;
@@ -81,7 +80,6 @@ import org.eclipse.egit.ui.internal.UIText;
 import org.eclipse.egit.ui.internal.actions.ActionCommands;
 import org.eclipse.egit.ui.internal.actions.BooleanPrefAction;
 import org.eclipse.egit.ui.internal.actions.ReplaceWithOursTheirsMenu;
-import org.eclipse.egit.ui.internal.branch.LaunchFinder;
 import org.eclipse.egit.ui.internal.commands.shared.AbortRebaseCommand;
 import org.eclipse.egit.ui.internal.commands.shared.AbstractRebaseCommandHandler;
 import org.eclipse.egit.ui.internal.commands.shared.ContinueRebaseCommand;
@@ -93,6 +91,7 @@ import org.eclipse.egit.ui.internal.commit.CommitProposalProcessor;
 import org.eclipse.egit.ui.internal.commit.DiffViewer;
 import org.eclipse.egit.ui.internal.components.RepositoryMenuUtil.RepositoryToolbarAction;
 import org.eclipse.egit.ui.internal.decorators.ProblemLabelDecorator;
+import org.eclipse.egit.ui.internal.dialogs.CommandConfirmation;
 import org.eclipse.egit.ui.internal.dialogs.CommitMessageArea;
 import org.eclipse.egit.ui.internal.dialogs.CommitMessageComponent;
 import org.eclipse.egit.ui.internal.dialogs.CommitMessageComponentState;
@@ -152,7 +151,6 @@ import org.eclipse.jface.viewers.TreeViewer;
 import org.eclipse.jface.viewers.Viewer;
 import org.eclipse.jface.viewers.ViewerComparator;
 import org.eclipse.jface.viewers.ViewerFilter;
-import org.eclipse.jface.window.Window;
 import org.eclipse.jgit.annotations.NonNull;
 import org.eclipse.jgit.annotations.Nullable;
 import org.eclipse.jgit.api.AddCommand;
@@ -3120,28 +3118,8 @@ public class StagingView extends ViewPart
 
 		@Override
 		public void run() {
-			String question = UIText.DiscardChangesAction_confirmActionMessage;
-			String launch = LaunchFinder
-					.getRunningLaunchConfiguration(
-							Collections.singleton(getCurrentRepository()),
-							null);
-			if (launch != null) {
-				question = MessageFormat.format(question,
-						"\n\n" + MessageFormat.format( //$NON-NLS-1$
-								UIText.LaunchFinder_RunningLaunchMessage,
-								launch));
-			} else {
-				question = MessageFormat.format(question, ""); //$NON-NLS-1$
-			}
-
-			MessageDialog dlg = new MessageDialog(form.getShell(),
-					UIText.DiscardChangesAction_confirmActionTitle, null,
-					question, MessageDialog.CONFIRM,
-					new String[] {
-							UIText.DiscardChangesAction_discardChangesButtonText,
-							IDialogConstants.CANCEL_LABEL },
-					0);
-			if (dlg.open() != Window.OK) {
+			if (!CommandConfirmation.confirmCheckout(form.getShell(),
+					getCurrentRepository())) {
 				return;
 			}
 			List<String> files = new ArrayList<>();
