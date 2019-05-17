@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3574b5dc_fd558446",
+        "filename": "org.eclipse.egit.gitflow.ui/src/org/eclipse/egit/gitflow/ui/internal/properties/RepositoryPropertyTester.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2019-05-17T07:59:17Z",
+      "side": 1,
+      "message": "Missing blank before {.",
+      "revId": "70bbae95031770f81744f0fdfe0e182b6353d3ae",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "31a765e2_d2afbe1f",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/expressions/GitPropertyTester.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2019-05-17T07:59:17Z",
+      "side": 1,
+      "message": "Unnecessary Yoda condition.",
+      "revId": "70bbae95031770f81744f0fdfe0e182b6353d3ae",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "fc5d1f49_6e6892a9",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/resources/ResourceStatePropertyTester.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 127,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2019-05-17T07:59:17Z",
+      "side": 1,
+      "message": "Simply\n\n  default:\n    return null;\n\nand removing line 129 would be a bit shorter and more regular.",
+      "revId": "70bbae95031770f81744f0fdfe0e182b6353d3ae",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
