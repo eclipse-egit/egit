@@ -25,6 +25,7 @@ import org.eclipse.jface.dialogs.IDialogConstants;
 import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.layout.GridDataFactory;
 import org.eclipse.jface.viewers.StructuredSelection;
+import org.eclipse.jgit.lib.Constants;
 import org.eclipse.jgit.lib.Repository;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.graphics.Image;
@@ -121,7 +122,7 @@ public class CleanupUncomittedChangesDialog extends MessageDialog {
 			break;
 		case IDialogConstants.ABORT_ID:
 			DiscardChangesOperation operation = new DiscardChangesOperation(
-					repository, fileList);
+					repository, fileList, Constants.HEAD);
 			JobUtil.scheduleUserWorkspaceJob(operation,
 					UIText.DiscardChangesAction_discardChanges,
 					JobFamilies.DISCARD_CHANGES);
