@@ -20,10 +20,10 @@ import java.util.AbstractList;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
-import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.CopyOnWriteArrayList;
 
 import org.eclipse.core.runtime.Assert;
@@ -123,7 +123,7 @@ public class RebaseInteractivePlan implements IndexDiffChangedListener,
 
 	private ListenerHandle refsChangedListener;
 
-	private static final Map<File, RebaseInteractivePlan> planRegistry = new HashMap<>();
+	private static final Map<File, RebaseInteractivePlan> PLAN_REGISTRY = new ConcurrentHashMap<>();
 
 	private static final String REBASE_TODO = "rebase-merge/git-rebase-todo"; //$NON-NLS-1$
 
@@ -142,12 +142,8 @@ public class RebaseInteractivePlan implements IndexDiffChangedListener,
 	 *         {@link Repository}
 	 */
 	public static RebaseInteractivePlan getPlan(Repository repo) {
-		RebaseInteractivePlan plan = planRegistry.get(repo.getDirectory());
-		if (plan == null) {
-			plan = new RebaseInteractivePlan(repo);
-			planRegistry.put(repo.getDirectory(), plan);
-		}
-		return plan;
+		return PLAN_REGISTRY.computeIfAbsent(repo.getDirectory(),
+				d -> new RebaseInteractivePlan(repo));
 	}
 
 	private RebaseInteractivePlan(Repository repo) {
@@ -213,7 +209,7 @@ public class RebaseInteractivePlan implements IndexDiffChangedListener,
 	public void dispose() {
 		reparsePlan(getRepository());
 		notifyPlanWasUpdatedFromRepository();
-		planRegistry.remove(myGitDir);
+		PLAN_REGISTRY.remove(myGitDir);
 		planList.clear();
 		planChangeListeners.clear();
 		unregisterIndexDiffChangeListener();
@@ -474,6 +470,8 @@ public class RebaseInteractivePlan implements IndexDiffChangedListener,
 
 		/** lazily set full commit */
 		private RevCommit commit;
+
+		private Object userData;
 
 		private PlanElement(RebaseTodoLine line, PersonIdent author,
 				PersonIdent committer) {
@@ -748,6 +746,25 @@ public class RebaseInteractivePlan implements IndexDiffChangedListener,
 			} catch (IOException e) {
 				return null;
 			}
+		}
+
+		/**
+		 * Adds arbitrary user data to the {@link PlanElement}
+		 * 
+		 * @param anything
+		 *            to set as user data, may be {@code null}
+		 */
+		public void setUserData(Object anything) {
+			userData = anything;
+		}
+
+		/**
+		 * Retrieves the user data set.
+		 *
+		 * @return the user data, may be {@code null}
+		 */
+		public Object getUserData() {
+			return userData;
 		}
 	}
 

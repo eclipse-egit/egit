@@ -52,10 +52,12 @@ public enum RebaseInteractivePlanContentProvider implements ITreeContentProvider
 		if (parentElement instanceof RebaseInteractivePlan) {
 			RebaseInteractivePlan plan = (RebaseInteractivePlan) parentElement;
 			List<RebaseInteractivePlan.PlanElement> linesToDisplay = new LinkedList<>();
+			int i = 0;
 			for (RebaseInteractivePlan.PlanElement line : plan.getList()) {
 				if (line.isComment())
 					continue;
 				linesToDisplay.add(line);
+				line.setUserData(Integer.valueOf(++i));
 			}
 
 			if (RebaseInteractivePreferences.isOrderReversed())
