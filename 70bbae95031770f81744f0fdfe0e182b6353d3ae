@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "d4e2c5eb_fe8f99d2",
+        "filename": "org.eclipse.egit.gitflow.ui/src/org/eclipse/egit/gitflow/ui/internal/properties/RepositoryPropertyTester.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 209389
+      },
+      "writtenOn": "2019-05-21T17:36:47Z",
+      "side": 1,
+      "message": "done",
+      "parentUuid": "3574b5dc_fd558446",
+      "revId": "70bbae95031770f81744f0fdfe0e182b6353d3ae",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "31a765e2_d2afbe1f",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/expressions/GitPropertyTester.java",
         "patchSetId": 4
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "fe9797d7_4b4a3c18",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/expressions/GitPropertyTester.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 209389
+      },
+      "writtenOn": "2019-05-21T17:36:47Z",
+      "side": 1,
+      "message": "changed",
+      "parentUuid": "31a765e2_d2afbe1f",
+      "revId": "70bbae95031770f81744f0fdfe0e182b6353d3ae",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fc5d1f49_6e6892a9",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/resources/ResourceStatePropertyTester.java",
         "patchSetId": 4
@@ -47,6 +83,24 @@
       "writtenOn": "2019-05-17T07:59:17Z",
       "side": 1,
       "message": "Simply\n\n  default:\n    return null;\n\nand removing line 129 would be a bit shorter and more regular.",
+      "revId": "70bbae95031770f81744f0fdfe0e182b6353d3ae",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "47db28e8_73cfefc2",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/resources/ResourceStatePropertyTester.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 127,
+      "author": {
+        "id": 209389
+      },
+      "writtenOn": "2019-05-21T17:36:47Z",
+      "side": 1,
+      "message": "done",
+      "parentUuid": "fc5d1f49_6e6892a9",
       "revId": "70bbae95031770f81744f0fdfe0e182b6353d3ae",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
