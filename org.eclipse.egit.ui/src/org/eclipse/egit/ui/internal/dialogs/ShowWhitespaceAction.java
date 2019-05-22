@@ -33,6 +33,16 @@ public class ShowWhitespaceAction extends TextEditorPropertyAction {
 	 *
 	 * @param viewer
 	 *            to operate on
+	 */
+	public ShowWhitespaceAction(ITextViewer viewer) {
+		this(viewer, false);
+	}
+
+	/**
+	 * Creates a new {@link ShowWhitespaceAction}.
+	 *
+	 * @param viewer
+	 *            to operate on
 	 * @param initiallyOff
 	 *            whether to show whitespace initially
 	 */
