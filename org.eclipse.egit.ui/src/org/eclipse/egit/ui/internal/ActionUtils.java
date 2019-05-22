@@ -17,7 +17,10 @@ import java.util.function.BooleanSupplier;
 
 import org.eclipse.jface.action.Action;
 import org.eclipse.jface.action.IAction;
+import org.eclipse.jface.action.MenuManager;
+import org.eclipse.jface.action.Separator;
 import org.eclipse.jface.commands.ActionHandler;
+import org.eclipse.jface.text.ITextOperationTarget;
 import org.eclipse.swt.events.FocusEvent;
 import org.eclipse.swt.events.FocusListener;
 import org.eclipse.swt.widgets.Control;
@@ -109,6 +112,95 @@ public final class ActionUtils {
 	}
 
 	/**
+	 * Creates a new text action using a given {@link ActionFactory} to use as a
+	 * template to set the label, image, and action definition id.
+	 *
+	 * @param target
+	 *            for the action
+	 * @param factory
+	 *            to configure the action
+	 * @param operationCode
+	 *            for the action
+	 * @return the configured {@link UpdateableAction}
+	 */
+	public static UpdateableAction createTextAction(
+			ITextOperationTarget target, ActionFactory factory,
+			int operationCode) {
+		if (operationCode == ITextOperationTarget.REDO) {
+			// XXX: workaround for
+			// https://bugs.eclipse.org/bugs/show_bug.cgi?id=206111
+			return createGlobalAction(factory,
+					() -> target.doOperation(operationCode), () -> true);
+		}
+		return createGlobalAction(factory,
+				() -> target.doOperation(operationCode),
+				() -> target.canDoOperation(operationCode));
+	}
+
+	private static UpdateableAction[] createStandardTextActions(
+			ITextOperationTarget target, boolean editable) {
+		UpdateableAction[] actions = new UpdateableAction[ITextOperationTarget.SELECT_ALL
+				+ 1];
+		if (editable) {
+			actions[ITextOperationTarget.UNDO] = createTextAction(target,
+					ActionFactory.UNDO, ITextOperationTarget.UNDO);
+			actions[ITextOperationTarget.REDO] = createTextAction(target,
+					ActionFactory.REDO, ITextOperationTarget.REDO);
+			actions[ITextOperationTarget.CUT] = createTextAction(target,
+					ActionFactory.CUT, ITextOperationTarget.CUT);
+			actions[ITextOperationTarget.PASTE] = createTextAction(
+					target, ActionFactory.PASTE, ITextOperationTarget.PASTE);
+			actions[ITextOperationTarget.DELETE] = createTextAction(
+					target, ActionFactory.DELETE, ITextOperationTarget.DELETE);
+		}
+		actions[ITextOperationTarget.COPY] = createTextAction(target,
+				ActionFactory.COPY, ITextOperationTarget.COPY);
+		actions[ITextOperationTarget.SELECT_ALL] = createTextAction(
+				target, ActionFactory.SELECT_ALL,
+				ITextOperationTarget.SELECT_ALL);
+		return actions;
+	}
+
+	/**
+	 * Create the standard text actions, fill them into a {@MenuManager} and
+	 * return them as an array indexed by the {@link ITextOperationTarget}
+	 * operation codes. For an editable target, creates undo, redo | cut, copy,
+	 * paste | delete, select all; otherwise just copy, select all.
+	 *
+	 * @param target
+	 *            for the actions to operate on
+	 * @param editable
+	 *            whether the target is editable
+	 * @param manager
+	 *            to fill in; may be {@code null} if the actions shall not be
+	 *            added to a {@link MenuManager}
+	 * @return the actions; may contain {@code null} values (index 0 will always
+	 *         be {@code null})
+	 */
+	public static UpdateableAction[] fillStandardTextActions(
+			ITextOperationTarget target, boolean editable,
+			MenuManager manager) {
+		UpdateableAction[] actions = createStandardTextActions(target,
+				editable);
+		if (manager != null) {
+			if (editable) {
+				manager.add(actions[ITextOperationTarget.UNDO]);
+				manager.add(actions[ITextOperationTarget.REDO]);
+				manager.add(new Separator());
+				manager.add(actions[ITextOperationTarget.CUT]);
+			}
+			manager.add(actions[ITextOperationTarget.COPY]);
+			if (editable) {
+				manager.add(actions[ITextOperationTarget.PASTE]);
+				manager.add(new Separator());
+				manager.add(actions[ITextOperationTarget.DELETE]);
+			}
+			manager.add(actions[ITextOperationTarget.SELECT_ALL]);
+		}
+		return actions;
+	}
+
+	/**
 	 * Hooks up the {@link Control} such that the given {@link IAction}s are
 	 * registered with the given {@link IHandlerService} while the control has
 	 * the focus. Ensures that actions are properly de-registered when the
@@ -117,7 +209,8 @@ public final class ActionUtils {
 	 * @param control
 	 *            to hook up
 	 * @param actions
-	 *            to be registered while the control has the focus
+	 *            to be registered while the control has the focus; {@code null}
+	 *            items are skipped.
 	 * @param service
 	 *            to register the actions with
 	 */
@@ -148,12 +241,14 @@ public final class ActionUtils {
 					// Looks like sometimes we get two focusGained events.
 					return;
 				}
-				for (final IAction action : actions) {
-					handlerActivations.add(service.activateHandler(
-							action.getActionDefinitionId(),
-							new ActionHandler(action), expression, false));
-					if (action instanceof IUpdate) {
-						((IUpdate) action).update();
+				for (IAction action : actions) {
+					if (action != null) {
+						handlerActivations.add(service.activateHandler(
+								action.getActionDefinitionId(),
+								new ActionHandler(action), expression, false));
+						if (action instanceof IUpdate) {
+							((IUpdate) action).update();
+						}
 					}
 				}
 			}
