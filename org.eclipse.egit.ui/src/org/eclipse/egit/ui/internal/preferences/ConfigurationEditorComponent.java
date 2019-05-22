@@ -17,7 +17,6 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
-import java.util.Comparator;
 import java.util.List;
 import java.util.Set;
 import java.util.StringTokenizer;
@@ -550,13 +549,8 @@ public class ConfigurationEditorComponent {
 					Set<String> sectionNames = config.getSections();
 					for (String sectionName : sectionNames)
 						sections.add(new Section(this, sectionName));
-					Collections.sort(sections, new Comparator<Section>() {
-
-						@Override
-						public int compare(Section o1, Section o2) {
-							return o1.name.compareTo(o2.name);
-						}
-					});
+					Collections.sort(sections,
+							(a, b) -> a.name.compareTo(b.name));
 					children = sections.toArray(new Section[0]);
 				} else
 					children = new Section[0];
@@ -975,8 +969,9 @@ public class ConfigurationEditorComponent {
 			if (boldFont != null)
 				return boldFont;
 			FontData[] data = defaultFont.getFontData();
-			for (int i = 0; i < data.length; i++)
-				data[i].setStyle(data[i].getStyle() | SWT.BOLD);
+			for (FontData d : data) {
+				d.setStyle(d.getStyle() | SWT.BOLD);
+			}
 
 			boldFont = new Font(PlatformUI.getWorkbench().getDisplay(), data);
 			return boldFont;

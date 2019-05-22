@@ -126,12 +126,7 @@ public class RefSpecPage extends WizardPage {
 		specsPanel = new RefSpecPanel(panel, pushPage);
 		specsPanel.getControl().setLayoutData(
 				new GridData(SWT.FILL, SWT.FILL, true, true));
-		specsPanel.addRefSpecTableListener(new SelectionChangeListener() {
-			@Override
-			public void selectionChanged() {
-				checkPage();
-			}
-		});
+		specsPanel.addRefSpecTableListener(this::checkPage);
 
 		if (!pushPage) {
 			final Group tagsGroup = new Group(panel, SWT.NULL);

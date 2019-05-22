@@ -52,7 +52,7 @@ public class IndexDiffCache {
 
 	private CopyOnWriteArrayList<IndexDiffChangedListener> listeners = new CopyOnWriteArrayList<>();
 
-	private IndexDiffChangedListener globalListener;
+	private final IndexDiffChangedListener globalListener;
 
 	private ExternalFileBufferListener bufferListener;
 
@@ -207,7 +207,7 @@ public class IndexDiffCache {
 	 * constructor
 	 */
 	public IndexDiffCache() {
-		createGlobalListener();
+		globalListener = this::notifyListeners;
 		registerBufferListener();
 	}
 
@@ -259,16 +259,6 @@ public class IndexDiffCache {
 	 */
 	public void removeIndexDiffChangedListener(IndexDiffChangedListener listener) {
 		listeners.remove(listener);
-	}
-
-	private void createGlobalListener() {
-		globalListener = new IndexDiffChangedListener() {
-			@Override
-			public void indexDiffChanged(Repository repository,
-					IndexDiffData indexDiffData) {
-				notifyListeners(repository, indexDiffData);
-			}
-		};
 	}
 
 	private void notifyListeners(Repository repository,

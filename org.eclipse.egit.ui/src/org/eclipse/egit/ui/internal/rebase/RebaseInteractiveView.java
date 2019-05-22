@@ -176,8 +176,6 @@ public class RebaseInteractiveView extends ViewPart implements
 
 	private List<PlanContextMenuAction> contextMenuItems;
 
-	private RebasePlanIndexer planIndexer;
-
 	private IPreferenceChangeListener prefListener;
 
 	private IPropertyChangeListener uiPrefsListener;
@@ -262,9 +260,6 @@ public class RebaseInteractiveView extends ViewPart implements
 				selectionChangedListener);
 		if (currentPlan != null)
 			currentPlan.removeRebaseInteractivePlanChangeListener(this);
-
-		if (planIndexer != null)
-			planIndexer.dispose();
 
 		InstanceScope.INSTANCE.getNode(
 				org.eclipse.egit.core.Activator.getPluginId())
@@ -691,7 +686,10 @@ public class RebaseInteractiveView extends ViewPart implements
 			public String getText(Object element) {
 				if (element instanceof PlanElement) {
 					PlanElement planLine = (PlanElement) element;
-					return (planIndexer.indexOf(planLine) + 1) + "."; //$NON-NLS-1$
+					Object userData = planLine.getUserData();
+					if (userData instanceof Integer) {
+						return ((Integer) userData).toString() + '.';
+					}
 				}
 				return super.getText(element);
 			}
@@ -897,17 +895,12 @@ public class RebaseInteractiveView extends ViewPart implements
 		if (currentPlan != null)
 			currentPlan.removeRebaseInteractivePlanChangeListener(this);
 
-		if (planIndexer != null)
-			planIndexer.dispose();
-
 		if (isValidRepo(repository)) {
 			currentPlan = RebaseInteractivePlan.getPlan(repository);
-			planIndexer = new RebasePlanIndexer(currentPlan);
 			currentPlan.addRebaseInteractivePlanChangeListener(this);
 			form.setText(getRepositoryName(repository));
 		} else {
 			currentPlan = null;
-			planIndexer = null;
 		}
 		refresh();
 	}

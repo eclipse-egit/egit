@@ -24,6 +24,7 @@ import org.eclipse.core.runtime.Path;
 import org.eclipse.egit.ui.internal.UIIcons;
 import org.eclipse.egit.ui.internal.UIText;
 import org.eclipse.egit.ui.internal.commit.DiffRegionFormatter.FileDiffRegion;
+import org.eclipse.egit.ui.internal.history.CommitFileDiffViewer.CheckoutAction;
 import org.eclipse.egit.ui.internal.history.FileDiff;
 import org.eclipse.jface.action.Action;
 import org.eclipse.jface.action.MenuManager;
@@ -46,6 +47,7 @@ import org.eclipse.jface.viewers.StructuredSelection;
 import org.eclipse.jface.viewers.TreeViewer;
 import org.eclipse.jface.viewers.Viewer;
 import org.eclipse.jgit.diff.DiffEntry;
+import org.eclipse.jgit.lib.RepositoryState;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Menu;
@@ -230,31 +232,52 @@ public class DiffEditorOutlinePage extends NestedContentOutlinePage {
 						}
 					}
 				});
-				if (selected.size() == 1 && !haveNew.isEmpty()) {
-					// "Compare with previous" makes only sense if there are
-					// both a new and a previous version.
+			}
+			if (!haveNew.isEmpty()) {
+				boolean hasFiles = haveNew.stream()
+						.anyMatch(d -> !d.getDiff().isSubmodule());
+				if (hasFiles) {
 					menuManager.add(new Separator());
-					menuManager.add(new Action(
-							UIText.CommitFileDiffViewer_CompareMenuLabel) {
-
-						@Override
-						public void run() {
-							FileDiffRegion fileDiff = selected.iterator()
-									.next();
-							DiffViewer.showTwoWayFileDiff(fileDiff.getDiff());
-						}
-					});
+					CheckoutAction action = new CheckoutAction(
+							this::getStructuredSelection);
+					menuManager.add(action);
+					action.setEnabled(haveNew.iterator().next().getDiff()
+							.getRepository().getRepositoryState()
+							.equals(RepositoryState.SAFE));
 				}
+			}
+			if (selected.size() == 1 && !haveNew.isEmpty()
+					&& !haveOld.isEmpty()) {
+				// "Compare with previous" makes only sense if there are
+				// both a new and a previous version.
+				menuManager.add(new Separator());
+				menuManager.add(new Action(
+						UIText.CommitFileDiffViewer_CompareMenuLabel) {
+
+					@Override
+					public void run() {
+						FileDiffRegion fileDiff = selected.iterator().next();
+						DiffViewer.showTwoWayFileDiff(fileDiff.getDiff());
+					}
+				});
 			}
 		});
 		Menu menu = contextMenu.createContextMenu(viewer.getTree());
 		viewer.getTree().setMenu(menu);
 	}
 
-	private Collection<FileDiffRegion> getSelectedFileDiffs() {
+	private IStructuredSelection getStructuredSelection() {
 		ISelection currentSelection = getSelection();
+		if (currentSelection instanceof IStructuredSelection) {
+			return (IStructuredSelection) currentSelection;
+		}
+		return StructuredSelection.EMPTY;
+	}
+
+	private Collection<FileDiffRegion> getSelectedFileDiffs() {
+		IStructuredSelection currentSelection = getStructuredSelection();
 		List<FileDiffRegion> result = new ArrayList<>();
-		if (!currentSelection.isEmpty() && currentSelection instanceof StructuredSelection) {
+		if (!currentSelection.isEmpty()) {
 			for (Object selected : ((StructuredSelection) currentSelection).toList()) {
 				if (selected instanceof FileDiffRegion
 						&& !((FileDiffRegion) selected).getDiff()

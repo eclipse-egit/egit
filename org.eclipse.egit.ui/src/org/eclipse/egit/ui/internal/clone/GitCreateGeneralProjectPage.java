@@ -13,9 +13,9 @@
 package org.eclipse.egit.ui.internal.clone;
 
 import java.io.File;
-import java.io.FilenameFilter;
 
 import org.eclipse.core.resources.IProject;
+import org.eclipse.core.resources.IProjectDescription;
 import org.eclipse.core.resources.IResource;
 import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.IPath;
@@ -172,24 +172,17 @@ public class GitCreateGeneralProjectPage extends WizardPage {
 				return;
 			}
 			// make sure there is not already a .project file
-			String[] dotProjectFiles = myDirectory.list(new FilenameFilter() {
-
-				@Override
-				public boolean accept(File dir, String name) {
-					if (name.equals(".project")) //$NON-NLS-1$
-						return true;
-					return false;
-				}
-			});
-			if (dotProjectFiles != null && dotProjectFiles.length > 0) {
-				setErrorMessage(NLS
-						.bind(
-								UIText.GitCreateGeneralProjectPage_FileExistsInDirMessage,
-								".project", myDirectory.getPath())); //$NON-NLS-1$
+			File projectFile = new File(myDirectory,
+					IProjectDescription.DESCRIPTION_FILE_NAME);
+			if (projectFile.exists()) {
+				setErrorMessage(NLS.bind(
+						UIText.GitCreateGeneralProjectPage_FileExistsInDirMessage,
+						IProjectDescription.DESCRIPTION_FILE_NAME,
+						myDirectory.getPath()));
 				return;
 			}
 			// project name empty
-			if (projectName.length() == 0) {
+			if (projectName.isEmpty()) {
 				setErrorMessage(UIText.GitCreateGeneralProjectPage_EnterProjectNameMessage);
 				return;
 			}
@@ -237,8 +230,8 @@ public class GitCreateGeneralProjectPage extends WizardPage {
 			return false;
 		}
 		IProject[] workspaceProjects = getProjectsInWorkspace();
-		for (int i = 0; i < workspaceProjects.length; i++) {
-			if (projectName.equals(workspaceProjects[i].getName())) {
+		for (IProject workspaceProject : workspaceProjects) {
+			if (projectName.equals(workspaceProject.getName())) {
 				return true;
 			}
 		}

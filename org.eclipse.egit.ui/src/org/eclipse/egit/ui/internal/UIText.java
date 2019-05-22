@@ -4592,6 +4592,9 @@ public class UIText extends NLS {
 	public static String CommitFileDiffViewer_CanNotOpenCompareEditorTitle;
 
 	/** */
+	public static String CommitFileDiffViewer_CheckoutThisVersionMenuLabel;
+
+	/** */
 	public static String CommitFileDiffViewer_CompareMenuLabel;
 
 	/** */

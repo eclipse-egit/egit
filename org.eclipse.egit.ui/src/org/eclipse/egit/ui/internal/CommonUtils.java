@@ -93,7 +93,8 @@ public class CommonUtils {
 
 				int result;
 
-				if (Character.isDigit(o1Part.charAt(0)) && Character.isDigit(o2Part.charAt(0))) {
+				if (Character.isDigit(o1Part.charAt(0))
+						&& Character.isDigit(o2Part.charAt(0))) {
 					o1Part = stripLeadingZeros(o1Part);
 					o2Part = stripLeadingZeros(o2Part);
 					result = o1Part.length() - o2Part.length();
@@ -147,36 +148,23 @@ public class CommonUtils {
 	 * Instance of comparator which sorts {@link Ref} names using
 	 * {@link CommonUtils#STRING_ASCENDING_COMPARATOR}.
 	 */
-	public static final Comparator<Ref> REF_ASCENDING_COMPARATOR = new Comparator<Ref>() {
-		@Override
-		public int compare(Ref o1, Ref o2) {
-			return STRING_ASCENDING_COMPARATOR.compare(o1.getName(), o2.getName());
-		}
-	};
+	public static final Comparator<Ref> REF_ASCENDING_COMPARATOR = Comparator
+			.comparing(Ref::getName, STRING_ASCENDING_COMPARATOR);
 
 	/**
 	 * Comparator for comparing {@link IResource} by the result of
 	 * {@link IResource#getName()}.
 	 */
-	public static final Comparator<IResource> RESOURCE_NAME_COMPARATOR = new Comparator<IResource>() {
-		@Override
-		public int compare(IResource r1, IResource r2) {
-			return Policy.getComparator().compare(r1.getName(), r2.getName());
-		}
-	};
+	public static final Comparator<IResource> RESOURCE_NAME_COMPARATOR = //
+			(a, b) -> Policy.getComparator().compare(a.getName(), b.getName());
 
 	/**
 	 * Comparator for comparing (@link Path} by the result of
 	 * {@link Path#toAbsolutePath()}
 	 */
-	public static final Comparator<Path> PATH_STRING_COMPARATOR = new Comparator<Path>() {
-		@Override
-		public int compare(Path p1, Path p2) {
-			return STRING_ASCENDING_COMPARATOR.compare(
-					p1.toAbsolutePath().toString(),
-					p2.toAbsolutePath().toString());
-		}
-	};
+	public static final Comparator<Path> PATH_STRING_COMPARATOR = Comparator
+			.comparing(p -> p.toAbsolutePath().toString(),
+					STRING_ASCENDING_COMPARATOR);
 
 	/**
 	 * Programmatically run command based on its id and given selection
@@ -190,14 +178,14 @@ public class CommonUtils {
 	 */
 	public static boolean runCommand(String commandId,
 			IStructuredSelection selection) {
-		ICommandService commandService = CommonUtils.getService(PlatformUI
-				.getWorkbench(), ICommandService.class);
+		ICommandService commandService = CommonUtils
+				.getService(PlatformUI.getWorkbench(), ICommandService.class);
 		Command cmd = commandService.getCommand(commandId);
 		if (!cmd.isDefined())
 			return false;
 
-		IHandlerService handlerService = CommonUtils.getService(PlatformUI
-				.getWorkbench(), IHandlerService.class);
+		IHandlerService handlerService = CommonUtils
+				.getService(PlatformUI.getWorkbench(), IHandlerService.class);
 		EvaluationContext c = null;
 		if (selection != null) {
 			c = new EvaluationContext(

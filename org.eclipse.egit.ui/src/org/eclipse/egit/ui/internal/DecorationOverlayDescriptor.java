@@ -169,9 +169,11 @@ public class DecorationOverlayDescriptor extends CompositeImageDescriptor {
 	@Override
 	public int hashCode() {
 		int code = base.hashCode();
-		for (int i = 0; i < overlays.length; i++)
-			if (overlays[i] != null)
-				code ^= overlays[i].hashCode();
+		for (ImageDescriptor overlay : overlays) {
+			if (overlay != null) {
+				code ^= overlay.hashCode();
+			}
+		}
 		return code;
 	}
 

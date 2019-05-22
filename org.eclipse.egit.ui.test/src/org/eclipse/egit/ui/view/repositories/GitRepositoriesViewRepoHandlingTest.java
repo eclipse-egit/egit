@@ -80,21 +80,26 @@ public class GitRepositoriesViewRepoHandlingTest extends
 			@Override
 			public void run() {
 				Clipboard clp = new Clipboard(Display.getCurrent());
-				clp.clearContents();
-				clp.setContents(new Object[] { "x" },
-						new TextTransfer[] { TextTransfer.getInstance() });
-				String value = (String) clp.getContents(TextTransfer
-						.getInstance());
-				assertEquals("Clipboard content should be x", "x", value);
+				try {
+					clp.clearContents();
+					clp.setContents(new Object[] { "x" },
+							new TextTransfer[] { TextTransfer.getInstance() });
+					String value = (String) clp
+							.getContents(TextTransfer.getInstance());
+					assertEquals("Clipboard content should be x", "x", value);
 
-				ContextMenuHelper.clickContextMenuSync(tree, myUtil
-						.getPluginLocalizedValue("CopyPathCommand"));
-				value = (String) clp.getContents(TextTransfer.getInstance());
-				assertTrue("Clipboard content (" + value
-						+ ")should be a repository path", FileKey
-						.isGitRepository(new File(value), FS.DETECTED));
-
-				clp.dispose();
+					ContextMenuHelper.clickContextMenuSync(tree,
+							myUtil.getPluginLocalizedValue("CopyPathCommand"));
+					value = (String) clp
+							.getContents(TextTransfer.getInstance());
+					assertTrue(
+							"Clipboard content (" + value
+									+ ")should be a repository path",
+							FileKey.isGitRepository(new File(value),
+									FS.DETECTED));
+				} finally {
+					clp.dispose();
+				}
 			}
 		});
 
@@ -111,9 +116,9 @@ public class GitRepositoriesViewRepoHandlingTest extends
 
 			@Override
 			public void run() {
-				Clipboard clip = null;
+				Clipboard clip = new Clipboard(
+						PlatformUI.getWorkbench().getDisplay());
 				try {
-					clip = new Clipboard(PlatformUI.getWorkbench().getDisplay());
 					clip.setContents(new Object[] { repositoryFile.getPath() },
 							new Transfer[] { TextTransfer.getInstance() });
 
@@ -122,8 +127,7 @@ public class GitRepositoriesViewRepoHandlingTest extends
 				} catch (Exception e) {
 					exceptions[0] = e;
 				} finally {
-					if (clip != null)
-						clip.dispose();
+					clip.dispose();
 				}
 			}
 		});

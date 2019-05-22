@@ -92,9 +92,7 @@ public class TaskReferenceFactory implements IAdapterFactory {
 				repoUrl = getRepoUrl(r);
 				message = revCommit.getFullMessage();
 				timestamp = (long) revCommit.getCommitTime() * 1000;
-			} catch (IOException e) {
-				continue;
-			} catch (RuntimeException e) {
+			} catch (IOException | RuntimeException e) {
 				continue;
 			}
 

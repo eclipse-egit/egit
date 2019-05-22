@@ -20,7 +20,6 @@ import java.security.cert.X509Certificate;
 import javax.net.ssl.HostnameVerifier;
 import javax.net.ssl.HttpsURLConnection;
 import javax.net.ssl.SSLContext;
-import javax.net.ssl.SSLSession;
 import javax.net.ssl.TrustManager;
 import javax.net.ssl.X509TrustManager;
 
@@ -33,30 +32,28 @@ import org.eclipse.jgit.transport.URIish;
  */
 public class NetUtil {
 
-	private static TrustManager[] trustAllCerts = new TrustManager[] { new X509TrustManager() {
-		@Override
-		public X509Certificate[] getAcceptedIssuers() {
-			return null;
-		}
+	private static final TrustManager[] TRUST_ALL_CERTS = new TrustManager[] {
+			new X509TrustManager() {
+				@Override
+				public X509Certificate[] getAcceptedIssuers() {
+					return null;
+				}
 
-		@Override
-		public void checkClientTrusted(X509Certificate[] certs, String authType) {
-			// no check
-		}
+				@Override
+				public void checkClientTrusted(X509Certificate[] certs,
+						String authType) {
+					// no check
+				}
 
-		@Override
-		public void checkServerTrusted(X509Certificate[] certs, String authType) {
-			// no check
-		}
-	} };
+				@Override
+				public void checkServerTrusted(X509Certificate[] certs,
+						String authType) {
+					// no check
+				}
+			} };
 
-	private static HostnameVerifier trustAllHostNames = new HostnameVerifier() {
-		@Override
-		public boolean verify(String hostname, SSLSession session) {
-			// always accept
-			return true;
-		}
-	};
+	private static final HostnameVerifier TRUST_ALL_HOST_NAMES = (hostname,
+			session) -> true; // always accept
 
 	/**
 	 * Configures a {@link HttpURLConnection} according to the value of the
@@ -80,9 +77,9 @@ public class NetUtil {
 						new URIish(conn.getURL().toString()));
 				if (!http.isSslVerify()) {
 					SSLContext ctx = SSLContext.getInstance("TLS"); //$NON-NLS-1$
-					ctx.init(null, trustAllCerts, null);
+					ctx.init(null, TRUST_ALL_CERTS, null);
 					httpsConn.setSSLSocketFactory(ctx.getSocketFactory());
-					httpsConn.setHostnameVerifier(trustAllHostNames);
+					httpsConn.setHostnameVerifier(TRUST_ALL_HOST_NAMES);
 				}
 			} catch (KeyManagementException | NoSuchAlgorithmException
 					| URISyntaxException e) {

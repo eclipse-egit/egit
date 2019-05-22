@@ -51,8 +51,8 @@ public final class GitProjectSetCapability extends ProjectSetCapability {
 			ProjectSetSerializationContext context, IProgressMonitor monitor)
 			throws TeamException {
 		List<String> references = new ArrayList<>(projects.length);
-		for (int i = 0; i < projects.length; i++) {
-			String reference = asReference(projects[i]);
+		for (IProject project : projects) {
+			String reference = asReference(project);
 			if(reference != null){
 				references.add(reference);
 			}

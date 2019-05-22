@@ -157,10 +157,7 @@ public class BranchConfigurationDialog extends TitleAreaDialog {
 				addBranchItemsForLocal();
 			else
 				addBranchItemsForRemote(remote);
-		} catch (IOException e) {
-			Activator.logError(
-					UIText.BranchConfigurationDialog_ExceptionGettingRefs, e);
-		} catch (URISyntaxException e) {
+		} catch (IOException | URISyntaxException e) {
 			Activator.logError(
 					UIText.BranchConfigurationDialog_ExceptionGettingRefs, e);
 		}

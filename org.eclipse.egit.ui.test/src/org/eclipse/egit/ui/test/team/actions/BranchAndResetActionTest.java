@@ -45,6 +45,7 @@ import org.eclipse.egit.ui.test.ContextMenuHelper;
 import org.eclipse.egit.ui.test.TestUtil;
 import org.eclipse.jface.bindings.keys.KeyStroke;
 import org.eclipse.jface.dialogs.IDialogConstants;
+import org.eclipse.jgit.api.Git;
 import org.eclipse.jgit.lib.Constants;
 import org.eclipse.jgit.lib.ObjectId;
 import org.eclipse.jgit.lib.Repository;
@@ -129,8 +130,8 @@ public class BranchAndResetActionTest extends LocalRepositoryTestCase {
 		}
 	}
 
-	@Test
-	public void testCheckoutWithConflictsAndReset() throws Exception {
+	private void checkoutWithConflictsAndReset(boolean stage)
+			throws Exception {
 		String charset = ResourcesPlugin.getWorkspace().getRoot()
 				.getProject(PROJ1).getDefaultCharset();
 		String file1Content = getTestFileContent();
@@ -140,6 +141,11 @@ public class BranchAndResetActionTest extends LocalRepositoryTestCase {
 						new ByteArrayInputStream(
 								"New content".getBytes(charset)),
 						IResource.NONE, null);
+		if (stage) {
+			try (Git git = new Git(lookupRepository(repositoryFile))) {
+				git.add().addFilepattern(FILE1_PATH).call();
+			}
+		}
 		String file2Content = "Also changed";
 		ResourcesPlugin.getWorkspace().getRoot().getProject(PROJ1)
 				.getFolder(FOLDER).getFile(FILE2).setContents(
@@ -160,6 +166,16 @@ public class BranchAndResetActionTest extends LocalRepositoryTestCase {
 		// FILE2 should _not_ have been reset since it didn't conflict with the
 		// checkout and wasn't shown in the conflict dialog
 		assertEquals(file2Content, getTestFileContent(FILE2));
+	}
+
+	@Test
+	public void testCheckoutWithConflictsAndReset() throws Exception {
+		checkoutWithConflictsAndReset(false);
+	}
+
+	@Test
+	public void testCheckoutWithStagedConflictsAndReset() throws Exception {
+		checkoutWithConflictsAndReset(true);
 	}
 
 	@Test
@@ -202,8 +218,7 @@ public class BranchAndResetActionTest extends LocalRepositoryTestCase {
 				"Add to stable");
 		op.execute(null);
 
-		InputStream is = toBeDeleted.getContents();
-		try {
+		try (InputStream is = toBeDeleted.getContents()) {
 			checkout(new String[] { LOCAL_BRANCHES, "master" });
 			final SWTBotShell showUndeleted = bot
 					.shell(UIText.NonDeletedFilesDialog_NonDeletedFilesTitle);
@@ -282,8 +297,6 @@ public class BranchAndResetActionTest extends LocalRepositoryTestCase {
 					UIText.NonDeletedFilesDialog_RetryDeleteButton).click();
 			showUndeleted.bot().waitUntil(treeEmpty, 1000, 100);
 			showUndeleted.close();
-		} finally {
-			is.close();
 		}
 	}
 

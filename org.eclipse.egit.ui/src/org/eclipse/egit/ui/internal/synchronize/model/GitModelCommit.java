@@ -17,7 +17,6 @@ import org.eclipse.core.runtime.Path;
 import org.eclipse.egit.core.synchronize.GitCommitsModelCache.Change;
 import org.eclipse.egit.core.synchronize.GitCommitsModelCache.Commit;
 import org.eclipse.egit.ui.internal.synchronize.model.TreeBuilder.FileModelFactory;
-import org.eclipse.egit.ui.internal.synchronize.model.TreeBuilder.TreeModelFactory;
 import org.eclipse.jgit.lib.Repository;
 
 /**
@@ -98,15 +97,8 @@ public class GitModelCommit extends GitModelObjectContainer implements
 				return false;
 			}
 		};
-		TreeModelFactory treeModelFactory = new TreeModelFactory() {
-			@Override
-			public GitModelTree createTreeModel(GitModelObjectContainer parent,
-					IPath fullPath, int kind) {
-				return new GitModelTree(parent, fullPath, kind);
-			}
-		};
 		return TreeBuilder.build(this, repo, commit.getChildren(),
-				fileModelFactory, treeModelFactory);
+				fileModelFactory, GitModelTree::new);
 	}
 
 	/**

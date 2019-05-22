@@ -17,7 +17,6 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
-import java.util.Comparator;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.LinkedList;
@@ -343,12 +342,7 @@ public class RefSpecPanel {
 		createPredefinedCreationPanel();
 		createTableGroup();
 
-		addRefSpecTableListener(new SelectionChangeListener() {
-			@Override
-			public void selectionChanged() {
-				validateSpecs();
-			}
-		});
+		addRefSpecTableListener(this::validateSpecs);
 		setEnable(false);
 	}
 
@@ -877,14 +871,11 @@ public class RefSpecPanel {
 				.setToolTipText(UIText.RefSpecPanel_predefinedTagsDescription);
 		updateAddPredefinedButton(addTagsButton, Transport.REFSPEC_TAGS);
 
-		addRefSpecTableListener(new SelectionChangeListener() {
-			@Override
-			public void selectionChanged() {
-				updateAddPredefinedButton(addConfiguredButton,
-						predefinedConfigured);
-				updateAddPredefinedButton(addBranchesButton, predefinedBranches);
-				updateAddPredefinedButton(addTagsButton, Transport.REFSPEC_TAGS);
-			}
+		addRefSpecTableListener(() -> {
+			updateAddPredefinedButton(addConfiguredButton,
+					predefinedConfigured);
+			updateAddPredefinedButton(addBranchesButton, predefinedBranches);
+			updateAddPredefinedButton(addTagsButton, Transport.REFSPEC_TAGS);
 		});
 	}
 
@@ -1359,12 +1350,9 @@ public class RefSpecPanel {
 				.setToolTipText(UIText.RefSpecPanel_removeAllDescription);
 		updateRemoveAllSpecButton();
 
-		addRefSpecTableListener(new SelectionChangeListener() {
-			@Override
-			public void selectionChanged() {
-				updateForceUpdateAllButton();
-				updateRemoveAllSpecButton();
-			}
+		addRefSpecTableListener(() -> {
+			updateForceUpdateAllButton();
+			updateRemoveAllSpecButton();
 		});
 	}
 
@@ -1744,12 +1732,8 @@ public class RefSpecPanel {
 
 	private List<RefContentProposal> createContentProposals(
 			final Collection<Ref> refs, final Ref head) {
-		final TreeSet<Ref> set = new TreeSet<>(new Comparator<Ref>() {
-			@Override
-			public int compare(Ref ref1, Ref ref2) {
-				return CommonUtils.REF_ASCENDING_COMPARATOR.compare(ref1, ref2);
-			}
-		});
+		final TreeSet<Ref> set = new TreeSet<>(
+				CommonUtils.REF_ASCENDING_COMPARATOR);
 		set.addAll(refs);
 		if (head != null) {
 			set.add(head);

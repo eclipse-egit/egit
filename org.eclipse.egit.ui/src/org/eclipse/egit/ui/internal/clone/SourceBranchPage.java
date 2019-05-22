@@ -19,7 +19,6 @@ import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
-import java.util.Comparator;
 import java.util.List;
 
 import org.eclipse.core.runtime.IProgressMonitor;
@@ -376,12 +375,7 @@ class SourceBranchPage extends WizardPage {
 				}
 			}
 		}
-		Collections.sort(availableRefs, new Comparator<Ref>() {
-			@Override
-			public int compare(final Ref ref1, final Ref ref2) {
-				return CommonUtils.REF_ASCENDING_COMPARATOR.compare(ref1, ref2);
-			}
-		});
+		Collections.sort(availableRefs, CommonUtils.REF_ASCENDING_COMPARATOR);
 		if (idHEAD != null && head == null) {
 			head = idHEAD;
 			availableRefs.add(0, idHEAD);

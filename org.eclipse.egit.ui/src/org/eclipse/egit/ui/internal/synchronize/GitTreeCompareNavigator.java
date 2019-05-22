@@ -43,15 +43,7 @@ class GitTreeCompareNavigator extends CompareNavigator {
 			baseNavigables.setAccessible(true);
 			return (INavigatable[]) baseNavigables.invoke(mainNavigator,
 					Void.class);
-		} catch (SecurityException e) {
-			// should never happen
-		} catch (NoSuchMethodException e) {
-			// should never happen
-		} catch (IllegalArgumentException e) {
-			// should never happen
-		} catch (IllegalAccessException e) {
-			// should never happen
-		} catch (InvocationTargetException e) {
+		} catch (SecurityException | NoSuchMethodException | IllegalArgumentException | IllegalAccessException | InvocationTargetException e) {
 			// should never happen
 		}
 		return new INavigatable[0];

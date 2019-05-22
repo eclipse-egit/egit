@@ -30,7 +30,6 @@ import org.eclipse.egit.ui.internal.components.AsynchronousBranchList;
 import org.eclipse.egit.ui.internal.components.AsynchronousRefProposalProvider;
 import org.eclipse.egit.ui.internal.components.BranchRebaseModeCombo;
 import org.eclipse.egit.ui.internal.components.RemoteSelectionCombo;
-import org.eclipse.egit.ui.internal.components.RemoteSelectionCombo.IRemoteSelectionListener;
 import org.eclipse.egit.ui.internal.components.RemoteSelectionCombo.SelectionType;
 import org.eclipse.egit.ui.internal.dialogs.CancelableFuture;
 import org.eclipse.egit.ui.internal.push.AddRemoteWizard;
@@ -128,13 +127,8 @@ public class PullWizardPage extends WizardPage {
 		try {
 			this.remoteConfigs = RemoteConfig
 					.getAllRemoteConfigs(repository.getConfig());
-			Collections.sort(remoteConfigs, new Comparator<RemoteConfig>() {
-				@Override
-				public int compare(RemoteConfig first, RemoteConfig second) {
-					return String.CASE_INSENSITIVE_ORDER
-							.compare(first.getName(), second.getName());
-				}
-			});
+			Collections.sort(remoteConfigs, Comparator.comparing(
+					RemoteConfig::getName, String.CASE_INSENSITIVE_ORDER));
 			setDefaultUpstreamConfig();
 		} catch (URISyntaxException e) {
 			this.remoteConfigs = new ArrayList<>();
@@ -152,15 +146,11 @@ public class PullWizardPage extends WizardPage {
 		GridDataFactory.fillDefaults().grab(true, false)
 				.applyTo(remoteSelectionCombo);
 		setRemoteConfigs();
-		remoteSelectionCombo
-				.addRemoteSelectionListener(new IRemoteSelectionListener() {
-					@Override
-					public void remoteSelected(RemoteConfig rc) {
-						remoteConfig = rc;
-						setRefAssist(rc);
-						checkPage();
-					}
-				});
+		remoteSelectionCombo.addRemoteSelectionListener(rc -> {
+			remoteConfig = rc;
+			setRefAssist(rc);
+			checkPage();
+		});
 
 		Button newRemoteButton = new Button(res, SWT.PUSH);
 		newRemoteButton.setText(UIText.PushBranchPage_NewRemoteButton);

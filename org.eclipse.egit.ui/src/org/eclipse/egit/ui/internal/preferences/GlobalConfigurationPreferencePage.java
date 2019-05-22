@@ -264,14 +264,8 @@ public class GlobalConfigurationPreferencePage extends PreferencePage implements
 	}
 
 	private void sortRepositoriesByName() {
-		Collections.sort(repositories, new Comparator<Repository>() {
-
-			@Override
-			public int compare(Repository repo1, Repository repo2) {
-				return String.CASE_INSENSITIVE_ORDER.compare(getName(repo1),
-						getName(repo2));
-			}
-		});
+		Collections.sort(repositories, Comparator.comparing(this::getName,
+				String.CASE_INSENSITIVE_ORDER));
 	}
 
 	private String[] getRepositoryComboItems() {

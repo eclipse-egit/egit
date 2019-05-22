@@ -241,8 +241,12 @@ public class CreatePatchActionTest extends LocalRepositoryTestCase {
 			@Override
 			public void run() {
 				Clipboard clp = new Clipboard(Display.getCurrent());
-				value[0] = (String) clp.getContents(TextTransfer.getInstance());
-				clp.dispose();
+				try {
+					value[0] = (String) clp
+							.getContents(TextTransfer.getInstance());
+				} finally {
+					clp.dispose();
+				}
 			}
 		});
 		assertEquals(expected, value[0]);

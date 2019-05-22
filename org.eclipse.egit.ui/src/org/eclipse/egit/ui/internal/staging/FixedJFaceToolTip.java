@@ -378,8 +378,8 @@ public abstract class FixedJFaceToolTip {
 
 				// Search on which monitor the event occurred
 				Rectangle tmp;
-				for (int i = 0; i < ms.length; i++) {
-					tmp = ms[i].getBounds();
+				for (Monitor m : ms) {
+					tmp = m.getBounds();
 					if (tmp.contains(p)) {
 						bounds = tmp;
 						break;
@@ -483,8 +483,8 @@ public abstract class FixedJFaceToolTip {
 
 		if (c instanceof Composite) {
 			Control[] children = ((Composite) c).getChildren();
-			for (int i = 0; i < children.length; i++) {
-				toolTipHookByTypeRecursively(children[i], add, type);
+			for (Control child : children) {
+				toolTipHookByTypeRecursively(child, add, type);
 			}
 		}
 	}
@@ -495,8 +495,8 @@ public abstract class FixedJFaceToolTip {
 
 		if (c instanceof Composite) {
 			Control[] children = ((Composite) c).getChildren();
-			for (int i = 0; i < children.length; i++) {
-				toolTipHookBothRecursively(children[i]);
+			for (Control child : children) {
+				toolTipHookBothRecursively(child);
 			}
 		}
 	}

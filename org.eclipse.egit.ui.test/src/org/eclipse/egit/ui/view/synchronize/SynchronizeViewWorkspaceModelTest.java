@@ -296,10 +296,10 @@ public class SynchronizeViewWorkspaceModelTest extends AbstractSynchronizeViewTe
 		String name = "non-workspace.txt";
 		File root = new File(getTestDirectory(), REPO1);
 		File nonWorkspace = new File(root, name);
-		BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(
-				Files.newOutputStream(nonWorkspace.toPath()), "UTF-8"));
-		writer.append("file content");
-		writer.close();
+		try (BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(
+				Files.newOutputStream(nonWorkspace.toPath()), "UTF-8"))) {
+			writer.append("file content");
+		}
 
 		// when
 		launchSynchronization(INITIAL_TAG, HEAD, true);
@@ -319,10 +319,10 @@ public class SynchronizeViewWorkspaceModelTest extends AbstractSynchronizeViewTe
 		String name = "non-workspace.txt";
 		File root = new File(getTestDirectory(), REPO1);
 		File nonWorkspace = new File(root, name);
-		BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(
-				Files.newOutputStream(nonWorkspace.toPath()), "UTF-8"));
-		writer.append(content);
-		writer.close();
+		try (BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(
+				Files.newOutputStream(nonWorkspace.toPath()), "UTF-8"))) {
+			writer.append(content);
+		}
 
 		// when
 		launchSynchronization(INITIAL_TAG, HEAD, true);

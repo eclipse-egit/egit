@@ -218,9 +218,12 @@ public class GitCreatePatchWizard extends Wizard {
 			public void run() {
 				TextTransfer plainTextTransfer = TextTransfer.getInstance();
 				Clipboard clipboard = new Clipboard(getShell().getDisplay());
-				clipboard.setContents(new String[] { content },
-						new Transfer[] { plainTextTransfer });
-				clipboard.dispose();
+				try {
+					clipboard.setContents(new String[] { content },
+							new Transfer[] { plainTextTransfer });
+				} finally {
+					clipboard.dispose();
+				}
 			}
 		});
 	}

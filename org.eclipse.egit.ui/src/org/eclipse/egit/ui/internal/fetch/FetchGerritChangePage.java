@@ -235,9 +235,13 @@ public class FetchGerritChangePage extends WizardPage {
 			changeRefs.clear();
 		});
 		Clipboard clipboard = new Clipboard(parent.getDisplay());
-		String clipText = (String) clipboard.getContents(TextTransfer
-				.getInstance());
-		clipboard.dispose();
+		String clipText;
+		try {
+			clipText = (String) clipboard
+					.getContents(TextTransfer.getInstance());
+		} finally {
+			clipboard.dispose();
+		}
 		String defaultUri = null;
 		String defaultCommand = null;
 		String defaultChange = null;
@@ -1259,10 +1263,7 @@ public class FetchGerritChangePage extends WizardPage {
 				}
 				Integer patchSetNumber = Integer.valueOf(m.group(3));
 				return new Change(refName, changeNumber, patchSetNumber);
-			} catch (NumberFormatException e) {
-				// if we can't parse this, just return null
-				return null;
-			} catch (IndexOutOfBoundsException e) {
+			} catch (NumberFormatException | IndexOutOfBoundsException e) {
 				// if we can't parse this, just return null
 				return null;
 			}

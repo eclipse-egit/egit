@@ -118,10 +118,13 @@ public class DiscardChangesOperation implements IEGitOperation {
 	 *            to work on
 	 * @param paths
 	 *            collection of repository-relative paths to reset
+	 * @param revision
+	 *            to reset to, if {@code null}, reset to the index
 	 */
 	public DiscardChangesOperation(Repository repository,
-			Collection<String> paths) {
+			Collection<String> paths, String revision) {
 		this(Collections.singletonMap(repository, paths));
+		this.revision = revision;
 	}
 
 	private DiscardChangesOperation(

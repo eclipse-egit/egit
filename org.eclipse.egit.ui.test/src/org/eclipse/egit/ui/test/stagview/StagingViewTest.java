@@ -17,6 +17,9 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
+import org.eclipse.core.resources.IFile;
+import org.eclipse.core.resources.ResourcesPlugin;
+import org.eclipse.egit.core.JobFamilies;
 import org.eclipse.egit.ui.common.StagingViewTester;
 import org.eclipse.egit.ui.test.CommitMessageUtil;
 import org.eclipse.egit.ui.test.TestUtil;
@@ -105,6 +108,51 @@ public class StagingViewTest extends AbstractStagingViewTestCase {
 
 		assertEquals(expectedMessage, TestUtil.getHeadCommit(repository)
 				.getShortMessage());
+	}
+
+	@Test
+	public void testDeleteModifyConflict() throws Exception {
+		IFile file = ResourcesPlugin.getWorkspace().getRoot().getProject(PROJ1)
+				.getFolder(FOLDER).getFile(FILE1);
+		try (Git git = new Git(repository)) {
+			git.checkout().setCreateBranch(true).setName("side").call();
+			assertTrue(file.exists());
+			file.delete(true, null);
+			assertFalse(file.exists());
+			git.rm().addFilepattern(FILE1_PATH).call();
+			TestUtil.joinJobs(JobFamilies.INDEX_DIFF_CACHE_UPDATE);
+			git.commit().setMessage("File deleted").call();
+			TestUtil.waitForJobs(50, 5000);
+
+			git.checkout().setName("master").call();
+			commitOneFileChange("on master");
+
+			git.merge().include(repository.findRef("side")).call();
+		}
+		assertEquals(RepositoryState.MERGING, repository.getRepositoryState());
+
+		StagingViewTester stagingView = StagingViewTester.openStagingView();
+		assertEquals("", stagingView.getCommitMessage());
+		stagingView.assertCommitEnabled(false);
+
+		assertTrue(file.exists());
+		file.delete(true, null);
+		assertFalse(file.exists());
+		TestUtil.joinJobs(JobFamilies.INDEX_DIFF_CACHE_UPDATE);
+
+		stagingView.stageFile(FILE1_PATH);
+		assertEquals(RepositoryState.MERGING_RESOLVED,
+				repository.getRepositoryState());
+		String expectedMessage = "Merge branch 'side'";
+		assertThat(stagingView.getCommitMessage(), startsWith(expectedMessage));
+
+		stagingView.commit();
+		assertEquals(RepositoryState.SAFE, repository.getRepositoryState());
+
+		assertEquals(expectedMessage,
+				TestUtil.getHeadCommit(repository).getShortMessage());
+
+		assertFalse(file.exists());
 	}
 
 	private StagingViewTester commitOneFileChange(String fileContent)

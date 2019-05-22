@@ -292,14 +292,9 @@ public class TestUtil {
 	 */
 	public static void appendFileContent(File file, String content, boolean append)
 			throws IOException {
-		Writer fw = null;
-		try {
-			fw = new OutputStreamWriter(new FileOutputStream(file, append),
-					"UTF-8");
+		try (Writer fw = new OutputStreamWriter(new FileOutputStream(file, append),
+				"UTF-8")) {
 			fw.append(content);
-		} finally {
-			if (fw != null)
-				fw.close();
 		}
 	}
 
@@ -835,8 +830,7 @@ public class TestUtil {
 				for (IWorkbenchWindow window : windows) {
 					IWorkbenchPage workbenchPage = window.getActivePage();
 					IViewReference[] views = workbenchPage.getViewReferences();
-					for (int i = 0; i < views.length; i++) {
-						IViewReference view = views[i];
+					for (IViewReference view : views) {
 						if (viewId.equals(view.getId())) {
 							workbenchPage.hideView(view);
 						}
