@@ -1,0 +1,61 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f8c1db4a_8655b1b5",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2019-05-23T18:19:41Z",
+      "side": 1,
+      "message": "Please see the contributor\u0027s Guide about the format of our commit messages.[1] Basically, add the bug number in the footer.\n\n[1] https://wiki.eclipse.org/EGit/Contributor_Guide#Commit_message_guidelines",
+      "revId": "245f18dcb5ec69901c21c4ba797ad25161dd1f04",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "f1fbdd5b_c1137058",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/dialogs/CreateTagDialog.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 678,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2019-05-23T18:19:41Z",
+      "side": 1,
+      "message": "I think this is the condition for !editable, i.e., readOnly.",
+      "range": {
+        "startLine": 678,
+        "startChar": 10,
+        "endLine": 678,
+        "endChar": 18
+      },
+      "revId": "245f18dcb5ec69901c21c4ba797ad25161dd1f04",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "cad62c3e_76704d66",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/dialogs/CreateTagDialog.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 720,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2019-05-23T18:19:41Z",
+      "side": 1,
+      "message": "This forbids moving lightweight tags, and keeps the overwrite button disabled. This should be improved; it\u0027s very strange that I can move annotated tags but not lightweight tags. Command-line git allows me to move a lightweight tag with git tag -f myLighweightTag \u003ccommitId\u003e. I see no reason why TagOperation shouldn\u0027t be able to move a lightweight tag?",
+      "revId": "245f18dcb5ec69901c21c4ba797ad25161dd1f04",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
