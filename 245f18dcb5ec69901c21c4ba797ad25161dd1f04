@@ -98,6 +98,24 @@
       "revId": "245f18dcb5ec69901c21c4ba797ad25161dd1f04",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "f55ca9e3_a3877d75",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/dialogs/CreateTagDialog.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 720,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2019-05-23T19:23:31Z",
+      "side": 1,
+      "message": "I don\u0027t agree. Before I just couldn\u0027t do anything with lightweight tags, now I can, and the behavior is inconsistent. The feature is not adding a \"lightweight\" button, it\u0027s making this dialog able to deal with lightweight tags. And this dialog can not only create tags but also move tags.\n\nIf you prefer to have separate bug reports for that, create them and push follow-up commits to Gerrit, but frankly said I think it\u0027s overkill since as far as I see the fixes will all be in the same files (probably even in this class here only) and won\u0027t be huge.",
+      "parentUuid": "1a3111c6_f9886519",
+      "revId": "245f18dcb5ec69901c21c4ba797ad25161dd1f04",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
     }
   ]
 }
