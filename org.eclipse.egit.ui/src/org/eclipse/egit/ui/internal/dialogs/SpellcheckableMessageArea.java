@@ -781,11 +781,10 @@ public class SpellcheckableMessageArea extends Composite {
 		final SourceViewerDecorationSupport support = new SourceViewerDecorationSupport(
 				sourceViewer, null, annotationAccess, textColors);
 
-		List annotationPreferences = new MarkerAnnotationPreferences()
-		.getAnnotationPreferences();
-		Iterator e = annotationPreferences.iterator();
-		while (e.hasNext())
-			support.setAnnotationPreference((AnnotationPreference) e.next());
+		List<AnnotationPreference> annotationPreferences = new MarkerAnnotationPreferences()
+				.getAnnotationPreferences();
+		annotationPreferences.iterator()
+				.forEachRemaining(p -> support.setAnnotationPreference(p));
 
 		support.install(EditorsUI.getPreferenceStore());
 		return support;
