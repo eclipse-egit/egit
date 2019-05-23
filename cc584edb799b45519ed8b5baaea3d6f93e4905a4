@@ -16,6 +16,24 @@
       "revId": "cc584edb799b45519ed8b5baaea3d6f93e4905a4",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7d506a76_796f1a7b",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/dialogs/SpellcheckableMessageArea.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 786,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2019-05-23T19:13:31Z",
+      "side": 1,
+      "message": "My personal view is to stick to iterator() unless I need the filtering/mapping and other advanced stuff that I can get only with stream(). But I\u0027m an old-timer who programmed in Java from Java 1.0 and before that in languages most people can\u0027t even remember if they\u0027ve heard of them at all, and before that 8-bit assembly. ;-)\n\nSeriously though, I guess it\u0027s a matter of personal preference, and if it read stream().forEach() it would be OK for me, too. Might even have used that myself in other places.\n\nWhen I look at the implementations of the things returned by ArrayList.iterator() and ArrayList.spliterator(), the old-style iterator is much simpler. For something as simple as an iteration, simpler should mean faster, shouldn\u0027t it? (Admittedly no guarantee about that.)\n\nThere was also recently a case where someone wanted to handle the first element specially. Ah yes, here: https://git.eclipse.org/r/#/c/126802/9/org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/actions/SwitchToMenu.java@227 Maybe doable with streams, but in any case it wasn\u0027t obvious to all involved how, but pretty straight-forward with an iterator.",
+      "parentUuid": "6771f18f_c397a022",
+      "revId": "cc584edb799b45519ed8b5baaea3d6f93e4905a4",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
     }
   ]
 }
