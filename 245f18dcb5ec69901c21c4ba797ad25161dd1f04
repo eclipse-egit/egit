@@ -42,6 +42,30 @@
     },
     {
       "key": {
+        "uuid": "7e68324b_768fc715",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/dialogs/CreateTagDialog.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 678,
+      "author": {
+        "id": 13743
+      },
+      "writtenOn": "2019-05-23T18:46:16Z",
+      "side": 1,
+      "message": "You are right. A regression of the latest fix.",
+      "parentUuid": "f1fbdd5b_c1137058",
+      "range": {
+        "startLine": 678,
+        "startChar": 10,
+        "endLine": 678,
+        "endChar": 18
+      },
+      "revId": "245f18dcb5ec69901c21c4ba797ad25161dd1f04",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "cad62c3e_76704d66",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/dialogs/CreateTagDialog.java",
         "patchSetId": 4
@@ -53,6 +77,24 @@
       "writtenOn": "2019-05-23T18:19:41Z",
       "side": 1,
       "message": "This forbids moving lightweight tags, and keeps the overwrite button disabled. This should be improved; it\u0027s very strange that I can move annotated tags but not lightweight tags. Command-line git allows me to move a lightweight tag with git tag -f myLighweightTag \u003ccommitId\u003e. I see no reason why TagOperation shouldn\u0027t be able to move a lightweight tag?",
+      "revId": "245f18dcb5ec69901c21c4ba797ad25161dd1f04",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1a3111c6_f9886519",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/dialogs/CreateTagDialog.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 720,
+      "author": {
+        "id": 13743
+      },
+      "writtenOn": "2019-05-23T18:46:16Z",
+      "side": 1,
+      "message": "I think it\u0027s out of scope for this bug. I just added a button to create a lightweight tag since it\u0027s not possible to use egit now to create this kind of tag. If there are multiple problems we should track them with different bug reports instead of use a single commit.",
+      "parentUuid": "cad62c3e_76704d66",
       "revId": "245f18dcb5ec69901c21c4ba797ad25161dd1f04",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
