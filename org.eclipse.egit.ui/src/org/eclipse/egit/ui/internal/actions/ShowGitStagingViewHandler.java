@@ -23,6 +23,9 @@ import org.eclipse.ui.IWorkbenchWindow;
 import org.eclipse.ui.PartInitException;
 import org.eclipse.ui.handlers.HandlerUtil;
 
+/**
+ *
+ */
 public class ShowGitStagingViewHandler extends AbstractHandler {
 
 	@Override

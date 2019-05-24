@@ -1140,6 +1140,11 @@
             id="org.eclipse.egit.ui.team.Revert"
             name="%RevertCommand.name">
       </command>
+      <command
+            categoryId="org.eclipse.egit.ui.commandCategory"
+            id="org.eclipse.egit.ui.team.ShowGitStagingView"
+            name="%ShowGitStagingView_label">
+      </command>
    </extension>
    <extension
          point="org.eclipse.ui.handlers">
@@ -3060,15 +3065,6 @@
       <handler
             class="org.eclipse.egit.ui.internal.actions.ShowGitStagingViewHandler"
             commandId="org.eclipse.egit.ui.team.ShowGitStagingView">
-         <activeWhen>
-	          <iterate>
-	             <instanceof value="org.eclipse.egit.ui.internal.repository.tree.RepositoryTreeNode"/>
-	             <not>
-	                <instanceof value="org.eclipse.egit.ui.internal.selection.RepositoryVirtualNode"/>
-	             </not>
-	             <test property="GitRepository.isBare" value="false" />
-	          </iterate>
-         </activeWhen>
       </handler>
    </extension>
    <extension
@@ -3505,7 +3501,7 @@
                label="%HistoryResetMenu.label">
             <visibleWhen>
                <and>
-                  <count value="1" />
+                  d
                   <iterate>
                      <instanceof value="org.eclipse.egit.ui.internal.history.SWTCommit" />
                   </iterate>
@@ -6330,6 +6326,10 @@
       <image
             commandId="org.eclipse.egit.ui.team.ReplaceWithCommit"
             icon="icons/obj16/changelog_obj.png">
+      </image>
+      <image
+            commandId="org.eclipse.egit.ui.team.ShowGitStagingView"
+            icon="icons/eview16/staging.png">
       </image>
    </extension>
    <extension
