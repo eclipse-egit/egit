@@ -3057,6 +3057,19 @@
             </or>
          </activeWhen>
       </handler>
+      <handler
+            class="org.eclipse.egit.ui.internal.actions.ShowGitStagingViewHandler"
+            commandId="org.eclipse.egit.ui.team.ShowGitStagingView">
+         <activeWhen>
+	          <iterate>
+	             <instanceof value="org.eclipse.egit.ui.internal.repository.tree.RepositoryTreeNode"/>
+	             <not>
+	                <instanceof value="org.eclipse.egit.ui.internal.selection.RepositoryVirtualNode"/>
+	             </not>
+	             <test property="GitRepository.isBare" value="false" />
+	          </iterate>
+         </activeWhen>
+      </handler>
    </extension>
    <extension
          point="org.eclipse.ui.views">
@@ -4986,6 +4999,11 @@
                         definitionId="org.eclipse.egit.ui.resourcesSingleRepository">
                   </reference>
                </visibleWhen>
+            </command>
+            <command
+                  commandId="org.eclipse.egit.ui.team.ShowGitStagingView"
+                  label="%ShowGitStagingView_label"
+                  style="push">
             </command>
             <menu
                   id="egit.menu.stashes"
