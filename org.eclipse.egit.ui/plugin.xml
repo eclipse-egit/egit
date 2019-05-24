@@ -3131,6 +3131,13 @@
          <showInPart
                id="org.eclipse.egit.ui.RepositoriesView">
          </showInPart>
+         <view
+               id="org.eclipse.egit.ui.StagingView"
+               minimized="false"
+               relationship="stack"
+               relative="org.eclipse.ui.navigator.ProjectExplorer"
+               visible="false">
+         </view>
       </perspectiveExtension>
       <perspectiveExtension
             targetID="org.eclipse.jdt.ui.JavaPerspective">
@@ -3142,6 +3149,13 @@
                minimized="false"
                ratio="0.6"
                relationship="bottom"
+               relative="org.eclipse.jdt.ui.PackageExplorer"
+               visible="false">
+         </view>
+         <view
+               id="org.eclipse.egit.ui.StagingView"
+               minimized="false"
+               relationship="stack"
                relative="org.eclipse.jdt.ui.PackageExplorer"
                visible="false">
          </view>
@@ -3163,6 +3177,13 @@
                ratio="0.6"
                relationship="bottom"
                relative="org.eclipse.jdt.ui.PackageExplorer"
+               visible="false">
+         </view>
+         <view
+               id="org.eclipse.egit.ui.StagingView"
+               minimized="false"
+               relationship="stack"
+               relative="org.eclipse.ui.navigator.ProjectExplorer"
                visible="false">
          </view>
       </perspectiveExtension>
