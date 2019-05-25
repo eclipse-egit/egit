@@ -1,0 +1,67 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "608d9635_9f3056ec",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/JobFamilies.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 129,
+      "author": {
+        "id": 440
+      },
+      "writtenOn": "2019-05-25T13:05:00Z",
+      "side": 1,
+      "message": "What do you think about UIIcons.COMMIT as argument for the job family, to see a more specific icon in the progress view?",
+      "revId": "181be0bff65a450382b99e2fce34d1b318ca5d12",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "4f2165ab_b5fbb52c",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/commit/CommitEditorPage.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 724,
+      "author": {
+        "id": 440
+      },
+      "writtenOn": "2019-05-25T13:05:00Z",
+      "side": 1,
+      "message": "I\u0027m in favor of removing the comparison with this to really only use the separate family object.",
+      "range": {
+        "startLine": 723,
+        "startChar": 10,
+        "endLine": 724,
+        "endChar": 7
+      },
+      "revId": "181be0bff65a450382b99e2fce34d1b318ca5d12",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "11bd4a7b_e74eaad7",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/commit/CommitEditorPage.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 755,
+      "author": {
+        "id": 440
+      },
+      "writtenOn": "2019-05-25T13:05:00Z",
+      "side": 1,
+      "message": "must become JobFamilies.COMMIT_EDITOR",
+      "range": {
+        "startLine": 755,
+        "startChar": 29,
+        "endLine": 755,
+        "endChar": 33
+      },
+      "revId": "181be0bff65a450382b99e2fce34d1b318ca5d12",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
