@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "0f2e529b_9996f4b3",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/JobFamilies.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 129,
+      "author": {
+        "id": 1179
+      },
+      "writtenOn": "2019-05-25T13:30:35Z",
+      "side": 1,
+      "message": "Commit icon looks as if one \"writes something to database\". Therefore I\u0027ve just left the generic database icon",
+      "parentUuid": "608d9635_9f3056ec",
+      "revId": "181be0bff65a450382b99e2fce34d1b318ca5d12",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4f2165ab_b5fbb52c",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/commit/CommitEditorPage.java",
         "patchSetId": 2
@@ -42,6 +60,30 @@
     },
     {
       "key": {
+        "uuid": "5bded2fd_110d3bf3",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/commit/CommitEditorPage.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 724,
+      "author": {
+        "id": 1179
+      },
+      "writtenOn": "2019-05-25T13:30:35Z",
+      "side": 1,
+      "message": "The reason to have \"this\" is to be able to cancel a job for only this current editor.",
+      "parentUuid": "4f2165ab_b5fbb52c",
+      "range": {
+        "startLine": 723,
+        "startChar": 10,
+        "endLine": 724,
+        "endChar": 7
+      },
+      "revId": "181be0bff65a450382b99e2fce34d1b318ca5d12",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "11bd4a7b_e74eaad7",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/commit/CommitEditorPage.java",
         "patchSetId": 2
@@ -53,6 +95,30 @@
       "writtenOn": "2019-05-25T13:05:00Z",
       "side": 1,
       "message": "must become JobFamilies.COMMIT_EDITOR",
+      "range": {
+        "startLine": 755,
+        "startChar": 29,
+        "endLine": 755,
+        "endChar": 33
+      },
+      "revId": "181be0bff65a450382b99e2fce34d1b318ca5d12",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "d6bbff7d_e7696a5e",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/commit/CommitEditorPage.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 755,
+      "author": {
+        "id": 1179
+      },
+      "writtenOn": "2019-05-25T13:30:35Z",
+      "side": 1,
+      "message": "This will cancell *all* jobs for *all* opened editors",
+      "parentUuid": "11bd4a7b_e74eaad7",
       "range": {
         "startLine": 755,
         "startChar": 29,
