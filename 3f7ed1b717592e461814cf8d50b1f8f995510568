@@ -16,6 +16,24 @@
       "revId": "3f7ed1b717592e461814cf8d50b1f8f995510568",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "b9c43aec_897d4007",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/AdapterUtils.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 440
+      },
+      "writtenOn": "2019-05-26T15:49:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6eba58ad_a28944d8",
+      "revId": "3f7ed1b717592e461814cf8d50b1f8f995510568",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
     }
   ]
 }
