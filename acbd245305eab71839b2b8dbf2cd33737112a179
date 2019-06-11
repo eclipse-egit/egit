@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7ba62d60_233a06a4",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/internal/storage/GitFileHistory.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 217,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2019-06-11T10:05:51Z",
+      "side": 1,
+      "message": "Unnecessary cast. Adapters.adapt() takes an Object.\n\nUnclear to me whether the up-front check for \"revision instanceof IAdaptable\" could also be removed, but I do suspect so.\n\nSame below.",
+      "range": {
+        "startLine": 217,
+        "startChar": 46,
+        "endLine": 217,
+        "endChar": 58
+      },
+      "revId": "acbd245305eab71839b2b8dbf2cd33737112a179",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "2be2ede8_10be84fe",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/operations/GitScopeUtil.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 117,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2019-06-11T10:05:51Z",
+      "side": 1,
+      "message": "Is this needed?",
+      "range": {
+        "startLine": 117,
+        "startChar": 2,
+        "endLine": 117,
+        "endChar": 32
+      },
+      "revId": "acbd245305eab71839b2b8dbf2cd33737112a179",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "f105063e_da656ed9",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/preferences/GitProjectPropertyPage.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2019-06-11T10:05:51Z",
+      "side": 1,
+      "message": "This could become simply\n\n  IResource resource \u003d Adapters.adapt(getElement(), IResource.class);\n  if (resource !\u003d null) {\n    project \u003d resource.getProject();\n  }",
+      "range": {
+        "startLine": 86,
+        "startChar": 0,
+        "endLine": 94,
+        "endChar": 3
+      },
+      "revId": "acbd245305eab71839b2b8dbf2cd33737112a179",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
