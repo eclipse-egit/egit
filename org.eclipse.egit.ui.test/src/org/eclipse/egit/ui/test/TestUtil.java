@@ -160,7 +160,7 @@ public class TestUtil {
 			BundleContext context = bundle.getBundleContext();
 
 			ServiceTracker<BundleLocalization, BundleLocalization> localizationTracker =
-					new ServiceTracker<BundleLocalization, BundleLocalization>(
+					new ServiceTracker<>(
 					context, BundleLocalization.class, null);
 			localizationTracker.open();
 
@@ -469,8 +469,7 @@ public class TestUtil {
 	public static void assertRepositoryContainsFiles(Repository repository,
 			String[] paths) throws Exception {
 		Set<String> expectedfiles = new HashSet<>();
-		for (String path : paths)
-			expectedfiles.add(path);
+		expectedfiles.addAll(Arrays.asList(paths));
 		try (TreeWalk treeWalk = new TreeWalk(repository)) {
 			treeWalk.addTree(repository.resolve("HEAD^{tree}"));
 			treeWalk.setRecursive(true);
@@ -555,7 +554,7 @@ public class TestUtil {
 	 */
 	public SWTBotTreeItem[] getProjectItems(SWTBotTree projectExplorerTree,
 			String... projects) {
-		List<SWTBotTreeItem> items = new ArrayList<SWTBotTreeItem>();
+		List<SWTBotTreeItem> items = new ArrayList<>();
 		for (SWTBotTreeItem item : projectExplorerTree.getAllItems()) {
 			String itemText = item.getText();
 			StringTokenizer tok = new StringTokenizer(itemText, " ");
@@ -691,7 +690,7 @@ public class TestUtil {
 	 */
 	public static SWTBotTreeItem getNode(SWTBotTreeItem[] nodes, String searchText) {
 		List<String> texts = new ArrayList<>();
-		List<SWTBotTreeItem> matchingItems = new ArrayList<SWTBotTreeItem>();
+		List<SWTBotTreeItem> matchingItems = new ArrayList<>();
 
 		for (SWTBotTreeItem item : nodes) {
 			String text = item.getText();

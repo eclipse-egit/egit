@@ -31,6 +31,7 @@ import java.util.regex.Pattern;
 
 import org.eclipse.core.resources.IResource;
 import org.eclipse.core.resources.IWorkspaceRoot;
+import org.eclipse.core.runtime.Adapters;
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
@@ -45,6 +46,7 @@ import org.eclipse.egit.ui.Activator;
 import org.eclipse.egit.ui.JobFamilies;
 import org.eclipse.egit.ui.UIPreferences;
 import org.eclipse.egit.ui.UIUtils;
+import org.eclipse.egit.ui.internal.ActionUtils;
 import org.eclipse.egit.ui.internal.CompareUtils;
 import org.eclipse.egit.ui.internal.UIIcons;
 import org.eclipse.egit.ui.internal.UIText;
@@ -55,6 +57,7 @@ import org.eclipse.egit.ui.internal.commit.FocusTracker;
 import org.eclipse.egit.ui.internal.components.RepositoryMenuUtil.RepositoryToolbarAction;
 import org.eclipse.egit.ui.internal.dialogs.HyperlinkSourceViewer;
 import org.eclipse.egit.ui.internal.dialogs.HyperlinkTokenScanner;
+import org.eclipse.egit.ui.internal.dialogs.ShowWhitespaceAction;
 import org.eclipse.egit.ui.internal.fetch.FetchHeadChangedEvent;
 import org.eclipse.egit.ui.internal.history.FindToolbar.StatusListener;
 import org.eclipse.egit.ui.internal.repository.tree.AdditionalRefNode;
@@ -90,6 +93,7 @@ import org.eclipse.jface.text.Document;
 import org.eclipse.jface.text.IDocument;
 import org.eclipse.jface.text.IRegion;
 import org.eclipse.jface.text.ITextListener;
+import org.eclipse.jface.text.ITextOperationTarget;
 import org.eclipse.jface.text.TextAttribute;
 import org.eclipse.jface.text.TextEvent;
 import org.eclipse.jface.text.hyperlink.IHyperlinkDetector;
@@ -888,7 +892,7 @@ public class GitHistoryPage extends HistoryPage implements RefsChangedListener,
 		if (resource != null && typeOk(resource))
 			return true;
 
-		return AdapterUtils.adapt(object, Repository.class) != null;
+		return Adapters.adapt(object, Repository.class) != null;
 	}
 
 	private static boolean typeOk(final IResource object) {
@@ -1289,6 +1293,33 @@ public class GitHistoryPage extends HistoryPage implements RefsChangedListener,
 				new DiffViewer.Configuration(EditorsUI.getPreferenceStore()));
 		diffViewer.getControl().setLayoutData(
 				GridDataFactory.fillDefaults().grab(true, false).create());
+
+		ActionUtils.UpdateableAction selectAll = ActionUtils.createGlobalAction(
+				ActionFactory.SELECT_ALL,
+				() -> diffViewer.doOperation(ITextOperationTarget.SELECT_ALL),
+				() -> diffViewer
+						.canDoOperation(ITextOperationTarget.SELECT_ALL));
+		ActionUtils.UpdateableAction copy = ActionUtils.createGlobalAction(
+				ActionFactory.COPY,
+				() -> diffViewer.doOperation(ITextOperationTarget.COPY),
+				() -> diffViewer.canDoOperation(ITextOperationTarget.COPY));
+		ActionUtils.setGlobalActions(diffViewer.getControl(), copy, selectAll);
+		ShowWhitespaceAction showWhitespaceAction = new ShowWhitespaceAction(
+				diffViewer);
+		diffViewer.addSelectionChangedListener(e -> copy.update());
+		MenuManager contextMenu = new MenuManager();
+		contextMenu.setRemoveAllWhenShown(true);
+		contextMenu.addMenuListener(manager -> {
+			if (diffViewer.getDocument().getLength() > 0) {
+				manager.add(copy);
+				manager.add(selectAll);
+				manager.add(new Separator());
+				manager.add(showWhitespaceAction);
+			}
+		});
+		StyledText diffWidget = diffViewer.getTextWidget();
+		diffWidget.setMenu(contextMenu.createContextMenu(diffWidget));
+		diffWidget.addDisposeListener(e -> showWhitespaceAction.dispose());
 
 		setWrap(store
 				.getBoolean(UIPreferences.RESOURCEHISTORY_SHOW_COMMENT_WRAP));
@@ -1893,9 +1924,9 @@ public class GitHistoryPage extends HistoryPage implements RefsChangedListener,
 				}
 			}
 			if (repo == null) {
-				repo = AdapterUtils.adapt(o, Repository.class);
+				repo = Adapters.adapt(o, Repository.class);
 				if (repo != null) {
-					File file = AdapterUtils.adapt(o, File.class);
+					File file = Adapters.adapt(o, File.class);
 					if (file == null) {
 						input = new HistoryPageInput(repo);
 					} else {
@@ -1903,7 +1934,7 @@ public class GitHistoryPage extends HistoryPage implements RefsChangedListener,
 					}
 				}
 			}
-			selection = AdapterUtils.adapt(o, RevCommit.class);
+			selection = Adapters.adapt(o, RevCommit.class);
 
 			if (input == null || repo == null) {
 				this.name = ""; //$NON-NLS-1$
@@ -2758,7 +2789,7 @@ public class GitHistoryPage extends HistoryPage implements RefsChangedListener,
 		IWorkbenchPartSite site = getPartSite();
 		if (site != null) {
 			final IWorkbenchSiteProgressService p;
-			p = AdapterUtils.adapt(site, IWorkbenchSiteProgressService.class);
+			p = Adapters.adapt(site, IWorkbenchSiteProgressService.class);
 			if (p != null) {
 				p.schedule(j, 0, true /* use half-busy cursor */);
 				return;

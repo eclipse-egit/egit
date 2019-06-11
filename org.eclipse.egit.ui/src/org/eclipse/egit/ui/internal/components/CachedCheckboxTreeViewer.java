@@ -13,6 +13,7 @@
  *******************************************************************************/
 package org.eclipse.egit.ui.internal.components;
 
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.Iterator;
@@ -198,9 +199,7 @@ public class CachedCheckboxTreeViewer extends ContainerCheckedTreeViewer {
 			}
 
 			if (contentProvider == null) {
-				for (Object element : visible) {
-					checkState.add(element);
-				}
+				checkState.addAll(Arrays.asList(visible));
 			} else {
 				Set<Object> toCheck = new HashSet<>();
 				for (Object element : visible) {

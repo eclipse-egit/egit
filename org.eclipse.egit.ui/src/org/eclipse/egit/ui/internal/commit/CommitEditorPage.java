@@ -20,17 +20,21 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
+import org.eclipse.core.runtime.Adapters;
 import org.eclipse.core.runtime.IAdaptable;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
+import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.core.runtime.Platform;
 import org.eclipse.core.runtime.PlatformObject;
 import org.eclipse.core.runtime.Status;
+import org.eclipse.core.runtime.SubMonitor;
 import org.eclipse.core.runtime.jobs.ISchedulingRule;
 import org.eclipse.core.runtime.jobs.Job;
-import org.eclipse.egit.core.AdapterUtils;
+import org.eclipse.egit.core.EclipseGitProgressTransformer;
 import org.eclipse.egit.core.internal.Utils;
 import org.eclipse.egit.ui.Activator;
+import org.eclipse.egit.ui.JobFamilies;
 import org.eclipse.egit.ui.UIPreferences;
 import org.eclipse.egit.ui.UIUtils;
 import org.eclipse.egit.ui.internal.ClipboardUtils;
@@ -548,7 +552,7 @@ public class CommitEditorPage extends FormPage
 	}
 
 	RepositoryCommit getCommit() {
-		return AdapterUtils.adapt(getEditor(), RepositoryCommit.class);
+		return Adapters.adapt(getEditor(), RepositoryCommit.class);
 	}
 
 	@Override
@@ -634,13 +638,14 @@ public class CommitEditorPage extends FormPage
 			return Collections.emptyList();
 		}
 		if (refs.size() < BRANCH_LIMIT_FOR_SYNC_LOAD) {
-			return findBranchesReachableFromCommit(commit, refs);
+			return findBranchesReachableFromCommit(commit, refs,
+					new NullProgressMonitor());
 		} else {
 			Job branchRefreshJob = new CommitEditorPageJob(commit) {
 				@Override
 				protected IStatus run(IProgressMonitor monitor) {
 					List<Ref> branches = findBranchesReachableFromCommit(commit,
-							refs);
+							refs, monitor);
 					updateUI(monitor, () -> fillBranches(branches));
 					return Status.OK_STATUS;
 				}
@@ -651,10 +656,12 @@ public class CommitEditorPage extends FormPage
 	}
 
 	private List<Ref> findBranchesReachableFromCommit(RepositoryCommit commit,
-			List<Ref> refs) {
+			List<Ref> refs, IProgressMonitor monitor) {
+		EclipseGitProgressTransformer progress = new EclipseGitProgressTransformer(
+				SubMonitor.convert(monitor, refs.size()));
 		try (RevWalk revWalk = new RevWalk(commit.getRepository())) {
 			return RevWalkUtils.findBranchesReachableFrom(commit.getRevCommit(),
-					revWalk, refs);
+					revWalk, refs, progress);
 		} catch (IOException e) {
 			Activator.handleError(e.getMessage(), e, false);
 			return Collections.emptyList();
@@ -713,7 +720,8 @@ public class CommitEditorPage extends FormPage
 
 		@Override
 		public boolean belongsTo(Object family) {
-			return CommitEditorPage.this == family;
+			return CommitEditorPage.this == family
+					|| JobFamilies.COMMIT_EDITOR == family;
 		}
 
 		protected final void updateUI(IProgressMonitor monitor, Runnable task) {

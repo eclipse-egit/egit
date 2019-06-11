@@ -24,6 +24,7 @@ import org.eclipse.core.commands.AbstractHandler;
 import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.commands.ExecutionException;
 import org.eclipse.core.resources.IResource;
+import org.eclipse.core.runtime.Adapters;
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.Path;
 import org.eclipse.egit.core.AdapterUtils;
@@ -74,8 +75,8 @@ abstract class AbstractHistoryCommandHandler extends AbstractHandler {
 			throws ExecutionException {
 		IStructuredSelection selection = getSelection(event);
 		if (!selection.isEmpty()) {
-			IRepositoryCommit commit = AdapterUtils
-					.adapt(selection.getFirstElement(), IRepositoryCommit.class);
+			IRepositoryCommit commit = Adapters.adapt(
+					selection.getFirstElement(), IRepositoryCommit.class);
 			if (commit != null) {
 				return commit.getRepository();
 			}
@@ -90,7 +91,7 @@ abstract class AbstractHistoryCommandHandler extends AbstractHandler {
 		if (input instanceof RepositoryTreeNode) {
 			return ((RepositoryTreeNode) input).getRepository();
 		}
-		Repository repo = AdapterUtils.adapt(input, Repository.class);
+		Repository repo = Adapters.adapt(input, Repository.class);
 		if (repo != null) {
 			return repo;
 		}
@@ -194,7 +195,7 @@ abstract class AbstractHistoryCommandHandler extends AbstractHandler {
 			throw new ExecutionException(
 					UIText.AbstractHistoryCommandHandler_ActionRequiresOneSelectedCommitMessage);
 		}
-		RevCommit commit = AdapterUtils.adapt(selection.getFirstElement(),
+		RevCommit commit = Adapters.adapt(selection.getFirstElement(),
 				RevCommit.class);
 		if (commit == null) {
 			throw new ExecutionException(
@@ -240,7 +241,7 @@ abstract class AbstractHistoryCommandHandler extends AbstractHandler {
 		List<RevCommit> commits = new ArrayList<>();
 		try (RevWalk walk = new RevWalk(repository)) {
 			for (Object element : selection.toList()) {
-				RevCommit commit = AdapterUtils.adapt(element, RevCommit.class);
+				RevCommit commit = Adapters.adapt(element, RevCommit.class);
 				if (commit != null) {
 					// Re-parse commit to clear effects of TreeFilter
 					RevCommit reparsed = walk.parseCommit(commit.getId());
@@ -307,7 +308,7 @@ abstract class AbstractHistoryCommandHandler extends AbstractHandler {
 		if (selection.isEmpty()) {
 			return branchesOfCommit;
 		}
-		RevCommit revCommit = AdapterUtils.adapt(selection.getFirstElement(),
+		RevCommit revCommit = Adapters.adapt(selection.getFirstElement(),
 				RevCommit.class);
 		if (!(revCommit instanceof PlotCommit)) {
 			return branchesOfCommit;

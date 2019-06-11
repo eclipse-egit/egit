@@ -25,8 +25,8 @@ import org.eclipse.core.resources.IContainer;
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IResource;
 import org.eclipse.core.resources.mapping.ResourceMapping;
+import org.eclipse.core.runtime.Adapters;
 import org.eclipse.core.runtime.CoreException;
-import org.eclipse.egit.core.AdapterUtils;
 import org.eclipse.egit.core.internal.indexdiff.IndexDiffData;
 import org.eclipse.egit.ui.Activator;
 import org.eclipse.egit.ui.UIPreferences;
@@ -226,7 +226,7 @@ public abstract class GitLightweightDecoratorTest
 
 	protected static IFile findFile(IContainer container, String name) {
 		IResource resource = findResource(container, name);
-		return AdapterUtils.adapt(resource, IFile.class);
+		return Adapters.adapt(resource, IFile.class);
 	}
 
 	protected static RevCommit gitCommit(Git git) throws Exception {

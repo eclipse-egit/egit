@@ -21,6 +21,7 @@ import java.util.List;
 
 import org.eclipse.core.commands.ExecutionException;
 import org.eclipse.core.resources.IResource;
+import org.eclipse.core.runtime.Adapters;
 import org.eclipse.core.runtime.preferences.IEclipsePreferences.IPreferenceChangeListener;
 import org.eclipse.core.runtime.preferences.IEclipsePreferences.PreferenceChangeEvent;
 import org.eclipse.core.runtime.preferences.InstanceScope;
@@ -227,7 +228,7 @@ public class RebaseInteractiveView extends ViewPart implements
 			}
 		}
 		if (repo == null) {
-			repo = AdapterUtils.adapt(o, Repository.class);
+			repo = Adapters.adapt(o, Repository.class);
 		}
 		if (repo == null && !force) {
 			return;

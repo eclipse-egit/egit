@@ -18,11 +18,11 @@ import java.util.Collections;
 
 import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.IResource;
+import org.eclipse.core.runtime.Adapters;
 import org.eclipse.core.runtime.IAdaptable;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.egit.core.Activator;
 import org.eclipse.egit.core.internal.CoreText;
-import org.eclipse.egit.core.internal.Utils;
 import org.eclipse.egit.core.project.RepositoryMapping;
 import org.eclipse.egit.core.synchronize.GitRemoteResource;
 import org.eclipse.jgit.errors.IncorrectObjectTypeException;
@@ -211,33 +211,35 @@ class GitFileHistory extends FileHistory implements IAdaptable {
 	}
 
 	private String getGitPath(IFileRevision revision) {
-		if (revision instanceof CommitFileRevision)
+		if (revision instanceof CommitFileRevision) {
 			return ((CommitFileRevision) revision).getGitPath();
-		else if (revision instanceof IAdaptable) {
-			final IResourceVariant variant = Utils.getAdapter(((IAdaptable) revision), IResourceVariant.class);
-
-			if (variant instanceof GitRemoteResource)
-				return ((GitRemoteResource) variant).getPath();
 		}
+		IResourceVariant variant = Adapters.adapt(revision,
+				IResourceVariant.class);
 
+		if (variant instanceof GitRemoteResource) {
+			return ((GitRemoteResource) variant).getPath();
+		}
 		return null;
 	}
 
 	private RevCommit getRevCommit(IFileRevision revision) {
-		if (revision instanceof CommitFileRevision)
+		if (revision instanceof CommitFileRevision) {
 			return ((CommitFileRevision) revision).getRevCommit();
-		else if (revision instanceof IAdaptable) {
-			final IResourceVariant variant = Utils.getAdapter(((IAdaptable) revision), IResourceVariant.class);
-			if (variant instanceof GitRemoteResource) {
-				final RevCommit commit = ((GitRemoteResource) variant)
-						.getCommitId();
-				try {
-					return walk.parseCommit(commit);
-				} catch (IOException e) {
-					Activator.logError(NLS.bind(
-							CoreText.GitFileHistory_invalidCommit,
-							commit.getName(), resource.getName()), e);
-				}
+		}
+		IResourceVariant variant = Adapters.adapt(revision,
+				IResourceVariant.class);
+		if (variant instanceof GitRemoteResource) {
+			final RevCommit commit = ((GitRemoteResource) variant)
+					.getCommitId();
+			try {
+				return walk.parseCommit(commit);
+			} catch (IOException e) {
+				Activator
+						.logError(
+								NLS.bind(CoreText.GitFileHistory_invalidCommit,
+										commit.getName(), resource.getName()),
+								e);
 			}
 		}
 

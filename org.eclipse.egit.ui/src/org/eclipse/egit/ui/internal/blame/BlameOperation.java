@@ -21,13 +21,13 @@ import java.util.Map;
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IResource;
 import org.eclipse.core.resources.IStorage;
+import org.eclipse.core.runtime.Adapters;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IAdaptable;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.Platform;
 import org.eclipse.core.runtime.SubMonitor;
 import org.eclipse.core.runtime.jobs.ISchedulingRule;
-import org.eclipse.egit.core.AdapterUtils;
 import org.eclipse.egit.core.internal.storage.CommitFileRevision;
 import org.eclipse.egit.core.op.IEGitOperation;
 import org.eclipse.egit.ui.Activator;
@@ -356,7 +356,7 @@ public class BlameOperation implements IEGitOperation {
 		AbstractDecoratedTextEditor editor = (AbstractDecoratedTextEditor) editorPart;
 		// IRevisionRulerColumn would also be possible but using
 		// IVerticalRulerInfo seems to work in more situations.
-		IVerticalRulerInfo rulerInfo = AdapterUtils.adapt(editor,
+		IVerticalRulerInfo rulerInfo = Adapters.adapt(editor,
 				IVerticalRulerInfo.class);
 
 		BlameInformationControlCreator creator = new BlameInformationControlCreator(
@@ -380,7 +380,7 @@ public class BlameOperation implements IEGitOperation {
 			}
 		}
 
-		IRevisionRulerColumn revisionRuler = AdapterUtils.adapt(editor,
+		IRevisionRulerColumn revisionRuler = Adapters.adapt(editor,
 				IRevisionRulerColumn.class);
 		if (revisionRuler instanceof IRevisionRulerColumnExtension)
 			((IRevisionRulerColumnExtension) revisionRuler)

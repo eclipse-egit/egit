@@ -20,7 +20,7 @@ import java.io.IOException;
 
 import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.commands.ExecutionException;
-import org.eclipse.egit.core.AdapterUtils;
+import org.eclipse.core.runtime.Adapters;
 import org.eclipse.egit.core.op.RebaseOperation;
 import org.eclipse.egit.ui.internal.UIText;
 import org.eclipse.egit.ui.internal.commands.shared.AbstractRebaseCommandHandler;
@@ -51,7 +51,7 @@ public abstract class AbstractRebaseHistoryCommandHandler extends
 
 	@Override
 	public Object execute(ExecutionEvent event) throws ExecutionException {
-		RevCommit revCommit = AdapterUtils
+		RevCommit revCommit = Adapters
 				.adapt(getSelection(event).getFirstElement(), RevCommit.class);
 		if (!(revCommit instanceof PlotCommit)) {
 			return null;

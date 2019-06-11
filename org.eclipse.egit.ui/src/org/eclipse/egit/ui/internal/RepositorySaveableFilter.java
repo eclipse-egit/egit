@@ -15,9 +15,9 @@ import java.util.List;
 
 import org.eclipse.core.filebuffers.FileBuffers;
 import org.eclipse.core.filebuffers.ITextFileBuffer;
+import org.eclipse.core.runtime.Adapters;
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.Path;
-import org.eclipse.egit.core.AdapterUtils;
 import org.eclipse.egit.core.internal.util.ProjectUtil;
 import org.eclipse.jface.text.IDocument;
 import org.eclipse.jgit.lib.Repository;
@@ -54,7 +54,7 @@ public class RepositorySaveableFilter extends SaveFilter {
 	}
 
 	private boolean isTextFileBufferInWorkDir(Saveable saveable) {
-		IDocument document = AdapterUtils.adapt(saveable, IDocument.class);
+		IDocument document = Adapters.adapt(saveable, IDocument.class);
 		if (document == null)
 			return true; // be conservative and assume this needs to be saved
 		ITextFileBuffer textFileBuffer = FileBuffers.getTextFileBufferManager()

@@ -33,10 +33,10 @@ import java.util.Map;
 import org.eclipse.core.resources.IResource;
 import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.resources.mapping.ResourceMapping;
+import org.eclipse.core.runtime.Adapters;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IAdaptable;
 import org.eclipse.core.runtime.IStatus;
-import org.eclipse.egit.core.AdapterUtils;
 import org.eclipse.egit.core.internal.indexdiff.IndexDiffData;
 import org.eclipse.egit.core.internal.util.ExceptionCollector;
 import org.eclipse.egit.core.project.GitProjectData;
@@ -710,9 +710,10 @@ public class GitLightweightDecorator extends GitDecorator
 			resource = (IResource) element;
 		} else if (element instanceof IAdaptable) {
 			final IAdaptable adaptable = (IAdaptable) element;
-			resource = AdapterUtils.adapt(adaptable, IResource.class);
+			resource = Adapters.adapt(adaptable, IResource.class);
 			if (resource == null) {
-				final IContributorResourceAdapter adapter = AdapterUtils.adapt(adaptable, IContributorResourceAdapter.class);
+				final IContributorResourceAdapter adapter = Adapters
+						.adapt(adaptable, IContributorResourceAdapter.class);
 				if (adapter != null)
 					resource = adapter.getAdaptedResource(adaptable);
 			}

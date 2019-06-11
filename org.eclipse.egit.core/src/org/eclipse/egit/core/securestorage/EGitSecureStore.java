@@ -120,7 +120,7 @@ public class EGitSecureStore {
 			return;
 		ISecurePreferences node = preferences.node(pathName);
 		node.removeNode();
-		node.flush();
+		preferences.flush();
 	}
 
 }

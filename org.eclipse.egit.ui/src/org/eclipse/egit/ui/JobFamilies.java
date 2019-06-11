@@ -124,6 +124,11 @@ public class JobFamilies {
 	public final static Object FORMAT_COMMIT_INFO = new JobFamily();
 
 	/**
+	 * Commit editor job
+	 */
+	public final static Object COMMIT_EDITOR = new JobFamily();
+
+	/**
 	 * Fill tag list
 	 */
 	public final static Object FILL_TAG_LIST = new JobFamily(UIIcons.TAGS);

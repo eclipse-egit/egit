@@ -15,6 +15,7 @@ import java.text.MessageFormat;
 
 import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.commands.ExecutionException;
+import org.eclipse.core.runtime.Adapters;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
@@ -22,7 +23,6 @@ import org.eclipse.core.runtime.Status;
 import org.eclipse.core.runtime.jobs.IJobChangeEvent;
 import org.eclipse.core.runtime.jobs.Job;
 import org.eclipse.core.runtime.jobs.JobChangeAdapter;
-import org.eclipse.egit.core.AdapterUtils;
 import org.eclipse.egit.core.internal.IRepositoryCommit;
 import org.eclipse.egit.core.op.TagOperation;
 import org.eclipse.egit.ui.Activator;
@@ -163,7 +163,7 @@ public class TagActionHandler extends RepositoryActionHandler {
 	private IRepositoryCommit getCommit(IStructuredSelection selection) {
 		if (selection != null && selection.size() == 1) {
 			Object obj = selection.getFirstElement();
-			return AdapterUtils.adapt(obj, IRepositoryCommit.class);
+			return Adapters.adapt(obj, IRepositoryCommit.class);
 		}
 		return null;
 	}

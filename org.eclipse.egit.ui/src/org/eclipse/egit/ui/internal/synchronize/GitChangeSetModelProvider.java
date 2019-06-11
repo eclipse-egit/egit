@@ -16,10 +16,10 @@ import org.eclipse.core.resources.IResource;
 import org.eclipse.core.resources.mapping.ModelProvider;
 import org.eclipse.core.resources.mapping.ResourceMapping;
 import org.eclipse.core.resources.mapping.ResourceMappingContext;
+import org.eclipse.core.runtime.Adapters;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.egit.core.Activator;
-import org.eclipse.egit.core.AdapterUtils;
 import org.eclipse.egit.core.synchronize.GitSubscriberResourceMappingContext;
 import org.eclipse.egit.core.synchronize.IgnoreInGitSynchronizations;
 import org.eclipse.egit.core.synchronize.dto.GitSynchronizeData;
@@ -76,7 +76,8 @@ public class GitChangeSetModelProvider extends ModelProvider
 				}
 
 				if (object != null) {
-					ResourceMapping rm = AdapterUtils.adapt(object, ResourceMapping.class);
+					ResourceMapping rm = Adapters.adapt(object,
+							ResourceMapping.class);
 					return new ResourceMapping[] { rm };
 				}
 			}

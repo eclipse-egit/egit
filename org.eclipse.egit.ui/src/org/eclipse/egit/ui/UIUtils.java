@@ -14,6 +14,7 @@ package org.eclipse.egit.ui;
 
 import java.lang.ref.SoftReference;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
@@ -27,8 +28,8 @@ import org.eclipse.core.commands.NotEnabledException;
 import org.eclipse.core.commands.NotHandledException;
 import org.eclipse.core.commands.common.NotDefinedException;
 import org.eclipse.core.expressions.IEvaluationContext;
+import org.eclipse.core.runtime.Adapters;
 import org.eclipse.core.runtime.Path;
-import org.eclipse.egit.core.AdapterUtils;
 import org.eclipse.egit.ui.internal.CommonUtils;
 import org.eclipse.egit.ui.internal.RepositorySaveableFilter;
 import org.eclipse.egit.ui.internal.UIIcons;
@@ -476,8 +477,7 @@ public class UIUtils {
 					List<String> values = new ArrayList<>(
 							existingValues.length + 1);
 
-					for (String existingValue : existingValues)
-						values.add(existingValue);
+					values.addAll(Arrays.asList(existingValues));
 					// if it is already the first value, we don't need to do
 					// anything
 					if (values.indexOf(value) == 0)
@@ -917,7 +917,7 @@ public class UIUtils {
 	}
 
 	private static String getShowInMenuLabel() {
-		IBindingService bindingService = AdapterUtils.adapt(PlatformUI
+		IBindingService bindingService = Adapters.adapt(PlatformUI
 		.getWorkbench(), IBindingService.class);
 		if (bindingService != null) {
 			String keyBinding = bindingService
@@ -942,7 +942,7 @@ public class UIUtils {
 	 */
 	@Nullable
 	public static KeyStroke getKeystrokeOfBestActiveBindingFor(String commandId) {
-		IBindingService bindingService = AdapterUtils
+		IBindingService bindingService = Adapters
 				.adapt(PlatformUI.getWorkbench(), IBindingService.class);
 		if (bindingService == null) {
 			return null;

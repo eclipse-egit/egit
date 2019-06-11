@@ -17,11 +17,11 @@ import org.eclipse.compare.structuremergeviewer.Differencer;
 import org.eclipse.core.resources.mapping.ResourceMapping;
 import org.eclipse.core.resources.mapping.ResourceMappingContext;
 import org.eclipse.core.resources.mapping.ResourceTraversal;
+import org.eclipse.core.runtime.Adapters;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IAdaptable;
 import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.egit.core.Activator;
-import org.eclipse.egit.core.AdapterUtils;
 import org.eclipse.egit.core.synchronize.GitResourceVariantTreeSubscriber;
 import org.eclipse.egit.core.synchronize.GitSubscriberMergeContext;
 import org.eclipse.egit.core.synchronize.GitSubscriberResourceMappingContext;
@@ -114,7 +114,7 @@ public class GitChangeSetContentProvider extends SynchronizationContentProvider 
 
 	@Nullable
 	private ResourceMapping getResourceMapping(Object object) {
-		return AdapterUtils.adapt(object, ResourceMapping.class);
+		return Adapters.adapt(object, ResourceMapping.class);
 	}
 
 	@Override

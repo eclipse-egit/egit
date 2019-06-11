@@ -14,7 +14,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.CopyOnWriteArrayList;
 
-import org.eclipse.egit.core.AdapterUtils;
+import org.eclipse.core.runtime.Adapters;
 import org.eclipse.egit.ui.internal.UIText;
 import org.eclipse.jface.dialogs.IPageChangedListener;
 import org.eclipse.jface.util.SafeRunnable;
@@ -223,7 +223,7 @@ public class MultiPageEditorContentOutlinePage extends ContentOutlinePage {
 	}
 
 	private IPage createOutlinePage(IEditorPart editor) {
-		IContentOutlinePage outlinePage = AdapterUtils.adapt(editor,
+		IContentOutlinePage outlinePage = Adapters.adapt(editor,
 				IContentOutlinePage.class);
 		if (outlinePage == null) {
 			pages.put(editor, emptyPage);

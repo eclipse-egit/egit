@@ -17,8 +17,7 @@ import java.io.IOException;
 
 import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.IResource;
-import org.eclipse.core.runtime.IAdaptable;
-import org.eclipse.egit.core.AdapterUtils;
+import org.eclipse.core.runtime.Adapters;
 import org.eclipse.egit.core.project.RepositoryMapping;
 import org.eclipse.egit.ui.Activator;
 import org.eclipse.egit.ui.UIUtils;
@@ -83,14 +82,9 @@ public class GitProjectPropertyPage extends PropertyPage {
 
 		// Get the project that is the source of this property page
 		IProject project = null;
-		final IAdaptable element = getElement();
-		if (element instanceof IResource) {
-			project = ((IResource) element).getProject();
-		} else {
-			IResource adapter = AdapterUtils.adapt(element, IResource.class);
-			if (adapter != null) {
-				project = adapter.getProject();
-			}
+		IResource resource = Adapters.adapt(getElement(), IResource.class);
+		if (resource != null) {
+			project = resource.getProject();
 		}
 
 		RepositoryMapping mapping = RepositoryMapping.getMapping(project);

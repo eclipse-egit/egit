@@ -21,10 +21,10 @@ import java.util.List;
 import org.eclipse.core.commands.ExecutionException;
 import org.eclipse.core.resources.IResource;
 import org.eclipse.core.resources.mapping.ResourceMapping;
+import org.eclipse.core.runtime.Adapters;
 import org.eclipse.core.runtime.IAdaptable;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.SubMonitor;
-import org.eclipse.egit.core.AdapterUtils;
 import org.eclipse.egit.core.synchronize.GitResourceVariantTreeSubscriber;
 import org.eclipse.egit.core.synchronize.dto.GitSynchronizeDataSet;
 import org.eclipse.egit.ui.Activator;
@@ -110,17 +110,15 @@ public class GitScopeUtil {
 
 	@Nullable
 	private static ResourceMapping getResourceMapping(Object o) {
-		ResourceMapping mapping = AdapterUtils.adapt(o, ResourceMapping.class);
+		ResourceMapping mapping = Adapters.adapt(o, ResourceMapping.class);
 		if (mapping != null) {
 			return mapping;
 		}
-		if (o instanceof IAdaptable) {
-			IContributorResourceAdapter adapted = AdapterUtils.adapt(o,
-					IContributorResourceAdapter.class);
-			if (adapted instanceof IContributorResourceAdapter2) {
-				IContributorResourceAdapter2 cra = (IContributorResourceAdapter2) adapted;
-				return cra.getAdaptedResourceMapping((IAdaptable) o);
-			}
+		IContributorResourceAdapter adapted = Adapters.adapt(o,
+				IContributorResourceAdapter.class);
+		if (adapted instanceof IContributorResourceAdapter2) {
+			IContributorResourceAdapter2 cra = (IContributorResourceAdapter2) adapted;
+			return cra.getAdaptedResourceMapping((IAdaptable) o);
 		}
 		return null;
 	}

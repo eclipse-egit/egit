@@ -45,6 +45,7 @@ import org.eclipse.core.resources.IContainer;
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IResource;
 import org.eclipse.core.resources.ResourcesPlugin;
+import org.eclipse.core.runtime.Adapters;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.IProgressMonitor;
@@ -1204,7 +1205,7 @@ public class StagingView extends ViewPart
 				}
 				if (part instanceof IEditorPart) {
 					IEditorInput input = ((IEditorPart) part).getEditorInput();
-					Repository repository = AdapterUtils.adapt(input,
+					Repository repository = Adapters.adapt(input,
 							Repository.class);
 					if (repository != null) {
 						reactOnSelection(new StructuredSelection(repository));
@@ -1476,7 +1477,7 @@ public class StagingView extends ViewPart
 			if (resource != null) {
 				sel = new StructuredSelection(resource);
 			} else {
-				Repository repository = AdapterUtils.adapt(
+				Repository repository = Adapters.adapt(
 						((IEditorPart) part).getEditorInput(),
 						Repository.class);
 				if (repository != null) {
@@ -2004,7 +2005,8 @@ public class StagingView extends ViewPart
 
 		// For the normal resource undo/redo actions to be active, so that files
 		// deleted via the "Delete" action in the staging view can be restored.
-		IUndoContext workspaceContext = AdapterUtils.adapt(ResourcesPlugin.getWorkspace(), IUndoContext.class);
+		IUndoContext workspaceContext = Adapters
+				.adapt(ResourcesPlugin.getWorkspace(), IUndoContext.class);
 		undoRedoActionGroup = new UndoRedoActionGroup(getViewSite(), workspaceContext, true);
 		undoRedoActionGroup.fillActionBars(actionBars);
 
@@ -3320,8 +3322,7 @@ public class StagingView extends ViewPart
 				reload(repo);
 			}
 		} else {
-			Repository repo = AdapterUtils.adapt(firstElement,
-					Repository.class);
+			Repository repo = Adapters.adapt(firstElement, Repository.class);
 			if (repo != null) {
 				if (currentRepository != repo) {
 					reload(repo);
@@ -3609,7 +3610,7 @@ public class StagingView extends ViewPart
 					.getStagingEntriesFiltered((StagingFolderEntry) o);
 			collectPaths(entries, result);
 		} else if (o instanceof StagingEntry) {
-			result.add(AdapterUtils.adapt(o, IPath.class));
+			result.add(Adapters.adapt(o, IPath.class));
 		}
 	}
 

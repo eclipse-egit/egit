@@ -25,6 +25,8 @@ import java.util.List;
 
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.OperationCanceledException;
+import org.eclipse.core.runtime.SubMonitor;
+import org.eclipse.egit.core.EclipseGitProgressTransformer;
 import org.eclipse.egit.ui.Activator;
 import org.eclipse.egit.ui.UIPreferences;
 import org.eclipse.egit.ui.internal.CommonUtils;
@@ -120,7 +122,7 @@ public class CommitInfoBuilder {
 		if(Activator.getDefault().getPreferenceStore().getBoolean(
 				UIPreferences.HISTORY_SHOW_BRANCH_SEQUENCE)) {
 			try (RevWalk rw = new RevWalk(db)) {
-				List<Ref> branches = getBranches(commit, allRefs, db);
+				List<Ref> branches = getBranches(commit, allRefs, db, monitor);
 				Collections.sort(branches,
 						CommonUtils.REF_ASCENDING_COMPARATOR);
 				if (!branches.isEmpty()) {
@@ -255,18 +257,22 @@ public class CommitInfoBuilder {
 	 * @param commit
 	 * @param allRefs
 	 * @param db
+	 * @param monitor
 	 * @return List of heads from those current commit is reachable
 	 * @throws MissingObjectException
 	 * @throws IncorrectObjectTypeException
 	 * @throws IOException
 	 */
 	private static List<Ref> getBranches(RevCommit commit,
-			Collection<Ref> allRefs, Repository db)
+			Collection<Ref> allRefs, Repository db, IProgressMonitor monitor)
 			throws MissingObjectException, IncorrectObjectTypeException,
 			IOException {
+		EclipseGitProgressTransformer progress = new EclipseGitProgressTransformer(
+				SubMonitor.convert(monitor, allRefs.size()));
 		try (RevWalk revWalk = new RevWalk(db)) {
 			revWalk.setRetainBody(false);
-			return RevWalkUtils.findBranchesReachableFrom(commit, revWalk, allRefs);
+			return RevWalkUtils.findBranchesReachableFrom(commit, revWalk,
+					allRefs, progress);
 		}
 	}
 

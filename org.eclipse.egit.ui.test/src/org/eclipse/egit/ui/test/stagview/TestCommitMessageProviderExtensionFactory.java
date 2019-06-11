@@ -10,6 +10,7 @@
  *******************************************************************************/
 package org.eclipse.egit.ui.test.stagview;
 
+import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.Queue;
 
@@ -60,9 +61,7 @@ public class TestCommitMessageProviderExtensionFactory
 		public void setCommitMessageProviders(
 				ICommitMessageProvider... newProviders) {
 			providers.clear();
-			for (ICommitMessageProvider p : newProviders) {
-				providers.add(p);
-			}
+			providers.addAll(Arrays.asList(newProviders));
 		}
 
 	}
