@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "0c863759_e78d1d2f",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/internal/storage/GitFileHistory.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 217,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2019-06-11T13:35:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "083df5ca_2aa2daf5",
+      "range": {
+        "startLine": 217,
+        "startChar": 44,
+        "endLine": 217,
+        "endChar": 45
+      },
+      "revId": "e0a828e14a4ab28fd8ce75b77c137d89996aeba7",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6ba3550f_a1894ab5",
         "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/internal/storage/GitFileHistory.java",
         "patchSetId": 1
@@ -36,6 +60,30 @@
       "writtenOn": "2019-06-11T13:33:06Z",
       "side": 1,
       "message": "Extra parentheses could go away, too.",
+      "range": {
+        "startLine": 230,
+        "startChar": 44,
+        "endLine": 230,
+        "endChar": 45
+      },
+      "revId": "e0a828e14a4ab28fd8ce75b77c137d89996aeba7",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "6dae8467_1ab48fcb",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/internal/storage/GitFileHistory.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 230,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2019-06-11T13:35:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6ba3550f_a1894ab5",
       "range": {
         "startLine": 230,
         "startChar": 44,
