@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (C) 2018, Thomas Wolf <thomas.wolf@paranor.ch>
+ * Copyright (C) 2018, 2019 Thomas Wolf <thomas.wolf@paranor.ch>
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License 2.0
@@ -58,12 +58,18 @@ public class SshPreferencesMirror {
 
 	private String defaultMechanisms;
 
+	private boolean started;
+
 	private SshPreferencesMirror() {
 		// This is a singleton.
 	}
 
 	/** Starts mirroring the ssh preferences. */
 	public void start() {
+		if (started) {
+			return;
+		}
+		started = true;
 		preferences = InstanceScope.INSTANCE.getNode(PREFERENCES_NODE);
 		if (preferences != null) {
 			preferences.addPreferenceChangeListener(listener);
@@ -73,6 +79,7 @@ public class SshPreferencesMirror {
 
 	/** Stops mirroring the ssh preferences. */
 	public void stop() {
+		started = false;
 		if (preferences != null) {
 			preferences.removePreferenceChangeListener(listener);
 		}
@@ -168,8 +175,13 @@ public class SshPreferencesMirror {
 				return null;
 			}
 			return defaultIdentities.stream()
-					.map(s -> new File(sshDir, s).toPath())
-					.filter(Files::exists).collect(Collectors.toList());
+					.map(s -> {
+						File f = new File(s);
+						if (!f.isAbsolute()) {
+							f = new File(sshDir, s);
+						}
+						return f.toPath();
+					}).filter(Files::exists).collect(Collectors.toList());
 		}
 	}
 
