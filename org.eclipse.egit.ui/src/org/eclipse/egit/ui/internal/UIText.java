@@ -805,6 +805,9 @@ public class UIText extends NLS {
 	public static String RebaseInteractiveHandler_EditMessageDialogTitle;
 
 	/** */
+	public static String RebaseInteractiveHandler_EditMessageDialogOkButton;
+
+	/** */
 	public static String RebaseInteractiveStepActionToolBarProvider_SkipText;
 
 	/** */
