@@ -99,7 +99,9 @@ public class FeatureFinishSquashHandlerTest extends
 		String text = bot.styledText().getText();
 		text = text.substring(text.indexOf('\n'));
 		bot.styledText().setText(SQUASHED_COMMENT_SUMMARY + text);
-		bot.button("OK").click();
+		bot.button(
+				org.eclipse.egit.ui.internal.UIText.RebaseInteractiveHandler_EditMessageDialogOkButton)
+				.click();
 	}
 
 	@Override
