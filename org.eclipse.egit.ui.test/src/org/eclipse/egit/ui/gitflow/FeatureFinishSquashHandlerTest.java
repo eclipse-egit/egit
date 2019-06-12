@@ -22,8 +22,7 @@ import java.io.IOException;
 import java.util.Iterator;
 
 import org.eclipse.egit.gitflow.GitFlowRepository;
-import org.eclipse.egit.gitflow.ui.Activator;
-import org.eclipse.egit.gitflow.ui.internal.UIText;
+import org.eclipse.egit.ui.internal.UIText;
 import org.eclipse.jface.preference.IPreferenceStore;
 import org.eclipse.jgit.api.Git;
 import org.eclipse.jgit.api.errors.GitAPIException;
@@ -99,7 +98,8 @@ public class FeatureFinishSquashHandlerTest extends
 		String text = bot.styledText().getText();
 		text = text.substring(text.indexOf('\n'));
 		bot.styledText().setText(SQUASHED_COMMENT_SUMMARY + text);
-		bot.button("OK").click();
+		bot.button(UIText.RebaseInteractiveHandler_EditMessageDialogOkButton)
+				.click();
 	}
 
 	@Override
