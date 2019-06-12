@@ -149,8 +149,13 @@
 		<pre>bazel test --test_tag_filters=api,dfs,revplot,treewalk //...
 </pre>
 		<ul>
-			<li>to run build with 
-				<a href="https://github.com/google/error-prone" target="egit_external">the errorprone static analyzer</a> execute
+			<li>to rerun all tests ignoring cached test results execute</li>
+		</ul>
+		<pre>bazel test //... --cache_test_results=NO 
+</pre>
+		<ul>
+			<li>since 5.4.0 builds run with 
+				<a href="https://github.com/google/error-prone" target="egit_external">the errorprone static analyzer</a> by default. If you want to enable it for older JGit versions execute
 			</li>
 		</ul>
 		<pre>bazel build --java_toolchain //tools:error_prone_warnings_toolchain :all
