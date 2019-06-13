@@ -1,0 +1,72 @@
+<?xml version='1.0' encoding='utf-8' ?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+		<title>JGit 5.4 New and Noteworthy</title>
+		<link type="text/css" rel="stylesheet" href="../../../book.css"/>
+	</head>
+	<body>
+		<table class="navigation" style="width: 100%;" border="0" summary="navigation">
+			<tr>
+				<th style="width: 100%" align="center" colspan="3">JGit 5.4 New and Noteworthy</th>
+			</tr>
+			<tr>
+				<td style="width: 20%" align="left"></td>
+				<td style="width: 60%" align="center"></td>
+				<td style="width: 20%" align="right">
+					<a href="Contributors.html" title="Contributors">
+						<img alt="Next" border="0" src="../../../images/next.gif"/>
+					</a>
+				</td>
+			</tr>
+			<tr>
+				<td style="width: 20%" align="left" valign="top"></td>
+				<td style="width: 60%" align="center"></td>
+				<td style="width: 20%" align="right" valign="top">Contributors</td>
+			</tr>
+		</table><hr class="navigation-separator"/>
+		<h1 id="JGit">JGit</h1>
+		<h2 id="SSH_Library">SSH Library</h2>
+		<p>Bundle <code>org.eclipse.jgit.ssh.apache</code>, introduced in JGit 5.2.0 and implementing a new SSH session factory based on 
+			<a href="https://mina.apache.org/sshd-project/" target="egit_external">Apache MINA sshd</a>, has been updated to Apache MINA sshd 
+			<b>2.2.0</b>.
+		</p>
+		<p>Because of incompatible upstream interface changes, it will work only with that precise version of Apache MINA sshd.</p>
+		<p>Thanks to the update, the SSH support now also works for connections using 
+			<i>encrypted</i> new-style OpenSSH private keys, for instance password-protected ed25519 keys.
+		</p>
+		<dl>
+			<dd>On Java versions older than 8u161, you may need to download and install the 
+				<a href="https://www.oracle.com/technetwork/java/javase/downloads/jce-all-download-5170447.html" target="egit_external">"JCE Unlimited Strength Jurisdiction Policy Files"</a> for this to work. OpenSSH uses the AES encryption with 256bit keys, which is available in older Java only with this extension. On newer Java versions, "unlimited strength" encryption is enabled by default, so you need not do anything.
+			</dd>
+		</dl>
+		<p>To use the SSH client based on Apache MINA sshd in the JGit command-line tools, use the option <code>--ssh apache</code>. By default JGit still uses the older JSch library for SSH, which has been updated to JSch 
+			<b>0.1.55</b>.
+		</p>
+		<h2 id="HTTP_Cookie_Support">HTTP Cookie Support</h2>
+		<p>JGit has learnt to handle cookies in HTTP connections. Cookie storage can be configured via the 
+			<a href="https://git-scm.com/docs/git-config#Documentation/git-config.txt-httpcookieFile" target="egit_external">git config settings</a> <code>http.cookieFile</code> and <code>http.saveCookies</code>. These settings can also be 
+			<a href="https://git-scm.com/docs/git-config#Documentation/git-config.txt-httplturlgt" target="egit_external">given per URI</a> so that different settings can be used for different servers.
+		</p>
+		<h2 id="Other_Changes">Other Changes</h2>
+		<p>The complete list of new features and bug fixes is available in the 
+			<a href="https://projects.eclipse.org/projects/technology.jgit/releases/5.4.0/" target="egit_external">release notes</a>.
+		</p><hr class="navigation-separator"/>
+		<table class="navigation" style="width: 100%;" border="0" summary="navigation">
+			<tr>
+				<td style="width: 20%" align="left"></td>
+				<td style="width: 60%" align="center"></td>
+				<td style="width: 20%" align="right">
+					<a href="Contributors.html" title="Contributors">
+						<img alt="Next" border="0" src="../../../images/next.gif"/>
+					</a>
+				</td>
+			</tr>
+			<tr>
+				<td style="width: 20%" align="left" valign="top"></td>
+				<td style="width: 60%" align="center"></td>
+				<td style="width: 20%" align="right" valign="top">Contributors</td>
+			</tr>
+		</table>
+	</body>
+</html>

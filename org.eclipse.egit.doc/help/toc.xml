@@ -446,25 +446,26 @@
 		</topic>
 		<topic href="help/JGit/User_Guide/Updating-This-Document.html" label="Updating This Document"></topic>
 	</topic>
-	<topic href="help/EGit/New_and_Noteworthy/5.3/5.3.html" label="EGit 5.3 New and Noteworthy">
-		<topic href="help/EGit/New_and_Noteworthy/5.3/5.3.html" label="EGit">
-			<topic href="help/EGit/New_and_Noteworthy/5.3/5.3.html#Requires_Eclipse_Neon" label="Requires Eclipse Neon"></topic>
-			<topic href="help/EGit/New_and_Noteworthy/5.3/5.3.html#GPG-signing_Commits" label="GPG-signing Commits"></topic>
-			<topic href="help/EGit/New_and_Noteworthy/5.3/5.3.html#SSH_Library" label="SSH Library"></topic>
-			<topic href="help/EGit/New_and_Noteworthy/5.3/5.3.html#Compare_and_Merge_Editors" label="Compare and Merge Editors"></topic>
-			<topic href="help/EGit/New_and_Noteworthy/5.3/5.3.html#Other_Changes" label="Other Changes"></topic>
+	<topic href="help/EGit/New_and_Noteworthy/5.4/5.4.html" label="EGit 5.4 New and Noteworthy">
+		<topic href="help/EGit/New_and_Noteworthy/5.4/5.4.html" label="EGit">
+			<topic href="help/EGit/New_and_Noteworthy/5.4/5.4.html#SSH_Library" label="SSH Library"></topic>
+			<topic href="help/EGit/New_and_Noteworthy/5.4/5.4.html#Filtering_Content_from_the_Git_Repositories_View" label="Filtering Content from the Git Repositories View"></topic>
+			<topic href="help/EGit/New_and_Noteworthy/5.4/5.4.html#Checking_out_Files_from_a_Commit" label="Checking out Files from a Commit"></topic>
+			<topic href="help/EGit/New_and_Noteworthy/5.4/5.4.html#Showing_Whitespace_Characters_in_the_Diff_in_the_History_View" label="Showing Whitespace Characters in the Diff in the History View"></topic>
+			<topic href="help/EGit/New_and_Noteworthy/5.4/5.4.html#Other_Changes" label="Other Changes"></topic>
 		</topic>
-		<topic href="help/EGit/New_and_Noteworthy/5.3/Contributors.html" label="Contributors"></topic>
-		<topic href="help/EGit/New_and_Noteworthy/5.3/Updating-This-Document.html" label="Updating This Document"></topic>
+		<topic href="help/EGit/New_and_Noteworthy/5.4/Contributors.html" label="Contributors"></topic>
+		<topic href="help/EGit/New_and_Noteworthy/5.4/See-Also.html" label="See Also"></topic>
+		<topic href="help/EGit/New_and_Noteworthy/5.4/Updating-This-Document.html" label="Updating This Document"></topic>
 	</topic>
-	<topic href="help/JGit/New_and_Noteworthy/5.3/5.3.html" label="JGit 5.3 New and Noteworthy">
-		<topic href="help/JGit/New_and_Noteworthy/5.3/5.3.html" label="JGit">
-			<topic href="help/JGit/New_and_Noteworthy/5.3/5.3.html#Features" label="Features"></topic>
-			<topic href="help/JGit/New_and_Noteworthy/5.3/5.3.html#Performance_Improvements" label="Performance Improvements"></topic>
-			<topic href="help/JGit/New_and_Noteworthy/5.3/5.3.html#Other_Changes" label="Other Changes"></topic>
+	<topic href="help/JGit/New_and_Noteworthy/5.4/5.4.html" label="JGit 5.4 New and Noteworthy">
+		<topic href="help/JGit/New_and_Noteworthy/5.4/5.4.html" label="JGit">
+			<topic href="help/JGit/New_and_Noteworthy/5.4/5.4.html#SSH_Library" label="SSH Library"></topic>
+			<topic href="help/JGit/New_and_Noteworthy/5.4/5.4.html#HTTP_Cookie_Support" label="HTTP Cookie Support"></topic>
+			<topic href="help/JGit/New_and_Noteworthy/5.4/5.4.html#Other_Changes" label="Other Changes"></topic>
 		</topic>
-		<topic href="help/JGit/New_and_Noteworthy/5.3/Contributors.html" label="Contributors"></topic>
-		<topic href="help/JGit/New_and_Noteworthy/5.3/Updating-This-Document.html" label="Updating This Document"></topic>
+		<topic href="help/JGit/New_and_Noteworthy/5.4/Contributors.html" label="Contributors"></topic>
+		<topic href="help/JGit/New_and_Noteworthy/5.4/Updating-This-Document.html" label="Updating This Document"></topic>
 	</topic>
 	<topic href="help/EGit/Git_For_Eclipse_Users/Git-For-Eclipse-Users.html" label="Git for Eclipse Users">
 		<topic href="help/EGit/Git_For_Eclipse_Users/Git-For-Eclipse-Users.html" label="Centralised version control systems"></topic>
@@ -565,6 +566,7 @@
 				<topic href="help/EGit/Contributor_Guide/Contributing-Patches.html#Use_of_the_.22final.22_modifier" label="Use of the &quot;final&quot; modifier"></topic>
 			</topic>
 			<topic href="help/EGit/Contributor_Guide/Contributing-Patches.html#Commit_message_guidelines" label="Commit message guidelines"></topic>
+			<topic href="help/EGit/Contributor_Guide/Contributing-Patches.html#License_Header" label="License Header"></topic>
 			<topic href="help/EGit/Contributor_Guide/Contributing-Patches.html#Copyright" label="Copyright"></topic>
 			<topic href="help/EGit/Contributor_Guide/Contributing-Patches.html#Test_before_submitting" label="Test before submitting"></topic>
 			<topic href="help/EGit/Contributor_Guide/Contributing-Patches.html#Sending_patches_by_mail" label="Sending patches by mail"></topic>
