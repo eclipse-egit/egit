@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ad391bb3_f98456ca",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 5
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2019-06-14T06:41:26Z",
+      "side": 1,
+      "message": "Please see https://wiki.eclipse.org/EGit/Contributor_Guide#Commit_message_guidelines : move the bug mention into the footer lines:\n\n  Bug: 548144\n  Change-Id: ...",
+      "revId": "d059164d729a720290407bc80a70f3226378b703",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1ca28a70_feb6f3da",
+        "filename": "org.eclipse.egit.ui.test/src/org/eclipse/egit/ui/gitflow/FeatureFinishSquashHandlerTest.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2019-06-14T06:41:26Z",
+      "side": 1,
+      "message": "Use UIText.RebaseInteractiveHandler_EditMessageDialogOkButton?",
+      "range": {
+        "startLine": 102,
+        "startChar": 13,
+        "endLine": 102,
+        "endChar": 21
+      },
+      "revId": "d059164d729a720290407bc80a70f3226378b703",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
