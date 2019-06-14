@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3f1f13e7_8ed8950d",
+        "filename": "tools/oomph/EGit.setup",
+        "patchSetId": 1
+      },
+      "lineNbr": 127,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2019-06-14T09:13:35Z",
+      "side": 1,
+      "message": "In previous releases, this link started working only after the release date. This time it appears to work already now. Is that normal?",
+      "range": {
+        "startLine": 127,
+        "startChar": 6,
+        "endLine": 127,
+        "endChar": 15
+      },
+      "revId": "347fd6ae9b9b2e2ae5193e1c62164537d24f6334",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
