@@ -22,6 +22,30 @@
       "revId": "347fd6ae9b9b2e2ae5193e1c62164537d24f6334",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a724f227_26d977f3",
+        "filename": "tools/oomph/EGit.setup",
+        "patchSetId": 1
+      },
+      "lineNbr": 127,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2019-06-14T09:17:34Z",
+      "side": 1,
+      "message": "It is and always was populated by the release build immediately deploying to nexus and the download server.\n\nI use to update the generic, version independent download URL\nhttps://download.eclipse.org/egit/updates\na few days before the release date (this time June 19) in order to allow mirrors to catch up",
+      "parentUuid": "3f1f13e7_8ed8950d",
+      "range": {
+        "startLine": 127,
+        "startChar": 6,
+        "endLine": 127,
+        "endChar": 15
+      },
+      "revId": "347fd6ae9b9b2e2ae5193e1c62164537d24f6334",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
     }
   ]
 }
