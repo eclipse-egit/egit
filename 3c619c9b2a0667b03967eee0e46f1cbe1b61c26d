@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "39df1fb8_086e38dd",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/uitext.properties",
+        "patchSetId": 1
+      },
+      "lineNbr": 1375,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2019-06-16T12:16:32Z",
+      "side": 1,
+      "message": "\"Staging\" is a nonsense term. Correct would be \"Staging Area\". But instead of an awkward slash construction I suggest to use \"Staged in Index\". Then we have both, it\u0027s proper English, and it isn\u0027t too long.",
+      "revId": "3c619c9b2a0667b03967eee0e46f1cbe1b61c26d",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
