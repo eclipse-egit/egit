@@ -36,6 +36,7 @@ import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.SubMonitor;
 import org.eclipse.core.runtime.jobs.ISchedulingRule;
+import org.eclipse.egit.core.Activator;
 import org.eclipse.egit.core.EclipseGitProgressTransformer;
 import org.eclipse.egit.core.internal.CoreText;
 import org.eclipse.egit.core.internal.job.RuleUtil;
@@ -45,6 +46,7 @@ import org.eclipse.jgit.api.CheckoutCommand;
 import org.eclipse.jgit.api.CheckoutResult;
 import org.eclipse.jgit.api.CheckoutResult.Status;
 import org.eclipse.jgit.api.Git;
+import org.eclipse.jgit.api.errors.CheckoutConflictException;
 import org.eclipse.jgit.api.errors.GitAPIException;
 import org.eclipse.jgit.api.errors.JGitInternalException;
 import org.eclipse.jgit.lib.Constants;
@@ -119,10 +121,11 @@ public class BranchOperation implements IEGitOperation {
 
 			@Override
 			public void run(IProgressMonitor pm) throws CoreException {
+				int numberOfRepositories = repositories.length;
 				SubMonitor progress = SubMonitor.convert(pm, 4);
 				for (Repository repository : repositories) {
 					CheckoutResult result = checkoutRepository(repository,
-							progress);
+							progress, numberOfRepositories > 1);
 					if (result.getStatus() == Status.NONDELETED) {
 						retryDelete(repository, result.getUndeletedList());
 					}
@@ -132,7 +135,7 @@ public class BranchOperation implements IEGitOperation {
 			}
 
 			public CheckoutResult checkoutRepository(Repository repo,
-					SubMonitor progress) throws CoreException {
+					SubMonitor progress, boolean logErrors) throws CoreException {
 				closeProjectsMissingAfterCheckout(repo, progress);
 				try (Git git = new Git(repo)) {
 					CheckoutCommand co = git.checkout().setProgressMonitor(
@@ -141,17 +144,24 @@ public class BranchOperation implements IEGitOperation {
 					co.setName(target);
 					try {
 						co.call();
+					} catch (CheckoutConflictException e) {
+						// Covered by the status return below.
 					} catch (JGitInternalException | GitAPIException e) {
-						// Result status, which is returned below, accounts
-						// for these.
+						String msg = MessageFormat.format(
+								CoreText.BranchOperation_checkoutError,
+								target, repo.getDirectory());
+						if (logErrors) {
+							Activator.logError(msg, e);
+						} else {
+							throw new CoreException(Activator.error(msg, e));
+						}
 					}
 					return co.getResult();
 				}
 			}
 
 			private void closeProjectsMissingAfterCheckout(Repository repo,
-					SubMonitor progress)
-					throws CoreException {
+					SubMonitor progress) throws CoreException {
 				IProject[] missing = getMissingProjects(repo, target);
 
 				progress.setTaskName(NLS.bind(
