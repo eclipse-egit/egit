@@ -61,7 +61,6 @@ import org.eclipse.jgit.treewalk.filter.AndTreeFilter;
 import org.eclipse.jgit.treewalk.filter.PathSuffixFilter;
 import org.eclipse.jgit.treewalk.filter.TreeFilter;
 import org.eclipse.jgit.util.FileUtils;
-import org.eclipse.osgi.util.NLS;
 
 /**
  * This class implements checkouts of a specific revision. A check is made that
@@ -164,7 +163,7 @@ public class BranchOperation implements IEGitOperation {
 					SubMonitor progress) throws CoreException {
 				IProject[] missing = getMissingProjects(repo, target);
 
-				progress.setTaskName(NLS.bind(
+				progress.setTaskName(MessageFormat.format(
 						CoreText.BranchOperation_performingBranch, target));
 				progress.setWorkRemaining(missing.length > 0 ? 4 : 3);
 
