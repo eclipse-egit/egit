@@ -120,22 +120,32 @@ public class BranchOperation implements IEGitOperation {
 
 			@Override
 			public void run(IProgressMonitor pm) throws CoreException {
-				int numberOfRepositories = repositories.length;
-				SubMonitor progress = SubMonitor.convert(pm, 4);
-				for (Repository repository : repositories) {
-					CheckoutResult result = checkoutRepository(repository,
-							progress, numberOfRepositories > 1);
-					if (result.getStatus() == Status.NONDELETED) {
-						retryDelete(repository, result.getUndeletedList());
+				try {
+					pm.setTaskName(MessageFormat.format(
+							CoreText.BranchOperation_performingBranch, target));
+					int numberOfRepositories = repositories.length;
+					SubMonitor progress = SubMonitor.convert(pm,
+							numberOfRepositories * 2);
+					for (Repository repository : repositories) {
+						CheckoutResult result = checkoutRepository(repository,
+								progress.newChild(1), numberOfRepositories > 1);
+						if (result.getStatus() == Status.NONDELETED) {
+							retryDelete(repository, result.getUndeletedList());
+						}
+						results.put(repository, result);
 					}
-					results.put(repository, result);
+					refreshAffectedProjects(
+							progress.newChild(numberOfRepositories));
+				} finally {
+					pm.done();
 				}
-				refreshAffectedProjects(progress);
 			}
 
 			public CheckoutResult checkoutRepository(Repository repo,
-					SubMonitor progress, boolean logErrors) throws CoreException {
-				closeProjectsMissingAfterCheckout(repo, progress);
+					IProgressMonitor monitor, boolean logErrors)
+					throws CoreException {
+				SubMonitor progress = SubMonitor.convert(monitor, 2);
+				closeProjectsMissingAfterCheckout(repo, progress.newChild(1));
 				try (Git git = new Git(repo)) {
 					CheckoutCommand co = git.checkout().setProgressMonitor(
 							new EclipseGitProgressTransformer(
@@ -160,15 +170,12 @@ public class BranchOperation implements IEGitOperation {
 			}
 
 			private void closeProjectsMissingAfterCheckout(Repository repo,
-					SubMonitor progress) throws CoreException {
+					IProgressMonitor monitor) throws CoreException {
 				IProject[] missing = getMissingProjects(repo, target);
 
-				progress.setTaskName(MessageFormat.format(
-						CoreText.BranchOperation_performingBranch, target));
-				progress.setWorkRemaining(missing.length > 0 ? 4 : 3);
-
 				if (missing.length > 0) {
-					SubMonitor closeMonitor = progress.newChild(1);
+					SubMonitor closeMonitor = SubMonitor.convert(monitor,
+							missing.length);
 					closeMonitor.setWorkRemaining(missing.length);
 					for (IProject project : missing) {
 						closeMonitor.subTask(MessageFormat.format(
@@ -179,15 +186,14 @@ public class BranchOperation implements IEGitOperation {
 				}
 			}
 
-			private void refreshAffectedProjects(SubMonitor progress)
+			private void refreshAffectedProjects(IProgressMonitor monitor)
 					throws CoreException {
 				IProject[] refreshProjects = results.entrySet().stream()
 						.map(this::getAffectedProjects)
 						.flatMap(arr -> Stream.of(arr)).distinct()
 						.toArray(IProject[]::new);
-
 				ProjectUtil.refreshValidProjects(refreshProjects, delete,
-						progress.newChild(1));
+						monitor);
 			}
 
 			private IProject[] getAffectedProjects(
