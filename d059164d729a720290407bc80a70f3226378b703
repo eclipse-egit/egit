@@ -39,6 +39,30 @@
       "revId": "d059164d729a720290407bc80a70f3226378b703",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "e2ffef17_470b67b0",
+        "filename": "org.eclipse.egit.ui.test/src/org/eclipse/egit/ui/gitflow/FeatureFinishSquashHandlerTest.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 1093
+      },
+      "writtenOn": "2019-06-19T14:42:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1ca28a70_feb6f3da",
+      "range": {
+        "startLine": 102,
+        "startChar": 13,
+        "endLine": 102,
+        "endChar": 21
+      },
+      "revId": "d059164d729a720290407bc80a70f3226378b703",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
     }
   ]
 }
