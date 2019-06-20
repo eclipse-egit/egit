@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "eb3234e3_9ffac362",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/repository/tree/BranchHierarchyNode.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2019-06-20T08:17:02Z",
+      "side": 1,
+      "message": "Looks good, and yes, the rest should be refactored, too.",
+      "revId": "e47097c4567bca7ea8c4068faa641e9a4fef68c1",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
