@@ -16,6 +16,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.Path;
@@ -89,14 +90,9 @@ public class BranchHierarchyNode extends RepositoryTreeNode<IPath> {
 	 * @throws IOException
 	 */
 	public List<Ref> getChildRefsRecursive() throws IOException {
-		List<Ref> childRefs = new ArrayList<>();
-		for (IPath myPath : getPathList()) {
-			if (getObject().isPrefixOf(myPath)) {
-				Ref ref = getRepository().exactRef(myPath.toPortableString());
-				childRefs.add(ref);
-			}
-		}
-		return childRefs;
+		return getRepository().getRefDatabase()
+				.getRefsByPrefix(getObject().toPortableString()).stream()
+				.filter(ref -> !ref.isSymbolic()).collect(Collectors.toList());
 	}
 
 	private List<IPath> getPathList() throws IOException {
