@@ -22,6 +22,30 @@
       "revId": "ef65cda9018418ecc428dae8d4c4798d7148d770",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "d90c8e0b_d3f031dd",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/op/BranchOperation.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 130,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2019-06-20T17:13:00Z",
+      "side": 1,
+      "message": "Good idea. But if you think most of the time was spent in getMissingProjects, we should also pass in a progress monitor there and cancel that. Though TreeWalks are surprisingly fast in my experience.\n\nWhen there are several repositories, we should probably make sure that the combined result dialog shows the correct information (some repos done, one canceled, others not_attempted).",
+      "parentUuid": "bde62694_a12b9b3e",
+      "range": {
+        "startLine": 130,
+        "startChar": 5,
+        "endLine": 130,
+        "endChar": 6
+      },
+      "revId": "ef65cda9018418ecc428dae8d4c4798d7148d770",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
     }
   ]
 }
