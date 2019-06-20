@@ -16,6 +16,24 @@
       "revId": "7c832d07b34da42221384048d719c6a1496d0ada",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5c42b609_f0f74bcb",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/repository/tree/BranchHierarchyNode.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 440
+      },
+      "writtenOn": "2019-06-20T08:11:24Z",
+      "side": 1,
+      "message": "If a huge amount of branches gets deleted, and at the same time some other code invokes this method, race conditions can happen where \"getPathList\" returns the child branches before deletion, and the loop iterating over that list doesn\u0027t find a branch anymore because it was deleted while the iteration is ongoing.\n\nYour code suggestion seems good to me, it just needs filtering for symbolic references, according to the implementation of getPathList. If you are happy with my second version of this change, then we should definitely rework the other methods in this class to use the same approach.",
+      "parentUuid": "6fa39fe7_218a1da8",
+      "revId": "7c832d07b34da42221384048d719c6a1496d0ada",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
     }
   ]
 }
