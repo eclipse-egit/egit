@@ -69,12 +69,8 @@ public class AuthorColors {
 	 * @return the corresponding color
 	 */
 	public RGB getCommitterRGB(String author) {
-		RGB rgb = colors.get(author);
-		if (rgb == null) {
-			rgb = COMMITTER_RGBs[count++ % COMMITTER_RGBs.length];
-			colors.put(author, rgb);
-		}
-		return rgb;
+		return colors.computeIfAbsent(author,
+				key -> COMMITTER_RGBs[count++ % COMMITTER_RGBs.length]);
 	}
 
 }

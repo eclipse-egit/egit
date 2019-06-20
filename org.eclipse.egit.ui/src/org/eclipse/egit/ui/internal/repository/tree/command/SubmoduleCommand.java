@@ -48,11 +48,8 @@ public abstract class SubmoduleCommand<V extends RepositoryTreeNode<?>> extends
 				Repository parent = node.getParent().getRepository();
 				String path = Repository.stripWorkDir(parent.getWorkTree(),
 						node.getRepository().getWorkTree());
-				List<String> paths = repoPaths.get(parent);
-				if (paths == null) {
-					paths = new ArrayList<>();
-					repoPaths.put(parent, paths);
-				}
+				List<String> paths = repoPaths.computeIfAbsent(parent,
+						key -> new ArrayList<>());
 				paths.add(path);
 			}
 		}

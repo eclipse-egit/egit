@@ -357,13 +357,12 @@ public class DiffEditorOutlinePage extends NestedContentOutlinePage {
 				} else {
 					path = "/"; //$NON-NLS-1$
 				}
-				Folder folder = folders.get(path);
-				if (folder == null) {
-					folder = new Folder();
-					folder.name = path;
-					folder.files = new ArrayList<>();
-					folders.put(path, folder);
-				}
+				Folder folder = folders.computeIfAbsent(path, key -> {
+					Folder newFolder = new Folder();
+					newFolder.name = key;
+					newFolder.files = new ArrayList<>();
+					return newFolder;
+				});
 				folder.files.add(range);
 				parents.put(range, folder);
 			}
