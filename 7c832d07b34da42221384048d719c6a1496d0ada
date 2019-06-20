@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6fa39fe7_218a1da8",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/repository/tree/BranchHierarchyNode.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2019-06-20T07:21:33Z",
+      "side": 1,
+      "message": "1. How can this be null here?\n\n2. This whole code is strange. Wouldn\u0027t getRepository().getRefDatabase().getRefsByPrefix(getObject().toPortableString()) give exactly the refs wanted?",
+      "revId": "7c832d07b34da42221384048d719c6a1496d0ada",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
