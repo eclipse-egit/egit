@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "29a80a94_36b01fa5",
+        "filename": "org.eclipse.egit.ui.test/src/org/eclipse/egit/ui/gitflow/FeatureFinishSquashHandlerTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 440
+      },
+      "writtenOn": "2019-06-20T18:42:52Z",
+      "side": 0,
+      "message": "this removal seems wrong",
+      "range": {
+        "startLine": 25,
+        "startChar": 6,
+        "endLine": 25,
+        "endChar": 45
+      },
+      "revId": "347fd6ae9b9b2e2ae5193e1c62164537d24f6334",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
