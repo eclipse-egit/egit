@@ -103,11 +103,8 @@ class GitSynchronizeWizardPage extends WizardPage {
 			if (repositoryMapping == null)
 				continue;
 			Repository repo = repositoryMapping.getRepository();
-			Set<IProject> projects = resources.get(repo);
-			if (projects == null) {
-				projects = new HashSet<>();
-				resources.put(repo, projects);
-			}
+			Set<IProject> projects = resources.computeIfAbsent(repo,
+					key -> new HashSet<>());
 			projects.add(project);
 		}
 

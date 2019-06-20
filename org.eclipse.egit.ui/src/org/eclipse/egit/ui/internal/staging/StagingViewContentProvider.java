@@ -212,11 +212,8 @@ public class StagingViewContentProvider extends WorkbenchContentProvider {
 
 	private static void addChild(Map<IPath, List<Object>> childrenForPath,
 			IPath path, Object child) {
-		List<Object> children = childrenForPath.get(path);
-		if (children == null) {
-			children = new ArrayList<>();
-			childrenForPath.put(path, children);
-		}
+		List<Object> children = childrenForPath.computeIfAbsent(path,
+				key -> new ArrayList<>());
 		children.add(child);
 	}
 

@@ -123,11 +123,8 @@ public class IgnoreOperation implements IEGitOperation {
 				return null;
 			}
 			IPath parent = path.removeLastSegments(1);
-			Collection<String> values = result.get(parent);
-			if (values == null) {
-				values = new LinkedHashSet<>();
-				result.put(parent, values);
-			}
+			Collection<String> values = result.computeIfAbsent(parent,
+					key -> new LinkedHashSet<>());
 			values.add(path.lastSegment());
 			progress.worked(1);
 		}

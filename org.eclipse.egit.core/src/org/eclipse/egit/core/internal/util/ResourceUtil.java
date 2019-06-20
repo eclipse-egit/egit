@@ -508,7 +508,7 @@ public class ResourceUtil {
 	 */
 	public static Map<Repository, Collection<String>> splitResourcesByRepository(
 			Collection<IResource> resources) {
-		Map<Repository, Collection<String>> result = new HashMap<Repository, Collection<String>>();
+		Map<Repository, Collection<String>> result = new HashMap<>();
 		for (IResource resource : resources) {
 			RepositoryMapping repositoryMapping = RepositoryMapping
 					.getMapping(resource);
@@ -547,7 +547,7 @@ public class ResourceUtil {
 			Collection<IPath> paths) {
 		RepositoryCache repositoryCache = Activator.getDefault()
 				.getRepositoryCache();
-		Map<Repository, Collection<String>> result = new HashMap<Repository, Collection<String>>();
+		Map<Repository, Collection<String>> result = new HashMap<>();
 		for (IPath path : paths) {
 			Repository repository = repositoryCache.getRepository(path);
 			if (repository != null) {
@@ -607,11 +607,8 @@ public class ResourceUtil {
 	private static void addPathToMap(@NonNull Repository repository,
 			@Nullable String path, Map<Repository, Collection<String>> result) {
 		if (path != null) {
-			Collection<String> resourcesList = result.get(repository);
-			if (resourcesList == null) {
-				resourcesList = new ArrayList<>();
-				result.put(repository, resourcesList);
-			}
+			Collection<String> resourcesList = result
+					.computeIfAbsent(repository, key -> new ArrayList<>());
 			resourcesList.add(path);
 		}
 	}
@@ -633,7 +630,7 @@ public class ResourceUtil {
 		final IModelProviderDescriptor[] modelDescriptors = ModelProvider
 				.getModelProviderDescriptors();
 
-		final Set<ResourceMapping> mappings = new LinkedHashSet<ResourceMapping>();
+		final Set<ResourceMapping> mappings = new LinkedHashSet<>();
 		for (IModelProviderDescriptor candidate : modelDescriptors) {
 			try {
 				final IResource[] resources = candidate
