@@ -127,6 +127,9 @@ public class BranchOperation implements IEGitOperation {
 					SubMonitor progress = SubMonitor.convert(pm,
 							numberOfRepositories * 2);
 					for (Repository repository : repositories) {
+						if (pm.isCanceled()) {
+							break;
+						}
 						CheckoutResult result = checkoutRepository(repository,
 								progress.newChild(1), numberOfRepositories > 1);
 						if (result.getStatus() == Status.NONDELETED) {
