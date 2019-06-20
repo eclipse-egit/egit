@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "bde62694_a12b9b3e",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/op/BranchOperation.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 130,
+      "author": {
+        "id": 440
+      },
+      "writtenOn": "2019-06-20T16:56:07Z",
+      "side": 1,
+      "message": "Should we also add a cancel check in this loop? I was recently wondering about that when I accidentially checked out an unwanted very branch and could not stop that operation for several minutes (where most of the time was probably spent in the check which projects to close).\nHowever, we can do that in a separate change, if you agree.",
+      "range": {
+        "startLine": 130,
+        "startChar": 5,
+        "endLine": 130,
+        "endChar": 6
+      },
+      "revId": "ef65cda9018418ecc428dae8d4c4798d7148d770",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
