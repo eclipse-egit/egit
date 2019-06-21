@@ -1,13 +1,13 @@
 Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
-Bundle-Name: %plugin_name
+Bundle-Name: %Bundle-Name
 Automatic-Module-Name: org.eclipse.egit.gitflow.ui
 Bundle-SymbolicName: org.eclipse.egit.gitflow.ui;singleton:=true
 Bundle-Version: 5.5.0.qualifier
 Bundle-Activator: org.eclipse.egit.gitflow.ui.Activator
 Bundle-RequiredExecutionEnvironment: JavaSE-1.8
 Bundle-ActivationPolicy: lazy
-Bundle-Vendor: %provider_name
+Bundle-Vendor: %Bundle-Vendor
 Bundle-Localization: plugin
 Import-Package: org.eclipse.egit.core;version="[5.5.0,5.6.0)",
  org.eclipse.egit.core.internal;version="[5.5.0,5.6.0)",

@@ -1,11 +1,11 @@
 Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
-Bundle-Name: %plugin_name
+Bundle-Name: %Bundle-Name
 Automatic-Module-Name: org.eclipse.egit.ui
 Bundle-SymbolicName: org.eclipse.egit.ui;singleton:=true
 Bundle-Version: 5.5.0.qualifier
 Bundle-Activator: org.eclipse.egit.ui.Activator
-Bundle-Vendor: %provider_name
+Bundle-Vendor: %Bundle-Vendor
 Bundle-Localization: plugin
 Require-Bundle: org.eclipse.core.runtime;bundle-version="[3.12.0,4.0.0)",
  org.eclipse.core.filesystem;bundle-version="[1.6.0,2.0.0)",
