@@ -11,6 +11,7 @@
 package org.eclipse.egit.ui.internal.expressions;
 
 import java.io.IOException;
+import java.sql.Ref;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
@@ -19,9 +20,7 @@ import org.eclipse.core.expressions.PropertyTester;
 import org.eclipse.core.runtime.Adapters;
 import org.eclipse.egit.core.internal.IRepositoryCommit;
 import org.eclipse.egit.ui.internal.commit.RepositoryCommit;
-import org.eclipse.jgit.lib.Constants;
 import org.eclipse.jgit.lib.ObjectId;
-import org.eclipse.jgit.lib.Ref;
 import org.eclipse.jgit.lib.Repository;
 import org.eclipse.jgit.lib.RepositoryState;
 import org.eclipse.jgit.revplot.PlotCommit;
@@ -70,7 +69,11 @@ public class GitPropertyTester extends AbstractPropertyTester {
 	@Override
 	public boolean test(Object receiver, String property, Object[] args,
 			Object expectedValue) {
-		if ("parentCount".equals(property)) { //$NON-NLS-1$
+		if (property == null) {
+			return false;
+		}
+		switch (property) {
+		case "parentCount": //$NON-NLS-1$
 			RevCommit commit = Adapters.adapt(receiver, RevCommit.class);
 			if (commit == null) {
 				return false;
@@ -82,42 +85,50 @@ public class GitPropertyTester extends AbstractPropertyTester {
 				return computeResult(expectedValue,
 						commit.getParentCount() > 0);
 			}
-		} else if ("isBare".equals(property)) { //$NON-NLS-1$
+			break;
+		case "isBare": { //$NON-NLS-1$
 			Repository repository = Adapters.adapt(receiver, Repository.class);
 			if (repository != null) {
 				return computeResult(expectedValue, repository.isBare());
 			}
-		} else if ("isSafe".equals(property)) { //$NON-NLS-1$
+		}
+		case "isSafe": { //$NON-NLS-1$
 			Repository repository = Adapters.adapt(receiver, Repository.class);
 			if (repository != null) {
 				return computeResult(expectedValue, repository
 						.getRepositoryState().equals(RepositoryState.SAFE));
 			}
-		} else if ("canCommit".equals(property)) { //$NON-NLS-1$
+		}
+		case "canCommit": { //$NON-NLS-1$
 			Repository repository = Adapters.adapt(receiver, Repository.class);
 			if (repository != null) {
 				return computeResult(expectedValue,
 						repository.getRepositoryState().canCommit());
 			}
-		} else if ("hasMultipleRefs".equals(property)) { //$NON-NLS-1$
+		}
+		case "hasMultipleRefs": { //$NON-NLS-1$
 			IRepositoryCommit commit = Adapters.adapt(receiver,
 					IRepositoryCommit.class);
 			if (commit != null) {
 				return computeResult(expectedValue,
 						hasMultipleRefs(commit, toRefNames(args)));
 			}
-		} else if ("hasRef".equals(property)) { //$NON-NLS-1$
+		}
+		case "hasRef": { //$NON-NLS-1$
 			IRepositoryCommit commit = Adapters.adapt(receiver,
 					IRepositoryCommit.class);
 			if (commit != null) {
 				return computeResult(expectedValue,
 						hasRef(commit, toRefNames(args)));
 			}
-		} else if ("isStash".equals(property)) { //$NON-NLS-1$
+		}
+		case "isStash": //$NON-NLS-1$
 			RepositoryCommit commit = Adapters.adapt(receiver,
 					RepositoryCommit.class);
 			return computeResult(expectedValue,
 					commit != null && commit.isStash());
+		default:
+			break;
 		}
 		return false;
 	}

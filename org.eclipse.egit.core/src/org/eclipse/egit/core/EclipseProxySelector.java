@@ -10,6 +10,10 @@
  *******************************************************************************/
 package org.eclipse.egit.core;
 
+import static org.eclipse.core.net.proxy.IProxyData.HTTPS_PROXY_TYPE;
+import static org.eclipse.core.net.proxy.IProxyData.HTTP_PROXY_TYPE;
+import static org.eclipse.core.net.proxy.IProxyData.SOCKS_PROXY_TYPE;
+
 import java.io.IOException;
 import java.net.InetAddress;
 import java.net.InetSocketAddress;
@@ -38,22 +42,31 @@ class EclipseProxySelector extends ProxySelector {
 		final String host = uri.getHost();
 
 		if (host != null) {
-			String type = IProxyData.SOCKS_PROXY_TYPE;
-			if ("http".equals(uri.getScheme())) //$NON-NLS-1$
-				type = IProxyData.HTTP_PROXY_TYPE;
-			else if ("ftp".equals(uri.getScheme())) //$NON-NLS-1$
-				type = IProxyData.HTTP_PROXY_TYPE;
-			else if ("https".equals(uri.getScheme())) //$NON-NLS-1$
-				type = IProxyData.HTTPS_PROXY_TYPE;
+			String type = SOCKS_PROXY_TYPE;
+			if (uri.getScheme() != null) {
+				switch (uri.getScheme()) {
+				case "http": //$NON-NLS-1$
+					type = HTTP_PROXY_TYPE;
+					break;
+				case "ftp": //$NON-NLS-1$
+					type = HTTP_PROXY_TYPE;
+					break;
+				case "https": //$NON-NLS-1$
+					type = HTTPS_PROXY_TYPE;
+					break;
+				default:
+					break;
+				}
+			}
 			try {
 				URI queryUri = new URI(type, "//" + host, null); //$NON-NLS-1$
 				final IProxyData[] dataArray = service.select(queryUri);
 				for (IProxyData data : dataArray) {
-					if (IProxyData.HTTP_PROXY_TYPE.equals(data.getType()))
+					if (HTTP_PROXY_TYPE.equals(data.getType()))
 						addProxy(r, Proxy.Type.HTTP, data);
-					else if (IProxyData.HTTPS_PROXY_TYPE.equals(data.getType()))
+					else if (HTTPS_PROXY_TYPE.equals(data.getType()))
 						addProxy(r, Proxy.Type.HTTP, data);
-					else if (IProxyData.SOCKS_PROXY_TYPE.equals(data.getType()))
+					else if (SOCKS_PROXY_TYPE.equals(data.getType()))
 						addProxy(r, Proxy.Type.SOCKS, data);
 				}
 			} catch (URISyntaxException e) {
