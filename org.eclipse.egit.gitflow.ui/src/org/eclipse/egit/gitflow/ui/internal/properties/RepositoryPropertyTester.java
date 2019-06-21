@@ -63,21 +63,27 @@ public class RepositoryPropertyTester extends AbstractPropertyTester {
 
 	private boolean internalTest(Repository repository, String property) {
 		GitFlowRepository gitFlowRepository = new GitFlowRepository(repository);
+		if (property == null) {
+			return false;
+		}
 		try {
-			if (IS_INITIALIZED.equals(property)) {
+			switch (property) {
+			case IS_INITIALIZED:
 				return gitFlowRepository.getConfig().isInitialized();
-			} else if (IS_FEATURE.equals(property)) {
+			case IS_FEATURE:
 				return gitFlowRepository.isFeature();
-			} else if (IS_RELEASE.equals(property)) {
+			case IS_RELEASE:
 				return gitFlowRepository.isRelease();
-			} else if (IS_HOTFIX.equals(property)) {
+			case IS_HOTFIX:
 				return gitFlowRepository.isHotfix();
-			} else if (IS_DEVELOP.equals(property)) {
+			case IS_DEVELOP:
 				return gitFlowRepository.isDevelop();
-			} else if (IS_MASTER.equals(property)) {
+			case IS_MASTER:
 				return gitFlowRepository.isMaster();
-			} else if (HAS_DEFAULT_REMOTE.equals(property)) {
+			case HAS_DEFAULT_REMOTE:
 				return gitFlowRepository.getConfig().hasDefaultRemote();
+			default:
+				break;
 			}
 		} catch (IOException e) {
 			Activator.getDefault().getLog().log(error(e.getMessage(), e));
