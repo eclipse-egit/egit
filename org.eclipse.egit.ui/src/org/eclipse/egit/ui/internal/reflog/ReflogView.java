@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2011, 2017 Chris Aniszczyk <caniszczyk@gmail.com> and others.
+ * Copyright (c) 2011, 2019 Chris Aniszczyk <caniszczyk@gmail.com> and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License 2.0
  * which accompanies this distribution, and is available at
@@ -20,7 +20,10 @@ import java.io.IOException;
 
 import org.eclipse.core.resources.IResource;
 import org.eclipse.core.runtime.Adapters;
+import org.eclipse.core.runtime.preferences.IEclipsePreferences.IPreferenceChangeListener;
+import org.eclipse.core.runtime.preferences.InstanceScope;
 import org.eclipse.egit.core.AdapterUtils;
+import org.eclipse.egit.core.RepositoryUtil;
 import org.eclipse.egit.core.internal.Utils;
 import org.eclipse.egit.core.project.RepositoryMapping;
 import org.eclipse.egit.ui.Activator;
@@ -34,6 +37,7 @@ import org.eclipse.egit.ui.internal.UIText;
 import org.eclipse.egit.ui.internal.actions.ResetMenu;
 import org.eclipse.egit.ui.internal.commit.CommitEditor;
 import org.eclipse.egit.ui.internal.commit.RepositoryCommit;
+import org.eclipse.egit.ui.internal.components.PartVisibilityListener;
 import org.eclipse.egit.ui.internal.components.RepositoryMenuUtil.RepositoryToolbarAction;
 import org.eclipse.egit.ui.internal.reflog.ReflogViewContentProvider.ReflogInput;
 import org.eclipse.egit.ui.internal.repository.tree.RefNode;
@@ -84,13 +88,14 @@ import org.eclipse.swt.widgets.Tree;
 import org.eclipse.swt.widgets.TreeColumn;
 import org.eclipse.ui.IEditorInput;
 import org.eclipse.ui.IEditorPart;
+import org.eclipse.ui.IPartService;
 import org.eclipse.ui.ISelectionListener;
 import org.eclipse.ui.ISelectionService;
 import org.eclipse.ui.IWorkbenchActionConstants;
 import org.eclipse.ui.IWorkbenchPart;
+import org.eclipse.ui.IWorkbenchPartReference;
 import org.eclipse.ui.IWorkbenchPartSite;
 import org.eclipse.ui.OpenAndLinkWithEditorHelper;
-import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.actions.ActionFactory.IWorkbenchAction;
 import org.eclipse.ui.contexts.IContextService;
 import org.eclipse.ui.dialogs.FilteredTree;
@@ -131,11 +136,33 @@ public class ReflogView extends ViewPart implements RefsChangedListener, IShowIn
 
 	private ListenerHandle addRefsChangedListener;
 
+	private final IPreferenceChangeListener prefListener = event -> {
+		if (!RepositoryUtil.PREFS_DIRECTORIES_REL.equals(event.getKey())) {
+			return;
+		}
+		Repository repo = getRepository();
+		if (repo == null
+				|| !Activator.getDefault().getRepositoryUtil().contains(repo)) {
+			Control control = refLogTreeViewer.getControl();
+			if (!control.isDisposed()) {
+				control.getDisplay().asyncExec(() -> {
+					if (!control.isDisposed()) {
+						updateView(null);
+					}
+				});
+			}
+		}
+	};
+
 	private IPropertyChangeListener uiPrefsListener;
 
 	private PreferenceBasedDateFormatter dateFormatter;
 
 	private IWorkbenchAction switchRepositoriesAction;
+
+	private VisibilityListener partListener;
+
+	private ReflogInput pendingInput;
 
 	@SuppressWarnings("unused")
 	@Override
@@ -361,6 +388,10 @@ public class ReflogView extends ViewPart implements RefsChangedListener, IShowIn
 		};
 		Activator.getDefault().getPreferenceStore()
 				.addPropertyChangeListener(uiPrefsListener);
+		InstanceScope.INSTANCE
+				.getNode(org.eclipse.egit.core.Activator.getPluginId())
+				.addPreferenceChangeListener(prefListener);
+
 		selectionChangedListener = new ISelectionListener() {
 			@Override
 			public void selectionChanged(IWorkbenchPart part,
@@ -381,7 +412,10 @@ public class ReflogView extends ViewPart implements RefsChangedListener, IShowIn
 			}
 		};
 
+		partListener = new VisibilityListener();
 		IWorkbenchPartSite site = getSite();
+		CommonUtils.getService(site, IPartService.class)
+				.addPartListener(partListener);
 		ISelectionService service = CommonUtils.getService(site, ISelectionService.class);
 		service.addPostSelectionListener(selectionChangedListener);
 
@@ -430,7 +464,11 @@ public class ReflogView extends ViewPart implements RefsChangedListener, IShowIn
 
 	@Override
 	public void dispose() {
-		super.dispose();
+		InstanceScope.INSTANCE
+				.getNode(org.eclipse.egit.core.Activator.getPluginId())
+				.removePreferenceChangeListener(prefListener);
+		CommonUtils.getService(getSite(), IPartService.class)
+				.removePartListener(partListener);
 		ISelectionService service = CommonUtils.getService(getSite(), ISelectionService.class);
 		service.removePostSelectionListener(selectionChangedListener);
 		if (addRefsChangedListener != null) {
@@ -438,6 +476,8 @@ public class ReflogView extends ViewPart implements RefsChangedListener, IShowIn
 		}
 		Activator.getDefault().getPreferenceStore()
 				.removePropertyChangeListener(uiPrefsListener);
+		pendingInput = null;
+		super.dispose();
 		if (switchRepositoriesAction != null) {
 			switchRepositoriesAction.dispose();
 			switchRepositoriesAction = null;
@@ -468,9 +508,10 @@ public class ReflogView extends ViewPart implements RefsChangedListener, IShowIn
 			return;
 		}
 
-		// Only update when different repository is selected
+		// Only update when different repository is selected, unless we're not
+		// visible
 		Repository currentRepo = getRepository();
-		if (currentRepo == null
+		if (currentRepo == null || !partListener.isVisible()
 				|| !selectedRepo.getDirectory().equals(
 						currentRepo.getDirectory())) {
 			showReflogFor(selectedRepo);
@@ -567,9 +608,53 @@ public class ReflogView extends ViewPart implements RefsChangedListener, IShowIn
 	 */
 	private void showReflogFor(Repository repository, String ref) {
 		if (repository != null && ref != null) {
-			refLogTreeViewer.setInput(new ReflogInput(repository, ref));
-			updateRefLink(ref);
-			form.setText(getRepositoryName(repository));
+			updateView(new ReflogInput(repository, ref));
+		}
+	}
+
+	private void updateView(ReflogInput input) {
+		if (input != null) {
+			if (!partListener.isVisible()) {
+				pendingInput = input;
+				return;
+			}
+			pendingInput = null;
+			Object currentInput = refLogTreeViewer.getInput();
+			boolean repoChanged = true;
+			boolean needRefUpdate = true;
+			if (currentInput instanceof ReflogInput) {
+				ReflogInput oldInput = (ReflogInput) currentInput;
+				repoChanged = oldInput.getRepository() != input.getRepository();
+				needRefUpdate = repoChanged
+						|| !oldInput.getRef().equals(input.getRef());
+			}
+			// Check that the ref exists; fall back to HEAD if not
+			if (!hasRef(input)) {
+				input = new ReflogInput(input.getRepository(), Constants.HEAD);
+				needRefUpdate = true;
+			}
+			refLogTreeViewer.setInput(input);
+			if (needRefUpdate) {
+				updateRefLink(input.getRef());
+			}
+			if (repoChanged) {
+				form.setText(getRepositoryName(input.getRepository()));
+			}
+		} else {
+			// Repository gone?
+			refLogTreeViewer.setInput(null);
+			form.setText(UIText.StagingView_NoSelectionTitle);
+			IToolBarManager toolbar = form.getToolBarManager();
+			toolbar.removeAll();
+			toolbar.update(true);
+		}
+	}
+
+	private static boolean hasRef(ReflogInput input) {
+		try {
+			return input.getRepository().findRef(input.getRef()) != null;
+		} catch (IOException e) {
+			return false;
 		}
 	}
 
@@ -596,27 +681,43 @@ public class ReflogView extends ViewPart implements RefsChangedListener, IShowIn
 
 	@Override
 	public void onRefsChanged(RefsChangedEvent event) {
-		PlatformUI.getWorkbench().getDisplay().syncExec(() -> {
-			Object currentInput = refLogTreeViewer.getInput();
-			if (currentInput instanceof ReflogInput) {
-				ReflogInput oldInput = (ReflogInput) currentInput;
-				Repository repo = oldInput.getRepository();
-				if (repo.getDirectory()
-						.equals(event.getRepository().getDirectory())) {
-					try {
-						if (repo.findRef(oldInput.getRef()) != null) {
-							refLogTreeViewer.setInput(
-									new ReflogInput(oldInput.getRepository(),
-											oldInput.getRef()));
-							return;
-						}
-					} catch (IOException e) {
-						// Ignore here
-					}
-					// Fall back to HEAD
-					showReflogFor(repo);
+		Control control = refLogTreeViewer.getControl();
+		if (control != null && !control.isDisposed()) {
+			control.getDisplay().asyncExec(() -> {
+				if (control.isDisposed()) {
+					return;
 				}
+				Object currentInput = refLogTreeViewer.getInput();
+				if (currentInput instanceof ReflogInput) {
+					ReflogInput oldInput = (ReflogInput) currentInput;
+					Repository repo = oldInput.getRepository();
+					if (repo.getDirectory()
+							.equals(event.getRepository().getDirectory())) {
+						updateView(new ReflogInput(oldInput.getRepository(),
+								oldInput.getRef()));
+					}
+				}
+			});
+		}
+	}
+
+	private final class VisibilityListener extends PartVisibilityListener {
+
+		public VisibilityListener() {
+			super(ReflogView.this);
+		}
+
+		@Override
+		public void partActivated(IWorkbenchPartReference partRef) {
+			if (isMe(partRef) && pendingInput != null) {
+				ReflogInput input = pendingInput;
+				pendingInput = null;
+				// Verify that the repository still exists
+				if (!input.getRepository().getDirectory().exists()) {
+					input = null;
+				}
+				updateView(input);
 			}
-		});
+		}
 	}
 }

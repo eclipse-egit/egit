@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (C) 2011, 2018 Bernard Leach <leachbj@bouncycastle.org> and others.
+ * Copyright (C) 2011, 2019 Bernard Leach <leachbj@bouncycastle.org> and others.
  * Copyright (C) 2015 SAP SE (Christian Georgi <christian.georgi@sap.com>)
  * Copyright (C) 2015 Denis Zygann <d.zygann@web.de>
  * Copyright (C) 2016 IBM (Daniel Megert <daniel_megert@ch.ibm.com>)
@@ -90,6 +90,7 @@ import org.eclipse.egit.ui.internal.commit.CommitJob;
 import org.eclipse.egit.ui.internal.commit.CommitMessageHistory;
 import org.eclipse.egit.ui.internal.commit.CommitProposalProcessor;
 import org.eclipse.egit.ui.internal.commit.DiffViewer;
+import org.eclipse.egit.ui.internal.components.PartVisibilityListener;
 import org.eclipse.egit.ui.internal.components.RepositoryMenuUtil.RepositoryToolbarAction;
 import org.eclipse.egit.ui.internal.decorators.ProblemLabelDecorator;
 import org.eclipse.egit.ui.internal.dialogs.CommandConfirmation;
@@ -207,7 +208,6 @@ import org.eclipse.ui.IActionBars;
 import org.eclipse.ui.IEditorInput;
 import org.eclipse.ui.IEditorPart;
 import org.eclipse.ui.IFileEditorInput;
-import org.eclipse.ui.IPartListener2;
 import org.eclipse.ui.IPartService;
 import org.eclipse.ui.ISelectionListener;
 import org.eclipse.ui.ISelectionService;
@@ -295,14 +295,12 @@ public class StagingView extends ViewPart
 
 	private boolean reactOnSelection = true;
 
-	private boolean isViewHidden;
-
 	/** Tracks the last selection while the view is not active. */
 	private StructuredSelection lastSelection;
 
 	private ISelectionListener selectionChangedListener;
 
-	private IPartListener2 partListener;
+	private PartVisibilityListener partListener;
 
 	private ToolBarManager unstagedToolBarManager;
 
@@ -509,26 +507,10 @@ public class StagingView extends ViewPart
 		}
 	}
 
-	private final class PartListener implements IPartListener2 {
+	private final class PartListener extends PartVisibilityListener {
 
-		@Override
-		public void partVisible(IWorkbenchPartReference partRef) {
-			updateHiddenState(partRef, false);
-		}
-
-		@Override
-		public void partOpened(IWorkbenchPartReference partRef) {
-			updateHiddenState(partRef, false);
-		}
-
-		@Override
-		public void partHidden(IWorkbenchPartReference partRef) {
-			updateHiddenState(partRef, true);
-		}
-
-		@Override
-		public void partClosed(IWorkbenchPartReference partRef) {
-			updateHiddenState(partRef, true);
+		public PartListener() {
+			super(StagingView.this);
 		}
 
 		@Override
@@ -544,7 +526,7 @@ public class StagingView extends ViewPart
 			}
 			IWorkbenchPart part = partRef.getPart(false);
 			StructuredSelection sel = getSelectionOfPart(part);
-			if (isViewHidden) {
+			if (!isVisible()) {
 				// remember last selection in the part so that we can
 				// synchronize on it as soon as we will be visible
 				lastSelection = sel;
@@ -555,32 +537,6 @@ public class StagingView extends ViewPart
 				}
 			}
 
-		}
-
-		private void updateHiddenState(IWorkbenchPartReference partRef,
-				boolean hidden) {
-			if (isMe(partRef)) {
-				isViewHidden = hidden;
-			}
-		}
-
-		private boolean isMe(IWorkbenchPartReference partRef) {
-			return partRef.getPart(false) == StagingView.this;
-		}
-
-		@Override
-		public void partDeactivated(IWorkbenchPartReference partRef) {
-			//
-		}
-
-		@Override
-		public void partBroughtToTop(IWorkbenchPartReference partRef) {
-			//
-		}
-
-		@Override
-		public void partInputChanged(IWorkbenchPartReference partRef) {
-			//
 		}
 	}
 
@@ -3292,7 +3248,7 @@ public class StagingView extends ViewPart
 	}
 
 	private boolean shouldUpdateSelection() {
-		return !isDisposed() && !isViewHidden && reactOnSelection;
+		return !isDisposed() && partListener.isVisible() && reactOnSelection;
 	}
 
 	private void reactOnSelection(ISelection sel) {
