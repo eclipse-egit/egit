@@ -766,14 +766,15 @@ public class FetchGerritChangePage extends WizardPage {
 				ChangeList list = changeRefs.get(uriCombo.getText());
 				if (list != null && list.isDone()) {
 					try {
+						Collection<Change> changes = list.get();
 						if (change.getPatchSetNumber() != null) {
-							if (!list.get().contains(change)) {
+							if (changes == null || !changes.contains(change)) {
 								setErrorMessage(
 										UIText.FetchGerritChangePage_UnknownChangeRefMessage);
 								return;
 							}
 						} else {
-							Change fromGerrit = findHighestPatchSet(list.get(),
+							Change fromGerrit = findHighestPatchSet(changes,
 									change.getChangeNumber().intValue());
 							if (fromGerrit == null) {
 								setErrorMessage(NLS.bind(
@@ -908,6 +909,9 @@ public class FetchGerritChangePage extends WizardPage {
 
 	private Change findHighestPatchSet(Collection<Change> changes,
 			int changeNumber) {
+		if (changes == null) {
+			return null;
+		}
 		// We know that the result is sorted by change and
 		// patch set number descending
 		for (Change fromGerrit : changes) {
@@ -1055,8 +1059,11 @@ public class FetchGerritChangePage extends WizardPage {
 					if (monitor.isCanceled()) {
 						throw new OperationCanceledException();
 					}
-					return findHighestPatchSet(changes,
+					Change highest = findHighestPatchSet(changes,
 							originalChange.getChangeNumber().intValue());
+					if (highest != null) {
+						return highest;
+					}
 				}
 				return originalChange;
 			}
