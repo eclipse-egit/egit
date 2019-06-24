@@ -148,7 +148,7 @@ public class SelectionPropertyTester extends AbstractPropertyTester {
 	private boolean selectionContainsMoreThanOneRepository(
 			Collection<?> collection, Object[] args) {
 		IStructuredSelection selection = getStructuredSelection(collection);
-		Repository[] repos = SelectionUtils.getRepositories(selection);
+		Repository[] repos = SelectionUtils.getAllRepositories(selection);
 		return testMultipleRepositoryProperties(Arrays.asList(repos), args);
 	}
 

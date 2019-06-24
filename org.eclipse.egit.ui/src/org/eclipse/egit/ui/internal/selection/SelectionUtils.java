@@ -83,7 +83,7 @@ public class SelectionUtils {
 	 * Retrieves all the repositories associated with the current selection. It
 	 * attempts to first identify the selections as projects and if that yields
 	 * an empty result, it then changes to adapt the selections to the
-	 * repository class
+	 * repository class.
 	 *
 	 * @param selection
 	 * @return array of repositories
@@ -104,6 +104,60 @@ public class SelectionUtils {
 		Set<Repository> repos = new LinkedHashSet<>();
 		for (Object o : selection.toArray()) {
 			Repository repo = Adapters.adapt(o, Repository.class);
+			if (repo != null) {
+				repos.add(repo);
+			} else {
+				// no repository found for one of the objects!
+				return new Repository[0];
+			}
+		}
+		return repos.toArray(new Repository[0]);
+	}
+
+	/**
+	 * Retrieves all the repositories associated with the current selection,
+	 * even if associated with a folder instead of a project. If no repository
+	 * can be determined for any object in the selection, returns an empty
+	 * array.
+	 *
+	 * @param evaluationContext
+	 * @return array of selected repositories
+	 */
+	@NonNull
+	public static Repository[] getAllRepositories(
+			@Nullable IEvaluationContext evaluationContext) {
+		return getAllRepositories(getSelection(evaluationContext));
+	}
+
+	/**
+	 * Retrieves all the repositories associated with the current selection,
+	 * even if associated with a folder instead of a project. If no repository
+	 * can be determined for any object in the selection, returns an empty
+	 * array.
+	 *
+	 * @param selection
+	 * @return array of repositories; may include submodule or nested
+	 *         repositories
+	 */
+	@NonNull
+	public static Repository[] getAllRepositories(
+			@NonNull IStructuredSelection selection) {
+		if (selection.isEmpty()) {
+			return new Repository[0];
+		}
+		Set<Object> elements = getSelectionContents(selection);
+		Set<Repository> repos = new LinkedHashSet<>();
+		for (Object location : elements) {
+			Repository repo = null;
+			if (location instanceof Repository) {
+				repo = (Repository) location;
+			} else if (location instanceof IResource) {
+				repo = ResourceUtil.getRepository((IResource) location);
+			} else if (location instanceof IPath) {
+				repo = ResourceUtil.getRepository((IPath) location);
+			} else {
+				repo = Adapters.adapt(location, Repository.class);
+			}
 			if (repo != null) {
 				repos.add(repo);
 			} else {

@@ -95,7 +95,7 @@ public class SwitchToMenu extends ContributionItem implements
 			return;
 
 		Repository[] repositories = SelectionUtils
-				.getRepositories(handlerService.getCurrentState());
+				.getAllRepositories(handlerService.getCurrentState());
 
 		if (repositories.length > 0) {
 			createDynamicMenu(menu, repositories);

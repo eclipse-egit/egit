@@ -39,6 +39,7 @@ import org.eclipse.egit.core.project.GitProjectData;
 import org.eclipse.egit.core.project.RepositoryMapping;
 import org.eclipse.egit.core.test.TestRepository;
 import org.eclipse.egit.ui.common.LocalRepositoryTestCase;
+import org.eclipse.egit.ui.internal.UIText;
 import org.eclipse.egit.ui.internal.clone.ProjectRecord;
 import org.eclipse.egit.ui.internal.clone.ProjectUtils;
 import org.eclipse.egit.ui.internal.resources.IResourceState;
@@ -52,6 +53,7 @@ import org.eclipse.jgit.lib.Repository;
 import org.eclipse.jgit.submodule.SubmoduleWalk;
 import org.eclipse.swtbot.eclipse.finder.widgets.SWTBotView;
 import org.eclipse.swtbot.swt.finder.junit.SWTBotJunit4ClassRunner;
+import org.eclipse.swtbot.swt.finder.widgets.SWTBotShell;
 import org.eclipse.swtbot.swt.finder.widgets.SWTBotTree;
 import org.eclipse.swtbot.swt.finder.widgets.SWTBotTreeItem;
 import org.eclipse.ui.IEditorReference;
@@ -227,6 +229,27 @@ public class SubmoduleFolderTest extends LocalRepositoryTestCase {
 		assertTrue("File should be dirty", state.isDirty());
 		TestUtil.waitForDecorations();
 		assertTrue(node.getText().startsWith("> " + file.getName()));
+	}
+
+	/**
+	 * Tests that the Team->Switch To... menu item has content by clicking on
+	 * "New Branch..." and then closing the resulting "Create Branch" dialog.
+	 *
+	 * @throws Exception
+	 */
+	@Test
+	public void testSwitchToMenu() throws Exception {
+		SWTBotTree projectExplorerTree = TestUtil.getExplorerTree();
+		SWTBotTreeItem node = TestUtil.navigateTo(projectExplorerTree,
+				childFolder.getFullPath().segments());
+		TestUtil.waitForDecorations();
+		node.select();
+		ContextMenuHelper.clickContextMenu(projectExplorerTree, "Team",
+				util.getPluginLocalizedValue("SwitchToMenu.label"),
+				UIText.SwitchToMenu_NewBranchMenuLabel);
+
+		SWTBotShell shell = bot.shell(UIText.CreateBranchWizard_NewBranchTitle);
+		shell.close();
 	}
 
 	/**
