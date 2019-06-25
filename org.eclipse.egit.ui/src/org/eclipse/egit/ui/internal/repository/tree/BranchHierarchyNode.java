@@ -16,6 +16,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 import java.util.stream.Collectors;
 
 import org.eclipse.core.runtime.IPath;
@@ -50,13 +51,13 @@ public class BranchHierarchyNode extends RepositoryTreeNode<IPath> {
 	 */
 	public List<IPath> getChildPaths() throws IOException {
 		List<IPath> result = new ArrayList<>();
-		for (IPath myPath : getPathList()) {
-			if (getObject().isPrefixOf(myPath)) {
-				int segmentDiff = myPath.segmentCount()
+		for (IPath childPath : getPathMap().keySet()) {
+			if (getObject().isPrefixOf(childPath)) {
+				int segmentDiff = childPath.segmentCount()
 						- getObject().segmentCount();
 				if (segmentDiff > 1) {
 					IPath newPath = getObject().append(
-							myPath.segment(getObject().segmentCount()));
+							childPath.segment(getObject().segmentCount()));
 					if (!result.contains(newPath))
 						result.add(newPath);
 				}
@@ -71,14 +72,13 @@ public class BranchHierarchyNode extends RepositoryTreeNode<IPath> {
 	 */
 	public List<Ref> getChildRefs() throws IOException {
 		List<Ref> childRefs = new ArrayList<>();
-		for (IPath myPath : getPathList()) {
-			if (getObject().isPrefixOf(myPath)) {
-				int segmentDiff = myPath.segmentCount()
+		for (Entry<IPath, Ref> entry : getPathMap().entrySet()) {
+			IPath childPath = entry.getKey();
+			if (getObject().isPrefixOf(childPath)) {
+				int segmentDiff = childPath.segmentCount()
 						- getObject().segmentCount();
 				if (segmentDiff == 1) {
-					Ref ref = getRepository()
-							.findRef(myPath.toPortableString());
-					childRefs.add(ref);
+					childRefs.add(entry.getValue());
 				}
 			}
 		}
@@ -95,15 +95,13 @@ public class BranchHierarchyNode extends RepositoryTreeNode<IPath> {
 				.filter(ref -> !ref.isSymbolic()).collect(Collectors.toList());
 	}
 
-	private List<IPath> getPathList() throws IOException {
-		List<IPath> result = new ArrayList<>();
+	private Map<IPath, Ref> getPathMap() throws IOException {
 		Map<String, Ref> refsMap = getRepository().getRefDatabase().getRefs(
 				getObject().toPortableString()); // getObject() returns path ending with /
-		for (Map.Entry<String, Ref> entry : refsMap.entrySet()) {
-			if (entry.getValue().isSymbolic())
-				continue;
-			result.add(getObject().append(new Path(entry.getKey())));
-		}
-		return result;
+		return refsMap.entrySet().stream()
+				.filter(entry -> !entry.getValue().isSymbolic())
+				.collect(Collectors.toMap(
+						entry -> getObject().append(new Path(entry.getKey())),
+						entry -> entry.getValue()));
 	}
 }
