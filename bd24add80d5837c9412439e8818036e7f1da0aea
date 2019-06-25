@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f9bbac64_6d75ea92",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/repository/tree/BranchHierarchyNode.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2019-06-25T06:44:22Z",
+      "side": 1,
+      "message": "Just\n\n  Set\u003cIPath\u003e result \u003d new LinkedHashSet\u003c\u003e();\n  for (Ref ref : getChildRefsRecursive()) {\n    IPath path \u003d Path.fromPortableString(ref.getName());\n    int segmentDiff \u003d path.segmentCount() - getObject().segmentCount();\n    if (segmentDiff \u003e 1) {\n      result.add(path.removeLastSegments(segmentDiff - 1));\n    }\n  }\n  return result;\n\nshould do the trick.",
+      "revId": "bd24add80d5837c9412439e8818036e7f1da0aea",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "dca40bd2_0abdbd08",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/repository/tree/BranchHierarchyNode.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2019-06-25T06:44:22Z",
+      "side": 1,
+      "message": "And here\n\n  for (Ref ref : getChildRefsRecursive()) {\n    IPath path \u003d Path.fromPortableString(ref.getName());\n    int segmentDiff \u003d path.segmentCount() - getObject().segmentCount();\n    if (segmentDiff \u003d\u003d 1) {\n      childRefs.add(ref);\n    }\n  }",
+      "revId": "bd24add80d5837c9412439e8818036e7f1da0aea",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5fa22c65_95b05ae9",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/repository/tree/BranchHierarchyNode.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2019-06-25T06:44:22Z",
+      "side": 1,
+      "message": "And then remove this altogether.",
+      "revId": "bd24add80d5837c9412439e8818036e7f1da0aea",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
