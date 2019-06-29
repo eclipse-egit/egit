@@ -13,13 +13,10 @@
 package org.eclipse.egit.ui.internal.repository.tree;
 
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 import java.util.stream.Collectors;
 
 import org.eclipse.core.runtime.IPath;
-import org.eclipse.core.runtime.Path;
 import org.eclipse.jgit.lib.Ref;
 import org.eclipse.jgit.lib.Repository;
 
@@ -45,47 +42,6 @@ public class BranchHierarchyNode extends RepositoryTreeNode<IPath> {
 	}
 
 	/**
-	 * @return the child paths
-	 * @throws IOException
-	 */
-	public List<IPath> getChildPaths() throws IOException {
-		List<IPath> result = new ArrayList<>();
-		for (IPath myPath : getPathList()) {
-			if (getObject().isPrefixOf(myPath)) {
-				int segmentDiff = myPath.segmentCount()
-						- getObject().segmentCount();
-				if (segmentDiff > 1) {
-					IPath newPath = getObject().append(
-							myPath.segment(getObject().segmentCount()));
-					if (!result.contains(newPath))
-						result.add(newPath);
-				}
-			}
-		}
-		return result;
-	}
-
-	/**
-	 * @return the direct child Refs (branches) only
-	 * @throws IOException
-	 */
-	public List<Ref> getChildRefs() throws IOException {
-		List<Ref> childRefs = new ArrayList<>();
-		for (IPath myPath : getPathList()) {
-			if (getObject().isPrefixOf(myPath)) {
-				int segmentDiff = myPath.segmentCount()
-						- getObject().segmentCount();
-				if (segmentDiff == 1) {
-					Ref ref = getRepository()
-							.findRef(myPath.toPortableString());
-					childRefs.add(ref);
-				}
-			}
-		}
-		return childRefs;
-	}
-
-	/**
 	 * @return all child Refs reachable from this hierarchy node
 	 * @throws IOException
 	 */
@@ -95,15 +51,4 @@ public class BranchHierarchyNode extends RepositoryTreeNode<IPath> {
 				.filter(ref -> !ref.isSymbolic()).collect(Collectors.toList());
 	}
 
-	private List<IPath> getPathList() throws IOException {
-		List<IPath> result = new ArrayList<>();
-		Map<String, Ref> refsMap = getRepository().getRefDatabase().getRefs(
-				getObject().toPortableString()); // getObject() returns path ending with /
-		for (Map.Entry<String, Ref> entry : refsMap.entrySet()) {
-			if (entry.getValue().isSymbolic())
-				continue;
-			result.add(getObject().append(new Path(entry.getKey())));
-		}
-		return result;
-	}
 }

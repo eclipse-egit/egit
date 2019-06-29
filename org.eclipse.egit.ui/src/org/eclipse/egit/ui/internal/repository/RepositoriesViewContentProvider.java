@@ -28,9 +28,11 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.EnumSet;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
+import java.util.Objects;
 import java.util.Set;
 import java.util.WeakHashMap;
 
@@ -39,7 +41,6 @@ import org.eclipse.core.commands.State;
 import org.eclipse.core.resources.IWorkspaceRoot;
 import org.eclipse.core.resources.WorkspaceJob;
 import org.eclipse.core.runtime.CoreException;
-import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Path;
@@ -218,10 +219,10 @@ public class RepositoriesViewContentProvider implements ITreeContentProvider,
 		case REMOTETRACKING:
 			return getBranchChildren(node, repo, Constants.R_REMOTES);
 
-		case BRANCHHIERARCHY: {
-			return getBranchHierarchyChildren((BranchHierarchyNode) node, repo,
-					node);
-		}
+		case BRANCHHIERARCHY:
+			return getBranchHierarchyChildren(node, repo,
+					((BranchHierarchyNode) node).getObject()
+							.toPortableString());
 
 		case TAGS:
 			return getTagsChildren(node, repo);
@@ -392,9 +393,7 @@ public class RepositoriesViewContentProvider implements ITreeContentProvider,
 	private Object[] getBranchChildren(RepositoryTreeNode node, Repository repo,
 			String prefix) {
 		if (branchHierarchyMode) {
-			return getBranchHierarchyChildren(
-					new BranchHierarchyNode(node, repo, new Path(prefix)), repo,
-					node);
+			return getBranchHierarchyChildren(node, repo, prefix);
 		} else {
 			try {
 				return getRefs(repo, prefix).values().stream()
@@ -406,19 +405,27 @@ public class RepositoriesViewContentProvider implements ITreeContentProvider,
 		}
 	}
 
-	private Object[] getBranchHierarchyChildren(BranchHierarchyNode hierNode,
-			Repository repo, RepositoryTreeNode parentNode) {
+	private Object[] getBranchHierarchyChildren(RepositoryTreeNode node,
+			Repository repo, String prefix) {
 		try {
-			List<RepositoryTreeNode> children = new ArrayList<>();
-			for (IPath path : hierNode.getChildPaths()) {
-				children.add(new BranchHierarchyNode(parentNode, repo, path));
-			}
-			for (Ref ref : hierNode.getChildRefs()) {
-				children.add(new RefNode(parentNode, repo, ref));
-			}
-			return children.toArray();
+			Set<String> folderChildren = new HashSet<>();
+			return getRefs(repo, prefix).entrySet().stream()
+					.filter(e -> !e.getValue().isSymbolic()).map(e -> {
+						int i = e.getKey().indexOf('/', prefix.length());
+						if (i < 0) {
+							return new RefNode(node, repo, e.getValue());
+						} else {
+							String name = e.getKey().substring(prefix.length(),
+									i);
+							if (folderChildren.add(name)) {
+								return new BranchHierarchyNode(node, repo,
+										Path.fromPortableString(prefix + name));
+							}
+							return null;
+						}
+					}).filter(Objects::nonNull).toArray();
 		} catch (IOException e) {
-			return handleException(e, parentNode);
+			return handleException(e, node);
 		}
 	}
 
