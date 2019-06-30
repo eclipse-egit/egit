@@ -127,10 +127,20 @@ public class BranchOperation implements IEGitOperation {
 					SubMonitor progress = SubMonitor.convert(pm,
 							numberOfRepositories * 2);
 					for (Repository repository : repositories) {
-						CheckoutResult result = checkoutRepository(repository,
-								progress.newChild(1), numberOfRepositories > 1);
-						if (result.getStatus() == Status.NONDELETED) {
-							retryDelete(repository, result.getUndeletedList());
+						CheckoutResult result;
+						if (pm.isCanceled()) {
+							// don't break from the loop, the result map must be
+							// filled
+							result = CheckoutResult.NOT_TRIED_RESULT;
+						}
+						else {
+							result = checkoutRepository(repository,
+									progress.newChild(1),
+									numberOfRepositories > 1);
+							if (result.getStatus() == Status.NONDELETED) {
+								retryDelete(repository,
+										result.getUndeletedList());
+							}
 						}
 						results.put(repository, result);
 					}
