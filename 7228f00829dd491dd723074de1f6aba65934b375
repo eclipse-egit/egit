@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6e4bb887_5eda0229",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/repository/RepositoriesViewContentProvider.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 420,
+      "author": {
+        "id": 440
+      },
+      "writtenOn": "2019-06-30T14:31:41Z",
+      "side": 1,
+      "message": "I really like this part. I tend to forget such useful return values and typically create the set first, afterwards iterating it again for the actual work.",
+      "range": {
+        "startLine": 420,
+        "startChar": 7,
+        "endLine": 420,
+        "endChar": 38
+      },
+      "revId": "7228f00829dd491dd723074de1f6aba65934b375",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
