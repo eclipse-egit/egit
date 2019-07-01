@@ -13,6 +13,7 @@ package org.eclipse.egit.ui.internal.submodules;
 import static org.eclipse.egit.ui.JobFamilies.ADD_TO_INDEX;
 import static org.eclipse.egit.ui.JobFamilies.GENERATE_HISTORY;
 import static org.eclipse.egit.ui.JobFamilies.REMOVE_FROM_INDEX;
+import static org.eclipse.egit.ui.JobFamilies.REPO_VIEW_REFRESH;
 import static org.eclipse.swtbot.eclipse.finder.waits.Conditions.waitForEditor;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
@@ -42,6 +43,7 @@ import org.eclipse.egit.ui.common.LocalRepositoryTestCase;
 import org.eclipse.egit.ui.internal.UIText;
 import org.eclipse.egit.ui.internal.clone.ProjectRecord;
 import org.eclipse.egit.ui.internal.clone.ProjectUtils;
+import org.eclipse.egit.ui.internal.repository.RepositoriesView;
 import org.eclipse.egit.ui.internal.resources.IResourceState;
 import org.eclipse.egit.ui.internal.resources.ResourceStateFactory;
 import org.eclipse.egit.ui.test.ContextMenuHelper;
@@ -51,6 +53,8 @@ import org.eclipse.jgit.lib.Constants;
 import org.eclipse.jgit.lib.Ref;
 import org.eclipse.jgit.lib.Repository;
 import org.eclipse.jgit.submodule.SubmoduleWalk;
+import org.eclipse.swt.widgets.Tree;
+import org.eclipse.swt.widgets.TreeItem;
 import org.eclipse.swtbot.eclipse.finder.widgets.SWTBotView;
 import org.eclipse.swtbot.swt.finder.junit.SWTBotJunit4ClassRunner;
 import org.eclipse.swtbot.swt.finder.widgets.SWTBotShell;
@@ -73,6 +77,8 @@ public class SubmoduleFolderTest extends LocalRepositoryTestCase {
 	private static final String CHILD = "child";
 
 	private static final String CHILDPROJECT = "ChildProject";
+
+	private static final TestUtil UTIL = new TestUtil();
 
 	private Repository parentRepository;
 
@@ -118,7 +124,7 @@ public class SubmoduleFolderTest extends LocalRepositoryTestCase {
 						.toString())
 				.call();
 		TestRepository parentRepo = new TestRepository(parentRepository);
-		parentRepo.trackAllFiles(parentProject);
+		Git.wrap(parentRepository).add().addFilepattern(".").call();
 		parentRepo.commit("Commit submodule");
 		assertTrue(SubmoduleWalk.containsGitModulesFile(parentRepository));
 		parentProject.refreshLocal(IResource.DEPTH_INFINITE, null);
@@ -252,6 +258,53 @@ public class SubmoduleFolderTest extends LocalRepositoryTestCase {
 		shell.close();
 	}
 
+	@Test
+	public void testRepoViewFollowSelection() throws Exception {
+		SWTBotView view = TestUtil.showView(RepositoriesView.VIEW_ID);
+		TestUtil.joinJobs(REPO_VIEW_REFRESH);
+		view.toolbarButton(
+				UTIL.getPluginLocalizedValue("LinkWithSelectionCommand"))
+				.click();
+		try {
+			SWTBotTree projectExplorerTree = TestUtil.getExplorerTree();
+			SWTBotTreeItem node = TestUtil.navigateTo(projectExplorerTree,
+					childFolder.getFullPath().segments());
+			node.select();
+			TestUtil.waitForDecorations();
+			TestUtil.joinJobs(REPO_VIEW_REFRESH);
+			SWTBotTree tree = view.bot().tree();
+			int[] numberOfSelected = { 0 };
+			boolean[] parentFound = { false };
+			view.getWidget().getDisplay().syncExec(() -> {
+				Tree t = tree.widget;
+				TreeItem[] selected = t.getSelection();
+				numberOfSelected[0] = selected.length;
+				if (selected.length == 1) {
+					TreeItem root = null;
+					TreeItem parent = selected[0].getParentItem();
+					String parentRepoName = parentRepositoryGitDir
+							.getParentFile().getName();
+					while (parent != null) {
+						root = parent;
+						parent = parent.getParentItem();
+					}
+					if (root != null
+							&& root.getText().startsWith(parentRepoName)) {
+						parentFound[0] = true;
+					}
+				}
+			});
+			assertEquals("One node selected", 1, numberOfSelected[0]);
+			assertTrue("Selected node not under parent repository",
+					parentFound[0]);
+		} finally {
+			// Reset "follow selection"
+			view.toolbarButton(
+					UTIL.getPluginLocalizedValue("LinkWithSelectionCommand"))
+					.click();
+		}
+	}
+
 	/**
 	 * Tests that a CompareWithHeadAction on a file from a submodule folder does
 	 * open the right compare editor, comparing against the version from the
@@ -362,9 +415,9 @@ public class SubmoduleFolderTest extends LocalRepositoryTestCase {
 		// Set link with selection
 		((org.eclipse.team.internal.ui.history.GenericHistoryView) viewPart)
 				.setLinkingEnabled(true);
-		// Select PROJ1 (has 3 commits)
+		// Select PROJ1 (has 4 commits)
 		TestUtil.navigateTo(TestUtil.getExplorerTree(), PROJ1).select();
-		assertRowCountInHistory(PROJ1, 3);
+		assertRowCountInHistory(PROJ1, 4);
 		// Select the child folder (from the submodule; has 2 commits)
 		TestUtil.navigateTo(TestUtil.getExplorerTree(),
 				childFolder.getFullPath().segments()).select();
