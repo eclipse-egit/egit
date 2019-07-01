@@ -631,13 +631,13 @@ public class RepositoriesView extends CommonNavigator implements IShowInSource, 
 	private boolean checkNotConfiguredRepositories(
 			Map<Repository, Collection<String>> pathsByRepo) {
 		boolean added = false;
-		for (Map.Entry<Repository, Collection<String>> entry : pathsByRepo.entrySet()) {
-			Repository repository = entry.getKey();
+		for (Repository repository : pathsByRepo.keySet()) {
 			try {
-				boolean newOne = repositoryUtil
-						.addConfiguredRepository(repository.getDirectory());
-				if (newOne) {
-					added = true;
+				RepositoryTreeNode node = getRepositoryChildNode(repository,
+						RepositoryTreeNodeType.WORKINGDIR);
+				if (node == null) {
+					added |= repositoryUtil
+							.addConfiguredRepository(repository.getDirectory());
 				}
 			} catch (IllegalArgumentException iae) {
 				Activator.handleError(iae.getMessage(), iae, false);
@@ -1001,20 +1001,46 @@ public class RepositoriesView extends CommonNavigator implements IShowInSource, 
 		}
 	}
 
+	private RepositoryTreeNode findChild(ITreeContentProvider cp,
+			RepositoryTreeNode root, RepositoryTreeNodeType type) {
+		for (Object child : cp.getChildren(root)) {
+			RepositoryTreeNode childNode = (RepositoryTreeNode) child;
+			if (childNode.getType() == type) {
+				return childNode;
+			}
+		}
+		return null;
+	}
+
 	private RepositoryTreeNode getRepositoryChildNode(Repository repository,
 			RepositoryTreeNodeType type) {
 		ITreeContentProvider cp = (ITreeContentProvider) getCommonViewer()
 				.getContentProvider();
-		for (Object repo : cp.getElements(getCommonViewer().getInput())) {
+		return recursiveRepositoryChildNode(cp,
+				cp.getElements(getCommonViewer().getInput()), repository, type);
+	}
+
+	private RepositoryTreeNode recursiveRepositoryChildNode(
+			ITreeContentProvider cp, Object[] roots,
+			Repository repository, RepositoryTreeNodeType type) {
+		for (Object repo : roots) {
 			RepositoryTreeNode node = (RepositoryTreeNode) repo;
 			// TODO equals implementation of Repository?
 			if (repository.getDirectory().equals(
 					((Repository) node.getObject()).getDirectory())) {
-				for (Object child : cp.getChildren(node)) {
-					RepositoryTreeNode childNode = (RepositoryTreeNode) child;
-					if (childNode.getType() == type) {
-						return childNode;
-					}
+				return findChild(cp, node, type);
+			}
+		}
+		// Might be a submodule
+		for (Object repo : roots) {
+			RepositoryTreeNode node = (RepositoryTreeNode) repo;
+			RepositoryTreeNode submodules = findChild(cp, node,
+						RepositoryTreeNodeType.SUBMODULES);
+			if (submodules != null) {
+				RepositoryTreeNode childNode = recursiveRepositoryChildNode(cp,
+						cp.getChildren(submodules), repository, type);
+				if (childNode != null) {
+					return childNode;
 				}
 			}
 		}
@@ -1025,7 +1051,9 @@ public class RepositoriesView extends CommonNavigator implements IShowInSource, 
 			String repoRelativePath) {
 		RepositoryTreeNode currentNode = getRepositoryChildNode(repository,
 				RepositoryTreeNodeType.WORKINGDIR);
-
+		if (currentNode == null) {
+			return null;
+		}
 		ITreeContentProvider cp = (ITreeContentProvider) getCommonViewer()
 				.getContentProvider();
 		IPath relPath = new Path(repoRelativePath);
