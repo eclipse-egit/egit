@@ -6313,6 +6313,18 @@
             commandId="org.eclipse.egit.ui.team.ReplaceWithCommit"
             icon="icons/obj16/changelog_obj.png">
       </image>
+      <image
+            commandId="org.eclipse.egit.ui.team.submodule.add"
+            icon="icons/obj16/submodules.png">
+      </image>
+      <image
+            commandId="org.eclipse.egit.ui.team.ReplaceWithRef"
+            icon="icons/obj16/branches_obj.png">
+      </image>
+      <image
+            commandId="org.eclipse.egit.ui.team.CompareWithRef"
+            icon="icons/obj16/branches_obj.png">
+      </image>
    </extension>
    <extension
          point="org.eclipse.core.expressions.propertyTesters">
