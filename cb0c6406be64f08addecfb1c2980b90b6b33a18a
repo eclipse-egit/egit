@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "7c0250b0_6c95c6ac",
+        "filename": "org.eclipse.egit.ui.test/src/org/eclipse/egit/ui/internal/submodules/SubmoduleFolderTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 276,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2019-07-02T17:25:34Z",
+      "side": 1,
+      "message": "I use Atomic* when there are issues with concurrent accesses. I don\u0027t see any here? I find using java.util.concurrent.Atomic* when there are no concurreny issues misleading.",
+      "parentUuid": "ce682a20_1374bb62",
+      "revId": "cb0c6406be64f08addecfb1c2980b90b6b33a18a",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6ae32d73_59e1b38e",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/repository/RepositoriesView.java",
         "patchSetId": 2
@@ -42,6 +60,30 @@
     },
     {
       "key": {
+        "uuid": "b8f37364_ba1a7da1",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/repository/RepositoriesView.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 642,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2019-07-02T17:25:34Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6ae32d73_59e1b38e",
+      "range": {
+        "startLine": 642,
+        "startChar": 9,
+        "endLine": 642,
+        "endChar": 15
+      },
+      "revId": "cb0c6406be64f08addecfb1c2980b90b6b33a18a",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b57abb43_95d52cce",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/repository/RepositoriesView.java",
         "patchSetId": 2
@@ -53,6 +95,30 @@
       "writtenOn": "2019-07-02T16:04:57Z",
       "side": 1,
       "message": "I would move the submodule part completely out of this loop and create a second loop over all repository top level nodes. My reasoning is that the submodule use case is rather seldom compared to the top level use case, therefore checking toplevelA, submodulesOfTopLevelA, topLevelB, subModulesOfTopLevelB etc. will seldomly have a hit in the submodule part, but still do the work for no reason. If it\u0027s a separate loop, then submodules will only be checked, if no top level repository was found, and it _is_ definitely a submodule.\n\nOr am I wrong with my thinking about how this iterates?",
+      "range": {
+        "startLine": 1038,
+        "startChar": 3,
+        "endLine": 1046,
+        "endChar": 4
+      },
+      "revId": "cb0c6406be64f08addecfb1c2980b90b6b33a18a",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "2d4a5621_5a50f938",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/repository/RepositoriesView.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 1046,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2019-07-02T17:25:34Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b57abb43_95d52cce",
       "range": {
         "startLine": 1038,
         "startChar": 3,
