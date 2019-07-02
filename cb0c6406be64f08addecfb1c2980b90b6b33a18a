@@ -1,0 +1,67 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ce682a20_1374bb62",
+        "filename": "org.eclipse.egit.ui.test/src/org/eclipse/egit/ui/internal/submodules/SubmoduleFolderTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 276,
+      "author": {
+        "id": 440
+      },
+      "writtenOn": "2019-07-02T16:04:57Z",
+      "side": 1,
+      "message": "I like AtomicInt and similar classes more than the old array trick.",
+      "revId": "cb0c6406be64f08addecfb1c2980b90b6b33a18a",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "6ae32d73_59e1b38e",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/repository/RepositoriesView.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 642,
+      "author": {
+        "id": 440
+      },
+      "writtenOn": "2019-07-02T16:04:57Z",
+      "side": 1,
+      "message": "Declaring newOne just to set another variable seems confusing style to me and I would rather inline newOne. Or do others think that a long if-expression is bad style?",
+      "range": {
+        "startLine": 642,
+        "startChar": 9,
+        "endLine": 642,
+        "endChar": 15
+      },
+      "revId": "cb0c6406be64f08addecfb1c2980b90b6b33a18a",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "b57abb43_95d52cce",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/repository/RepositoriesView.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 1046,
+      "author": {
+        "id": 440
+      },
+      "writtenOn": "2019-07-02T16:04:57Z",
+      "side": 1,
+      "message": "I would move the submodule part completely out of this loop and create a second loop over all repository top level nodes. My reasoning is that the submodule use case is rather seldom compared to the top level use case, therefore checking toplevelA, submodulesOfTopLevelA, topLevelB, subModulesOfTopLevelB etc. will seldomly have a hit in the submodule part, but still do the work for no reason. If it\u0027s a separate loop, then submodules will only be checked, if no top level repository was found, and it _is_ definitely a submodule.\n\nOr am I wrong with my thinking about how this iterates?",
+      "range": {
+        "startLine": 1038,
+        "startChar": 3,
+        "endLine": 1046,
+        "endChar": 4
+      },
+      "revId": "cb0c6406be64f08addecfb1c2980b90b6b33a18a",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
