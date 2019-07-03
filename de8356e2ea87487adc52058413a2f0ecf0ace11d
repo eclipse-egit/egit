@@ -22,6 +22,30 @@
       "revId": "de8356e2ea87487adc52058413a2f0ecf0ace11d",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "e8992e41_87d78872",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/repository/RepositoriesView.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 1031,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2019-07-03T07:08:23Z",
+      "side": 1,
+      "message": "It was, and that came from the base version, which also kept going through the remaining repo nodes if it didn\u0027t find the desired child under the matching node.\n\nBut I believe that doesn\u0027t make sense. None of the other nodes will match. So if the repo directory is the right one, we have found the single correct repo node, and it either has the child we\u0027re looking for or it doesn\u0027t, but we don\u0027t need to keep iterating over other repo nodes.\n\nIn fact this could be improved for the submodule part, too, which currently keeps going even if it found a matching submodule repo node, but that one didn\u0027t have the wanted child. I doubt it\u0027s worth doing that, though, since we\u0027re only looking for WORKING_TREE children, and I have yet to see a bare submodule. So in line 1042 childNode \u003d\u003d null effectively means \"no matching repo node found\", and childNode !\u003d null means \"repo node found, here\u0027s it\u0027s working tree\". \"repo node found, but it has no working tree\" doesn\u0027t occur in that second \"find submodule\" loop.\n\nI\u0027ve restructured the code in PS 4 to make it clearer. First find the repo node, and if found then look once for the wanted child.",
+      "parentUuid": "011478be_98536965",
+      "range": {
+        "startLine": 1031,
+        "startChar": 4,
+        "endLine": 1031,
+        "endChar": 37
+      },
+      "revId": "de8356e2ea87487adc52058413a2f0ecf0ace11d",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
     }
   ]
 }
