@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "011478be_98536965",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/repository/RepositoriesView.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 1031,
+      "author": {
+        "id": 440
+      },
+      "writtenOn": "2019-07-03T05:18:54Z",
+      "side": 1,
+      "message": "shouldn\u0027t this be conditional on non-null only? at least it was in patch set 2",
+      "range": {
+        "startLine": 1031,
+        "startChar": 4,
+        "endLine": 1031,
+        "endChar": 37
+      },
+      "revId": "de8356e2ea87487adc52058413a2f0ecf0ace11d",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
