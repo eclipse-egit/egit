@@ -31,8 +31,6 @@ import org.eclipse.jgit.lib.Constants;
 import org.eclipse.jgit.lib.ObjectId;
 import org.eclipse.jgit.lib.Ref;
 import org.eclipse.jgit.lib.Repository;
-import org.eclipse.jgit.revwalk.RevCommit;
-import org.eclipse.jgit.revwalk.RevWalk;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.model.WorkbenchAdapter;
 
@@ -136,15 +134,15 @@ public class RepositoryTreeNodeWorkbenchAdapter extends WorkbenchAdapter {
 				TagNode tagNode = (TagNode) node;
 				compareString = tagNode.getCommitId();
 			} else if (refName.startsWith(Constants.R_REMOTES)) {
-				// remote branch: HEAD would be on the commit id to which
-				// the branch is pointing
-				ObjectId id = repository.resolve(refName);
-				if (id == null) {
-					return base;
-				}
-				try (RevWalk rw = new RevWalk(repository)) {
-					RevCommit commit = rw.parseCommit(id);
-					compareString = commit.getId().name();
+				// remote branch: branch name is object id in detached HEAD
+				// state
+				ObjectId objectId = leaf.getObjectId();
+				if (objectId != null) {
+					String leafName = objectId.getName();
+					if (leafName.equals(branchName)) {
+						return new DecorationOverlayDescriptor(base,
+								UIIcons.OVR_CHECKEDOUT, IDecoration.TOP_LEFT);
+					}
 				}
 			} else if (refName.equals(Constants.HEAD)) {
 				return new DecorationOverlayDescriptor(base,
