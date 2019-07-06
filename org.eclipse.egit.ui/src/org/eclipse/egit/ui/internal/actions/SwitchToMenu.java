@@ -128,7 +128,8 @@ public class SwitchToMenu extends ContributionItem implements
 
 	private boolean hasBranches(Repository repository) {
 		try {
-			return !repository.getRefDatabase().getRefs(Constants.R_HEADS)
+			return !repository.getRefDatabase()
+					.getRefsByPrefix(Constants.R_HEADS)
 					.isEmpty();
 		} catch (IOException e) {
 			Activator.handleError(e.getMessage(), e, true);
