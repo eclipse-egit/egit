@@ -17,6 +17,7 @@ import java.text.MessageFormat;
 import java.util.Collections;
 import java.util.Set;
 import java.util.TreeSet;
+import java.util.stream.Collectors;
 
 import org.eclipse.egit.core.internal.gerrit.GerritUtil;
 import org.eclipse.egit.ui.Activator;
@@ -305,11 +306,14 @@ class GerritConfigurationPage extends WizardPage {
 		UIUtils.<String> addContentProposalToText(textField,
 				() -> {
 					try {
+						String prefix = Constants.R_REMOTES + remoteName + '/';
 						Set<String> sortedSet = new TreeSet<>(
 								CommonUtils.STRING_ASCENDING_COMPARATOR);
 						sortedSet.addAll(repository.getRefDatabase()
-								.getRefs(Constants.R_REMOTES + remoteName + '/')
-								.keySet());
+								.getRefsByPrefix(prefix).stream()
+								.map(ref -> ref.getName()
+										.substring(prefix.length()))
+								.collect(Collectors.toList()));
 						return sortedSet;
 					} catch (IOException e) {
 						return Collections.emptyList();
