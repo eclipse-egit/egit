@@ -21,6 +21,7 @@ import org.eclipse.jgit.errors.IncorrectObjectTypeException;
 import org.eclipse.jgit.errors.MissingObjectException;
 import org.eclipse.jgit.lib.AnyObjectId;
 import org.eclipse.jgit.lib.Constants;
+import org.eclipse.jgit.lib.ObjectId;
 import org.eclipse.jgit.lib.Ref;
 import org.eclipse.jgit.lib.RefDatabase;
 import org.eclipse.jgit.lib.Repository;
@@ -39,9 +40,12 @@ class GitHistoryWalk extends SWTWalk {
 
 	private final AnyObjectId headId;
 
-	GitHistoryWalk(Repository repository, AnyObjectId headId) {
+	private final ObjectId toShow;
+
+	GitHistoryWalk(Repository repository, AnyObjectId headId, ObjectId toShow) {
 		super(repository);
 		this.headId = headId;
+		this.toShow = toShow;
 	}
 
 	@Override
@@ -85,6 +89,9 @@ class GitHistoryWalk extends SWTWalk {
 				markUninteresting(db, Constants.R_NOTES);
 			}
 			markStart(parseCommit(headId));
+			if (toShow != null) {
+				markStart(toShow);
+			}
 		} catch (IOException e) {
 			throw new IOException(MessageFormat.format(
 					UIText.GitHistoryPage_errorSettingStartPoints,
@@ -111,11 +118,10 @@ class GitHistoryWalk extends SWTWalk {
 		}
 	}
 
-	private void markStartRef(Ref ref)
+	private void markStart(ObjectId id)
 			throws IOException, IncorrectObjectTypeException {
 		try {
-			RevObject refTarget = parseAny(ref.getLeaf().getObjectId());
-			RevObject peeled = peel(refTarget);
+			RevObject peeled = peel(parseAny(id));
 			if (peeled instanceof RevCommit) {
 				markStart((RevCommit) peeled);
 			}
@@ -124,6 +130,11 @@ class GitHistoryWalk extends SWTWalk {
 			// ignore this ref. We should not let a corrupt ref cause that the
 			// history view is not filled at all.
 		}
+	}
+
+	private void markStartRef(Ref ref)
+			throws IOException, IncorrectObjectTypeException {
+		markStart(ref.getLeaf().getObjectId());
 	}
 
 	private void markUninteresting(RefDatabase db, String prefix)

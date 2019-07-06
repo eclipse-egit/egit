@@ -14,6 +14,7 @@ package org.eclipse.egit.ui.test.history;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
@@ -25,12 +26,16 @@ import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IFolder;
 import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.ResourcesPlugin;
+import org.eclipse.core.runtime.Adapters;
 import org.eclipse.core.runtime.jobs.Job;
+import org.eclipse.egit.core.RepositoryUtil;
+import org.eclipse.egit.ui.Activator;
 import org.eclipse.egit.ui.JobFamilies;
-import org.eclipse.egit.ui.common.LocalRepositoryTestCase;
 import org.eclipse.egit.ui.internal.UIText;
+import org.eclipse.egit.ui.internal.repository.RepositoriesView;
 import org.eclipse.egit.ui.test.ContextMenuHelper;
 import org.eclipse.egit.ui.test.TestUtil;
+import org.eclipse.egit.ui.view.repositories.GitRepositoriesViewTestBase;
 import org.eclipse.jface.dialogs.IDialogConstants;
 import org.eclipse.jgit.api.Git;
 import org.eclipse.jgit.lib.Constants;
@@ -38,6 +43,7 @@ import org.eclipse.jgit.lib.ObjectId;
 import org.eclipse.jgit.lib.Ref;
 import org.eclipse.jgit.lib.Repository;
 import org.eclipse.jgit.revwalk.RevCommit;
+import org.eclipse.swt.widgets.Table;
 import org.eclipse.swt.widgets.TableItem;
 import org.eclipse.swtbot.eclipse.finder.widgets.SWTBotView;
 import org.eclipse.swtbot.swt.finder.SWTBot;
@@ -56,7 +62,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 
 @RunWith(SWTBotJunit4ClassRunner.class)
-public class HistoryViewTest extends LocalRepositoryTestCase {
+public class HistoryViewTest extends GitRepositoriesViewTestBase {
 	private static final String SECONDFOLDER = "secondFolder";
 
 	private static final String ADDEDFILE = "another.txt";
@@ -68,7 +74,7 @@ public class HistoryViewTest extends LocalRepositoryTestCase {
 	private File repoFile;
 
 	@Before
-	public void setup() throws Exception {
+	public void setupTests() throws Exception {
 		repoFile = createProjectAndCommitToRepository();
 		IProject prj = ResourcesPlugin.getWorkspace().getRoot()
 				.getProject(PROJ1);
@@ -81,6 +87,9 @@ public class HistoryViewTest extends LocalRepositoryTestCase {
 		addAndCommit(addedFile, ADDEDMESSAGE);
 		// TODO count the commits
 		commitCount = 3;
+		RepositoryUtil repositoryUtil = Activator.getDefault()
+				.getRepositoryUtil();
+		repositoryUtil.addConfiguredRepository(repoFile);
 	}
 
 	@Test
@@ -228,6 +237,15 @@ public class HistoryViewTest extends LocalRepositoryTestCase {
 				getHistoryViewTable(PROJ1).getTableItem(0).getText(1));
 	}
 
+	private SWTBotTable getHistoryViewTable() throws Exception {
+		SWTBot historyView = getHistoryViewBot();
+		Job.getJobManager().join(JobFamilies.GENERATE_HISTORY, null);
+		historyView.getDisplay().syncExec(() -> {
+			// Join UI update triggered by GenerateHistoryJob
+		});
+		return historyView.table();
+	}
+
 	/**
 	 * @param path
 	 *            must be length 2 or three (folder or file)
@@ -252,17 +270,7 @@ public class HistoryViewTest extends LocalRepositoryTestCase {
 		explorerItem.select();
 		ContextMenuHelper.clickContextMenuSync(projectExplorerTree, "Team",
 				"Show in History");
-		// join GenerateHistoryJob
-		Job.getJobManager().join(JobFamilies.GENERATE_HISTORY, null);
-		// join UI update triggered by GenerateHistoryJob
-		projectExplorerTree.widget.getDisplay().syncExec(new Runnable() {
-			@Override
-			public void run() {
-				// empty
-			}
-		});
-
-		return getHistoryViewBot().table();
+		return getHistoryViewTable();
 	}
 
 	private SWTBotTable getFileDiffTable() throws Exception {
@@ -277,6 +285,55 @@ public class HistoryViewTest extends LocalRepositoryTestCase {
 
 	private SWTBot getHistoryViewBot() {
 		return TestUtil.showHistoryView().bot();
+	}
+
+	@Test
+	public void testSelectBranch() throws Exception {
+		toggleShowAllBranchesButton(false);
+		SWTBotTable commitTable = getHistoryViewTable(PROJ1);
+		assertEquals("Unexpected number of commits", commitCount,
+				commitTable.rowCount());
+		// Current branch is "master". Create a new commit on a new branch, then
+		// switch back to master.
+		try (Git git = new Git(lookupRepository(repoFile))) {
+			git.checkout().setCreateBranch(true).setName("otherBranch").call();
+			TestUtil.waitForDecorations();
+			touchAndSubmit("Updated");
+			ObjectId otherCommit = git.getRepository().resolve("otherBranch");
+			Ref master = git.checkout().setName(Constants.MASTER).call();
+			assertNotNull("Branch is null", master.getLeaf().getObjectId());
+			assertNotEquals("Branch not switched", otherCommit,
+					master.getLeaf().getObjectId());
+			TestUtil.waitForDecorations();
+			// History table should not show otherCommit
+			commitTable = getHistoryViewTable();
+			assertEquals("Unexpected number of commits", commitCount,
+					commitTable.rowCount());
+			// Open git repo view, select "otherBranch".
+			SWTBotView view = TestUtil.showView(RepositoriesView.VIEW_ID);
+			TestUtil.joinJobs(JobFamilies.REPO_VIEW_REFRESH);
+			TestUtil.waitForDecorations();
+			SWTBotTree tree = view.bot().tree();
+			SWTBotTreeItem localBranches = myRepoViewUtil
+					.getLocalBranchesItem(tree, repoFile);
+			TestUtil.expandAndWait(localBranches).getNode("otherBranch")
+					.select();
+			ContextMenuHelper.clickContextMenuSync(tree, "Show In", "History");
+			// History table should show both branches
+			commitTable = getHistoryViewTable();
+			assertEquals("Unexpected number of commits", commitCount + 1,
+					commitTable.rowCount());
+			Table swtTable = commitTable.widget;
+			ObjectId[] firstId = { null };
+			swtTable.getDisplay().syncExec(() -> {
+				Object obj = swtTable.getItem(0).getData();
+				RevCommit c = Adapters.adapt(obj, RevCommit.class);
+				if (c != null) {
+					firstId[0] = c.getId();
+				}
+			});
+			assertEquals("Unexpected commit in table", otherCommit, firstId[0]);
+		}
 	}
 
 	@Test
@@ -341,17 +398,21 @@ public class HistoryViewTest extends LocalRepositoryTestCase {
 
 	@Test
 	public void testShowAllBranches() throws Exception {
-		toggleShowAllBranchesButton(true);
-		final SWTBotTable table = getHistoryViewTable(PROJ1);
-		int commits = getHistoryViewTable(PROJ1).rowCount();
-		checkoutLine(table, 1);
+		try {
+			toggleShowAllBranchesButton(true);
+			final SWTBotTable table = getHistoryViewTable(PROJ1);
+			int commits = getHistoryViewTable(PROJ1).rowCount();
+			checkoutLine(table, 1);
 
-		toggleShowAllBranchesButton(false);
-		assertEquals("Wrong number of commits", commits - 1,
-				getHistoryViewTable(PROJ1).rowCount());
-		toggleShowAllBranchesButton(true);
-		assertEquals("Wrong number of commits", commits,
-				getHistoryViewTable(PROJ1).rowCount());
+			toggleShowAllBranchesButton(false);
+			assertEquals("Wrong number of commits", commits - 1,
+					getHistoryViewTable(PROJ1).rowCount());
+			toggleShowAllBranchesButton(true);
+			assertEquals("Wrong number of commits", commits,
+					getHistoryViewTable(PROJ1).rowCount());
+		} finally {
+			toggleShowAllBranchesButton(false);
+		}
 	}
 
 	@Test
