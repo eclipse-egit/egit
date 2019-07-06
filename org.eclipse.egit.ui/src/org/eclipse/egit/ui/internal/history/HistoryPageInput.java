@@ -19,6 +19,7 @@ import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Objects;
 
 import org.eclipse.core.resources.IResource;
 import org.eclipse.egit.ui.Activator;
@@ -212,8 +213,9 @@ public class HistoryPageInput {
 			return false;
 		}
 		HistoryPageInput other = (HistoryPageInput) obj;
-		return repo == other.repo && singleFile == other.singleFile
-				&& singleItem == other.singleItem
+		return repo == other.repo
+				&& Objects.equals(singleFile, other.singleFile)
+				&& Objects.equals(singleItem, other.singleItem)
 				&& listEquals(files, other.files)
 				&& listEquals(list, other.list);
 	}
@@ -230,10 +232,13 @@ public class HistoryPageInput {
 
 	@Override
 	public int hashCode() {
-		return (repo == null ? 0 : repo.hashCode())
-				^ (singleFile == null ? 0 : singleFile.hashCode())
-				^ (singleItem == null ? 0 : singleItem.hashCode())
-				^ (files == null ? 0 : Arrays.hashCode(files.toArray()))
-				^ (list == null ? 0 : Arrays.hashCode(list.toArray()));
+		int result = Objects.hash(repo, singleFile, singleItem);
+		if (files != null) {
+			result = 31 * result + Arrays.hashCode(files.toArray());
+		}
+		if (list != null) {
+			result = 31 * result + Arrays.hashCode(list.toArray());
+		}
+		return result;
 	}
 }
