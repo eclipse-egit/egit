@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "69897c47_602b41a2",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/push/PushToGerritPage.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 256,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2019-07-06T09:50:00Z",
+      "side": 1,
+      "message": "Missing\n\n  .substring(Constants.R_REMOTES.length())\n\nhere.",
+      "revId": "89ddb5282644620ac787d5978beb9671796bbb00",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
