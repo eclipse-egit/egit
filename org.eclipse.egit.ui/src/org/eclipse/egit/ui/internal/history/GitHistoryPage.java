@@ -809,6 +809,9 @@ public class GitHistoryPage extends HistoryPage implements RefsChangedListener,
 	/** Repository of the last input*/
 	private Repository currentRepo;
 
+	/** ObjectId of the ref or commit of the last input, if any. */
+	private ObjectId selectedObj;
+
 	private boolean currentShowAllBranches;
 
 	private boolean currentShowAdditionalRefs;
@@ -1661,6 +1664,8 @@ public class GitHistoryPage extends HistoryPage implements RefsChangedListener,
 		}
 		renameTracker.reset(null);
 		Job.getJobManager().cancel(JobFamilies.HISTORY_DIFF);
+		currentRepo = null;
+		selectedObj = null;
 		super.dispose();
 	}
 
@@ -1685,6 +1690,7 @@ public class GitHistoryPage extends HistoryPage implements RefsChangedListener,
 
 	private void clearHistoryPage() {
 		currentRepo = null;
+		selectedObj = null;
 		name = ""; //$NON-NLS-1$
 		input = null;
 		commentViewer.setInput(null);
@@ -1957,7 +1963,13 @@ public class GitHistoryPage extends HistoryPage implements RefsChangedListener,
 
 			setErrorMessage(null);
 			try {
-				initAndStartRevWalk(false);
+				ObjectId id = null;
+				if (ref != null) {
+					id = ref.getLeaf().getObjectId();
+				} else if (selection != null) {
+					id = selection.getId();
+				}
+				initAndStartRevWalk(false, id);
 			} catch (IllegalStateException e) {
 				Activator.handleError(e.getMessage(), e, true);
 				return false;
@@ -2291,7 +2303,13 @@ public class GitHistoryPage extends HistoryPage implements RefsChangedListener,
 		warningComposite.getParent().layout(true);
 	}
 
-	void initAndStartRevWalk(boolean forceNewWalk) throws IllegalStateException {
+	private void initAndStartRevWalk(boolean forceNewWalk) {
+		initAndStartRevWalk(forceNewWalk, selectedObj);
+	}
+
+	private void initAndStartRevWalk(boolean forceNewWalk,
+			ObjectId newSelectedObj)
+			throws IllegalStateException {
 		try {
 			if (trace)
 				GitTraceLocation.getTrace().traceEntry(
@@ -2309,6 +2327,7 @@ public class GitHistoryPage extends HistoryPage implements RefsChangedListener,
 			if (headId == null) {
 				currentHeadId = null;
 				currentFetchHeadId = null;
+				selectedObj = null;
 				currentRepo = db;
 				clearViewers();
 				return;
@@ -2324,7 +2343,13 @@ public class GitHistoryPage extends HistoryPage implements RefsChangedListener,
 				currentRepo = db;
 			}
 
-			if (forceNewWalk || repoChanged
+			boolean objChanged = false;
+			if (newSelectedObj != null && newSelectedObj != selectedObj) {
+				objChanged = !newSelectedObj.equals(selectedObj);
+			}
+			selectedObj = newSelectedObj;
+
+			if (forceNewWalk || repoChanged || objChanged
 					|| shouldRedraw(headId, fetchHeadId, paths)) {
 				releaseGenerateHistoryJob();
 
@@ -2501,7 +2526,7 @@ public class GitHistoryPage extends HistoryPage implements RefsChangedListener,
 			AnyObjectId fetchHeadId) {
 		currentHeadId = headId;
 		currentFetchHeadId = fetchHeadId;
-		SWTWalk walk = new GitHistoryWalk(db, headId);
+		SWTWalk walk = new GitHistoryWalk(db, headId, selectedObj);
 		try {
 			if (store
 					.getBoolean(UIPreferences.RESOURCEHISTORY_SHOW_ADDITIONAL_REFS))
