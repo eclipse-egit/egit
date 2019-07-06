@@ -18,6 +18,7 @@ import java.io.IOException;
 import java.net.URISyntaxException;
 import java.util.Arrays;
 import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.SortedSet;
@@ -249,13 +250,14 @@ public class PushToGerritPage extends WizardPage {
 
 	private void loadKnownRemoteRefs() {
 		try {
-			Set<String> remotes = repository.getRefDatabase()
-					.getRefs(Constants.R_REMOTES).keySet();
-			for (String remote : remotes) {
-				// these are "origin/master", "origin/xxx"...
-				int slashIndex = remote.indexOf('/');
-				if (slashIndex > 0 && slashIndex < remote.length() - 1) {
-					knownRemoteRefs.add(remote.substring(slashIndex + 1));
+			List<Ref> refs = repository.getRefDatabase()
+					.getRefsByPrefix(Constants.R_REMOTES);
+			for (Ref ref : refs) {
+				String refName = ref.getName()
+						.substring(Constants.R_REMOTES.length());
+				int slashIndex = refName.indexOf('/');
+				if (slashIndex > 0 && slashIndex < refName.length() - 1) {
+					knownRemoteRefs.add(refName.substring(slashIndex + 1));
 				}
 			}
 		} catch (IOException e) {
