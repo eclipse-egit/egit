@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1d437676_dbf84c12",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/push/PushToGerritPage.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 261,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2019-07-07T14:51:12Z",
+      "side": 1,
+      "message": "Unrelated to your change: this code is wrong. It proposes _all_ remote refs from _all_ remotes. It should only propose those corresponding to the selected remote.\n\nI work on two machines, each with its own clone of EGit. Sometimes I fetch from one machine to the other, so my repo has two remotes: \"origin\" pointing to Gerrit, and \"other\" pointing to my other machine. Fetching from \"other\" gives me all the other\u0027s local branches as remotes. Push to Gerrit then proposes me not only \"master\" and the \"stable-*\" branches from \"origin\" but also all these other remote branches coming from \"other\". It shouldn\u0027t do that.",
+      "revId": "c90fa92dd3efa75239b926b800125379961e1068",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
