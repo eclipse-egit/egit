@@ -93,6 +93,30 @@
       "revId": "5fe3b2654e14162dd5d322a358f0fc87ead28b93",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "2d32265d_d20f7e82",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/history/GitHistoryPage.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 2348,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2019-07-07T13:53:54Z",
+      "side": 1,
+      "message": "Done in PS 4.",
+      "parentUuid": "75c55a65_218d3e5f",
+      "range": {
+        "startLine": 2348,
+        "startChar": 17,
+        "endLine": 2348,
+        "endChar": 36
+      },
+      "revId": "5fe3b2654e14162dd5d322a358f0fc87ead28b93",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
     }
   ]
 }
