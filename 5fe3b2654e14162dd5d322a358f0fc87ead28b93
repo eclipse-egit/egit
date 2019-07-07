@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "aab20123_a840e754",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/history/GitHistoryPage.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 2319,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2019-07-07T13:39:58Z",
+      "side": 1,
+      "message": "Same here; I very rarely use it. I think the immediate return could well be done outside the try-finally.",
+      "parentUuid": "3999482b_e3b4591e",
+      "range": {
+        "startLine": 2314,
+        "startChar": 0,
+        "endLine": 2319,
+        "endChar": 11
+      },
+      "revId": "5fe3b2654e14162dd5d322a358f0fc87ead28b93",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "58e3eb61_0bc9e559",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/history/GitHistoryPage.java",
         "patchSetId": 2
@@ -36,6 +60,30 @@
       "writtenOn": "2019-07-07T13:26:49Z",
       "side": 1,
       "message": "this seems superflous, doesn\u0027t it? by contract, equals() must be able to deal with null, so that is already contained in the following call. I also find lines with an assignment and a directly following equals operator very hard to read (on first glance it looked like 2 nested assignments in C).",
+      "range": {
+        "startLine": 2348,
+        "startChar": 17,
+        "endLine": 2348,
+        "endChar": 36
+      },
+      "revId": "5fe3b2654e14162dd5d322a358f0fc87ead28b93",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "75c55a65_218d3e5f",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/history/GitHistoryPage.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 2348,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2019-07-07T13:39:58Z",
+      "side": 1,
+      "message": "Right; will change. It\u0027s a left-over from a previous version where I dealt only with Refs, and had a selectedRef here and compared the object ids pointed to by the refs.",
+      "parentUuid": "58e3eb61_0bc9e559",
       "range": {
         "startLine": 2348,
         "startChar": 17,
