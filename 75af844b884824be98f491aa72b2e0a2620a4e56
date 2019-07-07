@@ -16,6 +16,24 @@
       "revId": "75af844b884824be98f491aa72b2e0a2620a4e56",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "d5a98570_c428999c",
+        "filename": "org.eclipse.egit.ui.test/src/org/eclipse/egit/ui/test/history/HistoryViewTest.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 414,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2019-07-07T13:39:58Z",
+      "side": 1,
+      "message": "Theoretically yes. In fact, this _is_ restoring the initial state, which this test didn\u0027t do and which made the new test fail. In the tests we always start off with \"Show All Branches\" being off, so I took the shortcut here by just re-setting it to false instead of first figuring out the initial setting and restoring that.",
+      "parentUuid": "745141df_43690956",
+      "revId": "75af844b884824be98f491aa72b2e0a2620a4e56",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
     }
   ]
 }
