@@ -16,6 +16,24 @@
       "revId": "89ddb5282644620ac787d5978beb9671796bbb00",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "bebad304_39dea4d0",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/push/PushToGerritPage.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 256,
+      "author": {
+        "id": 440
+      },
+      "writtenOn": "2019-07-07T10:26:21Z",
+      "side": 1,
+      "message": "Done. Thanks for catching this. I had forgotten to test this one with manual testing.",
+      "parentUuid": "69897c47_602b41a2",
+      "revId": "89ddb5282644620ac787d5978beb9671796bbb00",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
     }
   ]
 }
