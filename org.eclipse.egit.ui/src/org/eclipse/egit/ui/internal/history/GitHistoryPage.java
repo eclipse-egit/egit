@@ -23,6 +23,7 @@ package org.eclipse.egit.ui.internal.history;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.EnumSet;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -66,6 +67,7 @@ import org.eclipse.egit.ui.internal.repository.tree.FolderNode;
 import org.eclipse.egit.ui.internal.repository.tree.RefNode;
 import org.eclipse.egit.ui.internal.repository.tree.RepositoryNode;
 import org.eclipse.egit.ui.internal.repository.tree.RepositoryTreeNode;
+import org.eclipse.egit.ui.internal.repository.tree.RepositoryTreeNodeType;
 import org.eclipse.egit.ui.internal.repository.tree.TagNode;
 import org.eclipse.egit.ui.internal.selection.RepositorySelectionProvider;
 import org.eclipse.egit.ui.internal.selection.SelectionUtils;
@@ -184,6 +186,12 @@ public class GitHistoryPage extends HistoryPage implements RefsChangedListener,
 		TableLoader, IShowInSource, IShowInTargetList {
 
 	private static final int INITIAL_ITEM = -1;
+
+	private static final EnumSet SUPPORTED_REPOSITORY_NODE_TYPES = EnumSet.of(
+			RepositoryTreeNodeType.REPO, RepositoryTreeNodeType.REF,
+			RepositoryTreeNodeType.ADDITIONALREF, RepositoryTreeNodeType.TAG,
+			RepositoryTreeNodeType.FOLDER, RepositoryTreeNodeType.FILE,
+			RepositoryTreeNodeType.WORKINGDIR);
 
 	/** actions used in GitHistoryPage **/
 	private static class GitHistoryPageActions {
@@ -878,22 +886,27 @@ public class GitHistoryPage extends HistoryPage implements RefsChangedListener,
 	 *         FOLDER or PROJECT and we can show it; false otherwise.
 	 */
 	public static boolean canShowHistoryFor(final Object object) {
-		if (object instanceof HistoryPageInput)
+		if (object instanceof HistoryPageInput) {
 			return true;
+		}
 
-		if (object instanceof IResource)
+		if (object instanceof IResource) {
 			return typeOk((IResource) object);
+		}
 
-		if (object instanceof RepositoryTreeNode)
-			return true;
+		if (object instanceof RepositoryTreeNode) {
+			return SUPPORTED_REPOSITORY_NODE_TYPES
+					.contains(((RepositoryTreeNode) object).getType());
+		}
 
 		if (object instanceof Path) {
 			return true;
 		}
 
 		IResource resource = AdapterUtils.adaptToAnyResource(object);
-		if (resource != null && typeOk(resource))
+		if (resource != null && typeOk(resource)) {
 			return true;
+		}
 
 		return Adapters.adapt(object, Repository.class) != null;
 	}
