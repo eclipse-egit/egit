@@ -72,6 +72,7 @@ public class CreateBranchWizard extends Wizard {
 				}
 			}
 		} catch (IOException e) {
+			Activator.handleError(e.getMessage(), e, false);
 			// simply don't select the drop down
 			myPage = new CreateBranchPage(repository, (Ref) null);
 		}
