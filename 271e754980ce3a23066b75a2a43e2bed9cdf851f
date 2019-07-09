@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "20d023b9_85c3430c",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/history/GitHistoryPage.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 895,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2019-07-09T21:31:01Z",
+      "side": 1,
+      "message": "Make this a static final constant? Maybe safer (in case we ever add new node types?) to have a set of supported types?",
+      "range": {
+        "startLine": 895,
+        "startChar": 33,
+        "endLine": 895,
+        "endChar": 43
+      },
+      "revId": "271e754980ce3a23066b75a2a43e2bed9cdf851f",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
