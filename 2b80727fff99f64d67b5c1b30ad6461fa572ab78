@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "269370a5_2d8df226",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/history/GitHistoryPage.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 898,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2019-07-10T20:33:49Z",
+      "side": 1,
+      "message": "((RepositoryTreeNode) object).getType()",
+      "range": {
+        "startLine": 898,
+        "startChar": 51,
+        "endLine": 898,
+        "endChar": 57
+      },
+      "revId": "2b80727fff99f64d67b5c1b30ad6461fa572ab78",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
