@@ -109,9 +109,11 @@ import org.eclipse.egit.ui.internal.repository.tree.RepositoryTreeNode;
 import org.eclipse.egit.ui.internal.selection.MultiViewerSelectionProvider;
 import org.eclipse.egit.ui.internal.selection.RepositorySelectionProvider;
 import org.eclipse.jface.action.Action;
+import org.eclipse.jface.action.ActionContributionItem;
 import org.eclipse.jface.action.ControlContribution;
 import org.eclipse.jface.action.IAction;
 import org.eclipse.jface.action.IContributionItem;
+import org.eclipse.jface.action.IMenuCreator;
 import org.eclipse.jface.action.IMenuListener;
 import org.eclipse.jface.action.IMenuManager;
 import org.eclipse.jface.action.IToolBarManager;
@@ -194,16 +196,21 @@ import org.eclipse.swt.events.VerifyEvent;
 import org.eclipse.swt.graphics.Cursor;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.graphics.Point;
+import org.eclipse.swt.graphics.Rectangle;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.layout.RowLayout;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
+import org.eclipse.swt.widgets.Event;
 import org.eclipse.swt.widgets.Label;
+import org.eclipse.swt.widgets.Menu;
 import org.eclipse.swt.widgets.Text;
+import org.eclipse.swt.widgets.ToolItem;
 import org.eclipse.swt.widgets.Tree;
 import org.eclipse.swt.widgets.TreeItem;
+import org.eclipse.swt.widgets.Widget;
 import org.eclipse.ui.IActionBars;
 import org.eclipse.ui.IEditorInput;
 import org.eclipse.ui.IEditorPart;
@@ -340,6 +347,8 @@ public class StagingView extends ViewPart
 	private Repository currentRepository;
 
 	private Presentation presentation = Presentation.LIST;
+
+	private PresentationAction presentationAction;
 
 	private Set<IPath> pathsToExpandInStaged = new HashSet<>();
 
@@ -839,6 +848,8 @@ public class StagingView extends ViewPart
 		unstageAllAction.setEnabled(false);
 		stageAllAction.setEnabled(false);
 
+		createPresentationActions();
+
 		unstagedSection = toolkit.createSection(stagingSashForm,
 				ExpandableComposite.SHORT_TITLE_BAR);
 		unstagedSection.clientVerticalSpacing = 0;
@@ -1172,6 +1183,7 @@ public class StagingView extends ViewPart
 			}
 		};
 
+		initPresentation();
 		partListener = new PartListener();
 
 		IPreferenceStore preferenceStore = getPreferenceStore();
@@ -1545,6 +1557,8 @@ public class StagingView extends ViewPart
 
 		unstagedToolBarManager.add(stageAction);
 		unstagedToolBarManager.add(stageAllAction);
+		unstagedToolBarManager.add(presentationAction);
+		presentationAction.setToolbar(unstagedToolBarManager);
 		unstagedToolBarManager.add(sortAction);
 		unstagedToolBarManager.add(unstagedExpandAllAction);
 		unstagedToolBarManager.add(unstagedCollapseAllAction);
@@ -1730,6 +1744,84 @@ public class StagingView extends ViewPart
 		}
 	}
 
+	private void createPresentationActions() {
+		listPresentationAction = new Action(UIText.StagingView_List,
+				IAction.AS_RADIO_BUTTON) {
+			@Override
+			public void run() {
+				if (!isChecked()) {
+					return;
+				}
+				switchToListMode();
+				refreshViewers();
+			}
+		};
+		listPresentationAction.setImageDescriptor(UIIcons.FLAT);
+
+		treePresentationAction = new Action(UIText.StagingView_Tree,
+				IAction.AS_RADIO_BUTTON) {
+			@Override
+			public void run() {
+				if (!isChecked()) {
+					return;
+				}
+				presentation = Presentation.TREE;
+				setPresentation(presentation, false);
+				listPresentationAction.setChecked(false);
+				compactTreePresentationAction.setChecked(false);
+				setExpandCollapseActionsVisible(false, isExpandAllowed(false),
+						true);
+				setExpandCollapseActionsVisible(true, isExpandAllowed(true),
+						true);
+				refreshViewers();
+			}
+		};
+		treePresentationAction.setImageDescriptor(UIIcons.HIERARCHY);
+
+		compactTreePresentationAction = new Action(
+				UIText.StagingView_CompactTree, IAction.AS_RADIO_BUTTON) {
+			@Override
+			public void run() {
+				if (!isChecked()) {
+					return;
+				}
+				switchToCompactModeInternal(false);
+				refreshViewers();
+			}
+
+		};
+		compactTreePresentationAction.setImageDescriptor(UIIcons.COMPACT);
+
+		presentationAction = new PresentationAction(getPreferenceStore(),
+				listPresentationAction, treePresentationAction,
+				compactTreePresentationAction);
+		presentationAction.setImageDescriptor(UIIcons.FLAT);
+	}
+
+	private void initPresentation() {
+		presentation = readPresentation(UIPreferences.STAGING_VIEW_PRESENTATION,
+				Presentation.LIST);
+		switch (presentation) {
+		case LIST:
+			presentationAction.setImageDescriptor(UIIcons.FLAT);
+			listPresentationAction.setChecked(true);
+			setExpandCollapseActionsVisible(false, false, false);
+			setExpandCollapseActionsVisible(true, false, false);
+			break;
+		case TREE:
+			presentationAction.setImageDescriptor(UIIcons.HIERARCHY);
+			treePresentationAction.setChecked(true);
+			break;
+		case COMPACT_TREE:
+			presentationAction.setImageDescriptor(UIIcons.COMPACT);
+			compactTreePresentationAction.setChecked(true);
+			break;
+		default:
+			break;
+		}
+		presentationAction.update();
+	}
+
 	private void updateToolbar() {
 
 		ControlContribution controlContribution = new ControlContribution(
@@ -1883,73 +1975,9 @@ public class StagingView extends ViewPart
 		IMenuManager dropdownMenu = actionBars.getMenuManager();
 		MenuManager presentationMenu = new MenuManager(
 				UIText.StagingView_Presentation);
-		listPresentationAction = new Action(UIText.StagingView_List,
-				IAction.AS_RADIO_BUTTON) {
-			@Override
-			public void run() {
-				if (!isChecked()) {
-					return;
-				}
-				switchToListMode();
-				refreshViewers();
-			}
-		};
-		listPresentationAction.setImageDescriptor(UIIcons.FLAT);
 		presentationMenu.add(listPresentationAction);
-
-		treePresentationAction = new Action(UIText.StagingView_Tree,
-				IAction.AS_RADIO_BUTTON) {
-			@Override
-			public void run() {
-				if (!isChecked()) {
-					return;
-				}
-				presentation = Presentation.TREE;
-				setPresentation(presentation, false);
-				listPresentationAction.setChecked(false);
-				compactTreePresentationAction.setChecked(false);
-				setExpandCollapseActionsVisible(false, isExpandAllowed(false),
-						true);
-				setExpandCollapseActionsVisible(true, isExpandAllowed(true),
-						true);
-				refreshViewers();
-			}
-		};
-		treePresentationAction.setImageDescriptor(UIIcons.HIERARCHY);
 		presentationMenu.add(treePresentationAction);
-
-		compactTreePresentationAction = new Action(UIText.StagingView_CompactTree,
-				IAction.AS_RADIO_BUTTON) {
-			@Override
-			public void run() {
-				if (!isChecked()) {
-					return;
-				}
-				switchToCompactModeInternal(false);
-				refreshViewers();
-			}
-
-		};
-		compactTreePresentationAction.setImageDescriptor(UIIcons.COMPACT);
 		presentationMenu.add(compactTreePresentationAction);
-
-		presentation = readPresentation(UIPreferences.STAGING_VIEW_PRESENTATION,
-				Presentation.LIST);
-		switch (presentation) {
-		case LIST:
-			listPresentationAction.setChecked(true);
-			setExpandCollapseActionsVisible(false, false, false);
-			setExpandCollapseActionsVisible(true, false, false);
-			break;
-		case TREE:
-			treePresentationAction.setChecked(true);
-			break;
-		case COMPACT_TREE:
-			compactTreePresentationAction.setChecked(true);
-			break;
-		default:
-			break;
-		}
 		dropdownMenu.add(presentationMenu);
 		dropdownMenu.add(new Separator());
 		dropdownMenu.add(openNewCommitsAction);
@@ -1970,10 +1998,14 @@ public class StagingView extends ViewPart
 	}
 
 	private Presentation readPresentation(String key, Presentation def) {
-		String presentationString = getPreferenceStore().getString(key);
-		if (presentationString.length() > 0) {
+		return getPresentation(getPreferenceStore().getString(key), def);
+	}
+
+	private static Presentation getPresentation(String value,
+			Presentation def) {
+		if (!value.isEmpty()) {
 			try {
-				return Presentation.valueOf(presentationString);
+				return Presentation.valueOf(value);
 			} catch (IllegalArgumentException e) {
 				// Use given default
 			}
@@ -4312,6 +4344,10 @@ public class StagingView extends ViewPart
 			switchRepositoriesAction.dispose();
 			switchRepositoriesAction = null;
 		}
+		if (presentationAction != null) {
+			presentationAction.dispose();
+			presentationAction = null;
+		}
 
 		getPreferenceStore().removePropertyChangeListener(uiPrefsListener);
 
@@ -4509,5 +4545,110 @@ public class StagingView extends ViewPart
 			}
 		}
 
+	}
+
+	private static class PresentationAction extends Action
+			implements IWorkbenchAction, IMenuCreator, IPropertyChangeListener {
+
+		private Menu menu;
+
+		private ToolBarManager toolbar;
+
+		private final IPreferenceStore store;
+
+		private final IAction[] actions;
+
+		public PresentationAction(IPreferenceStore store, IAction... actions) {
+			super(UIText.StagingView_Presentation, IAction.AS_DROP_DOWN_MENU);
+			this.actions = actions;
+			this.store = store;
+			store.addPropertyChangeListener(this);
+		}
+
+		public void setToolbar(ToolBarManager toolbar) {
+			this.toolbar = toolbar;
+		}
+
+		@Override
+		public IMenuCreator getMenuCreator() {
+			return this;
+		}
+
+		@Override
+		public Menu getMenu(Menu parent) {
+			// Not used
+			return null;
+		}
+
+		@Override
+		public void runWithEvent(Event event) {
+			if (!isEnabled()) {
+				return;
+			}
+			Widget widget = event.widget;
+			if (widget instanceof ToolItem) {
+				ToolItem item = (ToolItem) widget;
+				Rectangle bounds = item.getBounds();
+				event.detail = SWT.ARROW;
+				event.x = bounds.x;
+				event.y = bounds.y + bounds.height;
+				item.notifyListeners(SWT.Selection, event);
+			}
+		}
+
+		@Override
+		public Menu getMenu(Control parent) {
+			if (menu != null) {
+				menu.dispose();
+				menu = null;
+			}
+			if (isEnabled()) {
+				menu = new Menu(parent);
+				for (IAction action : actions) {
+					ActionContributionItem item = new ActionContributionItem(
+							action);
+					item.fill(menu, -1);
+				}
+			}
+			return menu;
+		}
+
+		@Override
+		public void dispose() {
+			if (menu != null) {
+				menu.dispose();
+				menu = null;
+			}
+			store.removePropertyChangeListener(this);
+		}
+
+		@Override
+		public void propertyChange(PropertyChangeEvent event) {
+			if (UIPreferences.STAGING_VIEW_PRESENTATION
+					.equals(event.getProperty())) {
+				Presentation current = getPresentation(
+						event.getNewValue().toString(), Presentation.LIST);
+				switch (current) {
+				case LIST:
+					setImageDescriptor(UIIcons.FLAT);
+					break;
+				case TREE:
+					setImageDescriptor(UIIcons.HIERARCHY);
+					break;
+				case COMPACT_TREE:
+					setImageDescriptor(UIIcons.COMPACT);
+					break;
+				default:
+					return;
+				}
+				update();
+			}
+		}
+
+		public void update() {
+			if (toolbar != null) {
+				toolbar.update(true);
+			}
+		}
 	}
 }
