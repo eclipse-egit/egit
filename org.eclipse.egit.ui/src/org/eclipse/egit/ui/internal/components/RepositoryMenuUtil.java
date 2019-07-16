@@ -32,22 +32,12 @@ import org.eclipse.egit.ui.internal.CommonUtils;
 import org.eclipse.egit.ui.internal.UIIcons;
 import org.eclipse.egit.ui.internal.UIText;
 import org.eclipse.jface.action.Action;
-import org.eclipse.jface.action.ActionContributionItem;
 import org.eclipse.jface.action.IAction;
-import org.eclipse.jface.action.IMenuCreator;
 import org.eclipse.jface.action.IMenuManager;
 import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.jgit.annotations.NonNull;
 import org.eclipse.jgit.annotations.Nullable;
 import org.eclipse.jgit.lib.Repository;
-import org.eclipse.swt.SWT;
-import org.eclipse.swt.graphics.Rectangle;
-import org.eclipse.swt.widgets.Control;
-import org.eclipse.swt.widgets.Event;
-import org.eclipse.swt.widgets.Menu;
-import org.eclipse.swt.widgets.ToolItem;
-import org.eclipse.swt.widgets.Widget;
-import org.eclipse.ui.actions.ActionFactory.IWorkbenchAction;
 
 /**
  * Provides a way to populate a menu with a list of repositories.
@@ -100,6 +90,7 @@ public final class RepositoryMenuUtil {
 	 *            to perform on the chosen repository
 	 * @return the (possibly empty) list of actions
 	 */
+	@NonNull
 	public static Collection<IAction> getRepositoryActions(boolean includeBare,
 			@Nullable File currentRepoDir,
 			@NonNull Consumer<Repository> action) {
@@ -165,8 +156,7 @@ public final class RepositoryMenuUtil {
 	 * menu of all registered repositories, performing a given action on a
 	 * selected repository.
 	 */
-	public static class RepositoryToolbarAction extends Action
-			implements IWorkbenchAction, IMenuCreator {
+	public static class RepositoryToolbarAction extends ToolbarMenuAction {
 
 		private final RepositoryUtil util = org.eclipse.egit.core.Activator
 				.getDefault().getRepositoryUtil();
@@ -180,10 +170,6 @@ public final class RepositoryMenuUtil {
 		private final @NonNull Supplier<Repository> currentRepo;
 
 		private final boolean includeBare;
-
-		private Menu menu;
-
-		private boolean showMenu;
 
 		/**
 		 * Creates a new {@link RepositoryToolbarAction} with the given
@@ -231,7 +217,7 @@ public final class RepositoryMenuUtil {
 				@Nullable ImageDescriptor image, @Nullable String tooltip,
 				boolean includeBare, @NonNull Supplier<Repository> currentRepo,
 				@NonNull Consumer<Repository> action) {
-			super(text, IAction.AS_DROP_DOWN_MENU);
+			super(text);
 			setImageDescriptor(image);
 			setToolTipText(tooltip == null ? text : tooltip);
 			this.includeBare = includeBare;
@@ -247,69 +233,19 @@ public final class RepositoryMenuUtil {
 			preferences.addPreferenceChangeListener(listener);
 		}
 
-		@Override
-		public void run() {
-			showMenu = true;
-		}
 
 		@Override
-		public void runWithEvent(Event event) {
-			if (!isEnabled()) {
-				return;
-			}
-			// Show the menu also when the button is clicked, unless run() is
-			// overridden (and not called via super).
-			showMenu = false;
-			run();
-			Widget widget = event.widget;
-			if (showMenu && (widget instanceof ToolItem)) {
-				ToolItem item = (ToolItem) widget;
-				Rectangle bounds = item.getBounds();
-				event.detail = SWT.ARROW;
-				event.x = bounds.x;
-				event.y = bounds.y + bounds.height;
-				item.notifyListeners(SWT.Selection, event);
-			}
-		}
-
-		@Override
-		public IMenuCreator getMenuCreator() {
-			return this;
-		}
-
-		@Override
-		public Menu getMenu(Control parent) {
-			if (menu != null) {
-				menu.dispose();
-				menu = null;
-			}
-			if (isEnabled()) {
-				Repository current = currentRepo.get();
-				File gitDir = current == null ? null : current.getDirectory();
-				Collection<IAction> actions = RepositoryMenuUtil
-						.getRepositoryActions(includeBare, gitDir, action);
-				menu = new Menu(parent);
-				for (IAction a : actions) {
-					ActionContributionItem item = new ActionContributionItem(a);
-					item.fill(menu, -1);
-				}
-			}
-			return menu;
-		}
-
-		@Override
-		public Menu getMenu(Menu parent) {
-			// Not used
-			return null;
+		public Collection<IAction> getActions() {
+			Repository current = currentRepo.get();
+			File gitDir = current == null ? null : current.getDirectory();
+			return RepositoryMenuUtil.getRepositoryActions(includeBare, gitDir,
+					action);
 		}
 
 		@Override
 		public void dispose() {
-			if (menu != null) {
-				menu.dispose();
-				menu = null;
-			}
 			preferences.removePreferenceChangeListener(listener);
+			super.dispose();
 		}
 	}
 }
