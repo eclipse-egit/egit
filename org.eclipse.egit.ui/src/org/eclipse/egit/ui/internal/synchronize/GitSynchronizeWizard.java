@@ -83,8 +83,7 @@ public class GitSynchronizeWizard extends Wizard {
 		Set<IProject> selectedProjects
 				 = page.getSelectedProjects();
 		GitModelSynchronize.launch(gsdSet, selectedProjects
-				.toArray(new IResource[selectedProjects
-				.size()]));
+				.toArray(new IResource[0]));
 
 		return true;
 	}

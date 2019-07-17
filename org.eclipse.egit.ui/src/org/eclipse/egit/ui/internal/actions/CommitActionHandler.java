@@ -151,8 +151,7 @@ public class CommitActionHandler extends RepositoryActionHandler {
 								result[0] = new IndexDiffData(
 										CommitUI.getIndexDiff(repository,
 												projects.toArray(
-														new IProject[projects
-																.size()]),
+														new IProject[0]),
 												monitor));
 							} catch (IOException e) {
 								throw new InvocationTargetException(e);

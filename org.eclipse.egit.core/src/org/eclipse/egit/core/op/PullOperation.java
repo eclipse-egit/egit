@@ -140,7 +140,7 @@ public class PullOperation implements IEGitOperation {
 	public PullOperation(Set<Repository> repositories, int timeout) {
 		this.timeout = timeout;
 		this.repositories = repositories
-				.toArray(new Repository[repositories.size()]);
+				.toArray(new Repository[0]);
 		this.configs = Collections.emptyMap();
 		this.results = new LinkedHashMap<>();
 	}

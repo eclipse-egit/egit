@@ -322,7 +322,7 @@ public class DiffRegionFormatter extends DiffFormatter {
 	 * @return non-null but possibly empty array
 	 */
 	public DiffRegion[] getRegions() {
-		return this.regions.toArray(new DiffRegion[this.regions.size()]);
+		return this.regions.toArray(new DiffRegion[0]);
 	}
 
 	/**
@@ -332,7 +332,7 @@ public class DiffRegionFormatter extends DiffFormatter {
 	 */
 	public FileDiffRegion[] getFileRegions() {
 		return this.fileRegions
-				.toArray(new FileDiffRegion[this.fileRegions.size()]);
+				.toArray(new FileDiffRegion[0]);
 	}
 
 	/**

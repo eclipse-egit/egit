@@ -330,8 +330,8 @@ public class RepositoryUtil {
 				}
 				if (!branchNames.isEmpty()) {
 					// get the last (sorted) entry
-					cacheValue = branchNames.toArray(new String[branchNames
-							.size()])[branchNames.size() - 1];
+					cacheValue = branchNames
+							.toArray(new String[0])[branchNames.size() - 1];
 				}
 			}
 
@@ -351,8 +351,8 @@ public class RepositoryUtil {
 					}
 					if (!branchNames.isEmpty()) {
 						// get the last (sorted) entry
-						cacheValue = branchNames.toArray(new String[branchNames
-								.size()])[branchNames.size() - 1];
+						cacheValue = branchNames
+								.toArray(new String[0])[branchNames.size() - 1];
 					}
 				} catch (IOException e) {
 					// ignore here

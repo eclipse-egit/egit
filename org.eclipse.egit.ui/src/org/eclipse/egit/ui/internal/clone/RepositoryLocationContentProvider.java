@@ -57,8 +57,7 @@ class RepositoryLocationContentProvider implements ITreeContentProvider {
 	@SuppressWarnings("unchecked")
 	public Object[] getElements(Object inputElement) {
 		List<CloneSourceProvider> repositoryImports = (List<CloneSourceProvider>) inputElement;
-		return repositoryImports.toArray(new CloneSourceProvider[repositoryImports
-				.size()]);
+		return repositoryImports.toArray(new CloneSourceProvider[0]);
 	}
 
 	@Override
@@ -76,8 +75,7 @@ class RepositoryLocationContentProvider implements ITreeContentProvider {
 				return null;
 			cacheParents(repositoryImport, repositoryServerInfos);
 			return repositoryServerInfos
-					.toArray(new RepositoryServerInfo[repositoryServerInfos
-							.size()]);
+					.toArray(new RepositoryServerInfo[0]);
 		}
 		return null;
 	}

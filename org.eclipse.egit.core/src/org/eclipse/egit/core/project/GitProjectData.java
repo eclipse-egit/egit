@@ -202,8 +202,7 @@ public class GitProjectData {
 	 */
 	private static synchronized RepositoryMappingChangeListener[] getRepositoryChangeListeners() {
 		return repositoryChangeListeners
-				.toArray(new RepositoryMappingChangeListener[repositoryChangeListeners
-						.size()]);
+				.toArray(new RepositoryMappingChangeListener[0]);
 	}
 
 	/**
