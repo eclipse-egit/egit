@@ -13,10 +13,12 @@
 package org.eclipse.egit.ui.internal.actions;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
 import java.io.File;
+import java.nio.file.Files;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -105,7 +107,31 @@ public class SwitchToMenuTest extends LocalRepositoryTestCase {
 		selectionWithProj1Common();
 
 		// delete reflog again to not confuse other tests
-		new File(gitDir, Constants.LOGS + "/" + Constants.HEAD).delete();
+		assertTrue(new File(gitDir, Constants.LOGS + "/" + Constants.HEAD)
+				.delete());
+	}
+
+	@Test
+	public void selectionWithCorruptedReflog() throws Exception {
+		File gitDir = createProjectAndCommitToRepository();
+
+		// create additional reflog entries
+		try (Git git = new Git(lookupRepository(gitDir))) {
+			git.checkout().setName("stable").call();
+			git.checkout().setName("master").call();
+		}
+
+		// Corrupt the reflog
+		File reflog = new File(gitDir, Constants.LOGS + "/" + Constants.HEAD);
+		List<String> lines = Files.readAllLines(reflog.toPath());
+		assertTrue("Expected some lines in the reflog", lines.size() > 1);
+		lines.add(1,
+				"INTENTIONALLY CORRUPTED REFLOG. Just some text that definitely shouldn't be in a reflog.");
+		Files.write(reflog.toPath(), lines);
+
+		selectionWithProj1Common();
+
+		assertTrue(reflog.delete());
 	}
 
 	private void selectionWithProj1Common() {
