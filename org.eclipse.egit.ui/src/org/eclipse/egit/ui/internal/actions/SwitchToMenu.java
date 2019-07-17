@@ -24,6 +24,7 @@ import java.util.Set;
 import java.util.TreeSet;
 import java.util.stream.Stream;
 
+import org.eclipse.egit.core.RepositoryUtil;
 import org.eclipse.egit.ui.Activator;
 import org.eclipse.egit.ui.internal.CommonUtils;
 import org.eclipse.egit.ui.internal.UIIcons;
@@ -41,7 +42,6 @@ import org.eclipse.jgit.lib.ConfigConstants;
 import org.eclipse.jgit.lib.Constants;
 import org.eclipse.jgit.lib.Ref;
 import org.eclipse.jgit.lib.ReflogEntry;
-import org.eclipse.jgit.lib.ReflogReader;
 import org.eclipse.jgit.lib.Repository;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.SelectionAdapter;
@@ -180,10 +180,17 @@ public class SwitchToMenu extends ContributionItem implements
 		try {
 			List<Map<String, Ref>> activeBranches = new ArrayList<>();
 
-			for (Repository repository : repositories) {
-				Map<String, Ref> branchRefMapping = getMostActiveBranches(
-						repository, MAX_NUM_MENU_ENTRIES);
-				activeBranches.add(branchRefMapping);
+			try {
+				for (Repository repository : repositories) {
+					Map<String, Ref> branchRefMapping = getMostActiveBranches(
+							repository, MAX_NUM_MENU_ENTRIES);
+					activeBranches.add(branchRefMapping);
+				}
+			} catch (IOException e) {
+				Activator.logError(e.getLocalizedMessage(), e);
+				// The intersection should be empty if we cannot read the reflog
+				// of one repository.
+				activeBranches.clear();
 			}
 
 			Set<String> activeBranchIntersection = getBranchNameIntersection(
@@ -309,14 +316,8 @@ public class SwitchToMenu extends ContributionItem implements
 				.getRefs(Constants.R_HEADS);
 		Map<String, Ref> activeRefs = new HashMap<>();
 
-		ReflogReader reflogReader = repository.getReflogReader(Constants.HEAD);
-		List<ReflogEntry> reflogEntries;
-		if (reflogReader == null) {
-			return Collections.emptyMap();
-		}
-
-		reflogEntries = reflogReader.getReverseEntries();
-
+		List<ReflogEntry> reflogEntries = RepositoryUtil
+				.safeReadReflog(repository, Constants.HEAD);
 		for (ReflogEntry entry : reflogEntries) {
 			CheckoutEntry checkout = entry.parseCheckout();
 			if (checkout != null) {

@@ -238,6 +238,9 @@ public class CoreText extends NLS {
 	public static String RepositoryUtil_noHead;
 
 	/** */
+	public static String RepositoryUtil_ReflogCorrupted;
+
+	/** */
 	public static String RemoteRefUpdateCantBeReused;
 
 	/** */
