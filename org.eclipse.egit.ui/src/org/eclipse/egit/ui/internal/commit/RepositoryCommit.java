@@ -207,8 +207,7 @@ public class RepositoryCommit extends WorkbenchAdapter
 					if (note != null)
 						noteList.add(new RepositoryCommitNote(this, ref, note));
 				}
-				notes = noteList.toArray(new RepositoryCommitNote[noteList
-						.size()]);
+				notes = noteList.toArray(new RepositoryCommitNote[0]);
 			} catch (Exception e) {
 				Activator.logError("Error showing notes", e); //$NON-NLS-1$
 				notes = new RepositoryCommitNote[0];

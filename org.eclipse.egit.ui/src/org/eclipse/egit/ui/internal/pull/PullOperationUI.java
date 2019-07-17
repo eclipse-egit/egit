@@ -80,8 +80,7 @@ public class PullOperationUI extends JobChangeAdapter {
 	 * @param repositories
 	 */
 	public PullOperationUI(Set<Repository> repositories) {
-		this.repositories = repositories.toArray(new Repository[repositories
-				.size()]);
+		this.repositories = repositories.toArray(new Repository[0]);
 		int timeout = Activator.getDefault().getPreferenceStore().getInt(
 				UIPreferences.REMOTE_CONNECTION_TIMEOUT);
 		pullOperation = new PullOperation(repositories, timeout);

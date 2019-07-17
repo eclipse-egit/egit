@@ -114,7 +114,7 @@ public class SynchronizePreferencePage extends FieldEditorPreferencePage
 			strategies.add(new String[] { strategy.getLabel(),
 					strategy.getName() });
 		}
-		return strategies.toArray(new String[strategies.size()][2]);
+		return strategies.toArray(new String[0][0]);
 	}
 
 	private ScopedPreferenceStore getCorePreferenceStore() {

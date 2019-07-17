@@ -75,7 +75,7 @@ public class CommitCombo extends Composite {
 					list.add(makeContentProposal(message));
 				}
 			}
-			return list.toArray(new IContentProposal[] {});
+			return list.toArray(new IContentProposal[0]);
 		}
 
 		/*

@@ -207,8 +207,7 @@ public class SharingWizard extends Wizard implements IConfigurationWizard,
 			@Override
 			public void run() {
 				activePage.closeEditors(
-						editorRefsToClose.toArray(
-								new IEditorReference[editorRefsToClose.size()]),
+						editorRefsToClose.toArray(new IEditorReference[0]),
 						true);
 			}
 		});

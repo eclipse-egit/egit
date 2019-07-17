@@ -169,7 +169,7 @@ public class DiffViewer extends HyperlinkSourceViewer {
 			Assert.isTrue(sourceViewer instanceof DiffViewer);
 			DiffViewer viewer = (DiffViewer) sourceViewer;
 			return viewer.tokens.keySet()
-					.toArray(new String[viewer.tokens.size()]);
+					.toArray(new String[0]);
 		}
 
 		@Override
