@@ -225,7 +225,7 @@ public class FindResults {
 	private Integer[] getkeysArray() {
 		if (keysArray == null) {
 			keysArray = matchesMap.keySet().toArray(
-					new Integer[matchesMap.size()]);
+					new Integer[0]);
 		}
 
 		return keysArray;

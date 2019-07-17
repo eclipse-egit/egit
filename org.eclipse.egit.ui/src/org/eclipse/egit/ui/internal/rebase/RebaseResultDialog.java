@@ -569,8 +569,7 @@ public class RebaseResultDialog extends MessageDialog {
 					IPath location = repoWorkdirPath.append(repoPath);
 					locationList.add(location);
 				}
-				IPath[] locations = locationList.toArray(new IPath[locationList
-						.size()]);
+				IPath[] locations = locationList.toArray(new IPath[0]);
 				int mergeMode = Activator.getDefault().getPreferenceStore()
 						.getInt(UIPreferences.MERGE_MODE);
 				CompareEditorInput input;

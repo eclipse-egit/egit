@@ -418,7 +418,7 @@ public class FileDiff {
 			objectIds.add(diffEntry.getOldId().toObjectId());
 		if (diffEntry.getNewId() != null)
 			objectIds.add(diffEntry.getNewId().toObjectId());
-		return objectIds.toArray(new ObjectId[]{});
+		return objectIds.toArray(new ObjectId[0]);
 	}
 
 	/**
@@ -432,7 +432,7 @@ public class FileDiff {
 			modes.add(diffEntry.getOldMode());
 		if (diffEntry.getOldMode() != null)
 			modes.add(diffEntry.getOldMode());
-		return modes.toArray(new FileMode[]{});
+		return modes.toArray(new FileMode[0]);
 	}
 
 	/**

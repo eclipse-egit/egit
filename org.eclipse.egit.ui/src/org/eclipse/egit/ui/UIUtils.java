@@ -445,8 +445,7 @@ public class UIUtils {
 						resultList.add(propsal);
 					}
 				}
-				return resultList.toArray(new IContentProposal[resultList
-						.size()]);
+				return resultList.toArray(new IContentProposal[0]);
 			}
 		};
 
@@ -597,8 +596,7 @@ public class UIUtils {
 						resultList.add(proposal);
 					}
 				}
-				return resultList.toArray(new IContentProposal[resultList
-						.size()]);
+				return resultList.toArray(new IContentProposal[0]);
 			}
 		};
 

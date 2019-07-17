@@ -179,8 +179,7 @@ public class GitSubscriberMergeContext extends SubscriberMergeContext {
 	}
 
 	private void refreshResources(Collection<IFile> resources) {
-		IResource[] files = resources.toArray(new IResource[resources
-				.size()]);
+		IResource[] files = resources.toArray(new IResource[0]);
 		try {
 			subscriber.refresh(files, IResource.DEPTH_ONE,
 					new NullProgressMonitor());
