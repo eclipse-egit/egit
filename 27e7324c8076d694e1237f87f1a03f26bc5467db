@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "cd99aa50_facf90c3",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/RepositoryUtil.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 334,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2019-07-17T19:22:46Z",
+      "side": 1,
+      "message": "These two are nonsense anyway. branchNames is a TreeSet, so we could just call last().",
+      "revId": "27e7324c8076d694e1237f87f1a03f26bc5467db",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "2d9f7126_f2fc6170",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/preferences/SynchronizePreferencePage.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 117,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2019-07-17T19:22:46Z",
+      "side": 1,
+      "message": "This one I find highly confusing.",
+      "revId": "27e7324c8076d694e1237f87f1a03f26bc5467db",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
