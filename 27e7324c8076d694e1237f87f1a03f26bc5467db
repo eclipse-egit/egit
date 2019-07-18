@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "638ef1ec_1d547d59",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/RepositoryUtil.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 334,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2019-07-18T10:04:09Z",
+      "side": 1,
+      "message": "Done in https://git.eclipse.org/r/#/c/146304/",
+      "parentUuid": "cd99aa50_facf90c3",
+      "revId": "27e7324c8076d694e1237f87f1a03f26bc5467db",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "92ced0d3_e76d8ef7",
         "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/RepositoryUtil.java",
         "patchSetId": 1
@@ -30,6 +48,30 @@
       "writtenOn": "2019-07-17T21:18:49Z",
       "side": 1,
       "message": "And anyway, is using a TreeSet even necessary? Can\u0027t we just do (here and above)\n\n  for (Ref branch : remoteBranches) {\n    ObjectId objectId \u003d branch.getObjectId();\n    if (objectId !\u003d null\n        \u0026\u0026 objectId.name().equals(commitId)) {\n      if (cacheValue \u003d\u003d null || cacheValue.compareTo(branch.getName()) \u003c 0) {\n        cacheValue \u003d branch.getName();\n      }\n    }\n  }\n\n? No need for the set at all. And maybe even factor out these identical loops for local and remote branches into a separate function. This is copy-paste code of the worst kind. In the local branch case, the variable is even still called \"remoteBranches\"!",
+      "range": {
+        "startLine": 345,
+        "startChar": 0,
+        "endLine": 355,
+        "endChar": 56
+      },
+      "revId": "27e7324c8076d694e1237f87f1a03f26bc5467db",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3b01326f_a7d94145",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/RepositoryUtil.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 355,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2019-07-18T10:04:09Z",
+      "side": 1,
+      "message": "Done in https://git.eclipse.org/r/#/c/146304/",
+      "parentUuid": "92ced0d3_e76d8ef7",
       "range": {
         "startLine": 345,
         "startChar": 0,
