@@ -24,7 +24,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.StringTokenizer;
-import java.util.TreeSet;
 
 import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.CoreException;
@@ -285,7 +284,11 @@ public class RepositoryUtil {
 				List<Ref> tags = repository.getRefDatabase().getRefsByPrefix(
 						Constants.R_TAGS);
 				for (Ref tagRef : tags) {
-					RevObject any = rw.parseAny(repository.resolve(tagRef.getName()));
+					ObjectId id = tagRef.getLeaf().getObjectId();
+					if (id == null) {
+						continue;
+					}
+					RevObject any = rw.parseAny(id);
 					if (any instanceof RevTag) {
 						RevTag tag = (RevTag) any;
 						if (tag.getObject().name().equals(commitId)) {
@@ -327,11 +330,10 @@ public class RepositoryUtil {
 				}
 				// if we don't have time stamps, we sort
 				if (cacheValue == null) {
-					String compareString = ""; //$NON-NLS-1$
 					for (String tagName : tagMap.keySet()) {
-						if (tagName.compareTo(compareString) >= 0) {
+						if (cacheValue == null
+								|| cacheValue.compareTo(tagName) < 0) {
 							cacheValue = tagName;
-							compareString = tagName;
 						}
 					}
 				}
@@ -339,47 +341,19 @@ public class RepositoryUtil {
 
 			if (cacheValue == null) {
 				// we didnt't find a tag, so let's look for local branches
-				Set<String> branchNames = new TreeSet<>();
-				// put this into a sorted set
 				try {
-					List<Ref> remoteBranches = repository.getRefDatabase()
-							.getRefsByPrefix(Constants.R_HEADS);
-					for (Ref branch : remoteBranches) {
-						ObjectId objectId = branch.getObjectId();
-						if (objectId != null
-								&& objectId.name().equals(commitId)) {
-							branchNames.add(branch.getName());
-						}
-					}
+					cacheValue = lastRefNameForCommitId(repository,
+							Constants.R_HEADS, commitId);
 				} catch (IOException e) {
 					// ignore here
-				}
-				if (!branchNames.isEmpty()) {
-					// get the last (sorted) entry
-					cacheValue = branchNames.toArray(new String[branchNames
-							.size()])[branchNames.size() - 1];
 				}
 			}
 
 			if (cacheValue == null) {
 				// last try: remote branches
-				Set<String> branchNames = new TreeSet<>();
-				// put this into a sorted set
 				try {
-					List<Ref> remoteBranches = repository.getRefDatabase()
-							.getRefsByPrefix(Constants.R_REMOTES);
-					for (Ref branch : remoteBranches) {
-						ObjectId objectId = branch.getObjectId();
-						if (objectId != null
-								&& objectId.name().equals(commitId)) {
-							branchNames.add(branch.getName());
-						}
-					}
-					if (!branchNames.isEmpty()) {
-						// get the last (sorted) entry
-						cacheValue = branchNames.toArray(new String[branchNames
-								.size()])[branchNames.size() - 1];
-					}
+					cacheValue = lastRefNameForCommitId(repository,
+							Constants.R_REMOTES, commitId);
 				} catch (IOException e) {
 					// ignore here
 				}
@@ -387,6 +361,20 @@ public class RepositoryUtil {
 			cacheEntry.put(commitId, cacheValue);
 			return cacheValue;
 		}
+	}
+
+	private String lastRefNameForCommitId(Repository repository,
+			String refPrefix, String commitId) throws IOException {
+		String result = null;
+		for (Ref ref : repository.getRefDatabase().getRefsByPrefix(refPrefix)) {
+			ObjectId objectId = ref.getObjectId();
+			if (objectId != null && objectId.name().equals(commitId)) {
+				if (result == null || result.compareTo(ref.getName()) < 0) {
+					result = ref.getName();
+				}
+			}
+		}
+		return result;
 	}
 
 	/**
