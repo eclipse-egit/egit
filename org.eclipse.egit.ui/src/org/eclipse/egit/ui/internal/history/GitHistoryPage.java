@@ -315,6 +315,8 @@ public class GitHistoryPage extends HistoryPage implements RefsChangedListener,
 
 		IWorkbenchAction showAllBranchesAction;
 
+		IWorkbenchAction showFirstParentOnlyAction;
+
 		IWorkbenchAction showAdditionalRefsAction;
 
 		BooleanPrefAction followRenamesAction;
@@ -352,6 +354,7 @@ public class GitHistoryPage extends HistoryPage implements RefsChangedListener,
 			createCompareModeAction();
 			createReuseCompareEditorAction();
 			createShowAllBranchesAction();
+			createShowFirstParentOnlyAction();
 			createShowAdditionalRefsAction();
 			createShowCommentAction();
 			createShowFilesAction();
@@ -514,6 +517,23 @@ public class GitHistoryPage extends HistoryPage implements RefsChangedListener,
 			showAllBranchesAction
 					.setToolTipText(UIText.GitHistoryPage_showAllBranches);
 			actionsToDispose.add(showAllBranchesAction);
+		}
+
+		private void createShowFirstParentOnlyAction() {
+			showFirstParentOnlyAction = new BooleanPrefAction(
+					UIPreferences.RESOURCEHISTORY_SHOW_FIRST_PARENT_ONLY,
+					UIText.GitHistoryPage_ShowFirstParentOnlyMenuLabel) {
+
+				@Override
+				void apply(boolean value) {
+					historyPage.refresh();
+				}
+			};
+			showFirstParentOnlyAction
+					.setImageDescriptor(UIIcons.MERGE_FIRST_PARENT);
+			showFirstParentOnlyAction
+					.setToolTipText(UIText.GitHistoryPage_showFirstParentOnly);
+			actionsToDispose.add(showFirstParentOnlyAction);
 		}
 
 		private void createShowAdditionalRefsAction() {
@@ -813,6 +833,8 @@ public class GitHistoryPage extends HistoryPage implements RefsChangedListener,
 	private ObjectId selectedObj;
 
 	private boolean currentShowAllBranches;
+
+	private boolean currentShowFirstParentOnly;
 
 	private boolean currentShowAdditionalRefs;
 
@@ -1547,6 +1569,7 @@ public class GitHistoryPage extends HistoryPage implements RefsChangedListener,
 		mgr.add(new Separator());
 		mgr.add(actions.compareModeAction);
 		mgr.add(actions.showAllBranchesAction);
+		mgr.add(actions.showFirstParentOnlyAction);
 	}
 
 	private class ColumnAction extends Action implements IUpdate {
@@ -1593,6 +1616,7 @@ public class GitHistoryPage extends HistoryPage implements RefsChangedListener,
 				UIText.GitHistoryPage_ShowSubMenuLabel);
 		viewMenuMgr.add(showSubMenuMgr);
 		showSubMenuMgr.add(actions.showAllBranchesAction);
+		showSubMenuMgr.add(actions.showFirstParentOnlyAction);
 		showSubMenuMgr.add(actions.showAdditionalRefsAction);
 		showSubMenuMgr.add(actions.showNotesAction);
 		showSubMenuMgr.add(actions.followRenamesAction);
@@ -2389,6 +2413,12 @@ public class GitHistoryPage extends HistoryPage implements RefsChangedListener,
 		currentShowAllBranches = store
 			.getBoolean(UIPreferences.RESOURCEHISTORY_SHOW_ALL_BRANCHES);
 
+		boolean firstParentOnlyChanged = currentShowFirstParentOnly != store
+				.getBoolean(
+						UIPreferences.RESOURCEHISTORY_SHOW_FIRST_PARENT_ONLY);
+		currentShowFirstParentOnly = store.getBoolean(
+				UIPreferences.RESOURCEHISTORY_SHOW_FIRST_PARENT_ONLY);
+
 		boolean additionalRefsChange = currentShowAdditionalRefs != store
 				.getBoolean(UIPreferences.RESOURCEHISTORY_SHOW_ADDITIONAL_REFS);
 		currentShowAdditionalRefs = store
@@ -2405,8 +2435,9 @@ public class GitHistoryPage extends HistoryPage implements RefsChangedListener,
 		currentFollowRenames = getFollowRenames();
 
 		return pathChanged || headChanged || fetchHeadChanged
-				|| allBranchesChanged || additionalRefsChange
-				|| showNotesChanged || followRenamesChanged;
+				|| allBranchesChanged || firstParentOnlyChanged
+				|| additionalRefsChange || showNotesChanged
+				|| followRenamesChanged;
 	}
 
 	/**
@@ -2527,6 +2558,10 @@ public class GitHistoryPage extends HistoryPage implements RefsChangedListener,
 		currentHeadId = headId;
 		currentFetchHeadId = fetchHeadId;
 		SWTWalk walk = new GitHistoryWalk(db, headId, selectedObj);
+		if (store.getBoolean(
+				UIPreferences.RESOURCEHISTORY_SHOW_FIRST_PARENT_ONLY)) {
+			walk.setFirstParent(true);
+		}
 		try {
 			if (store
 					.getBoolean(UIPreferences.RESOURCEHISTORY_SHOW_ADDITIONAL_REFS))
