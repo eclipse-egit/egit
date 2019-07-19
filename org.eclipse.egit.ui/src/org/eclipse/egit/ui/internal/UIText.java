@@ -475,6 +475,9 @@ public class UIText extends NLS {
 	public static String GitHistoryPage_showAllBranches;
 
 	/** */
+	public static String GitHistoryPage_showFirstParentOnly;
+
+	/** */
 	public static String GitHistoryPage_squashMenuItem;
 
 	/** */
@@ -623,6 +626,9 @@ public class UIText extends NLS {
 
 	/** */
 	public static String GitHistoryPage_ShowAllBranchesMenuLabel;
+
+	/** */
+	public static String GitHistoryPage_ShowFirstParentOnlyMenuLabel;
 
 	/** */
 	public static String GitHistoryPage_FollowRenames;
@@ -2129,6 +2135,9 @@ public class UIText extends NLS {
 
 	/** */
 	public static String HistoryPreferencePage_toggleAllBranches;
+
+	/** */
+	public static String HistoryPreferencePage_showFirstParentOnlyDefault;
 
 	/** */
 	public static String HistoryPreferencePage_toggleEmailAddresses;
