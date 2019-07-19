@@ -63,6 +63,10 @@ public class HistoryPreferencePage extends FieldEditorPreferencePage implements
 				UIPreferences.RESOURCEHISTORY_SHOW_ALL_BRANCHES,
 				UIText.HistoryPreferencePage_toggleAllBranches, showGroup));
 		addField(new BooleanFieldEditor(
+				UIPreferences.RESOURCEHISTORY_SHOW_FIRST_PARENT_ONLY_DEFAULT,
+				UIText.HistoryPreferencePage_showFirstParentOnlyDefault,
+				showGroup));
+		addField(new BooleanFieldEditor(
 				UIPreferences.RESOURCEHISTORY_SHOW_ADDITIONAL_REFS,
 				UIText.HistoryPreferencePage_toggleAdditionalRefs, showGroup));
 		addField(new BooleanFieldEditor(
