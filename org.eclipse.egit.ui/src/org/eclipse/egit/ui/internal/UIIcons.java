@@ -268,6 +268,9 @@ public class UIIcons {
 	/** Merge icon */
 	public final static ImageDescriptor MERGE;
 
+	/** First parent only icon */
+	public final static ImageDescriptor FIRST_PARENT_ONLY;
+
 	/** Annotated tag icon */
 	public final static ImageDescriptor TAG_ANNOTATED;
 
@@ -452,6 +455,7 @@ public class UIIcons {
 		REBASE_PROCESS_STEPS = map("elcl16/start.png"); //$NON-NLS-1$
 		OVR_ERROR = map("ovr/error.png"); //$NON-NLS-1$
 		MERGE = map("obj16/merge.png"); //$NON-NLS-1$
+		FIRST_PARENT_ONLY = map("obj16/first_parent_only.png"); //$NON-NLS-1$
 		TAG_ANNOTATED = map("obj16/annotated-tag.png"); //$NON-NLS-1$
 		CREATE_REPOSITORY = map("etool16/createRepository.png"); //$NON-NLS-1$
 		SUBMODULES = map("obj16/submodules.png"); //$NON-NLS-1$
