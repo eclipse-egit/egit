@@ -23,8 +23,10 @@ package org.eclipse.egit.ui.internal.history;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Objects;
 import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -87,6 +89,7 @@ import org.eclipse.jface.bindings.keys.SWTKeySupport;
 import org.eclipse.jface.layout.GridDataFactory;
 import org.eclipse.jface.layout.GridLayoutFactory;
 import org.eclipse.jface.preference.IPersistentPreferenceStore;
+import org.eclipse.jface.preference.IPreferenceStore;
 import org.eclipse.jface.preference.PreferenceDialog;
 import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.jface.resource.JFaceResources;
@@ -189,6 +192,8 @@ public class GitHistoryPage extends HistoryPage implements RefsChangedListener,
 
 	private static final int INITIAL_ITEM = -1;
 
+	private static final String P_REPOSITORY = "GitHistoryPage.Repository"; //$NON-NLS-1$
+
 	/** actions used in GitHistoryPage **/
 	private static class GitHistoryPageActions {
 
@@ -206,12 +211,7 @@ public class GitHistoryPage extends HistoryPage implements RefsChangedListener,
 			@Override
 			public void run() {
 				historyPage.store.setValue(prefName, isChecked());
-				if (historyPage.store.needsSaving())
-					try {
-						historyPage.store.save();
-					} catch (IOException e) {
-						Activator.handleError(e.getMessage(), e, false);
-					}
+				historyPage.saveStoreIfNeeded();
 			}
 
 			abstract void apply(boolean value);
@@ -319,6 +319,8 @@ public class GitHistoryPage extends HistoryPage implements RefsChangedListener,
 
 		IWorkbenchAction showAllBranchesAction;
 
+		IWorkbenchAction showFirstParentOnlyAction;
+
 		IWorkbenchAction showAdditionalRefsAction;
 
 		BooleanPrefAction followRenamesAction;
@@ -356,6 +358,7 @@ public class GitHistoryPage extends HistoryPage implements RefsChangedListener,
 			createCompareModeAction();
 			createReuseCompareEditorAction();
 			createShowAllBranchesAction();
+			createShowFirstParentOnlyAction();
 			createShowAdditionalRefsAction();
 			createShowCommentAction();
 			createShowFilesAction();
@@ -374,9 +377,9 @@ public class GitHistoryPage extends HistoryPage implements RefsChangedListener,
 
 		private void createRepositorySwitchAction() {
 			switchRepositoryAction = new RepositoryToolbarAction(true,
-					() -> historyPage.currentRepo,
+					() -> historyPage.getCurrentRepo(),
 					repo -> {
-						Repository current = historyPage.currentRepo;
+						Repository current = historyPage.getCurrentRepo();
 						if (current != null && repo.getDirectory()
 								.equals(current.getDirectory())) {
 							HistoryPageInput currentInput = historyPage
@@ -406,13 +409,7 @@ public class GitHistoryPage extends HistoryPage implements RefsChangedListener,
 					historyPage.store.setValue(
 							UIPreferences.RESOURCEHISTORY_SHOW_FINDTOOLBAR,
 							isChecked());
-					if (historyPage.store.needsSaving()) {
-						try {
-							historyPage.store.save();
-						} catch (IOException e) {
-							Activator.handleError(e.getMessage(), e, false);
-						}
-					}
+					historyPage.saveStoreIfNeeded();
 					historyPage.searchBar.setVisible(isChecked());
 				}
 
@@ -518,6 +515,100 @@ public class GitHistoryPage extends HistoryPage implements RefsChangedListener,
 			showAllBranchesAction
 					.setToolTipText(UIText.GitHistoryPage_showAllBranches);
 			actionsToDispose.add(showAllBranchesAction);
+		}
+
+		private class ShowFirstParentOnlyPrefAction extends Action
+				implements IPropertyChangeListener, IWorkbenchAction {
+
+			ShowFirstParentOnlyPrefAction() {
+				super(UIText.GitHistoryPage_ShowFirstParentOnlyMenuLabel);
+				historyPage.addPropertyChangeListener(this);
+				historyPage.store.addPropertyChangeListener(this);
+				setChecked(historyPage.isShowFirstParentOnly());
+				setImageDescriptor(UIIcons.FIRST_PARENT_ONLY);
+				setToolTipText(UIText.GitHistoryPage_showFirstParentOnly);
+			}
+
+			@Override
+			public void run() {
+				final String prefKey = UIPreferences.RESOURCEHISTORY_SHOW_FIRST_PARENT_ONLY_DEFAULT;
+				Repository repo = historyPage.getCurrentRepo();
+				if (repo != null) {
+					String repoSpecificKey = getRepoSpecificKey(repo, prefKey);
+					boolean newBoolean = isChecked();
+					if (newBoolean == historyPage.store.getBoolean(prefKey)) {
+						historyPage.store.setToDefault(repoSpecificKey);
+					} else {
+						String newValue = newBoolean ? IPreferenceStore.TRUE
+								: IPreferenceStore.FALSE;
+						historyPage.store.putValue(repoSpecificKey, newValue);
+					}
+
+					historyPage.saveStoreIfNeeded();
+				}
+				historyPage.refresh();
+			}
+
+			/**
+			 * Applies the new boolean state to the checkbox and refreshes the
+			 * historyPage if the state was changed.
+			 *
+			 * @param newState
+			 *            the new state to apply.
+			 */
+			private void applyNewState(boolean newState) {
+				Control control = historyPage.getControl();
+				if (control != null && !control.isDisposed()) {
+					control.getDisplay().asyncExec(() -> {
+						if (!control.isDisposed()) {
+							setChecked(newState);
+						}
+					});
+				}
+				historyPage.refresh();
+			}
+
+			@Override
+			public void propertyChange(PropertyChangeEvent event) {
+				Repository repo = historyPage.getCurrentRepo();
+
+				final String prefKey = UIPreferences.RESOURCEHISTORY_SHOW_FIRST_PARENT_ONLY_DEFAULT;
+
+				if (repo == null) {
+					if (prefKey.equals(event.getProperty())) {
+						// global first parent preference changed and we have no
+						// current repo. Apply the new global preference
+						applyNewState(historyPage.store.getBoolean(prefKey));
+					}
+					return;
+				}
+
+				String repoSpecificKey = getRepoSpecificKey(repo, prefKey);
+
+				if (prefKey.equals(event.getProperty())) {
+					// global first parent preference changed, if this repo does
+					// not have a repo specific one apply the global one
+					if (!historyPage.store.contains(repoSpecificKey)) {
+						applyNewState(historyPage.store.getBoolean(prefKey));
+					}
+				}
+
+				if (P_REPOSITORY.equals(event.getProperty())) {
+					// The repository was switched. Apply that correct state.
+					applyNewState(historyPage.isShowFirstParentOnly());
+				}
+			}
+
+			@Override
+			public void dispose() {
+				historyPage.removePropertyChangeListener(this);
+				historyPage.store.removePropertyChangeListener(this);
+			}
+		}
+
+		private void createShowFirstParentOnlyAction() {
+			showFirstParentOnlyAction = new ShowFirstParentOnlyPrefAction();
+			actionsToDispose.add(showFirstParentOnlyAction);
 		}
 
 		private void createShowAdditionalRefsAction() {
@@ -818,6 +909,8 @@ public class GitHistoryPage extends HistoryPage implements RefsChangedListener,
 
 	private boolean currentShowAllBranches;
 
+	private boolean currentShowFirstParentOnly;
+
 	private boolean currentShowAdditionalRefs;
 
 	private boolean currentShowNotes;
@@ -859,6 +952,29 @@ public class GitHistoryPage extends HistoryPage implements RefsChangedListener,
 					}
 				});
 			}
+		}
+
+		Object oldValue = event.getOldValue();
+		String pathSep = File.pathSeparator;
+
+		if (oldValue != null) {
+			String[] oldPaths = oldValue.toString().split(pathSep);
+			List<String> removedPaths = new ArrayList<>(
+					Arrays.asList(oldPaths));
+
+			Object newValue = event.getNewValue();
+			if (newValue != null) {
+				String[] newPaths = newValue.toString().split(pathSep);
+				for (String path : newPaths) {
+					removedPaths.remove(path);
+				}
+			}
+
+			for (String path : removedPaths) {
+				unsetRepoSpecificPreference(path,
+						UIPreferences.RESOURCEHISTORY_SHOW_FIRST_PARENT_ONLY_DEFAULT);
+			}
+			saveStoreIfNeeded();
 		}
 	};
 
@@ -1425,12 +1541,7 @@ public class GitHistoryPage extends HistoryPage implements RefsChangedListener,
 			public void widgetDisposed(DisposeEvent e) {
 				final int[] w = sf.getWeights();
 				store.putValue(key, UIPreferences.intArrayToString(w));
-				if (store.needsSaving())
-					try {
-						store.save();
-					} catch (IOException e1) {
-						Activator.handleError(e1.getMessage(), e1, false);
-					}
+				saveStoreIfNeeded();
 
 			}
 		});
@@ -1572,6 +1683,7 @@ public class GitHistoryPage extends HistoryPage implements RefsChangedListener,
 		mgr.add(new Separator());
 		mgr.add(actions.compareModeAction);
 		mgr.add(actions.showAllBranchesAction);
+		mgr.add(actions.showFirstParentOnlyAction);
 	}
 
 	private class ColumnAction extends Action implements IUpdate {
@@ -1618,6 +1730,7 @@ public class GitHistoryPage extends HistoryPage implements RefsChangedListener,
 				UIText.GitHistoryPage_ShowSubMenuLabel);
 		viewMenuMgr.add(showSubMenuMgr);
 		showSubMenuMgr.add(actions.showAllBranchesAction);
+		showSubMenuMgr.add(actions.showFirstParentOnlyAction);
 		showSubMenuMgr.add(actions.showAdditionalRefsAction);
 		showSubMenuMgr.add(actions.showNotesAction);
 		showSubMenuMgr.add(actions.followRenamesAction);
@@ -1693,14 +1806,14 @@ public class GitHistoryPage extends HistoryPage implements RefsChangedListener,
 		}
 		renameTracker.reset(null);
 		Job.getJobManager().cancel(JobFamilies.HISTORY_DIFF);
-		currentRepo = null;
+		setCurrentRepo(null);
 		selectedObj = null;
 		super.dispose();
 	}
 
 	@Override
 	public void setFocus() {
-		if (repoHasBeenRemoved(currentRepo)) {
+		if (repoHasBeenRemoved(getCurrentRepo())) {
 			clearHistoryPage();
 			graph.getControl().setFocus();
 		} else {
@@ -1718,7 +1831,7 @@ public class GitHistoryPage extends HistoryPage implements RefsChangedListener,
 	}
 
 	private void clearHistoryPage() {
-		currentRepo = null;
+		setCurrentRepo(null);
 		selectedObj = null;
 		name = ""; //$NON-NLS-1$
 		input = null;
@@ -1741,7 +1854,7 @@ public class GitHistoryPage extends HistoryPage implements RefsChangedListener,
 
 	@Override
 	public void refresh() {
-		if (repoHasBeenRemoved(currentRepo)) {
+		if (repoHasBeenRemoved(getCurrentRepo())) {
 			clearHistoryPage();
 		}
 		this.input = null;
@@ -2243,6 +2356,19 @@ public class GitHistoryPage extends HistoryPage implements RefsChangedListener,
 		return getInputInternal();
 	}
 
+	private Repository getCurrentRepo() {
+		return currentRepo;
+	}
+
+	private void setCurrentRepo(Repository newRepo) {
+		Repository old = getCurrentRepo();
+		this.currentRepo = newRepo;
+
+		if (!Objects.equals(old, newRepo)) {
+			this.firePropertyChange(this, P_REPOSITORY, old, newRepo);
+		}
+	}
+
 	void setWarningTextInUIThread(final Job j) {
 		graph.getControl().getDisplay().asyncExec(new Runnable() {
 			@Override
@@ -2356,7 +2482,7 @@ public class GitHistoryPage extends HistoryPage implements RefsChangedListener,
 				currentHeadId = null;
 				currentFetchHeadId = null;
 				selectedObj = null;
-				currentRepo = db;
+				setCurrentRepo(db);
 				clearViewers();
 				return;
 			}
@@ -2366,9 +2492,9 @@ public class GitHistoryPage extends HistoryPage implements RefsChangedListener,
 					.getFileList(), db);
 
 			boolean repoChanged = false;
-			if (!db.equals(currentRepo)) {
+			if (!db.equals(getCurrentRepo())) {
 				repoChanged = true;
-				currentRepo = db;
+				setCurrentRepo(db);
 			}
 
 			boolean objChanged = false;
@@ -2417,6 +2543,10 @@ public class GitHistoryPage extends HistoryPage implements RefsChangedListener,
 		currentShowAllBranches = store
 			.getBoolean(UIPreferences.RESOURCEHISTORY_SHOW_ALL_BRANCHES);
 
+		boolean isShowFirstParentOnly = isShowFirstParentOnly();
+		boolean firstParentOnlyChanged = currentShowFirstParentOnly != isShowFirstParentOnly;
+		currentShowFirstParentOnly = isShowFirstParentOnly;
+
 		boolean additionalRefsChange = currentShowAdditionalRefs != store
 				.getBoolean(UIPreferences.RESOURCEHISTORY_SHOW_ADDITIONAL_REFS);
 		currentShowAdditionalRefs = store
@@ -2433,8 +2563,9 @@ public class GitHistoryPage extends HistoryPage implements RefsChangedListener,
 		currentFollowRenames = getFollowRenames();
 
 		return pathChanged || headChanged || fetchHeadChanged
-				|| allBranchesChanged || additionalRefsChange
-				|| showNotesChanged || followRenamesChanged;
+				|| allBranchesChanged || firstParentOnlyChanged
+				|| additionalRefsChange || showNotesChanged
+				|| followRenamesChanged;
 	}
 
 	/**
@@ -2550,11 +2681,76 @@ public class GitHistoryPage extends HistoryPage implements RefsChangedListener,
 		return !o.equals(n);
 	}
 
+	private static String getRepoSpecificKey(String repositoryId,
+			String key) {
+		return key + "_" + repositoryId; //$NON-NLS-1$
+	}
+
+	private static String getRepoSpecificKey(@NonNull Repository repo,
+			String key) {
+		String pathString = Activator.getDefault().getRepositoryUtil()
+				.getRelativizedRepositoryPath(repo);
+
+		if (pathString == null) {
+			return getRepoSpecificKey(repo.toString(), key);
+		}
+
+		return getRepoSpecificKey(pathString, key);
+	}
+
+	/**
+	 * Unset the repository specific preference of the given key for the
+	 * repository represented by the given repository path.
+	 * <p>
+	 * This method does not save the preference store. Call
+	 * {@link #saveStoreIfNeeded()} when appropriate.
+	 * </p>
+	 *
+	 * @param repositoryPath
+	 *            Representing the repository to remove the preference for
+	 * @param key
+	 *            The preference to remove for the given repository.
+	 */
+	private void unsetRepoSpecificPreference(String repositoryPath,
+			String key) {
+		String prefString = getRepoSpecificKey(repositoryPath, key);
+		store.setToDefault(prefString);
+	}
+
+	private void saveStoreIfNeeded() {
+		if (store.needsSaving()) {
+			try {
+				store.save();
+			} catch (IOException e) {
+				Activator.handleError(e.getMessage(), e, false);
+			}
+		}
+	}
+
+	private boolean isShowFirstParentOnly() {
+		final String prefKey = UIPreferences.RESOURCEHISTORY_SHOW_FIRST_PARENT_ONLY_DEFAULT;
+		boolean firstParent = store.getBoolean(prefKey);
+		Repository repo = getCurrentRepo();
+
+		if (repo != null) {
+			String repoSpecificKey = getRepoSpecificKey(repo, prefKey);
+			if (store.contains(repoSpecificKey)) {
+				firstParent = store.getBoolean(repoSpecificKey);
+			}
+		}
+		return firstParent;
+	}
+
 	private @NonNull SWTWalk createNewWalk(Repository db, AnyObjectId headId,
 			AnyObjectId fetchHeadId) {
 		currentHeadId = headId;
 		currentFetchHeadId = fetchHeadId;
 		SWTWalk walk = new GitHistoryWalk(db, headId, selectedObj);
+
+		if (isShowFirstParentOnly()) {
+			walk.setFirstParent(true);
+		}
+
 		try {
 			if (store
 					.getBoolean(UIPreferences.RESOURCEHISTORY_SHOW_ADDITIONAL_REFS))
@@ -2731,7 +2927,8 @@ public class GitHistoryPage extends HistoryPage implements RefsChangedListener,
 		if (paths == null || paths.isEmpty())
 			throw new IllegalArgumentException("paths must not be null nor empty"); //$NON-NLS-1$
 
-		DiffConfig diffConfig = currentRepo.getConfig().get(DiffConfig.KEY);
+		DiffConfig diffConfig = getCurrentRepo().getConfig()
+				.get(DiffConfig.KEY);
 
 		List<TreeFilter> followFilters = new ArrayList<>(paths.size());
 		for (String path : paths)

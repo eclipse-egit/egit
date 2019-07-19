@@ -557,20 +557,54 @@ public class RepositoryUtil {
 	}
 
 	/**
+	 * Relativize the given absolute path.
+	 * <p>
+	 * The result is the path of {@code pathString} relative to the workspace
+	 * root if the given {@code pathString} is under the workspace root,
+	 * otherwise the absolute path {@code pathString}.
+	 * </p>
+	 * <p>
+	 * This enables moving or copying the workspace, when saving this path and
+	 * later resolving it relative to the workspace path.
+	 * </p>
+	 * <p>
+	 * It is required, that the given pathString is absolute
+	 * </p>
+	 *
 	 * @param pathString
-	 *            an absolute path String
-	 * @return if the given {@code pathString} is under the workspace root the
-	 *         relative path of {@code pathString} relative to the workspace
-	 *         root, otherwise the absolute path {@code pathString}. This
-	 *         enables moving or copying the workspace.
+	 *            an absolute path String. Must be absolute.
+	 * @return the relativized path String
+	 * @throws java.nio.file.InvalidPathException
+	 *             if the path string cannot be converted to a Path
 	 */
-	private String relativizeToWorkspace(String pathString) {
+	public @NonNull String relativizeToWorkspace(@NonNull String pathString) {
 		java.nio.file.Path p = java.nio.file.Paths.get(pathString);
 		if (p.startsWith(workspacePath)) {
 			return workspacePath.relativize(p).toString();
 		} else {
 			return pathString;
 		}
+	}
+
+	/**
+	 * Get the relativized path of the given repository.
+	 * <p>
+	 * If the repository is not local this method will return null.
+	 * </p>
+	 *
+	 * @param repository
+	 *            The repository to get the path String of
+	 * @return the relativized path String
+	 * @see #relativizeToWorkspace(String)
+	 */
+	@Nullable
+	public String getRelativizedRepositoryPath(
+			final @NonNull Repository repository) {
+		File dir = repository.getDirectory();
+		if (dir == null) {
+			return null;
+		}
+		return relativizeToWorkspace(dir.getAbsolutePath());
 	}
 
 	/**
