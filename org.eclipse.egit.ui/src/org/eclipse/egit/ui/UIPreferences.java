@@ -50,6 +50,8 @@ public class UIPreferences {
 	/** */
 	public final static String RESOURCEHISTORY_SHOW_ALL_BRANCHES = "resourcehistory_show_all_branches"; //$NON-NLS-1$
 	/** */
+	public final static String RESOURCEHISTORY_SHOW_FIRST_PARENT_ONLY_DEFAULT = "resourcehistory_show_first_parent_only"; //$NON-NLS-1$
+	/** */
 	public final static String RESOURCEHISTORY_SHOW_ADDITIONAL_REFS = "resourcehistory_show_additionalrefs"; //$NON-NLS-1$
 	/** */
 	public static final String RESOURCEHISTORY_FOLLOW_RENAMES = "resourcehistory_follow_renames"; //$NON-NLS-1$

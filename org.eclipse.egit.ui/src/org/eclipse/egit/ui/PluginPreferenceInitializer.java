@@ -60,6 +60,8 @@ public class PluginPreferenceInitializer extends AbstractPreferenceInitializer {
 		store.setDefault(UIPreferences.RESOURCEHISTORY_SHOW_REV_COMMENT, true);
 		store.setDefault(UIPreferences.RESOURCEHISTORY_SHOW_TOOLTIPS, false);
 		store.setDefault(UIPreferences.RESOURCEHISTORY_SHOW_ALL_BRANCHES, false);
+		store.setDefault(UIPreferences.RESOURCEHISTORY_SHOW_FIRST_PARENT_ONLY_DEFAULT,
+				false);
 		store.setDefault(UIPreferences.RESOURCEHISTORY_SHOW_ADDITIONAL_REFS,
 				false);
 		store.setDefault(UIPreferences.RESOURCEHISTORY_FOLLOW_RENAMES, true);
