@@ -58,9 +58,6 @@ public class CoreText extends NLS {
 	public static String Activator_SshClientUnknown;
 
 	/** */
-	public static String Activator_SshClientUsingApache;
-
-	/** */
 	public static String AssumeUnchangedOperation_adding;
 
 	/** */

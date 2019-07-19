@@ -149,7 +149,7 @@ public class Activator extends Plugin implements DebugOptionsListener {
 
 	/**
 	 * Utility method to log errors in the Egit plugin.
-	 * 
+	 *
 	 * @param message
 	 *            User comprehensible message
 	 * @param thr
@@ -258,23 +258,11 @@ public class Activator extends Plugin implements DebugOptionsListener {
 	@SuppressWarnings("unchecked")
 	private void setupSSH(final BundleContext context) {
 		String sshClient = Platform.getPreferencesService().getString(pluginId,
-				GitCorePreferences.core_sshClient, "jsch", null); //$NON-NLS-1$
+				GitCorePreferences.core_sshClient, "apache", null); //$NON-NLS-1$
 		SshSessionFactory previous = SshSessionFactory.getInstance();
-		if (SshClientType.APACHE.name().equalsIgnoreCase(sshClient)) {
-			if (previous instanceof EGitSshdSessionFactory) {
-				return;
-			}
-			logInfo(CoreText.Activator_SshClientUsingApache);
-			SshSessionFactory.setInstance(new EGitSshdSessionFactory());
-		} else {
+		if (SshClientType.JSCH.name().equalsIgnoreCase(sshClient)) {
 			if (previous instanceof EclipseSshSessionFactory) {
 				return;
-			}
-			if (!SshClientType.JSCH.name().equalsIgnoreCase(sshClient)) {
-				logWarning(
-						MessageFormat.format(
-								CoreText.Activator_SshClientUnknown, sshClient),
-						null);
 			}
 			ServiceReference ssh = context
 					.getServiceReference(IJSchService.class.getName());
@@ -289,6 +277,17 @@ public class Activator extends Plugin implements DebugOptionsListener {
 				}
 				SshSessionFactory.setInstance(new EGitSshdSessionFactory());
 			}
+		} else {
+			if (!SshClientType.APACHE.name().equalsIgnoreCase(sshClient)) {
+				logWarning(
+						MessageFormat.format(
+								CoreText.Activator_SshClientUnknown, sshClient),
+						null);
+			}
+			if (previous instanceof EGitSshdSessionFactory) {
+				return;
+			}
+			SshSessionFactory.setInstance(new EGitSshdSessionFactory());
 		}
 		if (previous instanceof SshdSessionFactory) {
 			((SshdSessionFactory) previous).close();
