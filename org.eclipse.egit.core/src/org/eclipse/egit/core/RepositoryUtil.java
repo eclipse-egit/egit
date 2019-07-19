@@ -14,6 +14,7 @@ package org.eclipse.egit.core;
 
 import java.io.File;
 import java.io.IOException;
+import java.nio.file.InvalidPathException;
 import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -557,20 +558,50 @@ public class RepositoryUtil {
 	}
 
 	/**
+	 * Relativize the given absolute path.
+	 * <p>
+	 * The result is the path of {@code pathString} relative to the workspace
+	 * root if the given {@code pathString} is under the workspace root,
+	 * otherwise the absolute path {@code pathString}.
+	 * </p>
+	 * <p>
+	 * This enables moving or copying the workspace.
+	 * </p>
+	 *
 	 * @param pathString
 	 *            an absolute path String
-	 * @return if the given {@code pathString} is under the workspace root the
-	 *         relative path of {@code pathString} relative to the workspace
-	 *         root, otherwise the absolute path {@code pathString}. This
-	 *         enables moving or copying the workspace.
+	 * @return the relativized path String
+	 * @throws InvalidPathException
+	 *             if the path string cannot be converted to a Path
 	 */
-	private String relativizeToWorkspace(String pathString) {
+	public @NonNull String relativizeToWorkspace(@NonNull String pathString) {
 		java.nio.file.Path p = java.nio.file.Paths.get(pathString);
 		if (p.startsWith(workspacePath)) {
 			return workspacePath.relativize(p).toString();
 		} else {
 			return pathString;
 		}
+	}
+
+	/**
+	 * Get the relativized path of the given workspace.
+	 * <p>
+	 * If the repository is not local this method will return null.
+	 * </p>
+	 *
+	 * @param repository
+	 *            The repository to get the path String of
+	 * @return the relativized path String
+	 * @see #relativizeToWorkspace(String)
+	 */
+	@Nullable
+	public String getRelativizedWorkspacePath(@NonNull
+	final Repository repository) {
+		File dir = repository.getDirectory();
+		if (dir == null) {
+			return null;
+		}
+		return relativizeToWorkspace(dir.getAbsolutePath());
 	}
 
 	/**
