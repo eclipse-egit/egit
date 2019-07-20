@@ -94,7 +94,7 @@ import org.eclipse.egit.ui.internal.commit.CommitProposalProcessor;
 import org.eclipse.egit.ui.internal.commit.DiffViewer;
 import org.eclipse.egit.ui.internal.components.PartVisibilityListener;
 import org.eclipse.egit.ui.internal.components.RepositoryMenuUtil.RepositoryToolbarAction;
-import org.eclipse.egit.ui.internal.components.ToolbarMenuAction;
+import org.eclipse.egit.ui.internal.components.DropDownMenuAction;
 import org.eclipse.egit.ui.internal.decorators.ProblemLabelDecorator;
 import org.eclipse.egit.ui.internal.dialogs.CommandConfirmation;
 import org.eclipse.egit.ui.internal.dialogs.CommitMessageArea;
@@ -1554,7 +1554,6 @@ public class StagingView extends ViewPart
 		unstagedToolBarManager.add(stageAction);
 		unstagedToolBarManager.add(stageAllAction);
 		unstagedToolBarManager.add(presentationAction);
-		presentationAction.setToolbar(unstagedToolBarManager);
 		unstagedToolBarManager.add(sortAction);
 		unstagedToolBarManager.add(unstagedExpandAllAction);
 		unstagedToolBarManager.add(unstagedCollapseAllAction);
@@ -1815,7 +1814,6 @@ public class StagingView extends ViewPart
 		default:
 			break;
 		}
-		presentationAction.update();
 	}
 
 	private void updateToolbar() {
@@ -1969,12 +1967,7 @@ public class StagingView extends ViewPart
 				UIPreferences.STAGING_VIEW_FILENAME_MODE));
 
 		IMenuManager dropdownMenu = actionBars.getMenuManager();
-		MenuManager presentationMenu = new MenuManager(
-				UIText.StagingView_Presentation);
-		presentationMenu.add(listPresentationAction);
-		presentationMenu.add(treePresentationAction);
-		presentationMenu.add(compactTreePresentationAction);
-		dropdownMenu.add(presentationMenu);
+		dropdownMenu.add(presentationAction);
 		dropdownMenu.add(new Separator());
 		dropdownMenu.add(openNewCommitsAction);
 		dropdownMenu.add(columnLayoutAction);
@@ -4547,10 +4540,8 @@ public class StagingView extends ViewPart
 
 	}
 
-	private static class PresentationAction extends ToolbarMenuAction
+	private static class PresentationAction extends DropDownMenuAction
 			implements IPropertyChangeListener {
-
-		private ToolBarManager toolbar;
 
 		private final IPreferenceStore store;
 
@@ -4570,10 +4561,6 @@ public class StagingView extends ViewPart
 		@Override
 		protected Collection<IAction> getActions() {
 			return actions;
-		}
-
-		public void setToolbar(ToolBarManager toolbar) {
-			this.toolbar = toolbar;
 		}
 
 		@Override
@@ -4601,15 +4588,7 @@ public class StagingView extends ViewPart
 				default:
 					return;
 				}
-				update();
 			}
 		}
-
-		public void update() {
-			if (toolbar != null) {
-				toolbar.update(true);
-			}
-		}
-
 	}
 }
