@@ -3656,7 +3656,11 @@ public class StagingView extends ViewPart
 		enableCommitWidgets(false);
 		refreshAction.setEnabled(false);
 		updateSectionText();
+		RepositoryNode tmp = titleNode;
 		titleNode = null;
+		if (tmp != null) {
+			tmp.clear();
+		}
 		if (repository != null && repository.isBare()) {
 			form.setText(UIText.StagingView_BareRepoSelection);
 		} else {

@@ -398,9 +398,10 @@ class ExistingOrNewPage extends WizardPage {
 				File gitDir = new File(repositoryToCreate.getText(),
 						Constants.DOT_GIT);
 				try {
-					Repository repository = FileRepositoryBuilder
-							.create(gitDir);
-					repository.create();
+					try (Repository repository = FileRepositoryBuilder
+							.create(gitDir)) {
+						repository.create();
+					}
 					for (IProject project : getProjects(false).keySet()) {
 						// If we don't refresh the project directories right
 						// now we won't later know that a .git directory
@@ -535,10 +536,9 @@ class ExistingOrNewPage extends WizardPage {
 				treeItem.setText(0, path.toString());
 			}
 			treeItem.setText(2, relativePath.toOSString());
-			try {
+			try (Repository repo = new RepositoryBuilder()
+					.setGitDir(gitDir.toFile()).build();) {
 				IProject project = m.getContainer().getProject();
-				Repository repo = new RepositoryBuilder()
-						.setGitDir(gitDir.toFile()).build();
 				File workTree = repo.getWorkTree();
 				IPath workTreePath = Path.fromOSString(workTree
 						.getAbsolutePath());
@@ -563,7 +563,6 @@ class ExistingOrNewPage extends WizardPage {
 						}
 					}
 				}
-				repo.close();
 			} catch (IOException e1) {
 				Activator
 						.logError(

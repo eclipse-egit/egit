@@ -15,18 +15,17 @@ package org.eclipse.egit.ui.internal.repository.tree;
 import java.io.File;
 import java.io.IOException;
 import java.net.URI;
-import java.util.List;
 
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.Path;
+import org.eclipse.egit.core.RepositoryCache;
 import org.eclipse.egit.core.RepositoryUtil;
 import org.eclipse.egit.ui.Activator;
 import org.eclipse.egit.ui.internal.repository.RepositoriesViewContentProvider;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.viewers.StructuredSelection;
 import org.eclipse.jgit.lib.Repository;
-import org.eclipse.jgit.storage.file.FileRepositoryBuilder;
 import org.eclipse.ui.IEditorInput;
 import org.eclipse.ui.IEditorPart;
 import org.eclipse.ui.IEditorReference;
@@ -94,12 +93,12 @@ public class LinkHelper implements ILinkHelper {
 			return null;
 
 		RepositoryUtil config = Activator.getDefault().getRepositoryUtil();
-
-		List<String> repos = config.getConfiguredRepositories();
-		for (String repo : repos) {
+		RepositoryCache cache = org.eclipse.egit.core.Activator.getDefault()
+				.getRepositoryCache();
+		for (String repo : config.getConfiguredRepositories()) {
 			Repository repository;
 			try {
-				repository = FileRepositoryBuilder.create(new File(repo));
+				repository = cache.lookupRepository(new File(repo));
 			} catch (IOException e) {
 				continue;
 			}
