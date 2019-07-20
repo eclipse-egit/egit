@@ -156,7 +156,7 @@ public final class RepositoryMenuUtil {
 	 * menu of all registered repositories, performing a given action on a
 	 * selected repository.
 	 */
-	public static class RepositoryToolbarAction extends ToolbarMenuAction {
+	public static class RepositoryToolbarAction extends DropDownMenuAction {
 
 		private final RepositoryUtil util = org.eclipse.egit.core.Activator
 				.getDefault().getRepositoryUtil();

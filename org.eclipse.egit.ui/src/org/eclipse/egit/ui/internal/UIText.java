@@ -634,6 +634,12 @@ public class UIText extends NLS {
 	public static String GitHistoryPage_FilterSubMenuLabel;
 
 	/** */
+	public static String GitHistoryPage_FilterTooltip;
+
+	/** */
+	public static String GitHistoryPage_FilterTooltipCurrent;
+
+	/** */
 	public static String GitHistoryPage_IncompleteListTooltip;
 
 	/** */
