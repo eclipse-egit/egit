@@ -43,11 +43,13 @@ import org.eclipse.jgit.lib.ObjectId;
 import org.eclipse.jgit.lib.Ref;
 import org.eclipse.jgit.lib.Repository;
 import org.eclipse.jgit.revwalk.RevCommit;
+import org.eclipse.swt.widgets.MenuItem;
 import org.eclipse.swt.widgets.Table;
 import org.eclipse.swt.widgets.TableItem;
 import org.eclipse.swtbot.eclipse.finder.widgets.SWTBotView;
 import org.eclipse.swtbot.swt.finder.SWTBot;
 import org.eclipse.swtbot.swt.finder.junit.SWTBotJunit4ClassRunner;
+import org.eclipse.swtbot.swt.finder.widgets.SWTBotMenu;
 import org.eclipse.swtbot.swt.finder.widgets.SWTBotShell;
 import org.eclipse.swtbot.swt.finder.widgets.SWTBotTable;
 import org.eclipse.swtbot.swt.finder.widgets.SWTBotTableItem;
@@ -56,6 +58,8 @@ import org.eclipse.swtbot.swt.finder.widgets.SWTBotTree;
 import org.eclipse.swtbot.swt.finder.widgets.SWTBotTreeItem;
 import org.eclipse.team.ui.history.IHistoryView;
 import org.eclipse.ui.PlatformUI;
+import org.hamcrest.BaseMatcher;
+import org.hamcrest.Description;
 import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Test;
@@ -185,33 +189,51 @@ public class HistoryViewTest extends GitRepositoriesViewTestBase {
 		getHistoryViewTable(PROJ1);
 		SWTBotView view = bot
 				.viewById(IHistoryView.VIEW_ID);
-		SWTBotToolbarToggleButton folder = (SWTBotToolbarToggleButton) view
-				.toolbarButton(UIText.GitHistoryPage_AllInParentTooltip);
-		SWTBotToolbarToggleButton project = (SWTBotToolbarToggleButton) view
-				.toolbarButton(UIText.GitHistoryPage_AllInProjectTooltip);
-		SWTBotToolbarToggleButton repo = (SWTBotToolbarToggleButton) view
-				.toolbarButton(UIText.GitHistoryPage_AllInRepoTooltip);
+		SWTBotMenu filterMenu = view
+				.viewMenu(UIText.GitHistoryPage_FilterSubMenuLabel);
 		switch (filter) {
-		case 0:
-			if (folder.isChecked())
-				folder.click();
-			if (project.isChecked())
-				project.click();
-			if (repo.isChecked())
-				repo.click();
+		case 0: {
+			SWTBotMenu checkedChild = filterMenu
+					.menu(new BaseMatcher<MenuItem>() {
+
+						@Override
+						public boolean matches(Object item) {
+							return item instanceof MenuItem
+									&& ((MenuItem) item).getSelection();
+						}
+
+						@Override
+						public void describeTo(Description description) {
+							description.appendText("Checked menu item");
+
+						}
+					}, true, 0);
+			if (checkedChild != null) {
+				checkedChild.click();
+			}
 			break;
-		case 1:
+		}
+		case 1: {
+			SWTBotMenu repo = filterMenu
+					.menu(UIText.GitHistoryPage_AllInRepoMenuLabel);
 			if (!repo.isChecked())
 				repo.click();
 			break;
-		case 2:
+		}
+		case 2: {
+			SWTBotMenu project = filterMenu
+					.menu(UIText.GitHistoryPage_AllInProjectMenuLabel);
 			if (!project.isChecked())
 				project.click();
 			break;
-		case 3:
+		}
+		case 3: {
+			SWTBotMenu folder = filterMenu
+					.menu(UIText.GitHistoryPage_AllInParentMenuLabel);
 			if (!folder.isChecked())
 				folder.click();
 			break;
+		}
 		default:
 			break;
 		}

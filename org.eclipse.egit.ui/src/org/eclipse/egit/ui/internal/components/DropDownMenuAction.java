@@ -28,25 +28,27 @@ import org.eclipse.ui.actions.ActionFactory.IWorkbenchAction;
 
 /**
  * Specialized {@link Action} intended to be used in a
- * {@link org.eclipse.jface.action.ToolBarManager ToolBarManager} for buttons
- * with a drop-down menu. By default selecting the button itself will also show
- * the menu; if that is not desired, override {@link #runWithEvent(Event)} or
- * {@link #run()}.
+ * {@link org.eclipse.jface.action.IContributionManager IContributionManager}
+ * for actions with a drop-down menu. In a tool bar, selecting the button itself
+ * will by default also show the menu; if that is not desired, override
+ * {@link #runWithEvent(Event)} or {@link #run()}.
  */
-public abstract class ToolbarMenuAction extends Action
+public abstract class DropDownMenuAction extends Action
 		implements IWorkbenchAction, IMenuCreator {
 
-	private Menu menu;
+	private Menu controlMenu;
+
+	private Menu subMenu;
 
 	private boolean showMenu;
 
 	/**
-	 * Creates a new {@link ToolbarMenuAction}.
+	 * Creates a new {@link DropDownMenuAction}.
 	 *
 	 * @param title
 	 *            for the action
 	 */
-	public ToolbarMenuAction(String title) {
+	public DropDownMenuAction(String title) {
 		super(title, IAction.AS_DROP_DOWN_MENU);
 	}
 
@@ -80,27 +82,35 @@ public abstract class ToolbarMenuAction extends Action
 		return this;
 	}
 
-	@Override
-	public Menu getMenu(Menu parent) {
-		// Not used
+	private Menu fillMenu(Menu m) {
+		for (IAction action : getActions()) {
+			ActionContributionItem item = new ActionContributionItem(action);
+			item.fill(m, -1);
+		}
+		return m;
+	}
+
+	private Menu dispose(Menu m) {
+		if (m != null) {
+			if (!m.isDisposed()) {
+				m.dispose();
+			}
+		}
 		return null;
 	}
 
 	@Override
+	public Menu getMenu(Menu parent) {
+		subMenu = dispose(subMenu);
+		subMenu = fillMenu(new Menu(parent));
+		return subMenu;
+	}
+
+	@Override
 	public Menu getMenu(Control parent) {
-		if (menu != null) {
-			menu.dispose();
-			menu = null;
-		}
-		if (isEnabled()) {
-			menu = new Menu(parent);
-			for (IAction action : getActions()) {
-				ActionContributionItem item = new ActionContributionItem(
-						action);
-				item.fill(menu, -1);
-			}
-		}
-		return menu;
+		controlMenu = dispose(controlMenu);
+		controlMenu = fillMenu(new Menu(parent));
+		return controlMenu;
 	}
 
 	/**
@@ -113,10 +123,8 @@ public abstract class ToolbarMenuAction extends Action
 
 	@Override
 	public void dispose() {
-		if (menu != null) {
-			menu.dispose();
-			menu = null;
-		}
+		controlMenu = dispose(controlMenu);
+		subMenu = dispose(subMenu);
 	}
 
 }
