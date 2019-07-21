@@ -41,6 +41,7 @@ import org.eclipse.core.runtime.SubMonitor;
 import org.eclipse.core.runtime.jobs.ISchedulingRule;
 import org.eclipse.core.runtime.jobs.Job;
 import org.eclipse.egit.core.AdapterUtils;
+import org.eclipse.egit.core.internal.util.ResourceUtil;
 import org.eclipse.egit.core.project.RepositoryMapping;
 import org.eclipse.egit.ui.Activator;
 import org.eclipse.egit.ui.JobFamilies;
@@ -1911,9 +1912,8 @@ public class GitHistoryPage extends HistoryPage implements RefsChangedListener,
 				repo = input.getRepository();
 			} else if (o instanceof Path) {
 				Path path = (Path) o;
-				RepositoryMapping mapping = RepositoryMapping.getMapping(path);
-				if (mapping != null) {
-					repo = mapping.getRepository();
+				repo = ResourceUtil.getRepository(path);
+				if (repo != null) {
 					input = new HistoryPageInput(repo,
 							new File[] { path.toFile() });
 				}
