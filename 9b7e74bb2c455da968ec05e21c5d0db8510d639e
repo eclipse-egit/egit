@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "19279085_4540092c",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/sharing/ExistingOrNewPage.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 540,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2019-07-21T13:11:04Z",
+      "side": 1,
+      "message": "use try with resource ?",
+      "revId": "9b7e74bb2c455da968ec05e21c5d0db8510d639e",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
