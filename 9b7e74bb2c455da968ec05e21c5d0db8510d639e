@@ -16,6 +16,24 @@
       "revId": "9b7e74bb2c455da968ec05e21c5d0db8510d639e",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ec066f20_998eef36",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/sharing/ExistingOrNewPage.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 540,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2019-07-21T13:12:26Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "19279085_4540092c",
+      "revId": "9b7e74bb2c455da968ec05e21c5d0db8510d639e",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
     }
   ]
 }
