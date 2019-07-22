@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "31b6b9f7_e5f66664",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/repository/tree/command/RemoveCommand.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 185,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2019-07-22T17:50:12Z",
+      "side": 1,
+      "message": "Not sure this is good. You can remove a repo from the view without removing its projects, so there may still be references to it, and it may still be used.",
+      "revId": "2ea473353157cddd0d58d22d6e85f748f48581c4",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
