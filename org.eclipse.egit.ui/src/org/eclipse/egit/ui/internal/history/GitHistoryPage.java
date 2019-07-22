@@ -40,7 +40,10 @@ import org.eclipse.core.runtime.Status;
 import org.eclipse.core.runtime.SubMonitor;
 import org.eclipse.core.runtime.jobs.ISchedulingRule;
 import org.eclipse.core.runtime.jobs.Job;
+import org.eclipse.core.runtime.preferences.IEclipsePreferences.IPreferenceChangeListener;
+import org.eclipse.core.runtime.preferences.InstanceScope;
 import org.eclipse.egit.core.AdapterUtils;
+import org.eclipse.egit.core.RepositoryUtil;
 import org.eclipse.egit.core.internal.util.ResourceUtil;
 import org.eclipse.egit.core.project.RepositoryMapping;
 import org.eclipse.egit.ui.Activator;
@@ -842,6 +845,23 @@ public class GitHistoryPage extends HistoryPage implements RefsChangedListener,
 		}
 	};
 
+	private final IPreferenceChangeListener prefListener = event -> {
+		if (!RepositoryUtil.PREFS_DIRECTORIES_REL.equals(event.getKey())) {
+			return;
+		}
+		if (currentRepo == null || !Activator.getDefault().getRepositoryUtil()
+				.contains(currentRepo)) {
+			Control control = historyControl;
+			if (!control.isDisposed()) {
+				control.getDisplay().asyncExec(() -> {
+					if (!control.isDisposed()) {
+						setInput(null);
+					}
+				});
+			}
+		}
+	};
+
 	/** Tracks the selection to display the correct input when linked with editors. */
 	private GitHistorySelectionTracker selectionTracker;
 
@@ -1379,6 +1399,10 @@ public class GitHistoryPage extends HistoryPage implements RefsChangedListener,
 		myRefsChangedHandle = Repository.getGlobalListenerList()
 				.addRefsChangedListener(this);
 
+		InstanceScope.INSTANCE
+				.getNode(org.eclipse.egit.core.Activator.getPluginId())
+				.addPreferenceChangeListener(prefListener);
+
 		IToolBarManager manager = getSite().getActionBars().getToolBarManager();
 		searchBar = new SearchBar(GitHistoryPage.class.getName() + ".searchBar", //$NON-NLS-1$
 				graph, actions.findAction, getSite().getActionBars());
@@ -1641,6 +1665,10 @@ public class GitHistoryPage extends HistoryPage implements RefsChangedListener,
 
 		Activator.getDefault().getPreferenceStore()
 				.removePropertyChangeListener(listener);
+
+		InstanceScope.INSTANCE
+				.getNode(org.eclipse.egit.core.Activator.getPluginId())
+				.removePreferenceChangeListener(prefListener);
 
 		if (myRefsChangedHandle != null) {
 			myRefsChangedHandle.remove();
