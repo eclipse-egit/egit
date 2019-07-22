@@ -177,14 +177,12 @@ public class RemoveCommand extends
 						return Activator.createErrorStatus(e.getMessage(), e);
 					}
 				}
-				PlatformUI.getWorkbench().getDisplay()
-						.asyncExec(new Runnable() {
-
-					@Override
-					public void run() {
-						for (RepositoryNode node : selectedNodes) {
-							node.clear();
-						}
+				PlatformUI.getWorkbench().getDisplay().asyncExec(() -> {
+					RepositoryCache repositoryCache = org.eclipse.egit.core.Activator
+							.getDefault().getRepositoryCache();
+					for (RepositoryNode node : selectedNodes) {
+						repositoryCache.removeRepository(node.getRepository());
+						node.clear();
 					}
 				});
 				return Status.OK_STATUS;
