@@ -21,6 +21,11 @@ import java.security.GeneralSecurityException;
 import java.util.Arrays;
 import java.util.List;
 
+import org.apache.sshd.common.config.keys.loader.KeyPairResourceParser;
+import org.apache.sshd.common.config.keys.loader.openssh.OpenSSHKeyPairResourceParser;
+import org.apache.sshd.common.config.keys.loader.pem.PEMResourceParserUtils;
+import org.apache.sshd.common.config.keys.loader.putty.PuttyKeyUtils;
+import org.apache.sshd.common.util.security.SecurityUtils;
 import org.eclipse.core.net.proxy.IProxyData;
 import org.eclipse.core.net.proxy.IProxyService;
 import org.eclipse.egit.core.Activator;
@@ -48,6 +53,10 @@ public class EGitSshdSessionFactory extends SshdSessionFactory {
 	 */
 	public EGitSshdSessionFactory() {
 		super(null, new EGitProxyDataFactory());
+		SecurityUtils.setKeyPairResourceParser(
+				KeyPairResourceParser.aggregate(PEMResourceParserUtils.PROXY,
+						OpenSSHKeyPairResourceParser.INSTANCE,
+						PuttyKeyUtils.DEFAULT_INSTANCE));
 	}
 
 	@Override
