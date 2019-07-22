@@ -133,16 +133,12 @@ public class RemoveCommand extends
 			if (!projectsToDelete.isEmpty()) {
 				final boolean[] confirmedCanceled = new boolean[] { false,
 						false };
-				PlatformUI.getWorkbench().getDisplay().syncExec(new Runnable() {
-
-					@Override
-					public void run() {
-						try {
-							confirmedCanceled[0] = confirmProjectDeletion(
-									projectsToDelete, event);
-						} catch (OperationCanceledException e) {
-							confirmedCanceled[1] = true;
-						}
+				PlatformUI.getWorkbench().getDisplay().syncExec(() -> {
+					try {
+						confirmedCanceled[0] = confirmProjectDeletion(
+								projectsToDelete, event);
+					} catch (OperationCanceledException e) {
+						confirmedCanceled[1] = true;
 					}
 				});
 				if (confirmedCanceled[1])
@@ -208,14 +204,9 @@ public class RemoveCommand extends
 			final boolean delete,
 			final List<IProject> projectsToDelete,
 			IProgressMonitor monitor) {
-		IWorkspaceRunnable wsr = new IWorkspaceRunnable() {
-
-			@Override
-			public void run(IProgressMonitor actMonitor)
-			throws CoreException {
-
-				for (IProject prj : projectsToDelete)
-					prj.delete(delete, false, actMonitor);
+		IWorkspaceRunnable wsr = actMonitor -> {
+			for (IProject prj : projectsToDelete) {
+				prj.delete(delete, false, actMonitor);
 			}
 		};
 
