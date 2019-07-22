@@ -80,6 +80,25 @@ public class RepositoryCache {
 	}
 
 	/**
+	 * Remove a repository from the cache
+	 *
+	 * @param repo
+	 *            the repository to remove
+	 */
+	public void removeRepository(Repository repo) {
+		File normalizedGitDir = new Path(repo.getDirectory().getAbsolutePath())
+				.toFile();
+		Reference<Repository> ref = repositoryCache.remove(normalizedGitDir);
+		Repository r = ref.get();
+		if (r != null) {
+			IndexDiffCache indexDiffCache = Activator.getDefault()
+					.getIndexDiffCache();
+			indexDiffCache.remove(r.getDirectory());
+			r.close();
+		}
+	}
+
+	/**
 	 * Looks in the cache for a {@link Repository} matching the given git
 	 * directory.
 	 *
