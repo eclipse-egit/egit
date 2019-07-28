@@ -400,7 +400,7 @@ public class BranchOperationUI {
 			Repository repo = repositories[0];
 			CheckoutResult result = results.get(repo);
 			handleSingleRepositoryCheckoutOperationResult(repo,
-					result);
+					result, target);
 		} else {
 			handleMultipleRepositoryCheckoutError(results);
 		}
@@ -418,8 +418,15 @@ public class BranchOperationUI {
 				.anyMatch(RepositoryUtil::isDetachedHead);
 	}
 
-	private void handleSingleRepositoryCheckoutOperationResult(
-			Repository repository, CheckoutResult result) {
+	/**
+	 * @param repository
+	 * @param result
+	 *            Result of previous attempt to check out branch.
+	 * @param target
+	 *            Name of the branch to be checked out.
+	 */
+	public static void handleSingleRepositoryCheckoutOperationResult(
+			Repository repository, CheckoutResult result, String target) {
 
 		if (result.getStatus() == CheckoutResult.Status.CONFLICTS) {
 			PlatformUI.getWorkbench().getDisplay().asyncExec(() -> {

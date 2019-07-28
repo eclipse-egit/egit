@@ -16,6 +16,7 @@ import org.eclipse.core.commands.ExecutionException;
 import org.eclipse.egit.core.internal.job.JobUtil;
 import org.eclipse.egit.gitflow.GitFlowRepository;
 import org.eclipse.egit.gitflow.op.FeatureStartOperation;
+import org.eclipse.egit.gitflow.op.GitFlowOperation;
 import org.eclipse.egit.gitflow.ui.internal.JobFamilies;
 import org.eclipse.egit.gitflow.ui.internal.UIText;
 import org.eclipse.egit.gitflow.ui.internal.validation.FeatureNameValidator;
@@ -33,6 +34,9 @@ public class FeatureStartHandler extends AbstractHandler {
 	@Override
 	public Object execute(ExecutionEvent event) throws ExecutionException {
 		final GitFlowRepository gfRepo = GitFlowHandlerUtil.getRepository(event);
+		if (gfRepo == null) {
+			return null;
+		}
 
 		InputDialog inputDialog = new StartDialog(
 				HandlerUtil.getActiveShell(event),
@@ -48,11 +52,14 @@ public class FeatureStartHandler extends AbstractHandler {
 		final String featureName = inputDialog.getValue();
 		int timeout = Activator.getDefault().getPreferenceStore()
 				.getInt(UIPreferences.REMOTE_CONNECTION_TIMEOUT);
-		FeatureStartOperation featureStartOperation = new FeatureStartOperation(
+		GitFlowOperation operation = new FeatureStartOperation(
 				gfRepo, featureName, timeout);
-		JobUtil.scheduleUserWorkspaceJob(featureStartOperation,
+		String fullBranchName = gfRepo.getConfig()
+				.getFullFeatureBranchName(featureName);
+		JobUtil.scheduleUserWorkspaceJob(operation,
 				UIText.FeatureStartHandler_startingNewFeature,
-				JobFamilies.GITFLOW_FAMILY);
+				JobFamilies.GITFLOW_FAMILY,
+				new PostBranchCheckoutUiTask(gfRepo, fullBranchName, operation));
 
 		return null;
 	}

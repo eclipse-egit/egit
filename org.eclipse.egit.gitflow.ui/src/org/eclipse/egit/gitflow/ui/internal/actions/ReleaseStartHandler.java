@@ -38,6 +38,9 @@ public class ReleaseStartHandler extends AbstractHandler {
 	@Override
 	public Object execute(ExecutionEvent event) throws ExecutionException {
 		final GitFlowRepository gfRepo = GitFlowHandlerUtil.getRepository(event);
+		if (gfRepo == null) {
+			return null;
+		}
 		final String startCommitSha1 = getStartCommit(event);
 
 		Shell activeShell = HandlerUtil.getActiveShell(event);
@@ -61,11 +64,14 @@ public class ReleaseStartHandler extends AbstractHandler {
 
 		final String releaseName = inputDialog.getValue();
 
-		ReleaseStartOperation releaseStartOperation = new ReleaseStartOperation(
+		ReleaseStartOperation operation = new ReleaseStartOperation(
 				gfRepo, startCommitSha1, releaseName);
-		JobUtil.scheduleUserWorkspaceJob(releaseStartOperation,
+		String fullBranchName = gfRepo.getConfig()
+				.getFullReleaseBranchName(releaseName);
+		JobUtil.scheduleUserWorkspaceJob(operation,
 				UIText.ReleaseStartHandler_startingNewRelease,
-				JobFamilies.GITFLOW_FAMILY);
+				JobFamilies.GITFLOW_FAMILY,
+				new PostBranchCheckoutUiTask(gfRepo, fullBranchName, operation));
 	}
 
 	private String getStartCommit(ExecutionEvent event)

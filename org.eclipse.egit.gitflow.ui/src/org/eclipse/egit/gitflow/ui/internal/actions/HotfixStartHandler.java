@@ -31,6 +31,9 @@ public class HotfixStartHandler extends AbstractHandler {
 	@Override
 	public Object execute(ExecutionEvent event) throws ExecutionException {
 		final GitFlowRepository gfRepo = GitFlowHandlerUtil.getRepository(event);
+		if (gfRepo == null) {
+			return null;
+		}
 
 		InputDialog inputDialog = new StartDialog(
 				HandlerUtil.getActiveShell(event),
@@ -44,11 +47,14 @@ public class HotfixStartHandler extends AbstractHandler {
 		}
 
 		final String hotfixName = inputDialog.getValue();
-		HotfixStartOperation hotfixStartOperation = new HotfixStartOperation(
+		HotfixStartOperation operation = new HotfixStartOperation(
 				gfRepo, hotfixName);
-		JobUtil.scheduleUserWorkspaceJob(hotfixStartOperation,
+		String fullBranchName = gfRepo.getConfig()
+				.getFullHotfixBranchName(hotfixName);
+		JobUtil.scheduleUserWorkspaceJob(operation,
 				UIText.HotfixStartHandler_startingNewHotfix,
-				JobFamilies.GITFLOW_FAMILY);
+				JobFamilies.GITFLOW_FAMILY,
+				new PostBranchCheckoutUiTask(gfRepo, fullBranchName, operation));
 
 		return null;
 	}

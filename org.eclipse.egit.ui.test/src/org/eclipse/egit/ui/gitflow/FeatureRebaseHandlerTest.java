@@ -107,7 +107,7 @@ public class FeatureRebaseHandlerTest extends AbstractGitflowHandlerTest {
 		new FeatureCheckoutOperation(new GitFlowRepository(repository), featureName).execute(null);
 	}
 
-	private void checkoutBranch(String branchToCheckout) throws CoreException {
+	protected void checkoutBranch(String branchToCheckout) throws CoreException {
 		new BranchOperation(repository, branchToCheckout).execute(null);
 	}
 
