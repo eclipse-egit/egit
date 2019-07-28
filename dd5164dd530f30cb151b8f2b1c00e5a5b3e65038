@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7953f2de_b1dfe454",
+        "filename": "org.eclipse.egit.gitflow.ui/src/org/eclipse/egit/gitflow/ui/internal/actions/FeatureStartHandler.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2019-07-28T20:43:08Z",
+      "side": 1,
+      "message": "Not good; this blocks the UI thread. No point running the operation in a background job then.",
+      "revId": "dd5164dd530f30cb151b8f2b1c00e5a5b3e65038",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "bfccfe8b_ad7309a6",
+        "filename": "org.eclipse.egit.gitflow.ui/src/org/eclipse/egit/gitflow/ui/internal/actions/HotfixStartHandler.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2019-07-28T20:43:08Z",
+      "side": 1,
+      "message": "The operation runs in a background thread; this access to get the checkout result may not work.",
+      "revId": "dd5164dd530f30cb151b8f2b1c00e5a5b3e65038",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "60415ee5_0f54d1ef",
+        "filename": "org.eclipse.egit.gitflow.ui/src/org/eclipse/egit/gitflow/ui/internal/actions/ReleaseStartHandler.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2019-07-28T20:43:08Z",
+      "side": 1,
+      "message": "The operation runs in a background thread; this access to get the checkout result may not work.",
+      "revId": "dd5164dd530f30cb151b8f2b1c00e5a5b3e65038",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
