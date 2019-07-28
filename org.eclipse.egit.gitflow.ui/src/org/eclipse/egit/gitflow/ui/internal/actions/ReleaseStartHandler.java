@@ -20,6 +20,7 @@ import org.eclipse.egit.gitflow.op.ReleaseStartOperation;
 import org.eclipse.egit.gitflow.ui.internal.JobFamilies;
 import org.eclipse.egit.gitflow.ui.internal.UIText;
 import org.eclipse.egit.gitflow.ui.internal.validation.ReleaseNameValidator;
+import org.eclipse.egit.ui.internal.branch.BranchOperationUI;
 import org.eclipse.egit.ui.internal.selection.SelectionUtils;
 import org.eclipse.jface.dialogs.InputDialog;
 import org.eclipse.jface.viewers.ISelection;
@@ -38,6 +39,9 @@ public class ReleaseStartHandler extends AbstractHandler {
 	@Override
 	public Object execute(ExecutionEvent event) throws ExecutionException {
 		final GitFlowRepository gfRepo = GitFlowHandlerUtil.getRepository(event);
+		if (gfRepo == null) {
+			return null;
+		}
 		final String startCommitSha1 = getStartCommit(event);
 
 		Shell activeShell = HandlerUtil.getActiveShell(event);
@@ -66,6 +70,10 @@ public class ReleaseStartHandler extends AbstractHandler {
 		JobUtil.scheduleUserWorkspaceJob(releaseStartOperation,
 				UIText.ReleaseStartHandler_startingNewRelease,
 				JobFamilies.GITFLOW_FAMILY);
+		BranchOperationUI.handleSingleRepositoryCheckoutOperationResult(
+				gfRepo.getRepository(),
+				releaseStartOperation.getCheckoutResult(),
+				gfRepo.getConfig().getFullReleaseBranchName(releaseName));
 	}
 
 	private String getStartCommit(ExecutionEvent event)

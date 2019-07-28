@@ -19,6 +19,7 @@ import org.eclipse.egit.gitflow.op.HotfixStartOperation;
 import org.eclipse.egit.gitflow.ui.internal.JobFamilies;
 import org.eclipse.egit.gitflow.ui.internal.UIText;
 import org.eclipse.egit.gitflow.ui.internal.validation.HotfixNameValidator;
+import org.eclipse.egit.ui.internal.branch.BranchOperationUI;
 import org.eclipse.jface.dialogs.InputDialog;
 import org.eclipse.jface.window.Window;
 import org.eclipse.ui.handlers.HandlerUtil;
@@ -31,6 +32,9 @@ public class HotfixStartHandler extends AbstractHandler {
 	@Override
 	public Object execute(ExecutionEvent event) throws ExecutionException {
 		final GitFlowRepository gfRepo = GitFlowHandlerUtil.getRepository(event);
+		if (gfRepo == null) {
+			return null;
+		}
 
 		InputDialog inputDialog = new StartDialog(
 				HandlerUtil.getActiveShell(event),
@@ -49,6 +53,10 @@ public class HotfixStartHandler extends AbstractHandler {
 		JobUtil.scheduleUserWorkspaceJob(hotfixStartOperation,
 				UIText.HotfixStartHandler_startingNewHotfix,
 				JobFamilies.GITFLOW_FAMILY);
+		BranchOperationUI.handleSingleRepositoryCheckoutOperationResult(
+				gfRepo.getRepository(),
+				hotfixStartOperation.getCheckoutResult(),
+				gfRepo.getConfig().getFullHotfixBranchName(hotfixName));
 
 		return null;
 	}

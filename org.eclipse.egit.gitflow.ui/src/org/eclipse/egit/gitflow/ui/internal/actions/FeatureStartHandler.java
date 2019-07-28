@@ -10,9 +10,15 @@
  *******************************************************************************/
 package org.eclipse.egit.gitflow.ui.internal.actions;
 
+import static org.eclipse.egit.gitflow.ui.Activator.error;
+import static org.eclipse.egit.gitflow.ui.internal.JobFamilies.GITFLOW_FAMILY;
+
 import org.eclipse.core.commands.AbstractHandler;
 import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.commands.ExecutionException;
+import org.eclipse.core.runtime.OperationCanceledException;
+import org.eclipse.core.runtime.jobs.IJobManager;
+import org.eclipse.core.runtime.jobs.Job;
 import org.eclipse.egit.core.internal.job.JobUtil;
 import org.eclipse.egit.gitflow.GitFlowRepository;
 import org.eclipse.egit.gitflow.op.FeatureStartOperation;
@@ -21,6 +27,7 @@ import org.eclipse.egit.gitflow.ui.internal.UIText;
 import org.eclipse.egit.gitflow.ui.internal.validation.FeatureNameValidator;
 import org.eclipse.egit.ui.Activator;
 import org.eclipse.egit.ui.UIPreferences;
+import org.eclipse.egit.ui.internal.branch.BranchOperationUI;
 import org.eclipse.jface.dialogs.InputDialog;
 import org.eclipse.jface.window.Window;
 import org.eclipse.ui.handlers.HandlerUtil;
@@ -33,6 +40,9 @@ public class FeatureStartHandler extends AbstractHandler {
 	@Override
 	public Object execute(ExecutionEvent event) throws ExecutionException {
 		final GitFlowRepository gfRepo = GitFlowHandlerUtil.getRepository(event);
+		if (gfRepo == null) {
+			return null;
+		}
 
 		InputDialog inputDialog = new StartDialog(
 				HandlerUtil.getActiveShell(event),
@@ -53,6 +63,17 @@ public class FeatureStartHandler extends AbstractHandler {
 		JobUtil.scheduleUserWorkspaceJob(featureStartOperation,
 				UIText.FeatureStartHandler_startingNewFeature,
 				JobFamilies.GITFLOW_FAMILY);
+
+		IJobManager jobMan = Job.getJobManager();
+		try {
+			jobMan.join(GITFLOW_FAMILY, null);
+		} catch (OperationCanceledException | InterruptedException e) {
+			return error(e.getMessage(), e);
+		}
+		BranchOperationUI.handleSingleRepositoryCheckoutOperationResult(
+				gfRepo.getRepository(),
+				featureStartOperation.getCheckoutResult(),
+				gfRepo.getConfig().getFullFeatureBranchName(featureName));
 
 		return null;
 	}
