@@ -20,6 +20,7 @@ import org.eclipse.egit.gitflow.op.ReleaseStartOperation;
 import org.eclipse.egit.gitflow.ui.internal.JobFamilies;
 import org.eclipse.egit.gitflow.ui.internal.UIText;
 import org.eclipse.egit.gitflow.ui.internal.validation.ReleaseNameValidator;
+import org.eclipse.egit.ui.internal.branch.BranchOperationUI;
 import org.eclipse.egit.ui.internal.selection.SelectionUtils;
 import org.eclipse.jface.dialogs.InputDialog;
 import org.eclipse.jface.viewers.ISelection;
@@ -38,6 +39,9 @@ public class ReleaseStartHandler extends AbstractHandler {
 	@Override
 	public Object execute(ExecutionEvent event) throws ExecutionException {
 		final GitFlowRepository gfRepo = GitFlowHandlerUtil.getRepository(event);
+		if (gfRepo == null) {
+			return null;
+		}
 		final String startCommitSha1 = getStartCommit(event);
 
 		Shell activeShell = HandlerUtil.getActiveShell(event);
@@ -61,11 +65,14 @@ public class ReleaseStartHandler extends AbstractHandler {
 
 		final String releaseName = inputDialog.getValue();
 
-		ReleaseStartOperation releaseStartOperation = new ReleaseStartOperation(
+		ReleaseStartOperation operation = new ReleaseStartOperation(
 				gfRepo, startCommitSha1, releaseName);
-		JobUtil.scheduleUserWorkspaceJob(releaseStartOperation,
+		String fullBranchName = gfRepo.getConfig()
+				.getFullReleaseBranchName(releaseName);
+		JobUtil.scheduleUserWorkspaceJob(operation,
 				UIText.ReleaseStartHandler_startingNewRelease,
-				JobFamilies.GITFLOW_FAMILY);
+				JobFamilies.GITFLOW_FAMILY,
+				new PostBranchCheckoutUiTask(gfRepo, fullBranchName, operation));
 	}
 
 	private String getStartCommit(ExecutionEvent event)

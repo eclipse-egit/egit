@@ -65,6 +65,8 @@ abstract public class GitFlowOperation implements IEGitOperation {
 	// TODO: Remove from this class. Not all GitFlow operations involve a merge
 	protected MergeResult mergeResult;
 
+	private CheckoutResult checkoutResult;
+
 	/**
 	 * @param repository
 	 */
@@ -105,6 +107,8 @@ abstract public class GitFlowOperation implements IEGitOperation {
 		BranchOperation checkoutOperation = new BranchOperation(
 				repository.getRepository(), branchName);
 		checkoutOperation.execute(progress.newChild(1));
+		checkoutResult = checkoutOperation
+				.getResult(repository.getRepository());
 	}
 
 	/**
@@ -287,5 +291,13 @@ abstract public class GitFlowOperation implements IEGitOperation {
 	 */
 	public MergeResult getMergeResult() {
 		return mergeResult;
+	}
+
+	/**
+	 * @return Result of CheckoutOperation started for newly created branch.
+	 * @since 5.5
+	 */
+	public CheckoutResult getCheckoutResult() {
+		return checkoutResult;
 	}
 }
