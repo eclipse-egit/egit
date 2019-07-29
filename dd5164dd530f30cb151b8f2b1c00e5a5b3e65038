@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "3da31b2f_4d0e6a55",
+        "filename": "org.eclipse.egit.gitflow.ui/src/org/eclipse/egit/gitflow/ui/internal/actions/FeatureStartHandler.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1638
+      },
+      "writtenOn": "2019-07-29T06:37:52Z",
+      "side": 1,
+      "message": "Good point. I believe this issue slipped through in the past in a couple of places. As part of Bug 478518 I\u0027ve fixed it in one place using a JobChangeAdapter. Any other ideas?",
+      "parentUuid": "7953f2de_b1dfe454",
+      "revId": "dd5164dd530f30cb151b8f2b1c00e5a5b3e65038",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "bfccfe8b_ad7309a6",
         "filename": "org.eclipse.egit.gitflow.ui/src/org/eclipse/egit/gitflow/ui/internal/actions/HotfixStartHandler.java",
         "patchSetId": 1
