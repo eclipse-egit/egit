@@ -516,7 +516,7 @@ public class GitHistoryPage extends HistoryPage implements RefsChangedListener,
 
 				@Override
 				void apply(boolean value) {
-					historyPage.refresh();
+					historyPage.refresh(historyPage.selectedCommit());
 				}
 			};
 			showAllBranchesAction.setImageDescriptor(UIIcons.BRANCH);
@@ -554,7 +554,7 @@ public class GitHistoryPage extends HistoryPage implements RefsChangedListener,
 
 					historyPage.saveStoreIfNeeded();
 				}
-				historyPage.refresh();
+				historyPage.refresh(historyPage.selectedCommit());
 			}
 
 			/**
@@ -573,7 +573,7 @@ public class GitHistoryPage extends HistoryPage implements RefsChangedListener,
 						}
 					});
 				}
-				historyPage.refresh();
+				historyPage.refresh(historyPage.selectedCommit());
 			}
 
 			@Override
@@ -626,7 +626,7 @@ public class GitHistoryPage extends HistoryPage implements RefsChangedListener,
 
 				@Override
 				void apply(boolean value) {
-					historyPage.refresh();
+					historyPage.refresh(historyPage.selectedCommit());
 				}
 			};
 			actionsToDispose.add(showAdditionalRefsAction);
@@ -638,7 +638,7 @@ public class GitHistoryPage extends HistoryPage implements RefsChangedListener,
 					UIText.GitHistoryPage_FollowRenames) {
 				@Override
 				void apply(boolean follow) {
-					historyPage.refresh();
+					historyPage.refresh(historyPage.selectedCommit());
 				}
 			};
 			followRenamesAction.apply(followRenamesAction.isChecked());
@@ -1868,11 +1868,15 @@ public class GitHistoryPage extends HistoryPage implements RefsChangedListener,
 
 	@Override
 	public void refresh() {
+		refresh(null);
+	}
+
+	private void refresh(RevCommit prevSelection) {
 		if (repoHasBeenRemoved(getCurrentRepo())) {
 			clearHistoryPage();
 		}
 		this.input = null;
-		inputSet();
+		inputSet(prevSelection);
 	}
 
 	/**
@@ -1888,6 +1892,15 @@ public class GitHistoryPage extends HistoryPage implements RefsChangedListener,
 	 */
 	public ISelectionProvider getSelectionProvider() {
 		return graph.getTableView();
+	}
+
+	private RevCommit selectedCommit() {
+		IStructuredSelection selection = graph.getTableView()
+				.getStructuredSelection();
+		if (!selection.isEmpty()) {
+			return Adapters.adapt(selection.getFirstElement(), RevCommit.class);
+		}
+		return null;
 	}
 
 	@Override
@@ -1997,6 +2010,10 @@ public class GitHistoryPage extends HistoryPage implements RefsChangedListener,
 
 	@Override
 	public boolean inputSet() {
+		return inputSet(null);
+	}
+
+	private boolean inputSet(RevCommit prevSelection) {
 		try {
 			if (trace)
 				GitTraceLocation.getTrace().traceEntry(
@@ -2130,15 +2147,22 @@ public class GitHistoryPage extends HistoryPage implements RefsChangedListener,
 				return false;
 			}
 
-			if (showHead)
-				showHead(repo);
-			if (showRef)
-				showRef(ref, repo);
-			if (showTag)
-				showTag(ref, repo);
-			if (selection != null)
-				graph.selectCommitStored(selection);
-
+			if (prevSelection != null) {
+				graph.selectCommitStored(prevSelection);
+			} else {
+				if (showHead) {
+					showHead(repo);
+				}
+				if (showRef) {
+					showRef(ref, repo);
+				}
+				if (showTag) {
+					showTag(ref, repo);
+				}
+				if (selection != null) {
+					graph.selectCommitStored(selection);
+				}
+			}
 			return true;
 		} finally {
 			if (trace)
