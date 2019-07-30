@@ -509,6 +509,8 @@ public class CommitFileDiffViewer extends TableViewer {
 					FileDiffInput newInput = (FileDiffInput) input;
 					if (!Objects.equals(realInput.getRepository(),
 							newInput.getRepository())
+							|| realInput.isFirstParentOnly() != newInput
+									.isFirstParentOnly()
 							|| !realInput.getCommit()
 									.equals(newInput.getCommit())) {
 						setSelection(StructuredSelection.EMPTY);
@@ -744,9 +746,17 @@ public class CommitFileDiffViewer extends TableViewer {
 				if (monitor.isCanceled()) {
 					return Status.CANCEL_STATUS;
 				}
-				diffs = FileDiff.compute(input.getRepository(),
-						input.getTreeWalk(), input.getCommit(), monitor,
-						filter);
+				if (input.isFirstParentOnly()
+						&& input.getCommit().getParentCount() > 1) {
+					RevCommit[] parents = { input.getCommit().getParent(0) };
+					diffs = FileDiff.compute(input.getRepository(),
+							input.getTreeWalk(), input.getCommit(), parents,
+							monitor, filter);
+				} else {
+					diffs = FileDiff.compute(input.getRepository(),
+							input.getTreeWalk(), input.getCommit(), monitor,
+							filter);
+				}
 			} catch (IOException err) {
 				Activator.handleError(MessageFormat.format(
 						UIText.CommitFileDiffViewer_errorGettingDifference,

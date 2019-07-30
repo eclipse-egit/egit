@@ -8,7 +8,7 @@
  * Copyright (C) 2012-2013 Robin Stocker <robin@nibor.org>
  * Copyright (C) 2012, François Rey <eclipse.org_@_francois_._rey_._name>
  * Copyright (C) 2015, IBM Corporation (Dani Megert <daniel_megert@ch.ibm.com>)
- * Copyright (C) 2015-2018 Thomas Wolf <thomas.wolf@paranor.ch>
+ * Copyright (C) 2015-2019 Thomas Wolf <thomas.wolf@paranor.ch>
  * Copyright (C) 2015-2017, Stefan Dirix <sdirix@eclipsesource.com>
  *
  * All rights reserved. This program and the accompanying materials
@@ -1620,6 +1620,7 @@ public class GitHistoryPage extends HistoryPage implements RefsChangedListener,
 					return;
 				}
 				commentViewer.setInput(c);
+				boolean firstParentOnly = isShowFirstParentOnly();
 				try (RevWalk walk = new RevWalk(input.getRepository())) {
 					final RevCommit unfilteredCommit = walk.parseCommit(c);
 					for (RevCommit parent : unfilteredCommit.getParents())
@@ -1627,11 +1628,11 @@ public class GitHistoryPage extends HistoryPage implements RefsChangedListener,
 					fileViewer.newInput(new FileDiffInput(input.getRepository(),
 							fileDiffWalker, unfilteredCommit,
 							fileViewerInterestingPaths,
-							input.getSingleFile() != null));
+							input.getSingleFile() != null, firstParentOnly));
 				} catch (IOException e) {
 					fileViewer.newInput(new FileDiffInput(input.getRepository(),
 							fileDiffWalker, c, fileViewerInterestingPaths,
-							input.getSingleFile() != null));
+							input.getSingleFile() != null, firstParentOnly));
 				}
 			}
 		});
@@ -2797,7 +2798,7 @@ public class GitHistoryPage extends HistoryPage implements RefsChangedListener,
 							diffs.size());
 					for (FileDiff diff : diffs) {
 						if (progress.isCanceled()
-								|| diff.getCommit().getParentCount() > 1
+								|| diff.getBlobs().length > 2
 								|| document.getNumberOfLines() > maxLines) {
 							break;
 						}

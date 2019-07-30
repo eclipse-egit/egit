@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (C) 2018, Thomas Wolf <thomas.wolf@paranor.ch>
+ * Copyright (C) 2018, 2019 Thomas Wolf <thomas.wolf@paranor.ch>
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License 2.0
@@ -33,6 +33,8 @@ public class FileDiffInput {
 
 	private final boolean selectMarked;
 
+	private final boolean firstParentOnly;
+
 	/**
 	 * Creates a new {@link FileDiffInput}.
 	 *
@@ -41,11 +43,14 @@ public class FileDiffInput {
 	 * @param commit
 	 * @param interestingPaths
 	 * @param selectMarked
+	 * @param firstParentOnly
 	 */
 	public FileDiffInput(Repository repository, TreeWalk walk, RevCommit commit,
-			Collection<String> interestingPaths, boolean selectMarked) {
+			Collection<String> interestingPaths, boolean selectMarked,
+			boolean firstParentOnly) {
 		this.commit = commit;
 		this.selectMarked = selectMarked;
+		this.firstParentOnly = firstParentOnly;
 		this.repository = repository;
 		this.walk = walk;
 		this.interestingPaths = interestingPaths;
@@ -56,6 +61,13 @@ public class FileDiffInput {
 	 */
 	public RevCommit getCommit() {
 		return commit;
+	}
+
+	/**
+	 * @return whether the diffs shall be computed against the first parent only
+	 */
+	public boolean isFirstParentOnly() {
+		return firstParentOnly;
 	}
 
 	/**
@@ -88,7 +100,7 @@ public class FileDiffInput {
 
 	/**
 	 * Sets the interesting paths.
-	 * 
+	 *
 	 * @param interestingPaths
 	 *            to set; may be {@code null} or empty
 	 */
