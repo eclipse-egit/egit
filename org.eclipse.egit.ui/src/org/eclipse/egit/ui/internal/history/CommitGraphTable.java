@@ -7,7 +7,7 @@
  * Copyright (C) 2011-2012, Matthias Sohn <matthias.sohn@sap.com>
  * Copyright (C) 2012-2013, Robin Stocker <robin@nibor.org>
  * Copyright (C) 2012, Daniel Megert <daniel_megert@ch.ibm.com>
- * Copyright (C) 2016, Thomas Wolf <thomas.wolf@paranor.ch>
+ * Copyright (C) 2016-2019, Thomas Wolf <thomas.wolf@paranor.ch>
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License 2.0
@@ -147,6 +147,8 @@ class CommitGraphTable {
 
 	private SWTCommitList allCommits;
 
+	private SWTCommit[] allCommitsArray;
+
 	private int allCommitsLength = 0;
 
 	// used for resolving PlotCommit objects by ids
@@ -270,6 +272,7 @@ class CommitGraphTable {
 			@Override
 			public void widgetDisposed(final DisposeEvent e) {
 				clipboard.dispose();
+				allCommitsArray = null;
 			}
 		});
 
@@ -422,31 +425,44 @@ class CommitGraphTable {
 
 	void setInput(final RevFlag hFlag, final SWTCommitList list,
 			final SWTCommit[] asArray, HistoryPageInput input, boolean keepPosition) {
-		int topIndex = -1;
+		Table t = table.getTable();
+		String topCommitName = null;
 		if (keepPosition) {
-			topIndex = table.getTable().getTopIndex();
+			int i = t.getTopIndex();
+			if (i >= 0 && i < t.getItemCount()
+					&& i < allCommitsLength
+					&& allCommitsArray != null) {
+				// We have a virtual table, so item.getData() may return null...
+				topCommitName = allCommitsArray[i].getId().name();
+			}
 		}
 		setHistoryPageInput(input);
 		final SWTCommitList oldList = allCommits;
 		highlight = hFlag;
 		allCommits = list;
 		int newAllCommitsLength = asArray == null ? 0 : asArray.length;
-		table.setInput(asArray);
+		int topIndex = -1;
 		if (newAllCommitsLength > 0) {
 			if (oldList != list || allCommitsLength < newAllCommitsLength) {
-				initCommitsMap(asArray);
+				topIndex = initCommitsMap(asArray, topCommitName);
+			} else {
+				topIndex = findCommit(asArray, topCommitName);
+			}
+		}
+		allCommitsArray = asArray;
+		allCommitsLength = newAllCommitsLength;
+		table.setInput(asArray);
+		if (newAllCommitsLength > 0) {
+			if (commitToShow != null) {
+				selectCommit(commitToShow);
+			}
+			if (keepPosition && topIndex >= 0) {
+				t.setTopIndex(topIndex);
 			}
 		} else {
-			table.getTable().deselectAll();
+			t.deselectAll();
 			// Fire an event
 			table.setSelection(table.getSelection());
-		}
-		allCommitsLength = newAllCommitsLength;
-		if (commitToShow != null) {
-			selectCommit(commitToShow);
-		}
-		if (keepPosition) {
-			table.getTable().setTopIndex(topIndex);
 		}
 	}
 
@@ -454,13 +470,33 @@ class CommitGraphTable {
 		this.input = input;
 	}
 
-	private void initCommitsMap(SWTCommit[] asArray) {
+	private int initCommitsMap(SWTCommit[] asArray, String topName) {
+		int topIndex = -1;
 		commitsMap = new HashMap<>();
 		for (SWTCommit commit : asArray) {
 			if (commit != null) {
-				commitsMap.put(commit.getId().name(), commit);
+				String name = commit.getId().name();
+				commitsMap.put(name, commit);
+				if (name.equals(topName)) {
+					topIndex = commitsMap.size() - 1;
+				}
 			}
 		}
+		return topIndex;
+	}
+
+	private int findCommit(SWTCommit[] asArray, String topName) {
+		int index = 0;
+		for (SWTCommit commit : asArray) {
+			if (commit != null) {
+				String name = commit.getId().name();
+				if (name.equals(topName)) {
+					return index;
+				}
+			}
+			index++;
+		}
+		return -1;
 	}
 
 	private void createColumns(Table rawTable) {
