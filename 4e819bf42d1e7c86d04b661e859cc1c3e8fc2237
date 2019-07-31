@@ -42,6 +42,30 @@
     },
     {
       "key": {
+        "uuid": "11284ef1_1f24d56e",
+        "filename": "icons/org.eclipse.egit.ui/icons/obj16/first_parent_only.svg",
+        "patchSetId": 6
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1179
+      },
+      "writtenOn": "2019-07-31T16:06:34Z",
+      "side": 1,
+      "message": "Inkscape saves original file (aka \"document\") name.",
+      "parentUuid": "9a278d1e_d90a83d8",
+      "range": {
+        "startLine": 18,
+        "startChar": 21,
+        "endLine": 18,
+        "endChar": 33
+      },
+      "revId": "4e819bf42d1e7c86d04b661e859cc1c3e8fc2237",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "92dd970f_6a333d99",
         "filename": "org.eclipse.egit.ui/icons/obj16/first_parent_only.png",
         "patchSetId": 6
