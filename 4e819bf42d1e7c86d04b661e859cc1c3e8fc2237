@@ -66,6 +66,30 @@
     },
     {
       "key": {
+        "uuid": "a25512c7_82e3b25f",
+        "filename": "icons/org.eclipse.egit.ui/icons/obj16/first_parent_only.svg",
+        "patchSetId": 6
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2019-07-31T16:20:16Z",
+      "side": 1,
+      "message": "I know. I usually fix it at the very end by editing the SVG directly in a text editor.",
+      "parentUuid": "11284ef1_1f24d56e",
+      "range": {
+        "startLine": 18,
+        "startChar": 21,
+        "endLine": 18,
+        "endChar": 33
+      },
+      "revId": "4e819bf42d1e7c86d04b661e859cc1c3e8fc2237",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "92dd970f_6a333d99",
         "filename": "org.eclipse.egit.ui/icons/obj16/first_parent_only.png",
         "patchSetId": 6
@@ -77,6 +101,24 @@
       "writtenOn": "2019-07-31T16:02:49Z",
       "side": 1,
       "message": "The icon is differently scaled inside the canvas compared to \norg.eclipse.egit.ui/icons/obj16/branch_obj.png\n\nLooking on both together in same IDE the difference is immediately visible. \n\nI *guess* the new version must be exported from SVG with 15x15 resolution but the resulted pixels put into 16x16 canvas.\n\nI haven\u0027t checked this, but I guess we have same issue with 32x32 version and org.eclipse.egit.ui/icons/obj16/first_parent_only@2x.png.",
+      "revId": "4e819bf42d1e7c86d04b661e859cc1c3e8fc2237",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "984c8fac_7028ea1e",
+        "filename": "org.eclipse.egit.ui/icons/obj16/first_parent_only.png",
+        "patchSetId": 6
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2019-07-31T16:20:16Z",
+      "side": 1,
+      "message": "No, exporting the SVG as 16x16 bit and 32x32 bit works.  But really, start with a copy of branch_obj.svg. The arrow in there is 15x15 px; icons are supposed to have a 1px border right and bottom. Which we mostly followed. The \"x\" also has strange proportions. It really should be possible to combine this icon from existing elements without resizing anything.",
+      "parentUuid": "92dd970f_6a333d99",
       "revId": "4e819bf42d1e7c86d04b661e859cc1c3e8fc2237",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
