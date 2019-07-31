@@ -1,0 +1,95 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "57991dd0_d33b1057",
+        "filename": "icons/org.eclipse.egit.ui/icons/obj16/first_parent_only.svg",
+        "patchSetId": 6
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2019-07-31T15:49:24Z",
+      "side": 1,
+      "message": "The blue base arrow is larger than in the original branch icon.  How come?\n\nIt should be possible to compose this new icon starting with a copy of icons/org.eclipse.egit.ui/obj16/branch_obj.svg.\nThen copy over the gray \"x\" from icons/org.eclipse.egit.ui/obj16/ignore.svg and adjust the colors of the \"x\" to match the colors used in icons/org.eclipse.egit.ui/obj/delete_obj.svg.\n\nThen the sizes should be correct and consistent with other icons.",
+      "revId": "4e819bf42d1e7c86d04b661e859cc1c3e8fc2237",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a278d1e_d90a83d8",
+        "filename": "icons/org.eclipse.egit.ui/icons/obj16/first_parent_only.svg",
+        "patchSetId": 6
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2019-07-31T15:49:24Z",
+      "side": 1,
+      "message": "??",
+      "range": {
+        "startLine": 18,
+        "startChar": 21,
+        "endLine": 18,
+        "endChar": 33
+      },
+      "revId": "4e819bf42d1e7c86d04b661e859cc1c3e8fc2237",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7119d6b2_4fd8137f",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/history/GitHistoryPage.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 583,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2019-07-31T15:49:24Z",
+      "side": 1,
+      "message": "This mighty strange. Just do\n\n  if (repo \u003d\u003d null) {\n    return;\n  }\n  if (...) ...",
+      "revId": "4e819bf42d1e7c86d04b661e859cc1c3e8fc2237",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7e52813a_050c692e",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/history/GitHistoryPage.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 587,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2019-07-31T15:49:24Z",
+      "side": 1,
+      "message": "Why? I get most confusing behavior, including a case where the button is checked, but when I change the preference to false, it remains checked, but the view doesn\u0027t show a first-parent history.\n\nI find this all confusing. Let\u0027s have a single user preference for using first-parent *by default*, i.e., when there is no repo-specific one. This action here should toggle only the repo-specific one, but leave the global one alone.\n\nOn a repo-change event, again check for a repo-specific preference. If there is one, check or uncheck the button. Otherwise, get the value of the global \"by default\" preference and check or uncheck the button, and create a\nrepo-specific one.\n\nWhere we use it, first check for a repo-specific one. If there is one, use its value. Otherwise use the value of the global \"per default\" preference.",
+      "revId": "4e819bf42d1e7c86d04b661e859cc1c3e8fc2237",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1382f1d7_0c1609b3",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/history/GitHistoryPage.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 2765,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2019-07-31T15:49:24Z",
+      "side": 1,
+      "message": "Ah, perhaps that\u0027s the source of the confusion in the action and its setting the global preference. Why not use isFirstParent() here?",
+      "revId": "4e819bf42d1e7c86d04b661e859cc1c3e8fc2237",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
