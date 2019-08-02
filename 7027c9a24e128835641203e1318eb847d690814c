@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c0b6d9fe_95244d4a",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/components/DropDownMenuAction.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 440
+      },
+      "writtenOn": "2019-08-02T15:17:13Z",
+      "side": 1,
+      "message": "should this eventually have the same isEnabled() check as the next method?",
+      "range": {
+        "startLine": 105,
+        "startChar": 2,
+        "endLine": 105,
+        "endChar": 39
+      },
+      "revId": "7027c9a24e128835641203e1318eb847d690814c",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "2fad470b_f4be20cb",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/history/GitHistoryPage.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 379,
+      "author": {
+        "id": 440
+      },
+      "writtenOn": "2019-08-02T15:17:13Z",
+      "side": 1,
+      "message": "is there any reason for calling super first? I thought calling super.dispose last were a common best practice (unless some of the other code in this dispose method requires some fields to be disposed by such a call before).",
+      "range": {
+        "startLine": 379,
+        "startChar": 4,
+        "endLine": 379,
+        "endChar": 20
+      },
+      "revId": "7027c9a24e128835641203e1318eb847d690814c",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
