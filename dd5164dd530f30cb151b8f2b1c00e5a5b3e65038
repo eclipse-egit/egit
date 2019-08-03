@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "76dff9c0_475b7276",
+        "filename": "org.eclipse.egit.gitflow.ui/src/org/eclipse/egit/gitflow/ui/internal/actions/FeatureStartHandler.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 440
+      },
+      "writtenOn": "2019-08-03T12:11:28Z",
+      "side": 1,
+      "message": "If I get it right, you just want to wait for the job to finish, before starting the BranchOperationUI? In that case just call the BranchOperationUI code as last operation in the run method of the job (where you need to sync it to the UI thread, of course), and remove all the newly added code from this class.",
+      "parentUuid": "3da31b2f_4d0e6a55",
+      "revId": "dd5164dd530f30cb151b8f2b1c00e5a5b3e65038",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "bfccfe8b_ad7309a6",
         "filename": "org.eclipse.egit.gitflow.ui/src/org/eclipse/egit/gitflow/ui/internal/actions/HotfixStartHandler.java",
         "patchSetId": 1
