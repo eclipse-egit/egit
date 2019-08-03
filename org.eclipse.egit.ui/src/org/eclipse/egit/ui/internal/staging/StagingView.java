@@ -3188,14 +3188,25 @@ public class StagingView extends ViewPart
 			if (selection.isEmpty())
 				return false;
 
-			for (Object element : selection.toList()) {
-				if (!(element instanceof StagingEntry))
-					return false;
-				StagingEntry entry = (StagingEntry) element;
-				if (!entry.getAvailableActions().contains(StagingEntry.Action.DELETE))
-					return false;
-			}
+			return canDeleteAll(selection.toList());
+		}
 
+		private boolean canDeleteAll(List list) {
+			for (Object element : list) {
+				if (element instanceof StagingFolderEntry) {
+					if (!canDeleteAll(Arrays.asList(
+							((StagingFolderEntry) element).getChildren()))) {
+						return false;
+					}
+				} else if (element instanceof StagingEntry) {
+					StagingEntry entry = (StagingEntry) element;
+					if (!entry.getAvailableActions()
+							.contains(StagingEntry.Action.DELETE))
+						return false;
+				} else {
+					return false;
+				}
+			}
 			return true;
 		}
 
@@ -3208,10 +3219,20 @@ public class StagingView extends ViewPart
 		List<IPath> paths = new ArrayList<>();
 		Iterator iterator = selection.iterator();
 		while (iterator.hasNext()) {
-			StagingEntry stagingEntry = (StagingEntry) iterator.next();
-			paths.add(stagingEntry.getLocation());
+			addPath(iterator.next(), paths);
 		}
 		return paths;
+	}
+
+	private static void addPath(Object element, List<IPath> paths) {
+		if (element instanceof StagingEntry) {
+			StagingEntry stagingEntry = (StagingEntry) element;
+			paths.add(stagingEntry.getLocation());
+		} else if (element instanceof StagingFolderEntry) {
+			for (Object child : ((StagingFolderEntry) element).getChildren()) {
+				addPath(child, paths);
+			}
+		}
 	}
 
 	/**
