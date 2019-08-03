@@ -13,26 +13,48 @@
  *******************************************************************************/
 package org.eclipse.egit.ui.internal.repository.tree.command;
 
+import java.io.IOException;
 import java.util.List;
 
 import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.commands.ExecutionException;
+import org.eclipse.egit.ui.Activator;
 import org.eclipse.egit.ui.internal.dialogs.BranchRenameDialog;
 import org.eclipse.egit.ui.internal.repository.tree.RefNode;
+import org.eclipse.egit.ui.internal.repository.tree.RepositoryNode;
+import org.eclipse.egit.ui.internal.repository.tree.RepositoryTreeNode;
+import org.eclipse.jgit.lib.Constants;
+import org.eclipse.jgit.lib.Ref;
+import org.eclipse.jgit.lib.Repository;
 import org.eclipse.swt.widgets.Shell;
 
 /**
  * Renames a branch
  */
 public class RenameBranchCommand extends
-		RepositoriesViewCommandHandler<RefNode> {
+		RepositoriesViewCommandHandler<RepositoryTreeNode> {
 	@Override
 	public Object execute(ExecutionEvent event) throws ExecutionException {
-		final List<RefNode> nodes = getSelectedNodes(event);
-		RefNode refNode = nodes.get(0);
+		final List<RepositoryTreeNode> nodes = getSelectedNodes(event);
+		RepositoryTreeNode node = nodes.get(0);
 
-		Shell shell = getShell(event);
-		new BranchRenameDialog(shell, refNode.getRepository(), refNode.getObject()).open();
+		Repository repository = node.getRepository();
+		Ref branch = null;
+		if (node instanceof RefNode) {
+			branch = (Ref) node.getObject();
+		} else if (node instanceof RepositoryNode) {
+			try {
+				branch = repository
+						.exactRef(Constants.R_HEADS + repository.getBranch());
+			} catch (IOException e) {
+				Activator.logError("Cannot rename branch", e); //$NON-NLS-1$
+			}
+		}
+
+		if (branch != null) {
+			Shell shell = getShell(event);
+			new BranchRenameDialog(shell, repository, branch).open();
+		}
 		return null;
 	}
 }
