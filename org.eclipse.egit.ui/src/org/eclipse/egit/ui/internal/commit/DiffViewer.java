@@ -51,6 +51,7 @@ import org.eclipse.egit.ui.internal.commit.DiffRegionFormatter.FileDiffRegion;
 import org.eclipse.egit.ui.internal.dialogs.HyperlinkSourceViewer;
 import org.eclipse.egit.ui.internal.history.FileDiff;
 import org.eclipse.egit.ui.internal.revision.GitCompareFileRevisionEditorInput;
+import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.preference.IPreferenceStore;
 import org.eclipse.jface.resource.ColorRegistry;
 import org.eclipse.jface.resource.FontRegistry;
@@ -797,10 +798,19 @@ public class DiffViewer extends HyperlinkSourceViewer {
 	 *            the {@link FileDiff} to show
 	 */
 	public static void showTwoWayFileDiff(FileDiff d) {
+		ObjectId[] blobs = d.getBlobs();
+		if (blobs.length > 2) {
+			MessageDialog.openInformation(
+					PlatformUI.getWorkbench().getActiveWorkbenchWindow()
+							.getShell(),
+					UIText.CommitFileDiffViewer_CanNotOpenCompareEditorTitle,
+					UIText.CommitFileDiffViewer_MergeCommitMultiAncestorMessage);
+			return;
+		}
+
 		String np = d.getNewPath();
 		String op = d.getOldPath();
 		RevCommit c = d.getCommit();
-		ObjectId[] blobs = d.getBlobs();
 
 		// extract commits
 		final RevCommit oldCommit;
