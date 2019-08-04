@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0a419833_12e74554",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/clean/CleanRepositoryPage.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 289,
+      "author": {
+        "id": 440
+      },
+      "writtenOn": "2019-08-04T06:11:33Z",
+      "side": 1,
+      "message": "I\u0027m not sure of this, it\u0027s basically copy/paste from line 300. Anyone with a different opinion on any of those 2 suppressed exceptions?",
+      "range": {
+        "startLine": 289,
+        "startChar": 6,
+        "endLine": 289,
+        "endChar": 50
+      },
+      "revId": "0bbacd12aef6a2904ce30d2afccdce74a13fd0dc",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
