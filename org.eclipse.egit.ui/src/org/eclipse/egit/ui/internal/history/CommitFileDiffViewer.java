@@ -60,7 +60,6 @@ import org.eclipse.jface.action.Action;
 import org.eclipse.jface.action.IAction;
 import org.eclipse.jface.action.MenuManager;
 import org.eclipse.jface.action.Separator;
-import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.viewers.ArrayContentProvider;
 import org.eclipse.jface.viewers.ColumnViewerToolTipSupport;
 import org.eclipse.jface.viewers.IOpenListener;
@@ -614,15 +613,7 @@ public class CommitFileDiffViewer extends TableViewer {
 	}
 
 	void showTwoWayFileDiff(final FileDiff d) {
-		if (d.getBlobs().length <= 2) {
-			DiffViewer.showTwoWayFileDiff(d);
-		} else {
-			MessageDialog.openInformation(
-					PlatformUI.getWorkbench().getActiveWorkbenchWindow()
-							.getShell(),
-					UIText.CommitFileDiffViewer_CanNotOpenCompareEditorTitle,
-					UIText.CommitFileDiffViewer_MergeCommitMultiAncestorMessage);
-		}
+		DiffViewer.showTwoWayFileDiff(d);
 	}
 
 	void showWorkingDirectoryFileDiff(final FileDiff d) {
