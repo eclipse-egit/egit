@@ -277,9 +277,16 @@ public class CleanRepositoryPage extends WizardPage {
 					command.setIgnore(!includeIgnored);
 					command.setPaths(itemsToClean);
 					try {
-						command.call();
-					} catch (GitAPIException ex) {
-						Activator.logError("cannot call clean command!", ex); //$NON-NLS-1$
+						ResourcesPlugin.getWorkspace().run(pm -> {
+							try {
+								command.call();
+							} catch (GitAPIException ex) {
+								Activator.logError("cannot call clean command!", //$NON-NLS-1$
+										ex);
+							}
+						}, null, IWorkspace.AVOID_UPDATE, null);
+					} catch (CoreException e) {
+						// could not refresh... not a "real" problem
 					}
 
 					try {
