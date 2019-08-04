@@ -40,6 +40,7 @@ import org.eclipse.jface.viewers.StyledString;
 import org.eclipse.jface.viewers.TreeViewer;
 import org.eclipse.jface.viewers.Viewer;
 import org.eclipse.jface.viewers.ViewerComparator;
+import org.eclipse.jgit.lib.ConfigConstants;
 import org.eclipse.jgit.lib.Constants;
 import org.eclipse.jgit.lib.ObjectId;
 import org.eclipse.jgit.lib.ObjectReader;
@@ -240,6 +241,10 @@ class FetchResultTable {
 		private boolean isPruned() {
 			return update.getNewObjectId().equals(ObjectId.zeroId());
 		}
+
+		public boolean isRemoteBranch(String branchName) {
+			return update.getRemoteName().equals(branchName);
+		}
 	}
 
 	private final Composite treePanel;
@@ -251,6 +256,8 @@ class FetchResultTable {
 	private ObjectReader reader;
 
 	private Map<ObjectId, String> abbrevations;
+
+	private String remoteBranchOfCurrentBranch;
 
 	@SuppressWarnings("unused")
 	FetchResultTable(final Composite parent) {
@@ -304,10 +311,13 @@ class FetchResultTable {
 
 			@Override
 			public int compare(Viewer viewer, Object e1, Object e2) {
+				// top level: branches and tags
 				if (e1 instanceof FetchResultAdapter
 						&& e2 instanceof FetchResultAdapter) {
 					FetchResultAdapter f1 = (FetchResultAdapter) e1;
 					FetchResultAdapter f2 = (FetchResultAdapter) e2;
+
+					// branches come before tags
 					if (f1.getChildren(f1).length > 0
 							&& f2.getChildren(f2).length == 0)
 						return -1;
@@ -315,15 +325,25 @@ class FetchResultTable {
 							&& f2.getChildren(f2).length > 0)
 						return 1;
 
+					// currently checked out branch comes before other branches
+					if (f1.isRemoteBranch(remoteBranchOfCurrentBranch)) {
+						return -1;
+					}
+					if (f2.isRemoteBranch(remoteBranchOfCurrentBranch)) {
+						return 1;
+					}
+
+					// otherwise sort by name
 					return CommonUtils.STRING_ASCENDING_COMPARATOR
 							.compare(f1.getLabel(f1), f2.getLabel(f2));
 				}
 
-				// Leave commits order alone
+				// nested inside of branches: don't change commit order
 				if (e1 instanceof RepositoryCommit
 						&& e2 instanceof RepositoryCommit)
 					return 0;
 
+				// nested inside commits: sort by path
 				if (e1 instanceof FileDiff && e2 instanceof FileDiff) {
 					FileDiff f1 = (FileDiff) e1;
 					FileDiff f2 = (FileDiff) e2;
@@ -416,6 +436,16 @@ class FetchResultTable {
 		repo = db;
 		reader = db.newObjectReader();
 		abbrevations = new HashMap<>();
+		try {
+			String branch = repo.getBranch();
+			if (branch != null) {
+				remoteBranchOfCurrentBranch = repo.getConfig().getString(
+						ConfigConstants.CONFIG_BRANCH_SECTION, branch,
+						ConfigConstants.CONFIG_KEY_MERGE);
+			}
+		} catch (IOException e) {
+			remoteBranchOfCurrentBranch = null;
+		}
 		treeViewer.setInput(fetchResult);
 	}
 
