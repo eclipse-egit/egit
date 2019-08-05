@@ -46,6 +46,30 @@
       "revId": "0bbacd12aef6a2904ce30d2afccdce74a13fd0dc",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "17e0165a_81d1d42a",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/clean/CleanRepositoryPage.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 289,
+      "author": {
+        "id": 440
+      },
+      "writtenOn": "2019-08-05T18:38:14Z",
+      "side": 1,
+      "message": "1. Will change that, of course.\n\n2. and 3. I can assure you, the clean command might not only trigger builds, it does (at least on Windows and with the automatic refresh enabled). I\u0027ve seen clean commands cleaning all target directories in a big workspace, where the automatic build was starting more than 10 times, with some seconds delay in between.\n\nI guess you suggest a org.eclipse.core.runtime.jobs.MultiRule with every affected project as child as SchedulingRule (I have never used that class before) for both. Please correct me if I\u0027m wrong.\n\nI\u0027m not sure whether having 2 separate workspace actions or just 1 is better, since I don\u0027t know how repeated and out of order change notifications are handled. If everything is just one workspace operation, then the notifications created by automatic refresh are only handled after we already refreshed manually. Would that late handling of notifications be a no-op or really refresh everything twice? I had assumed that when using 2 operations the asynchronously collected notifications would be dealt with before our manual refresh starts, and the manual refresh would create almost no additional notifications anymore. That being said, I can also go with just one operation and watch how it behaves with the nightly at work.",
+      "parentUuid": "1c922d9f_2beb6521",
+      "range": {
+        "startLine": 289,
+        "startChar": 6,
+        "endLine": 289,
+        "endChar": 50
+      },
+      "revId": "0bbacd12aef6a2904ce30d2afccdce74a13fd0dc",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
     }
   ]
 }
