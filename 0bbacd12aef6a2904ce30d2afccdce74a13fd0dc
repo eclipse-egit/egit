@@ -22,6 +22,30 @@
       "revId": "0bbacd12aef6a2904ce30d2afccdce74a13fd0dc",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1c922d9f_2beb6521",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/clean/CleanRepositoryPage.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 289,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2019-08-05T16:32:23Z",
+      "side": 1,
+      "message": "1. Why can\u0027t this try-catch be combined with the one below?\n\n2. JGit\u0027s CleanCommand is going to use the java.io.File API, not the Eclipse IFile API, so I don\u0027t see how wrapping this in a workspace action is going to change anything?\n\n3. JGit\u0027s using the java.io.File API is the reason for the refreshes below.\n\nIf Eclipse picks up file system changes asynchronously (\"automatic refresh\"), I guess changes done by the CleanCommand might trigger builds. If so, running the command inside the same workspace action as the refreshes, and using the projects as scheduling rule, might perhaps help. But it might also block the workspace for longer.",
+      "parentUuid": "0a419833_12e74554",
+      "range": {
+        "startLine": 289,
+        "startChar": 6,
+        "endLine": 289,
+        "endChar": 50
+      },
+      "revId": "0bbacd12aef6a2904ce30d2afccdce74a13fd0dc",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
     }
   ]
 }
