@@ -13,6 +13,8 @@
 package org.eclipse.egit.ui.internal.repository.tree;
 
 import java.io.IOException;
+import java.nio.file.NoSuchFileException;
+import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -46,9 +48,18 @@ public class BranchHierarchyNode extends RepositoryTreeNode<IPath> {
 	 * @throws IOException
 	 */
 	public List<Ref> getChildRefsRecursive() throws IOException {
-		return getRepository().getRefDatabase()
-				.getRefsByPrefix(getObject().toPortableString()).stream()
-				.filter(ref -> !ref.isSymbolic()).collect(Collectors.toList());
+		try {
+			return getRepository().getRefDatabase()
+					.getRefsByPrefix(getObject().toPortableString()).stream()
+					.filter(ref -> !ref.isSymbolic())
+					.collect(Collectors.toList());
+		} catch (NoSuchFileException e) {
+			// The common navigator may trigger children calculation for a
+			// branch hierarchy node after all children have been deleted. In
+			// that case the underlying path is gone and we should deal with the
+			// exception here.
+			return Collections.emptyList();
+		}
 	}
 
 }
