@@ -613,6 +613,30 @@
     },
     {
       "key": {
+        "uuid": "e28b71a5_d6a970ea",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/history/GitHistoryPage.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 2733,
+      "author": {
+        "id": 228343
+      },
+      "writtenOn": "2019-08-07T14:31:13Z",
+      "side": 1,
+      "message": "After discussion with Andrey, we decided on returning null in that case. I will add this method to RepositoryUtil with the next patch set.",
+      "parentUuid": "4424c6ac_31309ed1",
+      "range": {
+        "startLine": 2733,
+        "startChar": 2,
+        "endLine": 2733,
+        "endChar": 8
+      },
+      "revId": "c603db586a980dfb2f242a46aac2376fb59b9456",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "818d3b32_90b68447",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/history/GitHistoryPage.java",
         "patchSetId": 8
