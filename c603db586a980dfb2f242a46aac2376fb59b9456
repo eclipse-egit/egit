@@ -1,0 +1,372 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b0426b90_e38adb5a",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/history/GitHistoryPage.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 548,
+      "author": {
+        "id": 1179
+      },
+      "writtenOn": "2019-08-07T10:45:18Z",
+      "side": 1,
+      "message": "on the value that equals the current *default* we can (and I think should) remove the repo specific key/value completely from the prefs via unsetProjectSpecificFirstParentPreference",
+      "range": {
+        "startLine": 548,
+        "startChar": 5,
+        "endLine": 548,
+        "endChar": 31
+      },
+      "revId": "c603db586a980dfb2f242a46aac2376fb59b9456",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "b79da590_db259e93",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/history/GitHistoryPage.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 594,
+      "author": {
+        "id": 1179
+      },
+      "writtenOn": "2019-08-07T10:45:18Z",
+      "side": 1,
+      "message": "Spe",
+      "range": {
+        "startLine": 594,
+        "startChar": 15,
+        "endLine": 594,
+        "endChar": 18
+      },
+      "revId": "c603db586a980dfb2f242a46aac2376fb59b9456",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "823c1364_e2de7596",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/history/GitHistoryPage.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 977,
+      "author": {
+        "id": 1179
+      },
+      "writtenOn": "2019-08-07T10:45:18Z",
+      "side": 1,
+      "message": "please just use \"\", also below, may be as a named constant \"EMPTY_VALUE\" or so.",
+      "range": {
+        "startLine": 977,
+        "startChar": 6,
+        "endLine": 977,
+        "endChar": 18
+      },
+      "revId": "c603db586a980dfb2f242a46aac2376fb59b9456",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "909e25b7_dfee60e1",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/history/GitHistoryPage.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 981,
+      "author": {
+        "id": 1179
+      },
+      "writtenOn": "2019-08-07T10:45:18Z",
+      "side": 1,
+      "message": "Is the input platform specific, or uses \"/\" on all platforms?",
+      "range": {
+        "startLine": 981,
+        "startChar": 30,
+        "endLine": 981,
+        "endChar": 52
+      },
+      "revId": "c603db586a980dfb2f242a46aac2376fb59b9456",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c24513ca_835d66a5",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/history/GitHistoryPage.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 2379,
+      "author": {
+        "id": 1179
+      },
+      "writtenOn": "2019-08-07T10:45:18Z",
+      "side": 1,
+      "message": "no value providing this comment",
+      "range": {
+        "startLine": 2377,
+        "startChar": 1,
+        "endLine": 2379,
+        "endChar": 4
+      },
+      "revId": "c603db586a980dfb2f242a46aac2376fb59b9456",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a1662cfc_a4db46df",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/history/GitHistoryPage.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 2387,
+      "author": {
+        "id": 1179
+      },
+      "writtenOn": "2019-08-07T10:45:18Z",
+      "side": 1,
+      "message": "no value providing this comment",
+      "range": {
+        "startLine": 2384,
+        "startChar": 1,
+        "endLine": 2387,
+        "endChar": 4
+      },
+      "revId": "c603db586a980dfb2f242a46aac2376fb59b9456",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "e8390c39_ccf466aa",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/history/GitHistoryPage.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 2388,
+      "author": {
+        "id": 1179
+      },
+      "writtenOn": "2019-08-07T10:45:18Z",
+      "side": 1,
+      "message": "newRepo",
+      "range": {
+        "startLine": 2388,
+        "startChar": 40,
+        "endLine": 2388,
+        "endChar": 51
+      },
+      "revId": "c603db586a980dfb2f242a46aac2376fb59b9456",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "83048783_0ebc3e97",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/history/GitHistoryPage.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 2391,
+      "author": {
+        "id": 1179
+      },
+      "writtenOn": "2019-08-07T10:45:18Z",
+      "side": 1,
+      "message": "sorry, this is not readable.",
+      "range": {
+        "startLine": 2391,
+        "startChar": 6,
+        "endLine": 2391,
+        "endChar": 68
+      },
+      "revId": "c603db586a980dfb2f242a46aac2376fb59b9456",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "f6873973_7bd0275f",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/history/GitHistoryPage.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 2571,
+      "author": {
+        "id": 1179
+      },
+      "writtenOn": "2019-08-07T10:45:18Z",
+      "side": 1,
+      "message": "I would extract this to a variable",
+      "range": {
+        "startLine": 2571,
+        "startChar": 65,
+        "endLine": 2571,
+        "endChar": 88
+      },
+      "revId": "c603db586a980dfb2f242a46aac2376fb59b9456",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9764b236_38a288a7",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/history/GitHistoryPage.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 2708,
+      "author": {
+        "id": 1179
+      },
+      "writtenOn": "2019-08-07T10:45:18Z",
+      "side": 1,
+      "message": "I would just say getRepoSpecificKey(path, key)",
+      "range": {
+        "startLine": 2708,
+        "startChar": 23,
+        "endLine": 2708,
+        "endChar": 68
+      },
+      "revId": "c603db586a980dfb2f242a46aac2376fb59b9456",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "b2455dbd_26840785",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/history/GitHistoryPage.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 2713,
+      "author": {
+        "id": 1179
+      },
+      "writtenOn": "2019-08-07T10:45:18Z",
+      "side": 1,
+      "message": "I would just say getRepoSpecificKey(repo, key)",
+      "range": {
+        "startLine": 2713,
+        "startChar": 26,
+        "endLine": 2713,
+        "endChar": 36
+      },
+      "revId": "c603db586a980dfb2f242a46aac2376fb59b9456",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "0d3de717_6217a7a0",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/history/GitHistoryPage.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 2721,
+      "author": {
+        "id": 1179
+      },
+      "writtenOn": "2019-08-07T10:45:18Z",
+      "side": 1,
+      "message": "We return here a path not prefixed with preference key",
+      "range": {
+        "startLine": 2721,
+        "startChar": 10,
+        "endLine": 2721,
+        "endChar": 25
+      },
+      "revId": "c603db586a980dfb2f242a46aac2376fb59b9456",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "841be1f9_55860ef6",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/history/GitHistoryPage.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 2733,
+      "author": {
+        "id": 1179
+      },
+      "writtenOn": "2019-08-07T10:45:18Z",
+      "side": 1,
+      "message": "The code *before* this return should be moved to a dedicated method returning a path for a given repo. I wondering if we already have something like this in the code.",
+      "range": {
+        "startLine": 2733,
+        "startChar": 2,
+        "endLine": 2733,
+        "endChar": 8
+      },
+      "revId": "c603db586a980dfb2f242a46aac2376fb59b9456",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "818d3b32_90b68447",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/history/GitHistoryPage.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 2736,
+      "author": {
+        "id": 1179
+      },
+      "writtenOn": "2019-08-07T10:45:18Z",
+      "side": 1,
+      "message": "Same as above, I would just say unsetProjectSpecificPreference(path, key)",
+      "range": {
+        "startLine": 2736,
+        "startChar": 14,
+        "endLine": 2736,
+        "endChar": 55
+      },
+      "revId": "c603db586a980dfb2f242a46aac2376fb59b9456",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7279262a_d6775ca0",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/history/GitHistoryPage.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 2746,
+      "author": {
+        "id": 1179
+      },
+      "writtenOn": "2019-08-07T10:45:18Z",
+      "side": 1,
+      "message": "I\u0027ve seen this already, would make sense to extract a method.",
+      "range": {
+        "startLine": 2741,
+        "startChar": 2,
+        "endLine": 2746,
+        "endChar": 4
+      },
+      "revId": "c603db586a980dfb2f242a46aac2376fb59b9456",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "8d34c149_6b9dbece",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/uitext.properties",
+        "patchSetId": 8
+      },
+      "lineNbr": 734,
+      "author": {
+        "id": 1179
+      },
+      "writtenOn": "2019-08-07T10:45:18Z",
+      "side": 1,
+      "message": "\"F\u0026irst parent only by default\"\n\nTwo issues: \"p\" is already used, I think \"i\" not, and wrong capitalization.\n\nNote, most of the options on History page are wrongly capitalized - option *descriptions* should never be capitalized as in commands or menus.\n\nPlease open a bug and may be provide a fix, also for other EGit pages - some are OK, some are wrong.",
+      "range": {
+        "startLine": 734,
+        "startChar": 49,
+        "endLine": 734,
+        "endChar": 78
+      },
+      "revId": "c603db586a980dfb2f242a46aac2376fb59b9456",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
