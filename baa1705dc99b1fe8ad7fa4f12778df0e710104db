@@ -1,0 +1,280 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0b40af1e_82fd61f9",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 10
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1179
+      },
+      "writtenOn": "2019-08-07T15:34:21Z",
+      "side": 1,
+      "message": "I think \u0027\u0027 around are missing",
+      "range": {
+        "startLine": 7,
+        "startChar": 9,
+        "endLine": 7,
+        "endChar": 26
+      },
+      "revId": "baa1705dc99b1fe8ad7fa4f12778df0e710104db",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "de6b2f6c_92349626",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 10
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1179
+      },
+      "writtenOn": "2019-08-07T15:34:21Z",
+      "side": 1,
+      "message": "If this is a list of tasks, remove \"Also\" and use \"-\" and start on a new line. Otherwise just remove line breaks after following sentences please.\n\nSomething like:\n\nAdditionally:\n - item 1\n - item 2\n - whatever else",
+      "range": {
+        "startLine": 11,
+        "startChar": 0,
+        "endLine": 11,
+        "endChar": 4
+      },
+      "revId": "baa1705dc99b1fe8ad7fa4f12778df0e710104db",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "454bde35_bbf7ab3f",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 10
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1179
+      },
+      "writtenOn": "2019-08-07T15:34:21Z",
+      "side": 1,
+      "message": "menu (only)",
+      "range": {
+        "startLine": 13,
+        "startChar": 22,
+        "endLine": 13,
+        "endChar": 38
+      },
+      "revId": "baa1705dc99b1fe8ad7fa4f12778df0e710104db",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "e56f55a0_1e73ff7a",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 10
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1179
+      },
+      "writtenOn": "2019-08-07T15:34:21Z",
+      "side": 1,
+      "message": "\"Team -\u003e Git -\u003e History\" page",
+      "range": {
+        "startLine": 14,
+        "startChar": 51,
+        "endLine": 14,
+        "endChar": 56
+      },
+      "revId": "baa1705dc99b1fe8ad7fa4f12778df0e710104db",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "6e9b8a40_754897d3",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 10
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1179
+      },
+      "writtenOn": "2019-08-07T15:34:21Z",
+      "side": 1,
+      "message": "This part is not necessarily needed, I think.",
+      "range": {
+        "startLine": 16,
+        "startChar": 0,
+        "endLine": 16,
+        "endChar": 23
+      },
+      "revId": "baa1705dc99b1fe8ad7fa4f12778df0e710104db",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "8106f556_d8578d4d",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/RepositoryUtil.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 574,
+      "author": {
+        "id": 1179
+      },
+      "writtenOn": "2019-08-07T15:34:21Z",
+      "side": 1,
+      "message": "I don\u0027t see the throws in the code.",
+      "range": {
+        "startLine": 574,
+        "startChar": 4,
+        "endLine": 574,
+        "endChar": 32
+      },
+      "revId": "baa1705dc99b1fe8ad7fa4f12778df0e710104db",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "46ef53c6_990804e2",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/RepositoryUtil.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 599,
+      "author": {
+        "id": 1179
+      },
+      "writtenOn": "2019-08-07T15:34:21Z",
+      "side": 1,
+      "message": "new line?",
+      "range": {
+        "startLine": 598,
+        "startChar": 51,
+        "endLine": 599,
+        "endChar": 7
+      },
+      "revId": "baa1705dc99b1fe8ad7fa4f12778df0e710104db",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7a4205df_4eadcfcf",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/history/GitHistoryPage.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 536,
+      "author": {
+        "id": 1179
+      },
+      "writtenOn": "2019-08-07T15:34:21Z",
+      "side": 1,
+      "message": "Spe",
+      "range": {
+        "startLine": 536,
+        "startChar": 16,
+        "endLine": 536,
+        "endChar": 19
+      },
+      "revId": "baa1705dc99b1fe8ad7fa4f12778df0e710104db",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "fd6266ef_eeb4d856",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/history/GitHistoryPage.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 596,
+      "author": {
+        "id": 1179
+      },
+      "writtenOn": "2019-08-07T15:34:21Z",
+      "side": 1,
+      "message": "\"else if\" ?",
+      "range": {
+        "startLine": 594,
+        "startChar": 4,
+        "endLine": 596,
+        "endChar": 6
+      },
+      "revId": "baa1705dc99b1fe8ad7fa4f12778df0e710104db",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "852cd66f_e0b3db4b",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/history/GitHistoryPage.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 2376,
+      "author": {
+        "id": 1179
+      },
+      "writtenOn": "2019-08-07T15:34:21Z",
+      "side": 1,
+      "message": "Can we use if(Objects.equals(old, new)) return; here?\n\nIf not, please add {} breaces around if/else cases",
+      "range": {
+        "startLine": 2370,
+        "startChar": 2,
+        "endLine": 2376,
+        "endChar": 3
+      },
+      "revId": "baa1705dc99b1fe8ad7fa4f12778df0e710104db",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a1a31ba6_1bd73165",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/history/GitHistoryPage.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 2714,
+      "author": {
+        "id": 1179
+      },
+      "writtenOn": "2019-08-07T15:34:21Z",
+      "side": 1,
+      "message": "really new line required here?",
+      "range": {
+        "startLine": 2713,
+        "startChar": 40,
+        "endLine": 2714,
+        "endChar": 4
+      },
+      "revId": "baa1705dc99b1fe8ad7fa4f12778df0e710104db",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "0617065f_879c39e2",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/history/GitHistoryPage.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 2930,
+      "author": {
+        "id": 1179
+      },
+      "writtenOn": "2019-08-07T15:34:21Z",
+      "side": 1,
+      "message": "I guess also here no new line needed",
+      "range": {
+        "startLine": 2929,
+        "startChar": 54,
+        "endLine": 2930,
+        "endChar": 4
+      },
+      "revId": "baa1705dc99b1fe8ad7fa4f12778df0e710104db",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
