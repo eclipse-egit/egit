@@ -205,6 +205,24 @@
     },
     {
       "key": {
+        "uuid": "2912129e_fbc4f0df",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/history/GitHistoryPage.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 587,
+      "author": {
+        "id": 228343
+      },
+      "writtenOn": "2019-08-07T06:07:35Z",
+      "side": 1,
+      "message": "I agree. Will need to redo the repo specific settings.",
+      "parentUuid": "7e52813a_050c692e",
+      "revId": "4e819bf42d1e7c86d04b661e859cc1c3e8fc2237",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "391c559c_23b24f56",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/history/GitHistoryPage.java",
         "patchSetId": 6
@@ -239,6 +257,30 @@
       "writtenOn": "2019-07-31T16:02:49Z",
       "side": 1,
       "message": "do we really need this, is this ambiguous here?",
+      "range": {
+        "startLine": 2720,
+        "startChar": 25,
+        "endLine": 2720,
+        "endChar": 39
+      },
+      "revId": "4e819bf42d1e7c86d04b661e859cc1c3e8fc2237",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "00d63624_fda4da32",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/history/GitHistoryPage.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 2720,
+      "author": {
+        "id": 228343
+      },
+      "writtenOn": "2019-08-07T06:07:35Z",
+      "side": 1,
+      "message": "Yes. With org.eclipse.core.runtime.Path",
+      "parentUuid": "9718f549_23aa9cc4",
       "range": {
         "startLine": 2720,
         "startChar": 25,
@@ -331,6 +373,24 @@
       "writtenOn": "2019-07-31T15:49:24Z",
       "side": 1,
       "message": "Ah, perhaps that\u0027s the source of the confusion in the action and its setting the global preference. Why not use isFirstParent() here?",
+      "revId": "4e819bf42d1e7c86d04b661e859cc1c3e8fc2237",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "793f0422_9121542a",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/history/GitHistoryPage.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 2765,
+      "author": {
+        "id": 228343
+      },
+      "writtenOn": "2019-08-07T06:07:35Z",
+      "side": 1,
+      "message": "I tried that, but it had other problems. Will redo the complete handling of the repo specific setting.",
+      "parentUuid": "1382f1d7_0c1609b3",
       "revId": "4e819bf42d1e7c86d04b661e859cc1c3e8fc2237",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
