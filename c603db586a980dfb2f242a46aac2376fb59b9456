@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "2a15433d_1cf148f5",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/history/GitHistoryPage.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 548,
+      "author": {
+        "id": 228343
+      },
+      "writtenOn": "2019-08-07T14:17:58Z",
+      "side": 1,
+      "message": "This could cause some people to accidentally unset the repo specific setting in some edge cases. But i guess in most cases this is the desired behavior. Done.",
+      "parentUuid": "b0426b90_e38adb5a",
+      "range": {
+        "startLine": 548,
+        "startChar": 5,
+        "endLine": 548,
+        "endChar": 31
+      },
+      "revId": "c603db586a980dfb2f242a46aac2376fb59b9456",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b79da590_db259e93",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/history/GitHistoryPage.java",
         "patchSetId": 8
@@ -36,6 +60,30 @@
       "writtenOn": "2019-08-07T10:45:18Z",
       "side": 1,
       "message": "Spe",
+      "range": {
+        "startLine": 594,
+        "startChar": 15,
+        "endLine": 594,
+        "endChar": 18
+      },
+      "revId": "c603db586a980dfb2f242a46aac2376fb59b9456",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "bb499e2e_05624731",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/history/GitHistoryPage.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 594,
+      "author": {
+        "id": 228343
+      },
+      "writtenOn": "2019-08-07T14:17:58Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b79da590_db259e93",
       "range": {
         "startLine": 594,
         "startChar": 15,
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "1f1f5495_583b7888",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/history/GitHistoryPage.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 977,
+      "author": {
+        "id": 228343
+      },
+      "writtenOn": "2019-08-07T14:17:58Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "823c1364_e2de7596",
+      "range": {
+        "startLine": 977,
+        "startChar": 6,
+        "endLine": 977,
+        "endChar": 18
+      },
+      "revId": "c603db586a980dfb2f242a46aac2376fb59b9456",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "909e25b7_dfee60e1",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/history/GitHistoryPage.java",
         "patchSetId": 8
@@ -82,6 +154,30 @@
       "writtenOn": "2019-08-07T10:45:18Z",
       "side": 1,
       "message": "Is the input platform specific, or uses \"/\" on all platforms?",
+      "range": {
+        "startLine": 981,
+        "startChar": 30,
+        "endLine": 981,
+        "endChar": 52
+      },
+      "revId": "c603db586a980dfb2f242a46aac2376fb59b9456",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "bd67d6c2_c8995e02",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/history/GitHistoryPage.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 981,
+      "author": {
+        "id": 228343
+      },
+      "writtenOn": "2019-08-07T14:17:58Z",
+      "side": 1,
+      "message": "I took this from RepositoryUtil, so yes it seems to be platform specific.",
+      "parentUuid": "909e25b7_dfee60e1",
       "range": {
         "startLine": 981,
         "startChar": 30,
@@ -117,6 +213,30 @@
     },
     {
       "key": {
+        "uuid": "d8ffe84d_f2008f54",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/history/GitHistoryPage.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 2379,
+      "author": {
+        "id": 228343
+      },
+      "writtenOn": "2019-08-07T14:17:58Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c24513ca_835d66a5",
+      "range": {
+        "startLine": 2377,
+        "startChar": 1,
+        "endLine": 2379,
+        "endChar": 4
+      },
+      "revId": "c603db586a980dfb2f242a46aac2376fb59b9456",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a1662cfc_a4db46df",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/history/GitHistoryPage.java",
         "patchSetId": 8
@@ -128,6 +248,30 @@
       "writtenOn": "2019-08-07T10:45:18Z",
       "side": 1,
       "message": "no value providing this comment",
+      "range": {
+        "startLine": 2384,
+        "startChar": 1,
+        "endLine": 2387,
+        "endChar": 4
+      },
+      "revId": "c603db586a980dfb2f242a46aac2376fb59b9456",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "4939fcb9_3c788a6c",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/history/GitHistoryPage.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 2387,
+      "author": {
+        "id": 228343
+      },
+      "writtenOn": "2019-08-07T14:17:58Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a1662cfc_a4db46df",
       "range": {
         "startLine": 2384,
         "startChar": 1,
@@ -163,6 +307,30 @@
     },
     {
       "key": {
+        "uuid": "bfa7adc2_55fb6e16",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/history/GitHistoryPage.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 2388,
+      "author": {
+        "id": 228343
+      },
+      "writtenOn": "2019-08-07T14:17:58Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e8390c39_ccf466aa",
+      "range": {
+        "startLine": 2388,
+        "startChar": 40,
+        "endLine": 2388,
+        "endChar": 51
+      },
+      "revId": "c603db586a980dfb2f242a46aac2376fb59b9456",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "83048783_0ebc3e97",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/history/GitHistoryPage.java",
         "patchSetId": 8
@@ -174,6 +342,30 @@
       "writtenOn": "2019-08-07T10:45:18Z",
       "side": 1,
       "message": "sorry, this is not readable.",
+      "range": {
+        "startLine": 2391,
+        "startChar": 6,
+        "endLine": 2391,
+        "endChar": 68
+      },
+      "revId": "c603db586a980dfb2f242a46aac2376fb59b9456",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "8dbfe850_81f3e342",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/history/GitHistoryPage.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 2391,
+      "author": {
+        "id": 228343
+      },
+      "writtenOn": "2019-08-07T14:17:58Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "83048783_0ebc3e97",
       "range": {
         "startLine": 2391,
         "startChar": 6,
@@ -209,6 +401,30 @@
     },
     {
       "key": {
+        "uuid": "2e6f7284_e7e655b8",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/history/GitHistoryPage.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 2571,
+      "author": {
+        "id": 228343
+      },
+      "writtenOn": "2019-08-07T14:17:58Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f6873973_7bd0275f",
+      "range": {
+        "startLine": 2571,
+        "startChar": 65,
+        "endLine": 2571,
+        "endChar": 88
+      },
+      "revId": "c603db586a980dfb2f242a46aac2376fb59b9456",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9764b236_38a288a7",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/history/GitHistoryPage.java",
         "patchSetId": 8
@@ -220,6 +436,30 @@
       "writtenOn": "2019-08-07T10:45:18Z",
       "side": 1,
       "message": "I would just say getRepoSpecificKey(path, key)",
+      "range": {
+        "startLine": 2708,
+        "startChar": 23,
+        "endLine": 2708,
+        "endChar": 68
+      },
+      "revId": "c603db586a980dfb2f242a46aac2376fb59b9456",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "d63917e3_25bab596",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/history/GitHistoryPage.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 2708,
+      "author": {
+        "id": 228343
+      },
+      "writtenOn": "2019-08-07T14:17:58Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9764b236_38a288a7",
       "range": {
         "startLine": 2708,
         "startChar": 23,
@@ -255,6 +495,30 @@
     },
     {
       "key": {
+        "uuid": "e4d16727_44b80902",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/history/GitHistoryPage.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 2713,
+      "author": {
+        "id": 228343
+      },
+      "writtenOn": "2019-08-07T14:17:58Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b2455dbd_26840785",
+      "range": {
+        "startLine": 2713,
+        "startChar": 26,
+        "endLine": 2713,
+        "endChar": 36
+      },
+      "revId": "c603db586a980dfb2f242a46aac2376fb59b9456",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0d3de717_6217a7a0",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/history/GitHistoryPage.java",
         "patchSetId": 8
@@ -266,6 +530,30 @@
       "writtenOn": "2019-08-07T10:45:18Z",
       "side": 1,
       "message": "We return here a path not prefixed with preference key",
+      "range": {
+        "startLine": 2721,
+        "startChar": 10,
+        "endLine": 2721,
+        "endChar": 25
+      },
+      "revId": "c603db586a980dfb2f242a46aac2376fb59b9456",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "8c8f6268_23b151da",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/history/GitHistoryPage.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 2721,
+      "author": {
+        "id": 228343
+      },
+      "writtenOn": "2019-08-07T14:17:58Z",
+      "side": 1,
+      "message": "Yes this was a mistake. Done.",
+      "parentUuid": "0d3de717_6217a7a0",
       "range": {
         "startLine": 2721,
         "startChar": 10,
@@ -301,6 +589,30 @@
     },
     {
       "key": {
+        "uuid": "4424c6ac_31309ed1",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/history/GitHistoryPage.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 2733,
+      "author": {
+        "id": 228343
+      },
+      "writtenOn": "2019-08-07T14:17:58Z",
+      "side": 1,
+      "message": "This could be added to RepositoryUtil. But what would be the return value when the dir is null. Also null? or maybe we could work with Optionals? Opinions?",
+      "parentUuid": "841be1f9_55860ef6",
+      "range": {
+        "startLine": 2733,
+        "startChar": 2,
+        "endLine": 2733,
+        "endChar": 8
+      },
+      "revId": "c603db586a980dfb2f242a46aac2376fb59b9456",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "818d3b32_90b68447",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/history/GitHistoryPage.java",
         "patchSetId": 8
@@ -312,6 +624,30 @@
       "writtenOn": "2019-08-07T10:45:18Z",
       "side": 1,
       "message": "Same as above, I would just say unsetProjectSpecificPreference(path, key)",
+      "range": {
+        "startLine": 2736,
+        "startChar": 14,
+        "endLine": 2736,
+        "endChar": 55
+      },
+      "revId": "c603db586a980dfb2f242a46aac2376fb59b9456",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "60bd7c0c_e9633c5c",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/history/GitHistoryPage.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 2736,
+      "author": {
+        "id": 228343
+      },
+      "writtenOn": "2019-08-07T14:17:58Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "818d3b32_90b68447",
       "range": {
         "startLine": 2736,
         "startChar": 14,
@@ -347,6 +683,30 @@
     },
     {
       "key": {
+        "uuid": "944aba62_b63c8083",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/history/GitHistoryPage.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 2746,
+      "author": {
+        "id": 228343
+      },
+      "writtenOn": "2019-08-07T14:17:58Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7279262a_d6775ca0",
+      "range": {
+        "startLine": 2741,
+        "startChar": 2,
+        "endLine": 2746,
+        "endChar": 4
+      },
+      "revId": "c603db586a980dfb2f242a46aac2376fb59b9456",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8d34c149_6b9dbece",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/uitext.properties",
         "patchSetId": 8
@@ -358,6 +718,30 @@
       "writtenOn": "2019-08-07T10:45:18Z",
       "side": 1,
       "message": "\"F\u0026irst parent only by default\"\n\nTwo issues: \"p\" is already used, I think \"i\" not, and wrong capitalization.\n\nNote, most of the options on History page are wrongly capitalized - option *descriptions* should never be capitalized as in commands or menus.\n\nPlease open a bug and may be provide a fix, also for other EGit pages - some are OK, some are wrong.",
+      "range": {
+        "startLine": 734,
+        "startChar": 49,
+        "endLine": 734,
+        "endChar": 78
+      },
+      "revId": "c603db586a980dfb2f242a46aac2376fb59b9456",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a2e018d0_be06a35d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/uitext.properties",
+        "patchSetId": 8
+      },
+      "lineNbr": 734,
+      "author": {
+        "id": 228343
+      },
+      "writtenOn": "2019-08-07T14:17:58Z",
+      "side": 1,
+      "message": "Done. \nSee https://bugs.eclipse.org/bugs/show_bug.cgi?id\u003d549850",
+      "parentUuid": "8d34c149_6b9dbece",
       "range": {
         "startLine": 734,
         "startChar": 49,
