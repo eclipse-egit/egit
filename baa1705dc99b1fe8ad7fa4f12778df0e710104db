@@ -140,6 +140,30 @@
     },
     {
       "key": {
+        "uuid": "208573c9_8926c8f7",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/RepositoryUtil.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 574,
+      "author": {
+        "id": 228343
+      },
+      "writtenOn": "2019-08-07T15:53:43Z",
+      "side": 1,
+      "message": "java.nio.file.Paths.get(String) can throw this for the same reason.",
+      "parentUuid": "8106f556_d8578d4d",
+      "range": {
+        "startLine": 574,
+        "startChar": 4,
+        "endLine": 574,
+        "endChar": 32
+      },
+      "revId": "baa1705dc99b1fe8ad7fa4f12778df0e710104db",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "46ef53c6_990804e2",
         "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/RepositoryUtil.java",
         "patchSetId": 10
@@ -151,6 +175,30 @@
       "writtenOn": "2019-08-07T15:34:21Z",
       "side": 1,
       "message": "new line?",
+      "range": {
+        "startLine": 598,
+        "startChar": 51,
+        "endLine": 599,
+        "endChar": 7
+      },
+      "revId": "baa1705dc99b1fe8ad7fa4f12778df0e710104db",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "4659c96c_6381d5c6",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/RepositoryUtil.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 599,
+      "author": {
+        "id": 228343
+      },
+      "writtenOn": "2019-08-07T15:53:43Z",
+      "side": 1,
+      "message": "That\u0027s the formatter.",
+      "parentUuid": "46ef53c6_990804e2",
       "range": {
         "startLine": 598,
         "startChar": 51,
@@ -186,6 +234,30 @@
     },
     {
       "key": {
+        "uuid": "b974093a_17c431cf",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/history/GitHistoryPage.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 536,
+      "author": {
+        "id": 228343
+      },
+      "writtenOn": "2019-08-07T15:53:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7a4205df_4eadcfcf",
+      "range": {
+        "startLine": 536,
+        "startChar": 16,
+        "endLine": 536,
+        "endChar": 19
+      },
+      "revId": "baa1705dc99b1fe8ad7fa4f12778df0e710104db",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fd6266ef_eeb4d856",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/history/GitHistoryPage.java",
         "patchSetId": 10
@@ -197,6 +269,30 @@
       "writtenOn": "2019-08-07T15:34:21Z",
       "side": 1,
       "message": "\"else if\" ?",
+      "range": {
+        "startLine": 594,
+        "startChar": 4,
+        "endLine": 596,
+        "endChar": 6
+      },
+      "revId": "baa1705dc99b1fe8ad7fa4f12778df0e710104db",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "8552246b_a742a6d7",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/history/GitHistoryPage.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 596,
+      "author": {
+        "id": 228343
+      },
+      "writtenOn": "2019-08-07T15:53:43Z",
+      "side": 1,
+      "message": "It is not needed as they cannot both be true. It is down to personal preference which version is faster to understand.",
+      "parentUuid": "fd6266ef_eeb4d856",
       "range": {
         "startLine": 594,
         "startChar": 4,
@@ -232,6 +328,30 @@
     },
     {
       "key": {
+        "uuid": "826c1836_b1621252",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/history/GitHistoryPage.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 2376,
+      "author": {
+        "id": 228343
+      },
+      "writtenOn": "2019-08-07T15:53:43Z",
+      "side": 1,
+      "message": "Yes. Done.",
+      "parentUuid": "852cd66f_e0b3db4b",
+      "range": {
+        "startLine": 2370,
+        "startChar": 2,
+        "endLine": 2376,
+        "endChar": 3
+      },
+      "revId": "baa1705dc99b1fe8ad7fa4f12778df0e710104db",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a1a31ba6_1bd73165",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/history/GitHistoryPage.java",
         "patchSetId": 10
@@ -255,6 +375,30 @@
     },
     {
       "key": {
+        "uuid": "c898005f_e6b31da6",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/history/GitHistoryPage.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 2714,
+      "author": {
+        "id": 228343
+      },
+      "writtenOn": "2019-08-07T15:53:43Z",
+      "side": 1,
+      "message": "You\u0027re right, didn\u0027t reformat this after changes. Done.",
+      "parentUuid": "a1a31ba6_1bd73165",
+      "range": {
+        "startLine": 2713,
+        "startChar": 40,
+        "endLine": 2714,
+        "endChar": 4
+      },
+      "revId": "baa1705dc99b1fe8ad7fa4f12778df0e710104db",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0617065f_879c39e2",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/history/GitHistoryPage.java",
         "patchSetId": 10
@@ -266,6 +410,30 @@
       "writtenOn": "2019-08-07T15:34:21Z",
       "side": 1,
       "message": "I guess also here no new line needed",
+      "range": {
+        "startLine": 2929,
+        "startChar": 54,
+        "endLine": 2930,
+        "endChar": 4
+      },
+      "revId": "baa1705dc99b1fe8ad7fa4f12778df0e710104db",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "71750df9_10b64dce",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/history/GitHistoryPage.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 2930,
+      "author": {
+        "id": 228343
+      },
+      "writtenOn": "2019-08-07T15:53:43Z",
+      "side": 1,
+      "message": "Here the formatter wants it.",
+      "parentUuid": "0617065f_879c39e2",
       "range": {
         "startLine": 2929,
         "startChar": 54,
