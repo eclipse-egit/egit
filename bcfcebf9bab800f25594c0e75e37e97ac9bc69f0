@@ -1,0 +1,170 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "71e1fff7_43b70968",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/RepositoryUtil.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 568,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2019-08-07T18:04:23Z",
+      "side": 1,
+      "message": "Should mention that using this to store git repository paths, in combination with resolving non-absolute paths relative to the Eclipse workspace path enables moving or copying the Eclipse workspace.\n\nBy itself this method doesn\u0027t enable doing so.",
+      "range": {
+        "startLine": 568,
+        "startChar": 4,
+        "endLine": 568,
+        "endChar": 49
+      },
+      "revId": "bcfcebf9bab800f25594c0e75e37e97ac9bc69f0",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "368c7471_21c084c5",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/RepositoryUtil.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 570,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2019-08-07T18:04:23Z",
+      "side": 1,
+      "message": "Should mention that a precondition is that pathString actually contains an absolute path.",
+      "revId": "bcfcebf9bab800f25594c0e75e37e97ac9bc69f0",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9d7f46b2_038c58f6",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/RepositoryUtil.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 574,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2019-08-07T18:04:23Z",
+      "side": 1,
+      "message": "Can the import be avoided by prefixing the package \"java.nio.file.\" here?",
+      "range": {
+        "startLine": 574,
+        "startChar": 12,
+        "endLine": 574,
+        "endChar": 32
+      },
+      "revId": "bcfcebf9bab800f25594c0e75e37e97ac9bc69f0",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "43e9d781_0d2af3dc",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/RepositoryUtil.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 587,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2019-08-07T18:04:23Z",
+      "side": 1,
+      "message": "Doesn\u0027t make sense.",
+      "range": {
+        "startLine": 587,
+        "startChar": 24,
+        "endLine": 587,
+        "endChar": 51
+      },
+      "revId": "bcfcebf9bab800f25594c0e75e37e97ac9bc69f0",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "91d4e0ce_8f5ef78b",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/RepositoryUtil.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 599,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2019-08-07T18:04:23Z",
+      "side": 1,
+      "message": "\"final @NonNull Repository\" would avoid this strange auto-formatting. Or just drop the \"final\".",
+      "range": {
+        "startLine": 598,
+        "startChar": 43,
+        "endLine": 599,
+        "endChar": 17
+      },
+      "revId": "bcfcebf9bab800f25594c0e75e37e97ac9bc69f0",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1fc16f38_94f5134a",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/history/GitHistoryPage.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 560,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2019-08-07T18:04:23Z",
+      "side": 1,
+      "message": "Spurious empty line.",
+      "revId": "bcfcebf9bab800f25594c0e75e37e97ac9bc69f0",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "910cca54_f1b9f5bd",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/history/GitHistoryPage.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 971,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2019-08-07T18:04:23Z",
+      "side": 1,
+      "message": "Fairly confusing. How about\n\n  Object oldValue \u003d event.getOldValue();\n\n  if (oldValue !\u003d null) {\n    String[] oldPaths \u003d oldValue.toString().split(...);\n    List\u003cString\u003e removedPaths \u003d new ArrayList\u003c\u003e(Arrays.asList(oldPaths));\n    Object newValue \u003d event.getNewValue();\n    if (newValue !\u003d null) {\n      String[] newPaths \u003d newValue.toString().split(...);\n      for (String path : newPaths) {\n        removedPaths.remove(path);\n      }\n    }\n    for (String path : removedPaths) {\n      unsetProjectSpecificPreference(path,\n        UIPreferences.RESOURCEHISTORY_SHOW_FIRST_PARENT_ONLY_DEFAULT);\n    }\n  }\n\n?",
+      "revId": "bcfcebf9bab800f25594c0e75e37e97ac9bc69f0",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a420f627_55fac425",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/history/GitHistoryPage.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 2709,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2019-08-07T18:04:23Z",
+      "side": 1,
+      "message": "Wouldn\u0027t this be better at line 982? Here, it\u0027ll save for each removed repo.",
+      "range": {
+        "startLine": 2709,
+        "startChar": 2,
+        "endLine": 2709,
+        "endChar": 22
+      },
+      "revId": "bcfcebf9bab800f25594c0e75e37e97ac9bc69f0",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
