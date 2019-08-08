@@ -149,7 +149,7 @@ public class Activator extends Plugin implements DebugOptionsListener {
 
 	/**
 	 * Utility method to log errors in the Egit plugin.
-	 * 
+	 *
 	 * @param message
 	 *            User comprehensible message
 	 * @param thr
