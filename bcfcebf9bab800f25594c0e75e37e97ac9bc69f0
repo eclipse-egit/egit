@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "34613465_285fb317",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/RepositoryUtil.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 568,
+      "author": {
+        "id": 228343
+      },
+      "writtenOn": "2019-08-09T14:07:31Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "71e1fff7_43b70968",
+      "range": {
+        "startLine": 568,
+        "startChar": 4,
+        "endLine": 568,
+        "endChar": 49
+      },
+      "revId": "bcfcebf9bab800f25594c0e75e37e97ac9bc69f0",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "368c7471_21c084c5",
         "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/RepositoryUtil.java",
         "patchSetId": 11
@@ -88,6 +112,30 @@
     },
     {
       "key": {
+        "uuid": "dca8ba4d_69124454",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/RepositoryUtil.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 587,
+      "author": {
+        "id": 228343
+      },
+      "writtenOn": "2019-08-09T14:07:31Z",
+      "side": 1,
+      "message": "Meant repository... Done.",
+      "parentUuid": "43e9d781_0d2af3dc",
+      "range": {
+        "startLine": 587,
+        "startChar": 24,
+        "endLine": 587,
+        "endChar": 51
+      },
+      "revId": "bcfcebf9bab800f25594c0e75e37e97ac9bc69f0",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "91d4e0ce_8f5ef78b",
         "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/RepositoryUtil.java",
         "patchSetId": 11
@@ -99,6 +147,30 @@
       "writtenOn": "2019-08-07T18:04:23Z",
       "side": 1,
       "message": "\"final @NonNull Repository\" would avoid this strange auto-formatting. Or just drop the \"final\".",
+      "range": {
+        "startLine": 598,
+        "startChar": 43,
+        "endLine": 599,
+        "endChar": 17
+      },
+      "revId": "bcfcebf9bab800f25594c0e75e37e97ac9bc69f0",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "4d2bf680_a62f3b50",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/RepositoryUtil.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 599,
+      "author": {
+        "id": 228343
+      },
+      "writtenOn": "2019-08-09T14:07:31Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "91d4e0ce_8f5ef78b",
       "range": {
         "startLine": 598,
         "startChar": 43,
@@ -128,6 +200,24 @@
     },
     {
       "key": {
+        "uuid": "fd1bbb3b_5dc721c8",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/history/GitHistoryPage.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 560,
+      "author": {
+        "id": 228343
+      },
+      "writtenOn": "2019-08-09T14:07:31Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1fc16f38_94f5134a",
+      "revId": "bcfcebf9bab800f25594c0e75e37e97ac9bc69f0",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "910cca54_f1b9f5bd",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/history/GitHistoryPage.java",
         "patchSetId": 11
@@ -145,6 +235,24 @@
     },
     {
       "key": {
+        "uuid": "90130116_b411e514",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/history/GitHistoryPage.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 971,
+      "author": {
+        "id": 228343
+      },
+      "writtenOn": "2019-08-09T14:07:31Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "910cca54_f1b9f5bd",
+      "revId": "bcfcebf9bab800f25594c0e75e37e97ac9bc69f0",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a420f627_55fac425",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/history/GitHistoryPage.java",
         "patchSetId": 11
@@ -156,6 +264,30 @@
       "writtenOn": "2019-08-07T18:04:23Z",
       "side": 1,
       "message": "Wouldn\u0027t this be better at line 982? Here, it\u0027ll save for each removed repo.",
+      "range": {
+        "startLine": 2709,
+        "startChar": 2,
+        "endLine": 2709,
+        "endChar": 22
+      },
+      "revId": "bcfcebf9bab800f25594c0e75e37e97ac9bc69f0",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "22203bb5_651b4775",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/history/GitHistoryPage.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 2709,
+      "author": {
+        "id": 228343
+      },
+      "writtenOn": "2019-08-09T14:07:31Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a420f627_55fac425",
       "range": {
         "startLine": 2709,
         "startChar": 2,
