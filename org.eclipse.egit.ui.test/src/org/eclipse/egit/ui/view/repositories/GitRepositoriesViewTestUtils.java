@@ -22,6 +22,7 @@ import org.eclipse.egit.ui.internal.repository.tree.LocalNode;
 import org.eclipse.egit.ui.internal.repository.tree.RemoteTrackingNode;
 import org.eclipse.egit.ui.internal.repository.tree.RemotesNode;
 import org.eclipse.egit.ui.internal.repository.tree.RepositoryNode;
+import org.eclipse.egit.ui.internal.repository.tree.StashNode;
 import org.eclipse.egit.ui.internal.repository.tree.TagsNode;
 import org.eclipse.egit.ui.internal.repository.tree.WorkingDirNode;
 import org.eclipse.egit.ui.test.TestUtil;
@@ -156,6 +157,19 @@ public class GitRepositoriesViewTestUtils {
 		SWTBotTreeItem remotesItem = TestUtil.navigateTo(tree, rootText,
 				remotesText);
 		return remotesItem;
+	}
+
+	public SWTBotTreeItem getStashesItem(SWTBotTree tree, File repositoryFile)
+			throws Exception {
+		Repository repository = lookupRepository(repositoryFile);
+		RepositoryNode root = new RepositoryNode(null, repository);
+		StashNode stashes = new StashNode(root, repository);
+
+		String rootText = labelProvider.getText(root);
+		String stashesText = labelProvider.getText(stashes);
+		SWTBotTreeItem stashesItem = TestUtil.navigateTo(tree, rootText,
+				stashesText);
+		return stashesItem;
 	}
 
 	public Repository lookupRepository(File directory) throws Exception {
