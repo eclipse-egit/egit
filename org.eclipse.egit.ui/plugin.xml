@@ -5108,12 +5108,12 @@
                      visible="true">
                </separator>
                <command
-                     commandId="org.eclipse.egit.ui.ConfigureUpstreamPush"
+                     commandId="org.eclipse.egit.ui.team.ConfigurePush"
                      label="%ConfigurePushToUpstreamCommand.label"
                      style="push">
                </command>
                <command
-                     commandId="org.eclipse.egit.ui.ConfigureUpstreamFetch"
+                     commandId="org.eclipse.egit.ui.team.ConfigureFetch"
                      label="%ConfigureFetchFromUpstreamCommand.label"
                      style="push">
                </command>
@@ -6122,11 +6122,11 @@
             icon="icons/obj16/fetch.png">
       </image>
       <image
-            commandId="org.eclipse.egit.ui.ConfigureUpstreamFetch"
+            commandId="org.eclipse.egit.ui.team.ConfigureFetch"
             icon="icons/obj16/fetch.png">
       </image>
       <image
-            commandId="org.eclipse.egit.ui.ConfigureUpstreamPush"
+            commandId="org.eclipse.egit.ui.team.ConfigurePush"
             icon="icons/obj16/push.png">
       </image>
       <image
@@ -6601,16 +6601,6 @@
             defaultHandler="org.eclipse.egit.ui.internal.actions.MergeToolActionHandler"
             id="org.eclipse.egit.ui.team.MergeTool"
             name="%MergeToolCommand.name">
-      </command>
-      <command
-            defaultHandler="org.eclipse.egit.ui.internal.actions.ConfigureFetchActionHandler"
-            id="org.eclipse.egit.ui.ConfigureUpstreamFetch"
-            name="%ConfigureUpstreamFetchCommand.name">
-      </command>
-      <command
-            defaultHandler="org.eclipse.egit.ui.internal.actions.ConfigurePushActionHandler"
-            id="org.eclipse.egit.ui.ConfigureUpstreamPush"
-            name="%ConfigureUpstreamPushCommand.name">
       </command>
       <command
             categoryId="org.eclipse.egit.ui.commandCategory"
