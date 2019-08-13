@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7f4f680f_48bb6cd7",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/repository/tree/command/GarbageCollectCommand.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2019-08-13T09:50:42Z",
+      "side": 1,
+      "message": "Was missing before already, but should have a monitor.done() here.",
+      "revId": "629c45bccda7836a7abf18472676fb3f1b452e3d",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
