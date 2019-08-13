@@ -23,6 +23,7 @@ import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Status;
+import org.eclipse.core.runtime.SubMonitor;
 import org.eclipse.core.runtime.jobs.Job;
 import org.eclipse.egit.core.op.StashDropOperation;
 import org.eclipse.egit.ui.Activator;
@@ -95,8 +96,8 @@ public class StashDropCommand
 
 			@Override
 			protected IStatus run(IProgressMonitor monitor) {
-				monitor.beginTask(UIText.StashDropCommand_jobTitle,
-						nodes.size());
+				SubMonitor progress = SubMonitor.convert(monitor,
+						UIText.StashDropCommand_jobTitle, nodes.size());
 
 				// Sort by highest to lowest stash commit index.
 				// This avoids shifting problems that cause the indices of the
@@ -116,14 +117,13 @@ public class StashDropCommand
 							node.getIndex());
 					monitor.subTask(stashName);
 					try {
-						op.execute(monitor);
+						op.execute(progress.newChild(1));
 					} catch (CoreException e) {
 						Activator.logError(MessageFormat.format(
 								UIText.StashDropCommand_dropFailed,
 								node.getObject().name()), e);
 					}
 					tryToCloseEditor(node);
-					monitor.worked(1);
 				}
 				monitor.done();
 				return Status.OK_STATUS;

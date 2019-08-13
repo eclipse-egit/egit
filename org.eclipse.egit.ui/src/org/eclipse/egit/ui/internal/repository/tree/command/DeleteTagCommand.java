@@ -22,6 +22,7 @@ import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Status;
+import org.eclipse.core.runtime.SubMonitor;
 import org.eclipse.core.runtime.jobs.Job;
 import org.eclipse.egit.core.op.DeleteTagOperation;
 import org.eclipse.egit.ui.Activator;
@@ -71,19 +72,22 @@ public class DeleteTagCommand extends RepositoriesViewCommandHandler<TagNode> {
 
 			@Override
 			protected IStatus run(IProgressMonitor monitor) {
-				monitor.beginTask(UIText.DeleteTagCommand_taskName, tags.size());
+				SubMonitor progress = SubMonitor.convert(monitor,
+						UIText.DeleteTagCommand_taskName, tags.size());
 				for (TagNode tag : tags) {
+					if (progress.isCanceled()) {
+						break;
+					}
 					final Repository repo = tag.getRepository();
 					final String tagName = tag.getObject().getName();
 					final DeleteTagOperation op = new DeleteTagOperation(repo,
 							tagName);
 					monitor.subTask(tagName);
 					try {
-						op.execute(monitor);
+						op.execute(progress.newChild(1));
 					} catch (CoreException e) {
 						Activator.logError(e.getLocalizedMessage(), e);
 					}
-					monitor.worked(1);
 				}
 				monitor.done();
 				return Status.OK_STATUS;
