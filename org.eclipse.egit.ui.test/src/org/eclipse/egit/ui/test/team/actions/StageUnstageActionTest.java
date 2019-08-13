@@ -96,6 +96,7 @@ public class StageUnstageActionTest extends LocalRepositoryTestCase {
 						"Team", removeFromIndexLabel));
 		// And again, with only the two shared projects
 		unshared.delete(true, null);
+		projectExplorerTree = TestUtil.getExplorerTree();
 		projectExplorerTree.select(projectExplorerTree.getAllItems());
 		assertFalse("Add To Index should not be present",
 				ContextMenuHelper.contextMenuItemExists(projectExplorerTree,
