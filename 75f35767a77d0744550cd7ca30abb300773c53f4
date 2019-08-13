@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "482aa648_6f688024",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/history/GitHistoryPage.java",
+        "patchSetId": 14
+      },
+      "lineNbr": 613,
+      "author": {
+        "id": 440
+      },
+      "writtenOn": "2019-08-13T14:12:52Z",
+      "side": 1,
+      "message": "why not in the constructor of that action class?",
+      "range": {
+        "startLine": 610,
+        "startChar": 0,
+        "endLine": 613,
+        "endChar": 64
+      },
+      "revId": "75f35767a77d0744550cd7ca30abb300773c53f4",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "f645a9d3_a4a05b03",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/history/GitHistoryPage.java",
+        "patchSetId": 14
+      },
+      "lineNbr": 961,
+      "author": {
+        "id": 440
+      },
+      "writtenOn": "2019-08-13T14:12:52Z",
+      "side": 1,
+      "message": "File.pathSeparator exists already :)",
+      "range": {
+        "startLine": 961,
+        "startChar": 19,
+        "endLine": 961,
+        "endChar": 62
+      },
+      "revId": "75f35767a77d0744550cd7ca30abb300773c53f4",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "bf5d3b79_215d11a4",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/history/GitHistoryPage.java",
+        "patchSetId": 14
+      },
+      "lineNbr": 2709,
+      "author": {
+        "id": 440
+      },
+      "writtenOn": "2019-08-13T14:12:52Z",
+      "side": 1,
+      "message": "missing e",
+      "range": {
+        "startLine": 2709,
+        "startChar": 48,
+        "endLine": 2709,
+        "endChar": 49
+      },
+      "revId": "75f35767a77d0744550cd7ca30abb300773c53f4",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
