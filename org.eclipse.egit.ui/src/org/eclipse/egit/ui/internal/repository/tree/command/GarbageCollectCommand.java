@@ -20,6 +20,7 @@ import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Status;
+import org.eclipse.core.runtime.SubMonitor;
 import org.eclipse.core.runtime.jobs.Job;
 import org.eclipse.egit.core.op.GarbageCollectOperation;
 import org.eclipse.egit.ui.Activator;
@@ -62,8 +63,13 @@ public class GarbageCollectCommand extends
 
 			@Override
 			protected IStatus run(IProgressMonitor monitor) {
+				SubMonitor progress = SubMonitor.convert(monitor,
+						selectedNodes.size());
 
 				for (RepositoryNode node : selectedNodes) {
+					if (progress.isCanceled()) {
+						break;
+					}
 					Repository repo = node.getRepository();
 					String name = MessageFormat.format(
 							UIText.GarbageCollectCommand_jobTitle,
@@ -72,13 +78,13 @@ public class GarbageCollectCommand extends
 					final GarbageCollectOperation op = new GarbageCollectOperation(
 							repo);
 					try {
-						op.execute(monitor);
+						op.execute(progress.newChild(1));
 					} catch (CoreException e) {
 						Activator.logError(MessageFormat.format(
 								UIText.GarbageCollectCommand_failed, repo), e);
 					}
 				}
-
+				monitor.done();
 				return Status.OK_STATUS;
 			}
 		};
