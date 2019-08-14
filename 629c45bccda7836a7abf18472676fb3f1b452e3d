@@ -16,6 +16,24 @@
       "revId": "629c45bccda7836a7abf18472676fb3f1b452e3d",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "0d076e02_d8f132f0",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/repository/tree/command/GarbageCollectCommand.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 440
+      },
+      "writtenOn": "2019-08-14T13:48:06Z",
+      "side": 1,
+      "message": "Done.",
+      "parentUuid": "7f4f680f_48bb6cd7",
+      "revId": "629c45bccda7836a7abf18472676fb3f1b452e3d",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
     }
   ]
 }
