@@ -26,7 +26,7 @@ import org.eclipse.jgit.lib.Repository;
 /**
  * Represents a decoratable resource mapping (i.e. a group of resources).
  */
-public class DecoratableResourceMapping extends DecoratableResource {
+public class DecoratableResourceMapping extends DecoratableResourceGroup {
 
 	private static final String MULTIPLE = "*"; //$NON-NLS-1$
 
@@ -45,7 +45,7 @@ public class DecoratableResourceMapping extends DecoratableResource {
 	 */
 	public DecoratableResourceMapping(ResourceMapping mapping)
 			throws IOException {
-		super(null); // no resource ...
+		super(mapping);
 
 		Set<Repository> repositories = new HashSet<>();
 		Set<StagingState> stagingStates = new HashSet<>();
@@ -108,6 +108,10 @@ public class DecoratableResourceMapping extends DecoratableResource {
 			setStagingState(StagingState.MODIFIED);
 		}
 
+		if (repositories.isEmpty()) {
+			return;
+		}
+		someShared = true;
 		decorateRepositoryInformation(this, repositories);
 	}
 
