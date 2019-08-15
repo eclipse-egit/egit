@@ -55,6 +55,24 @@
     },
     {
       "key": {
+        "uuid": "2be35d5f_10268f10",
+        "filename": "org.eclipse.egit.gitflow.ui/src/org/eclipse/egit/gitflow/ui/internal/actions/FeatureStartHandler.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1638
+      },
+      "writtenOn": "2019-08-15T08:33:24Z",
+      "side": 1,
+      "message": "Not sure if I follow. The Job is created by the EGit JobUtil. Creating a custom job would mean I can no longer use it, but have to duplicate a lot of its code.\n\nAs I\u0027ve already usesd the job change listener in the FeatureFinishOperation successfully, I\u0027d try this approach here as well, also for consistency.",
+      "parentUuid": "76dff9c0_475b7276",
+      "revId": "dd5164dd530f30cb151b8f2b1c00e5a5b3e65038",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "bfccfe8b_ad7309a6",
         "filename": "org.eclipse.egit.gitflow.ui/src/org/eclipse/egit/gitflow/ui/internal/actions/HotfixStartHandler.java",
         "patchSetId": 1
@@ -72,6 +90,24 @@
     },
     {
       "key": {
+        "uuid": "1f8963ee_9ffbfa12",
+        "filename": "org.eclipse.egit.gitflow.ui/src/org/eclipse/egit/gitflow/ui/internal/actions/HotfixStartHandler.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1638
+      },
+      "writtenOn": "2019-08-15T08:33:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bfccfe8b_ad7309a6",
+      "revId": "dd5164dd530f30cb151b8f2b1c00e5a5b3e65038",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "60415ee5_0f54d1ef",
         "filename": "org.eclipse.egit.gitflow.ui/src/org/eclipse/egit/gitflow/ui/internal/actions/ReleaseStartHandler.java",
         "patchSetId": 1
@@ -83,6 +119,24 @@
       "writtenOn": "2019-07-28T20:43:08Z",
       "side": 1,
       "message": "The operation runs in a background thread; this access to get the checkout result may not work.",
+      "revId": "dd5164dd530f30cb151b8f2b1c00e5a5b3e65038",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c96f8096_58bc7c48",
+        "filename": "org.eclipse.egit.gitflow.ui/src/org/eclipse/egit/gitflow/ui/internal/actions/ReleaseStartHandler.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1638
+      },
+      "writtenOn": "2019-08-15T08:33:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "60415ee5_0f54d1ef",
       "revId": "dd5164dd530f30cb151b8f2b1c00e5a5b3e65038",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
