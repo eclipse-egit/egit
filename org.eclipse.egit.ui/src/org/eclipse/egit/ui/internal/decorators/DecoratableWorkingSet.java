@@ -31,7 +31,7 @@ import org.eclipse.ui.IWorkingSet;
 /**
  * Represents a decoratable resource mapping (i.e. a group of resources).
  */
-public class DecoratableWorkingSet extends DecoratableResource {
+public class DecoratableWorkingSet extends DecoratableResourceGroup {
 
 	/**
 	 * Denotes the type of decoratable resource, used by the decoration helper.
@@ -50,7 +50,7 @@ public class DecoratableWorkingSet extends DecoratableResource {
 	 * @throws IOException
 	 */
 	public DecoratableWorkingSet(ResourceMapping mapping) throws IOException {
-		super(null); // no resource ...
+		super(mapping);
 
 		this.mapping = mapping;
 		IProject[] projects = mapping.getProjects();
@@ -97,6 +97,10 @@ public class DecoratableWorkingSet extends DecoratableResource {
 			repositories.add(repository);
 		}
 
+		if (repositories.isEmpty()) {
+			return;
+		}
+		someShared = true;
 		DecoratableResourceMapping.decorateRepositoryInformation(this,
 				repositories);
 	}

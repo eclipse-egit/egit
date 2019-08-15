@@ -252,7 +252,7 @@ public class GitLightweightDecorator extends GitDecorator
 
 		boolean isWorkingSet = mapping.getModelObject() instanceof IWorkingSet;
 
-		IDecoratableResource decoRes;
+		DecoratableResourceGroup decoRes;
 		try {
 			if (isWorkingSet) {
 				decoRes = new DecoratableWorkingSet(mapping);
@@ -262,6 +262,10 @@ public class GitLightweightDecorator extends GitDecorator
 		} catch (IOException e) {
 			throw new CoreException(Activator.createErrorStatus(
 					NLS.bind(UIText.Decorator_exceptionMessage, element), e));
+		}
+
+		if (!decoRes.hasSharedResources()) {
+			return;
 		}
 
 		/*
