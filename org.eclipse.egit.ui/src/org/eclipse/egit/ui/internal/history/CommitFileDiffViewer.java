@@ -189,6 +189,7 @@ public class CommitFileDiffViewer extends TableViewer {
 	public CommitFileDiffViewer(final Composite parent,
 			final IWorkbenchSite site, final int style) {
 		super(parent, preventBug499850(style));
+		setUseHashlookup(true);
 		this.site = site;
 		final Table rawTable = getTable();
 
