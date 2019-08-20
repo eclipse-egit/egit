@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7c231918_02048c80",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/history/CommitGraphTable.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 482,
+      "author": {
+        "id": 440
+      },
+      "writtenOn": "2019-08-20T05:14:36Z",
+      "side": 1,
+      "message": "I would have moved it up a line and removed the -1, but it\u0027s fine.",
+      "range": {
+        "startLine": 480,
+        "startChar": 4,
+        "endLine": 482,
+        "endChar": 5
+      },
+      "revId": "b047df72e3af093df807ce18ecc0f481bd27306b",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "cd3c13d8_3ef4f8d0",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/history/GitHistoryPage.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1861,
+      "author": {
+        "id": 440
+      },
+      "writtenOn": "2019-08-20T05:14:36Z",
+      "side": 1,
+      "message": "Not sure why you introduced 2 methods here. Wouldn\u0027t it be useful to always remain on the selected commit on a refresh? I.e. to inline the new argument again? The table code already deals with null etc.\n\nOr is there some API expectation of the refresh method, which forbids this?",
+      "range": {
+        "startLine": 1857,
+        "startChar": 0,
+        "endLine": 1861,
+        "endChar": 48
+      },
+      "revId": "b047df72e3af093df807ce18ecc0f481bd27306b",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
