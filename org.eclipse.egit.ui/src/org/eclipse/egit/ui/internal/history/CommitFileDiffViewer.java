@@ -69,8 +69,6 @@ import org.eclipse.jface.viewers.TableViewer;
 import org.eclipse.jface.viewers.Viewer;
 import org.eclipse.jface.viewers.ViewerComparator;
 import org.eclipse.jgit.diff.DiffEntry;
-import org.eclipse.jgit.diff.DiffEntry.ChangeType;
-import org.eclipse.jgit.lib.Constants;
 import org.eclipse.jgit.lib.Repository;
 import org.eclipse.jgit.revwalk.RevCommit;
 import org.eclipse.jgit.treewalk.TreeWalk;
@@ -181,6 +179,7 @@ public class CommitFileDiffViewer extends TableViewer {
 	public CommitFileDiffViewer(final Composite parent,
 			final IWorkbenchSite site, final int style) {
 		super(parent, preventBug499850(style));
+		setUseHashlookup(true);
 		this.site = site;
 		final Table rawTable = getTable();
 
