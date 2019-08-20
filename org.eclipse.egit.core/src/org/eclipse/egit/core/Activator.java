@@ -69,8 +69,10 @@ import org.eclipse.egit.core.project.RepositoryFinder;
 import org.eclipse.egit.core.project.RepositoryMapping;
 import org.eclipse.egit.core.securestorage.EGitSecureStore;
 import org.eclipse.equinox.security.storage.SecurePreferencesFactory;
+import org.eclipse.jgit.errors.ConfigInvalidException;
 import org.eclipse.jgit.lib.Config;
 import org.eclipse.jgit.lib.Constants;
+import org.eclipse.jgit.lib.StoredConfig;
 import org.eclipse.jgit.merge.MergeStrategy;
 import org.eclipse.jgit.storage.file.FileBasedConfig;
 import org.eclipse.jgit.transport.SshSessionFactory;
@@ -1102,6 +1104,18 @@ public class Activator extends Plugin implements DebugOptionsListener {
 		@Override
 		public int getTimezone(long when) {
 			return delegate.getTimezone(when);
+		}
+
+		@Override
+		public StoredConfig getUserConfig()
+				throws IOException, ConfigInvalidException {
+			return delegate.getUserConfig();
+		}
+
+		@Override
+		public StoredConfig getSystemConfig()
+				throws IOException, ConfigInvalidException {
+			return delegate.getSystemConfig();
 		}
 	}
 }

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <?pde?>
 <!-- generated with https://github.com/eclipse-cbi/targetplatform-dsl -->
-<target name="egit-4.10" sequenceNumber="1559548233">
+<target name="egit-4.10" sequenceNumber="1566279210">
   <locations>
     <location includeMode="slicer" includeAllPlatforms="false" includeSource="true" includeConfigurePhase="true" type="InstallableUnit">
       <unit id="org.eclipse.jetty.client" version="9.4.14.v20181114"/>
@@ -75,12 +75,12 @@
       <unit id="org.hamcrest.text.source" version="1.1.0.v20090501071000"/>
       <unit id="org.junit" version="4.12.0.v201504281640"/>
       <unit id="org.junit.source" version="4.12.0.v201504281640"/>
-      <unit id="org.mockito" version="2.13.0.v20180426-1843"/>
-      <unit id="org.mockito.source" version="2.13.0.v20180426-1843"/>
-      <unit id="net.bytebuddy.byte-buddy" version="1.7.9.v20180420-1519"/>
-      <unit id="net.bytebuddy.byte-buddy.source" version="1.7.9.v20180420-1519"/>
-      <unit id="net.bytebuddy.byte-buddy-agent" version="1.7.9.v20180420-1519"/>
-      <unit id="net.bytebuddy.byte-buddy-agent.source" version="1.7.9.v20180420-1519"/>
+      <unit id="org.mockito" version="2.23.0.v20190527-1420"/>
+      <unit id="org.mockito.source" version="2.23.0.v20190527-1420"/>
+      <unit id="net.bytebuddy.byte-buddy" version="1.9.0.v20181107-1410"/>
+      <unit id="net.bytebuddy.byte-buddy.source" version="1.9.0.v20181107-1410"/>
+      <unit id="net.bytebuddy.byte-buddy-agent" version="1.9.0.v20181106-1534"/>
+      <unit id="net.bytebuddy.byte-buddy-agent.source" version="1.9.0.v20181106-1534"/>
       <unit id="org.objenesis" version="2.6.0.v20180420-1519"/>
       <unit id="org.objenesis.source" version="2.6.0.v20180420-1519"/>
       <unit id="org.slf4j.api" version="1.7.2.v20121108-1250"/>
