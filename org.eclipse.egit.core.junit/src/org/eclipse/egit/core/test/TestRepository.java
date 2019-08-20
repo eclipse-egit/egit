@@ -483,7 +483,7 @@ public class TestRepository {
 		String repoPath = getRepoRelativePath(path);
 		DirCache dc = DirCache.read(repository.getIndexFile(), repository.getFS());
 
-		return dc.getEntry(repoPath).getLastModified();
+		return dc.getEntry(repoPath).getLastModifiedInstant().toEpochMilli();
 	}
 
 	public int getDirCacheEntryLength(String path) throws IOException {

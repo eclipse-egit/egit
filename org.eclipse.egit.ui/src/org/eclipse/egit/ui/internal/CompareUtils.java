@@ -25,6 +25,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.nio.ByteBuffer;
 import java.nio.file.Files;
+import java.time.Instant;
 
 import org.eclipse.compare.CompareEditorInput;
 import org.eclipse.compare.CompareUI;
@@ -1114,7 +1115,7 @@ public class CompareUtils {
 				ent.setFileMode(FileMode.REGULAR_FILE);
 
 			ent.setLength(content.limit());
-			ent.setLastModified(System.currentTimeMillis());
+			ent.setLastModified(Instant.now());
 			try {
 				ByteArrayInputStream in = new ByteArrayInputStream(
 						content.array(), 0, content.limit());
