@@ -45,6 +45,30 @@
       "revId": "b047df72e3af093df807ce18ecc0f481bd27306b",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "bcdec174_93da2a6c",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/history/GitHistoryPage.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1861,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2019-08-21T10:45:25Z",
+      "side": 1,
+      "message": "Not that I know of. Yes, refresh() could be made to always try to keep the position. Not sure which behavior is expected by users, or would be most convenient.",
+      "parentUuid": "cd3c13d8_3ef4f8d0",
+      "range": {
+        "startLine": 1857,
+        "startChar": 0,
+        "endLine": 1861,
+        "endChar": 48
+      },
+      "revId": "b047df72e3af093df807ce18ecc0f481bd27306b",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
     }
   ]
 }
