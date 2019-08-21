@@ -1978,10 +1978,10 @@ public class UIText extends NLS {
 	public static String ResetTargetSelectionDialog_ResetButton;
 
 	/** */
-	public static String ResetTargetSelectionDialog_ResetConfirmQuestion;
+	public static String ResetTargetSelectionDialog_ResetConfirmMessage;
 
 	/** */
-	public static String ResetTargetSelectionDialog_ResetQuestion;
+	public static String ResetTargetSelectionDialog_ResetQuestionTitle;
 
 	/** */
 	public static String ResetTargetSelectionDialog_ResetTitle;

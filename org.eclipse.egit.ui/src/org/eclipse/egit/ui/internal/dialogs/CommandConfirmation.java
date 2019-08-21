@@ -50,22 +50,18 @@ public class CommandConfirmation {
 	 * @return {@code true} if the user confirmed hard reset
 	 */
 	public static boolean confirmHardReset(Shell shell, final Repository repo) {
-		String question = UIText.ResetTargetSelectionDialog_ResetConfirmQuestion;
+		String question = UIText.ResetTargetSelectionDialog_ResetConfirmMessage;
 		String launch = LaunchFinder
 				.getRunningLaunchConfiguration(Collections.singleton(repo),
 						null);
 		if (launch != null) {
-			question = MessageFormat.format(question,
-					"\n\n" + MessageFormat.format( //$NON-NLS-1$
-							UIText.LaunchFinder_RunningLaunchMessage,
-							launch));
-		} else {
-			question = MessageFormat.format(question, ""); //$NON-NLS-1$
+			question += "\n\n" + MessageFormat.format( //$NON-NLS-1$
+					UIText.LaunchFinder_RunningLaunchMessage, launch);
 		}
 
 		MessageDialog messageDialog = new MessageDialog(shell,
-				UIText.ResetTargetSelectionDialog_ResetQuestion, null, question,
-				MessageDialog.QUESTION,
+				UIText.ResetTargetSelectionDialog_ResetQuestionTitle, null,
+				question, MessageDialog.QUESTION,
 				new String[] {
 						UIText.CommandConfirmationHardResetDialog_resetButtonLabel,
 						IDialogConstants.CANCEL_LABEL },
@@ -113,12 +109,8 @@ public class CommandConfirmation {
 			String launch = LaunchFinder
 					.getRunningLaunchConfiguration(repoAndPaths.keySet(), null);
 			if (launch != null) {
-				question = MessageFormat.format(question,
-						"\n\n" + MessageFormat.format( //$NON-NLS-1$
-								UIText.LaunchFinder_RunningLaunchMessage,
-								launch));
-			} else {
-				question = MessageFormat.format(question, ""); //$NON-NLS-1$
+				question += "\n\n" + MessageFormat.format( //$NON-NLS-1$
+						UIText.LaunchFinder_RunningLaunchMessage, launch);
 			}
 			Shell parent = shell != null ? shell
 					: PlatformUI.getWorkbench().getModalDialogShellProvider()
