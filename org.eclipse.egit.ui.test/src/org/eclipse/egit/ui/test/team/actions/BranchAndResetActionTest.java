@@ -317,7 +317,7 @@ public class BranchAndResetActionTest extends LocalRepositoryTestCase {
 		resetDialog.bot().button(UIText.ResetTargetSelectionDialog_ResetButton)
 				.click();
 
-		bot.shell(UIText.ResetTargetSelectionDialog_ResetQuestion).bot()
+		bot.shell(UIText.ResetTargetSelectionDialog_ResetConfirmTitle).bot()
 				.button(UIText.CommandConfirmationHardResetDialog_resetButtonLabel)
 				.click();
 
