@@ -2,6 +2,52 @@
   "comments": [
     {
       "key": {
+        "uuid": "04c96179_bf0866ea",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2019-08-22T13:46:12Z",
+      "side": 1,
+      "message": "I\u0027d suggest something like\n\n  Simplify wording of confirmation questions in dialogs",
+      "range": {
+        "startLine": 7,
+        "startChar": 0,
+        "endLine": 7,
+        "endChar": 56
+      },
+      "revId": "d2b54e4f4d985866d7ac46b5495929f01e71cd1e",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a88ee31a_b00e7154",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2019-08-22T13:46:12Z",
+      "side": 1,
+      "message": "Copy-pasted commit message makes no sense.\n\nThese were question already, and still are questions, we just improve the wording.",
+      "range": {
+        "startLine": 10,
+        "startChar": 0,
+        "endLine": 18,
+        "endChar": 62
+      },
+      "revId": "d2b54e4f4d985866d7ac46b5495929f01e71cd1e",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "82d448d4_f16ada99",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/uitext.properties",
         "patchSetId": 1
