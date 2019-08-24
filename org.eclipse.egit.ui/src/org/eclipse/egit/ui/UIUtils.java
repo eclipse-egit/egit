@@ -887,8 +887,9 @@ public class UIUtils {
 		if (success && cancelConfirmationQuestion != null && filter.isAnythingSaved()){
 			// allow the user to cancel the operation to first do something with
 			// the newly saved files
-			String[] buttons = new String[] { IDialogConstants.YES_LABEL,
-					IDialogConstants.NO_LABEL };
+			String[] buttons = new String[] {
+					IDialogConstants.CANCEL_LABEL,
+					UIText.CancelAfterSaveDialog_CommitAnyway };
 			MessageDialog dialog = new MessageDialog(window.getShell(),
 					UIText.CancelAfterSaveDialog_Title, null,
 					cancelConfirmationQuestion,
