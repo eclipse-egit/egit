@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5d98543f_87ef36b0",
+        "filename": "org.eclipse.egit.target/orbit/S20190819183153.tpd",
+        "patchSetId": 1
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 440
+      },
+      "writtenOn": "2019-08-24T11:42:28Z",
+      "side": 1,
+      "message": "don\u0027t get confused by gerrit here. the left and right file are completely unrelated.\n\nAlso I\u0027m wondering if we should delete _all_ Orbit files except the most recent one. We are not using any of the old Orbit releases anywhere.",
+      "range": {
+        "startLine": 1,
+        "startChar": 0,
+        "endLine": 2,
+        "endChar": 57
+      },
+      "revId": "2ce80525d4c2870766c63c89e4754c1780a86e66",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
