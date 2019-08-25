@@ -72,8 +72,6 @@ import org.eclipse.egit.ui.internal.dialogs.ShowWhitespaceAction;
 import org.eclipse.egit.ui.internal.fetch.FetchHeadChangedEvent;
 import org.eclipse.egit.ui.internal.history.FindToolbar.StatusListener;
 import org.eclipse.egit.ui.internal.repository.tree.AdditionalRefNode;
-import org.eclipse.egit.ui.internal.repository.tree.FileNode;
-import org.eclipse.egit.ui.internal.repository.tree.FolderNode;
 import org.eclipse.egit.ui.internal.repository.tree.RefNode;
 import org.eclipse.egit.ui.internal.repository.tree.RepositoryNode;
 import org.eclipse.egit.ui.internal.repository.tree.RepositoryTreeNode;
@@ -2163,13 +2161,19 @@ public class GitHistoryPage extends HistoryPage implements RefsChangedListener,
 				repo = repoNode.getRepository();
 				switch (repoNode.getType()) {
 				case FILE:
-					File file = ((FileNode) repoNode).getObject();
-					input = new HistoryPageInput(repo, new File[] { file });
-					showHead = true;
-					break;
 				case FOLDER:
-					File folder = ((FolderNode) repoNode).getObject();
-					input = new HistoryPageInput(repo, new File[] { folder });
+					// map working tree files/folders to imported resources, if
+					// possible
+					IPath path = repoNode.getPath();
+					IResource resource = ResourceUtil
+							.getResourceForLocation(path, false);
+					if (resource != null) {
+						input = new HistoryPageInput(repo,
+								new IResource[] { resource });
+					} else {
+						File file = (File) repoNode.getObject();
+						input = new HistoryPageInput(repo, new File[] { file });
+					}
 					showHead = true;
 					break;
 				case REF:
@@ -2357,8 +2361,6 @@ public class GitHistoryPage extends HistoryPage implements RefsChangedListener,
 				break;
 			}
 			String path = resource.getFullPath().makeRelative().toString();
-			if (resource.getType() == IResource.FOLDER)
-				path = path + '/';
 			return NLS.bind(NAME_PATTERN, new Object[] { type, path,
 					repositoryName });
 		} else if (in.getFileList() != null && in.getFileList().length == 1) {
@@ -2368,7 +2370,7 @@ public class GitHistoryPage extends HistoryPage implements RefsChangedListener,
 			final String type;
 			if (resource.isDirectory()) {
 				type = UIText.GitHistoryPage_FolderType;
-				path = resource.getPath() + IPath.SEPARATOR;
+				path = resource.getPath();
 			} else {
 				type = UIText.GitHistoryPage_FileType;
 				path = resource.getPath();
