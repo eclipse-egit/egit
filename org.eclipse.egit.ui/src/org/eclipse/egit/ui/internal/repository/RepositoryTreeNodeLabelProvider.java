@@ -180,7 +180,8 @@ public class RepositoryTreeNodeLabelProvider
 					.getType() != RepositoryTreeNodeType.REPO) {
 				Repository repo = ((RepositoryTreeNode) element)
 						.getRepository();
-				result.append(" - ").append(GitLabels.getPlainShortLabel(repo)); //$NON-NLS-1$
+				result.append(" [").append(GitLabels.getPlainShortLabel(repo)) //$NON-NLS-1$
+						.append(']');
 			}
 		}
 		return result.toString();
