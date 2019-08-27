@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5ef4d497_5ab45ee6",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/UIUtils.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 892,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2019-08-27T13:10:01Z",
+      "side": 1,
+      "message": "I think this text should be also passed as a parameter since this is a generic dialog which is already used by commit and stash, there could be other usages in the future. In case of stash the text could be \"Stash anyway\"",
+      "revId": "66e53a2785385005e15800930a424a03a75f9c3f",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
