@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "32e78185_78059640",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2019-08-27T12:56:15Z",
+      "side": 1,
+      "message": "we show the project-relative path which may be different from repo-relative path:\n\nE.g. for repo-relative path\norg.eclipse.jgit.packaging/org.eclipse.jgit.pgm.feature/feature.properties\nwe show\norg.eclipse.jgit.pgm.feature/feature.properties\n\nThis is shorter but could be confusing if projects are scattered on different levels of the working tree.",
+      "revId": "b74c753522d80bdd4ed3fcdbcba1a32aa87f0460",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
