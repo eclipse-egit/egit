@@ -92,9 +92,9 @@ import org.eclipse.egit.ui.internal.commit.CommitJob;
 import org.eclipse.egit.ui.internal.commit.CommitMessageHistory;
 import org.eclipse.egit.ui.internal.commit.CommitProposalProcessor;
 import org.eclipse.egit.ui.internal.commit.DiffViewer;
+import org.eclipse.egit.ui.internal.components.DropDownMenuAction;
 import org.eclipse.egit.ui.internal.components.PartVisibilityListener;
 import org.eclipse.egit.ui.internal.components.RepositoryMenuUtil.RepositoryToolbarAction;
-import org.eclipse.egit.ui.internal.components.DropDownMenuAction;
 import org.eclipse.egit.ui.internal.decorators.ProblemLabelDecorator;
 import org.eclipse.egit.ui.internal.dialogs.CommandConfirmation;
 import org.eclipse.egit.ui.internal.dialogs.CommitMessageArea;
@@ -4197,27 +4197,54 @@ public class StagingView extends ViewPart
 	}
 
 	private void commit(boolean pushUpstream) {
-		// don't allow to do anything as long as commit is in progress
+		boolean reEnable = false;
+		// Don't allow to do anything as long as commit is in progress
 		enableAllWidgets(false);
+		try {
+			boolean jobScheduled = internalCommit(pushUpstream,
+					() -> enableAllWidgets(true));
+			// If a job was scheduled, our Runnable will re-enable the widgets
+			// once the commit and push is done; even if it fails. Otherwise, we
+			// must re-enable the widgets here and now ourselves.
+			reEnable = !jobScheduled;
+		} catch (RuntimeException e) { // See bugs 550336, 550513
+			// If internalCommit() should fail after having scheduled the job,
+			// we may re-enable a little too early. But better that than never.
+			reEnable = true;
+			Activator.handleError(e.getLocalizedMessage(), e, true);
+		} finally {
+			if (reEnable) {
+				enableAllWidgets(true);
+			}
+		}
+	}
 
+	/**
+	 * Performs some checks and if successful schedules a background job to
+	 * execute the commit (and possibly push).
+	 *
+	 * @param pushUpstream
+	 *            whether to also push the commit to upstream
+	 * @param afterJob
+	 *            code to run after the job if a job is scheduled
+	 * @return whether a job was scheduled
+	 */
+	private boolean internalCommit(boolean pushUpstream, Runnable afterJob) {
 		if (!isCommitWithoutFilesAllowed()) {
 			MessageDialog md = new MessageDialog(getSite().getShell(),
 					UIText.StagingView_committingNotPossible, null,
 					UIText.StagingView_noStagedFiles, MessageDialog.ERROR,
 					new String[] { IDialogConstants.CLOSE_LABEL }, 0);
 			md.open();
-			enableAllWidgets(true);
-			return;
+			return false;
 		}
 		if (!commitMessageComponent.checkCommitInfo()) {
-			enableAllWidgets(true);
-			return;
+			return false;
 		}
 
 		if (!UIUtils.saveAllEditors(currentRepository,
 				UIText.StagingView_cancelCommitAfterSaving)) {
-			enableAllWidgets(true);
-			return;
+			return false;
 		}
 
 		String commitMessage = commitMessageComponent.getCommitMessage();
@@ -4229,8 +4256,7 @@ public class StagingView extends ViewPart
 					commitMessage);
 		} catch (CoreException e) {
 			Activator.handleError(UIText.StagingView_commitFailed, e, true);
-			enableAllWidgets(true);
-			return;
+			return false;
 		}
 		if (amendPreviousCommitAction.isChecked())
 			commitOperation.setAmending(true);
@@ -4251,7 +4277,7 @@ public class StagingView extends ViewPart
 			@Override
 			public void done(IJobChangeEvent event) {
 				asyncExec(() -> {
-					enableAllWidgets(true);
+					afterJob.run();
 					if (event.getResult().isOK()) {
 						commitMessageText.setText(EMPTY_STRING);
 					}
@@ -4263,6 +4289,7 @@ public class StagingView extends ViewPart
 
 		CommitMessageHistory.saveCommitHistory(commitMessage);
 		clearCommitMessageToggles();
+		return true;
 	}
 
 	/**
