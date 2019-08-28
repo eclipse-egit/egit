@@ -27,6 +27,7 @@ import org.eclipse.egit.ui.internal.repository.tree.PushNode;
 import org.eclipse.egit.ui.internal.repository.tree.RemoteNode;
 import org.eclipse.egit.ui.internal.repository.tree.RepositoryNode;
 import org.eclipse.egit.ui.internal.repository.tree.RepositoryTreeNode;
+import org.eclipse.egit.ui.internal.selection.RepositoryStateCache;
 import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jgit.transport.RemoteConfig;
 
@@ -53,36 +54,60 @@ public class PushConfiguredRemoteCommand extends
 	@Override
 	public boolean isEnabled() {
 		RepositoryTreeNode<?> node = getSelectedNodes().get(0);
-		return getRemoteConfig(node) != null;
+		return getRemoteConfigCached(node) != null;
 	}
 
 	private RemoteConfig getRemoteConfig(RepositoryTreeNode node) {
-		if (node instanceof RepositoryNode)
+		if (node instanceof RepositoryNode) {
 			return SimpleConfigurePushDialog.getConfiguredRemote(node
 					.getRepository());
-
-		if (node instanceof RemoteNode || node instanceof PushNode) {
-			RemoteNode remoteNode;
-			if (node instanceof PushNode)
-				remoteNode = (RemoteNode) node.getParent();
-			else
-				remoteNode = (RemoteNode) node;
-
+		}
+		if (node instanceof PushNode) {
+			node = node.getParent();
+		}
+		if (node instanceof RemoteNode) {
 			try {
-				RemoteConfig config = new RemoteConfig(remoteNode
-						.getRepository().getConfig(), remoteNode.getObject());
-				boolean fetchConfigured = !config.getFetchRefSpecs().isEmpty();
-				boolean pushConfigured = !config.getPushRefSpecs().isEmpty();
-				if (fetchConfigured || pushConfigured)
-					return config;
-				else
-					return null;
+				RemoteNode remoteNode = (RemoteNode) node;
+				RemoteConfig config = new RemoteConfig(
+						remoteNode.getRepository().getConfig(),
+						remoteNode.getObject());
+				return withRefSpecs(config);
 			} catch (URISyntaxException e) {
 				return null;
 			}
 		}
-
 		return null;
 	}
 
+	private RemoteConfig getRemoteConfigCached(RepositoryTreeNode node) {
+		if (node instanceof RepositoryNode) {
+			return SimpleConfigurePushDialog
+					.getConfiguredRemoteCached(node.getRepository());
+		}
+		if (node instanceof PushNode) {
+			node = node.getParent();
+		}
+		if (node instanceof RemoteNode) {
+			try {
+				RemoteNode remoteNode = (RemoteNode) node;
+				RemoteConfig config = new RemoteConfig(
+						RepositoryStateCache.INSTANCE
+								.getConfig(node.getRepository()),
+						remoteNode.getObject());
+				return withRefSpecs(config);
+			} catch (URISyntaxException e) {
+				return null;
+			}
+		}
+		return null;
+	}
+
+	private RemoteConfig withRefSpecs(RemoteConfig config) {
+		boolean fetchConfigured = !config.getFetchRefSpecs().isEmpty();
+		boolean pushConfigured = !config.getPushRefSpecs().isEmpty();
+		if (fetchConfigured || pushConfigured) {
+			return config;
+		}
+		return null;
+	}
 }

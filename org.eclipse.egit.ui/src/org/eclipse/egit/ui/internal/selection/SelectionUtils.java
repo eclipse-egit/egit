@@ -514,15 +514,14 @@ public class SelectionUtils {
 	}
 
 	private static IEvaluationContext getEvaluationContext() {
-		IEvaluationContext ctx;
 		IWorkbenchWindow activeWorkbenchWindow = PlatformUI.getWorkbench()
 				.getActiveWorkbenchWindow();
 		// no active window during Eclipse shutdown
-		if (activeWorkbenchWindow == null)
+		if (activeWorkbenchWindow == null) {
 			return null;
+		}
 		IHandlerService hsr = CommonUtils.getService(activeWorkbenchWindow, IHandlerService.class);
-		ctx = hsr.getCurrentState();
-		return ctx;
+		return hsr != null ? hsr.getCurrentState() : null;
 	}
 
 	/**

@@ -62,6 +62,7 @@ import org.eclipse.egit.ui.internal.RepositoryCacheRule;
 import org.eclipse.egit.ui.internal.UIIcons;
 import org.eclipse.egit.ui.internal.UIText;
 import org.eclipse.egit.ui.internal.credentials.EGitCredentialsProvider;
+import org.eclipse.egit.ui.internal.selection.RepositoryStateCache;
 import org.eclipse.egit.ui.internal.trace.GitTraceLocation;
 import org.eclipse.egit.ui.internal.variables.GitTemplateVariableResolver;
 import org.eclipse.jdt.internal.ui.JavaPlugin;
@@ -355,6 +356,7 @@ public class Activator extends AbstractUIPlugin implements DebugOptionsListener 
 		context.registerService(DebugOptionsListener.class.getName(), this,
 				props);
 
+		RepositoryStateCache.INSTANCE.initialize();
 		setupRepoChangeScanner();
 		setupRepoIndexRefresh();
 		setupFocusHandling();
@@ -1118,6 +1120,7 @@ public class Activator extends AbstractUIPlugin implements DebugOptionsListener 
 
 	@Override
 	public void stop(final BundleContext context) throws Exception {
+		RepositoryStateCache.INSTANCE.dispose();
 		if (refreshHandle != null) {
 			refreshHandle.remove();
 			refreshHandle = null;

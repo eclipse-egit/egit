@@ -36,6 +36,7 @@ import org.eclipse.core.resources.IResource;
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.egit.core.internal.CompareCoreUtils;
 import org.eclipse.egit.core.project.RepositoryMapping;
+import org.eclipse.egit.ui.internal.selection.RepositoryStateCache;
 import org.eclipse.egit.ui.internal.selection.SelectionUtils;
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.IStructuredSelection;
@@ -321,26 +322,13 @@ abstract class RepositoryActionHandler extends AbstractHandler {
 	 *         {@code false} otherwise
 	 */
 	protected boolean containsHead(Repository repository) {
-		try {
-			return repository != null ? repository.resolve(Constants.HEAD) != null
-					: false;
-		} catch (Exception e) {
-			// do nothing
-		}
-
-		return false;
+		return RepositoryStateCache.INSTANCE.getHead(repository) != null;
 	}
 
 	protected boolean isLocalBranchCheckedout(Repository repository) {
-		try {
-			String fullBranch = repository.getFullBranch();
-			return fullBranch != null
-					&& fullBranch.startsWith(Constants.R_HEADS);
-		} catch (Exception e) {
-			// do nothing
-		}
-
-		return false;
+		String fullBranch = RepositoryStateCache.INSTANCE
+				.getFullBranchName(repository);
+		return fullBranch != null && fullBranch.startsWith(Constants.R_HEADS);
 	}
 
 	protected String getPreviousPath(Repository repository,
