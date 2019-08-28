@@ -25,6 +25,7 @@ import org.eclipse.egit.ui.Activator;
 import org.eclipse.egit.ui.internal.UIText;
 import org.eclipse.egit.ui.internal.dialogs.AbstractConfigureRemoteDialog;
 import org.eclipse.egit.ui.internal.repository.SelectUriWizard;
+import org.eclipse.egit.ui.internal.selection.RepositoryStateCache;
 import org.eclipse.jface.dialogs.Dialog;
 import org.eclipse.jface.dialogs.IDialogConstants;
 import org.eclipse.jface.layout.GridDataFactory;
@@ -34,6 +35,7 @@ import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.viewers.TableViewer;
 import org.eclipse.jface.window.Window;
 import org.eclipse.jface.wizard.WizardDialog;
+import org.eclipse.jgit.lib.Config;
 import org.eclipse.jgit.lib.ConfigConstants;
 import org.eclipse.jgit.lib.Constants;
 import org.eclipse.jgit.lib.ObjectId;
@@ -106,38 +108,65 @@ public class SimpleConfigurePushDialog extends AbstractConfigureRemoteDialog {
 		}
 		if (branch == null)
 			return null;
+		return getConfiguredRemote(branch, repository.getConfig());
+	}
 
+	/**
+	 * Same as {@link #getConfiguredRemote(Repository)} but using cached
+	 * repository state; intended for use in property testers or handler
+	 * enablements.
+	 *
+	 * @param repository
+	 * @return the configured remote for the current branch if any, or null
+	 */
+	public static RemoteConfig getConfiguredRemoteCached(
+			Repository repository) {
+		String branch = RepositoryStateCache.INSTANCE
+				.getFullBranchName(repository);
+		if (branch == null) {
+			return null;
+		}
+		branch = Repository.shortenRefName(branch);
+		return getConfiguredRemote(branch,
+				RepositoryStateCache.INSTANCE.getConfig(repository));
+	}
+
+	private static RemoteConfig getConfiguredRemote(String branch,
+			Config config) {
+		if (branch == null) {
+			return null;
+		}
 		String remoteName = null;
 		if (!ObjectId.isId(branch))
-			remoteName = repository.getConfig().getString(
+			remoteName = config.getString(
 					ConfigConstants.CONFIG_BRANCH_SECTION, branch,
 					ConfigConstants.CONFIG_REMOTE_SECTION);
 
 		// check if we find the configured and default Remotes
 		List<RemoteConfig> allRemotes;
 		try {
-			allRemotes = RemoteConfig.getAllRemoteConfigs(repository
-					.getConfig());
+			allRemotes = RemoteConfig.getAllRemoteConfigs(config);
 		} catch (URISyntaxException e) {
 			allRemotes = new ArrayList<>();
 		}
 
 		RemoteConfig configuredConfig = null;
 		RemoteConfig defaultConfig = null;
-		for (RemoteConfig config : allRemotes) {
-			if (remoteName != null && config.getName().equals(remoteName))
-				configuredConfig = config;
-			if (config.getName().equals(Constants.DEFAULT_REMOTE_NAME))
-				defaultConfig = config;
+		for (RemoteConfig cfg : allRemotes) {
+			if (remoteName != null && cfg.getName().equals(remoteName)) {
+				configuredConfig = cfg;
+			}
+			if (cfg.getName().equals(Constants.DEFAULT_REMOTE_NAME)) {
+				defaultConfig = cfg;
+			}
 		}
 
-		if (configuredConfig != null)
+		if (configuredConfig != null) {
 			return configuredConfig;
-
-		if (defaultConfig != null)
-			if (!defaultConfig.getPushRefSpecs().isEmpty())
-				return defaultConfig;
-
+		}
+		if (defaultConfig != null && !defaultConfig.getPushRefSpecs().isEmpty()) {
+			return defaultConfig;
+		}
 		return null;
 	}
 

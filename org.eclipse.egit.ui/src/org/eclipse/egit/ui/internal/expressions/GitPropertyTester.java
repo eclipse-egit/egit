@@ -19,6 +19,7 @@ import org.eclipse.core.expressions.PropertyTester;
 import org.eclipse.core.runtime.Adapters;
 import org.eclipse.egit.core.internal.IRepositoryCommit;
 import org.eclipse.egit.ui.internal.commit.RepositoryCommit;
+import org.eclipse.egit.ui.internal.selection.RepositoryStateCache;
 import org.eclipse.jgit.lib.Constants;
 import org.eclipse.jgit.lib.ObjectId;
 import org.eclipse.jgit.lib.Ref;
@@ -90,14 +91,16 @@ public class GitPropertyTester extends AbstractPropertyTester {
 		} else if ("isSafe".equals(property)) { //$NON-NLS-1$
 			Repository repository = Adapters.adapt(receiver, Repository.class);
 			if (repository != null) {
-				return computeResult(expectedValue, repository
-						.getRepositoryState().equals(RepositoryState.SAFE));
+				return computeResult(expectedValue,
+						RepositoryState.SAFE.equals(RepositoryStateCache.INSTANCE
+								.getRepositoryState(repository)));
 			}
 		} else if ("canCommit".equals(property)) { //$NON-NLS-1$
 			Repository repository = Adapters.adapt(receiver, Repository.class);
 			if (repository != null) {
-				return computeResult(expectedValue,
-						repository.getRepositoryState().canCommit());
+				RepositoryState state = RepositoryStateCache.INSTANCE
+						.getRepositoryState(repository);
+				return computeResult(expectedValue, state.canCommit());
 			}
 		} else if ("hasMultipleRefs".equals(property)) { //$NON-NLS-1$
 			IRepositoryCommit commit = Adapters.adapt(receiver,

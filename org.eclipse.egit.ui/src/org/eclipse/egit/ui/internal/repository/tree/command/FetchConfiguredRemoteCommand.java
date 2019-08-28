@@ -28,6 +28,7 @@ import org.eclipse.egit.ui.internal.repository.tree.FetchNode;
 import org.eclipse.egit.ui.internal.repository.tree.RemoteNode;
 import org.eclipse.egit.ui.internal.repository.tree.RepositoryNode;
 import org.eclipse.egit.ui.internal.repository.tree.RepositoryTreeNode;
+import org.eclipse.egit.ui.internal.selection.RepositoryStateCache;
 import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jgit.transport.RemoteConfig;
 
@@ -59,7 +60,7 @@ public class FetchConfiguredRemoteCommand extends
 	public boolean isEnabled() {
 		RepositoryTreeNode node = getSelectedNodes().get(0);
 		try {
-			return getRemoteConfig(node) != null;
+			return getRemoteConfigCached(node) != null;
 		} catch (ExecutionException e) {
 			return false;
 		}
@@ -67,16 +68,14 @@ public class FetchConfiguredRemoteCommand extends
 
 	private RemoteConfig getRemoteConfig(RepositoryTreeNode node)
 			throws ExecutionException {
-		if (node instanceof FetchNode)
-			try {
-				RemoteNode remote = (RemoteNode) node.getParent();
-				return  new RemoteConfig(node.getRepository().getConfig(),
-						remote.getObject());
-			} catch (URISyntaxException e) {
-				throw new ExecutionException(e.getMessage());
-			}
-
-		if (node instanceof RemoteNode)
+		if (node instanceof RepositoryNode) {
+			return SimpleConfigureFetchDialog
+					.getConfiguredRemote(node.getRepository());
+		}
+		if (node instanceof FetchNode) {
+			node = node.getParent();
+		}
+		if (node instanceof RemoteNode) {
 			try {
 				RemoteNode remote = (RemoteNode) node;
 				return new RemoteConfig(node.getRepository().getConfig(),
@@ -84,11 +83,28 @@ public class FetchConfiguredRemoteCommand extends
 			} catch (URISyntaxException e) {
 				throw new ExecutionException(e.getMessage());
 			}
+		}
+		return null;
+	}
 
-		if (node instanceof RepositoryNode)
-			return SimpleConfigureFetchDialog.getConfiguredRemote(node
-					.getRepository());
-
+	private RemoteConfig getRemoteConfigCached(RepositoryTreeNode node)
+			throws ExecutionException {
+		if (node instanceof RepositoryNode) {
+			return SimpleConfigureFetchDialog
+					.getConfiguredRemoteCached(node.getRepository());
+		}
+		if (node instanceof FetchNode) {
+			node = node.getParent();
+		}
+		if (node instanceof RemoteNode) {
+			try {
+				RemoteNode remote = (RemoteNode) node;
+				return new RemoteConfig(RepositoryStateCache.INSTANCE
+						.getConfig(node.getRepository()), remote.getObject());
+			} catch (URISyntaxException e) {
+				throw new ExecutionException(e.getMessage());
+			}
+		}
 		return null;
 	}
 }

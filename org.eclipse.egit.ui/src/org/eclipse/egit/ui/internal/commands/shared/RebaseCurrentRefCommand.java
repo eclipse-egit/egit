@@ -28,6 +28,7 @@ import org.eclipse.egit.ui.internal.branch.LaunchFinder;
 import org.eclipse.egit.ui.internal.dialogs.BasicConfigurationDialog;
 import org.eclipse.egit.ui.internal.dialogs.RebaseTargetSelectionDialog;
 import org.eclipse.egit.ui.internal.rebase.RebaseInteractiveHandler;
+import org.eclipse.egit.ui.internal.selection.RepositoryStateCache;
 import org.eclipse.egit.ui.internal.selection.SelectionUtils;
 import org.eclipse.jface.dialogs.IDialogConstants;
 import org.eclipse.jface.viewers.ISelection;
@@ -36,7 +37,6 @@ import org.eclipse.jgit.api.RebaseCommand.InteractiveHandler;
 import org.eclipse.jgit.lib.BranchConfig.BranchRebaseMode;
 import org.eclipse.jgit.lib.Config;
 import org.eclipse.jgit.lib.ConfigConstants;
-import org.eclipse.jgit.lib.Constants;
 import org.eclipse.jgit.lib.Ref;
 import org.eclipse.jgit.lib.Repository;
 import org.eclipse.jgit.lib.RepositoryState;
@@ -129,7 +129,7 @@ public class RebaseCurrentRefCommand extends AbstractRebaseCommandHandler {
 			Repository repo = SelectionUtils.getRepository(ctx);
 			if (repo != null) {
 				boolean enabled = isEnabledForState(repo,
-						repo.getRepositoryState());
+						RepositoryStateCache.INSTANCE.getRepositoryState(repo));
 				setBaseEnabled(enabled);
 			} else {
 				setBaseEnabled(false);
@@ -146,16 +146,8 @@ public class RebaseCurrentRefCommand extends AbstractRebaseCommandHandler {
 	 */
 	public static boolean isEnabledForState(Repository repo,
 			RepositoryState state) {
-		return state == RepositoryState.SAFE && hasHead(repo);
-	}
-
-	private static boolean hasHead(Repository repo) {
-		try {
-			Ref headRef = repo.exactRef(Constants.HEAD);
-			return headRef != null && headRef.getObjectId() != null;
-		} catch (IOException e) {
-			return false;
-		}
+		return state == RepositoryState.SAFE
+				&& RepositoryStateCache.INSTANCE.getHead(repo) != null;
 	}
 
 	private String getFullBranch(Repository repository)
