@@ -13,14 +13,11 @@
  *******************************************************************************/
 package org.eclipse.egit.gitflow.ui.internal.properties;
 
-import static org.eclipse.egit.gitflow.ui.Activator.error;
-
 import java.io.File;
-import java.io.IOException;
 
-import org.eclipse.egit.gitflow.Activator;
-import org.eclipse.egit.gitflow.GitFlowRepository;
+import org.eclipse.egit.gitflow.GitFlowConfig;
 import org.eclipse.egit.ui.internal.expressions.AbstractPropertyTester;
+import org.eclipse.egit.ui.internal.selection.RepositoryStateCache;
 import org.eclipse.jgit.lib.Repository;
 
 /**
@@ -62,25 +59,30 @@ public class RepositoryPropertyTester extends AbstractPropertyTester {
 	}
 
 	private boolean internalTest(Repository repository, String property) {
-		GitFlowRepository gitFlowRepository = new GitFlowRepository(repository);
-		try {
-			if (IS_INITIALIZED.equals(property)) {
-				return gitFlowRepository.getConfig().isInitialized();
-			} else if (IS_FEATURE.equals(property)) {
-				return gitFlowRepository.isFeature();
-			} else if (IS_RELEASE.equals(property)) {
-				return gitFlowRepository.isRelease();
-			} else if (IS_HOTFIX.equals(property)) {
-				return gitFlowRepository.isHotfix();
-			} else if (IS_DEVELOP.equals(property)) {
-				return gitFlowRepository.isDevelop();
-			} else if (IS_MASTER.equals(property)) {
-				return gitFlowRepository.isMaster();
-			} else if (HAS_DEFAULT_REMOTE.equals(property)) {
-				return gitFlowRepository.getConfig().hasDefaultRemote();
+		GitFlowConfig config = new GitFlowConfig(
+				RepositoryStateCache.INSTANCE.getConfig(repository));
+		if (IS_INITIALIZED.equals(property)) {
+			return config.isInitialized();
+		} else if (HAS_DEFAULT_REMOTE.equals(property)) {
+			return config.hasDefaultRemote();
+		} else {
+			String branch = RepositoryStateCache.INSTANCE
+					.getFullBranchName(repository);
+			if (branch == null) {
+				return false;
 			}
-		} catch (IOException e) {
-			Activator.getDefault().getLog().log(error(e.getMessage(), e));
+			branch = Repository.shortenRefName(branch);
+			if (IS_FEATURE.equals(property)) {
+				return branch.startsWith(config.getFeaturePrefix());
+			} else if (IS_RELEASE.equals(property)) {
+				return branch.startsWith(config.getReleasePrefix());
+			} else if (IS_HOTFIX.equals(property)) {
+				return branch.startsWith(config.getHotfixPrefix());
+			} else if (IS_DEVELOP.equals(property)) {
+				return branch.equals(config.getDevelop());
+			} else if (IS_MASTER.equals(property)) {
+				return branch.equals(config.getMaster());
+			}
 		}
 		return false;
 	}

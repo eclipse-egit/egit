@@ -17,7 +17,6 @@
 package org.eclipse.egit.ui.internal.repository.tree.command;
 
 import java.io.File;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
@@ -35,10 +34,9 @@ import org.eclipse.egit.ui.internal.repository.tree.FileNode;
 import org.eclipse.egit.ui.internal.repository.tree.FolderNode;
 import org.eclipse.egit.ui.internal.repository.tree.RepositoryTreeNode;
 import org.eclipse.egit.ui.internal.repository.tree.WorkingDirNode;
+import org.eclipse.egit.ui.internal.selection.RepositoryStateCache;
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.IStructuredSelection;
-import org.eclipse.jgit.lib.Constants;
-import org.eclipse.jgit.lib.Ref;
 import org.eclipse.jgit.lib.Repository;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.ui.ISources;
@@ -106,14 +104,8 @@ abstract class RepositoriesViewCommandHandler<T extends RepositoryTreeNode<?>>
 	}
 
 	private boolean repositoryHasHead(T treeNode) {
-		Repository repo = treeNode.getRepository();
-		try {
-			Ref ref = repo.exactRef(Constants.HEAD);
-			return ref != null && ref.getObjectId() != null;
-		} catch (IOException e) {
-			// ignore and report false
-			return false;
-		}
+		return RepositoryStateCache.INSTANCE
+				.getHead(treeNode.getRepository()) != null;
 	}
 
 	private boolean selectionHasHead(boolean all) {

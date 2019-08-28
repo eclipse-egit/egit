@@ -31,6 +31,7 @@ import org.eclipse.egit.ui.internal.branch.LaunchFinder;
 import org.eclipse.egit.ui.internal.dialogs.BasicConfigurationDialog;
 import org.eclipse.egit.ui.internal.dialogs.MergeTargetSelectionDialog;
 import org.eclipse.egit.ui.internal.merge.MergeResultDialog;
+import org.eclipse.egit.ui.internal.selection.RepositoryStateCache;
 import org.eclipse.jface.dialogs.IDialogConstants;
 import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jgit.lib.Constants;
@@ -74,7 +75,8 @@ public class MergeActionHandler extends RepositoryActionHandler {
 	public boolean isEnabled() {
 		Repository repo = getRepository();
 		return repo != null
-				&& repo.getRepositoryState() == RepositoryState.SAFE
+				&& RepositoryState.SAFE.equals(
+						RepositoryStateCache.INSTANCE.getRepositoryState(repo))
 				&& isLocalBranchCheckedout(repo);
 	}
 

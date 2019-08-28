@@ -14,8 +14,9 @@ import java.io.IOException;
 import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.commands.ExecutionException;
 import org.eclipse.egit.ui.Activator;
-import org.eclipse.egit.ui.internal.push.PushWizardDialog;
 import org.eclipse.egit.ui.internal.push.PushBranchWizard;
+import org.eclipse.egit.ui.internal.push.PushWizardDialog;
+import org.eclipse.egit.ui.internal.selection.RepositoryStateCache;
 import org.eclipse.jgit.lib.Constants;
 import org.eclipse.jgit.lib.ObjectId;
 import org.eclipse.jgit.lib.Ref;
@@ -54,15 +55,7 @@ public class PushBranchActionHandler extends RepositoryActionHandler {
 		if (repository == null) {
 			return false;
 		}
-		try {
-			Ref head = repository.exactRef(Constants.HEAD);
-			if (head != null && head.getObjectId() != null) {
-				return true;
-			}
-		} catch (IOException e) {
-			Activator.logError(e.getMessage(), e);
-		}
-		return false;
+		return RepositoryStateCache.INSTANCE.getHead(repository) != null;
 	}
 
 	private Ref getBranchRef(Repository repository) {
