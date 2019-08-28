@@ -13,13 +13,9 @@
  *******************************************************************************/
 package org.eclipse.egit.ui.internal.actions;
 
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
-
-import org.eclipse.egit.ui.Activator;
 import org.eclipse.egit.ui.internal.CommonUtils;
 import org.eclipse.egit.ui.internal.UIText;
+import org.eclipse.egit.ui.internal.selection.RepositoryStateCache;
 import org.eclipse.egit.ui.internal.selection.SelectionUtils;
 import org.eclipse.jface.action.IContributionItem;
 import org.eclipse.jgit.lib.Constants;
@@ -68,33 +64,28 @@ public class PushMenu extends CompoundContributionItem implements
 
 	@Override
 	protected IContributionItem[] getContributionItems() {
-		List<IContributionItem> res = new ArrayList<>();
-
 		if (this.handlerService != null) {
 			Repository repository = SelectionUtils.getRepository(handlerService
 					.getCurrentState());
 
 			if (repository != null) {
-				try {
-					String ref = repository.getFullBranch();
-					String menuLabel = UIText.PushMenu_PushHEAD;
-					if (ref != null && ref.startsWith(Constants.R_HEADS)) {
-						menuLabel = NLS.bind(UIText.PushMenu_PushBranch,
-								Repository.shortenRefName(ref));
-					}
-					CommandContributionItemParameter params = new CommandContributionItemParameter(
-							this.serviceLocator, getClass().getName(),
-							ActionCommands.PUSH_BRANCH_ACTION,
-							CommandContributionItem.STYLE_PUSH);
-					params.label = menuLabel;
-					CommandContributionItem item = new CommandContributionItem(
-							params);
-					res.add(item);
-				} catch (IOException ex) {
-					Activator.handleError(ex.getLocalizedMessage(), ex, false);
+				String ref = RepositoryStateCache.INSTANCE
+						.getFullBranchName(repository);
+				String menuLabel = UIText.PushMenu_PushHEAD;
+				if (ref != null && ref.startsWith(Constants.R_HEADS)) {
+					menuLabel = NLS.bind(UIText.PushMenu_PushBranch,
+							Repository.shortenRefName(ref));
 				}
+				CommandContributionItemParameter params = new CommandContributionItemParameter(
+						this.serviceLocator, getClass().getName(),
+						ActionCommands.PUSH_BRANCH_ACTION,
+						CommandContributionItem.STYLE_PUSH);
+				params.label = menuLabel;
+				CommandContributionItem item = new CommandContributionItem(
+						params);
+				return new IContributionItem[] { item };
 			}
 		}
-		return res.toArray(new IContributionItem[0]);
+		return new IContributionItem[0];
 	}
 }

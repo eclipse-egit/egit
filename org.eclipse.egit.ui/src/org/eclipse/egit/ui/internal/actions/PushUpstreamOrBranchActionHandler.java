@@ -14,10 +14,11 @@ import java.io.IOException;
 
 import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.commands.ExecutionException;
-import org.eclipse.egit.ui.internal.push.PushWizardDialog;
 import org.eclipse.egit.ui.internal.push.PushBranchWizard;
 import org.eclipse.egit.ui.internal.push.PushOperationUI;
+import org.eclipse.egit.ui.internal.push.PushWizardDialog;
 import org.eclipse.egit.ui.internal.push.SimpleConfigurePushDialog;
+import org.eclipse.egit.ui.internal.selection.RepositoryStateCache;
 import org.eclipse.jgit.lib.Constants;
 import org.eclipse.jgit.lib.Ref;
 import org.eclipse.jgit.lib.Repository;
@@ -68,14 +69,11 @@ public class PushUpstreamOrBranchActionHandler extends RepositoryActionHandler {
 	@Override
 	public boolean isEnabled() {
 		final Repository repository = getRepository();
-		if (repository == null)
+		if (repository == null) {
 			return false;
-
-		Ref head = getHeadIfSymbolic(repository);
-		if (head == null)
-			return false;
-
-		return true;
+		}
+		Ref head = RepositoryStateCache.INSTANCE.getHeadRef(repository);
+		return head != null && head.isSymbolic();
 	}
 
 	private static Ref getHeadIfSymbolic(Repository repository) {

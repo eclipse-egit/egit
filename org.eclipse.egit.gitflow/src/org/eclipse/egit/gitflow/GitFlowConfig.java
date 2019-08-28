@@ -22,7 +22,7 @@ import java.io.IOException;
 import java.net.URISyntaxException;
 import java.util.Set;
 
-import org.eclipse.core.runtime.Assert;
+import org.eclipse.jgit.annotations.NonNull;
 import org.eclipse.jgit.lib.Repository;
 import org.eclipse.jgit.lib.StoredConfig;
 import org.eclipse.jgit.transport.RemoteConfig;
@@ -83,22 +83,30 @@ public class GitFlowConfig {
 	 */
 	public static final String FEATURE_START_SUBSECTION = "feature.start"; //$NON-NLS-1$
 
-	private Repository repository;
+	private StoredConfig config;
 
 	/**
 	 * @param repository
 	 */
-	public GitFlowConfig(Repository repository) {
-		Assert.isNotNull(repository);
-		this.repository = repository;
+	public GitFlowConfig(@NonNull Repository repository) {
+		this(repository.getConfig());
+	}
+
+	/**
+	 * Creates a {@link GitFlowConfig}
+	 *
+	 * @param config
+	 *            to read values from
+	 * @since 5.6
+	 */
+	public GitFlowConfig(@NonNull StoredConfig config) {
+		this.config = config;
 	}
 
 	/**
 	 * @return git init done?
-	 * @throws IOException
 	 */
-	public boolean isInitialized() throws IOException {
-		StoredConfig config = repository.getConfig();
+	public boolean isInitialized() {
 		Set<String> sections = config.getSections();
 		return sections.contains(GITFLOW_SECTION);
 	}
@@ -107,7 +115,6 @@ public class GitFlowConfig {
 	 * @return Local user of this repository.
 	 */
 	public String getUser() {
-		StoredConfig config = repository.getConfig();
 		String userName = config.getString(USER_SECTION, null, "name"); //$NON-NLS-1$
 		String email = config.getString(USER_SECTION, null, "email"); //$NON-NLS-1$
 		return String.format("%s <%s>", userName, email); //$NON-NLS-1$
@@ -169,7 +176,6 @@ public class GitFlowConfig {
 	 * @return value for key prefixName from .git/config or default
 	 */
 	public String getPrefix(String prefixName, String defaultPrefix) {
-		StoredConfig config = repository.getConfig();
 		String result = config.getString(GITFLOW_SECTION, PREFIX_SECTION,
 				prefixName);
 		return (result == null) ? defaultPrefix : result;
@@ -181,7 +187,6 @@ public class GitFlowConfig {
 	 * @return value for key branch from .git/config or default
 	 */
 	public String getBranch(String branch, String defaultBranch) {
-		StoredConfig config = repository.getConfig();
 		String result = config.getString(GITFLOW_SECTION, BRANCH_SECTION,
 				branch);
 		return (result == null) ? defaultBranch : result;
@@ -194,7 +199,6 @@ public class GitFlowConfig {
 	 * @param value
 	 */
 	public void setPrefix(String prefixName, String value) {
-		StoredConfig config = repository.getConfig();
 		config.setString(GITFLOW_SECTION, PREFIX_SECTION, prefixName, value);
 	}
 
@@ -205,7 +209,6 @@ public class GitFlowConfig {
 	 * @param value
 	 */
 	public void setBranch(String branchName, String value) {
-		StoredConfig config = repository.getConfig();
 		config.setString(GITFLOW_SECTION, BRANCH_SECTION, branchName, value);
 	}
 
@@ -261,10 +264,9 @@ public class GitFlowConfig {
 	 * @return Configured origin.
 	 */
 	public RemoteConfig getDefaultRemoteConfig() {
-		StoredConfig rc = repository.getConfig();
 		RemoteConfig result;
 		try {
-			result = new RemoteConfig(rc, DEFAULT_REMOTE_NAME);
+			result = new RemoteConfig(config, DEFAULT_REMOTE_NAME);
 		} catch (URISyntaxException e) {
 			throw new IllegalStateException(e);
 		}
@@ -275,8 +277,7 @@ public class GitFlowConfig {
 	 * @return Whether or not there is a default remote configured.
 	 */
 	public boolean hasDefaultRemote() {
-		RemoteConfig config = getDefaultRemoteConfig();
-		return !config.getURIs().isEmpty();
+		return !getDefaultRemoteConfig().getURIs().isEmpty();
 	}
 
 	/**
@@ -302,14 +303,12 @@ public class GitFlowConfig {
 	 * @return Upstream branch name
 	 */
 	public String getUpstreamBranchName(String featureName) {
-		StoredConfig config = repository.getConfig();
 		return config.getString(BRANCH_SECTION,
 				getFeatureBranchName(featureName), MERGE_KEY);
 	}
 
 	private void setBranchValue(String featureName, String value,
 			String mergeKey) throws IOException {
-		StoredConfig config = repository.getConfig();
 		config.setString(BRANCH_SECTION, featureName, mergeKey, value);
 		config.save();
 	}
@@ -319,7 +318,6 @@ public class GitFlowConfig {
 	 * @return remote tracking branch
 	 */
 	public String getRemoteName(String featureName) {
-		StoredConfig config = repository.getConfig();
 		return config.getString(BRANCH_SECTION,
 				getFeatureBranchName(featureName), REMOTE_KEY);
 	}
@@ -334,7 +332,6 @@ public class GitFlowConfig {
 	 */
 	public void setFetchOnFeatureStart(boolean isFetchOnFeatureStart)
 			throws IOException {
-		StoredConfig config = repository.getConfig();
 		config.setBoolean(GITFLOW_SECTION, FEATURE_START_SUBSECTION, FEATURE_START_FETCH_KEY,
 				isFetchOnFeatureStart);
 		config.save();
@@ -347,7 +344,6 @@ public class GitFlowConfig {
 	 * @since 5.2
 	 */
 	public boolean isFetchOnFeatureStart() {
-		StoredConfig config = repository.getConfig();
 		return config.getBoolean(GITFLOW_SECTION, FEATURE_START_SUBSECTION,
 				FEATURE_START_FETCH_KEY, false);
 	}

@@ -29,6 +29,7 @@ import org.eclipse.egit.ui.JobFamilies;
 import org.eclipse.egit.ui.internal.UIText;
 import org.eclipse.egit.ui.internal.dialogs.CommandConfirmation;
 import org.eclipse.egit.ui.internal.operations.GitScopeUtil;
+import org.eclipse.egit.ui.internal.selection.RepositoryStateCache;
 import org.eclipse.jgit.lib.Repository;
 import org.eclipse.jgit.lib.RepositoryState;
 import org.eclipse.ui.IWorkbenchPart;
@@ -72,8 +73,10 @@ public class DiscardChangesActionHandler extends RepositoryActionHandler {
 		if (repositories.length == 0)
 			return false;
 		for (Repository repository : repositories) {
-			if (!repository.getRepositoryState().equals(RepositoryState.SAFE))
+			if (!RepositoryState.SAFE.equals(RepositoryStateCache.INSTANCE
+					.getRepositoryState(repository))) {
 				return false;
+			}
 		}
 		return true;
 	}
