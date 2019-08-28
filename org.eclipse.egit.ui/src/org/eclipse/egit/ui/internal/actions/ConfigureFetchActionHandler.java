@@ -34,7 +34,7 @@ public class ConfigureFetchActionHandler extends RepositoryActionHandler {
 		Repository repository = getRepository();
 		return repository != null
 				&& SimpleConfigureFetchDialog
-						.getConfiguredRemote(repository) != null;
+						.getConfiguredRemoteCached(repository) != null;
 	}
 
 }

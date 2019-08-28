@@ -34,7 +34,7 @@ public class ConfigurePushActionHandler extends RepositoryActionHandler {
 		Repository repository = getRepository();
 		return repository != null
 				&& SimpleConfigurePushDialog
-						.getConfiguredRemote(repository) != null;
+						.getConfiguredRemoteCached(repository) != null;
 	}
 
 }

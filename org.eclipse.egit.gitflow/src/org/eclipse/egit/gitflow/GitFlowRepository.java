@@ -41,14 +41,11 @@ public class GitFlowRepository {
 
 	private Repository repository;
 
-	private GitFlowConfig config;
-
 	/**
 	 * @param repository
 	 */
 	public GitFlowRepository(@NonNull Repository repository) {
 		this.repository = repository;
-		this.config = new GitFlowConfig(repository);
 	}
 
 	/**
@@ -297,7 +294,7 @@ public class GitFlowRepository {
 	 * @return the configuration of this repository
 	 */
 	public GitFlowConfig getConfig() {
-		return this.config;
+		return new GitFlowConfig(repository.getConfig());
 	}
 
 	/**
@@ -310,7 +307,7 @@ public class GitFlowRepository {
 	 * @since 4.3
 	 */
 	public boolean isOnDevelop(@NonNull RevCommit selectedCommit) throws IOException {
-		String develop = config.getDevelopFull();
+		String develop = getConfig().getDevelopFull();
 		return isOnBranch(selectedCommit, develop);
 	}
 
