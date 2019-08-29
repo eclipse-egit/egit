@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8aafa6b6_4552e908",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/staging/StagingView.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 4205,
+      "author": {
+        "id": 440
+      },
+      "writtenOn": "2019-08-29T17:39:34Z",
+      "side": 1,
+      "message": "is there a reason why that runnable is a separate argument? there seems to be only one caller of the new method, and the runnable is constant, so the code could be inlined at the place where the runnable is called, right?",
+      "revId": "b783673bc851a3be0e41533ce9ae066038ecea79",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
