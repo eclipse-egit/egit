@@ -22,6 +22,30 @@
       "revId": "88a9f6304b900cf1a7407fb2fc4680c0f7be9724",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "23744d29_702298c9",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/staging/StagingView.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 4204,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2019-08-29T08:31:53Z",
+      "side": 1,
+      "message": "Ooops. Refactoring leftover :-( from an earlier version where I just did reEnable \u003d !internalCommit(...).",
+      "parentUuid": "ae6544ea_ffc7ff58",
+      "range": {
+        "startLine": 4204,
+        "startChar": 26,
+        "endLine": 4204,
+        "endChar": 27
+      },
+      "revId": "88a9f6304b900cf1a7407fb2fc4680c0f7be9724",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
     }
   ]
 }
