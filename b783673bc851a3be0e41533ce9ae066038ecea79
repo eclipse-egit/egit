@@ -16,6 +16,24 @@
       "revId": "b783673bc851a3be0e41533ce9ae066038ecea79",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ff1835e3_06b65097",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/staging/StagingView.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 4205,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2019-08-29T18:28:56Z",
+      "side": 1,
+      "message": "I wanted to keep all handling related to these enableWidgets() calls local to this method. internalCommit() doesn\u0027t do anything with widget enablement anymore, so I found it strange to have that single call in the job completion listener. IMO it\u0027s easier to understand this way.\n\nIf this were Ada, I\u0027d even used named parameter associations; in Eclipse you can AFAIK get something similar via code minings. If you know the argument is called \"afterJob\", it becomes even easier to read.",
+      "parentUuid": "8aafa6b6_4552e908",
+      "revId": "b783673bc851a3be0e41533ce9ae066038ecea79",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
     }
   ]
 }
