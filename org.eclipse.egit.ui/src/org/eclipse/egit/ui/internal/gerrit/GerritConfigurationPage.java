@@ -80,7 +80,7 @@ class GerritConfigurationPage extends WizardPage {
 	private final String remoteName;
 
 	/**
-	 * @param repository the respository
+	 * @param repository the repository
 	 * @param remoteName the remote name
 	 *
 	 */
