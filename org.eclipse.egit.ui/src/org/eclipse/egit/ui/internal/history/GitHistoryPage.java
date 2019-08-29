@@ -2330,7 +2330,7 @@ public class GitHistoryPage extends HistoryPage implements RefsChangedListener,
 
 	private static String calculateName(HistoryPageInput in) {
 		// we always visualize the current input in the form
-		// <type>: <path> [<respository name>]
+		// <type>: <path> [<repository name>]
 		// in order to give the user an understanding which context
 		// menus they can expect with the current input
 		// we show the filter hint only upon getDescription()
