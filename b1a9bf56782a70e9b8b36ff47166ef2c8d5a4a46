@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e4daac4a_57774a02",
+        "filename": "org.eclipse.egit.target/orbit/S20190827152740.tpd",
+        "patchSetId": 1
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 440
+      },
+      "writtenOn": "2019-08-29T17:43:13Z",
+      "side": 1,
+      "message": "this should probably have been RC1 on stable-5.5, but no need to fix this now. there will be another update in some days anyway.",
+      "range": {
+        "startLine": 1,
+        "startChar": 36,
+        "endLine": 1,
+        "endChar": 38
+      },
+      "revId": "b1a9bf56782a70e9b8b36ff47166ef2c8d5a4a46",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
