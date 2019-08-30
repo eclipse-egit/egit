@@ -42,6 +42,24 @@
     },
     {
       "key": {
+        "uuid": "581df4bf_82625d27",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2019-08-30T22:33:30Z",
+      "side": 1,
+      "message": "No statistics. On my Mac stat is cheap, the UI was never unbearably sluggish. But the effect is quite noticeable even on my Mac.\n\nYes, it\u0027s 1 stat call per config, and 3 configs each time you access Repository.getConfig(). For getting head you also get 1 stat call for HEAD, 1 for packed_refs, and 1 for refs/heads/master. We get HEAD very often.\n\nWe do know from previous bugs that accessing file metadata is fairly expensive on Windows. I\u0027d be really interested in what Michael says; he\u0027s using Windows.",
+      "parentUuid": "605fd1ba_5ab36f79",
+      "revId": "cef23d039ef3bf14dd00df2c8d1b87e72ca423d8",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "591288d3_ad338395",
         "filename": "/COMMIT_MSG",
         "patchSetId": 2
@@ -59,6 +77,24 @@
     },
     {
       "key": {
+        "uuid": "af8a9936_6f9ec943",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2019-08-30T22:33:30Z",
+      "side": 1,
+      "message": "I think so. Have you ever seen a context menu with some item enabled/disabled based on state before the external change was picked up, and another item with state picked up after the external change? It could happen theoretically already. With the new code, at least all menu items would use a consistent state (even if it would be slightly out of date).",
+      "parentUuid": "591288d3_ad338395",
+      "revId": "cef23d039ef3bf14dd00df2c8d1b87e72ca423d8",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "cd36acd2_2ccf80c1",
         "filename": "/COMMIT_MSG",
         "patchSetId": 2
@@ -70,6 +106,24 @@
       "writtenOn": "2019-08-30T22:09:47Z",
       "side": 1,
       "message": "Do you have some statistics from testing this ?\n\nWe could try to use strace (on Linux) or dtrace (on Mac) to get stats about file system accesses when running some test.",
+      "revId": "cef23d039ef3bf14dd00df2c8d1b87e72ca423d8",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "dce9f5d6_56e3ccb5",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2019-08-30T22:33:30Z",
+      "side": 1,
+      "message": "No. I did the easy thing: count the calls in-process (just added counters in jgit).",
+      "parentUuid": "cd36acd2_2ccf80c1",
       "revId": "cef23d039ef3bf14dd00df2c8d1b87e72ca423d8",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
