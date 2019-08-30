@@ -1,0 +1,78 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8ab8a5e1_d6ebace0",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2019-08-30T22:09:47Z",
+      "side": 1,
+      "message": "on",
+      "range": {
+        "startLine": 21,
+        "startChar": 16,
+        "endLine": 21,
+        "endChar": 18
+      },
+      "revId": "cef23d039ef3bf14dd00df2c8d1b87e72ca423d8",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "605fd1ba_5ab36f79",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2019-08-30T22:09:47Z",
+      "side": 1,
+      "message": "How expensive is accessing the config file\u0027s meta data ? If it didn\u0027t change it\u0027s 1 stat call per config to be checked, or did I miss something ?\n\nI agree overall this could still be expensive since there are many files.\n\nDo you have some statistics from testing this ?",
+      "revId": "cef23d039ef3bf14dd00df2c8d1b87e72ca423d8",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "591288d3_ad338395",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2019-08-30T22:09:47Z",
+      "side": 1,
+      "message": "Why ? \nThe repository state can also change by external processes e.g. git command line.\nCan we ignore them for evaluations happening synchronously in the UI thread ?",
+      "revId": "cef23d039ef3bf14dd00df2c8d1b87e72ca423d8",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "cd36acd2_2ccf80c1",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2019-08-30T22:09:47Z",
+      "side": 1,
+      "message": "Do you have some statistics from testing this ?\n\nWe could try to use strace (on Linux) or dtrace (on Mac) to get stats about file system accesses when running some test.",
+      "revId": "cef23d039ef3bf14dd00df2c8d1b87e72ca423d8",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
