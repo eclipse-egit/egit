@@ -153,6 +153,30 @@
     },
     {
       "key": {
+        "uuid": "e96a42bb_f7f6406e",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/fetch/SimpleConfigureFetchDialog.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 109,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2019-08-31T14:41:24Z",
+      "side": 1,
+      "message": "As it says in the javadoc: intended for use in property testers and isEnabled(). In other contexts use the other one.\n\nI don\u0027t want the execution of commands to rely on possibly slightly outdated state. For handler evaluations it can happen anyway, so I thought it was OK to do this.\nAlso, for command _execution_, these file accesses are only a small part of the overall cost. But for handler evaluations, they are a major factor.",
+      "parentUuid": "083c2844_0ea99d81",
+      "range": {
+        "startLine": 109,
+        "startChar": 1,
+        "endLine": 109,
+        "endChar": 53
+      },
+      "revId": "cef23d039ef3bf14dd00df2c8d1b87e72ca423d8",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "dcf34787_202f1ef2",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/selection/RepositoryStateCache.java",
         "patchSetId": 2
@@ -170,6 +194,24 @@
     },
     {
       "key": {
+        "uuid": "b71eaa91_5a9bf7cb",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/selection/RepositoryStateCache.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 194,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2019-08-31T14:41:24Z",
+      "side": 1,
+      "message": "The exactRef() calls were mostly of the form\n\n  Ref head \u003d repo.exactRef(Constants.HEAD)\n  return head !\u003d null \u0026\u0026 head.getObjectId() !\u003d null;\n\nThat can be replaced by\n\n  return RepositoryStateCache.INSTANCE.getHead(repo) !\u003d null;\n\nI think there is one that was replaced by getHeadRef().\n\nresolve(Constants.HEAD) can be replaced by getHead().",
+      "parentUuid": "dcf34787_202f1ef2",
+      "revId": "cef23d039ef3bf14dd00df2c8d1b87e72ca423d8",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2f9cdcca_74cf2bfa",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/selection/RepositoryStateCache.java",
         "patchSetId": 2
@@ -181,6 +223,30 @@
       "writtenOn": "2019-08-31T14:12:56Z",
       "side": 1,
       "message": "you can return the names as is (even for null)...\n\n(continue in line 297)",
+      "range": {
+        "startLine": 212,
+        "startChar": 38,
+        "endLine": 212,
+        "endChar": 40
+      },
+      "revId": "cef23d039ef3bf14dd00df2c8d1b87e72ca423d8",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "099ce2c2_02fa133e",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/selection/RepositoryStateCache.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 212,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2019-08-31T14:41:24Z",
+      "side": 1,
+      "message": "No, getFullBranchName() would trigger repeated re-evaluations.",
+      "parentUuid": "2f9cdcca_74cf2bfa",
       "range": {
         "startLine": 212,
         "startChar": 38,
@@ -227,6 +293,30 @@
       "writtenOn": "2019-08-31T14:12:56Z",
       "side": 1,
       "message": "...if you are converting the empty string back to null anyway, thereby making this if-statement superfluous",
+      "range": {
+        "startLine": 297,
+        "startChar": 19,
+        "endLine": 297,
+        "endChar": 36
+      },
+      "revId": "cef23d039ef3bf14dd00df2c8d1b87e72ca423d8",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7b9fb056_8cb34ac2",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/selection/RepositoryStateCache.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 297,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2019-08-31T14:41:24Z",
+      "side": 1,
+      "message": "See above.",
+      "parentUuid": "b0f704f6_1ca8e8b8",
       "range": {
         "startLine": 297,
         "startChar": 19,
