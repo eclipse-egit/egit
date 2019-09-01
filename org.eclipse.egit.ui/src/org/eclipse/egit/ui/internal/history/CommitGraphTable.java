@@ -70,6 +70,7 @@ import org.eclipse.jface.viewers.StructuredSelection;
 import org.eclipse.jface.viewers.TableViewer;
 import org.eclipse.jgit.annotations.NonNull;
 import org.eclipse.jgit.annotations.Nullable;
+import org.eclipse.jgit.lib.Ref;
 import org.eclipse.jgit.lib.Repository;
 import org.eclipse.jgit.revplot.PlotCommit;
 import org.eclipse.jgit.revwalk.RevCommit;
@@ -157,6 +158,8 @@ class CommitGraphTable {
 	private RevFlag highlight;
 
 	private HistoryPageInput input;
+
+	private Ref head;
 
 	IAction copy;
 
@@ -468,6 +471,7 @@ class CommitGraphTable {
 
 	void setHistoryPageInput(HistoryPageInput input) {
 		this.input = input;
+		this.head = null;
 	}
 
 	private int initCommitsMap(SWTCommit[] asArray, String topName) {
@@ -546,22 +550,15 @@ class CommitGraphTable {
 
 	private void createPaintListener(final Table rawTable) {
 		// Tell SWT we will completely handle painting for some columns.
-		//
-		rawTable.addListener(SWT.EraseItem, new Listener() {
-			@Override
-			public void handleEvent(final Event event) {
-				if (event.index == 1) {
-					event.detail &= ~SWT.FOREGROUND;
-				}
+		rawTable.addListener(SWT.EraseItem, event -> {
+			if (event.index == 1) {
+				event.detail &= ~SWT.FOREGROUND;
 			}
 		});
 
-		rawTable.addListener(SWT.PaintItem, new Listener() {
-			@Override
-			public void handleEvent(final Event event) {
-				if (event.index == 1) {
-					doPaint(event);
-				}
+		rawTable.addListener(SWT.PaintItem, event -> {
+			if (event.index == 1) {
+				doPaint(event);
 			}
 		});
 	}
@@ -588,7 +585,18 @@ class CommitGraphTable {
 			event.gc.setFont(nFont);
 		}
 
-		renderer.paint(event, input == null ? null : input.getHead());
+		renderer.paint(event, getHead());
+	}
+
+	private Ref getHead() {
+		if (input == null) {
+			return null;
+		}
+		if (head != null) {
+			return head;
+		}
+		head = input.getHead();
+		return head;
 	}
 
 	/**
