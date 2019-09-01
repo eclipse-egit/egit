@@ -19,6 +19,7 @@ import java.io.IOException;
 import org.eclipse.core.runtime.IAdaptable;
 import org.eclipse.egit.core.internal.IRepositoryCommit;
 import org.eclipse.jgit.lib.AnyObjectId;
+import org.eclipse.jgit.lib.Ref;
 import org.eclipse.jgit.lib.Repository;
 import org.eclipse.jgit.revplot.PlotCommit;
 import org.eclipse.jgit.revwalk.RevCommit;
@@ -46,6 +47,17 @@ class SWTCommit extends PlotCommit<SWTCommitList.SWTLane>
 		if (getRawBuffer() == null) {
 			walk.parseBody(this);
 		}
+	}
+
+	/**
+	 * Retrieves the HEAD ref if it is symbolic.
+	 *
+	 * @return the Ref, or {@code null} if HEAD is not a symbolic Ref
+	 * @throws IOException
+	 *             if the head cannot be read
+	 */
+	public Ref getHead() throws IOException {
+		return walk.getHead();
 	}
 
 	@Override

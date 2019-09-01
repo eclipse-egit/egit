@@ -13,7 +13,13 @@
  *******************************************************************************/
 package org.eclipse.egit.ui.internal.history;
 
+import java.io.IOException;
+
+import org.eclipse.jgit.errors.IncorrectObjectTypeException;
+import org.eclipse.jgit.errors.MissingObjectException;
 import org.eclipse.jgit.lib.AnyObjectId;
+import org.eclipse.jgit.lib.Constants;
+import org.eclipse.jgit.lib.Ref;
 import org.eclipse.jgit.lib.Repository;
 import org.eclipse.jgit.revplot.PlotWalk;
 import org.eclipse.jgit.revwalk.RevCommit;
@@ -21,6 +27,10 @@ import org.eclipse.jgit.revwalk.RevCommit;
 class SWTWalk extends PlotWalk {
 
 	private final Repository repo;
+
+	private Ref head;
+
+	private boolean headInitialized;
 
 	SWTWalk(final Repository repo) {
 		super(repo);
@@ -32,7 +42,47 @@ class SWTWalk extends PlotWalk {
 	}
 
 	@Override
+	protected void reset(int retainFlags) {
+		headInitialized = false;
+		head = null;
+		super.reset(retainFlags);
+	}
+
+	@Override
+	public RevCommit next() throws MissingObjectException,
+			IncorrectObjectTypeException, IOException {
+		if (!headInitialized) {
+			head = determineHead();
+			headInitialized = true;
+		}
+		return super.next();
+	}
+
+	/**
+	 * Retrieves the HEAD ref if it is symbolic.
+	 *
+	 * @return the Ref, or {@code null} if HEAD is not a symbolic Ref
+	 * @throws IOException
+	 *             if the head cannot be read
+	 */
+	public Ref getHead() throws IOException {
+		if (!headInitialized) {
+			head = determineHead();
+			headInitialized = true;
+		}
+		return head;
+	}
+
+	@Override
 	protected RevCommit createCommit(final AnyObjectId id) {
 		return new SWTCommit(id, this);
+	}
+
+	private Ref determineHead() throws IOException {
+		Ref h = repo.exactRef(Constants.HEAD);
+		if (h != null && h.isSymbolic()) {
+			return h;
+		}
+		return null;
 	}
 }
