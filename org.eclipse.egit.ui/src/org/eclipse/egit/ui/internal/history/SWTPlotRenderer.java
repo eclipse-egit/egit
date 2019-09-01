@@ -113,10 +113,9 @@ class SWTPlotRenderer extends AbstractPlotRenderer<SWTLane, Color> {
 		commitDotOutline = resources.createColor(new RGB(110, 110, 110));
 	}
 
-	void paint(final Event event, Ref actHeadRef) {
+	void paint(final Event event) {
 		g = event.gc;
 
-		this.headRef = actHeadRef;
 		cellX = event.x;
 		cellY = event.y;
 		cellFG = g.getForeground();
@@ -128,6 +127,7 @@ class SWTPlotRenderer extends AbstractPlotRenderer<SWTLane, Color> {
 		SWTCommit commit = (SWTCommit) ti.getData();
 		try {
 			commit.parseBody();
+			headRef = commit.getHead();
 		} catch (IOException e) {
 			Activator.error("Error parsing body", e); //$NON-NLS-1$
 			return;

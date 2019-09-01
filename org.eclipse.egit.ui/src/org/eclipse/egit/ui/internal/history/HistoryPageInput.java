@@ -14,7 +14,6 @@
 package org.eclipse.egit.ui.internal.history;
 
 import java.io.File;
-import java.io.IOException;
 import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -22,12 +21,7 @@ import java.util.List;
 import java.util.Objects;
 
 import org.eclipse.core.resources.IResource;
-import org.eclipse.egit.ui.Activator;
-import org.eclipse.egit.ui.internal.UIText;
-import org.eclipse.jgit.lib.Constants;
-import org.eclipse.jgit.lib.Ref;
 import org.eclipse.jgit.lib.Repository;
-import org.eclipse.osgi.util.NLS;
 
 /**
  * Input for the {@link GitHistoryPage}
@@ -142,23 +136,6 @@ public class HistoryPageInput {
 	 */
 	public boolean isSingleFile() {
 		return singleFile != null;
-	}
-
-	/**
-	 * @return the HEAD Ref
-	 */
-	public Ref getHead() {
-		try {
-			Ref h = repo.exactRef(Constants.HEAD);
-			if (h != null && h.isSymbolic())
-				return h;
-			return null;
-		} catch (IOException e) {
-			throw new IllegalStateException(NLS.bind(
-					UIText.GitHistoryPage_errorParsingHead, Activator
-							.getDefault().getRepositoryUtil()
-							.getRepositoryName(repo)), e);
-		}
 	}
 
 	/**
