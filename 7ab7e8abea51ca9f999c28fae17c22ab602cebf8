@@ -16,6 +16,24 @@
       "revId": "7ab7e8abea51ca9f999c28fae17c22ab602cebf8",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "6b0bcd89_3f0d1a6e",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/fetch/SimpleConfigureFetchDialog.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2019-09-02T16:41:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6b6d01a4_1fa05b32",
+      "revId": "7ab7e8abea51ca9f999c28fae17c22ab602cebf8",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
     }
   ]
 }
