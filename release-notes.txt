@@ -1,0 +1,978 @@
+commit 1ebf4f0f3cac064509ec293881aaa3809b3e6dab
+Author: Matthias Sohn <matthias.sohn@sap.com>
+Date:   Wed Sep 4 18:01:16 2019 +0200
+
+    Prepare 5.5.0-SNAPSHOT builds
+    
+    Change-Id: I3527681cf219e8e0a358986398891a3a1fe8b303
+    Signed-off-by: Matthias Sohn <matthias.sohn@sap.com>
+
+commit f6c6ffe5e3b81186a62da8449fd807d302de4608
+Author: Matthias Sohn <matthias.sohn@sap.com>
+Date:   Wed Sep 4 16:57:44 2019 +0200
+
+    EGit v5.5.0.201909041048-rc1
+    
+    Change-Id: I2f07b70159f12597aea840beadfeeb631b77ad19
+    Signed-off-by: Matthias Sohn <matthias.sohn@sap.com>
+
+commit c5b09e8b9494aa2771d3b416e19edd124f85c9e5
+Author: Matthias Sohn <matthias.sohn@sap.com>
+Date:   Fri Aug 30 11:12:28 2019 +0200
+
+    Use https in update site URLs
+    
+    Bug: 450485
+    Change-Id: Ia2a8a1de0c95c7ea38003e2333b2b133cf1c42f8
+    Signed-off-by: Matthias Sohn <matthias.sohn@sap.com>
+
+commit b783673bc851a3be0e41533ce9ae066038ecea79
+Author: Thomas Wolf <thomas.wolf@paranor.ch>
+Date:   Wed Aug 28 17:12:01 2019 +0200
+
+    Ensure staging view widgets get re-enabled
+    
+    Make sure the staging view widgets, which get disabled before a
+    commit, get re-enabled if something goes wrong and a RuntimeException
+    is thrown. See bug 550336.
+    
+    As far as I see the only possibility where the widgets could remain
+    disabled is if the scheduled job never terminates.
+    
+    If a RuntimeException does occur log and show the error to the user.
+    Previously it was apparently only logged.
+    
+    Bug: 550513
+    Change-Id: I74b2268666a2e441a76a48d462e25f119380760b
+    Signed-off-by: Thomas Wolf <thomas.wolf@paranor.ch>
+
+commit 38ea65a2ea10e7c39f16e90b8feecec2f393e12d
+Author: Matthias Sohn <matthias.sohn@sap.com>
+Date:   Thu Aug 29 09:43:19 2019 +0200
+
+    Update Orbit to S20190827152740 for 2019-09 RC1
+    
+    Change-Id: I51d431ced8aa4145341fd874d41b0acb47b714a5
+
+commit 04d8d8b8e1fb402ebc51c502756c7477ae19b9cc
+Author: Matthias Sohn <matthias.sohn@sap.com>
+Date:   Wed Aug 28 21:50:21 2019 +0200
+
+    Prepare 5.5.0-SNAPSHOT builds
+    
+    Change-Id: I8f1969e5bcfae5a148505a0fe291372862ce99e4
+    Signed-off-by: Matthias Sohn <matthias.sohn@sap.com>
+
+commit 719be4d38bbd3b2da8a0138081ce5068f6604592
+Author: Matthias Sohn <matthias.sohn@sap.com>
+Date:   Wed Aug 28 16:05:12 2019 +0200
+
+    EGit v5.5.0.201908280940-m3
+    
+    Change-Id: I434ea0ec51c0209b908227ba4ae7f0b7514f2791
+    Signed-off-by: Matthias Sohn <matthias.sohn@sap.com>
+
+commit afe4fddbb3bf7d523fba637ad7e523d837aef9e9
+Author: Thomas Wolf <thomas.wolf@paranor.ch>
+Date:   Sat Jul 20 16:51:13 2019 +0200
+
+    History view: shorten view toolbar
+    
+    Combine the four filter buttons into one single button with a
+    drop-down menu. Selecting the button itself cycles though the
+    filters. Use the new FilterAction also in the view menu; to be
+    able to do so implement ToolBarMenuAction.getMenu(Menu) and rename
+    the class to DropDownMenuAction.
+    
+    Also, as long as one only updates the image of an action it isn't
+    necessary to update the whole toolbar. The framework listens for
+    such changes and updates the corresponding ToolItem or Menu entry
+    already.
+    
+    Change-Id: If7fb1e3199cd1721a4455bac10925fc2922c5ba8
+    Signed-off-by: Thomas Wolf <thomas.wolf@paranor.ch>
+
+commit 478756d3a953d31ad0bb3912a50a21a5dc2e2243
+Author: Michael Keppler <Michael.Keppler@gmx.de>
+Date:   Sun Aug 25 12:55:44 2019 +0200
+
+    Change status bar label for repository view nodes
+    
+    Previously we used "node - repository" for the label in the status bar.
+    Let's use "node [repository]" instead. That pattern is used everywhere
+    else by egit (package explorer decoration, history page input etc.).
+    
+    Change-Id: I82764652c97b5497f6e230e10744a7cdb10138ac
+    Signed-off-by: Michael Keppler <Michael.Keppler@gmx.de>
+
+commit 0aef5a35e5a4a6d09646d9fb3184462ebda89ebb
+Author: Matthias Sohn <matthias.sohn@sap.com>
+Date:   Mon Aug 26 10:46:41 2019 +0200
+
+    Update Jetty to 9.4.20.v20190813
+    
+    Bug: 550094
+    Change-Id: I3fd9244c13e5fe0b0279ce5af15dc2de5246bfe0
+    Signed-off-by: Matthias Sohn <matthias.sohn@sap.com>
+
+commit d5470c5fd24fc6ad7f7f4fe4bdbf4e9ef2ec8d42
+Author: Matthias Sohn <matthias.sohn@sap.com>
+Date:   Sun Aug 25 23:06:13 2019 +0200
+
+    Delete outdated Orbit target platform definitions
+    
+    Keep the last release and the latest snapshot only.
+    
+    Change-Id: I68151b238caa511b0429d1f654a7974c7d213370
+    Signed-off-by: Matthias Sohn <matthias.sohn@sap.com>
+
+commit 50881815e484239aee71936eadb7ea0834cd06fc
+Author: Michael Keppler <Michael.Keppler@gmx.de>
+Date:   Sat Aug 24 13:24:13 2019 +0200
+
+    Update target platform to S20190819183153 (2019-09 M3)
+    
+    * rename 4.12 staging to 4.12 (it used the actual release URL already)
+    * verified there are no version number changes between 4.12-staging and
+    new 4.12 final
+    * create 4.13-staging from former 4.12-staging
+    * update orbit to latest snapshot
+    * remove outdated orbit integration build
+    * fix label of 2018-09.tpd file (no functional change)
+    * sort entries in S20190819183153.tpd
+    
+    Change-Id: Id3c8ca553bcd251fbd899751f446b3451f75752f
+    Signed-off-by: Michael Keppler <Michael.Keppler@gmx.de>
+    Signed-off-by: Matthias Sohn <matthias.sohn@sap.com>
+
+commit 6f8368a9dbe8ba99f37dad7935490be37d07a346
+Author: Matthias Sohn <matthias.sohn@sap.com>
+Date:   Sun Aug 25 12:56:49 2019 +0200
+
+    Prepare 5.4.3-SNAPSHOT builds
+    
+    Change-Id: I00d0e5a1f008f99a8c66675e09fd906b89ed5423
+    Signed-off-by: Matthias Sohn <matthias.sohn@sap.com>
+
+commit 9fee37efeefc3aa0e13e1f6c447e3cb517ee51af
+Author: Michael Keppler <Michael.Keppler@gmx.de>
+Date:   Tue Aug 20 16:16:54 2019 +0200
+
+    Fix deprecations caused by Instant based DirCacheEntry
+    
+    Call the Instant based DirCacheEntry methods (instead of epoch based
+    methods) to avoid deprecation warnings. To avoid bigger refactorings,
+    the tests simply convert to epoch afterwards and continue to assert
+    based on the epoch.
+    
+    Change-Id: I99d47f49adc778861b83ec8b255f090361ff31f5
+    Signed-off-by: Michael Keppler <Michael.Keppler@gmx.de>
+
+commit 1416f9a5733c118fc8dcb7ca762281abb5d76ac6
+Author: Lars Vogel <Lars.Vogel@vogella.com>
+Date:   Thu Aug 22 15:31:44 2019 +0200
+
+    Simplify wording of confirmation questions in dialogs
+    
+    Change-Id: I88511166447e80129b0e5d3c831b614eb0a72dc5
+    Signed-off-by: Lars Vogel <Lars.Vogel@vogella.com>
+
+commit 70207c34222a4bcb0fc56c3810080dd5e5621430
+Author: Thomas Wolf <thomas.wolf@paranor.ch>
+Date:   Wed Aug 21 17:06:30 2019 +0200
+
+    Shorten confirmation messages for "reset hard" and "discard changes"
+    
+    Eliminate the "Are you sure?"-like extra questions. They're not
+    necessary; the dialogs tell the user what's going to happen and
+    present a "Reset"/"Discard Changes" button and a "Cancel" button.
+    The explicit questions were a left-over from older code where the
+    dialogs had just "Yes"/"No" or "OK"/"Cancel" buttons.
+    
+    Incidentally constructing the message texts becomes simpler because
+    the warning text about running launches doesn't have to be inserted
+    somewhere in the middle but can simply be tacked onto the end.
+    
+    Bug: 550292
+    Bug: 550293
+    Change-Id: I9365737ef08fe43f29142ca1ae6851464282a334
+    Signed-off-by: Thomas Wolf <thomas.wolf@paranor.ch>
+
+commit d000c9dd50d6dff346349a0a0c66a70b5445ba1b
+Author: Michael Keppler <Michael.Keppler@gmx.de>
+Date:   Sun Aug 4 15:13:51 2019 +0200
+
+    Show current branch first in pull result dialog
+    
+    Branches are sorted by name in the pull result dialog. Make an exception
+    for the current branch, and move it to the top. That way the commits
+    being merged into the current local branch are shown first.
+    
+    Bug: 545044
+    Change-Id: Ib807f3ce1ab1b0fb57e2eb7b5a81ee7ef80ff3e9
+    Signed-off-by: Michael Keppler <Michael.Keppler@gmx.de>
+
+commit 9a0e6920c9e134d8a7848ca289645e79f9e4d6fa
+Author: Thomas Wolf <thomas.wolf@paranor.ch>
+Date:   Tue Jul 30 22:07:50 2019 +0200
+
+    History: keep commit selected if branches to show change
+    
+    Keep the currently selected commit selected when the user toggles
+    first-parent, show all branches, show additional refs, or the
+    follow renames settings.
+    
+    Additionally, try to avoid jumping around in the history. Previously,
+    the code simply tried to keep the table at the current top row index.
+    But that doesn't really help when the branches to show change. (It may
+    have been fine for incremental loading.) Newly, try to keep the current
+    top commit shown by name. For incremental loading this gives the same
+    result; for other use cases it reduces the jumping around quite a bit.
+    
+    Change-Id: Id20ba2bf97fccb60fdba629240e1681489871fb5
+    Signed-off-by: Thomas Wolf <thomas.wolf@paranor.ch>
+
+commit f9c82928f45f5e9ab33ab04a08904e1b6d2ebfa6
+Author: Max Hohenegger <eclipse@hohenegger.eu>
+Date:   Sun Jul 28 17:18:38 2019 +0200
+
+    Fix silent failure on conflicting checkout after branch creation.
+    
+    * Minor changes in BranchOperationUI to re-use checkout result handling.
+    * Add UI test because the issue is tedious to reproduce, and depends on
+      proper synchronization with the Job and the Display thread.
+    
+    Bug 549612
+    Change-Id: I616b975f5eff881c6cc3455649ec7dd7a9bd293f
+    Signed-off-by: Max Hohenegger <eclipse@hohenegger.eu>
+
+commit a3cbbff0ea6af88f8b2db463633cdd0fe9c9b026
+Author: Michael Keppler <Michael.Keppler@gmx.de>
+Date:   Tue Aug 13 10:59:00 2019 +0200
+
+    Remove duplicate configure fetch/push commands
+    
+    The commands "configure fetch" and "configure upstream fetch" use the
+    same handler and the same label, therefore one of them is superfluous.
+    Remove the one without ".team" in the command id, since ".team" is a
+    convention in the list of command ids in the egit API. Redirect menus
+    and command images to the remaining command id.
+    
+    Bug: 549997
+    Change-Id: I5f8129670566e2f41051f0f533dcf36947d4dd68
+
+commit 2353ea858e20fb5df2b950659049dae43bdd76f3
+Author: Michael Keppler <Michael.Keppler@gmx.de>
+Date:   Mon Jul 8 20:43:33 2019 +0200
+
+    Suppress history for structural RepositoryTreeNodes
+    
+    Don't adapt the structural tree nodes of the repository view to history
+    input. This avoids unwantedly showing the full repository history when
+    clicking on any of those nodes just for expanding/navigating the tree,
+    therefore not loosing the history of the previously selected
+    branch/tag/ref.
+    
+    Bug:549034
+    Change-Id: I7761b29f6a33d9fa7b992ec296afba8a60016a70
+    Signed-off-by: Michael Keppler <Michael.Keppler@gmx.de>
+
+commit 88ea3acf4878360f7b9cae6614a122579b316f7f
+Author: Thomas Wolf <thomas.wolf@paranor.ch>
+Date:   Tue Aug 20 07:37:12 2019 +0200
+
+    [releng] Update target platform & SystemReader to JGit changes
+    
+    During the fixes in JGit 5.1.9 the JGit target platform was changed,
+    and SystemReader got two new abstract methods.
+    
+    EGit doesn't build anymore after these changes. Update the target
+    platform to match the one in JGit to enable building both EGit and
+    JGit in the same workspace, and add implementations for the two new
+    methods in the EclipseSystemReader.
+    
+    Change-Id: Ic1392b8e140d2be118226567a71be62ba833477d
+    Signed-off-by: Thomas Wolf <thomas.wolf@paranor.ch>
+
+commit a2571755340979bc9bfd895fa3f5058da2b2ec8f
+Author: Thomas Wolf <thomas.wolf@paranor.ch>
+Date:   Tue Jul 30 20:01:51 2019 +0200
+
+    History: show diffs for merges in first-parent mode
+    
+    When the history is filtered to show only first parents of merges,
+    use a simple file diff against that single first merge parent to
+    show the list of changes files, and make sure the diff is shown when
+    a file is selected.
+    
+    Change-Id: If2f5f2a7cdd86515190b7d1619c58bd6883520b4
+    Signed-off-by: Thomas Wolf <thomas.wolf@paranor.ch>
+
+commit 13ae584b2a99f56e19a10e0f1ecc3b9a07d2e9ad
+Author: Michael Keppler <Michael.Keppler@gmx.de>
+Date:   Sat Aug 3 16:58:39 2019 +0200
+
+    Show standard message box on paste to repo view error
+    
+    When pasting invalid content to the git repositories view, it shows the
+    "Problem occurred" message box due to using the status handler of
+    eclipse. Since this is bad user input, we should only show a message
+    box, and not handle this situation like an internal error.
+    
+    Changed message texts to be sentence style.
+    
+    Bug: 549618
+    Change-Id: Id6e2b4facff5deb945275e89a85d74442aa1462a
+    Signed-off-by: Michael Keppler <Michael.Keppler@gmx.de>
+
+commit 2d7e27301cc89fe30abc392598a96fac2e8d299a
+Author: Thomas Wolf <thomas.wolf@paranor.ch>
+Date:   Thu Aug 15 14:25:42 2019 +0200
+
+    Don't decorate ResourceMappings mapping only unshared resources
+    
+    If a ResourceMapping has no shared resources, its state will be
+    untracked, which would make EGit show the "?" overlay.
+    
+    Bug: 550082
+    Change-Id: I2bf6c1b7261907d8d49188317fc4a7768bc0f046
+    Signed-off-by: Thomas Wolf <thomas.wolf@paranor.ch>
+
+commit 63093b15aeb7417a0a0aed15676da116bd682c35
+Author: Michael Keppler <Michael.Keppler@gmx.de>
+Date:   Sun Aug 4 11:44:27 2019 +0200
+
+    Handle Java templates initialization error silently
+    
+    If the additional variable for the Java templates cannot be registered,
+    only log this error to the platform log, but do not show an error
+    dialog.
+    
+    Depending on the (currently unknown) root cause of the error, this might
+    happen on every start of eclipse, and users will be annoyed by an error
+    message that is shown on every eclipse start.
+    
+    Bug: 549206
+    Change-Id: Ife0bf013c9f5666218447426f03002b87687f83c
+    Signed-off-by: Michael Keppler <Michael.Keppler@gmx.de>
+
+commit 49134410668238184bbdfc5c5b732c18894a9f49
+Author: Michael Keppler <Michael.Keppler@gmx.de>
+Date:   Tue Jul 9 07:22:34 2019 +0200
+
+    Log exception in create branch wizard
+    
+    Since we currently can only guess what causes the linked bug, we should
+    log the exception that causes the remote to be empty in the wizard.
+    
+    Bug:548996
+    Change-Id: I868fd98772c275698e1ea29bb8522f8347554926
+    Signed-off-by: Michael Keppler <Michael.Keppler@gmx.de>
+
+commit dbd7838aba2f54b28d4d5601f994e70cc2ddab2d
+Author: Michael Keppler <Michael.Keppler@gmx.de>
+Date:   Sun Aug 4 07:59:49 2019 +0200
+
+    Always check for merge commit when opening file diff
+    
+    The 2-way file diff is invoked from 3 different places in the code, but
+    only one of them checked whether the diff was a merge commit. Move that
+    check into the file diff method itself to have all 3 invocations
+    checked.
+    
+    It might be possible that the other 2 invocations cannot be called for
+    merge commits due to other external logic, but let's be fault tolerant
+    here by always forbidding this.
+    
+    Change-Id: Ieaacc0c0ddf0bdbc273891cd557ab55ff5560133
+    Signed-off-by: Michael Keppler <Michael.Keppler@gmx.de>
+
+commit 3742c81bfc1e99c5ecaf558eace056a786e2aeaf
+Author: Michael Keppler <Michael.Keppler@gmx.de>
+Date:   Sat Aug 3 19:13:39 2019 +0200
+
+    Bind F2 on repo node to rename of current branch
+    
+    Add the ability to use F2 directly on the repository node to rename the
+    current branch instead of first having to expand all nodes to the
+    current branch.
+    
+    It would have been possible to use the existing eclipse.ui.edit.rename
+    command (and just to add to the existing activeWhen expression), but
+    that has the bad side effect of the command still being labeled "Rename"
+    in Ctrl-3, when invoked on the repository. Therefore the old rename
+    handler has been attached to the rename branch command instead and a
+    separate key binding has been added to the repositry view, to override
+    the generic F2 rename binding there.
+    
+    Bug: 545290
+    Change-Id: Idf7fd3fd6f9fba00954d6b7318b11182dcd4cb69
+    Signed-off-by: Michael Keppler <Michael.Keppler@gmx.de>
+
+commit e48ed04cd3f86f698c453ca6295621cde7501157
+Author: Tim Neumann <Tim.Neumann@advantest.com>
+Date:   Fri Jul 19 15:31:12 2019 +0200
+
+    Add "show first parent only" button to the history view
+    
+    This includes:
+     - action in GitHistoryPage
+     - allow the setting to be sticky to one repository
+     - add getter and setter for GitHistoryPage.currentRepo
+            -> so a repo change can be detected
+     - add the action to the menu and toolbar
+     - add corresponding preference to the preference page
+        -> "Team -> Git -> History"
+     - add a new icon for the action
+     - based on the preference do a first-parent-only RevWalk
+     - create some new helper methods in RepositoryUtil
+    
+    Bug: 549424
+    Change-Id: I548ef25f8c13661fadf725952bc25d2f481c7a43
+    Signed-off-by: Tim Neumann <Tim.Neumann@advantest.com>
+    Also-by: Tetiana Pliekhova <tetiana.pliekhova@advantest.com>
+    Signed-off-by: Andrey Loskutov <loskutov@gmx.de>
+
+commit 37f68e0f7151b67592b592d07d4356811895ce3e
+Author: Michael Keppler <Michael.Keppler@gmx.de>
+Date:   Tue Aug 13 09:56:22 2019 +0200
+
+    Fix progress reporting for some commands
+    
+    Commands being executed in a loop should always use a new SubMonitor,
+    instead of reporting multiple times against the original progress
+    monitor.
+    
+    Bug: 549812
+    Change-Id: I8692eb45561e179618c1ed65f301662d4343b134
+
+commit 227524b534e62af73b612c284f6066c022c2f68c
+Author: Michael Keppler <Michael.Keppler@gmx.de>
+Date:   Tue Aug 13 10:15:50 2019 +0200
+
+    Stabilize StageUnstageActionTest
+    
+    We had WidgetNotFoundExceptions in the last 2 executions of our main
+    build job. Re-calculate the tree widget after unsharing a project to
+    eventually get rid of the exception.
+    
+    Local testing did not expose the exception on my Windows system.
+    
+    org.eclipse.swtbot.swt.finder.exceptions.WidgetNotFoundException: The
+    widget {null} was disposed.
+            at org.eclipse.swtbot.swt.finder.widgets.AbstractSWTBot.<init>(AbstractSWTBot.java:119)
+            at org.eclipse.swtbot.swt.finder.widgets.SWTBotTreeItem.<init>(SWTBotTreeItem.java:76)
+            at org.eclipse.swtbot.swt.finder.widgets.SWTBotTreeItem.<init>(SWTBotTreeItem.java:67)
+            at org.eclipse.swtbot.swt.finder.widgets.SWTBotTree.notifySelect(SWTBotTree.java:448)
+            at org.eclipse.swtbot.swt.finder.widgets.SWTBotTree.notifySelect(SWTBotTree.java:444)
+            at org.eclipse.swtbot.swt.finder.widgets.SWTBotTree.select(SWTBotTree.java:275)
+            at org.eclipse.egit.ui.test.team.actions.StageUnstageActionTest.testActionsInitiallyNotPresent(StageUnstageActionTest.java:99)
+    
+    Change-Id: Iefbeb57f1adb62426db457c3f0a918529fe648a7
+    Signed-off-by: Michael Keppler <Michael.Keppler@gmx.de>
+
+commit edf184454666339c93b676d62077d212cf72e78f
+Author: Michael Keppler <Michael.Keppler@gmx.de>
+Date:   Sun Aug 4 11:55:29 2019 +0200
+
+    Fix typos in localization
+    
+    Change-Id: I21429402d8733b96325b98fa206fc5f04d4d04c6
+    Signed-off-by: Michael Keppler <Michael.Keppler@gmx.de>
+
+commit 629c4a6ff266225837ec323051ca56c2af3df7ba
+Author: Thomas Wolf <thomas.wolf@paranor.ch>
+Date:   Fri Aug 9 13:27:18 2019 +0200
+
+    Fix equals & hashCode of StashedCommitNode
+    
+    Nodes in the repositories view for stashed commits must only be equal
+    if the commit _AND_ the index are equal. Otherwise the TreeViewer in
+    the repositories view gets confused and does not update the tree
+    correctly.
+    
+    Bug: 464949
+    Change-Id: Iab7dc3e5471f71f4034735bb661e29ed8f3b6998
+    Signed-off-by: Thomas Wolf <thomas.wolf@paranor.ch>
+
+commit 27f697e7169474370f6e7b24f7e4364a074048cd
+Author: Matthias Sohn <matthias.sohn@sap.com>
+Date:   Mon Jul 22 18:55:45 2019 +0200
+
+    Clear input of history view when repository is removed
+    
+    Bug: 548495
+    Change-Id: Idc566cf9433e815f61f061e37096bb0df16c48fb
+    Signed-off-by: Matthias Sohn <matthias.sohn@sap.com>
+
+commit 94da2cca5ab3a4ea25cfe269e66129cd32f50286
+Author: Thomas Wolf <thomas.wolf@paranor.ch>
+Date:   Thu Jul 18 12:00:52 2019 +0200
+
+    Simplify RepositoryUtils.mapCommitToRef()
+    
+    Don't re-resolve a known tag ref; just ask it directly for its object
+    id. Also factor out and simplify duplicate code for finding a local or
+    remote branch for a commit id.
+    
+    Bug: 549178
+    Change-Id: Id8ea90e323c43ecad8ec677a2c2f2b3b6f473ce9
+    Signed-off-by: Thomas Wolf <thomas.wolf@paranor.ch>
+
+commit 667dc0c5175637e32b4b9f41c37006e7f827beeb
+Author: Thomas Wolf <thomas.wolf@paranor.ch>
+Date:   Wed Jul 17 17:49:07 2019 +0200
+
+    Log an error if the reflog cannot be read
+    
+    EGit reads the reflog in three places: in the SwitchToMenu, when
+    trying to get a short branch name, and in the reflog view. The
+    latter uses JGit's ReflogCommand and has its own fatal error handling.
+    In the other two places, a failure to read the reflog may cause severe
+    UI functionality loss. Therefore catch RuntimeExceptions, too, and
+    just log them.
+    
+    In SwitchToMenu, also just log IOExceptions when the ref log cannot be
+    read. That way, there's a fair chance that the menu will still show
+    some branches.
+    
+    Bug: 549235
+    Change-Id: I914536a65cec9d7e5c04199e989926d46e607427
+    Signed-off-by: Thomas Wolf <thomas.wolf@paranor.ch>
+
+commit 374c142de4634d0888425368b138957c38498482
+Author: Thomas Wolf <thomas.wolf@paranor.ch>
+Date:   Sat Jul 20 14:39:01 2019 +0200
+
+    Fix a few instances where repositories are not closed
+    
+    In the staging view, ensure the fake RepositoryNode is cleared when
+    no longer needed.
+    
+    In ExistingOrNewPage, ensure the newly created repo is closed.
+    
+    In LinkHelper, look up the repository from the repository cache
+    instead of creating a new Repository instance that then cannot be
+    closed because it my be referenced by the RepositoryTreeNode returned
+    and that may be needed later.
+    
+    Change-Id: I7d255df59038167b17796735cc36b542d0771d36
+    Signed-off-by: Thomas Wolf <thomas.wolf@paranor.ch>
+    Signed-off-by: Matthias Sohn <matthias.sohn@sap.com>
+
+commit 4869cd977ac253f65f61d360548b49dfec01b5db
+Author: Thomas Wolf <thomas.wolf@paranor.ch>
+Date:   Sun Jul 21 13:20:29 2019 +0200
+
+    Fix CommitFileDiffViewer/"Show in History" for non-resources
+    
+    The history page tried to get the RepositoryMapping from the path,
+    but that doesn't work for non-resources. The history view would
+    just show "No input".
+    
+    Use the alternative ResourceUtil.getRepository() instead.
+    
+    Change-Id: I2240b1c900a634fc57ad114b2759d3c72e804a46
+    Signed-off-by: Thomas Wolf <thomas.wolf@paranor.ch>
+
+commit 572cc2f512eda3ac80e441fe24d7ae42d7eb22b3
+Author: Thomas Wolf <thomas.wolf@paranor.ch>
+Date:   Fri Jul 19 16:48:46 2019 +0200
+
+    Don't log info about using Apache MINA sshd SSH client
+    
+    Since this is the default now, logging this is no longer necessary.
+    Also switch the default in case the setting is corrupted.
+    
+    Bug: 549426
+    Change-Id: Iaee98ae9970f25bbc85f436cf0e4911d9ec80a54
+    Signed-off-by: Thomas Wolf <thomas.wolf@paranor.ch>
+
+commit e851211032255b2f29aa5ff76156ac19e72ac856
+Author: Thomas Wolf <thomas.wolf@paranor.ch>
+Date:   Fri Jul 19 13:01:14 2019 +0200
+
+    Cleanup: remove obsolete SVG file for deleted icon
+    
+    The smart import fragment has been incorporated into the main
+    EGit UI bundle, so the SVG for its icon is no longer needed.
+    
+    Change-Id: Iec79270bb427018c48bded44c0cfffc111563b54
+    Signed-off-by: Thomas Wolf <thomas.wolf@paranor.ch>
+
+commit a6320bfc2193461e479a14e73fe062d60d36fad4
+Author: Thomas Wolf <thomas.wolf@paranor.ch>
+Date:   Tue Jul 16 17:44:20 2019 +0200
+
+    Put a "presentation" button in the unstaged viewer's toolbar
+    
+    Adds a button to switch the file presentation in both the unstaged
+    and staged viewers between list mode, tree mode, and compact tree
+    mode to the toolbar of the unstaged viewer, where we already have
+    the button to switch the sort order that also affects both viewers.
+    Re-uses the actions defined for the view menu. The button changes
+    its icon depending on the mode chosen.
+    
+    A first implementation made selecting the button cycle through
+    the presentations, but that introduced a usability problem: when
+    clicked and the presentation switched to list mode, the two buttons
+    for "expand all" and "collapse all" would be hidden. The mouse would
+    then suddenly be over the "stage selected files" button. A user who'd
+    mistakenly click twice might inadvertently stage things he hadn't
+    wanted to stage.
+    
+    Thus this implementation now simple shows the drop-down menu also
+    when the button is selected, not only when the arrow is selected.
+    When the user selects an entry from the drop-down menu and the
+    toolbar changes, the mouse won't be over any of the buttons.
+    
+    Note that the staging view reacts only upon the next refresh or
+    repository switch on changes of the "Maximum number of lines"
+    preference that governs the automatic switching to tree mode. Thus
+    when this preference is changed to a higher value and the view
+    currently is in that forced tree mode, the "list" menu item may
+    remain disabled until the next refresh. That issue is unrelated
+    to this change, though. (But it is made more visible.)
+    
+    Bug: 549269
+    Change-Id: I347941440ec411eaa21b4e014ebc44893e6c28ce
+    Signed-off-by: Thomas Wolf <thomas.wolf@paranor.ch>
+
+commit 16ce6278de965eae48a8a529000fe9fd019000b6
+Author: Michael Keppler <Michael.Keppler@gmx.de>
+Date:   Sat Jul 6 09:30:40 2019 +0200
+
+    Replace deprecated getRefs() calls
+    
+    Change-Id: I7f92400ea6b86a812617d2046351e192d7a8f215
+    Signed-off-by: Michael Keppler <Michael.Keppler@gmx.de>
+
+commit 104d3ecfe02eb771f107fa0b892a2be646aa81ab
+Author: Thomas Wolf <thomas.wolf@paranor.ch>
+Date:   Sat Jul 6 18:07:08 2019 +0200
+
+    Avoid duplicate entries in the history view's view history
+    
+    With the history filtered to a resource, the view history of the
+    history view itself contained many duplicate elements. This was
+    caused by == comparisons instead of equals() in HistoryPageInput.
+    
+    Also improve HistoryPageInput.hashCode() to use the "standard"
+    multiply-by-31 mechanism instead of xor.
+    
+    Change-Id: I8f1bde2bed52ac3ce52ec252fd5fcf735870ff3f
+    Signed-off-by: Thomas Wolf <thomas.wolf@paranor.ch>
+
+commit 10293f9f0c3739a66e772d7cd3e7560f7c4b7ccd
+Author: Thomas Wolf <thomas.wolf@paranor.ch>
+Date:   Sat Jul 6 19:18:52 2019 +0200
+
+    Fix showing selected refs or commits in history view
+    
+    When the history view shows only the current branch ("Show all
+    branches and tags" _off_), selecting some other branch in the git
+    repositories view might not show the selected branch. It would be
+    shown only if that branch happened to be merged into the currently
+    checked out branch. The same could be observed when using "Show In
+    History" on a commit in the results of a "Git Search": the commit
+    would only be selected if it was contained in the branch currently
+    checked out.
+    
+    Change this by always considering such a selected branch or commit
+    as an additional start point for the RevWalk. This enables the user
+    to make the history view show exactly two branches (plus all those
+    merged into these two), and also correctly selects commits not on
+    the current branch.
+    
+    Bug: 360868
+    Change-Id: Ib2e071f40c57b06a0ce0a51defac3fe30f481e03
+    Signed-off-by: Thomas Wolf <thomas.wolf@paranor.ch>
+
+commit b9df19f1d83ca2daa7272369d264f9806d8118ab
+Author: Michael Keppler <Michael.Keppler@gmx.de>
+Date:   Thu Jul 4 20:33:24 2019 +0200
+
+    Speed up image decoration for remote branch nodes
+    
+    If a remote tracking branch is checked out, the repository should be in
+    a detached head state, and then we can directly compare the branch name
+    with the objectid of the node.
+    
+    Bug:548978
+    Change-Id: I73895fc7e243f6d97ab55cc417e78a598580b690
+    Signed-off-by: Michael Keppler <Michael.Keppler@gmx.de>
+
+commit 8ea29e491aa59ee692d982cb517b61e92066dac5
+Author: Michael Keppler <Michael.Keppler@gmx.de>
+Date:   Sun Jun 30 19:41:58 2019 +0200
+
+    Allow cancelling multi repository checkout
+    
+    Only cancel the git operation. The Eclipse project refresh must be done
+    even when the checkout was cancelled.
+    
+    Change-Id: I19c07f55e91f58984deb7fe9d27082adcaef191f
+    Signed-off-by: Michael Keppler <Michael.Keppler@gmx.de>
+
+commit cd2aeaa7c9ebaa04e535eb9e177b5d8b979e0dc0
+Author: Thomas Wolf <thomas.wolf@paranor.ch>
+Date:   Mon Jul 1 22:34:57 2019 +0200
+
+    Repositories view: check for submodules when reacting on selection
+    
+    When the repositories was set to follow the selection and a file in
+    a submodule folder was selected, the submodule repository was added
+    as a top-level repository in the view. Fix this by also considering
+    repositories under submodule nodes when determining which node to
+    show.
+    
+    Add a new test, and fix SubmoduleFolderTest to properly commit the
+    addition of the submodule in setUp().
+    
+    Bug: 520735
+    Change-Id: I54c1d2c5d2b8fac95dc7a4fed658e59285639f4c
+    Signed-off-by: Thomas Wolf <thomas.wolf@paranor.ch>
+
+commit 104a017c2ac391372ed8a361a0c074a377ef9722
+Author: Michael Keppler <Michael.Keppler@gmx.de>
+Date:   Mon Jul 1 09:59:42 2019 +0200
+
+    Add more command icons
+    
+    * add submodule (repo view context menu)
+    * replace with commit, branch, ref (resource context menu)
+    * compare with commit, branch, ref (resource context menu)
+    
+    Change-Id: I3327b4ae540337b05b07c965e8b22aa9c996df45
+
+commit 19726c3b28bd4cdabaa9cad3f88c995ccb387d8b
+Author: Michael Keppler <Michael.Keppler@gmx.de>
+Date:   Fri Jun 21 17:40:28 2019 +0200
+
+    unify bundle name placeholders
+    
+    To simplify validation in our workspace, use the same placeholders
+    everywhere.
+    
+    Change-Id: I0d5294c947b9dffb6901caadc93ee929579e386a
+    Signed-off-by: Michael Keppler <Michael.Keppler@gmx.de>
+
+commit 7228f00829dd491dd723074de1f6aba65934b375
+Author: Thomas Wolf <thomas.wolf@paranor.ch>
+Date:   Sat Jun 29 17:51:08 2019 +0200
+
+    Simplify getting the children of a BranchHierarchyNode
+    
+    Avoid repeatedly querying the ref database; this may lead to
+    inconsistencies when branches are deleted. Instead let the
+    RepositoriesViewContentProvider deal with this directly and
+    use its cached map of refs, like it does for tags.
+    
+    Change-Id: I31f1d87d01f532972af70f66c95b87590db8b0a4
+    Signed-off-by: Thomas Wolf <thomas.wolf@paranor.ch>
+
+commit 3b9dc4a76f88089dae74bb5390fedefb78e4dcb0
+Author: Thomas Wolf <thomas.wolf@paranor.ch>
+Date:   Fri Jun 28 09:42:23 2019 +0200
+
+    Fix grammar in tooltip for lightweight tag creation
+    
+    Change-Id: Ibfba6a238f8364c8ac1a4a04d2f204913be33aa9
+    Signed-off-by: Thomas Wolf <thomas.wolf@paranor.ch>
+
+commit 9e3a3c73ab7c62a85e3baf5fb41c2a401ca299f0
+Author: Marco Stornelli <marco.stornelli@gmail.com>
+Date:   Sun May 5 16:21:32 2019 +0200
+
+    Added option to create light weight tags
+    
+    When the tag has no message in CreateTagDialog create a lightweight
+    tag instead of an annotated tag. Adds tests for both the UI and for
+    the new "annotated" flag in TagOperation. (Since the lower-level
+    TagOperation allows creating an annotated tag without message, an
+    extra flag is needed.)
+    
+    Bug 438902
+    Change-Id: I99b53c08f94744f78aabe1c1e57b91d0da587bc7
+    Signed-off-by: Marco Stornelli <marco.stornelli@gmail.com>
+    Signed-off-by: Thomas Wolf <thomas.wolf@paranor.ch>
+
+commit 49573a86da2997b44073bd8606479218d23b5371
+Author: Michael Keppler <Michael.Keppler@gmx.de>
+Date:   Thu Jun 20 19:25:18 2019 +0200
+
+    Use computeIfAbsent where possible
+    
+    Analysis was done with Sonarlint.
+    
+    Change-Id: I9d543d37886c7cfbd3a43ecf4477b8e8f3f573ff
+    Signed-off-by: Michael Keppler <Michael.Keppler@gmx.de>
+
+commit 58ba9fb83ae041fabed390261a79a7f34f40f9f3
+Author: Thomas Wolf <thomas.wolf@paranor.ch>
+Date:   Mon Jun 24 22:27:21 2019 +0200
+
+    Enable the "Switch To..." menu for submodule folders
+    
+    Commits 1f69fad3 and e4dc3eaf from the multi-repository branch
+    switch had the effect that the "Switch To..." menu didn't work
+    anymore for submodule folders in the package or project explorer.
+    
+    Add a new operation SelectionUtils.getAllRepositories() and use it
+    in SwitchToMenu. Changing the existing SelectionUtils.getRepositories()
+    to also return repositories for folders was deemed too risky since
+    that would have changed the behavior of the multi-repository pull,
+    which has always worked only for folders. Enabling that to also handle
+    submodule folders might be an idea for a future commit, but might
+    need more tests.
+    
+    Add a new test. The test only verifies that the menu has content by
+    trying to invoke "New Branch..." and then closing the resulting
+    "Create Branch" dialog.
+    
+    Interestingly this test succeeds even without the fix, which matches
+    the experience described in the bug report: the problem could only
+    be observed in official packages, but not in my development setup.
+    
+    Change verified manually by actually building EGit and installing it
+    into standard Eclipse packages.
+    
+    Bug: 548158
+    Change-Id: Ic67578b46a89687a6bcfe73ef3d2d3d71d2a39e0
+    Signed-off-by: Thomas Wolf <thomas.wolf@paranor.ch>
+
+commit 2a6d24376833d10036f81a79d8423be4a5c59b3c
+Author: Michael Keppler <Michael.Keppler@gmx.de>
+Date:   Thu Jun 20 10:08:12 2019 +0200
+
+    Fix NPE in RepositoriesViewPropertyTester
+    
+    There can be a race condition when first getting the list of all child
+    paths and then iterating the paths to get the ref again, since the ref
+    can have been deleted in the meantime by another thread.
+    
+    Avoid the race condition by using just a single interaction with the ref
+    database.
+    
+    Bug:548434
+    Change-Id: Ie665d4b1c7c49668550a5f75341695b1a24c52a2
+    Signed-off-by: Michael Keppler <Michael.Keppler@gmx.de>
+
+commit 319caf2e4b81c538aa2ee759a516d3157d6a3ec3
+Author: Thomas Wolf <thomas.wolf@paranor.ch>
+Date:   Mon Jun 24 08:13:05 2019 +0200
+
+    Avoid NPE in FetchGerritChangePage
+    
+    When getting the change refs from the Gerrit server fails the change
+    list may be null. Therefore add null checks where needed.
+    
+    Bug: 548534
+    Change-Id: Ifc4d42f42ab016897430eb71c8831cfd979d47c4
+    Signed-off-by: Thomas Wolf <thomas.wolf@paranor.ch>
+
+commit 4e74fabf1344fa92e92efc059b53d4170e3edd79
+Author: Lars Vogel <Lars.Vogel@vogella.com>
+Date:   Wed Jun 12 19:35:42 2019 +0200
+
+    Reword commit dialog - Use verbs instead of OK
+    
+    Ok button text changed to Reword.
+    
+    Bug: 548144
+    Change-Id: I823ea451498925cf8a70cc6c114f06c904cbde01
+    Signed-off-by: Manuel Niquet <m_niquet82@yahoo.de>
+    Signed-off-by: Lars Vogel <Lars.Vogel@vogella.com>
+    Signed-off-by: Michael Keppler <Michael.Keppler@gmx.de>
+
+commit f395c56d6232e147f9ff3a4acdaf7c1913256267
+Author: Florian Meyer <Florian.Meyer@ituv-software.de>
+Date:   Wed Jun 12 18:28:13 2019 +0200
+
+    Hide "Rebase sucessfull" dialog by default
+    
+    
+    Bug:548170
+    Change-Id: I7cb55977029a5a45f4a87bcc2f2a809c636ba5e3
+    Signed-off-by: Florian Meyer <Florian.Meyer@ituv-software.de>
+
+commit ef65cda9018418ecc428dae8d4c4798d7148d770
+Author: Thomas Wolf <thomas.wolf@paranor.ch>
+Date:   Wed Jun 19 16:29:12 2019 +0200
+
+    BranchOperation: fix progress monitor handling
+    
+    Usage of progress monitors was rather strange. Use the well-
+    established pattern for using SubMonitors that re-distributes
+    work locally within one method properly. It's much easier to
+    allocate ticks correctly that way.
+    
+    Change-Id: I92ef88067cb6996353a05ab4ac26551c245f4b59
+    Signed-off-by: Thomas Wolf <thomas.wolf@paranor.ch>
+
+commit 47fbfcbbd68c4e6c15b49a6b377b240a6a07d726
+Author: Thomas Wolf <thomas.wolf@paranor.ch>
+Date:   Wed Jun 19 16:22:52 2019 +0200
+
+    BranchOperation: consistent use of MessageFormat
+    
+    Don't use both NLS and MessageFormat. Use only one or the other to
+    reduce unneeded depedencies. I chose MessageFormat.
+    
+    Change-Id: I5f48fe995109c6011ce115f3060af04fe32c7213
+    Signed-off-by: Thomas Wolf <thomas.wolf@paranor.ch>
+
+commit 84aff5ad01d639054710a0685287f2fa62d98a4f
+Author: Thomas Wolf <thomas.wolf@paranor.ch>
+Date:   Tue Jun 18 16:03:29 2019 +0200
+
+    Restore behavior of exception reporting during branch switch
+    
+    Fall-out from the multi-repository branch switch added in EGit
+    5.1: exceptions during checkout were no longer reported or logged.
+    
+    Re-introduce propagating them as CoreExceptions if we have only one
+    repository; and log them if we have several.
+    
+    Bug: 548368
+    Change-Id: Id8d69d3a97ed9f847b20eac02cc0d37ab9e85e90
+    Signed-off-by: Thomas Wolf <thomas.wolf@paranor.ch>
+
+commit 5e1ab83c744b633371b0ce3328f7a5fb06d552dd
+Author: Thomas Wolf <thomas.wolf@paranor.ch>
+Date:   Fri Aug 24 16:29:59 2018 +0200
+
+    Improve reflog view updates
+    
+    Update the view only when it is visible, otherwise remember the
+    new input and set it when the view becomes visible.
+    
+    This is the same mechanism as used in StagingView, which has been
+    factored out now into a new class PartVisibilityListener.
+    
+    Make sure the view reacts correctly when the branch of which the
+    reflog is shown is deleted, or when the whole repository is deleted.
+    
+    Bug: 548079
+    Change-Id: Id429a1e02684298a91747fa99889d4e9ebcdae9a
+    Signed-off-by: Thomas Wolf <thomas.wolf@paranor.ch>
+
+commit 347fd6ae9b9b2e2ae5193e1c62164537d24f6334
+Author: Thomas Wolf <thomas.wolf@paranor.ch>
+Date:   Thu Jun 13 20:26:16 2019 +0200
+
+    [releng] Oomph setup: update and rotate API baselines
+    
+    Drop the 5.1.1 baseline and add the 5.4.0 baseline.
+    
+    Change-Id: I9cdf34e94ecde93cd9b77feb35c2d5e20ad7e47f
+    Signed-off-by: Thomas Wolf <thomas.wolf@paranor.ch>
+
+commit 92ac012b21f231dd31f2fa32cf23904966aa61cf
+Author: Matthias Sohn <matthias.sohn@sap.com>
+Date:   Thu Jun 13 03:04:17 2019 +0200
+
+    Prepare 5.5.0-SNAPSHOT builds
+    
+    Change-Id: Ic3c01dd294e3d348ba7ab6f2b104da3dc6b6724d
+    Signed-off-by: Matthias Sohn <matthias.sohn@sap.com>
