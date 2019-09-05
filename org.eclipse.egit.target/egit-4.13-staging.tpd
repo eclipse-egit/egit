@@ -2,5 +2,5 @@ target "egit-4.13-staging" with source configurePhase
 
 include "projects/jetty-9.4.20.tpd"
 include "projects/swtbot-snapshot.tpd"
-include "orbit/S20190827152740.tpd"
+include "orbit/R20190827152740-2019-09.tpd"
 include "releasetrain/staging.tpd"
