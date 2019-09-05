@@ -23,11 +23,12 @@ import java.util.List;
 import org.eclipse.core.runtime.IAdapterFactory;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Status;
-import org.eclipse.egit.core.Activator;
+import org.eclipse.egit.core.internal.IRepositoryCommit;
 import org.eclipse.egit.internal.mylyn.ui.EGitMylynUI;
 import org.eclipse.egit.ui.internal.synchronize.model.GitModelCommit;
 import org.eclipse.egit.ui.internal.synchronize.model.GitModelRepository;
 import org.eclipse.jgit.lib.AbbreviatedObjectId;
+import org.eclipse.jgit.lib.Config;
 import org.eclipse.jgit.lib.ConfigConstants;
 import org.eclipse.jgit.lib.Constants;
 import org.eclipse.jgit.lib.Repository;
@@ -65,58 +66,56 @@ public class TaskReferenceFactory implements IAdapterFactory {
 	}
 
 	private AbstractTaskReference adaptFromObject(Object element) {
-		RevCommit commit = getCommitForElement(element);
-		if (commit != null)
-			return adaptFromRevCommit(commit);
-
+		IRepositoryCommit commit = getCommitForElement(element);
+		if (commit != null) {
+			return adaptFromCommit(commit);
+		}
 		return null;
 	}
 
 	/**
-	 * Finds {@link TaskRepository} for provided {@link RevCommit} object and returns new {@link LinkedTaskInfo} object
-	 * or <code>null</code> if nothing found.
-	 * @param commit a {@link RevCommit} object to look for
-	 * @return {@link LinkedTaskInfo} object, or <code>null</code> if repository not found
+	 * Finds the {@link TaskRepository} for the provided
+	 * {@link IRepositoryCommit} object and returns new {@link LinkedTaskInfo}
+	 * object or <code>null</code> if nothing found.
+	 *
+	 * @param commit
+	 *            an {@link IRepositoryCommit} object to find the task info for
+	 * @return {@link LinkedTaskInfo} object, or <code>null</code> if repository
+	 *         not found
 	 */
-	private AbstractTaskReference adaptFromRevCommit(RevCommit commit) {
-		Repository[] repositories = Activator.getDefault().getRepositoryCache().getAllRepositories();
-		for (Repository r : repositories) {
-
-			String repoUrl = null;
-			String message = null;
-			long timestamp = 0;
-
-			// try to get repository url and commit message
-			try (RevWalk revWalk = new RevWalk(r)) {
-				RevCommit revCommit = revWalk.parseCommit(commit);
-				repoUrl = getRepoUrl(r);
-				message = revCommit.getFullMessage();
-				timestamp = (long) revCommit.getCommitTime() * 1000;
-			} catch (IOException | RuntimeException e) {
-				continue;
-			}
-
-			if (message == null || message.trim().length() == 0)
-				continue;
-
-			String taskRepositoryUrl = null;
-			if (repoUrl != null) {
-				TaskRepository repository = getTaskRepositoryByGitRepoURL(repoUrl);
-				if (repository != null)
-					taskRepositoryUrl = repository.getRepositoryUrl();
-			}
-
-			return new LinkedTaskInfo(taskRepositoryUrl, null, null, message, timestamp);
+	private AbstractTaskReference adaptFromCommit(IRepositoryCommit commit) {
+		Repository r = commit.getRepository();
+		String repoUrl = getRepoUrl(r);
+		if (repoUrl == null) {
+			return null;
 		}
+		TaskRepository repository = getTaskRepositoryByGitRepoURL(repoUrl);
+		if (repository == null) {
+			return null;
+		}
+		String taskRepositoryUrl = repository.getRepositoryUrl();
 
-		return null;
+		String message = null;
+		long timestamp = 0;
+		try (RevWalk revWalk = new RevWalk(r)) {
+			RevCommit revCommit = revWalk.parseCommit(commit.getRevCommit());
+			message = revCommit.getFullMessage();
+			timestamp = (long) revCommit.getCommitTime() * 1000;
+		} catch (IOException | RuntimeException e) {
+			return null;
+		}
+		if (message == null || message.trim().isEmpty()) {
+			return null;
+		}
+		return new LinkedTaskInfo(taskRepositoryUrl, null, null, message,
+				timestamp);
 	}
 
-	private static RevCommit getCommitForElement(Object element) {
-		RevCommit commit = null;
-		if (element instanceof RevCommit)
-			commit = (RevCommit) element;
-		else if (element instanceof GitModelCommit) {
+	private static IRepositoryCommit getCommitForElement(Object element) {
+		if (element instanceof IRepositoryCommit) {
+			// plugin.xml references SWTCommit, but that's internal
+			return (IRepositoryCommit) element;
+		} else if (element instanceof GitModelCommit) {
 			GitModelCommit modelCommit = (GitModelCommit) element;
 			if (!(modelCommit.getParent() instanceof GitModelRepository))
 				return null; // should never happen
@@ -125,10 +124,22 @@ public class TaskReferenceFactory implements IAdapterFactory {
 			Repository repo = parent.getRepository();
 			AbbreviatedObjectId id = modelCommit.getCachedCommitObj().getId();
 			try (RevWalk rw = new RevWalk(repo)) {
-				commit = rw.lookupCommit(id.toObjectId());
+				RevCommit commit = rw.lookupCommit(id.toObjectId());
+				return new IRepositoryCommit() {
+
+					@Override
+					public Repository getRepository() {
+						return repo;
+					}
+
+					@Override
+					public RevCommit getRevCommit() {
+						return commit;
+					}
+				};
 			}
 		}
-		return commit;
+		return null;
 	}
 
 	/**
@@ -150,10 +161,14 @@ public class TaskReferenceFactory implements IAdapterFactory {
 	}
 
 	private static String getRepoUrl(Repository repo) {
-		String configuredUrl = repo.getConfig().getString(BUGTRACK_SECTION, null, BUGTRACK_URL);
-		String originUrl = repo.getConfig().getString(ConfigConstants.CONFIG_REMOTE_SECTION,
+		Config config = repo.getConfig();
+		String configuredUrl = config.getString(BUGTRACK_SECTION, null,
+				BUGTRACK_URL);
+		if (configuredUrl != null) {
+			return configuredUrl;
+		}
+		return config.getString(ConfigConstants.CONFIG_REMOTE_SECTION,
 				Constants.DEFAULT_REMOTE_NAME, ConfigConstants.CONFIG_KEY_URL);
-		return configuredUrl != null ? configuredUrl : originUrl;
 	}
 
 	private TaskRepository getTaskRepositoryByHost(String host) {
