@@ -19,6 +19,7 @@ import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.core.runtime.jobs.Job;
+import org.eclipse.e4.ui.workbench.UIEvents;
 import org.eclipse.egit.ui.Activator;
 import org.eclipse.egit.ui.internal.repository.tree.command.CloneCommand;
 import org.eclipse.jface.util.Util;
@@ -39,7 +40,6 @@ import org.eclipse.ui.IPartListener2;
 import org.eclipse.ui.IPartService;
 import org.eclipse.ui.IPerspectiveDescriptor;
 import org.eclipse.ui.IPerspectiveListener;
-import org.eclipse.ui.IStartup;
 import org.eclipse.ui.IWindowListener;
 import org.eclipse.ui.IWorkbench;
 import org.eclipse.ui.IWorkbenchPage;
@@ -47,13 +47,19 @@ import org.eclipse.ui.IWorkbenchPartReference;
 import org.eclipse.ui.IWorkbenchWindow;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.progress.UIJob;
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.event.Event;
+import org.osgi.service.event.EventConstants;
+import org.osgi.service.event.EventHandler;
 
 /**
  * Adapter to listen for any Drag and Drop operations that transfer a valid git
  * URL. If it goes through the URL parser correctly, a Clone Git Repo wizard
  * will appear and be populated.
  */
-public class GitCloneDropAdapter implements IStartup {
+@Component(property = EventConstants.EVENT_TOPIC + '='
+		+ UIEvents.UILifeCycle.APP_STARTUP_COMPLETE)
+public class GitCloneDropAdapter implements EventHandler {
 
 	private static final int[] PREFERRED_DROP_OPERATIONS = { DND.DROP_DEFAULT,
 			DND.DROP_COPY, DND.DROP_MOVE, DND.DROP_LINK };
@@ -68,7 +74,7 @@ public class GitCloneDropAdapter implements IStartup {
 	private Transfer[] transferAgents;
 
 	@Override
-	public void earlyStartup() {
+	public void handleEvent(Event event) {
 		UIJob registerJob = new UIJob(PlatformUI.getWorkbench().getDisplay(),
 				"Git Clone DND Initialization") { //$NON-NLS-1$
 			{
