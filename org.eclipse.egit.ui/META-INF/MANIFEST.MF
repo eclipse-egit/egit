@@ -28,9 +28,12 @@ Require-Bundle: org.eclipse.core.runtime;bundle-version="[3.12.0,4.0.0)",
  org.eclipse.debug.ui;bundle-version="[3.11.200,4.0.0)";resolution:=optional,
  org.eclipse.jdt.core;bundle-version="[3.12.0,4.0.0)";resolution:=optional,
  org.eclipse.jdt.ui;bundle-version="[3.12.0,4.0.0)";resolution:=optional,
- org.eclipse.ui.views;bundle-version="[3.8.100,4.0.0)"
+ org.eclipse.ui.views;bundle-version="[3.8.100,4.0.0)",
+ org.eclipse.osgi.services;bundle-version="[3.5.100,4.0.0)",
+ org.eclipse.e4.ui.workbench;bundle-version="[1.4.0,2.0.0)"
 Bundle-ActivationPolicy: lazy
 Bundle-RequiredExecutionEnvironment: JavaSE-1.8
+Service-Component: OSGI-INF/org.eclipse.egit.ui.internal.clone.GitCloneDropAdapter.xml
 Import-Package: org.eclipse.egit.core;version="[5.6.0,5.7.0)",
  org.eclipse.egit.core.attributes;version="[5.6.0,5.7.0)",
  org.eclipse.egit.core.internal;version="[5.6.0,5.7.0)",
