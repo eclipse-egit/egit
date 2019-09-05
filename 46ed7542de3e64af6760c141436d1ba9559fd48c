@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7e2c5a8a_4a58372e",
+        "filename": "release-notes.txt",
+        "patchSetId": 1
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2019-09-05T09:47:43Z",
+      "side": 1,
+      "message": "this shall not be included",
+      "revId": "46ed7542de3e64af6760c141436d1ba9559fd48c",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": true
+    }
+  ]
+}
