@@ -16,6 +16,24 @@
       "revId": "46ed7542de3e64af6760c141436d1ba9559fd48c",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "81721ad6_da4e591f",
+        "filename": "release-notes.txt",
+        "patchSetId": 1
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2019-09-05T09:51:46Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7e2c5a8a_4a58372e",
+      "revId": "46ed7542de3e64af6760c141436d1ba9559fd48c",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": true
     }
   ]
 }
