@@ -181,6 +181,9 @@ public class BranchOperation implements IEGitOperation {
 
 			private void closeProjectsMissingAfterCheckout(Repository repo,
 					IProgressMonitor monitor) throws CoreException {
+				if (monitor.isCanceled()) {
+					return;
+				}
 				IProject[] missing = getMissingProjects(repo, target);
 
 				if (missing.length > 0) {
@@ -188,6 +191,9 @@ public class BranchOperation implements IEGitOperation {
 							missing.length);
 					closeMonitor.setWorkRemaining(missing.length);
 					for (IProject project : missing) {
+						if (closeMonitor.isCanceled()) {
+							break;
+						}
 						closeMonitor.subTask(MessageFormat.format(
 								CoreText.BranchOperation_closingMissingProject,
 								project.getName()));
