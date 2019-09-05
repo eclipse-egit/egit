@@ -14,10 +14,8 @@
 package org.eclipse.egit.internal.mylyn.ui.commit;
 
 import java.io.IOException;
-import java.net.InetAddress;
 import java.net.MalformedURLException;
 import java.net.URL;
-import java.net.UnknownHostException;
 import java.util.List;
 
 import org.eclipse.core.runtime.IAdapterFactory;
@@ -49,6 +47,8 @@ public class TaskReferenceFactory implements IAdapterFactory {
 
 	private static final String BUGTRACK_SECTION = "bugtracker"; //$NON-NLS-1$
 	private static final String BUGTRACK_URL = "url"; //$NON-NLS-1$
+
+	private static final String LOCALHOST = "localhost"; //$NON-NLS-1$
 
 	@Override
 	public Class<?>[] getAdapterList() {
@@ -85,11 +85,7 @@ public class TaskReferenceFactory implements IAdapterFactory {
 	 */
 	private AbstractTaskReference adaptFromCommit(IRepositoryCommit commit) {
 		Repository r = commit.getRepository();
-		String repoUrl = getRepoUrl(r);
-		if (repoUrl == null) {
-			return null;
-		}
-		TaskRepository repository = getTaskRepositoryByGitRepoURL(repoUrl);
+		TaskRepository repository = getTaskRepository(r);
 		if (repository == null) {
 			return null;
 		}
@@ -143,32 +139,32 @@ public class TaskReferenceFactory implements IAdapterFactory {
 	}
 
 	/**
-	 * Finds {@link TaskRepository} by provided Git repository Url
-	 * @param repoUrl Git repository url
-	 * @return {@link TaskRepository} associated with this Git repo or <code>null</code> if nothing found
+	 * Finds a {@link TaskRepository} for the given {@link Repository}.
+	 *
+	 * @param repository
+	 *            git repository to find a task repository for
+	 * @return {@link TaskRepository} associated with this git repository or
+	 *         {@code null} if none found
 	 */
-	private TaskRepository getTaskRepositoryByGitRepoURL(final String repoUrl) {
-		if (repoUrl == null)
+	private TaskRepository getTaskRepository(Repository repository) {
+		Config config = repository.getConfig();
+		String url = config.getString(BUGTRACK_SECTION, null, BUGTRACK_URL);
+		if (url != null) {
+			return TasksUiPlugin.getRepositoryManager().getRepository(url);
+		}
+		// Try to find any that uses the same host as the configured origin URL
+		url = config.getString(ConfigConstants.CONFIG_REMOTE_SECTION,
+				Constants.DEFAULT_REMOTE_NAME, ConfigConstants.CONFIG_KEY_URL);
+		if (url == null) {
 			return null;
-
+		}
 		try {
-			return getTaskRepositoryByHost(new URIish(repoUrl).getHost());
+			return getTaskRepositoryByHost(new URIish(url).getHost());
 		} catch (Exception ex) {
 			EGitMylynUI.getDefault().getLog().log(
 					new Status(IStatus.ERROR, EGitMylynUI.PLUGIN_ID, "failed to get repo url", ex)); //$NON-NLS-1$
 		}
 		return null;
-	}
-
-	private static String getRepoUrl(Repository repo) {
-		Config config = repo.getConfig();
-		String configuredUrl = config.getString(BUGTRACK_SECTION, null,
-				BUGTRACK_URL);
-		if (configuredUrl != null) {
-			return configuredUrl;
-		}
-		return config.getString(ConfigConstants.CONFIG_REMOTE_SECTION,
-				Constants.DEFAULT_REMOTE_NAME, ConfigConstants.CONFIG_KEY_URL);
 	}
 
 	private TaskRepository getTaskRepositoryByHost(String host) {
@@ -194,35 +190,17 @@ public class TaskReferenceFactory implements IAdapterFactory {
 		return null;
 	}
 
-	private boolean isSameHosts(final String name1, final String name2) {
-		String hostname1 = name1 == null ? "" : name1.trim(); //$NON-NLS-1$
-		String hostname2 = name2 == null ? "" : name2.trim(); //$NON-NLS-1$
-
-		if (hostname1.equals(hostname2))
-			return true;
-
-		String localHost = "localhost"; //$NON-NLS-1$
-		String resolvedHostName;
-		try {
-			resolvedHostName = InetAddress.getLocalHost().getHostName();
-		} catch (UnknownHostException ex) {
-			resolvedHostName = localHost;
+	private boolean isSameHosts(String name1, String name2) {
+		String hostname1 = name1 == null ? LOCALHOST : name1.trim();
+		String hostname2 = name2 == null ? LOCALHOST : name2.trim();
+		if (hostname1.isEmpty()) {
+			hostname1 = LOCALHOST;
+		}
+		if (hostname2.isEmpty()) {
+			hostname2 = LOCALHOST;
 		}
 
-		if (hostname1.length() == 0)
-			hostname1 = resolvedHostName;
-
-		if (hostname2.length() == 0)
-			hostname2 = resolvedHostName;
-
-		if (hostname1.equals(hostname2))
-			return true;
-
-		if ((hostname1.equals(localHost) && hostname2.equals(resolvedHostName))
-				|| (hostname1.equals(resolvedHostName) && hostname2.equals(localHost)))
-			return true;
-
-		return false;
+		return hostname1.equals(hostname2);
 	}
 
 }
