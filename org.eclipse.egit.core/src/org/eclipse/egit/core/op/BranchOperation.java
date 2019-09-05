@@ -181,13 +181,16 @@ public class BranchOperation implements IEGitOperation {
 
 			private void closeProjectsMissingAfterCheckout(Repository repo,
 					IProgressMonitor monitor) throws CoreException {
-				IProject[] missing = getMissingProjects(repo, target);
+				IProject[] missing = getMissingProjects(repo, target, monitor);
 
 				if (missing.length > 0) {
 					SubMonitor closeMonitor = SubMonitor.convert(monitor,
 							missing.length);
 					closeMonitor.setWorkRemaining(missing.length);
 					for (IProject project : missing) {
+						if (closeMonitor.isCanceled()) {
+							break;
+						}
 						closeMonitor.subTask(MessageFormat.format(
 								CoreText.BranchOperation_closingMissingProject,
 								project.getName()));
@@ -281,11 +284,12 @@ public class BranchOperation implements IEGitOperation {
 	 *
 	 * @param repository
 	 * @param branch
+	 * @param monitor
 	 * @return non-null but possibly empty array of missing projects
 	 * @throws CoreException
 	 */
 	private IProject[] getMissingProjects(Repository repository,
-			String branch) throws CoreException {
+			String branch, IProgressMonitor monitor) throws CoreException {
 		IProject[] openProjects = ProjectUtil.getValidOpenProjects(repository);
 		if (delete || openProjects.length == 0) {
 			return new IProject[0];
@@ -303,6 +307,9 @@ public class BranchOperation implements IEGitOperation {
 		}
 		Map<File, IProject> locations = new HashMap<>();
 		for (IProject project : openProjects) {
+			if (monitor.isCanceled()) {
+				break;
+			}
 			IPath location = project.getLocation();
 			if (location == null) {
 				continue;
@@ -323,6 +330,9 @@ public class BranchOperation implements IEGitOperation {
 					.create(IProjectDescription.DESCRIPTION_FILE_NAME),
 					TreeFilter.ANY_DIFF));
 			while (walk.next()) {
+				if (monitor.isCanceled()) {
+					break;
+				}
 				AbstractTreeIterator targetIter = walk.getTree(0,
 						AbstractTreeIterator.class);
 				if (targetIter != null) {
