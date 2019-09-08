@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f4ee4272_88c61c83",
+        "filename": "org.eclipse.egit.mylyn.ui/src/org/eclipse/egit/internal/mylyn/ui/commit/TaskReferenceFactory.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 440
+      },
+      "writtenOn": "2019-09-08T08:43:14Z",
+      "side": 1,
+      "message": "an",
+      "range": {
+        "startLine": 82,
+        "startChar": 15,
+        "endLine": 82,
+        "endChar": 16
+      },
+      "revId": "b78871ae32c8243b2827384646aeb0515a4a1648",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "d55bfecf_841ced6b",
+        "filename": "org.eclipse.egit.mylyn.ui/src/org/eclipse/egit/internal/mylyn/ui/commit/TaskReferenceFactory.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 165,
+      "author": {
+        "id": 440
+      },
+      "writtenOn": "2019-09-08T08:43:14Z",
+      "side": 1,
+      "message": "So this is what actually triggered the refactoring. :)",
+      "range": {
+        "startLine": 165,
+        "startChar": 25,
+        "endLine": 165,
+        "endChar": 31
+      },
+      "revId": "b78871ae32c8243b2827384646aeb0515a4a1648",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
