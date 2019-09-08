@@ -16,6 +16,24 @@
       "revId": "8503cd7a181a85f94af343a6d0c734901fbc1323",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "43ab1f54_110f2d75",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/op/BranchOperation.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 184,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2019-09-08T20:17:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "db3eba83_31c2b98c",
+      "revId": "8503cd7a181a85f94af343a6d0c734901fbc1323",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
     }
   ]
 }
