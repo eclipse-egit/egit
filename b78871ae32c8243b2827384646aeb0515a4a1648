@@ -45,6 +45,30 @@
       "revId": "b78871ae32c8243b2827384646aeb0515a4a1648",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "0e027ff1_c626227d",
+        "filename": "org.eclipse.egit.mylyn.ui/src/org/eclipse/egit/internal/mylyn/ui/commit/TaskReferenceFactory.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 165,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2019-09-08T13:49:15Z",
+      "side": 1,
+      "message": "Actually, no. It was https://git.eclipse.org/r/#/c/148976/ , which reminded me about bug 520386. And when I started doing https://git.eclipse.org/r/#/c/148994/ I noticed that the rest of this class also did strange things, which led to this change.",
+      "parentUuid": "d55bfecf_841ced6b",
+      "range": {
+        "startLine": 165,
+        "startChar": 25,
+        "endLine": 165,
+        "endChar": 31
+      },
+      "revId": "b78871ae32c8243b2827384646aeb0515a4a1648",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
     }
   ]
 }
