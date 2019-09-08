@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "db3eba83_31c2b98c",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/op/BranchOperation.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 184,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2019-09-08T20:14:38Z",
+      "side": 1,
+      "message": "I think we should rather check for cancellation in the for loop and in the treewalk in getMissingProjects() instead of this check",
+      "revId": "8503cd7a181a85f94af343a6d0c734901fbc1323",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
