@@ -71,6 +71,8 @@ import org.eclipse.osgi.util.NLS;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.team.core.history.IFileRevision;
+import org.eclipse.team.internal.ui.synchronize.EditableSharedDocumentAdapter.ISharedDocumentAdapterListener;
+import org.eclipse.team.internal.ui.synchronize.LocalResourceTypedElement;
 import org.eclipse.team.ui.synchronize.SaveableCompareEditorInput;
 import org.eclipse.ui.ISharedImages;
 import org.eclipse.ui.PlatformUI;
@@ -79,6 +81,7 @@ import org.eclipse.ui.ide.IDE.SharedImages;
 /**
  * A Git-specific {@link CompareEditorInput}
  */
+@SuppressWarnings("restriction")
 public class GitMergeEditorInput extends CompareEditorInput {
 	private static final String LABELPATTERN = "{0} - {1}"; //$NON-NLS-1$
 
@@ -374,6 +377,12 @@ public class GitMergeEditorInput extends CompareEditorInput {
 						left = new LocalNonWorkspaceTypedElement(repository,
 								location);
 					}
+					if (left instanceof LocalResourceTypedElement) {
+						((LocalResourceTypedElement) left)
+								.setSharedDocumentListener(
+										new LocalResourceSaver(
+												(LocalResourceTypedElement) left));
+					}
 				} else {
 					rev = GitFileRevision.inIndex(repository, gitPath,
 							DirCacheEntry.STAGE_2);
@@ -487,5 +496,45 @@ public class GitMergeEditorInput extends CompareEditorInput {
 	@Override
 	public boolean canRunAsJob() {
 		return true;
+	}
+
+	private static class LocalResourceSaver
+			implements ISharedDocumentAdapterListener {
+
+		LocalResourceTypedElement element;
+
+		public LocalResourceSaver(LocalResourceTypedElement element) {
+			this.element = element;
+		}
+
+		@Override
+		public void handleDocumentConnected() {
+			// Nothing
+		}
+
+		@Override
+		public void handleDocumentDisconnected() {
+			// Nothing
+		}
+
+		@Override
+		public void handleDocumentFlushed() {
+			try {
+				element.saveDocument(true, null);
+			} catch (CoreException e) {
+				Activator.handleStatus(e.getStatus(), true);
+			}
+		}
+
+		@Override
+		public void handleDocumentDeleted() {
+			// Nothing
+		}
+
+		@Override
+		public void handleDocumentSaved() {
+			// Nothing
+		}
+
 	}
 }
