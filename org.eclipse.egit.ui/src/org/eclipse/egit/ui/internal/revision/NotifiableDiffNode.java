@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2011 IBM Corporation and others.
+ * Copyright (c) 2011, 2019 IBM Corporation and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License 2.0
  * which accompanies this distribution, and is available at
@@ -16,15 +16,49 @@ import org.eclipse.compare.ITypedElement;
 import org.eclipse.compare.structuremergeviewer.DiffNode;
 import org.eclipse.compare.structuremergeviewer.IDiffContainer;
 
-class NotifiableDiffNode extends DiffNode {
+/**
+ * A {@link DiffNode} with a public {@link #fireChange()} method.
+ */
+public class NotifiableDiffNode extends DiffNode {
 
-	NotifiableDiffNode(IDiffContainer parent, int kind, ITypedElement ancestor,
+	/**
+	 * Creates a new {@link NotifiableDiffNode} and initializes with the given
+	 * values.
+	 *
+	 * @param parent
+	 *            under which the new container is added as a child or
+	 *            {@code null}
+	 * @param kind
+	 *            of difference (defined in
+	 *            {@link org.eclipse.compare.structuremergeviewer.Differencer
+	 *            Differencer})
+	 * @param ancestor
+	 *            the common ancestor input to a compare
+	 * @param left
+	 *            the left input to a compare
+	 * @param right
+	 *            the right input to a compare
+	 */
+	public NotifiableDiffNode(IDiffContainer parent, int kind,
+			ITypedElement ancestor,
 			ITypedElement left, ITypedElement right) {
 		super(parent, kind, ancestor, left, right);
 	}
 
+	/**
+	 * Creates a new {@link NotifiableDiffNode} with the given diff kind.
+	 *
+	 * @param kind
+	 *            of difference (defined in
+	 *            {@link org.eclipse.compare.structuremergeviewer.Differencer
+	 *            Differencer})
+	 */
+	public NotifiableDiffNode(int kind) {
+		super(kind);
+	}
+
 	@Override
-	protected void fireChange() {
+	public void fireChange() {
 		super.fireChange();
 	}
 
