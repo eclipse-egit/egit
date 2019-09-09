@@ -51,6 +51,7 @@ import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.viewers.SelectionChangedEvent;
 import org.eclipse.jface.viewers.StructuredSelection;
 import org.eclipse.jface.viewers.TreeViewer;
+import org.eclipse.jface.viewers.Viewer;
 import org.eclipse.jface.viewers.ViewerComparator;
 import org.eclipse.jface.window.Window;
 import org.eclipse.jgit.lib.BranchConfig;
@@ -74,6 +75,25 @@ import org.eclipse.ui.dialogs.PatternFilter;
  * {@link #createCustomArea(Composite)}.
  */
 public abstract class AbstractBranchSelectionDialog extends TitleAreaDialog {
+
+	/**
+	 * Filter refs by their label or by their full name (with hierarchical
+	 * layout enabled, the node label is only the last part of the ref name).
+	 */
+	private static final class RefNamePatternFilter extends PatternFilter {
+		@Override
+		protected boolean isLeafMatch(Viewer viewer, Object element) {
+			if (super.isLeafMatch(viewer, element)) {
+				return true;
+			}
+			if (element instanceof RefNode) {
+				String branchName = ((RefNode) element).getObject()
+						.getName();
+				return wordMatches(branchName);
+			}
+			return false;
+		}
+	}
 
 	/**
 	 * Get the target merge ref name for the currently checkout branch
@@ -273,7 +293,7 @@ public abstract class AbstractBranchSelectionDialog extends TitleAreaDialog {
 		} else {
 			selectionModel = SWT.SINGLE;
 		}
-		PatternFilter filter = new PatternFilter();
+		PatternFilter filter = new RefNamePatternFilter();
 		filter.setIncludeLeadingWildcard(true);
 		FilteredTree tree = new FilteredTree(composite,
 				selectionModel | SWT.BORDER, filter, true);
