@@ -12,6 +12,7 @@ package org.eclipse.egit.ui.internal.history;
 
 import java.io.IOException;
 import java.text.MessageFormat;
+import java.util.Set;
 
 import org.eclipse.egit.ui.Activator;
 import org.eclipse.egit.ui.UIPreferences;
@@ -19,7 +20,6 @@ import org.eclipse.egit.ui.internal.UIText;
 import org.eclipse.jface.preference.IPreferenceStore;
 import org.eclipse.jgit.errors.IncorrectObjectTypeException;
 import org.eclipse.jgit.errors.MissingObjectException;
-import org.eclipse.jgit.lib.AnyObjectId;
 import org.eclipse.jgit.lib.Constants;
 import org.eclipse.jgit.lib.ObjectId;
 import org.eclipse.jgit.lib.Ref;
@@ -38,13 +38,10 @@ class GitHistoryWalk extends SWTWalk {
 
 	private boolean initialized = false;
 
-	private final AnyObjectId headId;
-
 	private final ObjectId toShow;
 
-	GitHistoryWalk(Repository repository, AnyObjectId headId, ObjectId toShow) {
+	GitHistoryWalk(Repository repository, ObjectId toShow) {
 		super(repository);
-		this.headId = headId;
 		this.toShow = toShow;
 	}
 
@@ -73,12 +70,8 @@ class GitHistoryWalk extends SWTWalk {
 		IPreferenceStore store = Activator.getDefault().getPreferenceStore();
 		RefDatabase db = getRepository().getRefDatabase();
 		try {
-			if (store.getBoolean(
-					UIPreferences.RESOURCEHISTORY_SHOW_ALL_BRANCHES)) {
-				markStartAllRefs(db, Constants.R_HEADS);
-				markStartAllRefs(db, Constants.R_REMOTES);
-				markStartAllRefs(db, Constants.R_TAGS);
-			}
+			markStartAllRefs(new RefFilterHelper()
+					.getMatchingRefsForSelectedRefFilters(getRepository()));
 			if (store.getBoolean(
 					UIPreferences.RESOURCEHISTORY_SHOW_ADDITIONAL_REFS)) {
 				markStartAdditionalRefs(db);
@@ -88,7 +81,6 @@ class GitHistoryWalk extends SWTWalk {
 			} else {
 				markUninteresting(db, Constants.R_NOTES);
 			}
-			markStart(parseCommit(headId));
 			if (toShow != null) {
 				markStart(toShow);
 			}
@@ -108,6 +100,13 @@ class GitHistoryWalk extends SWTWalk {
 			if (!ref.isSymbolic()) {
 				markStartRef(ref);
 			}
+		}
+	}
+
+	private void markStartAllRefs(Set<Ref> refs)
+			throws IOException, IncorrectObjectTypeException {
+		for (Ref ref : refs) {
+			markStartRef(ref);
 		}
 	}
 

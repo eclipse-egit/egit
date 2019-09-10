@@ -15,12 +15,11 @@ import java.lang.reflect.InvocationTargetException;
 import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 import org.eclipse.core.resources.IResource;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.egit.core.project.RepositoryMapping;
-import org.eclipse.egit.ui.Activator;
-import org.eclipse.egit.ui.UIPreferences;
 import org.eclipse.egit.ui.UIUtils;
 import org.eclipse.egit.ui.internal.GitLabels;
 import org.eclipse.egit.ui.internal.UIText;
@@ -40,7 +39,6 @@ import org.eclipse.jface.viewers.SelectionChangedEvent;
 import org.eclipse.jgit.diff.DiffConfig;
 import org.eclipse.jgit.errors.IncorrectObjectTypeException;
 import org.eclipse.jgit.errors.MissingObjectException;
-import org.eclipse.jgit.lib.Constants;
 import org.eclipse.jgit.lib.ObjectId;
 import org.eclipse.jgit.lib.Ref;
 import org.eclipse.jgit.lib.Repository;
@@ -170,19 +168,12 @@ public class CommitSelectionDialog extends TitleAreaDialog {
 										.newFlag("highlight"); //$NON-NLS-1$
 								allCommits.source(currentWalk);
 
-								if (Activator.getDefault().getPreferenceStore()
-										.getBoolean(
-												UIPreferences.RESOURCEHISTORY_SHOW_ALL_BRANCHES)) {
-									markStartAllRefs(currentWalk,
-											Constants.R_HEADS);
-									markStartAllRefs(currentWalk,
-											Constants.R_REMOTES);
-								} else {
-									currentWalk
-											.markStart(currentWalk.parseCommit(
-													repository.resolve(
-															Constants.HEAD)));
-								}
+								RefFilterHelper helper = new RefFilterHelper();
+
+								markStartAllRefs(currentWalk, helper
+										.getMatchingRefsForSelectedRefFilters(
+												repository));
+
 								for (;;) {
 									final int oldsz = allCommits.size();
 									allCommits.fillTo(oldsz + BATCH_SIZE - 1);
@@ -231,10 +222,10 @@ public class CommitSelectionDialog extends TitleAreaDialog {
 				.toArray(new SWTCommit[0]), null, true);
 	}
 
-	private void markStartAllRefs(RevWalk currentWalk, String prefix)
+	private void markStartAllRefs(RevWalk currentWalk, Set<Ref> refs)
 			throws IOException, MissingObjectException,
 			IncorrectObjectTypeException {
-		for (Ref ref : repository.getRefDatabase().getRefsByPrefix(prefix)) {
+		for (Ref ref : refs) {
 			if (ref.isSymbolic())
 				continue;
 			currentWalk.markStart(currentWalk.parseCommit(ref.getObjectId()));
