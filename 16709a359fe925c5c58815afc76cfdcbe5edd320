@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a208419c_bd3da3ea",
+        "filename": "org.eclipse.egit.doc/help/EGit/New_and_Noteworthy/5.5/Video.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2019-09-10T20:51:44Z",
+      "side": 1,
+      "message": "I don\u0027t see a video yet. Perhaps remove that whole section, and only add it on the wiki once there is one of Holger\u0027s videos. Maybe also not such a good idea to include links to youtube in the built-in help...",
+      "range": {
+        "startLine": 33,
+        "startChar": 58,
+        "endLine": 33,
+        "endChar": 61
+      },
+      "revId": "16709a359fe925c5c58815afc76cfdcbe5edd320",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
