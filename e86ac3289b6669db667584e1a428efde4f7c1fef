@@ -16,6 +16,24 @@
       "revId": "e86ac3289b6669db667584e1a428efde4f7c1fef",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "24f42aaf_3ced1d43",
+        "filename": "org.eclipse.egit.doc/help/JGit/New_and_Noteworthy/5.5/5.5.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2019-09-10T22:11:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8a13fbfb_c403fcce",
+      "revId": "e86ac3289b6669db667584e1a428efde4f7c1fef",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
     }
   ]
 }
