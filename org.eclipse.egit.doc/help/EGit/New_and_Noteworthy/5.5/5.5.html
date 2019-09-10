@@ -1,0 +1,78 @@
+<?xml version='1.0' encoding='utf-8' ?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+		<title>EGit 5.5 New and Noteworthy</title>
+		<link type="text/css" rel="stylesheet" href="../../../book.css"/>
+	</head>
+	<body>
+		<table class="navigation" style="width: 100%;" border="0" summary="navigation">
+			<tr>
+				<th style="width: 100%" align="center" colspan="3">EGit 5.5 New and Noteworthy</th>
+			</tr>
+			<tr>
+				<td style="width: 20%" align="left"></td>
+				<td style="width: 60%" align="center"></td>
+				<td style="width: 20%" align="right">
+					<a href="Contributors.html" title="Contributors">
+						<img alt="Next" border="0" src="../../../images/next.gif"/>
+					</a>
+				</td>
+			</tr>
+			<tr>
+				<td style="width: 20%" align="left" valign="top"></td>
+				<td style="width: 60%" align="center"></td>
+				<td style="width: 20%" align="right" valign="top">Contributors</td>
+			</tr>
+		</table><hr class="navigation-separator"/>
+		<h1 id="EGit">EGit</h1>
+		<h2 id="Creating_Lightweight_Tags">Creating Lightweight Tags</h2>
+		<p>With EGit 5.5, you can create lightweight tags. Just leave the message field in the "Create Tag" dialog empty:</p>
+		<p>
+			<img alt="Screenshot of the &quot;Create Tag&quot; dialog showing the tooltip on the &quot;Create&quot; button explaining this." border="0" src="images/Create_Lightweight_Tag.png"/>
+		</p>
+		<p>A lightweight tag doesn't store any author information (who created the tag) or message, and it cannot be signed. It is really just a plain name for a commit. An annotated commit, on the other hand, additionally stores a message, and also the author of the tag.</p>
+		<p>If an existing tag is selected and the "Force replace existing tag" option is checked, the dialog can also be used to move a tag (make it refer to a different commit than before), or to change an annotated tag into a lightweight tag (by clearing the message) or vice versa (by adding a message).</p>
+		<h2 id="History_View">History View</h2>
+		<h3 id="Option_to_Show_First_Parents_Only">Option to Show First Parents Only</h3>
+		<p>A history graph with many merges can be very hard to read. Therefore native git log has an option --first-parent, which shows only the first parent of each merge commit. This is now also available in the EGit history view.</p>
+		<p>
+			<img alt="History with first parent only enabled" border="0" src="images/Egit-first-parent.png"/>
+		</p>
+		<p>Notice the many merge commits in the history, which all show only one parent, instead of splitting into more and more lines.</p>
+		<h3 id="Shorter_View_Toolbar">Shorter View Toolbar</h3>
+		<p>The toolbar of the history view has been made shorter:</p>
+		<p>
+			<img alt="Screenshot of the Egit History View with the four resource filter buttons combined into one button with a drop-down menu" border="0" src="images/EGit_HistoryView_filter.png"/>
+		</p>
+		<p>Instead of four individual buttons for the resource filters there's now only one button with a drop-down menu. Clicking the button cycles through the filters; the button's icon changes depending on the chosen filter.</p>
+		<h2 id="Renaming_branches_became_easier">Renaming branches became easier</h2>
+		<p>Before EGit 5.5 you had to navigate to a branch node in the repository view, in order to rename the branch. Now you can use the F2 key for renaming a branch both on the branch node or on the repository node. No need to expand all the nodes down to the branch node anymore.</p>
+		<h2 id="Staged_files_as_list_or_tree">Staged files as list or tree</h2>
+		<p>EGit had an option to display the staged and unstaged files as a flat list or as a tree of folders and files since a long time already. Both can be very helpful when you want to stage only some of many changed files, either based on their name or based on their location. To make more users aware of the different presentations, the option can now be changed more easily via a dropdown menu next to the unstaged files area in the history view.</p>
+		<p>
+			<img alt="Screenshot of the EGit Staging view showing the new &quot;Presentation&quot; button and drop-down menu" border="0" src="images/EGit_5_5_Staging_Presentation.png"/>
+		</p>
+		<p>The button's icon changes depending on the selected mode.</p>
+		<h2 id="Other_Changes">Other Changes</h2>
+		<p>EGit 5.5 includes lots of less noticeable improvements in the UI, plus a number of bug fixes. The complete list of new features and bug fixes is available in the 
+			<a href="https://projects.eclipse.org/projects/technology.egit/releases/5.5.0/" target="egit_external">release notes</a>.
+		</p><hr class="navigation-separator"/>
+		<table class="navigation" style="width: 100%;" border="0" summary="navigation">
+			<tr>
+				<td style="width: 20%" align="left"></td>
+				<td style="width: 60%" align="center"></td>
+				<td style="width: 20%" align="right">
+					<a href="Contributors.html" title="Contributors">
+						<img alt="Next" border="0" src="../../../images/next.gif"/>
+					</a>
+				</td>
+			</tr>
+			<tr>
+				<td style="width: 20%" align="left" valign="top"></td>
+				<td style="width: 60%" align="center"></td>
+				<td style="width: 20%" align="right" valign="top">Contributors</td>
+			</tr>
+		</table>
+	</body>
+</html>
