@@ -22,6 +22,30 @@
       "revId": "16709a359fe925c5c58815afc76cfdcbe5edd320",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "aab5f4f6_401d319c",
+        "filename": "org.eclipse.egit.doc/help/EGit/New_and_Noteworthy/5.5/Video.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2019-09-10T21:40:06Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a208419c_bd3da3ea",
+      "range": {
+        "startLine": 33,
+        "startChar": 58,
+        "endLine": 33,
+        "endChar": 61
+      },
+      "revId": "16709a359fe925c5c58815afc76cfdcbe5edd320",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
     }
   ]
 }
