@@ -2176,7 +2176,12 @@ Sein oder nicht sein
 			<img border="0" src="images/Egit-3.1-DeleteRepository.png"/>
 		</p>
 		<p>
-			<br/>
+			<b>Attention</b>: deleting the working tree (second checkbox) along with the repository (the <code>.git</code> directory; first checkbox) of course removes everything contained in that working tree directory. This includes Eclipse projects that were ever shared (see 
+			<a href="http://wiki.eclipse.org/EGit/User_Guide/Sharing#Adding_a_project_to_version_control" title="EGit/User Guide/Sharing#Adding_a_project_to_version_control" target="egit_external">Adding a project to version control</a>) with that git repository, even if later disconnected (
+			<b>Team&rarr;Disconnect</b>)! Sharing a project copies it into the git working tree; disconnecting it does 
+			<b>
+				<i>not</i>
+			</b> copy it back.
 		</p>
 		<h3 id="Structure_of_the_Git_Repositories_View">Structure of the Git Repositories View</h3>
 		<p>The following screenshot shows the topmost two levels of the Git Repositories View:</p>
