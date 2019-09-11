@@ -35,7 +35,10 @@
 			<a href="https://www.gerritcodereview.com/" target="egit_external">Gerrit Code Review</a> for Git based patch submission and review. 
 		</p>
 		<p>Parts of this chapter are also available in the 
-			<a href="http://wiki.eclipse.org/Gerrit#Doing_Code_Reviews_with_Gerrit" target="egit_external">Eclipse Gerrit wiki</a>.
+			<a href="https://wiki.eclipse.org/Gerrit#Doing_Code_Reviews_with_Gerrit" target="egit_external">Eclipse Gerrit wiki</a>.
+		</p>
+		<p>Both projects can accept contributions 
+			<i>only</i> via Gerrit. Please do not send patches by e-mail. Although both projects are mirrored to Gihub, EGit and JGit also cannot accept Github pull requests.
 		</p>
 		<h3 id="User_Account">User Account</h3>
 		<ul>
@@ -60,7 +63,7 @@
 		<p>In addition ensure</p>
 		<ul>
 			<li>that the contributed code is licensed under the project license (EPL 2.0 for EGit and EDL 1.0 for JGit). This is done by putting a 
-				<a href="http://www.eclipse.org/legal/copyrightandlicensenotice.php" target="egit_external">copyright and license header</a> into every new java file. See other existing project source files for the correct content.
+				<a href="https://www.eclipse.org/projects/handbook/#ip-copyright-headers" target="egit_external">copyright and license header</a> into every new java file. See other existing project source files for the correct content.
 			</li>
 		</ul>
 		<p>With a valid ECA on file, the signed-off commit and the copyright and license header in place, we will be able to accept small patches (&lt;1000 LoC) immediately. For larger patches, we will also have to create a contribution questionnaire for review by the Eclipse IP team, but this usually doesn't require additional actions from you.</p>
@@ -68,13 +71,13 @@
 			<a href="https://dev.eclipse.org/mhonarc/lists/eclipse.org-committers/msg00973.html" target="egit_external">requires a CQ</a>, use one of the following git commands to check:
 		</p>
 		<ul>
-			<li>If it's committed:  git log --shortstat</li>
-			<li>If not committed: git diff --stat</li>
+			<li>If it's committed: <tt>git log --shortstat</tt></li>
+			<li>If not committed: <tt>git diff --stat</tt></li>
 		</ul>
 		<p>These commands tell you the number of insertions(+), and deletions(-). If the total number of lines inserted (e.g. added) in a contribution is greater than 1000 (yes, this includes comments) then a CQ is required.</p>
 		<p>Find more details about how to contribute in 
-			<a href="http://wiki.eclipse.org/Development_Resources/Contributing_via_Git" target="egit_external">Contributing via Git (for contributors)</a> and 
-			<a href="http://wiki.eclipse.org/Development_Resources/Handling_Git_Contributions" target="egit_external">Handling Git Contributions (for committers)</a>.
+			<a href="https://wiki.eclipse.org/Development_Resources/Contributing_via_Git" target="egit_external">Contributing via Git (for contributors)</a> and 
+			<a href="https://wiki.eclipse.org/Development_Resources/Handling_Git_Contributions" target="egit_external">Handling Git Contributions (for committers)</a>.
 		</p>
 		<h3 id="Logon">Logon</h3>
 		<h4 id="Gerrit_Web_UI">Gerrit Web UI</h4>
@@ -101,7 +104,7 @@
 			</li>
 			<li>If you are 
 				<b>absolutely certain</b> you do not have keys already, you must create a public and private pair of SSH keys. It is strongly recommended that you 
-				<a href="http://help.github.com/working-with-key-passphrases" target="egit_external">use a passphrase.</a>
+				<a href="https://help.github.com/working-with-key-passphrases" target="egit_external">use a passphrase</a>.
 			</li>
 			<li>
 				<b>Generating SSH key pair on command line</b>
@@ -117,7 +120,7 @@
 		<p> </p>
 		<ul>
 			<li>
-				<a href="http://wiki.eclipse.org/EGit/User_Guide#Eclipse_SSH_Configuration" target="egit_external">Generating SSH key pair in Eclipse</a>
+				<a href="https://wiki.eclipse.org/EGit/User_Guide#Eclipse_SSH_Configuration" target="egit_external">Generating SSH key pair in Eclipse</a>
 			</li>
 		</ul>
 		<h3 id="Doing_Code_Reviews_with_Gerrit">Doing Code Reviews with Gerrit</h3>
@@ -135,7 +138,7 @@
 				<a href="https://git.eclipse.org/r/Documentation/index.html#_user_guide" target="egit_external">Gerrit user guide</a> for more information about using Gerrit.
 			</li>
 			<li>The 
-				<a href="http://wiki.eclipse.org/EGit/User_Guide#EGit_Tutorial_.28EclipseCon_Europe_Nov_2011.29" target="egit_external">EGit tutorial</a> walks you through the basic steps of working with Gerrit and EGit.
+				<a href="https://wiki.eclipse.org/EGit/User_Guide#EGit_Tutorial_.28EclipseCon_Europe_Nov_2011.29" target="egit_external">EGit tutorial</a> walks you through the basic steps of working with Gerrit and EGit.
 			</li>
 			<li>Use 
 				<a href="https://git.eclipse.org/r/Documentation/user-search.html" target="egit_external">Gerrit queries</a> to filter the review list for changes you are interested in:
@@ -296,7 +299,7 @@ git config remote.review.push HEAD:refs/for/master
 			<li>CTRL-Z (CMD-Z on Mac) removes the re-added whitespace without  triggering the save action again</li>
 		</ul>
 		<p>Another workaround is to use 
-			<a href="http://stackoverflow.com/questions/10413922/convert-spaces-to-tabs-in-lines-i-changed-in-a-commit?answertab=active#tab-top" target="egit_external">this little script</a> from the command line to edit away trailing whitespace from changed lines.
+			<a href="https://stackoverflow.com/questions/10413922/convert-spaces-to-tabs-in-lines-i-changed-in-a-commit?answertab=active#tab-top" target="egit_external">this little script</a> from the command line to edit away trailing whitespace from changed lines.
 		</p>
 		<h3 id="Use_of_the_.22final.22_modifier">Use of the "final" modifier</h3>
 		<p>New code uses the "final" modifier in the following circumstances
@@ -320,13 +323,13 @@ git config remote.review.push HEAD:refs/for/master
 		</ul>
 		<h2 id="Commit_message_guidelines">Commit message guidelines</h2>
 		<ul>
-			<li>The commit message header should fit on one line and should start with an uppercase letter. A blank line separates it from the body of the message.</li>
-			<li>The first line should be a clear and concise description about the change and should not end with a dot.</li>
+			<li>The commit message header should fit on one line. A blank line separates it from the body of the message.</li>
+			<li>The first line should be a clear and concise description about the change. It is recommended to start with the modified subsystem, followed by a colon and a description starting with capital letter and without period at the end. For example: <code>UploadPack: Use reachability checker to validate non-advertised wants</code></li>
 			<li>In case of release engineering tasks without bugzilla entries the commit message header may look like "[findbugs] Fix warning XYZ for String constructor". The prefix in brackets is an indication why this comes without a corresponding bug. </li>
 			<li>Enter a newline before providing a more detailed description about the change.</li>
 			<li>Format the commit message to have newline characters after every 60-70 characters. </li>
 			<li>Find more reasoning about commit message formatting in 
-				<a href="http://tbaggery.com/2008/04/19/a-note-about-git-commit-messages.html" target="egit_external">"A Note About Git Commit Messages"</a>
+				<a href="https://tbaggery.com/2008/04/19/a-note-about-git-commit-messages.html" target="egit_external">"A Note About Git Commit Messages"</a>
 			</li>
 			<li>
 				<i>Commit message footers</i> (everything following the last blank line in the commit message) in 
@@ -349,7 +352,7 @@ git config remote.review.push HEAD:refs/for/master
 				</ul>
 			</li>
 		</ul>
-		<pre>Fix the commit dialog to respect the workbench's selection
+		<pre>CommitDialog: Fix the commit dialog to respect the workbench's selection
 
 Originally, the commit dialog would automatically check off all
 files in the dialog. This behaviour contradicts a user's expectation
@@ -371,51 +374,15 @@ Signed-off-by: Your Name &lt;your.email@example.org&gt;
 			which was approved in a 
 			<a href="https://www.eclipse.org/org/foundation/boardminutes/2009_09_16_Minutes.php" target="egit_external">meeting of the board in Sep 2009</a>.
 		</p>
-		<p>The license header to be used for JGit is (see this 
-			<a href="https://www.eclipse.org/lists/jgit-dev/msg00127.html" target="egit_external">mail thread on the jgit-dev list</a>):
-		</p>
+		<p>The license and copyright header to be used for JGit is</p>
 		<pre>/*
- * Copyright &#169; YEAR, CONTRIBUTOR
- * [Copyright &#169; YEAR, CONTRIBUTOR...]
- * and other copyright owners as documented in the project's IP log.
- *
- * This program and the accompanying materials are made available
- * under the terms of the Eclipse Distribution License v1.0 which
- * accompanies this distribution, is reproduced below, and is
- * available at <a href="http://www.eclipse.org/org/documents/edl-v10.php" target="egit_external">http://www.eclipse.org/org/documents/edl-v10.php</a>
- *
- * All rights reserved.
- *
- * Redistribution and use in source and binary forms, with or
- * without modification, are permitted provided that the following
- * conditions are met:
- *
- * - Redistributions of source code must retain the above copyright
- *   notice, this list of conditions and the following disclaimer.
- *
- * - Redistributions in binary form must reproduce the above
- *   copyright notice, this list of conditions and the following
- *   disclaimer in the documentation and/or other materials provided
- *   with the distribution.
- *
- * - Neither the name of the Eclipse Foundation, Inc. nor the
- *   names of its contributors may be used to endorse or promote
- *   products derived from this software without specific prior
- *   written permission.
- *
- * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND
- * CONTRIBUTORS "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES,
- * INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES
- * OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
- * ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR
- * CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
- * SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT
- * NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
- * LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER
- * CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT,
- * STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
- * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF
- * ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ * Copyright &#169; YEAR CONTRIBUTOR[ and others]
+ * 
+ * This program and the accompanying materials are made available under the
+ * terms of the Eclipse Distribution License v. 1.0 which is available at
+ * <a href="http://www.eclipse.org/org/documents/edl-v10.php" target="egit_external">http://www.eclipse.org/org/documents/edl-v10.php</a>.
+ * 
+ * SPDX-License-Identifier: BSD-3-Clause
  */
 </pre>
 		<p>See 
@@ -450,14 +417,8 @@ Copyright (C) YEAR Your Name &lt;you@example.org&gt;
 			<li>Pay attention to the Java and Eclipse SDK baselines. EGit requires only Java 8 and Eclipse 4.4. You cannot use API's that are newer.</li>
 		</ul>
 		<h2 id="Sending_patches_by_mail">Sending patches by mail</h2>
-		<p>Although sending patches by mail is the approved way of interacting with, and asking feedback from, the Git project, please don't send patches via 
-			<a href="http://www.kernel.org/pub//software/scm/git/docs/git-send-email.html" target="egit_external">git send-email</a>. Instead, please use 
-			<a href="http://www.kernel.org/pub/software/scm/git/docs/git-format-patch.html" target="egit_external">git format-patch</a> to generate the <code>mbox</code>, and then attach that to an item in bugzilla as per the above SUBMITTING_PATCHES guides. 
-		</p>
-		<p>If you're sending a work-in-progress for a review, be aware that you can also attach work-in-progress (or RFC) items to Bugzilla; it's not just for finished patches. </p>
-		<p>
-			<b>However</b>, it's generally preferred that you send items which you want comments on via Gerrit as per 
-			<a href="#Contributing_Patches">Contributing_Patches</a>, since Gerrit allows comments to be added in-line and allows the opportunity to send multiple versions of a patch after changes are made. Once a change has been submitted to Gerrit, you can then mail the developer mailing list with a request to review your change via URL or get Gerrit to send the mail on your behalf.
+		<p>EGit and JGit can accept patches only via Gerrit as per 
+			<a href="#Contributing_Patches">Contributing_Patches</a>.
 		</p>
 		<p>
 			<br/>
