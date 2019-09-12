@@ -7,7 +7,7 @@
  * Copyright (C) 2013, Robin Stocker <robin@nibor.org>
  * Copyright (C) 2014, Axel Richard <axel.richard@obeo.fr>
  * Copyright (C) 2015, Denis Zygann <d.zygann@web.de>
- * Copyright (C) 2016, Thomas Wolf <thomas.wolf@paranor.ch>
+ * Copyright (C) 2016, 2019 Thomas Wolf <thomas.wolf@paranor.ch>
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License 2.0
@@ -407,17 +407,35 @@ public class UIIcons {
 		ELCL16_CLEAR = map("elcl16/clear_co.png"); //$NON-NLS-1$
 		ELCL16_REFRESH = map("elcl16/refresh.png"); //$NON-NLS-1$
 		ELCL16_SYNCED = map("elcl16/synced.png"); //$NON-NLS-1$
-		ELCL16_FILTER = map("elcl16/filter_ps.png"); //$NON-NLS-1$
+		ELCL16_FILTER = map(
+				Platform.getBundle("org.eclipse.ui.ide").getVersion() //$NON-NLS-1$
+						.compareTo(Version.valueOf("3.16.100")) >= 0 ? //$NON-NLS-1$
+								"elcl16/filter_ps_funnel.png" //$NON-NLS-1$
+								: "elcl16/filter_ps.png"); //$NON-NLS-1$
 		ELCL16_ID = map("elcl16/sha1.png"); //$NON-NLS-1$
 		ELCL16_COLUMN_LAYOUT = map("elcl16/horizontal_view.png"); //$NON-NLS-1$
 		CHECKBOX_ENABLED_CHECKED = map("checkboxes/enabled_checked.png"); //$NON-NLS-1$
 		CHECKBOX_ENABLED_UNCHECKED = map("checkboxes/enabled_unchecked.png"); //$NON-NLS-1$
 		CHECKBOX_DISABLED_CHECKED = map("checkboxes/disabled_checked.png"); //$NON-NLS-1$
 		CHECKBOX_DISABLED_UNCHECKED = map("checkboxes/disabled_unchecked.png"); //$NON-NLS-1$
-		FILTERNONE = map("elcl16/filter_none.png"); //$NON-NLS-1$
-		FILTERRESOURCE = map("elcl16/filterresource.png"); //$NON-NLS-1$
-		FILTERPROJECT = map("elcl16/filterproject.png"); //$NON-NLS-1$
-		FILTERFOLDER = map("elcl16/filterfolder.png"); //$NON-NLS-1$
+		FILTERNONE = map(Platform.getBundle("org.eclipse.ui.ide").getVersion() //$NON-NLS-1$
+				.compareTo(Version.valueOf("3.16.100")) >= 0 ? //$NON-NLS-1$
+						"elcl16/filter_none_funnel.png" //$NON-NLS-1$
+						: "elcl16/filter_none.png"); //$NON-NLS-1$
+		FILTERRESOURCE = map(
+				Platform.getBundle("org.eclipse.ui.ide").getVersion() //$NON-NLS-1$
+						.compareTo(Version.valueOf("3.16.100")) >= 0 ? //$NON-NLS-1$
+								"elcl16/filter_resource_funnel.png" //$NON-NLS-1$
+								: "elcl16/filterresource.png"); //$NON-NLS-1$
+		FILTERPROJECT = map(
+				Platform.getBundle("org.eclipse.ui.ide").getVersion() //$NON-NLS-1$
+						.compareTo(Version.valueOf("3.16.100")) >= 0 ? //$NON-NLS-1$
+								"elcl16/filter_project_funnel.png" //$NON-NLS-1$
+								: "elcl16/filterproject.png"); //$NON-NLS-1$
+		FILTERFOLDER = map(Platform.getBundle("org.eclipse.ui.ide").getVersion() //$NON-NLS-1$
+				.compareTo(Version.valueOf("3.16.100")) >= 0 ? //$NON-NLS-1$
+						"elcl16/filter_folder_funnel.png" //$NON-NLS-1$
+						: "elcl16/filterfolder.png"); //$NON-NLS-1$
 		FETCH = map("obj16/fetch.png"); //$NON-NLS-1$
 		PUSH = map("obj16/push.png"); //$NON-NLS-1$
 		PULL = map("obj16/pull.png"); //$NON-NLS-1$
