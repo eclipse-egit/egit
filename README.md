@@ -115,9 +115,9 @@ to post.
 
 ## Contributing
 
-See the [EGit Contributor Guide](http://wiki.eclipse.org/EGit/Contributor_Guide).
+See the [EGit Contributor Guide](https://wiki.eclipse.org/EGit/Contributor_Guide).
 
 ## About Git
 
 More information about Git, its repository format, and the canonical
-C based implementation can be obtained from the [Git website](http://git-scm.com/).
+C based implementation can be obtained from the [Git website](https://git-scm.com/).

@@ -8,7 +8,7 @@
       license-feature="org.eclipse.license"
       license-feature-version="0.0.0">
 
-   <description url="http://www.eclipse.org/egit/">
+   <description url="https://www.eclipse.org/egit/">
      %description
    </description>
 

@@ -17,7 +17,7 @@ things.
 
 AUTOMATED INSTALLATION INSTRUCTIONS
 
-- Find installation instructions on http://www.eclipse.org/egit/download/
+- Find installation instructions on https://www.eclipse.org/egit/download/
 
 MANUAL INSTALLATION INSTRUCTIONS
 
@@ -39,4 +39,4 @@ REPORTING BUGS
   id or the version your plugin is built from, or the version of the plugin if it does
   not contain a date.
 
-- Check http://www.eclipse.org/egit/support/ to find information about reporting bugs.
+- Check https://www.eclipse.org/egit/support/ to find information about reporting bugs.
