@@ -252,7 +252,11 @@ public class BranchOperation implements IEGitOperation {
 	 * @return return the result specific to a repository
 	 */
 	public CheckoutResult getResult(Repository repo) {
-		return results.get(repo);
+		CheckoutResult result = results.get(repo);
+		if (result == null) {
+			return CheckoutResult.NOT_TRIED_RESULT;
+		}
+		return result;
 	}
 
 	void retryDelete(Repository repo, List<String> pathList) {
