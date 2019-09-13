@@ -22,6 +22,30 @@
       "revId": "24558faab847b6a229257ac20de9d2a6ea138ff9",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "60c40c80_524cfed1",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/UIIcons.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 414,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2019-09-13T17:05:12Z",
+      "side": 1,
+      "message": "I had planned something like that for a follow-up commit...",
+      "parentUuid": "2b2258f0_b04e4181",
+      "range": {
+        "startLine": 411,
+        "startChar": 4,
+        "endLine": 414,
+        "endChar": 34
+      },
+      "revId": "24558faab847b6a229257ac20de9d2a6ea138ff9",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
     }
   ]
 }
