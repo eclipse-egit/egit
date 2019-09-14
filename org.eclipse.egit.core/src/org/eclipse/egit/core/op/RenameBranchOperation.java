@@ -65,9 +65,7 @@ public class RenameBranchOperation implements IEGitOperation {
 				try (Git git = new Git(repository)) {
 					git.branchRename().setOldName(
 							branch.getName()).setNewName(newName).call();
-				} catch (JGitInternalException e) {
-					throw new CoreException(Activator.error(e.getMessage(), e));
-				} catch (GitAPIException e) {
+				} catch (JGitInternalException | GitAPIException e) {
 					throw new CoreException(Activator.error(e.getMessage(), e));
 				}
 			}

@@ -76,9 +76,7 @@ public class AddToIndexOperation implements IEGitOperation {
 				command.call();
 				progress.worked(1);
 			}
-		} catch (RuntimeException e) {
-			throw new CoreException(Activator.error(CoreText.AddToIndexOperation_failed, e));
-		} catch (GitAPIException e) {
+		} catch (RuntimeException | GitAPIException e) {
 			throw new CoreException(Activator.error(CoreText.AddToIndexOperation_failed, e));
 		}
 	}

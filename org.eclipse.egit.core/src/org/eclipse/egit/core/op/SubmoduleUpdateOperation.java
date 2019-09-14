@@ -140,10 +140,7 @@ public class SubmoduleUpdateOperation implements IEGitOperation {
 							refreshMonitor.worked(1);
 						}
 					}
-				} catch (GitAPIException e) {
-					throw new TeamException(e.getLocalizedMessage(),
-							e.getCause());
-				} catch (IOException e) {
+				} catch (GitAPIException | IOException e) {
 					throw new TeamException(e.getLocalizedMessage(),
 							e.getCause());
 				} finally {

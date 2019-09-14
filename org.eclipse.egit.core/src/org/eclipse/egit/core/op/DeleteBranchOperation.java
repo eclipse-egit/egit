@@ -136,9 +136,7 @@ public class DeleteBranchOperation implements IEGitOperation {
 					} catch (CannotDeleteCurrentBranchException e) {
 						status = REJECTED_CURRENT;
 						break;
-					} catch (JGitInternalException e) {
-						throw new CoreException(Activator.error(e.getMessage(), e));
-					} catch (GitAPIException e) {
+					} catch (JGitInternalException | GitAPIException e) {
 						throw new CoreException(Activator.error(e.getMessage(), e));
 					}
 					progress.worked(1);

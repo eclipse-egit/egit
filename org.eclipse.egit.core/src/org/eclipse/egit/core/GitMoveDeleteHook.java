@@ -400,10 +400,7 @@ class GitMoveDeleteHook implements IMoveDeleteHook {
 					source.getWorkspace().getRoot()
 							.getProject(description.getName()),
 					description, monitor, gitDir);
-		} catch (IOException e) {
-			tree.failed(new Status(IStatus.ERROR, Activator.getPluginId(),
-					0, CoreText.MoveDeleteHook_operationError, e));
-		} catch (CoreException e) {
+		} catch (IOException | CoreException e) {
 			tree.failed(new Status(IStatus.ERROR, Activator.getPluginId(),
 					0, CoreText.MoveDeleteHook_operationError, e));
 		}
