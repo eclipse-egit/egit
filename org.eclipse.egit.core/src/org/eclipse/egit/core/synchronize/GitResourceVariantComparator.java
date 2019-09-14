@@ -77,10 +77,7 @@ class GitResourceVariantComparator implements IResourceVariantComparator {
 						return Arrays.equals(bytes, remoteBytes);
 					}
 				}
-			} catch (IOException e) {
-				logException(e);
-				return false;
-			} catch (CoreException e) {
+			} catch (IOException | CoreException e) {
 				logException(e);
 				return false;
 			} finally {

@@ -77,10 +77,7 @@ public class StashApplyOperation implements IEGitOperation {
 					progress.worked(1);
 					ProjectUtil.refreshValidProjects(validProjects,
 							progress.newChild(1));
-				} catch (JGitInternalException e) {
-					throw new TeamException(e.getLocalizedMessage(),
-							e.getCause());
-				} catch (GitAPIException e) {
+				} catch (JGitInternalException | GitAPIException e) {
 					throw new TeamException(e.getLocalizedMessage(),
 							e.getCause());
 				}

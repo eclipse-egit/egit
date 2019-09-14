@@ -60,10 +60,7 @@ public class StashDropOperation implements IEGitOperation {
 				try {
 					command.call();
 					repo.fireEvent(new RefsChangedEvent());
-				} catch (JGitInternalException e) {
-					throw new TeamException(e.getLocalizedMessage(),
-							e.getCause());
-				} catch (GitAPIException e) {
+				} catch (JGitInternalException | GitAPIException e) {
 					throw new TeamException(e.getLocalizedMessage(),
 							e.getCause());
 				}

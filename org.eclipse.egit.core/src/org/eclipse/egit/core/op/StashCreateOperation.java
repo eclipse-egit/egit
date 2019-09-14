@@ -95,10 +95,7 @@ public class StashCreateOperation implements IEGitOperation {
 						command.setWorkingDirectoryMessage(message);
 					command.setIncludeUntracked(includeUntracked);
 					commit = command.call();
-				} catch (JGitInternalException e) {
-					throw new TeamException(e.getLocalizedMessage(),
-							e.getCause());
-				} catch (GitAPIException e) {
+				} catch (JGitInternalException | GitAPIException e) {
 					throw new TeamException(e.getLocalizedMessage(),
 							e.getCause());
 				} finally {

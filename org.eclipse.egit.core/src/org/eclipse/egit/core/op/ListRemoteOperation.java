@@ -114,9 +114,7 @@ public class ListRemoteOperation {
 					IProgressMonitor.UNKNOWN);
 		try {
 			remoteRefs = rc.call();
-		} catch (JGitInternalException e) {
-			throw new InvocationTargetException(e);
-		} catch (GitAPIException e) {
+		} catch (JGitInternalException | GitAPIException e) {
 			throw new InvocationTargetException(e);
 		}
 		if (pm != null)
