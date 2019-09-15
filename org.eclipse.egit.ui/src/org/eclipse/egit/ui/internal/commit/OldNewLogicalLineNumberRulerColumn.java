@@ -18,6 +18,8 @@ import org.eclipse.jface.text.source.IAnnotationModel;
 import org.eclipse.jface.text.source.LineNumberRulerColumn;
 import org.eclipse.jgit.diff.DiffEntry;
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.events.ControlAdapter;
+import org.eclipse.swt.events.ControlEvent;
 import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.graphics.Font;
 import org.eclipse.swt.graphics.GC;
@@ -210,6 +212,13 @@ public class OldNewLogicalLineNumberRulerColumn extends LineNumberRulerColumn {
 				}
 			}
 		};
+		parentControl.addControlListener(new ControlAdapter() {
+
+			@Override
+			public void controlResized(ControlEvent e) {
+				parentRuler.relayout();
+			}
+		});
 		return composite.createControl(parentControl,
 				parentRuler.getTextViewer());
 	}
