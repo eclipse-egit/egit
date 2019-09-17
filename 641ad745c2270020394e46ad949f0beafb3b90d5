@@ -22,6 +22,30 @@
       "revId": "641ad745c2270020394e46ad949f0beafb3b90d5",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "4c492c38_149b493e",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/internal/indexdiff/IndexDiffCache.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 276,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2019-09-17T18:17:06Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "897a059e_4daad9f0",
+      "range": {
+        "startLine": 276,
+        "startChar": 19,
+        "endLine": 276,
+        "endChar": 23
+      },
+      "revId": "641ad745c2270020394e46ad949f0beafb3b90d5",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
     }
   ]
 }
