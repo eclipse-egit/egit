@@ -10,8 +10,9 @@
  *******************************************************************************/
 package org.eclipse.egit.ui.internal.commands;
 
-import java.util.HashMap;
 import java.util.Map;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import org.eclipse.core.commands.IParameterValues;
 import org.eclipse.core.resources.IProject;
@@ -31,14 +32,13 @@ public class ProjectNameParameterValues implements IParameterValues {
 	public Map getParameterValues() {
 		IWorkspaceRoot root = ResourcesPlugin.getWorkspace().getRoot();
 		IProject[] projects = root.getProjects();
-		Map<String, String> paramValues = new HashMap<>();
-		for (IProject project : projects) {
-			final boolean notAlreadyShared = RepositoryProvider
-					.getProvider(project) == null;
-			if (project.isAccessible() && notAlreadyShared)
-				paramValues.put(project.getName(), project.getName());
-		}
-		return paramValues;
+		return Stream.of(projects)
+				.parallel()
+				.filter(IProject::isAccessible)
+				.filter(project -> RepositoryProvider
+						.getProvider(project) == null)
+				.collect(
+						Collectors.toMap(IProject::getName, IProject::getName));
 	}
 
 }
