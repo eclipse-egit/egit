@@ -74,7 +74,7 @@ public class ProjectReferenceImporter {
 
 		final Map<URIish, Map<String, Set<ProjectReference>>> repositories = parseReferenceStrings();
 
-		final List<IProject> importedProjects = new ArrayList<IProject>();
+		final List<IProject> importedProjects = new ArrayList<>();
 
 		SubMonitor progress = SubMonitor.convert(monitor, repositories.size());
 		for (final Map.Entry<URIish, Map<String, Set<ProjectReference>>> entry : repositories
@@ -154,7 +154,7 @@ public class ProjectReferenceImporter {
 
 	private Map<URIish, Map<String, Set<ProjectReference>>> parseReferenceStrings()
 			throws TeamException {
-		final Map<URIish, Map<String, Set<ProjectReference>>> repositories = new LinkedHashMap<URIish, Map<String, Set<ProjectReference>>>();
+		final Map<URIish, Map<String, Set<ProjectReference>>> repositories = new LinkedHashMap<>();
 
 		for (final String reference : referenceStrings) {
 			if (reference == null) {
@@ -165,21 +165,11 @@ public class ProjectReferenceImporter {
 			try {
 				final ProjectReference projectReference = new ProjectReference(
 						reference);
-				Map<String, Set<ProjectReference>> repositoryBranches = repositories
-						.get(projectReference.getRepository());
-				if (repositoryBranches == null) {
-					repositoryBranches = new HashMap<>();
-					repositories.put(projectReference.getRepository(),
-							repositoryBranches);
-				}
-				Set<ProjectReference> projectReferences = repositoryBranches
-						.get(projectReference.getBranch());
-				if (projectReferences == null) {
-					projectReferences = new LinkedHashSet<>();
-					repositoryBranches.put(projectReference.getBranch(),
-							projectReferences);
-				}
-
+				Set<ProjectReference> projectReferences = repositories
+						.computeIfAbsent(projectReference.getRepository(),
+								repo -> new HashMap<>())
+						.computeIfAbsent(projectReference.getBranch(),
+								branch -> new LinkedHashSet<>());
 				projectReferences.add(projectReference);
 			} catch (final IllegalArgumentException | URISyntaxException e) {
 				throw new TeamException(reference, e);
@@ -285,7 +275,7 @@ public class ProjectReferenceImporter {
 			final IProgressMonitor monitor) throws TeamException {
 		try {
 
-			List<IProject> importedProjects = new ArrayList<IProject>();
+			List<IProject> importedProjects = new ArrayList<>();
 
 			// import projects from the current repository to workspace
 			final IWorkspace workspace = ResourcesPlugin.getWorkspace();

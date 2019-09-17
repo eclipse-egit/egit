@@ -26,9 +26,7 @@ import org.eclipse.egit.core.internal.CoreText;
 import org.eclipse.egit.core.internal.job.RuleUtil;
 import org.eclipse.egit.core.project.RepositoryMapping;
 import org.eclipse.jgit.api.AddCommand;
-import org.eclipse.jgit.api.Git;
 import org.eclipse.jgit.api.errors.GitAPIException;
-import org.eclipse.jgit.lib.Repository;
 
 /**
  */
@@ -64,7 +62,7 @@ public class AddToIndexOperation implements IEGitOperation {
 	public void execute(IProgressMonitor monitor) throws CoreException {
 		SubMonitor progress = SubMonitor.convert(monitor, rsrcList.size() * 2);
 
-		Map<RepositoryMapping, AddCommand> addCommands = new HashMap<RepositoryMapping, AddCommand>();
+		Map<RepositoryMapping, AddCommand> addCommands = new HashMap<>();
 		try {
 			for (IResource obj : rsrcList) {
 				addToCommand(obj, addCommands);
@@ -90,19 +88,13 @@ public class AddToIndexOperation implements IEGitOperation {
 	}
 
 	private void addToCommand(IResource resource, Map<RepositoryMapping, AddCommand> addCommands) {
-		RepositoryMapping map = RepositoryMapping.getMapping(resource);
-		if (map == null) {
+		RepositoryMapping mapping = RepositoryMapping.getMapping(resource);
+		if (mapping == null) {
 			return;
 		}
-		AddCommand command = addCommands.get(map);
-		if (command == null) {
-			Repository repo = map.getRepository();
-			try (Git git = new Git(repo)) {
-				command = git.add();
-			}
-			addCommands.put(map, command);
-		}
-		String filepattern = map.getRepoRelativePath(resource);
+		AddCommand command = addCommands.computeIfAbsent(mapping,
+				m -> new AddCommand(m.getRepository()));
+		String filepattern = mapping.getRepoRelativePath(resource);
 		if ("".equals(filepattern)) //$NON-NLS-1$
 			filepattern = "."; //$NON-NLS-1$
 		command.addFilepattern(filepattern);
