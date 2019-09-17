@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "897a059e_4daad9f0",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/internal/indexdiff/IndexDiffCache.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 276,
+      "author": {
+        "id": 440
+      },
+      "writtenOn": "2019-09-17T17:20:43Z",
+      "side": 1,
+      "message": "At work I require words instead of single characters as lambda parameter names, since this can become very unreadable due to missing type information for the next one looking at the code. Not sure if we have any policy about names here in egit.\n\nTo be clear: In this case that is still easy to understand, but in\n\n    stream\n    .map(e -\u003e e.something())\n    .filter(e -\u003e e.isSomethingElse())\n    .map(e -\u003e e.anotherSomething())\n    .filter(e -\u003e e.whatTheHeckIsTheTypeOfThisE())\n\nI really don\u0027t know what the code is doing at the end, so I go with the general rule at work, to avoid the \"I can read this\" discussions.",
+      "range": {
+        "startLine": 276,
+        "startChar": 19,
+        "endLine": 276,
+        "endChar": 23
+      },
+      "revId": "641ad745c2270020394e46ad949f0beafb3b90d5",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
