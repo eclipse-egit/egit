@@ -449,17 +449,14 @@ class FetchResultTable {
 		treeViewer.setInput(fetchResult);
 	}
 
-	private String safeAbbreviate(ObjectId id) {
-		String abbrev = abbrevations.get(id);
-		if (abbrev == null) {
+	private String safeAbbreviate(ObjectId objectId) {
+		return abbrevations.computeIfAbsent(objectId, id -> {
 			try {
-				abbrev = reader.abbreviate(id).name();
+				return reader.abbreviate(id).name();
 			} catch (IOException cannotAbbreviate) {
-				abbrev = id.name();
+				return id.name();
 			}
-			abbrevations.put(id, abbrev);
-		}
-		return abbrev;
+		});
 	}
 
 	Control getControl() {
