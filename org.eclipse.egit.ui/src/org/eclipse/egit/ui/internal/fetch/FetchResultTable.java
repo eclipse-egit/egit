@@ -450,16 +450,13 @@ class FetchResultTable {
 	}
 
 	private String safeAbbreviate(ObjectId id) {
-		String abbrev = abbrevations.get(id);
-		if (abbrev == null) {
+		return abbrevations.computeIfAbsent(id, x -> {
 			try {
-				abbrev = reader.abbreviate(id).name();
+				return reader.abbreviate(x).name();
 			} catch (IOException cannotAbbreviate) {
-				abbrev = id.name();
+				return x.name();
 			}
-			abbrevations.put(id, abbrev);
-		}
-		return abbrev;
+		});
 	}
 
 	Control getControl() {

@@ -112,14 +112,7 @@ public final class RepositoryMenuUtil {
 			} catch (IOException e) {
 				continue;
 			}
-			Set<File> files = repos.get(name);
-			if (files == null) {
-				files = new HashSet<>();
-				files.add(gitDir);
-				repos.put(name, files);
-			} else {
-				files.add(gitDir);
-			}
+			repos.computeIfAbsent(name, key -> new HashSet<>()).add(gitDir);
 		}
 		String[] repoNames = repos.keySet().toArray(new String[0]);
 		Arrays.sort(repoNames, CommonUtils.STRING_ASCENDING_COMPARATOR);

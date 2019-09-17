@@ -81,13 +81,8 @@ public class CommitSearchResultsPage extends AbstractTextSearchViewPage {
 					Map<Repository, RepositoryMatch> repos = new HashMap<>();
 					for (Object inputElement : getInput().getElements()) {
 						RepositoryCommit commit = (RepositoryCommit) inputElement;
-						RepositoryMatch match = repos.get(commit
-								.getRepository());
-						if (match == null) {
-							match = new RepositoryMatch(commit.getRepository());
-							repos.put(commit.getRepository(), match);
-						}
-						match.addCommit(commit);
+						repos.computeIfAbsent(commit.getRepository(),
+								r -> new RepositoryMatch(r)).addCommit(commit);
 					}
 					return repos.values().toArray();
 				}

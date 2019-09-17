@@ -302,15 +302,10 @@ public class PushBranchPage extends WizardPage {
 						return null;
 					}
 					return uris.get(0).toString();
-				}, uri -> {
-					AsynchronousBranchList list = refs.get(uri);
-					if (list == null) {
-						list = new AsynchronousBranchList(repository, uri,
-								getLocalBranchName());
-						refs.put(uri, list);
-					}
-					return list;
-				});
+				},
+				uri -> refs.computeIfAbsent(uri,
+						u -> new AsynchronousBranchList(repository, u,
+								getLocalBranchName())));
 		candidateProvider.setContentProposalAdapter(
 				UIUtils.addRefContentProposalToText(remoteBranchNameText,
 						this.repository, candidateProvider, true));
