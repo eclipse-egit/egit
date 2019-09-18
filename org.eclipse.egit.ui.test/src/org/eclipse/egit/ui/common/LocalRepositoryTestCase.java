@@ -142,6 +142,8 @@ public abstract class LocalRepositoryTestCase extends EGitTestCase {
 
 	protected static final String REPO2 = "RemoteRepository";
 
+	protected static final String REMOTE_REPO_SIMPLE = "SimpleRemoteRepository";
+
 	protected static final String CHILDREPO = "ChildRepository";
 
 	/** A general project containing FOLDER containing FILE1 and FILE2 */
@@ -483,6 +485,29 @@ public abstract class LocalRepositoryTestCase extends EGitTestCase {
 		}
 		assertNotNull("RepositoryMapping is null for: " + project, mapping);
 		return mapping;
+	}
+
+	protected File createSimpleRemoteRepository(File repositoryDir)
+			throws Exception {
+		Repository myRepository = lookupRepository(repositoryDir);
+		File gitDir = new File(testDirectory, REMOTE_REPO_SIMPLE);
+		Repository myRemoteRepository = FileRepositoryBuilder.create(gitDir);
+		myRemoteRepository.create(true);
+		// double-check that this is bare
+		assertTrue(myRemoteRepository.isBare());
+
+		// now we configure the remote
+		myRepository.getConfig().setString("remote", "origin", "url",
+				"file:///" + myRemoteRepository.getDirectory().getPath());
+		myRepository.getConfig().setString("remote", "origin", "fetch",
+				"+refs/heads/*:refs/remotes/origin/*");
+		myRepository.getConfig().save();
+
+		// and push
+		PushOperationUI pa = new PushOperationUI(myRepository, "origin", false);
+		pa.execute(null);
+
+		return myRemoteRepository.getDirectory();
 	}
 
 	protected File createRemoteRepository(File repositoryDir)
