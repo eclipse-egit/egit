@@ -409,6 +409,43 @@ public class RepositoryUtil {
 	}
 
 	/**
+	 * Get the repository specific preference key for the given preference key
+	 * and repository.
+	 *
+	 * @param repositoryId
+	 *            The id of the repository to get the key for
+	 * @param preferenceKey
+	 *            The preference key to get the repository specific one for
+	 * @return The repository specific key
+	 */
+	public String getRepositorySpecificPreferenceKey(String repositoryId,
+			String preferenceKey) {
+		return preferenceKey + "_" + repositoryId; //$NON-NLS-1$
+	}
+
+	/**
+	 * Get the repository specific preference key for the given preference key
+	 * and repository.
+	 *
+	 * @param repository
+	 *            The repository to get the key for
+	 * @param preferenceKey
+	 *            The preference key to get the repository specific one for
+	 * @return The repository specific key
+	 */
+	public String getRepositorySpecificPreferenceKey(
+			@NonNull Repository repository, String preferenceKey) {
+		String pathString = getRelativizedRepositoryPath(repository);
+
+		if (pathString == null) {
+			return getRepositorySpecificPreferenceKey(repository.toString(),
+					preferenceKey);
+		}
+
+		return getRepositorySpecificPreferenceKey(pathString, preferenceKey);
+	}
+
+	/**
 	 * @return the underlying preferences
 	 */
 	public IEclipsePreferences getPreferences() {
