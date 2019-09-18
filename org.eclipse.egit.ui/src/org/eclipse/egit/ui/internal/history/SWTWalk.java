@@ -15,6 +15,7 @@ package org.eclipse.egit.ui.internal.history;
 
 import java.io.IOException;
 
+import org.eclipse.jgit.annotations.NonNull;
 import org.eclipse.jgit.errors.IncorrectObjectTypeException;
 import org.eclipse.jgit.errors.MissingObjectException;
 import org.eclipse.jgit.lib.AnyObjectId;
@@ -26,17 +27,19 @@ import org.eclipse.jgit.revwalk.RevCommit;
 
 class SWTWalk extends PlotWalk {
 
+	@NonNull
 	private final Repository repo;
 
 	private Ref head;
 
 	private boolean headInitialized;
 
-	SWTWalk(final Repository repo) {
+	SWTWalk(final @NonNull Repository repo) {
 		super(repo);
 		this.repo = repo;
 	}
 
+	@NonNull
 	Repository getRepository() {
 		return repo;
 	}
