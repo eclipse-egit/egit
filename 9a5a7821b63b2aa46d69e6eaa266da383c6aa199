@@ -1,0 +1,362 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "67f8f462_b637725c",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/history/CommitSelectionDialog.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2019-09-18T20:11:42Z",
+      "side": 1,
+      "message": "instead of this null check mark repository as @NonNull ?",
+      "revId": "9a5a7821b63b2aa46d69e6eaa266da383c6aa199",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "77ffd5a7_95227028",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/history/CommitSelectionDialog.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2019-09-18T20:11:42Z",
+      "side": 1,
+      "message": "throw a NPE if you really want to throw an exception",
+      "revId": "9a5a7821b63b2aa46d69e6eaa266da383c6aa199",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "728b5a62_ec67fd9e",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/history/GitHistoryPage.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 671,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2019-09-18T20:11:42Z",
+      "side": 1,
+      "message": "nit: missing braces",
+      "revId": "9a5a7821b63b2aa46d69e6eaa266da383c6aa199",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5e7d6d21_848b3879",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/history/GitHistoryPage.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 682,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2019-09-18T20:11:42Z",
+      "side": 1,
+      "message": "nit: missing braces",
+      "revId": "9a5a7821b63b2aa46d69e6eaa266da383c6aa199",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "73566c9d_14f96d2e",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/history/GitHistoryPage.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 683,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2019-09-18T20:11:42Z",
+      "side": 1,
+      "message": "what are these magic numbers ?",
+      "revId": "9a5a7821b63b2aa46d69e6eaa266da383c6aa199",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "84bdfd91_2a7288f2",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/history/GitHistoryPage.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 699,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2019-09-18T20:11:42Z",
+      "side": 1,
+      "message": "remove this trivial comment",
+      "revId": "9a5a7821b63b2aa46d69e6eaa266da383c6aa199",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "68d5d8a7_9974e156",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/history/GitHistoryPage.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 1048,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2019-09-18T20:11:42Z",
+      "side": 1,
+      "message": "where is this used ?",
+      "range": {
+        "startLine": 1048,
+        "startChar": 45,
+        "endLine": 1048,
+        "endChar": 54
+      },
+      "revId": "9a5a7821b63b2aa46d69e6eaa266da383c6aa199",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "25b1f94d_2eed5c17",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/history/GitHistoryPage.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 1056,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2019-09-18T20:11:42Z",
+      "side": 1,
+      "message": "where is this used ?",
+      "range": {
+        "startLine": 1056,
+        "startChar": 44,
+        "endLine": 1056,
+        "endChar": 54
+      },
+      "revId": "9a5a7821b63b2aa46d69e6eaa266da383c6aa199",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "94bea2fc_c0f9d07b",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/history/GitHistoryPage.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 1078,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2019-09-18T20:11:42Z",
+      "side": 1,
+      "message": "missing braces",
+      "revId": "9a5a7821b63b2aa46d69e6eaa266da383c6aa199",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "384d6623_262ea4c6",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/history/GitHistoryPage.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 1092,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2019-09-18T20:11:42Z",
+      "side": 1,
+      "message": "missing braces",
+      "revId": "9a5a7821b63b2aa46d69e6eaa266da383c6aa199",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5e2e322a_4de1368a",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/history/GitHistoryPage.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 2864,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2019-09-18T20:11:42Z",
+      "side": 1,
+      "message": "missing braces",
+      "revId": "9a5a7821b63b2aa46d69e6eaa266da383c6aa199",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "009d8c6f_c255a3aa",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/history/GitHistoryPage.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 2865,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2019-09-18T20:11:42Z",
+      "side": 1,
+      "message": "throw NPE to signal variable is null but shouldn\u0027t have that value\n\nthough I think this shouldn\u0027t happen",
+      "revId": "9a5a7821b63b2aa46d69e6eaa266da383c6aa199",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "2e6a942f_8493e55c",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/history/GitHistoryRefFilterConfigurationDialog.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2019-09-18T20:11:42Z",
+      "side": 1,
+      "message": "we don\u0027t use author tags",
+      "revId": "9a5a7821b63b2aa46d69e6eaa266da383c6aa199",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "b433b40b_4e48b915",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/history/GitHistoryRefFilterConfigurationDialog.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2019-09-18T20:11:42Z",
+      "side": 1,
+      "message": "I guess all these fields can be final ?",
+      "revId": "9a5a7821b63b2aa46d69e6eaa266da383c6aa199",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9cb3b465_d9b7d882",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/history/GitHistoryRefFilterConfigurationDialog.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2019-09-18T20:11:42Z",
+      "side": 1,
+      "message": "I\u0027d remove these blank lines",
+      "revId": "9a5a7821b63b2aa46d69e6eaa266da383c6aa199",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "8d54bcf5_75cbd76b",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/history/GitHistoryRefFilterConfigurationDialog.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 197,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2019-09-18T20:11:42Z",
+      "side": 1,
+      "message": "missing braces",
+      "revId": "9a5a7821b63b2aa46d69e6eaa266da383c6aa199",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "49a829bb_81902dc5",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/history/RefFilterHelper.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2019-09-18T20:11:42Z",
+      "side": 1,
+      "message": "that\u0027s obvious from the class name, what functionality does it provide ?",
+      "revId": "9a5a7821b63b2aa46d69e6eaa266da383c6aa199",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "610cd146_06bde11d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/history/RefFilterHelper.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 285,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2019-09-18T20:11:42Z",
+      "side": 1,
+      "message": "Set",
+      "range": {
+        "startLine": 285,
+        "startChar": 4,
+        "endLine": 285,
+        "endChar": 9
+      },
+      "revId": "9a5a7821b63b2aa46d69e6eaa266da383c6aa199",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "86635940_3987f0c6",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/history/RefFilterHelper.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 379,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2019-09-18T20:11:42Z",
+      "side": 1,
+      "message": "missing braces",
+      "revId": "9a5a7821b63b2aa46d69e6eaa266da383c6aa199",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "be299f31_2a8abd46",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/history/RefFilterHelper.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 416,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2019-09-18T20:11:42Z",
+      "side": 1,
+      "message": "missing braces",
+      "revId": "9a5a7821b63b2aa46d69e6eaa266da383c6aa199",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
