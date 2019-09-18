@@ -20,6 +20,7 @@ import org.eclipse.core.resources.IResource;
 import org.eclipse.core.runtime.OperationCanceledException;
 import org.eclipse.egit.ui.internal.history.CommitSelectionDialog;
 import org.eclipse.jface.window.Window;
+import org.eclipse.jgit.lib.Repository;
 
 /**
  * Replace with commit action handler
@@ -28,9 +29,13 @@ public class ReplaceWithCommitActionHandler extends DiscardChangesActionHandler 
 
 	@Override
 	protected String gatherRevision(ExecutionEvent event) throws ExecutionException {
+		final Repository repo = getRepository(true, event);
+		if (repo == null) {
+			return null;
+		}
 		IResource[] resources = gatherResourceToOperateOn(event);
 		CommitSelectionDialog dlg = new CommitSelectionDialog(getShell(event),
-				getRepository(true, event), resources);
+				repo, resources);
 		if (dlg.open() == Window.OK)
 			return dlg.getCommitId().name();
 		else
