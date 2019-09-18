@@ -15,12 +15,11 @@ import java.lang.reflect.InvocationTargetException;
 import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 import org.eclipse.core.resources.IResource;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.egit.core.project.RepositoryMapping;
-import org.eclipse.egit.ui.Activator;
-import org.eclipse.egit.ui.UIPreferences;
 import org.eclipse.egit.ui.UIUtils;
 import org.eclipse.egit.ui.internal.GitLabels;
 import org.eclipse.egit.ui.internal.UIText;
@@ -37,10 +36,10 @@ import org.eclipse.jface.viewers.ISelectionChangedListener;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.viewers.OpenEvent;
 import org.eclipse.jface.viewers.SelectionChangedEvent;
+import org.eclipse.jgit.annotations.NonNull;
 import org.eclipse.jgit.diff.DiffConfig;
 import org.eclipse.jgit.errors.IncorrectObjectTypeException;
 import org.eclipse.jgit.errors.MissingObjectException;
-import org.eclipse.jgit.lib.Constants;
 import org.eclipse.jgit.lib.ObjectId;
 import org.eclipse.jgit.lib.Ref;
 import org.eclipse.jgit.lib.Repository;
@@ -65,6 +64,7 @@ import org.eclipse.ui.PlatformUI;
 public class CommitSelectionDialog extends TitleAreaDialog {
 	private static final int BATCH_SIZE = 256;
 
+	@NonNull
 	private final Repository repository;
 
 	private final IResource[] filterResources;
@@ -81,7 +81,8 @@ public class CommitSelectionDialog extends TitleAreaDialog {
 	 * @param parentShell
 	 * @param repository
 	 */
-	public CommitSelectionDialog(Shell parentShell, Repository repository) {
+	public CommitSelectionDialog(Shell parentShell,
+			@NonNull Repository repository) {
 		this(parentShell, repository, null);
 	}
 
@@ -91,10 +92,15 @@ public class CommitSelectionDialog extends TitleAreaDialog {
 	 *
 	 * @param parentShell
 	 * @param repository
+	 *            the repository; must not be null
 	 * @param filterResources
 	 *            the resources to use to filter commits, null for no filter
+	 *
+	 * @throws IllegalArgumentException
+	 *             if the given repository is null
 	 */
-	public CommitSelectionDialog(Shell parentShell, Repository repository,
+	public CommitSelectionDialog(Shell parentShell,
+			@NonNull Repository repository,
 			IResource[] filterResources) {
 		super(parentShell);
 		setShellStyle(getShellStyle() | SWT.SHELL_TRIM);
@@ -170,19 +176,12 @@ public class CommitSelectionDialog extends TitleAreaDialog {
 										.newFlag("highlight"); //$NON-NLS-1$
 								allCommits.source(currentWalk);
 
-								if (Activator.getDefault().getPreferenceStore()
-										.getBoolean(
-												UIPreferences.RESOURCEHISTORY_SHOW_ALL_BRANCHES)) {
-									markStartAllRefs(currentWalk,
-											Constants.R_HEADS);
-									markStartAllRefs(currentWalk,
-											Constants.R_REMOTES);
-								} else {
-									currentWalk
-											.markStart(currentWalk.parseCommit(
-													repository.resolve(
-															Constants.HEAD)));
-								}
+								RefFilterHelper helper = new RefFilterHelper(
+										repository);
+
+								markStartAllRefs(currentWalk, helper
+										.getMatchingRefsForSelectedRefFilters());
+
 								for (;;) {
 									final int oldsz = allCommits.size();
 									allCommits.fillTo(oldsz + BATCH_SIZE - 1);
@@ -231,13 +230,12 @@ public class CommitSelectionDialog extends TitleAreaDialog {
 				.toArray(new SWTCommit[0]), null, true);
 	}
 
-	private void markStartAllRefs(RevWalk currentWalk, String prefix)
+	private void markStartAllRefs(RevWalk currentWalk, Set<Ref> refs)
 			throws IOException, MissingObjectException,
 			IncorrectObjectTypeException {
-		for (Ref ref : repository.getRefDatabase().getRefsByPrefix(prefix)) {
-			if (ref.isSymbolic())
-				continue;
-			currentWalk.markStart(currentWalk.parseCommit(ref.getObjectId()));
+		for (Ref ref : refs) {
+			currentWalk.markStart(
+					currentWalk.parseCommit(ref.getLeaf().getObjectId()));
 		}
 	}
 
