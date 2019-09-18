@@ -13,6 +13,11 @@
 package org.eclipse.egit.ui.test.history;
 
 import static org.eclipse.swtbot.swt.finder.matchers.WidgetMatcherFactory.withRegex;
+import static org.hamcrest.Matchers.arrayContainingInAnyOrder;
+import static org.hamcrest.Matchers.emptyArray;
+import static org.hamcrest.Matchers.equalTo;
+import static org.hamcrest.Matchers.is;
+import static org.hamcrest.Matchers.startsWith;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotEquals;
@@ -22,6 +27,9 @@ import static org.junit.Assert.assertTrue;
 
 import java.io.ByteArrayInputStream;
 import java.io.File;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Set;
 
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IFolder;
@@ -34,14 +42,24 @@ import org.eclipse.egit.gitflow.op.InitOperation;
 import org.eclipse.egit.ui.Activator;
 import org.eclipse.egit.ui.JobFamilies;
 import org.eclipse.egit.ui.internal.UIText;
+import org.eclipse.egit.ui.internal.history.RefFilterHelper;
+import org.eclipse.egit.ui.internal.history.RefFilterHelper.RefFilter;
 import org.eclipse.egit.ui.internal.repository.RepositoriesView;
 import org.eclipse.egit.ui.test.ContextMenuHelper;
 import org.eclipse.egit.ui.test.TestUtil;
 import org.eclipse.egit.ui.view.repositories.GitRepositoriesViewTestBase;
 import org.eclipse.jface.dialogs.IDialogConstants;
+import org.eclipse.jgit.api.CheckoutCommand;
+import org.eclipse.jgit.api.CreateBranchCommand.SetupUpstreamMode;
+import org.eclipse.jgit.api.FetchCommand;
 import org.eclipse.jgit.api.Git;
+import org.eclipse.jgit.api.PushCommand;
+import org.eclipse.jgit.api.ResetCommand;
+import org.eclipse.jgit.api.ResetCommand.ResetType;
+import org.eclipse.jgit.api.TagCommand;
 import org.eclipse.jgit.lib.Constants;
 import org.eclipse.jgit.lib.ObjectId;
+import org.eclipse.jgit.lib.PersonIdent;
 import org.eclipse.jgit.lib.Ref;
 import org.eclipse.jgit.lib.Repository;
 import org.eclipse.jgit.revwalk.RevCommit;
@@ -52,17 +70,21 @@ import org.eclipse.swt.widgets.TableItem;
 import org.eclipse.swtbot.eclipse.finder.widgets.SWTBotView;
 import org.eclipse.swtbot.swt.finder.SWTBot;
 import org.eclipse.swtbot.swt.finder.junit.SWTBotJunit4ClassRunner;
+import org.eclipse.swtbot.swt.finder.waits.DefaultCondition;
 import org.eclipse.swtbot.swt.finder.widgets.SWTBotMenu;
 import org.eclipse.swtbot.swt.finder.widgets.SWTBotShell;
 import org.eclipse.swtbot.swt.finder.widgets.SWTBotTable;
 import org.eclipse.swtbot.swt.finder.widgets.SWTBotTableItem;
-import org.eclipse.swtbot.swt.finder.widgets.SWTBotToolbarToggleButton;
+import org.eclipse.swtbot.swt.finder.widgets.SWTBotToolbarDropDownButton;
 import org.eclipse.swtbot.swt.finder.widgets.SWTBotTree;
 import org.eclipse.swtbot.swt.finder.widgets.SWTBotTreeItem;
 import org.eclipse.team.ui.history.IHistoryView;
 import org.eclipse.ui.PlatformUI;
 import org.hamcrest.BaseMatcher;
 import org.hamcrest.Description;
+import org.hamcrest.Matcher;
+import org.hamcrest.TypeSafeMatcher;
+import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Test;
@@ -80,6 +102,8 @@ public class HistoryViewTest extends GitRepositoriesViewTestBase {
 
 	private File repoFile;
 
+	private RefFilterHelper refFilterHelper;
+
 	@Before
 	public void setupTests() throws Exception {
 		repoFile = createProjectAndCommitToRepository();
@@ -89,14 +113,117 @@ public class HistoryViewTest extends GitRepositoriesViewTestBase {
 		folder2.create(false, true, null);
 		IFile addedFile = folder2.getFile(ADDEDFILE);
 		addedFile.create(
-				new ByteArrayInputStream("More content".getBytes(prj
-						.getDefaultCharset())), false, null);
+				new ByteArrayInputStream(
+						"More content".getBytes(prj.getDefaultCharset())),
+				false, null);
 		addAndCommit(addedFile, ADDEDMESSAGE);
+
 		// TODO count the commits
 		commitCount = 3;
+
+		setupAdditionalCommits();
+
 		RepositoryUtil repositoryUtil = Activator.getDefault()
 				.getRepositoryUtil();
 		repositoryUtil.addConfiguredRepository(repoFile);
+
+		Repository repo = myRepoViewUtil.lookupRepository(repoFile);
+
+		refFilterHelper = new RefFilterHelper(repo);
+		refFilterHelper.setRefFilters(refFilterHelper.getDefaults());
+		refFilterHelper.resetLastSelectionStateToDefault();
+	}
+
+	private void checkout(Git git, String ref, boolean create)
+			throws Exception {
+		CheckoutCommand checkout = git.checkout();
+		checkout.setName(ref);
+		checkout.setCreateBranch(create);
+		checkout.setUpstreamMode(SetupUpstreamMode.SET_UPSTREAM);
+		checkout.call();
+	}
+
+	private void commitNewFile(String fileName, String commitMsg)
+			throws Exception {
+		IProject prj = ResourcesPlugin.getWorkspace().getRoot()
+				.getProject(PROJ1);
+		IFile toCreate = prj.getFile(fileName);
+		toCreate.create(
+				new ByteArrayInputStream(
+						"Content".getBytes(prj.getDefaultCharset())),
+				false, null);
+		addAndCommit(toCreate, commitMsg);
+	}
+
+	private static void tag(Git git, String name) throws Exception {
+		TagCommand tag = git.tag();
+		tag.setName(name);
+		PersonIdent committer = new PersonIdent(TestUtil.TESTCOMMITTER_NAME,
+				TestUtil.TESTCOMMITTER_EMAIL);
+		tag.setTagger(committer);
+		Repository repo = git.getRepository();
+		RevCommit headCommit = repo.parseCommit(
+				repo.exactRef(Constants.HEAD).getLeaf().getObjectId());
+		tag.setObjectId(headCommit);
+		tag.call();
+	}
+
+	private void resetHard(Git git, String to) throws Exception {
+		ResetCommand reset = git.reset();
+		reset.setRef(to);
+		reset.setMode(ResetType.HARD);
+		reset.call();
+	}
+
+	private void push(Git git) throws Exception {
+		PushCommand push = git.push();
+		push.setPushAll();
+		push.call();
+	}
+
+	private void fetch(Git git) throws Exception {
+		FetchCommand fetch = git.fetch();
+		fetch.call();
+	}
+
+	private void setupAdditionalCommits() throws Exception {
+		Repository repo = myRepoViewUtil.lookupRepository(repoFile);
+
+		try (Git git = Git.wrap(repo)) {
+			createSimpleRemoteRepository(repoFile);
+
+			checkout(git, "master", false);
+			checkout(git, "testR", true);
+			commitNewFile("testR.txt", "testR");
+			push(git);
+			resetHard(git, "HEAD~");
+
+			checkout(git, "master", false);
+			checkout(git, "testD", true);
+			commitNewFile("testDa.txt", "testDa");
+			push(git);
+			fetch(git);
+			resetHard(git, "HEAD~");
+			commitNewFile("testDb.txt", "testDb");
+
+			checkout(git, "master", false);
+			checkout(git, "test1", true);
+			commitNewFile("test1.txt", "test1");
+
+			commitNewFile("test1t.txt", "test1t");
+			tag(git, "TEST1t");
+			resetHard(git, "HEAD~");
+
+			checkout(git, "master", false);
+			checkout(git, "test2", true);
+			commitNewFile("test2.txt", "test2");
+
+			checkout(git, "master", false);
+			checkout(git, "test12", true);
+			commitNewFile("test12.txt", "test12");
+
+			checkout(git, "master", false);
+		}
 	}
 
 	@Test
@@ -314,7 +441,6 @@ public class HistoryViewTest extends GitRepositoriesViewTestBase {
 
 	@Test
 	public void testSelectBranch() throws Exception {
-		toggleShowAllBranchesButton(false);
 		SWTBotTable commitTable = getHistoryViewTable(PROJ1);
 		assertEquals("Unexpected number of commits", commitCount,
 				commitTable.rowCount());
@@ -421,23 +547,226 @@ public class HistoryViewTest extends GitRepositoriesViewTestBase {
 		assertEquals(commit[0].getId().name(), repo.getBranch());
 	}
 
-	@Test
-	public void testShowAllBranches() throws Exception {
-		try {
-			toggleShowAllBranchesButton(true);
-			final SWTBotTable table = getHistoryViewTable(PROJ1);
-			int commits = getHistoryViewTable(PROJ1).rowCount();
-			checkoutLine(table, 1);
+	private String[] getCommitMsgsFromUi(final SWTBotTable table) {
+		int length = table.rowCount();
+		String[] result = new String[length];
 
-			toggleShowAllBranchesButton(false);
-			assertEquals("Wrong number of commits", commits - 1,
-					getHistoryViewTable(PROJ1).rowCount());
-			toggleShowAllBranchesButton(true);
-			assertEquals("Wrong number of commits", commits,
-					getHistoryViewTable(PROJ1).rowCount());
-		} finally {
-			toggleShowAllBranchesButton(false);
+		for (int i = 0; i < length; i++) {
+			RevCommit commit = getCommitInLine(table, i)[0];
+			String msg = commit.getFullMessage();
+			// Want newest commit last.
+			result[length - (1 + i)] = msg;
 		}
+
+		return result;
+	}
+
+	private SWTBotMenu getFilterMenuItem(
+			SWTBotToolbarDropDownButton selectedRefs, String refFilter) {
+		return selectedRefs.menuItem(new TypeSafeMatcher<MenuItem>() {
+
+			@Override
+			public void describeTo(Description description) {
+				description.appendText(
+						"MenuItem for RefFilter \"" + refFilter + "\"");
+			}
+
+			@Override
+			protected boolean matchesSafely(MenuItem item) {
+				return item.getText().startsWith(refFilter);
+			}
+
+		});
+	}
+
+	private void uncheckRefFilter(SWTBotToolbarDropDownButton selectedRefs,
+			String refFilter) {
+		SWTBotMenu filter = getFilterMenuItem(selectedRefs, refFilter);
+		assertTrue("Expected " + refFilter + " to be checked",
+				filter.isChecked());
+		filter.click();
+	}
+
+	private void checkRefFilter(SWTBotToolbarDropDownButton selectedRefs,
+			String refFilter) {
+		SWTBotMenu filter = getFilterMenuItem(selectedRefs, refFilter);
+		assertTrue("Expected " + refFilter + " to be unchecked",
+				!filter.isChecked());
+		filter.click();
+	}
+
+	private void assertNoCommit(SWTBotTable table) {
+		bot.waitUntil(new DefaultCondition() {
+
+			@Override
+			public boolean test() throws Exception {
+				return table.rowCount() == 0;
+			}
+
+			@Override
+			public String getFailureMessage() {
+				return "CommitGraphTable did not become empty";
+			}
+
+		});
+		Assert.assertThat("Expected no commit", getCommitMsgsFromUi(table),
+				emptyArray());
+	}
+
+	private void assertCommitsAfterBase(SWTBotTable table, String... commitMsgs)
+			throws Exception {
+		TestUtil.waitForJobs(50, 5000);
+		// There are three expected fixed commits, plus then the ones given in
+		// the parameter.
+		int expectedNumberOfCommits = commitMsgs.length + 3;
+		bot.waitUntil(new DefaultCondition() {
+
+			@Override
+			public boolean test() throws Exception {
+				return table.rowCount() == expectedNumberOfCommits;
+			}
+
+			@Override
+			public String getFailureMessage() {
+				return "CommitGraphTable did not get expected number of rows: "
+						+ expectedNumberOfCommits;
+			}
+
+		});
+		List<Matcher<? super String>> matchers = new ArrayList<>();
+		matchers.add(equalTo("Initial commit"));
+		matchers.add(startsWith("Touched at"));
+		matchers.add(equalTo("A new file in a new folder"));
+
+		for (String msg : commitMsgs) {
+			matchers.add(equalTo(msg));
+		}
+
+		Assert.assertThat("Expected different commits",
+				getCommitMsgsFromUi(table),
+				is(arrayContainingInAnyOrder(matchers)));
+	}
+
+	@Test
+	public void testSelectShownRefs() throws Exception {
+		Set<RefFilter> filters = refFilterHelper.getRefFilters();
+		filters.add(refFilterHelper.new RefFilter("refs/heads/test1"));
+		filters.add(refFilterHelper.new RefFilter("refs/heads/test?"));
+		filters.add(refFilterHelper.new RefFilter("refs/heads/test*"));
+		refFilterHelper.setRefFilters(filters);
+
+		Repository repo = myRepoViewUtil.lookupRepository(repoFile);
+
+		SWTBotTable table = getHistoryViewTable(PROJ1);
+		SWTBotView view = bot.viewById(IHistoryView.VIEW_ID);
+		SWTBotToolbarDropDownButton selectedRefs = (SWTBotToolbarDropDownButton) view
+				.toolbarButton(UIText.GitHistoryPage_showingHistoryOfHead);
+
+		try(Git git = Git.wrap(repo)) {
+			checkout(git, "testD", false);
+		}
+		assertCommitsAfterBase(table, "testDb");
+
+		uncheckRefFilter(selectedRefs, "HEAD");
+		assertNoCommit(table);
+
+		checkRefFilter(selectedRefs, "refs/**/[CURRENT-BRANCH]");
+		assertCommitsAfterBase(table, "testDa", "testDb");
+
+		uncheckRefFilter(selectedRefs, "refs/**/[CURRENT-BRANCH]");
+		assertNoCommit(table);
+
+		checkRefFilter(selectedRefs, "refs/heads/**");
+		assertCommitsAfterBase(table, "test1", "test2", "test12", "testDb");
+
+		uncheckRefFilter(selectedRefs, "refs/heads/**");
+		assertNoCommit(table);
+
+		checkRefFilter(selectedRefs, "refs/remotes/**");
+		assertCommitsAfterBase(table, "testDa", "testR");
+
+		uncheckRefFilter(selectedRefs, "refs/remotes/**");
+		assertNoCommit(table);
+
+		checkRefFilter(selectedRefs, "refs/tags/**");
+		assertCommitsAfterBase(table, "test1", "test1t");
+
+		uncheckRefFilter(selectedRefs, "refs/tags/**");
+		assertNoCommit(table);
+
+		checkRefFilter(selectedRefs, "refs/heads/test1");
+		assertCommitsAfterBase(table, "test1");
+
+		uncheckRefFilter(selectedRefs, "refs/heads/test1");
+		assertNoCommit(table);
+
+		checkRefFilter(selectedRefs, "refs/heads/test?");
+		assertCommitsAfterBase(table, "test1", "test2", "testDb");
+
+		uncheckRefFilter(selectedRefs, "refs/heads/test?");
+		assertNoCommit(table);
+
+		checkRefFilter(selectedRefs, "refs/heads/test*");
+		assertCommitsAfterBase(table, "test1", "test2", "test12", "testDb");
+
+		uncheckRefFilter(selectedRefs, "refs/heads/test*");
+		assertNoCommit(table);
+	}
+
+	@Test
+	public void testToggleShownRefs() throws Exception {
+		SWTBotTable table = getHistoryViewTable(PROJ1);
+		SWTBotView view = bot.viewById(IHistoryView.VIEW_ID);
+		SWTBotToolbarDropDownButton selectedRefs = (SWTBotToolbarDropDownButton) view
+				.toolbarButton(UIText.GitHistoryPage_showingHistoryOfHead);
+
+		checkRefFilter(selectedRefs, "refs/heads/**");
+		checkRefFilter(selectedRefs, "refs/remotes/**");
+		checkRefFilter(selectedRefs, "refs/tags/**");
+
+		assertCommitsAfterBase(table, "test1", "test2", "test12", "testDa",
+				"testDb", "test1t", "testR");
+
+		selectedRefs.click();
+		assertCommitsAfterBase(table);
+
+		uncheckRefFilter(selectedRefs, "HEAD");
+		assertNoCommit(table);
+
+		checkRefFilter(selectedRefs, "HEAD");
+		assertCommitsAfterBase(table);
+
+		selectedRefs.click();
+		assertCommitsAfterBase(table, "test1", "test2", "test12", "testDa",
+				"testDb", "test1t", "testR");
+
+		uncheckRefFilter(selectedRefs, "refs/heads/**");
+		uncheckRefFilter(selectedRefs, "refs/remotes/**");
+		uncheckRefFilter(selectedRefs, "refs/tags/**");
+	}
+
+	@Test
+	public void testOpenRefFilterDialogFromDropdown() throws Exception {
+		getHistoryViewTable(PROJ1); // Make sure the history view is visible
+		SWTBotView view = bot.viewById(IHistoryView.VIEW_ID);
+		SWTBotToolbarDropDownButton selectedRefs = (SWTBotToolbarDropDownButton) view
+				.toolbarButton(UIText.GitHistoryPage_showingHistoryOfHead);
+
+		selectedRefs.menuItem(UIText.GitHistoryPage_configureFilters).click();
+		// This will cause an exception if the dialog is not found
+		bot.shell(UIText.GitHistoryPage_filterRefDialog_dialogTitle).bot()
+				.button(IDialogConstants.OK_LABEL).click();
+	}
+
+	@Test
+	public void testOpenRefFilterDialogFromMenu() throws Exception {
+		getHistoryViewTable(PROJ1); // Make sure the history view is visible
+		SWTBotView view = bot.viewById(IHistoryView.VIEW_ID);
+
+		view.viewMenu(UIText.GitHistoryPage_configureFilters).click();
+		// This will cause an exception if the dialog is not found
+		bot.shell(UIText.GitHistoryPage_filterRefDialog_dialogTitle).bot()
+				.button(IDialogConstants.OK_LABEL).click();
 	}
 
 	@Test
@@ -523,13 +852,11 @@ public class HistoryViewTest extends GitRepositoriesViewTestBase {
 		TestUtil.joinJobs(JobFamilies.REBASE);
 	}
 
-	private RevCommit[] checkoutLine(final SWTBotTable table, int line)
-			throws InterruptedException {
+	private RevCommit[] getCommitInLine(SWTBotTable table, int line) {
 		table.getTableItem(line).select();
 		final RevCommit[] commit = new RevCommit[1];
 
 		PlatformUI.getWorkbench().getDisplay().syncExec(new Runnable() {
-
 			@Override
 			public void run() {
 				TableItem tableItem = table.widget.getSelection()[0];
@@ -537,6 +864,14 @@ public class HistoryViewTest extends GitRepositoriesViewTestBase {
 				commit[0] = (RevCommit) tableItem.getData();
 			}
 		});
+
+		return commit;
+	}
+
+	private RevCommit[] checkoutLine(final SWTBotTable table, int line)
+			throws InterruptedException {
+		table.getTableItem(line).select();
+		final RevCommit[] commit = getCommitInLine(table, line);
 
 		ContextMenuHelper.clickContextMenuSync(table,
 				UIText.GitHistoryPage_CheckoutMenuLabel);
@@ -552,17 +887,6 @@ public class HistoryViewTest extends GitRepositoriesViewTestBase {
 	 */
 	private static void ensureTableItemLoaded(TableItem item) {
 		item.setText(item.getText()); // TODO: is there a better solution?
-	}
-
-	private void toggleShowAllBranchesButton(boolean checked) throws Exception{
-		getHistoryViewTable(PROJ1);
-		SWTBotView view = bot
-				.viewById(IHistoryView.VIEW_ID);
-		SWTBotToolbarToggleButton showAllBranches = (SWTBotToolbarToggleButton) view
-				.toolbarButton(UIText.GitHistoryPage_showAllBranches);
-		boolean isChecked = showAllBranches.isChecked();
-		if(isChecked && !checked || !isChecked && checked)
-			showAllBranches.click();
 	}
 
 	private static SWTBotTableItem getTableItemWithId(SWTBotTable table,
