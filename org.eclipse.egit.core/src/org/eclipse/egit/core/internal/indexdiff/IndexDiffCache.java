@@ -16,10 +16,10 @@ package org.eclipse.egit.core.internal.indexdiff;
 import java.io.File;
 import java.net.URI;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
-import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.CopyOnWriteArrayList;
 
 import org.eclipse.core.filebuffers.FileBuffers;
@@ -48,7 +48,7 @@ import org.eclipse.jgit.lib.Repository;
  */
 public class IndexDiffCache {
 
-	private Map<File, IndexDiffCacheEntry> entries = new ConcurrentHashMap<>();
+	private Map<File, IndexDiffCacheEntry> entries = new HashMap<>();
 
 	private CopyOnWriteArrayList<IndexDiffChangedListener> listeners = new CopyOnWriteArrayList<>();
 
@@ -226,13 +226,21 @@ public class IndexDiffCache {
 	 */
 	@Nullable
 	public IndexDiffCacheEntry getIndexDiffCacheEntry(@NonNull Repository repository) {
-		if (repository.isBare()) {
-			return null;
+		IndexDiffCacheEntry entry;
+		synchronized (entries) {
+			File gitDir = new Path(repository.getDirectory().getAbsolutePath())
+					.toFile();
+			entry = entries.get(gitDir);
+			if (entry != null) {
+				return entry;
+			}
+			if (repository.isBare()) {
+				return null;
+			}
+			entry = new IndexDiffCacheEntry(repository, globalListener);
+			entries.put(gitDir, entry);
 		}
-		File gitDir = new Path(repository.getDirectory().getAbsolutePath())
-				.toFile();
-		return entries.computeIfAbsent(gitDir,
-				dir -> new IndexDiffCacheEntry(repository, globalListener));
+		return entry;
 	}
 
 	/**
@@ -273,8 +281,9 @@ public class IndexDiffCache {
 				bufferListener = null;
 			}
 		}
-		entries.forEach((gitDir, entry) -> entry.dispose());
-		entries.clear();
+		for (IndexDiffCacheEntry entry : entries.values()) {
+			entry.dispose();
+		}
 		Job.getJobManager().cancel(JobFamilies.INDEX_DIFF_CACHE_UPDATE);
 		try {
 			Job.getJobManager().join(JobFamilies.INDEX_DIFF_CACHE_UPDATE, null);
@@ -290,9 +299,11 @@ public class IndexDiffCache {
 	 *            of the {@link Repository} to remove the cache entry of
 	 */
 	public void remove(@NonNull File gitDir) {
-		IndexDiffCacheEntry cachedEntry = entries.remove(gitDir);
-		if (cachedEntry != null) {
-			cachedEntry.dispose();
+		synchronized (entries) {
+			IndexDiffCacheEntry cachedEntry = entries.remove(gitDir);
+			if (cachedEntry != null) {
+				cachedEntry.dispose();
+			}
 		}
 	}
 
@@ -305,7 +316,11 @@ public class IndexDiffCache {
 	 */
 	@NonNull
 	public Set<File> currentCacheEntries() {
-		return new HashSet<>(entries.keySet());
+		Set<File> result = null;
+		synchronized (entries) {
+			result = new HashSet<>(entries.keySet());
+		}
+		return result;
 	}
 
 }
