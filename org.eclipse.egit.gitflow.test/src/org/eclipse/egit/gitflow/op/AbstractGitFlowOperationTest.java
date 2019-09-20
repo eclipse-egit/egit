@@ -18,6 +18,7 @@ import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 
 import org.eclipse.core.resources.IFile;
+import org.eclipse.egit.core.Activator;
 import org.eclipse.egit.core.test.GitTestCase;
 import org.eclipse.egit.core.test.TestRepository;
 import org.eclipse.jgit.errors.IncorrectObjectTypeException;
@@ -56,6 +57,7 @@ abstract public class AbstractGitFlowOperationTest extends GitTestCase {
 	@Override
 	@After
 	public void tearDown() throws Exception {
+		Activator.getDefault().waitForResourceRefresh(1000);
 		testRepository.dispose();
 		super.tearDown();
 	}
