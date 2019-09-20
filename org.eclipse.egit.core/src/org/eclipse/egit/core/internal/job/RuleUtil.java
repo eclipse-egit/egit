@@ -83,18 +83,14 @@ public class RuleUtil {
 	 * @return scheduling rule
 	 */
 	public static ISchedulingRule getRuleForRepositories(IResource[] resources) {
-		ISchedulingRule result = null;
-		Set<Repository> repositories = new HashSet<Repository>();
+		Set<Repository> repositories = new HashSet<>();
 		for (IResource resource : resources) {
 			RepositoryMapping mapping = RepositoryMapping.getMapping(resource);
-			if (mapping != null)
+			if (mapping != null) {
 				repositories.add(mapping.getRepository());
+			}
 		}
-		for (Repository repository : repositories) {
-			ISchedulingRule rule = getRule(repository);
-			result = MultiRule.combine(result, rule);
-		}
-		return result;
+		return getRuleForRepositories(repositories);
 	}
 
 	/**
@@ -105,7 +101,7 @@ public class RuleUtil {
 	 * @return scheduling rule
 	 */
 	public static ISchedulingRule getRuleForContainers(Collection<IPath> paths) {
-		List<ISchedulingRule> rules = new ArrayList<ISchedulingRule>();
+		List<ISchedulingRule> rules = new ArrayList<>();
 		IResourceRuleFactory ruleFactory = ResourcesPlugin.getWorkspace()
 				.getRuleFactory();
 		for (IPath path : paths) {
@@ -149,7 +145,7 @@ public class RuleUtil {
 	public static IProject[] getProjects(File workTreeDirectory) {
 		final IProject[] projects = ResourcesPlugin.getWorkspace().getRoot()
 				.getProjects();
-		List<IProject> result = new ArrayList<IProject>();
+		List<IProject> result = new ArrayList<>();
 		final Path workTree = workTreeDirectory.getAbsoluteFile().toPath();
 		for (IProject p : projects) {
 			IPath projectLocation = p.getLocation();
