@@ -15,24 +15,32 @@ import java.lang.reflect.InvocationTargetException;
 import java.net.Authenticator;
 import java.net.ProxySelector;
 import java.text.MessageFormat;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Dictionary;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Hashtable;
 import java.util.LinkedHashMap;
 import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.stream.Stream;
 
 import org.eclipse.core.net.proxy.IProxyService;
+import org.eclipse.core.resources.IContainer;
+import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IProject;
+import org.eclipse.core.resources.IProjectDescription;
 import org.eclipse.core.resources.IResource;
 import org.eclipse.core.resources.IResourceChangeEvent;
 import org.eclipse.core.resources.IResourceChangeListener;
 import org.eclipse.core.resources.IResourceDelta;
 import org.eclipse.core.resources.IResourceDeltaVisitor;
+import org.eclipse.core.resources.IWorkspace;
+import org.eclipse.core.resources.IWorkspaceRunnable;
 import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IConfigurationElement;
@@ -49,6 +57,7 @@ import org.eclipse.core.runtime.Path;
 import org.eclipse.core.runtime.Platform;
 import org.eclipse.core.runtime.Plugin;
 import org.eclipse.core.runtime.Status;
+import org.eclipse.core.runtime.SubMonitor;
 import org.eclipse.core.runtime.jobs.Job;
 import org.eclipse.core.runtime.preferences.DefaultScope;
 import org.eclipse.core.runtime.preferences.IEclipsePreferences;
@@ -60,6 +69,7 @@ import org.eclipse.egit.core.internal.ReportingTypedConfigGetter;
 import org.eclipse.egit.core.internal.SshPreferencesMirror;
 import org.eclipse.egit.core.internal.indexdiff.IndexDiffCache;
 import org.eclipse.egit.core.internal.job.JobUtil;
+import org.eclipse.egit.core.internal.job.RuleUtil;
 import org.eclipse.egit.core.internal.trace.GitTraceLocation;
 import org.eclipse.egit.core.internal.util.ResourceUtil;
 import org.eclipse.egit.core.op.ConnectProviderOperation;
@@ -70,8 +80,12 @@ import org.eclipse.egit.core.project.RepositoryMapping;
 import org.eclipse.egit.core.securestorage.EGitSecureStore;
 import org.eclipse.equinox.security.storage.SecurePreferencesFactory;
 import org.eclipse.jgit.errors.ConfigInvalidException;
+import org.eclipse.jgit.events.ListenerHandle;
+import org.eclipse.jgit.events.WorkingTreeModifiedEvent;
+import org.eclipse.jgit.events.WorkingTreeModifiedListener;
 import org.eclipse.jgit.lib.Config;
 import org.eclipse.jgit.lib.Constants;
+import org.eclipse.jgit.lib.Repository;
 import org.eclipse.jgit.lib.StoredConfig;
 import org.eclipse.jgit.merge.MergeStrategy;
 import org.eclipse.jgit.storage.file.FileBasedConfig;
@@ -110,6 +124,8 @@ public class Activator extends Plugin implements DebugOptionsListener {
 	private MergeStrategyRegistryListener mergeStrategyRegistryListener;
 	private IPreferenceChangeListener sshClientChangeListener;
 	private ServiceTracker<IProxyService, IProxyService> proxyServiceTracker;
+	private ResourceRefreshJob refreshJob;
+	private ListenerHandle refreshHandle;
 
 	/**
 	 * @return the singleton {@link Activator}
@@ -248,6 +264,8 @@ public class Activator extends Plugin implements DebugOptionsListener {
 		}
 		GitProjectData.attachToWorkspace();
 
+		setupRepoResourceRefresh();
+
 		repositoryUtil = new RepositoryUtil();
 
 		secureStore = new EGitSecureStore(SecurePreferencesFactory.getDefault());
@@ -304,6 +322,12 @@ public class Activator extends Plugin implements DebugOptionsListener {
 			ProxySelector.setDefault(new EclipseProxySelector(proxy));
 			Authenticator.setDefault(new EclipseAuthenticator(proxy));
 		}
+	}
+
+	private void setupRepoResourceRefresh() {
+		refreshJob = new ResourceRefreshJob();
+		refreshHandle = Repository.getGlobalListenerList()
+				.addWorkingTreeModifiedListener(refreshJob);
 	}
 
 	private void registerPreDeleteResourceChangeListener() {
@@ -463,6 +487,18 @@ public class Activator extends Plugin implements DebugOptionsListener {
 
 	@Override
 	public void stop(final BundleContext context) throws Exception {
+		if (refreshHandle != null) {
+			refreshHandle.remove();
+			refreshHandle = null;
+		}
+		if (GitTraceLocation.REFRESH.isActive()) {
+			GitTraceLocation.getTrace().trace(
+					GitTraceLocation.REFRESH.getLocation(),
+					"Trying to cancel " + refreshJob.getName() + " job"); //$NON-NLS-1$ //$NON-NLS-2$
+		}
+		refreshJob.cancel();
+		refreshJob.join();
+
 		SshPreferencesMirror.INSTANCE.stop();
 		if (sshClientChangeListener != null) {
 			InstanceScope.INSTANCE.getNode(pluginId)
@@ -509,6 +545,22 @@ public class Activator extends Plugin implements DebugOptionsListener {
 		Config.setTypedConfigGetter(null);
 		super.stop(context);
 		plugin = null;
+	}
+
+	/**
+	 * Wait for the resource refresh job to finish
+	 *
+	 * @param timeoutMillis
+	 *            the maximum amount of time to wait for the join to complete,
+	 *            or <code>zero</code> for no timeout.
+	 */
+	public void waitForResourceRefresh(long timeoutMillis) {
+		try {
+			refreshJob.join(timeoutMillis, null);
+		} catch (InterruptedException e) {
+			// Re-set interrupted flag
+			Thread.currentThread().interrupt();
+		}
 	}
 
 	private void registerAutoShareProjects() {
@@ -1115,6 +1167,360 @@ public class Activator extends Plugin implements DebugOptionsListener {
 		public StoredConfig getSystemConfig()
 				throws IOException, ConfigInvalidException {
 			return delegate.getSystemConfig();
+		}
+	}
+
+	/**
+	 * Refreshes resources in the workspace changed by JGit operations. This
+	 * will not refresh any git-ignored resources since those are not reported
+	 * in the {@link WorkingTreeModifiedEvent}.
+	 */
+	static class ResourceRefreshJob extends Job
+			implements WorkingTreeModifiedListener {
+
+		ResourceRefreshJob() {
+			super(CoreText.Activator_refreshJobName);
+			setUser(false);
+			setSystem(true);
+		}
+
+		/**
+		 * Internal helper class to record batched accumulated results from
+		 * several {@link WorkingTreeModifiedEvent}s.
+		 */
+		private static class WorkingTreeChanges {
+
+			private final File workTree;
+
+			private final Set<String> modified;
+
+			private final Set<String> deleted;
+
+			public WorkingTreeChanges(WorkingTreeModifiedEvent event) {
+				workTree = event.getRepository().getWorkTree()
+						.getAbsoluteFile();
+				modified = new HashSet<>(event.getModified());
+				deleted = new HashSet<>(event.getDeleted());
+			}
+
+			public File getWorkTree() {
+				return workTree;
+			}
+
+			public Set<String> getModified() {
+				return modified;
+			}
+
+			public Set<String> getDeleted() {
+				return deleted;
+			}
+
+			public boolean isEmpty() {
+				return modified.isEmpty() && deleted.isEmpty();
+			}
+
+			public WorkingTreeChanges merge(WorkingTreeModifiedEvent event) {
+				modified.removeAll(event.getDeleted());
+				deleted.removeAll(event.getModified());
+				modified.addAll(event.getModified());
+				deleted.addAll(event.getDeleted());
+				return this;
+			}
+		}
+
+		private Map<File, WorkingTreeChanges> repositoriesChanged = new LinkedHashMap<>();
+
+		@Override
+		public IStatus run(IProgressMonitor monitor) {
+			try {
+				List<WorkingTreeChanges> changes;
+				synchronized (repositoriesChanged) {
+					if (repositoriesChanged.isEmpty()) {
+						return Status.OK_STATUS;
+					}
+					changes = new ArrayList<>(repositoriesChanged.values());
+					repositoriesChanged.clear();
+				}
+
+				SubMonitor progress = SubMonitor.convert(monitor,
+						changes.size());
+				try {
+					for (WorkingTreeChanges change : changes) {
+						refreshRepository(change, progress.newChild(1));
+					}
+				} catch (OperationCanceledException oe) {
+					return Status.CANCEL_STATUS;
+				} catch (CoreException e) {
+					error(CoreText.Activator_refreshFailed, e);
+					return new Status(IStatus.ERROR, getPluginId(),
+							e.getMessage());
+				}
+
+				if (!monitor.isCanceled()) {
+					// re-schedule if we got some changes in the meantime
+					synchronized (repositoriesChanged) {
+						if (!repositoriesChanged.isEmpty()) {
+							schedule(100);
+						}
+					}
+				}
+			} finally {
+				monitor.done();
+			}
+			return Status.OK_STATUS;
+		}
+
+		private void refreshRepository(WorkingTreeChanges changes,
+				IProgressMonitor monitor) throws CoreException {
+			if (monitor.isCanceled()) {
+				throw new OperationCanceledException();
+			}
+			if (changes.isEmpty()) {
+				return; // Should actually not occur
+			}
+			Map<IPath, IProject> roots = getProjectLocations(
+					changes.getWorkTree());
+			if (roots.isEmpty()) {
+				// No open projects from this repository in the workspace
+				return;
+			}
+			SubMonitor progress = SubMonitor.convert(monitor, 2);
+			IPath workTree = new Path(changes.getWorkTree().getPath());
+			Map<IResource, Boolean> toRefresh = computeResources(
+					changes.getModified(), changes.getDeleted(), workTree,
+					roots, progress.newChild(1));
+			if (toRefresh.isEmpty()) {
+				return;
+			}
+			IWorkspace workspace = ResourcesPlugin.getWorkspace();
+			IWorkspaceRunnable operation = innerMonitor -> {
+				SubMonitor innerProgress = SubMonitor.convert(innerMonitor,
+						toRefresh.size());
+				if (GitTraceLocation.REFRESH.isActive()) {
+					GitTraceLocation.getTrace()
+							.trace(GitTraceLocation.REFRESH
+									.getLocation(),
+									"Refreshing repository " + workTree + ' ' //$NON-NLS-1$
+											+ toRefresh.size());
+				}
+				for (Map.Entry<IResource, Boolean> entry : toRefresh
+						.entrySet()) {
+					entry.getKey().refreshLocal(
+							entry.getValue().booleanValue()
+									? IResource.DEPTH_INFINITE
+									: IResource.DEPTH_ONE,
+							innerProgress.newChild(1));
+				}
+				if (GitTraceLocation.REFRESH.isActive()) {
+					GitTraceLocation.getTrace()
+							.trace(GitTraceLocation.REFRESH
+									.getLocation(),
+									"Refreshed repository " + workTree + ' ' //$NON-NLS-1$
+											+ toRefresh.size());
+				}
+			};
+			// No scheduling rule needed; IResource.refreshLocal() gets its own
+			// rule. This workspace operation serves only to batch resource
+			// update notifications.
+			workspace.run(operation, null, IWorkspace.AVOID_UPDATE,
+					progress.newChild(1));
+		}
+
+		private Map<IPath, IProject> getProjectLocations(File workTree) {
+			IProject[] projects = RuleUtil.getProjects(workTree);
+			if (projects == null) {
+				return Collections.emptyMap();
+			}
+			Map<IPath, IProject> result = new HashMap<>();
+			for (IProject project : projects) {
+				if (project.isAccessible()) {
+					IPath path = project.getLocation();
+					if (path != null) {
+						IPath projectFilePath = path.append(
+								IProjectDescription.DESCRIPTION_FILE_NAME);
+						if (projectFilePath.toFile().exists()) {
+							result.put(path, project);
+						}
+					}
+				}
+			}
+			return result;
+		}
+
+		private Map<IResource, Boolean> computeResources(Set<String> modified,
+				Set<String> deleted, IPath workTree, Map<IPath, IProject> roots,
+				IProgressMonitor monitor) {
+			// Attempt to minimize the refreshes by returning IContainers if
+			// more than one file in a container has changed.
+			if (GitTraceLocation.REFRESH.isActive()) {
+				GitTraceLocation.getTrace().trace(
+						GitTraceLocation.REFRESH.getLocation(),
+						"Calculating refresh for repository " + workTree + ' ' //$NON-NLS-1$
+								+ modified.size() + ' ' + deleted.size());
+			}
+			SubMonitor progress = SubMonitor.convert(monitor,
+					modified.size() + deleted.size());
+			Set<IPath> fullRefreshes = new HashSet<>();
+			Map<IPath, IFile> handled = new HashMap<>();
+			Map<IResource, Boolean> result = new HashMap<>();
+			Stream.concat(modified.stream(), deleted.stream()).forEach(path -> {
+				if (progress.isCanceled()) {
+					throw new OperationCanceledException();
+				}
+				IPath filePath = "/".equals(path) ? workTree //$NON-NLS-1$
+						: workTree.append(path);
+				IProject project = roots.get(filePath);
+				if (project != null) {
+					// Eclipse knows this as a project. Make sure it gets
+					// refreshed as such. One can refresh a folder via an IFile,
+					// but not an IProject.
+					handled.put(filePath, null);
+					result.put(project, Boolean.FALSE);
+					progress.worked(1);
+					return;
+				}
+				if (fullRefreshes.stream()
+						.anyMatch(full -> full.isPrefixOf(filePath))
+						|| !roots.keySet().stream()
+								.anyMatch(root -> root.isPrefixOf(filePath))) {
+					// Not in workspace or covered by a full container refresh
+					progress.worked(1);
+					return;
+				}
+				IPath containerPath;
+				boolean isFile;
+				if (path.endsWith("/")) { //$NON-NLS-1$
+					// It's already a directory
+					isFile = false;
+					containerPath = filePath.removeTrailingSeparator();
+				} else {
+					isFile = true;
+					containerPath = filePath.removeLastSegments(1);
+				}
+				if (!handled.containsKey(containerPath)) {
+					if (!isFile && containerPath != null) {
+						IContainer container = ResourceUtil
+								.getContainerForLocation(containerPath, false);
+						if (container != null) {
+							IFile file = handled.get(containerPath);
+							handled.put(containerPath, null);
+							if (file != null) {
+								result.remove(file);
+							}
+							result.put(container, Boolean.FALSE);
+						}
+					} else if (isFile) {
+						// First file in this container. Find the deepest
+						// existing container and record its non-existing child.
+						String lastPart = filePath.lastSegment();
+						while (containerPath != null
+								&& workTree.isPrefixOf(containerPath)) {
+							IContainer container = ResourceUtil
+									.getContainerForLocation(containerPath,
+											false);
+							if (container == null) {
+								lastPart = containerPath.lastSegment();
+								containerPath = containerPath
+										.removeLastSegments(1);
+								isFile = false;
+								continue;
+							}
+							if (container.getType() == IResource.ROOT) {
+								// Missing project... ignore it and anything
+								// beneath. The user or our own branch project
+								// tracker will have to properly add/import the
+								// project.
+								containerPath = containerPath.append(lastPart);
+								fullRefreshes.add(containerPath);
+								handled.put(containerPath, null);
+							} else if (isFile) {
+								IFile file = container
+										.getFile(new Path(lastPart));
+								handled.put(containerPath, file);
+								result.put(file, Boolean.FALSE);
+							} else {
+								// New or deleted folder.
+								container = container
+										.getFolder(new Path(lastPart));
+								containerPath = containerPath.append(lastPart);
+								fullRefreshes.add(containerPath);
+								handled.put(containerPath, null);
+								result.put(container, Boolean.TRUE);
+							}
+							break;
+						}
+					}
+				} else {
+					IFile file = handled.get(containerPath);
+					if (file != null) {
+						// Second file in this container: replace file by
+						// its container.
+						handled.put(containerPath, null);
+						result.remove(file);
+						result.put(file.getParent(), Boolean.FALSE);
+					}
+					// Otherwise we already have this container.
+				}
+				progress.worked(1);
+			});
+
+			if (GitTraceLocation.REFRESH.isActive()) {
+				GitTraceLocation.getTrace().trace(
+						GitTraceLocation.REFRESH.getLocation(),
+						"Calculated refresh for repository " + workTree); //$NON-NLS-1$
+			}
+			return result;
+		}
+
+		@Override
+		public void onWorkingTreeModified(WorkingTreeModifiedEvent event) {
+			mayTriggerRefresh(event);
+		}
+
+		/**
+		 * Record which projects have changes and initiate a resource refresh
+		 * job.
+		 *
+		 * @param event
+		 *            The {@link WorkingTreeModifiedEvent} that triggered this
+		 *            refresh
+		 */
+		private void mayTriggerRefresh(WorkingTreeModifiedEvent event) {
+			if (event.isEmpty()) {
+				return;
+			}
+			Repository repo = event.getRepository();
+			if (repo == null || repo.isBare()) {
+				return; // Should never occur
+			}
+			File gitDir = repo.getDirectory();
+			synchronized (repositoriesChanged) {
+				WorkingTreeChanges changes = repositoriesChanged.get(gitDir);
+				if (changes == null) {
+					repositoriesChanged.put(gitDir,
+							new WorkingTreeChanges(event));
+				} else {
+					changes.merge(event);
+					if (changes.isEmpty()) {
+						// Actually, this cannot happen.
+						repositoriesChanged.remove(gitDir);
+					}
+				}
+			}
+			triggerRefresh();
+		}
+
+		/**
+		 * Figure which projects belong to a repository, add them to a set of
+		 * project to refresh and schedule the refresh as a job.
+		 */
+		void triggerRefresh() {
+			if (GitTraceLocation.REFRESH.isActive()) {
+				GitTraceLocation.getTrace().trace(
+						GitTraceLocation.REFRESH.getLocation(),
+						"Triggered refresh"); //$NON-NLS-1$
+			}
+			schedule();
 		}
 	}
 }
