@@ -70,13 +70,7 @@ public class UIText extends NLS {
 	public static String AbstractReflogCommandHandler_NoInput;
 
 	/** */
-	public static String Activator_refreshFailed;
-
-	/** */
 	public static String Activator_refreshingProjects;
-
-	/** */
-	public static String Activator_refreshJobName;
 
 	/** */
 	public static String Activator_repoScanJobName;
