@@ -24,6 +24,7 @@ import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.SubMonitor;
 import org.eclipse.core.runtime.jobs.ISchedulingRule;
+import org.eclipse.egit.core.Activator;
 import org.eclipse.egit.core.internal.CoreText;
 import org.eclipse.egit.core.internal.job.RuleUtil;
 import org.eclipse.egit.core.internal.util.ProjectUtil;
@@ -80,6 +81,7 @@ public class ResetOperation implements IEGitOperation {
 			// lock workspace to protect working tree changes
 			ResourcesPlugin.getWorkspace().run(action, getSchedulingRule(),
 					IWorkspace.AVOID_UPDATE, m);
+			Activator.getDefault().waitForRefresh(repository);
 		} else {
 			reset(m);
 		}
