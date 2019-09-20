@@ -114,6 +114,7 @@ public class RevertCommitOperation implements IEGitOperation {
 		};
 		ResourcesPlugin.getWorkspace().run(action, getSchedulingRule(),
 				IWorkspace.AVOID_UPDATE, m);
+		Activator.getDefault().waitForRefresh(repo);
 	}
 
 	@Override

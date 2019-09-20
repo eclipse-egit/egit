@@ -182,6 +182,8 @@ public class DiscardChangesOperation implements IEGitOperation {
 		};
 		ResourcesPlugin.getWorkspace().run(action, getSchedulingRule(),
 				IWorkspace.AVOID_UPDATE, m);
+		Activator.getDefault()
+				.waitForRefresh(pathsByRepository.keySet());
 	}
 
 	private void discardChanges(IProgressMonitor monitor) throws CoreException {

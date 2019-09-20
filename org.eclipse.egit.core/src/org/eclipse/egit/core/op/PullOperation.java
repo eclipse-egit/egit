@@ -18,6 +18,7 @@ package org.eclipse.egit.core.op;
 
 import java.io.IOException;
 import java.text.MessageFormat;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.LinkedHashMap;
 import java.util.Map;
@@ -189,6 +190,8 @@ public class PullOperation implements IEGitOperation {
 		} catch (OperationCanceledException e) {
 			throw new CoreException(Activator.cancel(e.getMessage(), e));
 		}
+		Activator.getDefault()
+				.waitForRefresh(Arrays.asList(repositories));
 	}
 
 	private int getMaxPullThreadsCount() {
