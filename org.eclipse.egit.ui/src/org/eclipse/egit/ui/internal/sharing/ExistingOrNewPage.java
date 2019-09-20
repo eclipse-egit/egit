@@ -446,7 +446,7 @@ class ExistingOrNewPage extends WizardPage {
 		repositoryToCreate.addListener(SWT.Modify, new Listener() {
 			@Override
 			public void handleEvent(Event e) {
-				if (repositoryToCreate.getText().equals("")) { //$NON-NLS-1$
+				if (repositoryToCreate.getText().isEmpty()) {
 					createRepo.setEnabled(false);
 					return;
 				}

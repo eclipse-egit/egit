@@ -3383,7 +3383,7 @@ public class StagingView extends ViewPart
 					if (mapping != null && mapping.getRepository() == currentRepository) {
 						String path = mapping.getRepoRelativePath(resource);
 						// If resource corresponds to root of working directory
-						if ("".equals(path)) //$NON-NLS-1$
+						if (path == null || path.isEmpty())
 							addPaths.add("."); //$NON-NLS-1$
 						else
 							addPaths.add(path);

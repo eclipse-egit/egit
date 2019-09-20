@@ -51,7 +51,7 @@ public class ShowInSystemExplorerActionHandler extends RepositoryActionHandler {
 						String launchCmd = getShowInSystemExplorerCommand(
 								canonicalPath);
 
-						if ("".equals(launchCmd)) { //$NON-NLS-1$
+						if (launchCmd.isEmpty()) {
 							return Status.CANCEL_STATUS;
 						}
 

@@ -597,7 +597,7 @@ public class LocationPage extends WizardPage {
 	private boolean validateWorkspaceLocation() {
 		//make sure that the field actually has a filename in it - making
 		//sure that the user has had a chance to browse the workspace first
-		if (wsPathText.getText().equals("")){ //$NON-NLS-1$
+		if (wsPathText.getText().isEmpty()) {
 			if (wsRadio.getSelection() && wsBrowsed)
 				setErrorMessage(UIText.GitCreatePatchWizard_WorkspacePatchEnterValidFileName);
 			else

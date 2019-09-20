@@ -348,7 +348,7 @@ public class FetchGerritChangePage extends WizardPage {
 			@Override
 			public void widgetSelected(SelectionEvent selectionEvent) {
 				String txt = branchText.getText();
-				String refToMark = "".equals(txt) ? null : Constants.R_HEADS + txt; //$NON-NLS-1$
+				String refToMark = txt.isEmpty() ? null : Constants.R_HEADS + txt;
 				AbstractBranchSelectionDialog dlg = new BranchEditDialog(
 						checkoutGroup.getShell(), repository, refToMark);
 				if (dlg.open() == Window.OK) {

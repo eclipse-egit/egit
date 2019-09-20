@@ -112,7 +112,7 @@ public class RemoveFromIndexOperation implements IEGitOperation {
 	}
 
 	private static String getCommandPath(String path) {
-		if ("".equals(path)) // Working directory //$NON-NLS-1$
+		if (path.isEmpty()) // Working directory
 			return "."; //$NON-NLS-1$
 		else
 			return path;

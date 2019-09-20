@@ -251,7 +251,7 @@ public class CommitSelectionDialog extends TitleAreaDialog {
 			if (mapping != null) {
 				DiffConfig diffConfig = mapping.getRepository().getConfig().get(DiffConfig.KEY);
 				String path = mapping.getRepoRelativePath(resource);
-				if (path != null && !"".equals(path)) { //$NON-NLS-1$
+				if (path != null && !path.isEmpty()) {
 					if (resource.getType() == IResource.FILE)
 						filters.add(FollowFilter.create(path, diffConfig));
 					else

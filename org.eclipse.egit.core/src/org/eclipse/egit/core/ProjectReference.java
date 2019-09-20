@@ -73,8 +73,9 @@ public final class ProjectReference {
 
 		this.version = tokens[0];
 		this.repository = new URIish(tokens[1]);
-		if (!"".equals(tokens[2])) //$NON-NLS-1$
+		if (!tokens[2].isEmpty()) {
 			this.branch = tokens[2];
+		}
 		this.projectDir = tokens[3];
 	}
 

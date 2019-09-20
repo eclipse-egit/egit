@@ -160,8 +160,9 @@ public class GitModelSynchronizeParticipant extends ModelSynchronizeParticipant 
 				modelProvider = GitChangeSetModelProvider.ID;
 			} else {
 				String lastSelectedModel = preferenceStore.getString(UIPreferences.SYNC_VIEW_LAST_SELECTED_MODEL);
-				if (!"".equals(lastSelectedModel)) //$NON-NLS-1$
+				if (lastSelectedModel != null && !lastSelectedModel.isEmpty()) {
 					modelProvider = lastSelectedModel;
+				}
 			}
 		}
 

@@ -95,8 +95,9 @@ public class AddToIndexOperation implements IEGitOperation {
 		AddCommand command = addCommands.computeIfAbsent(mapping,
 				m -> new AddCommand(m.getRepository()));
 		String filepattern = mapping.getRepoRelativePath(resource);
-		if ("".equals(filepattern)) //$NON-NLS-1$
+		if (filepattern == null || filepattern.isEmpty()) {
 			filepattern = "."; //$NON-NLS-1$
+		}
 		command.addFilepattern(filepattern);
 	}
 
