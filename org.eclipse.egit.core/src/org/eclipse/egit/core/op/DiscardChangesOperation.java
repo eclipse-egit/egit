@@ -182,6 +182,7 @@ public class DiscardChangesOperation implements IEGitOperation {
 		};
 		ResourcesPlugin.getWorkspace().run(action, getSchedulingRule(),
 				IWorkspace.AVOID_UPDATE, m);
+		Activator.getDefault().waitForResourceRefresh(1000);
 	}
 
 	private void discardChanges(IProgressMonitor monitor) throws CoreException {

@@ -232,6 +232,7 @@ public class BranchOperation implements IEGitOperation {
 		// lock workspace to protect working tree changes
 		ResourcesPlugin.getWorkspace().run(action, getSchedulingRule(),
 				IWorkspace.AVOID_UPDATE, m);
+		Activator.getDefault().waitForResourceRefresh(1000);
 	}
 
 	@Override

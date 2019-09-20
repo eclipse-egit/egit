@@ -85,6 +85,7 @@ public class StashApplyOperation implements IEGitOperation {
 		};
 		ResourcesPlugin.getWorkspace().run(action, getSchedulingRule(),
 				IWorkspace.AVOID_UPDATE, monitor);
+		Activator.getDefault().waitForResourceRefresh(1000);
 	}
 
 	@Override

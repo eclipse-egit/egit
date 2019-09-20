@@ -189,6 +189,7 @@ public class PullOperation implements IEGitOperation {
 		} catch (OperationCanceledException e) {
 			throw new CoreException(Activator.cancel(e.getMessage(), e));
 		}
+		Activator.getDefault().waitForResourceRefresh(1000);
 	}
 
 	private int getMaxPullThreadsCount() {

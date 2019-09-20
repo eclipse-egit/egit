@@ -152,6 +152,7 @@ public class SubmoduleUpdateOperation implements IEGitOperation {
 		};
 		ResourcesPlugin.getWorkspace().run(action, getSchedulingRule(),
 				IWorkspace.AVOID_UPDATE, monitor);
+		Activator.getDefault().waitForResourceRefresh(1000);
 	}
 
 	@Override
