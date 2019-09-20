@@ -124,6 +124,7 @@ import org.eclipse.jface.viewers.ISelectionChangedListener;
 import org.eclipse.jface.viewers.ISelectionProvider;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.viewers.SelectionChangedEvent;
+import org.eclipse.jface.viewers.StructuredSelection;
 import org.eclipse.jface.viewers.TableViewer;
 import org.eclipse.jgit.annotations.NonNull;
 import org.eclipse.jgit.diff.DiffConfig;
@@ -1972,9 +1973,8 @@ public class GitHistoryPage extends HistoryPage implements RefsChangedListener,
 
 	private void clearViewers() {
 		TableViewer viewer = graph.getTableView();
+		viewer.setSelection(StructuredSelection.EMPTY);
 		viewer.setInput(new SWTCommit[0]);
-		// Force a selection changed event
-		viewer.setSelection(viewer.getSelection());
 	}
 
 	@Override
