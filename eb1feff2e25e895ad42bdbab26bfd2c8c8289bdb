@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3a929a90_5d911236",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/Activator.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 559,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2019-09-22T09:24:17Z",
+      "side": 1,
+      "message": "See the javadoc of Job.join():\n\n\"If the job has not been scheduled, this method returns immediately\" and \"If this method is called on a job that reschedules itself from within the \u003ccode\u003erun\u003c/code\u003e method, the join will return at the end of the first execution.\"\n\nSo this may return too early.\n\nAlso, what if it takes more that timeoutMillis milliseconds for the refreshjob to finish?\n\nFurthermore, we sometimes do run things in parallel, for instance switching a branch in multiple repositories. All these may cause this job to be re-scheduled, so each individual branch operation would wait until finally all are done.\n\nI suspect this needs quite a bit more. We\u0027d need a way to wait until there are no more pending refreshes for a particular repository. Perhaps we need to split the listener and the job, and have one job per repo.",
+      "revId": "eb1feff2e25e895ad42bdbab26bfd2c8c8289bdb",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
