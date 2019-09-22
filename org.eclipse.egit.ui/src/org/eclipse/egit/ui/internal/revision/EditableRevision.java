@@ -26,6 +26,7 @@ import org.eclipse.core.resources.IEncodedStorage;
 import org.eclipse.core.resources.IStorage;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IPath;
+import org.eclipse.core.runtime.Path;
 import org.eclipse.egit.core.internal.SafeRunnable;
 import org.eclipse.egit.ui.Activator;
 import org.eclipse.egit.ui.internal.UIText;
@@ -96,81 +97,7 @@ public class EditableRevision extends FileRevisionTypedElement implements
 	public IEditorInput getDocumentKey(Object element) {
 		if (element == this) {
 			if (input == null) {
-				input = new IStorageEditorInput() {
-
-					@Override
-					public boolean exists() {
-						return true;
-					}
-
-					@Override
-					public ImageDescriptor getImageDescriptor() {
-						return null;
-					}
-
-					@Override
-					public String getName() {
-						return EditableRevision.this.getName();
-					}
-
-					@Override
-					public IPersistableElement getPersistable() {
-						return null;
-					}
-
-					@Override
-					public String getToolTipText() {
-						return EditableRevision.this.getName();
-					}
-
-					@Override
-					public <T> T getAdapter(Class<T> adapter) {
-						return null;
-					}
-
-					private IStorage storage;
-
-					@Override
-					public IStorage getStorage() throws CoreException {
-						if (storage == null) {
-							storage = new IEncodedStorage() {
-
-								@Override
-								public <T> T getAdapter(Class<T> adapter) {
-									return null;
-								}
-
-								@Override
-								public boolean isReadOnly() {
-									return false;
-								}
-
-								@Override
-								public String getName() {
-									return EditableRevision.this.getName();
-								}
-
-								@Override
-								public IPath getFullPath() {
-									return null;
-								}
-
-								@Override
-								public InputStream getContents()
-										throws CoreException {
-									return EditableRevision.this.getContents();
-								}
-
-								@Override
-								public String getCharset()
-										throws CoreException {
-									return EditableRevision.this.getCharset();
-								}
-							};
-						}
-						return storage;
-					}
-				};
+				input = new FakeResourceStorageEditorInput(this);
 			}
 			return input;
 		}
@@ -190,6 +117,20 @@ public class EditableRevision extends FileRevisionTypedElement implements
 	@Override
 	public void removeContentChangeListener(IContentChangeListener listener) {
 		listeners.remove(listener);
+	}
+
+	/**
+	 * Adapt the given editor input. May be overridden in subclasses.
+	 *
+	 * @param editorInput
+	 *            of this revision
+	 * @param adapter
+	 *            to adapt to
+	 * @return the adapted object or {@code null} if none
+	 */
+	protected <T> T adaptEditorInput(IEditorInput editorInput,
+			Class<T> adapter) {
+		return null;
 	}
 
 	/**
@@ -297,9 +238,134 @@ public class EditableRevision extends FileRevisionTypedElement implements
 		}
 
 		@Override
+		public void connect(IDocumentProvider provider,
+				IEditorInput documentKey) throws CoreException {
+			if (documentKey instanceof FakeResourceStorageEditorInput) {
+				// When we connect, our editor input shouldn't adapt to
+				// that (non-existing) resource, otherwise we'll confuse
+				// other parts of Eclipse.
+				FakeResourceStorageEditorInput input = (FakeResourceStorageEditorInput) documentKey;
+				try {
+					input.setAdapt(false);
+					super.connect(provider, input);
+				} finally {
+					// Once we _are_ connected, there are other places
+					// where SharedDocumentAdapter.getDocumentProvider()
+					// is called again during the life of the document,
+					// so the documentKey must again adapt to IFile.
+					input.setAdapt(true);
+				}
+			} else {
+				super.connect(provider, documentKey);
+			}
+		}
+
+		@Override
 		public IEditorInput getDocumentKey(Object element) {
 			return editable.getDocumentKey(element);
 		}
 	}
 
+	/**
+	 * @see org.eclipse.egit.ui.internal.synchronize.compare.LocalNonWorkspaceTypedElement
+	 */
+	private static class FakeResourceStorageEditorInput
+			implements IStorageEditorInput {
+
+		// This class and the connect() override above are a work-around for bug
+		// 544315: the file extension is used to find the document provider only
+		// if the editor input adapts to IFile.
+
+		// TODO: figure out a way to use a FileStoreEditorInput instead
+		// (perhaps with a little EFS to access the index). Then this hack
+		// could be removed once EGit's base platform is Eclipse 4.11
+		// (2019-03).
+
+		private final EditableRevision editable;
+
+		private boolean adapt;
+
+		public FakeResourceStorageEditorInput(EditableRevision revision) {
+			editable = revision;
+			adapt = true;
+		}
+
+		public void setAdapt(boolean adapt) {
+			this.adapt = adapt;
+		}
+
+		@Override
+		public boolean exists() {
+			return true;
+		}
+
+		@Override
+		public ImageDescriptor getImageDescriptor() {
+			return null;
+		}
+
+		@Override
+		public String getName() {
+			return editable.getName();
+		}
+
+		@Override
+		public IPersistableElement getPersistable() {
+			return null;
+		}
+
+		@Override
+		public String getToolTipText() {
+			return editable.getName();
+		}
+
+		@Override
+		public <T> T getAdapter(Class<T> adapter) {
+			if (adapt) {
+				return editable.adaptEditorInput(this, adapter);
+			}
+			return null;
+		}
+
+		private IStorage storage;
+
+		@Override
+		public IStorage getStorage() throws CoreException {
+			if (storage == null) {
+				storage = new IEncodedStorage() {
+
+					@Override
+					public <T> T getAdapter(Class<T> adapter) {
+						return null;
+					}
+
+					@Override
+					public boolean isReadOnly() {
+						return false;
+					}
+
+					@Override
+					public String getName() {
+						return editable.getName();
+					}
+
+					@Override
+					public IPath getFullPath() {
+						return new Path(editable.getPath());
+					}
+
+					@Override
+					public InputStream getContents() throws CoreException {
+						return editable.getContents();
+					}
+
+					@Override
+					public String getCharset() throws CoreException {
+						return editable.getCharset();
+					}
+				};
+			}
+			return storage;
+		}
+	}
 }

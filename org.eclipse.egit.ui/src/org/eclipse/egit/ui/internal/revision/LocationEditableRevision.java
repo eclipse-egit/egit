@@ -28,6 +28,7 @@ import org.eclipse.egit.ui.Activator;
 import org.eclipse.jface.operation.IRunnableContext;
 import org.eclipse.jgit.annotations.NonNull;
 import org.eclipse.team.core.history.IFileRevision;
+import org.eclipse.ui.IEditorInput;
 
 /**
  * Editable revision backed by a file outside of the workspace (just IPath).
@@ -85,6 +86,18 @@ public class LocationEditableRevision extends EditableRevision {
 		} catch (InterruptedException e) {
 			// ignore here
 		}
+	}
+
+	@Override
+	protected <T> T adaptEditorInput(IEditorInput editorInput,
+			Class<T> adapter) {
+		// Ugly hack to ensure the framework finds the correct document
+		// provider.
+		if (adapter == IFile.class) {
+			return adapter.cast(
+					ResourcesPlugin.getWorkspace().getRoot().getFile(location));
+		}
+		return super.adaptEditorInput(editorInput, adapter);
 	}
 
 	@Override
