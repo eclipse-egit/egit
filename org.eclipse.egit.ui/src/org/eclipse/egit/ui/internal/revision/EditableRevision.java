@@ -26,6 +26,7 @@ import org.eclipse.core.resources.IEncodedStorage;
 import org.eclipse.core.resources.IStorage;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IPath;
+import org.eclipse.core.runtime.Path;
 import org.eclipse.egit.core.internal.SafeRunnable;
 import org.eclipse.egit.ui.Activator;
 import org.eclipse.egit.ui.internal.UIText;
@@ -125,7 +126,7 @@ public class EditableRevision extends FileRevisionTypedElement implements
 
 					@Override
 					public <T> T getAdapter(Class<T> adapter) {
-						return null;
+						return adaptEditorInput(this, adapter);
 					}
 
 					private IStorage storage;
@@ -152,7 +153,8 @@ public class EditableRevision extends FileRevisionTypedElement implements
 
 								@Override
 								public IPath getFullPath() {
-									return null;
+									return new Path(
+											EditableRevision.this.getPath());
 								}
 
 								@Override
@@ -190,6 +192,20 @@ public class EditableRevision extends FileRevisionTypedElement implements
 	@Override
 	public void removeContentChangeListener(IContentChangeListener listener) {
 		listeners.remove(listener);
+	}
+
+	/**
+	 * Adapt the given editor input. May be overridden in subclasses.
+	 *
+	 * @param editorInput
+	 *            of this revision
+	 * @param adapter
+	 *            to adapt to
+	 * @return the adapted object or {@code null} if none
+	 */
+	protected <T> T adaptEditorInput(IEditorInput editorInput,
+			Class<T> adapter) {
+		return null;
 	}
 
 	/**
