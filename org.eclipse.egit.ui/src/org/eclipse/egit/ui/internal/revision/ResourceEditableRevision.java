@@ -25,6 +25,7 @@ import org.eclipse.egit.ui.Activator;
 import org.eclipse.jface.operation.IRunnableContext;
 import org.eclipse.jgit.annotations.NonNull;
 import org.eclipse.team.core.history.IFileRevision;
+import org.eclipse.ui.IEditorInput;
 
 /**
  * Editable revision backed by an {@link IFile}. Used for conflict resolutions
@@ -93,6 +94,15 @@ public class ResourceEditableRevision extends EditableRevision
 	@Override
 	public IResource getResource() {
 		return file;
+	}
+
+	@Override
+	protected <T> T adaptEditorInput(IEditorInput editorInput,
+			Class<T> adapter) {
+		if (adapter == IResource.class || adapter == IFile.class) {
+			return adapter.cast(file);
+		}
+		return super.adaptEditorInput(editorInput, adapter);
 	}
 
 	@Override

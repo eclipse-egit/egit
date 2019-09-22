@@ -496,6 +496,8 @@ public class LocalNonWorkspaceTypedElement extends LocalResourceTypedElement {
 		// 544315: the file extension is used to find the document provider only
 		// if the editor input adapts to IFile.
 
+		// TODO: Remove when EGit's base platform is Eclipse 4.11 (2019-03)
+
 		private IResource resource;
 
 		public FakeResourceFileStoreEditorInput(IFileStore store, IResource resource) {

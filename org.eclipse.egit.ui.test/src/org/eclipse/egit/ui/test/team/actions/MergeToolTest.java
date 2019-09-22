@@ -22,6 +22,7 @@ import org.eclipse.egit.core.Activator;
 import org.eclipse.egit.core.JobFamilies;
 import org.eclipse.egit.core.internal.indexdiff.IndexDiffCache;
 import org.eclipse.egit.core.op.MergeOperation;
+import org.eclipse.egit.ui.UIPreferences;
 import org.eclipse.egit.ui.common.CompareEditorTester;
 import org.eclipse.egit.ui.common.LocalRepositoryTestCase;
 import org.eclipse.egit.ui.test.ContextMenuHelper;
@@ -32,6 +33,7 @@ import org.eclipse.jgit.junit.TestRepository;
 import org.eclipse.jgit.lib.Repository;
 import org.eclipse.swtbot.swt.finder.widgets.SWTBotTree;
 import org.eclipse.swtbot.swt.finder.widgets.SWTBotTreeItem;
+import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -42,16 +44,28 @@ public class MergeToolTest extends LocalRepositoryTestCase {
 
 	private TestRepository testRepository;
 
+	private int mergeMode;
+
 	@Before
 	public void setUp() throws Exception {
 		File repositoryFile = createProjectAndCommitToRepository();
 		Repository repository = lookupRepository(repositoryFile);
-		testRepository = new TestRepository<Repository>(repository);
+		testRepository = new TestRepository<>(repository);
+		mergeMode = org.eclipse.egit.ui.Activator.getDefault()
+				.getPreferenceStore().getInt(UIPreferences.MERGE_MODE);
+	}
+
+	@After
+	public void resetMergeMode() throws Exception {
+		org.eclipse.egit.ui.Activator.getDefault().getPreferenceStore()
+				.setValue(UIPreferences.MERGE_MODE, mergeMode);
 	}
 
 	@Test
 	public void useHeadOptionShouldCauseFileToNotHaveConflictMarkers()
 			throws Exception {
+		org.eclipse.egit.ui.Activator.getDefault().getPreferenceStore()
+				.setValue(UIPreferences.MERGE_MODE, 2);
 		IPath path = new Path(PROJ1).append("folder/test.txt");
 		testRepository.branch("stable").commit().add(path.toString(), "stable")
 				.create();
