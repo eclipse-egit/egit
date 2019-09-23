@@ -57,6 +57,7 @@ import org.eclipse.core.runtime.preferences.InstanceScope;
 import org.eclipse.egit.core.internal.CoreText;
 import org.eclipse.egit.core.internal.EGitSshdSessionFactory;
 import org.eclipse.egit.core.internal.ReportingTypedConfigGetter;
+import org.eclipse.egit.core.internal.ResourceRefreshHandler;
 import org.eclipse.egit.core.internal.SshPreferencesMirror;
 import org.eclipse.egit.core.internal.indexdiff.IndexDiffCache;
 import org.eclipse.egit.core.internal.job.JobUtil;
@@ -70,8 +71,10 @@ import org.eclipse.egit.core.project.RepositoryMapping;
 import org.eclipse.egit.core.securestorage.EGitSecureStore;
 import org.eclipse.equinox.security.storage.SecurePreferencesFactory;
 import org.eclipse.jgit.errors.ConfigInvalidException;
+import org.eclipse.jgit.events.ListenerHandle;
 import org.eclipse.jgit.lib.Config;
 import org.eclipse.jgit.lib.Constants;
+import org.eclipse.jgit.lib.Repository;
 import org.eclipse.jgit.lib.StoredConfig;
 import org.eclipse.jgit.merge.MergeStrategy;
 import org.eclipse.jgit.storage.file.FileBasedConfig;
@@ -110,6 +113,9 @@ public class Activator extends Plugin implements DebugOptionsListener {
 	private MergeStrategyRegistryListener mergeStrategyRegistryListener;
 	private IPreferenceChangeListener sshClientChangeListener;
 	private ServiceTracker<IProxyService, IProxyService> proxyServiceTracker;
+	private ResourceRefreshHandler refreshHandler;
+
+	private ListenerHandle refreshHandle;
 
 	/**
 	 * @return the singleton {@link Activator}
@@ -247,6 +253,7 @@ public class Activator extends Plugin implements DebugOptionsListener {
 			logError(CoreText.Activator_ReconfigureWindowCacheError, e);
 		}
 		GitProjectData.attachToWorkspace();
+		setupResourceRefresh();
 
 		repositoryUtil = new RepositoryUtil();
 
@@ -304,6 +311,12 @@ public class Activator extends Plugin implements DebugOptionsListener {
 			ProxySelector.setDefault(new EclipseProxySelector(proxy));
 			Authenticator.setDefault(new EclipseAuthenticator(proxy));
 		}
+	}
+
+	private void setupResourceRefresh() {
+		refreshHandler = new ResourceRefreshHandler();
+		refreshHandle = Repository.getGlobalListenerList()
+				.addWorkingTreeModifiedListener(refreshHandler);
 	}
 
 	private void registerPreDeleteResourceChangeListener() {
@@ -491,6 +504,10 @@ public class Activator extends Plugin implements DebugOptionsListener {
 					ignoreDerivedResourcesListener);
 			ignoreDerivedResourcesListener.stop();
 			ignoreDerivedResourcesListener = null;
+		}
+		if (refreshHandle != null) {
+			refreshHandle.remove();
+			refreshHandle = null;
 		}
 		if (shareGitProjectsJob != null) {
 			ResourcesPlugin.getWorkspace().removeResourceChangeListener(

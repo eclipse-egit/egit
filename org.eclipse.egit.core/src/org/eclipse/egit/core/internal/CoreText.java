@@ -52,6 +52,9 @@ public class CoreText extends NLS {
 	public static String Activator_ReconfigureWindowCacheError;
 
 	/** */
+	public static String Activator_refreshFailed;
+
+	/** */
 	public static String Activator_SshClientNoJsch;
 
 	/** */

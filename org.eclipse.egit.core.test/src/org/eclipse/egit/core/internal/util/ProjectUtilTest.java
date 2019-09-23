@@ -16,10 +16,9 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertThat;
 import static org.junit.Assert.assertTrue;
-import static org.mockito.Matchers.any;
-import static org.mockito.Matchers.eq;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.spy;
 import static org.mockito.Mockito.verify;
 
 import java.io.ByteArrayInputStream;
@@ -193,15 +192,6 @@ public class ProjectUtilTest extends GitTestCase {
 		IProject[] projects = ProjectUtil.getValidOpenProjects(repository
 				.getRepository());
 		assertEquals(0, projects.length);
-	}
-
-	@Test
-	public void testRefreshValidProjects() throws Exception {
-		IProject p = spy(project.getProject());
-		IProject[] projects = { p };
-		ProjectUtil.refreshValidProjects(projects, new NullProgressMonitor());
-		verify(p).refreshLocal(eq(IResource.DEPTH_INFINITE),
-				any(IProgressMonitor.class));
 	}
 
 	@Test
