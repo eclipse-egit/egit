@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "327efb8c_5128d01f",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/history/CommitSelectionDialog.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 228343
+      },
+      "writtenOn": "2019-09-23T08:33:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "67f8f462_b637725c",
+      "revId": "9a5a7821b63b2aa46d69e6eaa266da383c6aa199",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "77ffd5a7_95227028",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/history/CommitSelectionDialog.java",
         "patchSetId": 6
@@ -30,6 +48,24 @@
       "writtenOn": "2019-09-18T20:11:42Z",
       "side": 1,
       "message": "throw a NPE if you really want to throw an exception",
+      "revId": "9a5a7821b63b2aa46d69e6eaa266da383c6aa199",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7f67f63c_f38fd14d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/history/CommitSelectionDialog.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 228343
+      },
+      "writtenOn": "2019-09-23T08:33:02Z",
+      "side": 1,
+      "message": "Will do @NonNull, and implement a check in all calling methods.",
+      "parentUuid": "77ffd5a7_95227028",
       "revId": "9a5a7821b63b2aa46d69e6eaa266da383c6aa199",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "a2c665ba_056e45a0",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/history/GitHistoryPage.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 671,
+      "author": {
+        "id": 228343
+      },
+      "writtenOn": "2019-09-23T08:33:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "728b5a62_ec67fd9e",
+      "revId": "9a5a7821b63b2aa46d69e6eaa266da383c6aa199",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5e7d6d21_848b3879",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/history/GitHistoryPage.java",
         "patchSetId": 6
@@ -64,6 +118,24 @@
       "writtenOn": "2019-09-18T20:11:42Z",
       "side": 1,
       "message": "nit: missing braces",
+      "revId": "9a5a7821b63b2aa46d69e6eaa266da383c6aa199",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "2aa073e7_8bbca3f8",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/history/GitHistoryPage.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 682,
+      "author": {
+        "id": 228343
+      },
+      "writtenOn": "2019-09-23T08:33:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5e7d6d21_848b3879",
       "revId": "9a5a7821b63b2aa46d69e6eaa266da383c6aa199",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "ab60f2d3_a4b62b39",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/history/GitHistoryPage.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 683,
+      "author": {
+        "id": 228343
+      },
+      "writtenOn": "2019-09-23T08:33:02Z",
+      "side": 1,
+      "message": "Nothing special. The only important thing is, that the first needs to be less then the second. What should I do? Change them to simpler numbers? Define class constants for them? Just add a comment with what I just wrote?",
+      "parentUuid": "73566c9d_14f96d2e",
+      "revId": "9a5a7821b63b2aa46d69e6eaa266da383c6aa199",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "84bdfd91_2a7288f2",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/history/GitHistoryPage.java",
         "patchSetId": 6
@@ -104,6 +194,24 @@
     },
     {
       "key": {
+        "uuid": "56963112_04be04b4",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/history/GitHistoryPage.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 699,
+      "author": {
+        "id": 228343
+      },
+      "writtenOn": "2019-09-23T08:33:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "84bdfd91_2a7288f2",
+      "revId": "9a5a7821b63b2aa46d69e6eaa266da383c6aa199",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "68d5d8a7_9974e156",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/history/GitHistoryPage.java",
         "patchSetId": 6
@@ -115,6 +223,30 @@
       "writtenOn": "2019-09-18T20:11:42Z",
       "side": 1,
       "message": "where is this used ?",
+      "range": {
+        "startLine": 1048,
+        "startChar": 45,
+        "endLine": 1048,
+        "endChar": 54
+      },
+      "revId": "9a5a7821b63b2aa46d69e6eaa266da383c6aa199",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "0c17b479_a1dd6710",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/history/GitHistoryPage.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 1048,
+      "author": {
+        "id": 228343
+      },
+      "writtenOn": "2019-09-23T08:33:02Z",
+      "side": 1,
+      "message": "Oh, forgot to remove this. Was from early testing. The complete filterBranchAction has been replaced with SelectShownRefsAction. Will remove.",
+      "parentUuid": "68d5d8a7_9974e156",
       "range": {
         "startLine": 1048,
         "startChar": 45,
@@ -150,6 +282,30 @@
     },
     {
       "key": {
+        "uuid": "2e618b52_175ffce1",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/history/GitHistoryPage.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 1056,
+      "author": {
+        "id": 228343
+      },
+      "writtenOn": "2019-09-23T08:33:02Z",
+      "side": 1,
+      "message": "See above. Will remove.",
+      "parentUuid": "25b1f94d_2eed5c17",
+      "range": {
+        "startLine": 1056,
+        "startChar": 44,
+        "endLine": 1056,
+        "endChar": 54
+      },
+      "revId": "9a5a7821b63b2aa46d69e6eaa266da383c6aa199",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "94bea2fc_c0f9d07b",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/history/GitHistoryPage.java",
         "patchSetId": 6
@@ -161,6 +317,24 @@
       "writtenOn": "2019-09-18T20:11:42Z",
       "side": 1,
       "message": "missing braces",
+      "revId": "9a5a7821b63b2aa46d69e6eaa266da383c6aa199",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "783748c7_5938665d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/history/GitHistoryPage.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 1078,
+      "author": {
+        "id": 228343
+      },
+      "writtenOn": "2019-09-23T08:33:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "94bea2fc_c0f9d07b",
       "revId": "9a5a7821b63b2aa46d69e6eaa266da383c6aa199",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
@@ -184,6 +358,24 @@
     },
     {
       "key": {
+        "uuid": "325f1172_3938efa6",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/history/GitHistoryPage.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 1092,
+      "author": {
+        "id": 228343
+      },
+      "writtenOn": "2019-09-23T08:33:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "384d6623_262ea4c6",
+      "revId": "9a5a7821b63b2aa46d69e6eaa266da383c6aa199",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5e2e322a_4de1368a",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/history/GitHistoryPage.java",
         "patchSetId": 6
@@ -195,6 +387,24 @@
       "writtenOn": "2019-09-18T20:11:42Z",
       "side": 1,
       "message": "missing braces",
+      "revId": "9a5a7821b63b2aa46d69e6eaa266da383c6aa199",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7fec7bde_b2bfdd37",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/history/GitHistoryPage.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 2864,
+      "author": {
+        "id": 228343
+      },
+      "writtenOn": "2019-09-23T08:33:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5e2e322a_4de1368a",
       "revId": "9a5a7821b63b2aa46d69e6eaa266da383c6aa199",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
@@ -218,6 +428,24 @@
     },
     {
       "key": {
+        "uuid": "853a3dde_fcc0c57b",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/history/GitHistoryPage.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 2865,
+      "author": {
+        "id": 228343
+      },
+      "writtenOn": "2019-09-23T08:33:02Z",
+      "side": 1,
+      "message": "Ok. Will use NPE. I think theoretically this could happen. input.getRepository() can definitely return null, this is the case if no repoistory is selected.\nI don\u0027t know if this method may be called when no repository is selected.",
+      "parentUuid": "009d8c6f_c255a3aa",
+      "revId": "9a5a7821b63b2aa46d69e6eaa266da383c6aa199",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2e6a942f_8493e55c",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/history/GitHistoryRefFilterConfigurationDialog.java",
         "patchSetId": 6
@@ -229,6 +457,24 @@
       "writtenOn": "2019-09-18T20:11:42Z",
       "side": 1,
       "message": "we don\u0027t use author tags",
+      "revId": "9a5a7821b63b2aa46d69e6eaa266da383c6aa199",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a5585b13_cfef17b0",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/history/GitHistoryRefFilterConfigurationDialog.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 228343
+      },
+      "writtenOn": "2019-09-23T08:33:02Z",
+      "side": 1,
+      "message": "Sry. Auto generated. Will remove.",
+      "parentUuid": "2e6a942f_8493e55c",
       "revId": "9a5a7821b63b2aa46d69e6eaa266da383c6aa199",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
@@ -252,6 +498,24 @@
     },
     {
       "key": {
+        "uuid": "1b9ccfbc_84a4d7bf",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/history/GitHistoryRefFilterConfigurationDialog.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 228343
+      },
+      "writtenOn": "2019-09-23T08:33:02Z",
+      "side": 1,
+      "message": "No. All fields, which can be final are final.",
+      "parentUuid": "b433b40b_4e48b915",
+      "revId": "9a5a7821b63b2aa46d69e6eaa266da383c6aa199",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9cb3b465_d9b7d882",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/history/GitHistoryRefFilterConfigurationDialog.java",
         "patchSetId": 6
@@ -263,6 +527,24 @@
       "writtenOn": "2019-09-18T20:11:42Z",
       "side": 1,
       "message": "I\u0027d remove these blank lines",
+      "revId": "9a5a7821b63b2aa46d69e6eaa266da383c6aa199",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a4727980_4c886fa3",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/history/GitHistoryRefFilterConfigurationDialog.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 228343
+      },
+      "writtenOn": "2019-09-23T08:33:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9cb3b465_d9b7d882",
       "revId": "9a5a7821b63b2aa46d69e6eaa266da383c6aa199",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
@@ -286,6 +568,24 @@
     },
     {
       "key": {
+        "uuid": "448dfcc9_f24ab897",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/history/GitHistoryRefFilterConfigurationDialog.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 197,
+      "author": {
+        "id": 228343
+      },
+      "writtenOn": "2019-09-23T08:33:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8d54bcf5_75cbd76b",
+      "revId": "9a5a7821b63b2aa46d69e6eaa266da383c6aa199",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "49a829bb_81902dc5",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/history/RefFilterHelper.java",
         "patchSetId": 6
@@ -297,6 +597,24 @@
       "writtenOn": "2019-09-18T20:11:42Z",
       "side": 1,
       "message": "that\u0027s obvious from the class name, what functionality does it provide ?",
+      "revId": "9a5a7821b63b2aa46d69e6eaa266da383c6aa199",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1f9f605c_bcd140f2",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/history/RefFilterHelper.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 228343
+      },
+      "writtenOn": "2019-09-23T08:33:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "49a829bb_81902dc5",
       "revId": "9a5a7821b63b2aa46d69e6eaa266da383c6aa199",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
@@ -326,6 +644,30 @@
     },
     {
       "key": {
+        "uuid": "299ddc16_8693822b",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/history/RefFilterHelper.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 285,
+      "author": {
+        "id": 228343
+      },
+      "writtenOn": "2019-09-23T08:33:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "610cd146_06bde11d",
+      "range": {
+        "startLine": 285,
+        "startChar": 4,
+        "endLine": 285,
+        "endChar": 9
+      },
+      "revId": "9a5a7821b63b2aa46d69e6eaa266da383c6aa199",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "86635940_3987f0c6",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/history/RefFilterHelper.java",
         "patchSetId": 6
@@ -343,6 +685,24 @@
     },
     {
       "key": {
+        "uuid": "3dccc506_72a9f43b",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/history/RefFilterHelper.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 379,
+      "author": {
+        "id": 228343
+      },
+      "writtenOn": "2019-09-23T08:33:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "86635940_3987f0c6",
+      "revId": "9a5a7821b63b2aa46d69e6eaa266da383c6aa199",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "be299f31_2a8abd46",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/history/RefFilterHelper.java",
         "patchSetId": 6
@@ -354,6 +714,24 @@
       "writtenOn": "2019-09-18T20:11:42Z",
       "side": 1,
       "message": "missing braces",
+      "revId": "9a5a7821b63b2aa46d69e6eaa266da383c6aa199",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ec582979_17b88e70",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/history/RefFilterHelper.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 416,
+      "author": {
+        "id": 228343
+      },
+      "writtenOn": "2019-09-23T08:33:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "be299f31_2a8abd46",
       "revId": "9a5a7821b63b2aa46d69e6eaa266da383c6aa199",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
