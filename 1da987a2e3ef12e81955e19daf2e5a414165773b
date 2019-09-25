@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0cd66503_4aafc3f6",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/preferences/AddConfigEntryDialog.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 112,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2019-09-25T20:38:49Z",
+      "side": 1,
+      "message": "This adds more and more content proposal providers to the text field, which gives confusing behavior.\n\nOpen the dialog, type \"core.\" in the key field, choose \"autocrlf\". TAB to the value field, type Ctrl-Space : would offer \"true\" and \"input\". Good.\n\nNow go back to the key field. (We just realize we\u0027ve chosen the wrong key.) Delete \"autocrlf, type \"longpaths\" (or choose it from the content assist). TAB to the value field again. Invoke content assist: would propose \"true\". Hit ESC. Type \"in\": content assist previously added opens and proposes \"input\", which is wrong.",
+      "revId": "1da987a2e3ef12e81955e19daf2e5a414165773b",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
