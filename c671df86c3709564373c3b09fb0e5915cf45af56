@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "07fd857a_63e47af3",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/internal/ResourceRefreshHandler.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 335,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2019-09-25T20:56:52Z",
+      "side": 1,
+      "message": "Why do we still do this? If we call run synchronously anyway, we don\u0027t need to batch and merge events. That only made sense while there was a job. We could just pass through the event directly to run(). The whole mechanism with that repositoriesChanged map is no longer needed.",
+      "revId": "c671df86c3709564373c3b09fb0e5915cf45af56",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
