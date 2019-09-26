@@ -16,6 +16,24 @@
       "revId": "9ebe11e84775030de6aeea2b758928f6c646de29",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "0d7a94dc_e4418565",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/internal/ResourceRefreshHandler.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 128,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2019-09-26T13:06:34Z",
+      "side": 1,
+      "message": "Rebase uses cherry-pick :-). Submit https://git.eclipse.org/r/#/c/150030/ and the build should work.\n\n(I had pointed that out before ;-)",
+      "parentUuid": "abd90bfe_8e4eaf06",
+      "revId": "9ebe11e84775030de6aeea2b758928f6c646de29",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
     }
   ]
 }
