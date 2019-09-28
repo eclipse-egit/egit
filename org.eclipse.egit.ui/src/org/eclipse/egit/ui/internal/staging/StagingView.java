@@ -804,7 +804,7 @@ public class StagingView extends ViewPart
 				UIIcons.UNSTAGE) {
 			@Override
 			public void run() {
-				unstage(stagedViewer.getStructuredSelection());
+				unstage(stagedViewer.getStructuredSelection().toList());
 			}
 		};
 		unstageAction.setToolTipText(UIText.StagingView_UnstageItemTooltip);
@@ -812,7 +812,7 @@ public class StagingView extends ViewPart
 				UIIcons.ELCL16_ADD) {
 			@Override
 			public void run() {
-				stage(unstagedViewer.getStructuredSelection());
+				stage(unstagedViewer.getStructuredSelection().toList());
 			}
 		};
 		stageAction.setToolTipText(UIText.StagingView_StageItemTooltip);
@@ -825,8 +825,8 @@ public class StagingView extends ViewPart
 				UIIcons.UNSTAGE_ALL) {
 			@Override
 			public void run() {
-				stagedViewer.getTree().selectAll();
-				unstage(stagedViewer.getStructuredSelection());
+				unstage(Arrays.asList(
+						getContentProvider(stagedViewer).getStagingEntries()));
 			}
 		};
 		unstageAllAction
@@ -835,8 +835,8 @@ public class StagingView extends ViewPart
 				UIIcons.ELCL16_ADD_ALL) {
 			@Override
 			public void run() {
-				unstagedViewer.getTree().selectAll();
-				stage(unstagedViewer.getStructuredSelection());
+				stage(Arrays.asList(getContentProvider(unstagedViewer)
+						.getStagingEntries()));
 			}
 		};
 		stageAllAction.setToolTipText(UIText.StagingView_StageAllItemTooltip);
@@ -861,7 +861,7 @@ public class StagingView extends ViewPart
 		GridLayoutFactory.fillDefaults().applyTo(unstagedComposite);
 
 		unstagedViewer = createViewer(unstagedComposite, true,
-				selection -> unstage(selection), stageAction);
+				selection -> unstage(selection.toList()), stageAction);
 
 		unstagedViewer.addSelectionChangedListener(event -> {
 			boolean hasSelection = !event.getSelection().isEmpty();
@@ -1145,7 +1145,7 @@ public class StagingView extends ViewPart
 		GridLayoutFactory.fillDefaults().applyTo(stagedComposite);
 
 		stagedViewer = createViewer(stagedComposite, false,
-				selection -> stage(selection), unstageAction);
+				selection -> stage(selection.toList()), unstageAction);
 		stagedViewer.getLabelProvider().addListener(event -> {
 			updateMessage();
 			updateCommitButtons();
@@ -2842,7 +2842,7 @@ public class StagingView extends ViewPart
 									UIIcons.ELCL16_ADD) {
 						@Override
 						public void run() {
-							stage(selection);
+									stage(selection.toList());
 						}
 					});
 				}
@@ -2852,7 +2852,7 @@ public class StagingView extends ViewPart
 									UIIcons.UNSTAGE) {
 						@Override
 						public void run() {
-							unstage(selection);
+									unstage(selection.toList());
 						}
 					});
 				}
@@ -3353,10 +3353,10 @@ public class StagingView extends ViewPart
 		schedule(job, false);
 	}
 
-	private void stage(IStructuredSelection selection) {
+	private void stage(Collection<?> selectedEntries) {
 		StagingViewContentProvider contentProvider = getContentProvider(unstagedViewer);
 		final Repository repository = currentRepository;
-		Iterator iterator = selection.iterator();
+		Iterator iterator = selectedEntries.iterator();
 		final Set<String> addPaths = new HashSet<>();
 		final Set<String> rmPaths = new HashSet<>();
 		resetPathsToExpand();
@@ -3485,11 +3485,11 @@ public class StagingView extends ViewPart
 		}
 	}
 
-	private void unstage(IStructuredSelection selection) {
-		if (selection.isEmpty())
+	private void unstage(Collection<?> selectedEntries) {
+		if (selectedEntries.isEmpty())
 			return;
 
-		Collection<String> paths = processUnstageSelection(selection);
+		Collection<String> paths = processUnstageSelection(selectedEntries);
 		if (paths.isEmpty())
 			return;
 
@@ -3518,10 +3518,10 @@ public class StagingView extends ViewPart
 	}
 
 	private Collection<String> processUnstageSelection(
-			IStructuredSelection selection) {
+			Collection<?> selectedEntries) {
 		Set<String> paths = new HashSet<>();
 		resetPathsToExpand();
-		for (Object element : selection.toList()) {
+		for (Object element : selectedEntries) {
 			if (element instanceof StagingEntry) {
 				StagingEntry entry = (StagingEntry) element;
 				addUnstagePath(entry, paths);
