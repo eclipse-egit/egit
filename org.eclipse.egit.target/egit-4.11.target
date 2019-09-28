@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <?pde?>
 <!-- generated with https://github.com/eclipse-cbi/targetplatform-dsl -->
-<target name="egit-4.11" sequenceNumber="1568324170">
+<target name="egit-4.11" sequenceNumber="1569655470">
   <locations>
     <location includeMode="slicer" includeAllPlatforms="false" includeSource="true" includeConfigurePhase="true" type="InstallableUnit">
       <unit id="org.eclipse.jetty.client" version="9.4.20.v20190813"/>
@@ -21,6 +21,10 @@
       <unit id="org.eclipse.jetty.util" version="9.4.20.v20190813"/>
       <unit id="org.eclipse.jetty.util.source" version="9.4.20.v20190813"/>
       <repository id="jetty-9.4.20" location="https://download.eclipse.org/jetty/updates/jetty-bundles-9.x/9.4.20.v20190813/"/>
+    </location>
+    <location includeMode="slicer" includeAllPlatforms="false" includeSource="true" includeConfigurePhase="true" type="InstallableUnit">
+      <unit id="org.eclipse.license.feature.group" version="0.0.0"/>
+      <repository id="eclipse-public-license" location="https://download.eclipse.org/cbi/updates/license/2.0.2.v20181016-2210"/>
     </location>
     <location includeMode="slicer" includeAllPlatforms="false" includeSource="true" includeConfigurePhase="true" type="InstallableUnit">
       <unit id="org.eclipse.swtbot.eclipse.feature.group" version="0.0.0"/>

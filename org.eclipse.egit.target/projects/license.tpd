@@ -1,0 +1,7 @@
+target "license" with source configurePhase
+
+// This target file points to current license to enforce the right version gets bundled.
+
+location eclipse-public-license "https://download.eclipse.org/cbi/updates/license/2.0.2.v20181016-2210" {
+	org.eclipse.license.feature.group lazy
+}
