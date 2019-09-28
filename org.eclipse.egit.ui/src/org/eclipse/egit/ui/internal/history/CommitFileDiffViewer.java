@@ -722,6 +722,7 @@ public class CommitFileDiffViewer extends TableViewer {
 			loader.cancel();
 			loader = null;
 		}
+		Job.getJobManager().cancel(JobFamilies.HISTORY_FILE_DIFF);
 	}
 
 	private static class FileDiffLoader extends Job {
@@ -796,7 +797,8 @@ public class CommitFileDiffViewer extends TableViewer {
 		@Override
 		public IStatus runInUIThread(IProgressMonitor monitor) {
 			Control control = getControl();
-			if (control == null || control.isDisposed() || loader != loadJob) {
+			if (control == null || control.isDisposed() || loader != loadJob
+					|| monitor.isCanceled()) {
 				return Status.CANCEL_STATUS;
 			}
 			FileDiff[] diffs = loadJob.getDiffs();
@@ -829,6 +831,11 @@ public class CommitFileDiffViewer extends TableViewer {
 			return null;
 		}
 
+		@Override
+		public boolean belongsTo(Object family) {
+			return family == JobFamilies.HISTORY_FILE_DIFF
+					|| super.belongsTo(family);
+		}
 	}
 
 	/**
