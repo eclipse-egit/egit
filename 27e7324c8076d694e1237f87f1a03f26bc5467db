@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "d5836991_c847aae4",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/RepositoryUtil.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 334,
+      "author": {
+        "id": 440
+      },
+      "writtenOn": "2019-09-29T09:37:18Z",
+      "side": 1,
+      "message": "Removed this file from my change.",
+      "parentUuid": "638ef1ec_1d547d59",
+      "revId": "27e7324c8076d694e1237f87f1a03f26bc5467db",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "92ced0d3_e76d8ef7",
         "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/RepositoryUtil.java",
         "patchSetId": 1
@@ -95,6 +113,24 @@
       "writtenOn": "2019-07-17T19:22:46Z",
       "side": 1,
       "message": "This one I find highly confusing.",
+      "revId": "27e7324c8076d694e1237f87f1a03f26bc5467db",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "4654e880_eef25bf5",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/preferences/SynchronizePreferencePage.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 117,
+      "author": {
+        "id": 440
+      },
+      "writtenOn": "2019-09-29T09:37:18Z",
+      "side": 1,
+      "message": "Right. I verified with a new search this is the only 2 dimensional and changed both indexes to zero.",
+      "parentUuid": "2d9f7126_f2fc6170",
       "revId": "27e7324c8076d694e1237f87f1a03f26bc5467db",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
