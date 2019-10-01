@@ -691,8 +691,10 @@ public class GitHistoryPage extends HistoryPage implements RefsChangedListener,
 			 *
 			 * @param newState
 			 *            the new state to apply.
+			 * @param forceRefresh
+			 *            whether to force a refresh of the entire history page
 			 */
-			private void applyNewState(boolean newState) {
+			private void applyNewState(boolean newState, boolean forceRefresh) {
 				Control control = historyPage.getControl();
 				if (control != null && !control.isDisposed()) {
 					control.getDisplay().asyncExec(() -> {
@@ -701,7 +703,9 @@ public class GitHistoryPage extends HistoryPage implements RefsChangedListener,
 						}
 					});
 				}
-				historyPage.refresh(historyPage.selectedCommit());
+				if (forceRefresh) {
+					historyPage.refresh(historyPage.selectedCommit());
+				}
 			}
 
 			@Override
@@ -714,7 +718,8 @@ public class GitHistoryPage extends HistoryPage implements RefsChangedListener,
 					if (prefKey.equals(event.getProperty())) {
 						// global first parent preference changed and we have no
 						// current repo. Apply the new global preference
-						applyNewState(historyPage.store.getBoolean(prefKey));
+						applyNewState(historyPage.store.getBoolean(prefKey),
+								true);
 					}
 					return;
 				}
@@ -725,13 +730,16 @@ public class GitHistoryPage extends HistoryPage implements RefsChangedListener,
 					// global first parent preference changed, if this repo does
 					// not have a repo specific one apply the global one
 					if (!historyPage.store.contains(repoSpecificKey)) {
-						applyNewState(historyPage.store.getBoolean(prefKey));
+						applyNewState(historyPage.store.getBoolean(prefKey),
+								true);
 					}
 				}
 
 				if (P_REPOSITORY.equals(event.getProperty())) {
 					// The repository was switched. Apply that correct state.
-					applyNewState(historyPage.isShowFirstParentOnly());
+					// As the repository switch causes a refresh anyway don't do
+					// it again here.
+					applyNewState(historyPage.isShowFirstParentOnly(), false);
 				}
 			}
 
