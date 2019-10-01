@@ -12,6 +12,8 @@ package org.eclipse.egit.ui.internal;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertTrue;
+import static org.junit.Assume.assumeTrue;
 
 import java.io.File;
 import java.io.IOException;
@@ -22,6 +24,7 @@ import java.nio.charset.StandardCharsets;
 
 import org.eclipse.compare.ITypedElement;
 import org.eclipse.core.resources.IFile;
+import org.eclipse.core.resources.IResource;
 import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.egit.core.Activator;
 import org.eclipse.egit.core.op.CommitOperation;
@@ -33,9 +36,14 @@ import org.eclipse.jgit.api.ResetCommand.ResetType;
 import org.eclipse.jgit.attributes.FilterCommand;
 import org.eclipse.jgit.attributes.FilterCommandFactory;
 import org.eclipse.jgit.attributes.FilterCommandRegistry;
+import org.eclipse.jgit.dircache.DirCache;
+import org.eclipse.jgit.dircache.DirCacheIterator;
 import org.eclipse.jgit.lib.Constants;
+import org.eclipse.jgit.lib.FileMode;
 import org.eclipse.jgit.lib.Repository;
 import org.eclipse.jgit.lib.StoredConfig;
+import org.eclipse.jgit.treewalk.TreeWalk;
+import org.eclipse.jgit.treewalk.filter.PathFilterGroup;
 import org.eclipse.jgit.util.IO;
 import org.junit.Before;
 import org.junit.Test;
@@ -91,6 +99,39 @@ public class CompareUtilsTest extends LocalRepositoryTestCase {
 		// Should have 'xx' now
 		try (InputStream in = testFile.getContents()) {
 			assertEquals("xx", get(in));
+		}
+	}
+
+	@Test
+	public void testIndexEditExecutable() throws Exception {
+		assumeTrue(repository.getFS().supportsExecute());
+		IFile testFile = touch("a");
+		File rawFile = new File(testFile.getLocation().toOSString());
+		repository.getFS().setExecute(rawFile, true);
+		testFile.refreshLocal(IResource.DEPTH_ZERO, null);
+		stage(testFile);
+		assertEquals("Executable bit should be set", FileMode.EXECUTABLE_FILE,
+				getIndexEntryMode(FILE1_PATH));
+		ITypedElement element = CompareUtils.getIndexTypedElement(testFile);
+		assert (element instanceof EditableRevision);
+		EditableRevision revision = (EditableRevision) element;
+		try (InputStream in = revision.getContents()) {
+			assertEquals("a", get(in));
+		}
+		revision.setContent("xx".getBytes(StandardCharsets.UTF_8));
+		// Get the index entry again and check the executable bit
+		assertEquals("Executable bit should be set", FileMode.EXECUTABLE_FILE,
+				getIndexEntryMode(FILE1_PATH));
+	}
+
+	private FileMode getIndexEntryMode(String path) throws Exception {
+		DirCache dc = repository.readDirCache();
+		try (TreeWalk w = new TreeWalk(repository)) {
+			w.addTree(new DirCacheIterator(dc));
+			w.setFilter(PathFilterGroup.createFromStrings(path));
+			w.setRecursive(true);
+			assertTrue(path + " not in index", w.next());
+			return w.getFileMode();
 		}
 	}
 
