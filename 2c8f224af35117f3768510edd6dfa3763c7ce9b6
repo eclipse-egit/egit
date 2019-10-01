@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "52370398_854e8d05",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/preferences/ConfigEntryProposal.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2019-10-01T11:10:01Z",
+      "side": 1,
+      "message": "Can also be set to \"false\". What\u0027s the reason to omit it from the content assist?",
+      "revId": "2c8f224af35117f3768510edd6dfa3763c7ce9b6",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1620379d_a4744398",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/preferences/ConfigEntryProposal.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2019-10-01T11:10:01Z",
+      "side": 1,
+      "message": "Appears to exist only in git-for-windows. Maybe show only if running on Windows? I presume it can also be set to \"false\"?",
+      "revId": "2c8f224af35117f3768510edd6dfa3763c7ce9b6",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
