@@ -1111,9 +1111,9 @@ public class CompareUtils {
 		@Override
 		public void apply(DirCacheEntry ent) {
 			ObjectInserter inserter = repo.newObjectInserter();
-			if (ent.getFileMode() != FileMode.REGULAR_FILE)
+			if ((ent.getRawMode() & FileMode.TYPE_MASK) != FileMode.TYPE_FILE) {
 				ent.setFileMode(FileMode.REGULAR_FILE);
-
+			}
 			ent.setLength(content.limit());
 			ent.setLastModified(Instant.now());
 			try {
