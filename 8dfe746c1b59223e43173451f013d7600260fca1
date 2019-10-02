@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "cade7b12_d4ceeb7b",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/CompareUtils.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 1116,
+      "author": {
+        "id": 440
+      },
+      "writtenOn": "2019-10-02T06:19:56Z",
+      "side": 1,
+      "message": "I have absolutely no knowledge of these git internals at all. My only naive question would be: If this happens in the context of a compare editor, isn\u0027t there already a file in every case, such that the file mode never needs to be updated by this index change?",
+      "range": {
+        "startLine": 1114,
+        "startChar": 0,
+        "endLine": 1116,
+        "endChar": 4
+      },
+      "revId": "8dfe746c1b59223e43173451f013d7600260fca1",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
