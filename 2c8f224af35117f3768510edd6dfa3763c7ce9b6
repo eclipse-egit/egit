@@ -33,6 +33,24 @@
       "revId": "2c8f224af35117f3768510edd6dfa3763c7ce9b6",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "2eff9c58_401d4fea",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/preferences/ConfigEntryProposal.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 440
+      },
+      "writtenOn": "2019-10-02T06:43:46Z",
+      "side": 1,
+      "message": "The NLS entry contains a hint that this is Windows only. While we could easily suppress this on non-Windows machines, having it here (in a somewhat promient way due to the reduced number of overall proposals) for everyone may help non-Windows developers to understand why their Windows colleagues have trouble with the shared git repo containing paths of 300 characters.\n\nI personally have run into this issue multiple times. Looking around the web also shows that Windows developers regularly fail cloning repositories like spring-boot due to very long paths.",
+      "parentUuid": "1620379d_a4744398",
+      "revId": "2c8f224af35117f3768510edd6dfa3763c7ce9b6",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
     }
   ]
 }
