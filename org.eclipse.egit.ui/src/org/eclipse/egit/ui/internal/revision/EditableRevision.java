@@ -26,7 +26,6 @@ import org.eclipse.core.resources.IEncodedStorage;
 import org.eclipse.core.resources.IStorage;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IPath;
-import org.eclipse.core.runtime.Path;
 import org.eclipse.egit.core.internal.SafeRunnable;
 import org.eclipse.egit.ui.Activator;
 import org.eclipse.egit.ui.internal.UIText;
@@ -351,7 +350,7 @@ public class EditableRevision extends FileRevisionTypedElement implements
 
 					@Override
 					public IPath getFullPath() {
-						return new Path(editable.getPath());
+						return null;
 					}
 
 					@Override

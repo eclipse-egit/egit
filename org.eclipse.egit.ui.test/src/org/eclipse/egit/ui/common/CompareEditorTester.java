@@ -48,6 +48,10 @@ public class CompareEditorTester {
 		return getNonAncestorEditor(1);
 	}
 
+	public boolean isDirty() {
+		return editor.isDirty();
+	}
+
 	public void save() {
 		editor.save();
 	}
