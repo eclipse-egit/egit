@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "224aba23_406118e5",
+        "filename": "org.eclipse.egit.ui.test/src/org/eclipse/egit/ui/internal/CompareUtilsTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 133,
+      "author": {
+        "id": 440
+      },
+      "writtenOn": "2019-10-02T06:15:59Z",
+      "side": 1,
+      "message": "missing blank, will edit online",
+      "range": {
+        "startLine": 133,
+        "startChar": 22,
+        "endLine": 133,
+        "endChar": 23
+      },
+      "revId": "f2ca0f3909fd6d443bbacbdc93fa4dd26a2669db",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
