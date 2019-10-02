@@ -22,6 +22,30 @@
       "revId": "8dfe746c1b59223e43173451f013d7600260fca1",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "f116639f_0b673217",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/CompareUtils.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 1116,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2019-10-02T12:52:20Z",
+      "side": 1,
+      "message": "Nope. Could be a new file, in which case there we\u0027ll have an \"empty\" entry (raw mode \u003d\u003d 0, FileMode.MISSING) from the index. Or it could have been a symlink, or a gitlink. That\u0027s why the code here forces it to be a file.",
+      "parentUuid": "cade7b12_d4ceeb7b",
+      "range": {
+        "startLine": 1114,
+        "startChar": 0,
+        "endLine": 1116,
+        "endChar": 4
+      },
+      "revId": "8dfe746c1b59223e43173451f013d7600260fca1",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
     }
   ]
 }
