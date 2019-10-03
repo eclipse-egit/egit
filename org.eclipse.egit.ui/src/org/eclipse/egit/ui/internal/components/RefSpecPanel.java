@@ -51,6 +51,7 @@ import org.eclipse.jface.viewers.IElementComparer;
 import org.eclipse.jface.viewers.TableViewer;
 import org.eclipse.jface.viewers.TableViewerColumn;
 import org.eclipse.jface.viewers.TextCellEditor;
+import org.eclipse.jface.viewers.ViewerCell;
 import org.eclipse.jgit.lib.Constants;
 import org.eclipse.jgit.lib.ObjectId;
 import org.eclipse.jgit.lib.Ref;
@@ -62,6 +63,7 @@ import org.eclipse.jgit.transport.RemoteConfig;
 import org.eclipse.jgit.transport.Transport;
 import org.eclipse.osgi.util.NLS;
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.custom.TableEditor;
 import org.eclipse.swt.events.DisposeEvent;
 import org.eclipse.swt.events.DisposeListener;
 import org.eclipse.swt.events.ModifyEvent;
@@ -72,6 +74,7 @@ import org.eclipse.swt.events.TraverseEvent;
 import org.eclipse.swt.events.TraverseListener;
 import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.graphics.Image;
+import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.layout.RowLayout;
@@ -83,7 +86,9 @@ import org.eclipse.swt.widgets.Group;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Table;
 import org.eclipse.swt.widgets.TableColumn;
+import org.eclipse.swt.widgets.TableItem;
 import org.eclipse.swt.widgets.Text;
+import org.eclipse.swt.widgets.Widget;
 import org.eclipse.ui.fieldassist.ContentAssistCommandAdapter;
 
 /**
@@ -236,8 +241,6 @@ public class RefSpecPanel {
 	private CellEditor localRefCellEditor;
 
 	private CellEditor remoteRefCellEditor;
-
-	private CellEditor forceUpdateCellEditor;
 
 	private CellEditor removeSpecCellEditor;
 
@@ -1178,58 +1181,125 @@ public class RefSpecPanel {
 		});
 	}
 
+	/**
+	 * Specialized label provider to put native SWT widgets into a JFace
+	 * {@link TableViewerColumn}.
+	 * <p>
+	 * Contrary to the apparently widely copied technique from JFace Snippet
+	 * 061, which creates screenshots of an {@link SWT#CHECK} button in various
+	 * states and then uses those images in a normal
+	 * {@link ColumnLabelProvider}, this implementation actually provides
+	 * neither text not images but uses the SWT techniques from SWT Snippet 126
+	 * to place native SWT.CHECK {@link Button}s into the SWT {@link Table} the
+	 * JFace {@link TableViewer} is based on.
+	 * </p>
+	 * <p>
+	 * The advantage is a more native look-and-feel across platforms and themes.
+	 * The downside is that it's not quite as general (though with some effort,
+	 * it could probably be generalized.)
+	 * </p>
+	 *
+	 * @see <a href=
+	 *      "https://wiki.eclipse.org/JFaceSnippets#Snippet061_-_Faked_Native_Cell_Editor">JFace
+	 *      Snippet 061</a>
+	 * @see <a href=
+	 *      "https://git.eclipse.org/c/platform/eclipse.platform.swt.git/tree/examples/org.eclipse.swt.snippets/src/org/eclipse/swt/snippets/Snippet126.java">SWT
+	 *      Snippet 126</a>
+	 */
+	private class NativeCheckboxLabelProvider extends ColumnLabelProvider {
+
+		private final int index;
+
+		private final Map<TableItem, Button> buttons = new HashMap<>();
+
+		public NativeCheckboxLabelProvider(int index) {
+			this.index = index;
+		}
+
+		@Override
+		public void dispose() {
+			buttons.clear();
+			super.dispose();
+		}
+
+		@Override
+		public String getText(Object element) {
+			return null;
+		}
+
+		@Override
+		public String getToolTipText(Object element) {
+			if (element instanceof RefSpec) {
+				RefSpec refSpec = (RefSpec) element;
+				if (isDeleteRefSpec(refSpec)) {
+					return UIText.RefSpecPanel_forceDeleteDescription;
+				} else if (refSpec.isForceUpdate()) {
+					return UIText.RefSpecPanel_forceTrueDescription + '\n'
+							+ UIText.RefSpecPanel_clickToChange;
+				}
+				return UIText.RefSpecPanel_forceFalseDescription + '\n'
+						+ UIText.RefSpecPanel_clickToChange;
+			}
+			return null;
+		}
+
+		@Override
+		public void update(ViewerCell cell) {
+			Object obj = cell.getElement();
+			Widget w = cell.getViewerRow().getItem();
+			if (w instanceof TableItem) {
+				TableItem item = (TableItem) w;
+				if (obj instanceof RefSpec) {
+					RefSpec r = (RefSpec) obj;
+					Button button = buttons.get(item);
+					boolean isDeletion = isDeleteRefSpec(r);
+					if (button != null) {
+						button.setData(r);
+						button.setEnabled(!isDeletion);
+						button.setSelection(r.isForceUpdate() || isDeletion);
+					} else {
+						Table table = item.getParent();
+						button = new Button(table, SWT.CHECK);
+						buttons.put(item, button);
+						button.pack();
+						button.setData(r);
+						button.setEnabled(!isDeletion);
+						button.setSelection(r.isForceUpdate() || isDeletion);
+						button.addSelectionListener(new SelectionAdapter() {
+							@Override
+							public void widgetSelected(SelectionEvent e) {
+								Button b = (Button) e.getSource();
+								RefSpec oldSpec = (RefSpec) b.getData();
+								RefSpec newSpec = oldSpec
+										.setForceUpdate(b.getSelection());
+								setRefSpec(oldSpec, newSpec);
+							}
+						});
+						TableEditor editor = new TableEditor(table);
+						editor.grabVertical = true;
+						editor.horizontalAlignment = SWT.CENTER;
+						editor.verticalAlignment = SWT.CENTER;
+						Point size = button.getSize();
+						editor.minimumWidth = size.x;
+						editor.minimumHeight = size.y;
+						editor.setEditor(button, item, index);
+						item.addDisposeListener(e -> {
+							editor.getEditor().dispose();
+							editor.dispose();
+							buttons.remove(item);
+						});
+					}
+				}
+			}
+		}
+	}
+
 	private void createForceColumn(final TableColumnLayout columnLayout) {
 		final TableViewerColumn column = createColumn(columnLayout,
 				UIText.RefSpecPanel_columnForce, COLUMN_FORCE_WEIGHT,
 				SWT.CENTER);
-		column.setLabelProvider(new CheckboxLabelProvider(tableViewer
-				.getControl()) {
-			@Override
-			protected boolean isChecked(final Object element) {
-				return ((RefSpec) element).isForceUpdate();
-			}
-
-			@Override
-			protected boolean isEnabled(Object element) {
-				return !isDeleteRefSpec(element);
-			}
-
-			@Override
-			public String getToolTipText(Object element) {
-				if (!isEnabled(element))
-					return UIText.RefSpecPanel_forceDeleteDescription;
-				if (isChecked(element))
-					return UIText.RefSpecPanel_forceTrueDescription + '\n'
-							+ UIText.RefSpecPanel_clickToChange;
-				return UIText.RefSpecPanel_forceFalseDescription + '\n'
-						+ UIText.RefSpecPanel_clickToChange;
-			}
-		});
-		column.setEditingSupport(new EditingSupport(tableViewer) {
-			@Override
-			protected boolean canEdit(final Object element) {
-				return !isDeleteRefSpec(element);
-			}
-
-			@Override
-			protected CellEditor getCellEditor(final Object element) {
-				return forceUpdateCellEditor;
-			}
-
-			@SuppressWarnings("boxing")
-			@Override
-			protected Object getValue(final Object element) {
-				return ((RefSpec) element).isForceUpdate();
-			}
-
-			@SuppressWarnings("boxing")
-			@Override
-			protected void setValue(final Object element, final Object value) {
-				final RefSpec oldSpec = (RefSpec) element;
-				final RefSpec newSpec = oldSpec.setForceUpdate((Boolean) value);
-				setRefSpec(oldSpec, newSpec);
-			}
-		});
+		column.setLabelProvider(
+				new NativeCheckboxLabelProvider(pushSpecs ? 4 : 3));
 	}
 
 	private void createRemoveColumn(TableColumnLayout columnLayout) {
@@ -1287,7 +1357,6 @@ public class RefSpecPanel {
 			modeCellEditor = new CheckboxCellEditor(table);
 		localRefCellEditor = createLocalRefCellEditor(table);
 		remoteRefCellEditor = createRemoteRefCellEditor(table);
-		forceUpdateCellEditor = new CheckboxCellEditor(table);
 		removeSpecCellEditor = new ClickableCellEditor(table);
 	}
 
