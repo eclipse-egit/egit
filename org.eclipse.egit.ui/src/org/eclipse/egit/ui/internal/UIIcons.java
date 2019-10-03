@@ -102,14 +102,6 @@ public class UIIcons {
 	/** Filter icon */
 	public final static ImageDescriptor ELCL16_COLUMN_LAYOUT;
 
-	/** Enabled, checked, checkbox image */
-	public final static ImageDescriptor CHECKBOX_ENABLED_CHECKED;
-	/** Enabled, unchecked, checkbox image */
-	public final static ImageDescriptor CHECKBOX_ENABLED_UNCHECKED;
-	/** Disabled, checked, checkbox image */
-	public final static ImageDescriptor CHECKBOX_DISABLED_CHECKED;
-	/** Disabled, unchecked, checkbox image */
-	public final static ImageDescriptor CHECKBOX_DISABLED_UNCHECKED;
 	/** Edit configuration */
 	public final static ImageDescriptor EDITCONFIG;
 	/** Create Patch Wizard banner */
@@ -409,10 +401,6 @@ public class UIIcons {
 		ELCL16_SYNCED = map("elcl16/synced.png"); //$NON-NLS-1$
 		ELCL16_ID = map("elcl16/sha1.png"); //$NON-NLS-1$
 		ELCL16_COLUMN_LAYOUT = map("elcl16/horizontal_view.png"); //$NON-NLS-1$
-		CHECKBOX_ENABLED_CHECKED = map("checkboxes/enabled_checked.png"); //$NON-NLS-1$
-		CHECKBOX_ENABLED_UNCHECKED = map("checkboxes/enabled_unchecked.png"); //$NON-NLS-1$
-		CHECKBOX_DISABLED_CHECKED = map("checkboxes/disabled_checked.png"); //$NON-NLS-1$
-		CHECKBOX_DISABLED_UNCHECKED = map("checkboxes/disabled_unchecked.png"); //$NON-NLS-1$
 		// Eclipse 4.14 has a new filter icon showing a funnel.
 		if (Platform.getBundle("org.eclipse.ui.ide").getVersion() //$NON-NLS-1$
 				.compareTo(Version.valueOf("3.16.100")) >= 0) { //$NON-NLS-1$

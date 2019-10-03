@@ -40,6 +40,7 @@ import org.eclipse.jface.fieldassist.IContentProposalProvider;
 import org.eclipse.jface.fieldassist.TextContentAdapter;
 import org.eclipse.jface.layout.TableColumnLayout;
 import org.eclipse.jface.resource.ImageRegistry;
+import org.eclipse.jface.util.Util;
 import org.eclipse.jface.viewers.ArrayContentProvider;
 import org.eclipse.jface.viewers.CellEditor;
 import org.eclipse.jface.viewers.CheckboxCellEditor;
@@ -48,9 +49,12 @@ import org.eclipse.jface.viewers.ColumnViewerToolTipSupport;
 import org.eclipse.jface.viewers.ColumnWeightData;
 import org.eclipse.jface.viewers.EditingSupport;
 import org.eclipse.jface.viewers.IElementComparer;
+import org.eclipse.jface.viewers.ISelectionChangedListener;
+import org.eclipse.jface.viewers.StructuredSelection;
 import org.eclipse.jface.viewers.TableViewer;
 import org.eclipse.jface.viewers.TableViewerColumn;
 import org.eclipse.jface.viewers.TextCellEditor;
+import org.eclipse.jface.viewers.ViewerCell;
 import org.eclipse.jgit.lib.Constants;
 import org.eclipse.jgit.lib.ObjectId;
 import org.eclipse.jgit.lib.Ref;
@@ -236,8 +240,6 @@ public class RefSpecPanel {
 	private CellEditor localRefCellEditor;
 
 	private CellEditor remoteRefCellEditor;
-
-	private CellEditor forceUpdateCellEditor;
 
 	private CellEditor removeSpecCellEditor;
 
@@ -1182,53 +1184,67 @@ public class RefSpecPanel {
 		final TableViewerColumn column = createColumn(columnLayout,
 				UIText.RefSpecPanel_columnForce, COLUMN_FORCE_WEIGHT,
 				SWT.CENTER);
-		column.setLabelProvider(new CheckboxLabelProvider(tableViewer
-				.getControl()) {
-			@Override
-			protected boolean isChecked(final Object element) {
-				return ((RefSpec) element).isForceUpdate();
-			}
+		column.setLabelProvider(new ControlLabelProvider() {
 
 			@Override
-			protected boolean isEnabled(Object element) {
-				return !isDeleteRefSpec(element);
+			public Control setEditor(ViewerCell cell, Composite parent,
+					Control existing, Object element) {
+				Button editor;
+				if (existing != null) {
+					editor = (Button) existing;
+				} else {
+					editor = new Button(parent, SWT.CHECK);
+					editor.addSelectionListener(new SelectionAdapter() {
+
+						@Override
+						public void widgetSelected(SelectionEvent e) {
+							Button b = (Button) e.getSource();
+							RefSpec oldSpec = (RefSpec) b.getData();
+							RefSpec newSpec = oldSpec
+									.setForceUpdate(b.getSelection());
+							setRefSpec(oldSpec, newSpec);
+							tableViewer.setSelection(
+									new StructuredSelection(newSpec), false);
+						}
+					});
+					if (Util.isWindows()) {
+						// Work-around for a rendering bug on Windows: the area
+						// above and below the checkbox is not redrawn when the
+						// selection changes.
+						ISelectionChangedListener listener = event -> {
+							if (!editor.isDisposed()) {
+								editor.redraw();
+							}
+						};
+						tableViewer.addSelectionChangedListener(listener);
+						editor.addDisposeListener(event -> tableViewer
+								.removeSelectionChangedListener(listener));
+					}
+				}
+				boolean isDeletion = isDeleteRefSpec(element);
+				editor.setData(element);
+				editor.setEnabled(!isDeletion);
+				editor.setSelection(
+						((RefSpec) element).isForceUpdate() || isDeletion);
+				return editor;
 			}
 
 			@Override
 			public String getToolTipText(Object element) {
-				if (!isEnabled(element))
-					return UIText.RefSpecPanel_forceDeleteDescription;
-				if (isChecked(element))
-					return UIText.RefSpecPanel_forceTrueDescription + '\n'
+				if (element instanceof RefSpec) {
+					RefSpec refSpec = (RefSpec) element;
+					if (isDeleteRefSpec(refSpec)) {
+						return UIText.RefSpecPanel_forceDeleteDescription;
+					} else if (refSpec.isForceUpdate()) {
+						return UIText.RefSpecPanel_forceTrueDescription + '\n'
+								+ UIText.RefSpecPanel_clickToChange;
+					}
+					return UIText.RefSpecPanel_forceFalseDescription + '\n'
 							+ UIText.RefSpecPanel_clickToChange;
-				return UIText.RefSpecPanel_forceFalseDescription + '\n'
-						+ UIText.RefSpecPanel_clickToChange;
-			}
-		});
-		column.setEditingSupport(new EditingSupport(tableViewer) {
-			@Override
-			protected boolean canEdit(final Object element) {
-				return !isDeleteRefSpec(element);
+				}
+				return null;
 			}
 
-			@Override
-			protected CellEditor getCellEditor(final Object element) {
-				return forceUpdateCellEditor;
-			}
-
-			@SuppressWarnings("boxing")
-			@Override
-			protected Object getValue(final Object element) {
-				return ((RefSpec) element).isForceUpdate();
-			}
-
-			@SuppressWarnings("boxing")
-			@Override
-			protected void setValue(final Object element, final Object value) {
-				final RefSpec oldSpec = (RefSpec) element;
-				final RefSpec newSpec = oldSpec.setForceUpdate((Boolean) value);
-				setRefSpec(oldSpec, newSpec);
-			}
 		});
 	}
 
@@ -1287,7 +1303,6 @@ public class RefSpecPanel {
 			modeCellEditor = new CheckboxCellEditor(table);
 		localRefCellEditor = createLocalRefCellEditor(table);
 		remoteRefCellEditor = createRemoteRefCellEditor(table);
-		forceUpdateCellEditor = new CheckboxCellEditor(table);
 		removeSpecCellEditor = new ClickableCellEditor(table);
 	}
 
