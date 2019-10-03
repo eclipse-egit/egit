@@ -18,7 +18,7 @@
   <parent>
     <groupId>org.eclipse.egit</groupId>
     <artifactId>egit-parent</artifactId>
-    <version>5.5.1.201910021850-r</version>
+    <version>5.5.2-SNAPSHOT</version>
   </parent>
 
   <artifactId>org.eclipse.egit.core.test</artifactId>
