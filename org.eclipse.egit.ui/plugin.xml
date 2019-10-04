@@ -3230,6 +3230,9 @@
       <commonFilter id="org.eclipse.egit.ui.repositoriesView.filters.worktree"
           name="%RepoViewFilterWorktree.label" description="%RepoViewFilterWorktree.description" activeByDefault="false"
           class="org.eclipse.egit.ui.internal.repository.tree.filter.NodeFilterFactory:WORKINGDIR"/>
+      <commonFilter id="org.eclipse.egit.ui.repositoriesView.filters.hiddenGroup"
+          name="%RepoViewFilterHiddenGroup.label" description="%RepoViewFilterHiddenGroup.description" activeByDefault="false"
+          class="org.eclipse.egit.ui.internal.repository.tree.filter.HiddenRepositoryGroupFilter"/>
    </extension>
    <extension
          point="org.eclipse.ui.navigator.viewer">
@@ -3340,6 +3343,9 @@
             </contentExtension>
             <contentExtension
                   pattern="org.eclipse.egit.ui.repositoriesView.filters.worktree">
+            </contentExtension>
+            <contentExtension
+                  pattern="org.eclipse.egit.ui.repositoriesView.filters.hiddenGroup">
             </contentExtension>
          </includes>
       </viewerContentBinding>
@@ -4946,6 +4952,48 @@
       <menuContribution
             locationURI="popup:org.eclipse.egit.ui.RepositoriesView?after=repo-1">
          <command
+               commandId="org.eclipse.egit.ui.RepositoriesUnhideGroup"
+               style="push">
+            <visibleWhen
+                  checkEnabled="false">
+               <and>
+                  <count
+                        value="+">
+                  </count>
+                  <iterate ifEmpty="false"
+                        operator="and">
+                     <instanceof
+                           value="org.eclipse.egit.ui.internal.repository.tree.RepositoryGroupNode">
+                     </instanceof>
+                  </iterate>
+               </and>
+            </visibleWhen>
+         </command>
+      </menuContribution>
+      <menuContribution
+            locationURI="popup:org.eclipse.egit.ui.RepositoriesView?after=repo-1">
+         <command
+               commandId="org.eclipse.egit.ui.RepositoriesHideGroup"
+               style="push">
+            <visibleWhen
+                  checkEnabled="false">
+               <and>
+                  <count
+                        value="+">
+                  </count>
+                  <iterate ifEmpty="false"
+                        operator="and">
+                     <instanceof
+                           value="org.eclipse.egit.ui.internal.repository.tree.RepositoryGroupNode">
+                     </instanceof>
+                  </iterate>
+               </and>
+            </visibleWhen>
+         </command>
+      </menuContribution>
+      <menuContribution
+            locationURI="popup:org.eclipse.egit.ui.RepositoriesView?after=repo-1">
+         <command
                commandId="org.eclipse.egit.ui.RepositoriesRenameGroup"
                style="push">
             <visibleWhen
@@ -6037,6 +6085,18 @@
             defaultHandler="org.eclipse.egit.ui.internal.repository.tree.command.RenameRepositoryGroupCommand"
             id="org.eclipse.egit.ui.RepositoriesRenameGroup"
             name="%RenameRepositoryGroupCommand.name">
+      </command>
+            <command
+            categoryId="org.eclipse.egit.ui.commandCategory"
+            defaultHandler="org.eclipse.egit.ui.internal.repository.tree.command.HideRepositoryGroupCommand"
+            id="org.eclipse.egit.ui.RepositoriesHideGroup"
+            name="%HideRepositoryGroupCommand.name">
+      </command>
+      <command
+            categoryId="org.eclipse.egit.ui.commandCategory"
+            defaultHandler="org.eclipse.egit.ui.internal.repository.tree.command.UnhideRepositoryGroupCommand"
+            id="org.eclipse.egit.ui.RepositoriesUnhideGroup"
+            name="%UnhideRepositoryGroupCommand.name">
       </command>
       <command
             categoryId="org.eclipse.egit.ui.commandCategory"

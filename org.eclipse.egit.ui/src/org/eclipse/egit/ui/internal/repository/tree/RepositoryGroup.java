@@ -24,6 +24,8 @@ public class RepositoryGroup {
 
 	private String name;
 
+	private boolean hidden;
+
 	private List<String> repositories = new ArrayList<>();
 
 	RepositoryGroup(UUID uuid, String name) {
@@ -74,6 +76,19 @@ public class RepositoryGroup {
 
 	void setName(String newName) {
 		this.name = newName;
+	}
+
+	void setHidden(boolean hidden) {
+		this.hidden = hidden;
+	}
+
+	/**
+	 * @return true if and only if the group is marked as hidden for the
+	 *         Repositories View filter
+	 */
+
+	public boolean isHidden() {
+		return hidden;
 	}
 
 }

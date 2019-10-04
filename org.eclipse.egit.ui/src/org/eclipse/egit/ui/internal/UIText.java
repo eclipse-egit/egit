@@ -3823,6 +3823,9 @@ public class UIText extends NLS {
 	public static String RepositoriesViewLabelProvider_UnbornBranchText;
 
 	/** */
+	public static String RepositoriesViewLabelProvider_HiddenRepoGroupText;
+
+	/** */
 	public static String DialogsPreferencePage_autoConfigureLfs;
 
 	/** */

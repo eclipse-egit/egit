@@ -14,6 +14,7 @@
 package org.eclipse.egit.ui.internal.repository.tree;
 
 import java.io.File;
+import java.util.Optional;
 
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.Path;
@@ -299,7 +300,11 @@ public abstract class RepositoryTreeNode<T> extends PlatformObject implements Co
 		switch (myType) {
 
 		case REPOGROUP:
-			// fall through
+			Optional<Integer> maybeCompare = compareToOtherGroup(otherNode);
+			if (maybeCompare.isPresent()) {
+				return maybeCompare.get().intValue();
+			}
+			//$FALL-THROUGH$
 		case BRANCHES:
 			// fall through
 		case LOCAL:
@@ -365,6 +370,20 @@ public abstract class RepositoryTreeNode<T> extends PlatformObject implements Co
 									.getPath());
 		}
 		return 0;
+	}
+
+	// place hidden groups after non-hidden groups
+	private Optional<Integer> compareToOtherGroup(RepositoryTreeNode other) {
+		boolean meHidden = ((RepositoryGroupNode) this).getGroup().isHidden();
+		boolean otherHidden = ((RepositoryGroupNode) other).getGroup()
+				.isHidden();
+		if (meHidden == otherHidden) {
+			return Optional.empty();
+		} else if (meHidden) {
+			return Optional.of(Integer.valueOf(1));
+		} else {
+			return Optional.of(Integer.valueOf(-1));
+		}
 	}
 
 	private File getDirectoryContainingRepo(Repository repo) {

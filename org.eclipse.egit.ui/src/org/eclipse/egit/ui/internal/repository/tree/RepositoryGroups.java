@@ -37,6 +37,8 @@ public class RepositoryGroups {
 
 	private static final String PREFS_GROUPS = "GitRepositoriesView.RepositoryGroups.uuids"; //$NON-NLS-1$
 
+	private static final String PREFS_HIDDEN_GROUPS = "GitRepositoriesView.RepositoryGroups.uuidsHidden"; //$NON-NLS-1$
+
 	private static final String PREFS_GROUP_NAME_PREFIX = "GitRepositoriesView.RepositoryGroups."; //$NON-NLS-1$
 
 	private static final String PREFS_GROUP_PREFIX = "GitRepositoriesView.RepositoryGroups.group."; //$NON-NLS-1$
@@ -50,6 +52,8 @@ public class RepositoryGroups {
 	public RepositoryGroups() {
 		List<String> groups = split(
 				preferences.get(PREFS_GROUPS, EMPTY_STRING));
+		List<String> hiddenGroups = split(
+				preferences.get(PREFS_HIDDEN_GROUPS, EMPTY_STRING));
 		for (String groupUUIDString : groups) {
 			UUID groupUUIDuuid = UUID.fromString(groupUUIDString);
 			String name = preferences
@@ -60,6 +64,9 @@ public class RepositoryGroups {
 							EMPTY_STRING));
 			RepositoryGroup group = new RepositoryGroup(groupUUIDuuid, name,
 					repos);
+			if (hiddenGroups.contains(groupUUIDString)) {
+				group.setHidden(true);
+			}
 			groupMap.put(groupUUIDuuid, group);
 		}
 	}
@@ -158,9 +165,23 @@ public class RepositoryGroups {
 		savePreferences();
 	}
 
+	/**
+	 * @param groups
+	 * @param hidden
+	 *            new hidden state of the groups
+	 */
+	public void setHidden(Collection<RepositoryGroup> groups,
+			boolean hidden) {
+		for (RepositoryGroup group : groups) {
+			groupMap.get(group.getUuid()).setHidden(hidden);
+		}
+		savePreferences();
+	}
+
 	private void savePreferences() {
 		try {
 			List<String> groupUUIDS = new ArrayList<>();
+			List<String> hiddenGroupUUIDS = new ArrayList<>();
 			for (RepositoryGroup group : groupMap.values()) {
 				UUID uuid = group.getUuid();
 				String uuidString = uuid.toString();
@@ -170,9 +191,14 @@ public class RepositoryGroups {
 				List<String> repos = group.getRepositories();
 				preferences.put(PREFS_GROUP_PREFIX + uuidString,
 						StringUtils.join(repos, SEPARATOR));
+				if (group.isHidden()) {
+					hiddenGroupUUIDS.add(uuidString);
+				}
 			}
 			preferences.put(PREFS_GROUPS,
 					StringUtils.join(groupUUIDS, SEPARATOR));
+			preferences.put(PREFS_HIDDEN_GROUPS,
+					StringUtils.join(hiddenGroupUUIDS, SEPARATOR));
 			preferences.flush();
 		} catch (BackingStoreException e) {
 			Activator.error("error saving repository group state", e);//$NON-NLS-1$
