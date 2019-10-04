@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d1920d06_4c74cb6f",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/components/RefSpecPanel.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 1217,
+      "author": {
+        "id": 440
+      },
+      "writtenOn": "2019-10-04T11:47:14Z",
+      "side": 1,
+      "message": "To get around the selection issue, I added this \"brute force refresh\" in the constructor:\n\n tableViewer.addSelectionChangedListener(event -\u003e {\n  for (Button button : buttons.values()) {\n   button.redraw();\n  }\n });",
+      "revId": "5f1ff4678e08b8e6830a7d2310cd51e05acb7453",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
