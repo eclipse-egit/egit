@@ -16,6 +16,24 @@
       "revId": "5f1ff4678e08b8e6830a7d2310cd51e05acb7453",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "4554eb2c_a4522f65",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/components/RefSpecPanel.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 1217,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2019-10-04T11:52:55Z",
+      "side": 1,
+      "message": "Yuck. Might work for this particular table, but something more general that would only update formerly selected, now unselected buttons would be much better.\n\nSince this doesn\u0027t occur on Mac or GTK, could this be a SWT Windows bug that should actually be fixed there?",
+      "parentUuid": "d1920d06_4c74cb6f",
+      "revId": "5f1ff4678e08b8e6830a7d2310cd51e05acb7453",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
     }
   ]
 }
