@@ -125,7 +125,8 @@ public class FindToolbarJob extends Job {
 				continue;
 			}
 
-			if (findInCommitId && find(findPattern, revision.getId().name())) {
+			if (findInCommitId
+					&& find(findPattern.trim(), revision.getId().name())) {
 				if (progress.isCanceled()) {
 					return Status.CANCEL_STATUS;
 				}
