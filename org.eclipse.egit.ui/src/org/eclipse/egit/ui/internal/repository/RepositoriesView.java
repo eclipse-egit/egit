@@ -432,6 +432,10 @@ public class RepositoriesView extends CommonNavigator implements IShowInSource, 
 				TreeSelection sel = (TreeSelection) event.getSelection();
 				RepositoryTreeNode element = (RepositoryTreeNode) sel
 						.getFirstElement();
+				// after deletion the selection can be empty
+				if (element == null) {
+					return;
+				}
 				// Disable checkout for bare repositories
 				if (element.getRepository().isBare()) {
 					return;
