@@ -392,12 +392,28 @@ public abstract class RepositoryTreeNode<T> extends PlatformObject implements Co
 		if (Repository.class == adapter && myRepository != null) {
 			return adapter.cast(myRepository);
 		}
+		if (File.class == adapter) {
+			return adapter.cast(adaptFile());
+		}
 		if (myObject != null) {
 			if (adapter.isInstance(myObject)) {
 				return adapter.cast(myObject);
 			}
 		}
 		return super.getAdapter(adapter);
+	}
+
+	private File adaptFile() {
+		switch (getType()) {
+		case REPO:
+		case WORKINGDIR:
+		case FILE:
+		case FOLDER:
+			IPath path = getPath();
+			return path != null ? path.toFile() : null;
+		default:
+			return null;
+		}
 	}
 
 	@Override
