@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "53e44046_91fcba1f",
+        "filename": "org.eclipse.egit.gitflow.ui/src/org/eclipse/egit/gitflow/ui/internal/factories/GitFlowAdapterFactory.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2019-10-06T17:34:46Z",
+      "side": 1,
+      "message": "I wonder if we shouldn\u0027t make the HistoryPageInput adaptable to the Repository instead of this hard-coded dependency.\n\nRepositoryTreeNode is already adaptable to Repository.",
+      "revId": "53fb29951bfef914968da48777aed8e28a01c1e8",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
