@@ -13,6 +13,7 @@ package org.eclipse.egit.gitflow.ui.internal.factories;
 import org.eclipse.core.resources.IResource;
 import org.eclipse.core.runtime.IAdapterFactory;
 import org.eclipse.egit.core.project.RepositoryMapping;
+import org.eclipse.egit.ui.internal.history.HistoryPageInput;
 import org.eclipse.egit.ui.internal.repository.tree.RepositoryNode;
 import org.eclipse.egit.ui.internal.selection.SelectionUtils;
 import org.eclipse.jface.viewers.ISelection;
@@ -42,6 +43,8 @@ public class GitFlowAdapterFactory implements IAdapterFactory {
 					repository = node.getRepository();
 				} else if (input instanceof IResource) {
 					repository = getRepository((IResource) input);
+				} else if (input instanceof HistoryPageInput) {
+					repository = ((HistoryPageInput) input).getRepository();
 				}
 			} else if (adaptableObject instanceof ISelection) {
 				IStructuredSelection structuredSelection = SelectionUtils
