@@ -1,0 +1,513 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f75939bb_47bbee85",
+        "filename": "org.eclipse.egit.ui/icons/etool16/newgroup_wiz.png",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2019-10-06T14:32:34Z",
+      "side": 1,
+      "message": "We need the SVG for this. Put it under the top-level folder ./icons/ at the right place.",
+      "revId": "3a619676169558560c92751d4e5ea82895f08105",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "f831bb10_fd14b3e2",
+        "filename": "org.eclipse.egit.ui/plugin.properties",
+        "patchSetId": 2
+      },
+      "lineNbr": 293,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2019-10-06T14:32:34Z",
+      "side": 1,
+      "message": "Shortcuts? (\"\u0026\")",
+      "revId": "3a619676169558560c92751d4e5ea82895f08105",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "fa8af6e8_2836d518",
+        "filename": "org.eclipse.egit.ui/plugin.xml",
+        "patchSetId": 2
+      },
+      "lineNbr": 4780,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2019-10-06T14:32:34Z",
+      "side": 1,
+      "message": "checkEnabled\u003d\"true\": there should be no children.",
+      "range": {
+        "startLine": 4780,
+        "startChar": 25,
+        "endLine": 4780,
+        "endChar": 44
+      },
+      "revId": "3a619676169558560c92751d4e5ea82895f08105",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "938d9bd8_3925c47b",
+        "filename": "org.eclipse.egit.ui/plugin.xml",
+        "patchSetId": 2
+      },
+      "lineNbr": 6019,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2019-10-06T14:32:34Z",
+      "side": 1,
+      "message": "Please don\u0027t use defaultHandler. Means the handler is always active, which is not good. Use dedicated handlers with enablement expressions.\n\nAs is, this can crash:\n\nSelect a project in the package explorer. Type \"Ctrl-3\", \"remove\". Select \"Remove from Repository Group\". Get\n\n  java.lang.ClassCastException: org.eclipse.jdt.internal.ui.packageview.PackageExplorerPart cannot be cast to org.eclipse.egit.ui.internal.repository.RepositoriesView\n\tat org.eclipse.egit.ui.internal.repository.tree.command.RepositoriesViewCommandHandler.getView(RepositoriesViewCommandHandler.java:56)\n\tat org.eclipse.egit.ui.internal.repository.tree.command.RemoveFromRepositoryGroupCommand.getView(RemoveFromRepositoryGroupCommand.java:1)\n\tat org.eclipse.egit.ui.internal.repository.tree.command.RemoveFromRepositoryGroupCommand.execute(RemoveFromRepositoryGroupCommand.java:35)",
+      "revId": "3a619676169558560c92751d4e5ea82895f08105",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "e6af1775_c121565a",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/repository/DropAdapterAssistant.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2019-10-06T14:32:34Z",
+      "side": 1,
+      "message": "Typo.",
+      "range": {
+        "startLine": 58,
+        "startChar": 17,
+        "endLine": 58,
+        "endChar": 18
+      },
+      "revId": "3a619676169558560c92751d4e5ea82895f08105",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3f22321a_d57d764d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/repository/RepositoriesViewContentProvider.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 161,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2019-10-06T14:32:34Z",
+      "side": 1,
+      "message": "What has showing repo groups have to do with showing unborn head? Perhaps \"showUnbornHead\" needs to be renamed. But actually I was wondering if the groups should also be shown elsewhere (repo selection dialog).",
+      "revId": "3a619676169558560c92751d4e5ea82895f08105",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "2b48674b_4f6fe553",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/repository/RepositoriesViewContentProvider.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 309,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2019-10-06T14:32:34Z",
+      "side": 1,
+      "message": "Resolve the TODO?",
+      "revId": "3a619676169558560c92751d4e5ea82895f08105",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "b90d6c9d_a6e0b073",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/repository/tree/RepositoryGroup.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2019-10-06T14:32:34Z",
+      "side": 1,
+      "message": "As far as I see this is the git directory, not the \"name\". Use \"File gitDir\" instead throughout.",
+      "revId": "3a619676169558560c92751d4e5ea82895f08105",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "d857b430_cfb41a37",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/repository/tree/RepositoryGroup.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2019-10-06T14:32:34Z",
+      "side": 1,
+      "message": "Typo.",
+      "range": {
+        "startLine": 61,
+        "startChar": 55,
+        "endLine": 61,
+        "endChar": 64
+      },
+      "revId": "3a619676169558560c92751d4e5ea82895f08105",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "deb556a6_d897ec12",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/repository/tree/RepositoryGroups.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2019-10-06T14:32:34Z",
+      "side": 1,
+      "message": "Strange name. Why not simply groupId? We generally don\u0027t use hungarian notation (putting type info into variable names).\n\nSame below.",
+      "range": {
+        "startLine": 54,
+        "startChar": 8,
+        "endLine": 54,
+        "endChar": 21
+      },
+      "revId": "3a619676169558560c92751d4e5ea82895f08105",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "249c67e8_f36652d2",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/repository/tree/RepositoryGroups.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2019-10-06T14:32:34Z",
+      "side": 1,
+      "message": "Missing blanks around \"\u003d\".",
+      "range": {
+        "startLine": 68,
+        "startChar": 21,
+        "endLine": 68,
+        "endChar": 22
+      },
+      "revId": "3a619676169558560c92751d4e5ea82895f08105",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "be714dea_1d966dbd",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/repository/tree/RepositoryGroups.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2019-10-06T14:32:34Z",
+      "side": 1,
+      "message": "Use isEmpty(), and avoid calling trim() twice.",
+      "range": {
+        "startLine": 71,
+        "startChar": 24,
+        "endLine": 71,
+        "endChar": 48
+      },
+      "revId": "3a619676169558560c92751d4e5ea82895f08105",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "b0a48366_b6007094",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/repository/tree/RepositoryGroups.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2019-10-06T14:32:34Z",
+      "side": 1,
+      "message": "Missing blank.",
+      "range": {
+        "startLine": 71,
+        "startChar": 4,
+        "endLine": 71,
+        "endChar": 6
+      },
+      "revId": "3a619676169558560c92751d4e5ea82895f08105",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "00ab3525_0e90d2f8",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/repository/tree/RepositoryGroups.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2019-10-06T14:32:34Z",
+      "side": 1,
+      "message": "What\u0027s the advantage of Optional here over returning null or the groupUUIDuuid?",
+      "range": {
+        "startLine": 82,
+        "startChar": 8,
+        "endLine": 82,
+        "endChar": 16
+      },
+      "revId": "3a619676169558560c92751d4e5ea82895f08105",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a9945607_f4ce0d89",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/repository/tree/RepositoryGroups.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 128,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2019-10-06T14:32:34Z",
+      "side": 1,
+      "message": "Stray blank line.",
+      "revId": "3a619676169558560c92751d4e5ea82895f08105",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "15fda38a_d4238652",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/repository/tree/RepositoryGroups.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 132,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2019-10-06T14:32:34Z",
+      "side": 1,
+      "message": "Rename to groupId?",
+      "range": {
+        "startLine": 132,
+        "startChar": 41,
+        "endLine": 132,
+        "endChar": 50
+      },
+      "revId": "3a619676169558560c92751d4e5ea82895f08105",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "59ec9cca_e0010ae3",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/repository/tree/RepositoryGroups.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 144,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2019-10-06T14:32:34Z",
+      "side": 1,
+      "message": "Remove commented-out code.",
+      "revId": "3a619676169558560c92751d4e5ea82895f08105",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "eeed1bd1_9247da58",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/repository/tree/RepositoryGroups.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 153,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2019-10-06T14:32:34Z",
+      "side": 1,
+      "message": "Just \"group\".",
+      "range": {
+        "startLine": 153,
+        "startChar": 23,
+        "endLine": 153,
+        "endChar": 32
+      },
+      "revId": "3a619676169558560c92751d4e5ea82895f08105",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "87722bed_8e9e50b3",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/repository/tree/RepositoryGroups.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 178,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2019-10-06T14:32:34Z",
+      "side": 1,
+      "message": "This reminds me that we should probably deprecate this method in favor of logError. Error message should be localized.",
+      "range": {
+        "startLine": 178,
+        "startChar": 13,
+        "endLine": 178,
+        "endChar": 18
+      },
+      "revId": "3a619676169558560c92751d4e5ea82895f08105",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "57a3278a_a0f80fe7",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/repository/tree/RepositoryGroups.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 200,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2019-10-06T14:32:34Z",
+      "side": 1,
+      "message": "Remove commented-out code.",
+      "revId": "3a619676169558560c92751d4e5ea82895f08105",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "989f473f_1066a2e3",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/repository/tree/RepositoryGroups.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 206,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2019-10-06T14:32:34Z",
+      "side": 1,
+      "message": "Doesn\u0027t seem to be the \"name\" but the git directory. Maybe use File gitDir instead.",
+      "range": {
+        "startLine": 206,
+        "startChar": 38,
+        "endLine": 206,
+        "endChar": 52
+      },
+      "revId": "3a619676169558560c92751d4e5ea82895f08105",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "162d786f_db324ce6",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/repository/tree/RepositoryTreeNode.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 258,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2019-10-06T14:32:34Z",
+      "side": 1,
+      "message": "That\u0027s not the contract of hashCode.",
+      "range": {
+        "startLine": 258,
+        "startChar": 10,
+        "endLine": 258,
+        "endChar": 41
+      },
+      "revId": "3a619676169558560c92751d4e5ea82895f08105",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ace12fdd_9136fa3b",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/repository/tree/command/AddRepositoryGroupCommand.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2019-10-06T14:32:34Z",
+      "side": 1,
+      "message": "Just \"groupName\".",
+      "range": {
+        "startLine": 42,
+        "startChar": 19,
+        "endLine": 42,
+        "endChar": 36
+      },
+      "revId": "3a619676169558560c92751d4e5ea82895f08105",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3b4f99e1_71aab372",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/repository/tree/command/AddRepositoryGroupCommand.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2019-10-06T14:32:34Z",
+      "side": 1,
+      "message": "Again I don\u0027t quite see the advantage of Optional here.\n\n  String groupName \u003d ...;\n  if (groupName !\u003d null) {\n    ...\n  }",
+      "revId": "3a619676169558560c92751d4e5ea82895f08105",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "91133641_46c031a5",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/repository/tree/command/RenameRepositoryGroupCommand.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2019-10-06T14:32:34Z",
+      "side": 1,
+      "message": "Needs to be localizable.",
+      "revId": "3a619676169558560c92751d4e5ea82895f08105",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
