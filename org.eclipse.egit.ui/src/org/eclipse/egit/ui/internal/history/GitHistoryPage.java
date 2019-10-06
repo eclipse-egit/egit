@@ -167,6 +167,7 @@ import org.eclipse.swt.events.KeyListener;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.graphics.Point;
+import org.eclipse.swt.graphics.Rectangle;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
@@ -174,6 +175,7 @@ import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Event;
 import org.eclipse.swt.widgets.Link;
 import org.eclipse.swt.widgets.Listener;
+import org.eclipse.swt.widgets.ScrollBar;
 import org.eclipse.swt.widgets.TableColumn;
 import org.eclipse.team.ui.history.HistoryPage;
 import org.eclipse.team.ui.history.IHistoryView;
@@ -1503,6 +1505,14 @@ public class GitHistoryPage extends HistoryPage implements RefsChangedListener,
 			}
 		});
 
+		StyledText commentWidget = commentViewer.getTextWidget();
+		commentWidget.addCaretListener(event -> {
+			Point location = commentWidget
+					.getLocationAtOffset(event.caretOffset);
+			scrollCommentAndDiff(location,
+					commentWidget.getLineHeight(event.caretOffset));
+		});
+
 		commentAndDiffComposite.setBackground(commentViewer.getControl()
 				.getBackground());
 
@@ -1610,6 +1620,13 @@ public class GitHistoryPage extends HistoryPage implements RefsChangedListener,
 		diffWidget.setMenu(contextMenu.createContextMenu(diffWidget));
 		diffWidget.addDisposeListener(e -> showWhitespaceAction.dispose());
 
+		diffWidget.addCaretListener(event -> {
+			Point location = diffWidget.getLocationAtOffset(event.caretOffset);
+			location.y += diffViewer.getControl().getLocation().y;
+			scrollCommentAndDiff(location,
+					diffWidget.getLineHeight(event.caretOffset));
+		});
+
 		setWrap(store
 				.getBoolean(UIPreferences.RESOURCEHISTORY_SHOW_COMMENT_WRAP));
 
@@ -1676,6 +1693,39 @@ public class GitHistoryPage extends HistoryPage implements RefsChangedListener,
 		if (trace)
 			GitTraceLocation.getTrace().traceExit(
 					GitTraceLocation.HISTORYVIEW.getLocation());
+	}
+
+	private void scrollCommentAndDiff(Point location, int lineHeight) {
+		Rectangle size = commentAndDiffScrolledComposite.getBounds();
+		ScrollBar bar = commentAndDiffScrolledComposite.getVerticalBar();
+		if (bar != null) {
+			size.width = Math.max(0, size.width - bar.getSize().x);
+		}
+		bar = commentAndDiffScrolledComposite.getHorizontalBar();
+		if (bar != null) {
+			size.height = Math.max(0, size.height - bar.getSize().y);
+		}
+		Point topLeft = commentAndDiffScrolledComposite.getOrigin();
+		size.x = topLeft.x;
+		size.y = topLeft.y;
+		if (location.y >= size.y) {
+			location.y += lineHeight;
+		}
+		if (!size.contains(location)) {
+			int left = size.x;
+			int top = size.y;
+			if (location.x < left) {
+				left = location.x;
+			} else if (location.x > left + size.width) {
+				left = Math.max(0, location.x - size.width);
+			}
+			if (location.y < top) {
+				top = location.y;
+			} else if (location.y > top + size.height) {
+				top = Math.max(0, location.y - size.height);
+			}
+			commentAndDiffScrolledComposite.setOrigin(left, top);
+		}
 	}
 
 	private void trackFocus(Control control) {
