@@ -34,6 +34,24 @@
       "revId": "7ad398f259f05bbe1e531158cdf3e3e9378c8a51",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "22a6299e_33254099",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2019-10-06T17:34:46Z",
+      "side": 1,
+      "message": "Probably caused by https://git.eclipse.org/r/#/c/125054/ .",
+      "parentUuid": "d0b8031e_10c64d5f",
+      "revId": "7ad398f259f05bbe1e531158cdf3e3e9378c8a51",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
     }
   ]
 }
