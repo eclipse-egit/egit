@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "42e7e057_9e4ab609",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2019-10-06T14:36:47Z",
+      "side": 1,
+      "message": "What was broken? Create a bugzilla with a description and link here; useful for tracking.",
+      "revId": "7ad398f259f05bbe1e531158cdf3e3e9378c8a51",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
