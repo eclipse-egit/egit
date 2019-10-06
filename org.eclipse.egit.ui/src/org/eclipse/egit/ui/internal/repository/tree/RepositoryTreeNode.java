@@ -14,6 +14,7 @@
 package org.eclipse.egit.ui.internal.repository.tree;
 
 import java.io.File;
+import java.util.Optional;
 
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.Path;
@@ -392,12 +393,31 @@ public abstract class RepositoryTreeNode<T> extends PlatformObject implements Co
 		if (Repository.class == adapter && myRepository != null) {
 			return adapter.cast(myRepository);
 		}
+		if (File.class == adapter) {
+			return adapter.cast(adaptIPath());
+		}
 		if (myObject != null) {
 			if (adapter.isInstance(myObject)) {
 				return adapter.cast(myObject);
 			}
 		}
 		return super.getAdapter(adapter);
+	}
+
+	private File adaptIPath() {
+		switch (getType()) {
+		case REPO:
+			// fall through
+		case WORKINGDIR:
+			// fall through
+		case FILE:
+			// fall through
+		case FOLDER:
+			return Optional.ofNullable(getPath()).map(IPath::toFile)
+					.orElse(null);
+		default:
+			return null;
+		}
 	}
 
 	@Override
