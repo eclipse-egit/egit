@@ -1091,6 +1091,11 @@ public class Activator extends Plugin implements DebugOptionsListener {
 		}
 
 		@Override
+		public FileBasedConfig openJGitConfig(Config parent, FS fs) {
+			return delegate.openJGitConfig(parent, fs);
+		}
+
+		@Override
 		public FileBasedConfig openSystemConfig(Config parent, FS fs) {
 			return delegate.openSystemConfig(parent, fs);
 		}
@@ -1109,6 +1114,12 @@ public class Activator extends Plugin implements DebugOptionsListener {
 		public StoredConfig getUserConfig()
 				throws IOException, ConfigInvalidException {
 			return delegate.getUserConfig();
+		}
+
+		@Override
+		public StoredConfig getJGitConfig()
+				throws IOException, ConfigInvalidException {
+			return delegate.getJGitConfig();
 		}
 
 		@Override
