@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4cac9ef6_cf51e8aa",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/history/GitHistoryPage.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 1365,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2019-10-07T08:55:17Z",
+      "side": 1,
+      "message": "Shouldn\u0027t that code be in ControlContribution.setVisible()? Client code shouldn\u0027t need to bother with that.",
+      "revId": "4d63cb65d318df968c2d94a19b7b9fd763ad5f6e",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
