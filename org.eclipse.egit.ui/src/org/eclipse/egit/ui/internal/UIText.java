@@ -694,6 +694,12 @@ public class UIText extends NLS {
 	public static String GitPreferenceRoot_DefaultRepoFolderVariableButton;
 
 	/** */
+	public static String GitPreferenceRoot_HttpClient_Jdk_Label;
+
+	/** */
+	public static String GitPreferenceRoot_HttpClient_Apache_Label;
+
+	/** */
 	public static String GitPreferenceRoot_MergeGroupHeader;
 
 	/** */
@@ -4890,6 +4896,9 @@ public class UIText extends NLS {
 
 	/** */
 	public static String GitPreferenceRoot_MaxPullThreadsCountTooltip;
+
+	/** */
+	public static String RemoteConnectionPreferencePage_HttpClientLabel;
 
 	/** */
 	public static String RemoteConnectionPreferencePage_SshClientLabel;

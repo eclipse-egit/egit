@@ -56,6 +56,8 @@ public class GitPreferenceRoot extends DoublePreferencesPreferencePage
 
 	private final static String[][] SSH_CLIENT_NAMES_AND_VALUES = new String[2][2];
 
+	private final static String[][] HTTP_CLIENT_NAMES_AND_VALUES = new String[2][2];
+
 	private final static boolean HAS_DEBUG_UI = hasDebugUiBundle();
 
 	static {
@@ -70,6 +72,11 @@ public class GitPreferenceRoot extends DoublePreferencesPreferencePage
 		SSH_CLIENT_NAMES_AND_VALUES[0][1] = "jsch"; //$NON-NLS-1$
 		SSH_CLIENT_NAMES_AND_VALUES[1][0] = UIText.GitPreferenceRoot_SshClient_Apache_Label;
 		SSH_CLIENT_NAMES_AND_VALUES[1][1] = "apache"; //$NON-NLS-1$
+
+		HTTP_CLIENT_NAMES_AND_VALUES[0][0] = UIText.GitPreferenceRoot_HttpClient_Jdk_Label;
+		HTTP_CLIENT_NAMES_AND_VALUES[0][1] = "jdk"; //$NON-NLS-1$
+		HTTP_CLIENT_NAMES_AND_VALUES[1][0] = UIText.GitPreferenceRoot_HttpClient_Apache_Label;
+		HTTP_CLIENT_NAMES_AND_VALUES[1][1] = "apache"; //$NON-NLS-1$
 	}
 
 	/**
@@ -225,6 +232,18 @@ public class GitPreferenceRoot extends DoublePreferencesPreferencePage
 
 		};
 		addField(sshClient);
+		ComboFieldEditor httpClient = new ComboFieldEditor(
+				GitCorePreferences.core_httpClient,
+				UIText.RemoteConnectionPreferencePage_HttpClientLabel,
+				HTTP_CLIENT_NAMES_AND_VALUES, remoteConnectionsGroup) {
+
+			@Override
+			public IPreferenceStore getPreferenceStore() {
+				return getSecondaryPreferenceStore();
+			}
+
+		};
+		addField(httpClient);
 		updateMargins(remoteConnectionsGroup);
 
 		Group repoChangeScannerGroup = new Group(main, SWT.SHADOW_ETCHED_IN);

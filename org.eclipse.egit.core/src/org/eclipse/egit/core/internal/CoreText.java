@@ -43,6 +43,9 @@ public class CoreText extends NLS {
 	public static String Activator_AutoSharingFailed;
 
 	/** */
+	public static String Activator_HttpClientUnknown;
+
+	/** */
 	public static String Activator_ignoreResourceFailed;
 
 	/** */

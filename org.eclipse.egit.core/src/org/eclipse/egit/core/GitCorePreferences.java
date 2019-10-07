@@ -81,9 +81,17 @@ public final class GitCorePreferences {
 	public static final String core_maxPullThreadsCount = "core_max_pull_threads_count"; //$NON-NLS-1$
 
 	/**
+	 * HTTP client library to use. Currently allowed values are "jdk" and
+	 * "apache", case insensitive, if undefined or any other value the default
+	 * "jdk" will be used.
+	 */
+	public static final String core_httpClient = "core_http_client"; //$NON-NLS-1$
+
+	/**
 	 * Ssh client library to use. Currently allowed values are "jsch" and
 	 * "apache", case insensitive, if undefined or any other value the default
-	 * "jsch" will be used.
+	 * "apache" will be used.
 	 */
 	public static final String core_sshClient = "core_ssh_client"; //$NON-NLS-1$
+
 }

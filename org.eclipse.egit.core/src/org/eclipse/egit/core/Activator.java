@@ -75,7 +75,10 @@ import org.eclipse.jgit.lib.Constants;
 import org.eclipse.jgit.lib.StoredConfig;
 import org.eclipse.jgit.merge.MergeStrategy;
 import org.eclipse.jgit.storage.file.FileBasedConfig;
+import org.eclipse.jgit.transport.HttpTransport;
 import org.eclipse.jgit.transport.SshSessionFactory;
+import org.eclipse.jgit.transport.http.JDKHttpConnectionFactory;
+import org.eclipse.jgit.transport.http.apache.HttpClientConnectionFactory;
 import org.eclipse.jgit.transport.sshd.SshdSessionFactory;
 import org.eclipse.jgit.util.FS;
 import org.eclipse.jgit.util.SystemReader;
@@ -98,6 +101,10 @@ public class Activator extends Plugin implements DebugOptionsListener {
 		JSCH, APACHE
 	}
 
+	private enum HttpClientType {
+		JDK, APACHE
+	}
+
 	private static Activator plugin;
 	private static String pluginId;
 	private RepositoryCache repositoryCache;
@@ -108,7 +115,7 @@ public class Activator extends Plugin implements DebugOptionsListener {
 	private IResourceChangeListener preDeleteProjectListener;
 	private IgnoreDerivedResources ignoreDerivedResourcesListener;
 	private MergeStrategyRegistryListener mergeStrategyRegistryListener;
-	private IPreferenceChangeListener sshClientChangeListener;
+	private IPreferenceChangeListener preferenceChangeListener;
 	private ServiceTracker<IProxyService, IProxyService> proxyServiceTracker;
 
 	/**
@@ -225,18 +232,22 @@ public class Activator extends Plugin implements DebugOptionsListener {
 		context.registerService(DebugOptionsListener.class.getName(), this,
 				props);
 
+		setupHttp();
 		SshPreferencesMirror.INSTANCE.start();
 		proxyServiceTracker = new ServiceTracker<>(context,
 				IProxyService.class.getName(), null);
 		proxyServiceTracker.open();
 		setupSSH(context);
-		sshClientChangeListener = event -> {
+		preferenceChangeListener = event -> {
 			if (GitCorePreferences.core_sshClient.equals(event.getKey())) {
 				setupSSH(getBundle().getBundleContext());
+			} else if (GitCorePreferences.core_httpClient
+					.equals(event.getKey())) {
+				setupHttp();
 			}
 		};
 		InstanceScope.INSTANCE.getNode(pluginId)
-				.addPreferenceChangeListener(sshClientChangeListener);
+				.addPreferenceChangeListener(preferenceChangeListener);
 		setupProxy();
 
 		repositoryCache = new RepositoryCache();
@@ -295,6 +306,22 @@ public class Activator extends Plugin implements DebugOptionsListener {
 		}
 		if (previous instanceof SshdSessionFactory) {
 			((SshdSessionFactory) previous).close();
+		}
+	}
+
+	private void setupHttp() {
+		String sshClient = Platform.getPreferencesService().getString(pluginId,
+				GitCorePreferences.core_httpClient, "jdk", null); //$NON-NLS-1$
+		if (HttpClientType.APACHE.name().equalsIgnoreCase(sshClient)) {
+			HttpTransport.setConnectionFactory(new HttpClientConnectionFactory());
+		} else {
+			if (!HttpClientType.JDK.name().equalsIgnoreCase(sshClient)) {
+				logWarning(
+						MessageFormat.format(
+								CoreText.Activator_HttpClientUnknown, sshClient),
+						null);
+			}
+			HttpTransport.setConnectionFactory(new JDKHttpConnectionFactory());
 		}
 	}
 
@@ -464,10 +491,10 @@ public class Activator extends Plugin implements DebugOptionsListener {
 	@Override
 	public void stop(final BundleContext context) throws Exception {
 		SshPreferencesMirror.INSTANCE.stop();
-		if (sshClientChangeListener != null) {
+		if (preferenceChangeListener != null) {
 			InstanceScope.INSTANCE.getNode(pluginId)
-					.removePreferenceChangeListener(sshClientChangeListener);
-			sshClientChangeListener = null;
+					.removePreferenceChangeListener(preferenceChangeListener);
+			preferenceChangeListener = null;
 		}
 		SshSessionFactory current = SshSessionFactory.getInstance();
 		if (current instanceof SshdSessionFactory) {
