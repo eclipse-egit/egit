@@ -16,6 +16,24 @@
       "revId": "4d63cb65d318df968c2d94a19b7b9fd763ad5f6e",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "e28d4a5e_d6a4b5c0",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/history/GitHistoryPage.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 1365,
+      "author": {
+        "id": 1179
+      },
+      "writtenOn": "2019-10-07T09:24:01Z",
+      "side": 1,
+      "message": "OK, see https://git.eclipse.org/r/150713",
+      "parentUuid": "4cac9ef6_cf51e8aa",
+      "revId": "4d63cb65d318df968c2d94a19b7b9fd763ad5f6e",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
     }
   ]
 }
