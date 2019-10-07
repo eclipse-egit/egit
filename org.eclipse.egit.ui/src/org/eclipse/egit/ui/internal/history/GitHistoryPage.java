@@ -86,11 +86,13 @@ import org.eclipse.jface.action.Action;
 import org.eclipse.jface.action.ControlContribution;
 import org.eclipse.jface.action.IAction;
 import org.eclipse.jface.action.IContributionItem;
+import org.eclipse.jface.action.IContributionManager;
 import org.eclipse.jface.action.IMenuManager;
 import org.eclipse.jface.action.IStatusLineManager;
 import org.eclipse.jface.action.IToolBarManager;
 import org.eclipse.jface.action.MenuManager;
 import org.eclipse.jface.action.Separator;
+import org.eclipse.jface.action.SubToolBarManager;
 import org.eclipse.jface.bindings.keys.SWTKeySupport;
 import org.eclipse.jface.layout.GridDataFactory;
 import org.eclipse.jface.layout.GridLayoutFactory;
@@ -1352,6 +1354,15 @@ public class GitHistoryPage extends HistoryPage implements RefsChangedListener,
 					beforeHide();
 				}
 				super.setVisible(visible);
+				IContributionManager parent = getParent();
+				if (parent instanceof SubToolBarManager) {
+					SubToolBarManager subManager = (SubToolBarManager) parent;
+					IContributionItem item = subManager.getParent()
+							.find(getId());
+					if (item != null) {
+						item.setVisible(visible);
+					}
+				}
 				// Update the toolbar. Will dispose our FindToolbar widget on
 				// hide, and will create a new one (through createControl())
 				// on show. It'll also reposition the toolbar, if needed.
