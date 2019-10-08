@@ -23,7 +23,6 @@ import org.eclipse.core.resources.IResource;
 import org.eclipse.core.resources.IStorage;
 import org.eclipse.core.runtime.Adapters;
 import org.eclipse.core.runtime.CoreException;
-import org.eclipse.core.runtime.IAdaptable;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.Platform;
 import org.eclipse.core.runtime.SubMonitor;
@@ -65,8 +64,7 @@ import org.eclipse.ui.texteditor.AbstractDecoratedTextEditor;
  */
 public class BlameOperation implements IEGitOperation {
 
-	static class BlameHistoryPageInput extends HistoryPageInput
-			implements IAdaptable {
+	static class BlameHistoryPageInput extends HistoryPageInput {
 
 		private final RevCommit commit;
 
@@ -89,9 +87,14 @@ public class BlameOperation implements IEGitOperation {
 
 		@Override
 		public <T> T getAdapter(Class<T> adapter) {
+			T result = super.getAdapter(adapter);
+			if (result != null) {
+				return result;
+			}
 			if (RevCommit.class == adapter) {
 				return adapter.cast(commit);
 			}
+
 			return Platform.getAdapterManager().getAdapter(this, adapter);
 		}
 

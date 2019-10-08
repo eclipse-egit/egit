@@ -21,12 +21,13 @@ import java.util.List;
 import java.util.Objects;
 
 import org.eclipse.core.resources.IResource;
+import org.eclipse.core.runtime.IAdaptable;
 import org.eclipse.jgit.lib.Repository;
 
 /**
  * Input for the {@link GitHistoryPage}
  **/
-public class HistoryPageInput {
+public class HistoryPageInput implements IAdaptable {
 	private final List<IResource> list;
 
 	private final List<File> files;
@@ -217,5 +218,13 @@ public class HistoryPageInput {
 			result = 31 * result + Arrays.hashCode(list.toArray());
 		}
 		return result;
+	}
+
+	@Override
+	public <T> T getAdapter(Class<T> adapter) {
+		if (Repository.class == adapter) {
+			return adapter.cast(repo);
+		}
+		return null;
 	}
 }
