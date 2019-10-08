@@ -22,6 +22,30 @@
       "revId": "8700d93b92b2b236491e744f5f3149fe1b2c870d",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "eebfe5eb_32dd47b7",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/history/GitHistoryPage.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1705,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2019-10-08T17:04:52Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c7e71e6e_ac30e376",
+      "range": {
+        "startLine": 1701,
+        "startChar": 0,
+        "endLine": 1705,
+        "endChar": 20
+      },
+      "revId": "8700d93b92b2b236491e744f5f3149fe1b2c870d",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
     }
   ]
 }
