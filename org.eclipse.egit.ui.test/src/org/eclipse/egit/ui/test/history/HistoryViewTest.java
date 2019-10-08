@@ -12,6 +12,7 @@
  *******************************************************************************/
 package org.eclipse.egit.ui.test.history;
 
+import static org.eclipse.swtbot.swt.finder.matchers.WidgetMatcherFactory.withRegex;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotEquals;
@@ -29,6 +30,7 @@ import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.Adapters;
 import org.eclipse.core.runtime.jobs.Job;
 import org.eclipse.egit.core.RepositoryUtil;
+import org.eclipse.egit.gitflow.op.InitOperation;
 import org.eclipse.egit.ui.Activator;
 import org.eclipse.egit.ui.JobFamilies;
 import org.eclipse.egit.ui.internal.UIText;
@@ -43,6 +45,7 @@ import org.eclipse.jgit.lib.ObjectId;
 import org.eclipse.jgit.lib.Ref;
 import org.eclipse.jgit.lib.Repository;
 import org.eclipse.jgit.revwalk.RevCommit;
+import org.eclipse.osgi.util.NLS;
 import org.eclipse.swt.widgets.MenuItem;
 import org.eclipse.swt.widgets.Table;
 import org.eclipse.swt.widgets.TableItem;
@@ -490,6 +493,22 @@ public class HistoryViewTest extends GitRepositoriesViewTestBase {
 		// Editor for old file version should be opened
 		bot.editorByTitle(
 				FILE1 + " " + commit.getParent(0).getName().substring(0, 7));
+	}
+
+	@Test
+	public void testStartGitflowReleaseEnabled() throws Exception {
+		Repository repository = lookupRepository(repoFile);
+		new InitOperation(repository).execute(null);
+
+		final SWTBotTable table = getHistoryViewTable(PROJ1);
+		table.getTableItem(1).select();
+
+		String itemLabelRegex = NLS.bind(org.eclipse.egit.gitflow.ui.internal.
+						UIText.DynamicHistoryMenu_startGitflowReleaseFrom, ".*");
+		SWTBotMenu startReleaseMenu = table.contextMenu().menu(withRegex(itemLabelRegex),
+				true, 0);
+
+		assertTrue(startReleaseMenu.isEnabled());
 	}
 
 	@Test

@@ -14,7 +14,7 @@ import static org.eclipse.egit.gitflow.ui.Activator.error;
 
 import java.io.IOException;
 
-import org.eclipse.core.runtime.Adapters;
+import org.eclipse.egit.core.internal.IRepositoryCommit;
 import org.eclipse.egit.core.internal.Utils;
 import org.eclipse.egit.gitflow.Activator;
 import org.eclipse.egit.gitflow.GitFlowRepository;
@@ -22,6 +22,7 @@ import org.eclipse.egit.gitflow.ui.internal.UIText;
 import org.eclipse.egit.gitflow.ui.internal.actions.ReleaseStartFromCommitHandler;
 import org.eclipse.jface.action.ContributionItem;
 import org.eclipse.jface.viewers.ISelection;
+import org.eclipse.jface.viewers.ISelectionProvider;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jgit.lib.Repository;
 import org.eclipse.jgit.revwalk.RevCommit;
@@ -39,6 +40,7 @@ import org.eclipse.ui.PlatformUI;
 public class DynamicHistoryMenu extends ContributionItem {
 	@Override
 	public void fill(Menu menu, int index) {
+
 		GitFlowRepository gfRepo = getRepository();
 		if (gfRepo == null) {
 			return;
@@ -72,9 +74,6 @@ public class DynamicHistoryMenu extends ContributionItem {
 		return Utils.getShortObjectId(selectedCommit.getId());
 	}
 
-	/**
-	 * @return Selected commit
-	 */
 	private RevCommit getSelectedCommit() {
 		ISelection selection = PlatformUI.getWorkbench()
 				.getActiveWorkbenchWindow().getActivePage().getActivePart()
@@ -97,7 +96,18 @@ public class DynamicHistoryMenu extends ContributionItem {
 	private GitFlowRepository getRepository() {
 		IWorkbenchPart activePart = PlatformUI.getWorkbench()
 				.getActiveWorkbenchWindow().getActivePage().getActivePart();
-		Repository repository = Adapters.adapt(activePart, Repository.class);
+		ISelectionProvider selectionProvider = activePart.getSite()
+				.getSelectionProvider();
+		ISelection selection = selectionProvider.getSelection();
+		if (!(selection instanceof IStructuredSelection)) {
+			return null;
+		}
+		Object element = ((IStructuredSelection) selection).getFirstElement();
+		if (!(element instanceof IRepositoryCommit)) {
+			return null;
+		}
+		Repository repository = ((IRepositoryCommit) element).getRepository();
+
 		if (repository == null) {
 			return null;
 		}
