@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "98d8a91d_1960f24e",
+        "filename": "org.eclipse.egit.ui/icons/etool16/newgroup_wiz.png",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2019-10-09T12:32:11Z",
+      "side": 1,
+      "message": "OK, I\u0027ll deal with it.",
+      "parentUuid": "d8c9bfbf_e5c209a9",
+      "revId": "3a619676169558560c92751d4e5ea82895f08105",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f831bb10_fd14b3e2",
         "filename": "org.eclipse.egit.ui/plugin.properties",
         "patchSetId": 2
