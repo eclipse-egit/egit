@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "d8c9bfbf_e5c209a9",
+        "filename": "org.eclipse.egit.ui/icons/etool16/newgroup_wiz.png",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 236689
+      },
+      "writtenOn": "2019-10-09T12:25:27Z",
+      "side": 1,
+      "message": "It is a copy of newfolder_wiz.png from org.eclipse.ui.ide. I don\u0027t know where the SVG for that is available.",
+      "parentUuid": "f75939bb_47bbee85",
+      "revId": "3a619676169558560c92751d4e5ea82895f08105",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f831bb10_fd14b3e2",
         "filename": "org.eclipse.egit.ui/plugin.properties",
         "patchSetId": 2
