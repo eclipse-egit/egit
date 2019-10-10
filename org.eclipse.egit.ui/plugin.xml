@@ -3261,11 +3261,11 @@
             </insertionPoint>
             <insertionPoint
                   name="repo-0"
-                  separator="true">
+                  separator="true"> <!-- switch to -->
             </insertionPoint>
             <insertionPoint
                   name="repo-1"
-                  separator="true">
+                  separator="true"> <!-- commit, stash, apply stash -->
             </insertionPoint>
             <insertionPoint
                   name="repo-commit"
@@ -3273,11 +3273,11 @@
             </insertionPoint>
             <insertionPoint
                   name="repo-2"
-                  separator="true">
+                  separator="true"> <!-- merge, rebase, reset -->
             </insertionPoint>
             <insertionPoint
                   name="repo-3"
-                  separator="true">
+                  separator="true"> <!-- add to index, delete, import projects -->
             </insertionPoint>
             <insertionPoint
                   name="group.open"
@@ -3289,15 +3289,15 @@
             </insertionPoint>
             <insertionPoint
                   name="repo-4"
-                  separator="true">
+                  separator="true"> <!-- clean, gc, lfs, delete, remove -->
             </insertionPoint>
             <insertionPoint
                   name="repo-5"
-                  separator="true">
+                  separator="true"> <!-- submodule add, sync, update -->
             </insertionPoint>
             <insertionPoint
                   name="repo-6"
-                  separator="true">
+                  separator="true"> <!-- copy path, paste URL -->
             </insertionPoint>
             <insertionPoint
                   name="group.properties"
