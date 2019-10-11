@@ -76,6 +76,9 @@ public class UIText extends NLS {
 	public static String Activator_refreshingProjects;
 
 	/** */
+	public static String Activator_refreshJobName;
+
+	/** */
 	public static String Activator_repoScanJobName;
 
 	/** */
