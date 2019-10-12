@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "dcc245f9_b281a0f6",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/Activator.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 708,
+      "author": {
+        "id": 440
+      },
+      "writtenOn": "2019-10-12T06:16:43Z",
+      "side": 1,
+      "message": "missing blank",
+      "range": {
+        "startLine": 708,
+        "startChar": 46,
+        "endLine": 708,
+        "endChar": 47
+      },
+      "revId": "4c2a1716b0b7a6445dbf12108bc960b6c929adfd",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "10fe8212_feaf0ea3",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/Activator.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 891,
+      "author": {
+        "id": 440
+      },
+      "writtenOn": "2019-10-12T06:16:43Z",
+      "side": 1,
+      "message": "Should we make this an early return to avoid the synchronized blocks completely for the inactive case?",
+      "range": {
+        "startLine": 889,
+        "startChar": 23,
+        "endLine": 891,
+        "endChar": 18
+      },
+      "revId": "4c2a1716b0b7a6445dbf12108bc960b6c929adfd",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
