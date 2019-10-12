@@ -311,9 +311,12 @@ public abstract class RepositoryTreeNode<T> extends PlatformObject implements Co
 		// i.e. siblings to each other
 
 		switch (myType) {
-
 		case REPOGROUP:
-			// fall through
+			int hideableStateCompare = compareGroupHideableState(otherNode);
+			if (hideableStateCompare != 0) {
+				return hideableStateCompare;
+			}
+			// $FALL-THROUGH$
 		case BRANCHES:
 			// fall through
 		case LOCAL:
@@ -379,6 +382,20 @@ public abstract class RepositoryTreeNode<T> extends PlatformObject implements Co
 									.getPath());
 		}
 		return 0;
+	}
+
+	// place hidden groups after non-hidden groups
+	private int compareGroupHideableState(RepositoryTreeNode other) {
+		boolean meHidden = ((RepositoryGroupNode) this).getGroup().isHideable();
+		boolean otherHidden = ((RepositoryGroupNode) other).getGroup()
+				.isHideable();
+		if (meHidden == otherHidden) {
+			return 0;
+		} else if (meHidden) {
+			return 1;
+		} else {
+			return -1;
+		}
 	}
 
 	private File getDirectoryContainingRepo(Repository repo) {

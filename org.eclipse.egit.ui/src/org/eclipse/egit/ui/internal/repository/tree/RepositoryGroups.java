@@ -36,6 +36,8 @@ public class RepositoryGroups {
 
 	private static final String PREFS_GROUPS = "GitRepositoriesView.RepositoryGroups.uuids"; //$NON-NLS-1$
 
+	private static final String PREFS_HIDEABLE_GROUPS = "GitRepositoriesView.RepositoryGroups.uuidsHideable"; //$NON-NLS-1$
+
 	private static final String PREFS_GROUP_NAME_PREFIX = "GitRepositoriesView.RepositoryGroups."; //$NON-NLS-1$
 
 	private static final String PREFS_GROUP_PREFIX = "GitRepositoriesView.RepositoryGroups.group."; //$NON-NLS-1$
@@ -50,6 +52,8 @@ public class RepositoryGroups {
 	public RepositoryGroups() {
 		List<String> groups = split(
 				preferences.get(PREFS_GROUPS, EMPTY_STRING));
+		List<String> hideableGroups = split(
+				preferences.get(PREFS_HIDEABLE_GROUPS, EMPTY_STRING));
 		for (String groupIdString : groups) {
 			UUID groupId = UUID.fromString(groupIdString);
 			String name = preferences
@@ -57,6 +61,9 @@ public class RepositoryGroups {
 			List<String> repos = split(preferences
 					.get(PREFS_GROUP_PREFIX + groupIdString, EMPTY_STRING));
 			RepositoryGroup group = new RepositoryGroup(groupId, name, repos);
+			if (hideableGroups.contains(groupIdString)) {
+				group.setHideable(true);
+			}
 			groupMap.put(groupId, group);
 		}
 	}
@@ -179,6 +186,7 @@ public class RepositoryGroups {
 	private void savePreferences() {
 		try {
 			List<String> groupIds = new ArrayList<>();
+			List<String> hideableGroupIds = new ArrayList<>();
 			for (RepositoryGroup group : groupMap.values()) {
 				String groupId = group.getGroupId().toString();
 				groupIds.add(groupId);
@@ -187,9 +195,14 @@ public class RepositoryGroups {
 				List<String> repos = group.getRepositoryDirectories();
 				preferences.put(PREFS_GROUP_PREFIX + groupId,
 						StringUtils.join(repos, SEPARATOR));
+				if (group.isHideable()) {
+					hideableGroupIds.add(groupId);
+				}
 			}
 			preferences.put(PREFS_GROUPS,
 					StringUtils.join(groupIds, SEPARATOR));
+			preferences.put(PREFS_HIDEABLE_GROUPS,
+					StringUtils.join(hideableGroupIds, SEPARATOR));
 			preferences.flush();
 		} catch (BackingStoreException e) {
 			Activator.logError(
@@ -229,4 +242,19 @@ public class RepositoryGroups {
 		}
 		savePreferences();
 	}
+
+	/**
+	 * @param groups
+	 *            the repository groups to be marked as (not) hideable
+	 * @param hideable
+	 *            new hideable state of the groups
+	 */
+	public void setHideable(Collection<RepositoryGroup> groups,
+			boolean hideable) {
+		for (RepositoryGroup group : groups) {
+			groupMap.get(group.getGroupId()).setHideable(hideable);
+		}
+		savePreferences();
+	}
+
 }

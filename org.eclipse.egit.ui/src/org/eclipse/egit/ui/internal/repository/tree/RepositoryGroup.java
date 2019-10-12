@@ -26,6 +26,8 @@ public class RepositoryGroup implements Comparable<RepositoryGroup> {
 
 	private String groupName;
 
+	private boolean hideable;
+
 	private List<String> repositoryDirectories = new ArrayList<>();
 
 	RepositoryGroup(UUID groupId, String groupName) {
@@ -79,9 +81,22 @@ public class RepositoryGroup implements Comparable<RepositoryGroup> {
 		this.groupName = newName;
 	}
 
+	void setHideable(boolean hideable) {
+		this.hideable = hideable;
+	}
+
+	/**
+	 * @return true if and only if the group is marked as hideable for the
+	 *         Repositories View filter
+	 */
+	public boolean isHideable() {
+		return hideable;
+	}
+
 	@Override
 	public int compareTo(RepositoryGroup o) {
-		return CommonUtils.STRING_ASCENDING_COMPARATOR.compare(getName(), o.getName());
+		return CommonUtils.STRING_ASCENDING_COMPARATOR.compare(getName(),
+				o.getName());
 	}
 
 }

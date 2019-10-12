@@ -24,6 +24,7 @@ import org.eclipse.egit.ui.internal.UIText;
 import org.eclipse.egit.ui.internal.decorators.GitDecorator;
 import org.eclipse.egit.ui.internal.repository.tree.AdditionalRefNode;
 import org.eclipse.egit.ui.internal.repository.tree.RefNode;
+import org.eclipse.egit.ui.internal.repository.tree.RepositoryGroupNode;
 import org.eclipse.egit.ui.internal.repository.tree.RepositoryTreeNode;
 import org.eclipse.egit.ui.internal.repository.tree.RepositoryTreeNodeType;
 import org.eclipse.egit.ui.internal.repository.tree.StashedCommitNode;
@@ -106,6 +107,8 @@ public class RepositoryTreeNodeDecorator extends GitDecorator
 						UIText.GitLabelProvider_UnableToRetrieveLabel,
 						element.toString()), e);
 			}
+		} else if (node.getType() == RepositoryTreeNodeType.REPOGROUP) {
+			decorateRepositoryGroup(node, decoration);
 		}
 	}
 
@@ -236,6 +239,16 @@ public class RepositoryTreeNodeDecorator extends GitDecorator
 		}
 		decoration.addSuffix(suffix.toString());
 		return true;
+	}
+
+	private void decorateRepositoryGroup(RepositoryTreeNode<?> node,
+			IDecoration decoration) {
+		if (((RepositoryGroupNode) node).getGroup().isHideable()) {
+			decoration.addSuffix(
+					UIText.RepositoriesViewLabelProvider_HideableRepoGroupText);
+		} else {
+			decoration.addSuffix(" ");//$NON-NLS-1$
+		}
 	}
 
 	private boolean decorateStash(StashedCommitNode node,
