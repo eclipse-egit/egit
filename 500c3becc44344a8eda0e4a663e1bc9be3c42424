@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a9af8150_75734a12",
+        "filename": "org.eclipse.egit.core.junit/src/org/eclipse/egit/core/test/TestProject.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 109,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2019-10-13T09:19:59Z",
+      "side": 1,
+      "message": "Oh. This actually creates a Java project. So it really should use the JavaProjectTester.\n\nNote that other places where we use Java projects we switch off autobuilding.\n\nDoes this project need to be a Java project? Which tests need that?",
+      "range": {
+        "startLine": 109,
+        "startChar": 2,
+        "endLine": 109,
+        "endChar": 41
+      },
+      "revId": "500c3becc44344a8eda0e4a663e1bc9be3c42424",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
