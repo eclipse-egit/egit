@@ -1,0 +1,986 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "513af217_7dca9997",
+        "filename": "org.eclipse.egit.ui/plugin.xml",
+        "patchSetId": 6
+      },
+      "lineNbr": 4950,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2019-10-13T14:14:43Z",
+      "side": 1,
+      "message": "Do these have to be separate menu contributions? Why not add the commands to the existing group for after\u003drepo-1?",
+      "revId": "105961f7cf466cc255db927374890f542cda921b",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "22468955_d87d8f16",
+        "filename": "org.eclipse.egit.ui/plugin.xml",
+        "patchSetId": 6
+      },
+      "lineNbr": 4956,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2019-10-13T14:14:43Z",
+      "side": 1,
+      "message": "I think \u003cvisibleWhen checkEnabled\u003d\"true\" /\u003e would work here, too.",
+      "revId": "105961f7cf466cc255db927374890f542cda921b",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "26a6c829_4c3efc4b",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/actions/RepositoryGroupsMenu.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2019-10-13T14:14:43Z",
+      "side": 1,
+      "message": "File",
+      "range": {
+        "startLine": 61,
+        "startChar": 13,
+        "endLine": 61,
+        "endChar": 19
+      },
+      "revId": "105961f7cf466cc255db927374890f542cda921b",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7a31526c_f8f24fb5",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/actions/RepositoryGroupsMenu.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2019-10-13T14:14:43Z",
+      "side": 1,
+      "message": "File",
+      "range": {
+        "startLine": 83,
+        "startChar": 8,
+        "endLine": 83,
+        "endChar": 14
+      },
+      "revId": "105961f7cf466cc255db927374890f542cda921b",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3ac53a70_c65d8303",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/actions/RepositoryGroupsMenu.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2019-10-13T14:14:43Z",
+      "side": 1,
+      "message": "File",
+      "range": {
+        "startLine": 89,
+        "startChar": 7,
+        "endLine": 89,
+        "endChar": 13
+      },
+      "revId": "105961f7cf466cc255db927374890f542cda921b",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "23fc2620_23e5f44b",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/actions/RepositoryGroupsMenu.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 121,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2019-10-13T14:14:43Z",
+      "side": 1,
+      "message": "File",
+      "range": {
+        "startLine": 121,
+        "startChar": 14,
+        "endLine": 121,
+        "endChar": 20
+      },
+      "revId": "105961f7cf466cc255db927374890f542cda921b",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "d28b2af5_5373fdc5",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/actions/RepositoryGroupsMenu.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 123,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2019-10-13T14:14:43Z",
+      "side": 1,
+      "message": "File",
+      "range": {
+        "startLine": 123,
+        "startChar": 7,
+        "endLine": 123,
+        "endChar": 13
+      },
+      "revId": "105961f7cf466cc255db927374890f542cda921b",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "d6255472_d397f6fb",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/actions/RepositoryGroupsMenu.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 129,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2019-10-13T14:14:43Z",
+      "side": 1,
+      "message": "Remove",
+      "range": {
+        "startLine": 129,
+        "startChar": 22,
+        "endLine": 129,
+        "endChar": 33
+      },
+      "revId": "105961f7cf466cc255db927374890f542cda921b",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "04440a8c_f43953c7",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/repository/DropAdapterAssistant.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 122,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2019-10-13T14:14:43Z",
+      "side": 1,
+      "message": "File",
+      "range": {
+        "startLine": 122,
+        "startChar": 9,
+        "endLine": 122,
+        "endChar": 15
+      },
+      "revId": "105961f7cf466cc255db927374890f542cda921b",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "75da2d81_41149844",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/repository/DropAdapterAssistant.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 126,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2019-10-13T14:14:43Z",
+      "side": 1,
+      "message": "Remove",
+      "range": {
+        "startLine": 126,
+        "startChar": 42,
+        "endLine": 126,
+        "endChar": 53
+      },
+      "revId": "105961f7cf466cc255db927374890f542cda921b",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "81297efc_4e8d5a3a",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/repository/DropAdapterAssistant.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 143,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2019-10-13T14:14:43Z",
+      "side": 1,
+      "message": "File",
+      "range": {
+        "startLine": 143,
+        "startChar": 9,
+        "endLine": 143,
+        "endChar": 15
+      },
+      "revId": "105961f7cf466cc255db927374890f542cda921b",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "0813b048_0f6e0476",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/repository/DropAdapterAssistant.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 147,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2019-10-13T14:14:43Z",
+      "side": 1,
+      "message": "Remove",
+      "range": {
+        "startLine": 147,
+        "startChar": 42,
+        "endLine": 147,
+        "endChar": 53
+      },
+      "revId": "105961f7cf466cc255db927374890f542cda921b",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ea6973ef_99e1423e",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/repository/DropAdapterAssistant.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 172,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2019-10-13T14:14:43Z",
+      "side": 1,
+      "message": "How about\n\n  return ((List\u003c?\u003e) ((IStructuredSelection) selection).toList())\n    .stream().allMatch(e -\u003e e instanceof RepositoryNode);\n\n?",
+      "range": {
+        "startLine": 166,
+        "startChar": 0,
+        "endLine": 172,
+        "endChar": 15
+      },
+      "revId": "105961f7cf466cc255db927374890f542cda921b",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7ec914e7_9d19c8d2",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/repository/RepositoriesViewContentProvider.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 174,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2019-10-13T14:14:43Z",
+      "side": 1,
+      "message": "File",
+      "range": {
+        "startLine": 174,
+        "startChar": 7,
+        "endLine": 174,
+        "endChar": 13
+      },
+      "revId": "105961f7cf466cc255db927374890f542cda921b",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "6cf5daa8_4440aaa9",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/repository/RepositoriesViewContentProvider.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 184,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2019-10-13T14:14:43Z",
+      "side": 1,
+      "message": "new File((String) next);",
+      "range": {
+        "startLine": 184,
+        "startChar": 21,
+        "endLine": 184,
+        "endChar": 34
+      },
+      "revId": "105961f7cf466cc255db927374890f542cda921b",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "42e7e120_b190d6d3",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/repository/RepositoriesViewContentProvider.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 188,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2019-10-13T14:14:43Z",
+      "side": 1,
+      "message": "repositoryUtil.getConfiguredRepositories().stream()\n    .map(File::new)\n    .collect(Collectors.toList());\n\nWould have to check whether it would make sense to change RepoUtil.getConfiguredRepositories to return a List\u003cFile\u003e already. But that\u0027s for a future commit.",
+      "range": {
+        "startLine": 188,
+        "startChar": 22,
+        "endLine": 188,
+        "endChar": 64
+      },
+      "revId": "105961f7cf466cc255db927374890f542cda921b",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "297692b7_479e15c6",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/repository/RepositoriesViewContentProvider.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 303,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2019-10-13T14:14:43Z",
+      "side": 1,
+      "message": "File",
+      "range": {
+        "startLine": 303,
+        "startChar": 8,
+        "endLine": 303,
+        "endChar": 14
+      },
+      "revId": "105961f7cf466cc255db927374890f542cda921b",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "d5c4c3fd_7af227e1",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/repository/RepositoriesViewContentProvider.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 418,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2019-10-13T14:14:43Z",
+      "side": 1,
+      "message": "File",
+      "range": {
+        "startLine": 418,
+        "startChar": 8,
+        "endLine": 418,
+        "endChar": 14
+      },
+      "revId": "105961f7cf466cc255db927374890f542cda921b",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "edb98be3_8810d06a",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/repository/RepositoriesViewContentProvider.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 420,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2019-10-13T14:14:43Z",
+      "side": 1,
+      "message": "File gitDir",
+      "range": {
+        "startLine": 420,
+        "startChar": 7,
+        "endLine": 420,
+        "endChar": 23
+      },
+      "revId": "105961f7cf466cc255db927374890f542cda921b",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "99b82a83_778a8b45",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/repository/RepositoriesViewContentProvider.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 422,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2019-10-13T14:14:43Z",
+      "side": 1,
+      "message": "Remove",
+      "range": {
+        "startLine": 422,
+        "startChar": 4,
+        "endLine": 422,
+        "endChar": 38
+      },
+      "revId": "105961f7cf466cc255db927374890f542cda921b",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "b3e7395d_797a3cd6",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/repository/RepositoriesViewContentProvider.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 425,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2019-10-13T14:14:43Z",
+      "side": 1,
+      "message": "gitDir",
+      "range": {
+        "startLine": 425,
+        "startChar": 33,
+        "endLine": 425,
+        "endChar": 42
+      },
+      "revId": "105961f7cf466cc255db927374890f542cda921b",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "8c439c2f_2e28c370",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/repository/RepositoryTreeNodeDecorator.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 256,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2019-10-13T14:14:43Z",
+      "side": 1,
+      "message": "File",
+      "range": {
+        "startLine": 256,
+        "startChar": 7,
+        "endLine": 256,
+        "endChar": 13
+      },
+      "revId": "105961f7cf466cc255db927374890f542cda921b",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5c84f824_27d48c6f",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/repository/RepositoryTreeNodeDecorator.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 257,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2019-10-13T14:14:43Z",
+      "side": 1,
+      "message": "repoDir",
+      "range": {
+        "startLine": 257,
+        "startChar": 41,
+        "endLine": 257,
+        "endChar": 58
+      },
+      "revId": "105961f7cf466cc255db927374890f542cda921b",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "b8e485ec_15a86f28",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/repository/tree/RepositoryGroup.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2019-10-13T14:14:43Z",
+      "side": 1,
+      "message": "I\u0027d use File throughout for directories.",
+      "range": {
+        "startLine": 29,
+        "startChar": 14,
+        "endLine": 29,
+        "endChar": 20
+      },
+      "revId": "105961f7cf466cc255db927374890f542cda921b",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9000c6bf_54a929b3",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/repository/tree/RepositoryGroup.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2019-10-13T14:14:43Z",
+      "side": 1,
+      "message": "Collection\u003cFile\u003e",
+      "range": {
+        "startLine": 37,
+        "startChar": 3,
+        "endLine": 37,
+        "endChar": 15
+      },
+      "revId": "105961f7cf466cc255db927374890f542cda921b",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "26f6beae_dce9e39b",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/repository/tree/RepositoryGroup.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2019-10-13T14:14:43Z",
+      "side": 1,
+      "message": "File",
+      "range": {
+        "startLine": 59,
+        "startChar": 13,
+        "endLine": 59,
+        "endChar": 19
+      },
+      "revId": "105961f7cf466cc255db927374890f542cda921b",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "da75e154_ecd45537",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/repository/tree/RepositoryGroup.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2019-10-13T14:14:43Z",
+      "side": 1,
+      "message": "Collection\u003cFile\u003e",
+      "range": {
+        "startLine": 70,
+        "startChar": 31,
+        "endLine": 70,
+        "endChar": 43
+      },
+      "revId": "105961f7cf466cc255db927374890f542cda921b",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3ea794a7_485accc1",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/repository/tree/RepositoryGroup.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2019-10-13T14:14:43Z",
+      "side": 1,
+      "message": "Collection\u003cFile\u003e",
+      "range": {
+        "startLine": 74,
+        "startChar": 34,
+        "endLine": 74,
+        "endChar": 46
+      },
+      "revId": "105961f7cf466cc255db927374890f542cda921b",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "68321f99_a6128db8",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/repository/tree/RepositoryGroups.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2019-10-13T14:14:43Z",
+      "side": 1,
+      "message": "This should be a singleton.",
+      "revId": "105961f7cf466cc255db927374890f542cda921b",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ca6b2613_9830956e",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/repository/tree/RepositoryGroups.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2019-10-13T14:14:43Z",
+      "side": 1,
+      "message": "List\u003cFile\u003e repos \u003d split(preferences\n    .get(PREFS_GROUP_PREFIX + groupIdString, EMPTY_STRING))\n    .stream().map(File::new)\n    .collect(Collectors.toList());",
+      "range": {
+        "startLine": 57,
+        "startChar": 3,
+        "endLine": 58,
+        "endChar": 60
+      },
+      "revId": "105961f7cf466cc255db927374890f542cda921b",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "95bea15a_e0a81e69",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/repository/tree/RepositoryGroups.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 149,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2019-10-13T14:14:43Z",
+      "side": 1,
+      "message": "Let\u0027s use File for directories.\n\n  Collection\u003cFile\u003e repoDirs",
+      "range": {
+        "startLine": 149,
+        "startChar": 50,
+        "endLine": 149,
+        "endChar": 71
+      },
+      "revId": "105961f7cf466cc255db927374890f542cda921b",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "4be03ba5_61327f32",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/repository/tree/RepositoryGroups.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 173,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2019-10-13T14:14:43Z",
+      "side": 1,
+      "message": "No necessary. + operator with a string operand (the prefix) performs auto-stringification of the other operand.",
+      "range": {
+        "startLine": 173,
+        "startChar": 52,
+        "endLine": 173,
+        "endChar": 63
+      },
+      "revId": "105961f7cf466cc255db927374890f542cda921b",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "b77483ca_3c65ac64",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/repository/tree/RepositoryGroups.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 189,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2019-10-13T14:14:43Z",
+      "side": 1,
+      "message": "String repos \u003d group.getRepositoryDirectories().stream()\n    .map(File::toString)\n    .collect(Collectors.joining(SEPARATOR));\n  preferences.put(PREFS_GROUP_PREFIX + groupId, repos);",
+      "range": {
+        "startLine": 187,
+        "startChar": 0,
+        "endLine": 189,
+        "endChar": 42
+      },
+      "revId": "105961f7cf466cc255db927374890f542cda921b",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "01cd7b16_64ac45cd",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/repository/tree/RepositoryGroups.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 212,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2019-10-13T14:14:43Z",
+      "side": 1,
+      "message": "Typo",
+      "range": {
+        "startLine": 212,
+        "startChar": 53,
+        "endLine": 212,
+        "endChar": 54
+      },
+      "revId": "105961f7cf466cc255db927374890f542cda921b",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7ce7ddd9_499dc833",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/repository/tree/RepositoryGroups.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 212,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2019-10-13T14:14:43Z",
+      "side": 1,
+      "message": "File",
+      "range": {
+        "startLine": 212,
+        "startChar": 31,
+        "endLine": 212,
+        "endChar": 37
+      },
+      "revId": "105961f7cf466cc255db927374890f542cda921b",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "13c57ace_2ac8d6a6",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/repository/tree/command/AddRepositoryGroupCommand.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2019-10-13T14:14:43Z",
+      "side": 1,
+      "message": "File",
+      "range": {
+        "startLine": 50,
+        "startChar": 8,
+        "endLine": 50,
+        "endChar": 14
+      },
+      "revId": "105961f7cf466cc255db927374890f542cda921b",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "b91fe13a_6646ce55",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/repository/tree/command/AddRepositoryGroupCommand.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2019-10-13T14:14:43Z",
+      "side": 1,
+      "message": "How about\n\n  return getSelectedNodes(event).stream()\n    .map(e -\u003e e.getRepository().getDirectory())\n    .collect(Collectors.toList());",
+      "range": {
+        "startLine": 61,
+        "startChar": 0,
+        "endLine": 70,
+        "endChar": 18
+      },
+      "revId": "105961f7cf466cc255db927374890f542cda921b",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "13b6585a_3423341c",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/repository/tree/command/AddRepositoryGroupCommand.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2019-10-13T14:14:43Z",
+      "side": 1,
+      "message": "Could be a lambda.",
+      "range": {
+        "startLine": 78,
+        "startChar": 0,
+        "endLine": 92,
+        "endChar": 5
+      },
+      "revId": "105961f7cf466cc255db927374890f542cda921b",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "b061102e_e9059527",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/repository/tree/command/DeleteRepositoryGroupCommand.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2019-10-13T14:14:43Z",
+      "side": 1,
+      "message": "OK. Something for a follow-up commit: add preference where the user can switch off being shown that dialog.",
+      "revId": "105961f7cf466cc255db927374890f542cda921b",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "62b7c9f4_781a7a2d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/repository/tree/command/DeleteRepositoryGroupConfirmDialog.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2019-10-13T14:14:43Z",
+      "side": 1,
+      "message": "groupsViewer?",
+      "range": {
+        "startLine": 53,
+        "startChar": 14,
+        "endLine": 53,
+        "endChar": 28
+      },
+      "revId": "105961f7cf466cc255db927374890f542cda921b",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "88063967_ad247899",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/repository/tree/command/DeleteRepositoryGroupConfirmDialog.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2019-10-13T14:14:43Z",
+      "side": 1,
+      "message": "Maybe a better content provider that would also show the contained repos? I\u0027m thinking of the user mistakenly having selected a second repo group, so here he sees the second group, but if he wants to double check which repos are contained, he\u0027d have to cancel and go back to the repo view. Same also if he selected a collapsed repo group, and here he suddenly isn\u0027t sure anymore and would like to see the contained repos.",
+      "range": {
+        "startLine": 59,
+        "startChar": 36,
+        "endLine": 59,
+        "endChar": 70
+      },
+      "revId": "105961f7cf466cc255db927374890f542cda921b",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "b39299ab_8e9fa77e",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/uitext.properties",
+        "patchSetId": 6
+      },
+      "lineNbr": 1341,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2019-10-13T14:14:43Z",
+      "side": 1,
+      "message": "Perhaps \"Move to...\" ?",
+      "range": {
+        "startLine": 1341,
+        "startChar": 34,
+        "endLine": 1341,
+        "endChar": 43
+      },
+      "revId": "105961f7cf466cc255db927374890f542cda921b",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "e20cbe73_636109dc",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/uitext.properties",
+        "patchSetId": 6
+      },
+      "lineNbr": 1344,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2019-10-13T14:14:43Z",
+      "side": 1,
+      "message": "Do we need to make clear that the repos won\u0027t be removed/deleted?",
+      "revId": "105961f7cf466cc255db927374890f542cda921b",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a866e691_38364dae",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/uitext.properties",
+        "patchSetId": 6
+      },
+      "lineNbr": 1348,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2019-10-13T14:14:43Z",
+      "side": 1,
+      "message": "Trim automatically? Then we don\u0027t have to tell the user about this condition.",
+      "range": {
+        "startLine": 1348,
+        "startChar": 80,
+        "endLine": 1348,
+        "endChar": 113
+      },
+      "revId": "105961f7cf466cc255db927374890f542cda921b",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
