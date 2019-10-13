@@ -213,10 +213,9 @@ public class GitLightweightDecorator extends GitDecorator
 	 *
 	 * @param resource the resource to decorate
 	 * @param decoration the decoration
-	 * @throws CoreException
 	 */
 	private void decorateResource(@NonNull IResource resource,
-			IDecoration decoration) throws CoreException {
+			IDecoration decoration) {
 		if (resource.getType() == IResource.ROOT || !resource.isAccessible()) {
 			return;
 		}
@@ -226,13 +225,8 @@ public class GitLightweightDecorator extends GitDecorator
 		if (indexDiffData == null) {
 			return;
 		}
-		IDecoratableResource decoratableResource = null;
-		try {
-			decoratableResource = new DecoratableResourceAdapter(indexDiffData, resource);
-		} catch (IOException e) {
-			throw new CoreException(Activator.createErrorStatus(
-					NLS.bind(UIText.Decorator_exceptionMessage, resource), e));
-		}
+		IDecoratableResource decoratableResource = new DecoratableResourceAdapter(
+				indexDiffData, resource);
 		helper.decorate(decoration, decoratableResource);
 	}
 
@@ -697,7 +691,7 @@ public class GitLightweightDecorator extends GitDecorator
 	public void indexDiffChanged(Repository repository,
 			IndexDiffData indexDiffData) {
 		// clear calculated repo data
-		DecoratableResourceHelper.clearState(repository);
+		DecoratorRepositoryStateCache.INSTANCE.clear(repository);
 		super.indexDiffChanged(repository, indexDiffData);
 	}
 

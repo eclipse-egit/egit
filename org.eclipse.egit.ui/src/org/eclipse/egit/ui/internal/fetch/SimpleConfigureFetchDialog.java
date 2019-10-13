@@ -24,7 +24,7 @@ import org.eclipse.egit.ui.Activator;
 import org.eclipse.egit.ui.UIPreferences;
 import org.eclipse.egit.ui.internal.UIText;
 import org.eclipse.egit.ui.internal.dialogs.AbstractConfigureRemoteDialog;
-import org.eclipse.egit.ui.internal.selection.RepositoryStateCache;
+import org.eclipse.egit.ui.internal.selection.SelectionRepositoryStateCache;
 import org.eclipse.jface.dialogs.Dialog;
 import org.eclipse.jface.dialogs.IDialogConstants;
 import org.eclipse.jface.window.Window;
@@ -108,14 +108,14 @@ public class SimpleConfigureFetchDialog extends AbstractConfigureRemoteDialog {
 	 */
 	public static RemoteConfig getConfiguredRemoteCached(
 			Repository repository) {
-		String branch = RepositoryStateCache.INSTANCE
+		String branch = SelectionRepositoryStateCache.INSTANCE
 				.getFullBranchName(repository);
 		if (branch == null) {
 			return null;
 		}
 		branch = Repository.shortenRefName(branch);
 		return getConfiguredRemote(branch,
-				RepositoryStateCache.INSTANCE.getConfig(repository));
+				SelectionRepositoryStateCache.INSTANCE.getConfig(repository));
 	}
 
 	/**

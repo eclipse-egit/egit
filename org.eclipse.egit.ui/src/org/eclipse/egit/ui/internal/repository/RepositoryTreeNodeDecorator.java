@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2018 Thomas Wolf <thomas.wolf@paranor.ch>
+ * Copyright (c) 2018, 2019 Thomas Wolf <thomas.wolf@paranor.ch>
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License 2.0
@@ -11,7 +11,6 @@
 package org.eclipse.egit.ui.internal.repository;
 
 import java.io.IOException;
-import java.text.MessageFormat;
 import java.util.Set;
 
 import org.eclipse.core.commands.IStateListener;
@@ -23,8 +22,8 @@ import org.eclipse.egit.core.internal.indexdiff.IndexDiffCacheEntry;
 import org.eclipse.egit.core.internal.indexdiff.IndexDiffData;
 import org.eclipse.egit.ui.Activator;
 import org.eclipse.egit.ui.internal.CommonUtils;
-import org.eclipse.egit.ui.internal.GitLabels;
 import org.eclipse.egit.ui.internal.UIText;
+import org.eclipse.egit.ui.internal.decorators.DecoratorRepositoryStateCache;
 import org.eclipse.egit.ui.internal.decorators.GitDecorator;
 import org.eclipse.egit.ui.internal.repository.tree.AdditionalRefNode;
 import org.eclipse.egit.ui.internal.repository.tree.RefNode;
@@ -35,8 +34,6 @@ import org.eclipse.egit.ui.internal.repository.tree.TagNode;
 import org.eclipse.egit.ui.internal.repository.tree.command.ToggleBranchCommitCommand;
 import org.eclipse.jface.viewers.IDecoration;
 import org.eclipse.jgit.annotations.NonNull;
-import org.eclipse.jgit.lib.BranchTrackingStatus;
-import org.eclipse.jgit.lib.Constants;
 import org.eclipse.jgit.lib.ObjectId;
 import org.eclipse.jgit.lib.Ref;
 import org.eclipse.jgit.lib.Repository;
@@ -85,6 +82,13 @@ public class RepositoryTreeNodeDecorator extends GitDecorator
 	}
 
 	@Override
+	public void indexDiffChanged(Repository repository,
+			IndexDiffData indexDiffData) {
+		DecoratorRepositoryStateCache.INSTANCE.clear(repository);
+		super.indexDiffChanged(repository, indexDiffData);
+	}
+
+	@Override
 	public void handleStateChange(State state, Object oldValue) {
 		try {
 			boolean newValue = ((Boolean) state.getValue())
@@ -103,19 +107,12 @@ public class RepositoryTreeNodeDecorator extends GitDecorator
 		RepositoryTreeNode<?> node = (RepositoryTreeNode) element;
 		Repository repository = node.getRepository();
 		if (repository != null) {
-			try {
-				decorateText(node, repository, decoration);
-			} catch (IOException e) {
-				Activator.logError(MessageFormat.format(
-						UIText.GitLabelProvider_UnableToRetrieveLabel,
-						element.toString()), e);
-			}
+			decorateText(node, repository, decoration);
 		}
 	}
 
 	private void decorateText(RepositoryTreeNode<?> node,
-			@NonNull Repository repository, IDecoration decoration)
-			throws IOException {
+			@NonNull Repository repository, IDecoration decoration) {
 		boolean decorated = false;
 		switch (node.getType()) {
 		case REPO:
@@ -183,8 +180,7 @@ public class RepositoryTreeNodeDecorator extends GitDecorator
 	}
 
 	private boolean decorateRepository(RepositoryTreeNode<?> node,
-			@NonNull Repository repository, IDecoration decoration)
-			throws IOException {
+			@NonNull Repository repository, IDecoration decoration) {
 		boolean isSubModule = node.getParent() != null && node.getParent()
 				.getType() == RepositoryTreeNodeType.SUBMODULES;
 		if (RepositoryUtil.hasChanges(repository)) {
@@ -192,7 +188,8 @@ public class RepositoryTreeNodeDecorator extends GitDecorator
 		}
 		StringBuilder suffix = new StringBuilder();
 		if (isSubModule) {
-			Ref head = repository.exactRef(Constants.HEAD);
+			Ref head = DecoratorRepositoryStateCache.INSTANCE
+					.getHeadRef(repository);
 			if (head == null) {
 				return false;
 			}
@@ -205,33 +202,29 @@ public class RepositoryTreeNodeDecorator extends GitDecorator
 			}
 			suffix.append(']');
 			if (verboseBranchMode && head.getObjectId() != null) {
-				try (RevWalk walk = new RevWalk(repository)) {
-					RevCommit commit = walk.parseCommit(head.getObjectId());
+				RevCommit commit = DecoratorRepositoryStateCache.INSTANCE
+						.getHeadCommit(repository);
+				if (commit != null) {
 					suffix.append(' ').append(commit.getShortMessage());
-				} catch (IOException ignored) {
-					// Ignored
 				}
 			}
 		} else {
 			// Not a submodule
-			String branch = Activator.getDefault().getRepositoryUtil()
-					.getShortBranch(repository);
+			String branch = DecoratorRepositoryStateCache.INSTANCE
+					.getCurrentBranchLabel(repository);
 			if (branch == null) {
 				return false;
 			}
 			suffix.append(" ["); //$NON-NLS-1$
 			suffix.append(branch);
 
-			BranchTrackingStatus trackingStatus = BranchTrackingStatus
-					.of(repository, branch);
-			if (trackingStatus != null && (trackingStatus.getAheadCount() != 0
-					|| trackingStatus.getBehindCount() != 0)) {
-				String formattedTrackingStatus = GitLabels
-						.formatBranchTrackingStatus(trackingStatus);
-				suffix.append(' ').append(formattedTrackingStatus);
+			String trackingStatus = DecoratorRepositoryStateCache.INSTANCE
+					.getBranchStatus(repository);
+			if (trackingStatus != null) {
+				suffix.append(' ').append(trackingStatus);
 			}
-
-			RepositoryState repositoryState = repository.getRepositoryState();
+			RepositoryState repositoryState = DecoratorRepositoryStateCache.INSTANCE
+					.getRepositoryState(repository);
 			if (repositoryState != RepositoryState.SAFE) {
 				suffix.append(" - ") //$NON-NLS-1$
 						.append(repositoryState.getDescription());

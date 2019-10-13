@@ -27,7 +27,7 @@ import org.eclipse.egit.ui.internal.repository.tree.PushNode;
 import org.eclipse.egit.ui.internal.repository.tree.RemoteNode;
 import org.eclipse.egit.ui.internal.repository.tree.RepositoryNode;
 import org.eclipse.egit.ui.internal.repository.tree.RepositoryTreeNode;
-import org.eclipse.egit.ui.internal.selection.RepositoryStateCache;
+import org.eclipse.egit.ui.internal.selection.SelectionRepositoryStateCache;
 import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jgit.transport.RemoteConfig;
 
@@ -91,7 +91,7 @@ public class PushConfiguredRemoteCommand extends
 			try {
 				RemoteNode remoteNode = (RemoteNode) node;
 				RemoteConfig config = new RemoteConfig(
-						RepositoryStateCache.INSTANCE
+						SelectionRepositoryStateCache.INSTANCE
 								.getConfig(node.getRepository()),
 						remoteNode.getObject());
 				return withRefSpecs(config);

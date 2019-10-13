@@ -260,8 +260,7 @@ public abstract class GitLightweightDecoratorTest
 	}
 
 	protected static DecoratableResource newDecoratableResource(
-			IndexDiffData indexDiffData, IResource resource)
-			throws IOException {
+			IndexDiffData indexDiffData, IResource resource) {
 		return new DecoratableResourceAdapter(indexDiffData, resource);
 	}
 

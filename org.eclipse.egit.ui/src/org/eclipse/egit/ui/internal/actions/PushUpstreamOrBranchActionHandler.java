@@ -18,7 +18,7 @@ import org.eclipse.egit.ui.internal.push.PushBranchWizard;
 import org.eclipse.egit.ui.internal.push.PushOperationUI;
 import org.eclipse.egit.ui.internal.push.PushWizardDialog;
 import org.eclipse.egit.ui.internal.push.SimpleConfigurePushDialog;
-import org.eclipse.egit.ui.internal.selection.RepositoryStateCache;
+import org.eclipse.egit.ui.internal.selection.SelectionRepositoryStateCache;
 import org.eclipse.jgit.lib.Constants;
 import org.eclipse.jgit.lib.Ref;
 import org.eclipse.jgit.lib.Repository;
@@ -72,7 +72,7 @@ public class PushUpstreamOrBranchActionHandler extends RepositoryActionHandler {
 		if (repository == null) {
 			return false;
 		}
-		Ref head = RepositoryStateCache.INSTANCE.getHeadRef(repository);
+		Ref head = SelectionRepositoryStateCache.INSTANCE.getHeadRef(repository);
 		return head != null && head.isSymbolic();
 	}
 
