@@ -35,8 +35,10 @@ import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IFolder;
 import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.IProjectDescription;
+import org.eclipse.core.resources.IResource;
 import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.CoreException;
+import org.eclipse.core.runtime.ICoreRunnable;
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.Path;
 import org.eclipse.core.runtime.jobs.IJobManager;
@@ -54,6 +56,10 @@ public class TestUtils {
 	public final static String COMMITTER = "The Commiter <The.committer@some.com>";
 
 	private final static File rootDir = customTestDirectory();
+
+	private static final int MAX_DELETE_RETRY = 5;
+
+	private static final int DELETE_RETRY_DELAY = 1000; // ms
 
 	/**
 	 * Allow to set a custom directory for running tests
@@ -410,6 +416,47 @@ public class TestUtils {
 			}
 		}
 		return dump.toString();
+	}
+
+	/**
+	 * Delete a project and repeat multiple times in case of resource deletion
+	 * errors. A {@link ICoreRunnable} is used to avoid concurrent activities
+	 * disturbing the deletion.
+	 *
+	 * @param project
+	 *
+	 * @throws CoreException
+	 */
+	public static void deleteProject(IProject project) throws CoreException {
+		ResourcesPlugin.getWorkspace().run(monitor -> {
+			// Following code inspired by {@link
+			// org.eclipse.jdt.testplugin.JavaProjectHelper#delete(IResource)}.
+			// Sometimes resource deletion may fail due to concurrently held
+			// locks.
+			for (int i = 0; i < MAX_DELETE_RETRY; i++) {
+				try {
+					project.delete(
+							IResource.FORCE
+									| IResource.ALWAYS_DELETE_PROJECT_CONTENT,
+							null);
+					break;
+				} catch (CoreException e) {
+					if (i == MAX_DELETE_RETRY - 1) {
+						throw e;
+					}
+					try {
+						org.eclipse.egit.core.Activator.logInfo(
+								"Sleep before retrying to delete project "
+										+ project.getLocationURI());
+						// Give other threads the time to close and release
+						// the resource.
+						Thread.sleep(DELETE_RETRY_DELAY);
+					} catch (InterruptedException e1) {
+						// Ignore and retry to delete
+					}
+				}
+			}
+		}, null);
 	}
 
 }
