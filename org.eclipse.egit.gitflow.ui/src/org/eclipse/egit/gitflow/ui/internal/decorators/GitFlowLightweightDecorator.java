@@ -13,16 +13,16 @@ package org.eclipse.egit.gitflow.ui.internal.decorators;
 import java.io.IOException;
 
 import org.eclipse.core.runtime.ILog;
+import org.eclipse.egit.gitflow.GitFlowConfig;
 import org.eclipse.egit.gitflow.GitFlowRepository;
 import org.eclipse.egit.gitflow.ui.Activator;
 import org.eclipse.egit.gitflow.ui.internal.UIIcons;
+import org.eclipse.egit.ui.internal.decorators.DecoratorRepositoryStateCache;
 import org.eclipse.egit.ui.internal.repository.tree.RepositoryNode;
 import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.jface.viewers.IDecoration;
 import org.eclipse.jface.viewers.ILightweightLabelDecorator;
 import org.eclipse.jface.viewers.LabelProvider;
-import org.eclipse.jgit.annotations.Nullable;
-import org.eclipse.jgit.lib.Repository;
 import org.eclipse.swt.graphics.ImageData;
 import org.eclipse.ui.PlatformUI;
 
@@ -53,57 +53,39 @@ public class GitFlowLightweightDecorator extends LabelProvider implements
 	 */
 	@Override
 	public void decorate(Object element, IDecoration decoration) {
-		// Don't decorate if UI plugin is not running
-		if (Activator.getDefault() == null) {
+		if (!PlatformUI.isWorkbenchRunning() || Activator.getDefault() == null) {
 			return;
 		}
 
-		// Don't decorate if the workbench is not running
-		if (!PlatformUI.isWorkbenchRunning()) {
-			return;
+		GitFlowConfig config = null;
+		if (element instanceof GitFlowRepository) {
+			config = ((GitFlowRepository) element).getConfig();
+		} else if (element instanceof RepositoryNode) {
+			config = new GitFlowConfig(DecoratorRepositoryStateCache.INSTANCE
+					.getConfig(((RepositoryNode) element).getRepository()));
 		}
-
-
-		final GitFlowRepository repository = getRepository(element);
 		try {
-			if (repository != null) {
-				decorateRepository(repository, decoration);
+			if (config != null) {
+				decorateRepository(config, decoration);
 			}
 		} catch (Exception e) {
-			handleException(repository, e);
+			log.log(Activator.error(e.getMessage(), e));
 		}
-	}
-
-	private static @Nullable GitFlowRepository getRepository(Object element) {
-		GitFlowRepository repository = null;
-		if (element instanceof GitFlowRepository) {
-			repository = (GitFlowRepository) element;
-		}
-
-		if (element instanceof RepositoryNode) {
-			RepositoryNode node = (RepositoryNode) element;
-			Repository repo = node.getObject();
-			if (repo != null) {
-				repository = new GitFlowRepository(repo);
-			}
-		}
-
-		return repository;
 	}
 
 	/**
 	 * Decorates a single repository.
 	 *
-	 * @param repository
-	 *            the repository to decorate
+	 * @param config
+	 *            of the repository to decorate
 	 * @param decoration
 	 *            the decoration
 	 * @throws IOException
 	 */
-	private void decorateRepository(GitFlowRepository repository,
+	private void decorateRepository(GitFlowConfig config,
 			IDecoration decoration) throws IOException {
 		final DecorationHelper helper = new DecorationHelper();
-		helper.decorate(decoration, repository);
+		helper.decorate(decoration, config);
 	}
 
 
@@ -137,11 +119,8 @@ public class GitFlowLightweightDecorator extends LabelProvider implements
 			}
 		}
 
-		private final static ImageDescriptor INITIALIZED_IMAGE;
-
-		static {
-			INITIALIZED_IMAGE = new CachedImageDescriptor(UIIcons.OVR_GITFLOW);
-		}
+		private final static ImageDescriptor INITIALIZED_IMAGE = new CachedImageDescriptor(
+				UIIcons.OVR_GITFLOW);
 
 		/**
 		 * Decorates the given <code>decoration</code> based on the state of the
@@ -149,20 +128,20 @@ public class GitFlowLightweightDecorator extends LabelProvider implements
 		 *
 		 * @param decoration
 		 *            the decoration to decorate
-		 * @param repository
-		 *            the repository to retrieve state from
+		 * @param config
+		 *            the config to retrieve state from
 		 * @throws IOException
 		 */
-		public void decorate(IDecoration decoration, GitFlowRepository repository)
+		public void decorate(IDecoration decoration, GitFlowConfig config)
 				throws IOException {
-			decorateIcons(decoration, repository);
+			decorateIcons(decoration, config);
 		}
 
 		private void decorateIcons(IDecoration decoration,
-				GitFlowRepository repository) throws IOException {
+				GitFlowConfig config) {
 			ImageDescriptor overlay = null;
 
-			if (repository.getConfig().isInitialized()) {
+			if (config.isInitialized()) {
 				overlay = INITIALIZED_IMAGE;
 			}
 
@@ -170,22 +149,10 @@ public class GitFlowLightweightDecorator extends LabelProvider implements
 			// for feature branch
 
 			// Overlays can only be added once, so do it at the end
-			decoration.addOverlay(overlay);
+			if (overlay != null) {
+				decoration.addOverlay(overlay);
+			}
 		}
 
-	}
-
-	/**
-	 * Handle exceptions that occur in the decorator.
-	 *
-	 * @param repository
-	 *            The repository that triggered the exception
-	 * @param e
-	 *            The exception that occurred
-	 */
-	private void handleException(GitFlowRepository repository, Exception e) {
-		if (repository != null) {
-			log.log(Activator.error(e.getMessage(), e));
-		 }
 	}
 }

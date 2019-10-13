@@ -17,7 +17,7 @@ import java.net.URISyntaxException;
 
 import org.eclipse.egit.ui.internal.ResourcePropertyTester;
 import org.eclipse.egit.ui.internal.expressions.AbstractPropertyTester;
-import org.eclipse.egit.ui.internal.selection.RepositoryStateCache;
+import org.eclipse.egit.ui.internal.selection.SelectionRepositoryStateCache;
 import org.eclipse.egit.ui.internal.trace.GitTraceLocation;
 import org.eclipse.jgit.lib.Constants;
 import org.eclipse.jgit.lib.ObjectId;
@@ -103,7 +103,7 @@ public class RepositoriesViewPropertyTester extends AbstractPropertyTester {
 				RemoteConfig rconfig;
 				try {
 					rconfig = new RemoteConfig(
-							RepositoryStateCache.INSTANCE.getConfig(repository),
+							SelectionRepositoryStateCache.INSTANCE.getConfig(repository),
 							configName);
 				} catch (URISyntaxException e2) {
 					return false;
@@ -120,7 +120,7 @@ public class RepositoriesViewPropertyTester extends AbstractPropertyTester {
 				RemoteConfig rconfig;
 				try {
 					rconfig = new RemoteConfig(
-							RepositoryStateCache.INSTANCE.getConfig(repository),
+							SelectionRepositoryStateCache.INSTANCE.getConfig(repository),
 							configName);
 				} catch (URISyntaxException e2) {
 					return false;
@@ -132,17 +132,17 @@ public class RepositoriesViewPropertyTester extends AbstractPropertyTester {
 			}
 		}
 		if (property.equals("canStash")) { //$NON-NLS-1$
-			RepositoryState state = RepositoryStateCache.INSTANCE
+			RepositoryState state = SelectionRepositoryStateCache.INSTANCE
 					.getRepositoryState(repository);
 			return state.canCommit();
 		}
 		if (property.equals("canMerge")) { //$NON-NLS-1$
-			RepositoryState state = RepositoryStateCache.INSTANCE
+			RepositoryState state = SelectionRepositoryStateCache.INSTANCE
 					.getRepositoryState(repository);
 			if (state != RepositoryState.SAFE) {
 				return false;
 			}
-			String branch = RepositoryStateCache.INSTANCE
+			String branch = SelectionRepositoryStateCache.INSTANCE
 					.getFullBranchName(repository);
 			if (branch == null) {
 				return false; // fail gracefully...
@@ -168,24 +168,24 @@ public class RepositoriesViewPropertyTester extends AbstractPropertyTester {
 	private boolean isRefCheckedOut(Repository repository, Ref ref) {
 		if (ref.getName().startsWith(Constants.R_REFS)) {
 			return ref.getName().equals(
-					RepositoryStateCache.INSTANCE.getFullBranchName(repository));
+					SelectionRepositoryStateCache.INSTANCE.getFullBranchName(repository));
 		} else if (ref.getName().equals(Constants.HEAD)) {
 			return true;
 		} else {
 			String leafname = ref.getLeaf().getName();
 			if (leafname.startsWith(Constants.R_REFS) && leafname.equals(
-					RepositoryStateCache.INSTANCE.getFullBranchName(repository))) {
+					SelectionRepositoryStateCache.INSTANCE.getFullBranchName(repository))) {
 				return true;
 			} else {
 				ObjectId objectId = ref.getLeaf().getObjectId();
 				return objectId != null && objectId
-						.equals(RepositoryStateCache.INSTANCE.getHead(repository));
+						.equals(SelectionRepositoryStateCache.INSTANCE.getHead(repository));
 			}
 		}
 	}
 
 	private boolean containsHead(Repository repository) {
-		return RepositoryStateCache.INSTANCE.getHead(repository) != null;
+		return SelectionRepositoryStateCache.INSTANCE.getHead(repository) != null;
 	}
 
 }

@@ -133,18 +133,18 @@ public class DecoratableResourceMapping extends DecoratableResourceGroup {
 		if (repositories.size() == 1) {
 			// single repo, single branch --> [repo branch]
 			Repository repository = repositories.iterator().next();
-			resource.repositoryName = DecoratableResourceHelper
-					.getRepositoryName(repository);
-			resource.branch = DecoratableResourceHelper
-					.getShortBranch(repository);
-			resource.branchStatus = DecoratableResourceHelper
+			resource.repositoryName = DecoratorRepositoryStateCache.INSTANCE
+					.getRepositoryNameAndState(repository);
+			resource.branch = DecoratorRepositoryStateCache.INSTANCE
+					.getCurrentBranchLabel(repository);
+			resource.branchStatus = DecoratorRepositoryStateCache.INSTANCE
 					.getBranchStatus(repository);
 		} else if (repositories.size() > 1) {
 			// collect branch names but skip branch status (doesn't make sense)
 			Set<String> branches = new HashSet<>(2);
 			for (Repository repository : repositories) {
-				branches.add(
-						DecoratableResourceHelper.getShortBranch(repository));
+				branches.add(DecoratorRepositoryStateCache.INSTANCE
+						.getCurrentBranchLabel(repository));
 				if (branches.size() > 1)
 					break;
 			}

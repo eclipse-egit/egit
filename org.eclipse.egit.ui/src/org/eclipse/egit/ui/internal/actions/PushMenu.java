@@ -15,7 +15,7 @@ package org.eclipse.egit.ui.internal.actions;
 
 import org.eclipse.egit.ui.internal.CommonUtils;
 import org.eclipse.egit.ui.internal.UIText;
-import org.eclipse.egit.ui.internal.selection.RepositoryStateCache;
+import org.eclipse.egit.ui.internal.selection.SelectionRepositoryStateCache;
 import org.eclipse.egit.ui.internal.selection.SelectionUtils;
 import org.eclipse.jface.action.IContributionItem;
 import org.eclipse.jgit.lib.Constants;
@@ -69,7 +69,7 @@ public class PushMenu extends CompoundContributionItem implements
 					.getCurrentState());
 
 			if (repository != null) {
-				String ref = RepositoryStateCache.INSTANCE
+				String ref = SelectionRepositoryStateCache.INSTANCE
 						.getFullBranchName(repository);
 				String menuLabel = UIText.PushMenu_PushHEAD;
 				if (ref != null && ref.startsWith(Constants.R_HEADS)) {

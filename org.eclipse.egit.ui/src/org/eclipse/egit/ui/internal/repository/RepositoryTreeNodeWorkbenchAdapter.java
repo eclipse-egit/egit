@@ -11,7 +11,6 @@
 package org.eclipse.egit.ui.internal.repository;
 
 import java.io.File;
-import java.io.IOException;
 import java.text.MessageFormat;
 
 import org.eclipse.core.runtime.IPath;
@@ -20,6 +19,7 @@ import org.eclipse.egit.ui.internal.GitLabels;
 import org.eclipse.egit.ui.internal.ResourcePropertyTester;
 import org.eclipse.egit.ui.internal.UIIcons;
 import org.eclipse.egit.ui.internal.UIText;
+import org.eclipse.egit.ui.internal.decorators.DecoratorRepositoryStateCache;
 import org.eclipse.egit.ui.internal.repository.tree.RepositoryTreeNode;
 import org.eclipse.egit.ui.internal.repository.tree.RepositoryTreeNodeType;
 import org.eclipse.egit.ui.internal.repository.tree.StashedCommitNode;
@@ -67,13 +67,9 @@ public class RepositoryTreeNodeWorkbenchAdapter extends WorkbenchAdapter {
 			return null;
 		}
 		// We have to decorate here: if we let an asynchronous lightweight
-		// decorator do it, image decorations may flicker in the repositories
-		// view and elsewhere where we'd refresh viewers.
-		try {
-			return decorateImageDescriptor(base, node);
-		} catch (IOException e) {
-			return base;
-		}
+		// decorator do it, image decorations may flicker in the
+		// repositories view and elsewhere where we'd refresh viewers.
+		return decorateImageDescriptor(base, node);
 	}
 
 	private ImageDescriptor getBaseImageDescriptor(
@@ -107,8 +103,8 @@ public class RepositoryTreeNodeWorkbenchAdapter extends WorkbenchAdapter {
 	}
 
 	private ImageDescriptor decorateImageDescriptor(
-			@NonNull ImageDescriptor base, @NonNull RepositoryTreeNode<?> node)
-			throws IOException {
+			@NonNull ImageDescriptor base,
+			@NonNull RepositoryTreeNode<?> node) {
 		switch (node.getType()) {
 		case TAG:
 		case ADDITIONALREF:
@@ -121,7 +117,8 @@ public class RepositoryTreeNodeWorkbenchAdapter extends WorkbenchAdapter {
 
 			String compareString = null;
 			Repository repository = node.getRepository();
-			String branchName = repository.getFullBranch();
+			String branchName = DecoratorRepositoryStateCache.INSTANCE
+					.getFullBranchName(repository);
 			if (branchName == null) {
 				return base;
 			}
@@ -156,7 +153,8 @@ public class RepositoryTreeNodeWorkbenchAdapter extends WorkbenchAdapter {
 				}
 				ObjectId objectId = leaf.getObjectId();
 				if (objectId != null && objectId
-						.equals(repository.resolve(Constants.HEAD))) {
+						.equals(DecoratorRepositoryStateCache.INSTANCE
+								.getHead(repository))) {
 					return new DecorationOverlayDescriptor(base,
 							UIIcons.OVR_CHECKEDOUT, IDecoration.TOP_LEFT);
 				}

@@ -22,8 +22,6 @@
 
 package org.eclipse.egit.ui.internal.decorators;
 
-import java.io.IOException;
-
 import org.eclipse.core.resources.IResource;
 import org.eclipse.egit.core.internal.indexdiff.IndexDiffData;
 import org.eclipse.egit.core.project.RepositoryMapping;
@@ -37,8 +35,7 @@ import org.eclipse.jgit.revwalk.RevCommit;
 class DecoratableResourceAdapter extends DecoratableResource {
 
 	public DecoratableResourceAdapter(@NonNull IndexDiffData indexDiffData,
-			@NonNull IResource resourceToWrap)
-			throws IOException {
+			@NonNull IResource resourceToWrap) {
 		super(resourceToWrap);
 		boolean trace = GitTraceLocation.DECORATION.isActive();
 		long start = 0;
@@ -71,11 +68,13 @@ class DecoratableResourceAdapter extends DecoratableResource {
 				// We only need this very expensive info for for decorating
 				// projects and folders that are submodule or nested repository
 				// roots
-				repositoryName = DecoratableResourceHelper
-						.getRepositoryName(repository);
-				branch = DecoratableResourceHelper.getShortBranch(repository);
-				branchStatus = DecoratableResourceHelper.getBranchStatus(repository);
-				RevCommit headCommit = DecoratableResourceHelper
+				repositoryName = DecoratorRepositoryStateCache.INSTANCE
+						.getRepositoryNameAndState(repository);
+				branch = DecoratorRepositoryStateCache.INSTANCE
+						.getCurrentBranchLabel(repository);
+				branchStatus = DecoratorRepositoryStateCache.INSTANCE
+						.getBranchStatus(repository);
+				RevCommit headCommit = DecoratorRepositoryStateCache.INSTANCE
 						.getHeadCommit(repository);
 				if (headCommit != null) {
 					commitMessage = headCommit.getShortMessage();

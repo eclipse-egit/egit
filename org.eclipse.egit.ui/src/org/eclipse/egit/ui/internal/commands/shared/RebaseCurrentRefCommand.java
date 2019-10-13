@@ -28,7 +28,7 @@ import org.eclipse.egit.ui.internal.branch.LaunchFinder;
 import org.eclipse.egit.ui.internal.dialogs.BasicConfigurationDialog;
 import org.eclipse.egit.ui.internal.dialogs.RebaseTargetSelectionDialog;
 import org.eclipse.egit.ui.internal.rebase.RebaseInteractiveHandler;
-import org.eclipse.egit.ui.internal.selection.RepositoryStateCache;
+import org.eclipse.egit.ui.internal.selection.SelectionRepositoryStateCache;
 import org.eclipse.egit.ui.internal.selection.SelectionUtils;
 import org.eclipse.jface.dialogs.IDialogConstants;
 import org.eclipse.jface.viewers.ISelection;
@@ -129,7 +129,7 @@ public class RebaseCurrentRefCommand extends AbstractRebaseCommandHandler {
 			Repository repo = SelectionUtils.getRepository(ctx);
 			if (repo != null) {
 				boolean enabled = isEnabledForState(repo,
-						RepositoryStateCache.INSTANCE.getRepositoryState(repo));
+						SelectionRepositoryStateCache.INSTANCE.getRepositoryState(repo));
 				setBaseEnabled(enabled);
 			} else {
 				setBaseEnabled(false);
@@ -147,7 +147,7 @@ public class RebaseCurrentRefCommand extends AbstractRebaseCommandHandler {
 	public static boolean isEnabledForState(Repository repo,
 			RepositoryState state) {
 		return state == RepositoryState.SAFE
-				&& RepositoryStateCache.INSTANCE.getHead(repo) != null;
+				&& SelectionRepositoryStateCache.INSTANCE.getHead(repo) != null;
 	}
 
 	private String getFullBranch(Repository repository)
