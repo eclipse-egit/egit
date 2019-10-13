@@ -32,6 +32,7 @@ import org.eclipse.egit.core.Activator;
 import org.eclipse.egit.core.internal.indexdiff.IndexDiffCache;
 import org.eclipse.egit.core.op.CommitOperation;
 import org.eclipse.egit.core.op.ConnectProviderOperation;
+import org.eclipse.egit.core.test.TestUtils;
 import org.eclipse.egit.ui.test.TestUtil;
 import org.eclipse.jdt.core.IClasspathEntry;
 import org.eclipse.jdt.core.IJavaProject;
@@ -60,10 +61,6 @@ public class JavaProjectTester {
 
 	public static final String INITIAL_FILE_CONTENT = "package " + PACKAGE_NAME
 			+ ";\nclass " + JAVA_CLASS_NAME + " {\n\n}";
-
-	private static final int MAX_DELETE_RETRY = 5;
-
-	private static final int DELETE_RETRY_DELAY = 1000; // ms
 
 	private final LocalRepositoryTestCase testCase;
 
@@ -190,40 +187,7 @@ public class JavaProjectTester {
 			return;
 		}
 		final IProject project = javaProject.getProject();
-		IWorkspaceRunnable runnable = new IWorkspaceRunnable() {
-			@Override
-			public void run(IProgressMonitor monitor) throws CoreException {
-				// Following code inspired by {@link
-				// org.eclipse.jdt.testplugin.JavaProjectHelper#delete(IResource)}.
-				// I don't like all this sleeping at all, but apparently it's
-				// needed because the Java indexer might still run and hold on
-				// to some resources.
-				for (int i = 0; i < MAX_DELETE_RETRY; i++) {
-					try {
-						project.delete(IResource.FORCE
-								| IResource.ALWAYS_DELETE_PROJECT_CONTENT,
-								null);
-						break;
-					} catch (CoreException e) {
-						if (i == MAX_DELETE_RETRY - 1) {
-							throw e;
-						}
-						try {
-							Activator.logInfo(
-									"Sleep before retrying to delete project "
-											+ project.getLocationURI());
-							// Give other threads the time to close and release
-							// the resource.
-							Thread.sleep(DELETE_RETRY_DELAY);
-						} catch (InterruptedException e1) {
-							// Ignore and retry to delete
-						}
-					}
-				}
-
-			}
-		};
-		ResourcesPlugin.getWorkspace().run(runnable, null);
+		TestUtils.deleteProject(project);
 	}
 
 }
