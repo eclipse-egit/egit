@@ -22,11 +22,13 @@ import org.eclipse.core.runtime.jobs.Job;
 import org.eclipse.egit.core.op.StashCreateOperation;
 import org.eclipse.egit.ui.Activator;
 import org.eclipse.egit.ui.JobFamilies;
+import org.eclipse.egit.ui.UIPreferences;
 import org.eclipse.egit.ui.UIUtils;
 import org.eclipse.egit.ui.internal.UIText;
 import org.eclipse.jface.dialogs.Dialog;
 import org.eclipse.jface.dialogs.IDialogConstants;
 import org.eclipse.jface.dialogs.MessageDialog;
+import org.eclipse.jface.preference.IPreferenceStore;
 import org.eclipse.jface.window.Window;
 import org.eclipse.jgit.lib.Repository;
 import org.eclipse.jgit.revwalk.RevCommit;
@@ -136,6 +138,9 @@ public class StashCreateUI {
 
 		private boolean includeUntracked;
 
+		private final IPreferenceStore store = Activator.getDefault()
+				.getPreferenceStore();
+
 		public StashCreateDialog(Shell shell) {
 			super(shell);
 		}
@@ -163,6 +168,9 @@ public class StashCreateUI {
 			untrackedButton = new Button(composite, SWT.CHECK);
 			untrackedButton
 					.setText(UIText.StashCreateCommand_includeUntrackedLabel);
+			includeUntracked = store
+					.getBoolean(UIPreferences.STASH_INCLUDE_UNTRACKED);
+			untrackedButton.setSelection(includeUntracked);
 
 			text.setFocus();
 			return composite;
@@ -173,6 +181,8 @@ public class StashCreateUI {
 			if (buttonId == IDialogConstants.OK_ID) {
 				commitMessage = text.getText();
 				includeUntracked = untrackedButton.getSelection();
+				store.setValue(UIPreferences.STASH_INCLUDE_UNTRACKED,
+						includeUntracked);
 			} else {
 				commitMessage = null;
 				includeUntracked = false;
