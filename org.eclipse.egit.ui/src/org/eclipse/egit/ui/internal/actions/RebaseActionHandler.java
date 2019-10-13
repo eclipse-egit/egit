@@ -13,7 +13,7 @@ package org.eclipse.egit.ui.internal.actions;
 import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.commands.ExecutionException;
 import org.eclipse.egit.ui.internal.commands.shared.RebaseCurrentRefCommand;
-import org.eclipse.egit.ui.internal.selection.RepositoryStateCache;
+import org.eclipse.egit.ui.internal.selection.SelectionRepositoryStateCache;
 import org.eclipse.jgit.lib.Repository;
 import org.eclipse.jgit.lib.RepositoryState;
 
@@ -50,7 +50,7 @@ public class RebaseActionHandler extends RepositoryActionHandler {
 		// (main action) or an active rebase can be continued, skipped or
 		// aborted (menu items). Even when the main action is not enabled we
 		// must enable this because otherwise the menu items cannot be opened.
-		RepositoryState state = RepositoryStateCache.INSTANCE
+		RepositoryState state = SelectionRepositoryStateCache.INSTANCE
 				.getRepositoryState(repo);
 		return state.isRebasing()
 				|| RebaseCurrentRefCommand.isEnabledForState(repo, state);

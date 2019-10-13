@@ -34,7 +34,7 @@ import org.eclipse.egit.ui.internal.repository.tree.FileNode;
 import org.eclipse.egit.ui.internal.repository.tree.FolderNode;
 import org.eclipse.egit.ui.internal.repository.tree.RepositoryTreeNode;
 import org.eclipse.egit.ui.internal.repository.tree.WorkingDirNode;
-import org.eclipse.egit.ui.internal.selection.RepositoryStateCache;
+import org.eclipse.egit.ui.internal.selection.SelectionRepositoryStateCache;
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jgit.lib.Repository;
@@ -104,7 +104,7 @@ abstract class RepositoriesViewCommandHandler<T extends RepositoryTreeNode<?>>
 	}
 
 	private boolean repositoryHasHead(T treeNode) {
-		return RepositoryStateCache.INSTANCE
+		return SelectionRepositoryStateCache.INSTANCE
 				.getHead(treeNode.getRepository()) != null;
 	}
 
