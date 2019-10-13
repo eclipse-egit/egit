@@ -19,7 +19,7 @@ import java.util.Set;
 import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.commands.ExecutionException;
 import org.eclipse.egit.ui.internal.pull.PullOperationUI;
-import org.eclipse.egit.ui.internal.selection.RepositoryStateCache;
+import org.eclipse.egit.ui.internal.selection.SelectionRepositoryStateCache;
 import org.eclipse.jgit.lib.Constants;
 import org.eclipse.jgit.lib.Repository;
 
@@ -44,13 +44,13 @@ public class PullFromUpstreamActionHandler extends RepositoryActionHandler {
 		// ensure that a branch is checked out
 		Repository[] repos = getRepositories();
 		for (Repository repo : repos) {
-			String fullBranch = RepositoryStateCache.INSTANCE
+			String fullBranch = SelectionRepositoryStateCache.INSTANCE
 					.getFullBranchName(repo);
 			if (fullBranch == null
 					|| !fullBranch.startsWith(Constants.R_REFS)) {
 				return false;
 			}
-			if (RepositoryStateCache.INSTANCE.getHead(repo) == null) {
+			if (SelectionRepositoryStateCache.INSTANCE.getHead(repo) == null) {
 				return false;
 			}
 		}

@@ -28,7 +28,7 @@ import org.eclipse.egit.ui.internal.repository.tree.FetchNode;
 import org.eclipse.egit.ui.internal.repository.tree.RemoteNode;
 import org.eclipse.egit.ui.internal.repository.tree.RepositoryNode;
 import org.eclipse.egit.ui.internal.repository.tree.RepositoryTreeNode;
-import org.eclipse.egit.ui.internal.selection.RepositoryStateCache;
+import org.eclipse.egit.ui.internal.selection.SelectionRepositoryStateCache;
 import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jgit.transport.RemoteConfig;
 
@@ -99,7 +99,7 @@ public class FetchConfiguredRemoteCommand extends
 		if (node instanceof RemoteNode) {
 			try {
 				RemoteNode remote = (RemoteNode) node;
-				return new RemoteConfig(RepositoryStateCache.INSTANCE
+				return new RemoteConfig(SelectionRepositoryStateCache.INSTANCE
 						.getConfig(node.getRepository()), remote.getObject());
 			} catch (URISyntaxException e) {
 				throw new ExecutionException(e.getMessage());

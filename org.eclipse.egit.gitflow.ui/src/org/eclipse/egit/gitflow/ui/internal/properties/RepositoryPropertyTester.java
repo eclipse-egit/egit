@@ -17,7 +17,7 @@ import java.io.File;
 
 import org.eclipse.egit.gitflow.GitFlowConfig;
 import org.eclipse.egit.ui.internal.expressions.AbstractPropertyTester;
-import org.eclipse.egit.ui.internal.selection.RepositoryStateCache;
+import org.eclipse.egit.ui.internal.selection.SelectionRepositoryStateCache;
 import org.eclipse.jgit.lib.Repository;
 
 /**
@@ -60,13 +60,13 @@ public class RepositoryPropertyTester extends AbstractPropertyTester {
 
 	private boolean internalTest(Repository repository, String property) {
 		GitFlowConfig config = new GitFlowConfig(
-				RepositoryStateCache.INSTANCE.getConfig(repository));
+				SelectionRepositoryStateCache.INSTANCE.getConfig(repository));
 		if (IS_INITIALIZED.equals(property)) {
 			return config.isInitialized();
 		} else if (HAS_DEFAULT_REMOTE.equals(property)) {
 			return config.hasDefaultRemote();
 		} else {
-			String branch = RepositoryStateCache.INSTANCE
+			String branch = SelectionRepositoryStateCache.INSTANCE
 					.getFullBranchName(repository);
 			if (branch == null) {
 				return false;

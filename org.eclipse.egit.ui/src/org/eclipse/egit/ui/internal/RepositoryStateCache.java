@@ -8,19 +8,14 @@
  *
  * SPDX-License-Identifier: EPL-2.0
  *******************************************************************************/
-package org.eclipse.egit.ui.internal.selection;
+package org.eclipse.egit.ui.internal;
 
 import java.io.File;
 import java.io.IOException;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
-import java.util.concurrent.atomic.AtomicBoolean;
 
-import org.eclipse.e4.core.contexts.IEclipseContext;
-import org.eclipse.e4.core.contexts.RunAndTrack;
 import org.eclipse.egit.ui.Activator;
-import org.eclipse.jface.text.ITextSelection;
-import org.eclipse.jface.viewers.StructuredSelection;
 import org.eclipse.jgit.annotations.NonNull;
 import org.eclipse.jgit.lib.Constants;
 import org.eclipse.jgit.lib.ObjectId;
@@ -28,144 +23,52 @@ import org.eclipse.jgit.lib.Ref;
 import org.eclipse.jgit.lib.Repository;
 import org.eclipse.jgit.lib.RepositoryState;
 import org.eclipse.jgit.lib.StoredConfig;
-import org.eclipse.ui.IEditorInput;
-import org.eclipse.ui.IEditorPart;
-import org.eclipse.ui.ISources;
-import org.eclipse.ui.PlatformUI;
-import org.eclipse.ui.part.MultiPageEditorPart;
+import org.eclipse.jgit.revwalk.RevCommit;
+import org.eclipse.jgit.revwalk.RevWalk;
 
 /**
- * A global cache of some state of repositories. The cache is automatically
- * cleared whenever the workbench selection or the menu selection changes.
- * <p>
- * Intended for use in property testers and in other handler activation or
- * enablement code, such as {@code isEnabled()} methods. Using this cache can
- * massively reduce the number of file system accesses done in the UI thread to
- * evaluate some git repository state. The first handler evaluations will fill
- * the cache, and subsequent enablement expressions can then re-use these cached
- * values.
- * </p>
+ * A cache of some state of repositories. Concrete subclasses are responsible
+ * for clearing this cache in response to some event.
  */
-public class RepositoryStateCache {
+public abstract class RepositoryStateCache {
 
 	private enum RepositoryItem {
-		CONFIG, HEAD, HEAD_REF, FULL_BRANCH_NAME, STATE
+		CONFIG, HEAD, HEAD_REF, HEAD_COMMIT, FULL_BRANCH_NAME, STATE
 	}
-
-	/** The singleton instance of the {@link RepositoryStateCache}. */
-	public static final RepositoryStateCache INSTANCE = new RepositoryStateCache();
 
 	/** "null" marker in the maps. */
 	private static final Object NOTHING = new Object();
 
-	private final AtomicBoolean stopped = new AtomicBoolean();
-
 	private final Map<File, Map<RepositoryItem, Object>> cache = new ConcurrentHashMap<>();
-
-	private RepositoryStateCache() {
-		// No creation from outside
-	}
 
 	/**
 	 * Initializes the {@link RepositoryStateCache} and makes it listen to changes
 	 * that may affect the cache.
 	 */
-	public void initialize() {
-		// Clear the cache whenever the selection changes.
-		IEclipseContext applicationContext = PlatformUI.getWorkbench()
-				.getService(IEclipseContext.class);
-		// A RunAndTrack on the workbench context runs *before* any E3 or E4
-		// selection listener on the selection service, which is how expression
-		// re-evaluations for expressions based on the current selection are
-		// triggered. So we can ensure here that re-evaluations don't use stale
-		// cached values.
-		applicationContext.runAndTrack(new ContextListener(stopped, cache));
+	public abstract void initialize();
+
+	/**
+	 * Disposes the {@link RepositoryStateCache}.
+	 */
+	public void dispose() {
+		clear();
 	}
 
 	/**
-	 * Disposes the {@link RepositoryStateCache} and makes it stop listening to
-	 * changes in the workbench context.
+	 * Completely clears the cache.
 	 */
-	public void dispose() {
-		stopped.set(true);
+	public void clear() {
+		cache.clear();
 	}
 
-	private static class ContextListener extends RunAndTrack {
-
-		private AtomicBoolean stopped;
-
-		private Map<?, ?> cache;
-
-		ContextListener(AtomicBoolean stopped, Map<?, ?> cache) {
-			super();
-			this.stopped = stopped;
-			this.cache = cache;
-		}
-
-		private Object lastSelection;
-
-		private Object lastMenuSelection;
-
-		@Override
-		public boolean changed(IEclipseContext context) {
-			if (stopped.get()) {
-				cache.clear();
-				return false;
-			}
-			Object selection = context
-					.get(ISources.ACTIVE_CURRENT_SELECTION_NAME);
-			if (selection instanceof ITextSelection) {
-				selection = getInput(context);
-			}
-			Object menuSelection = context
-					.getActive(ISources.ACTIVE_MENU_SELECTION_NAME);
-			if (menuSelection instanceof ITextSelection) {
-				menuSelection = getInput(context);
-			}
-			// Clearing the cache on every workbench _or_ menu selection
-			// change is defensive. It might be possible to not clear the
-			// cache if the menuSelection == lastSelection.
-			if (selection != lastSelection
-					|| menuSelection != lastMenuSelection) {
-				cache.clear();
-			}
-			lastSelection = selection;
-			lastMenuSelection = menuSelection;
-			return true;
-		}
-
-		private Object getInput(IEclipseContext context) {
-			Object[] input = { null };
-			runExternalCode(() -> {
-				IEditorInput e = getEditorInput(context);
-				input[0] = e != null ? e : StructuredSelection.EMPTY;
-			});
-			return input[0];
-		}
-
-		private IEditorInput getEditorInput(IEclipseContext context) {
-			Object part = context.get(ISources.ACTIVE_PART_NAME);
-			if (!(part instanceof IEditorPart)) {
-				return null;
-			}
-			Object object = context.get(ISources.ACTIVE_EDITOR_INPUT_NAME);
-			Object editor = context.get(ISources.ACTIVE_EDITOR_NAME);
-			if (editor instanceof MultiPageEditorPart) {
-				Object nestedEditor = ((MultiPageEditorPart) editor)
-						.getSelectedPage();
-				if (nestedEditor instanceof IEditorPart) {
-					object = ((IEditorPart) nestedEditor).getEditorInput();
-				}
-			}
-			if (!(object instanceof IEditorInput)
-					&& (editor instanceof IEditorPart)) {
-				object = ((IEditorPart) editor).getEditorInput();
-			}
-			if (object instanceof IEditorInput) {
-				return (IEditorInput) object;
-			}
-			return null;
-		}
+	/**
+	 * Clears all cached entries for the given {@link Repository}.
+	 *
+	 * @param repository
+	 *            to remove cached items of
+	 */
+	public void clear(Repository repository) {
+		cache.remove(repository.getDirectory());
 	}
 
 	private Map<RepositoryItem, Object> getItems(Repository repository) {
@@ -269,6 +172,37 @@ public class RepositoryStateCache {
 			return null;
 		}
 		return (Ref) value;
+	}
+
+	/**
+	 * Retrieves the current HEAD commit of the repository.
+	 *
+	 * @param repository
+	 * @return the commit, or {@code null} if none could be determined
+	 */
+	public RevCommit getHeadCommit(Repository repository) {
+		if (repository == null) {
+			return null;
+		}
+		Map<RepositoryItem, Object> items = getItems(repository);
+		Object value = items.get(RepositoryItem.HEAD_COMMIT);
+		if (value == null) {
+			ObjectId headId = getHead(repository);
+			if (headId != null) {
+				try (RevWalk w = new RevWalk(repository)) {
+					RevCommit commit = w.parseCommit(headId);
+					items.put(RepositoryItem.HEAD_COMMIT, commit);
+					return commit;
+				} catch (IOException e) {
+					// Ignore here
+				}
+			}
+			items.put(RepositoryItem.HEAD_COMMIT, NOTHING);
+			return null;
+		} else if (value == NOTHING) {
+			return null;
+		}
+		return (RevCommit) value;
 	}
 
 	/**
