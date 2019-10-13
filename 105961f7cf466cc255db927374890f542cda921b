@@ -473,6 +473,23 @@
     },
     {
       "key": {
+        "uuid": "491edad3_715284c9",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/repository/RepositoriesViewContentProvider.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 431,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2019-10-13T14:17:54Z",
+      "side": 1,
+      "message": "Missing curly braces. (Yes, copied, but please change all the same. We fix this in code we touch anyway.)",
+      "revId": "105961f7cf466cc255db927374890f542cda921b",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8c439c2f_2e28c370",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/repository/RepositoryTreeNodeDecorator.java",
         "patchSetId": 6
