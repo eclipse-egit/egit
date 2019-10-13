@@ -92,8 +92,9 @@ public class TestProject {
 		IProjectDescription description = createDescription(path, insidews,
 				root);
 		project = root.getProject(description.getName());
-		if (remove)
-			project.delete(true, null);
+		if (remove) {
+			TestUtils.deleteProject(project);
+		}
 		IPath locationBefore = null;
 		URI locationURI = description.getLocationURI();
 		if (locationURI != null) {
@@ -204,9 +205,9 @@ public class TestProject {
 
 	public void dispose() throws CoreException, IOException {
 		waitForIndexer();
-		if (project.exists())
-			project.delete(true, true, null);
-		else {
+		if (project.exists()) {
+			TestUtils.deleteProject(project);
+		} else {
 			File f = new File(location);
 			if (f.exists())
 				FileUtils.delete(f, FileUtils.RECURSIVE | FileUtils.RETRY);
