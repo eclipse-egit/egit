@@ -163,6 +163,7 @@ public class StashCreateUI {
 			untrackedButton = new Button(composite, SWT.CHECK);
 			untrackedButton
 					.setText(UIText.StashCreateCommand_includeUntrackedLabel);
+			untrackedButton.setSelection(true);
 
 			text.setFocus();
 			return composite;
