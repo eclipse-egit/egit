@@ -23,7 +23,7 @@ import org.eclipse.core.resources.IResource;
 import org.eclipse.egit.core.internal.gerrit.GerritUtil;
 import org.eclipse.egit.core.project.RepositoryMapping;
 import org.eclipse.egit.ui.internal.expressions.AbstractPropertyTester;
-import org.eclipse.egit.ui.internal.selection.RepositoryStateCache;
+import org.eclipse.egit.ui.internal.selection.SelectionRepositoryStateCache;
 import org.eclipse.egit.ui.internal.trace.GitTraceLocation;
 import org.eclipse.jgit.annotations.NonNull;
 import org.eclipse.jgit.lib.Config;
@@ -116,7 +116,7 @@ public class ResourcePropertyTester extends AbstractPropertyTester {
 			if ("canPushToGerrit".equals(property)) { //$NON-NLS-1$
 				return canPushToGerrit(repository);
 			}
-			RepositoryState state = RepositoryStateCache.INSTANCE
+			RepositoryState state = SelectionRepositoryStateCache.INSTANCE
 					.getRepositoryState(repository);
 
 			if ("canAbortRebase".equals(property)) { //$NON-NLS-1$
@@ -155,7 +155,7 @@ public class ResourcePropertyTester extends AbstractPropertyTester {
 	 */
 	public static boolean hasGerritConfiguration(
 			@NonNull Repository repository) {
-		Config config = RepositoryStateCache.INSTANCE.getConfig(repository);
+		Config config = SelectionRepositoryStateCache.INSTANCE.getConfig(repository);
 		if (GerritUtil.getCreateChangeId(config)) {
 			return true;
 		}
@@ -180,7 +180,7 @@ public class ResourcePropertyTester extends AbstractPropertyTester {
 	 *         Gerrit
 	 */
 	public static boolean canFetchFromGerrit(@NonNull Repository repository) {
-		Config config = RepositoryStateCache.INSTANCE.getConfig(repository);
+		Config config = SelectionRepositoryStateCache.INSTANCE.getConfig(repository);
 		try {
 			List<RemoteConfig> remoteConfigs = RemoteConfig
 					.getAllRemoteConfigs(config);
@@ -201,7 +201,7 @@ public class ResourcePropertyTester extends AbstractPropertyTester {
 	 *         Gerrit
 	 */
 	public static boolean canPushToGerrit(@NonNull Repository repository) {
-		Config config = RepositoryStateCache.INSTANCE.getConfig(repository);
+		Config config = SelectionRepositoryStateCache.INSTANCE.getConfig(repository);
 		try {
 			List<RemoteConfig> remoteConfigs = RemoteConfig
 					.getAllRemoteConfigs(config);
