@@ -284,6 +284,9 @@ public class UIPreferences {
 	/** */
 	public static final String BLOCK_COMMIT_LEVEL = "blockCommitCombo"; //$NON-NLS-1$
 
+	/** */
+	public static final String STASH_INCLUDE_UNTRACKED = "stashIncludeUntracked"; //$NON-NLS-1$
+
 	/**
 	 * Converts a persisted String separated with commas to an integer array
 	 *
