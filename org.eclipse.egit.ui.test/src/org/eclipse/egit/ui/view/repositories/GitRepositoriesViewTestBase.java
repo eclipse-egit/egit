@@ -35,6 +35,7 @@ import org.eclipse.egit.ui.internal.CommonUtils;
 import org.eclipse.egit.ui.internal.UIText;
 import org.eclipse.egit.ui.internal.repository.RepositoriesView;
 import org.eclipse.egit.ui.internal.repository.tree.command.ToggleBranchCommitCommand;
+import org.eclipse.egit.ui.internal.repository.tree.command.ToggleLinkWithSelectionCommand;
 import org.eclipse.egit.ui.test.TestUtil;
 import org.eclipse.jgit.lib.ObjectId;
 import org.eclipse.jgit.lib.Ref;
@@ -45,6 +46,7 @@ import org.eclipse.swtbot.swt.finder.widgets.SWTBotTree;
 import org.eclipse.swtbot.swt.finder.widgets.SWTBotTreeItem;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.commands.ICommandService;
+import org.eclipse.ui.handlers.RegistryToggleState;
 import org.junit.After;
 import org.junit.Before;
 
@@ -106,10 +108,21 @@ public abstract class GitRepositoriesViewTestBase extends
 	protected static void setVerboseBranchMode(boolean state) {
 		ICommandService srv = CommonUtils.getService(PlatformUI.getWorkbench(),
 				ICommandService.class);
-		State verboseBranchModeState = srv.getCommand(
-				ToggleBranchCommitCommand.ID).getState(
-				ToggleBranchCommitCommand.TOGGLE_STATE);
+		State verboseBranchModeState = srv
+				.getCommand(ToggleBranchCommitCommand.ID)
+				.getState(RegistryToggleState.STATE_ID);
 		verboseBranchModeState.setValue(Boolean.valueOf(state));
+	}
+
+	protected static boolean setLinkWithSelection(boolean state) {
+		ICommandService srv = CommonUtils.getService(PlatformUI.getWorkbench(),
+				ICommandService.class);
+		State linkingState = srv.getCommand(ToggleLinkWithSelectionCommand.ID)
+				.getState(RegistryToggleState.STATE_ID);
+		boolean previousState = ((Boolean) linkingState.getValue())
+				.booleanValue();
+		linkingState.setValue(Boolean.valueOf(state));
+		return previousState;
 	}
 
 	protected SWTBotView getOrOpenView() throws Exception {
