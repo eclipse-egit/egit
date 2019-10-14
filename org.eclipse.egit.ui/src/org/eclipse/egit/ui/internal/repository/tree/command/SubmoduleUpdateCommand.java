@@ -12,6 +12,7 @@
  *****************************************************************************/
 package org.eclipse.egit.ui.internal.repository.tree.command;
 
+import java.io.IOException;
 import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.List;
@@ -28,6 +29,7 @@ import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.core.runtime.SubMonitor;
 import org.eclipse.core.runtime.jobs.Job;
+import org.eclipse.egit.core.RepositoryCache;
 import org.eclipse.egit.core.op.SubmoduleUpdateOperation;
 import org.eclipse.egit.ui.Activator;
 import org.eclipse.egit.ui.JobFamilies;
@@ -52,17 +54,21 @@ public class SubmoduleUpdateCommand extends
 			// Check for uncommitted changes in submodules.
 			try {
 				boolean submodulesNodeSelected = false;
+				RepositoryCache cache = org.eclipse.egit.core.Activator
+						.getDefault().getRepositoryCache();
 				List<Repository> subRepos = new ArrayList<>();
 				// If Submodules node is selected, check all submodules.
 				for (RepositoryTreeNode<?> node : getSelectedNodes(event)) {
 					if (node.getType() == RepositoryTreeNodeType.SUBMODULES) {
 						submodulesNodeSelected = true;
-						SubmoduleWalk walk = SubmoduleWalk
-								.forIndex(node.getRepository());
-						while (walk.next()) {
-							Repository subRepo = walk.getRepository();
-							if (subRepo != null) {
-								subRepos.add(subRepo);
+						try (SubmoduleWalk walk = SubmoduleWalk
+								.forIndex(node.getRepository())) {
+							while (walk.next()) {
+								Repository subRepo = getCached(cache,
+										walk.getRepository());
+								if (subRepo != null) {
+									subRepos.add(subRepo);
+								}
 							}
 						}
 						break;
@@ -75,9 +81,9 @@ public class SubmoduleUpdateCommand extends
 							.entrySet()) {
 						if (entry.getValue() != null) {
 							for (String path : entry.getValue()) {
-								Repository subRepo;
-								subRepo = SubmoduleWalk.getSubmoduleRepository(
-										entry.getKey(), path);
+								Repository subRepo = getCached(cache,
+										SubmoduleWalk.getSubmoduleRepository(
+												entry.getKey(), path));
 								if (subRepo != null) {
 									subRepos.add(subRepo);
 								}
@@ -143,5 +149,17 @@ public class SubmoduleUpdateCommand extends
 			job.schedule();
 		}
 		return null;
+	}
+
+	private Repository getCached(RepositoryCache cache, Repository repository)
+			throws IOException {
+		if (repository == null) {
+			return null;
+		}
+		try {
+			return cache.lookupRepository(repository.getDirectory());
+		} finally {
+			repository.close();
+		}
 	}
 }
