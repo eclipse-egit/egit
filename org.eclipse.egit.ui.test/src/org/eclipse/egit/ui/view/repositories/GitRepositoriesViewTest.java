@@ -65,6 +65,7 @@ import org.eclipse.ui.internal.dialogs.WorkbenchWizardElement;
 import org.eclipse.ui.internal.wizards.AbstractExtensionWizardRegistry;
 import org.eclipse.ui.wizards.IWizardCategory;
 import org.eclipse.ui.wizards.IWizardDescriptor;
+import org.junit.After;
 import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Test;
@@ -90,12 +91,20 @@ public class GitRepositoriesViewTest extends GitRepositoriesViewTestBase {
 
 	private File repositoryFile;
 
+	private boolean initialLinkingState;
+
 	@Before
-	public void beforeClass() throws Exception {
+	public void prepare() throws Exception {
 		setVerboseBranchMode(false);
+		initialLinkingState = setLinkWithSelection(false);
 		repositoryFile = createProjectAndCommitToRepository();
 		Activator.getDefault().getRepositoryUtil()
 				.addConfiguredRepository(repositoryFile);
+	}
+
+	@After
+	public void resetLinkingState() {
+		setLinkWithSelection(initialLinkingState);
 	}
 
 	/**
@@ -527,9 +536,6 @@ public class GitRepositoriesViewTest extends GitRepositoriesViewTestBase {
 
 		// the selection should be project
 		assertTrue(tree.selection().get(0, 0).equals(PROJ1));
-
-		// deactivate the link with selection
-		toggleLinkWithSelection();
 	}
 
 	/**
@@ -869,7 +875,8 @@ public class GitRepositoriesViewTest extends GitRepositoriesViewTestBase {
 
 	private void toggleLinkWithSelection() throws Exception {
 		getOrOpenView().toolbarButton(
-				myUtil.getPluginLocalizedValue("LinkWithSelectionCommand"))
+				myUtil.getPluginLocalizedValue(
+						"RepoViewLinkWithSelection.tooltip"))
 				.click();
 	}
 

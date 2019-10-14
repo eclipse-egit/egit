@@ -30,7 +30,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import org.eclipse.core.commands.Command;
+import org.eclipse.core.commands.IStateListener;
+import org.eclipse.core.commands.State;
 import org.eclipse.core.resources.IResource;
 import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.Adapters;
@@ -69,6 +70,8 @@ import org.eclipse.egit.ui.internal.repository.tree.RepositoryTreeNodeType;
 import org.eclipse.egit.ui.internal.repository.tree.StashedCommitNode;
 import org.eclipse.egit.ui.internal.repository.tree.TagNode;
 import org.eclipse.egit.ui.internal.repository.tree.WorkingDirNode;
+import org.eclipse.egit.ui.internal.repository.tree.command.ToggleBranchHierarchyCommand;
+import org.eclipse.egit.ui.internal.repository.tree.command.ToggleLinkWithSelectionCommand;
 import org.eclipse.egit.ui.internal.selection.SelectionUtils;
 import org.eclipse.egit.ui.internal.staging.StagingView;
 import org.eclipse.egit.ui.internal.trace.GitTraceLocation;
@@ -195,11 +198,63 @@ public class RepositoriesView extends CommonNavigator implements IShowInSource, 
 
 	private volatile long lastInputUpdate = -1L;
 
-	private boolean reactOnSelection;
+	private State reactOnSelection;
+
+	private final ISelectionListener selectionChangedListener = (part,
+			selection) -> {
+		if (!((Boolean) reactOnSelection.getValue()).booleanValue()
+				|| part == RepositoriesView.this) {
+			return;
+		}
+
+		// this may happen if we switch between editors
+		if (part instanceof IEditorPart) {
+			IEditorInput input = ((IEditorPart) part).getEditorInput();
+			if (input instanceof IFileEditorInput) {
+				reactOnSelection(new StructuredSelection(
+						((IFileEditorInput) input).getFile()));
+			} else if (input instanceof IURIEditorInput) {
+				reactOnSelection(new StructuredSelection(input));
+			}
+
+		} else {
+			reactOnSelection(selection);
+		}
+	};
+
+	private final IStateListener reactOnSelectionListener = (state,
+			oldValue) -> {
+		if (((Boolean) state.getValue()).booleanValue()) {
+			PlatformUI.getWorkbench().getDisplay().asyncExec(() -> {
+				ISelectionService service = CommonUtils
+						.getService(getViewSite(), ISelectionService.class);
+				if (service == null) {
+					return;
+				}
+				ISelection currentSelection = service.getSelection();
+				if (currentSelection == null || currentSelection.isEmpty()) {
+					return;
+				}
+				IWorkbenchWindow window = PlatformUI.getWorkbench()
+						.getActiveWorkbenchWindow();
+				if (window == null) {
+					return;
+				}
+				IWorkbenchPart part = window.getPartService().getActivePart();
+				if (part != null) {
+					selectionChangedListener.selectionChanged(part,
+							currentSelection);
+				}
+			});
+		}
+	};
+
+	private State branchHierarchy;
+
+	private final IStateListener stateChangeListener = (state,
+			oldValue) -> refresh();
 
 	private final IPreferenceChangeListener configurationListener;
-
-	private ISelectionListener selectionChangedListener;
 
 	/**
 	 * The default constructor
@@ -240,30 +295,6 @@ public class RepositoriesView extends CommonNavigator implements IShowInSource, 
 			@Override
 			public void onConfigChanged(ConfigChangedEvent event) {
 				scheduleRefresh(DEFAULT_REFRESH_DELAY, null);
-			}
-		};
-
-		selectionChangedListener = new ISelectionListener() {
-			@Override
-			public void selectionChanged(IWorkbenchPart part,
-					ISelection selection) {
-				if (!reactOnSelection || part == RepositoriesView.this) {
-					return;
-				}
-
-				// this may happen if we switch between editors
-				if (part instanceof IEditorPart) {
-					IEditorInput input = ((IEditorPart) part).getEditorInput();
-					if (input instanceof IFileEditorInput) {
-						reactOnSelection(new StructuredSelection(
-								((IFileEditorInput) input).getFile()));
-					} else if (input instanceof IURIEditorInput) {
-						reactOnSelection(new StructuredSelection(input));
-					}
-
-				} else {
-					reactOnSelection(selection);
-				}
 			}
 		};
 	}
@@ -370,7 +401,6 @@ public class RepositoriesView extends CommonNavigator implements IShowInSource, 
 				.grab(true, false).applyTo(createLink);
 	}
 
-	@SuppressWarnings("boxing")
 	@Override
 	public void createPartControl(Composite aParent) {
 		Composite displayArea = new Composite(aParent, SWT.NONE);
@@ -383,11 +413,12 @@ public class RepositoriesView extends CommonNavigator implements IShowInSource, 
 		IWorkbenchWindow w = PlatformUI.getWorkbench()
 				.getActiveWorkbenchWindow();
 		ICommandService csrv = CommonUtils.getService(w, ICommandService.class);
-		Command command = csrv
-				.getCommand("org.eclipse.egit.ui.RepositoriesLinkWithSelection"); //$NON-NLS-1$
-		reactOnSelection = (Boolean) command.getState(
-				RegistryToggleState.STATE_ID).getValue();
-
+		reactOnSelection = csrv.getCommand(ToggleLinkWithSelectionCommand.ID)
+				.getState(RegistryToggleState.STATE_ID);
+		reactOnSelection.addListener(reactOnSelectionListener);
+		branchHierarchy = csrv.getCommand(ToggleBranchHierarchyCommand.ID)
+				.getState(RegistryToggleState.STATE_ID);
+		branchHierarchy.addListener(stateChangeListener);
 		IWorkbenchSiteProgressService service = CommonUtils.getService(getSite(), IWorkbenchSiteProgressService.class);
 		if (service != null) {
 			service.showBusyForFamily(JobFamilies.REPO_VIEW_REFRESH);
@@ -411,15 +442,6 @@ public class RepositoriesView extends CommonNavigator implements IShowInSource, 
 			return adapter.cast(page);
 		}
 		return super.getAdapter(adapter);
-	}
-
-	/**
-	 * Used by the "link with selection" action
-	 *
-	 * @param reactOnSelection
-	 */
-	public void setReactOnSelection(boolean reactOnSelection) {
-		this.reactOnSelection = reactOnSelection;
 	}
 
 	@Override
@@ -580,6 +602,12 @@ public class RepositoriesView extends CommonNavigator implements IShowInSource, 
 
 	@Override
 	public void dispose() {
+		if (reactOnSelection != null) {
+			reactOnSelection.removeListener(reactOnSelectionListener);
+		}
+		if (branchHierarchy != null) {
+			branchHierarchy.removeListener(stateChangeListener);
+		}
 		// make sure to cancel the refresh job
 		if (this.scheduledJob != null) {
 			this.scheduledJob.cancel();

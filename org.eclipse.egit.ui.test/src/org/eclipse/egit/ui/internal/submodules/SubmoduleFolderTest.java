@@ -24,6 +24,7 @@ import static org.junit.Assert.assertTrue;
 import java.io.File;
 import java.util.Collections;
 
+import org.eclipse.core.commands.State;
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IFolder;
 import org.eclipse.core.resources.IProject;
@@ -40,10 +41,12 @@ import org.eclipse.egit.core.project.GitProjectData;
 import org.eclipse.egit.core.project.RepositoryMapping;
 import org.eclipse.egit.core.test.TestRepository;
 import org.eclipse.egit.ui.common.LocalRepositoryTestCase;
+import org.eclipse.egit.ui.internal.CommonUtils;
 import org.eclipse.egit.ui.internal.UIText;
 import org.eclipse.egit.ui.internal.clone.ProjectRecord;
 import org.eclipse.egit.ui.internal.clone.ProjectUtils;
 import org.eclipse.egit.ui.internal.repository.RepositoriesView;
+import org.eclipse.egit.ui.internal.repository.tree.command.ToggleLinkWithSelectionCommand;
 import org.eclipse.egit.ui.internal.resources.IResourceState;
 import org.eclipse.egit.ui.internal.resources.ResourceStateFactory;
 import org.eclipse.egit.ui.test.ContextMenuHelper;
@@ -62,6 +65,9 @@ import org.eclipse.swtbot.swt.finder.widgets.SWTBotTree;
 import org.eclipse.swtbot.swt.finder.widgets.SWTBotTreeItem;
 import org.eclipse.ui.IEditorReference;
 import org.eclipse.ui.IViewPart;
+import org.eclipse.ui.PlatformUI;
+import org.eclipse.ui.commands.ICommandService;
+import org.eclipse.ui.handlers.RegistryToggleState;
 import org.hamcrest.BaseMatcher;
 import org.hamcrest.Description;
 import org.junit.After;
@@ -77,8 +83,6 @@ public class SubmoduleFolderTest extends LocalRepositoryTestCase {
 	private static final String CHILD = "child";
 
 	private static final String CHILDPROJECT = "ChildProject";
-
-	private static final TestUtil UTIL = new TestUtil();
 
 	private Repository parentRepository;
 
@@ -260,11 +264,14 @@ public class SubmoduleFolderTest extends LocalRepositoryTestCase {
 
 	@Test
 	public void testRepoViewFollowSelection() throws Exception {
+		ICommandService srv = CommonUtils.getService(PlatformUI.getWorkbench(),
+				ICommandService.class);
+		State commandState = srv.getCommand(ToggleLinkWithSelectionCommand.ID)
+				.getState(RegistryToggleState.STATE_ID);
+		Boolean followsSelection = (Boolean) commandState.getValue();
+		commandState.setValue(Boolean.TRUE);
 		SWTBotView view = TestUtil.showView(RepositoriesView.VIEW_ID);
 		TestUtil.joinJobs(REPO_VIEW_REFRESH);
-		view.toolbarButton(
-				UTIL.getPluginLocalizedValue("LinkWithSelectionCommand"))
-				.click();
 		try {
 			SWTBotTree projectExplorerTree = TestUtil.getExplorerTree();
 			SWTBotTreeItem node = TestUtil.navigateTo(projectExplorerTree,
@@ -299,9 +306,7 @@ public class SubmoduleFolderTest extends LocalRepositoryTestCase {
 					parentFound[0]);
 		} finally {
 			// Reset "follow selection"
-			view.toolbarButton(
-					UTIL.getPluginLocalizedValue("LinkWithSelectionCommand"))
-					.click();
+			commandState.setValue(followsSelection);
 		}
 	}
 
