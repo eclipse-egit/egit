@@ -65,6 +65,7 @@ import org.eclipse.ui.internal.dialogs.WorkbenchWizardElement;
 import org.eclipse.ui.internal.wizards.AbstractExtensionWizardRegistry;
 import org.eclipse.ui.wizards.IWizardCategory;
 import org.eclipse.ui.wizards.IWizardDescriptor;
+import org.junit.After;
 import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Test;
@@ -90,12 +91,20 @@ public class GitRepositoriesViewTest extends GitRepositoriesViewTestBase {
 
 	private File repositoryFile;
 
+	private boolean initialLinkingState;
+
 	@Before
-	public void beforeClass() throws Exception {
+	public void prepare() throws Exception {
 		setVerboseBranchMode(false);
+		initialLinkingState = setLinkWithSelection(false);
 		repositoryFile = createProjectAndCommitToRepository();
 		Activator.getDefault().getRepositoryUtil()
 				.addConfiguredRepository(repositoryFile);
+	}
+
+	@After
+	public void resetLinkingState() {
+		setLinkWithSelection(initialLinkingState);
 	}
 
 	/**
@@ -515,21 +524,10 @@ public class GitRepositoriesViewTest extends GitRepositoriesViewTestBase {
 		// the selection should be still be root
 		assertTrue(tree.selection().get(0, 0).contains(REPO1));
 
-		// activate the link with selection
-		toggleLinkWithSelection();
-
-		// the selection should be still be root
-		assertTrue(tree.selection().get(0, 0).contains(REPO1));
-
-		// select again the project
-		projectExplorerTree = TestUtil.getExplorerTree();
-		getProjectItem(projectExplorerTree, PROJ1).select();
+		setLinkWithSelection(true);
 
 		// the selection should be project
 		assertTrue(tree.selection().get(0, 0).equals(PROJ1));
-
-		// deactivate the link with selection
-		toggleLinkWithSelection();
 	}
 
 	/**
@@ -566,8 +564,7 @@ public class GitRepositoriesViewTest extends GitRepositoriesViewTestBase {
 		// the selection should be still be root
 		assertTrue(tree.selection().get(0, 0).startsWith(REPO1));
 
-		// activate the link with selection
-		toggleLinkWithSelection();
+		setLinkWithSelection(true);
 
 		bot.editorByTitle(FILE2).show();
 		// the selection should have changed to the latest editor
@@ -577,8 +574,7 @@ public class GitRepositoriesViewTest extends GitRepositoriesViewTestBase {
 		// selection should have changed
 		TestUtil.waitUntilTreeHasSelectedNodeWithText(bot, tree, FILE1, 10000);
 
-		// deactivate the link with editor
-		toggleLinkWithSelection();
+		setLinkWithSelection(false);
 
 		bot.editorByTitle(FILE2).show();
 		// the selection should be still be test.txt
@@ -595,8 +591,7 @@ public class GitRepositoriesViewTest extends GitRepositoriesViewTestBase {
 		// the editor should still be test.txt
 		assertEquals(FILE1, bot.activeEditor().getTitle());
 
-		// activate again
-		toggleLinkWithSelection();
+		setLinkWithSelection(true);
 
 		// make sure focus is here
 		// tried to remove this waitInUI but failed.
@@ -617,8 +612,7 @@ public class GitRepositoriesViewTest extends GitRepositoriesViewTestBase {
 		item.getNode(FILE1).select();
 		TestUtil.waitUntilEditorIsActive(bot, bot.editorByTitle(FILE1), 10000);
 
-		// deactivate the link with editor
-		toggleLinkWithSelection();
+		setLinkWithSelection(false);
 
 		item = TestUtil.expandAndWait(
 				myRepoViewUtil.getWorkdirItem(tree, repositoryFile));
@@ -865,12 +859,6 @@ public class GitRepositoriesViewTest extends GitRepositoriesViewTestBase {
 				}
 			}
 		}
-	}
-
-	private void toggleLinkWithSelection() throws Exception {
-		getOrOpenView().toolbarButton(
-				myUtil.getPluginLocalizedValue("LinkWithSelectionCommand"))
-				.click();
 	}
 
 	private SWTBotTreeItem findWorkdirNode(SWTBotTree tree, String... nodes)
