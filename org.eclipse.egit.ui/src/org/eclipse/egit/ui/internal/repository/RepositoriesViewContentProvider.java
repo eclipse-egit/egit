@@ -1,5 +1,6 @@
 /*******************************************************************************
- * Copyright (c) 2010, 2013 SAP AG and others.
+ * Copyright (c) 2010, 2019 SAP AG and others.
+ *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License 2.0
  * which accompanies this distribution, and is available at
@@ -36,7 +37,6 @@ import java.util.Objects;
 import java.util.Set;
 import java.util.WeakHashMap;
 
-import org.eclipse.core.commands.IStateListener;
 import org.eclipse.core.commands.State;
 import org.eclipse.core.resources.IWorkspaceRoot;
 import org.eclipse.core.resources.WorkspaceJob;
@@ -94,21 +94,19 @@ import org.eclipse.jgit.transport.RemoteConfig;
 import org.eclipse.jgit.transport.URIish;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.commands.ICommandService;
+import org.eclipse.ui.handlers.RegistryToggleState;
 
 /**
  * Content Provider for the Git Repositories View
  */
-public class RepositoriesViewContentProvider implements ITreeContentProvider,
-		IStateListener {
+public class RepositoriesViewContentProvider implements ITreeContentProvider {
 
 	private static final Object[] NO_CHILDREN = new Object[0];
 
 	private final RepositoryCache repositoryCache = org.eclipse.egit.core.Activator
 			.getDefault().getRepositoryCache();
 
-	private final State commandState;
-
-	private boolean branchHierarchyMode = false;
+	private final State branchHierarchy;
 
 	private boolean showUnbornHead = false;
 
@@ -134,16 +132,8 @@ public class RepositoriesViewContentProvider implements ITreeContentProvider,
 		super();
 		this.showUnbornHead = showUnbornHead;
 		ICommandService srv = CommonUtils.getService(PlatformUI.getWorkbench(), ICommandService.class);
-		commandState = srv.getCommand(
-				ToggleBranchHierarchyCommand.ID)
-				.getState(ToggleBranchHierarchyCommand.TOGGLE_STATE);
-		commandState.addListener(this);
-		try {
-			this.branchHierarchyMode = ((Boolean) commandState.getValue())
-					.booleanValue();
-		} catch (Exception e) {
-			Activator.handleError(e.getMessage(), e, false);
-		}
+		branchHierarchy = srv.getCommand(ToggleBranchHierarchyCommand.ID)
+				.getState(RegistryToggleState.STATE_ID);
 	}
 
 	@Override
@@ -187,9 +177,7 @@ public class RepositoriesViewContentProvider implements ITreeContentProvider,
 
 	@Override
 	public void dispose() {
-		commandState.removeListener(this);
-		for (ListenerHandle handle : refsChangedListeners.values())
-			handle.remove();
+		refsChangedListeners.values().forEach(ListenerHandle::remove);
 		refsChangedListeners.clear();
 	}
 
@@ -391,7 +379,7 @@ public class RepositoriesViewContentProvider implements ITreeContentProvider,
 
 	private Object[] getBranchChildren(RepositoryTreeNode node, Repository repo,
 			String prefix) {
-		if (branchHierarchyMode) {
+		if (isHierarchical()) {
 			return getBranchHierarchyChildren(node, repo, prefix);
 		} else {
 			try {
@@ -592,16 +580,6 @@ public class RepositoriesViewContentProvider implements ITreeContentProvider,
 		}
 	}
 
-	@Override
-	public void handleStateChange(State state, Object oldValue) {
-		try {
-			this.branchHierarchyMode = ((Boolean) state.getValue())
-					.booleanValue();
-		} catch (Exception e) {
-			Activator.handleError(e.getMessage(), e, false);
-		}
-	}
-
 	private synchronized Map<String, Ref> getRefs(final Repository repo, final String prefix) throws IOException {
 		Map<String, Ref> allRefs = branchRefs.get(repo);
 		if (allRefs == null) {
@@ -674,6 +652,6 @@ public class RepositoriesViewContentProvider implements ITreeContentProvider,
 	 *         layout; {@code false} otherwise
 	 */
 	public boolean isHierarchical() {
-		return branchHierarchyMode;
+		return ((Boolean) branchHierarchy.getValue()).booleanValue();
 	}
 }
