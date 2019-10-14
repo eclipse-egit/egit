@@ -20,16 +20,19 @@ import static org.junit.Assert.assertTrue;
 
 import java.io.File;
 
+import org.eclipse.core.commands.State;
 import org.eclipse.core.runtime.Adapters;
 import org.eclipse.egit.core.RepositoryUtil;
 import org.eclipse.egit.core.op.CloneOperation;
 import org.eclipse.egit.ui.Activator;
 import org.eclipse.egit.ui.JobFamilies;
+import org.eclipse.egit.ui.internal.CommonUtils;
 import org.eclipse.egit.ui.internal.UIText;
 import org.eclipse.egit.ui.internal.rebase.RebaseInteractiveView;
 import org.eclipse.egit.ui.internal.reflog.ReflogView;
 import org.eclipse.egit.ui.internal.repository.RepositoriesView;
 import org.eclipse.egit.ui.internal.repository.tree.RepositoryNode;
+import org.eclipse.egit.ui.internal.repository.tree.command.ToggleLinkWithSelectionCommand;
 import org.eclipse.egit.ui.internal.staging.StagingView;
 import org.eclipse.egit.ui.test.TestUtil;
 import org.eclipse.egit.ui.view.repositories.GitRepositoriesViewTestBase;
@@ -49,6 +52,8 @@ import org.eclipse.swtbot.swt.finder.widgets.SWTBotTreeItem;
 import org.eclipse.team.internal.ui.history.GenericHistoryView;
 import org.eclipse.team.ui.history.IHistoryView;
 import org.eclipse.ui.PlatformUI;
+import org.eclipse.ui.commands.ICommandService;
+import org.eclipse.ui.handlers.RegistryToggleState;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Ignore;
@@ -78,6 +83,10 @@ public class SelectionForViewsTest extends GitRepositoriesViewTestBase {
 
 	private SWTBotView repoView;
 
+	private State linkWithSelectionState;
+
+	private Boolean initialLinkingWithSelection;
+
 	@Before
 	public void before() throws Exception {
 		localRepositoryDir = createProjectAndCommitToRepository();
@@ -92,14 +101,19 @@ public class SelectionForViewsTest extends GitRepositoriesViewTestBase {
 		repoUtil.addConfiguredRepository(localRepositoryDir);
 		repoUtil.addConfiguredRepository(clonedRepositoryDir);
 		repoUtil.addConfiguredRepository(remoteRepositoryDir); // it's bare
+		ICommandService srv = CommonUtils.getService(PlatformUI.getWorkbench(),
+				ICommandService.class);
+		linkWithSelectionState = srv
+				.getCommand(ToggleLinkWithSelectionCommand.ID)
+				.getState(RegistryToggleState.STATE_ID);
+		initialLinkingWithSelection = (Boolean) linkWithSelectionState
+				.getValue();
+		linkWithSelectionState.setValue(Boolean.TRUE);
 		stagingView = TestUtil.showView(StagingView.VIEW_ID);
 		reflogView = TestUtil.showView(ReflogView.VIEW_ID);
 		rebaseInteractiveView = TestUtil
 				.showView(RebaseInteractiveView.VIEW_ID);
 		repoView = TestUtil.showView(RepositoriesView.VIEW_ID);
-		RepositoriesView repos = (RepositoriesView) repoView.getViewReference()
-				.getView(false);
-		repos.setReactOnSelection(true);
 		historyView = TestUtil.showHistoryView();
 		IHistoryView history = (IHistoryView) historyView.getViewReference()
 				.getView(false);
@@ -122,9 +136,7 @@ public class SelectionForViewsTest extends GitRepositoriesViewTestBase {
 
 	@After
 	public void after() {
-		RepositoriesView repos = (RepositoriesView) repoView.getViewReference()
-				.getView(false);
-		repos.setReactOnSelection(false);
+		linkWithSelectionState.setValue(initialLinkingWithSelection);
 		IHistoryView history = (IHistoryView) historyView.getViewReference()
 				.getView(false);
 		((GenericHistoryView) history).setLinkingEnabled(false);

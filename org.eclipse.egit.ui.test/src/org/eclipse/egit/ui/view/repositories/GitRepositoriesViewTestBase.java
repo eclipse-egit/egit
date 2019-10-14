@@ -45,6 +45,7 @@ import org.eclipse.swtbot.swt.finder.widgets.SWTBotTree;
 import org.eclipse.swtbot.swt.finder.widgets.SWTBotTreeItem;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.commands.ICommandService;
+import org.eclipse.ui.handlers.RegistryToggleState;
 import org.junit.After;
 import org.junit.Before;
 
@@ -106,9 +107,9 @@ public abstract class GitRepositoriesViewTestBase extends
 	protected static void setVerboseBranchMode(boolean state) {
 		ICommandService srv = CommonUtils.getService(PlatformUI.getWorkbench(),
 				ICommandService.class);
-		State verboseBranchModeState = srv.getCommand(
-				ToggleBranchCommitCommand.ID).getState(
-				ToggleBranchCommitCommand.TOGGLE_STATE);
+		State verboseBranchModeState = srv
+				.getCommand(ToggleBranchCommitCommand.ID)
+				.getState(RegistryToggleState.STATE_ID);
 		verboseBranchModeState.setValue(Boolean.valueOf(state));
 	}
 
