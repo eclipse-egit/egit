@@ -335,9 +335,8 @@ public class RepositoriesViewContentProvider implements ITreeContentProvider,
 
 		case SUBMODULES:
 			List<RepositoryNode> children = new ArrayList<>();
-			try {
-				SubmoduleWalk walk = SubmoduleWalk.forIndex(node
-						.getRepository());
+			try (SubmoduleWalk walk = SubmoduleWalk
+					.forIndex(node.getRepository())) {
 				while (walk.next()) {
 					Repository subRepo = walk.getRepository();
 					if (subRepo != null) {
