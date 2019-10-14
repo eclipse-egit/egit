@@ -42,6 +42,7 @@ import org.eclipse.jgit.revwalk.RevWalk;
 import org.eclipse.jgit.submodule.SubmoduleWalk;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.commands.ICommandService;
+import org.eclipse.ui.handlers.RegistryToggleState;
 
 /**
  * Lightweight decorator for {@link RepositoryTreeNode}s. Note that this
@@ -63,7 +64,7 @@ public class RepositoryTreeNodeDecorator extends GitDecorator
 	public RepositoryTreeNodeDecorator() {
 		ICommandService srv = CommonUtils.getService(PlatformUI.getWorkbench(), ICommandService.class);
 		verboseBranchModeState = srv.getCommand(ToggleBranchCommitCommand.ID)
-				.getState(ToggleBranchCommitCommand.TOGGLE_STATE);
+				.getState(RegistryToggleState.STATE_ID);
 		verboseBranchModeState.addListener(this);
 		try {
 			this.verboseBranchMode = ((Boolean) verboseBranchModeState

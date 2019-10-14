@@ -2441,17 +2441,6 @@
          </activeWhen>
       </handler>
       <handler
-            commandId="org.eclipse.egit.ui.RepositoriesLinkWithSelection">
-         <class
-               class="org.eclipse.egit.ui.internal.repository.tree.command.LinkWithSelectionCommand">
-         </class>
-         <activeWhen>
-            <with variable="activePart">
-               <instanceof value="org.eclipse.egit.ui.internal.repository.RepositoriesView" />
-            </with>
-         </activeWhen>
-      </handler>
-      <handler
             commandId="org.eclipse.egit.ui.RepositoriesViewRemove">
          <class
                class="org.eclipse.egit.ui.internal.repository.tree.command.RemoveCommand">
@@ -4915,6 +4904,7 @@
          </command>
          <command
                commandId="org.eclipse.egit.ui.RepositoriesLinkWithSelection"
+               tooltip="%RepoViewLinkWithSelection.tooltip"
                style="toggle">
          </command>
          <separator
@@ -5905,6 +5895,7 @@
       <command
             categoryId="org.eclipse.egit.ui.commandCategory"
             id="org.eclipse.egit.ui.RepositoriesLinkWithSelection"
+            defaultHandler="org.eclipse.egit.ui.internal.repository.tree.command.ToggleLinkWithSelectionCommand"
             name="%LinkWithSelectionCommand">
           <state
                 class="org.eclipse.ui.handlers.RegistryToggleState:false"
