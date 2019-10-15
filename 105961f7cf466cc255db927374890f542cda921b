@@ -36,6 +36,24 @@
     },
     {
       "key": {
+        "uuid": "f1875a5a_27e6ea58",
+        "filename": "org.eclipse.egit.ui/plugin.xml",
+        "patchSetId": 6
+      },
+      "lineNbr": 4956,
+      "author": {
+        "id": 236689
+      },
+      "writtenOn": "2019-10-15T20:32:29Z",
+      "side": 1,
+      "message": "I thought so, too. But if I do not do the check here, the delete group item also appears if a single repository is selected.",
+      "parentUuid": "22468955_d87d8f16",
+      "revId": "105961f7cf466cc255db927374890f542cda921b",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "26a6c829_4c3efc4b",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/actions/RepositoryGroupsMenu.java",
         "patchSetId": 6
@@ -989,6 +1007,30 @@
       "writtenOn": "2019-10-13T14:14:43Z",
       "side": 1,
       "message": "Trim automatically? Then we don\u0027t have to tell the user about this condition.",
+      "range": {
+        "startLine": 1348,
+        "startChar": 80,
+        "endLine": 1348,
+        "endChar": 113
+      },
+      "revId": "105961f7cf466cc255db927374890f542cda921b",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "74351fc3_1f7ec356",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/uitext.properties",
+        "patchSetId": 6
+      },
+      "lineNbr": 1348,
+      "author": {
+        "id": 236689
+      },
+      "writtenOn": "2019-10-15T20:32:29Z",
+      "side": 1,
+      "message": "It was the simplest way to get a consistent validation and API without duplicating too much code and having localizations for every single error case.\nMy intention was that RepositoryGroups-methods where the name is passed as an argument can be sure that the name is a valid one (check+Exception).",
+      "parentUuid": "a866e691_38364dae",
       "range": {
         "startLine": 1348,
         "startChar": 80,
