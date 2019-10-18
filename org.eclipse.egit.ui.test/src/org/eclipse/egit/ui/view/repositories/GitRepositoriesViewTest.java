@@ -67,7 +67,6 @@ import org.eclipse.ui.wizards.IWizardCategory;
 import org.eclipse.ui.wizards.IWizardDescriptor;
 import org.junit.After;
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
@@ -527,13 +526,6 @@ public class GitRepositoriesViewTest extends GitRepositoriesViewTestBase {
 		// activate the link with selection
 		toggleLinkWithSelection();
 
-		// the selection should be still be root
-		assertTrue(tree.selection().get(0, 0).contains(REPO1));
-
-		// select again the project
-		projectExplorerTree = TestUtil.getExplorerTree();
-		getProjectItem(projectExplorerTree, PROJ1).select();
-
 		// the selection should be project
 		assertTrue(tree.selection().get(0, 0).equals(PROJ1));
 	}
@@ -544,7 +536,6 @@ public class GitRepositoriesViewTest extends GitRepositoriesViewTestBase {
 	 * @throws Exception
 	 */
 	@Test
-	@Ignore("'Link with Selection' does not activate editor on selection change (bug 409722).")
 	public void testLinkWithSelectionEditor() throws Exception {
 		deleteAllProjects();
 		shareProjects(repositoryFile);

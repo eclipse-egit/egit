@@ -52,6 +52,7 @@ import org.eclipse.egit.ui.JobFamilies;
 import org.eclipse.egit.ui.UIPreferences;
 import org.eclipse.egit.ui.UIUtils;
 import org.eclipse.egit.ui.internal.CommonUtils;
+import org.eclipse.egit.ui.internal.EgitUiEditorUtils;
 import org.eclipse.egit.ui.internal.UIIcons;
 import org.eclipse.egit.ui.internal.UIText;
 import org.eclipse.egit.ui.internal.actions.ActionCommands;
@@ -91,6 +92,7 @@ import org.eclipse.jface.viewers.IBaseLabelProvider;
 import org.eclipse.jface.viewers.IDoubleClickListener;
 import org.eclipse.jface.viewers.IOpenListener;
 import org.eclipse.jface.viewers.ISelection;
+import org.eclipse.jface.viewers.ISelectionProvider;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.viewers.ITreeContentProvider;
 import org.eclipse.jface.viewers.OpenEvent;
@@ -124,7 +126,9 @@ import org.eclipse.ui.ISelectionListener;
 import org.eclipse.ui.ISelectionService;
 import org.eclipse.ui.IURIEditorInput;
 import org.eclipse.ui.IViewPart;
+import org.eclipse.ui.IWorkbenchPage;
 import org.eclipse.ui.IWorkbenchPart;
+import org.eclipse.ui.IWorkbenchPartSite;
 import org.eclipse.ui.IWorkbenchWindow;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.commands.ICommandService;
@@ -140,6 +144,7 @@ import org.eclipse.ui.navigator.CommonViewer;
 import org.eclipse.ui.part.IPage;
 import org.eclipse.ui.part.IShowInSource;
 import org.eclipse.ui.part.IShowInTargetList;
+import org.eclipse.ui.part.MultiPageEditorPart;
 import org.eclipse.ui.part.ShowInContext;
 import org.eclipse.ui.progress.IWorkbenchSiteProgressService;
 import org.eclipse.ui.progress.WorkbenchJob;
@@ -200,51 +205,52 @@ public class RepositoriesView extends CommonNavigator implements IShowInSource, 
 
 	private State reactOnSelection;
 
+	private IWorkbenchPart lastSelectionPart;
+
+	private File lastSelectedRepository;
+
 	private final ISelectionListener selectionChangedListener = (part,
 			selection) -> {
-		if (!((Boolean) reactOnSelection.getValue()).booleanValue()
-				|| part == RepositoriesView.this) {
+		if (part == RepositoriesView.this) {
+			if (!selection.isEmpty()
+					&& selection instanceof IStructuredSelection) {
+				Repository repo = SelectionUtils
+						.getRepository((IStructuredSelection) selection);
+				if (repo != null) {
+					lastSelectedRepository = repo.getDirectory();
+				} else {
+					lastSelectedRepository = null;
+				}
+			}
 			return;
 		}
-
-		// this may happen if we switch between editors
-		if (part instanceof IEditorPart) {
-			IEditorInput input = ((IEditorPart) part).getEditorInput();
-			if (input instanceof IFileEditorInput) {
-				reactOnSelection(new StructuredSelection(
-						((IFileEditorInput) input).getFile()));
-			} else if (input instanceof IURIEditorInput) {
-				reactOnSelection(new StructuredSelection(input));
-			}
-
+		IWorkbenchPart currentPart = determinePart(part);
+		if (!((Boolean) reactOnSelection.getValue()).booleanValue()) {
+			lastSelectionPart = currentPart;
 		} else {
-			reactOnSelection(selection);
+			lastSelectionPart = null;
+			reactOnSelection(convertSelection(currentPart, selection));
 		}
 	};
 
 	private final IStateListener reactOnSelectionListener = (state,
 			oldValue) -> {
-		if (((Boolean) state.getValue()).booleanValue()) {
+		if (((Boolean) state.getValue()).booleanValue()
+				&& lastSelectionPart != null) {
 			PlatformUI.getWorkbench().getDisplay().asyncExec(() -> {
-				ISelectionService service = CommonUtils
-						.getService(getViewSite(), ISelectionService.class);
-				if (service == null) {
+				if (lastSelectionPart == null) {
 					return;
 				}
-				ISelection currentSelection = service.getSelection();
-				if (currentSelection == null || currentSelection.isEmpty()) {
+				IWorkbenchPartSite site = lastSelectionPart.getSite();
+				if (site == null) {
 					return;
 				}
-				IWorkbenchWindow window = PlatformUI.getWorkbench()
-						.getActiveWorkbenchWindow();
-				if (window == null) {
+				ISelectionProvider provider = site.getSelectionProvider();
+				if (provider == null) {
 					return;
 				}
-				IWorkbenchPart part = window.getPartService().getActivePart();
-				if (part != null) {
-					selectionChangedListener.selectionChanged(part,
-							currentSelection);
-				}
+				reactOnSelection(convertSelection(lastSelectionPart,
+						provider.getSelection()));
 			});
 		}
 	};
@@ -493,7 +499,25 @@ public class RepositoriesView extends CommonNavigator implements IShowInSource, 
 				configurationListener);
 		initRepositoriesAndListeners();
 		activateContextService();
-
+		// link with editor
+		viewer.addPostSelectionChangedListener(event -> {
+			if (!((Boolean) reactOnSelection.getValue()).booleanValue()) {
+				return;
+			}
+			ISelection selection = event.getSelection();
+			if (selection.isEmpty()
+					|| !(selection instanceof IStructuredSelection)) {
+				return;
+			}
+			IStructuredSelection sel = (IStructuredSelection) selection;
+			if (sel.size() > 1) {
+				return;
+			}
+			Object selected = sel.getFirstElement();
+			if (selected instanceof FileNode) {
+				showEditor((FileNode) selected);
+			}
+		});
 		emptyArea.setBackground(viewer.getControl().getBackground());
 		if (!repositories.isEmpty())
 			layout.topControl = viewer.getControl();
@@ -682,9 +706,10 @@ public class RepositoriesView extends CommonNavigator implements IShowInSource, 
 	private void selectAndReveal(
 			Map<Repository, Collection<String>> pathsByRepo) {
 		final List<RepositoryTreeNode> nodesToShow = new ArrayList<>();
+		Repository repository = null;
 		for (Map.Entry<Repository, Collection<String>> entry : pathsByRepo
 				.entrySet()) {
-			Repository repository = entry.getKey();
+			repository = entry.getKey();
 			for (String repoPath : entry.getValue()) {
 				final RepositoryTreeNode node = getNodeForPath(repository,
 						repoPath);
@@ -693,7 +718,20 @@ public class RepositoriesView extends CommonNavigator implements IShowInSource, 
 				}
 			}
 		}
-		selectReveal(new StructuredSelection(nodesToShow));
+
+		if (repository != null && !nodesToShow.isEmpty()
+				&& pathsByRepo.size() == 1) {
+			lastSelectedRepository = repository.getDirectory();
+		} else {
+			lastSelectedRepository = null;
+		}
+		List<?> current = getCommonViewer().getStructuredSelection().toList();
+		Set<?> currentlySelected = new HashSet<>(current);
+		if (currentlySelected.containsAll(nodesToShow)) {
+			getCommonViewer().getTree().showSelection();
+		} else {
+			selectReveal(new StructuredSelection(nodesToShow));
+		}
 	}
 
 	/**
@@ -704,12 +742,14 @@ public class RepositoriesView extends CommonNavigator implements IShowInSource, 
 	public void showRepository(Repository repositoryToShow) {
 		ITreeContentProvider cp = (ITreeContentProvider) getCommonViewer()
 				.getContentProvider();
-		for (Object repo : cp.getElements(getCommonViewer().getInput())) {
-			RepositoryTreeNode node = (RepositoryTreeNode) repo;
-			if (repositoryToShow.getDirectory().equals(node.getRepository().getDirectory()))
-				selectReveal(new StructuredSelection(node));
+		RepositoryTreeNode node = findRepositoryNode(cp,
+				cp.getElements(getCommonViewer().getInput()), repositoryToShow);
+		if (node != null) {
+			lastSelectedRepository = repositoryToShow.getDirectory();
+			selectReveal(new StructuredSelection(node));
 		}
 	}
+
 	/**
 	 * Refresh Repositories View
 	 */
@@ -1006,8 +1046,38 @@ public class RepositoriesView extends CommonNavigator implements IShowInSource, 
 			return null;
 	}
 
+	private IWorkbenchPart determinePart(IWorkbenchPart part) {
+		IWorkbenchPart currentPart = part;
+		// this may happen if we switch between editors
+		if (currentPart instanceof IEditorPart) {
+			if (currentPart instanceof MultiPageEditorPart) {
+				Object nestedEditor = ((MultiPageEditorPart) part)
+						.getSelectedPage();
+				if (nestedEditor instanceof IEditorPart) {
+					currentPart = ((IEditorPart) nestedEditor);
+				}
+			}
+		}
+		return currentPart;
+	}
+
+	private ISelection convertSelection(IWorkbenchPart part,
+			ISelection selection) {
+		if (part instanceof IEditorPart) {
+			IEditorInput input = ((IEditorPart) part).getEditorInput();
+			if (input instanceof IFileEditorInput) {
+				return new StructuredSelection(
+						((IFileEditorInput) input).getFile());
+			} else if (input instanceof IURIEditorInput) {
+				return new StructuredSelection(input);
+			}
+		}
+		return selection;
+	}
+
 	private void reactOnSelection(ISelection selection) {
-		if (selection instanceof StructuredSelection) {
+		if (layout.topControl != emptyArea
+				&& selection instanceof StructuredSelection) {
 			StructuredSelection ssel = (StructuredSelection) selection;
 			if (ssel.size() != 1) {
 				return;
@@ -1026,9 +1096,25 @@ public class RepositoriesView extends CommonNavigator implements IShowInSource, 
 			}
 			Repository repository = Adapters.adapt(ssel.getFirstElement(),
 					Repository.class);
-			if (repository != null) {
+			if (repository != null && !repository.getDirectory()
+					.equals(lastSelectedRepository)) {
 				showRepository(repository);
 				return;
+			}
+		}
+	}
+
+	private void showEditor(FileNode node) {
+		File file = node.getObject();
+		IWorkbenchWindow window = PlatformUI.getWorkbench()
+				.getActiveWorkbenchWindow();
+		if (window != null) {
+			IWorkbenchPage page = window.getActivePage();
+			IEditorPart editor = EgitUiEditorUtils.findEditor(file, page);
+			IEditorPart active = page.getActiveEditor();
+			if (editor != null && editor != active) {
+				window.getWorkbench().getDisplay()
+						.asyncExec(() -> page.bringToTop(editor));
 			}
 		}
 	}
