@@ -3230,6 +3230,9 @@
                name="org.eclipse.ui.navigator.hideAvailableExtensionsTab"
                value="true"/>
             <!-- Hide the "Link with Editor" action from the toolbar of the viewer -->
+            <!-- We implement our own "Link with Editor and Selection"; the built-in -->
+            <!-- ILinkHelper works only for linking with an active editor, but not -->
+            <!-- for synchronizing the selection with that in other views. -->
             <property
                name="org.eclipse.ui.navigator.hideLinkWithEditorAction"
                value="true"/>
@@ -3302,9 +3305,6 @@
          <includes>
             <contentExtension
                   pattern="org.eclipse.egit.ui.RepositoriesViewContent">
-            </contentExtension>
-            <contentExtension
-                  pattern="org.eclipse.egit.ui.RepositoriesViewLinkHelper">
             </contentExtension>
             <contentExtension
                   pattern="org.eclipse.egit.ui.repositoriesView.filters.remoteBranches">
@@ -6407,22 +6407,6 @@
       </propertyTester>
    </extension>
    <extension
-         point="org.eclipse.ui.navigator.linkHelper">
-      <linkHelper
-            class="org.eclipse.egit.ui.internal.repository.tree.LinkHelper"
-            id="org.eclipse.egit.ui.RepositoriesViewLinkHelper">
-         <editorInputEnablement>
-            <instanceof
-                  value="org.eclipse.ui.IURIEditorInput">
-            </instanceof></editorInputEnablement>
-         <selectionEnablement>
-            <instanceof
-                  value="org.eclipse.egit.ui.internal.repository.tree.FileNode">
-            </instanceof>
-         </selectionEnablement>
-      </linkHelper>
-    </extension>
-    <extension
          id="changeSetModel"
          name="%ChangeSetModel.name"
          point="org.eclipse.core.resources.modelProviders">
