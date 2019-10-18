@@ -43,7 +43,9 @@ import org.eclipse.ui.IWorkbenchPage;
 import org.eclipse.ui.PartInitException;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.editors.text.EditorsUI;
+import org.eclipse.ui.ide.FileStoreEditorInput;
 import org.eclipse.ui.ide.IDE;
+import org.eclipse.ui.part.FileEditorInput;
 import org.eclipse.ui.part.MultiPageEditorPart;
 import org.eclipse.ui.texteditor.ITextEditor;
 
@@ -174,6 +176,27 @@ public class EgitUiEditorUtils {
 			Activator.handleError(UIText.EgitUiEditorUtils_openFailed, e, true);
 		}
 		return null;
+	}
+
+	/**
+	 * Looks for and returns an open editor on the given page that has the given file as input.
+	 *
+	 * @param file to find an editor for
+	 * @param page on which to look for open editors
+	 * @return the open editor, or {@code null} if none could be found
+	 */
+	public static IEditorPart findEditor(File file, IWorkbenchPage page) {
+		if (!file.exists() || page == null) {
+			return null;
+		}
+		IPath path = new Path(file.getAbsolutePath());
+		IFile iFile = ResourceUtil.getFileForLocation(path, true);
+		if (iFile != null) {
+			return page.findEditor(new FileEditorInput(iFile));
+		} else {
+			IFileStore store = EFS.getLocalFileSystem().getStore(path);
+			return page.findEditor(new FileStoreEditorInput(store));
+		}
 	}
 
 	private static IEditorDescriptor getEditor(
