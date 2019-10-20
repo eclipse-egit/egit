@@ -12,11 +12,15 @@ package org.eclipse.egit.ui.internal.repository;
 
 import java.io.IOException;
 import java.text.MessageFormat;
+import java.util.Set;
 
 import org.eclipse.core.commands.IStateListener;
 import org.eclipse.core.commands.State;
 import org.eclipse.egit.core.RepositoryUtil;
 import org.eclipse.egit.core.internal.Utils;
+import org.eclipse.egit.core.internal.indexdiff.IndexDiffCache;
+import org.eclipse.egit.core.internal.indexdiff.IndexDiffCacheEntry;
+import org.eclipse.egit.core.internal.indexdiff.IndexDiffData;
 import org.eclipse.egit.ui.Activator;
 import org.eclipse.egit.ui.internal.CommonUtils;
 import org.eclipse.egit.ui.internal.GitLabels;
@@ -39,7 +43,6 @@ import org.eclipse.jgit.lib.Repository;
 import org.eclipse.jgit.lib.RepositoryState;
 import org.eclipse.jgit.revwalk.RevCommit;
 import org.eclipse.jgit.revwalk.RevWalk;
-import org.eclipse.jgit.submodule.SubmoduleWalk;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.commands.ICommandService;
 import org.eclipse.ui.handlers.RegistryToggleState;
@@ -248,7 +251,7 @@ public class RepositoryTreeNodeDecorator extends GitDecorator
 	}
 
 	private boolean decorateSubmodules(@NonNull Repository repository,
-			IDecoration decoration) throws IOException {
+			IDecoration decoration) {
 		if (haveSubmoduleChanges(repository)) {
 			decoration.addPrefix("> "); //$NON-NLS-1$
 			return true;
@@ -293,23 +296,20 @@ public class RepositoryTreeNodeDecorator extends GitDecorator
 		}
 	}
 
-	private boolean haveSubmoduleChanges(@NonNull Repository repository)
-			throws IOException {
-		boolean hasChanges = false;
-		try (SubmoduleWalk walk = SubmoduleWalk.forIndex(repository)) {
-			while (!hasChanges && walk.next()) {
-				Repository submodule = walk.getRepository();
-				if (submodule != null) {
-					Repository cached = org.eclipse.egit.core.Activator
-							.getDefault().getRepositoryCache().lookupRepository(
-									submodule.getDirectory().getAbsoluteFile());
-					hasChanges = cached != null
-							&& RepositoryUtil.hasChanges(cached);
-					submodule.close();
-				}
-			}
+	private boolean haveSubmoduleChanges(@NonNull Repository repository) {
+		IndexDiffCache cache = org.eclipse.egit.core.Activator.getDefault()
+				.getIndexDiffCache();
+		if (cache == null) {
+			return false;
 		}
-		return hasChanges;
+		IndexDiffCacheEntry entry = cache.getIndexDiffCacheEntry(repository);
+		IndexDiffData data = entry != null ? entry.getIndexDiff() : null;
+		if (data == null) {
+			return false;
+		}
+		Set<String> modified = data.getModified();
+		return data.getSubmodules().stream()
+				.anyMatch(s -> modified.contains(s));
 	}
 
 	@Override
