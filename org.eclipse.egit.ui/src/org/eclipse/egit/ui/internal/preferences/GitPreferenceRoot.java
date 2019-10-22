@@ -119,8 +119,9 @@ public class GitPreferenceRoot extends DoublePreferencesPreferencePage
 			private static final int NUMBER_OF_OWN_CONTROLS = 1;
 
 			@Override
-			public IPreferenceStore getPreferenceStore() {
-				return getSecondaryPreferenceStore();
+			public void setPreferenceStore(IPreferenceStore store) {
+				super.setPreferenceStore(
+						store == null ? store : getSecondaryPreferenceStore());
 			}
 
 			@Override
@@ -203,15 +204,16 @@ public class GitPreferenceRoot extends DoublePreferencesPreferencePage
 				GitCorePreferences.core_maxPullThreadsCount,
 				UIText.GitPreferenceRoot_MaxPullThreadsCount,
 				remoteConnectionsGroup) {
+
 			@Override
-			public IPreferenceStore getPreferenceStore() {
-				return getSecondaryPreferenceStore();
+			public void setPreferenceStore(IPreferenceStore store) {
+				super.setPreferenceStore(
+						store == null ? store : getSecondaryPreferenceStore());
 			}
 		};
 		pullEditor.getLabelControl(remoteConnectionsGroup).setToolTipText(
 				UIText.GitPreferenceRoot_MaxPullThreadsCountTooltip);
 		addField(pullEditor);
-		pullEditor.setPreferenceStore(getSecondaryPreferenceStore());
 
 		IntegerFieldEditor timeoutEditor = new IntegerFieldEditor(
 				UIPreferences.REMOTE_CONNECTION_TIMEOUT,
@@ -226,10 +228,10 @@ public class GitPreferenceRoot extends DoublePreferencesPreferencePage
 				SSH_CLIENT_NAMES_AND_VALUES, remoteConnectionsGroup) {
 
 			@Override
-			public IPreferenceStore getPreferenceStore() {
-				return getSecondaryPreferenceStore();
+			public void setPreferenceStore(IPreferenceStore store) {
+				super.setPreferenceStore(
+						store == null ? store : getSecondaryPreferenceStore());
 			}
-
 		};
 		addField(sshClient);
 		ComboFieldEditor httpClient = new ComboFieldEditor(
@@ -238,10 +240,10 @@ public class GitPreferenceRoot extends DoublePreferencesPreferencePage
 				HTTP_CLIENT_NAMES_AND_VALUES, remoteConnectionsGroup) {
 
 			@Override
-			public IPreferenceStore getPreferenceStore() {
-				return getSecondaryPreferenceStore();
+			public void setPreferenceStore(IPreferenceStore store) {
+				super.setPreferenceStore(
+						store == null ? store : getSecondaryPreferenceStore());
 			}
-
 		};
 		addField(httpClient);
 		updateMargins(remoteConnectionsGroup);

@@ -120,8 +120,9 @@ public class CommittingPreferencePage extends DoublePreferencesPreferencePage
 				generalGroup) {
 
 			@Override
-			public IPreferenceStore getPreferenceStore() {
-				return getSecondaryPreferenceStore();
+			public void setPreferenceStore(IPreferenceStore store) {
+				super.setPreferenceStore(
+						store == null ? store : getSecondaryPreferenceStore());
 			}
 		};
 		addField(autoStageDeletion);
@@ -131,8 +132,9 @@ public class CommittingPreferencePage extends DoublePreferencesPreferencePage
 				UIText.CommittingPreferencePage_autoStageMoves, generalGroup) {
 
 			@Override
-			public IPreferenceStore getPreferenceStore() {
-				return getSecondaryPreferenceStore();
+			public void setPreferenceStore(IPreferenceStore store) {
+				super.setPreferenceStore(
+						store == null ? store : getSecondaryPreferenceStore());
 			}
 		};
 		addField(autoStageMoves);

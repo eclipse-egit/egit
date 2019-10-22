@@ -59,9 +59,11 @@ public class ProjectsPreferencePage extends DoublePreferencesPreferencePage
 		addField(new BooleanFieldEditor(UIPreferences.CHECKOUT_PROJECT_RESTORE,
 				UIText.ProjectsPreferencePage_RestoreBranchProjects,
 				getFieldEditorParent()) {
+
 			@Override
-			public IPreferenceStore getPreferenceStore() {
-				return getSecondaryPreferenceStore();
+			public void setPreferenceStore(IPreferenceStore store) {
+				super.setPreferenceStore(
+						store == null ? store : getSecondaryPreferenceStore());
 			}
 		});
 		addField(new BooleanFieldEditor(
