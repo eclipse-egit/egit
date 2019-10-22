@@ -58,6 +58,7 @@ import org.eclipse.jface.viewers.AbstractTreeViewer;
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.StructuredSelection;
 import org.eclipse.jface.viewers.Viewer;
+import org.eclipse.jgit.annotations.NonNull;
 import org.eclipse.jgit.annotations.Nullable;
 import org.eclipse.jgit.lib.Ref;
 import org.eclipse.jgit.lib.Repository;
@@ -558,6 +559,7 @@ public class UIUtils {
 	 *            appropriate keystroke
 	 * @return the content proposal adapter set on the {@code textField}
 	 */
+	@NonNull
 	public static final <T> ExplicitContentProposalAdapter addContentProposalToText(
 			Text textField,
 			IContentProposalCandidateProvider<T> candidateProvider,
@@ -568,9 +570,6 @@ public class UIUtils {
 		KeyStroke stroke = UIUtils
 				.getKeystrokeOfBestActiveBindingFor(IWorkbenchCommandConstants.EDIT_CONTENT_ASSIST);
 		if (stroke == null) {
-			if (startTypingMessage == null) {
-				return null;
-			}
 			addBulbDecorator(textField, startTypingMessage);
 		} else {
 			addBulbDecorator(textField,
