@@ -328,6 +328,8 @@ public class ReflogView extends ViewPart implements RefsChangedListener, IShowIn
 				if (comment.startsWith("reset") //$NON-NLS-1$
 						|| comment.endsWith(": updating HEAD")) //$NON-NLS-1$
 					return (Image) resourceManager.get(UIIcons.RESET);
+				if (comment.startsWith("revert:")) //$NON-NLS-1$
+					return (Image) resourceManager.get(UIIcons.REVERT);
 				return null;
 			}
 
