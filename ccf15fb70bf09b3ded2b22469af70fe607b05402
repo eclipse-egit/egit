@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "85f0eaba_8ccffe58",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/repository/tree/RepositoryGroups.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 197,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2019-10-23T17:52:11Z",
+      "side": 1,
+      "message": "This will also need to relativize paths to repos inside the workspace. Use RepositoryUtil.relativizeToWorkspace().",
+      "revId": "ccf15fb70bf09b3ded2b22469af70fe607b05402",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "f4704845_a77d9fc7",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/repository/tree/command/RemoveCommand.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 174,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2019-10-23T17:52:11Z",
+      "side": 1,
+      "message": "Why not simply\n\n  repoDirs.forEach(util::removeDir);\n\n?",
+      "range": {
+        "startLine": 174,
+        "startChar": 4,
+        "endLine": 174,
+        "endChar": 66
+      },
+      "revId": "ccf15fb70bf09b3ded2b22469af70fe607b05402",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
