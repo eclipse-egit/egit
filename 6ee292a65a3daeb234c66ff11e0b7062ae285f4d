@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "0606c583_154284da",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/DiffContainerJob.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 159690
+      },
+      "writtenOn": "2019-10-23T18:33:27Z",
+      "side": 1,
+      "message": "Yes, done with next PS.",
+      "parentUuid": "c2aa8ff1_4869c91a",
+      "revId": "6ee292a65a3daeb234c66ff11e0b7062ae285f4d",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3534bb4b_9c5b0fd9",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/ToolsUtils.java",
         "patchSetId": 3
@@ -30,6 +48,24 @@
       "writtenOn": "2019-10-23T11:07:14Z",
       "side": 1,
       "message": "We do not use @author tags",
+      "revId": "6ee292a65a3daeb234c66ff11e0b7062ae285f4d",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "82d7703f_31646c0c",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/ToolsUtils.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 159690
+      },
+      "writtenOn": "2019-10-23T18:33:27Z",
+      "side": 1,
+      "message": "Yes, done with next PS.",
+      "parentUuid": "3534bb4b_9c5b0fd9",
       "revId": "6ee292a65a3daeb234c66ff11e0b7062ae285f4d",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
@@ -64,6 +100,24 @@
       "writtenOn": "2019-10-23T11:07:14Z",
       "side": 1,
       "message": "java.lang.ClassCastException: org.eclipse.egit.ui.internal.revision.LocationEditableRevision cannot be cast to org.eclipse.egit.ui.internal.revision.ResourceEditableRevision",
+      "revId": "6ee292a65a3daeb234c66ff11e0b7062ae285f4d",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "2c7ef321_28e19a67",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/actions/MergeToolActionHandler.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 136,
+      "author": {
+        "id": 159690
+      },
+      "writtenOn": "2019-10-23T18:33:27Z",
+      "side": 1,
+      "message": "Yes, fixed with next PS, also other NPE places are checked now if left version not available (deleted or not there in the revision).",
+      "parentUuid": "cac4a846_b40b8e2a",
       "revId": "6ee292a65a3daeb234c66ff11e0b7062ae285f4d",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
