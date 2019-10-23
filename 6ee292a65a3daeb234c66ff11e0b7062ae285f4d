@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c2aa8ff1_4869c91a",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/DiffContainerJob.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 228343
+      },
+      "writtenOn": "2019-10-23T11:07:14Z",
+      "side": 1,
+      "message": "In this case another status should be returned.",
+      "revId": "6ee292a65a3daeb234c66ff11e0b7062ae285f4d",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3534bb4b_9c5b0fd9",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/ToolsUtils.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 228343
+      },
+      "writtenOn": "2019-10-23T11:07:14Z",
+      "side": 1,
+      "message": "We do not use @author tags",
+      "revId": "6ee292a65a3daeb234c66ff11e0b7062ae285f4d",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "35f70642_267a3b66",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/actions/MergeToolActionHandler.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 228343
+      },
+      "writtenOn": "2019-10-23T11:07:14Z",
+      "side": 1,
+      "message": "Can we just execute the following code async after completion of the job instead of joining here?",
+      "revId": "6ee292a65a3daeb234c66ff11e0b7062ae285f4d",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "cac4a846_b40b8e2a",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/actions/MergeToolActionHandler.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 136,
+      "author": {
+        "id": 228343
+      },
+      "writtenOn": "2019-10-23T11:07:14Z",
+      "side": 1,
+      "message": "java.lang.ClassCastException: org.eclipse.egit.ui.internal.revision.LocationEditableRevision cannot be cast to org.eclipse.egit.ui.internal.revision.ResourceEditableRevision",
+      "revId": "6ee292a65a3daeb234c66ff11e0b7062ae285f4d",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
