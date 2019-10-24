@@ -2446,8 +2446,11 @@
                class="org.eclipse.egit.ui.internal.repository.tree.command.RemoveCommand">
          </class>
          <activeWhen>
-            <iterate ifEmpty="false">
+            <iterate
+                  ifEmpty="false"
+                  operator="and">
                <instanceof value="org.eclipse.egit.ui.internal.repository.tree.RepositoryNode" />
+               <test property="GitRepository.isSubmodule" value="false" />
             </iterate>
          </activeWhen>
       </handler>
@@ -2462,6 +2465,7 @@
                <iterate>
                   <instanceof value="org.eclipse.egit.ui.internal.repository.tree.RepositoryNode" />
                </iterate>
+               <test property="GitRepository.isSubmodule" value="false" />
             </and>
          </activeWhen>
       </handler>
