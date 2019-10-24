@@ -750,7 +750,7 @@ public class RebaseInteractivePlan implements IndexDiffChangedListener,
 
 		/**
 		 * Adds arbitrary user data to the {@link PlanElement}
-		 * 
+		 *
 		 * @param anything
 		 *            to set as user data, may be {@code null}
 		 */
@@ -778,27 +778,40 @@ public class RebaseInteractivePlan implements IndexDiffChangedListener,
 		 * lost on the new branch. Internally this is mapped to
 		 * {@link Action#COMMENT}, to comment out a {@link RebaseTodoLine}
 		 */
-		SKIP,
+		SKIP(CoreText.RebaseInteractiveStep_Skip),
 		/**
 		 * Equivalent to {@link Action#EDIT};
 		 */
-		EDIT,
+		EDIT(CoreText.RebaseInteractiveStep_Edit),
 		/**
 		 * Equivalent to {@link Action#PICK};
 		 */
-		PICK,
+		PICK(CoreText.RebaseInteractiveStep_Pick),
 		/**
 		 * Equivalent to {@link Action#SQUASH};
 		 */
-		SQUASH,
+		SQUASH(CoreText.RebaseInteractiveStep_Squash),
 		/**
 		 * Equivalent to {@link Action#FIXUP};
 		 */
-		FIXUP,
+		FIXUP(CoreText.RebaseInteractiveStep_Fixup),
 		/**
 		 * Equivalent to {@link Action#REWORD};
 		 */
-		REWORD;
+		REWORD(CoreText.RebaseInteractiveStep_Reword);
+
+		private final String label;
+
+		private ElementAction(final String label) {
+			this.label = label;
+		}
+
+		/**
+		 * @return the human readable localized label of the action
+		 */
+		public String getLabel() {
+			return label;
+		}
 	}
 
 	/**
