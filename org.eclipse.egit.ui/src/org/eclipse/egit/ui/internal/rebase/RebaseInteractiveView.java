@@ -763,7 +763,7 @@ public class RebaseInteractiveView extends ViewPart implements
 			@Override
 			public String getText(Object element) {
 				ElementAction a = getAction(element);
-				return (a != null) ? a.name() : super.getText(element);
+				return (a != null) ? a.getLabel() : super.getText(element);
 			}
 
 			private ElementAction getAction(Object element) {
