@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "964f02bc_c344f006",
+        "filename": "org.eclipse.egit.ui.test/src/org/eclipse/egit/ui/test/history/GitHistoryRefFilterConfigurationDialogTest.java",
+        "patchSetId": 17
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2019-10-24T14:40:22Z",
+      "side": 1,
+      "message": "Missing copyright header.",
+      "revId": "d53612ff4eb16d4f4d4bf617709a77f6656a694f",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ae814a3d_c145024b",
+        "filename": "org.eclipse.egit.ui.test/src/org/eclipse/egit/ui/test/history/RefFilterUtil.java",
+        "patchSetId": 17
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2019-10-24T14:40:22Z",
+      "side": 1,
+      "message": "Missing copyright header.",
+      "revId": "d53612ff4eb16d4f4d4bf617709a77f6656a694f",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "f7dc77cb_458a3478",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/history/DynamicActionContributionItem.java",
+        "patchSetId": 17
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2019-10-24T14:40:22Z",
+      "side": 1,
+      "message": "Missing copyright header.",
+      "revId": "d53612ff4eb16d4f4d4bf617709a77f6656a694f",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "f9347e02_bfd39513",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/history/DynamicActionContributionItem.java",
+        "patchSetId": 17
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2019-10-24T14:40:22Z",
+      "side": 1,
+      "message": "I wonder if delegation is worth avoiding that pesky \"illegally extends ActionContributionItem\" warning in Eclipse which occurs only because someone in the dim past thought slapping a @noextend on it was a good idea. EGit already \"illegally\" extends some other JFace classes, and there\u0027s also bug 538077.\n\nI\u0027d just have subclassing and overridden isDynamic().\n\nAnd perhaps it\u0027s a mistake anyway to return false from ActionContributionItem.isDynamic(); if they check for style changes for menu items, then why not for toolbar buttons?\n\nProbably you could do a similar optimization here and return true only if the style really changed.",
+      "revId": "d53612ff4eb16d4f4d4bf617709a77f6656a694f",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
