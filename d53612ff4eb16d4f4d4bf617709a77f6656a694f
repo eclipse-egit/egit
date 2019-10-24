@@ -67,6 +67,40 @@
       "revId": "d53612ff4eb16d4f4d4bf617709a77f6656a694f",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "0f7e2344_c5bbd456",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/history/GitHistoryWalk.java",
+        "patchSetId": 17
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2019-10-24T14:52:40Z",
+      "side": 1,
+      "message": "Unrelated to this change, but something for a follow-up: I think we might drop this config and menu item? Personally I\u0027ve never used it, and the \"notes\" I get when I enable it don\u0027t really tell much. If someone really wants that, he could configure \"refs/notes/**\" explicitly now.",
+      "revId": "d53612ff4eb16d4f4d4bf617709a77f6656a694f",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c73fd25a_39e21207",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/history/SWTWalk.java",
+        "patchSetId": 17
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2019-10-24T14:52:40Z",
+      "side": 1,
+      "message": "JDT formatting doesn\u0027t work right with these annotations. Use \"final @NonNull Repository repo\", or drop the \"final\" altogether.",
+      "revId": "d53612ff4eb16d4f4d4bf617709a77f6656a694f",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
     }
   ]
 }
