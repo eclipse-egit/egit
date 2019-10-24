@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4a279f9a_1ce19719",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/history/GitHistoryPage.java",
+        "patchSetId": 16
+      },
+      "lineNbr": 661,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2019-10-24T13:59:13Z",
+      "side": 1,
+      "message": "I think as long as you only change the image/tooltip there\u0027s no need to update the toolbar. The ActionContributionItem should listen to such changes and update its ToolItem.",
+      "revId": "2d80ca6c21ae837308ed6a385461c2f39506c942",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "eb0305d1_e7da3a2a",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/history/GitHistoryPage.java",
+        "patchSetId": 16
+      },
+      "lineNbr": 670,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2019-10-24T13:59:13Z",
+      "side": 1,
+      "message": "Is flipping the style the only reason you need this DynamicContributionItem?",
+      "revId": "2d80ca6c21ae837308ed6a385461c2f39506c942",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
