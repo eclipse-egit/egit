@@ -4927,17 +4927,20 @@
             locationURI="menu:org.eclipse.egit.ui.RepositoriesView">
          <command
                commandId="org.eclipse.egit.ui.RepositoriesViewAddRepository"
-               label="%RepoAddRepositoryViewMenu.label"
+               label="%RepoViewAddRepository.label"
+               tooltip="%RepoViewAddRepository.tooltip"
                style="push">
          </command>
          <command
                commandId="org.eclipse.egit.ui.RepositoriesViewClone"
-               label="%RepoCloneRepositoryViewMenu.label"
+               label="%RepoViewCloneRepository.label"
+               tooltip="%RepoViewCloneRepository.tooltip"
                style="push">
          </command>
          <command
                commandId="org.eclipse.egit.ui.RepositoriesViewCreateRepository"
-               label="%RepoCreateRepositoryViewMenu.label"
+               label="%RepoViewCreateRepository.label"
+               tooltip="%RepoViewCreateRepository.tooltip"
                style="push">
          </command>
          <separator
@@ -5805,13 +5808,22 @@
             categoryId="org.eclipse.egit.ui.commandCategory"
             defaultHandler="org.eclipse.egit.ui.internal.repository.tree.command.AddCommand"
             id="org.eclipse.egit.ui.RepositoriesViewAddRepository"
-            name="%AddRepositoryCommand">
+            name="%AddRepositoryCommand"
+            description="%AddRepositoryCommand.description">
       </command>
       <command
             categoryId="org.eclipse.egit.ui.commandCategory"
             defaultHandler="org.eclipse.egit.ui.internal.repository.tree.command.CloneCommand"
             id="org.eclipse.egit.ui.RepositoriesViewClone"
-            name="%CloneRepositoryCommand">
+            name="%CloneRepositoryCommand"
+            description="%CloneRepositoryCommand.description">
+      </command>
+      <command
+            categoryId="org.eclipse.egit.ui.commandCategory"
+            defaultHandler="org.eclipse.egit.ui.internal.repository.tree.command.CreateRepositoryCommand"
+            id="org.eclipse.egit.ui.RepositoriesViewCreateRepository"
+            name="%CreateRepositoryCommand"
+            description="%CreateRepositoryCommand.description">
       </command>
       <command
             categoryId="org.eclipse.egit.ui.commandCategory"
@@ -5906,12 +5918,6 @@
             categoryId="org.eclipse.egit.ui.commandCategory"
             id="org.eclipse.egit.ui.CheckoutCommand"
             name="%CheckoutCommand">
-      </command>
-      <command
-            categoryId="org.eclipse.egit.ui.commandCategory"
-            defaultHandler="org.eclipse.egit.ui.internal.repository.tree.command.CreateRepositoryCommand"
-            id="org.eclipse.egit.ui.RepositoriesViewCreateRepository"
-            name="%RepoViewCreateRepositoryCommand.name">
       </command>
       <command
             categoryId="org.eclipse.egit.ui.commandCategory"
