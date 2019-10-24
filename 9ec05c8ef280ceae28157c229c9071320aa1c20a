@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "23e73fbb_0ae3008a",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/repository/RepositoriesView.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 751,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2019-10-24T10:32:25Z",
+      "side": 1,
+      "message": "Would like to get this in before Alexander\u0027s repo groups change because of this change here in showRepository().",
+      "revId": "9ec05c8ef280ceae28157c229c9071320aa1c20a",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
