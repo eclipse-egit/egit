@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "7b8828ba_b14431eb",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/history/GitHistoryPage.java",
+        "patchSetId": 16
+      },
+      "lineNbr": 661,
+      "author": {
+        "id": 228343
+      },
+      "writtenOn": "2019-10-24T14:09:10Z",
+      "side": 1,
+      "message": "Is is required for flipping the style.",
+      "parentUuid": "4a279f9a_1ce19719",
+      "revId": "2d80ca6c21ae837308ed6a385461c2f39506c942",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "eb0305d1_e7da3a2a",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/history/GitHistoryPage.java",
         "patchSetId": 16
@@ -30,6 +48,24 @@
       "writtenOn": "2019-10-24T13:59:13Z",
       "side": 1,
       "message": "Is flipping the style the only reason you need this DynamicContributionItem?",
+      "revId": "2d80ca6c21ae837308ed6a385461c2f39506c942",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "576b9f97_a0ba334f",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/history/GitHistoryPage.java",
+        "patchSetId": 16
+      },
+      "lineNbr": 670,
+      "author": {
+        "id": 228343
+      },
+      "writtenOn": "2019-10-24T14:09:10Z",
+      "side": 1,
+      "message": "yes",
+      "parentUuid": "eb0305d1_e7da3a2a",
       "revId": "2d80ca6c21ae837308ed6a385461c2f39506c942",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
