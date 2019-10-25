@@ -121,7 +121,7 @@ public class GitPreferenceRoot extends DoublePreferencesPreferencePage
 			@Override
 			public void setPreferenceStore(IPreferenceStore store) {
 				super.setPreferenceStore(
-						store == null ? store : getSecondaryPreferenceStore());
+						store == null ? null : getSecondaryPreferenceStore());
 			}
 
 			@Override
@@ -208,7 +208,7 @@ public class GitPreferenceRoot extends DoublePreferencesPreferencePage
 			@Override
 			public void setPreferenceStore(IPreferenceStore store) {
 				super.setPreferenceStore(
-						store == null ? store : getSecondaryPreferenceStore());
+						store == null ? null : getSecondaryPreferenceStore());
 			}
 		};
 		pullEditor.getLabelControl(remoteConnectionsGroup).setToolTipText(
@@ -230,7 +230,7 @@ public class GitPreferenceRoot extends DoublePreferencesPreferencePage
 			@Override
 			public void setPreferenceStore(IPreferenceStore store) {
 				super.setPreferenceStore(
-						store == null ? store : getSecondaryPreferenceStore());
+						store == null ? null : getSecondaryPreferenceStore());
 			}
 		};
 		addField(sshClient);
@@ -242,7 +242,7 @@ public class GitPreferenceRoot extends DoublePreferencesPreferencePage
 			@Override
 			public void setPreferenceStore(IPreferenceStore store) {
 				super.setPreferenceStore(
-						store == null ? store : getSecondaryPreferenceStore());
+						store == null ? null : getSecondaryPreferenceStore());
 			}
 		};
 		addField(httpClient);

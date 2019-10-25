@@ -63,7 +63,7 @@ public class ProjectsPreferencePage extends DoublePreferencesPreferencePage
 			@Override
 			public void setPreferenceStore(IPreferenceStore store) {
 				super.setPreferenceStore(
-						store == null ? store : getSecondaryPreferenceStore());
+						store == null ? null : getSecondaryPreferenceStore());
 			}
 		});
 		addField(new BooleanFieldEditor(
