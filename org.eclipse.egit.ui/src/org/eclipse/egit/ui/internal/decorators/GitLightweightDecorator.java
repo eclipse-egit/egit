@@ -660,7 +660,7 @@ public class GitLightweightDecorator extends GitDecorator
 		PlatformUI.getWorkbench().getDisplay().asyncExec(new Runnable() {
 			@Override
 			public void run() {
-				Activator.getDefault().getWorkbench().getDecoratorManager()
+				PlatformUI.getWorkbench().getDecoratorManager()
 						.update(DECORATOR_ID);
 			}
 		});

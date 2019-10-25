@@ -286,7 +286,7 @@ public class Activator extends AbstractUIPlugin implements DebugOptionsListener 
 	 * @return our theme.
 	 */
 	public static ITheme getTheme() {
-		return plugin.getWorkbench().getThemeManager().getCurrentTheme();
+		return PlatformUI.getWorkbench().getThemeManager().getCurrentTheme();
 	}
 
 	/**
