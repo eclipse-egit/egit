@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "bfbb7250_9bb090cc",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/repository/RepositoryTreeNodeLabelProvider.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 150,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2019-10-25T11:08:32Z",
+      "side": 1,
+      "message": "I know. :-) Don\u0027t you get blinking decorations now? On refresh, the decorator briefly disappears before it re-appears when the background decorator has done its job. Compare bug 130340; especially the last comment.\n\nAny idea how to avoid that? I\u0027d _love_ to have all these image decorations in the decorator, not in the label provider, but so far I haven\u0027t found a way to do so without this flickering. For label texts, there\u0027s this hyper-ugly work-around with appending a blank.",
+      "revId": "565d4a39bc47a1ad0bf2c5db543a16fd2bde89c2",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
