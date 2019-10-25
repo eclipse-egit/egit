@@ -122,7 +122,7 @@ public class CommittingPreferencePage extends DoublePreferencesPreferencePage
 			@Override
 			public void setPreferenceStore(IPreferenceStore store) {
 				super.setPreferenceStore(
-						store == null ? store : getSecondaryPreferenceStore());
+						store == null ? null : getSecondaryPreferenceStore());
 			}
 		};
 		addField(autoStageDeletion);
@@ -134,7 +134,7 @@ public class CommittingPreferencePage extends DoublePreferencesPreferencePage
 			@Override
 			public void setPreferenceStore(IPreferenceStore store) {
 				super.setPreferenceStore(
-						store == null ? store : getSecondaryPreferenceStore());
+						store == null ? null : getSecondaryPreferenceStore());
 			}
 		};
 		addField(autoStageMoves);
