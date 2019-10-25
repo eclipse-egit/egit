@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c115ab68_42131296",
+        "filename": "org.eclipse.egit.ui/plugin.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 2453,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2019-10-25T13:57:31Z",
+      "side": 1,
+      "message": "Good catch. I suspect the deletion (just below) should be guarded, too. From looking at the code it seems to me that it might actually delete things, but the user may end up with a completely inconsistent repo. For one, .gitmodules and .git/config of the parent repo are not updated.\n\nIf enabled, it should probably perform the equivalent of a git rm on the sub-module. Which, IIRC correctly, isn\u0027t implemented in JGit yet.\n\nSo it\u0027s probably best to also forbid that. (Didn\u0027t try it, though. Had no setup in which I could risk corrupting the repo.)",
+      "revId": "107cb09cea343dc31b1faa2dd033bb3d1e8255c3",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
