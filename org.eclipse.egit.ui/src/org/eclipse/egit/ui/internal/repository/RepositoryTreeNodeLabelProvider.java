@@ -141,9 +141,13 @@ public class RepositoryTreeNodeLabelProvider
 
 	@Override
 	public Image getImage(Object element) {
-		// We know that the decorator for RepositoryTreeNodes will not decorate
-		// the image; our label provider will do so already.
-		return labelProvider.getImage(element);
+		if (element instanceof RepositoryNode) {
+			return super.getImage(element);
+		} else {
+			// We know that the decorator for RepositoryTreeNodes will not
+			// decorate the image; our label provider will do so already.
+			return labelProvider.getImage(element);
+		}
 	}
 
 	@Override
