@@ -54,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "bd1338b8_e47656cc",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/repository/RepositoriesView.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 718,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2019-10-26T16:09:01Z",
+      "side": 1,
+      "message": "Yes, I did. It works for files. It doesn\u0027t work for repositories. (Quite evidently, since this code here doesn\u0027t descend into groups.) To reproduce: have git repo and history view open. Select a top-level repo in the repo view, let the history show. In the history view\u0027s toolbar, switch to a repo in a group via the \"repo switch\" toolbar button\u0027s drop-down menu.\n\nActual: repo view doesn\u0027t select the repo now shown in the history view.\n\nExpected: repo view expands the group node and selects the repo inside.\n\nShould work once this is rebased onto 67a046c.",
+      "parentUuid": "fe7d0d0d_10a1719d",
+      "revId": "5d5d22d60ade4428dc823bd6e6db30d2185a79bf",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "bc9037df_870f5ac0",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/repository/RepositoryTreeNodeLabelProvider.java",
         "patchSetId": 11
