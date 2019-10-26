@@ -6115,6 +6115,10 @@
             icon="icons/obj16/cloneGit.png">
       </image>
       <image
+            commandId="org.eclipse.egit.ui.RepositoriesRenameGroup"
+            icon="icons/obj16/editconfig.png">
+      </image>
+      <image
             commandId="org.eclipse.egit.ui.RepositoriesLinkWithSelection"
             icon="icons/elcl16/synced.png">
       </image>
@@ -6803,6 +6807,12 @@
             schemeId="org.eclipse.ui.defaultAcceleratorConfiguration"
             sequence="F2">
       </key>
+      <key
+            commandId="org.eclipse.egit.ui.RepositoriesRenameGroup"
+            contextId="org.eclipse.egit.ui.RepositoriesView.Group"
+            schemeId="org.eclipse.ui.defaultAcceleratorConfiguration"
+            sequence="F2">
+      </key>
    </extension>
    <extension
          name="%HistoryViewCommands.extension.name"
@@ -6946,6 +6956,11 @@
             id="org.eclipse.egit.ui.RepositoriesView"
             name="%RepositoriesViewContext.name"
             parentId="org.eclipse.ui.contexts.window">
+      </context>
+      <context
+            id="org.eclipse.egit.ui.RepositoriesView.Group"
+            name="%RepositoriesViewContext.name"
+            parentId="org.eclipse.egit.ui.RepositoriesView">
       </context>
       <context
             id="org.eclipse.egit.ui.ReflogView"
