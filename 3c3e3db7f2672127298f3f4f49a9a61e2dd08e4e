@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "11388299_d1b09cde",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/repository/RepositoriesView.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 244,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2019-10-26T09:30:39Z",
+      "side": 1,
+      "message": "No, we\u0027re running in the UI thread, and so does the selection listener. But I should remove the \"volatile\" on the variable. It\u0027s a left-over from before I had the Display.asyncExec here.\n\nDone in PS 5.",
+      "parentUuid": "714bb995_64a3f25c",
+      "range": {
+        "startLine": 241,
+        "startChar": 0,
+        "endLine": 244,
+        "endChar": 47
+      },
+      "revId": "3c3e3db7f2672127298f3f4f49a9a61e2dd08e4e",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2b54011f_cf5791fb",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/repository/RepositoriesView.java",
         "patchSetId": 4
