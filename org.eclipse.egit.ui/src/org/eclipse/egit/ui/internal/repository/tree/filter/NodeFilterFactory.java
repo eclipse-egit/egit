@@ -15,6 +15,7 @@ import org.eclipse.core.runtime.IConfigurationElement;
 import org.eclipse.core.runtime.IExecutableExtension;
 import org.eclipse.core.runtime.IExecutableExtensionFactory;
 import org.eclipse.egit.ui.internal.repository.tree.RepositoryTreeNodeType;
+import org.eclipse.jface.viewers.ViewerFilter;
 
 /**
  * Factory creating a filter based on the node type parameter.
@@ -37,6 +38,20 @@ public class NodeFilterFactory
 	public void setInitializationData(IConfigurationElement config,
 			String propertyName, Object data) throws CoreException {
 		typeToHide = RepositoryTreeNodeType.valueOf((String) data);
+	}
+
+	/**
+	 * @param filter
+	 *            the filter to test
+	 * @return true if and only if the filter hides the working directory
+	 */
+	public static boolean isWorkTreeFilter(ViewerFilter filter) {
+		if (filter instanceof NodeByTypeFilter) {
+			if (((NodeByTypeFilter) filter).typeToHide == RepositoryTreeNodeType.WORKINGDIR) {
+				return true;
+			}
+		}
+		return false;
 	}
 
 }

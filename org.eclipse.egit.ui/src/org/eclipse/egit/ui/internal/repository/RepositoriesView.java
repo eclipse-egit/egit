@@ -73,6 +73,7 @@ import org.eclipse.egit.ui.internal.repository.tree.TagNode;
 import org.eclipse.egit.ui.internal.repository.tree.WorkingDirNode;
 import org.eclipse.egit.ui.internal.repository.tree.command.ToggleBranchHierarchyCommand;
 import org.eclipse.egit.ui.internal.repository.tree.command.ToggleLinkWithSelectionCommand;
+import org.eclipse.egit.ui.internal.repository.tree.filter.NodeFilterFactory;
 import org.eclipse.egit.ui.internal.selection.SelectionUtils;
 import org.eclipse.egit.ui.internal.staging.StagingView;
 import org.eclipse.egit.ui.internal.trace.GitTraceLocation;
@@ -98,6 +99,7 @@ import org.eclipse.jface.viewers.ITreeContentProvider;
 import org.eclipse.jface.viewers.OpenEvent;
 import org.eclipse.jface.viewers.StructuredSelection;
 import org.eclipse.jface.viewers.TreeSelection;
+import org.eclipse.jface.viewers.ViewerFilter;
 import org.eclipse.jface.window.Window;
 import org.eclipse.jgit.events.ConfigChangedEvent;
 import org.eclipse.jgit.events.ConfigChangedListener;
@@ -1168,6 +1170,16 @@ public class RepositoriesView extends CommonNavigator implements IShowInSource, 
 
 	private RepositoryTreeNode getNodeForPath(Repository repository,
 			String repoRelativePath) {
+		for (ViewerFilter filter : getCommonViewer().getFilters()) {
+			if (NodeFilterFactory.isWorkTreeFilter(filter)) {
+				ITreeContentProvider cp = (ITreeContentProvider) getCommonViewer()
+						.getContentProvider();
+				RepositoryTreeNode repoNode = findRepositoryNode(cp,
+						cp.getElements(getCommonViewer().getInput()),
+						repository);
+				return repoNode;
+			}
+		}
 		RepositoryTreeNode currentNode = getRepositoryChildNode(repository,
 				RepositoryTreeNodeType.WORKINGDIR);
 		if (currentNode == null) {

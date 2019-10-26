@@ -20,7 +20,7 @@ import org.eclipse.jface.viewers.ViewerFilter;
  */
 class NodeByTypeFilter extends ViewerFilter {
 
-	private RepositoryTreeNodeType typeToHide;
+	RepositoryTreeNodeType typeToHide;
 
 	NodeByTypeFilter(RepositoryTreeNodeType typeToHide) {
 		this.typeToHide = typeToHide;
