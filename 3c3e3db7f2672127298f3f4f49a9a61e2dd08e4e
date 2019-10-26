@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "714bb995_64a3f25c",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/repository/RepositoriesView.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 244,
+      "author": {
+        "id": 440
+      },
+      "writtenOn": "2019-10-26T07:07:14Z",
+      "side": 1,
+      "message": "Wouldn\u0027t we need to take a local copy of the lastSelectionPart variable and to check that against null? Otherwise it might still change to null after the initial guard, right?",
+      "range": {
+        "startLine": 241,
+        "startChar": 0,
+        "endLine": 244,
+        "endChar": 47
+      },
+      "revId": "3c3e3db7f2672127298f3f4f49a9a61e2dd08e4e",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "2b54011f_cf5791fb",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/repository/RepositoriesView.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 1079,
+      "author": {
+        "id": 440
+      },
+      "writtenOn": "2019-10-26T07:07:14Z",
+      "side": 1,
+      "message": "nice catch of a corner case!",
+      "range": {
+        "startLine": 1079,
+        "startChar": 6,
+        "endLine": 1079,
+        "endChar": 36
+      },
+      "revId": "3c3e3db7f2672127298f3f4f49a9a61e2dd08e4e",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
