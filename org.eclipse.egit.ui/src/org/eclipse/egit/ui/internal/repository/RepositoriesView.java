@@ -112,6 +112,8 @@ import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.StackLayout;
 import org.eclipse.swt.events.DisposeEvent;
 import org.eclipse.swt.events.DisposeListener;
+import org.eclipse.swt.events.FocusEvent;
+import org.eclipse.swt.events.FocusListener;
 import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.widgets.Composite;
@@ -130,6 +132,7 @@ import org.eclipse.ui.IWorkbenchPart;
 import org.eclipse.ui.IWorkbenchWindow;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.commands.ICommandService;
+import org.eclipse.ui.contexts.IContextActivation;
 import org.eclipse.ui.contexts.IContextService;
 import org.eclipse.ui.forms.events.HyperlinkAdapter;
 import org.eclipse.ui.forms.events.HyperlinkEvent;
@@ -169,8 +172,11 @@ public class RepositoriesView extends CommonNavigator implements IShowInSource, 
 	/** "fetch" */
 	public static final String FETCH = "fetch"; //$NON-NLS-1$
 
-	/** view id */
+	/** View id; also doubles as context id. */
 	public static final String VIEW_ID = "org.eclipse.egit.ui.RepositoriesView"; //$NON-NLS-1$
+
+	/** Sub-context active when a single repository is selected. */
+	private static final String RENAME_CONTEXT = ".Rename"; //$NON-NLS-1$
 
 	private static final long DEFAULT_REFRESH_DELAY = 1000;
 
@@ -257,6 +263,10 @@ public class RepositoriesView extends CommonNavigator implements IShowInSource, 
 			oldValue) -> refresh();
 
 	private final IPreferenceChangeListener configurationListener;
+
+	private IContextActivation renameContext;
+
+	private IContextService ctxSrv;
 
 	/**
 	 * The default constructor
@@ -490,6 +500,26 @@ public class RepositoriesView extends CommonNavigator implements IShowInSource, 
 					executeOpenCommand(element);
 			}
 		});
+		ctxSrv = CommonUtils.getService(getSite(), IContextService.class);
+		viewer.addSelectionChangedListener(event -> {
+			handleRenameContext(event.getSelection(), viewer);
+		});
+		viewer.getTree().addFocusListener(new FocusListener() {
+
+			@Override
+			public void focusGained(FocusEvent e) {
+				handleRenameContext(viewer.getSelection(), viewer);
+			}
+
+			@Override
+			public void focusLost(FocusEvent e) {
+				if (renameContext != null) {
+					ctxSrv.deactivateContext(renameContext);
+					renameContext = null;
+				}
+			}
+
+		});
 		// react on selection changes
 		ISelectionService srv = CommonUtils.getService(getSite(), ISelectionService.class);
 		srv.addPostSelectionListener(selectionChangedListener);
@@ -506,6 +536,29 @@ public class RepositoriesView extends CommonNavigator implements IShowInSource, 
 			layout.topControl = emptyArea;
 
 		return viewer;
+	}
+
+	private void handleRenameContext(ISelection selection,
+			CommonViewer viewer) {
+		if (selection == null || selection.isEmpty()
+				|| !(selection instanceof StructuredSelection)) {
+			if (renameContext != null) {
+				ctxSrv.deactivateContext(renameContext);
+				renameContext = null;
+			}
+			return;
+		}
+		StructuredSelection sel = (StructuredSelection) selection;
+		Object item = sel.getFirstElement();
+		if (sel.size() != 1 || !(item instanceof RepositoryNode)) {
+			if (renameContext != null) {
+				ctxSrv.deactivateContext(renameContext);
+				renameContext = null;
+			}
+		} else if (viewer.getTree().isFocusControl()) {
+			renameContext = ctxSrv
+					.activateContext(VIEW_ID + RENAME_CONTEXT);
+		}
 	}
 
 	private void executeOpenCommandWithConfirmation(RepositoryTreeNode element,
