@@ -36,6 +36,24 @@
     },
     {
       "key": {
+        "uuid": "fe7d0d0d_10a1719d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/repository/RepositoriesView.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 718,
+      "author": {
+        "id": 236689
+      },
+      "writtenOn": "2019-10-26T06:30:26Z",
+      "side": 1,
+      "message": "Have you tried it? At least in the current state, with link selection enabled, repositories and working tree children are opened also in groups (in my setup\u003d.",
+      "parentUuid": "b651b0d5_436213e7",
+      "revId": "5d5d22d60ade4428dc823bd6e6db30d2185a79bf",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "bc9037df_870f5ac0",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/repository/RepositoryTreeNodeLabelProvider.java",
         "patchSetId": 11
@@ -64,6 +82,30 @@
       "writtenOn": "2019-10-25T20:12:39Z",
       "side": 1,
       "message": "I\u0027d use\n\n  new RepositoryTreeNodeLabelProvider()\n\nOK, we\u0027ll lose the gitflow decorator, but we\u0027ll get styled labels and be consistent with the rest of EGit. (And if we ever fix that blinking problem, we\u0027ll automatically have the gitflow decorator back, too.)",
+      "range": {
+        "startLine": 76,
+        "startChar": 4,
+        "endLine": 76,
+        "endChar": 64
+      },
+      "revId": "5d5d22d60ade4428dc823bd6e6db30d2185a79bf",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a6bc853d_8af6116f",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/repository/tree/command/DeleteRepositoryGroupConfirmDialog.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 236689
+      },
+      "writtenOn": "2019-10-26T06:30:26Z",
+      "side": 1,
+      "message": "OK, done. However, DeleteRepositoryConfirmDialog uses this provider, too.",
+      "parentUuid": "fb6292a7_f2e7ebe5",
       "range": {
         "startLine": 76,
         "startChar": 4,
