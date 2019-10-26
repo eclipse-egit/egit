@@ -24,6 +24,7 @@ import org.eclipse.jface.dialogs.IMessageProvider;
 import org.eclipse.jface.dialogs.TitleAreaDialog;
 import org.eclipse.jface.layout.GridDataFactory;
 import org.eclipse.jface.viewers.ArrayContentProvider;
+import org.eclipse.jface.viewers.DecoratingStyledCellLabelProvider;
 import org.eclipse.jface.viewers.TableViewer;
 import org.eclipse.jgit.lib.Repository;
 import org.eclipse.osgi.util.NLS;
@@ -36,6 +37,7 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Text;
+import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.model.WorkbenchLabelProvider;
 
 /**
@@ -132,8 +134,12 @@ public class DeleteRepositoryConfirmDialog extends TitleAreaDialog {
 					.hint(SWT.DEFAULT, 100)
 					.applyTo(projectsViewer.getControl());
 
-			projectsViewer.setLabelProvider(WorkbenchLabelProvider
-					.getDecoratingWorkbenchLabelProvider());
+			projectsViewer
+					.setLabelProvider(new DecoratingStyledCellLabelProvider(
+							new WorkbenchLabelProvider(),
+							PlatformUI.getWorkbench().getDecoratorManager()
+									.getLabelDecorator(),
+							null));
 			projectsViewer.setContentProvider(ArrayContentProvider.getInstance());
 			projectsViewer.setInput(projectsToDelete);
 		} else
