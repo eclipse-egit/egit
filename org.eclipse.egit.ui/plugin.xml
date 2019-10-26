@@ -1947,26 +1947,28 @@
          </activeWhen>
       </handler>
       <handler
+            commandId="org.eclipse.ui.edit.rename">
+         <class
+               class="org.eclipse.egit.ui.internal.repository.tree.command.RenameBranchCommand">
+         </class>
+         <activeWhen>
+            <reference
+                  definitionId="org.eclipse.egit.ui.singleRefNode">
+            </reference>
+         </activeWhen>
+      </handler>
+      <handler
             commandId="org.eclipse.egit.ui.team.RenameBranch">
          <class
                class="org.eclipse.egit.ui.internal.repository.tree.command.RenameBranchCommand">
          </class>
          <activeWhen>
-            <or>
-               <reference
-                     definitionId="org.eclipse.egit.ui.singleRefNode">
-               </reference>
-               <and>
-                  <count
-                     value="1">
-                  </count>
-                  <iterate>
-                     <instanceof
-                           value="org.eclipse.egit.ui.internal.repository.tree.RepositoryNode">
-                     </instanceof>
-                  </iterate>
-               </and>
-            </or>
+            <and>
+               <count value="1" />
+               <iterate>
+                  <instanceof value="org.eclipse.egit.ui.internal.repository.tree.RepositoryNode" />
+               </iterate>
+            </and>
          </activeWhen>
       </handler>
       <handler
@@ -3069,7 +3071,7 @@
          </activeWhen>
       </handler>
       <handler
-            commandId="org.eclipse.egit.ui.RepositoriesRenameGroup">
+            commandId="org.eclipse.ui.edit.rename">
          <class
                class="org.eclipse.egit.ui.internal.repository.tree.command.RenameRepositoryGroupCommand">
          </class>
@@ -3735,24 +3737,23 @@
                style="push">
             <visibleWhen checkEnabled="true" />
          </command>
+         <!-- These two rename commands are never active simultaneously. -->
          <command
-               commandId="org.eclipse.egit.ui.team.RenameBranch"
+               commandId="org.eclipse.ui.edit.rename"
                icon="icons/obj16/editconfig.png"
                label="%RepoViewRenameBranch.label"
                style="push">
-            <visibleWhen
-                  checkEnabled="false">
-               <and>
-                  <count
-                        value="1">
-                  </count>
-                  <iterate>
-                     <instanceof
-                           value="org.eclipse.egit.ui.internal.repository.tree.RefNode">
-                     </instanceof>
-                  </iterate>
-               </and>
+            <visibleWhen>
+               <reference
+                     definitionId="org.eclipse.egit.ui.singleRefNode">
+               </reference>
             </visibleWhen>
+         </command>
+         <command
+               commandId="org.eclipse.egit.ui.team.RenameBranch"
+               label="%RepoViewRenameBranch.label"
+               style="push">
+            <visibleWhen checkEnabled="true" />
          </command>
          <command
                commandId="org.eclipse.egit.ui.RepositoriesViewConfigureBranch"
@@ -4223,10 +4224,15 @@
             </visibleWhen>
          </command>
          <command
-               commandId="org.eclipse.egit.ui.RepositoriesRenameGroup"
+               commandId="org.eclipse.ui.edit.rename"
                label="%RenameRepositoryGroupCommand.label"
                style="push">
-            <visibleWhen checkEnabled="true"/>
+            <visibleWhen>
+               <and>
+                  <count value="1"/>
+                  <reference definitionId="org.eclipse.egit.ui.repoGroups.onlyGroupsSelected"/>
+               </and>
+            </visibleWhen>
          </command>
       </menuContribution>
       <menuContribution
@@ -6027,12 +6033,6 @@
       </command>
       <command
             categoryId="org.eclipse.egit.ui.commandCategory"
-            id="org.eclipse.egit.ui.RepositoriesRenameGroup"
-            name="%RenameRepositoryGroupCommand.name"
-            description="%RenameRepositoryGroupCommand.description">
-      </command>
-      <command
-            categoryId="org.eclipse.egit.ui.commandCategory"
             defaultHandler="org.eclipse.egit.ui.internal.repository.tree.command.ToggleBranchHierarchyCommand"
             id="org.eclipse.egit.ui.RepositoriesToggleBranchHierarchy"
             name="%ToggleLayoutCommand.name">
@@ -6792,7 +6792,7 @@
       </key>
       <key
             commandId="org.eclipse.egit.ui.team.RenameBranch"
-            contextId="org.eclipse.egit.ui.RepositoriesView"
+            contextId="org.eclipse.egit.ui.RepositoriesView.SingleRepository"
             schemeId="org.eclipse.ui.defaultAcceleratorConfiguration"
             sequence="F2">
       </key>
@@ -6939,6 +6939,11 @@
             id="org.eclipse.egit.ui.RepositoriesView"
             name="%RepositoriesViewContext.name"
             parentId="org.eclipse.ui.contexts.window">
+      </context>
+      <context
+            id="org.eclipse.egit.ui.RepositoriesView.SingleRepository"
+            name="%RepositoriesViewContext.name"
+            parentId="org.eclipse.egit.ui.RepositoriesView">
       </context>
       <context
             id="org.eclipse.egit.ui.ReflogView"
