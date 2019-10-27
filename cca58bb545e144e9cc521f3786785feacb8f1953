@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5ce69a65_5eeaf8ce",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/repository/RepositoryTreeNodeDecorator.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 312,
+      "author": {
+        "id": 440
+      },
+      "writtenOn": "2019-10-27T11:27:54Z",
+      "side": 1,
+      "message": "I don\u0027t know the involved Strings from the submodule and the modified data. Is this safe in the sense of not reporting a false positive if a file name (i.e. not its path, just the name) contains the name of a submodule?",
+      "range": {
+        "startLine": 312,
+        "startChar": 28,
+        "endLine": 312,
+        "endChar": 39
+      },
+      "revId": "cca58bb545e144e9cc521f3786785feacb8f1953",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
