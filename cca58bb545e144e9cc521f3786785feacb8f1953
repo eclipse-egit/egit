@@ -46,6 +46,30 @@
       "revId": "cca58bb545e144e9cc521f3786785feacb8f1953",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c07810f7_4a20abf1",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/repository/RepositoryTreeNodeDecorator.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 312,
+      "author": {
+        "id": 440
+      },
+      "writtenOn": "2019-10-27T17:39:38Z",
+      "side": 1,
+      "message": "My fault. I was reading the contains() as String method, not Set method.",
+      "parentUuid": "62346705_4265d388",
+      "range": {
+        "startLine": 312,
+        "startChar": 28,
+        "endLine": 312,
+        "endChar": 39
+      },
+      "revId": "cca58bb545e144e9cc521f3786785feacb8f1953",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
     }
   ]
 }
