@@ -22,6 +22,30 @@
       "revId": "cca58bb545e144e9cc521f3786785feacb8f1953",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "62346705_4265d388",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/repository/RepositoryTreeNodeDecorator.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 312,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2019-10-27T15:32:50Z",
+      "side": 1,
+      "message": "getSubmodules() returns a set of the submodule paths, not names. modified is also a set of paths. We\u0027re not doing a substring match here. Or am I missing something?",
+      "parentUuid": "5ce69a65_5eeaf8ce",
+      "range": {
+        "startLine": 312,
+        "startChar": 28,
+        "endLine": 312,
+        "endChar": 39
+      },
+      "revId": "cca58bb545e144e9cc521f3786785feacb8f1953",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
     }
   ]
 }
