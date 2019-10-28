@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "aacdcc97_2f2a3744",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2019-10-28T20:27:24Z",
+      "side": 1,
+      "message": "In particular I have an old test repository with a submodule present in .git/modules, present in .git/config, its working tree present at the right place in the parent repo\u0027s working tree, but not registered in .gitmodules, and not committed either.\n\nDon\u0027t remember how that state was created. In any case the new code does find the sub-repo and shows its head, and (because the sub-repo isn\u0027t in the index) an empty non-editable editor for the index side.",
+      "range": {
+        "startLine": 21,
+        "startChar": 12,
+        "endLine": 21,
+        "endChar": 25
+      },
+      "revId": "d2fdb0b0a63bb7d50159266ae9ebc7852d4fc501",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
