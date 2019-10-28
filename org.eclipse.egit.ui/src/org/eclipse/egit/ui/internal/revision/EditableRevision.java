@@ -27,6 +27,7 @@ import org.eclipse.core.resources.IStorage;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.egit.core.internal.SafeRunnable;
+import org.eclipse.egit.core.internal.storage.IndexFileRevision;
 import org.eclipse.egit.ui.Activator;
 import org.eclipse.egit.ui.internal.UIText;
 import org.eclipse.jface.resource.ImageDescriptor;
@@ -62,6 +63,14 @@ public class EditableRevision extends FileRevisionTypedElement implements
 
 	@Override
 	public boolean isEditable() {
+		IFileRevision revision = getFileRevision();
+		if (revision instanceof IndexFileRevision
+				&& ((IndexFileRevision) revision).isGitlink()) {
+			// Gitlinks are not editable in the index. It's too fragile; content
+			// is the commit ID of the submodule's HEAD. We don't allow changing
+			// that manually.
+			return false;
+		}
 		return true;
 	}
 

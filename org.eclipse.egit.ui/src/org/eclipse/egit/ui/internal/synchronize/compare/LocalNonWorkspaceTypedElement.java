@@ -50,6 +50,9 @@ import org.eclipse.jgit.events.IndexChangedEvent;
 import org.eclipse.jgit.lib.Constants;
 import org.eclipse.jgit.lib.Repository;
 import org.eclipse.jgit.revwalk.RevCommit;
+import org.eclipse.jgit.submodule.SubmoduleWalk;
+import org.eclipse.jgit.treewalk.FileTreeIterator;
+import org.eclipse.jgit.treewalk.filter.PathFilterGroup;
 import org.eclipse.jgit.util.FileUtils;
 import org.eclipse.team.internal.ui.synchronize.EditableSharedDocumentAdapter;
 import org.eclipse.team.internal.ui.synchronize.LocalResourceTypedElement;
@@ -163,16 +166,32 @@ public class LocalNonWorkspaceTypedElement extends LocalResourceTypedElement {
 				}
 				if (file.isDirectory()) {
 					// submodule
-					Repository sub = ResourceUtil.getRepository(path);
-					if (sub != null && sub != repository) {
-						RevCommit headCommit = Activator.getDefault()
-								.getRepositoryUtil().parseHeadCommit(sub);
-						if (headCommit == null) {
-							return null;
-						}
-						return new ByteArrayInputStream(Constants
-								.encode(headCommit.name()));
+					IPath subPath = ResourceUtil.getRepositoryRelativePath(path,
+							repository);
+					if (subPath == null || subPath.isEmpty()) {
+						return null;
 					}
+					try (SubmoduleWalk walk = new SubmoduleWalk(repository)) {
+						FileTreeIterator iterator = new FileTreeIterator(
+								repository);
+						walk.setTree(iterator);
+						walk.setFilter(PathFilterGroup
+								.createFromStrings(subPath.toString()));
+						walk.setRootTree(iterator);
+						if (walk.next()) {
+							try (Repository sub = walk.getRepository()) {
+								RevCommit headCommit = Activator.getDefault()
+										.getRepositoryUtil()
+										.parseHeadCommit(sub);
+								if (headCommit == null) {
+									return null;
+								}
+								return new ByteArrayInputStream(
+										Constants.encode(headCommit.name()));
+							}
+						}
+					}
+					return null;
 				}
 				return Files.newInputStream(file.toPath());
 			} catch (IOException | UnsupportedOperationException e) {

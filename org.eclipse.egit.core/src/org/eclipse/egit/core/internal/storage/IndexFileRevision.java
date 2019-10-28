@@ -15,6 +15,7 @@
  *******************************************************************************/
 package org.eclipse.egit.core.internal.storage;
 
+import java.io.File;
 import java.io.IOException;
 
 import org.eclipse.core.resources.IStorage;
@@ -27,6 +28,7 @@ import org.eclipse.jgit.dircache.DirCacheCheckout.CheckoutMetadata;
 import org.eclipse.jgit.dircache.DirCacheEntry;
 import org.eclipse.jgit.dircache.DirCacheIterator;
 import org.eclipse.jgit.lib.Constants;
+import org.eclipse.jgit.lib.FileMode;
 import org.eclipse.jgit.lib.ObjectId;
 import org.eclipse.jgit.lib.Repository;
 import org.eclipse.jgit.treewalk.FileTreeIterator;
@@ -52,6 +54,8 @@ public class IndexFileRevision extends GitFileRevision implements
 
 	private ObjectId blobId;
 
+	private boolean isGitlink;
+
 	private CheckoutMetadata metadata;
 
 	IndexFileRevision(final Repository repo, final String path) {
@@ -70,9 +74,23 @@ public class IndexFileRevision extends GitFileRevision implements
 		if (blobId == null) {
 			try {
 				DirCache cache = db.readDirCache();
-				blobId = locateBlobObjectId(cache);
-				if (blobId != null) {
-					metadata = getMetadata(cache);
+				DirCacheEntry entry = locateEntry(cache);
+				if (entry != null) {
+					blobId = entry.getObjectId();
+					if (FileMode.GITLINK.equals(entry.getFileMode())) {
+						isGitlink = true;
+					} else {
+						if (blobId != null) {
+							metadata = getMetadata(cache);
+						}
+					}
+				} else if (!db.isBare()) {
+					// Not found in index. Check if the file on disk, if any, is
+					// a directory, and assume it's a gitlink if so. This is a
+					// safe fallback and results in a read-only editor in the
+					// compare editor.
+					File onDisk = new File(db.getWorkTree(), path);
+					isGitlink = onDisk.isDirectory();
 				}
 			} catch (IOException e) {
 				throw new CoreException(Activator.error(
@@ -81,7 +99,14 @@ public class IndexFileRevision extends GitFileRevision implements
 						e));
 			}
 		}
-		return new IndexBlobStorage(db, path, blobId, metadata);
+		return new IndexBlobStorage(db, path, isGitlink, blobId, metadata);
+	}
+
+	/**
+	 * @return whether this represents a gitlink
+	 */
+	public boolean isGitlink() {
+		return isGitlink;
 	}
 
 	@Override
@@ -130,7 +155,7 @@ public class IndexFileRevision extends GitFileRevision implements
 		return null;
 	}
 
-	private ObjectId locateBlobObjectId(DirCache cache) {
+	private DirCacheEntry locateEntry(DirCache cache) {
 		int firstIndex = cache.findEntry(path);
 		if (firstIndex < 0)
 			return null;
@@ -138,14 +163,14 @@ public class IndexFileRevision extends GitFileRevision implements
 		// Try to avoid call to nextEntry if first entry already matches
 		DirCacheEntry firstEntry = cache.getEntry(firstIndex);
 		if (stage == FIRST_AVAILABLE || firstEntry.getStage() == stage)
-			return firstEntry.getObjectId();
+			return firstEntry;
 
 		// Ok, we have to search
 		int nextIndex = cache.nextEntry(firstIndex);
 		for (int i = firstIndex; i < nextIndex; i++) {
 			DirCacheEntry entry = cache.getEntry(i);
 			if (entry.getStage() == stage)
-				return entry.getObjectId();
+				return entry;
 		}
 		return null;
 	}
