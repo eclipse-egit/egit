@@ -22,6 +22,30 @@
       "revId": "d2fdb0b0a63bb7d50159266ae9ebc7852d4fc501",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7cbb699d_f4bd26d8",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2019-10-28T21:47:33Z",
+      "side": 1,
+      "message": "I remember now how that state came about to be. I had cloned (recursively) an upstream repo with the submodule, then checked out an older branch before that submodule was added.\n\n.gitmodules is checked in, so the entry there for that new submodule got removed by the checkout. But the working tree remained (and is shown as untracked submodule in the staging view), and so did everything under .git. Repo view does not show this \"untracked submodule\". Canonical git shows it as an untracked directory.",
+      "parentUuid": "aacdcc97_2f2a3744",
+      "range": {
+        "startLine": 21,
+        "startChar": 12,
+        "endLine": 21,
+        "endChar": 25
+      },
+      "revId": "d2fdb0b0a63bb7d50159266ae9ebc7852d4fc501",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
     }
   ]
 }
