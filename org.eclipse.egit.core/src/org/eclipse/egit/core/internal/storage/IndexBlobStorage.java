@@ -30,9 +30,9 @@ import org.eclipse.jgit.lib.Repository;
  */
 public class IndexBlobStorage extends GitBlobStorage {
 
-	IndexBlobStorage(final Repository repository, final String fileName,
-			final ObjectId blob, CheckoutMetadata metadata) {
-		super(repository, fileName, blob, metadata);
+	IndexBlobStorage(Repository repository, String fileName, boolean isGitlink,
+			ObjectId blob, CheckoutMetadata metadata) {
+		super(repository, fileName, blob, metadata, isGitlink);
 	}
 
 	@Override

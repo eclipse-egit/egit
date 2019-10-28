@@ -48,7 +48,6 @@ import org.eclipse.osgi.util.NLS;
  */
 public class GitBlobStorage implements IEncodedStorage {
 
-
 	/** Repository containing the object this storage provides access to. */
 	protected final Repository db;
 
@@ -60,6 +59,8 @@ public class GitBlobStorage implements IEncodedStorage {
 
 	/** Checkout metadata: smudge filters, EOL stream type. */
 	private final CheckoutMetadata metadata;
+
+	private final boolean isGitlink;
 
 	private String charset;
 
@@ -101,10 +102,33 @@ public class GitBlobStorage implements IEncodedStorage {
 	 */
 	public GitBlobStorage(final Repository repository, final String path,
 			final ObjectId blob, final CheckoutMetadata metadata) {
+		this(repository, path, blob, metadata, false);
+	}
+
+	/**
+	 * @param repository
+	 *            The repository containing this object.
+	 * @param path
+	 *            Repository-relative path of the underlying object. This path
+	 *            is not validated by this class, i.e. it's returned as is by
+	 *            {@code #getAbsolutePath()} and {@code #getFullPath()} without
+	 *            validating if the blob is reachable using this path.
+	 * @param blob
+	 *            Id of this object in its repository.
+	 * @param metadata
+	 *            Smudge filters and EOL stream type to apply when the content
+	 *            is to be gotten.
+	 * @param isGitlink
+	 *            whether this is a gitlink
+	 * @since 5.6
+	 */
+	public GitBlobStorage(Repository repository, String path, ObjectId blob,
+			CheckoutMetadata metadata, boolean isGitlink) {
 		this.db = repository;
 		this.path = path;
 		this.blobId = blob;
 		this.metadata = metadata;
+		this.isGitlink = isGitlink;
 	}
 
 	@Override
@@ -122,6 +146,8 @@ public class GitBlobStorage implements IEncodedStorage {
 			IncorrectObjectTypeException {
 		if (blobId == null) {
 			return new ByteArrayInputStream(new byte[0]);
+		} else if (isGitlink) {
+			return new ByteArrayInputStream(Constants.encode(blobId.name()));
 		}
 		try {
 			WorkingTreeOptions workingTreeOptions = db.getConfig().get(WorkingTreeOptions.KEY);
@@ -199,7 +225,7 @@ public class GitBlobStorage implements IEncodedStorage {
 				return false;
 		} else if (!path.equals(other.path))
 			return false;
-		return true;
+		return isGitlink == other.isGitlink;
 	}
 
 	/**
