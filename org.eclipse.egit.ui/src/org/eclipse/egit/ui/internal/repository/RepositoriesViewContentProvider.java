@@ -291,7 +291,7 @@ public class RepositoriesViewContentProvider implements ITreeContentProvider {
 		}
 
 		case REPOGROUP: {
-			List<File> repoDirs = ((RepositoryGroupNode) node).getGroup()
+			List<File> repoDirs = ((RepositoryGroupNode) node).getObject()
 					.getRepositoryDirectories();
 			return getRepositoryNodes(
 					Activator.getDefault().getRepositoryUtil(), null, node,

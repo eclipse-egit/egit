@@ -126,7 +126,7 @@ public class DropAdapterAssistant extends CommonDropAdapterAssistant {
 					reposToAdd.add(repo.getRepository().getDirectory());
 				}
 				RepositoryGroups.getInstance().addRepositoriesToGroup(
-						group.getGroup().getGroupId(), reposToAdd);
+						group.getObject().getGroupId(), reposToAdd);
 				refreshRepositoriesView();
 				return Status.OK_STATUS;
 			}

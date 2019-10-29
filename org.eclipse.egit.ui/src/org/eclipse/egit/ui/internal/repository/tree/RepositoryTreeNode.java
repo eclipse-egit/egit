@@ -169,21 +169,13 @@ public abstract class RepositoryTreeNode<T> extends PlatformObject implements Co
 		int result = 1;
 		switch (myType) {
 		case REPO:
-			// fall through
 		case REMOTES:
-			// fall through
 		case LOCAL:
-			// fall through
 		case REMOTETRACKING:
-			// fall through
 		case BRANCHES:
-			// fall through
 		case ADDITIONALREFS:
-			// fall through
 		case SUBMODULES:
-			// fall through
 		case STASH:
-			// fall through
 		case WORKINGDIR:
 			result = prime
 					* result
@@ -191,14 +183,11 @@ public abstract class RepositoryTreeNode<T> extends PlatformObject implements Co
 							.getDirectory().hashCode());
 			break;
 		case REPOGROUP:
-			RepositoryGroup group = ((RepositoryGroupNode) this).getGroup();
+			RepositoryGroup group = ((RepositoryGroupNode) this).getObject();
 			result = prime * result + group.getGroupId().hashCode();
-			result = prime * result + group.getName().hashCode();
 			break;
 		case REF:
-			// fall through
 		case TAG:
-			// fall through
 		case ADDITIONALREF:
 			result = prime
 					* result
@@ -206,7 +195,6 @@ public abstract class RepositoryTreeNode<T> extends PlatformObject implements Co
 							.hashCode());
 			break;
 		case FILE:
-			// fall through
 		case FOLDER:
 			result = prime
 					* result
@@ -214,17 +202,11 @@ public abstract class RepositoryTreeNode<T> extends PlatformObject implements Co
 							.hashCode());
 			break;
 		case TAGS:
-			// fall through
 		case REMOTE:
-			// fall through
 		case PUSH:
-			// fall through
 		case FETCH:
-			// fall through
 		case BRANCHHIERARCHY:
-			// fall through
 		case STASHED_COMMIT:
-			// fall through
 		case ERROR:
 			result = prime * result
 					+ ((myObject == null) ? 0 : myObject.hashCode());
@@ -268,13 +250,6 @@ public abstract class RepositoryTreeNode<T> extends PlatformObject implements Co
 				return false;
 			}
 		}
-		if (myType == RepositoryTreeNodeType.REPOGROUP
-				&& other.myType == RepositoryTreeNodeType.REPOGROUP) {
-			RepositoryGroup myGroup = ((RepositoryGroupNode)this).getGroup();
-			RepositoryGroup otherGroup = ((RepositoryGroupNode)other).getGroup();
-			return myGroup.getGroupId().equals(otherGroup.getGroupId())
-					&& myGroup.getName().equals(otherGroup.getName());
-		}
 		if (myRepository == null) {
 			if (other.myRepository != null) {
 				return false;
@@ -307,50 +282,39 @@ public abstract class RepositoryTreeNode<T> extends PlatformObject implements Co
 	@Override
 	public int compareTo(RepositoryTreeNode otherNode) {
 		int typeDiff = this.myType.ordinal() - otherNode.getType().ordinal();
-		if (typeDiff != 0)
+		if (typeDiff != 0) {
 			return typeDiff;
-
+		}
 		// we only implement this for sorting, so we only have to
 		// implement this for nodes that can be on the same level
 		// i.e. siblings to each other
 
 		switch (myType) {
-
 		case REPOGROUP:
-			// fall through
+			return CommonUtils.STRING_ASCENDING_COMPARATOR.compare(
+					((RepositoryGroup) myObject).getName(),
+					((RepositoryGroup) otherNode.getObject()).getName());
 		case BRANCHES:
-			// fall through
 		case LOCAL:
-			// fall through
 		case REMOTETRACKING:
-			// fall through
 		case BRANCHHIERARCHY:
 			return CommonUtils.STRING_ASCENDING_COMPARATOR.compare(
 					myObject.toString(), otherNode.getObject().toString());
 		case REMOTES:
-			// fall through
 		case ADDITIONALREFS:
-			// fall through
 		case TAGS:
-			// fall through
 		case ERROR:
-			// fall through
 		case SUBMODULES:
-			// fall through
 		case STASH:
-			// fall through
 		case WORKINGDIR:
 			return 0;
 
 		case FETCH:
-			// fall through
 		case PUSH:
-			// fall through
 		case REMOTE:
 			return CommonUtils.STRING_ASCENDING_COMPARATOR
 					.compare((String) myObject, (String) otherNode.getObject());
 		case FILE:
-			// fall through
 		case FOLDER:
 			return CommonUtils.STRING_ASCENDING_COMPARATOR
 					.compare(((File) myObject).getName(),
@@ -360,9 +324,7 @@ public abstract class RepositoryTreeNode<T> extends PlatformObject implements Co
 			return ((StashedCommitNode) this).getIndex()
 					- ((StashedCommitNode) otherNode).getIndex();
 		case TAG:
-			// fall through
 		case ADDITIONALREF:
-			// fall through
 		case REF:
 			return CommonUtils.REF_ASCENDING_COMPARATOR.compare((Ref) myObject,
 					(Ref) otherNode.getObject());
@@ -395,52 +357,34 @@ public abstract class RepositoryTreeNode<T> extends PlatformObject implements Co
 	private boolean checkObjectsEqual(Object otherObject) {
 		switch (myType) {
 		case REPO:
-			// fall through
 		case REMOTES:
-			// fall through
 		case BRANCHES:
-			// fall through
 		case LOCAL:
-			// fall through
 		case REMOTETRACKING:
-			// fall through
 		case ADDITIONALREFS:
-			// fall through
 		case SUBMODULES:
-			// fall through
 		case STASH:
-			// fall through
 		case WORKINGDIR:
 			return ((Repository) myObject).getDirectory().equals(
 					((Repository) otherObject).getDirectory());
 		case REF:
-			// fall through
 		case TAG:
-			// fall through
 		case ADDITIONALREF:
 			return ((Ref) myObject).getName().equals(
 					((Ref) otherObject).getName());
 		case FOLDER:
-			// fall through
 		case FILE:
 			return ((File) myObject).getPath().equals(
 					((File) otherObject).getPath());
 		case ERROR:
-			// fall through
 		case REMOTE:
-			// fall through
 		case FETCH:
-			// fall through
 		case PUSH:
-			// fall through
 		case BRANCHHIERARCHY:
-			// fall through
 		case STASHED_COMMIT:
-			// fall through
+		case REPOGROUP:
 		case TAGS:
 			return myObject.equals(otherObject);
-		case REPOGROUP:
-			// fall through - comparison not by label alone
 		}
 		return false;
 	}
