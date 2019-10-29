@@ -40,24 +40,35 @@ public class RepositoriesViewSorter extends
 		super(collator);
 	}
 
-	@SuppressWarnings("unchecked")
 	@Override
 	public int category(Object element) {
 		if (element instanceof RepositoryTreeNode) {
-			RepositoryTreeNode<? extends Object> node = (RepositoryTreeNode<? extends Object>) element;
-			if (node.getType() == RepositoryTreeNodeType.BRANCHHIERARCHY)
+			RepositoryTreeNode<?> node = (RepositoryTreeNode<?>) element;
+			RepositoryTreeNodeType type = node.getType();
+			switch (type) {
+			case REPOGROUP:
+				return RepositoryTreeNodeType.values().length; // At the bottom
+			case BRANCHHIERARCHY:
 				return RepositoryTreeNodeType.REF.ordinal();
-			return node.getType().ordinal();
+			default:
+				return type.ordinal();
+			}
 		}
 		return super.category(element);
 	}
 
 	@Override
 	public int compare(Viewer viewer, Object e1, Object e2) {
+		int category1 = category(e1);
+		int category2 = category(e2);
+
+		if (category1 != category2) {
+			return category1 - category2;
+		}
 		if (e1 instanceof RepositoryTreeNode
 				&& e2 instanceof RepositoryTreeNode) {
-			RepositoryTreeNode node1 = (RepositoryTreeNode) e1;
-			RepositoryTreeNode node2 = (RepositoryTreeNode) e2;
+			RepositoryTreeNode<?> node1 = (RepositoryTreeNode<?>) e1;
+			RepositoryTreeNode<?> node2 = (RepositoryTreeNode<?>) e2;
 			return node1.compareTo(node2);
 		} else {
 			return super.compare(viewer, e1, e2);

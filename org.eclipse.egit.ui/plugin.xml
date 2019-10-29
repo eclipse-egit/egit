@@ -1947,6 +1947,17 @@
          </activeWhen>
       </handler>
       <handler
+            commandId="org.eclipse.ui.edit.paste">
+         <class
+               class="org.eclipse.egit.ui.internal.repository.tree.command.PasteCommand">
+         </class>
+         <activeWhen>
+            <with variable="activePart">
+            	<instanceof value="org.eclipse.egit.ui.internal.repository.RepositoriesView" />
+            </with>
+         </activeWhen>
+      </handler>
+      <handler
             commandId="org.eclipse.ui.edit.rename">
          <class
                class="org.eclipse.egit.ui.internal.repository.tree.command.RenameBranchCommand">
@@ -4939,7 +4950,7 @@
             </visibleWhen>
          </command>
          <command
-               commandId="org.eclipse.egit.ui.RepositoriesViewPaste"
+               commandId="org.eclipse.ui.edit.paste"
                label="%RepoViewPastePath.label"
                style="push">
          </command>
@@ -5918,12 +5929,6 @@
       </command>
       <command
             categoryId="org.eclipse.egit.ui.commandCategory"
-            defaultHandler="org.eclipse.egit.ui.internal.repository.tree.command.PasteCommand"
-            id="org.eclipse.egit.ui.RepositoriesViewPaste"
-            name="%PastePathCommand">
-      </command>
-      <command
-            categoryId="org.eclipse.egit.ui.commandCategory"
             id="org.eclipse.egit.ui.RepositoriesViewRemove"
             name="%RemoveRepositoryCommand">
       </command>
@@ -6778,12 +6783,6 @@
             contextId="org.eclipse.ui.contexts.window"
             schemeId="org.eclipse.ui.defaultAcceleratorConfiguration"
             sequence="COMMAND+ALT+3">
-      </key>
-      <key
-            commandId="org.eclipse.egit.ui.RepositoriesViewPaste"
-            contextId="org.eclipse.egit.ui.RepositoriesView"
-            schemeId="org.eclipse.ui.defaultAcceleratorConfiguration"
-            sequence="M1+V">
       </key>
       <key
             commandId="org.eclipse.egit.ui.RepositoriesViewCopyPath"

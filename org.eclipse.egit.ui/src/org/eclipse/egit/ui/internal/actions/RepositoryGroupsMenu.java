@@ -96,7 +96,7 @@ public class RepositoryGroupsMenu extends CompoundContributionItem
 			if (uniqueParent != null
 					&& uniqueParent instanceof RepositoryGroupNode) {
 				RepositoryGroup parentGroup = ((RepositoryGroupNode) uniqueParent)
-						.getGroup();
+						.getObject();
 				groups.remove(parentGroup);
 			}
 		}

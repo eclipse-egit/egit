@@ -179,7 +179,7 @@ public class RepositoryTreeNodeLabelProvider
 			result = new StringBuilder(branchName);
 		}
 		if (element instanceof RepositoryGroupNode) {
-			RepositoryGroup group = ((RepositoryGroupNode) element).getGroup();
+			RepositoryGroup group = ((RepositoryGroupNode) element).getObject();
 			result.append(" (").append(group.getRepositoryDirectories().size()) //$NON-NLS-1$
 					.append(')');
 		} else if (element instanceof RepositoryTreeNode) {
