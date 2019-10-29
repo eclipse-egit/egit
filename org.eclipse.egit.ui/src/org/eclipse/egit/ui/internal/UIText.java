@@ -3805,9 +3805,6 @@ public class UIText extends NLS {
 	public static String RepositoriesView_RepoGroup_Rename_Title;
 
 	/** */
-	public static String RepositoriesView_RepoGroup_Rename_IllegalSelection;
-
-	/** */
 	public static String RepositoriesView_RepoGroup_EnterName;
 
 	/** */

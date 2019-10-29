@@ -105,7 +105,7 @@ public class DeleteRepositoryGroupConfirmDialog extends TitleAreaDialog {
 		@Override
 		public boolean hasChildren(Object element) {
 			if (element instanceof RepositoryGroupNode) {
-				return !((RepositoryGroupNode) element).getGroup()
+				return !((RepositoryGroupNode) element).getObject()
 						.getRepositoryDirectories().isEmpty();
 			}
 			return false;
@@ -128,7 +128,7 @@ public class DeleteRepositoryGroupConfirmDialog extends TitleAreaDialog {
 						.getRepositoryCache();
 				RepositoryGroupNode groupNode = ((RepositoryGroupNode) parentElement);
 				final List<RepositoryNode> result = new ArrayList<>();
-				groupNode.getGroup().getRepositoryDirectories().stream()
+				groupNode.getObject().getRepositoryDirectories().stream()
 						.forEach(repoDir -> {
 							try {
 								result.add(new RepositoryNode(groupNode,
