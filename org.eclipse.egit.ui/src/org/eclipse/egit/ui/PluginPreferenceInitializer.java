@@ -6,7 +6,7 @@
  * Copyright (C) 2013, Robin Stocker <robin@nibor.org>
  * Copyright (C) 2015, Jan-Ove Weichel <ovi.weichel@gmail.com>
  * Copyright (C) 2015, SAP SE (Christian Georgi <christian.georgi@sap.com>)
- * Copyright (C) 2016, Thomas Wolf <thomas.wolf@paranor.ch>
+ * Copyright (C) 2016, 2019 Thomas Wolf <thomas.wolf@paranor.ch>
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License 2.0
@@ -121,6 +121,7 @@ public class PluginPreferenceInitializer extends AbstractPreferenceInitializer {
 		store.setDefault(UIPreferences.SHOW_HOME_DIR_WARNING, true);
 		store.setDefault(UIPreferences.LFS_AUTO_CONFIGURATION, false);
 		store.setDefault(UIPreferences.SHOW_DETACHED_HEAD_WARNING, true);
+		store.setDefault(UIPreferences.SHOW_DELETE_REPO_GROUP_WARNING, true);
 		store.setDefault(UIPreferences.SHOW_CHECKOUT_CONFIRMATION, true);
 		store.setDefault(UIPreferences.SHOW_RUNNING_LAUNCH_ON_CHECKOUT_WARNING,
 				true);
