@@ -3859,15 +3859,6 @@ public class UIText extends NLS {
 	public static String RepositoriesView_RepoGroup_EmptyNameError;
 
 	/** */
-	public static String RepositoriesView_RepoGroup_InvalidNameException;
-
-	/** */
-	public static String RepositoriesView_RepoGroup_GroupExists;
-
-	/** */
-	public static String RepositoriesView_RepoGroup_ErrorSavePreferences;
-
-	/** */
 	public static String RepositoriesViewActionProvider_OpenWithMenu;
 
 	/** */
@@ -3896,6 +3887,18 @@ public class UIText extends NLS {
 
 	/** */
 	public static String RepositoriesViewLabelProvider_UnbornBranchText;
+
+	/** */
+	public static String RepositoryGroups_InvalidNameError;
+
+	/** */
+	public static String RepositoryGroups_DuplicateGroupNameError;
+
+	/** */
+	public static String RepositoryGroups_LoadPreferencesInvalidName;
+
+	/** */
+	public static String RepositoryGroups_SavePreferencesError;
 
 	/** */
 	public static String DialogsPreferencePage_autoConfigureLfs;
