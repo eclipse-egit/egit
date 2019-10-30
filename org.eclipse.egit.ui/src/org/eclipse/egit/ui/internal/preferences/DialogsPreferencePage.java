@@ -1,7 +1,7 @@
 /*******************************************************************************
  * Copyright (C) 2011, Mathias Kinzler <mathias.kinzler@sap.com>
  * Copyright (C) 2012, Matthias Sohn <matthias.sohn@sap.com>
- * Copyright (C) 2017, Thomas Wolf <thomas.wolf@paranor.ch>
+ * Copyright (C) 2017, 2019 Thomas Wolf <thomas.wolf@paranor.ch>
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License 2.0
@@ -71,6 +71,10 @@ public class DialogsPreferencePage extends FieldEditorPreferencePage implements
 		addField(new BooleanFieldEditor(
 				UIPreferences.SHOW_DETACHED_HEAD_WARNING,
 				UIText.DialogsPreferencePage_DetachedHeadCombo, confirmDialogsGroup));
+		addField(new BooleanFieldEditor(
+				UIPreferences.SHOW_DELETE_REPO_GROUP_WARNING,
+				UIText.DialogsPreferencePage_ShowDeleteRepoGroup,
+				confirmDialogsGroup));
 		addField(new BooleanFieldEditor(
 				UIPreferences.SHOW_RUNNING_LAUNCH_ON_CHECKOUT_WARNING,
 				UIText.DialogsPreferencePage_RunningLaunchOnCheckout,
