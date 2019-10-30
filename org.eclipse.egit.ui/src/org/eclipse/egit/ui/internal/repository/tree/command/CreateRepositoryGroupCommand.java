@@ -18,7 +18,7 @@ import java.util.stream.Collectors;
 import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.commands.ExecutionException;
 import org.eclipse.egit.ui.internal.UIText;
-import org.eclipse.egit.ui.internal.repository.tree.RepositoryGroups;
+import org.eclipse.egit.ui.internal.groups.RepositoryGroups;
 import org.eclipse.egit.ui.internal.repository.tree.RepositoryNode;
 import org.eclipse.egit.ui.internal.repository.tree.RepositoryTreeNode;
 import org.eclipse.egit.ui.internal.repository.tree.RepositoryTreeNodeType;
@@ -76,7 +76,7 @@ public class CreateRepositoryGroupCommand
 						return UIText.RepositoriesView_RepoGroup_EmptyNameError;
 					}
 					if (groupsUtil.groupExists(name.trim())) {
-						return UIText.RepositoriesView_RepoGroup_GroupExists;
+						return UIText.RepositoryGroups_DuplicateGroupNameError;
 					}
 					return null;
 				});

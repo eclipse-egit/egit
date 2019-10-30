@@ -8,7 +8,7 @@
  *
  * SPDX-License-Identifier: EPL-2.0
  *******************************************************************************/
-package org.eclipse.egit.ui.internal.repository.tree;
+package org.eclipse.egit.ui.internal.groups;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -40,11 +40,11 @@ public class RepositoryGroups {
 
 	private IEclipsePreferences preferences = util.getPreferences();
 
-	private static final String PREFS_GROUPS = "GitRepositoriesView.RepositoryGroups.uuids"; //$NON-NLS-1$
+	private static final String PREFS_GROUPS = "RepositoryGroups.uuids"; //$NON-NLS-1$
 
-	private static final String PREFS_GROUP_NAME_PREFIX = "GitRepositoriesView.RepositoryGroups."; //$NON-NLS-1$
+	private static final String PREFS_GROUP_NAME_PREFIX = "RepositoryGroups."; //$NON-NLS-1$
 
-	private static final String PREFS_GROUP_PREFIX = "GitRepositoriesView.RepositoryGroups.group."; //$NON-NLS-1$
+	private static final String PREFS_GROUP_PREFIX = "RepositoryGroups.group."; //$NON-NLS-1$
 
 	private static final String EMPTY_STRING = ""; //$NON-NLS-1$
 
@@ -105,7 +105,7 @@ public class RepositoryGroups {
 			return groupId;
 		} else {
 			throw new IllegalStateException(
-					UIText.RepositoriesView_RepoGroup_GroupExists);
+					UIText.RepositoryGroups_DuplicateGroupNameError);
 		}
 	}
 
@@ -143,7 +143,7 @@ public class RepositoryGroups {
 		if (StringUtils.isEmptyOrNull(groupName)
 				|| !groupName.equals(groupName.trim())) {
 			throw new IllegalArgumentException(
-					UIText.RepositoriesView_RepoGroup_InvalidNameException);
+					UIText.RepositoryGroups_InvalidNameError);
 		}
 	}
 
@@ -207,7 +207,7 @@ public class RepositoryGroups {
 			preferences.flush();
 		} catch (BackingStoreException e) {
 			Activator.logError(
-					UIText.RepositoriesView_RepoGroup_ErrorSavePreferences, e);
+					UIText.RepositoryGroups_ErrorSavePreferences, e);
 		}
 	}
 

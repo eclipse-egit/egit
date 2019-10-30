@@ -10,6 +10,8 @@
  *******************************************************************************/
 package org.eclipse.egit.ui.internal.repository.tree;
 
+import org.eclipse.egit.ui.internal.groups.RepositoryGroup;
+
 /**
  * This class represents the tree node of a repository group.
  */
