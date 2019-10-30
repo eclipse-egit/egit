@@ -8,9 +8,10 @@
  *
  * SPDX-License-Identifier: EPL-2.0
  *******************************************************************************/
-package org.eclipse.egit.ui.internal.repository.tree;
+package org.eclipse.egit.ui.internal.groups;
 
 import java.io.File;
+import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
@@ -21,34 +22,38 @@ import java.util.stream.Collectors;
 
 import org.eclipse.core.runtime.preferences.IEclipsePreferences;
 import org.eclipse.egit.core.RepositoryUtil;
+import org.eclipse.egit.core.internal.Utils;
 import org.eclipse.egit.ui.Activator;
 import org.eclipse.egit.ui.internal.UIText;
 import org.eclipse.jgit.util.StringUtils;
 import org.osgi.service.prefs.BackingStoreException;
 
 /**
- * This class manages the repository groups. The data is stored in the
+ * This singleton manages the repository groups. The data is stored in the
  * preferences.
  */
-public class RepositoryGroups {
+public final class RepositoryGroups {
 
-	private static RepositoryGroups INSTANCE = new RepositoryGroups();
+	private static final RepositoryGroups INSTANCE = new RepositoryGroups();
 
-	private Map<UUID, RepositoryGroup> groupMap = new HashMap<>();
+	private static final String PREFS_GROUP_NAME_PREFIX = "RepositoryGroups."; //$NON-NLS-1$
 
-	private RepositoryUtil util = Activator.getDefault().getRepositoryUtil();
+	private static final String PREFS_GROUPS = PREFS_GROUP_NAME_PREFIX
+			+ "uuids"; //$NON-NLS-1$
 
-	private IEclipsePreferences preferences = util.getPreferences();
-
-	private static final String PREFS_GROUPS = "GitRepositoriesView.RepositoryGroups.uuids"; //$NON-NLS-1$
-
-	private static final String PREFS_GROUP_NAME_PREFIX = "GitRepositoriesView.RepositoryGroups."; //$NON-NLS-1$
-
-	private static final String PREFS_GROUP_PREFIX = "GitRepositoriesView.RepositoryGroups.group."; //$NON-NLS-1$
+	private static final String PREFS_GROUP_PREFIX = PREFS_GROUP_NAME_PREFIX
+			+ "group."; //$NON-NLS-1$
 
 	private static final String EMPTY_STRING = ""; //$NON-NLS-1$
 
 	private static final String SEPARATOR = "\n";//$NON-NLS-1$
+
+	private final Map<UUID, RepositoryGroup> groupMap = new HashMap<>();
+
+	private final RepositoryUtil util = Activator.getDefault()
+			.getRepositoryUtil();
+
+	private final IEclipsePreferences preferences = util.getPreferences();
 
 	/**
 	 * @return singleton of the repository group manager
@@ -62,17 +67,29 @@ public class RepositoryGroups {
 	private RepositoryGroups() {
 		List<String> groups = split(
 				preferences.get(PREFS_GROUPS, EMPTY_STRING));
+		List<RepositoryGroup> toDelete = new ArrayList<>();
 		for (String groupIdString : groups) {
 			UUID groupId = UUID.fromString(groupIdString);
 			String name = preferences
 					.get(PREFS_GROUP_NAME_PREFIX + groupIdString, EMPTY_STRING);
+			// Guard against corrupted preferences
+			if (isGroupNameInvalid(name)) {
+				toDelete.add(new RepositoryGroup(groupId, name));
+				Activator.logWarning(MessageFormat.format(
+						UIText.RepositoryGroups_LoadPreferencesInvalidName,
+						name), null);
+				continue;
+			}
 			List<File> repos = split(preferences
 					.get(PREFS_GROUP_PREFIX + groupIdString, EMPTY_STRING))
 							.stream().map(util::getAbsoluteRepositoryPath)
-							.map(File::new)
+							.map(File::new).filter(File::isDirectory)
 							.collect(Collectors.toList());
 			RepositoryGroup group = new RepositoryGroup(groupId, name, repos);
 			groupMap.put(groupId, group);
+		}
+		if (!toDelete.isEmpty()) {
+			delete(toDelete);
 		}
 	}
 
@@ -96,16 +113,18 @@ public class RepositoryGroups {
 	 * @return id of the new group
 	 */
 	public UUID createGroup(String groupName) {
+		checkGroupName(groupName);
 		if (!groupExists(groupName)) {
-			String trimmedName = groupName.trim();
 			UUID groupId = UUID.randomUUID();
-			RepositoryGroup group = new RepositoryGroup(groupId, trimmedName);
+			RepositoryGroup group = new RepositoryGroup(groupId, groupName);
 			groupMap.put(groupId, group);
 			savePreferences();
 			return groupId;
 		} else {
 			throw new IllegalStateException(
-					UIText.RepositoriesView_RepoGroup_GroupExists);
+					MessageFormat.format(
+							UIText.RepositoryGroups_DuplicateGroupNameError,
+							groupName));
 		}
 	}
 
@@ -118,7 +137,7 @@ public class RepositoryGroups {
 	public void renameGroup(RepositoryGroup group, String newName) {
 		checkGroupName(newName);
 		RepositoryGroup myGroup = groupMap.get(group.getGroupId());
-		if (myGroup != null) {
+		if (myGroup != null && !newName.equals(myGroup.getName())) {
 			myGroup.setGroupName(newName);
 			savePreferences();
 		}
@@ -128,22 +147,22 @@ public class RepositoryGroups {
 	 * @param groupName
 	 *            name of the group
 	 * @return true if and only if a group of the given name already exists
-	 * @throws IllegalArgumentException
-	 *             if the group name is not valid
-	 *
 	 */
-	public boolean groupExists(String groupName)
-			throws IllegalArgumentException {
-		checkGroupName(groupName);
+	public boolean groupExists(String groupName) {
 		return groupMap.values().stream()
 				.anyMatch(group -> group.getName().equals(groupName));
 	}
 
-	private void checkGroupName(String groupName) {
-		if (StringUtils.isEmptyOrNull(groupName)
-				|| !groupName.equals(groupName.trim())) {
+	private static boolean isGroupNameInvalid(String groupName) {
+		return StringUtils.isEmptyOrNull(groupName)
+				|| !groupName.equals(groupName.trim())
+				|| Utils.isMultiLine(groupName);
+	}
+
+	private static void checkGroupName(String groupName) {
+		if (isGroupNameInvalid(groupName)) {
 			throw new IllegalArgumentException(
-					UIText.RepositoriesView_RepoGroup_InvalidNameException);
+					UIText.RepositoryGroups_InvalidNameError);
 		}
 	}
 
@@ -207,7 +226,7 @@ public class RepositoryGroups {
 			preferences.flush();
 		} catch (BackingStoreException e) {
 			Activator.logError(
-					UIText.RepositoriesView_RepoGroup_ErrorSavePreferences, e);
+					UIText.RepositoryGroups_SavePreferencesError, e);
 		}
 	}
 
@@ -229,12 +248,12 @@ public class RepositoryGroups {
 	}
 
 	/**
-	 * @param repositoryDirecptories
+	 * @param repositoryDirectories
 	 *            repository directories to be removed from all groups
 	 */
-	public void removeFromGroups(List<File> repositoryDirecptories) {
+	public void removeFromGroups(List<File> repositoryDirectories) {
 		for (RepositoryGroup group : groupMap.values()) {
-			group.removeRepositoryDirectories(repositoryDirecptories);
+			group.removeRepositoryDirectories(repositoryDirectories);
 		}
 		savePreferences();
 	}
