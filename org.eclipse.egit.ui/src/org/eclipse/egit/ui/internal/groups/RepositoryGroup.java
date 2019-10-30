@@ -8,7 +8,7 @@
  *
  * SPDX-License-Identifier: EPL-2.0
  *******************************************************************************/
-package org.eclipse.egit.ui.internal.repository.tree;
+package org.eclipse.egit.ui.internal.groups;
 
 import java.io.File;
 import java.util.ArrayList;
