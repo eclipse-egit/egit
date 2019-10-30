@@ -197,6 +197,8 @@ public class UIPreferences {
 	/** */
 	public static final String SHOW_DETACHED_HEAD_WARNING = "show_detached_head_warning"; //$NON-NLS-1$
 	/** */
+	public static final String SHOW_DELETE_REPO_GROUP_WARNING = "show_delete_repo_group_warning"; //$NON-NLS-1$
+	/** */
 	public static final String SHOW_CHECKOUT_CONFIRMATION = "show_checkout_confirmation"; //$NON-NLS-1$
 	/** */
 	public static final String SHOW_RUNNING_LAUNCH_ON_CHECKOUT_WARNING = "show_running_launch_on_checkout_warning"; //$NON-NLS-1$
