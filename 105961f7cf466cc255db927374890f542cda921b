@@ -910,6 +910,24 @@
     },
     {
       "key": {
+        "uuid": "9221b193_394b9325",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/repository/tree/command/DeleteRepositoryGroupCommand.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2019-10-30T23:12:38Z",
+      "side": 1,
+      "message": "Done in https://git.eclipse.org/r/#/c/151822/",
+      "parentUuid": "b061102e_e9059527",
+      "revId": "105961f7cf466cc255db927374890f542cda921b",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "62b7c9f4_781a7a2d",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/repository/tree/command/DeleteRepositoryGroupConfirmDialog.java",
         "patchSetId": 6
