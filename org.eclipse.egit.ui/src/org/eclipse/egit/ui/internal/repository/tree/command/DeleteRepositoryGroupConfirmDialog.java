@@ -29,6 +29,7 @@ import org.eclipse.jface.viewers.TreeViewer;
 import org.eclipse.jface.viewers.Viewer;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.layout.GridLayout;
+import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Shell;
@@ -39,6 +40,10 @@ import org.eclipse.swt.widgets.Shell;
 public class DeleteRepositoryGroupConfirmDialog extends TitleAreaDialog {
 
 	private List<RepositoryGroupNode> groupsToDelete;
+
+	private boolean toggleState;
+
+	private Button toggle;
 
 	/**
 	 * @param parentShell
@@ -76,9 +81,24 @@ public class DeleteRepositoryGroupConfirmDialog extends TitleAreaDialog {
 		groupsViewer.setContentProvider(
 				new DeleteRepositoryGroupTreeContentProvider());
 		groupsViewer.setInput(groupsToDelete);
+		toggle = new Button(main, SWT.CHECK);
+		toggle.setText(UIText.RepositoriesView_RepoGroup_DeleteDontShowAgain);
 		setTitle(UIText.RepositoriesView_RepoGroup_Delete_Title);
 		setMessage(UIText.RepositoriesView_RepoGroup_Delete_Confirm);
 		return main;
+	}
+
+	@Override
+	protected void okPressed() {
+		toggleState = toggle.getSelection();
+		super.okPressed();
+	}
+
+	/**
+	 * @return whether to show this dialog again in the future
+	 */
+	public boolean showAgain() {
+		return !toggleState;
 	}
 
 	@Override

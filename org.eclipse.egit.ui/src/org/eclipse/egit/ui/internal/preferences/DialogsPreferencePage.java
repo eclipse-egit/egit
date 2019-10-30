@@ -72,6 +72,10 @@ public class DialogsPreferencePage extends FieldEditorPreferencePage implements
 				UIPreferences.SHOW_DETACHED_HEAD_WARNING,
 				UIText.DialogsPreferencePage_DetachedHeadCombo, confirmDialogsGroup));
 		addField(new BooleanFieldEditor(
+				UIPreferences.SHOW_DELETE_REPO_GROUP_WARNING,
+				UIText.DialogsPreferencePage_ShowDeleteRepoGroup,
+				confirmDialogsGroup));
+		addField(new BooleanFieldEditor(
 				UIPreferences.SHOW_RUNNING_LAUNCH_ON_CHECKOUT_WARNING,
 				UIText.DialogsPreferencePage_RunningLaunchOnCheckout,
 				confirmDialogsGroup));
