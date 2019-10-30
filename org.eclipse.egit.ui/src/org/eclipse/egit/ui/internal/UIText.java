@@ -3796,6 +3796,9 @@ public class UIText extends NLS {
 	public static String RepositoriesView_RepoGroup_Remove_Title;
 
 	/** */
+	public static String RepositoriesView_RepoGroup_DeleteDontShowAgain;
+
+	/** */
 	public static String RepositoriesView_RepoGroup_Delete_Title;
 
 	/** */
@@ -3857,6 +3860,9 @@ public class UIText extends NLS {
 
 	/** */
 	public static String DialogsPreferencePage_HideConfirmationGroupHeader;
+
+	/** */
+	public static String DialogsPreferencePage_ShowDeleteRepoGroup;
 
 	/** */
 	public static String DialogsPreferencePage_ShowInfoGroupHeader;
