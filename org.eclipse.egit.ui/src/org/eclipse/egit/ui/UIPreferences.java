@@ -8,7 +8,7 @@
  * Copyright (C) 2014, Marc Khouzam <marc.khouzam@ericsson.com>
  * Copyright (C) 2015, Jan-Ove Weichel <ovi.weichel@gmail.com>
  * Copyright (C) 2015, SAP SE (Christian Georgi <christian.georgi@sap.com>)
- * Copyright (C) 2016, Thomas Wolf <thomas.wolf@paranor.ch>
+ * Copyright (C) 2016, 2019 Thomas Wolf <thomas.wolf@paranor.ch>
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License 2.0
@@ -202,6 +202,8 @@ public class UIPreferences {
 	public static final String LFS_AUTO_CONFIGURATION = "auto_lfs_config"; //$NON-NLS-1$
 	/** */
 	public static final String SHOW_DETACHED_HEAD_WARNING = "show_detached_head_warning"; //$NON-NLS-1$
+	/** */
+	public static final String SHOW_DELETE_REPO_GROUP_WARNING = "show_delete_repo_group_warning"; //$NON-NLS-1$
 	/** */
 	public static final String SHOW_CHECKOUT_CONFIRMATION = "show_checkout_confirmation"; //$NON-NLS-1$
 	/** */
