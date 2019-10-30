@@ -91,6 +91,7 @@ Export-Package: org.eclipse.egit.ui;version="5.6.0";x-friends:="org.eclipse.egit
  org.eclipse.egit.ui.internal.factories;version="5.6.0";x-internal:=true,
  org.eclipse.egit.ui.internal.fetch;version="5.6.0";x-friends:="org.eclipse.mylyn.github.ui",
  org.eclipse.egit.ui.internal.gerrit;version="5.6.0";x-internal:=true,
+ org.eclipse.egit.ui.internal.groups;version="5.6.0";x-internal:=true,
  org.eclipse.egit.ui.internal.handler;version="5.6.0";x-internal:=true,
  org.eclipse.egit.ui.internal.history;version="5.6.0";x-internal:=true,
  org.eclipse.egit.ui.internal.history.command;version="5.6.0";x-internal:=true,
