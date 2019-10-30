@@ -15,9 +15,9 @@ import java.util.List;
 import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.commands.ExecutionException;
 import org.eclipse.egit.ui.internal.UIText;
-import org.eclipse.egit.ui.internal.repository.tree.RepositoryGroup;
+import org.eclipse.egit.ui.internal.groups.RepositoryGroup;
+import org.eclipse.egit.ui.internal.groups.RepositoryGroups;
 import org.eclipse.egit.ui.internal.repository.tree.RepositoryGroupNode;
-import org.eclipse.egit.ui.internal.repository.tree.RepositoryGroups;
 import org.eclipse.egit.ui.internal.repository.tree.RepositoryTreeNode;
 
 /**
