@@ -16,6 +16,24 @@
       "revId": "6c6fc4234e3af09bfd53e6457ab41b2830e623f9",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "f6ae4054_7416f062",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/uitext.properties",
+        "patchSetId": 1
+      },
+      "lineNbr": 1350,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2019-10-31T14:22:44Z",
+      "side": 1,
+      "message": "Good catch. Yes, I forgot to do so.",
+      "parentUuid": "8e811585_8aa9fc88",
+      "revId": "6c6fc4234e3af09bfd53e6457ab41b2830e623f9",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
     }
   ]
 }
