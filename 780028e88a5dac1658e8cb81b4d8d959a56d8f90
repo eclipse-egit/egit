@@ -85,6 +85,24 @@
       "revId": "780028e88a5dac1658e8cb81b4d8d959a56d8f90",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "811ee5a8_014a7cf9",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/repository/tree/command/RenameRepositoryGroupCommand.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2019-10-31T14:39:12Z",
+      "side": 0,
+      "message": "I think for that purpose I\u0027d have chosen to log an error.",
+      "parentUuid": "5b674334_17e70a75",
+      "revId": "780028e88a5dac1658e8cb81b4d8d959a56d8f90",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
     }
   ]
 }
