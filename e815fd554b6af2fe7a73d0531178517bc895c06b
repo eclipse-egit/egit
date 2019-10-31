@@ -2,6 +2,199 @@
   "comments": [
     {
       "key": {
+        "uuid": "fd6bd4f0_1d9404f1",
+        "filename": "org.eclipse.egit.ui.test/META-INF/MANIFEST.MF",
+        "patchSetId": 20
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2019-10-31T09:55:03Z",
+      "side": 1,
+      "message": "Version range?",
+      "revId": "e815fd554b6af2fe7a73d0531178517bc895c06b",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "6d7496b1_1847c2d6",
+        "filename": "org.eclipse.egit.ui.test/src/org/eclipse/egit/ui/common/LocalRepositoryTestCase.java",
+        "patchSetId": 20
+      },
+      "lineNbr": 524,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2019-10-31T09:55:03Z",
+      "side": 1,
+      "message": "Spurious empty line.",
+      "revId": "e815fd554b6af2fe7a73d0531178517bc895c06b",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "2f0763b0_32608529",
+        "filename": "org.eclipse.egit.ui.test/src/org/eclipse/egit/ui/test/history/GitHistoryRefFilterConfigurationDialogTest.java",
+        "patchSetId": 20
+      },
+      "lineNbr": 695,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2019-10-31T09:55:03Z",
+      "side": 1,
+      "message": "Typo. \"Cancel\". More occurrences below.",
+      "range": {
+        "startLine": 695,
+        "startChar": 17,
+        "endLine": 695,
+        "endChar": 23
+      },
+      "revId": "e815fd554b6af2fe7a73d0531178517bc895c06b",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "36eafc39_93b8f0e0",
+        "filename": "org.eclipse.egit.ui.test/src/org/eclipse/egit/ui/test/history/HistoryViewTest.java",
+        "patchSetId": 20
+      },
+      "lineNbr": 156,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2019-10-31T09:55:03Z",
+      "side": 1,
+      "message": "Uh... don\u0027t the test base classes close shells already?",
+      "revId": "e815fd554b6af2fe7a73d0531178517bc895c06b",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3eb690c9_efd23e18",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/actions/ReplaceWithCommitActionHandler.java",
+        "patchSetId": 20
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2019-10-31T09:55:03Z",
+      "side": 1,
+      "message": "Missing curly braces.",
+      "revId": "e815fd554b6af2fe7a73d0531178517bc895c06b",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ce2afaf1_6cb003cb",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/history/GitHistoryPage.java",
+        "patchSetId": 20
+      },
+      "lineNbr": 639,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2019-10-31T09:55:03Z",
+      "side": 1,
+      "message": "Missing curly braces.",
+      "revId": "e815fd554b6af2fe7a73d0531178517bc895c06b",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7328dffb_cf73eefb",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/history/GitHistoryPage.java",
+        "patchSetId": 20
+      },
+      "lineNbr": 1229,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2019-10-31T09:55:03Z",
+      "side": 1,
+      "message": "This is used only in SelectShownRefsAction. Move it there, and update it in response to a repo changed event.",
+      "revId": "e815fd554b6af2fe7a73d0531178517bc895c06b",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "b4068d9f_c8f00aee",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/history/GitHistoryPage.java",
+        "patchSetId": 20
+      },
+      "lineNbr": 2586,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2019-10-31T09:55:03Z",
+      "side": 1,
+      "message": "Should be done in SelectShownRefsAction (see above).\n\nAlso: null out if repo is null?",
+      "revId": "e815fd554b6af2fe7a73d0531178517bc895c06b",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "92d7dd55_d972be0b",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/history/GitHistoryPage.java",
+        "patchSetId": 20
+      },
+      "lineNbr": 2703,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2019-10-31T09:55:03Z",
+      "side": 1,
+      "message": "Why that?",
+      "revId": "e815fd554b6af2fe7a73d0531178517bc895c06b",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9f33daf6_fbadf4a5",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/history/GitHistoryRefFilterConfigurationDialog.java",
+        "patchSetId": 20
+      },
+      "lineNbr": 257,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2019-10-31T09:55:03Z",
+      "side": 1,
+      "message": "Missing curly braces.",
+      "revId": "e815fd554b6af2fe7a73d0531178517bc895c06b",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "94d2e2ff_df81739e",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/history/GitHistoryRefFilterConfigurationDialog.java",
+        "patchSetId": 20
+      },
+      "lineNbr": 413,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2019-10-31T09:55:03Z",
+      "side": 1,
+      "message": "Missing curly braces.",
+      "revId": "e815fd554b6af2fe7a73d0531178517bc895c06b",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8cd42236_c089970c",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/history/RefFilterHelper.java",
         "patchSetId": 20
@@ -31,6 +224,74 @@
       "side": 1,
       "message": "Done",
       "parentUuid": "8cd42236_c089970c",
+      "revId": "e815fd554b6af2fe7a73d0531178517bc895c06b",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "b3ae3b8a_3b693b95",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/history/RefFilterHelper.java",
+        "patchSetId": 20
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2019-10-31T09:55:03Z",
+      "side": 1,
+      "message": "Missing curly braces.",
+      "revId": "e815fd554b6af2fe7a73d0531178517bc895c06b",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3b827bf5_2cff4422",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/history/RefFilterHelper.java",
+        "patchSetId": 20
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2019-10-31T09:55:03Z",
+      "side": 1,
+      "message": "Strange formatting.",
+      "revId": "e815fd554b6af2fe7a73d0531178517bc895c06b",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5285d689_d1a447e1",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/history/RefFilterHelper.java",
+        "patchSetId": 20
+      },
+      "lineNbr": 623,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2019-10-31T09:55:03Z",
+      "side": 1,
+      "message": "Missing curly braces.",
+      "revId": "e815fd554b6af2fe7a73d0531178517bc895c06b",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "26eef825_372d30de",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/history/RefFilterHelper.java",
+        "patchSetId": 20
+      },
+      "lineNbr": 716,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2019-10-31T09:55:03Z",
+      "side": 1,
+      "message": "Missing curly braces.",
       "revId": "e815fd554b6af2fe7a73d0531178517bc895c06b",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
