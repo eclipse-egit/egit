@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "041aba89_ddec44fb",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/repository/tree/RepositoryTreeNode.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 197,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2019-10-31T14:20:10Z",
+      "side": 0,
+      "message": "Not really. But one could equally well use group.hashCode() directly. There is exactly one Java RepositoryGroup object for a given group UUID. Actually, the UUIDs are currently an unneeded level of indirection. But I didn\u0027t want to change that; might come in handy if we ever do nested groups.\n\nFor consistency, I think I should call group.hashCode() here.",
+      "parentUuid": "65afafe9_25ec2962",
+      "revId": "780028e88a5dac1658e8cb81b4d8d959a56d8f90",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "55cbe7b3_fb3c8e02",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/repository/tree/RepositoryTreeNode.java",
         "patchSetId": 4
