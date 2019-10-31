@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8e811585_8aa9fc88",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/uitext.properties",
+        "patchSetId": 1
+      },
+      "lineNbr": 1350,
+      "author": {
+        "id": 236689
+      },
+      "writtenOn": "2019-10-31T10:37:30Z",
+      "side": 1,
+      "message": "In UIText.java the corrensponding entries were moved behind the RepositoriesViewLabelProvider entries. Maybe for consistency this should be done here, as well.",
+      "revId": "6c6fc4234e3af09bfd53e6457ab41b2830e623f9",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
