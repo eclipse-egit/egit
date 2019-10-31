@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "69807e76_9ae5dfe1",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/repository/tree/RepositoriesViewSorter.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 236689
+      },
+      "writtenOn": "2019-10-31T14:00:22Z",
+      "side": 1,
+      "message": "Technically, wouldn\u0027t it make sense to change the position of REPOGROUP in the enum definition?\n\nI intentionally put the groups after the repositories without a group (without claiming that my reasoning is correct, just that a decision must be made, I can live with both versions).\nThe primary concept of the Repositories View is the repository which is why I would show it first. I can think of different ways groups can be used. The one I had in mind is leaving the few current focus repositories without a group and put the rest in an attic group (which I would like to be at the end). And if all repositories are placed in groups, there is no problem. If a new repository is added, it appears on top and can be moved to a group.\nFrom a workflow perspective to me it simply seems more natural that groups come last.\n\nFrom a file/folder interpretation groups are like folders and are expected to come first...",
+      "revId": "40a021eee84b286554e8dd5c58e5ba5e5381aee2",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "160c6f6d_facd1dac",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/repository/tree/RepositoryGroupNode.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 236689
+      },
+      "writtenOn": "2019-10-31T14:00:22Z",
+      "side": 1,
+      "message": "Yes, much better making more sense and making the additional API redundant.",
+      "revId": "40a021eee84b286554e8dd5c58e5ba5e5381aee2",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}

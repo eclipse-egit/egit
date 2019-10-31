@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "65afafe9_25ec2962",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/repository/tree/RepositoryTreeNode.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 197,
+      "author": {
+        "id": 236689
+      },
+      "writtenOn": "2019-10-31T14:00:22Z",
+      "side": 0,
+      "message": "I am just wondering if the equal-hashcode-correspondence is broken now. Equals basically delegates to RepositoryGroup#equals which is not implemented while hashCode   is implemented here.",
+      "revId": "780028e88a5dac1658e8cb81b4d8d959a56d8f90",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "55cbe7b3_fb3c8e02",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/repository/tree/RepositoryTreeNode.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 272,
+      "author": {
+        "id": 236689
+      },
+      "writtenOn": "2019-10-31T14:00:22Z",
+      "side": 0,
+      "message": "See hashCode comment.",
+      "revId": "780028e88a5dac1658e8cb81b4d8d959a56d8f90",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c1dec71d_1b77cf5b",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/repository/tree/command/RenameRepositoryGroupCommand.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 236689
+      },
+      "writtenOn": "2019-10-31T14:00:22Z",
+      "side": 0,
+      "message": "In case inline renaming makes it, the static CreateRepositoryGroupCommand#getNewGroupName should not be exposed anymore as it is not used elsewhere.",
+      "revId": "780028e88a5dac1658e8cb81b4d8d959a56d8f90",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5b674334_17e70a75",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/repository/tree/command/RenameRepositoryGroupCommand.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 236689
+      },
+      "writtenOn": "2019-10-31T14:00:22Z",
+      "side": 0,
+      "message": "I understand why you eliminate the exception. I often use this pattern (without localized exception messages) not as information for the user but for the programmer.\nThere is no guarantee that the command is only invoked via the plugin.xml definitions and there is no guarantee that the enablement definition is not changed at some point.\n\nThere is a difference between a NOOP in case some precondition is not met and an actual implementation error. Here I wanted to make explicit that the command must not be invoked on an illegal selection.",
+      "revId": "780028e88a5dac1658e8cb81b4d8d959a56d8f90",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
