@@ -16,6 +16,24 @@
       "revId": "e815fd554b6af2fe7a73d0531178517bc895c06b",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ef5acd5b_ccb7eebc",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/history/RefFilterHelper.java",
+        "patchSetId": 20
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1179
+      },
+      "writtenOn": "2019-10-31T09:32:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8cd42236_c089970c",
+      "revId": "e815fd554b6af2fe7a73d0531178517bc895c06b",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
     }
   ]
 }
