@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "ac57e21b_825b2d9b",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/repository/tree/RepositoriesViewSorter.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2019-10-31T20:16:34Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2ee402b4_e492007f",
+      "revId": "40a021eee84b286554e8dd5c58e5ba5e5381aee2",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "160c6f6d_facd1dac",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/repository/tree/RepositoryGroupNode.java",
         "patchSetId": 4

@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "c7decdfe_71ff60ae",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/repository/tree/RepositoryTreeNode.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 197,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2019-10-31T20:16:34Z",
+      "side": 0,
+      "message": "Done",
+      "parentUuid": "041aba89_ddec44fb",
+      "revId": "780028e88a5dac1658e8cb81b4d8d959a56d8f90",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "55cbe7b3_fb3c8e02",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/repository/tree/RepositoryTreeNode.java",
         "patchSetId": 4
@@ -65,6 +83,24 @@
       "writtenOn": "2019-10-31T14:00:22Z",
       "side": 0,
       "message": "In case inline renaming makes it, the static CreateRepositoryGroupCommand#getNewGroupName should not be exposed anymore as it is not used elsewhere.",
+      "revId": "780028e88a5dac1658e8cb81b4d8d959a56d8f90",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "57753d61_3d39ee2b",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/repository/tree/command/RenameRepositoryGroupCommand.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2019-10-31T20:16:34Z",
+      "side": 0,
+      "message": "Done",
+      "parentUuid": "c1dec71d_1b77cf5b",
       "revId": "780028e88a5dac1658e8cb81b4d8d959a56d8f90",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
@@ -100,6 +136,24 @@
       "side": 0,
       "message": "I think for that purpose I\u0027d have chosen to log an error.",
       "parentUuid": "5b674334_17e70a75",
+      "revId": "780028e88a5dac1658e8cb81b4d8d959a56d8f90",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "36ce1465_ab5c3c65",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/repository/tree/command/RenameRepositoryGroupCommand.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2019-10-31T20:16:34Z",
+      "side": 0,
+      "message": "Done",
+      "parentUuid": "811ee5a8_014a7cf9",
       "revId": "780028e88a5dac1658e8cb81b4d8d959a56d8f90",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
