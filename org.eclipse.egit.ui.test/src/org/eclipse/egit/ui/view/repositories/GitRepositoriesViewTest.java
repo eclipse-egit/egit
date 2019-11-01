@@ -18,6 +18,7 @@ import static org.hamcrest.CoreMatchers.not;
 import static org.hamcrest.Matchers.hasItem;
 import static org.junit.Assert.assertArrayEquals;
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
@@ -40,7 +41,9 @@ import org.eclipse.egit.core.project.RepositoryMapping;
 import org.eclipse.egit.ui.Activator;
 import org.eclipse.egit.ui.JobFamilies;
 import org.eclipse.egit.ui.UIPreferences;
+import org.eclipse.egit.ui.common.StagingViewTester;
 import org.eclipse.egit.ui.internal.UIText;
+import org.eclipse.egit.ui.internal.repository.tree.RepositoryTreeNode;
 import org.eclipse.egit.ui.internal.repository.tree.StashedCommitNode;
 import org.eclipse.egit.ui.test.ContextMenuHelper;
 import org.eclipse.egit.ui.test.TestUtil;
@@ -120,6 +123,43 @@ public class GitRepositoriesViewTest extends GitRepositoriesViewTestBase {
 		assertEquals("Wrong number of children", 5, children.length);
 	}
 
+	/**
+	 * Tests that the tree does not suddenly have a node with a null repository.
+	 *
+	 * @throws Exception
+	 * @see <a href="https://bugs.eclipse.org/bugs/show_bug.cgi?id=552622">bug
+	 *      552622</a>
+	 */
+	@Test
+	public void testWithStagingView() throws Exception {
+		SWTBotTree tree = getOrOpenView().bot().tree();
+		StagingViewTester stagingViewTester = StagingViewTester
+				.openStagingView();
+		TestUtil.waitForDecorations();
+		SWTBotTreeItem item = myRepoViewUtil.getRootItem(tree, repositoryFile);
+		item.select();
+		TestUtil.waitForDecorations();
+		stagingViewTester.getView().close();
+		TestUtil.waitForDecorations();
+		SWTBotTreeItem[] items = tree.getAllItems();
+		boolean[] hasNull = { false };
+		String[] unknownClass = { "" };
+		tree.widget.getDisplay().syncExec(() -> {
+			for (SWTBotTreeItem i : items) {
+				Object obj = i.widget.getData();
+				if (!(obj instanceof RepositoryTreeNode)) {
+					unknownClass[0] = obj.getClass().getName();
+					break;
+				}
+				if (((RepositoryTreeNode) obj).getRepository() == null) {
+					hasNull[0] = true;
+					break;
+				}
+			}
+		});
+		assertEquals("Unknown tree element", "", unknownClass[0]);
+		assertFalse("Tree has node with null repository", hasNull[0]);
+	}
 	/**
 	 * Open (expand, file->editor, branch->checkout)
 	 *

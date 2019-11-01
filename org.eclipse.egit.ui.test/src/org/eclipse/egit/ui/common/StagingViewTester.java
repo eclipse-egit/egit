@@ -49,6 +49,10 @@ public class StagingViewTester {
 		return new StagingViewTester(view);
 	}
 
+	public SWTBotView getView() {
+		return stagingView;
+	}
+
 	public void setAuthor(String author) {
 		stagingView.bot().textWithLabel(UIText.StagingView_Author)
 				.setText(author);
