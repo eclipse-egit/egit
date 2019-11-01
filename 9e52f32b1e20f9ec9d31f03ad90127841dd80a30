@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6cccdb01_41e8876f",
+        "filename": "org.eclipse.egit.ui.test/src/org/eclipse/egit/ui/test/history/GitHistoryRefFilterConfigurationDialogTest.java",
+        "patchSetId": 21
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2019-11-01T23:19:08Z",
+      "side": 1,
+      "message": "private",
+      "range": {
+        "startLine": 81,
+        "startChar": 1,
+        "endLine": 81,
+        "endChar": 17
+      },
+      "revId": "9e52f32b1e20f9ec9d31f03ad90127841dd80a30",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "f4a757f8_40cc7407",
+        "filename": "org.eclipse.egit.ui.test/src/org/eclipse/egit/ui/test/history/RefFilterHelperTest.java",
+        "patchSetId": 21
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2019-11-01T23:19:08Z",
+      "side": 1,
+      "message": "private",
+      "range": {
+        "startLine": 66,
+        "startChar": 1,
+        "endLine": 66,
+        "endChar": 17
+      },
+      "revId": "9e52f32b1e20f9ec9d31f03ad90127841dd80a30",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
