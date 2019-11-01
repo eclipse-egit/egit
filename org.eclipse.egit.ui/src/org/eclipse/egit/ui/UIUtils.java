@@ -527,9 +527,30 @@ public class UIUtils {
 						return null;
 					}
 					return new RefContentProposal(repository, ref, upstream);
-				}, null,
+				}, createRefPatternProvider(),
 				UIText.UIUtils_StartTypingForRemoteRefMessage,
 				UIText.UIUtils_PressShortcutForRemoteRefMessage);
+	}
+
+	/**
+	 * Match input for ref names anywhere in the string, not only at the
+	 * beginning.
+	 *
+	 * @return pattern to match anywhere in the trimmed input
+	 */
+	private static Function<String, Pattern> createRefPatternProvider() {
+		return input -> {
+			try {
+				String quotedInput = Pattern.quote(input.trim());
+				return Pattern.compile(
+						"refs/(heads|tags|notes)/.*" + quotedInput + ".*" //$NON-NLS-1$ //$NON-NLS-2$
+								+ "|" + quotedInput //$NON-NLS-1$
+								+ ".*", //$NON-NLS-1$
+						Pattern.CASE_INSENSITIVE);
+			} catch (Exception e) {
+				return null;
+			}
+		};
 	}
 
 	/**
