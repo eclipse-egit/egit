@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "6000c90b_a17a7659",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/repository/RepositoriesView.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 179,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2019-11-01T22:22:55Z",
+      "side": 1,
+      "message": "Named it \".SingleRepository\"",
+      "parentUuid": "66939b56_7bdbf3de",
+      "revId": "33d2e5c8c71b654497338a6b4c87f4ae99846c88",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a4afff78_e6dc5d98",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/repository/RepositoriesView.java",
         "patchSetId": 3
@@ -30,6 +48,24 @@
       "writtenOn": "2019-11-01T18:42:31Z",
       "side": 1,
       "message": "Extract to void deactivateRenameContext? The deactivation code is used in three places.",
+      "revId": "33d2e5c8c71b654497338a6b4c87f4ae99846c88",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1d0eb81e_7866c4d6",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/repository/RepositoriesView.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 516,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2019-11-01T22:22:55Z",
+      "side": 1,
+      "message": "Refactored.",
+      "parentUuid": "a4afff78_e6dc5d98",
       "revId": "33d2e5c8c71b654497338a6b4c87f4ae99846c88",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
