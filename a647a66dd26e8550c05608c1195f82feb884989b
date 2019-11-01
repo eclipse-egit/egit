@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9a1fc52d_00fa6691",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/repository/RepositoriesView.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 586,
+      "author": {
+        "id": 236689
+      },
+      "writtenOn": "2019-11-01T18:54:50Z",
+      "side": 1,
+      "message": "I was wondering if this should be extracted to a dedicated RepositoriesViewTextCellEditor class, in particular as allowing more inline editing use cases are considered.",
+      "revId": "a647a66dd26e8550c05608c1195f82feb884989b",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
