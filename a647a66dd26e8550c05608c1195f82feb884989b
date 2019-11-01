@@ -16,6 +16,24 @@
       "revId": "a647a66dd26e8550c05608c1195f82feb884989b",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "152884f4_945fa734",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/repository/RepositoriesView.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 586,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2019-11-01T22:26:56Z",
+      "side": 1,
+      "message": "Done. New class MessagePopupTextCellEditor.",
+      "parentUuid": "9a1fc52d_00fa6691",
+      "revId": "a647a66dd26e8550c05608c1195f82feb884989b",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
     }
   ]
 }
