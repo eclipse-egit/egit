@@ -3649,11 +3649,7 @@ public class StagingView extends ViewPart
 		enableCommitWidgets(false);
 		refreshAction.setEnabled(false);
 		updateSectionText();
-		RepositoryNode tmp = titleNode;
 		titleNode = null;
-		if (tmp != null) {
-			tmp.clear();
-		}
 		if (repository != null && repository.isBare()) {
 			form.setText(UIText.StagingView_BareRepoSelection);
 		} else {
@@ -3737,10 +3733,10 @@ public class StagingView extends ViewPart
 			boolean indexDiffAvailable = indexDiffAvailable(indexDiff);
 			boolean noConflicts = noConflicts(indexDiff);
 
-			titleNode = new RepositoryNode(null, repository);
-			form.setText(
-					titleLabelProvider.getStyledText(titleNode).getString());
 			if (repositoryChanged) {
+				titleNode = new RepositoryNode(null, repository);
+				form.setText(titleLabelProvider.getStyledText(titleNode)
+						.getString());
 				// Reset paths, they're from the old repository
 				resetPathsToExpand();
 				removeRepositoryListeners();
@@ -4377,12 +4373,7 @@ public class StagingView extends ViewPart
 			titleLabelProvider.dispose();
 			titleLabelProvider = null;
 		}
-		RepositoryNode tmp = titleNode;
 		titleNode = null;
-		if (tmp != null) {
-			tmp.clear();
-			tmp = null;
-		}
 		currentRepository = null;
 		lastSelection = null;
 		disposed = true;

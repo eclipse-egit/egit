@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2010, 2012 SAP AG and others.
+ * Copyright (c) 2010, 2019 SAP AG and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License 2.0
  * which accompanies this distribution, and is available at
@@ -428,6 +428,6 @@ public abstract class RepositoryTreeNode<T> extends PlatformObject implements Co
 
 	@Override
 	public String toString() {
-		return "RepositoryNode[" + myType + ", " + myObject.toString() + "]";   //$NON-NLS-1$//$NON-NLS-2$//$NON-NLS-3$
+		return "RepositoryNode[" + myType + ", " + myObject + ']'; //$NON-NLS-1$//$NON-NLS-2$
 	}
 }

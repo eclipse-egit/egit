@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (C) 2011, 2017 Jens Baumgart <jens.baumgart@sap.com> and others.
+ * Copyright (C) 2011, 2019 Jens Baumgart <jens.baumgart@sap.com> and others.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License 2.0
@@ -47,6 +47,10 @@ public class StagingViewTester {
 		TestUtil.processUIEvents();
 
 		return new StagingViewTester(view);
+	}
+
+	public SWTBotView getView() {
+		return stagingView;
 	}
 
 	public void setAuthor(String author) {
