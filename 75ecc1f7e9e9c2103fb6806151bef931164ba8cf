@@ -34,6 +34,24 @@
       "revId": "75ecc1f7e9e9c2103fb6806151bef931164ba8cf",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "d2d4d66a_f35e69a2",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/repository/RepositoriesView.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 599,
+      "author": {
+        "id": 236689
+      },
+      "writtenOn": "2019-11-02T10:51:05Z",
+      "side": 1,
+      "message": "OK. I was rather thinking of something like RepositoriesViewInlineEditorFactory with a static TextCellEditor createAndBindEditor(CommonViewer viewer) method. I was concerned about the amount of code for a special case that might easily be externalized...",
+      "parentUuid": "6682815a_ec81f3a0",
+      "revId": "75ecc1f7e9e9c2103fb6806151bef931164ba8cf",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
     }
   ]
 }
