@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (C) 2010, 2015 Jens Baumgart <jens.baumgart@sap.com> and others.
+ * Copyright (C) 2010, 2019 Jens Baumgart <jens.baumgart@sap.com> and others.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License 2.0
@@ -16,6 +16,8 @@ import static org.eclipse.core.runtime.Status.OK_STATUS;
 import java.io.IOException;
 import java.text.MessageFormat;
 import java.util.Collection;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.egit.core.Activator;
@@ -26,15 +28,58 @@ import org.eclipse.jgit.lib.RefDatabase;
 import org.eclipse.jgit.lib.Repository;
 
 /**
- * Utility class
- *
+ * General utilities, mostly related to strings.
  */
-public class Utils {
+public final class Utils {
 
 	private static final int SHORT_OBJECT_ID_LENGTH = 7;
 	private static final String EMPTY_STRING = ""; //$NON-NLS-1$
 	private static final char CR_CHAR = '\r';
 	private static final char LF_CHAR = '\n';
+
+	private static final Pattern VERTICAL_SPACES = Pattern.compile("\\v+"); //$NON-NLS-1$
+
+	private Utils() {
+		// No instantiation
+	}
+
+	/**
+	 * Reduce a multi-line text to the first line only.
+	 *
+	 * @param text
+	 *            to reduce
+	 * @return the first line of {@text}, may be empty.
+	 */
+	public static String firstLine(String text) {
+		Matcher m = VERTICAL_SPACES.matcher(text);
+		if (m.find()) {
+			return text.substring(0, m.start());
+		}
+		return text;
+	}
+
+	/**
+	 * Returns whether the given text contains any vertical whitespace.
+	 *
+	 * @param text
+	 *            to check
+	 * @return whether {@code text} contains vertical whitespace
+	 */
+	public static boolean isMultiLine(String text) {
+		return VERTICAL_SPACES.matcher(text).find();
+	}
+
+	/**
+	 * Converts a multi-line text to a single line by replacing all sequences of
+	 * vertical whitespace by a single blank.
+	 *
+	 * @param text
+	 *            to convert
+	 * @return the converted text
+	 */
+	public static String toSingleLine(String text) {
+		return VERTICAL_SPACES.matcher(text).replaceAll(" "); //$NON-NLS-1$
+	}
 
 	/**
 	 * @param id

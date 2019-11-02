@@ -46,6 +46,7 @@ import org.eclipse.core.runtime.OperationCanceledException;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.core.runtime.SubMonitor;
 import org.eclipse.core.runtime.jobs.Job;
+import org.eclipse.egit.core.internal.Utils;
 import org.eclipse.egit.core.internal.gerrit.GerritUtil;
 import org.eclipse.egit.core.op.CreateLocalBranchOperation;
 import org.eclipse.egit.core.op.TagOperation;
@@ -287,12 +288,9 @@ public class FetchGerritChangePage extends WizardPage {
 		refText = new Text(main, SWT.SINGLE | SWT.BORDER);
 		GridDataFactory.fillDefaults().grab(true, false).applyTo(refText);
 		contentProposer = addRefContentProposalToText(refText);
-		refText.addVerifyListener(event -> {
-			event.text = event.text
-					// C.f. https://bugs.eclipse.org/bugs/show_bug.cgi?id=273470
-					.replaceAll("\\v", " ") //$NON-NLS-1$ //$NON-NLS-2$
-					.trim();
-		});
+		// C.f. https://bugs.eclipse.org/bugs/show_bug.cgi?id=273470
+		refText.addVerifyListener(
+				event -> event.text = Utils.toSingleLine(event.text).trim());
 
 		final Group checkoutGroup = new Group(main, SWT.SHADOW_ETCHED_IN);
 		checkoutGroup.setLayout(new GridLayout(3, false));
