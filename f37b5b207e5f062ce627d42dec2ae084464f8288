@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "5dbf641d_49fa2c98",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/repository/tree/command/DeleteRepositoryGroupConfirmDialog.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2019-11-02T19:29:26Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c96e7510_31bfb041",
+      "revId": "f37b5b207e5f062ce627d42dec2ae084464f8288",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fa15382b_8da640ec",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/uitext.properties",
         "patchSetId": 8
@@ -54,6 +72,30 @@
       "side": 1,
       "message": "Do so, please. I just picked the first of the already existing strings I found.",
       "parentUuid": "fa15382b_8da640ec",
+      "range": {
+        "startLine": 1344,
+        "startChar": 47,
+        "endLine": 1344,
+        "endChar": 87
+      },
+      "revId": "f37b5b207e5f062ce627d42dec2ae084464f8288",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "18d913db_5265bfbc",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/uitext.properties",
+        "patchSetId": 8
+      },
+      "lineNbr": 1344,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2019-11-02T19:29:26Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6b1ff26d_729bb89b",
       "range": {
         "startLine": 1344,
         "startChar": 47,
