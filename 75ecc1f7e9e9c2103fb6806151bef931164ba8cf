@@ -16,6 +16,24 @@
       "revId": "75ecc1f7e9e9c2103fb6806151bef931164ba8cf",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "6682815a_ec81f3a0",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/repository/RepositoriesView.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 599,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2019-11-02T10:40:47Z",
+      "side": 1,
+      "message": "I would do that later. Ever heard about YAGNI? I\u0027m not going to design a \"general\" interface for setting this up now while I have only one use case. Once the second use case is implemented we\u0027ll see much clearer what the commonalities are and what exactly would make sense to factor out.\n\nNote that there is only _one_ TextCellEditor for the column. We\u0027d have to handle the different cases in the validator and in the modifier.",
+      "parentUuid": "43f9c740_a4ada0ce",
+      "revId": "75ecc1f7e9e9c2103fb6806151bef931164ba8cf",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
     }
   ]
 }
