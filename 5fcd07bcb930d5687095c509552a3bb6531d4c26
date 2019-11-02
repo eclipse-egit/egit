@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "65bc088b_c9d8ffef",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/groups/RepositoryGroups.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 159,
+      "author": {
+        "id": 440
+      },
+      "writtenOn": "2019-11-02T16:11:08Z",
+      "side": 1,
+      "message": "Not sure if it\u0027s just me: I find that much more easy to read when it is a concatenation of AND expressions on top level instead of OR expressions nested in a negation.\n\nSide note: At work we even use a (much more verbose) approach of specifying every atomic condition as guard: if not A then return false; if not B then return false; return true as last statement. However, I\u0027m aware most people find that too verbose, even though it is the most clear variant to read/write. :)",
+      "range": {
+        "startLine": 157,
+        "startChar": 2,
+        "endLine": 159,
+        "endChar": 37
+      },
+      "revId": "5fcd07bcb930d5687095c509552a3bb6531d4c26",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
