@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "43f9c740_a4ada0ce",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/repository/RepositoriesView.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 599,
+      "author": {
+        "id": 236689
+      },
+      "writtenOn": "2019-11-02T10:32:49Z",
+      "side": 1,
+      "message": "I still think that the actual editing and validation logic justifies a separate class - if only a configurator class returing the textCell editor.\nIf inline editing for other nodes is added, there will have to be if-elses in many of the methods. The setupInlineEditing method will become much longer.",
+      "revId": "75ecc1f7e9e9c2103fb6806151bef931164ba8cf",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
