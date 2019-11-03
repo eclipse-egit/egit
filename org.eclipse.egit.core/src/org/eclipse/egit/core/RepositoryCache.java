@@ -17,6 +17,7 @@ package org.eclipse.egit.core;
 import java.io.File;
 import java.io.IOException;
 import java.lang.ref.Reference;
+import java.lang.ref.ReferenceQueue;
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -28,6 +29,11 @@ import org.eclipse.core.resources.IResource;
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.Path;
 import org.eclipse.egit.core.internal.indexdiff.IndexDiffCache;
+import org.eclipse.jgit.events.ConfigChangedEvent;
+import org.eclipse.jgit.events.IndexChangedEvent;
+import org.eclipse.jgit.events.ListenerList;
+import org.eclipse.jgit.events.RefsChangedEvent;
+import org.eclipse.jgit.events.WorkingTreeModifiedEvent;
 import org.eclipse.jgit.lib.Repository;
 import org.eclipse.jgit.storage.file.FileRepositoryBuilder;
 
@@ -35,7 +41,84 @@ import org.eclipse.jgit.storage.file.FileRepositoryBuilder;
  * Central cache for Repository instances.
  */
 public class RepositoryCache {
-	private final Map<File, Reference<Repository>> repositoryCache = new HashMap<>();
+
+	// EGit uses a weak-reference cache. In Eclipse, EGit can never be sure that
+	// a repo instance isn't still used somewhere, and thus it never explicitly
+	// closes repository instances. Instead, this cache wraps any repository
+	// in a {@link RepositoryHandle} and returns that, and closes the wrapped
+	// repository once that handle is garbage collected.
+
+	private final ReferenceQueue<RepositoryHandle> queue = new ReferenceQueue<>();
+
+	private final Map<File, RepositoryReference> repositoryCache = new HashMap<>();
+
+	private final ListenerList globalListeners = new ListenerList();
+
+	RepositoryCache() {
+		new Closer(queue).start();
+		// Set up listeners on the JGit global listener list to be able to
+		// re-fire events with the correct repository.
+		ListenerList global = Repository.getGlobalListenerList();
+		global.addConfigChangedListener(event -> {
+			Repository repo = getRepository(
+					event.getRepository().getDirectory());
+			if (repo == null || repo == event.getRepository()) {
+				// Re-dispatch the original event
+				globalListeners.dispatch(event);
+			} else {
+				ConfigChangedEvent newEvent = new ConfigChangedEvent();
+				newEvent.setRepository(repo);
+				globalListeners.dispatch(newEvent);
+			}
+		});
+		global.addIndexChangedListener(event -> {
+			Repository repo = getRepository(
+					event.getRepository().getDirectory());
+			if (repo == null || repo == event.getRepository()) {
+				globalListeners.dispatch(event);
+			} else {
+				IndexChangedEvent newEvent = new IndexChangedEvent(
+						event.isInternal());
+				newEvent.setRepository(repo);
+				globalListeners.dispatch(newEvent);
+			}
+		});
+		global.addRefsChangedListener(event -> {
+			Repository repo = getRepository(
+					event.getRepository().getDirectory());
+			if (repo == null || repo == event.getRepository()) {
+				globalListeners.dispatch(event);
+			} else {
+				RefsChangedEvent newEvent = new RefsChangedEvent();
+				newEvent.setRepository(repo);
+				globalListeners.dispatch(newEvent);
+			}
+		});
+		global.addWorkingTreeModifiedListener(event -> {
+			Repository repo = getRepository(
+					event.getRepository().getDirectory());
+			if (repo == null || repo == event.getRepository()) {
+				globalListeners.dispatch(event);
+			} else {
+				WorkingTreeModifiedEvent newEvent = new WorkingTreeModifiedEvent(
+						event.getModified(), event.getDeleted());
+				newEvent.setRepository(repo);
+				globalListeners.dispatch(newEvent);
+			}
+		});
+	}
+
+	/**
+	 * Gets a global listener list that fires events from any repository. EGit
+	 * uses this instead of {@link Repository#getGlobalListenerList()} so that
+	 * we can be sure to only ever pass around {@link RepositoryHandle}s instead
+	 * of the underlying real repositories.
+	 *
+	 * @return the global listener list
+	 */
+	public ListenerList getGlobalListenerList() {
+		return globalListeners;
+	}
 
 	/**
 	 * Looks in the cache for a {@link Repository} matching the given git
@@ -52,19 +135,21 @@ public class RepositoryCache {
 		// Make sure we have a normalized path without .. segments here.
 		File normalizedGitDir = new Path(gitDir.getAbsolutePath()).toFile();
 		synchronized (repositoryCache) {
-			Reference<Repository> r = repositoryCache.get(normalizedGitDir);
+			RepositoryReference r = repositoryCache.get(normalizedGitDir);
 			if (r == null) {
-				Repository result = FileRepositoryBuilder
+				Repository inner = FileRepositoryBuilder
 						.create(normalizedGitDir);
+				RepositoryHandle result = new RepositoryHandle(inner);
 				repositoryCache.put(normalizedGitDir,
-						new WeakReference<>(result));
+						new RepositoryReference(result, inner, queue));
 				return result;
 			} else {
 				Repository result = r.get();
 				if (result != null && result.getDirectory().exists()) {
 					return result;
 				} else {
-					repositoryCache.remove(normalizedGitDir);
+					Closer.closeReference(
+							repositoryCache.remove(normalizedGitDir));
 				}
 			}
 		}
@@ -77,6 +162,32 @@ public class RepositoryCache {
 			cache.remove(normalizedGitDir);
 		}
 		return lookupRepository(gitDir);
+	}
+
+	/**
+	 * A {@link WeakReference} that keeps the link to the underlying real
+	 * repository of a {@link RepositoryHandle}. This is necessary because the
+	 * referent (the handle) is already nulled out by the time the weak
+	 * reference is returned from the {@link ReferenceQueue}.
+	 */
+	private static class RepositoryReference
+			extends WeakReference<RepositoryHandle> {
+
+		private Repository inner;
+
+		public RepositoryReference(RepositoryHandle handle, Repository delegate,
+				ReferenceQueue<RepositoryHandle> queue) {
+			super(handle, queue);
+			inner = delegate;
+		}
+
+		public Repository getRepository() {
+			return inner;
+		}
+
+		public void clearRepository() {
+			inner = null;
+		}
 	}
 
 	/**
@@ -93,7 +204,7 @@ public class RepositoryCache {
 		}
 		File normalizedGitDir = new Path(gitDir.getAbsolutePath()).toFile();
 		synchronized (repositoryCache) {
-			Reference<Repository> r = repositoryCache.get(normalizedGitDir);
+			RepositoryReference r = repositoryCache.get(normalizedGitDir);
 			if (r == null) {
 				return null;
 			}
@@ -101,7 +212,7 @@ public class RepositoryCache {
 			if (result != null && result.getDirectory().exists()) {
 				return result;
 			}
-			repositoryCache.remove(normalizedGitDir);
+			Closer.closeReference(repositoryCache.remove(normalizedGitDir));
 		}
 		IndexDiffCache cache = Activator.getDefault().getIndexDiffCache();
 		if (cache != null) {
@@ -117,12 +228,13 @@ public class RepositoryCache {
 		List<Repository> repositories = new ArrayList<>();
 		List<File> toRemove = new ArrayList<>();
 		synchronized (repositoryCache) {
-			for (Iterator<Map.Entry<File, Reference<Repository>>> i = repositoryCache
+			for (Iterator<Map.Entry<File, RepositoryReference>> i = repositoryCache
 					.entrySet().iterator(); i.hasNext();) {
-				Map.Entry<File, Reference<Repository>> entry = i.next();
+				Map.Entry<File, RepositoryReference> entry = i.next();
 				Repository repository = entry.getValue().get();
 				if (repository == null || !repository.getDirectory().exists()) {
 					i.remove();
+					Closer.closeReference(entry.getValue());
 					toRemove.add(entry.getKey());
 				} else {
 					repositories.add(repository);
@@ -168,12 +280,13 @@ public class RepositoryCache {
 		int largestSegmentCount = 0;
 		List<File> toRemove = new ArrayList<>();
 		synchronized (repositoryCache) {
-			for (Iterator<Map.Entry<File, Reference<Repository>>> i = repositoryCache
+			for (Iterator<Map.Entry<File, RepositoryReference>> i = repositoryCache
 					.entrySet().iterator(); i.hasNext();) {
-				Map.Entry<File, Reference<Repository>> entry = i.next();
+				Map.Entry<File, RepositoryReference> entry = i.next();
 				Repository repo = entry.getValue().get();
 				if (repo == null) {
 					i.remove();
+					Closer.closeReference(entry.getValue());
 					toRemove.add(entry.getKey());
 					continue;
 				}
@@ -186,6 +299,7 @@ public class RepositoryCache {
 							|| repoPath.segmentCount() > largestSegmentCount) {
 						if (!repo.getDirectory().exists()) {
 							i.remove();
+							Closer.closeReference(entry.getValue());
 							toRemove.add(entry.getKey());
 							continue;
 						}
@@ -204,11 +318,14 @@ public class RepositoryCache {
 	 */
 	public void clear() {
 		List<File> gitDirs;
+		List<RepositoryReference> references;
 		synchronized (repositoryCache) {
 			gitDirs = new ArrayList<>(repositoryCache.keySet());
+			references = new ArrayList<>(repositoryCache.values());
 			repositoryCache.clear();
 		}
 		removeIndexDiffCaches(gitDirs);
+		references.forEach(Closer::closeReference);
 	}
 
 	private void removeIndexDiffCaches(List<File> gitDirs) {
@@ -219,6 +336,43 @@ public class RepositoryCache {
 					cache.remove(f);
 				}
 			}
+		}
+	}
+
+	/**
+	 * Closes the real repository behind the {@link RepositoryHandle}s handed
+	 * out by this cache when the handle is garbage collected.
+	 */
+	private static class Closer extends Thread {
+
+		private final ReferenceQueue<RepositoryHandle> queue;
+
+		public Closer(ReferenceQueue<RepositoryHandle> queue) {
+			this.queue = queue;
+			setDaemon(true);
+			setName("Git Repository Closer"); //$NON-NLS-1$
+		}
+
+		@Override
+		public void run() {
+			try {
+				for (;;) {
+					Reference<?> stale = queue.remove();
+					if (stale instanceof RepositoryReference) {
+						closeReference((RepositoryReference) stale);
+					}
+				}
+			} catch (InterruptedException e) {
+				Thread.currentThread().interrupt();
+			}
+		}
+
+		public static void closeReference(RepositoryReference stale) {
+			Repository repository = stale.getRepository();
+			if (repository != null) {
+				repository.close();
+			}
+			stale.clearRepository();
 		}
 	}
 }

@@ -175,7 +175,8 @@ public class RebaseInteractivePlan implements IndexDiffChangedListener,
 	}
 
 	private void registerRefChangedListener() {
-		refsChangedListener = Repository.getGlobalListenerList()
+		refsChangedListener = org.eclipse.egit.core.Activator.getDefault()
+				.getRepositoryCache().getGlobalListenerList()
 				.addRefsChangedListener(this);
 	}
 
