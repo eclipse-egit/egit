@@ -155,6 +155,14 @@ class RepositoryHandle extends Repository {
 	}
 
 	@Override
+	public final void close() {
+		if (delegate instanceof CachingRepository) {
+			((CachingRepository) delegate).clearConfigCache();
+		}
+		super.close();
+	}
+
+	@Override
 	protected void doClose() {
 		listeners.forEach(ListenerHandle::remove);
 		listeners.clear();
