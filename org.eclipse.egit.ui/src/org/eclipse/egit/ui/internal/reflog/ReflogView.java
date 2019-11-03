@@ -428,7 +428,8 @@ public class ReflogView extends ViewPart implements RefsChangedListener, IShowIn
 		site.setSelectionProvider(new RepositorySelectionProvider(
 				refLogTreeViewer, () -> getRepository()));
 
-		addRefsChangedListener = Repository.getGlobalListenerList()
+		addRefsChangedListener = org.eclipse.egit.core.Activator.getDefault()
+				.getRepositoryCache().getGlobalListenerList()
 				.addRefsChangedListener(this);
 
 		// Toolbar

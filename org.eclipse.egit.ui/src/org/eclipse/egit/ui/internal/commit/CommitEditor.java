@@ -246,7 +246,8 @@ public class CommitEditor extends SharedHeaderFormEditor implements
 		} catch (PartInitException e) {
 			Activator.error("Error adding page", e); //$NON-NLS-1$
 		}
-		refListenerHandle = Repository.getGlobalListenerList()
+		refListenerHandle = org.eclipse.egit.core.Activator.getDefault()
+				.getRepositoryCache().getGlobalListenerList()
 				.addRefsChangedListener(this);
 	}
 
