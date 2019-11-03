@@ -1506,7 +1506,8 @@ public class GitHistoryPage extends HistoryPage implements RefsChangedListener,
 		trackFocus(fileViewer.getControl());
 		layout();
 
-		myRefsChangedHandle = Repository.getGlobalListenerList()
+		myRefsChangedHandle = org.eclipse.egit.core.Activator.getDefault()
+				.getRepositoryCache().getGlobalListenerList()
 				.addRefsChangedListener(this);
 
 		InstanceScope.INSTANCE
