@@ -2479,8 +2479,9 @@ public class GitHistoryPage extends HistoryPage implements RefsChangedListener,
 				GitTraceLocation.getTrace().traceEntry(
 						GitTraceLocation.HISTORYVIEW.getLocation());
 
-			if (input == null)
+			if (input == null) {
 				return;
+			}
 			Repository db = input.getRepository();
 			if (repoHasBeenRemoved(db)) {
 				clearHistoryPage();
@@ -2513,8 +2514,14 @@ public class GitHistoryPage extends HistoryPage implements RefsChangedListener,
 			}
 			selectedObj = newSelectedObj;
 
-			if (forceNewWalk || repoChanged || objChanged
-					|| shouldRedraw(headId, fetchHeadId, paths)) {
+			boolean headChanged = !headId.equals(currentHeadId);
+			boolean pathsChanged = pathChanged(pathFilters, paths);
+			boolean settingsChanged = updateSettings();
+			boolean fetchHeadChanged = currentShowAdditionalRefs
+					&& fetchHeadId != null
+					&& !fetchHeadId.equals(currentFetchHeadId);
+			if (forceNewWalk || repoChanged || objChanged || headChanged
+					|| fetchHeadChanged || pathsChanged || settingsChanged) {
 				releaseGenerateHistoryJob();
 
 				if (repoChanged) {
@@ -2530,7 +2537,13 @@ public class GitHistoryPage extends HistoryPage implements RefsChangedListener,
 
 				fileDiffWalker = createFileWalker(walk, db, paths);
 
-				loadInitialHistory(walk);
+				RevCommit toShow = null;
+				if (headChanged) {
+					toShow = toRevCommit(walk, headId);
+				} else if (fetchHeadChanged) {
+					toShow = toRevCommit(walk, fetchHeadId);
+				}
+				loadInitialHistory(walk, toShow);
 			} else {
 				// needed for context menu and double click
 				graph.setHistoryPageInput(input);
@@ -2543,11 +2556,23 @@ public class GitHistoryPage extends HistoryPage implements RefsChangedListener,
 		}
 	}
 
-	private boolean shouldRedraw(AnyObjectId headId, AnyObjectId fetchHeadId,
-			List<FilterPath> paths) {
-		boolean pathChanged = pathChanged(pathFilters, paths);
-		boolean headChanged = headId == null || !headId.equals(currentHeadId);
+	private RevCommit toRevCommit(RevWalk w, AnyObjectId id) {
+		try {
+			return w.parseCommit(id);
+		} catch (IOException e) {
+			// Ignore here; HEAD or FETCH_HEAD are not a commit? Result is only
+			// for display purposes.
+			return null;
+		}
+	}
 
+	/**
+	 * Updates the settings from the preferences and returns whether any have
+	 * changed.
+	 *
+	 * @return {@code true} if any setting changed, {@code false} otherwise
+	 */
+	private boolean updateSettings() {
 		boolean allBranchesChanged = currentShowAllBranches != store
 			.getBoolean(UIPreferences.RESOURCEHISTORY_SHOW_ALL_BRANCHES);
 		currentShowAllBranches = store
@@ -2561,9 +2586,6 @@ public class GitHistoryPage extends HistoryPage implements RefsChangedListener,
 				.getBoolean(UIPreferences.RESOURCEHISTORY_SHOW_ADDITIONAL_REFS);
 		currentShowAdditionalRefs = store
 				.getBoolean(UIPreferences.RESOURCEHISTORY_SHOW_ADDITIONAL_REFS);
-		boolean fetchHeadChanged = currentShowAdditionalRefs
-				&& fetchHeadId != null
-				&& !fetchHeadId.equals(currentFetchHeadId);
 
 		boolean showNotesChanged = currentShowNotes != store
 				.getBoolean(UIPreferences.RESOURCEHISTORY_SHOW_NOTES);
@@ -2572,8 +2594,7 @@ public class GitHistoryPage extends HistoryPage implements RefsChangedListener,
 		boolean followRenamesChanged = currentFollowRenames != getFollowRenames();
 		currentFollowRenames = getFollowRenames();
 
-		return pathChanged || headChanged || fetchHeadChanged
-				|| allBranchesChanged || firstParentOnlyChanged
+		return allBranchesChanged || firstParentOnlyChanged
 				|| additionalRefsChange || showNotesChanged
 				|| followRenamesChanged;
 	}
@@ -2668,13 +2689,12 @@ public class GitHistoryPage extends HistoryPage implements RefsChangedListener,
 					isRegularFile = file.isFile();
 				}
 
-				if (gitDirPath.isPrefixOf(filePath))
+				if (gitDirPath.isPrefixOf(filePath)) {
 					throw new IllegalStateException(
-							NLS
-									.bind(
-											UIText.GitHistoryPage_FileOrFolderPartOfGitDirMessage,
-											filePath.toOSString()));
-
+							NLS.bind(
+									UIText.GitHistoryPage_FileOrFolderPartOfGitDirMessage,
+									filePath.toOSString()));
+				}
 				IPath pathToAdd = filePath.removeFirstSegments(segmentCount)
 						.setDevice(null);
 				if (!pathToAdd.isEmpty())
@@ -2970,11 +2990,16 @@ public class GitHistoryPage extends HistoryPage implements RefsChangedListener,
 	 *
 	 * @param walk
 	 *            the revwalk, non null
+	 * @param toShow
+	 *            commit to show, if any
 	 */
-	private void loadInitialHistory(@NonNull RevWalk walk) {
+	private void loadInitialHistory(@NonNull RevWalk walk, RevCommit toShow) {
 		job = new GenerateHistoryJob(this, walk, resources);
 		job.setRule(pageSchedulingRule);
 		job.setLoadHint(INITIAL_ITEM);
+		if (toShow != null) {
+			job.setLoadHint(toShow);
+		}
 		if (trace)
 			GitTraceLocation.getTrace().trace(
 					GitTraceLocation.HISTORYVIEW.getLocation(),
