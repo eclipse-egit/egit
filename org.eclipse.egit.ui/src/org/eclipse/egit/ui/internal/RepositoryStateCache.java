@@ -15,6 +15,7 @@ import java.io.IOException;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
+import org.eclipse.egit.core.UnitOfWork;
 import org.eclipse.egit.ui.Activator;
 import org.eclipse.jgit.annotations.NonNull;
 import org.eclipse.jgit.lib.Constants;
@@ -90,30 +91,32 @@ public abstract class RepositoryStateCache {
 
 	private ObjectId getHead(Repository repository,
 			String[] fullName, Ref[] ref) {
-		ObjectId head = ObjectId.zeroId();
-		String name = null;
-		Ref r = null;
-		try {
-			r = repository.exactRef(Constants.HEAD);
-		} catch (IOException e) {
-			Activator.logError(e.getLocalizedMessage(), e);
-		}
-		ref[0] = r;
-		if (r != null) {
-			if (r.isSymbolic()) {
-				name = r.getTarget().getName();
+		return UnitOfWork.get(repository, () -> {
+			ObjectId head = ObjectId.zeroId();
+			String name = null;
+			Ref r = null;
+			try {
+				r = repository.exactRef(Constants.HEAD);
+			} catch (IOException e) {
+				Activator.logError(e.getLocalizedMessage(), e);
 			}
-			head = r.getObjectId();
-			if (head != null) {
-				if (name == null) {
-					name = head.name();
+			ref[0] = r;
+			if (r != null) {
+				if (r.isSymbolic()) {
+					name = r.getTarget().getName();
 				}
-			} else {
-				head = ObjectId.zeroId();
+				head = r.getObjectId();
+				if (head != null) {
+					if (name == null) {
+						name = head.name();
+					}
+				} else {
+					head = ObjectId.zeroId();
+				}
 			}
-		}
-		fullName[0] = name != null ? name : ""; //$NON-NLS-1$
-		return head;
+			fullName[0] = name != null ? name : ""; //$NON-NLS-1$
+			return head;
+		});
 	}
 
 	/**
@@ -241,10 +244,14 @@ public abstract class RepositoryStateCache {
 	 * @return the {@link RepositoryState}
 	 */
 	public @NonNull RepositoryState getRepositoryState(Repository repository) {
-		Object value = getItems(repository).computeIfAbsent(
-				RepositoryItem.STATE, key -> repository.getRepositoryState());
-		assert value != null; // Keep the compiler happy.
-		return (RepositoryState) value;
+		RepositoryState state = UnitOfWork.get(repository, () -> {
+			Object value = getItems(repository).computeIfAbsent(
+					RepositoryItem.STATE,
+					key -> repository.getRepositoryState());
+			return (RepositoryState) value;
+		});
+		assert state != null; // Keep the compiler happy.
+		return state;
 	}
 
 }

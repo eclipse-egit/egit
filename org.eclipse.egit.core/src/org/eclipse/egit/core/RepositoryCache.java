@@ -29,13 +29,14 @@ import org.eclipse.core.resources.IResource;
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.Path;
 import org.eclipse.egit.core.internal.indexdiff.IndexDiffCache;
+import org.eclipse.jgit.errors.RepositoryNotFoundException;
 import org.eclipse.jgit.events.ConfigChangedEvent;
 import org.eclipse.jgit.events.IndexChangedEvent;
 import org.eclipse.jgit.events.ListenerList;
 import org.eclipse.jgit.events.RefsChangedEvent;
 import org.eclipse.jgit.events.WorkingTreeModifiedEvent;
+import org.eclipse.jgit.lib.BaseRepositoryBuilder;
 import org.eclipse.jgit.lib.Repository;
-import org.eclipse.jgit.storage.file.FileRepositoryBuilder;
 
 /**
  * Central cache for Repository instances.
@@ -137,8 +138,8 @@ public class RepositoryCache {
 		synchronized (repositoryCache) {
 			RepositoryReference r = repositoryCache.get(normalizedGitDir);
 			if (r == null) {
-				Repository inner = FileRepositoryBuilder
-						.create(normalizedGitDir);
+				Repository inner = new Builder().setGitDir(normalizedGitDir)
+						.readEnvironment().build();
 				RepositoryHandle result = new RepositoryHandle(inner);
 				repositoryCache.put(normalizedGitDir,
 						new RepositoryReference(result, inner, queue));
@@ -187,6 +188,26 @@ public class RepositoryCache {
 
 		public void clearRepository() {
 			inner = null;
+		}
+	}
+
+	/**
+	 * A specialized {@link BaseRepositoryBuilder} that creates a
+	 * {@link CachingRepository}.
+	 */
+	private class Builder extends BaseRepositoryBuilder<Builder, Repository> {
+
+		@Override
+		public Repository build() throws IOException {
+			CachingRepository repo = new CachingRepository(setup());
+			if (isMustExist()) {
+				@SuppressWarnings("restriction")
+				boolean exists = repo.getObjectDatabase().exists();
+				if (!exists) {
+					throw new RepositoryNotFoundException(getGitDir());
+				}
+			}
+			return repo;
 		}
 	}
 

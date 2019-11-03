@@ -16,6 +16,7 @@ import java.util.Set;
 import org.eclipse.core.commands.IStateListener;
 import org.eclipse.core.commands.State;
 import org.eclipse.egit.core.RepositoryUtil;
+import org.eclipse.egit.core.UnitOfWork;
 import org.eclipse.egit.core.internal.Utils;
 import org.eclipse.egit.core.internal.indexdiff.IndexDiffCache;
 import org.eclipse.egit.core.internal.indexdiff.IndexDiffCacheEntry;
@@ -107,7 +108,8 @@ public class RepositoryTreeNodeDecorator extends GitDecorator
 		RepositoryTreeNode<?> node = (RepositoryTreeNode) element;
 		Repository repository = node.getRepository();
 		if (repository != null) {
-			decorateText(node, repository, decoration);
+			UnitOfWork.execute(repository,
+					() -> decorateText(node, repository, decoration));
 		}
 	}
 

@@ -51,6 +51,7 @@ import org.eclipse.core.runtime.preferences.IEclipsePreferences.IPreferenceChang
 import org.eclipse.core.runtime.preferences.InstanceScope;
 import org.eclipse.egit.core.AdapterUtils;
 import org.eclipse.egit.core.RepositoryUtil;
+import org.eclipse.egit.core.UnitOfWork;
 import org.eclipse.egit.core.internal.util.ResourceUtil;
 import org.eclipse.egit.core.project.RepositoryMapping;
 import org.eclipse.egit.ui.Activator;
@@ -2696,12 +2697,11 @@ public class GitHistoryPage extends HistoryPage implements RefsChangedListener,
 	}
 
 	private void initAndStartRevWalk(boolean forceNewWalk,
-			ObjectId newSelectedObj)
-			throws IllegalStateException {
+			ObjectId newSelectedObj) throws IllegalStateException {
 		try {
 			if (trace)
-				GitTraceLocation.getTrace().traceEntry(
-						GitTraceLocation.HISTORYVIEW.getLocation());
+				GitTraceLocation.getTrace()
+						.traceEntry(GitTraceLocation.HISTORYVIEW.getLocation());
 
 			if (input == null) {
 				return;
@@ -2714,66 +2714,69 @@ public class GitHistoryPage extends HistoryPage implements RefsChangedListener,
 
 			Assert.isNotNull(db);
 
-			AnyObjectId headId = resolveHead(db, true);
-			if (headId == null) {
-				currentHeadId = null;
-				currentFetchHeadId = null;
-				selectedObj = null;
-				setCurrentRepo(db);
-				clearViewers();
-				return;
-			}
-			AnyObjectId fetchHeadId = resolveFetchHead(db);
-
-			List<FilterPath> paths = buildFilterPaths(input.getItems(), input
-					.getFileList(), db);
-
-			boolean repoChanged = false;
-			if (!db.equals(getCurrentRepo())) {
-				repoChanged = true;
-				setCurrentRepo(db);
-			}
-
-			boolean objChanged = false;
-			if (newSelectedObj != null && newSelectedObj != selectedObj) {
-				objChanged = !newSelectedObj.equals(selectedObj);
-			}
-			selectedObj = newSelectedObj;
-
-			boolean headChanged = !headId.equals(currentHeadId);
-			boolean pathsChanged = pathChanged(pathFilters, paths);
-			boolean settingsChanged = updateSettings();
-			boolean fetchHeadChanged = currentShowAdditionalRefs
-					&& fetchHeadId != null
-					&& !fetchHeadId.equals(currentFetchHeadId);
-			if (forceNewWalk || repoChanged || objChanged || headChanged
-					|| fetchHeadChanged || pathsChanged || settingsChanged) {
-				releaseGenerateHistoryJob();
-
-				if (repoChanged) {
-					// Clear all viewers. Otherwise it may be possible that the
-					// user invokes a context menu command and due to to the
-					// highly asynchronous loading we end up with inconsistent
-					// diff computations trying to find the diff for a commit in
-					// the wrong repository.
+			UnitOfWork.execute(db, () -> {
+				AnyObjectId headId = resolveHead(db, true);
+				if (headId == null) {
+					currentHeadId = null;
+					currentFetchHeadId = null;
+					selectedObj = null;
+					setCurrentRepo(db);
 					clearViewers();
+					return;
+				}
+				AnyObjectId fetchHeadId = resolveFetchHead(db);
+
+				List<FilterPath> paths = buildFilterPaths(input.getItems(),
+						input.getFileList(), db);
+
+				boolean repoChanged = false;
+				if (!db.equals(getCurrentRepo())) {
+					repoChanged = true;
+					setCurrentRepo(db);
 				}
 
-				SWTWalk walk = createNewWalk(db, headId, fetchHeadId);
-
-				fileDiffWalker = createFileWalker(walk, db, paths);
-
-				RevCommit toShow = null;
-				if (headChanged) {
-					toShow = toRevCommit(walk, headId);
-				} else if (fetchHeadChanged) {
-					toShow = toRevCommit(walk, fetchHeadId);
+				boolean objChanged = false;
+				if (newSelectedObj != null && newSelectedObj != selectedObj) {
+					objChanged = !newSelectedObj.equals(selectedObj);
 				}
-				loadInitialHistory(walk, toShow);
-			} else {
-				// needed for context menu and double click
-				graph.setHistoryPageInput(input);
-			}
+				selectedObj = newSelectedObj;
+
+				boolean headChanged = !headId.equals(currentHeadId);
+				boolean pathsChanged = pathChanged(pathFilters, paths);
+				boolean settingsChanged = updateSettings();
+				boolean fetchHeadChanged = currentShowAdditionalRefs
+						&& fetchHeadId != null
+						&& !fetchHeadId.equals(currentFetchHeadId);
+				if (forceNewWalk || repoChanged || objChanged || headChanged
+						|| fetchHeadChanged || pathsChanged
+						|| settingsChanged) {
+					releaseGenerateHistoryJob();
+
+					if (repoChanged) {
+						// Clear all viewers. Otherwise it may be possible that
+						// the user invokes a context menu command and due to to
+						// the highly asynchronous loading we end up with
+						// inconsistent diff computations trying to find the
+						// diff for a commit in the wrong repository.
+						clearViewers();
+					}
+
+					SWTWalk walk = createNewWalk(db, headId, fetchHeadId);
+
+					fileDiffWalker = createFileWalker(walk, db, paths);
+
+					RevCommit toShow = null;
+					if (headChanged) {
+						toShow = toRevCommit(walk, headId);
+					} else if (fetchHeadChanged) {
+						toShow = toRevCommit(walk, fetchHeadId);
+					}
+					loadInitialHistory(walk, toShow);
+				} else {
+					// needed for context menu and double click
+					graph.setHistoryPageInput(input);
+				}
+			});
 		} finally {
 			if (trace)
 				GitTraceLocation.getTrace().traceExit(
