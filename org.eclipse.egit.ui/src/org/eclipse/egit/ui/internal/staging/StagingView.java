@@ -3748,6 +3748,10 @@ public class StagingView extends ViewPart
 						.addConfigChangedListener(
 								event -> updateCommitAuthorAndCommitter(
 										repository));
+			} else if (titleNode != null) {
+				// The label decoration may need an update.
+				form.setText(titleLabelProvider.getStyledText(titleNode)
+						.getString());
 			}
 			final StagingViewUpdate update = new StagingViewUpdate(repository,
 					indexDiff, null);
