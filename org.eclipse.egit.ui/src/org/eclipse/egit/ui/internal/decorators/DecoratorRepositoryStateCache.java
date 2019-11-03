@@ -15,6 +15,7 @@ import java.io.IOException;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
+import org.eclipse.egit.core.ConfigScope;
 import org.eclipse.egit.core.internal.CoreText;
 import org.eclipse.egit.ui.Activator;
 import org.eclipse.egit.ui.internal.GitLabels;
@@ -92,25 +93,27 @@ public class DecoratorRepositoryStateCache extends RepositoryStateCache {
 	 */
 	public String getCurrentBranchLabel(Repository repository) {
 		return branchLabels.computeIfAbsent(repository.getDirectory(), dir -> {
-			Ref head = getHeadRef(repository);
-			if (head == null) {
-				return CoreText.RepositoryUtil_noHead;
-			}
-			if (head.isSymbolic()) {
-				String branchName = getFullBranchName(repository);
-				return Repository.shortenRefName(branchName);
-			}
-			ObjectId objectId = head.getObjectId();
-			if (objectId == null) {
-				return CoreText.RepositoryUtil_noHead;
-			}
-			String ref = Activator.getDefault().getRepositoryUtil()
-					.mapCommitToRef(repository, objectId.name(), false);
-			if (ref != null) {
-				return Repository.shortenRefName(ref) + ' '
-						+ objectId.abbreviate(7).name();
-			} else {
-				return objectId.abbreviate(7).name();
+			try (ConfigScope scope = new ConfigScope(repository)) {
+				Ref head = getHeadRef(repository);
+				if (head == null) {
+					return CoreText.RepositoryUtil_noHead;
+				}
+				if (head.isSymbolic()) {
+					String branchName = getFullBranchName(repository);
+					return Repository.shortenRefName(branchName);
+				}
+				ObjectId objectId = head.getObjectId();
+				if (objectId == null) {
+					return CoreText.RepositoryUtil_noHead;
+				}
+				String ref = Activator.getDefault().getRepositoryUtil()
+						.mapCommitToRef(repository, objectId.name(), false);
+				if (ref != null) {
+					return Repository.shortenRefName(ref) + ' '
+							+ objectId.abbreviate(7).name();
+				} else {
+					return objectId.abbreviate(7).name();
+				}
 			}
 		});
 	}
@@ -126,25 +129,27 @@ public class DecoratorRepositoryStateCache extends RepositoryStateCache {
 	public String getBranchStatus(Repository repository) {
 		String label = branchStateLabels
 				.computeIfAbsent(repository.getDirectory(), dir -> {
-					String branchName = getFullBranchName(repository);
-					if (branchName == null) {
-						return ""; //$NON-NLS-1$
+					try (ConfigScope scope = new ConfigScope(repository)) {
+						String branchName = getFullBranchName(repository);
+						if (branchName == null) {
+							return ""; //$NON-NLS-1$
+						}
+						BranchTrackingStatus status = null;
+						try {
+							status = BranchTrackingStatus.of(repository,
+									branchName);
+						} catch (IOException e) {
+							// Ignore here; return null below.
+						}
+						if (status == null) {
+							return ""; //$NON-NLS-1$
+						}
+						if (status.getAheadCount() == 0
+								&& status.getBehindCount() == 0) {
+							return ""; //$NON-NLS-1$
+						}
+						return GitLabels.formatBranchTrackingStatus(status);
 					}
-					BranchTrackingStatus status = null;
-					try {
-						status = BranchTrackingStatus.of(repository,
-								branchName);
-					} catch (IOException e) {
-						// Ignore here; return null below.
-					}
-					if (status == null) {
-						return ""; //$NON-NLS-1$
-					}
-					if (status.getAheadCount() == 0
-							&& status.getBehindCount() == 0) {
-						return ""; //$NON-NLS-1$
-					}
-					return GitLabels.formatBranchTrackingStatus(status);
 				});
 		return StringUtils.isEmptyOrNull(label) ? null : label;
 	}

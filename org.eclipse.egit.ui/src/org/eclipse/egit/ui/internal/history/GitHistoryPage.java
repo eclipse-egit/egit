@@ -47,6 +47,7 @@ import org.eclipse.core.runtime.jobs.Job;
 import org.eclipse.core.runtime.preferences.IEclipsePreferences.IPreferenceChangeListener;
 import org.eclipse.core.runtime.preferences.InstanceScope;
 import org.eclipse.egit.core.AdapterUtils;
+import org.eclipse.egit.core.ConfigScope;
 import org.eclipse.egit.core.RepositoryUtil;
 import org.eclipse.egit.core.internal.util.ResourceUtil;
 import org.eclipse.egit.core.project.RepositoryMapping;
@@ -2475,19 +2476,18 @@ public class GitHistoryPage extends HistoryPage implements RefsChangedListener,
 	private void initAndStartRevWalk(boolean forceNewWalk,
 			ObjectId newSelectedObj)
 			throws IllegalStateException {
-		try {
-			if (trace)
-				GitTraceLocation.getTrace().traceEntry(
-						GitTraceLocation.HISTORYVIEW.getLocation());
+		if (trace)
+			GitTraceLocation.getTrace()
+					.traceEntry(GitTraceLocation.HISTORYVIEW.getLocation());
 
-			if (input == null) {
-				return;
-			}
-			Repository db = input.getRepository();
-			if (repoHasBeenRemoved(db)) {
-				clearHistoryPage();
-				return;
-			}
+		if (input == null)
+			return;
+		Repository db = input.getRepository();
+		if (repoHasBeenRemoved(db)) {
+			clearHistoryPage();
+			return;
+		}
+		try (ConfigScope scope = new ConfigScope(db)) {
 
 			AnyObjectId headId = resolveHead(db, true);
 			if (headId == null) {

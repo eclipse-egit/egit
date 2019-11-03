@@ -45,6 +45,7 @@ import org.eclipse.core.runtime.Status;
 import org.eclipse.core.runtime.jobs.ISchedulingRule;
 import org.eclipse.core.runtime.jobs.Job;
 import org.eclipse.egit.core.Activator;
+import org.eclipse.egit.core.ConfigScope;
 import org.eclipse.egit.core.EclipseGitProgressTransformer;
 import org.eclipse.egit.core.IteratorService;
 import org.eclipse.egit.core.JobFamilies;
@@ -157,7 +158,8 @@ public class IndexDiffCacheEntry {
 				.addRefsChangedListener(refsChangedListener));
 		// Add a listener also to all submodules in order to be notified when
 		// a branch switch or so occurs in a submodule.
-		try (SubmoduleWalk walk = SubmoduleWalk.forIndex(repository)) {
+		try (ConfigScope scope = new ConfigScope(repository);
+				SubmoduleWalk walk = SubmoduleWalk.forIndex(repository)) {
 			while (walk.next()) {
 				Repository submodule = walk.getRepository();
 				if (submodule != null && !submodule.isBare()) {
@@ -615,22 +617,26 @@ public class IndexDiffCacheEntry {
 
 		List<String> treeFilterPaths = calcTreeFilterPaths(filesToUpdate);
 
-		WorkingTreeIterator iterator = IteratorService.createInitialIterator(repository);
-		if (iterator == null)
-			return null; // workspace is closed
-		IndexDiff diffForChangedResources = new IndexDiff(repository,
-				Constants.HEAD, iterator);
-		diffForChangedResources.setFilter(PathFilterGroup
-				.createFromStrings(treeFilterPaths));
-		diffForChangedResources.diff(jgitMonitor, 0, 0, jobName);
-		IndexDiffData previous = indexDiffData;
-		if (previous == null) {
-			// Can happen when the index diff cache entry is already disposed,
-			// but the updateJob is still running (and about to cancel).
-			return null;
+		try (ConfigScope scope = new ConfigScope(repository)) {
+			WorkingTreeIterator iterator = IteratorService
+					.createInitialIterator(repository);
+			if (iterator == null)
+				return null; // workspace is closed
+			IndexDiff diffForChangedResources = new IndexDiff(repository,
+					Constants.HEAD, iterator);
+			diffForChangedResources.setFilter(
+					PathFilterGroup.createFromStrings(treeFilterPaths));
+			diffForChangedResources.diff(jgitMonitor, 0, 0, jobName);
+			IndexDiffData previous = indexDiffData;
+			if (previous == null) {
+				// Can happen when the index diff cache entry is already
+				// disposed, but the updateJob is still running (and about to
+				// cancel).
+				return null;
+			}
+			return new IndexDiffData(previous, filesToUpdate, resourcesToUpdate,
+					diffForChangedResources);
 		}
-		return new IndexDiffData(previous, filesToUpdate,
-				resourcesToUpdate, diffForChangedResources);
 	}
 
 	/*
@@ -667,13 +673,15 @@ public class IndexDiffCacheEntry {
 				monitor);
 
 		IndexDiff newIndexDiff;
-		WorkingTreeIterator iterator = IteratorService
-				.createInitialIterator(repository);
-		if (iterator == null)
-			return null; // workspace is closed
-		newIndexDiff = new IndexDiff(repository, Constants.HEAD, iterator);
-		newIndexDiff.diff(jgitMonitor, 0, 0, jobName);
-		return new IndexDiffData(newIndexDiff);
+		try (ConfigScope scope = new ConfigScope(repository)) {
+			WorkingTreeIterator iterator = IteratorService
+					.createInitialIterator(repository);
+			if (iterator == null)
+				return null; // workspace is closed
+			newIndexDiff = new IndexDiff(repository, Constants.HEAD, iterator);
+			newIndexDiff.diff(jgitMonitor, 0, 0, jobName);
+			return new IndexDiffData(newIndexDiff);
+		}
 	}
 
 	private String getReloadJobName() {
