@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c9cab9a5_54d86633",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 9
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2019-11-03T22:01:30Z",
+      "side": 1,
+      "message": "These are a lot of changes in a single commit. Can you split this into smaller more focused commits ?",
+      "revId": "0f389a00e12fb119ff4e956f59deef77990a1d79",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
