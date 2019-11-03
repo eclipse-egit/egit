@@ -70,6 +70,9 @@ public class CoreText extends NLS {
 	public static String AssumeUnchangedOperation_writingIndex;
 
 	/** */
+	public static String CachingRepository_cacheLevelZero;
+
+	/** */
 	public static String CherryPickOperation_cherryPicking;
 
 	/** */
