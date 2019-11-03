@@ -74,7 +74,6 @@ import org.eclipse.jgit.errors.ConfigInvalidException;
 import org.eclipse.jgit.events.ListenerHandle;
 import org.eclipse.jgit.lib.Config;
 import org.eclipse.jgit.lib.Constants;
-import org.eclipse.jgit.lib.Repository;
 import org.eclipse.jgit.lib.StoredConfig;
 import org.eclipse.jgit.merge.MergeStrategy;
 import org.eclipse.jgit.storage.file.FileBasedConfig;
@@ -120,8 +119,6 @@ public class Activator extends Plugin implements DebugOptionsListener {
 	private MergeStrategyRegistryListener mergeStrategyRegistryListener;
 	private IPreferenceChangeListener preferenceChangeListener;
 	private ServiceTracker<IProxyService, IProxyService> proxyServiceTracker;
-	private ResourceRefreshHandler refreshHandler;
-
 	private ListenerHandle refreshHandle;
 
 	/**
@@ -341,9 +338,8 @@ public class Activator extends Plugin implements DebugOptionsListener {
 	}
 
 	private void setupResourceRefresh() {
-		refreshHandler = new ResourceRefreshHandler();
-		refreshHandle = Repository.getGlobalListenerList()
-				.addWorkingTreeModifiedListener(refreshHandler);
+		refreshHandle = repositoryCache.getGlobalListenerList()
+				.addWorkingTreeModifiedListener(new ResourceRefreshHandler());
 	}
 
 	private void registerPreDeleteResourceChangeListener() {
