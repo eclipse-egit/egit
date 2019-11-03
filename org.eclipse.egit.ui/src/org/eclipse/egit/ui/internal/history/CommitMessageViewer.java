@@ -127,7 +127,7 @@ class CommitMessageViewer extends HyperlinkSourceViewer {
 			String property = event.getProperty();
 			if (UIPreferences.RESOURCEHISTORY_SHOW_COMMENT_FILL
 					.equals(property)) {
-				setFill(((Boolean) event.getNewValue()).booleanValue());
+				setFill(Boolean.parseBoolean(event.getNewValue().toString()));
 			} else if (UIPreferences.HISTORY_SHOW_TAG_SEQUENCE.equals(property)
 					|| UIPreferences.HISTORY_SHOW_BRANCH_SEQUENCE
 							.equals(property)
