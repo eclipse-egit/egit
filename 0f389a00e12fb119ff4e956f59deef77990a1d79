@@ -16,6 +16,24 @@
       "revId": "0f389a00e12fb119ff4e956f59deef77990a1d79",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "62add9d6_eb04e1a9",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 9
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2019-11-03T22:13:32Z",
+      "side": 1,
+      "message": "One could separate the equals/hashcode stuff from the rest. Problem is, with the previous way of renaming one didn\u0027t notice that this was suboptimal. So in a way it belongs in here; without inline renaming one doesn\u0027t really need to fix the equals/hashcode/sorting.\n\nSame with the paste. If one doesn\u0027t have an editor in this view there\u0027s no need to refactor the paste.\n\nDon\u0027t know when I\u0027ll have the time to split this.",
+      "parentUuid": "c9cab9a5_54d86633",
+      "revId": "0f389a00e12fb119ff4e956f59deef77990a1d79",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
     }
   ]
 }
