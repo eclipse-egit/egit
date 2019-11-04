@@ -15,7 +15,6 @@ package org.eclipse.egit.ui.internal.repository;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.HashSet;
 import java.util.Set;
 
 import org.eclipse.core.commands.IStateListener;
@@ -66,6 +65,10 @@ public class RepositoryTreeNodeDecorator extends GitDecorator
 	private static final String HAS_CHANGES_PREFIX = "> "; //$NON-NLS-1$
 
 	private static final String OPEN_BRACKET = " ["; //$NON-NLS-1$
+
+	private static final String OPEN_PARENTHESIS = " ("; //$NON-NLS-1$
+
+	private static final String MULTIPLE_REPOSITORIES = "*"; //$NON-NLS-1$
 
 	private final State verboseBranchModeState;
 
@@ -256,34 +259,52 @@ public class RepositoryTreeNodeDecorator extends GitDecorator
 				.getRepositoryCache();
 		RepositoryGroup group = ((RepositoryGroupNode) node).getObject();
 		boolean markGroupDirty = false;
-		Set<String> branches = new HashSet<>();
+		int numberOfBranches = 0;
+		String singleBranch = null;
+		String singleRepoName = null;
+		int numberOfDirectories = group.getRepositoryDirectories().size();
 		for (File repoDir : group.getRepositoryDirectories()) {
 			Repository repo = cache.getRepository(repoDir);
 			if (repo != null) {
-				if (RepositoryUtil.hasChanges(repo)) {
+				if (numberOfDirectories == 1) {
+					singleRepoName = DecoratorRepositoryStateCache.INSTANCE
+							.getRepositoryNameAndState(repo);
+				}
+				if (!markGroupDirty && RepositoryUtil.hasChanges(repo)) {
 					markGroupDirty = true;
 				}
-				branches.add(Repository
-						.shortenRefName(DecoratorRepositoryStateCache.INSTANCE
-								.getFullBranchName(repo)));
-				if (markGroupDirty && branches.size() > 1) {
+				if (numberOfBranches <= 1) {
+					String thisBranch = Repository.shortenRefName(
+							DecoratorRepositoryStateCache.INSTANCE
+									.getFullBranchName(repo));
+					if (!thisBranch.equals(singleBranch)) {
+						numberOfBranches++;
+					}
+					if (singleBranch == null) {
+						singleBranch = thisBranch;
+					}
+				}
+				if (markGroupDirty && numberOfBranches > 1) {
 					break;
 				}
 			}
 		}
-		boolean decorate = false;
+		boolean decorated = false;
 		if (markGroupDirty) {
-			decorate = true;
+			decorated = true;
 			decoration.addPrefix(HAS_CHANGES_PREFIX);
 		}
-		if (branches.size() == 1) {
-			decorate = true;
-			StringBuilder suffix = new StringBuilder();
-			suffix.append(OPEN_BRACKET).append(branches.iterator().next())
-					.append(']');
-			decoration.addSuffix(suffix.toString());
+		if (numberOfBranches == 1) {
+			decorated = true;
+			String repoLabel = singleRepoName != null ? singleRepoName
+					: MULTIPLE_REPOSITORIES;
+			decoration.addSuffix(
+					OPEN_BRACKET + repoLabel + ' ' + singleBranch + ']');
+		} else if (numberOfDirectories > 1) {
+			decorated = true;
+			decoration.addSuffix(OPEN_PARENTHESIS + numberOfDirectories + ')');
 		}
-		if (!decorate) {
+		if (!decorated) {
 			ensureCorrectLabelCaching(decoration);
 		}
 	}
