@@ -36,7 +36,7 @@ public class DeleteRepositoryGroupCommand
 			if (element instanceof RepositoryGroupNode) {
 				RepositoryGroupNode groupNode = (RepositoryGroupNode) element;
 				groupsNodes.add(groupNode);
-				groupsToDelete.add(groupNode.getGroup());
+				groupsToDelete.add(groupNode.getObject());
 			}
 		}
 		if (!groupsToDelete.isEmpty()) {
