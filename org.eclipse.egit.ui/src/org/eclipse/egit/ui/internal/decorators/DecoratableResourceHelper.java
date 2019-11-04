@@ -42,17 +42,35 @@ public class DecoratableResourceHelper {
 	private static Map<Repository, String> branchState = Collections
 			.synchronizedMap(new WeakHashMap<Repository, String>());
 
-	static String getRepositoryName(Repository repository) {
+	/**
+	 * Determines a repository name to be used as label; may include state
+	 * information.
+	 *
+	 * @param repository
+	 *            to get the name of
+	 * @return the name
+	 */
+	public static String getRepositoryName(Repository repository) {
 		String repoName = Activator.getDefault().getRepositoryUtil()
 				.getRepositoryName(repository);
 		RepositoryState state = repository.getRepositoryState();
-		if (state != RepositoryState.SAFE)
+		if (state != RepositoryState.SAFE) {
 			return repoName + '|' + state.getDescription();
-		else
-			return repoName;
+		}
+		return repoName;
 	}
 
-	static String getShortBranch(Repository repository) throws IOException {
+	/**
+	 * Determines a short name for the current HEAD of the repository.
+	 *
+	 * @param repository
+	 *            to get the HEAD name of
+	 * @return the name
+	 * @throws IOException
+	 *             if no name can be determined
+	 */
+	public static String getShortBranch(Repository repository)
+			throws IOException {
 		return Activator.getDefault().getRepositoryUtil()
 				.getShortBranch(repository);
 	}
