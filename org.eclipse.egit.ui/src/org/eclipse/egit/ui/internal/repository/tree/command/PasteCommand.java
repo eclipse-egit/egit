@@ -1,5 +1,6 @@
 /*******************************************************************************
- * Copyright (c) 2010-2011 SAP AG.
+ * Copyright (c) 2010, 2019 SAP AG and others.
+ *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License 2.0
  * which accompanies this distribution, and is available at
@@ -21,6 +22,7 @@ import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.commands.ExecutionException;
 import org.eclipse.egit.ui.internal.UIText;
 import org.eclipse.egit.ui.internal.components.RepositorySelectionPage.Protocol;
+import org.eclipse.egit.ui.internal.repository.RepositoriesView;
 import org.eclipse.egit.ui.internal.repository.tree.RepositoryTreeNode;
 import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jgit.lib.Constants;
@@ -51,6 +53,10 @@ public class PasteCommand extends
 
 	@Override
 	public Object execute(ExecutionEvent event) throws ExecutionException {
+		RepositoriesView view = getView(event);
+		if (view.pasteInEditor()) {
+			return null;
+		}
 		// we check if the pasted content is a directory
 		// repository location and try to add this
 		String errorMessage = null;

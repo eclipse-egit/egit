@@ -66,7 +66,7 @@ public class CreateRepositoryGroupCommand
 				.collect(Collectors.toList());
 	}
 
-	static String getNewGroupName(Shell shell, String title,
+	private static String getNewGroupName(Shell shell, String title,
 			RepositoryGroups groupsUtil, String initialName) {
 		InputDialog inputDialog = new InputDialog(shell, title,
 				UIText.RepositoriesView_RepoGroup_EnterName, initialName,
