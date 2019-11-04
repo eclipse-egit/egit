@@ -259,7 +259,7 @@ public class RepositoryTreeNodeDecorator extends GitDecorator
 			IDecoration decoration) throws IOException {
 		RepositoryCache cache = org.eclipse.egit.core.Activator.getDefault()
 				.getRepositoryCache();
-		RepositoryGroup group = ((RepositoryGroupNode) node).getGroup();
+		RepositoryGroup group = ((RepositoryGroupNode) node).getObject();
 		boolean markGroupDirty = false;
 		Set<String> branches = new HashSet<>();
 		for (File repoDir : group.getRepositoryDirectories()) {
