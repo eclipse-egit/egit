@@ -48,7 +48,7 @@ public class RenameRepositoryGroupCommand
 		List<RepositoryTreeNode> elements = getSelectedNodes(event);
 		if (elements.size() == 1
 				&& elements.get(0) instanceof RepositoryGroupNode) {
-			return ((RepositoryGroupNode) elements.get(0)).getGroup();
+			return ((RepositoryGroupNode) elements.get(0)).getObject();
 		} else {
 			throw new ExecutionException(
 					UIText.RepositoriesView_RepoGroup_Rename_IllegalSelection);
