@@ -13,20 +13,20 @@ package org.eclipse.egit.ui.internal.repository.tree.command;
 import java.io.File;
 import java.text.MessageFormat;
 import java.util.List;
-import java.util.UUID;
 import java.util.stream.Collectors;
 
 import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.commands.ExecutionException;
 import org.eclipse.egit.ui.internal.UIText;
+import org.eclipse.egit.ui.internal.groups.RepositoryGroup;
 import org.eclipse.egit.ui.internal.groups.RepositoryGroups;
+import org.eclipse.egit.ui.internal.repository.tree.RepositoryGroupNode;
 import org.eclipse.egit.ui.internal.repository.tree.RepositoryNode;
 import org.eclipse.egit.ui.internal.repository.tree.RepositoryTreeNode;
 import org.eclipse.egit.ui.internal.repository.tree.RepositoryTreeNodeType;
-import org.eclipse.jface.dialogs.InputDialog;
-import org.eclipse.jface.window.Window;
-import org.eclipse.jgit.util.StringUtils;
-import org.eclipse.swt.widgets.Shell;
+import org.eclipse.jface.viewers.IStructuredSelection;
+import org.eclipse.jface.viewers.StructuredSelection;
+import org.eclipse.ui.navigator.CommonViewer;
 
 /**
  * Creates a repository group, if repositories are selected, they are added to
@@ -44,15 +44,20 @@ public class CreateRepositoryGroupCommand
 	public Object execute(ExecutionEvent event) throws ExecutionException {
 		RepositoryGroups groupsUtil = RepositoryGroups.getInstance();
 
-		String groupName = getNewGroupName(getActiveShell(event),
-				UIText.RepositoriesView_RepoGroup_Create_Title, groupsUtil, ""); //$NON-NLS-1$
+		String groupName = newGroupName(groupsUtil);
 		if (groupName != null) {
-			UUID groupId = groupsUtil.createGroup(groupName);
+			RepositoryGroup group = groupsUtil.createGroup(groupName);
 			List<File> repoDirs = getSelectedRepositories(event);
 			if (!repoDirs.isEmpty()) {
-				groupsUtil.addRepositoriesToGroup(groupId, repoDirs);
+				groupsUtil.addRepositoriesToGroup(group, repoDirs);
 			}
-			getView(event).refresh();
+			CommonViewer viewer = getView(event).getCommonViewer();
+			viewer.refresh();
+			viewer.setSelection(
+					new StructuredSelection(new RepositoryGroupNode(group)),
+					true);
+			IStructuredSelection sel = viewer.getStructuredSelection();
+			viewer.editElement(sel.getFirstElement(), 0);
 		}
 		return null;
 	}
@@ -67,27 +72,22 @@ public class CreateRepositoryGroupCommand
 				.collect(Collectors.toList());
 	}
 
-	static String getNewGroupName(Shell shell, String title,
-			RepositoryGroups groupsUtil, String initialName) {
-		InputDialog inputDialog = new InputDialog(shell, title,
-				UIText.RepositoriesView_RepoGroup_EnterName, initialName,
-				name -> {
-					if (name == null
-							|| StringUtils.isEmptyOrNull(name.trim())) {
-						return UIText.RepositoriesView_RepoGroup_EmptyNameError;
-					}
-					if (groupsUtil.groupExists(name.trim())) {
-						return MessageFormat.format(
-								UIText.RepositoryGroups_DuplicateGroupNameError,
-								name.trim());
-					}
-					return null;
-				});
-
-		if (inputDialog.open() == Window.OK) {
-			return inputDialog.getValue().trim();
-		} else {
-			return null;
+	private static String newGroupName(RepositoryGroups groups) {
+		for (int i = 0; i < 100; i++) {
+			String name = MessageFormat.format(
+					UIText.RepositoriesView_NewGroupFormat, Integer.valueOf(i));
+			if (!groups.groupExists(name)) {
+				return name;
+			}
 		}
+		// Come on!
+		String name = groups.getGroups().get(0).getName() + '_';
+		for (int i = 0; i < 100; i++) {
+			if (!groups.groupExists(name)) {
+				return name;
+			}
+			name += '_';
+		}
+		return null;
 	}
 }

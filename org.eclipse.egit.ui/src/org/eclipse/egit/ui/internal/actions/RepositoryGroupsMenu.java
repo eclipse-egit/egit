@@ -15,7 +15,6 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Set;
-import java.util.UUID;
 import java.util.stream.Collectors;
 
 import org.eclipse.egit.ui.internal.CommonUtils;
@@ -131,13 +130,13 @@ public class RepositoryGroupsMenu extends CompoundContributionItem
 
 	private IContributionItem getAssignGroupItem(RepositoryGroups groupsUtil,
 			RepositoryGroup group, List<File> selectedRepoDirectories) {
-		final UUID id = group.getGroupId();
 		String actionTitle = NLS.bind(UIText.RepositoriesView_RepoGroup_Assign,
 				group.getName());
 		return new ActionContributionItem(new Action(actionTitle) {
 			@Override
 			public void runWithEvent(Event event) {
-				groupsUtil.addRepositoriesToGroup(id, selectedRepoDirectories);
+				groupsUtil.addRepositoriesToGroup(group,
+						selectedRepoDirectories);
 				refreshRepositoriesView();
 			}
 		});

@@ -3821,6 +3821,9 @@ public class UIText extends NLS {
 	public static String RepositoriesView_messageEmpty;
 
 	/** */
+	public static String RepositoriesView_NewGroupFormat;
+
+	/** */
 	public static String RepositoriesView_NothingToPasteMessage;
 
 	/** */
