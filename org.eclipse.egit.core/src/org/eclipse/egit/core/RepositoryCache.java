@@ -139,7 +139,7 @@ public class RepositoryCache {
 			RepositoryReference r = repositoryCache.get(normalizedGitDir);
 			if (r == null) {
 				Repository inner = new Builder().setGitDir(normalizedGitDir)
-						.readEnvironment().build();
+						.readEnvironment().setup().createRepository();
 				RepositoryHandle result = new RepositoryHandle(inner);
 				repositoryCache.put(normalizedGitDir,
 						new RepositoryReference(result, inner, queue));
@@ -192,14 +192,23 @@ public class RepositoryCache {
 	}
 
 	/**
-	 * A specialized {@link BaseRepositoryBuilder} that creates a
-	 * {@link CachingRepository}.
+	 * A specialized {@link BaseRepositoryBuilder} that returns already existing
+	 * instances from this cache instead of creating new ones. If a repository
+	 * doesn't exist yet in the cache, it creates a {@link CachingRepository}
+	 * and adds a {@link RepositoryHandle} for it to the cache, then returns
+	 * that handle.
 	 */
-	private class Builder extends BaseRepositoryBuilder<Builder, Repository> {
+	private class Builder
+			extends BaseRepositoryBuilder<Builder, RepositoryHandle> {
 
 		@Override
-		public Repository build() throws IOException {
-			CachingRepository repo = new CachingRepository(setup());
+		public Builder setGitDir(File gitDir) {
+			File normalizedGitDir = new Path(gitDir.getAbsolutePath()).toFile();
+			return super.setGitDir(normalizedGitDir);
+		}
+
+		public CachingRepository createRepository() throws IOException {
+			CachingRepository repo = new CachingRepository(this);
 			if (isMustExist()) {
 				@SuppressWarnings("restriction")
 				boolean exists = repo.getObjectDatabase().exists();
@@ -209,6 +218,79 @@ public class RepositoryCache {
 			}
 			return repo;
 		}
+
+		@Override
+		public RepositoryHandle build() throws IOException {
+			setup();
+			File gitDir = getGitDir();
+			RepositoryHandle result = null;
+			boolean removeCache = false;
+			try {
+				synchronized (repositoryCache) {
+					Reference<RepositoryHandle> r = repositoryCache.get(gitDir);
+					if (r != null) {
+						RepositoryHandle cached = r.get();
+						if (cached != null && cached.getDirectory().exists()) {
+							return cached;
+						} else {
+							Closer.closeReference(
+									repositoryCache.remove(gitDir));
+							removeCache = true;
+						}
+					}
+					CachingRepository inner = createRepository();
+					result = new RepositoryHandle(inner);
+					repositoryCache.put(gitDir,
+							new RepositoryReference(result, inner, queue));
+				}
+			} finally {
+				if (removeCache) {
+					IndexDiffCache indexCache = Activator.getDefault()
+							.getIndexDiffCache();
+					if (indexCache != null) {
+						indexCache.remove(gitDir);
+					}
+				}
+			}
+			return result;
+		}
+	}
+
+	/**
+	 * Get a repository builder that can be used to build our cached
+	 * repositories. It automatically caches the result, and ensures its git
+	 * directory is normalized. If a cached repository already exists, it
+	 * returns the cached instance instead of creating a new one.
+	 *
+	 * @param preventClose
+	 *            whether to ensure that the next {@link Repository#close()}
+	 *            call on the repository is a no-op
+	 * @param cache
+	 *            whether the repository config should be cached for all
+	 *            operations until the next call to {@link Repository#close()}.
+	 *
+	 * @return A repository builder that caches the repository or returns a
+	 *         possibly already cached instance.
+	 */
+	public BaseRepositoryBuilder<? extends BaseRepositoryBuilder, ? extends Repository> getBuilder(
+			boolean preventClose, boolean cache) {
+		return new Builder() {
+
+			@Override
+			public RepositoryHandle build() throws IOException {
+				RepositoryHandle result = super.build();
+				if (preventClose) {
+					result.incrementOpen();
+				}
+				if (cache) {
+					Repository inner = result.getDelegate();
+					if (inner instanceof CachingRepository) {
+						((CachingRepository) inner).cacheConfig(true);
+					}
+				}
+				return result;
+			}
+		};
 	}
 
 	/**
