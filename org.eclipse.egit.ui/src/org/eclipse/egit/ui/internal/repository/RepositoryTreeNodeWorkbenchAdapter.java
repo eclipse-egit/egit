@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2018 Thomas Wolf <thomas.wolf@paranor.ch>
+ * Copyright (c) 2018, 2019 Thomas Wolf <thomas.wolf@paranor.ch>
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License 2.0
@@ -20,6 +20,7 @@ import org.eclipse.egit.ui.internal.ResourcePropertyTester;
 import org.eclipse.egit.ui.internal.UIIcons;
 import org.eclipse.egit.ui.internal.UIText;
 import org.eclipse.egit.ui.internal.decorators.DecoratorRepositoryStateCache;
+import org.eclipse.egit.ui.internal.groups.RepositoryGroup;
 import org.eclipse.egit.ui.internal.repository.tree.RepositoryTreeNode;
 import org.eclipse.egit.ui.internal.repository.tree.RepositoryTreeNodeType;
 import org.eclipse.egit.ui.internal.repository.tree.StashedCommitNode;
@@ -181,6 +182,8 @@ public class RepositoryTreeNodeWorkbenchAdapter extends WorkbenchAdapter {
 		case REPO:
 			Repository repository = (Repository) node.getObject();
 			return GitLabels.getPlainShortLabel(repository);
+		case REPOGROUP:
+			return ((RepositoryGroup) node.getObject()).getName();
 		case FILE:
 		case FOLDER:
 			return ((File) node.getObject()).getName();

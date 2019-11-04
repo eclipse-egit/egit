@@ -15,7 +15,7 @@ import org.eclipse.egit.ui.internal.groups.RepositoryGroup;
 /**
  * This class represents the tree node of a repository group.
  */
-public class RepositoryGroupNode extends RepositoryTreeNode<String> {
+public class RepositoryGroupNode extends RepositoryTreeNode<RepositoryGroup> {
 
 	private RepositoryGroup group;
 
@@ -25,7 +25,7 @@ public class RepositoryGroupNode extends RepositoryTreeNode<String> {
 	 */
 	public RepositoryGroupNode(RepositoryGroup group) {
 		// parent is null as long as nested groups are not supported
-		super(null, RepositoryTreeNodeType.REPOGROUP, null, group.getName());
+		super(null, RepositoryTreeNodeType.REPOGROUP, null, group);
 		this.group = group;
 	}
 
@@ -35,12 +35,4 @@ public class RepositoryGroupNode extends RepositoryTreeNode<String> {
 	public boolean hasChildren() {
 		return group.hasRepositories();
 	}
-
-	/**
-	 * @return the group represented by the node
-	 */
-	public RepositoryGroup getGroup() {
-		return group;
-	}
-
 }
