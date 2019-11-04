@@ -1,5 +1,6 @@
 /*******************************************************************************
- * Copyright (c) 2010, 2013 SAP AG and others.
+ * Copyright (c) 2010, 2019 SAP AG and others.
+ *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License 2.0
  * which accompanies this distribution, and is available at
@@ -58,6 +59,8 @@ public class GitRepositoriesViewRepoHandlingTest extends
 		GitRepositoriesViewTestBase {
 
 	private static final String REMOVE_REPOSITORY_CONTEXT_MENU_LABEL = "RepoViewRemove.label";
+
+	private static final String PASTE_PATH_CONTEXT_MENU_LABEL = "RepoViewPastePath.label";
 
 	private File repositoryFile;
 
@@ -123,7 +126,8 @@ public class GitRepositoriesViewRepoHandlingTest extends
 							new Transfer[] { TextTransfer.getInstance() });
 
 					ContextMenuHelper.clickContextMenuSync(label,
-							myUtil.getPluginLocalizedValue("PastePathCommand"));
+							myUtil.getPluginLocalizedValue(
+									PASTE_PATH_CONTEXT_MENU_LABEL));
 				} catch (Exception e) {
 					exceptions[0] = e;
 				} finally {
