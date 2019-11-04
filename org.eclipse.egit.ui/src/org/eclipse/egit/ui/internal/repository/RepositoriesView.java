@@ -58,6 +58,9 @@ import org.eclipse.egit.ui.internal.UIIcons;
 import org.eclipse.egit.ui.internal.UIText;
 import org.eclipse.egit.ui.internal.actions.ActionCommands;
 import org.eclipse.egit.ui.internal.branch.BranchOperationUI;
+import org.eclipse.egit.ui.internal.components.MessagePopupTextCellEditor;
+import org.eclipse.egit.ui.internal.groups.RepositoryGroup;
+import org.eclipse.egit.ui.internal.groups.RepositoryGroups;
 import org.eclipse.egit.ui.internal.history.HistoryPageInput;
 import org.eclipse.egit.ui.internal.reflog.ReflogView;
 import org.eclipse.egit.ui.internal.repository.tree.FetchNode;
@@ -89,9 +92,15 @@ import org.eclipse.jface.layout.GridDataFactory;
 import org.eclipse.jface.layout.GridLayoutFactory;
 import org.eclipse.jface.preference.IPreferenceStore;
 import org.eclipse.jface.resource.JFaceColors;
+import org.eclipse.jface.viewers.CellEditor;
+import org.eclipse.jface.viewers.ColumnViewerEditor;
+import org.eclipse.jface.viewers.ColumnViewerEditorActivationEvent;
+import org.eclipse.jface.viewers.ColumnViewerEditorActivationStrategy;
 import org.eclipse.jface.viewers.DecoratingStyledCellLabelProvider;
 import org.eclipse.jface.viewers.DoubleClickEvent;
+import org.eclipse.jface.viewers.FocusCellHighlighter;
 import org.eclipse.jface.viewers.IBaseLabelProvider;
+import org.eclipse.jface.viewers.ICellModifier;
 import org.eclipse.jface.viewers.IDoubleClickListener;
 import org.eclipse.jface.viewers.IOpenListener;
 import org.eclipse.jface.viewers.ISelection;
@@ -100,7 +109,10 @@ import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.viewers.ITreeContentProvider;
 import org.eclipse.jface.viewers.OpenEvent;
 import org.eclipse.jface.viewers.StructuredSelection;
+import org.eclipse.jface.viewers.TextCellEditor;
 import org.eclipse.jface.viewers.TreeSelection;
+import org.eclipse.jface.viewers.TreeViewerEditor;
+import org.eclipse.jface.viewers.TreeViewerFocusCellManager;
 import org.eclipse.jface.window.Window;
 import org.eclipse.jgit.events.ConfigChangedEvent;
 import org.eclipse.jgit.events.ConfigChangedListener;
@@ -120,6 +132,7 @@ import org.eclipse.swt.events.FocusListener;
 import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.Item;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Menu;
 import org.eclipse.team.ui.history.IHistoryView;
@@ -275,6 +288,8 @@ public class RepositoriesView extends CommonNavigator implements IShowInSource, 
 	private IContextActivation renameContext;
 
 	private IContextService ctxSrv;
+
+	private TextCellEditor textCellEditor;
 
 	/**
 	 * The default constructor
@@ -524,6 +539,7 @@ public class RepositoriesView extends CommonNavigator implements IShowInSource, 
 				handleSingleRepositoryContext(viewer.getSelection(), viewer);
 			}
 		});
+		setupInlineEditing(viewer);
 		// react on selection changes
 		ISelectionService srv = CommonUtils.getService(getSite(), ISelectionService.class);
 		srv.addPostSelectionListener(selectionChangedListener);
@@ -578,6 +594,115 @@ public class RepositoriesView extends CommonNavigator implements IShowInSource, 
 		} else if (viewer.getTree().isFocusControl() && renameContext == null) {
 			renameContext = ctxSrv.activateContext(SINGLE_REPO_CONTEXT_ID);
 		}
+	}
+
+	private void setupInlineEditing(CommonViewer viewer) {
+		TreeViewerFocusCellManager focusCellManager = new TreeViewerFocusCellManager(
+				viewer, new FocusCellHighlighter(viewer) {
+					// Empty; SWT highlights already.
+				});
+
+		ColumnViewerEditorActivationStrategy editorActivation = new ColumnViewerEditorActivationStrategy(
+				viewer) {
+
+			@Override
+			protected boolean isEditorActivationEvent(
+					ColumnViewerEditorActivationEvent event) {
+				// Editing is started only through the
+				// RenameRepositoryGroupCommand
+				return event.eventType == ColumnViewerEditorActivationEvent.PROGRAMMATIC;
+			}
+		};
+
+		// TABBING_HORIZONTAL with only one column effectively switches off
+		// tabbing. It may jump otherwise into an open editor (closing the cell
+		// editor), and when the user is typing he may then inadvertently modify
+		// that file.
+		TreeViewerEditor.create(viewer, focusCellManager, editorActivation,
+				ColumnViewerEditor.TABBING_HORIZONTAL);
+
+		// Record the initial value so that the validator can avoid producing an
+		// error if the text is the same again during editing.
+		String initialValue[] = { null };
+
+		textCellEditor = new MessagePopupTextCellEditor(viewer.getTree(), true);
+		textCellEditor.setValidator(value -> {
+			String currentText = value.toString().trim();
+			if (currentText.isEmpty()) {
+				return UIText.RepositoriesView_RepoGroup_EmptyNameError;
+			}
+			if (!currentText.equals(initialValue[0]) && RepositoryGroups
+					.getInstance().groupExists(currentText)) {
+				return MessageFormat.format(
+						UIText.RepositoryGroups_DuplicateGroupNameError,
+						currentText);
+			}
+			return null;
+		});
+
+		// We don't have a ViewerColumn at hand... use the legacy mechanism:
+
+		viewer.setColumnProperties(new String[] { "Name" }); //$NON-NLS-1$
+		viewer.setCellEditors(new CellEditor[] { textCellEditor });
+		viewer.setCellModifier(new ICellModifier() {
+
+			@Override
+			public boolean canModify(Object element, String property) {
+				return element instanceof RepositoryGroupNode;
+			}
+
+			private String doGetValue(Object element) {
+				if (element instanceof RepositoryGroupNode) {
+					return ((RepositoryGroupNode) element).getObject()
+							.getName();
+				}
+				return null;
+			}
+
+			@Override
+			public Object getValue(Object element, String property) {
+				String result = doGetValue(element);
+				initialValue[0] = result;
+				return result;
+			}
+
+			@Override
+			public void modify(Object element, String property, Object value) {
+				if (element instanceof Item) {
+					element = ((Item) element).getData();
+				}
+				if (element instanceof RepositoryGroupNode
+						&& value instanceof CharSequence) {
+					RepositoryGroup group = ((RepositoryGroupNode) element)
+							.getObject();
+					String newName = value.toString().trim();
+					if (!newName.equals(group.getName())) {
+						RepositoryGroups.getInstance().renameGroup(group,
+								newName);
+						// Refresh all to get re-sorting
+						viewer.refresh();
+						// Re-set the selection to get a status bar update
+						viewer.setSelection(new StructuredSelection(element),
+								true);
+					}
+				}
+			}
+		});
+	}
+
+	/**
+	 * If a text editor is open and has the focus, paste into it.
+	 *
+	 * @return {@code true} if there was a text editor that did paste,
+	 *         {@code false} otherwise
+	 */
+	public boolean pasteInEditor() {
+		if (textCellEditor != null && textCellEditor.isActivated()) {
+			// We're editing
+			textCellEditor.performPaste();
+			return true;
+		}
+		return false;
 	}
 
 	private void executeOpenCommandWithConfirmation(RepositoryTreeNode element,
@@ -672,6 +797,10 @@ public class RepositoriesView extends CommonNavigator implements IShowInSource, 
 
 	@Override
 	public void dispose() {
+		if (textCellEditor != null) {
+			textCellEditor.dispose();
+			textCellEditor = null;
+		}
 		if (reactOnSelection != null) {
 			reactOnSelection.removeListener(reactOnSelectionListener);
 		}

@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (C) 2019, Alexander Nittka <alex@nittka.de>
+ * Copyright (C) 2019, Alexander Nittka <alex@nittka.de> and others.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License 2.0
@@ -19,14 +19,16 @@ import java.util.stream.Collectors;
 import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.commands.ExecutionException;
 import org.eclipse.egit.ui.internal.UIText;
+import org.eclipse.egit.ui.internal.groups.RepositoryGroup;
 import org.eclipse.egit.ui.internal.groups.RepositoryGroups;
+import org.eclipse.egit.ui.internal.repository.tree.RepositoryGroupNode;
 import org.eclipse.egit.ui.internal.repository.tree.RepositoryNode;
 import org.eclipse.egit.ui.internal.repository.tree.RepositoryTreeNode;
 import org.eclipse.egit.ui.internal.repository.tree.RepositoryTreeNodeType;
-import org.eclipse.jface.dialogs.InputDialog;
-import org.eclipse.jface.window.Window;
-import org.eclipse.jgit.util.StringUtils;
-import org.eclipse.swt.widgets.Shell;
+import org.eclipse.jface.viewers.IStructuredSelection;
+import org.eclipse.jface.viewers.StructuredSelection;
+import org.eclipse.jgit.annotations.NonNull;
+import org.eclipse.ui.navigator.CommonViewer;
 
 /**
  * Creates a repository group, if repositories are selected, they are added to
@@ -44,16 +46,22 @@ public class CreateRepositoryGroupCommand
 	public Object execute(ExecutionEvent event) throws ExecutionException {
 		RepositoryGroups groupsUtil = RepositoryGroups.getInstance();
 
-		String groupName = getNewGroupName(getActiveShell(event),
-				UIText.RepositoriesView_RepoGroup_Create_Title, groupsUtil, ""); //$NON-NLS-1$
-		if (groupName != null) {
-			UUID groupId = groupsUtil.createGroup(groupName);
-			List<File> repoDirs = getSelectedRepositories(event);
-			if (!repoDirs.isEmpty()) {
-				groupsUtil.addRepositoriesToGroup(groupId, repoDirs);
-			}
-			getView(event).refresh();
+		RepositoryGroup group;
+		try {
+			group = groupsUtil.createGroup(newGroupName(groupsUtil));
+		} catch (IllegalStateException e) {
+			throw new ExecutionException(e.getLocalizedMessage(), e);
 		}
+		List<File> repoDirs = getSelectedRepositories(event);
+		if (!repoDirs.isEmpty()) {
+			groupsUtil.addRepositoriesToGroup(group, repoDirs);
+		}
+		CommonViewer viewer = getView(event).getCommonViewer();
+		viewer.refresh();
+		viewer.setSelection(
+				new StructuredSelection(new RepositoryGroupNode(group)), true);
+		IStructuredSelection sel = viewer.getStructuredSelection();
+		viewer.editElement(sel.getFirstElement(), 0);
 		return null;
 	}
 
@@ -67,27 +75,16 @@ public class CreateRepositoryGroupCommand
 				.collect(Collectors.toList());
 	}
 
-	static String getNewGroupName(Shell shell, String title,
-			RepositoryGroups groupsUtil, String initialName) {
-		InputDialog inputDialog = new InputDialog(shell, title,
-				UIText.RepositoriesView_RepoGroup_EnterName, initialName,
-				name -> {
-					if (name == null
-							|| StringUtils.isEmptyOrNull(name.trim())) {
-						return UIText.RepositoriesView_RepoGroup_EmptyNameError;
-					}
-					if (groupsUtil.groupExists(name.trim())) {
-						return MessageFormat.format(
-								UIText.RepositoryGroups_DuplicateGroupNameError,
-								name.trim());
-					}
-					return null;
-				});
-
-		if (inputDialog.open() == Window.OK) {
-			return inputDialog.getValue().trim();
-		} else {
-			return null;
+	private static @NonNull String newGroupName(RepositoryGroups groups) {
+		for (int i = 1; i < 100; i++) {
+			String name = MessageFormat.format(
+					UIText.RepositoriesView_NewGroupFormat, Integer.valueOf(i));
+			if (name != null && !groups.groupExists(name)) {
+				return name;
+			}
 		}
+		// Come on!
+		return MessageFormat.format(UIText.RepositoriesView_NewGroupFormat,
+				Integer.valueOf(1)) + ' ' + UUID.randomUUID().toString();
 	}
 }

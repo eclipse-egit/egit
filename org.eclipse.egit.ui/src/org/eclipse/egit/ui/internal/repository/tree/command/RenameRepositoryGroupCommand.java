@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (C) 2019, Alexander Nittka <alex@nittka.de>
+ * Copyright (C) 2019, Alexander Nittka <alex@nittka.de> and others.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License 2.0
@@ -14,9 +14,9 @@ import java.util.List;
 
 import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.commands.ExecutionException;
+import org.eclipse.egit.ui.Activator;
 import org.eclipse.egit.ui.internal.UIText;
-import org.eclipse.egit.ui.internal.groups.RepositoryGroup;
-import org.eclipse.egit.ui.internal.groups.RepositoryGroups;
+import org.eclipse.egit.ui.internal.repository.RepositoriesView;
 import org.eclipse.egit.ui.internal.repository.tree.RepositoryGroupNode;
 import org.eclipse.egit.ui.internal.repository.tree.RepositoryTreeNode;
 
@@ -28,31 +28,16 @@ public class RenameRepositoryGroupCommand
 
 	@Override
 	public Object execute(ExecutionEvent event) throws ExecutionException {
-		RepositoryGroups groupsUtil = RepositoryGroups.getInstance();
-
-		RepositoryGroup group = getSelectedGroup(event);
-		String groupName =
-				CreateRepositoryGroupCommand.getNewGroupName(getActiveShell(event),
-						UIText.RepositoriesView_RepoGroup_Rename_Title,
-						groupsUtil,
-						group.getName());
-		if (groupName != null) {
-			groupsUtil.renameGroup(group, groupName);
-			getView(event).refresh();
-		}
-		return null;
-	}
-
-	private RepositoryGroup getSelectedGroup(ExecutionEvent event)
-			throws ExecutionException {
 		List<RepositoryTreeNode> elements = getSelectedNodes(event);
 		if (elements.size() == 1
 				&& elements.get(0) instanceof RepositoryGroupNode) {
-			return ((RepositoryGroupNode) elements.get(0)).getObject();
+			RepositoriesView view = getView(event);
+			view.getCommonViewer().editElement(elements.get(0), 0);
 		} else {
-			throw new ExecutionException(
-					UIText.RepositoriesView_RepoGroup_Rename_IllegalSelection);
+			Activator.logError(
+					UIText.RepositoriesView_RepoGroup_Rename_IllegalSelection,
+					null);
 		}
+		return null;
 	}
-
 }

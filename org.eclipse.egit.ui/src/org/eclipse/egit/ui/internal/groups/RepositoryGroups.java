@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (C) 2019, Alexander Nittka <alex@nittka.de>
+ * Copyright (C) 2019, Alexander Nittka <alex@nittka.de> and others.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License 2.0
@@ -108,18 +108,24 @@ public final class RepositoryGroups {
 	}
 
 	/**
+	 * Creates a new group with the given name.
+	 *
 	 * @param groupName
 	 *            valid name of the new group
-	 * @return id of the new group
+	 * @return the new group
+	 * @throws IllegalArgumentException
+	 *             if the name is invalid
+	 * @throws IllegalStateException
+	 *             if a group with the given name already exists
 	 */
-	public UUID createGroup(String groupName) {
+	public RepositoryGroup createGroup(String groupName) {
 		checkGroupName(groupName);
 		if (!groupExists(groupName)) {
 			UUID groupId = UUID.randomUUID();
 			RepositoryGroup group = new RepositoryGroup(groupId, groupName);
 			groupMap.put(groupId, group);
 			savePreferences();
-			return groupId;
+			return group;
 		} else {
 			throw new IllegalStateException(
 					MessageFormat.format(
@@ -170,15 +176,15 @@ public final class RepositoryGroups {
 	 * adds repositories to the given group and removes them from all other
 	 * groups
 	 *
-	 * @param groupId
-	 *            id of group to which the repositories are added
+	 * @param group
+	 *            to which the repositories are added
 	 * @param repoDirs
 	 *            repository directories to be added to the group
 	 *
 	 */
-	public void addRepositoriesToGroup(UUID groupId,
+	public void addRepositoriesToGroup(RepositoryGroup group,
 			Collection<File> repoDirs) {
-		if (!groupMap.containsKey(groupId)) {
+		if (!groupMap.containsKey(group.getGroupId())) {
 			throw new IllegalArgumentException();
 		}
 		Collection<RepositoryGroup> currentGroups = groupMap.values();
@@ -186,7 +192,7 @@ public final class RepositoryGroups {
 			groups.removeRepositoryDirectories(repoDirs);
 		}
 
-		groupMap.get(groupId).addRepositoryDirectories(repoDirs);
+		group.addRepositoryDirectories(repoDirs);
 		savePreferences();
 
 	}
