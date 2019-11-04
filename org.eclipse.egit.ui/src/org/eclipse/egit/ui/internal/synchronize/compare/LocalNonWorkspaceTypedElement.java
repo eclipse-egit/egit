@@ -40,6 +40,7 @@ import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Path;
 import org.eclipse.core.runtime.Platform;
 import org.eclipse.core.runtime.Status;
+import org.eclipse.egit.core.UnitOfWork;
 import org.eclipse.egit.core.internal.indexdiff.IndexDiffCacheEntry;
 import org.eclipse.egit.core.internal.util.ResourceUtil;
 import org.eclipse.egit.core.project.RepositoryMapping;
@@ -171,27 +172,34 @@ public class LocalNonWorkspaceTypedElement extends LocalResourceTypedElement {
 					if (subPath == null || subPath.isEmpty()) {
 						return null;
 					}
-					try (SubmoduleWalk walk = new SubmoduleWalk(repository)) {
-						FileTreeIterator iterator = new FileTreeIterator(
-								repository);
-						walk.setTree(iterator);
-						walk.setFilter(PathFilterGroup
-								.createFromStrings(subPath.toString()));
-						walk.setRootTree(iterator);
-						if (walk.next()) {
-							try (Repository sub = walk.getRepository()) {
-								RevCommit headCommit = Activator.getDefault()
-										.getRepositoryUtil()
-										.parseHeadCommit(sub);
-								if (headCommit == null) {
-									return null;
+					return UnitOfWork.run(repository, () -> {
+						try (SubmoduleWalk walk = new SubmoduleWalk(
+								repository)) {
+							FileTreeIterator iterator = new FileTreeIterator(
+									repository);
+							walk.setTree(iterator);
+							walk.setFilter(PathFilterGroup
+									.createFromStrings(subPath.toString()));
+							walk.setRootTree(iterator);
+							walk.setBuilderFactory(
+									() -> org.eclipse.egit.core.Activator
+											.getDefault().getRepositoryCache()
+											.getBuilder(true, true));
+							if (walk.next()) {
+								try (Repository sub = walk.getRepository()) {
+									RevCommit headCommit = Activator
+											.getDefault().getRepositoryUtil()
+											.parseHeadCommit(sub);
+									if (headCommit == null) {
+										return null;
+									}
+									return new ByteArrayInputStream(Constants
+											.encode(headCommit.name()));
 								}
-								return new ByteArrayInputStream(
-										Constants.encode(headCommit.name()));
 							}
 						}
-					}
-					return null;
+						return null;
+					});
 				}
 				return Files.newInputStream(file.toPath());
 			} catch (IOException | UnsupportedOperationException e) {
