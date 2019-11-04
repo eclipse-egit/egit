@@ -347,28 +347,24 @@ public class RepositoriesViewContentProvider implements ITreeContentProvider {
 
 		}
 
-		case SUBMODULES:
+		case SUBMODULES: {
 			List<RepositoryNode> children = new ArrayList<>();
-			try (SubmoduleWalk walk = SubmoduleWalk
-					.forIndex(node.getRepository())) {
+			Repository repository = node.getRepository();
+			try (SubmoduleWalk walk = SubmoduleWalk.forIndex(repository)) {
+				walk.setBuilderFactory(
+						() -> repositoryCache.getBuilder(false, false));
 				while (walk.next()) {
-					Repository subRepo = walk.getRepository();
-					if (subRepo != null) {
-						Repository cachedRepo = null;
-						try {
-							cachedRepo = repositoryCache
-								.lookupRepository(subRepo.getDirectory());
-						} finally {
-							subRepo.close();
-						}
-						if (cachedRepo != null)
-							children.add(new RepositoryNode(node, cachedRepo));
+					Repository submodule = walk.getRepository();
+					if (submodule != null) {
+						children.add(new RepositoryNode(node, submodule));
 					}
 				}
 			} catch (IOException e) {
 				handleException(e, node);
 			}
 			return children.toArray();
+		}
+
 		case STASH:
 			List<StashedCommitNode> stashNodes = new ArrayList<>();
 			int index = 0;
