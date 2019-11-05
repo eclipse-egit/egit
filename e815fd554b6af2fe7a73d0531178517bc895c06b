@@ -329,6 +329,24 @@
     },
     {
       "key": {
+        "uuid": "04ef243e_40650ce4",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/history/GitHistoryPage.java",
+        "patchSetId": 20
+      },
+      "lineNbr": 2703,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2019-11-05T17:25:39Z",
+      "side": 1,
+      "message": "Well, my point was rather: raising an NPE explicitly seems strange. We *know* from experience it doesn\u0027t happen, but if it happened, I wouldn\u0027t know what the net results are.\n\nI usually use \"assert db !\u003d null;\" for such cases (make the compiler happy about following @NonNulls); at least that doesn\u0027t incur runtime overhead unless you run with -ea. And I don\u0027t need a NON-NLS, can\u0027t mistake it for some other unplanned NPE, and the \"assert\" is a clear marker that this is just never expected to occur. Or, if you prefer, there\u0027s org.eclipse.core.runtime.Assert, but I don\u0027t remember if the compiler is smart enough to recognize db as being @NonNull afterwards.\n\nOtherwise, if db being null were a real concern, I think it should be logged and the response should be something that doesn\u0027t break the UI. For instance, simply return (like we do for input \u003d\u003d null).",
+      "parentUuid": "052ac346_91aac2f9",
+      "revId": "e815fd554b6af2fe7a73d0531178517bc895c06b",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9f33daf6_fbadf4a5",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/history/GitHistoryRefFilterConfigurationDialog.java",
         "patchSetId": 20
