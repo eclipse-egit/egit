@@ -3696,7 +3696,7 @@ public class UIText extends NLS {
 	public static String DeleteResourcesOperationUI_confirmActionMessage;
 
 	/** */
-	public static String DeleteResourcesOperationUI_deleteFailed;
+	public static String DeleteResourcesOperationUI_DeleteFilesJobName;
 
 	/** */
 	public static String IgnoreActionHandler_addToGitignore;
@@ -5451,9 +5451,6 @@ public class UIText extends NLS {
 
 	/** */
 	public static String StagingView_cancelCommitAfterSaving;
-
-	/** */
-	public static String StagingView_checkoutFailed;
 
 	/** */
 	public static String StagingView_commitFailed;

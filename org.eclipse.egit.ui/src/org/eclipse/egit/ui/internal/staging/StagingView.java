@@ -70,6 +70,7 @@ import org.eclipse.egit.core.internal.job.JobUtil;
 import org.eclipse.egit.core.internal.job.RuleUtil;
 import org.eclipse.egit.core.op.AssumeUnchangedOperation;
 import org.eclipse.egit.core.op.CommitOperation;
+import org.eclipse.egit.core.op.DiscardChangesOperation;
 import org.eclipse.egit.core.op.UntrackOperation;
 import org.eclipse.egit.core.project.RepositoryMapping;
 import org.eclipse.egit.ui.Activator;
@@ -159,7 +160,6 @@ import org.eclipse.jface.viewers.ViewerFilter;
 import org.eclipse.jgit.annotations.NonNull;
 import org.eclipse.jgit.annotations.Nullable;
 import org.eclipse.jgit.api.AddCommand;
-import org.eclipse.jgit.api.CheckoutCommand;
 import org.eclipse.jgit.api.Git;
 import org.eclipse.jgit.api.ResetCommand;
 import org.eclipse.jgit.api.RmCommand;
@@ -3038,7 +3038,7 @@ public class StagingView extends ViewPart
 
 	private class ReplaceAction extends Action {
 
-		IStructuredSelection selection;
+		private final IStructuredSelection selection;
 		private final boolean headRevision;
 
 		ReplaceAction(String text, @NonNull IStructuredSelection selection,
@@ -3065,46 +3065,42 @@ public class StagingView extends ViewPart
 			}
 		}
 
-		private void replaceWith(@NonNull List<String> files,
-				@NonNull List<String> inaccessibleFiles) {
-			Repository repository = currentRepository;
-			if (files.isEmpty() || repository == null) {
-				return;
-			}
-			try (Git git = new Git(repository)) {
-				CheckoutCommand checkoutCommand = git.checkout();
-				if (headRevision) {
-					checkoutCommand.setStartPoint(Constants.HEAD);
-				}
-				for (String path : files) {
-					checkoutCommand.addPath(path);
-				}
-				checkoutCommand.call();
-				if (!inaccessibleFiles.isEmpty()) {
-					IndexDiffCacheEntry indexDiffCacheForRepository = org.eclipse.egit.core.Activator
-							.getDefault().getIndexDiffCache()
-							.getIndexDiffCacheEntry(repository);
-					if (indexDiffCacheForRepository != null) {
-						indexDiffCacheForRepository
-								.refreshFiles(inaccessibleFiles);
-					}
-				}
-			} catch (Exception e) {
-				Activator.handleError(UIText.StagingView_checkoutFailed, e,
-						true);
-			}
-		}
-
 		@Override
 		public void run() {
-			if (!CommandConfirmation.confirmCheckout(form.getShell(),
-					getCurrentRepository())) {
+			Repository repo = getCurrentRepository();
+			if (repo == null) {
 				return;
 			}
 			List<String> files = new ArrayList<>();
 			List<String> inaccessibleFiles = new ArrayList<>();
 			getSelectedFiles(files, inaccessibleFiles);
-			replaceWith(files, inaccessibleFiles);
+			if (files.isEmpty()) {
+				return;
+			}
+			if (!CommandConfirmation.confirmCheckout(form.getShell(), repo)) {
+				return;
+			}
+			DiscardChangesOperation operation = new DiscardChangesOperation(
+					repo, files, headRevision ? Constants.HEAD : null);
+			JobChangeAdapter refresher = null;
+			if (!inaccessibleFiles.isEmpty()) {
+				refresher = new JobChangeAdapter() {
+
+					@Override
+					public void done(IJobChangeEvent event) {
+						IndexDiffCacheEntry indexDiffCacheForRepository = org.eclipse.egit.core.Activator
+								.getDefault().getIndexDiffCache()
+								.getIndexDiffCacheEntry(repo);
+						if (indexDiffCacheForRepository != null) {
+							indexDiffCacheForRepository
+									.refreshFiles(inaccessibleFiles);
+						}
+					}
+				};
+			}
+			JobUtil.scheduleUserWorkspaceJob(operation,
+					UIText.DiscardChangesAction_discardChanges,
+					JobFamilies.DISCARD_CHANGES, refresher);
 		}
 	}
 

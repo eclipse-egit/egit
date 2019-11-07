@@ -144,6 +144,11 @@ public class JobFamilies {
 	public final static Object UNTRACK = new JobFamily();
 
 	/**
+	 * Delete Files
+	 */
+	public final static Object DELETE = new JobFamily();
+
+	/**
 	 * Disconnect
 	 */
 	public final static Object DISCONNECT = new JobFamily();
@@ -152,7 +157,6 @@ public class JobFamilies {
 	 * Discard Changes
 	 */
 	public final static Object DISCARD_CHANGES = new JobFamily();
-
 
 	/**
 	 * Add to index job
