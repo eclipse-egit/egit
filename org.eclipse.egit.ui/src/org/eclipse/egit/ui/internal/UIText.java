@@ -3643,6 +3643,15 @@ public class UIText extends NLS {
 	public static String DeletePathsOperationUI_ButtonOK;
 
 	/** */
+	public static String DeletePathsOperationUI_confirmActionTitle;
+
+	/** */
+	public static String DeletePathsOperationUI_confirmActionMessage;
+
+	/** */
+	public static String DeletePathsOperationUI_DeleteFilesJobName;
+
+	/** */
 	public static String DeleteRepositoryConfirmDialog_DeleteGitDirCheckbox;
 
 	/** */
@@ -3688,15 +3697,6 @@ public class UIText extends NLS {
 
 	/** */
 	public static String DeleteTagCommand_titleConfirm;
-
-	/** */
-	public static String DeleteResourcesOperationUI_confirmActionTitle;
-
-	/** */
-	public static String DeleteResourcesOperationUI_confirmActionMessage;
-
-	/** */
-	public static String DeleteResourcesOperationUI_deleteFailed;
 
 	/** */
 	public static String IgnoreActionHandler_addToGitignore;
@@ -5451,9 +5451,6 @@ public class UIText extends NLS {
 
 	/** */
 	public static String StagingView_cancelCommitAfterSaving;
-
-	/** */
-	public static String StagingView_checkoutFailed;
 
 	/** */
 	public static String StagingView_commitFailed;

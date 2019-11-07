@@ -775,6 +775,9 @@ public class GitRepositoriesViewTest extends GitRepositoriesViewTestBase {
 
 	@Test
 	public void testDeleteFileNotInProject() throws Exception {
+		// PROJ2 is still a valid Eclipse project at that point, even though the
+		// .project file wasn't committed. Close it.
+		ResourcesPlugin.getWorkspace().getRoot().getProject(PROJ2).close(null);
 		SWTBotTree tree = getOrOpenView().bot().tree();
 		refreshAndWait();
 
@@ -785,8 +788,8 @@ public class GitRepositoriesViewTest extends GitRepositoriesViewTestBase {
 				myUtil.getPluginLocalizedValue("RepoViewDeleteFile.label"));
 
 		SWTBotShell confirm = bot
-				.shell(UIText.DeleteResourcesOperationUI_confirmActionTitle);
-		confirm.bot().button(IDialogConstants.OK_LABEL).click();
+				.shell(UIText.DeletePathsOperationUI_confirmActionTitle);
+		confirm.bot().button(UIText.DeletePathsOperationUI_ButtonOK).click();
 		bot.waitUntil(shellCloses(confirm));
 		TestUtil.joinJobs(JobFamilies.REPO_VIEW_REFRESH);
 
