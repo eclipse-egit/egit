@@ -16,6 +16,24 @@
       "revId": "2ea473353157cddd0d58d22d6e85f748f48581c4",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "95750029_70edfb92",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/repository/tree/command/RemoveCommand.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 185,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2019-11-08T09:43:50Z",
+      "side": 1,
+      "message": "See https://git.eclipse.org/r/#/c/152108/ for an alternate approach consistent with EGit\u0027s weak reference cache.",
+      "parentUuid": "31b6b9f7_e5f66664",
+      "revId": "2ea473353157cddd0d58d22d6e85f748f48581c4",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
     }
   ]
 }
