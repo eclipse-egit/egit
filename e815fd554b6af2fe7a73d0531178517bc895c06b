@@ -347,6 +347,24 @@
     },
     {
       "key": {
+        "uuid": "39991d3f_3a847f84",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/history/GitHistoryPage.java",
+        "patchSetId": 20
+      },
+      "lineNbr": 2703,
+      "author": {
+        "id": 228343
+      },
+      "writtenOn": "2019-11-08T08:52:57Z",
+      "side": 1,
+      "message": "Ok. I will use org.eclipse.core.runtime.Assert",
+      "parentUuid": "04ef243e_40650ce4",
+      "revId": "e815fd554b6af2fe7a73d0531178517bc895c06b",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9f33daf6_fbadf4a5",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/history/GitHistoryRefFilterConfigurationDialog.java",
         "patchSetId": 20
