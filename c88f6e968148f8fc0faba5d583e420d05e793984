@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "44b95c07_4fd6ecb3",
+        "filename": "org.eclipse.egit.ui.test/src/org/eclipse/egit/ui/test/history/HistoryViewTest.java",
+        "patchSetId": 24
+      },
+      "lineNbr": 618,
+      "author": {
+        "id": 228343
+      },
+      "writtenOn": "2019-11-08T11:11:52Z",
+      "side": 1,
+      "message": "Shouldn\u0027t this be removed as it was replaced by bot.waitUntil()?",
+      "revId": "c88f6e968148f8fc0faba5d583e420d05e793984",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "8734e956_e098df4a",
+        "filename": "org.eclipse.egit.ui.test/src/org/eclipse/egit/ui/test/history/HistoryViewTest.java",
+        "patchSetId": 24
+      },
+      "lineNbr": 623,
+      "author": {
+        "id": 228343
+      },
+      "writtenOn": "2019-11-08T11:11:52Z",
+      "side": 1,
+      "message": "What if the table is supposed to get shorter before this assertCommitsAfterBase? I\u0027d suggest (table.rowCount() \u003d\u003d commitMsgs.length + 3)",
+      "revId": "c88f6e968148f8fc0faba5d583e420d05e793984",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "0ddfddd3_825c0bc4",
+        "filename": "org.eclipse.egit.ui.test/src/org/eclipse/egit/ui/test/history/HistoryViewTest.java",
+        "patchSetId": 24
+      },
+      "lineNbr": 628,
+      "author": {
+        "id": 228343
+      },
+      "writtenOn": "2019-11-08T11:11:52Z",
+      "side": 1,
+      "message": "This should be something like CommitGraphTable did not get expected length",
+      "revId": "c88f6e968148f8fc0faba5d583e420d05e793984",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
