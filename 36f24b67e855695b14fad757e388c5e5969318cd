@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b2ec5eb3_d6edbec8",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/RepositoryCache.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 440
+      },
+      "writtenOn": "2019-11-09T10:34:08Z",
+      "side": 1,
+      "message": "just repo?",
+      "range": {
+        "startLine": 106,
+        "startChar": 6,
+        "endLine": 106,
+        "endChar": 57
+      },
+      "revId": "36f24b67e855695b14fad757e388c5e5969318cd",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "22e71ca7_f1e741df",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/RepositoryCache.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 369,
+      "author": {
+        "id": 440
+      },
+      "writtenOn": "2019-11-09T10:34:08Z",
+      "side": 1,
+      "message": "where does that come from? I would expect just the plain RepoHandle type, given the above member declaration.",
+      "range": {
+        "startLine": 369,
+        "startChar": 14,
+        "endLine": 369,
+        "endChar": 23
+      },
+      "revId": "36f24b67e855695b14fad757e388c5e5969318cd",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a423ebee_15c89470",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/RepositoryHandle.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 440
+      },
+      "writtenOn": "2019-11-09T10:34:08Z",
+      "side": 1,
+      "message": "Since the delegate might be a handle itself, would it be necessary to add some code to unwrap it here, have an assertion to avoid it, or are nested handles perfectly fine?",
+      "range": {
+        "startLine": 69,
+        "startChar": 25,
+        "endLine": 69,
+        "endChar": 44
+      },
+      "revId": "36f24b67e855695b14fad757e388c5e5969318cd",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
