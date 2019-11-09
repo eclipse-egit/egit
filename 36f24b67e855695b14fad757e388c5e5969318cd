@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "96f919a0_312ac316",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/RepositoryCache.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2019-11-09T10:58:24Z",
+      "side": 1,
+      "message": "Yes.",
+      "parentUuid": "b2ec5eb3_d6edbec8",
+      "range": {
+        "startLine": 106,
+        "startChar": 6,
+        "endLine": 106,
+        "endChar": 57
+      },
+      "revId": "36f24b67e855695b14fad757e388c5e5969318cd",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "22e71ca7_f1e741df",
         "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/RepositoryCache.java",
         "patchSetId": 2
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "029e1a63_7b2bf374",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/RepositoryCache.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 369,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2019-11-09T10:58:24Z",
+      "side": 1,
+      "message": "Needed because of the return type of queue.remove() above.",
+      "parentUuid": "22e71ca7_f1e741df",
+      "range": {
+        "startLine": 369,
+        "startChar": 14,
+        "endLine": 369,
+        "endChar": 23
+      },
+      "revId": "36f24b67e855695b14fad757e388c5e5969318cd",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a423ebee_15c89470",
         "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/RepositoryHandle.java",
         "patchSetId": 2
@@ -59,6 +107,30 @@
       "writtenOn": "2019-11-09T10:34:08Z",
       "side": 1,
       "message": "Since the delegate might be a handle itself, would it be necessary to add some code to unwrap it here, have an assertion to avoid it, or are nested handles perfectly fine?",
+      "range": {
+        "startLine": 69,
+        "startChar": 25,
+        "endLine": 69,
+        "endChar": 44
+      },
+      "revId": "36f24b67e855695b14fad757e388c5e5969318cd",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "18001f90_2f20e52d",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/RepositoryHandle.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2019-11-09T10:58:24Z",
+      "side": 1,
+      "message": "That was never the intention. The class is package-visible only; the intention was that only the RepositoryCache ever creates RepositoryHandles, and that the delegate is always a real repo.\n\nInitially I had this as a \"private static\" class inside RepositoryCache, but the file just got too large. So I settled for extracting it as a package-visible class.\n\nI could make the constructor also package-visible only, and add an assertion here.",
+      "parentUuid": "a423ebee_15c89470",
       "range": {
         "startLine": 69,
         "startChar": 25,
