@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "7ae00a9e_c1a7c7ea",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/CachingRepository.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2019-11-09T11:18:45Z",
+      "side": 1,
+      "message": "OK, will do.",
+      "parentUuid": "9e97ff27_70543fb2",
+      "revId": "0315005c51c94bec6e5b3bf9c747fd32309a567f",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5125ed0a_bda2c12f",
         "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/ConfigScope.java",
         "patchSetId": 2
@@ -30,6 +48,30 @@
       "writtenOn": "2019-11-09T09:36:02Z",
       "side": 1,
       "message": "I do understand that the try-with-resource mechanism guarantees cleanup for deleting the cache. However, I find it confusing to create an object here, that I probably don\u0027t use in most of the egit operations that may appear inside the try.\n\nI therefore typically favor lambda syntax with single method functions for such operations, like disableLoggingWhile(lambda) etc. Would that be an alternative to your current syntax suggestion? Or are there are reasons for the above syntax that I missed?",
+      "range": {
+        "startLine": 24,
+        "startChar": 0,
+        "endLine": 29,
+        "endChar": 4
+      },
+      "revId": "0315005c51c94bec6e5b3bf9c747fd32309a567f",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "0c8e45c1_8f67065c",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/ConfigScope.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2019-11-09T11:18:45Z",
+      "side": 1,
+      "message": "Nice idea. Would allow to hide the ConfigScope completely, preventing potential misuses. But one would have to make sure all variables declared outside and used inside the lambda were effectively final. I\u0027ll give it a try.",
+      "parentUuid": "5125ed0a_bda2c12f",
       "range": {
         "startLine": 24,
         "startChar": 0,
