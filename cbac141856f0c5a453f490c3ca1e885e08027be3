@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3629ed55_f1c9726e",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/UnitOfWork.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 440
+      },
+      "writtenOn": "2019-11-10T20:58:48Z",
+      "side": 1,
+      "message": "Maybe it\u0027s just confused me, but did you eventually mean to have this and the next static method named exactly the other way around? Right now static run() calls instance execute, and static execute() calls instance run.\n\nAnd to avoid that confusion, would it eventually be possible to name the 2 methods identically? Or does that confuse the compiler?\n\nBTW: The class looks even better than I had thought when describing the lambda idea.",
+      "range": {
+        "startLine": 78,
+        "startChar": 1,
+        "endLine": 81,
+        "endChar": 18
+      },
+      "revId": "cbac141856f0c5a453f490c3ca1e885e08027be3",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
