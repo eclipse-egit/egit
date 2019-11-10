@@ -46,6 +46,30 @@
       "revId": "cbac141856f0c5a453f490c3ca1e885e08027be3",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "0eaefc8e_44a232c3",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/UnitOfWork.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2019-11-10T21:29:34Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "510309bd_1a31b754",
+      "range": {
+        "startLine": 78,
+        "startChar": 1,
+        "endLine": 81,
+        "endChar": 18
+      },
+      "revId": "cbac141856f0c5a453f490c3ca1e885e08027be3",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
     }
   ]
 }
