@@ -22,6 +22,30 @@
       "revId": "cbac141856f0c5a453f490c3ca1e885e08027be3",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "510309bd_1a31b754",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/UnitOfWork.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2019-11-10T21:29:02Z",
+      "side": 1,
+      "message": "I think I should just rename Work.execute() to run().\n\nUnitOfWork.run() are the two that may propagate IOE, UnitOfWork.execute() and UnitOfWork.get() are those without exceptions.\n\nIf I rename UnitOfWork.execute() also to UnitOfWork.run(), the compiler won\u0027t know anymore which variant it should call (so it gets confused at call sites, and one couldn\u0027t use lambdas anymore but would have to use anyonymous inner classes).",
+      "parentUuid": "3629ed55_f1c9726e",
+      "range": {
+        "startLine": 78,
+        "startChar": 1,
+        "endLine": 81,
+        "endChar": 18
+      },
+      "revId": "cbac141856f0c5a453f490c3ca1e885e08027be3",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
     }
   ]
 }
