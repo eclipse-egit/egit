@@ -59,6 +59,8 @@ import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.StyledText;
 import org.eclipse.swt.dnd.Clipboard;
 import org.eclipse.swt.dnd.TextTransfer;
+import org.eclipse.swt.events.KeyAdapter;
+import org.eclipse.swt.events.KeyEvent;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.widgets.Button;
@@ -409,6 +411,15 @@ public abstract class AbstractConfigureRemoteDialog
 		});
 
 		specViewer.addDoubleClickListener(event -> doChangeRefSpec());
+
+		specViewer.getTable().addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyPressed(KeyEvent e) {
+				if (e.keyCode == SWT.DEL) {
+					doDeleteRefSpecs();
+				}
+			}
+		});
 
 		// Initial action enablement (no selection in the specViewer):
 		copyRefSpecAction.setEnabled(false);
