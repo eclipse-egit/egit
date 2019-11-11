@@ -17,8 +17,6 @@
  *******************************************************************************/
 package org.eclipse.egit.ui.internal.dialogs;
 
-import static org.eclipse.egit.ui.internal.CommonUtils.STRING_ASCENDING_COMPARATOR;
-
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -34,6 +32,7 @@ import org.eclipse.egit.ui.internal.repository.tree.BranchHierarchyNode;
 import org.eclipse.egit.ui.internal.repository.tree.LocalNode;
 import org.eclipse.egit.ui.internal.repository.tree.RefNode;
 import org.eclipse.egit.ui.internal.repository.tree.RemoteTrackingNode;
+import org.eclipse.egit.ui.internal.repository.tree.RepositoryTreeNodeSorter;
 import org.eclipse.egit.ui.internal.repository.tree.RepositoryTreeNode;
 import org.eclipse.egit.ui.internal.repository.tree.RepositoryTreeNodeType;
 import org.eclipse.egit.ui.internal.repository.tree.TagNode;
@@ -52,7 +51,6 @@ import org.eclipse.jface.viewers.SelectionChangedEvent;
 import org.eclipse.jface.viewers.StructuredSelection;
 import org.eclipse.jface.viewers.TreeViewer;
 import org.eclipse.jface.viewers.Viewer;
-import org.eclipse.jface.viewers.ViewerComparator;
 import org.eclipse.jface.window.Window;
 import org.eclipse.jgit.lib.BranchConfig;
 import org.eclipse.jgit.lib.ConfigConstants;
@@ -333,8 +331,7 @@ public abstract class AbstractBranchSelectionDialog extends TitleAreaDialog {
 			}
 		});
 
-		branchTree.setComparator(new ViewerComparator(
-				STRING_ASCENDING_COMPARATOR));
+		branchTree.setComparator(new RepositoryTreeNodeSorter());
 
 		createCustomArea(composite);
 

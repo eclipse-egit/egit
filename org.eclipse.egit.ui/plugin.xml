@@ -3181,7 +3181,7 @@
             </or>
          </enablement>
          <commonSorter
-               class="org.eclipse.egit.ui.internal.repository.tree.RepositoriesViewSorter">
+               class="org.eclipse.egit.ui.internal.repository.tree.RepositoryTreeNodeSorter">
          </commonSorter>
          <dropAssistant
                class="org.eclipse.egit.ui.internal.repository.DropAdapterAssistant"

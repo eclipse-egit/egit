@@ -17,18 +17,19 @@ import java.text.Collator;
 import org.eclipse.jface.viewers.Viewer;
 
 /**
- * Sorter for the Git Repositories View.
+ * Sorter for {@link RepositoryTreeNode}s, used in the Git Repositories View as
+ * well as in different branch selection dialogs.
  */
 // TODO extend ViewerComparator as soon as minimum platform version is 4.7
 // (Oxygen)
 @SuppressWarnings("deprecation") // used as navigator commonSorter extension
-public class RepositoriesViewSorter extends
+public class RepositoryTreeNodeSorter extends
 		org.eclipse.jface.viewers.ViewerSorter {
 
 	/**
 	 * Default constructor
 	 */
-	public RepositoriesViewSorter() {
+	public RepositoryTreeNodeSorter() {
 		this(null);
 	}
 
@@ -36,7 +37,7 @@ public class RepositoriesViewSorter extends
 	 * Construct sorter from collator
 	 * @param collator to be used for locale-sensitive sorting
 	 */
-	public RepositoriesViewSorter(Collator collator) {
+	public RepositoryTreeNodeSorter(Collator collator) {
 		super(collator);
 	}
 
