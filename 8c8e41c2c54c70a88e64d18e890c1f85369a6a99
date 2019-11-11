@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f087b245_1e868d4b",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/RepositoryStateCache.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 440
+      },
+      "writtenOn": "2019-11-11T19:28:34Z",
+      "side": 1,
+      "message": "Sonar always tells me that an EnumMap is more efficient, but I don\u0027t really know it myself. Also if I get it right, your inner instances are concurrent maps, and I guess there is no crossover of an enum-and-concurrent map, right?",
+      "range": {
+        "startLine": 42,
+        "startChar": 24,
+        "endLine": 42,
+        "endChar": 44
+      },
+      "revId": "8c8e41c2c54c70a88e64d18e890c1f85369a6a99",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
