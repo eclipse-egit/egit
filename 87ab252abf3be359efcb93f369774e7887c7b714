@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2f55a3bb_1946a28d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/dialogs/AbstractBranchSelectionDialog.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 334,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2019-11-12T18:09:27Z",
+      "side": 1,
+      "message": "Perhaps rename to RepositoryTreeNodeSorter? It\u0027s not view-specific. Or perhaps RepositoryTreeNodeComparator, even if right now it still must extend ViewSorter?",
+      "range": {
+        "startLine": 334,
+        "startChar": 31,
+        "endLine": 334,
+        "endChar": 53
+      },
+      "revId": "87ab252abf3be359efcb93f369774e7887c7b714",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
