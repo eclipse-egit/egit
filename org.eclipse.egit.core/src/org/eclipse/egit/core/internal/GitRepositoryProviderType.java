@@ -15,7 +15,11 @@ package org.eclipse.egit.core.internal;
 
 import java.io.IOException;
 
+import org.eclipse.core.runtime.IProgressMonitor;
+import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.NullProgressMonitor;
+import org.eclipse.core.runtime.Status;
+import org.eclipse.core.runtime.jobs.Job;
 import org.eclipse.egit.core.Activator;
 import org.eclipse.egit.core.GitProjectSetCapability;
 import org.eclipse.egit.core.synchronize.GitResourceVariantTreeSubscriber;
@@ -32,7 +36,7 @@ import org.eclipse.team.core.subscribers.Subscriber;
  */
 public class GitRepositoryProviderType extends RepositoryProviderType {
 
-	private final Subscriber subscriber;
+	private Subscriber subscriber;
 
 	/**
 	 * Creates {@link GitRepositoryProviderType}
@@ -53,14 +57,41 @@ public class GitRepositoryProviderType extends RepositoryProviderType {
 			// do nothing
 		}
 
-		GitResourceVariantTreeSubscriber gitSubscriber = new GitResourceVariantTreeSubscriber(set);
-		gitSubscriber.init(new NullProgressMonitor());
+		Job initJob = new Job("Initialize Git subscriber") { //$NON-NLS-1$
+			{
+				setSystem(true);
+			}
 
-		subscriber = gitSubscriber;
+			@Override
+			protected IStatus run(IProgressMonitor monitor) {
+				GitResourceVariantTreeSubscriber gitSubscriber = new GitResourceVariantTreeSubscriber(
+						set);
+				gitSubscriber.init(new NullProgressMonitor());
+
+				subscriber = gitSubscriber;
+				return Status.OK_STATUS;
+			}
+
+			@Override
+			public boolean belongsTo(Object family) {
+				return GitRepositoryProviderType.class.equals(family);
+			}
+
+		};
+		initJob.schedule();
 	}
 
 	@Override
 	public Subscriber getSubscriber() {
+		if (subscriber == null) {
+			try {
+				Job.getJobManager().join(GitRepositoryProviderType.class,
+						new NullProgressMonitor());
+			} catch (InterruptedException e) {
+				throw new IllegalStateException(
+						"Subscriber initialization aborted"); //$NON-NLS-1$
+			}
+		}
 		return subscriber;
 	}
 
