@@ -46,6 +46,30 @@
       "revId": "87ab252abf3be359efcb93f369774e7887c7b714",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "11c4f1b5_762832bf",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/dialogs/AbstractBranchSelectionDialog.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 334,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2019-11-12T18:23:09Z",
+      "side": 1,
+      "message": "But ViewerComparator.",
+      "parentUuid": "3681fa6a_1ab61421",
+      "range": {
+        "startLine": 334,
+        "startChar": 31,
+        "endLine": 334,
+        "endChar": 53
+      },
+      "revId": "87ab252abf3be359efcb93f369774e7887c7b714",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
     }
   ]
 }
