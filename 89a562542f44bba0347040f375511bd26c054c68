@@ -1,0 +1,61 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3cae4403_d5474fc7",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/internal/GitRepositoryProviderType.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2019-11-12T11:23:12Z",
+      "side": 1,
+      "message": "Where\u0027s this constructor being called from? I just started a child Eclipse twice, once with the Synchonize perspective open, with a breakpoint in here. I did not hit that breakpoint.",
+      "revId": "89a562542f44bba0347040f375511bd26c054c68",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "bad86a30_7bc977b9",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/internal/GitRepositoryProviderType.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2019-11-12T11:23:12Z",
+      "side": 1,
+      "message": "monitor",
+      "range": {
+        "startLine": 69,
+        "startChar": 23,
+        "endLine": 69,
+        "endChar": 48
+      },
+      "revId": "89a562542f44bba0347040f375511bd26c054c68",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "f47b801c_3dc1f7eb",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/internal/GitRepositoryProviderType.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2019-11-12T11:23:12Z",
+      "side": 1,
+      "message": "How about moving the initialization simply here instead of the Job?",
+      "revId": "89a562542f44bba0347040f375511bd26c054c68",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
