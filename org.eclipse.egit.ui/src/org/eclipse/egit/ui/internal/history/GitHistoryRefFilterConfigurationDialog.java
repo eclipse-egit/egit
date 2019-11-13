@@ -10,6 +10,7 @@
  *******************************************************************************/
 package org.eclipse.egit.ui.internal.history;
 
+import java.util.List;
 import java.util.Set;
 
 import org.eclipse.egit.ui.internal.UIText;
@@ -187,7 +188,8 @@ public class GitHistoryRefFilterConfigurationDialog
 
 	private void createTable(Composite parent) {
 		configsTable = CheckboxTableViewer
-				.newCheckList(parent, SWT.BORDER | SWT.FULL_SELECTION);
+				.newCheckList(parent,
+						SWT.BORDER | SWT.FULL_SELECTION | SWT.MULTI);
 		GridData tableData = new GridData(SWT.FILL, SWT.FILL, true, true);
 		tableData.widthHint = convertHorizontalDLUsToPixels(120);
 		configsTable.getControl().setLayoutData(tableData);
@@ -330,7 +332,7 @@ public class GitHistoryRefFilterConfigurationDialog
 		removeButton.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
-				removeSelectedFilter();
+				removeSelectedFilters();
 			}
 		});
 		removeButton.setEnabled(false);
@@ -422,7 +424,8 @@ public class GitHistoryRefFilterConfigurationDialog
 	}
 
 	private void editCurrentRow() {
-		editFilter(getSelectionFromTable());
+		editFilter((RefFilter) configsTable.getStructuredSelection()
+				.getFirstElement());
 	}
 
 	private void editFilter(RefFilter filter) {
@@ -431,25 +434,28 @@ public class GitHistoryRefFilterConfigurationDialog
 		updateButtonEnablement();
 	}
 
-	private void removeSelectedFilter() {
-		RefFilter filter = getSelectionFromTable();
-		if (filter == null) {
+	private void removeSelectedFilters() {
+		IStructuredSelection selection = configsTable.getStructuredSelection();
+		if (selection.isEmpty()) {
 			return;
 		}
-		filters.remove(filter);
+		filters.removeAll(selection.toList());
 		configsTable.refresh();
 	}
 
 	private void updateButtonEnablement() {
-		RefFilter filter = getSelectionFromTable();
-		boolean writableRow = filter != null && !filter.isPreconfigured();
-		removeButton.setEnabled(writableRow);
-		editButton.setEnabled(writableRow);
-	}
-
-	private RefFilter getSelectionFromTable() {
 		IStructuredSelection selection = configsTable.getStructuredSelection();
-		return (RefFilter) selection.getFirstElement();
+		boolean allWriteable = false;
+		if (!selection.isEmpty()) {
+			List<?> elements = selection.toList();
+			allWriteable = elements.stream()
+					.allMatch(x -> x instanceof RefFilter
+							&& !((RefFilter) x).isPreconfigured());
+		}
+		removeButton.setEnabled(allWriteable);
+		editButton.setEnabled(selection.size() == 1
+				&& !((RefFilter) selection.getFirstElement())
+						.isPreconfigured());
 	}
 
 	private static class RefLableProvider extends LabelProvider
