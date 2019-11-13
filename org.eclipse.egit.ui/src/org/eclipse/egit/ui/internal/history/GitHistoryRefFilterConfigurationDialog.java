@@ -27,6 +27,7 @@ import org.eclipse.jface.viewers.IColorProvider;
 import org.eclipse.jface.viewers.IDoubleClickListener;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.viewers.LabelProvider;
+import org.eclipse.jface.viewers.StructuredSelection;
 import org.eclipse.jface.viewers.TextCellEditor;
 import org.eclipse.jface.viewers.ViewerComparator;
 import org.eclipse.jface.window.Window;
@@ -258,6 +259,7 @@ public class GitHistoryRefFilterConfigurationDialog
 				RefFilter filter = (RefFilter) ((TableItem) element).getData();
 				filter.setFilterString((String) value);
 				configsTable.refresh();
+				configsTable.reveal(filter);
 			}
 
 			@Override
@@ -311,6 +313,8 @@ public class GitHistoryRefFilterConfigurationDialog
 							dialog.getRefName());
 					filters.add(newFilter);
 					configsTable.refresh();
+					configsTable.setSelection(
+							new StructuredSelection(newFilter), true);
 				}
 			}
 		});
