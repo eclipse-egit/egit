@@ -257,7 +257,11 @@ public class GitHistoryRefFilterConfigurationDialog
 			@Override
 			public void modify(Object element, String property, Object value) {
 				RefFilter filter = (RefFilter) ((TableItem) element).getData();
+				// Remove the filter before changing the value; its hashCode
+				// depends on it!
+				filters.remove(filter);
 				filter.setFilterString((String) value);
+				filters.add(filter);
 				configsTable.refresh();
 				configsTable.reveal(filter);
 			}
