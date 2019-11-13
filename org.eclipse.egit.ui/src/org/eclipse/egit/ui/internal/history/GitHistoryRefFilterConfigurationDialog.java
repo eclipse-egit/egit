@@ -34,6 +34,8 @@ import org.eclipse.jgit.lib.Repository;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
+import org.eclipse.swt.events.ShellAdapter;
+import org.eclipse.swt.events.ShellEvent;
 import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.layout.GridData;
@@ -73,6 +75,8 @@ public class GitHistoryRefFilterConfigurationDialog
 
 	private boolean defaultsPerformed = false;
 
+	private Point minimumSize;
+
 	/**
 	 * Create a new instance of the receiver.
 	 *
@@ -91,12 +95,17 @@ public class GitHistoryRefFilterConfigurationDialog
 	protected void configureShell(Shell newShell) {
 		super.configureShell(newShell);
 		newShell.setText(UIText.GitHistoryPage_filterRefDialog_dialogTitle);
-	}
+		newShell.addShellListener(new ShellAdapter() {
 
-	@Override
-	protected Point getInitialSize() {
-		return new Point(convertHorizontalDLUsToPixels(400),
-				convertHorizontalDLUsToPixels(300));
+			@Override
+			public void shellActivated(ShellEvent e) {
+				// Prevent making the dialog too small
+				newShell.removeShellListener(this); // Only the first time
+				if (minimumSize != null) {
+					newShell.setMinimumSize(minimumSize);
+				}
+			}
+		});
 	}
 
 	@Override
@@ -143,6 +152,9 @@ public class GitHistoryRefFilterConfigurationDialog
 		actionsComposite.setBackground(composite.getBackground());
 
 		createActionCompositeButtons(actionsComposite);
+
+		composite.pack();
+		minimumSize = composite.getSize();
 
 		// Line above OK and cancel buttons
 		Label separator = new Label(parent, SWT.HORIZONTAL | SWT.SEPARATOR);
