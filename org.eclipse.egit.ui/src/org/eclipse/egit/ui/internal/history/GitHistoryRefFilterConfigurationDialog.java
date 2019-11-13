@@ -15,6 +15,8 @@ import java.util.Set;
 import org.eclipse.egit.ui.internal.UIText;
 import org.eclipse.egit.ui.internal.dialogs.AbstractBranchSelectionDialog;
 import org.eclipse.egit.ui.internal.history.RefFilterHelper.RefFilter;
+import org.eclipse.jface.layout.GridDataFactory;
+import org.eclipse.jface.layout.GridLayoutFactory;
 import org.eclipse.jface.viewers.ArrayContentProvider;
 import org.eclipse.jface.viewers.CellEditor;
 import org.eclipse.jface.viewers.CheckStateChangedEvent;
@@ -112,34 +114,18 @@ public class GitHistoryRefFilterConfigurationDialog
 	}
 
 	private Composite createUi(Composite parent) {
-		Composite container = new Composite(parent, SWT.NONE);
-		container.setLayout(new GridLayout());
+		// Using SWTDefaults gives some margin all around.
+		Composite composite = new Composite(parent, SWT.NONE);
+		GridLayoutFactory.swtDefaults().applyTo(composite);
+		GridDataFactory.fillDefaults().grab(true, true).applyTo(composite);
 
-		container.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
-		container.setFont(parent.getFont());
-
-		Composite composite = new Composite(container, SWT.NONE);
-		composite.setLayout(new GridLayout());
-		composite.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
-		composite.setBackground(container.getBackground());
-
-		Group filtersComposite = new Group(composite, SWT.NONE);
-		filtersComposite
-				.setText(
-						UIText.GitHistoryPage_filterRefDialog_filtersCompositLabel);
-
-		filtersComposite.setLayout(new GridLayout(2, false));
-		filtersComposite
-				.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
-		filtersComposite.setBackground(composite.getBackground());
-
-		fillFiltersComposite(filtersComposite);
+		createFiltersComposite(composite);
 
 		Composite actionsComposite = new Composite(composite, SWT.NONE);
 
-		actionsComposite.setLayout(new GridLayout());
-		actionsComposite
-				.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));
+		GridLayoutFactory.fillDefaults().applyTo(actionsComposite);
+		GridDataFactory.fillDefaults().align(SWT.FILL, SWT.CENTER)
+				.grab(true, false).applyTo(actionsComposite);
 		actionsComposite.setBackground(composite.getBackground());
 
 		createActionCompositeButtons(actionsComposite);
@@ -148,24 +134,39 @@ public class GitHistoryRefFilterConfigurationDialog
 		Label separator = new Label(parent, SWT.HORIZONTAL | SWT.SEPARATOR);
 		separator
 				.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));
-		return container;
+
+		return composite;
 	}
 
-	private void fillFiltersComposite(Group filtersComposite) {
+	private void createFiltersComposite(Composite parent) {
+		Group filtersComposite = new Group(parent, SWT.NONE);
+		filtersComposite.setText(
+				UIText.GitHistoryPage_filterRefDialog_filtersCompositLabel);
+
+		GridLayoutFactory.fillDefaults().numColumns(2).equalWidth(false)
+				.applyTo(filtersComposite);
+		GridDataFactory.fillDefaults().grab(true, true)
+				.applyTo(filtersComposite);
+		filtersComposite.setBackground(parent.getBackground());
+
+		// White area around the table
 		Composite tableComposite = new Composite(filtersComposite, SWT.NONE);
-		tableComposite.setLayout(new GridLayout());
-		tableComposite
-				.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
+		GridLayout borderLayout = GridLayoutFactory.swtDefaults().create();
+		tableComposite.setLayout(borderLayout);
+		GridDataFactory.fillDefaults().grab(true, true).applyTo(tableComposite);
 		tableComposite.setBackground(filtersComposite.getBackground());
 
 		createTable(tableComposite);
 
+		tableComposite.pack();
+
 		createFilterCompositeButtons(filtersComposite);
 
-		Label patternExplanation = new Label(filtersComposite,
-				SWT.CENTER | SWT.WRAP);
-		patternExplanation
-				.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));
+		Label patternExplanation = new Label(filtersComposite, SWT.WRAP);
+		GridDataFactory.fillDefaults().grab(true, false)
+				.indent(borderLayout.marginWidth, 0)
+				.hint(tableComposite.getSize().x, SWT.DEFAULT)
+				.applyTo(patternExplanation);
 		patternExplanation.setText(
 				UIText.GitHistoryPage_filterRefDialog_patternExplanation);
 	}
@@ -265,9 +266,9 @@ public class GitHistoryRefFilterConfigurationDialog
 
 	private void createFilterCompositeButtons(Composite parent) {
 		Composite buttonComposite = new Composite(parent, SWT.NONE);
-		buttonComposite.setLayout(new GridLayout());
-		buttonComposite.setLayoutData(
-				new GridData(SWT.CENTER, SWT.BEGINNING, false, false));
+		GridLayoutFactory.fillDefaults().applyTo(buttonComposite);
+		GridDataFactory.fillDefaults().align(SWT.CENTER, SWT.BEGINNING)
+				.applyTo(buttonComposite);
 
 		Button addNew = new Button(buttonComposite, SWT.PUSH);
 		addNew.setText(UIText.GitHistoryPage_filterRefDialog_button_add);
@@ -329,11 +330,9 @@ public class GitHistoryRefFilterConfigurationDialog
 
 	private void createActionCompositeButtons(Composite parent) {
 		Composite buttonComposite = new Composite(parent, SWT.NONE);
-		GridLayout layout = new GridLayout();
-		layout.numColumns = 3;
-		buttonComposite.setLayout(layout);
-		buttonComposite.setLayoutData(
-				new GridData(SWT.CENTER, SWT.BEGINNING, false, false));
+		GridLayoutFactory.swtDefaults().numColumns(3).applyTo(buttonComposite);
+		GridDataFactory.fillDefaults().align(SWT.LEFT, SWT.BEGINNING)
+				.applyTo(buttonComposite);
 
 		Button setHeadOnly = new Button(buttonComposite, SWT.PUSH);
 		setHeadOnly.setText(
