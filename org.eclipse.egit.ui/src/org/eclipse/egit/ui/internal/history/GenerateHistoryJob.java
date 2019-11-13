@@ -198,6 +198,10 @@ class GenerateHistoryJob extends Job {
 		commitToLoad = c;
 	}
 
+	void setShowHint(final RevCommit c) {
+		commitToShow = c;
+	}
+
 	int loadMoreItemsThreshold() {
 		return loadedCommits.size() - (BATCH_SIZE / 2);
 	}

@@ -2741,9 +2741,11 @@ public class GitHistoryPage extends HistoryPage implements RefsChangedListener,
 				}
 				selectedObj = newSelectedObj;
 
-				boolean headChanged = !headId.equals(currentHeadId);
-				boolean pathsChanged = pathChanged(pathFilters, paths);
 				boolean settingsChanged = updateSettings();
+				boolean pathsChanged = pathChanged(pathFilters, paths);
+				// Force a new walk and showing it only if we do show it at all.
+				boolean headChanged = !headId.equals(currentHeadId)
+						&& showsHead(db);
 				boolean fetchHeadChanged = currentShowAdditionalRefs
 						&& fetchHeadId != null
 						&& !fetchHeadId.equals(currentFetchHeadId);
@@ -2766,10 +2768,12 @@ public class GitHistoryPage extends HistoryPage implements RefsChangedListener,
 					fileDiffWalker = createFileWalker(walk, db, paths);
 
 					RevCommit toShow = null;
-					if (headChanged) {
-						toShow = toRevCommit(walk, headId);
-					} else if (fetchHeadChanged) {
-						toShow = toRevCommit(walk, fetchHeadId);
+					if (!repoChanged) {
+						if (headChanged) {
+							toShow = toRevCommit(walk, headId);
+						} else if (fetchHeadChanged) {
+							toShow = toRevCommit(walk, fetchHeadId);
+						}
 					}
 					loadInitialHistory(walk, toShow);
 				} else {
@@ -2793,6 +2797,12 @@ public class GitHistoryPage extends HistoryPage implements RefsChangedListener,
 			// for display purposes.
 			return null;
 		}
+	}
+
+	private boolean showsHead(@NonNull Repository db) {
+		return new RefFilterHelper(db).getRefFilters().stream()
+				.anyMatch(f -> f.isSelected()
+						&& Constants.HEAD.equals(f.getFilterString()));
 	}
 
 	/**
@@ -3220,7 +3230,7 @@ public class GitHistoryPage extends HistoryPage implements RefsChangedListener,
 		job.setRule(pageSchedulingRule);
 		job.setLoadHint(INITIAL_ITEM);
 		if (toShow != null) {
-			job.setLoadHint(toShow);
+			job.setShowHint(toShow);
 		}
 		if (trace)
 			GitTraceLocation.getTrace().trace(
