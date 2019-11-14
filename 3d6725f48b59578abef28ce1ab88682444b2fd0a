@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4c3c1315_4082db6d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/staging/StagingView.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1427,
+      "author": {
+        "id": 440
+      },
+      "writtenOn": "2019-11-14T06:33:32Z",
+      "side": 1,
+      "message": "It would also be possible to write the complete method as\n\n  return Optional.ofNullable(getSite()).map(site -\u003e site.getPage().getActiveEditor()).map(activeEditor -\u003e getSelectionOfPart(activeEditor).orElse(null);\n\nHowever, I still prefer guard style (with explicit if-null-return), even though there are more lines (and more missing branch coverage, if measured) due to it being more explicit. Other opinions?",
+      "revId": "3d6725f48b59578abef28ce1ab88682444b2fd0a",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
