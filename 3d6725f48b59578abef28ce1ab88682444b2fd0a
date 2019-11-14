@@ -16,6 +16,24 @@
       "revId": "3d6725f48b59578abef28ce1ab88682444b2fd0a",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "efd18077_c9551cee",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/staging/StagingView.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1427,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2019-11-14T19:46:36Z",
+      "side": 1,
+      "message": "I find that rather confusing.",
+      "parentUuid": "4c3c1315_4082db6d",
+      "revId": "3d6725f48b59578abef28ce1ab88682444b2fd0a",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
     }
   ]
 }
