@@ -160,12 +160,14 @@ public class GitHistoryRefFilterConfigurationDialog
 
 		createTable(tableComposite);
 
+		tableComposite.pack();
+
 		createFilterCompositeButtons(filtersComposite);
 
-		Label patternExplanation = new Label(filtersComposite,
-				SWT.CENTER | SWT.WRAP);
-		patternExplanation
-				.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));
+		Label patternExplanation = new Label(filtersComposite, SWT.WRAP);
+		GridData data = new GridData(SWT.FILL, SWT.CENTER, true, false);
+		data.widthHint = tableComposite.getSize().x;
+		patternExplanation.setLayoutData(data);
 		patternExplanation.setText(
 				UIText.GitHistoryPage_filterRefDialog_patternExplanation);
 	}
