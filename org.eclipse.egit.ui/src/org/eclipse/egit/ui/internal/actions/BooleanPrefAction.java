@@ -48,12 +48,13 @@ public abstract class BooleanPrefAction extends Action implements
 	@Override
 	public void run() {
 		store.setValue(prefName, isChecked());
-		if (store.needsSaving())
+		if (store.needsSaving()) {
 			try {
 				store.save();
 			} catch (IOException e) {
 				Activator.handleError(e.getMessage(), e, false);
 			}
+		}
 	}
 
 	/**
@@ -66,7 +67,12 @@ public abstract class BooleanPrefAction extends Action implements
 	public void propertyChange(final PropertyChangeEvent event) {
 		if (prefName.equals(event.getProperty())) {
 			setChecked(store.getBoolean(prefName));
-			apply(isChecked());
+			try {
+				apply(isChecked());
+			} catch (RuntimeException e) {
+				Activator.handleError("Error during preference change handler", //$NON-NLS-1$
+						e, false);
+			}
 		}
 	}
 

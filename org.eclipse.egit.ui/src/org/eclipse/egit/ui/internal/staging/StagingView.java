@@ -1424,7 +1424,11 @@ public class StagingView extends ViewPart
 	}
 
 	private StructuredSelection getSelectionOfActiveEditor() {
-		IEditorPart activeEditor = getSite().getPage().getActiveEditor();
+		final IWorkbenchPartSite site = getSite();
+		if (site == null) {
+			return null;
+		}
+		IEditorPart activeEditor = site.getPage().getActiveEditor();
 		if (activeEditor == null) {
 			return null;
 		}
