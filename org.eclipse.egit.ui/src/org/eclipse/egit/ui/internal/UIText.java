@@ -676,7 +676,7 @@ public class UIText extends NLS {
 	public static String GitHistoryPage_filterRefDialog_dialogTitle;
 
 	/** */
-	public static String GitHistoryPage_filterRefDialog_filtersCompositLabel;
+	public static String GitHistoryPage_filterRefDialog_filtersCompositeLabel;
 
 	/** */
 	public static String GitHistoryPage_filterRefDialog_patternExplanation;
