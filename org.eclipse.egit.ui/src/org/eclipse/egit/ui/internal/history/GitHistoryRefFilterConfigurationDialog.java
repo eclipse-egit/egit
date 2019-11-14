@@ -154,7 +154,7 @@ public class GitHistoryRefFilterConfigurationDialog
 	private void createFiltersComposite(Composite parent) {
 		Group filtersComposite = new Group(parent, SWT.NONE);
 		filtersComposite.setText(
-				UIText.GitHistoryPage_filterRefDialog_filtersCompositLabel);
+				UIText.GitHistoryPage_filterRefDialog_filtersCompositeLabel);
 
 		GridLayoutFactory.fillDefaults().numColumns(2).equalWidth(false)
 				.applyTo(filtersComposite);
@@ -194,7 +194,7 @@ public class GitHistoryRefFilterConfigurationDialog
 
 		configsTable.setContentProvider(ArrayContentProvider.getInstance());
 
-		configsTable.setLabelProvider(new RefLableProvider());
+		configsTable.setLabelProvider(new RefLabelProvider());
 
 		configsTable.setComparator(new ViewerComparator() {
 			@Override
@@ -454,7 +454,7 @@ public class GitHistoryRefFilterConfigurationDialog
 						.isPreconfigured());
 	}
 
-	private static class RefLableProvider extends LabelProvider
+	private static class RefLabelProvider extends LabelProvider
 			implements IColorProvider {
 
 		@Override
