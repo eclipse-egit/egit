@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4cfb25d0_89a9e21c",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/repository/RepositoryTreeNodeWorkbenchAdapter.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 231,
+      "author": {
+        "id": 440
+      },
+      "writtenOn": "2019-11-16T07:57:20Z",
+      "side": 1,
+      "message": "We can remove this, add the 4 missing labels, and throw an IllegalStateException outside the switch. That way the compiler would tell us, if we miss another case in the future. I always use that technique at work and it saved us several times when extending enums.\n\nWhat do you think? Should we use that in egit code, too? If so, we could introduce it independently of your change.",
+      "range": {
+        "startLine": 230,
+        "startChar": 0,
+        "endLine": 231,
+        "endChar": 36
+      },
+      "revId": "68ac902d7a496b34fcf26004a501c03f60d39a85",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "91c7392b_d7d9495c",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/repository/tree/RepositoryTreeNode.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 179,
+      "author": {
+        "id": 440
+      },
+      "writtenOn": "2019-11-16T07:57:20Z",
+      "side": 1,
+      "message": "Independent of your change: I find this implementation generally confusing. If I get it right, the basic idea is to calculate the hash based on the type of myObject. So why don\u0027t we actually just write that?\n\n  if (myObject instanceof Repository) {\n    result \u003d ...\n  } else if (myObject instanceof Ref) {\n    // handle ADDITONALREF specially\n    result \u003d ...\n  } else if (myObject instanceof File) {\n    ...\n  } else {\n    ...\n  }\n\nThat would avoid the somewhat hard check of whether all enum cases are considered.",
+      "range": {
+        "startLine": 173,
+        "startChar": 0,
+        "endLine": 179,
+        "endChar": 13
+      },
+      "revId": "68ac902d7a496b34fcf26004a501c03f60d39a85",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
