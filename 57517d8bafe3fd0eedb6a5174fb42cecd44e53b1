@@ -22,6 +22,30 @@
       "revId": "57517d8bafe3fd0eedb6a5174fb42cecd44e53b1",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7df00635_5fd3e35b",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/repository/RepositoryTreeNodeDecorator.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 275,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2019-11-16T10:35:30Z",
+      "side": 1,
+      "message": "Right. The call isn\u0027t costly; it looks at the IndexDiffCacheEntry. But would be good anyhow.\n\nDone.",
+      "parentUuid": "da1c34ec_c1a0223a",
+      "range": {
+        "startLine": 273,
+        "startChar": 4,
+        "endLine": 275,
+        "endChar": 5
+      },
+      "revId": "57517d8bafe3fd0eedb6a5174fb42cecd44e53b1",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
     }
   ]
 }
