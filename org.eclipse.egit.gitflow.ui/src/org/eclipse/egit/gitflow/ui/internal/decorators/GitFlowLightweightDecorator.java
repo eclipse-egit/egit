@@ -23,6 +23,7 @@ import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.jface.viewers.IDecoration;
 import org.eclipse.jface.viewers.ILightweightLabelDecorator;
 import org.eclipse.jface.viewers.LabelProvider;
+import org.eclipse.jgit.lib.Repository;
 import org.eclipse.swt.graphics.ImageData;
 import org.eclipse.ui.PlatformUI;
 
@@ -61,8 +62,12 @@ public class GitFlowLightweightDecorator extends LabelProvider implements
 		if (element instanceof GitFlowRepository) {
 			config = ((GitFlowRepository) element).getConfig();
 		} else if (element instanceof RepositoryNode) {
-			config = new GitFlowConfig(DecoratorRepositoryStateCache.INSTANCE
-					.getConfig(((RepositoryNode) element).getRepository()));
+			Repository repository = ((RepositoryNode) element).getRepository();
+			if (repository != null) {
+				config = new GitFlowConfig(
+						DecoratorRepositoryStateCache.INSTANCE
+								.getConfig(repository));
+			}
 		}
 		try {
 			if (config != null) {
