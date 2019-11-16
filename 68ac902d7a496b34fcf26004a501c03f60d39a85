@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "0d2339da_586a0603",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/repository/RepositoryTreeNodeWorkbenchAdapter.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 231,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2019-11-16T16:28:29Z",
+      "side": 1,
+      "message": "Sounds good.",
+      "parentUuid": "4cfb25d0_89a9e21c",
+      "range": {
+        "startLine": 230,
+        "startChar": 0,
+        "endLine": 231,
+        "endChar": 36
+      },
+      "revId": "68ac902d7a496b34fcf26004a501c03f60d39a85",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "91c7392b_d7d9495c",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/repository/tree/RepositoryTreeNode.java",
         "patchSetId": 2
@@ -36,6 +60,30 @@
       "writtenOn": "2019-11-16T07:57:20Z",
       "side": 1,
       "message": "Independent of your change: I find this implementation generally confusing. If I get it right, the basic idea is to calculate the hash based on the type of myObject. So why don\u0027t we actually just write that?\n\n  if (myObject instanceof Repository) {\n    result \u003d ...\n  } else if (myObject instanceof Ref) {\n    // handle ADDITONALREF specially\n    result \u003d ...\n  } else if (myObject instanceof File) {\n    ...\n  } else {\n    ...\n  }\n\nThat would avoid the somewhat hard check of whether all enum cases are considered.",
+      "range": {
+        "startLine": 173,
+        "startChar": 0,
+        "endLine": 179,
+        "endChar": 13
+      },
+      "revId": "68ac902d7a496b34fcf26004a501c03f60d39a85",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1556f0f6_7764608e",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/repository/tree/RepositoryTreeNode.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 179,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2019-11-16T16:28:29Z",
+      "side": 1,
+      "message": "It\u0027s probably not written that way because it uses these enum switches elsewhere. Don\u0027t know why it\u0027s written that way at all; it\u0027s not very object-oriented. Why doesn\u0027t each subclass implement equals \u0026 hashcode as needed? To capture commonalities, one could have abstract classes in the hierarchy.\n\ncompareTo is also a bit strange; probably doesn\u0027t always always agree with equals. (Not sure, didn\u0027t check.) Doesn\u0027t matter since it\u0027s used only for sorting, but having that in a separate comparator would be nicer.\n\nThe content provider sorts anyway IIRC. Maybe we could drop that if all viewers showing these nodes got proper ViewerComparators.",
+      "parentUuid": "91c7392b_d7d9495c",
       "range": {
         "startLine": 173,
         "startChar": 0,
