@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "743e9ea1_272156b8",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/repository/RepositoriesView.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1187,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2019-11-16T19:37:10Z",
+      "side": 1,
+      "message": "How about here instead of the above loop\n\n  CommonViewer viewer \u003d getCommonViewer();\n  if (currentNode \u003d\u003d null) {\n    return null;\n  } else if (Arrays.stream(viewer.getFilters())\n      .anyMatch(filter -\u003e !filter\n        .select(viewer, currentNode.getParent(), currentNode))) {\n    return currentNode.getParent();\n  }\n\nSeems to me that the changes in the other two classes are then not needed.",
+      "range": {
+        "startLine": 1185,
+        "startChar": 0,
+        "endLine": 1187,
+        "endChar": 3
+      },
+      "revId": "3635371f27e1fce6643d46d83a218a8f757e7ab2",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
