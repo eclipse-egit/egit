@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "da1c34ec_c1a0223a",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/repository/RepositoryTreeNodeDecorator.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 275,
+      "author": {
+        "id": 440
+      },
+      "writtenOn": "2019-11-16T07:32:22Z",
+      "side": 1,
+      "message": "Independent of your change: Don\u0027t know if the hasChanges call is costly. If so, it could be optimized further by using \"!markGroupDirty \u0026\u0026 RepoUtil.hashChanges\" in the condition, to call it for at most one changed repository.",
+      "range": {
+        "startLine": 273,
+        "startChar": 4,
+        "endLine": 275,
+        "endChar": 5
+      },
+      "revId": "57517d8bafe3fd0eedb6a5174fb42cecd44e53b1",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
