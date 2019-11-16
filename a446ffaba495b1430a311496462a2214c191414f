@@ -22,6 +22,30 @@
       "revId": "a446ffaba495b1430a311496462a2214c191414f",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "85815ac2_5c24600b",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/repository/tree/RepositoryTreeNodeSorter.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2019-11-16T09:40:39Z",
+      "side": 1,
+      "message": "I don\u0027t understand what you mean. ViewerComparator takes a Comparator\u003c? super String\u003e and compares the labels. I suspect that might include decorations. ViewerSorter is deprecated and used here only because we\u0027re still using Neon as baseline, which cannot accept a ViewerComparator in the extension point in plugin.xml.\n\nAn alternative might be to simply drop the whole category implementation. RepositoryTreeNode.compareTo() enforces the enum order anyway.",
+      "parentUuid": "5a2327df_b85afeee",
+      "range": {
+        "startLine": 70,
+        "startChar": 0,
+        "endLine": 77,
+        "endChar": 3
+      },
+      "revId": "a446ffaba495b1430a311496462a2214c191414f",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
     }
   ]
 }
