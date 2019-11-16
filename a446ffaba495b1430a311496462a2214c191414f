@@ -46,6 +46,30 @@
       "revId": "a446ffaba495b1430a311496462a2214c191414f",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a5b60f8b_305d439b",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/repository/tree/RepositoryTreeNodeSorter.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 440
+      },
+      "writtenOn": "2019-11-16T12:04:43Z",
+      "side": 1,
+      "message": "You are of course right. I missed the String type for the nested comparator, so my suggestion doesn\u0027t make sense.",
+      "parentUuid": "85815ac2_5c24600b",
+      "range": {
+        "startLine": 70,
+        "startChar": 0,
+        "endLine": 77,
+        "endChar": 3
+      },
+      "revId": "a446ffaba495b1430a311496462a2214c191414f",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
     }
   ]
 }
