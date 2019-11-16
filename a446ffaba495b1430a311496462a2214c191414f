@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5a2327df_b85afeee",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/repository/tree/RepositoryTreeNodeSorter.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 440
+      },
+      "writtenOn": "2019-11-16T07:21:21Z",
+      "side": 1,
+      "message": "If we move the existing code into a nested comparator instance which we use in the 2 constructor calls and delete this method, then there is no need to fix the categories, since the super implementation is used again.\n\nI would favor that alternative, since it avoids the code duplication that you introduce for the categories call. And it seems to be the \"intended way\" of using the ViewerComparator API. Or am I missing something else which prohibits that alternative?",
+      "range": {
+        "startLine": 70,
+        "startChar": 0,
+        "endLine": 77,
+        "endChar": 3
+      },
+      "revId": "a446ffaba495b1430a311496462a2214c191414f",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
