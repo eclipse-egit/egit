@@ -399,6 +399,7 @@ public class GitHistoryRefFilterConfigurationDialog
 
 	@Override
 	protected void okPressed() {
+		getButton(OK).setFocus(); // Apply possibly open cell editor
 		helper.setRefFilters(filters);
 		if (defaultsPerformed) {
 			helper.resetLastSelectionStateToDefault();
