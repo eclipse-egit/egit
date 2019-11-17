@@ -3116,6 +3116,21 @@
             </with>
          </activeWhen>
       </handler>
+       <handler
+            commandId="org.eclipse.egit.ui.RepositoriesViewCollapseWorkingTree">
+         <class
+               class="org.eclipse.egit.ui.internal.repository.tree.command.CollapseWorkingTreeCommand">
+         </class>
+         <activeWhen>
+            <iterate>
+               <or>
+                  <instanceof value="org.eclipse.egit.ui.internal.repository.tree.FileNode" />
+                  <instanceof value="org.eclipse.egit.ui.internal.repository.tree.FolderNode" />
+                  <instanceof value="org.eclipse.egit.ui.internal.repository.tree.WorkingDirNode" />
+               </or>
+            </iterate>
+         </activeWhen>
+      </handler>
    </extension>
    <extension
          point="org.eclipse.ui.views">
@@ -6029,6 +6044,12 @@
             id="org.eclipse.egit.ui.RepositoriesViewDelete"
             name="%DeleteRepositoryCommand.name">
       </command>
+       <command
+            categoryId="org.eclipse.egit.ui.commandCategory"
+            id="org.eclipse.egit.ui.RepositoriesViewCollapseWorkingTree"
+            name="%RepoViewCollapseWorktreeCommand.label">
+            description="%RepoViewCollapseWorktreeCommand.description">
+      </command>
       <command
             categoryId="org.eclipse.egit.ui.commandCategory"
             id="org.eclipse.egit.ui.RepositoriesCreateGroup"
@@ -6793,6 +6814,12 @@
             contextId="org.eclipse.egit.ui.RepositoriesView.SingleRepository"
             schemeId="org.eclipse.ui.defaultAcceleratorConfiguration"
             sequence="F2">
+      </key>
+       <key
+            commandId="org.eclipse.egit.ui.RepositoriesViewCollapseWorkingTree"
+            contextId="org.eclipse.egit.ui.RepositoriesView"
+            schemeId="org.eclipse.ui.defaultAcceleratorConfiguration"
+            sequence="M1+ARROW_LEFT">
       </key>
    </extension>
    <extension
