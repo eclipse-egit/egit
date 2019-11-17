@@ -18,6 +18,7 @@
  * Copyright (C) 2015, Denis Zygann <d.zygann@web.de>
  * Copyright (C) 2016, Lars Vogel <Lars.Vogel@vogella.com>
  * Copyright (C) 2017, Wim Jongman <wim.jongman@remainsoftware.com> bug 358152
+ * Copyright (C) 2019, Simon Muschel <smuschel@gmx.de> Bug 451087
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License 2.0
@@ -5235,6 +5236,9 @@ public class UIText extends NLS {
 
 	/** */
 	public static String SwitchToMenu_OtherMenuLabel;
+
+	/** */
+	public static String SwitchToMenu_CommitMenuLabel;
 
 	/** */
 	public static String GitMergeEditorInput_CalculatingDiffTaskName;
