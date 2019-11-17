@@ -136,14 +136,8 @@ public class GitResourceVariantTreeTest extends GitTestCase {
 			// then
 			IResource[] roots = grvt.roots();
 			// sort in order to be able to assert the project instances
-			Arrays.sort(roots, new Comparator<IResource>() {
-				@Override
-				public int compare(IResource r1, IResource r2) {
-					String path1 = r1.getFullPath().toString();
-					String path2 = r2.getFullPath().toString();
-					return path1.compareTo(path2);
-				}
-			});
+			Arrays.sort(roots, Comparator
+					.comparing(resource -> resource.getFullPath().toString()));
 			assertEquals(2, roots.length);
 			IResource actualProject = roots[0];
 			assertEquals(this.project.project, actualProject);
@@ -295,7 +289,7 @@ public class GitResourceVariantTreeTest extends GitTestCase {
 						new NullProgressMonitor());
 
 		Set<IResource> includedResource = collectResources(mappings);
-		Set<IResource> expectedIncludedResources = new HashSet<IResource>();
+		Set<IResource> expectedIncludedResources = new HashSet<>();
 		expectedIncludedResources.add(iModifiedFile);
 		expectedIncludedResources.add(iUnchangedFile);
 		expectedIncludedResources.add(iRemovedFile);
@@ -368,7 +362,7 @@ public class GitResourceVariantTreeTest extends GitTestCase {
 
 	private static Set<IResource> collectResources(ResourceMapping[] mappings)
 			throws CoreException {
-		final Set<IResource> resources = new HashSet<IResource>();
+		final Set<IResource> resources = new HashSet<>();
 		ResourceMappingContext context = ResourceMappingContext.LOCAL_CONTEXT;
 		for (ResourceMapping mapping : mappings) {
 			ResourceTraversal[] traversals = mapping.getTraversals(context,
