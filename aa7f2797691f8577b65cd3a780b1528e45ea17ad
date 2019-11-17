@@ -159,6 +159,30 @@
       "revId": "aa7f2797691f8577b65cd3a780b1528e45ea17ad",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "196f4ec9_89e7a716",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/history/RefFilterHelper.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 659,
+      "author": {
+        "id": 1179
+      },
+      "writtenOn": "2019-11-17T14:58:38Z",
+      "side": 1,
+      "message": "I think the PathMatcher we have for ignore paths (and which is reused for attributes) would work here too:\n\norg.eclipse.jgit.ignore.internal.PathMatcher.createPathMatcher(String, Character, boolean)\n\nMay be we should move it to a different, more generic name space. It will also allow more patterns to be supported.",
+      "parentUuid": "c5082209_4ca8f5c6",
+      "range": {
+        "startLine": 659,
+        "startChar": 8,
+        "endLine": 659,
+        "endChar": 43
+      },
+      "revId": "aa7f2797691f8577b65cd3a780b1528e45ea17ad",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
     }
   ]
 }
