@@ -374,8 +374,8 @@ public class HistoryViewTest extends GitRepositoriesViewTestBase {
 		SWTBotTable table = getHistoryViewTable(PROJ1);
 		int rowCount = table.rowCount();
 		assertTrue(table.rowCount() > 0);
-		assertEquals(table.getTableItem(rowCount - 1).getText(1),
-				"Initial commit");
+		assertEquals("Initial commit",
+				table.getTableItem(rowCount - 1).getText(1));
 	}
 
 	@Test
