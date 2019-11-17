@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "facd1127_163dcf8d",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/RepositoryCache.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 284,
+      "author": {
+        "id": 440
+      },
+      "writtenOn": "2019-11-17T06:42:06Z",
+      "side": 1,
+      "message": "Why is that necessary? I thought that all clients are responsible for matching pairs of open/close calls, which would mean that an artificial open would rather be a workaround for a unbalanced close call somewhere else.",
+      "range": {
+        "startLine": 282,
+        "startChar": 4,
+        "endLine": 284,
+        "endChar": 5
+      },
+      "revId": "b278d14dc9eef11f7f90158dd5fb2be9b4f88565",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
