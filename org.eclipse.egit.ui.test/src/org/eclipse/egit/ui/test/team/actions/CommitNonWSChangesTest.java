@@ -23,6 +23,7 @@ import org.eclipse.egit.ui.UIPreferences;
 import org.eclipse.egit.ui.common.LocalRepositoryTestCase;
 import org.eclipse.egit.ui.internal.UIText;
 import org.eclipse.egit.ui.internal.repository.RepositoriesView;
+import org.eclipse.egit.ui.test.ContextMenuHelper;
 import org.eclipse.egit.ui.test.TestUtil;
 import org.eclipse.jface.dialogs.IDialogConstants;
 import org.eclipse.jgit.lib.Repository;
@@ -42,6 +43,9 @@ import org.junit.runner.RunWith;
  */
 @RunWith(SWTBotJunit4ClassRunner.class)
 public class CommitNonWSChangesTest extends LocalRepositoryTestCase {
+
+	private static final TestUtil myUtil = new TestUtil();
+
 	private File repositoryFile;
 
 	private Repository repository;
@@ -122,6 +126,8 @@ public class CommitNonWSChangesTest extends LocalRepositoryTestCase {
 		TestUtil.joinJobs(JobFamilies.REPO_VIEW_REFRESH);
 		SWTBotTree tree = repoView.bot().tree();
 		TestUtil.waitUntilTreeHasNodeContainsText(bot, tree, REPO1, 10000);
-		tree.getAllItems()[0].contextMenu("Commit...").click();
+		TestUtil.navigateTo(tree, REPO1).select();
+		ContextMenuHelper.clickContextMenu(tree,
+				myUtil.getPluginLocalizedValue("RepoViewCommit.label"));
 	}
 }
