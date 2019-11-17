@@ -17,8 +17,9 @@ import org.eclipse.core.runtime.Status;
 import org.eclipse.core.runtime.jobs.ISchedulingRule;
 import org.eclipse.egit.core.Activator;
 import org.eclipse.egit.core.EclipseGitProgressTransformer;
+import org.eclipse.egit.core.RepositoryUtil;
 import org.eclipse.egit.core.internal.job.RuleUtil;
-import org.eclipse.jgit.api.Git;
+import org.eclipse.jgit.api.GarbageCollectCommand;
 import org.eclipse.jgit.api.errors.GitAPIException;
 import org.eclipse.jgit.lib.Repository;
 
@@ -41,10 +42,12 @@ public class GarbageCollectOperation implements IEGitOperation {
 	 */
 	@Override
 	public void execute(IProgressMonitor monitor) throws CoreException {
-		try (Git git = new Git(repository)) {
-			git.gc().setProgressMonitor(
+		try {
+			GarbageCollectCommand gc = RepositoryUtil
+					.getGarbageCollectCommand(repository);
+			gc.setProgressMonitor(
 					new EclipseGitProgressTransformer(monitor)).call();
-		} catch (GitAPIException e) {
+		} catch (IllegalStateException | GitAPIException e) {
 			throw new CoreException(new Status(IStatus.ERROR,
 					Activator.getPluginId(), e.getMessage(), e));
 		}

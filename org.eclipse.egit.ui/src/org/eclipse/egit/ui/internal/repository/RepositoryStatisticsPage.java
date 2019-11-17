@@ -16,10 +16,10 @@ import java.text.NumberFormat;
 import java.util.Properties;
 
 import org.eclipse.core.runtime.Adapters;
+import org.eclipse.egit.core.RepositoryUtil;
 import org.eclipse.egit.ui.Activator;
 import org.eclipse.egit.ui.internal.UIText;
 import org.eclipse.jgit.api.GarbageCollectCommand;
-import org.eclipse.jgit.api.Git;
 import org.eclipse.jgit.api.errors.GitAPIException;
 import org.eclipse.jgit.lib.Repository;
 import org.eclipse.jgit.util.SystemReader;
@@ -69,8 +69,9 @@ public class RepositoryStatisticsPage extends PropertyPage {
 		if (repo == null) {
 			return table;
 		}
-		try (Git git = new Git(repo)) {
-			GarbageCollectCommand gc = git.gc();
+		try {
+			GarbageCollectCommand gc = RepositoryUtil
+					.getGarbageCollectCommand(repo);
 			Properties stats = gc.getStatistics();
 
 			table.setLinesVisible(true);
@@ -104,7 +105,7 @@ public class RepositoryStatisticsPage extends PropertyPage {
 				table.getColumn(i).pack();
 			}
 			parent.pack();
-		} catch (GitAPIException e) {
+		} catch (IllegalStateException | GitAPIException e) {
 			Activator.handleError(e.getMessage(), e, false);
 		}
 		return table;
