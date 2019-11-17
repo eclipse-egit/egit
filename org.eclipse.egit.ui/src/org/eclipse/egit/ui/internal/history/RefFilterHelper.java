@@ -13,8 +13,8 @@ package org.eclipse.egit.ui.internal.history;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.HashMap;
-import java.util.HashSet;
+import java.util.LinkedHashMap;
+import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -143,7 +143,7 @@ public class RefFilterHelper {
 	}
 
 	private void setupMacros() {
-		macros = new HashMap<>();
+		macros = new LinkedHashMap<>();
 		macros.put(MACRO_CURRENT_BRANCH, repo -> {
 			try {
 				return repo.getBranch();
@@ -328,7 +328,7 @@ public class RefFilterHelper {
 	 * @return the set of all ref filters
 	 */
 	public Set<RefFilter> getRefFilters() {
-		Map<String, RefFilter> filters = new HashMap<>();
+		Map<String, RefFilter> filters = new LinkedHashMap<>();
 		addPreconfigueredFilters(filters);
 
 		for (String filter : getConfiguredFilters()) {
@@ -349,7 +349,7 @@ public class RefFilterHelper {
 			filters.putIfAbsent(filter, new RefFilter(filter, false));
 			filters.get(filter).setSelected(true);
 		}
-		return new HashSet<>(filters.values());
+		return new LinkedHashSet<>(filters.values());
 	}
 
 	/**
@@ -425,9 +425,10 @@ public class RefFilterHelper {
 	public Set<Ref> getMatchingRefsForSelectedRefFilters()
 			throws IOException {
 		RefDatabase db = this.repository.getRefDatabase();
-		Set<Ref> result = new HashSet<>();
+		Set<Ref> result = new LinkedHashSet<>();
 		Set<RefFilter> selectedFilters = getRefFilters().stream()
-				.filter(f -> f.isSelected()).collect(Collectors.toSet());
+				.filter(f -> f.isSelected())
+				.collect(Collectors.toCollection(LinkedHashSet::new));
 
 		for (Ref ref : db.getRefs()) {
 			TokenizedPath refPath = new TokenizedPath(ref.getName());
@@ -575,12 +576,15 @@ public class RefFilterHelper {
 	 * Representation of a ref filter
 	 */
 	public class RefFilter {
+
 		private final boolean preconfigured;
 
 		private String filterString;
 		private TokenizedPattern filterPattern;
 
-		private boolean selected = false;
+		private TokenizedPattern expandedFilterPattern;
+
+		private boolean selected;
 
 		/**
 		 * Create a ref filter as the copy of an original.
@@ -641,13 +645,20 @@ public class RefFilterHelper {
 		}
 
 		private TokenizedPattern patternWithExpandedMacros() {
+			if (expandedFilterPattern == null) {
+				expandedFilterPattern = expandMacros();
+			}
+			return expandedFilterPattern;
+		}
+
+		private TokenizedPattern expandMacros() {
 			TokenizedPattern currentPattern = filterPattern;
 			for(Map.Entry<String, Function<Repository, String>> macro : macros.entrySet()) {
-				if (currentPattern.containsPattern(macro.getKey())) {
-					String oldString = currentPattern.getPattern();
-					String macroString = macro.getKey();
+				String macroString = macro.getKey();
+				String patternString = currentPattern.getPattern();
+				if (patternString.contains(macroString)) {
 					String replacingString = macro.getValue().apply(repository);
-					String newString = oldString.replace(macroString,
+					String newString = patternString.replace(macroString,
 							replacingString);
 					currentPattern = new TokenizedPattern(newString);
 				}
@@ -694,6 +705,7 @@ public class RefFilterHelper {
 			}
 			this.filterString = filterString;
 			this.filterPattern = new TokenizedPattern(filterString);
+			this.expandedFilterPattern = null;
 		}
 
 		/**
@@ -722,6 +734,29 @@ public class RefFilterHelper {
 				return false;
 			}
 			return filterPattern.equals(((RefFilter) obj).filterPattern);
+		}
+
+		@Override
+		public String toString() {
+			StringBuilder builder = new StringBuilder();
+			builder.append("RefFilter ["); //$NON-NLS-1$
+			if (filterPattern != null) {
+				builder.append("pattern="); //$NON-NLS-1$
+				builder.append(filterPattern);
+				builder.append(", "); //$NON-NLS-1$
+				if (expandedFilterPattern != null
+						&& !expandedFilterPattern.equals(filterPattern)) {
+					builder.append("expandedPattern="); //$NON-NLS-1$
+					builder.append(expandedFilterPattern);
+					builder.append(", "); //$NON-NLS-1$
+				}
+			}
+			builder.append("preconfigured="); //$NON-NLS-1$
+			builder.append(preconfigured);
+			builder.append(", selected="); //$NON-NLS-1$
+			builder.append(selected);
+			builder.append("]"); //$NON-NLS-1$
+			return builder.toString();
 		}
 	}
 }
