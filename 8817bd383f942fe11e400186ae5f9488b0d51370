@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2a1504d9_73f1a33f",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/history/RefFilterHelper.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 147,
+      "author": {
+        "id": 440
+      },
+      "writtenOn": "2019-11-17T16:11:19Z",
+      "side": 1,
+      "message": "While I do understand that the Linked variant of Sets creates a stable order when using Sets, my immediate line of thinking to solve the stable problem would be to replace the Set by an ArrayList, both for the macros and the ref filter strings. Even if the user adds the same filter string multiple times, I would want to leave that input untouched.\n\nDo I miss some other benefits of the Set based implementation?\n\nThis is just out of curiosity, I don\u0027t request any change in the Set based implementation. :)",
+      "range": {
+        "startLine": 147,
+        "startChar": 11,
+        "endLine": 147,
+        "endChar": 28
+      },
+      "revId": "8817bd383f942fe11e400186ae5f9488b0d51370",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
