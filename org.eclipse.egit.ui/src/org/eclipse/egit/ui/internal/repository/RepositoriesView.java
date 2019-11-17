@@ -1224,10 +1224,18 @@ public class RepositoriesView extends CommonNavigator implements IShowInSource, 
 			String repoRelativePath) {
 		RepositoryTreeNode currentNode = getRepositoryChildNode(repository,
 				RepositoryTreeNodeType.WORKINGDIR);
+		CommonViewer viewer = getCommonViewer();
 		if (currentNode == null) {
 			return null;
+		} else {
+			// reveal repository in case working dir filter is applied
+			final RepositoryTreeNode workingDir = currentNode;
+			if (Arrays.stream(viewer.getFilters()).anyMatch(filter -> !filter
+					.select(viewer, workingDir.getParent(), workingDir))) {
+				return currentNode.getParent();
+			}
 		}
-		ITreeContentProvider cp = (ITreeContentProvider) getCommonViewer()
+		ITreeContentProvider cp = (ITreeContentProvider) viewer
 				.getContentProvider();
 		IPath relPath = new Path(repoRelativePath);
 
