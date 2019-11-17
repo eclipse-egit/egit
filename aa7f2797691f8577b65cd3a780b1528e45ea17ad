@@ -63,6 +63,30 @@
       "revId": "aa7f2797691f8577b65cd3a780b1528e45ea17ad",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "51b14211_c49e957c",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/history/RefFilterHelper.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 659,
+      "author": {
+        "id": 1179
+      },
+      "writtenOn": "2019-11-17T12:14:30Z",
+      "side": 1,
+      "message": "See patch set 2. Not nice but works. Since we always work/test on Linux we never seen that it actually never works on Windows.",
+      "parentUuid": "2096a3ca_5a89db73",
+      "range": {
+        "startLine": 659,
+        "startChar": 8,
+        "endLine": 659,
+        "endChar": 43
+      },
+      "revId": "aa7f2797691f8577b65cd3a780b1528e45ea17ad",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
     }
   ]
 }
