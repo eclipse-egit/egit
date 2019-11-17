@@ -42,16 +42,16 @@ public class RefFilterHelper {
 
 	private static final String ANY = "**"; //$NON-NLS-1$
 
-	private static final String REF_SEPERATOR = ":"; //$NON-NLS-1$
+	private static final String REF_SEPARATOR = ":"; //$NON-NLS-1$
 
 	private static final String MACRO_CURRENT_BRANCH = "[CURRENT-BRANCH]"; //$NON-NLS-1$
 
 	private static final String DEFAULT_SELECTED_REFS = Constants.HEAD;
 
 	private static final String DEFAULT_SELECTED_REFS_ALL_BRANCHES =
-			Constants.HEAD + REF_SEPERATOR
-			+ Constants.R_HEADS + ANY + REF_SEPERATOR
-			+ Constants.R_REMOTES + ANY + REF_SEPERATOR
+			Constants.HEAD + REF_SEPARATOR
+			+ Constants.R_HEADS + ANY + REF_SEPARATOR
+			+ Constants.R_REMOTES + ANY + REF_SEPARATOR
 			+ Constants.R_TAGS + ANY;
 
 	private final IPreferenceStore store;
@@ -99,7 +99,7 @@ public class RefFilterHelper {
 			@NonNull IPreferenceStore store) {
 		this.repository = repository;
 		this.store = store;
-		setupPreconfigueredFilters();
+		setupPreconfiguredFilters();
 		setupMacros();
 		// Just always init the repo defaults as we don't know if this repo had
 		// a helper before.
@@ -114,7 +114,7 @@ public class RefFilterHelper {
 		return newPreConfFilter(prefix + "**"); //$NON-NLS-1$
 	}
 
-	private void setupPreconfigueredFilters() {
+	private void setupPreconfiguredFilters() {
 		preconfiguredFilters = new ArrayList<>();
 		filtersForHEAD = new ArrayList<>();
 		filtersForCurrentBranch = new ArrayList<>();
@@ -125,10 +125,10 @@ public class RefFilterHelper {
 		filtersForHEAD.add(head);
 		filtersForAllBranchesAndTags.add(head);
 
-		RefFilter current_branch = newPreConfFilter(
+		RefFilter currentBranch = newPreConfFilter(
 				Constants.R_REFS + "**/" + MACRO_CURRENT_BRANCH); //$NON-NLS-1$
-		preconfiguredFilters.add(current_branch);
-		filtersForCurrentBranch.add(current_branch);
+		preconfiguredFilters.add(currentBranch);
+		filtersForCurrentBranch.add(currentBranch);
 
 		RefFilter branches = newPreConfPrefixFilter(Constants.R_HEADS);
 		preconfiguredFilters.add(branches);
@@ -180,18 +180,18 @@ public class RefFilterHelper {
 	}
 
 	private void initDefaultForRepo(String preferenceName) {
-		String repoSepcificPrefName = Activator.getDefault().getRepositoryUtil()
+		String repoSpecificPrefName = Activator.getDefault().getRepositoryUtil()
 				.getRepositorySpecificPreferenceKey(this.repository,
 						preferenceName);
 
-		store.setDefault(repoSepcificPrefName,
+		store.setDefault(repoSpecificPrefName,
 				store.getDefaultString(preferenceName));
 	}
 
 	/**
 	 * Init the default of the repo specific pref from global default. This
 	 * needs to happen after each eclipse startup (as the default is not
-	 * persistet) for each repo.
+	 * persisted) for each repo.
 	 */
 	private void initDefaultsForRepo() {
 		setDefaultSelectionBasedOnShowAllBranches();
@@ -210,16 +210,16 @@ public class RefFilterHelper {
 	 * @return the string-valued preference
 	 */
 	protected String getPreferenceString(String preferenceName) {
-		String repoSepcificPrefName = Activator.getDefault().getRepositoryUtil()
+		String repoSpecificPrefName = Activator.getDefault().getRepositoryUtil()
 				.getRepositorySpecificPreferenceKey(this.repository,
 						preferenceName);
 
-		return store.getString(repoSepcificPrefName);
+		return store.getString(repoSpecificPrefName);
 	}
 
 	private List<String> getFiltersFromPref(String preferenceName) {
 		String refFiltersString = getPreferenceString(preferenceName);
-		String[] filters = refFiltersString.split(REF_SEPERATOR);
+		String[] filters = refFiltersString.split(REF_SEPARATOR);
 
 		return Arrays.asList(filters);
 	}
@@ -237,11 +237,11 @@ public class RefFilterHelper {
 
 	private void setFiltersInPref(String preferenceName, List<String> filters,
 			boolean save) {
-		String repoSepcificPrefName = Activator.getDefault().getRepositoryUtil()
+		String repoSpecificPrefName = Activator.getDefault().getRepositoryUtil()
 				.getRepositorySpecificPreferenceKey(this.repository,
 						preferenceName);
-		String refFiltersString = String.join(REF_SEPERATOR, filters);
-		store.setValue(repoSepcificPrefName, refFiltersString);
+		String refFiltersString = String.join(REF_SEPARATOR, filters);
+		store.setValue(repoSpecificPrefName, refFiltersString);
 
 		if (save) {
 			savePreferencStoreIfNeeded();
@@ -251,7 +251,7 @@ public class RefFilterHelper {
 	/**
 	 * Get the configured ref filters from the preference store.
 	 *
-	 * @return A list of all configuered ref filter strings
+	 * @return A list of all configured ref filter strings
 	 */
 	public List<String> getConfiguredFilters() {
 		return getFiltersFromPref(UIPreferences.RESOURCEHISTORY_REF_FILTERS);
@@ -261,7 +261,7 @@ public class RefFilterHelper {
 	 * Set the configured ref filters in the preference store.
 	 *
 	 * @param filters
-	 *            The list of configuered ref filter strings to set
+	 *            The list of configured ref filter strings to set
 	 * @param save
 	 *            Whether to save the preference store if necessary
 	 */
@@ -317,7 +317,7 @@ public class RefFilterHelper {
 				filters, save);
 	}
 
-	private void addPreconfigueredFilters(Map<String, RefFilter> filters) {
+	private void addPreconfiguredFilters(Map<String, RefFilter> filters) {
 		for (RefFilter filter : preconfiguredFilters) {
 			// Don't use the existing object because selection states would be
 			// persisted immediately without calling setRefFilters.
@@ -330,7 +330,7 @@ public class RefFilterHelper {
 	 */
 	public Set<RefFilter> getRefFilters() {
 		Map<String, RefFilter> filters = new LinkedHashMap<>();
-		addPreconfigueredFilters(filters);
+		addPreconfiguredFilters(filters);
 
 		for (String filter : getConfiguredFilters()) {
 			if (filter == null || filter.isEmpty()) {
@@ -367,7 +367,7 @@ public class RefFilterHelper {
 	/**
 	 * Set the given rev filters in the preference store.
 	 * <p>
-	 * This overrides the selected and the configuered filters in the preference
+	 * This overrides the selected and the configured filters in the preference
 	 * store.
 	 * <p>
 	 *
@@ -408,10 +408,10 @@ public class RefFilterHelper {
 	 * Reset the last selection state to the default.
 	 */
 	public void resetLastSelectionStateToDefault() {
-		String repoSepcificPrefName = Activator.getDefault().getRepositoryUtil()
+		String repoSpecificPrefName = Activator.getDefault().getRepositoryUtil()
 				.getRepositorySpecificPreferenceKey(this.repository,
 						UIPreferences.RESOURCEHISTORY_LAST_SELECTED_REF_FILTERS);
-		store.setToDefault(repoSepcificPrefName);
+		store.setToDefault(repoSpecificPrefName);
 		savePreferencStoreIfNeeded();
 	}
 
@@ -624,7 +624,7 @@ public class RefFilterHelper {
 		 *            The filter string for the new ref filter; must not be
 		 *            null; must not be empty.
 		 * @param isPreconfigured
-		 *            Whether the new Filter is a preconfiguered one
+		 *            Whether the new Filter is a preconfigured one
 		 *
 		 * @throws IllegalArgumentException
 		 *             if the filter string is null or empty
