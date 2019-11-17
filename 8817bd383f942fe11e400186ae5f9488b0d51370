@@ -22,6 +22,30 @@
       "revId": "8817bd383f942fe11e400186ae5f9488b0d51370",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "baad7adf_6aa2f928",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/history/RefFilterHelper.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 147,
+      "author": {
+        "id": 1179
+      },
+      "writtenOn": "2019-11-17T16:16:06Z",
+      "side": 1,
+      "message": "I think sets make it more defensive programming style - avoiding duplicates, whether it is a bug or user input.",
+      "parentUuid": "2a1504d9_73f1a33f",
+      "range": {
+        "startLine": 147,
+        "startChar": 11,
+        "endLine": 147,
+        "endChar": 28
+      },
+      "revId": "8817bd383f942fe11e400186ae5f9488b0d51370",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
     }
   ]
 }
