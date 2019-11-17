@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (C) 2011, 2016 Mathias Kinzler <mathias.kinzler@sap.com> and others.
+ * Copyright (C) 2011, 2019 Mathias Kinzler <mathias.kinzler@sap.com> and others.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License 2.0
@@ -10,6 +10,7 @@
  *
  * Contributors:
  *    Thomas Wolf <thomas.wolf@paranor.ch> - Bug 486594
+ *    Simon Muschel <smuschel@gmx.de> - Bug 451087
  *******************************************************************************/
 package org.eclipse.egit.ui.internal.actions;
 
@@ -31,6 +32,7 @@ import org.eclipse.egit.ui.internal.UIIcons;
 import org.eclipse.egit.ui.internal.UIText;
 import org.eclipse.egit.ui.internal.branch.BranchOperationUI;
 import org.eclipse.egit.ui.internal.dialogs.CheckoutDialog;
+import org.eclipse.egit.ui.internal.history.CommitSelectionDialog;
 import org.eclipse.egit.ui.internal.repository.CreateBranchWizard;
 import org.eclipse.egit.ui.internal.selection.SelectionUtils;
 import org.eclipse.jface.action.ContributionItem;
@@ -40,6 +42,7 @@ import org.eclipse.jface.wizard.WizardDialog;
 import org.eclipse.jgit.lib.CheckoutEntry;
 import org.eclipse.jgit.lib.ConfigConstants;
 import org.eclipse.jgit.lib.Constants;
+import org.eclipse.jgit.lib.ObjectId;
 import org.eclipse.jgit.lib.Ref;
 import org.eclipse.jgit.lib.ReflogEntry;
 import org.eclipse.jgit.lib.Repository;
@@ -69,6 +72,10 @@ public class SwitchToMenu extends ContributionItem implements
 
 	private final Image checkedOutImage;
 
+	private final Image commitImage;
+
+	private final Image othersImage;
+
 	/**
 	 */
 	public SwitchToMenu() {
@@ -87,6 +94,8 @@ public class SwitchToMenu extends ContributionItem implements
 				UIIcons.CREATE_BRANCH);
 		checkedOutImage = UIIcons.getImage(pluginResources,
 				UIIcons.CHECKED_OUT_BRANCH);
+		commitImage = UIIcons.getImage(pluginResources, UIIcons.CHANGESET);
+		othersImage = UIIcons.getImage(pluginResources, UIIcons.BRANCHES);
 	}
 
 	@Override
@@ -114,9 +123,12 @@ public class SwitchToMenu extends ContributionItem implements
 
 		int itemCount = createMostActiveBranchesMenuItems(menu, repositories);
 
-		if (!isMultipleSelection(repositories) && itemCount > 0) {
+		if (!isMultipleSelection(repositories)) {
 			createSeparator(menu);
-			createOtherMenuItem(menu, repositories[0]);
+			createSwitchToCommitItem(menu, repositories[0]);
+			if (itemCount > 0) {
+				createOtherMenuItem(menu, repositories[0]);
+			}
 		}
 
 		if (itemCount == 0 && isMultipleSelection(repositories)) {
@@ -253,6 +265,7 @@ public class SwitchToMenu extends ContributionItem implements
 	private void createOtherMenuItem(Menu menu, Repository repository) {
 		MenuItem others = new MenuItem(menu, SWT.PUSH);
 		others.setText(UIText.SwitchToMenu_OtherMenuLabel);
+		others.setImage(othersImage);
 		others.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
@@ -263,6 +276,29 @@ public class SwitchToMenu extends ContributionItem implements
 							.start();
 				}
 
+			}
+		});
+	}
+
+	private void createSwitchToCommitItem(Menu menu, Repository repository) {
+		MenuItem switchToCommit = new MenuItem(menu, SWT.PUSH);
+		switchToCommit.setText(UIText.SwitchToMenu_CommitMenuLabel);
+		switchToCommit.setImage(commitImage);
+		switchToCommit.addSelectionListener(new SelectionAdapter() {
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				if (repository != null) {
+					CommitSelectionDialog dialog = new CommitSelectionDialog(
+							e.display.getActiveShell(), repository);
+					if (dialog.open() == Window.OK) {
+						ObjectId commitId = dialog.getCommitId();
+						if (commitId != null) {
+							BranchOperationUI
+									.checkout(repository, commitId.getName())
+									.start();
+						}
+					}
+				}
 			}
 		});
 	}

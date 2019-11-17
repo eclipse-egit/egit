@@ -1,5 +1,5 @@
 /******************************************************************************
- *  Copyright (c) 2014 Tasktop Technologies.
+ *  Copyright (c) 2014, 2019 Tasktop Technologies and others.
  *  All rights reserved. This program and the accompanying materials
  *  are made available under the terms of the Eclipse Public License 2.0
  *  which accompanies this distribution, and is available at
@@ -9,6 +9,7 @@
  *
  *  Contributors:
  *    Tomasz Zarna (Tasktop) - initial API and implementation
+ *    Simon Muschel <smuschel@gmx.de - Bug 451087
  *****************************************************************************/
 package org.eclipse.egit.ui.internal.actions;
 
@@ -64,8 +65,8 @@ public class SwitchToMenuTest extends LocalRepositoryTestCase {
 		switchToMenu = new SwitchToMenu();
 		handlerService = mock(IHandlerService.class);
 		IServiceLocator serviceLocator = mock(IServiceLocator.class);
-		when(serviceLocator.getService(IHandlerService.class)).thenReturn(
-				handlerService);
+		when(serviceLocator.getService(IHandlerService.class))
+				.thenReturn(handlerService);
 		switchToMenu.initialize(serviceLocator);
 	}
 
@@ -80,8 +81,7 @@ public class SwitchToMenuTest extends LocalRepositoryTestCase {
 
 	@Test
 	public void selectionNotAdaptableToRepository() {
-		mockSelection(
-				new StructuredSelection(new Object()));
+		mockSelection(new StructuredSelection(new Object()));
 
 		MenuItem[] items = fillMenu();
 
@@ -141,18 +141,20 @@ public class SwitchToMenuTest extends LocalRepositoryTestCase {
 
 		MenuItem[] items = fillMenu();
 
-		assertEquals(6, items.length);
+		assertEquals(7, items.length);
 		assertTextEquals(UIText.SwitchToMenu_NewBranchMenuLabel, items[0]);
 		assertStyleEquals(SWT.SEPARATOR, items[1]);
 		assertTextEquals("master", items[2]);
 		assertTextEquals("stable", items[3]);
 		assertStyleEquals(SWT.SEPARATOR, items[4]);
-		assertTextEquals(UIText.SwitchToMenu_OtherMenuLabel, items[5]);
+		assertTextEquals(UIText.SwitchToMenu_CommitMenuLabel, items[5]);
+		assertTextEquals(UIText.SwitchToMenu_OtherMenuLabel, items[6]);
 	}
 
 	@Test
 	public void selectionWithRepositoryHavingOver20Branches() throws Exception {
-		Repository repo = lookupRepository(createProjectAndCommitToRepository());
+		Repository repo = lookupRepository(
+				createProjectAndCommitToRepository());
 		for (int i = 0; i < SwitchToMenu.MAX_NUM_MENU_ENTRIES; i++) {
 			createBranch(repo, "refs/heads/change/" + i);
 		}
@@ -162,7 +164,7 @@ public class SwitchToMenuTest extends LocalRepositoryTestCase {
 
 		MenuItem[] items = fillMenu();
 
-		assertEquals(24, items.length);
+		assertEquals(25, items.length);
 		assertTextEquals(UIText.SwitchToMenu_NewBranchMenuLabel, items[0]);
 		assertStyleEquals(SWT.SEPARATOR, items[1]);
 		assertTextEquals("change/0", items[2]);
@@ -187,7 +189,8 @@ public class SwitchToMenuTest extends LocalRepositoryTestCase {
 		assertTextEquals("change/19", items[21]);
 		// "master" and "stable" didn't make it
 		assertStyleEquals(SWT.SEPARATOR, items[22]);
-		assertTextEquals(UIText.SwitchToMenu_OtherMenuLabel, items[23]);
+		assertTextEquals(UIText.SwitchToMenu_CommitMenuLabel, items[23]);
+		assertTextEquals(UIText.SwitchToMenu_OtherMenuLabel, items[24]);
 	}
 
 	@Test
@@ -298,7 +301,8 @@ public class SwitchToMenuTest extends LocalRepositoryTestCase {
 		PlatformUI.getWorkbench().getDisplay().syncExec(new Runnable() {
 			@Override
 			public void run() {
-				Menu menu = new Menu(new Shell(PlatformUI.getWorkbench().getDisplay()));
+				Menu menu = new Menu(
+						new Shell(PlatformUI.getWorkbench().getDisplay()));
 				switchToMenu.fill(menu, 0 /* index */);
 				items[0] = menu.getItems();
 			}
