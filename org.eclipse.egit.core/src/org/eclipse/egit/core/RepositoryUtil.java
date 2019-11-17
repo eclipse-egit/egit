@@ -43,6 +43,8 @@ import org.eclipse.egit.core.internal.indexdiff.IndexDiffData;
 import org.eclipse.egit.core.project.RepositoryMapping;
 import org.eclipse.jgit.annotations.NonNull;
 import org.eclipse.jgit.annotations.Nullable;
+import org.eclipse.jgit.api.GarbageCollectCommand;
+import org.eclipse.jgit.api.Git;
 import org.eclipse.jgit.errors.IncorrectObjectTypeException;
 import org.eclipse.jgit.lib.CheckoutEntry;
 import org.eclipse.jgit.lib.Constants;
@@ -867,5 +869,35 @@ public class RepositoryUtil {
 				.getIndexDiffCacheEntry(repository);
 		IndexDiffData data = entry != null ? entry.getIndexDiff() : null;
 		return data != null && data.hasChanges();
+	}
+
+	/**
+	 * Obtains a {@link GarbageCollectCommand} for the given repository.
+	 *
+	 * @param repository
+	 *            to garbage collect
+	 * @return the {@link GarbageCollectCommand}
+	 * @throws IllegalStateException
+	 *             if the repository cannot be garbage collected
+	 */
+	public static GarbageCollectCommand getGarbageCollectCommand(
+			@NonNull Repository repository) {
+		try (Git git = new Git(toFileRepository(repository))) {
+			return git.gc();
+		}
+	}
+
+	@SuppressWarnings("restriction")
+	private static @NonNull Repository toFileRepository(
+			@NonNull Repository repository) {
+		Repository toConvert = repository;
+		if (toConvert instanceof RepositoryHandle) {
+			toConvert = ((RepositoryHandle) toConvert).getDelegate();
+		}
+		if (toConvert instanceof org.eclipse.jgit.internal.storage.file.FileRepository) {
+			return toConvert;
+		}
+		throw new IllegalStateException(
+				"Repository is not a FileRepository: " + repository); //$NON-NLS-1$
 	}
 }
