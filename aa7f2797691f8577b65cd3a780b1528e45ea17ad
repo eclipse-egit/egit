@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f075b0ae_2def9b44",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/history/RefFilterHelper.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 652,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2019-11-17T11:27:33Z",
+      "side": 1,
+      "message": "Yep, that was my approach, too. Still calls getBranch() multiple times if there are multiple filters using that macro, but I don\u0027t think that\u0027s a concern.\n\nNote that doing this restricts the way these filters can be used. Essentially one must always create new RefFilterHelper when one wants to match, and one must never cache and re-use filters since there\u0027s no way to reset the expandedFilterPattern. (Except setting a new filter string, which would break any HashSets containing the filter.) Which fits the current usage but gives a rather fragile API.",
+      "revId": "aa7f2797691f8577b65cd3a780b1528e45ea17ad",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a09310c7_e7a0c9dd",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/history/RefFilterHelper.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 659,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2019-11-17T11:27:33Z",
+      "side": 1,
+      "message": "From just looking at the code I don\u0027t see why currentPattern.containsPattern() didn\u0027t work?",
+      "range": {
+        "startLine": 659,
+        "startChar": 8,
+        "endLine": 659,
+        "endChar": 43
+      },
+      "revId": "aa7f2797691f8577b65cd3a780b1528e45ea17ad",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
