@@ -135,6 +135,30 @@
       "revId": "aa7f2797691f8577b65cd3a780b1528e45ea17ad",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9fd3380d_6089779f",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/history/RefFilterHelper.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 659,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2019-11-17T13:07:54Z",
+      "side": 1,
+      "message": "Ack.",
+      "parentUuid": "153ba148_ab0e8b3b",
+      "range": {
+        "startLine": 659,
+        "startChar": 8,
+        "endLine": 659,
+        "endChar": 43
+      },
+      "revId": "aa7f2797691f8577b65cd3a780b1528e45ea17ad",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
     }
   ]
 }
