@@ -159,8 +159,8 @@ public class RefFilterHelper {
 		String currentDefault = store.getDefaultString(
 				UIPreferences.RESOURCEHISTORY_SELECTED_REF_FILTERS);
 
-		if (currentDefault != DEFAULT_SELECTED_REFS
-				&& currentDefault != DEFAULT_SELECTED_REFS_ALL_BRANCHES) {
+		if (!DEFAULT_SELECTED_REFS.equals(currentDefault)
+				&& !DEFAULT_SELECTED_REFS_ALL_BRANCHES.equals(currentDefault)) {
 			// The default was changed elsewhere.
 			// Probably a plugin customization.
 			// Don't overwrite it.
