@@ -16,6 +16,24 @@
       "revId": "95121bf1b402914f1832db990cd619a29e021c58",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "2eaf48a2_23398e80",
+        "filename": "org.eclipse.egit.core.test/src/org/eclipse/egit/core/synchronize/GitResourceVariantTreeTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 292,
+      "author": {
+        "id": 440
+      },
+      "writtenOn": "2019-11-17T19:07:32Z",
+      "side": 1,
+      "message": "That\u0027s a cleanup on save action, which is done automatically. If you don\u0027t want to see those in normal reviews, then we need to run a Source-\u003eCleanup on all files and commit that.\n\nShall I create such a change?",
+      "parentUuid": "fe795cfd_5df78e10",
+      "revId": "95121bf1b402914f1832db990cd619a29e021c58",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
     }
   ]
 }
