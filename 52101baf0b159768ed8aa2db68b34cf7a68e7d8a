@@ -22,6 +22,30 @@
       "revId": "52101baf0b159768ed8aa2db68b34cf7a68e7d8a",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "4d8981f2_6b17f2b7",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/repository/RepositoriesView.java",
+        "patchSetId": 15
+      },
+      "lineNbr": 635,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2019-11-18T19:45:21Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "db10f2c3_554d7682",
+      "range": {
+        "startLine": 635,
+        "startChar": 4,
+        "endLine": 635,
+        "endChar": 59
+      },
+      "revId": "52101baf0b159768ed8aa2db68b34cf7a68e7d8a",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
     }
   ]
 }
