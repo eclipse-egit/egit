@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f4be473f_30437f6d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/repository/tree/command/DeleteRepositoryGroupConfirmDialog.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 236689
+      },
+      "writtenOn": "2019-11-18T19:10:10Z",
+      "side": 1,
+      "message": "How about adding the list of groups to be deleted in the confirmation message. That way the user gets the information which groups were selected and what the effect (repositories without groups) is.\nI was thinking of initially expanding the tree as well, but for me seeing the affected groups seemed more important than the repositories.",
+      "revId": "123c9f154217782c7d9a19356967f4e276b3ecaa",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
