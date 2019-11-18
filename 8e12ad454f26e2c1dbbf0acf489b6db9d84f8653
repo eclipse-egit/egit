@@ -60,6 +60,24 @@
     },
     {
       "key": {
+        "uuid": "372cb8af_6898b20f",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/uitext.properties",
+        "patchSetId": 1
+      },
+      "lineNbr": 1882,
+      "author": {
+        "id": 587
+      },
+      "writtenOn": "2019-11-18T19:39:48Z",
+      "side": 1,
+      "message": "You\u0027re right, as long as Others come last, it\u0027s ok.",
+      "parentUuid": "d1368942_561172f8",
+      "revId": "8e12ad454f26e2c1dbbf0acf489b6db9d84f8653",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e7f2ff09_555e3ddf",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/uitext.properties",
         "patchSetId": 1
