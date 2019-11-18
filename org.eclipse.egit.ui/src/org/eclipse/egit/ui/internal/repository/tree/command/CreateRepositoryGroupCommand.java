@@ -11,6 +11,7 @@
 package org.eclipse.egit.ui.internal.repository.tree.command;
 
 import java.io.File;
+import java.text.MessageFormat;
 import java.util.List;
 import java.util.UUID;
 import java.util.stream.Collectors;
@@ -76,7 +77,9 @@ public class CreateRepositoryGroupCommand
 						return UIText.RepositoriesView_RepoGroup_EmptyNameError;
 					}
 					if (groupsUtil.groupExists(name.trim())) {
-						return UIText.RepositoryGroups_DuplicateGroupNameError;
+						return MessageFormat.format(
+								UIText.RepositoryGroups_DuplicateGroupNameError,
+								name.trim());
 					}
 					return null;
 				});
