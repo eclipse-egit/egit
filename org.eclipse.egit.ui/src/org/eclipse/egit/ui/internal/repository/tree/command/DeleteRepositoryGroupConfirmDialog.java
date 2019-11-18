@@ -24,6 +24,7 @@ import org.eclipse.egit.ui.internal.repository.tree.RepositoryTreeNode;
 import org.eclipse.jface.dialogs.IDialogConstants;
 import org.eclipse.jface.dialogs.TitleAreaDialog;
 import org.eclipse.jface.layout.GridDataFactory;
+import org.eclipse.jface.viewers.AbstractTreeViewer;
 import org.eclipse.jface.viewers.ITreeContentProvider;
 import org.eclipse.jface.viewers.TreeViewer;
 import org.eclipse.jface.viewers.Viewer;
@@ -80,6 +81,7 @@ public class DeleteRepositoryGroupConfirmDialog extends TitleAreaDialog {
 		groupsViewer.setLabelProvider(new RepositoryTreeNodeLabelProvider());
 		groupsViewer.setContentProvider(
 				new DeleteRepositoryGroupTreeContentProvider());
+		groupsViewer.setAutoExpandLevel(AbstractTreeViewer.ALL_LEVELS);
 		groupsViewer.setInput(groupsToDelete);
 		dontShowAgain = new Button(main, SWT.CHECK);
 		dontShowAgain.setText(UIText.RepositoriesView_RepoGroup_DeleteDontShowAgain);
