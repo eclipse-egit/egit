@@ -5091,6 +5091,9 @@ public class UIText extends NLS {
 	public static String RepositoryStatistics_SpaceNeededOnFilesystem;
 
 	/** */
+	public static String RepositoryStatistics_unknown;
+
+	/** */
 	public static String RevertFailureDialog_Message;
 
 	/** */

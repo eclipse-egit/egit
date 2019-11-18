@@ -112,7 +112,12 @@ public class RepositoryStatisticsPage extends PropertyPage {
 	}
 
 	private String getStatsAsString(Properties stats, String key) {
-		return bigIntFmt.format(firstNonNull(stats.get(key), "")); //$NON-NLS-1$
+		try {
+			return bigIntFmt.format(firstNonNull(stats.get(key), "")); //$NON-NLS-1$
+		} catch (IllegalArgumentException e) {
+			Activator.handleError(e.getMessage(), e, false);
+			return UIText.RepositoryStatistics_unknown;
+		}
 	}
 
 	private static long getStatsAsLong(Properties stats, String key) {
