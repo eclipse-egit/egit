@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "874b0573_1afed253",
+        "filename": "org.eclipse.egit.ui/plugin.properties",
+        "patchSetId": 1
+      },
+      "lineNbr": 269,
+      "author": {
+        "id": 440
+      },
+      "writtenOn": "2019-11-18T17:49:41Z",
+      "side": 1,
+      "message": "This is not completely consistent even in egit itself, but we should use infinitive here, that is \"Collapse\". That is what the majority of commands uses as description.",
+      "range": {
+        "startLine": 269,
+        "startChar": 54,
+        "endLine": 269,
+        "endChar": 55
+      },
+      "revId": "431c42b64090dc1f2d019f11d0437cab48f042c8",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a9014ff9_12463f2e",
+        "filename": "org.eclipse.egit.ui/plugin.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 3128,
+      "author": {
+        "id": 440
+      },
+      "writtenOn": "2019-11-18T17:49:41Z",
+      "side": 1,
+      "message": "For completeness, it should also be available on the working tree node itself. If users get used to the new command, they may want to use it there, too, instead of using only cursor_left.",
+      "range": {
+        "startLine": 3127,
+        "startChar": 17,
+        "endLine": 3128,
+        "endChar": 96
+      },
+      "revId": "431c42b64090dc1f2d019f11d0437cab48f042c8",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "8382a04d_b10615a4",
+        "filename": "org.eclipse.egit.ui/plugin.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 6822,
+      "author": {
+        "id": 440
+      },
+      "writtenOn": "2019-11-18T17:49:41Z",
+      "side": 1,
+      "message": "Just checked on Windows, and there is no conflict, not even without the context. Not sure if this key is bound on other operating systems.",
+      "range": {
+        "startLine": 6822,
+        "startChar": 22,
+        "endLine": 6822,
+        "endChar": 35
+      },
+      "revId": "431c42b64090dc1f2d019f11d0437cab48f042c8",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "386ef51d_1c78ec5b",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/repository/tree/command/CollapseWorkingTreeCommand.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 440
+      },
+      "writtenOn": "2019-11-18T17:49:41Z",
+      "side": 1,
+      "message": "We try to use lambdas and method references in all new code.\n\n  .map(this::getWorkingDirParent).filter(Objects::nonNull)",
+      "range": {
+        "startLine": 36,
+        "startChar": 4,
+        "endLine": 36,
+        "endChar": 60
+      },
+      "revId": "431c42b64090dc1f2d019f11d0437cab48f042c8",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
