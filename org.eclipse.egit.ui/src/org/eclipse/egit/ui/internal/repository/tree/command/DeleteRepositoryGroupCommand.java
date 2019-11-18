@@ -55,7 +55,7 @@ public class DeleteRepositoryGroupCommand
 				DeleteRepositoryGroupConfirmDialog confirmDelete = new DeleteRepositoryGroupConfirmDialog(
 						getShell(event), groupsNodes);
 				delete = confirmDelete.open() == Window.OK;
-				if (!confirmDelete.showAgain()) {
+				if (delete && !confirmDelete.showAgain()) {
 					store.setValue(UIPreferences.SHOW_DELETE_REPO_GROUP_WARNING,
 							false);
 				}
