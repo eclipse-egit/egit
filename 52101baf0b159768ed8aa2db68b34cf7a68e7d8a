@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "db10f2c3_554d7682",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/repository/RepositoriesView.java",
+        "patchSetId": 15
+      },
+      "lineNbr": 635,
+      "author": {
+        "id": 440
+      },
+      "writtenOn": "2019-11-18T18:53:38Z",
+      "side": 1,
+      "message": "This needs the same fix as in my change https://git.eclipse.org/r/#/c/152889/1/org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/repository/tree/command/CreateRepositoryGroupCommand.java",
+      "range": {
+        "startLine": 635,
+        "startChar": 4,
+        "endLine": 635,
+        "endChar": 59
+      },
+      "revId": "52101baf0b159768ed8aa2db68b34cf7a68e7d8a",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
