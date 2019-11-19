@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "18c9f77e_ef01b2fd",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/repository/tree/RepositoryTreeNode.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 407,
+      "author": {
+        "id": 236689
+      },
+      "writtenOn": "2019-11-19T14:54:16Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "092bb77c_d42f40f5",
+      "range": {
+        "startLine": 407,
+        "startChar": 19,
+        "endLine": 407,
+        "endChar": 24
+      },
+      "revId": "684b61f3616abe6e2185b3e28f46364494c034b2",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2856d007_e62e1e34",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/repository/tree/RepositoryTreeNode.java",
         "patchSetId": 1
@@ -84,6 +108,30 @@
       "side": 1,
       "message": "Please, don\u0027t think that I am in love with this type of code. If you can live with the *potential* NPE, I\u0027ll gladly simplify this to getPath().toFile() or write it out in an explicit if-statement. (Please let me know, before I submit an updated change.)",
       "parentUuid": "2856d007_e62e1e34",
+      "range": {
+        "startLine": 416,
+        "startChar": 10,
+        "endLine": 417,
+        "endChar": 18
+      },
+      "revId": "684b61f3616abe6e2185b3e28f46364494c034b2",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "bdf125ae_11c16398",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/repository/tree/RepositoryTreeNode.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 417,
+      "author": {
+        "id": 236689
+      },
+      "writtenOn": "2019-11-19T14:54:16Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e37a688b_68b2181f",
       "range": {
         "startLine": 416,
         "startChar": 10,
