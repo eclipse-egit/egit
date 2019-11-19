@@ -13,14 +13,17 @@ package org.eclipse.egit.ui.internal.history;
 import java.util.List;
 import java.util.Set;
 
+import org.eclipse.egit.core.internal.Utils;
 import org.eclipse.egit.ui.internal.UIText;
 import org.eclipse.egit.ui.internal.dialogs.AbstractBranchSelectionDialog;
 import org.eclipse.egit.ui.internal.history.RefFilterHelper.RefFilter;
+import org.eclipse.jface.layout.GridDataFactory;
 import org.eclipse.jface.viewers.ArrayContentProvider;
 import org.eclipse.jface.viewers.CellEditor;
 import org.eclipse.jface.viewers.CheckStateChangedEvent;
 import org.eclipse.jface.viewers.CheckboxTableViewer;
 import org.eclipse.jface.viewers.DoubleClickEvent;
+import org.eclipse.jface.viewers.ICellEditorListener;
 import org.eclipse.jface.viewers.ICellModifier;
 import org.eclipse.jface.viewers.ICheckStateListener;
 import org.eclipse.jface.viewers.ICheckStateProvider;
@@ -34,6 +37,7 @@ import org.eclipse.jface.viewers.ViewerComparator;
 import org.eclipse.jface.window.Window;
 import org.eclipse.jgit.lib.Repository;
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.custom.CLabel;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.events.ShellAdapter;
@@ -49,6 +53,7 @@ import org.eclipse.swt.widgets.Group;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.TableItem;
+import org.eclipse.ui.ISharedImages;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.preferences.ViewSettingsDialog;
 
@@ -72,6 +77,8 @@ public class GitHistoryRefFilterConfigurationDialog
 	private Button removeButton;
 	private Button editButton;
 	private TextCellEditor editor;
+
+	private CLabel message;
 
 	private volatile boolean editingMode = false;
 
@@ -133,6 +140,10 @@ public class GitHistoryRefFilterConfigurationDialog
 		composite.setLayout(new GridLayout());
 		composite.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
 		composite.setBackground(container.getBackground());
+
+		message = new CLabel(composite, SWT.WRAP);
+		message.setText(UIText.GitHistoryPage_filterRefDialog_dialogMessage);
+		GridDataFactory.fillDefaults().grab(true, false).applyTo(message);
 
 		Group filtersComposite = new Group(composite, SWT.NONE);
 		filtersComposite
@@ -241,19 +252,56 @@ public class GitHistoryRefFilterConfigurationDialog
 		});
 
 		editor = new TextCellEditor(configsTable.getTable()) {
+
 			@Override
-			public void deactivate() {
-				super.deactivate();
-				if (editingMode) {
-					editingMode = false;
-					updateButtonEnablement();
+			protected Control createControl(Composite containing) {
+				Control result = super.createControl(containing);
+				if ((text.getStyle() & SWT.SINGLE) != 0) {
+					// See bug 273470
+					text.addVerifyListener(
+							event -> event.text = Utils.firstLine(event.text));
 				}
+				return result;
 			}
 		};
-		CellEditor[] editors = new CellEditor[1];
-		editors[0] = editor;
+		editor.setValidator(value -> {
+			String currentText = value.toString().trim();
+			if (currentText.isEmpty()) {
+				return UIText.GitHistoryPage_filterRefDialog_refEmptyError;
+			}
+			return null;
+		});
+		editor.addListener(new ICellEditorListener() {
+
+			@Override
+			public void editorValueChanged(boolean oldValidState,
+					boolean newValidState) {
+				if (newValidState) {
+					message.setImage(null);
+					message.setText(
+							UIText.GitHistoryPage_filterRefDialog_dialogMessage);
+				} else {
+					message.setImage(PlatformUI.getWorkbench().getSharedImages()
+							.getImage(ISharedImages.IMG_OBJS_ERROR_TSK));
+					message.setText(editor.getErrorMessage());
+				}
+				getButton(OK).setEnabled(newValidState);
+			}
+
+			@Override
+			public void cancelEditor() {
+				editingMode = false;
+				editorValueChanged(false, true);
+				updateButtonEnablement();
+			}
+
+			@Override
+			public void applyEditorValue() {
+				cancelEditor();
+			}
+		});
 		configsTable.setColumnProperties(new String[] { FILTER_COLUMN_NAME });
-		configsTable.setCellEditors(editors);
+		configsTable.setCellEditors(new CellEditor[] { editor });
 		configsTable.setCellModifier(new ICellModifier() {
 
 			@Override
