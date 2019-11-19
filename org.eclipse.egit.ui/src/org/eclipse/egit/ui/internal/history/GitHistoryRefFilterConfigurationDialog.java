@@ -22,22 +22,27 @@ import org.eclipse.jface.viewers.ArrayContentProvider;
 import org.eclipse.jface.viewers.CellEditor;
 import org.eclipse.jface.viewers.CheckStateChangedEvent;
 import org.eclipse.jface.viewers.CheckboxTableViewer;
-import org.eclipse.jface.viewers.DoubleClickEvent;
+import org.eclipse.jface.viewers.ColumnViewerEditor;
+import org.eclipse.jface.viewers.ColumnViewerEditorActivationEvent;
+import org.eclipse.jface.viewers.ColumnViewerEditorActivationStrategy;
+import org.eclipse.jface.viewers.FocusCellHighlighter;
 import org.eclipse.jface.viewers.ICellEditorListener;
 import org.eclipse.jface.viewers.ICellModifier;
 import org.eclipse.jface.viewers.ICheckStateListener;
 import org.eclipse.jface.viewers.ICheckStateProvider;
 import org.eclipse.jface.viewers.IColorProvider;
-import org.eclipse.jface.viewers.IDoubleClickListener;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.viewers.LabelProvider;
 import org.eclipse.jface.viewers.StructuredSelection;
+import org.eclipse.jface.viewers.TableViewerEditor;
+import org.eclipse.jface.viewers.TableViewerFocusCellManager;
 import org.eclipse.jface.viewers.TextCellEditor;
 import org.eclipse.jface.viewers.ViewerComparator;
 import org.eclipse.jface.window.Window;
 import org.eclipse.jgit.lib.Repository;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.CLabel;
+import org.eclipse.swt.events.MouseEvent;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.events.ShellAdapter;
@@ -80,9 +85,7 @@ public class GitHistoryRefFilterConfigurationDialog
 
 	private CLabel message;
 
-	private volatile boolean editingMode = false;
-
-	private boolean defaultsPerformed = false;
+	private boolean defaultsPerformed;
 
 	private Point minimumSize;
 
@@ -146,9 +149,8 @@ public class GitHistoryRefFilterConfigurationDialog
 		GridDataFactory.fillDefaults().grab(true, false).applyTo(message);
 
 		Group filtersComposite = new Group(composite, SWT.NONE);
-		filtersComposite
-				.setText(
-						UIText.GitHistoryPage_filterRefDialog_filtersCompositeLabel);
+		filtersComposite.setText(
+				UIText.GitHistoryPage_filterRefDialog_filtersCompositeLabel);
 
 		filtersComposite.setLayout(new GridLayout(2, false));
 		filtersComposite
@@ -206,10 +208,9 @@ public class GitHistoryRefFilterConfigurationDialog
 		configsTable.getControl().setLayoutData(tableData);
 
 		configsTable.setContentProvider(ArrayContentProvider.getInstance());
-
 		configsTable.setLabelProvider(new RefLabelProvider());
-
 		configsTable.setComparator(new ViewerComparator() {
+
 			@Override
 			public int category(Object element) {
 				RefFilter filter = ((RefFilter) element);
@@ -219,20 +220,19 @@ public class GitHistoryRefFilterConfigurationDialog
 				return 1000;
 			}
 		});
-
 		configsTable.addSelectionChangedListener(event -> {
 			updateButtonEnablement();
 		});
-
 		configsTable.addCheckStateListener(new ICheckStateListener() {
+
 			@Override
 			public void checkStateChanged(CheckStateChangedEvent event) {
 				((RefFilter) event.getElement())
 						.setSelected(event.getChecked());
 			}
 		});
-
 		configsTable.setCheckStateProvider(new ICheckStateProvider() {
+
 			@Override
 			public boolean isGrayed(Object element) {
 				return false;
@@ -244,12 +244,26 @@ public class GitHistoryRefFilterConfigurationDialog
 			}
 		});
 
-		configsTable.addDoubleClickListener(new IDoubleClickListener() {
+		TableViewerFocusCellManager focusCellManager = new TableViewerFocusCellManager(
+				configsTable, new FocusCellHighlighter(configsTable) {
+					// Empty; SWT highlights already.
+				});
+		ColumnViewerEditorActivationStrategy editorActivation = new ColumnViewerEditorActivationStrategy(
+				configsTable) {
+
 			@Override
-			public void doubleClick(DoubleClickEvent event) {
-				editCurrentRow();
+			protected boolean isEditorActivationEvent(
+					ColumnViewerEditorActivationEvent event) {
+				boolean singleSelect = configsTable.getStructuredSelection()
+						.size() == 1;
+				boolean isLeftDoubleClick = event.eventType == ColumnViewerEditorActivationEvent.MOUSE_DOUBLE_CLICK_SELECTION
+						&& ((MouseEvent) event.sourceEvent).button == 1;
+				return singleSelect && (isLeftDoubleClick
+						|| event.eventType == ColumnViewerEditorActivationEvent.PROGRAMMATIC);
 			}
-		});
+		};
+		TableViewerEditor.create(configsTable, focusCellManager,
+				editorActivation, ColumnViewerEditor.DEFAULT);
 
 		editor = new TextCellEditor(configsTable.getTable()) {
 
@@ -290,7 +304,6 @@ public class GitHistoryRefFilterConfigurationDialog
 
 			@Override
 			public void cancelEditor() {
-				editingMode = false;
 				editorValueChanged(false, true);
 				updateButtonEnablement();
 			}
@@ -324,9 +337,6 @@ public class GitHistoryRefFilterConfigurationDialog
 
 			@Override
 			public boolean canModify(Object element, String property) {
-				if (!editingMode) {
-					return false;
-				}
 				RefFilter filter = (RefFilter) element;
 				return !filter.isPreconfigured();
 			}
@@ -342,13 +352,14 @@ public class GitHistoryRefFilterConfigurationDialog
 		Button addNew = new Button(buttonComposite, SWT.PUSH);
 		addNew.setText(UIText.GitHistoryPage_filterRefDialog_button_add);
 		addNew.addSelectionListener(new SelectionAdapter() {
+
 			@Override
 			public void widgetSelected(SelectionEvent e) {
 				RefFilter newFilter = helper.new RefFilter(
 						NEW_FILTER_INITIAL_STRING);
 				filters.add(newFilter);
 				configsTable.refresh();
-				editFilter(newFilter);
+				configsTable.editElement(newFilter, 0);
 			}
 		});
 		setButtonLayoutData(addNew);
@@ -357,9 +368,9 @@ public class GitHistoryRefFilterConfigurationDialog
 		addRefButton
 				.setText(UIText.GitHistoryPage_filterRefDialog_button_addRef);
 		addRefButton.addSelectionListener(new SelectionAdapter() {
+
 			@Override
 			public void widgetSelected(SelectionEvent e) {
-				updateButtonEnablement();
 				RefSelectionDialog dialog = new RefSelectionDialog(getShell(),
 						repo);
 				if (dialog.open() == Window.OK) {
@@ -378,6 +389,7 @@ public class GitHistoryRefFilterConfigurationDialog
 		removeButton
 				.setText(UIText.GitHistoryPage_filterRefDialog_button_remove);
 		removeButton.addSelectionListener(new SelectionAdapter() {
+
 			@Override
 			public void widgetSelected(SelectionEvent e) {
 				removeSelectedFilters();
@@ -389,10 +401,12 @@ public class GitHistoryRefFilterConfigurationDialog
 		editButton = new Button(buttonComposite, SWT.PUSH);
 		editButton.setText(UIText.GitHistoryPage_filterRefDialog_button_edit);
 		editButton.addSelectionListener(new SelectionAdapter() {
+
 			@Override
 			public void widgetSelected(SelectionEvent e) {
-				editCurrentRow();
-				updateButtonEnablement();
+				configsTable.editElement(
+						configsTable.getStructuredSelection().getFirstElement(),
+						0);
 			}
 		});
 		editButton.setEnabled(false);
@@ -411,6 +425,7 @@ public class GitHistoryRefFilterConfigurationDialog
 		setHeadOnly.setText(
 				UIText.GitHistoryPage_filterRefDialog_button_headOnly);
 		setHeadOnly.addSelectionListener(new SelectionAdapter() {
+
 			@Override
 			public void widgetSelected(SelectionEvent e) {
 				helper.selectOnlyHEAD(filters);
@@ -424,6 +439,7 @@ public class GitHistoryRefFilterConfigurationDialog
 				.setText(
 						UIText.GitHistoryPage_filterRefDialog_button_currentBranchOnly);
 		setCurrentBranchOnly.addSelectionListener(new SelectionAdapter() {
+
 			@Override
 			public void widgetSelected(SelectionEvent e) {
 				helper.selectOnlyCurrentBranch(filters);
@@ -436,6 +452,7 @@ public class GitHistoryRefFilterConfigurationDialog
 		setAllBranchesAndTags.setText(
 				UIText.GitHistoryPage_filterRefDialog_button_allBranchesAndTags);
 		setAllBranchesAndTags.addSelectionListener(new SelectionAdapter() {
+
 			@Override
 			public void widgetSelected(SelectionEvent e) {
 				helper.selectExactlyAllBranchesAndTags(filters);
@@ -470,17 +487,6 @@ public class GitHistoryRefFilterConfigurationDialog
 		}
 		configsTable.setInput(filters);
 		configsTable.refresh();
-	}
-
-	private void editCurrentRow() {
-		editFilter((RefFilter) configsTable.getStructuredSelection()
-				.getFirstElement());
-	}
-
-	private void editFilter(RefFilter filter) {
-		editingMode = true;
-		configsTable.editElement(filter, 0);
-		updateButtonEnablement();
 	}
 
 	private void removeSelectedFilters() {
