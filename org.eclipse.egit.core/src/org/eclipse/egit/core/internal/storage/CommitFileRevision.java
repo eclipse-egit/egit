@@ -126,7 +126,7 @@ public class CommitFileRevision extends GitFileRevision implements
 				ObjectId refId = ref.getPeeledObjectId();
 				if (refId == null)
 					refId = ref.getObjectId();
-				if (AnyObjectId.equals(refId, commit)) {
+				if (AnyObjectId.isEqual(refId, commit)) {
 					String tagName = tag.getName()
 							.substring(Constants.R_TAGS.length());
 					ret.add(new GitTag(tagName));
