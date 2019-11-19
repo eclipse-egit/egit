@@ -1953,7 +1953,7 @@
          </class>
          <activeWhen>
             <with variable="activePart">
-            	<instanceof value="org.eclipse.egit.ui.internal.repository.RepositoriesView" />
+               <instanceof value="org.eclipse.egit.ui.internal.repository.RepositoriesView" />
             </with>
          </activeWhen>
       </handler>
@@ -3748,7 +3748,6 @@
                style="push">
             <visibleWhen checkEnabled="true" />
          </command>
-         <!-- These two rename commands are never active simultaneously. -->
          <command
                commandId="org.eclipse.ui.edit.rename"
                icon="icons/obj16/editconfig.png"
@@ -3759,12 +3758,6 @@
                      definitionId="org.eclipse.egit.ui.singleRefNode">
                </reference>
             </visibleWhen>
-         </command>
-         <command
-               commandId="org.eclipse.egit.ui.team.RenameBranch"
-               label="%RepoViewRenameBranch.label"
-               style="push">
-            <visibleWhen checkEnabled="true" />
          </command>
          <command
                commandId="org.eclipse.egit.ui.RepositoriesViewConfigureBranch"
@@ -4719,6 +4712,34 @@
                style="push">
             <visibleWhen checkEnabled="true" />
          </command>
+         <command
+               commandId="org.eclipse.egit.ui.team.RenameBranch"
+               label="%RepoViewRenameBranch.label"
+               style="push">
+            <visibleWhen checkEnabled="true" />
+         </command>
+         <menu id="org.eclipse.egit.ui.repositorygroupmenu"
+              label="%RepositoryGroupMenu.label">
+            <dynamic
+                  class="org.eclipse.egit.ui.internal.actions.RepositoryGroupsMenu"
+                  id="org.eclipse.egit.ui.repositorygroupmenu.items">
+            </dynamic>
+            <visibleWhen checkEnabled="false">
+               <and>
+                  <iterate ifEmpty="false"
+                           operator="and">
+                     <instanceof
+                           value="org.eclipse.egit.ui.internal.repository.tree.RepositoryNode">
+                     </instanceof>
+                     <not>
+                        <test
+                              property="GitRepository.isSubmodule">
+                        </test>
+                     </not>
+                  </iterate>
+               </and>
+            </visibleWhen>
+         </menu>
       </menuContribution>
       <menuContribution
             locationURI="popup:org.eclipse.egit.ui.RepositoriesView?after=group.open">
@@ -4824,28 +4845,6 @@
                style="push">
             <visibleWhen checkEnabled="true" />
          </command>
-         <menu id="org.eclipse.egit.ui.repositorygroupmenu"
-              label="%RepositoryGroupMenu.label">
-            <dynamic
-                  class="org.eclipse.egit.ui.internal.actions.RepositoryGroupsMenu"
-                  id="org.eclipse.egit.ui.repositorygroupmenu.items">
-            </dynamic>
-            <visibleWhen checkEnabled="false">
-               <and>
-                  <iterate ifEmpty="false"
-                           operator="and">
-                     <instanceof
-                           value="org.eclipse.egit.ui.internal.repository.tree.RepositoryNode">
-                     </instanceof>
-                     <not>
-                        <test
-                              property="GitRepository.isSubmodule">
-                        </test>
-                     </not>
-                  </iterate>
-               </and>
-            </visibleWhen>
-         </menu>
          <command
                commandId="org.eclipse.egit.ui.RepositoriesViewDelete"
                label="%RepoViewDeleteRepository.label"
