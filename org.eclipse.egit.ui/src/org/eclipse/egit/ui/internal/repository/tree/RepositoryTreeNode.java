@@ -85,7 +85,7 @@ public abstract class RepositoryTreeNode<T> extends PlatformObject implements Co
 	 */
 	public IPath getPath() {
 		Repository repository = getRepository();
-		if (repository == null) {
+		if (repository == null || repository.isBare()) {
 			return null;
 		}
 		return new Path(getRepository().getWorkTree().getAbsolutePath());

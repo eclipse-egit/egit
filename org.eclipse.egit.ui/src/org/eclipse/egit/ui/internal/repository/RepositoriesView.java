@@ -75,6 +75,7 @@ import org.eclipse.egit.ui.internal.repository.tree.TagNode;
 import org.eclipse.egit.ui.internal.repository.tree.WorkingDirNode;
 import org.eclipse.egit.ui.internal.repository.tree.command.ToggleBranchHierarchyCommand;
 import org.eclipse.egit.ui.internal.repository.tree.command.ToggleLinkWithSelectionCommand;
+import org.eclipse.egit.ui.internal.selection.RepositoryVirtualNode;
 import org.eclipse.egit.ui.internal.selection.SelectionUtils;
 import org.eclipse.egit.ui.internal.staging.StagingView;
 import org.eclipse.egit.ui.internal.trace.GitTraceLocation;
@@ -1127,19 +1128,22 @@ public class RepositoriesView extends CommonNavigator implements IShowInSource, 
 			if (ssel.size() != 1) {
 				return;
 			}
-			IResource adapted = AdapterUtils
-					.adaptToAnyResource(ssel.getFirstElement());
+			Object selected = ssel.getFirstElement();
+			IResource adapted = AdapterUtils.adaptToAnyResource(selected);
 			if (adapted != null) {
 				showResource(adapted);
 				return;
 			}
-			File file = Adapters.adapt(ssel.getFirstElement(), File.class);
-			if (file != null) {
-				IPath path = new Path(file.getAbsolutePath());
-				showPaths(Arrays.asList(path));
-				return;
+			if (!(selected instanceof RepositoryNode
+					|| selected instanceof RepositoryVirtualNode)) {
+				File file = Adapters.adapt(selected, File.class);
+				if (file != null) {
+					IPath path = new Path(file.getAbsolutePath());
+					showPaths(Arrays.asList(path));
+					return;
+				}
 			}
-			Repository repository = Adapters.adapt(ssel.getFirstElement(),
+			Repository repository = Adapters.adapt(selected,
 					Repository.class);
 			if (repository != null && !repository.getDirectory()
 					.equals(lastSelectedRepository)) {
