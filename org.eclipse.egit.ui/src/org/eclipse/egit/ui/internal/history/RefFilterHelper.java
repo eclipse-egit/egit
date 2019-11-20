@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (C) 2019, Tim Neumann <Tim.Neumann@advantest.com>
+ * Copyright (C) 2019, Tim Neumann <Tim.Neumann@advantest.com> and others.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License 2.0
@@ -26,6 +26,7 @@ import org.apache.tools.ant.types.selectors.TokenizedPath;
 import org.apache.tools.ant.types.selectors.TokenizedPattern;
 import org.eclipse.egit.ui.Activator;
 import org.eclipse.egit.ui.UIPreferences;
+import org.eclipse.egit.ui.internal.variables.GitVariableResolver;
 import org.eclipse.jface.preference.IPersistentPreferenceStore;
 import org.eclipse.jface.preference.IPreferenceStore;
 import org.eclipse.jgit.annotations.NonNull;
@@ -44,7 +45,8 @@ public class RefFilterHelper {
 
 	private static final String REF_SEPARATOR = ":"; //$NON-NLS-1$
 
-	private static final String MACRO_CURRENT_BRANCH = "[CURRENT-BRANCH]"; //$NON-NLS-1$
+	private static final String MACRO_CURRENT_BRANCH = "${" //$NON-NLS-1$
+			+ GitVariableResolver.GIT_BRANCH + '}';
 
 	private static final String DEFAULT_SELECTED_REFS = Constants.HEAD;
 

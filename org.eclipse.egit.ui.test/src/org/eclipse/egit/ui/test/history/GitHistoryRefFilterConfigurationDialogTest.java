@@ -40,10 +40,7 @@ import org.eclipse.egit.ui.view.repositories.GitRepositoriesViewTestUtils;
 import org.eclipse.jface.dialogs.IDialogConstants;
 import org.eclipse.jface.resource.JFaceResources;
 import org.eclipse.jgit.lib.Repository;
-import org.eclipse.swt.SWT;
-import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Display;
-import org.eclipse.swt.widgets.Event;
 import org.eclipse.swtbot.swt.finder.junit.SWTBotJunit4ClassRunner;
 import org.eclipse.swtbot.swt.finder.widgets.SWTBotButton;
 import org.eclipse.swtbot.swt.finder.widgets.SWTBotShell;
@@ -103,7 +100,7 @@ public class GitHistoryRefFilterConfigurationDialogTest
 
 		List<RefFilter> testFilters = new ArrayList<>();
 		testFilters.add(newRefFilter("HEAD", true, false));
-		testFilters.add(newRefFilter("refs/**/[CURRENT-BRANCH]", true, false));
+		testFilters.add(newRefFilter("refs/**/${git_branch}", true, false));
 		testFilters.add(newRefFilter("refs/heads/**", true, true));
 		testFilters.add(newRefFilter("refs/remotes/**", true, false));
 		testFilters.add(newRefFilter("refs/tags/**", true, false));
@@ -152,7 +149,7 @@ public class GitHistoryRefFilterConfigurationDialogTest
 
 		List<RefFilter> defaults = new ArrayList<>();
 		defaults.add(newRefFilter("HEAD", true, true));
-		defaults.add(newRefFilter("refs/**/[CURRENT-BRANCH]", true, false));
+		defaults.add(newRefFilter("refs/**/${git_branch}", true, false));
 		defaults.add(newRefFilter("refs/heads/**", true, false));
 		defaults.add(newRefFilter("refs/remotes/**", true, false));
 		defaults.add(newRefFilter("refs/tags/**", true, false));
@@ -172,7 +169,9 @@ public class GitHistoryRefFilterConfigurationDialogTest
 	@After
 	public void teardown() {
 		myRepoViewUtil.dispose();
-		display.asyncExec(dialog::close);
+		if (dialog != null) {
+			display.asyncExec(dialog::close);
+		}
 	}
 
 	private static class RefFilterInfo {
@@ -310,7 +309,7 @@ public class GitHistoryRefFilterConfigurationDialogTest
 		List<RefFilterInfo> expected = new ArrayList<>();
 		expected.add(new RefFilterInfo("HEAD", true, false));
 		expected.add(
-				new RefFilterInfo("refs/**/[CURRENT-BRANCH]", true, false));
+				new RefFilterInfo("refs/**/${git_branch}", true, false));
 		expected.add(new RefFilterInfo("refs/heads/**", true, true));
 		expected.add(new RefFilterInfo("refs/remotes/**", true, false));
 		expected.add(new RefFilterInfo("refs/tags/**", true, false));
@@ -330,7 +329,7 @@ public class GitHistoryRefFilterConfigurationDialogTest
 		List<RefFilterInfo> expected = new ArrayList<>();
 		expected.add(new RefFilterInfo("HEAD", true, true));
 		expected.add(
-				new RefFilterInfo("refs/**/[CURRENT-BRANCH]", true, false));
+				new RefFilterInfo("refs/**/${git_branch}", true, false));
 		expected.add(new RefFilterInfo("refs/heads/**", true, true));
 		expected.add(new RefFilterInfo("refs/remotes/**", true, false));
 		expected.add(new RefFilterInfo("refs/tags/**", true, false));
@@ -351,7 +350,7 @@ public class GitHistoryRefFilterConfigurationDialogTest
 		List<RefFilterInfo> expected = new ArrayList<>();
 		expected.add(new RefFilterInfo("HEAD", true, false));
 		expected.add(
-				new RefFilterInfo("refs/**/[CURRENT-BRANCH]", true, false));
+				new RefFilterInfo("refs/**/${git_branch}", true, false));
 		expected.add(new RefFilterInfo("refs/heads/**", true, true));
 		expected.add(new RefFilterInfo("refs/remotes/**", true, true));
 		expected.add(new RefFilterInfo("refs/tags/**", true, false));
@@ -371,7 +370,7 @@ public class GitHistoryRefFilterConfigurationDialogTest
 		List<RefFilterInfo> expected = new ArrayList<>();
 		expected.add(new RefFilterInfo("HEAD", true, false));
 		expected.add(
-				new RefFilterInfo("refs/**/[CURRENT-BRANCH]", true, false));
+				new RefFilterInfo("refs/**/${git_branch}", true, false));
 		expected.add(new RefFilterInfo("refs/heads/**", true, false));
 		expected.add(new RefFilterInfo("refs/remotes/**", true, false));
 		expected.add(new RefFilterInfo("refs/tags/**", true, false));
@@ -392,7 +391,7 @@ public class GitHistoryRefFilterConfigurationDialogTest
 		List<RefFilterInfo> expected = new ArrayList<>();
 		expected.add(new RefFilterInfo("HEAD", true, false));
 		expected.add(
-				new RefFilterInfo("refs/**/[CURRENT-BRANCH]", true, false));
+				new RefFilterInfo("refs/**/${git_branch}", true, false));
 		expected.add(new RefFilterInfo("refs/heads/**", true, false));
 		expected.add(new RefFilterInfo("refs/remotes/**", true, false));
 		expected.add(new RefFilterInfo("refs/tags/**", true, false));
@@ -413,7 +412,7 @@ public class GitHistoryRefFilterConfigurationDialogTest
 		List<RefFilterInfo> expected = new ArrayList<>();
 		expected.add(new RefFilterInfo("HEAD", true, false));
 		expected.add(
-				new RefFilterInfo("refs/**/[CURRENT-BRANCH]", true, false));
+				new RefFilterInfo("refs/**/${git_branch}", true, false));
 		expected.add(new RefFilterInfo("refs/heads/**", true, false));
 		expected.add(new RefFilterInfo("refs/remotes/**", true, false));
 		expected.add(new RefFilterInfo("refs/tags/**", true, false));
@@ -424,48 +423,22 @@ public class GitHistoryRefFilterConfigurationDialogTest
 		verifyTableContentsClickOkAndVerifyResult(expected);
 	}
 
-	private Event createEvent(Control control) {
-		Event event = new Event();
-		event.keyCode = SWT.NONE;
-		event.stateMask = SWT.NONE;
-		event.doit = true;
-		event.widget = control;
-		event.button = 1;
-		return event;
-	}
-
-	private void keyEvent(Control control, int keyCode) {
-		Event event = createEvent(control);
-		event.button = 0;
-		event.type = SWT.KeyDown;
-		event.keyCode = keyCode;
-		event.character = (char) keyCode;
-
-		Display.getDefault().post(event);
-
-		event.type = SWT.KeyUp;
-
-		Display.getDefault().post(event);
-	}
-
-	private void typeTextAndEnter(String text) {
-		Control c = dialog.getShell();
-		for (int i = 0; i < text.length(); i++) {
-			keyEvent(c, text.charAt(i));
-		}
-		keyEvent(c, 13);
+	private void typeTextAndApply(String text) {
+		bot.text(0).setText(text);
+		// Click somewhere else; the editor applies its value
+		bot.table().click(0, 0);
 	}
 
 	@Test
 	public void testAdd() throws Exception {
 		click(UIText.GitHistoryPage_filterRefDialog_button_add);
 
-		typeTextAndEnter("added");
+		typeTextAndApply("added");
 
 		List<RefFilterInfo> expected = new ArrayList<>();
 		expected.add(new RefFilterInfo("HEAD", true, false));
 		expected.add(
-				new RefFilterInfo("refs/**/[CURRENT-BRANCH]", true, false));
+				new RefFilterInfo("refs/**/${git_branch}", true, false));
 		expected.add(new RefFilterInfo("refs/heads/**", true, true));
 		expected.add(new RefFilterInfo("refs/remotes/**", true, false));
 		expected.add(new RefFilterInfo("refs/tags/**", true, false));
@@ -518,7 +491,7 @@ public class GitHistoryRefFilterConfigurationDialogTest
 		List<RefFilterInfo> expected = new ArrayList<>();
 		expected.add(new RefFilterInfo("HEAD", true, false));
 		expected.add(
-				new RefFilterInfo("refs/**/[CURRENT-BRANCH]", true, false));
+				new RefFilterInfo("refs/**/${git_branch}", true, false));
 		expected.add(new RefFilterInfo("refs/heads/**", true, true));
 		expected.add(new RefFilterInfo("refs/remotes/**", true, false));
 		expected.add(new RefFilterInfo("refs/tags/**", true, false));
@@ -539,7 +512,7 @@ public class GitHistoryRefFilterConfigurationDialogTest
 		List<RefFilterInfo> expected = new ArrayList<>();
 		expected.add(new RefFilterInfo("HEAD", true, false));
 		expected.add(
-				new RefFilterInfo("refs/**/[CURRENT-BRANCH]", true, false));
+				new RefFilterInfo("refs/**/${git_branch}", true, false));
 		expected.add(new RefFilterInfo("refs/heads/**", true, true));
 		expected.add(new RefFilterInfo("refs/remotes/**", true, false));
 		expected.add(new RefFilterInfo("refs/tags/**", true, false));
@@ -555,12 +528,12 @@ public class GitHistoryRefFilterConfigurationDialogTest
 		table.getTableItem(5).select();
 		click(UIText.GitHistoryPage_filterRefDialog_button_edit);
 
-		typeTextAndEnter("edited");
+		typeTextAndApply("edited");
 
 		List<RefFilterInfo> expected = new ArrayList<>();
 		expected.add(new RefFilterInfo("HEAD", true, false));
 		expected.add(
-				new RefFilterInfo("refs/**/[CURRENT-BRANCH]", true, false));
+				new RefFilterInfo("refs/**/${git_branch}", true, false));
 		expected.add(new RefFilterInfo("refs/heads/**", true, true));
 		expected.add(new RefFilterInfo("refs/remotes/**", true, false));
 		expected.add(new RefFilterInfo("refs/tags/**", true, false));
@@ -577,12 +550,12 @@ public class GitHistoryRefFilterConfigurationDialogTest
 		SWTBotTableItem item = table.getTableItem(5);
 		item.doubleClick();
 
-		typeTextAndEnter("edited");
+		typeTextAndApply("edited");
 
 		List<RefFilterInfo> expected = new ArrayList<>();
 		expected.add(new RefFilterInfo("HEAD", true, false));
 		expected.add(
-				new RefFilterInfo("refs/**/[CURRENT-BRANCH]", true, false));
+				new RefFilterInfo("refs/**/${git_branch}", true, false));
 		expected.add(new RefFilterInfo("refs/heads/**", true, true));
 		expected.add(new RefFilterInfo("refs/remotes/**", true, false));
 		expected.add(new RefFilterInfo("refs/tags/**", true, false));
@@ -601,7 +574,7 @@ public class GitHistoryRefFilterConfigurationDialogTest
 		List<RefFilterInfo> expected = new ArrayList<>();
 		expected.add(new RefFilterInfo("HEAD", true, true));
 		expected.add(
-				new RefFilterInfo("refs/**/[CURRENT-BRANCH]", true, false));
+				new RefFilterInfo("refs/**/${git_branch}", true, false));
 		expected.add(new RefFilterInfo("refs/heads/**", true, false));
 		expected.add(new RefFilterInfo("refs/remotes/**", true, false));
 		expected.add(new RefFilterInfo("refs/tags/**", true, false));
@@ -618,7 +591,7 @@ public class GitHistoryRefFilterConfigurationDialogTest
 
 		List<RefFilterInfo> expected = new ArrayList<>();
 		expected.add(new RefFilterInfo("HEAD", true, false));
-		expected.add(new RefFilterInfo("refs/**/[CURRENT-BRANCH]", true, true));
+		expected.add(new RefFilterInfo("refs/**/${git_branch}", true, true));
 		expected.add(new RefFilterInfo("refs/heads/**", true, false));
 		expected.add(new RefFilterInfo("refs/remotes/**", true, false));
 		expected.add(new RefFilterInfo("refs/tags/**", true, false));
@@ -636,7 +609,7 @@ public class GitHistoryRefFilterConfigurationDialogTest
 		List<RefFilterInfo> expected = new ArrayList<>();
 		expected.add(new RefFilterInfo("HEAD", true, true));
 		expected.add(
-				new RefFilterInfo("refs/**/[CURRENT-BRANCH]", true, false));
+				new RefFilterInfo("refs/**/${git_branch}", true, false));
 		expected.add(new RefFilterInfo("refs/heads/**", true, true));
 		expected.add(new RefFilterInfo("refs/remotes/**", true, true));
 		expected.add(new RefFilterInfo("refs/tags/**", true, true));
@@ -654,7 +627,7 @@ public class GitHistoryRefFilterConfigurationDialogTest
 		List<RefFilterInfo> expected = new ArrayList<>();
 		expected.add(new RefFilterInfo("HEAD", true, true));
 		expected.add(
-				new RefFilterInfo("refs/**/[CURRENT-BRANCH]", true, false));
+				new RefFilterInfo("refs/**/${git_branch}", true, false));
 		expected.add(new RefFilterInfo("refs/heads/**", true, false));
 		expected.add(new RefFilterInfo("refs/remotes/**", true, false));
 		expected.add(new RefFilterInfo("refs/tags/**", true, false));
@@ -671,7 +644,7 @@ public class GitHistoryRefFilterConfigurationDialogTest
 		List<RefFilterInfo> expected = new ArrayList<>();
 		expected.add(new RefFilterInfo("HEAD", true, true));
 		expected.add(
-				new RefFilterInfo("refs/**/[CURRENT-BRANCH]", true, false));
+				new RefFilterInfo("refs/**/${git_branch}", true, false));
 		expected.add(new RefFilterInfo("refs/heads/**", true, false));
 		expected.add(new RefFilterInfo("refs/remotes/**", true, false));
 		expected.add(new RefFilterInfo("refs/tags/**", true, false));
@@ -724,7 +697,7 @@ public class GitHistoryRefFilterConfigurationDialogTest
 	public void testCancelAfterAdd() throws Exception {
 		click(UIText.GitHistoryPage_filterRefDialog_button_add);
 
-		typeTextAndEnter("added");
+		typeTextAndApply("added");
 
 		clickCancel();
 		verify(refFilterHelper, Mockito.never())
@@ -737,7 +710,7 @@ public class GitHistoryRefFilterConfigurationDialogTest
 		table.getTableItem(5).select();
 		click(UIText.GitHistoryPage_filterRefDialog_button_edit);
 
-		typeTextAndEnter("edited");
+		typeTextAndApply("edited");
 
 		clickCancel();
 		verify(refFilterHelper, Mockito.never())

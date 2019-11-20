@@ -670,10 +670,10 @@ public class HistoryViewTest extends GitRepositoriesViewTestBase {
 		uncheckRefFilter(selectedRefs, "HEAD");
 		assertNoCommit(table);
 
-		checkRefFilter(selectedRefs, "refs/**/[CURRENT-BRANCH]");
+		checkRefFilter(selectedRefs, "refs/**/${git_branch}");
 		assertCommitsAfterBase(table, "testDa", "testDb");
 
-		uncheckRefFilter(selectedRefs, "refs/**/[CURRENT-BRANCH]");
+		uncheckRefFilter(selectedRefs, "refs/**/${git_branch}");
 		assertNoCommit(table);
 
 		checkRefFilter(selectedRefs, "refs/heads/**");

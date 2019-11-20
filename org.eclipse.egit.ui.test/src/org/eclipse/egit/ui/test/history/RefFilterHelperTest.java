@@ -257,7 +257,7 @@ public class RefFilterHelperTest extends LocalRepositoryTestCase {
 		List<Matcher<? super RefFilter>> expected = new ArrayList<>();
 		expected.add(newRefFilterMatcher("HEAD", true, true));
 		expected.add(
-				newRefFilterMatcher("refs/**/[CURRENT-BRANCH]", true, false));
+				newRefFilterMatcher("refs/**/${git_branch}", true, false));
 		expected.add(newRefFilterMatcher("refs/heads/**", true, false));
 		expected.add(newRefFilterMatcher("refs/remotes/**", true, false));
 		expected.add(newRefFilterMatcher("refs/tags/**", true, false));
@@ -276,7 +276,7 @@ public class RefFilterHelperTest extends LocalRepositoryTestCase {
 						.thenReturn("HEAD:test");
 		Set<RefFilter> testSet = new HashSet<>();
 		testSet.add(newRefFilter("HEAD", true, false));
-		testSet.add(newRefFilter("refs/**/[CURRENT-BRANCH]", true,
+		testSet.add(newRefFilter("refs/**/${git_branch}", true,
 				false));
 		testSet.add(newRefFilter("refs/heads/**", true, true));
 		testSet.add(newRefFilter("refs/remotes/**", true, false));
@@ -288,7 +288,7 @@ public class RefFilterHelperTest extends LocalRepositoryTestCase {
 		List<Matcher<? super RefFilter>> expected = new ArrayList<>();
 		expected.add(newRefFilterMatcher("HEAD", true, true));
 		expected.add(
-				newRefFilterMatcher("refs/**/[CURRENT-BRANCH]", true, false));
+				newRefFilterMatcher("refs/**/${git_branch}", true, false));
 		expected.add(newRefFilterMatcher("refs/heads/**", true, false));
 		expected.add(newRefFilterMatcher("refs/remotes/**", true, false));
 		expected.add(newRefFilterMatcher("refs/tags/**", true, false));
@@ -305,7 +305,7 @@ public class RefFilterHelperTest extends LocalRepositoryTestCase {
 	public void testSetFilters() throws Exception {
 		Set<RefFilter> testSet = new HashSet<>();
 		testSet.add(newRefFilter("HEAD", true, false));
-		testSet.add(newRefFilter("refs/**/[CURRENT-BRANCH]", true,
+		testSet.add(newRefFilter("refs/**/${git_branch}", true,
 				false));
 		testSet.add(newRefFilter("refs/heads/**", true, true));
 		testSet.add(newRefFilter("refs/remotes/**", true, false));
@@ -333,7 +333,7 @@ public class RefFilterHelperTest extends LocalRepositoryTestCase {
 	public void testSaveSelectionStateAsLastSelectionState() throws Exception {
 		Set<RefFilter> testSet = new HashSet<>();
 		testSet.add(newRefFilter("HEAD", true, false));
-		testSet.add(newRefFilter("refs/**/[CURRENT-BRANCH]", true,
+		testSet.add(newRefFilter("refs/**/${git_branch}", true,
 				false));
 		testSet.add(newRefFilter("refs/heads/**", true, true));
 		testSet.add(newRefFilter("refs/remotes/**", true, false));
@@ -398,7 +398,7 @@ public class RefFilterHelperTest extends LocalRepositoryTestCase {
 			throws Exception {
 		checkMatchingRefsForSelectedRefFilters("HEAD",
 				Arrays.asList(ref(equalTo("HEAD"))));
-		checkMatchingRefsForSelectedRefFilters("refs/**/[CURRENT-BRANCH]",
+		checkMatchingRefsForSelectedRefFilters("refs/**/${git_branch}",
 				Arrays.asList(ref(equalTo("refs/heads/master")),
 						ref(equalTo("refs/remotes/origin/master"))));
 		checkMatchingRefsForSelectedRefFilters("refs/heads/**",
@@ -414,7 +414,7 @@ public class RefFilterHelperTest extends LocalRepositoryTestCase {
 	public void testSelectOnlyHEAD() throws Exception {
 		Set<RefFilter> testSet = new HashSet<>();
 		testSet.add(newRefFilter("HEAD", true, false));
-		testSet.add(newRefFilter("refs/**/[CURRENT-BRANCH]", true,
+		testSet.add(newRefFilter("refs/**/${git_branch}", true,
 				false));
 		testSet.add(newRefFilter("refs/heads/**", true, true));
 		testSet.add(newRefFilter("refs/remotes/**", true, false));
@@ -426,7 +426,7 @@ public class RefFilterHelperTest extends LocalRepositoryTestCase {
 		List<Matcher<? super RefFilter>> expected = new ArrayList<>();
 		expected.add(newRefFilterMatcher("HEAD", true, true));
 		expected.add(
-				newRefFilterMatcher("refs/**/[CURRENT-BRANCH]", true, false));
+				newRefFilterMatcher("refs/**/${git_branch}", true, false));
 		expected.add(newRefFilterMatcher("refs/heads/**", true, false));
 		expected.add(newRefFilterMatcher("refs/remotes/**", true, false));
 		expected.add(newRefFilterMatcher("refs/tags/**", true, false));
@@ -443,7 +443,7 @@ public class RefFilterHelperTest extends LocalRepositoryTestCase {
 	public void testIsOnlyHEADSelected() throws Exception {
 		Set<RefFilter> testSet1 = new HashSet<>();
 		testSet1.add(newRefFilter("HEAD", true, false));
-		testSet1.add(newRefFilter("refs/**/[CURRENT-BRANCH]",
+		testSet1.add(newRefFilter("refs/**/${git_branch}",
 				true, false));
 		testSet1.add(newRefFilter("refs/heads/**", true, true));
 		testSet1.add(
@@ -458,7 +458,7 @@ public class RefFilterHelperTest extends LocalRepositoryTestCase {
 
 		Set<RefFilter> testSet2 = new HashSet<>();
 		testSet2.add(newRefFilter("HEAD", true, true));
-		testSet2.add(newRefFilter("refs/**/[CURRENT-BRANCH]",
+		testSet2.add(newRefFilter("refs/**/${git_branch}",
 				true, false));
 		testSet2.add(newRefFilter("refs/heads/**", true, true));
 		testSet2.add(
@@ -473,7 +473,7 @@ public class RefFilterHelperTest extends LocalRepositoryTestCase {
 
 		Set<RefFilter> testSet3 = new HashSet<>();
 		testSet3.add(newRefFilter("HEAD", true, true));
-		testSet3.add(newRefFilter("refs/**/[CURRENT-BRANCH]",
+		testSet3.add(newRefFilter("refs/**/${git_branch}",
 				true, false));
 		testSet3.add(newRefFilter("refs/heads/**", true, false));
 		testSet3.add(
@@ -492,7 +492,7 @@ public class RefFilterHelperTest extends LocalRepositoryTestCase {
 	public void testSelectOnlyCurrentBranch() throws Exception {
 		Set<RefFilter> testSet = new HashSet<>();
 		testSet.add(newRefFilter("HEAD", true, false));
-		testSet.add(newRefFilter("refs/**/[CURRENT-BRANCH]", true,
+		testSet.add(newRefFilter("refs/**/${git_branch}", true,
 				false));
 		testSet.add(newRefFilter("refs/heads/**", true, true));
 		testSet.add(newRefFilter("refs/remotes/**", true, false));
@@ -504,7 +504,7 @@ public class RefFilterHelperTest extends LocalRepositoryTestCase {
 		List<Matcher<? super RefFilter>> expected = new ArrayList<>();
 		expected.add(newRefFilterMatcher("HEAD", true, false));
 		expected.add(
-				newRefFilterMatcher("refs/**/[CURRENT-BRANCH]", true, true));
+				newRefFilterMatcher("refs/**/${git_branch}", true, true));
 		expected.add(newRefFilterMatcher("refs/heads/**", true, false));
 		expected.add(newRefFilterMatcher("refs/remotes/**", true, false));
 		expected.add(newRefFilterMatcher("refs/tags/**", true, false));
@@ -521,7 +521,7 @@ public class RefFilterHelperTest extends LocalRepositoryTestCase {
 	public void testIsOnlyCurrentBranchSelected() throws Exception {
 		Set<RefFilter> testSet1 = new HashSet<>();
 		testSet1.add(newRefFilter("HEAD", true, false));
-		testSet1.add(newRefFilter("refs/**/[CURRENT-BRANCH]",
+		testSet1.add(newRefFilter("refs/**/${git_branch}",
 				true, false));
 		testSet1.add(newRefFilter("refs/heads/**", true, true));
 		testSet1.add(
@@ -536,7 +536,7 @@ public class RefFilterHelperTest extends LocalRepositoryTestCase {
 
 		Set<RefFilter> testSet2 = new HashSet<>();
 		testSet2.add(newRefFilter("HEAD", true, false));
-		testSet2.add(newRefFilter("refs/**/[CURRENT-BRANCH]",
+		testSet2.add(newRefFilter("refs/**/${git_branch}",
 				true, true));
 		testSet2.add(newRefFilter("refs/heads/**", true, true));
 		testSet2.add(
@@ -551,7 +551,7 @@ public class RefFilterHelperTest extends LocalRepositoryTestCase {
 
 		Set<RefFilter> testSet3 = new HashSet<>();
 		testSet3.add(newRefFilter("HEAD", true, false));
-		testSet3.add(newRefFilter("refs/**/[CURRENT-BRANCH]",
+		testSet3.add(newRefFilter("refs/**/${git_branch}",
 				true, true));
 		testSet3.add(newRefFilter("refs/heads/**", true, false));
 		testSet3.add(
@@ -570,7 +570,7 @@ public class RefFilterHelperTest extends LocalRepositoryTestCase {
 	public void testSelectExactlyAllBranchesAndTags() throws Exception {
 		Set<RefFilter> testSet = new HashSet<>();
 		testSet.add(newRefFilter("HEAD", true, false));
-		testSet.add(newRefFilter("refs/**/[CURRENT-BRANCH]", true,
+		testSet.add(newRefFilter("refs/**/${git_branch}", true,
 				false));
 		testSet.add(newRefFilter("refs/heads/**", true, true));
 		testSet.add(newRefFilter("refs/remotes/**", true, false));
@@ -582,7 +582,7 @@ public class RefFilterHelperTest extends LocalRepositoryTestCase {
 		List<Matcher<? super RefFilter>> expected = new ArrayList<>();
 		expected.add(newRefFilterMatcher("HEAD", true, true));
 		expected.add(
-				newRefFilterMatcher("refs/**/[CURRENT-BRANCH]", true, false));
+				newRefFilterMatcher("refs/**/${git_branch}", true, false));
 		expected.add(newRefFilterMatcher("refs/heads/**", true, true));
 		expected.add(newRefFilterMatcher("refs/remotes/**", true, true));
 		expected.add(newRefFilterMatcher("refs/tags/**", true, true));
@@ -599,7 +599,7 @@ public class RefFilterHelperTest extends LocalRepositoryTestCase {
 	public void testIsExactlyAllBranchesAndTagsSelected() throws Exception {
 		Set<RefFilter> testSet1 = new HashSet<>();
 		testSet1.add(newRefFilter("HEAD", true, false));
-		testSet1.add(newRefFilter("refs/**/[CURRENT-BRANCH]",
+		testSet1.add(newRefFilter("refs/**/${git_branch}",
 				true, false));
 		testSet1.add(newRefFilter("refs/heads/**", true, true));
 		testSet1.add(
@@ -614,7 +614,7 @@ public class RefFilterHelperTest extends LocalRepositoryTestCase {
 
 		Set<RefFilter> testSet2 = new HashSet<>();
 		testSet2.add(newRefFilter("HEAD", true, true));
-		testSet2.add(newRefFilter("refs/**/[CURRENT-BRANCH]",
+		testSet2.add(newRefFilter("refs/**/${git_branch}",
 				true, false));
 		testSet2.add(newRefFilter("refs/heads/**", true, true));
 		testSet2.add(newRefFilter("refs/remotes/**", true, true));
@@ -628,7 +628,7 @@ public class RefFilterHelperTest extends LocalRepositoryTestCase {
 
 		Set<RefFilter> testSet3 = new HashSet<>();
 		testSet3.add(newRefFilter("HEAD", true, true));
-		testSet3.add(newRefFilter("refs/**/[CURRENT-BRANCH]",
+		testSet3.add(newRefFilter("refs/**/${git_branch}",
 				true, false));
 		testSet3.add(newRefFilter("refs/heads/**", true, true));
 		testSet3.add(newRefFilter("refs/remotes/**", true, true));
@@ -655,7 +655,7 @@ public class RefFilterHelperTest extends LocalRepositoryTestCase {
 		List<Matcher<? super RefFilter>> expected = new ArrayList<>();
 		expected.add(newRefFilterMatcher("HEAD", true, true));
 		expected.add(
-				newRefFilterMatcher("refs/**/[CURRENT-BRANCH]", true, false));
+				newRefFilterMatcher("refs/**/${git_branch}", true, false));
 		expected.add(newRefFilterMatcher("refs/heads/**", true, false));
 		expected.add(newRefFilterMatcher("refs/remotes/**", true, false));
 		expected.add(newRefFilterMatcher("refs/tags/**", true, false));
