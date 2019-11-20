@@ -17,6 +17,7 @@
 package org.eclipse.egit.ui.internal.repository;
 
 import java.io.IOException;
+import java.text.MessageFormat;
 import java.util.concurrent.atomic.AtomicReference;
 
 import org.eclipse.core.runtime.CoreException;
@@ -163,7 +164,8 @@ class CreateBranchPage extends WizardPage {
 		} else {
 			this.upstreamConfig = null;
 		}
-		setTitle(UIText.CreateBranchPage_Title);
+		setTitle(MessageFormat.format(UIText.CreateBranchPage_Title, Activator
+				.getDefault().getRepositoryUtil().getRepositoryName(repo)));
 		setMessage(UIText.CreateBranchPage_ChooseBranchAndNameMessage);
 	}
 
@@ -185,7 +187,8 @@ class CreateBranchPage extends WizardPage {
 		this.myValidator = ValidationUtils.getRefNameInputValidator(
 				myRepository, Constants.R_HEADS, false);
 		this.upstreamConfig = null;
-		setTitle(UIText.CreateBranchPage_Title);
+		setTitle(MessageFormat.format(UIText.CreateBranchPage_Title, Activator
+				.getDefault().getRepositoryUtil().getRepositoryName(repo)));
 		setMessage(UIText.CreateBranchPage_ChooseNameMessage);
 	}
 

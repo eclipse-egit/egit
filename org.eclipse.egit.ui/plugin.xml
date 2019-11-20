@@ -6626,7 +6626,8 @@
             categoryId="org.eclipse.egit.ui.commandCategory"
             defaultHandler="org.eclipse.egit.ui.internal.actions.BranchActionHandler"
             id="org.eclipse.egit.ui.team.Branch"
-            name="%BranchCommand.name">
+            name="%BranchCommand.name"
+            description="%BranchCommand.description">
       </command>
       <command
             categoryId="org.eclipse.egit.ui.commandCategory"
