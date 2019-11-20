@@ -22,6 +22,30 @@
       "revId": "a3f69ccbc2082ad98301199bf087fd809ec36174",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "607902a8_7bacb1f0",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/actions/SwitchToMenu.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 129,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2019-11-20T18:14:45Z",
+      "side": 1,
+      "message": "Disregard, please. When !isMultipleSelection, it\u0027s indeed OK. (Also hadn\u0027t seen it was present in the expression of the \"if\" before.)",
+      "parentUuid": "824917ba_a95255b9",
+      "range": {
+        "startLine": 129,
+        "startChar": 3,
+        "endLine": 129,
+        "endChar": 23
+      },
+      "revId": "a3f69ccbc2082ad98301199bf087fd809ec36174",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
     }
   ]
 }
