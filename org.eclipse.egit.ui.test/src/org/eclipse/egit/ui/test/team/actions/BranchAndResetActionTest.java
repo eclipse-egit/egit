@@ -494,7 +494,7 @@ public class BranchAndResetActionTest extends LocalRepositoryTestCase {
 			throws IOException, Exception {
 		SWTBotShell dialog = openCheckoutBranchDialog();
 		TableCollection tc = dialog.bot().tree().selection();
-		assertEquals("Wrong selection count", 0, tc.rowCount());
+		assertEquals("Wrong selection count", 1, tc.rowCount());
 
 		TestUtil.navigateTo(dialog.bot().tree(), nodeTexts).select();
 		tc = dialog.bot().tree().selection();
