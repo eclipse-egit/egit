@@ -12,6 +12,9 @@
  *******************************************************************************/
 package org.eclipse.egit.ui.internal.dialogs;
 
+import java.text.MessageFormat;
+
+import org.eclipse.egit.ui.Activator;
 import org.eclipse.egit.ui.internal.UIText;
 import org.eclipse.egit.ui.internal.branch.BranchOperationUI;
 import org.eclipse.jface.window.Window;
@@ -30,14 +33,16 @@ public class CheckoutDialog extends BranchSelectionAndEditDialog {
 	 * @param repo
 	 */
 	public CheckoutDialog(Shell parentShell, Repository repo) {
-		super(parentShell, repo, SHOW_LOCAL_BRANCHES | SHOW_REMOTE_BRANCHES
+		super(parentShell, repo,
+				SELECT_CURRENT_REF | SHOW_LOCAL_BRANCHES | SHOW_REMOTE_BRANCHES
 				| SHOW_TAGS | SHOW_REFERENCES | EXPAND_LOCAL_BRANCHES_NODE
 				| ALLOW_MULTISELECTION);
 	}
 
 	@Override
 	protected String getTitle() {
-		return UIText.CheckoutDialog_Title;
+		return MessageFormat.format(UIText.CheckoutDialog_Title, Activator
+				.getDefault().getRepositoryUtil().getRepositoryName(repo));
 	}
 
 	@Override

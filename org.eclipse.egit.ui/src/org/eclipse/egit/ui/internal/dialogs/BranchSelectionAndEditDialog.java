@@ -16,6 +16,7 @@ import static org.eclipse.jgit.lib.Constants.R_HEADS;
 import static org.eclipse.jgit.lib.Constants.R_REMOTES;
 
 import java.io.IOException;
+import java.text.MessageFormat;
 import java.util.Iterator;
 
 import org.eclipse.egit.ui.Activator;
@@ -91,7 +92,9 @@ public class BranchSelectionAndEditDialog extends
 
 	@Override
 	protected String getTitle() {
-		return UIText.BranchSelectionAndEditDialog_Title;
+		return MessageFormat.format(UIText.BranchSelectionAndEditDialog_Title,
+				Activator.getDefault().getRepositoryUtil()
+						.getRepositoryName(repo));
 	}
 
 	@Override
