@@ -335,6 +335,9 @@
           <operand
               xsi:type="predicates:NamePredicate"
               pattern="org\.eclipse\.jgit\.packaging"/>
+          <operand
+              xsi:type="predicates:LocationPredicate"
+              pattern=".*website.*"/>
         </predicate>
       </workingSet>
       <description>Initialize working sets</description>
