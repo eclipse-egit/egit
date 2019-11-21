@@ -43,6 +43,7 @@ import org.eclipse.egit.ui.Activator;
 import org.eclipse.egit.ui.UIPreferences;
 import org.eclipse.egit.ui.internal.DiffContainerJob;
 import org.eclipse.egit.ui.internal.ToolsUtils;
+import org.eclipse.egit.ui.internal.diffmerge.DiffMergeSettings;
 import org.eclipse.egit.ui.internal.merge.GitMergeEditorInput;
 import org.eclipse.egit.ui.internal.merge.MergeInputMode;
 import org.eclipse.egit.ui.internal.merge.MergeModeDialog;
@@ -80,10 +81,10 @@ public class MergeToolActionHandler extends RepositoryActionHandler {
 			MergeInputMode mode = MergeInputMode.fromInteger(mergeMode);
 			input = new GitMergeEditorInput(mode, locations);
 		}
-		if (GitPreferenceRoot.useExternalMergeTool()) {
-			openMergeToolExternal(input);
-		} else {
+		if (DiffMergeSettings.useInternalMergeTool()) {
 			openMergeToolInternal(input);
+		} else {
+			openMergeToolExternal(input);
 		}
 		return null;
 	}
@@ -165,8 +166,8 @@ public class MergeToolActionHandler extends RepositoryActionHandler {
 			// create the merge tool manager
 			MergeTools mergeTools = new MergeTools(repository);
 			// get the selected tool name
-			Optional<String> toolNameToUse = Optional.ofNullable(GitPreferenceRoot.getMergeToolName());
-			BooleanTriState prompt = BooleanTriState.UNSET;
+			Optional<String> toolNameToUse = Optional.ofNullable(DiffMergeSettings.getMergeToolName());
+			BooleanTriState prompt = BooleanTriState.FALSE;
 
 			PromptContinueHandler promptContinueHandler = new FileNamePromptContinueHandler(
 					mergedFilePath);

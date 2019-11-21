@@ -559,6 +559,14 @@
                id="org.eclipse.egit.ui.GitPreferences">
          </keywordReference>
       </page>
+      <page name="%GitPreferences_DiffTools_name"
+            category="org.eclipse.egit.ui.GitPreferences"
+            class="org.eclipse.egit.ui.internal.preferences.DiffPreferencePage"
+            id="org.eclipse.egit.ui.DiffPreferencePage">
+         <keywordReference
+               id="org.eclipse.egit.ui.DiffPreferencePage">
+         </keywordReference>
+      </page>
       <page name="%GitPreferences_ProjectPreferencePage_name"
             category="org.eclipse.egit.ui.GitPreferences"
             class="org.eclipse.egit.ui.internal.preferences.ProjectsPreferencePage"
