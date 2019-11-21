@@ -15,10 +15,8 @@
 package org.eclipse.egit.ui.internal.preferences;
 
 import java.io.File;
-import java.io.IOException;
 import java.text.MessageFormat;
 import java.util.Collection;
-import java.util.Set;
 
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IProduct;
@@ -42,16 +40,8 @@ import org.eclipse.jface.preference.IPreferenceStore;
 import org.eclipse.jface.preference.IntegerFieldEditor;
 import org.eclipse.jface.preference.StringFieldEditor;
 import org.eclipse.jface.window.Window;
-import org.eclipse.jgit.errors.ConfigInvalidException;
-import org.eclipse.jgit.events.ConfigChangedEvent;
-import org.eclipse.jgit.events.ConfigChangedListener;
-import org.eclipse.jgit.events.ListenerHandle;
-import org.eclipse.jgit.internal.diffmergetool.DiffTools;
-import org.eclipse.jgit.internal.diffmergetool.MergeTools;
-import org.eclipse.jgit.storage.file.FileBasedConfig;
 import org.eclipse.jgit.transport.sshd.agent.ConnectorFactory;
 import org.eclipse.jgit.transport.sshd.agent.ConnectorFactory.ConnectorDescriptor;
-import org.eclipse.jgit.util.FS;
 import org.eclipse.jgit.util.LfsFactory;
 import org.eclipse.jgit.util.LfsFactory.LfsInstallCommand;
 import org.eclipse.jgit.util.SystemReader;
@@ -75,27 +65,9 @@ public class GitPreferenceRoot extends DoublePreferencesPreferencePage
 
 	private final static String[][] HTTP_CLIENT_NAMES_AND_VALUES = new String[2][2];
 
-	private final static String[][] MERGE_TOOL_NAMES_AND_VALUES = new String[2][2];
-
-	private final static String[][] DIFF_TOOL_NAMES_AND_VALUES = new String[2][2];
-
 	private final static boolean HAS_DEBUG_UI = hasDebugUiBundle();
 
-	static FileBasedConfig userScopedConfig = null;
-
-	static String[][] diffToolsList = null;
-
-	static String[][] mergeToolsList = null;
-
-	static ListenerHandle userScopedConfigChangeListener = null;
-
 	static {
-		loadUserScopedConfig();
-	}
-
-	static {
-		MERGE_MODE_NAMES_AND_VALUES[0][0] = UIText.GitPreferenceRoot_MergeMode_0_Label;
-		MERGE_MODE_NAMES_AND_VALUES[0][1] = "0";//$NON-NLS-1$
 		MERGE_MODE_NAMES_AND_VALUES[1][0] = UIText.GitPreferenceRoot_MergeMode_3_Label;
 		MERGE_MODE_NAMES_AND_VALUES[1][1] = "3"; //$NON-NLS-1$
 		MERGE_MODE_NAMES_AND_VALUES[2][0] = UIText.GitPreferenceRoot_MergeMode_1_Label;
@@ -115,20 +87,6 @@ public class GitPreferenceRoot extends DoublePreferencesPreferencePage
 
 	private ComboFieldEditor defaultSshAgent;
 
-	static {
-		MERGE_TOOL_NAMES_AND_VALUES[0][0] = UIText.GitPreferenceRoot_MergeTool_0_Label;
-		MERGE_TOOL_NAMES_AND_VALUES[0][1] = "0";//$NON-NLS-1$
-		MERGE_TOOL_NAMES_AND_VALUES[1][0] = UIText.GitPreferenceRoot_MergeTool_1_Label;
-		MERGE_TOOL_NAMES_AND_VALUES[1][1] = "1";//$NON-NLS-1$
-	}
-
-	static {
-		DIFF_TOOL_NAMES_AND_VALUES[0][0] = UIText.GitPreferenceRoot_DiffTool_0_Label;
-		DIFF_TOOL_NAMES_AND_VALUES[0][1] = "0";//$NON-NLS-1$
-		DIFF_TOOL_NAMES_AND_VALUES[1][0] = UIText.GitPreferenceRoot_DiffTool_1_Label;
-		DIFF_TOOL_NAMES_AND_VALUES[1][1] = "1";//$NON-NLS-1$
-	}
-
 	/**
 	 * The default constructor
 	 */
@@ -136,67 +94,6 @@ public class GitPreferenceRoot extends DoublePreferencesPreferencePage
 		super(FLAT);
 	}
 
-	/**
-	 * @return true if external diff tool and false if internal compare should
-	 *         be used
-	 */
-	public static boolean useExternalDiffTool() {
-		int toolNr = Activator.getDefault().getPreferenceStore()
-				.getInt(UIPreferences.DIFF_TOOL);
-		if (toolNr != 0) {
-			String diffToolCustom = Activator.getDefault().getPreferenceStore()
-					.getString(UIPreferences.DIFF_TOOL_CUSTOM);
-			if (!diffToolCustom.startsWith("none")) { //$NON-NLS-1$
-				return true;
-			}
-		}
-		return false;
-	}
-
-	/**
-	 * @return true if external merge tool and false if internal compare should
-	 *         be used
-	 */
-	public static boolean useExternalMergeTool() {
-		int toolNr = Activator.getDefault().getPreferenceStore()
-				.getInt(UIPreferences.MERGE_TOOL);
-		if (toolNr != 0) {
-			String diffToolCustom = Activator.getDefault().getPreferenceStore()
-					.getString(UIPreferences.MERGE_TOOL_CUSTOM);
-			if (!diffToolCustom.equals("none")) { //$NON-NLS-1$
-				return true;
-			}
-		}
-		return false;
-	}
-
-	/**
-	 * @return the selected diff tool name or null (=default)
-	 */
-	public static String getDiffToolName() {
-		String toolName = null;
-		int toolNr = Activator.getDefault().getPreferenceStore()
-				.getInt(UIPreferences.DIFF_TOOL);
-		if (toolNr != 0) {
-			toolName = Activator.getDefault().getPreferenceStore()
-						.getString(UIPreferences.DIFF_TOOL_CUSTOM);
-		}
-		return toolName;
-	}
-
-	/**
-	 * @return the selected merge tool name or null (=default)
-	 */
-	public static String getMergeToolName() {
-		String toolName = null;
-		int toolNr = Activator.getDefault().getPreferenceStore()
-				.getInt(UIPreferences.MERGE_TOOL);
-		if (toolNr != 0) {
-			toolName = Activator.getDefault().getPreferenceStore()
-					.getString(UIPreferences.MERGE_TOOL_CUSTOM);
-		}
-		return toolName;
-	}
 	/**
 	 * @return true if add to index automatically is enabled
 	 */
@@ -444,58 +341,6 @@ public class GitPreferenceRoot extends DoublePreferencesPreferencePage
 		});
 		updateMargins(repoChangeScannerGroup);
 
-		loadUserScopedConfig();
-
-		Group mergeGroup = new Group(main, SWT.SHADOW_ETCHED_IN);
-		GridDataFactory.fillDefaults().grab(true, false).span(GROUP_SPAN, 1)
-				.applyTo(mergeGroup);
-		mergeGroup.setText(UIText.GitPreferenceRoot_MergeGroupHeader);
-		ComboFieldEditor mergeMode = new ComboFieldEditor(
-				UIPreferences.MERGE_MODE,
-				UIText.GitPreferenceRoot_MergeModeLabel,
-				MERGE_MODE_NAMES_AND_VALUES, mergeGroup);
-		mergeMode.getLabelControl(mergeGroup).setToolTipText(
-				UIText.GitPreferenceRoot_MergeModeTooltip);
-		addField(mergeMode);
-		ComboFieldEditor mergeTool = new ComboFieldEditor(
-				UIPreferences.MERGE_TOOL,
-				UIText.GitPreferenceRoot_MergeToolLabel,
-				MERGE_TOOL_NAMES_AND_VALUES, mergeGroup);
-		mergeTool.getLabelControl(mergeGroup)
-				.setToolTipText(UIText.GitPreferenceRoot_MergeToolTooltip);
-		addField(mergeTool);
-		ComboFieldEditor mergeToolCustom = new ComboFieldEditor(
-				UIPreferences.MERGE_TOOL_CUSTOM,
-				UIText.GitPreferenceRoot_MergeToolCustomLabel, mergeToolsList,
-				mergeGroup);
-		mergeToolCustom.getLabelControl(mergeGroup).setToolTipText(
-				UIText.GitPreferenceRoot_MergeToolCustomTooltip);
-		addField(mergeToolCustom);
-		BooleanFieldEditor autoAddToIndex = new BooleanFieldEditor(
-				UIPreferences.MERGE_TOOL_AUTO_ADD_TO_INDEX,
-				UIText.GitPreferenceRoot_MergeToolAutoAddLabel, mergeGroup);
-		addField(autoAddToIndex);
-		updateMargins(mergeGroup);
-
-		Group diffGroup = new Group(main, SWT.SHADOW_ETCHED_IN);
-		GridDataFactory.fillDefaults().grab(true, false).span(GROUP_SPAN, 1)
-				.applyTo(diffGroup);
-		diffGroup.setText(UIText.GitPreferenceRoot_DiffGroupHeader);
-		ComboFieldEditor diffTool = new ComboFieldEditor(
-				UIPreferences.DIFF_TOOL, UIText.GitPreferenceRoot_DiffToolLabel,
-				DIFF_TOOL_NAMES_AND_VALUES, diffGroup);
-		diffTool.getLabelControl(diffGroup)
-				.setToolTipText(UIText.GitPreferenceRoot_DiffToolTooltip);
-		addField(diffTool);
-		ComboFieldEditor diffToolCustom = new ComboFieldEditor(
-				UIPreferences.DIFF_TOOL_CUSTOM,
-				UIText.GitPreferenceRoot_DiffToolCustomLabel, diffToolsList,
-				diffGroup);
-		diffToolCustom.getLabelControl(diffGroup)
-				.setToolTipText(UIText.GitPreferenceRoot_DiffToolCustomTooltip);
-		addField(diffToolCustom);
-		updateMargins(diffGroup);
-
 		Group blameGroup = new Group(main, SWT.SHADOW_ETCHED_IN);
 		GridDataFactory.fillDefaults().grab(true, false).span(GROUP_SPAN, 1)
 				.applyTo(blameGroup);
@@ -577,54 +422,6 @@ public class GitPreferenceRoot extends DoublePreferencesPreferencePage
 		String name = product == null ? null : product.getName();
 		return name == null ? UIText.GitPreferenceRoot_DefaultProductName
 				: name;
-	}
-
-	private static void loadUserScopedConfig() {
-		if (userScopedConfig == null || userScopedConfig.isOutdated()) {
-			userScopedConfig = SystemReader.getInstance().openUserConfig(null,
-					FS.DETECTED);
-			try {
-				userScopedConfig.load();
-			} catch (IOException e) {
-				Activator.handleError(e.getMessage(), e, true);
-			} catch (ConfigInvalidException e) {
-				Activator.handleError(e.getMessage(), e, true);
-			}
-			diffToolsList = getCustomDiffTools();
-			mergeToolsList = getCustomMergeTools();
-			if (userScopedConfigChangeListener != null) {
-				userScopedConfigChangeListener = userScopedConfig
-						.addChangeListener(new ConfigChangedListener() {
-							@Override
-							public void onConfigChanged(
-									ConfigChangedEvent event) {
-								diffToolsList = getCustomDiffTools();
-								mergeToolsList = getCustomMergeTools();
-							}
-						});
-			}
-		}
-	}
-
-	private static String[][] getCustomMergeTools() {
-		MergeTools mergeTools = new MergeTools(userScopedConfig);
-		return setToComboArray(mergeTools.getAllToolNames());
-	}
-
-	private static String[][] getCustomDiffTools() {
-		DiffTools diffTools = new DiffTools(userScopedConfig);
-		return setToComboArray(diffTools.getAllToolNames());
-	}
-
-	private static String[][] setToComboArray(Set<String> toolsList) {
-		String[][] toolsArray = new String[toolsList.size()][2];
-		int index = 0;
-		for (String toolName : toolsList) {
-			toolsArray[index][0] = toolName;
-			toolsArray[index][1] = toolName;
-			index++;
-		}
-		return toolsArray;
 	}
 
 	private void updateMargins(Group group) {
