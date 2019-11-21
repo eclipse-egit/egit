@@ -43,6 +43,7 @@ import org.eclipse.egit.ui.Activator;
 import org.eclipse.egit.ui.UIPreferences;
 import org.eclipse.egit.ui.internal.DiffContainerJob;
 import org.eclipse.egit.ui.internal.ToolsUtils;
+import org.eclipse.egit.ui.internal.diffmerge.DiffMergeSettings;
 import org.eclipse.egit.ui.internal.merge.GitMergeEditorInput;
 import org.eclipse.egit.ui.internal.merge.MergeInputMode;
 import org.eclipse.egit.ui.internal.merge.MergeModeDialog;
@@ -70,20 +71,29 @@ public class MergeToolActionHandler extends RepositoryActionHandler {
 		int mergeMode = Activator.getDefault().getPreferenceStore().getInt(
 				UIPreferences.MERGE_MODE);
 		IPath[] locations = getSelectedLocations(event);
+		boolean useInternalMergeTool = DiffMergeSettings.useInternalMergeTool();
 		CompareEditorInput input;
-		if (mergeMode == 0) {
-			MergeModeDialog dlg = new MergeModeDialog(getShell(event));
-			if (dlg.open() != Window.OK)
-				return null;
-			input = new GitMergeEditorInput(dlg.getMergeMode(), locations);
+		if (useInternalMergeTool) {
+			if (mergeMode == 0) {
+				MergeModeDialog dlg = new MergeModeDialog(getShell(event));
+				if (dlg.open() != Window.OK)
+					return null;
+				input = new GitMergeEditorInput(dlg.getMergeMode(), locations);
+			} else {
+				MergeInputMode mode = MergeInputMode.fromInteger(mergeMode);
+				input = new GitMergeEditorInput(mode, locations);
+			}
 		} else {
-			MergeInputMode mode = MergeInputMode.fromInteger(mergeMode);
-			input = new GitMergeEditorInput(mode, locations);
+			// TODO: for external merge we don't support yet other merge modes,
+			// mergeModified() below need to be improved to distinguish
+			// better between different new diff node types like
+			// LocalResourceTypedElement or HiddenResourceTypedElement
+			input = new GitMergeEditorInput(MergeInputMode.STAGE_2, locations);
 		}
-		if (GitPreferenceRoot.useExternalMergeTool()) {
-			openMergeToolExternal(input);
-		} else {
+		if (useInternalMergeTool) {
 			openMergeToolInternal(input);
+		} else {
+			openMergeToolExternal(input);
 		}
 		return null;
 	}
@@ -165,8 +175,8 @@ public class MergeToolActionHandler extends RepositoryActionHandler {
 			// create the merge tool manager
 			MergeTools mergeTools = new MergeTools(repository);
 			// get the selected tool name
-			Optional<String> toolNameToUse = Optional.ofNullable(GitPreferenceRoot.getMergeToolName());
-			BooleanTriState prompt = BooleanTriState.UNSET;
+			Optional<String> toolNameToUse = Optional.ofNullable(DiffMergeSettings.getMergeToolName());
+			BooleanTriState prompt = BooleanTriState.FALSE;
 
 			PromptContinueHandler promptContinueHandler = new FileNamePromptContinueHandler(
 					mergedFilePath);

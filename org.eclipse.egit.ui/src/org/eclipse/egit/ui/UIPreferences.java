@@ -198,7 +198,7 @@ public final class UIPreferences {
 	public static final String MERGE_MODE = "merge_mode"; //$NON-NLS-1$
 
 	/** */
-	public static final String MERGE_TOOL = "merge_tool"; //$NON-NLS-1$
+	public static final String MERGE_TOOL_MODE = "merge_tool_mode"; //$NON-NLS-1$
 
 	/** */
 	public static final String MERGE_TOOL_CUSTOM = "merge_tool_custom"; //$NON-NLS-1$
@@ -207,10 +207,13 @@ public final class UIPreferences {
 	public static final String MERGE_TOOL_AUTO_ADD_TO_INDEX = "merge_tool_auto_add"; //$NON-NLS-1$
 
 	/** */
-	public static final String DIFF_TOOL = "diff_tool"; //$NON-NLS-1$
+	public static final String DIFF_TOOL_CUSTOM = "diff_tool_custom"; //$NON-NLS-1$
 
 	/** */
-	public static final String DIFF_TOOL_CUSTOM = "diff_tool_custom"; //$NON-NLS-1$
+	public static final String DIFF_TOOL_FROM_GIT_CONFIG = "diff_tool_from_git_config"; //$NON-NLS-1$
+
+	/** */
+	public static final String DIFF_TOOL_MODE = "diff_tool_mode"; //$NON-NLS-1$
 
 	/** */
 	public static final String SHOW_REBASE_CONFIRM = "show_rebase_confirm"; //$NON-NLS-1$
