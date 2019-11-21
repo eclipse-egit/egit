@@ -23,6 +23,7 @@ import org.eclipse.jgit.lib.Ref;
 import org.eclipse.jgit.lib.Repository;
 import org.eclipse.jgit.revplot.PlotCommit;
 import org.eclipse.jgit.revwalk.RevCommit;
+import org.eclipse.jgit.revwalk.RevWalk;
 import org.eclipse.swt.widgets.Widget;
 
 class SWTCommit extends PlotCommit<SWTCommitList.SWTLane>
@@ -45,7 +46,18 @@ class SWTCommit extends PlotCommit<SWTCommitList.SWTLane>
 
 	public void parseBody() throws IOException {
 		if (getRawBuffer() == null) {
-			walk.parseBody(this);
+			Repository repo = walk.getRepository();
+			try (RevWalk w = new RevWalk(repo)) {
+				// We *know* that the commit has had its headers parsed, so all
+				// this does is add the cached bytes. Thus using a different
+				// walk than the one that created this commit is fine. We
+				// mustn't use "walk" since this may be called from different
+				// threads: the UI thread, the FormatJob, and the
+				// FindToolbarJob.
+				//
+				// Additionally the GitHistoryJob may still be using the walk.
+				w.parseBody(this);
+			}
 		}
 	}
 
