@@ -763,75 +763,6 @@ public class UIText extends NLS {
 	public static String GitPreferenceRoot_HttpClient_Apache_Label;
 
 	/** */
-	public static String GitPreferenceRoot_MergeGroupHeader;
-
-	/** */
-	public static String GitPreferenceRoot_MergeMode_0_Label;
-
-	/** */
-	public static String GitPreferenceRoot_MergeMode_1_Label;
-
-	/** */
-	public static String GitPreferenceRoot_MergeMode_2_Label;
-
-	/** */
-	public static String GitPreferenceRoot_MergeMode_3_Label;
-
-	/** */
-	public static String GitPreferenceRoot_MergeModeLabel;
-
-	/** */
-	public static String GitPreferenceRoot_MergeModeTooltip;
-
-	/** */
-	public static String GitPreferenceRoot_MergeTool_0_Label;
-
-	/** */
-	public static String GitPreferenceRoot_MergeTool_1_Label;
-
-	/** */
-	public static String GitPreferenceRoot_MergeTool_2_Label;
-
-	/** */
-	public static String GitPreferenceRoot_MergeToolCustomLabel;
-
-	/** */
-	public static String GitPreferenceRoot_MergeToolCustomTooltip;
-
-	/** */
-	public static String GitPreferenceRoot_MergeToolLabel;
-
-	/** */
-	public static String GitPreferenceRoot_MergeToolTooltip;
-
-	/** */
-	public static String GitPreferenceRoot_MergeToolAutoAddLabel;
-
-	/** */
-	public static String GitPreferenceRoot_DiffGroupHeader;
-
-	/** */
-	public static String GitPreferenceRoot_DiffTool_0_Label;
-
-	/** */
-	public static String GitPreferenceRoot_DiffTool_1_Label;
-
-	/** */
-	public static String GitPreferenceRoot_DiffTool_2_Label;
-
-	/** */
-	public static String GitPreferenceRoot_DiffToolCustomLabel;
-
-	/** */
-	public static String GitPreferenceRoot_DiffToolCustomTooltip;
-
-	/** */
-	public static String GitPreferenceRoot_DiffToolLabel;
-
-	/** */
-	public static String GitPreferenceRoot_DiffToolTooltip;
-
-	/** */
 	public static String GitPreferenceRoot_RemoteConnectionsGroupHeader;
 
 	/** */
@@ -1514,6 +1445,9 @@ public class UIText extends NLS {
 
 	/** */
 	public static String CompareTreeView_CompareModeTooltip;
+
+	/** */
+	public static String CompareUtils_DiffToolExecutionFailed;
 
 	/** */
 	public static String CompareUtils_errorGettingEncoding;
@@ -2855,6 +2789,21 @@ public class UIText extends NLS {
 
 	/** */
 	public static String CompareUtils_errorCommonAncestor;
+
+	/** */
+	public static String CompareUtils_ExecutingExtDiffTool;
+
+	/** */
+	public static String CompareUtils_ExternalDiffToolDied;
+
+	/** */
+	public static String CompareUtils_GitConfigurationErrorText;
+
+	/** */
+	public static String CompareUtils_NoDiffToolsDefined;
+
+	/** */
+	public static String CompareUtils_NoDiffToolSpecified;
 
 	/** */
 	public static String ConfirmationPage_cantConnectToAnyTitle;
@@ -4270,6 +4219,51 @@ public class UIText extends NLS {
 
 	/** */
 	public static String DiffEditorInput_Tooltip2;
+
+	/** */
+	public static String DiffPreferencePage_DiffToolSection;
+
+	/** */
+	public static String DiffPreferencePage_DiffToolToUse;
+
+	/** */
+	public static String DiffPreferencePage_MergeAddExternalMergedFile;
+
+	/** */
+	public static String DiffPreferencePage_MergeLastHeadMode;
+
+	/** */
+	public static String DiffPreferencePage_MergeModePremergedOursMode;
+
+	/** */
+	public static String DiffPreferencePage_MergePromptMode;
+
+	/** */
+	public static String DiffPreferencePage_MergeToolContent;
+
+	/** */
+	public static String DiffPreferencePage_MergeToolSection;
+
+	/** */
+	public static String DiffPreferencePage_MergeToolToUse;
+
+	/** */
+	public static String DiffPreferencePage_MergeWorkspaceMode;
+
+	/** */
+	public static String DiffPreferencePage_UseBuiltInEditor;
+
+	/** */
+	public static String DiffPreferencePage_UseExternal;
+
+	/** */
+	public static String DiffPreferencePage_UseExternalForType;
+
+	/** */
+	public static String DiffPreferencePage_UseGitConfig;
+
+	/** */
+	public static String DiffPreferencePage_WarningMessage;
 
 	/** */
 	public static String DiscardChangesAction_confirmActionTitle;
