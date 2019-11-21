@@ -33,6 +33,8 @@ import org.eclipse.compare.CompareUI;
 import org.eclipse.compare.IContentChangeListener;
 import org.eclipse.compare.IContentChangeNotifier;
 import org.eclipse.compare.ITypedElement;
+import org.eclipse.compare.internal.ComparePreferencePage;
+import org.eclipse.compare.internal.CompareUIPlugin;
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IFolder;
 import org.eclipse.core.resources.IResource;
@@ -58,8 +60,8 @@ import org.eclipse.egit.core.project.RepositoryMapping;
 import org.eclipse.egit.core.util.RevCommitUtils;
 import org.eclipse.egit.ui.Activator;
 import org.eclipse.egit.ui.UIPreferences;
+import org.eclipse.egit.ui.internal.diffmerge.DiffMergeSettings;
 import org.eclipse.egit.ui.internal.merge.GitCompareEditorInput;
-import org.eclipse.egit.ui.internal.preferences.GitPreferenceRoot;
 import org.eclipse.egit.ui.internal.revision.EditableRevision;
 import org.eclipse.egit.ui.internal.revision.FileRevisionTypedElement;
 import org.eclipse.egit.ui.internal.revision.GitCompareFileRevisionEditorInput;
@@ -78,6 +80,7 @@ import org.eclipse.jgit.dircache.DirCacheEntry;
 import org.eclipse.jgit.dircache.DirCacheIterator;
 import org.eclipse.jgit.internal.diffmergetool.DiffTools;
 import org.eclipse.jgit.internal.diffmergetool.FileElement;
+import org.eclipse.jgit.internal.diffmergetool.FileElement.Type;
 import org.eclipse.jgit.internal.diffmergetool.PromptContinueHandler;
 import org.eclipse.jgit.internal.diffmergetool.ToolException;
 import org.eclipse.jgit.lib.Constants;
@@ -306,10 +309,10 @@ public class CompareUtils {
 	 */
 	public static void openInCompare(IWorkbenchPage workbenchPage,
 			Repository repository, CompareEditorInput input) {
-		if (GitPreferenceRoot.useExternalDiffTool()) {
-			openCompareToolExternal(repository, input);
-		} else {
+		if (DiffMergeSettings.useInternalDiffTool()) {
 			openCompareToolInternal(workbenchPage, input);
+		} else {
+			openCompareToolExternal(workbenchPage, repository, input);
 		}
 	}
 
@@ -357,58 +360,111 @@ public class CompareUtils {
 		}
 	}
 
-	private static void openCompareToolExternal(Repository repository,
-			CompareEditorInput input) {
-		GitCompareFileRevisionEditorInput gitCompareInput = (GitCompareFileRevisionEditorInput) input;
-		FileRevisionTypedElement leftRevision = gitCompareInput
-				.getLeftRevision();
-		IFile leftResource = gitCompareInput.getAdapter(IFile.class);
-		FileRevisionTypedElement rightRevision = gitCompareInput
-				.getRightRevision();
-		// get the relative project path from right revision here
-		String mergedFilePath = null;
-		if (leftResource != null) {
-			mergedFilePath = leftResource.getName();
-		} else if (leftRevision != null) {
-			mergedFilePath = leftRevision.getPath();
-		}
+	private static void openCompareToolExternal(IWorkbenchPage workbenchPage,
+			Repository repository, CompareEditorInput input) {
+		Job job = new Job(UIText.CompareUtils_ExecutingExtDiffTool) {
 
-		Optional<String> toolNameToUse = Optional.ofNullable(GitPreferenceRoot.getDiffToolName());
+			@Override
+			public IStatus run(IProgressMonitor monitor) {
+				if (monitor.isCanceled()) {
+					return Status.CANCEL_STATUS;
+				}
+				GitCompareFileRevisionEditorInput gitCompareInput = (GitCompareFileRevisionEditorInput) input;
+				FileRevisionTypedElement leftRevision = gitCompareInput
+						.getLeftRevision();
+				IFile leftResource = gitCompareInput
+						.getAdapter(IFile.class);
+				FileRevisionTypedElement rightRevision = gitCompareInput
+						.getRightRevision();
+				// get the relative project path from right revision here
+				String changedFilePath = null;
+				if (leftResource != null) {
+					changedFilePath = repository.getWorkTree().toPath()
+							.relativize(leftResource.getRawLocation().toFile().toPath())
+							.toString();
+				} else if (leftRevision != null) {
+					changedFilePath = leftRevision.getPath();
+				}
 
-		BooleanTriState unset = BooleanTriState.UNSET;
+				try {
+					Optional<String> toolName = DiffMergeSettings.getDiffToolName(repository, changedFilePath);
 
-		try {
-			// create the diff tool manager
-			DiffTools diffTools = new DiffTools(repository);
+					// fall back if no tool specified or data is not in working
+					// tree
+					if (!toolName.isPresent()) {
+						openCompareToolInternal(workbenchPage, input);
+						return Status.OK_STATUS;
+					}
 
-			PromptContinueHandler promptContinueHandler = new FileNamePromptContinueHandler(
-					mergedFilePath);
+					PromptContinueHandler promptContinueHandler = new FileNamePromptContinueHandler(
+							changedFilePath);
 
-			FileElement local = null;
-			if (leftRevision != null) {
-				local = new FileElement(mergedFilePath, FileElement.Type.LOCAL,
-						repository.getWorkTree(), leftRevision.getContents());
-			} else {
-				local = new FileElement(mergedFilePath, FileElement.Type.LOCAL, repository.getWorkTree());
+					// swap left and right
+					@SuppressWarnings("restriction")
+					boolean swapSides = CompareUIPlugin.getDefault()
+							.getPreferenceStore()
+							.getBoolean(ComparePreferencePage.SWAPPED);
+					Type typeLocal;
+					Type typeRemote;
+					if (swapSides) {
+						typeLocal = FileElement.Type.REMOTE;
+						typeRemote = FileElement.Type.LOCAL;
+					} else {
+						typeLocal = FileElement.Type.LOCAL;
+						typeRemote = FileElement.Type.REMOTE;
+					}
+
+					FileElement local = null;
+					if (leftRevision != null) {
+						local = new FileElement(changedFilePath,
+								typeLocal,
+								repository.getWorkTree(),
+								leftRevision.getContents());
+					} else {
+						local = new FileElement(changedFilePath,
+								typeLocal,
+								repository.getWorkTree());
+					}
+					FileElement remote = null;
+					if (rightRevision != null) {
+						remote = new FileElement(changedFilePath,
+								typeRemote,
+								repository.getWorkTree(),
+								rightRevision.getContents());
+					} else {
+						remote = new FileElement(changedFilePath,
+								typeRemote,
+								repository.getWorkTree());
+					}
+
+					/* ExecutionResult result = */
+					boolean gui = false;
+					BooleanTriState trustExitCode = BooleanTriState.UNSET;
+					BooleanTriState prompt = BooleanTriState.FALSE;
+					DiffTools diffToolMgr = new DiffTools(repository);
+					diffToolMgr.compare(local, remote, toolName, prompt, gui,
+							trustExitCode, promptContinueHandler, tools -> {
+								ToolsUtils.informUser(
+										UIText.CompareUtils_NoDiffToolsDefined,
+										UIText.CompareUtils_NoDiffToolSpecified);
+							});
+				} catch (ToolException e) {
+					ToolsUtils.informUserAboutError(
+							UIText.CompareUtils_ExternalDiffToolDied
+									+ changedFilePath,
+							e.getMessage());
+				} catch (CoreException e) {
+					ToolsUtils.informUserAboutError(
+							UIText.CompareUtils_DiffToolExecutionFailed
+									+ changedFilePath,
+							e.getMessage());
+				}
+				return Status.OK_STATUS;
 			}
-			FileElement remote = new FileElement(mergedFilePath,
-					FileElement.Type.REMOTE, repository.getWorkTree(),
-					rightRevision.getContents());
 
-			/* ExecutionResult result = */
-			diffTools.compare(local, remote, toolNameToUse, unset, false,
-					unset, promptContinueHandler, tools -> {
-						ToolsUtils.informUser("No tool configured.", //$NON-NLS-1$
-								"No difftool is set. Will try a preconfigured one now. To configure one open the git config settings."); //$NON-NLS-1$
-					});
-		} catch (ToolException e) {
-			e.printStackTrace();
-			ToolsUtils.informUserAboutError(
-					"external diff died, stopping at " + mergedFilePath, //$NON-NLS-1$
-					e.getResultStdout() + e.getMessage());
-		} catch (CoreException e) {
-			e.printStackTrace();
-		}
+		};
+		job.setUser(true);
+		job.schedule();
 	}
 
 	private static IEditorPart findReusableCompareEditor(
@@ -592,22 +648,19 @@ public class CompareUtils {
 				openCompareEditorRunnable(page, repository, in);
 				return Status.OK_STATUS;
 			}
+
 		};
 		job.setUser(true);
 		job.schedule();
 	}
 
 	/**
-	 * Opens compare editor in UI thread. Safe to start from background threads
-	 * too - in this case the operation will be started asynchronously in UI
-	 * thread.
+	 * Opens compare editor in UI thread. Safe to start from background threads too
+	 * - in this case the operation will be started asynchronously in UI thread.
 	 *
-	 * @param page
-	 *            can be null
-	 * @param repository
-	 *            non null
-	 * @param in
-	 *            non null
+	 * @param page       can be null
+	 * @param repository non null
+	 * @param in         non null
 	 */
 	private static void openCompareEditorRunnable(
 			final IWorkbenchPage page,
