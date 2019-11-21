@@ -43,6 +43,7 @@ import org.eclipse.egit.ui.Activator;
 import org.eclipse.egit.ui.UIPreferences;
 import org.eclipse.egit.ui.internal.DiffContainerJob;
 import org.eclipse.egit.ui.internal.ToolsUtils;
+import org.eclipse.egit.ui.internal.diffmerge.DiffMergeSettings;
 import org.eclipse.egit.ui.internal.merge.GitMergeEditorInput;
 import org.eclipse.egit.ui.internal.merge.MergeModeDialog;
 import org.eclipse.egit.ui.internal.preferences.GitPreferenceRoot;
@@ -52,7 +53,7 @@ import org.eclipse.jface.window.Window;
 import org.eclipse.jgit.api.Git;
 import org.eclipse.jgit.api.errors.GitAPIException;
 import org.eclipse.jgit.diffmergetool.FileElement;
-import org.eclipse.jgit.diffmergetool.MergeToolManager;
+import org.eclipse.jgit.diffmergetool.MergeTools;
 import org.eclipse.jgit.diffmergetool.PromptContinueHandler;
 import org.eclipse.jgit.diffmergetool.ToolException;
 import org.eclipse.jgit.lib.Repository;
@@ -78,10 +79,10 @@ public class MergeToolActionHandler extends RepositoryActionHandler {
 			boolean useWorkspace = mergeMode == 1;
 			input = new GitMergeEditorInput(useWorkspace, locations);
 		}
-		if (GitPreferenceRoot.useExternalMergeTool()) {
-			openMergeToolExternal(input);
-		} else {
+		if (DiffMergeSettings.useInternalMergeTool()) {
 			openMergeToolInternal(input);
+		} else {
+			openMergeToolExternal(input);
 		}
 		return null;
 	}
@@ -165,9 +166,9 @@ public class MergeToolActionHandler extends RepositoryActionHandler {
 		long modifiedBefore = merged.getFile().lastModified();
 		try {
 			// create the merge tool manager
-			MergeToolManager mergeToolMgr = new MergeToolManager(repository);
+			MergeTools mergeToolMgr = new MergeTools(repository);
 			// get the selected tool name
-			Optional<String> toolNameToUse = Optional.ofNullable(GitPreferenceRoot.getMergeToolName());
+			Optional<String> toolNameToUse = Optional.ofNullable(DiffMergeSettings.getMergeToolName());
 			Optional<Boolean> prompt = Optional.empty();
 
 			PromptContinueHandler promptContinueHandler = new FileNamePromptContinueHandler(
