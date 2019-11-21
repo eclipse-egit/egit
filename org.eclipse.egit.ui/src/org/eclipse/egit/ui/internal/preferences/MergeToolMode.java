@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018-2019, Andre Bossert <andre.bossert@siemens.com>
+ * Copyright (C) 2019, Mykola Zakharchuk <mykola.zakharchuk@advantest.com>
  * and other copyright owners as documented in the project's IP log.
  *
  * This program and the accompanying materials are made available
@@ -40,70 +40,54 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF
  * ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-
-package org.eclipse.egit.ui.internal;
-
-import org.eclipse.core.runtime.IStatus;
-import org.eclipse.core.runtime.Status;
-import org.eclipse.egit.core.Activator;
-import org.eclipse.jface.dialogs.ErrorDialog;
-import org.eclipse.jface.dialogs.MessageDialog;
-import org.eclipse.swt.SWT;
-import org.eclipse.swt.widgets.Display;
-import org.eclipse.swt.widgets.MessageBox;
-import org.eclipse.ui.PlatformUI;
+package org.eclipse.egit.ui.internal.preferences;
 
 /**
- * @author anb0s
+ * Interprets the use cases for external mergetools:
+ * <ul>
+ * <li>Use Built-in Eclipse compare editor to invoke merge procedure.
+ * <li>External (specified) tool. End-user specifies which tool he wants to use
+ * from the list (provided by git configuration). We force Eclipse and JGit to
+ * use this specified external mergetool for every merge execution,
+ * independently of what is specified by git attributes / git config.
+ * </ul>
  *
  */
-public class ToolsUtils {
+public enum MergeToolMode implements DiffMergeMode {
 
 	/**
-	 * @param textHeader
-	 * @param message
-	 * @return yes or no
+	 * Use internal Eclipse compare editor.
 	 */
-	public static int askUserAboutToolExecution(String textHeader,
-			String message) {
-		MessageBox mbox = new MessageBox(Display.getCurrent().getActiveShell(),
-				SWT.ICON_QUESTION | SWT.YES | SWT.NO | SWT.CANCEL);
-		mbox.setText(textHeader);
-		mbox.setMessage(message);
-		return mbox.open();
+	INTERNAL(0),
+	/**
+	 * Use an external merge tool.
+	 */
+	EXTERNAL(1);
+
+	private int value;
+
+	MergeToolMode(int i) {
+		this.value = i;
 	}
 
 	/**
-	 * @param textHeader
-	 * @param message
+	 * @return value of the enum
 	 */
-	public static void informUserAboutError(String textHeader, String message) {
-		IStatus status = new Status(IStatus.ERROR, Activator.getPluginId(),
-				message);
-		Runnable runnable = () -> ErrorDialog.openError(null, textHeader,
-				null, status);
-		if (Display.getCurrent() == null) {
-			PlatformUI.getWorkbench().getDisplay().asyncExec(runnable);
-		} else {
-			runnable.run();
-		}
+	@Override
+	public int getValue() {
+		return value;
 	}
 
 	/**
-	 * Inform the user about something
-	 *
-	 * @param textHeader
-	 *            The title
-	 * @param message
-	 *            the message
+	 * @param i
+	 * @return get corresponding enum from value
 	 */
-	public static void informUser(String textHeader, String message) {
-		Runnable runnable = () -> MessageDialog.openInformation(null,
-				textHeader, message);
-		if (Display.getCurrent() == null) {
-			PlatformUI.getWorkbench().getDisplay().asyncExec(runnable);
-		} else {
-			runnable.run();
+	public static MergeToolMode fromInt(int i) {
+		for (MergeToolMode b : MergeToolMode.values()) {
+			if (b.getValue() == i) {
+				return b;
+			}
 		}
+		return null;
 	}
 }

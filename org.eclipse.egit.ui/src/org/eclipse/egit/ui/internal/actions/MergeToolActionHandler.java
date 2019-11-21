@@ -45,6 +45,7 @@ import org.eclipse.egit.ui.internal.DiffContainerJob;
 import org.eclipse.egit.ui.internal.ToolsUtils;
 import org.eclipse.egit.ui.internal.merge.GitMergeEditorInput;
 import org.eclipse.egit.ui.internal.merge.MergeModeDialog;
+import org.eclipse.egit.ui.internal.preferences.DiffPreferencePage;
 import org.eclipse.egit.ui.internal.preferences.GitPreferenceRoot;
 import org.eclipse.egit.ui.internal.revision.FileRevisionTypedElement;
 import org.eclipse.egit.ui.internal.revision.ResourceEditableRevision;
@@ -78,7 +79,7 @@ public class MergeToolActionHandler extends RepositoryActionHandler {
 			boolean useWorkspace = mergeMode == 1;
 			input = new GitMergeEditorInput(useWorkspace, locations);
 		}
-		if (GitPreferenceRoot.useExternalMergeTool()) {
+		if (DiffPreferencePage.useExternalMergeTool()) {
 			openMergeToolExternal(input);
 		} else {
 			openMergeToolInternal(input);
@@ -167,7 +168,7 @@ public class MergeToolActionHandler extends RepositoryActionHandler {
 			// create the merge tool manager
 			MergeToolManager mergeToolMgr = new MergeToolManager(repository);
 			// get the selected tool name
-			Optional<String> toolNameToUse = Optional.ofNullable(GitPreferenceRoot.getMergeToolName());
+			Optional<String> toolNameToUse = Optional.ofNullable(DiffPreferencePage.getMergeToolName());
 			Optional<Boolean> prompt = Optional.empty();
 
 			PromptContinueHandler promptContinueHandler = new FileNamePromptContinueHandler(
