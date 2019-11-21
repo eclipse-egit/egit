@@ -769,9 +769,6 @@ public class UIText extends NLS {
 	public static String GitPreferenceRoot_MergeTool_1_Label;
 
 	/** */
-	public static String GitPreferenceRoot_MergeTool_2_Label;
-
-	/** */
 	public static String GitPreferenceRoot_MergeToolCustomLabel;
 
 	/** */
@@ -794,9 +791,6 @@ public class UIText extends NLS {
 
 	/** */
 	public static String GitPreferenceRoot_DiffTool_1_Label;
-
-	/** */
-	public static String GitPreferenceRoot_DiffTool_2_Label;
 
 	/** */
 	public static String GitPreferenceRoot_DiffToolCustomLabel;
@@ -1460,6 +1454,9 @@ public class UIText extends NLS {
 
 	/** */
 	public static String CompareTreeView_CompareModeTooltip;
+
+	/** */
+	public static String CompareUtils_DiffToolExecutionFailed;
 
 	/** */
 	public static String CompareUtils_errorGettingEncoding;
@@ -2767,6 +2764,21 @@ public class UIText extends NLS {
 	public static String CompareUtils_errorCommonAncestor;
 
 	/** */
+	public static String CompareUtils_ExecutingExtDiffTool;
+
+	/** */
+	public static String CompareUtils_ExternalDiffToolDied;
+
+	/** */
+	public static String CompareUtils_GitConfigurationErrorText;
+
+	/** */
+	public static String CompareUtils_NoDiffToolsDefined;
+
+	/** */
+	public static String CompareUtils_NoDiffToolSpecified;
+
+	/** */
 	public static String ConfirmationPage_cantConnectToAnyTitle;
 
 	/** */
@@ -4039,6 +4051,45 @@ public class UIText extends NLS {
 
 	/** */
 	public static String DiffEditorInput_Tooltip2;
+
+	/** */
+	public static String DiffPreferencePage_DiffToolToUse;
+
+	/** */
+	public static String DiffPreferencePage_MergeAddExternalMergedFile;
+
+	/** */
+	public static String DiffPreferencePage_MergeLastHeadMode;
+
+	/** */
+	public static String DiffPreferencePage_MergePromptMode;
+
+	/** */
+	public static String DiffPreferencePage_MergeToolContent;
+
+	/** */
+	public static String DiffPreferencePage_MergeToolSection;
+
+	/** */
+	public static String DiffPreferencePage_MergeToolToUse;
+
+	/** */
+	public static String DiffPreferencePage_MergeWorkspaceMode;
+
+	/** */
+	public static String DiffPreferencePage_UseBuiltInEditor;
+
+	/** */
+	public static String DiffPreferencePage_UseExternal;
+
+	/** */
+	public static String DiffPreferencePage_UseExternalForType;
+
+	/** */
+	public static String DiffPreferencePage_UseGitConfig;
+
+	/** */
+	public static String DiffPreferencePage_WarningMessage;
 
 	/** */
 	public static String DiscardChangesAction_confirmActionTitle;
