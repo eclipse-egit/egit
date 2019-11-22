@@ -18,10 +18,14 @@ import static org.junit.Assert.fail;
 
 import java.io.OutputStream;
 import java.nio.file.Files;
+import java.util.concurrent.Callable;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.atomic.AtomicReference;
 
 import org.eclipse.core.resources.IFile;
+import org.eclipse.core.resources.IWorkspace;
+import org.eclipse.core.resources.ResourcesPlugin;
+import org.eclipse.core.runtime.CoreException;
 import org.eclipse.egit.core.Activator;
 import org.eclipse.egit.core.op.ConnectProviderOperation;
 import org.eclipse.egit.core.test.GitTestCase;
@@ -107,18 +111,23 @@ public class IndexDiffCacheTest extends GitTestCase {
 		testRepository.connect(project.project);
 		testRepository.addToIndex(project.project);
 		testRepository.createInitialCommit("testAddFileFromUntrackedFolder\n\nfirst commit\n");
-		prepareCacheEntry();
 
-		project.createFolder("folder");
-		project.createFolder("folder/a");
-		project.createFolder("folder/b");
-		IFile fileA = project.createFile("folder/a/file", new byte[] {});
-		project.createFile("folder/b/file", new byte[] {});
+		IFile[] fileA = { null };
+		runInWorkspace(() -> {
+			project.createFolder("folder");
+			project.createFolder("folder/a");
+			project.createFolder("folder/b");
+			fileA[0] = project.createFile("folder/a/file", new byte[] {});
+			project.createFile("folder/b/file", new byte[] {});
+			return null;
+		});
+
+		prepareCacheEntry();
 
 		IndexDiffData data1 = waitForListenerCalled();
 		assertThat(data1.getUntrackedFolders(), hasItem("Project-1/folder/"));
 
-		testRepository.track(fileA.getLocation().toFile());
+		testRepository.track(fileA[0].getLocation().toFile());
 
 		IndexDiffData data2 = waitForListenerCalled();
 		assertThat(data2.getAdded(), hasItem("Project-1/folder/a/file"));
@@ -130,10 +139,13 @@ public class IndexDiffCacheTest extends GitTestCase {
 	@Test
 	public void testAddIgnoredFolder() throws Exception {
 		testRepository.connect(project.project);
-		project.createFile(".gitignore", "ignore\n".getBytes("UTF-8"));
-		project.createFolder("ignore");
-		project.createFile("ignore/file.txt", new byte[] {});
-		project.createFolder("sub");
+		runInWorkspace(() -> {
+			project.createFile(".gitignore", "ignore\n".getBytes("UTF-8"));
+			project.createFolder("ignore");
+			project.createFile("ignore/file.txt", new byte[] {});
+			project.createFolder("sub");
+			return null;
+		});
 		testRepository.addToIndex(project.project);
 		testRepository.createInitialCommit("testAddFileInIgnoredFolder\n\nfirst commit\n");
 		prepareCacheEntry();
@@ -160,9 +172,13 @@ public class IndexDiffCacheTest extends GitTestCase {
 	@Test
 	public void testRemoveIgnoredFile() throws Exception {
 		testRepository.connect(project.project);
-		project.createFile(".gitignore", "ignore\n".getBytes("UTF-8"));
-		project.createFolder("sub");
-		IFile file = project.createFile("sub/ignore", new byte[] {});
+		IFile file[] = { null };
+		runInWorkspace(() -> {
+			project.createFile(".gitignore", "ignore\n".getBytes("UTF-8"));
+			project.createFolder("sub");
+			file[0] = project.createFile("sub/ignore", new byte[] {});
+			return null;
+		});
 		testRepository.addToIndex(project.project);
 		testRepository.createInitialCommit("testRemoveIgnoredFile\n\nfirst commit\n");
 		IndexDiffCacheEntry entry = prepareCacheEntry();
@@ -177,7 +193,7 @@ public class IndexDiffCacheTest extends GitTestCase {
 		IndexDiffData data2 = waitForListenerCalled();
 		assertThat(data2.getIgnoredNotInIndex(), hasItem("Project-1/sub/ignore"));
 
-		file.delete(false, null);
+		file[0].delete(false, null);
 
 		waitForListenerNotCalled();
 		entry.refresh(); // need explicit as ignored file shall not trigger.
@@ -188,9 +204,12 @@ public class IndexDiffCacheTest extends GitTestCase {
 	@Test
 	public void testAddAndRemoveGitIgnoreFileToIgnoredDir() throws Exception {
 		testRepository.connect(project.project);
-		project.createFile(".gitignore", "ignore\n".getBytes("UTF-8"));
-		project.createFolder("sub");
-		project.createFile("sub/ignore", new byte[] {});
+		runInWorkspace(() -> {
+			project.createFile(".gitignore", "ignore\n".getBytes("UTF-8"));
+			project.createFolder("sub");
+			project.createFile("sub/ignore", new byte[] {});
+			return null;
+		});
 		testRepository.addToIndex(project.project);
 		testRepository
 				.createInitialCommit("testRemoveIgnoredFile\n\nfirst commit\n");
@@ -201,6 +220,8 @@ public class IndexDiffCacheTest extends GitTestCase {
 				hasItem("Project-1/sub/ignore"));
 
 		project.createFile("sub/ignored", "Ignored".getBytes("UTF-8"));
+
+		waitForListenerCalled();
 
 		// adding this file will trigger a refresh, so no manual refresh must be
 		// required.
@@ -220,9 +241,12 @@ public class IndexDiffCacheTest extends GitTestCase {
 	@Test
 	public void testAddAndRemoveFileToIgnoredDir() throws Exception {
 		testRepository.connect(project.project);
-		project.createFile(".gitignore", "sub\n".getBytes("UTF-8"));
-		project.createFolder("sub");
-		project.createFile("sub/ignore", new byte[] {});
+		runInWorkspace(() -> {
+			project.createFile(".gitignore", "sub\n".getBytes("UTF-8"));
+			project.createFolder("sub");
+			project.createFile("sub/ignore", new byte[] {});
+			return null;
+		});
 		testRepository.addToIndex(project.project);
 		testRepository
 				.createInitialCommit("testRemoveIgnoredFile\n\nfirst commit\n");
@@ -243,9 +267,12 @@ public class IndexDiffCacheTest extends GitTestCase {
 	@Test
 	public void testModifyFileInIgnoredDir() throws Exception {
 		testRepository.connect(project.project);
-		project.createFile(".gitignore", "ignore\n".getBytes("UTF-8"));
-		project.createFolder("sub");
-		project.createFile("sub/ignore", new byte[] {});
+		runInWorkspace(() -> {
+			project.createFile(".gitignore", "ignore\n".getBytes("UTF-8"));
+			project.createFolder("sub");
+			project.createFile("sub/ignore", new byte[] {});
+			return null;
+		});
 		testRepository.addToIndex(project.project);
 		testRepository
 				.createInitialCommit("testRemoveIgnoredFile\n\nfirst commit\n");
@@ -263,6 +290,17 @@ public class IndexDiffCacheTest extends GitTestCase {
 
 		// no job should be triggered for that change.
 		waitForListenerNotCalled();
+	}
+
+	private void runInWorkspace(Callable<Void> action) throws CoreException {
+		ResourcesPlugin.getWorkspace().run(m -> {
+			try {
+				action.call();
+			} catch (Exception e) {
+				throw new CoreException(
+						Activator.error("Test preparation error", e));
+			}
+		}, project.getProject(), IWorkspace.AVOID_UPDATE, null);
 	}
 
 	private IndexDiffCacheEntry prepareCacheEntry() {
