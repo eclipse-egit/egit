@@ -34,6 +34,24 @@
       "revId": "3d6725f48b59578abef28ce1ab88682444b2fd0a",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "d2fdb789_7351e290",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/staging/StagingView.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1427,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2019-11-22T11:40:17Z",
+      "side": 1,
+      "message": "Ok, so that\u0027s what you meant in https://git.eclipse.org/r/#/c/152802/1/org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/repository/tree/RepositoryTreeNode.java@417 . Didn\u0027t make the connection then. Same answer.\n\nxtend has the rather nice ?. operator for this. In xtend I\u0027d just write\n\n  IEditorPart activeEditor \u003d site?.page?.activeEditor;\n  return activeEditor \u003d\u003d\u003d null ? null : getSelectionOfPart(activeEditor);\n\nI\u0027m not suggesting to move to xtend. :-)",
+      "parentUuid": "efd18077_c9551cee",
+      "revId": "3d6725f48b59578abef28ce1ab88682444b2fd0a",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
     }
   ]
 }
