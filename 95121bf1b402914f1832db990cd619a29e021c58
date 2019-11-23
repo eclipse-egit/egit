@@ -34,6 +34,24 @@
       "revId": "95121bf1b402914f1832db990cd619a29e021c58",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "6dafb571_8aa1c426",
+        "filename": "org.eclipse.egit.core.test/src/org/eclipse/egit/core/synchronize/GitResourceVariantTreeTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 292,
+      "author": {
+        "id": 440
+      },
+      "writtenOn": "2019-11-23T17:48:46Z",
+      "side": 1,
+      "message": "Removed from this change.",
+      "parentUuid": "2eaf48a2_23398e80",
+      "revId": "95121bf1b402914f1832db990cd619a29e021c58",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
     }
   ]
 }
