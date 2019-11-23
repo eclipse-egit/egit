@@ -41,6 +41,7 @@ import org.eclipse.egit.ui.Activator;
 import org.eclipse.egit.ui.UIPreferences;
 import org.eclipse.egit.ui.UIUtils;
 import org.eclipse.egit.ui.internal.CompareUtils;
+import org.eclipse.egit.ui.internal.GitLabels;
 import org.eclipse.egit.ui.internal.UIIcons;
 import org.eclipse.egit.ui.internal.UIText;
 import org.eclipse.egit.ui.internal.commit.CommitHelper;
@@ -96,6 +97,7 @@ import org.eclipse.jgit.lib.Repository;
 import org.eclipse.jgit.lib.RepositoryState;
 import org.eclipse.jgit.treewalk.FileTreeIterator;
 import org.eclipse.jgit.treewalk.filter.PathFilterGroup;
+import org.eclipse.osgi.util.NLS;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.SashForm;
 import org.eclipse.swt.events.DisposeEvent;
@@ -736,7 +738,8 @@ public class CommitDialog extends TitleAreaDialog {
 		Image titleImage = UIIcons.WIZBAN_COMMIT.createImage();
 		UIUtils.hookDisposal(parent, titleImage);
 		setTitleImage(titleImage);
-		setTitle(UIText.CommitDialog_Title);
+		setTitle(NLS.bind(UIText.CommitDialog_Title,
+				GitLabels.getPlainShortLabel(repository)));
 		if (ignoreErrors != null) {
 			setMessage(UIText.CommitDialog_MessageErrors,
 					IMessageProvider.WARNING);
