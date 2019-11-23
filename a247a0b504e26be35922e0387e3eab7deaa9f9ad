@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8694cc43_e745f400",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/components/DropDownMenuAction.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2019-11-23T18:27:52Z",
+      "side": 1,
+      "message": "Why don\u0027t you change getAction() to return a Collection\u003cContributionItem\u003e?",
+      "revId": "a247a0b504e26be35922e0387e3eab7deaa9f9ad",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
