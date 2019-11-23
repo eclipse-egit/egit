@@ -40,6 +40,7 @@ import java.util.Set;
 import java.util.function.Consumer;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import java.util.stream.Collectors;
 
 import org.eclipse.core.commands.ExecutionException;
 import org.eclipse.core.commands.operations.IUndoContext;
@@ -113,6 +114,7 @@ import org.eclipse.egit.ui.internal.repository.tree.RepositoryTreeNode;
 import org.eclipse.egit.ui.internal.selection.MultiViewerSelectionProvider;
 import org.eclipse.egit.ui.internal.selection.RepositorySelectionProvider;
 import org.eclipse.jface.action.Action;
+import org.eclipse.jface.action.ActionContributionItem;
 import org.eclipse.jface.action.ControlContribution;
 import org.eclipse.jface.action.IAction;
 import org.eclipse.jface.action.IContributionItem;
@@ -4581,8 +4583,9 @@ public class StagingView extends ViewPart
 		}
 
 		@Override
-		protected Collection<IAction> getActions() {
-			return actions;
+		protected Collection<IContributionItem> getActions() {
+			return actions.stream().map(ActionContributionItem::new)
+					.collect(Collectors.toList());
 		}
 
 		@Override

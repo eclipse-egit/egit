@@ -13,10 +13,9 @@ package org.eclipse.egit.ui.internal.components;
 import java.util.Collection;
 
 import org.eclipse.jface.action.Action;
-import org.eclipse.jface.action.ActionContributionItem;
 import org.eclipse.jface.action.IAction;
+import org.eclipse.jface.action.IContributionItem;
 import org.eclipse.jface.action.IMenuCreator;
-import org.eclipse.jgit.annotations.NonNull;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.graphics.Rectangle;
 import org.eclipse.swt.widgets.Control;
@@ -83,8 +82,7 @@ public abstract class DropDownMenuAction extends Action
 	}
 
 	private Menu fillMenu(Menu m) {
-		for (IAction action : getActions()) {
-			ActionContributionItem item = new ActionContributionItem(action);
+		for (IContributionItem item : getActions()) {
 			item.fill(m, -1);
 		}
 		return m;
@@ -114,12 +112,12 @@ public abstract class DropDownMenuAction extends Action
 	}
 
 	/**
-	 * Obtains the actions to display in the drop-down menu.
+	 * Obtains the items to display in the drop-down menu. Might be action
+	 * contributions or separators.
 	 *
-	 * @return the actions
+	 * @return the items
 	 */
-	@NonNull
-	protected abstract Collection<IAction> getActions();
+	protected abstract Collection<IContributionItem> getActions();
 
 	@Override
 	public void dispose() {

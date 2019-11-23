@@ -22,6 +22,7 @@ import java.util.Map;
 import java.util.Set;
 import java.util.function.Consumer;
 import java.util.function.Supplier;
+import java.util.stream.Collectors;
 
 import org.eclipse.core.runtime.preferences.IEclipsePreferences;
 import org.eclipse.core.runtime.preferences.IEclipsePreferences.IPreferenceChangeListener;
@@ -32,7 +33,9 @@ import org.eclipse.egit.ui.internal.CommonUtils;
 import org.eclipse.egit.ui.internal.UIIcons;
 import org.eclipse.egit.ui.internal.UIText;
 import org.eclipse.jface.action.Action;
+import org.eclipse.jface.action.ActionContributionItem;
 import org.eclipse.jface.action.IAction;
+import org.eclipse.jface.action.IContributionItem;
 import org.eclipse.jface.action.IMenuManager;
 import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.jgit.annotations.NonNull;
@@ -228,11 +231,12 @@ public final class RepositoryMenuUtil {
 
 
 		@Override
-		public Collection<IAction> getActions() {
+		public Collection<IContributionItem> getActions() {
 			Repository current = currentRepo.get();
 			File gitDir = current == null ? null : current.getDirectory();
 			return RepositoryMenuUtil.getRepositoryActions(includeBare, gitDir,
-					action);
+					action).stream().map(ActionContributionItem::new)
+					.collect(Collectors.toList());
 		}
 
 		@Override

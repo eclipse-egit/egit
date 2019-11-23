@@ -34,6 +34,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Objects;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 import org.eclipse.core.resources.IResource;
 import org.eclipse.core.resources.IWorkspaceRoot;
@@ -82,6 +83,7 @@ import org.eclipse.egit.ui.internal.selection.RepositorySelectionProvider;
 import org.eclipse.egit.ui.internal.selection.SelectionUtils;
 import org.eclipse.egit.ui.internal.trace.GitTraceLocation;
 import org.eclipse.jface.action.Action;
+import org.eclipse.jface.action.ActionContributionItem;
 import org.eclipse.jface.action.ControlContribution;
 import org.eclipse.jface.action.IAction;
 import org.eclipse.jface.action.IContributionItem;
@@ -359,8 +361,9 @@ public class GitHistoryPage extends HistoryPage implements RefsChangedListener,
 			}
 
 			@Override
-			protected Collection<IAction> getActions() {
-				return actions;
+			protected Collection<IContributionItem> getActions() {
+				return actions.stream().map(ActionContributionItem::new)
+						.collect(Collectors.toList());
 			}
 
 			@Override
@@ -672,12 +675,13 @@ public class GitHistoryPage extends HistoryPage implements RefsChangedListener,
 			}
 
 			@Override
-			protected Collection<IAction> getActions() {
+			protected Collection<IContributionItem> getActions() {
 				if (historyPage.getCurrentRepo() == null) {
 					return new ArrayList<>();
 				}
-				List<IAction> actions = new ArrayList<>();
-				actions.add(configureFiltersAction);
+				List<IContributionItem> actions = new ArrayList<>();
+				actions.add(new ActionContributionItem(configureFiltersAction));
+				actions.add(new Separator());
 				Set<RefFilter> filters = helper.getRefFilters();
 				List<RefFilter> sortedFilters = new ArrayList<>(
 						filters);
@@ -688,6 +692,7 @@ public class GitHistoryPage extends HistoryPage implements RefsChangedListener,
 								.thenComparing(RefFilter::getFilterString,
 										String.CASE_INSENSITIVE_ORDER));
 
+				boolean separated = false;
 				for (RefFilter filter : sortedFilters) {
 					Action action = new ShownRefAction(filter, () -> {
 						helper.setRefFilters(filters);
@@ -695,7 +700,11 @@ public class GitHistoryPage extends HistoryPage implements RefsChangedListener,
 						updateUiForMode();
 						historyPage.refresh();
 					});
-					actions.add(action);
+					if (!separated && !filter.isPreconfigured()) {
+						actions.add(new Separator());
+						separated = true;
+					}
+					actions.add(new ActionContributionItem(action));
 				}
 				return actions;
 			}
