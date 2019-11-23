@@ -15,7 +15,9 @@ import java.util.Collection;
 import org.eclipse.jface.action.Action;
 import org.eclipse.jface.action.ActionContributionItem;
 import org.eclipse.jface.action.IAction;
+import org.eclipse.jface.action.IContributionItem;
 import org.eclipse.jface.action.IMenuCreator;
+import org.eclipse.jface.action.Separator;
 import org.eclipse.jgit.annotations.NonNull;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.graphics.Rectangle;
@@ -84,7 +86,13 @@ public abstract class DropDownMenuAction extends Action
 
 	private Menu fillMenu(Menu m) {
 		for (IAction action : getActions()) {
-			ActionContributionItem item = new ActionContributionItem(action);
+			IContributionItem item;
+			String actionText = action.getText();
+			if (actionText == null || actionText.isEmpty()) {
+				item = new Separator();
+			} else {
+				item = new ActionContributionItem(action);
+			}
 			item.fill(m, -1);
 		}
 		return m;

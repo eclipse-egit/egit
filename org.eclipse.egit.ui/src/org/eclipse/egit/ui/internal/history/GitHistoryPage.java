@@ -678,6 +678,9 @@ public class GitHistoryPage extends HistoryPage implements RefsChangedListener,
 				}
 				List<IAction> actions = new ArrayList<>();
 				actions.add(configureFiltersAction);
+				actions.add(new Action() {
+					// separator
+				});
 				Set<RefFilter> filters = helper.getRefFilters();
 				List<RefFilter> sortedFilters = new ArrayList<>(
 						filters);
@@ -688,6 +691,7 @@ public class GitHistoryPage extends HistoryPage implements RefsChangedListener,
 								.thenComparing(RefFilter::getFilterString,
 										String.CASE_INSENSITIVE_ORDER));
 
+				boolean separated = false;
 				for (RefFilter filter : sortedFilters) {
 					Action action = new ShownRefAction(filter, () -> {
 						helper.setRefFilters(filters);
@@ -695,6 +699,12 @@ public class GitHistoryPage extends HistoryPage implements RefsChangedListener,
 						updateUiForMode();
 						historyPage.refresh();
 					});
+					if (!separated && !filter.isPreconfigured()) {
+						actions.add(new Action() {
+							// separator
+						});
+						separated = true;
+					}
 					actions.add(action);
 				}
 				return actions;
