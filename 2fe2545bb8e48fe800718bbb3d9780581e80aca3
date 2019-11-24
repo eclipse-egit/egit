@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "85ada740_9def50c8",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/repository/tree/command/CreateRepositoryGroupCommand.java",
+        "patchSetId": 17
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2019-11-24T10:34:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ede63dc2_a3168ba8",
+      "range": {
+        "startLine": 83,
+        "startChar": 2,
+        "endLine": 91,
+        "endChar": 14
+      },
+      "revId": "2fe2545bb8e48fe800718bbb3d9780581e80aca3",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9b0c61fe_13858368",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/uitext.properties",
         "patchSetId": 17
@@ -36,6 +60,30 @@
       "writtenOn": "2019-11-24T08:28:01Z",
       "side": 1,
       "message": "Can we please make that \"1#|1\u003c\" and let the loop start with 1 instead of 0? That results in \"New Group, New Group 2, New Group 3, ...\". Our users are humans used to 1-based numbering (instead of 0-based numbering used for computing), therefore naming the second new group with an index 1 is not user friendly.\n\nWe use the same strategy for creating new local repos.",
+      "range": {
+        "startLine": 1354,
+        "startChar": 51,
+        "endLine": 1354,
+        "endChar": 56
+      },
+      "revId": "2fe2545bb8e48fe800718bbb3d9780581e80aca3",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "e866b98f_5f48bd2d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/uitext.properties",
+        "patchSetId": 17
+      },
+      "lineNbr": 1354,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2019-11-24T10:34:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9b0c61fe_13858368",
       "range": {
         "startLine": 1354,
         "startChar": 51,
