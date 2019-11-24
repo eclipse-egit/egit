@@ -42,6 +42,8 @@ import org.eclipse.jface.window.Window;
 import org.eclipse.jgit.lib.Repository;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.CLabel;
+import org.eclipse.swt.events.KeyAdapter;
+import org.eclipse.swt.events.KeyEvent;
 import org.eclipse.swt.events.MouseEvent;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
@@ -244,6 +246,16 @@ public class GitHistoryRefFilterConfigurationDialog
 			@Override
 			public boolean isChecked(Object element) {
 				return ((RefFilter) element).isSelected();
+			}
+		});
+
+		configsTable.getTable().addKeyListener(new KeyAdapter() {
+
+			@Override
+			public void keyPressed(KeyEvent event) {
+				if (event.keyCode == SWT.DEL && removeButton.isEnabled()) {
+					removeSelectedFilters();
+				}
 			}
 		});
 
