@@ -277,7 +277,7 @@ class CommitGraphTable {
 		});
 
 		copy = ActionUtils.createGlobalAction(ActionFactory.COPY,
-				() -> doCopy());
+				this::doCopy);
 		copy.setText(UIText.CommitGraphTable_CopyCommitIdLabel);
 		copy.setImageDescriptor(UIIcons.ELCL16_ID);
 		table.setUseHashlookup(true);
