@@ -15,6 +15,7 @@ package org.eclipse.egit.ui.internal.repository.tree.command;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -40,6 +41,8 @@ import org.eclipse.egit.core.op.ConnectProviderOperation;
 import org.eclipse.egit.core.project.RepositoryFinder;
 import org.eclipse.egit.core.project.RepositoryMapping;
 import org.eclipse.egit.ui.internal.UIText;
+import org.eclipse.egit.ui.internal.groups.RepositoryGroup;
+import org.eclipse.egit.ui.internal.groups.RepositoryGroups;
 import org.eclipse.egit.ui.internal.repository.RepositorySearchWizard;
 import org.eclipse.egit.ui.internal.repository.tree.RepositoryTreeNode;
 import org.eclipse.jface.dialogs.IDialogConstants;
@@ -58,6 +61,7 @@ public class AddCommand extends
 		RepositoriesViewCommandHandler<RepositoryTreeNode> {
 	@Override
 	public Object execute(ExecutionEvent event) throws ExecutionException {
+		RepositoryGroup group = getSelectedRepositoryGroup(event);
 		RepositorySearchWizard wizard = new RepositorySearchWizard(
 				util.getConfiguredRepositories(), true);
 		WizardDialog dialog = new WizardDialog(getShell(event), wizard) {
@@ -74,14 +78,18 @@ public class AddCommand extends
 		if (dialog.open() == Window.OK) {
 			for (String dir : wizard.getDirectories()) {
 				File repositoryDir = FileUtils.canonicalize(new File(dir));
-				addRepository(repositoryDir);
+				addRepository(repositoryDir, group);
 			}
 		}
 		return null;
 	}
 
-	private void addRepository(File repositoryDir) {
+	private void addRepository(File repositoryDir, RepositoryGroup group) {
 		GerritUtil.tryToAutoConfigureForGerrit(repositoryDir);
+		if (group != null) {
+			RepositoryGroups.getInstance().addRepositoriesToGroup(group,
+				Collections.singletonList(repositoryDir));
+		}
 		util.addConfiguredRepository(repositoryDir);
 		if (doAutoShare()) {
 			autoShareProjects(repositoryDir);

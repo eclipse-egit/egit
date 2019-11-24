@@ -4085,6 +4085,38 @@
       </menuContribution>
       <menuContribution
             locationURI="popup:org.eclipse.egit.ui.RepositoriesView?after=repo-0">
+         <command
+               commandId="org.eclipse.egit.ui.RepositoriesViewAddRepository"
+               style="push"
+               tooltip="%RepoViewAddRepository.tooltip">
+            <visibleWhen checkEnabled="false">
+               <count value="0" />
+            </visibleWhen>
+         </command>
+         <command
+               commandId="org.eclipse.egit.ui.RepositoriesViewClone"
+               style="push"
+               tooltip="%RepoViewCloneRepository.tooltip">
+            <visibleWhen checkEnabled="false">
+               <count value="0" />
+            </visibleWhen>
+         </command>
+         <command
+               commandId="org.eclipse.egit.ui.RepositoriesViewCreateRepository"
+               style="push"
+               tooltip="%RepoViewCreateRepository.tooltip">
+             <visibleWhen checkEnabled="false">
+               <count value="0" />
+            </visibleWhen>
+         </command>
+         <command
+               commandId="org.eclipse.egit.ui.RepositoriesCreateGroup"
+               label="%CreateRepositoryGroupCommand.label"
+               style="push">
+            <visibleWhen checkEnabled="false">
+               <count value="0" />
+            </visibleWhen>
+         </command>
          <menu
                icon="icons/obj16/branches_obj.png"
                label="%SwitchToMenuMultiple.label">
@@ -4475,6 +4507,39 @@
       </menuContribution>
       <menuContribution
             locationURI="popup:org.eclipse.egit.ui.RepositoriesView?after=repo-2">
+         <command
+               commandId="org.eclipse.egit.ui.RepositoriesViewAddRepository"
+               style="push"
+               tooltip="%RepoViewAddRepository.tooltip">
+            <visibleWhen>
+               <and>
+                  <count value="1"/>
+                  <reference definitionId="org.eclipse.egit.ui.repoGroups.onlyGroupsSelected"/>
+               </and>
+            </visibleWhen>
+         </command>
+         <command
+               commandId="org.eclipse.egit.ui.RepositoriesViewClone"
+               style="push"
+               tooltip="%RepoViewCloneRepository.tooltip">
+            <visibleWhen>
+               <and>
+                  <count value="1"/>
+                  <reference definitionId="org.eclipse.egit.ui.repoGroups.onlyGroupsSelected"/>
+               </and>
+            </visibleWhen>
+         </command>
+         <command
+               commandId="org.eclipse.egit.ui.RepositoriesViewCreateRepository"
+               style="push"
+               tooltip="%RepoViewCreateRepository.tooltip">
+            <visibleWhen>
+               <and>
+                  <count value="1"/>
+                  <reference definitionId="org.eclipse.egit.ui.repoGroups.onlyGroupsSelected"/>
+               </and>
+            </visibleWhen>
+         </command>
          <command
                commandId="org.eclipse.egit.ui.team.Merge"
                icon="icons/obj16/merge.png"

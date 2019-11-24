@@ -44,10 +44,12 @@ public class CloneCommand extends
 	@Override
 	public Object execute(ExecutionEvent event) throws ExecutionException {
 		GitCloneWizard wizard;
-		if (presetURI == null)
+		if (presetURI == null) {
 			wizard = new GitCloneWizard();
-		else
+		} else {
 			wizard = new GitCloneWizard(presetURI);
+		}
+		wizard.setRepositoryGroup(getSelectedRepositoryGroup(event));
 		wizard.setShowProjectImport(true);
 		WizardDialog dlg = new WizardDialog(getShell(event), wizard);
 		dlg.setHelpAvailable(true);

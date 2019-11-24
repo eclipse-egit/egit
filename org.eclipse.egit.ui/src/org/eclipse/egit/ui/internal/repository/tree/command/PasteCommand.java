@@ -17,11 +17,14 @@ package org.eclipse.egit.ui.internal.repository.tree.command;
 
 import java.io.File;
 import java.net.URISyntaxException;
+import java.util.Collections;
 
 import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.commands.ExecutionException;
 import org.eclipse.egit.ui.internal.UIText;
 import org.eclipse.egit.ui.internal.components.RepositorySelectionPage.Protocol;
+import org.eclipse.egit.ui.internal.groups.RepositoryGroup;
+import org.eclipse.egit.ui.internal.groups.RepositoryGroups;
 import org.eclipse.egit.ui.internal.repository.RepositoriesView;
 import org.eclipse.egit.ui.internal.repository.tree.RepositoryTreeNode;
 import org.eclipse.jface.dialogs.MessageDialog;
@@ -29,6 +32,7 @@ import org.eclipse.jgit.lib.Constants;
 import org.eclipse.jgit.lib.RepositoryCache;
 import org.eclipse.jgit.transport.URIish;
 import org.eclipse.jgit.util.FS;
+import org.eclipse.jgit.util.FileUtils;
 import org.eclipse.osgi.util.NLS;
 import org.eclipse.swt.dnd.Clipboard;
 import org.eclipse.swt.dnd.TextTransfer;
@@ -96,7 +100,13 @@ public class PasteCommand extends
 				}
 			}
 
+			file = FileUtils.canonicalize(file);
 			if (util.addConfiguredRepository(file)) {
+				RepositoryGroup group = getSelectedRepositoryGroup(event);
+				if (group != null) {
+					RepositoryGroups.getInstance().addRepositoriesToGroup(group,
+							Collections.singletonList(file));
+				}
 				// let's do the auto-refresh the rest
 			} else {
 				errorMessage = NLS.bind(
