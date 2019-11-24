@@ -16,6 +16,24 @@
       "revId": "a247a0b504e26be35922e0387e3eab7deaa9f9ad",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "16b9f0c6_b438ff3e",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/components/DropDownMenuAction.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 440
+      },
+      "writtenOn": "2019-11-24T16:08:16Z",
+      "side": 1,
+      "message": "Thanks, that was a good suggestion. Done.",
+      "parentUuid": "8694cc43_e745f400",
+      "revId": "a247a0b504e26be35922e0387e3eab7deaa9f9ad",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
     }
   ]
 }
