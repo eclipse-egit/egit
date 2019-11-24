@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5deee255_41325974",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/uitext.properties",
+        "patchSetId": 2
+      },
+      "lineNbr": 260,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2019-11-24T18:53:03Z",
+      "side": 1,
+      "message": "You\u0027ll have to adapt the tests for this. It also doesn\u0027t really belong into this commit.",
+      "revId": "09e1e0cdb19b2782bc0ab846a9db2ea5f9d1c66e",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
