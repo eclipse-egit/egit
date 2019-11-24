@@ -76,7 +76,7 @@ public class DiffEditorOutlinePage extends NestedContentOutlinePage {
 		viewer.setLabelProvider(new DiffLabelProvider());
 		viewer.addDoubleClickListener(
 				event -> openFolder(event.getSelection()));
-		viewer.addOpenListener(event -> fireOpenEvent(event));
+		viewer.addOpenListener(this::fireOpenEvent);
 		if (input != null) {
 			viewer.setInput(input);
 		}

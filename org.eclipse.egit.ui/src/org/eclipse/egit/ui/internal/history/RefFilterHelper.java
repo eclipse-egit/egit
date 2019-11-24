@@ -430,7 +430,7 @@ public class RefFilterHelper {
 		RefDatabase db = this.repository.getRefDatabase();
 		Set<Ref> result = new LinkedHashSet<>();
 		Set<RefFilter> selectedFilters = getRefFilters().stream()
-				.filter(f -> f.isSelected())
+				.filter(RefFilter::isSelected)
 				.collect(Collectors.toCollection(LinkedHashSet::new));
 
 		for (Ref ref : db.getRefs()) {

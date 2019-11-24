@@ -426,7 +426,7 @@ public class ReflogView extends ViewPart implements RefsChangedListener, IShowIn
 				selectionChangedListener, site);
 
 		site.setSelectionProvider(new RepositorySelectionProvider(
-				refLogTreeViewer, () -> getRepository()));
+				refLogTreeViewer, this::getRepository));
 
 		addRefsChangedListener = org.eclipse.egit.core.Activator.getDefault()
 				.getRepositoryCache().getGlobalListenerList()
@@ -436,7 +436,7 @@ public class ReflogView extends ViewPart implements RefsChangedListener, IShowIn
 		IToolBarManager toolbar = getViewSite().getActionBars()
 				.getToolBarManager();
 		switchRepositoriesAction = new RepositoryToolbarAction(false,
-				() -> getRepository(),
+				this::getRepository,
 				repo -> reactOnSelection(new StructuredSelection(repo)));
 		toolbar.add(switchRepositoriesAction);
 		getViewSite().getActionBars().updateActionBars();

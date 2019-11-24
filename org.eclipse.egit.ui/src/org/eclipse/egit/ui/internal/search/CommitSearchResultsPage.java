@@ -82,7 +82,7 @@ public class CommitSearchResultsPage extends AbstractTextSearchViewPage {
 					for (Object inputElement : getInput().getElements()) {
 						RepositoryCommit commit = (RepositoryCommit) inputElement;
 						repos.computeIfAbsent(commit.getRepository(),
-								r -> new RepositoryMatch(r)).addCommit(commit);
+								RepositoryMatch::new).addCommit(commit);
 					}
 					return repos.values().toArray();
 				}

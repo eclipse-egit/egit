@@ -30,7 +30,7 @@ import org.eclipse.jgit.storage.file.FileBasedConfig;
 class CachingRepository extends FileRepository {
 
 	private static final ThreadLocal<Map<File, CachedConfig>> CACHED_CONFIG = ThreadLocal
-			.withInitial(() -> new HashMap<>());
+			.withInitial(HashMap::new);
 
 	/**
 	 * @param options

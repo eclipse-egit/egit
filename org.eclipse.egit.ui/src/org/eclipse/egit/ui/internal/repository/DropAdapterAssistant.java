@@ -160,7 +160,7 @@ public class DropAdapterAssistant extends CommonDropAdapterAssistant {
 	private boolean onlyRepositoryNodesSelected(ISelection selection) {
 		if (selection instanceof IStructuredSelection) {
 			return ((List<?>) ((IStructuredSelection) selection).toList())
-					.stream().allMatch(e -> isRegularRepository(e));
+					.stream().allMatch(this::isRegularRepository);
 		}
 		return false;
 	}

@@ -53,8 +53,7 @@ public class MultiPageEditorContentOutlinePage extends ContentOutlinePage {
 
 	private final MultiPageEditorPart editorPart;
 
-	private final ISelectionChangedListener globalSelectionListener = //
-			event -> fireSelectionChangedEvent(event);
+	private final ISelectionChangedListener globalSelectionListener = this::fireSelectionChangedEvent;
 
 	private final CopyOnWriteArrayList<ISelectionChangedListener> selectionListeners = new CopyOnWriteArrayList<>();
 

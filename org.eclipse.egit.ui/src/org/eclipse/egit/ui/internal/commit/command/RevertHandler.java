@@ -61,7 +61,8 @@ public class RevertHandler extends CommitCommandHandler {
 		}
 
 		List<RevCommit> commits = repoCommits.stream()
-				.map(c -> c.getRevCommit()).collect(Collectors.toList());
+				.map(IRepositoryCommit::getRevCommit)
+				.collect(Collectors.toList());
 
 		try {
 			if (!CommitUtil.areCommitsInCurrentBranch(commits, repo)) {
