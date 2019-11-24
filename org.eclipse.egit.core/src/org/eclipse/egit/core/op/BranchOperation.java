@@ -203,7 +203,7 @@ public class BranchOperation implements IEGitOperation {
 					throws CoreException {
 				IProject[] refreshProjects = results.entrySet().stream()
 						.map(this::getAffectedProjects)
-						.flatMap(arr -> Stream.of(arr)).distinct()
+						.flatMap(Stream::of).distinct()
 						.toArray(IProject[]::new);
 				ProjectUtil.refreshValidProjects(refreshProjects, delete,
 						monitor);

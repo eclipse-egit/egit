@@ -361,7 +361,7 @@ public class CommitFileDiffViewer extends TableViewer {
 		copy.setEnabled(true);
 		if ((rawTable.getStyle() & SWT.MULTI) != 0) {
 			selectAll = ActionUtils.createGlobalAction(ActionFactory.SELECT_ALL,
-					() -> doSelectAll());
+					this::doSelectAll);
 			selectAll.setEnabled(true);
 			ActionUtils.setGlobalActions(rawTable, copy, selectAll);
 			mgr.add(selectAll);
@@ -911,7 +911,7 @@ public class CommitFileDiffViewer extends TableViewer {
 			FileDiff first = diffs.iterator().next();
 			Repository repository = first.getRepository();
 			String revision = first.getCommit().getName();
-			List<String> paths = diffs.stream().map(d -> d.getNewPath())
+			List<String> paths = diffs.stream().map(FileDiff::getNewPath)
 					.collect(Collectors.toList());
 			return new DiscardChangesOperation(repository, paths, revision);
 		}

@@ -507,7 +507,7 @@ public class SpellcheckableMessageArea extends Composite {
 		List<AnnotationPreference> annotationPreferences = new MarkerAnnotationPreferences()
 				.getAnnotationPreferences();
 		annotationPreferences.iterator()
-				.forEachRemaining(p -> support.setAnnotationPreference(p));
+				.forEachRemaining(support::setAnnotationPreference);
 
 		support.install(EditorsUI.getPreferenceStore());
 		return support;

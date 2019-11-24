@@ -347,11 +347,11 @@ public abstract class AbstractConfigureRemoteDialog
 			}
 		};
 		IAction deleteRefSpecAction = ActionUtils.createGlobalAction(
-				ActionFactory.DELETE, () -> doDeleteRefSpecs());
+				ActionFactory.DELETE, this::doDeleteRefSpecs);
 		IAction copyRefSpecAction = ActionUtils
-				.createGlobalAction(ActionFactory.COPY, () -> doCopy());
+				.createGlobalAction(ActionFactory.COPY, this::doCopy);
 		IAction pasteRefSpecAction = ActionUtils
-				.createGlobalAction(ActionFactory.PASTE, () -> doPaste());
+				.createGlobalAction(ActionFactory.PASTE, this::doPaste);
 		IAction selectAllRefSpecsAction = ActionUtils.createGlobalAction(
 				ActionFactory.SELECT_ALL,
 				() -> {
@@ -539,7 +539,7 @@ public abstract class AbstractConfigureRemoteDialog
 		case DRY_RUN:
 			try {
 				new ProgressMonitorDialog(getShell()).run(true, true,
-						(monitor) -> dryRun(monitor));
+						this::dryRun);
 			} catch (InvocationTargetException e) {
 				Activator.showError(e.getMessage(), e);
 			} catch (InterruptedException e1) {

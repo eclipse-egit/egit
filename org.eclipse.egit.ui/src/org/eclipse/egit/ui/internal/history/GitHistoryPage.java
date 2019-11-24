@@ -307,12 +307,12 @@ public class GitHistoryPage extends HistoryPage implements RefsChangedListener,
 					if (IAction.ENABLED.equals(e.getProperty())) {
 						boolean previousEnablement = isEnabled();
 						childEnablement = FilterAction.this.actions.stream()
-								.anyMatch(act -> act.isEnabled());
+								.anyMatch(IAction::isEnabled);
 						boolean currentEnablement = isEnabled();
 						if (currentEnablement != previousEnablement) {
 							IAction currentChild = currentEnablement
 									? FilterAction.this.actions.stream()
-											.filter(act -> act.isChecked())
+											.filter(IAction::isChecked)
 											.findFirst().orElse(null)
 									: null;
 							if (currentChild == null) {

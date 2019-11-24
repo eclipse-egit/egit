@@ -469,7 +469,7 @@ public class RepositoryTreeNodeDecorator extends GitDecorator
 		}
 		Set<String> modified = data.getModified();
 		return data.getSubmodules().stream()
-				.anyMatch(s -> modified.contains(s));
+				.anyMatch(modified::contains);
 	}
 
 	@Override

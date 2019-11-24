@@ -119,12 +119,10 @@ public class HyperlinkSourceViewer extends ProjectionViewer {
 		super(parent, verticalRuler, overviewRuler, showAnnotationsOverview,
 				styles);
 		setColors();
-		editorPropertyChangeListener = event -> handleEditorPreferencesChange(
-				event);
+		editorPropertyChangeListener = this::handleEditorPreferencesChange;
 		EditorsUI.getPreferenceStore()
 				.addPropertyChangeListener(editorPropertyChangeListener);
-		jFacePropertyChangeListener = event -> handleJFacePreferencesChange(
-				event);
+		jFacePropertyChangeListener = this::handleJFacePreferencesChange;
 		JFacePreferences.getPreferenceStore()
 				.addPropertyChangeListener(jFacePropertyChangeListener);
 	}
@@ -140,7 +138,7 @@ public class HyperlinkSourceViewer extends ProjectionViewer {
 				String property = event.getProperty();
 				if (preferenceKeysForEnablement.contains(property)) {
 					resetHyperlinkDetectors();
-					async(() -> refresh());
+					async(this::refresh);
 				} else if (preferenceKeysForActivation.contains(property)) {
 					resetHyperlinkDetectors();
 				}
@@ -231,7 +229,7 @@ public class HyperlinkSourceViewer extends ProjectionViewer {
 		case AbstractTextEditor.PREFERENCE_COLOR_SELECTION_FOREGROUND_SYSTEM_DEFAULT:
 		case AbstractTextEditor.PREFERENCE_COLOR_SELECTION_BACKGROUND:
 		case AbstractTextEditor.PREFERENCE_COLOR_SELECTION_BACKGROUND_SYSTEM_DEFAULT:
-			async(() -> setColors());
+			async(this::setColors);
 			break;
 		default:
 			break;
@@ -248,7 +246,7 @@ public class HyperlinkSourceViewer extends ProjectionViewer {
 	 */
 	protected void handleJFacePreferencesChange(PropertyChangeEvent event) {
 		if (JFacePreferences.HYPERLINK_COLOR.equals(event.getProperty())) {
-			async(() -> invalidateTextPresentation());
+			async(this::invalidateTextPresentation);
 		}
 	}
 

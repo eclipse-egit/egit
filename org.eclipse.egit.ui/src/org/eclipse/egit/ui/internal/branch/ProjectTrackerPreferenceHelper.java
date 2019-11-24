@@ -126,7 +126,7 @@ class ProjectTrackerPreferenceHelper {
 			return Collections.emptyList();
 		}
 		List<String> projectPaths = Stream.of(children)
-				.map(child -> child.getTextData())
+				.map(IMemento::getTextData)
 				.filter(x -> !StringUtils.isEmptyOrNull(x))
 				.collect(Collectors.toList());
 		return projectPaths;

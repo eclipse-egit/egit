@@ -235,7 +235,8 @@ public class CommitSelectionDialog extends TitleAreaDialog {
 								if (monitor.isCanceled()) {
 									throw new InterruptedException();
 								}
-								getShell().getDisplay().asyncExec(() -> updateUi());
+								getShell().getDisplay().asyncExec(
+										CommitSelectionDialog.this::updateUi);
 							} catch (IOException e) {
 								throw new InvocationTargetException(e);
 							} finally {

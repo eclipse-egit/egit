@@ -100,7 +100,7 @@ class BranchProjectTracker {
 	public ProjectTrackerMemento snapshot() {
 		ProjectTrackerMemento memento = new ProjectTrackerMemento();
 		Stream.of(repositories).map(this::takeSnapshot).filter(Objects::nonNull)
-				.forEach(x -> memento.addSnapshot(x));
+				.forEach(memento::addSnapshot);
 		return memento;
 	}
 

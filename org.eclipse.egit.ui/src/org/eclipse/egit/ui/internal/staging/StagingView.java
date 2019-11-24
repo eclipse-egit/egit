@@ -1876,7 +1876,7 @@ public class StagingView extends ViewPart
 					StagingViewSearchThread searchThread = new StagingViewSearchThread(
 							StagingView.this);
 					filterText.getDisplay().timerExec(200,
-							() -> searchThread.start());
+							searchThread::start);
 				});
 				return toolbarComposite;
 			}
@@ -2164,7 +2164,7 @@ public class StagingView extends ViewPart
 						}
 					}
 				});
-		viewer.addOpenListener(event -> compareWith(event));
+		viewer.addOpenListener(this::compareWith);
 		viewer.setComparator(new StagingEntryComparator(!getSortCheckState(),
 				getPreferenceStore()
 						.getBoolean(UIPreferences.STAGING_VIEW_FILENAME_MODE)));

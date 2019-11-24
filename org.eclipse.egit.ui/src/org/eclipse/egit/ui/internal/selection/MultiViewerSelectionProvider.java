@@ -38,11 +38,9 @@ public class MultiViewerSelectionProvider extends AbstractSelectionProvider {
 		}
 	};
 
-	private final ISelectionChangedListener selectionHook = event -> selectionChanged(
-			event);
+	private final ISelectionChangedListener selectionHook = this::selectionChanged;
 
-	private final ISelectionChangedListener postSelectionHook = event -> postSelectionChanged(
-			event);
+	private final ISelectionChangedListener postSelectionHook = this::postSelectionChanged;
 
 	private Viewer currentViewer;
 
