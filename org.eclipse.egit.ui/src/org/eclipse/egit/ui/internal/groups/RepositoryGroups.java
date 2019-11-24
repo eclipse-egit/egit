@@ -108,6 +108,16 @@ public final class RepositoryGroups {
 	}
 
 	/**
+	 * Determines whether there are any repository groups.
+	 *
+	 * @return {@code true} if there are repository groups, {@code false}
+	 *         otherwise
+	 */
+	public boolean hasGroups() {
+		return !groupMap.isEmpty();
+	}
+
+	/**
 	 * Creates a new group with the given name.
 	 *
 	 * @param groupName

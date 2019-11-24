@@ -132,6 +132,7 @@ import org.eclipse.swt.events.FocusListener;
 import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Item;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Menu;
@@ -467,6 +468,24 @@ public class RepositoriesView extends CommonNavigator implements IShowInSource, 
 				SWT.MULTI | SWT.H_SCROLL | SWT.V_SCROLL);
 	}
 
+	private void setTopControl(CommonViewer viewer) {
+		if (!repositories.isEmpty()
+				|| RepositoryGroups.getInstance().hasGroups()) {
+			layout.topControl = viewer.getControl();
+		} else {
+			layout.topControl = emptyArea;
+		}
+	}
+
+	// After a refresh of the CommonViewer decide what to display
+	private void afterRefresh(CommonViewer viewer) {
+		Control currentTop = layout.topControl;
+		setTopControl(viewer);
+		if (currentTop != layout.topControl) {
+			emptyArea.getParent().layout(true, true);
+		}
+	}
+
 	@Override
 	public <T> T getAdapter(Class<T> adapter) {
 		// integrate with Properties view
@@ -569,11 +588,7 @@ public class RepositoriesView extends CommonNavigator implements IShowInSource, 
 		});
 
 		emptyArea.setBackground(viewer.getControl().getBackground());
-		if (!repositories.isEmpty())
-			layout.topControl = viewer.getControl();
-		else
-			layout.topControl = emptyArea;
-
+		setTopControl(viewer);
 		return viewer;
 	}
 
@@ -1026,6 +1041,7 @@ public class RepositoriesView extends CommonNavigator implements IShowInSource, 
 				Object[] expanded = tv.getExpandedElements();
 				tv.setInput(ResourcesPlugin.getWorkspace().getRoot());
 				tv.setExpandedElements(expanded);
+				afterRefresh(tv);
 			} else {
 				tv.refresh(true);
 			}
@@ -1048,12 +1064,6 @@ public class RepositoriesView extends CommonNavigator implements IShowInSource, 
 				return Status.CANCEL_STATUS;
 			}
 
-			if (!repositories.isEmpty()) {
-				layout.topControl = getCommonViewer().getControl();
-			} else {
-				layout.topControl = emptyArea;
-			}
-			emptyArea.getParent().layout(true, true);
 			if (monitor.isCanceled()) {
 				return Status.CANCEL_STATUS;
 			}
@@ -1390,7 +1400,7 @@ public class RepositoriesView extends CommonNavigator implements IShowInSource, 
 	 * provider -- our label provider already does so, and we don't want double
 	 * decorations.
 	 */
-	private static class RepositoriesCommonViewer extends CommonViewer {
+	private class RepositoriesCommonViewer extends CommonViewer {
 
 		public RepositoriesCommonViewer(String viewId, Composite parent,
 				int style) {
@@ -1406,6 +1416,18 @@ public class RepositoriesView extends CommonNavigator implements IShowInSource, 
 				((DecoratingStyledCellLabelProvider) labelProvider)
 						.setLabelDecorator(null);
 			}
+		}
+
+		@Override
+		public void refresh() {
+			super.refresh();
+			afterRefresh(this);
+		}
+
+		@Override
+		public void refresh(boolean updateLabels) {
+			super.refresh(updateLabels);
+			afterRefresh(this);
 		}
 	}
 }
