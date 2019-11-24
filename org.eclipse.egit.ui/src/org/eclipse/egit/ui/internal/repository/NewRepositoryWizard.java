@@ -15,6 +15,7 @@ package org.eclipse.egit.ui.internal.repository;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -32,6 +33,8 @@ import org.eclipse.egit.core.internal.job.JobUtil;
 import org.eclipse.egit.core.internal.util.ProjectUtil;
 import org.eclipse.egit.core.op.ConnectProviderOperation;
 import org.eclipse.egit.ui.internal.UIText;
+import org.eclipse.egit.ui.internal.groups.RepositoryGroup;
+import org.eclipse.egit.ui.internal.groups.RepositoryGroups;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.wizard.Wizard;
 import org.eclipse.jgit.api.Git;
@@ -48,6 +51,8 @@ public class NewRepositoryWizard extends Wizard implements INewWizard {
 	private final CreateRepositoryPage myCreatePage;
 
 	private Repository repository;
+
+	private RepositoryGroup group;
 
 	/**
 	 * Default constructor. Needed for File->New->Other->Git->Git Repository
@@ -82,6 +87,10 @@ public class NewRepositoryWizard extends Wizard implements INewWizard {
 					.call().getRepository().getDirectory();
 			this.repository = Activator.getDefault().getRepositoryCache()
 					.lookupRepository(gitDir);
+			if (group != null) {
+				RepositoryGroups.getInstance().addRepositoriesToGroup(group,
+						Collections.singletonList(gitDir));
+			}
 			Activator.getDefault().getRepositoryUtil()
 					.addConfiguredRepository(gitDir);
 
@@ -137,5 +146,15 @@ public class NewRepositoryWizard extends Wizard implements INewWizard {
 	 */
 	public Repository getCreatedRepository() {
 		return repository;
+	}
+
+	/**
+	 * Sets a {@link RepositoryGroup} to which the new repository will be added.
+	 *
+	 * @param group
+	 *            to add the new repository to
+	 */
+	public void setRepositoryGroup(RepositoryGroup group) {
+		this.group = group;
 	}
 }

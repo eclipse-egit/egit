@@ -29,9 +29,11 @@ import org.eclipse.core.expressions.IEvaluationContext;
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.egit.core.RepositoryUtil;
 import org.eclipse.egit.ui.Activator;
+import org.eclipse.egit.ui.internal.groups.RepositoryGroup;
 import org.eclipse.egit.ui.internal.repository.RepositoriesView;
 import org.eclipse.egit.ui.internal.repository.tree.FileNode;
 import org.eclipse.egit.ui.internal.repository.tree.FolderNode;
+import org.eclipse.egit.ui.internal.repository.tree.RepositoryGroupNode;
 import org.eclipse.egit.ui.internal.repository.tree.RepositoryTreeNode;
 import org.eclipse.egit.ui.internal.repository.tree.WorkingDirNode;
 import org.eclipse.egit.ui.internal.selection.SelectionRepositoryStateCache;
@@ -66,6 +68,16 @@ abstract class RepositoriesViewCommandHandler<T extends RepositoryTreeNode<?>>
 			this.evaluationContext = (IEvaluationContext) evaluationContext;
 		else
 			this.evaluationContext = null;
+	}
+
+	public RepositoryGroup getSelectedRepositoryGroup(ExecutionEvent event)
+			throws ExecutionException {
+		List<?> selected = getSelectedNodes(event);
+		if (selected.size() == 1
+				&& selected.get(0) instanceof RepositoryGroupNode) {
+			return ((RepositoryGroupNode) selected.get(0)).getObject();
+		}
+		return null;
 	}
 
 	@SuppressWarnings("unchecked")

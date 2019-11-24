@@ -53,6 +53,8 @@ import org.eclipse.egit.ui.internal.UIText;
 import org.eclipse.egit.ui.internal.clone.GitCloneSourceProviderExtension.CloneSourceProvider;
 import org.eclipse.egit.ui.internal.components.RepositorySelection;
 import org.eclipse.egit.ui.internal.credentials.EGitCredentialsProvider;
+import org.eclipse.egit.ui.internal.groups.RepositoryGroup;
+import org.eclipse.egit.ui.internal.groups.RepositoryGroups;
 import org.eclipse.egit.ui.internal.provisional.wizards.GitRepositoryInfo;
 import org.eclipse.egit.ui.internal.provisional.wizards.GitRepositoryInfo.PushInfo;
 import org.eclipse.egit.ui.internal.provisional.wizards.GitRepositoryInfo.RepositoryConfigProperty;
@@ -103,6 +105,8 @@ public abstract class AbstractGitCloneWizard extends Wizard {
 	protected IRepositorySearchResult currentSearchResult;
 
 	private CloneOperation cloneOperation;
+
+	private RepositoryGroup group;
 
 	/**
 	 * Construct the clone wizard based on given repository search result. If
@@ -482,6 +486,10 @@ public abstract class AbstractGitCloneWizard extends Wizard {
 		final RepositoryUtil util = Activator.getDefault().getRepositoryUtil();
 
 		op.run(monitor);
+		if (group != null) {
+			RepositoryGroups.getInstance().addRepositoriesToGroup(group,
+					Collections.singletonList(op.getGitDir()));
+		}
 		util.addConfiguredRepository(op.getGitDir());
 		try {
 			if (repositoryInfo.shouldSaveCredentialsInSecureStore())
@@ -501,6 +509,16 @@ public abstract class AbstractGitCloneWizard extends Wizard {
 	 */
 	public void setCallerRunsCloneOperation(boolean newValue) {
 		callerRunsCloneOperation = newValue;
+	}
+
+	/**
+	 * Sets a {@link RepositoryGroup} to which the new repository will be added.
+	 *
+	 * @param group
+	 *            to add the new repository to
+	 */
+	public void setRepositoryGroup(RepositoryGroup group) {
+		this.group = group;
 	}
 
 }

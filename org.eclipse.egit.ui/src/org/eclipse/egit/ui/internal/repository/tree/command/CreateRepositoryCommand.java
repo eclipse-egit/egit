@@ -29,8 +29,9 @@ public class CreateRepositoryCommand extends
 		RepositoriesViewCommandHandler<RepositoryTreeNode> {
 	@Override
 	public Object execute(ExecutionEvent event) throws ExecutionException {
-		WizardDialog dlg = new WizardDialog(getShell(event),
-				new NewRepositoryWizard(false)) {
+		NewRepositoryWizard wizard = new NewRepositoryWizard(false);
+		wizard.setRepositoryGroup(getSelectedRepositoryGroup(event));
+		WizardDialog dlg = new WizardDialog(getShell(event), wizard) {
 			@Override
 			protected Button createButton(Composite parent, int id,
 					String label, boolean defaultButton) {
