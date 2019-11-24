@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e1a67176_dcfeeabd",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/components/DropDownMenuAction.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 121,
+      "author": {
+        "id": 440
+      },
+      "writtenOn": "2019-11-24T16:08:16Z",
+      "side": 0,
+      "message": "If we really want to use @NonNull annotations, then we need to use external null annotations (.eea files). Otherwise JDT doesn\u0027t know about all the JRE and library methods.",
+      "range": {
+        "startLine": 121,
+        "startChar": 1,
+        "endLine": 121,
+        "endChar": 9
+      },
+      "revId": "8d15ef9e8b12e56a3ba5a656bd0d427ea4e63745",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
