@@ -10,8 +10,10 @@
  *******************************************************************************/
 package org.eclipse.egit.ui.internal.history;
 
+import java.text.MessageFormat;
 import java.util.List;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 import org.eclipse.egit.core.internal.Utils;
 import org.eclipse.egit.ui.internal.UIText;
@@ -24,7 +26,9 @@ import org.eclipse.jface.viewers.CheckStateChangedEvent;
 import org.eclipse.jface.viewers.CheckboxTableViewer;
 import org.eclipse.jface.viewers.ColumnViewerEditor;
 import org.eclipse.jface.viewers.ColumnViewerEditorActivationEvent;
+import org.eclipse.jface.viewers.ColumnViewerEditorActivationListener;
 import org.eclipse.jface.viewers.ColumnViewerEditorActivationStrategy;
+import org.eclipse.jface.viewers.ColumnViewerEditorDeactivationEvent;
 import org.eclipse.jface.viewers.FocusCellHighlighter;
 import org.eclipse.jface.viewers.ICellEditorListener;
 import org.eclipse.jface.viewers.ICellModifier;
@@ -93,6 +97,8 @@ public class GitHistoryRefFilterConfigurationDialog
 	private boolean defaultsPerformed;
 
 	private Point minimumSize;
+
+	private Set<String> predefinedPatterns;
 
 	/**
 	 * Create a new instance of the receiver.
@@ -297,6 +303,10 @@ public class GitHistoryRefFilterConfigurationDialog
 			String currentText = value.toString().trim();
 			if (currentText.isEmpty()) {
 				return UIText.GitHistoryPage_filterRefDialog_refEmptyError;
+			} else if (predefinedPatterns.contains(currentText)) {
+				return MessageFormat.format(
+						UIText.GitHistoryPage_filterRefDialog_refPredefinedPattern,
+						currentText);
 			}
 			return null;
 		});
@@ -306,28 +316,52 @@ public class GitHistoryRefFilterConfigurationDialog
 			public void editorValueChanged(boolean oldValidState,
 					boolean newValidState) {
 				if (newValidState) {
-					message.setImage(null);
-					message.setText(
-							UIText.GitHistoryPage_filterRefDialog_dialogMessage);
+					setMessage(null);
 				} else {
-					message.setImage(PlatformUI.getWorkbench().getSharedImages()
-							.getImage(ISharedImages.IMG_OBJS_ERROR_TSK));
-					message.setText(editor.getErrorMessage());
+					setMessage(editor.getErrorMessage());
 				}
 				getButton(OK).setEnabled(newValidState);
 			}
 
 			@Override
 			public void cancelEditor() {
-				editorValueChanged(false, true);
-				updateButtonEnablement();
+				// Nothing
 			}
 
 			@Override
 			public void applyEditorValue() {
-				cancelEditor();
+				// Nothing
 			}
 		});
+		configsTable.getColumnViewerEditor().addEditorActivationListener(
+				new ColumnViewerEditorActivationListener() {
+
+					@Override
+					public void beforeEditorActivated(
+							ColumnViewerEditorActivationEvent event) {
+						// Nothing
+					}
+
+					@Override
+					public void afterEditorActivated(
+							ColumnViewerEditorActivationEvent event) {
+						// Nothing
+					}
+
+					@Override
+					public void beforeEditorDeactivated(
+							ColumnViewerEditorDeactivationEvent event) {
+						// Nothing
+					}
+
+					@Override
+					public void afterEditorDeactivated(
+							ColumnViewerEditorDeactivationEvent event) {
+						setMessage(null);
+						updateButtonEnablement();
+						getButton(OK).setEnabled(true);
+					}
+				});
 		configsTable.setColumnProperties(new String[] { FILTER_COLUMN_NAME });
 		configsTable.setCellEditors(new CellEditor[] { editor });
 		configsTable.setCellModifier(new ICellModifier() {
@@ -358,6 +392,18 @@ public class GitHistoryRefFilterConfigurationDialog
 		});
 	}
 
+	private void setMessage(String text) {
+		if (text == null) {
+			message.setImage(null);
+			message.setText(
+					UIText.GitHistoryPage_filterRefDialog_dialogMessage);
+		} else {
+			message.setImage(PlatformUI.getWorkbench().getSharedImages()
+					.getImage(ISharedImages.IMG_OBJS_ERROR_TSK));
+			message.setText(text);
+		}
+	}
+
 	private void createFilterCompositeButtons(Composite parent) {
 		Composite buttonComposite = new Composite(parent, SWT.NONE);
 		buttonComposite.setLayout(new GridLayout());
@@ -370,6 +416,7 @@ public class GitHistoryRefFilterConfigurationDialog
 
 			@Override
 			public void widgetSelected(SelectionEvent e) {
+				configsTable.applyEditorValue();
 				RefFilter newFilter = helper.new RefFilter(
 						NEW_FILTER_INITIAL_STRING);
 				filters.add(newFilter);
@@ -386,6 +433,7 @@ public class GitHistoryRefFilterConfigurationDialog
 
 			@Override
 			public void widgetSelected(SelectionEvent e) {
+				configsTable.applyEditorValue();
 				RefSelectionDialog dialog = new RefSelectionDialog(getShell(),
 						repo);
 				if (dialog.open() == Window.OK) {
@@ -407,6 +455,7 @@ public class GitHistoryRefFilterConfigurationDialog
 
 			@Override
 			public void widgetSelected(SelectionEvent e) {
+				configsTable.applyEditorValue();
 				removeSelectedFilters();
 			}
 		});
@@ -419,6 +468,7 @@ public class GitHistoryRefFilterConfigurationDialog
 
 			@Override
 			public void widgetSelected(SelectionEvent e) {
+				configsTable.applyEditorValue();
 				configsTable.editElement(
 						configsTable.getStructuredSelection().getFirstElement(),
 						0);
@@ -443,6 +493,7 @@ public class GitHistoryRefFilterConfigurationDialog
 
 			@Override
 			public void widgetSelected(SelectionEvent e) {
+				configsTable.applyEditorValue();
 				helper.selectOnlyHEAD(filters);
 				configsTable.refresh();
 			}
@@ -456,6 +507,7 @@ public class GitHistoryRefFilterConfigurationDialog
 
 			@Override
 			public void widgetSelected(SelectionEvent e) {
+				configsTable.applyEditorValue();
 				helper.selectOnlyCurrentBranch(filters);
 				configsTable.refresh();
 			}
@@ -469,6 +521,7 @@ public class GitHistoryRefFilterConfigurationDialog
 
 			@Override
 			public void widgetSelected(SelectionEvent e) {
+				configsTable.applyEditorValue();
 				helper.selectExactlyAllBranchesAndTags(filters);
 				configsTable.refresh();
 			}
@@ -478,7 +531,7 @@ public class GitHistoryRefFilterConfigurationDialog
 
 	@Override
 	protected void okPressed() {
-		getButton(OK).setFocus(); // Apply possibly open cell editor
+		configsTable.applyEditorValue();
 		helper.setRefFilters(filters);
 		if (defaultsPerformed) {
 			helper.resetLastSelectionStateToDefault();
@@ -488,6 +541,7 @@ public class GitHistoryRefFilterConfigurationDialog
 
 	@Override
 	protected void performDefaults() {
+		configsTable.applyEditorValue();
 		filters = helper.getDefaults();
 		configsTable.setInput(filters);
 		defaultsPerformed = true;
@@ -496,6 +550,8 @@ public class GitHistoryRefFilterConfigurationDialog
 
 	private void init() {
 		filters = helper.getRefFilters();
+		predefinedPatterns = filters.stream().filter(RefFilter::isPreconfigured)
+				.map(RefFilter::getFilterString).collect(Collectors.toSet());
 		if (helper.isOnlyHEADSelected(filters)) {
 			helper.restoreLastSelectionState(filters);
 		}
