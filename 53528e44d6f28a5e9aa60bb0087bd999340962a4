@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "439f9829_0b064d44",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/history/GitHistoryRefFilterConfigurationDialog.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 256,
+      "author": {
+        "id": 440
+      },
+      "writtenOn": "2019-11-25T11:39:50Z",
+      "side": 1,
+      "message": "Uh, oh. I have to add that part to the deletion of refs I recently added.",
+      "range": {
+        "startLine": 256,
+        "startChar": 33,
+        "endLine": 256,
+        "endChar": 60
+      },
+      "revId": "53528e44d6f28a5e9aa60bb0087bd999340962a4",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
