@@ -5,6 +5,7 @@
  * Copyright (C) 2010, Mathias Kinzler <mathias.kinzler@sap.com>
  * Copyright (C) 2013, Robin Stocker <robin@nibor.org>
  * Copyright (C) 2016, Thomas Wolf <thomas.wolf@paranor.ch>
+ * Copyright (C) 2019, Simon Muschel <smuschel@gmx.de>
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License 2.0
@@ -219,7 +220,8 @@ public class FindToolbar extends Composite {
 
 		patternField = new Text(this,
 				SWT.SEARCH | SWT.ICON_CANCEL | SWT.ICON_SEARCH);
-		GridData findTextData = new GridData(SWT.LEFT, SWT.TOP, true, false);
+		GridData findTextData = new GridData(SWT.FILL, SWT.TOP, true,
+				false);
 		findTextData.minimumWidth = 150;
 		patternField.setLayoutData(findTextData);
 		patternField.setMessage(UIText.HistoryPage_findbar_find_msg);

@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (C) 2011, 2013 Mathias Kinzler <mathias.kinzler@sap.com> and others.
+ * Copyright (C) 2011, 2019 Mathias Kinzler <mathias.kinzler@sap.com> and others.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License 2.0
@@ -7,6 +7,9 @@
  * https://www.eclipse.org/legal/epl-2.0/
  *
  * SPDX-License-Identifier: EPL-2.0
+ *
+ * Contributors:
+ *    Simon Muschel <smuschel@gmx.de> - Bug 345466
  *******************************************************************************/
 package org.eclipse.egit.ui.internal.history;
 
@@ -58,6 +61,7 @@ import org.eclipse.swt.SWT;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
+import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.ui.PlatformUI;
 
@@ -79,6 +83,10 @@ public class CommitSelectionDialog extends TitleAreaDialog {
 	private RevFlag highlightFlag;
 
 	private ObjectId commitId;
+
+	private SearchBar searchBar;
+
+	private Label statusLabel;
 
 	/**
 	 * @param parentShell
@@ -113,12 +121,18 @@ public class CommitSelectionDialog extends TitleAreaDialog {
 
 	@Override
 	protected Control createDialogArea(Composite parent) {
+		Composite searchBarParent = new Composite(parent, SWT.NONE);
+		searchBarParent.setLayout(new GridLayout(1, false));
+		GridDataFactory.fillDefaults().grab(true, false)
+				.applyTo(searchBarParent);
+
 		Composite main = new Composite(parent, SWT.NONE);
 		main.setLayout(new GridLayout(1, false));
 		GridDataFactory.fillDefaults().grab(true, true).applyTo(main);
 		final ResourceManager resources = new LocalResourceManager(
 				JFaceResources.getResources());
 		UIUtils.hookDisposal(main, resources);
+
 		// Table never shows e-mail addresses because it might get rather wide.
 		table = new CommitGraphTable(main, null, resources, false);
 		table.getTableView().addSelectionChangedListener(
@@ -146,6 +160,26 @@ public class CommitSelectionDialog extends TitleAreaDialog {
 				400).applyTo(table.getControl());
 		allCommits = new SWTCommitList(resources);
 		table.getControl().addDisposeListener(e -> allCommits.clear());
+
+		searchBar = new SearchBar(
+				CommitSelectionDialog.class.getName() + ".searchBar", table) {//$NON-NLS-1$
+
+			@Override
+			protected void showStatus(FindToolbar originator, String text) {
+				statusLabel.setText(text);
+				statusLabel.requestLayout();
+			}
+
+		};
+		searchBar.fill(searchBarParent);
+
+		Composite statusLine = new Composite(parent, SWT.NONE);
+		statusLine.setLayout(new GridLayout());
+		GridDataFactory.fillDefaults().grab(true, true).applyTo(statusLine);
+		statusLabel = new Label(statusLine, SWT.NONE);
+		GridDataFactory.fillDefaults().align(SWT.BEGINNING, SWT.CENTER)
+				.grab(false, false).applyTo(statusLabel);
+
 		return main;
 	}
 
@@ -229,8 +263,25 @@ public class CommitSelectionDialog extends TitleAreaDialog {
 				Integer.valueOf(allCommits.size()),
 				GitLabels.getPlainShortLabel(repository)));
 		setMessage(UIText.CommitSelectionDialog_DialogMessage);
-		table.setInput(highlightFlag, allCommits, allCommits
-				.toArray(new SWTCommit[0]), null, true);
+		SWTCommit[] allCommitsArray = allCommits.toArray(new SWTCommit[0]);
+		table.setInput(highlightFlag, allCommits, allCommitsArray, null, true);
+		searchBar.setInput(new ICommitsProvider() {
+
+			@Override
+			public Object getSearchContext() {
+				return null;
+			}
+
+			@Override
+			public SWTCommit[] getCommits() {
+				return allCommitsArray;
+			}
+
+			@Override
+			public RevFlag getHighlight() {
+				return highlightFlag;
+			}
+		});
 	}
 
 	private void markStartAllRefs(RevWalk walk, Set<Ref> refs)
