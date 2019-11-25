@@ -16,6 +16,24 @@
       "revId": "09e1e0cdb19b2782bc0ab846a9db2ea5f9d1c66e",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9351c164_6be01d7e",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/uitext.properties",
+        "patchSetId": 2
+      },
+      "lineNbr": 260,
+      "author": {
+        "id": 440
+      },
+      "writtenOn": "2019-11-25T11:34:17Z",
+      "side": 1,
+      "message": "You are of course right. That was from experimenting with the ref filter suffix for the other bug. I should really change my workflow to create branches _before_ I work on new issues, not when I think the mess of changed files can be submitted. :)\n\nFixed.",
+      "parentUuid": "5deee255_41325974",
+      "revId": "09e1e0cdb19b2782bc0ab846a9db2ea5f9d1c66e",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
     }
   ]
 }
