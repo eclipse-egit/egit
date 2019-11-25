@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "ab600aef_462f70f7",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2019-11-25T12:26:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3098a0b0_ddb7eb4a",
+      "range": {
+        "startLine": 9,
+        "startChar": 10,
+        "endLine": 9,
+        "endChar": 13
+      },
+      "revId": "cf9829401c4f440ca2385bbffca7cfcfa51794e7",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3c471255_6a4f2315",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/repository/RepositoriesView.java",
         "patchSetId": 1
@@ -36,6 +60,30 @@
       "writtenOn": "2019-11-25T11:50:53Z",
       "side": 1,
       "message": "We could remove this code duplication, if the afterRefresh button had an additional boolean arg doLayout, setting it to false here.\nHowever, I\u0027m not really a friend of hiding different control flows in boolean arguments, so it\u0027s up to you. :)",
+      "range": {
+        "startLine": 588,
+        "startChar": 0,
+        "endLine": 594,
+        "endChar": 1
+      },
+      "revId": "cf9829401c4f440ca2385bbffca7cfcfa51794e7",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "bdb39b6b_2fbb54f7",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/repository/RepositoriesView.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 594,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2019-11-25T12:26:25Z",
+      "side": 1,
+      "message": "Done. New method setTopControl().",
+      "parentUuid": "3c471255_6a4f2315",
       "range": {
         "startLine": 588,
         "startChar": 0,
