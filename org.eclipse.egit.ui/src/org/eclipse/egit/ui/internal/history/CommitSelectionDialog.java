@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (C) 2011, 2013 Mathias Kinzler <mathias.kinzler@sap.com> and others.
+ * Copyright (C) 2011, 2019 Mathias Kinzler <mathias.kinzler@sap.com> and others.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License 2.0
@@ -7,6 +7,9 @@
  * https://www.eclipse.org/legal/epl-2.0/
  *
  * SPDX-License-Identifier: EPL-2.0
+ *
+ * Contributors:
+ *    Simon Muschel <smuschel@gmx.de> - Bug 345466
  *******************************************************************************/
 package org.eclipse.egit.ui.internal.history;
 
@@ -77,6 +80,8 @@ public class CommitSelectionDialog extends TitleAreaDialog {
 
 	private ObjectId commitId;
 
+	private SearchBar searchBar;
+
 	/**
 	 * @param parentShell
 	 * @param repository
@@ -110,12 +115,18 @@ public class CommitSelectionDialog extends TitleAreaDialog {
 
 	@Override
 	protected Control createDialogArea(Composite parent) {
+		Composite searchBarParent = new Composite(parent, SWT.NONE);
+		searchBarParent.setLayout(new GridLayout(1, false));
+		GridDataFactory.fillDefaults().grab(true, false)
+				.applyTo(searchBarParent);
+
 		Composite main = new Composite(parent, SWT.NONE);
 		main.setLayout(new GridLayout(1, false));
 		GridDataFactory.fillDefaults().grab(true, true).applyTo(main);
 		final ResourceManager resources = new LocalResourceManager(
 				JFaceResources.getResources());
 		UIUtils.hookDisposal(main, resources);
+
 		// Table never shows e-mail addresses because it might get rather wide.
 		table = new CommitGraphTable(main, null, resources, false);
 		table.getTableView().addSelectionChangedListener(
@@ -143,6 +154,10 @@ public class CommitSelectionDialog extends TitleAreaDialog {
 				400).applyTo(table.getControl());
 		allCommits = new SWTCommitList(resources);
 		table.getControl().addDisposeListener(e -> allCommits.clear());
+
+		searchBar = new SearchBar(GitHistoryPage.class.getName() + ".searchBar", //$NON-NLS-1$
+				table, null, null);
+		searchBar.fill(searchBarParent);
 		return main;
 	}
 
@@ -228,6 +243,23 @@ public class CommitSelectionDialog extends TitleAreaDialog {
 		setMessage(UIText.CommitSelectionDialog_DialogMessage);
 		table.setInput(highlightFlag, allCommits, allCommits
 				.toArray(new SWTCommit[0]), null, true);
+		searchBar.setInput(new ICommitsProvider() {
+
+			@Override
+			public Object getSearchContext() {
+				return null;
+			}
+
+			@Override
+			public SWTCommit[] getCommits() {
+				return allCommits.toArray(new SWTCommit[0]);
+			}
+
+			@Override
+			public RevFlag getHighlight() {
+				return highlightFlag;
+			}
+		});
 	}
 
 	private void markStartAllRefs(RevWalk currentWalk, Set<Ref> refs)
