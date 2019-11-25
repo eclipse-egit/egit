@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d170b23c_c799dee6",
+        "filename": "org.eclipse.egit.core.junit/src/org/eclipse/egit/core/test/TestUtils.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 429,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2019-11-25T12:34:32Z",
+      "side": 1,
+      "message": "In JavaProjectTester, we run that inside a workspace operation. Why only there? Shouldn\u0027t this be here?",
+      "revId": "ed324f6d5402205a34cf6a456f2ed24377515cc9",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
