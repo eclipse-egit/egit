@@ -25,12 +25,16 @@ import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IFolder;
 import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.IProjectDescription;
+import org.eclipse.core.resources.IResource;
 import org.eclipse.core.resources.IWorkspaceRoot;
+import org.eclipse.core.resources.IWorkspaceRunnable;
 import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IPath;
+import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.Path;
 import org.eclipse.core.runtime.Platform;
+import org.eclipse.egit.core.Activator;
 import org.eclipse.jdt.core.IClasspathEntry;
 import org.eclipse.jdt.core.ICompilationUnit;
 import org.eclipse.jdt.core.IJavaProject;
@@ -44,6 +48,11 @@ import org.eclipse.jgit.util.FileUtils;
 import org.osgi.framework.Bundle;
 
 public class TestProject {
+
+	private static final int MAX_DELETE_RETRY = 5;
+
+	private static final int DELETE_RETRY_DELAY = 1000; // ms
+
 	public IProject project;
 
 	public IJavaProject javaProject;
@@ -203,13 +212,13 @@ public class TestProject {
 	}
 
 	public void dispose() throws CoreException, IOException {
-		waitForIndexer();
-		if (project.exists())
-			project.delete(true, true, null);
-		else {
+		if (project.exists()) {
+			removeJavaProject(javaProject);
+		} else {
 			File f = new File(location);
-			if (f.exists())
+			if (f.exists()) {
 				FileUtils.delete(f, FileUtils.RECURSIVE | FileUtils.RETRY);
+			}
 		}
 	}
 
@@ -258,24 +267,6 @@ public class TestProject {
 		return new Path(resource.getPath());
 	}
 
-	public void waitForIndexer() {
-		//                new SearchEngine().searchAllTypeNames(ResourcesPlugin.getWorkspace(),
-		//                                null, null, IJavaSearchConstants.EXACT_MATCH,
-		//                                IJavaSearchConstants.CASE_SENSITIVE,
-		//                                IJavaSearchConstants.CLASS, SearchEngine
-		//                                                .createJavaSearchScope(new IJavaElement[0]),
-		//                                new ITypeNameRequestor() {
-		//                                        public void acceptClass(char[] packageName,
-		//                                                        char[] simpleTypeName, char[][] enclosingTypeNames,
-		//                                                        String path) {
-		//                                        }
-		//                                        public void acceptInterface(char[] packageName,
-		//                                                        char[] simpleTypeName, char[][] enclosingTypeNames,
-		//                                                        String path) {
-		//                                        }
-		//                                }, IJavaSearchConstants.WAIT_UNTIL_READY_TO_SEARCH, null);
-	}
-
 	public String getFileContent(String filepath) throws Exception {
 		IFile file = project.getFile(filepath);
 		InputStream stream = file.getContents();
@@ -298,4 +289,47 @@ public class TestProject {
 	public String getLocation() {
 		return location;
 	}
+
+	public static void removeJavaProject(IJavaProject javaProject)
+			throws CoreException {
+		if (javaProject == null) {
+			return;
+		}
+		final IProject project = javaProject.getProject();
+		IWorkspaceRunnable runnable = new IWorkspaceRunnable() {
+			@Override
+			public void run(IProgressMonitor monitor) throws CoreException {
+				// Following code inspired by {@link
+				// org.eclipse.jdt.testplugin.JavaProjectHelper#delete(IResource)}.
+				// I don't like all this sleeping at all, but apparently it's
+				// needed because the Java indexer might still run and hold on
+				// to some resources.
+				for (int i = 0; i < MAX_DELETE_RETRY; i++) {
+					try {
+						project.delete(IResource.FORCE
+								| IResource.ALWAYS_DELETE_PROJECT_CONTENT,
+								null);
+						break;
+					} catch (CoreException e) {
+						if (i == MAX_DELETE_RETRY - 1) {
+							throw e;
+						}
+						try {
+							Activator.logInfo(
+									"Sleep before retrying to delete project "
+											+ project.getLocationURI());
+							// Give other threads the time to close and release
+							// the resource.
+							Thread.sleep(DELETE_RETRY_DELAY);
+						} catch (InterruptedException e1) {
+							// Ignore and retry to delete
+						}
+					}
+				}
+
+			}
+		};
+		ResourcesPlugin.getWorkspace().run(runnable, null);
+	}
+
 }
