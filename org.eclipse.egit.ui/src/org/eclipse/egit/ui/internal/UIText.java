@@ -714,6 +714,9 @@ public class UIText extends NLS {
 	public static String GitHistoryPage_filterRefDialog_refEmptyError;
 
 	/** */
+	public static String GitHistoryPage_filterRefDialog_refPredefinedPattern;
+
+	/** */
 	public static String GitHistoryPage_filterRefDialog_selectRefDialog_dialogTitle;
 
 	/** */
