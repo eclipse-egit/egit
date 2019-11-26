@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d6ee8543_4ad0794e",
+        "filename": "org.eclipse.egit.core.junit/src/org/eclipse/egit/core/test/TestProject.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 210,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2019-11-26T12:56:43Z",
+      "side": 1,
+      "message": "\"else\" should be on the same line.",
+      "revId": "210be7fc08fea397d194cffd4c00749374358b73",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
