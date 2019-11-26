@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "dd9fa685_25cc18a0",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/history/CommitSelectionDialog.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 158,
+      "author": {
+        "id": 440
+      },
+      "writtenOn": "2019-11-26T08:31:16Z",
+      "side": 1,
+      "message": "CommitSelectionDialog",
+      "range": {
+        "startLine": 158,
+        "startChar": 28,
+        "endLine": 158,
+        "endChar": 42
+      },
+      "revId": "dc73e140a1b45b4384560bd65f663b387f5e4790",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
