@@ -45,6 +45,40 @@
       "revId": "dc73e140a1b45b4384560bd65f663b387f5e4790",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "125df94f_f1234d53",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/history/SearchBar.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2019-11-26T12:31:31Z",
+      "side": 1,
+      "message": "All this focus fiddling is probably not needed in the dialog, but it also doesn\u0027t seem to hurt. It _is_ needed unfortunately in the git history view toolbar.",
+      "revId": "dc73e140a1b45b4384560bd65f663b387f5e4790",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "e39d3960_d63639ee",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/history/SearchBar.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2019-11-26T12:31:31Z",
+      "side": 1,
+      "message": "Since bars\u003d\u003dnull in the dialog, there\u0027s no way to show the status. The feedback mechanism should be generalized such that we can show the N/M somewhere in the dialog.",
+      "revId": "dc73e140a1b45b4384560bd65f663b387f5e4790",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
     }
   ]
 }
