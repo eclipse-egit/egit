@@ -18,9 +18,9 @@ import java.util.Collection;
 import java.util.Collections;
 
 import org.eclipse.core.resources.IResource;
-import org.eclipse.core.resources.IWorkspaceRunnable;
 import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.CoreException;
+import org.eclipse.core.runtime.ICoreRunnable;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.egit.core.Activator;
 import org.eclipse.egit.core.JobFamilies;
@@ -133,7 +133,7 @@ public class IndexDiffCacheEntryTest extends GitTestCase {
 		assertTrue(entry.updateScheduled);
 		cleanEntryFlags();
 
-		ResourcesPlugin.getWorkspace().run(new IWorkspaceRunnable() {
+		ResourcesPlugin.getWorkspace().run(new ICoreRunnable() {
 			@Override
 			public void run(IProgressMonitor monitor) throws CoreException {
 				try {
@@ -153,7 +153,7 @@ public class IndexDiffCacheEntryTest extends GitTestCase {
 		assertTrue(entry.updateScheduled);
 		cleanEntryFlags();
 
-		ResourcesPlugin.getWorkspace().run(new IWorkspaceRunnable() {
+		ResourcesPlugin.getWorkspace().run(new ICoreRunnable() {
 			@Override
 			public void run(IProgressMonitor monitor) throws CoreException {
 				try {
@@ -171,7 +171,7 @@ public class IndexDiffCacheEntryTest extends GitTestCase {
 		assertTrue(entry.updateScheduled);
 		cleanEntryFlags();
 
-		ResourcesPlugin.getWorkspace().run(new IWorkspaceRunnable() {
+		ResourcesPlugin.getWorkspace().run(new ICoreRunnable() {
 			@Override
 			public void run(IProgressMonitor monitor) throws CoreException {
 				try {

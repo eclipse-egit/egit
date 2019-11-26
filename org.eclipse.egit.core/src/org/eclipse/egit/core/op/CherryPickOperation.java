@@ -17,9 +17,9 @@ package org.eclipse.egit.core.op;
 import java.text.MessageFormat;
 
 import org.eclipse.core.resources.IWorkspace;
-import org.eclipse.core.resources.IWorkspaceRunnable;
 import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.CoreException;
+import org.eclipse.core.runtime.ICoreRunnable;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.SubMonitor;
 import org.eclipse.core.runtime.jobs.ISchedulingRule;
@@ -82,7 +82,7 @@ public class CherryPickOperation implements IEGitOperation {
 
 	@Override
 	public void execute(IProgressMonitor m) throws CoreException {
-		IWorkspaceRunnable action = new IWorkspaceRunnable() {
+		ICoreRunnable action = new ICoreRunnable() {
 
 			@Override
 			public void run(IProgressMonitor pm) throws CoreException {

@@ -16,9 +16,9 @@ package org.eclipse.egit.core.op;
 
 import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.IWorkspace;
-import org.eclipse.core.resources.IWorkspaceRunnable;
 import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.CoreException;
+import org.eclipse.core.runtime.ICoreRunnable;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Status;
@@ -132,7 +132,7 @@ public class RebaseOperation implements IEGitOperation {
 			throw new CoreException(new Status(IStatus.ERROR, Activator
 					.getPluginId(), CoreText.OperationAlreadyExecuted));
 		final IProject[] validProjects = ProjectUtil.getValidOpenProjects(repository);
-		IWorkspaceRunnable action = new IWorkspaceRunnable() {
+		ICoreRunnable action = new ICoreRunnable() {
 			@Override
 			public void run(IProgressMonitor actMonitor) throws CoreException {
 				SubMonitor progress = SubMonitor.convert(actMonitor, 2);

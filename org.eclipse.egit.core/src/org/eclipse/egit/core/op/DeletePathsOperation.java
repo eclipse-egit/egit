@@ -21,9 +21,9 @@ import java.util.Map;
 
 import org.eclipse.core.resources.IResource;
 import org.eclipse.core.resources.IWorkspace;
-import org.eclipse.core.resources.IWorkspaceRunnable;
 import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.CoreException;
+import org.eclipse.core.runtime.ICoreRunnable;
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
@@ -59,7 +59,7 @@ public class DeletePathsOperation implements IEGitOperation {
 
 	@Override
 	public void execute(IProgressMonitor m) throws CoreException {
-		IWorkspaceRunnable action = new IWorkspaceRunnable() {
+		ICoreRunnable action = new ICoreRunnable() {
 			@Override
 			public void run(IProgressMonitor actMonitor) throws CoreException {
 				deletePaths(actMonitor);
@@ -81,7 +81,7 @@ public class DeletePathsOperation implements IEGitOperation {
 		boolean errorOccurred = false;
 
 		boolean refreshAll = false;
-		List<IPath> refreshCachePaths = new ArrayList<IPath>();
+		List<IPath> refreshCachePaths = new ArrayList<>();
 
 		for (IPath path : paths) {
 			IResource resource = ResourceUtil.getResourceForLocation(path, false);

@@ -22,9 +22,9 @@ import org.eclipse.core.resources.IResource;
 import org.eclipse.core.resources.IWorkspace;
 import org.eclipse.core.resources.IWorkspaceDescription;
 import org.eclipse.core.resources.IWorkspaceRoot;
-import org.eclipse.core.resources.IWorkspaceRunnable;
 import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.CoreException;
+import org.eclipse.core.runtime.ICoreRunnable;
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.Path;
@@ -119,7 +119,7 @@ public class JavaProjectTester {
 	private IJavaProject createJavaProject(final Repository repository,
 			final String projectName) throws Exception {
 		final IJavaProject[] jProjectHolder = new IJavaProject[] { null };
-		IWorkspaceRunnable runnable = new IWorkspaceRunnable() {
+		ICoreRunnable runnable = new ICoreRunnable() {
 			@Override
 			public void run(IProgressMonitor monitor) throws CoreException {
 				IWorkspaceRoot root = ResourcesPlugin.getWorkspace().getRoot();
@@ -190,7 +190,7 @@ public class JavaProjectTester {
 			return;
 		}
 		final IProject project = javaProject.getProject();
-		IWorkspaceRunnable runnable = new IWorkspaceRunnable() {
+		ICoreRunnable runnable = new ICoreRunnable() {
 			@Override
 			public void run(IProgressMonitor monitor) throws CoreException {
 				// Following code inspired by {@link

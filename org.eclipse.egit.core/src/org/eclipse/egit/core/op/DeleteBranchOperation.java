@@ -19,9 +19,9 @@ import java.util.Iterator;
 import java.util.Set;
 
 import org.eclipse.core.resources.IWorkspace;
-import org.eclipse.core.resources.IWorkspaceRunnable;
 import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.CoreException;
+import org.eclipse.core.runtime.ICoreRunnable;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.OperationCanceledException;
 import org.eclipse.core.runtime.SubMonitor;
@@ -73,7 +73,7 @@ public class DeleteBranchOperation implements IEGitOperation {
 	 */
 	public DeleteBranchOperation(Repository repository, Ref branch,
 			boolean force) {
-		this(repository, new HashSet<Ref>(asList(branch)), force);
+		this(repository, new HashSet<>(asList(branch)), force);
 	}
 
 	/**
@@ -99,7 +99,7 @@ public class DeleteBranchOperation implements IEGitOperation {
 
 	@Override
 	public void execute(IProgressMonitor monitor) throws CoreException {
-		IWorkspaceRunnable action = new IWorkspaceRunnable() {
+		ICoreRunnable action = new ICoreRunnable() {
 			@Override
 			public void run(IProgressMonitor actMonitor) throws CoreException {
 

@@ -28,10 +28,10 @@ import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.commands.ExecutionException;
 import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.IWorkspace;
-import org.eclipse.core.resources.IWorkspaceRunnable;
 import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.resources.WorkspaceJob;
 import org.eclipse.core.runtime.CoreException;
+import org.eclipse.core.runtime.ICoreRunnable;
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
@@ -215,7 +215,7 @@ public class RemoveCommand extends
 			final boolean delete,
 			final List<IProject> projectsToDelete,
 			IProgressMonitor monitor) {
-		IWorkspaceRunnable wsr = new IWorkspaceRunnable() {
+		ICoreRunnable wsr = new ICoreRunnable() {
 
 			@Override
 			public void run(IProgressMonitor actMonitor)

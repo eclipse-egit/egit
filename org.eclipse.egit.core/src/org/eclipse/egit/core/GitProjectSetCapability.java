@@ -22,9 +22,9 @@ import java.util.List;
 
 import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.IWorkspace;
-import org.eclipse.core.resources.IWorkspaceRunnable;
 import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.CoreException;
+import org.eclipse.core.runtime.ICoreRunnable;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.egit.core.internal.CoreText;
 import org.eclipse.egit.core.internal.GitURI;
@@ -115,7 +115,7 @@ public final class GitProjectSetCapability extends ProjectSetCapability {
 		final ArrayList<IProject> importedProjects = new ArrayList<>();
 
 		try{
-			ResourcesPlugin.getWorkspace().run(new IWorkspaceRunnable() {
+			ResourcesPlugin.getWorkspace().run(new ICoreRunnable() {
 				@Override
 				public void run(IProgressMonitor wsOpMonitor) throws CoreException {
 					ProjectReferenceImporter importer = new ProjectReferenceImporter(referenceStrings);

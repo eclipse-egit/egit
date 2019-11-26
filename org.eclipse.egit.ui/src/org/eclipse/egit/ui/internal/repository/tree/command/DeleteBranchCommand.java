@@ -24,9 +24,9 @@ import java.util.concurrent.atomic.AtomicReference;
 
 import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.commands.ExecutionException;
-import org.eclipse.core.resources.IWorkspaceRunnable;
 import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.CoreException;
+import org.eclipse.core.runtime.ICoreRunnable;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.egit.core.op.DeleteBranchOperation;
 import org.eclipse.egit.ui.Activator;
@@ -128,7 +128,7 @@ public class DeleteBranchCommand extends
 			IProgressMonitor progressMonitor) throws InvocationTargetException {
 		final Map<Ref, Repository> unmergedNodes = new LinkedHashMap<>();
 		try {
-			ResourcesPlugin.getWorkspace().run(new IWorkspaceRunnable() {
+			ResourcesPlugin.getWorkspace().run(new ICoreRunnable() {
 
 				@Override
 				public void run(IProgressMonitor monitor) throws CoreException {

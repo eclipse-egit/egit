@@ -25,9 +25,9 @@ import java.util.Set;
 import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.IProjectDescription;
 import org.eclipse.core.resources.IResource;
-import org.eclipse.core.resources.IWorkspaceRunnable;
 import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.CoreException;
+import org.eclipse.core.runtime.ICoreRunnable;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.Path;
 import org.eclipse.core.runtime.SubMonitor;
@@ -185,7 +185,7 @@ public class GitCreateProjectViaWizardWizard extends Wizard {
 							.getActiveWorkbenchWindow()).run();
 				}
 			});
-			IWorkspaceRunnable wsr = new IWorkspaceRunnable() {
+			ICoreRunnable wsr = new ICoreRunnable() {
 				@Override
 				public void run(IProgressMonitor actMonitor)
 						throws CoreException {
@@ -227,7 +227,7 @@ public class GitCreateProjectViaWizardWizard extends Wizard {
 			});
 
 			try {
-				IWorkspaceRunnable wsr = new IWorkspaceRunnable() {
+				ICoreRunnable wsr = new ICoreRunnable() {
 					@Override
 					public void run(IProgressMonitor actMonitor)
 							throws CoreException {

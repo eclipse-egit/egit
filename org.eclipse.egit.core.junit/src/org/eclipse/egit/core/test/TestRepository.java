@@ -30,9 +30,9 @@ import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.IResource;
 import org.eclipse.core.resources.IResourceVisitor;
 import org.eclipse.core.resources.IWorkspace;
-import org.eclipse.core.resources.IWorkspaceRunnable;
 import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.CoreException;
+import org.eclipse.core.runtime.ICoreRunnable;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.Path;
 import org.eclipse.egit.core.Activator;
@@ -546,7 +546,7 @@ public class TestRepository {
 				.getProject());
 		DisconnectProviderOperation disconnect = new DisconnectProviderOperation(
 				projects);
-		ResourcesPlugin.getWorkspace().run(new IWorkspaceRunnable() {
+		ResourcesPlugin.getWorkspace().run(new ICoreRunnable() {
 			@Override
 			public void run(IProgressMonitor monitor) throws CoreException {
 				disconnect.execute(null);

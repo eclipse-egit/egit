@@ -22,9 +22,9 @@ import java.util.Optional;
 import java.util.stream.Stream;
 
 import org.eclipse.core.resources.IWorkspace;
-import org.eclipse.core.resources.IWorkspaceRunnable;
 import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.CoreException;
+import org.eclipse.core.runtime.ICoreRunnable;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.NullProgressMonitor;
@@ -196,7 +196,7 @@ public class BranchOperationUI {
 			ProjectTrackerMemento snapshot = tracker.snapshot();
 			bop.execute(progress.newChild(7));
 			tracker.save(snapshot);
-			IWorkspaceRunnable action = new IWorkspaceRunnable() {
+			ICoreRunnable action = new ICoreRunnable() {
 
 				@Override
 				public void run(IProgressMonitor innerMonitor)

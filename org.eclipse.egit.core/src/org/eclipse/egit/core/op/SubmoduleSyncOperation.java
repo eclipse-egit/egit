@@ -17,9 +17,9 @@ import java.util.Collection;
 import java.util.Map;
 
 import org.eclipse.core.resources.IWorkspace;
-import org.eclipse.core.resources.IWorkspaceRunnable;
 import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.CoreException;
+import org.eclipse.core.runtime.ICoreRunnable;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.jobs.ISchedulingRule;
 import org.eclipse.jgit.api.Git;
@@ -60,7 +60,7 @@ public class SubmoduleSyncOperation implements IEGitOperation {
 
 	@Override
 	public void execute(final IProgressMonitor monitor) throws CoreException {
-		IWorkspaceRunnable action = new IWorkspaceRunnable() {
+		ICoreRunnable action = new ICoreRunnable() {
 
 			@Override
 			public void run(IProgressMonitor pm) throws CoreException {
