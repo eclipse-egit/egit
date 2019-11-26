@@ -16,6 +16,24 @@
       "revId": "ed324f6d5402205a34cf6a456f2ed24377515cc9",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "17436444_c9d322e3",
+        "filename": "org.eclipse.egit.core.junit/src/org/eclipse/egit/core/test/TestUtils.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 429,
+      "author": {
+        "id": 440
+      },
+      "writtenOn": "2019-11-26T08:42:47Z",
+      "side": 1,
+      "message": "Done. Also converted to lambda and used ICoreRunnable, since WorkspaceRunnable documentation says to use that instead.",
+      "parentUuid": "d170b23c_c799dee6",
+      "revId": "ed324f6d5402205a34cf6a456f2ed24377515cc9",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
     }
   ]
 }
