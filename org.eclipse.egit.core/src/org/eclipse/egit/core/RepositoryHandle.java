@@ -150,8 +150,8 @@ class RepositoryHandle extends Repository {
 	}
 
 	@Override
-	public final void incrementOpen() {
-		super.incrementOpen();
+	public final int incrementOpen() {
+		return super.incrementOpen();
 	}
 
 	@Override
