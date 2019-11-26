@@ -89,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "4725c9ee_fdbd3994",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/history/SearchBar.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 3358
+      },
+      "writtenOn": "2019-11-26T18:41:52Z",
+      "side": 1,
+      "message": "I think I\u0027ll remove the focus handling from SearchBar and create a separate class (extending SearchBar) that does all that inside GitHistoryPage.",
+      "parentUuid": "125df94f_f1234d53",
+      "revId": "dc73e140a1b45b4384560bd65f663b387f5e4790",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e39d3960_d63639ee",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/history/SearchBar.java",
         "patchSetId": 1
