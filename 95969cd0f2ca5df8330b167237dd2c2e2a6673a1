@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0aba578e_f27859ac",
+        "filename": "org.eclipse.egit.core.junit/src/org/eclipse/egit/core/test/TestRepository.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 554,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2019-11-26T11:34:46Z",
+      "side": 1,
+      "message": "I think using lambdas or method references we could get rid of this interface altogether. Here it could be simply disconnect::execute.",
+      "range": {
+        "startLine": 549,
+        "startChar": 38,
+        "endLine": 554,
+        "endChar": 3
+      },
+      "revId": "95969cd0f2ca5df8330b167237dd2c2e2a6673a1",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3bda51a3_625bcec2",
+        "filename": "org.eclipse.egit.core.test/src/org/eclipse/egit/core/internal/indexdiff/IndexDiffCacheEntryTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 138,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2019-11-26T11:34:46Z",
+      "side": 1,
+      "message": "Just make it a lambda. monitor -\u003e {...}",
+      "range": {
+        "startLine": 136,
+        "startChar": 37,
+        "endLine": 138,
+        "endChar": 65
+      },
+      "revId": "95969cd0f2ca5df8330b167237dd2c2e2a6673a1",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "87261690_14600fa1",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/repository/tree/command/RemoveCommand.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 230,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2019-11-26T11:34:46Z",
+      "side": 1,
+      "message": "Again. Delete the above and use a lambda here:\n\n  m -\u003e {\n    for (IProject prj : projectsToDelete) {\n      prj.delete(delete, false, m);\n    }\n  }",
+      "range": {
+        "startLine": 230,
+        "startChar": 38,
+        "endLine": 230,
+        "endChar": 41
+      },
+      "revId": "95969cd0f2ca5df8330b167237dd2c2e2a6673a1",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
