@@ -40,11 +40,14 @@ import org.eclipse.jgit.annotations.NonNull;
 import org.eclipse.jgit.diff.DiffConfig;
 import org.eclipse.jgit.errors.IncorrectObjectTypeException;
 import org.eclipse.jgit.errors.MissingObjectException;
+import org.eclipse.jgit.lib.Constants;
 import org.eclipse.jgit.lib.ObjectId;
 import org.eclipse.jgit.lib.Ref;
 import org.eclipse.jgit.lib.Repository;
 import org.eclipse.jgit.revwalk.FollowFilter;
+import org.eclipse.jgit.revwalk.RevCommit;
 import org.eclipse.jgit.revwalk.RevFlag;
+import org.eclipse.jgit.revwalk.RevObject;
 import org.eclipse.jgit.revwalk.RevSort;
 import org.eclipse.jgit.revwalk.RevWalk;
 import org.eclipse.jgit.treewalk.filter.AndTreeFilter;
@@ -230,12 +233,27 @@ public class CommitSelectionDialog extends TitleAreaDialog {
 				.toArray(new SWTCommit[0]), null, true);
 	}
 
-	private void markStartAllRefs(RevWalk currentWalk, Set<Ref> refs)
-			throws IOException, MissingObjectException,
-			IncorrectObjectTypeException {
+	private void markStartAllRefs(RevWalk walk, Set<Ref> refs)
+			throws IncorrectObjectTypeException, IOException {
 		for (Ref ref : refs) {
-			currentWalk.markStart(
-					currentWalk.parseCommit(ref.getLeaf().getObjectId()));
+			markStart(walk, ref.getLeaf().getObjectId());
+		}
+		// Include at least HEAD
+		Ref head = repository.exactRef(Constants.HEAD);
+		if (head != null) {
+			markStart(walk, head.getLeaf().getObjectId());
+		}
+	}
+
+	private void markStart(RevWalk walk, ObjectId id)
+			throws IncorrectObjectTypeException, IOException {
+		try {
+			RevObject peeled = walk.peel(walk.parseAny(id));
+			if (peeled instanceof RevCommit) {
+				walk.markStart((RevCommit) peeled);
+			}
+		} catch (MissingObjectException e) {
+			// Ignore
 		}
 	}
 
