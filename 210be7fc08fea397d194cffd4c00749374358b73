@@ -16,6 +16,24 @@
       "revId": "210be7fc08fea397d194cffd4c00749374358b73",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7c6d7796_84447e27",
+        "filename": "org.eclipse.egit.core.junit/src/org/eclipse/egit/core/test/TestProject.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 210,
+      "author": {
+        "id": 440
+      },
+      "writtenOn": "2019-11-26T13:29:21Z",
+      "side": 1,
+      "message": "Done.\n\nI think I have to do another digging through the prefs files. I suspect our setting of \"don\u0027t join lines\" might be having this side effect. Will check if I can find some workaround.",
+      "parentUuid": "d6ee8543_4ad0794e",
+      "revId": "210be7fc08fea397d194cffd4c00749374358b73",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
     }
   ]
 }
