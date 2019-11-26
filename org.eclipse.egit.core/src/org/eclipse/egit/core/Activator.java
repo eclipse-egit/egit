@@ -727,23 +727,8 @@ public class Activator extends Plugin implements DebugOptionsListener {
 			}
 			RepositoryMapping m = mappings.get(0);
 			IPath gitDirPath = m.getGitDirAbsolutePath();
-			if (gitDirPath == null || gitDirPath.segmentCount() == 0) {
+			if (gitDirPath == null || !isValidRepositoryPath(gitDirPath)) {
 				return;
-			}
-
-			IPath workingDir = gitDirPath.removeLastSegments(1);
-			// Don't connect "/" or "C:\"
-			if (workingDir.isRoot()) {
-				return;
-			}
-
-			File userHome = FS.DETECTED.userHome();
-			if (userHome != null) {
-				Path userHomePath = new Path(userHome.getAbsolutePath());
-				// Don't connect "/home" or "/home/username"
-				if (workingDir.isPrefixOf(userHomePath)) {
-					return;
-				}
 			}
 
 			// connect
@@ -756,9 +741,25 @@ public class Activator extends Plugin implements DebugOptionsListener {
 			// is deleted.
 			int nofMappings = mappings.size();
 			if (nofMappings > 1) {
-				IPath lastPath = mappings.get(nofMappings - 1)
-						.getGitDirAbsolutePath();
-				if (lastPath != null) {
+				Set<String> configured = Activator.getDefault()
+						.getRepositoryUtil().getRepositories();
+				if (!configured.contains(gitDirPath.toString())) {
+					// If we hit an already configured repository, we're done
+					// anyway.
+					IPath lastPath = gitDirPath;
+					for (int i = 1; i < nofMappings; i++) {
+						IPath nextPath = mappings.get(i)
+								.getGitDirAbsolutePath();
+						if (nextPath == null) {
+							continue;
+						}
+						if (configured.contains(nextPath.toString())) {
+							return;
+						} else if (!isValidRepositoryPath(nextPath)) {
+							break;
+						}
+						lastPath = nextPath;
+					}
 					repositoryDir = lastPath.toFile();
 				}
 			}
@@ -769,6 +770,26 @@ public class Activator extends Plugin implements DebugOptionsListener {
 				logError(CoreText.Activator_AutoSharingFailed, e);
 			}
 		}
+	}
+
+	private static boolean isValidRepositoryPath(IPath gitDirPath) {
+		if (gitDirPath == null || gitDirPath.segmentCount() == 0) {
+			return false;
+		}
+		IPath workingDir = gitDirPath.removeLastSegments(1);
+		// Don't connect "/" or "C:\"
+		if (workingDir.isRoot()) {
+			return false;
+		}
+		File userHome = FS.DETECTED.userHome();
+		if (userHome != null) {
+			Path userHomePath = new Path(userHome.getAbsolutePath());
+			// Don't connect "/home" or "/home/username"
+			if (workingDir.isPrefixOf(userHomePath)) {
+				return false;
+			}
+		}
+		return true;
 	}
 
 	private void registerAutoIgnoreDerivedResources() {
