@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "51693ec0_5aa3bfd2",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 440
+      },
+      "writtenOn": "2019-11-26T08:59:17Z",
+      "side": 1,
+      "message": "I missed this in first review: Please remove the dot from the commit message title. Only the second part of a commit message should be in sentence style, the first part should be in title style.",
+      "range": {
+        "startLine": 7,
+        "startChar": 49,
+        "endLine": 7,
+        "endChar": 50
+      },
+      "revId": "dc73e140a1b45b4384560bd65f663b387f5e4790",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "dd9fa685_25cc18a0",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/history/CommitSelectionDialog.java",
         "patchSetId": 1
