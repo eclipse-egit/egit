@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "ff570b33_435ee340",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 3358
+      },
+      "writtenOn": "2019-11-26T18:38:10Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "51693ec0_5aa3bfd2",
+      "range": {
+        "startLine": 7,
+        "startChar": 49,
+        "endLine": 7,
+        "endChar": 50
+      },
+      "revId": "dc73e140a1b45b4384560bd65f663b387f5e4790",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "dd9fa685_25cc18a0",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/history/CommitSelectionDialog.java",
         "patchSetId": 1
@@ -76,6 +100,24 @@
       "writtenOn": "2019-11-26T12:31:31Z",
       "side": 1,
       "message": "Since bars\u003d\u003dnull in the dialog, there\u0027s no way to show the status. The feedback mechanism should be generalized such that we can show the N/M somewhere in the dialog.",
+      "revId": "dc73e140a1b45b4384560bd65f663b387f5e4790",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "0e83b45a_db9eb4f1",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/history/SearchBar.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 3358
+      },
+      "writtenOn": "2019-11-26T18:38:10Z",
+      "side": 1,
+      "message": "I hadn\u0027t noticed that message before. A solution would be to have a simple label on the dialog. Then I could update that from a custom IStatusLineManager implementation. So both GitHistoryPage and CommitSelectionDialog would pass an IStatusLineManager instance to their SearchBar. Downside of using IStatusLineManager is, that I need to create a class with about 30 methods, of which only 1 is really implemented, the rest would be emtpy stubs. Alternatively, I could create something similar to IStatusLineManager, specifically for this case. What do you think about that?",
+      "parentUuid": "e39d3960_d63639ee",
       "revId": "dc73e140a1b45b4384560bd65f663b387f5e4790",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
