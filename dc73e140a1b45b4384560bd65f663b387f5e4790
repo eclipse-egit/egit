@@ -139,6 +139,24 @@
       "revId": "dc73e140a1b45b4384560bd65f663b387f5e4790",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ec2ca458_732d3f1f",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/history/SearchBar.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2019-11-26T19:07:10Z",
+      "side": 1,
+      "message": "Since you plan on creating a subclass anyway, how about this: (just a suggestion)\n\nMake this class abstract. Remove this StatusListener class completely. Implement here instead a method\n\n  abstract protected void showStatus(FindToolbar originator, String text);\n\nIn the subclass for the toolbar, override to do\n\n  if (bars !\u003d null) {\n    IStatusLineManager status \u003d bars.getStatusLineManager();\n    if (status !\u003d null) {\n      status.setMessage(text);\n    }\n  }\n\nIn a second (perhaps even anonymous) subclass for the dialog override to show the text in a label.\n\nIn line 234 below, pass this::showStatus instead of statusListener.\n\nAlternatively, pass in the StatusListener from outside in the constructor.",
+      "parentUuid": "0e83b45a_db9eb4f1",
+      "revId": "dc73e140a1b45b4384560bd65f663b387f5e4790",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
     }
   ]
 }
