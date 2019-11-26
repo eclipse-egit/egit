@@ -70,6 +70,7 @@ import org.eclipse.egit.core.project.RepositoryFinder;
 import org.eclipse.egit.core.project.RepositoryMapping;
 import org.eclipse.egit.core.securestorage.EGitSecureStore;
 import org.eclipse.equinox.security.storage.SecurePreferencesFactory;
+import org.eclipse.jgit.annotations.NonNull;
 import org.eclipse.jgit.errors.ConfigInvalidException;
 import org.eclipse.jgit.events.ListenerHandle;
 import org.eclipse.jgit.lib.Config;
@@ -727,40 +728,40 @@ public class Activator extends Plugin implements DebugOptionsListener {
 			}
 			RepositoryMapping m = mappings.get(0);
 			IPath gitDirPath = m.getGitDirAbsolutePath();
-			if (gitDirPath == null || gitDirPath.segmentCount() == 0) {
+			if (gitDirPath == null || !isValidRepositoryPath(gitDirPath)) {
 				return;
-			}
-
-			IPath workingDir = gitDirPath.removeLastSegments(1);
-			// Don't connect "/" or "C:\"
-			if (workingDir.isRoot()) {
-				return;
-			}
-
-			File userHome = FS.DETECTED.userHome();
-			if (userHome != null) {
-				Path userHomePath = new Path(userHome.getAbsolutePath());
-				// Don't connect "/home" or "/home/username"
-				if (workingDir.isPrefixOf(userHomePath)) {
-					return;
-				}
 			}
 
 			// connect
 			File repositoryDir = gitDirPath.toFile();
 			projects.put(project, repositoryDir);
 
-			// If we had more than one mapping: add the last one as
-			// 'configured' repository. We don't want to add submodules,
-			// that would only lead to problems when a configured repository
-			// is deleted.
+			Set<String> configured = Activator.getDefault().getRepositoryUtil()
+					.getRepositories();
+			if (configured.contains(gitDirPath.toString())) {
+				return;
+			}
 			int nofMappings = mappings.size();
 			if (nofMappings > 1) {
-				IPath lastPath = mappings.get(nofMappings - 1)
-						.getGitDirAbsolutePath();
-				if (lastPath != null) {
-					repositoryDir = lastPath.toFile();
+				// We don't want to add submodules, that would only lead to
+				// problems when a configured repository is deleted. Walk up the
+				// hierarchy of nested repositories found. If we hit an already
+				// configured repository, we're done anyway. Otherwise add the
+				// topmost not yet configured repository that has a valid path.
+				IPath lastPath = gitDirPath;
+				for (int i = 1; i < nofMappings; i++) {
+					IPath nextPath = mappings.get(i).getGitDirAbsolutePath();
+					if (nextPath == null) {
+						continue;
+					}
+					if (configured.contains(nextPath.toString())) {
+						return;
+					} else if (!isValidRepositoryPath(nextPath)) {
+						break;
+					}
+					lastPath = nextPath;
 				}
+				repositoryDir = lastPath.toFile();
 			}
 			try {
 				Activator.getDefault().getRepositoryUtil()
@@ -769,6 +770,26 @@ public class Activator extends Plugin implements DebugOptionsListener {
 				logError(CoreText.Activator_AutoSharingFailed, e);
 			}
 		}
+	}
+
+	private static boolean isValidRepositoryPath(@NonNull IPath gitDirPath) {
+		if (gitDirPath.segmentCount() == 0) {
+			return false;
+		}
+		IPath workingDir = gitDirPath.removeLastSegments(1);
+		// Don't connect "/" or "C:\"
+		if (workingDir.isRoot()) {
+			return false;
+		}
+		File userHome = FS.DETECTED.userHome();
+		if (userHome != null) {
+			Path userHomePath = new Path(userHome.getAbsolutePath());
+			// Don't connect "/home" or "/home/username"
+			if (workingDir.isPrefixOf(userHomePath)) {
+				return false;
+			}
+		}
+		return true;
 	}
 
 	private void registerAutoIgnoreDerivedResources() {
