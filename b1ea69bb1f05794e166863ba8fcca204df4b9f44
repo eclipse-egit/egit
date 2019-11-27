@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9597f7f6_47489675",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/Activator.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 730,
+      "author": {
+        "id": 440
+      },
+      "writtenOn": "2019-11-27T09:29:32Z",
+      "side": 1,
+      "message": "can be removed now",
+      "range": {
+        "startLine": 730,
+        "startChar": 7,
+        "endLine": 730,
+        "endChar": 28
+      },
+      "revId": "b1ea69bb1f05794e166863ba8fcca204df4b9f44",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "af398b2d_732b1df9",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/Activator.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 748,
+      "author": {
+        "id": 440
+      },
+      "writtenOn": "2019-11-27T09:29:32Z",
+      "side": 1,
+      "message": "The \"already configured\" logic is spread over 2 places (the other is line 756). We could make it easier to understand by doing something like\n\n newPathStrings \u003d mappings.map(m -\u003e m.getGitDirAbsolutePath().toString().collect(...))\n if (!Collections.disjoint(configured, newPathStrings)) {\n   return;\n }",
+      "range": {
+        "startLine": 746,
+        "startChar": 4,
+        "endLine": 748,
+        "endChar": 15
+      },
+      "revId": "b1ea69bb1f05794e166863ba8fcca204df4b9f44",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
