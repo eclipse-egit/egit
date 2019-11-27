@@ -1,0 +1,318 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "54aa52b5_6c450d00",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/history/CommitSelectionDialog.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 171,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2019-11-27T18:30:52Z",
+      "side": 1,
+      "message": "statusLabel.requestLayout(); is preferred these days.",
+      "range": {
+        "startLine": 171,
+        "startChar": 4,
+        "endLine": 171,
+        "endChar": 37
+      },
+      "revId": "cf4e736116a0aafaf6e7f07697815cfeaa5ca9c1",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "8f9c623a_35aa7e7f",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/history/CommitSelectionDialog.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 183,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2019-11-27T18:30:52Z",
+      "side": 1,
+      "message": "Strange formatting. Eclipse formats this differently. Please use the Eclipse formatter as configured.",
+      "revId": "cf4e736116a0aafaf6e7f07697815cfeaa5ca9c1",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "185edc50_66bd4dc4",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/history/CommitSelectionDialog.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 279,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2019-11-27T18:30:52Z",
+      "side": 1,
+      "message": "Avoid duplicating this array; it can be large. Create it once before table.setInput(), then pass there and use it here.",
+      "range": {
+        "startLine": 279,
+        "startChar": 11,
+        "endLine": 279,
+        "endChar": 47
+      },
+      "revId": "cf4e736116a0aafaf6e7f07697815cfeaa5ca9c1",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "73d6f4de_ad1596f9",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/history/GitHistoryPage.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 3064,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2019-11-27T18:30:52Z",
+      "side": 1,
+      "message": "Strange formatting; could be one line?",
+      "revId": "cf4e736116a0aafaf6e7f07697815cfeaa5ca9c1",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9eeac25f_d8c93fd7",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/history/ICommitsProvider.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2019-11-27T18:30:52Z",
+      "side": 1,
+      "message": "Should have some minimal javadoc explaining what this for.",
+      "revId": "cf4e736116a0aafaf6e7f07697815cfeaa5ca9c1",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "2b280570_77193603",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/history/SearchBar.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2019-11-27T18:30:52Z",
+      "side": 1,
+      "message": "Class should have javadoc now that this SearchBar becomes reusable.",
+      "revId": "cf4e736116a0aafaf6e7f07697815cfeaa5ca9c1",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5031ebde_c536b4eb",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/history/SearchBar.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2019-11-27T18:30:52Z",
+      "side": 1,
+      "message": "This is specific to the history, isn\u0027t it?",
+      "range": {
+        "startLine": 49,
+        "startChar": 25,
+        "endLine": 49,
+        "endChar": 40
+      },
+      "revId": "cf4e736116a0aafaf6e7f07697815cfeaa5ca9c1",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "19ce7f9c_b59a9b6c",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/history/SearchBar.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2019-11-27T18:30:52Z",
+      "side": 1,
+      "message": "This listener is needed only in the HistorySearchBar.",
+      "revId": "cf4e736116a0aafaf6e7f07697815cfeaa5ca9c1",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "e5473d73_a9a1a807",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/history/SearchBar.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 122,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2019-11-27T18:30:52Z",
+      "side": 1,
+      "message": "Is this Listener needed in the dialog or could it also go to HistorySearchBar?",
+      "revId": "cf4e736116a0aafaf6e7f07697815cfeaa5ca9c1",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "8c87ffe0_62a43a9d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/history/SearchBar.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 125,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2019-11-27T18:30:52Z",
+      "side": 1,
+      "message": "Empty javadoc, please fill in.",
+      "revId": "cf4e736116a0aafaf6e7f07697815cfeaa5ca9c1",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3d270a93_c7a58d41",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/history/SearchBar.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 133,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2019-11-27T18:30:52Z",
+      "side": 1,
+      "message": "This is probably also better at home at HistorySearchBar. In the dialog, it is visible by default, right?",
+      "range": {
+        "startLine": 133,
+        "startChar": 2,
+        "endLine": 133,
+        "endChar": 26
+      },
+      "revId": "cf4e736116a0aafaf6e7f07697815cfeaa5ca9c1",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "da1a4405_4e7f9865",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/history/SearchBar.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 142,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2019-11-27T18:30:52Z",
+      "side": 1,
+      "message": "This can go to HistorySearchBar.",
+      "range": {
+        "startLine": 138,
+        "startChar": 0,
+        "endLine": 142,
+        "endChar": 2
+      },
+      "revId": "cf4e736116a0aafaf6e7f07697815cfeaa5ca9c1",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7711534c_b97cb6b9",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/history/SearchBar.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 145,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2019-11-27T18:30:52Z",
+      "side": 1,
+      "message": "Perhaps a covariant override here?\n\n  protected FindToolbar createControl(Composite parent)\n\n?\n\nThough a subclass can also add listeners if it\u0027s a Control. So I\u0027m not sure it\u0027d bring any benefits.",
+      "range": {
+        "startLine": 145,
+        "startChar": 11,
+        "endLine": 145,
+        "endChar": 18
+      },
+      "revId": "cf4e736116a0aafaf6e7f07697815cfeaa5ca9c1",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "cfd71a31_e0e39e6a",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/history/SearchBar.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 185,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2019-11-27T18:30:52Z",
+      "side": 1,
+      "message": "I guess this can also to HistorySearchBar, including the wasVisible flag.",
+      "range": {
+        "startLine": 173,
+        "startChar": 0,
+        "endLine": 185,
+        "endChar": 5
+      },
+      "revId": "cf4e736116a0aafaf6e7f07697815cfeaa5ca9c1",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "8cb9d892_e4323cf1",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/history/SearchBar.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 192,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2019-11-27T18:30:52Z",
+      "side": 1,
+      "message": "Empty javadoc, could you fill in, please?",
+      "revId": "cf4e736116a0aafaf6e7f07697815cfeaa5ca9c1",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "05d201a4_fa8f63fb",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/history/SearchBar.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 204,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2019-11-27T18:30:52Z",
+      "side": 1,
+      "message": "Should have javadoc so that it\u0027s easier to understand what this is for.",
+      "revId": "cf4e736116a0aafaf6e7f07697815cfeaa5ca9c1",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
