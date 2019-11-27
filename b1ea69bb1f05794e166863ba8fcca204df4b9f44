@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "5e265bf4_7c8816b9",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/Activator.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 730,
+      "author": {
+        "id": 440
+      },
+      "writtenOn": "2019-11-27T10:33:01Z",
+      "side": 1,
+      "message": "Okay, get it. In such cases I\u0027m in favor of not removing the \"duplicate\" guard inside the method. Otherwise the method might become a source of failure in the future.",
+      "parentUuid": "fc18d1ea_f79ce542",
+      "range": {
+        "startLine": 730,
+        "startChar": 7,
+        "endLine": 730,
+        "endChar": 28
+      },
+      "revId": "b1ea69bb1f05794e166863ba8fcca204df4b9f44",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "af398b2d_732b1df9",
         "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/Activator.java",
         "patchSetId": 1
@@ -84,6 +108,30 @@
       "side": 1,
       "message": "Since we have to walk up the chain of nested repositories anyway, I don\u0027t see how that would simplify anything.",
       "parentUuid": "af398b2d_732b1df9",
+      "range": {
+        "startLine": 746,
+        "startChar": 4,
+        "endLine": 748,
+        "endChar": 15
+      },
+      "revId": "b1ea69bb1f05794e166863ba8fcca204df4b9f44",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7afa4593_03d16671",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/Activator.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 748,
+      "author": {
+        "id": 440
+      },
+      "writtenOn": "2019-11-27T10:33:01Z",
+      "side": 1,
+      "message": "It\u0027s not about simplifying the problem that needs to be solved or about optimizing runtime. It\u0027s just more easy to understand for someone who has not written the code. During review I had to understand\na) you check the first mapping via the gitDirPath variable in 746. The comment there explains that, but it does not explain how the other mappings are checked.\nb) you iterate over the mappings, but not the first mapping (750)\nc) you check other mappings, which are not the first, via 756 (under a different variable name than gitDirPath from a).\nd) all the other flow control in 754 and 759 does not disturb the check of the mappings\n\nThis kind of reverse engineering could be avoided by handling the \"have we seen any of the mappings already\" aspect in one place, instead of mixing it with the \"find the best mapping in a loop\" aspect. Thinking about it again, I would probably even extract my suggested code into a method and write this in line 744 to make it even more clear:\n\n if (isRepositoryAlreadyConfigured(mappings)) {\n   return\n }\n\n boolean isRepositoryAlreadyConfigured(mappings)) {\n   configured \u003d ...\n   mappingStrings \u003d ...\n   return !Collections.disjoint(configured, mappingStrings);\n }\n\nThat would also make it possible to extract all the remaining code afterwards into another method \n\n findBestMapping(mappings) {\n   ...\n }",
+      "parentUuid": "060a5f96_be5a2db7",
       "range": {
         "startLine": 746,
         "startChar": 4,
