@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "fc18d1ea_f79ce542",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/Activator.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 730,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2019-11-27T09:50:51Z",
+      "side": 1,
+      "message": "Not here, but inside isValidRepositoryPath. If I remove it here I get a potential null access warning. (I think it was at line 735.)",
+      "parentUuid": "9597f7f6_47489675",
+      "range": {
+        "startLine": 730,
+        "startChar": 7,
+        "endLine": 730,
+        "endChar": 28
+      },
+      "revId": "b1ea69bb1f05794e166863ba8fcca204df4b9f44",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "af398b2d_732b1df9",
         "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/Activator.java",
         "patchSetId": 1
@@ -36,6 +60,30 @@
       "writtenOn": "2019-11-27T09:29:32Z",
       "side": 1,
       "message": "The \"already configured\" logic is spread over 2 places (the other is line 756). We could make it easier to understand by doing something like\n\n newPathStrings \u003d mappings.map(m -\u003e m.getGitDirAbsolutePath().toString().collect(...))\n if (!Collections.disjoint(configured, newPathStrings)) {\n   return;\n }",
+      "range": {
+        "startLine": 746,
+        "startChar": 4,
+        "endLine": 748,
+        "endChar": 15
+      },
+      "revId": "b1ea69bb1f05794e166863ba8fcca204df4b9f44",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "060a5f96_be5a2db7",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/Activator.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 748,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2019-11-27T09:50:51Z",
+      "side": 1,
+      "message": "Since we have to walk up the chain of nested repositories anyway, I don\u0027t see how that would simplify anything.",
+      "parentUuid": "af398b2d_732b1df9",
       "range": {
         "startLine": 746,
         "startChar": 4,
