@@ -24,6 +24,7 @@ import org.eclipse.core.runtime.jobs.Job;
 import org.eclipse.egit.core.op.CommitOperation;
 import org.eclipse.egit.ui.Activator;
 import org.eclipse.egit.ui.JobFamilies;
+import org.eclipse.egit.ui.UIPreferences;
 import org.eclipse.egit.ui.internal.UIText;
 import org.eclipse.egit.ui.internal.decorators.GitLightweightDecorator;
 import org.eclipse.egit.ui.internal.dialogs.CommitMessageComponentStateManager;
@@ -73,6 +74,9 @@ public class CommitJob extends Job {
 		super(UIText.CommitAction_CommittingChanges);
 		this.repository = repository;
 		this.commitOperation = commitOperation;
+		boolean redirectOutput = Activator.getDefault().getPreferenceStore()
+				.getBoolean(UIPreferences.SHOW_COMMIT_HOOK_OUTPUT);
+		this.commitOperation.setRedirectHookOutput(redirectOutput);
 	}
 
 	/**
@@ -100,16 +104,20 @@ public class CommitJob extends Job {
 	@Override
 	protected IStatus run(IProgressMonitor monitor) {
 		RevCommit commit = null;
+		String hookOutput = ""; //$NON-NLS-1$
 		try {
 			commitOperation.execute(monitor);
 			commit = commitOperation.getCommit();
+			hookOutput = commitOperation.getHookCombinedOutput();
 			CommitMessageComponentStateManager.deleteState(repository);
 		} catch (CoreException e) {
+			hookOutput = commitOperation.getHookCombinedOutput();
 			if (e.getCause() instanceof JGitInternalException) {
 				return Activator.createErrorStatus(e.getLocalizedMessage(),
 						e.getCause());
 			} else if (e.getCause() instanceof AbortedByHookException) {
-				showAbortedByHook(e.getCause());
+				showAbortedByHook(e.getCause(), hookOutput);
+				hookOutput = ""; //$NON-NLS-1$
 				return Status.CANCEL_STATUS;
 			} else if (e.getCause() instanceof CanceledException) {
 				return Status.CANCEL_STATUS;
@@ -119,6 +127,9 @@ public class CommitJob extends Job {
 					.createErrorStatus(UIText.CommitAction_CommittingFailed, e);
 		} finally {
 			GitLightweightDecorator.refresh();
+			if (hookOutput.length() > 0) {
+				showHookOutput(hookOutput);
+			}
 		}
 
 		if (commit != null) {
@@ -132,15 +143,50 @@ public class CommitJob extends Job {
 		return Status.OK_STATUS;
 	}
 
-	private void showAbortedByHook(final Throwable cause) {
+	private void showAbortedByHook(final Throwable cause, String hookOutput) {
 		PlatformUI.getWorkbench().getDisplay().asyncExec(new Runnable() {
+
+			private String createMessage() {
+				StringBuilder b = new StringBuilder();
+
+				String failureCause = cause.getLocalizedMessage();
+
+				if (failureCause.length() > 0) {
+					b.append(failureCause);
+				} else {
+					b.append(UIText.CommitJob_NoFailureReason);
+				}
+
+				if (hookOutput.length() > 0
+						&& !hookOutput.equals(failureCause)) {
+					b.append(System.lineSeparator());
+					b.append(UIText.CommitJob_CompleteHookOutput);
+					b.append(System.lineSeparator());
+					b.append(hookOutput);
+				}
+
+				return b.toString();
+			}
 
 			@Override
 			public void run() {
 				MessageDialog.openWarning(PlatformUI.getWorkbench()
 						.getDisplay().getActiveShell(),
 						UIText.CommitJob_AbortedByHook,
-						cause.getLocalizedMessage());
+						createMessage());
+			}
+		});
+	}
+
+	private void showHookOutput(String hookOutput) {
+		PlatformUI.getWorkbench().getDisplay().asyncExec(new Runnable() {
+
+			@Override
+			public void run() {
+				MessageDialog.openInformation(
+						PlatformUI.getWorkbench().getDisplay().getActiveShell(),
+						UIText.CommitJob_HookOutput,
+						hookOutput);
 			}
 		});
 	}
