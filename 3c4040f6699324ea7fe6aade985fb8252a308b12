@@ -22,6 +22,30 @@
       "revId": "3c4040f6699324ea7fe6aade985fb8252a308b12",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "d2f9b817_e47db2c6",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/history/SWTPlotRenderer.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 173,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2019-11-28T08:52:40Z",
+      "side": 1,
+      "message": "We know it\u0027s a single line (it\u0027s the first line of the commit message), so no \\n. Theoretically it might contain other control characters and maybe even other vertical whitespace, but that\u0027s really esoteric. Already TABs are rather unusual. (I think I\u0027ve never written a single commit message with a TAB character in the title line :-) except this morning to test this.\n\nReplacing a single character is much faster than doing some regex replacement, and this occurs in the UI thread when drawing lines in the commit table. So I think this is good enough.",
+      "parentUuid": "68549a1d_3875fcef",
+      "range": {
+        "startLine": 173,
+        "startChar": 28,
+        "endLine": 173,
+        "endChar": 32
+      },
+      "revId": "3c4040f6699324ea7fe6aade985fb8252a308b12",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
     }
   ]
 }
