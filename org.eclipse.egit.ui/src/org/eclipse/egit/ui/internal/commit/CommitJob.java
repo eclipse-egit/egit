@@ -109,7 +109,7 @@ public class CommitJob extends Job {
 				return Activator.createErrorStatus(e.getLocalizedMessage(),
 						e.getCause());
 			} else if (e.getCause() instanceof AbortedByHookException) {
-				showAbortedByHook(e.getCause());
+				showAbortedByHook((AbortedByHookException) e.getCause());
 				return Status.CANCEL_STATUS;
 			} else if (e.getCause() instanceof CanceledException) {
 				return Status.CANCEL_STATUS;
@@ -132,15 +132,25 @@ public class CommitJob extends Job {
 		return Status.OK_STATUS;
 	}
 
-	private void showAbortedByHook(final Throwable cause) {
+	private void showAbortedByHook(final AbortedByHookException cause) {
 		PlatformUI.getWorkbench().getDisplay().asyncExec(new Runnable() {
+
+			private String createTitle() {
+				StringBuilder b = new StringBuilder();
+
+				b.append(UIText.CommitJob_AbortedByHook);
+				b.append(" \""); //$NON-NLS-1$
+				b.append(cause.getHookName());
+				b.append("\""); //$NON-NLS-1$
+
+				return b.toString();
+			}
 
 			@Override
 			public void run() {
 				MessageDialog.openWarning(PlatformUI.getWorkbench()
-						.getDisplay().getActiveShell(),
-						UIText.CommitJob_AbortedByHook,
-						cause.getLocalizedMessage());
+						.getDisplay().getActiveShell(), createTitle(),
+						cause.getHookStdErr());
 			}
 		});
 	}
