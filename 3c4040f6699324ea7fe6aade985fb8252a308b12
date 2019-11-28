@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "68549a1d_3875fcef",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/history/SWTPlotRenderer.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 173,
+      "author": {
+        "id": 440
+      },
+      "writtenOn": "2019-11-28T08:43:50Z",
+      "side": 1,
+      "message": "I remember vaguely that you fixed some other bugs related to whitespace using some obscure regular expression patterns to catch more different whitespace characters. Would that be useful here, too?\n\nIf not, then +2.",
+      "range": {
+        "startLine": 173,
+        "startChar": 28,
+        "endLine": 173,
+        "endChar": 32
+      },
+      "revId": "3c4040f6699324ea7fe6aade985fb8252a308b12",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
