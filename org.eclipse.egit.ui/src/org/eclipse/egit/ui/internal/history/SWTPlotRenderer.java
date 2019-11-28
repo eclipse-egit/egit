@@ -170,11 +170,12 @@ class SWTPlotRenderer extends AbstractPlotRenderer<SWTLane, Color> {
 
 	@Override
 	protected void drawText(final String msg, final int x, final int y) {
-		final Point textsz = g.textExtent(msg);
+		String text = msg.replace('\t', ' ');
+		final Point textsz = g.textExtent(text);
 		final int texty = (y - textsz.y) / 2;
 		g.setForeground(cellFG);
 		g.setBackground(cellBG);
-		g.drawString(msg, cellX + x, cellY + texty, true);
+		g.drawString(text, cellX + x, cellY + texty, true);
 
 		tagCount = 0;
 	}
