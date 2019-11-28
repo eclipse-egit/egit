@@ -125,6 +125,7 @@ public class PluginPreferenceInitializer extends AbstractPreferenceInitializer {
 		store.setDefault(UIPreferences.SHOW_CHECKOUT_CONFIRMATION, true);
 		store.setDefault(UIPreferences.SHOW_RUNNING_LAUNCH_ON_CHECKOUT_WARNING,
 				true);
+		store.setDefault(UIPreferences.SHOW_COMMIT_HOOK_OUTPUT, false);
 
 
 		store.setDefault(UIPreferences.SYNC_VIEW_CHANGESET_LABEL_FORMAT,
