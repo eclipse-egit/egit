@@ -3432,6 +3432,9 @@ public class UIText extends NLS {
 	public static String CommittingPreferencePage_footers;
 
 	/** */
+	public static String CommittingPreferencePage_popups;
+
+	/** */
 	public static String CommittingPreferencePage_formatting;
 
 	/** */
@@ -3481,6 +3484,9 @@ public class UIText extends NLS {
 
 	/** */
 	public static String CommittingPreferencePage_general;
+
+	/** */
+	public static String CommittingPreferencePage_ShowHookOutput;
 
 	/** */
 	public static String DateFormatPreferencePage_title;
@@ -5330,6 +5336,15 @@ public class UIText extends NLS {
 
 	/** */
 	public static String CommitJob_AbortedByHook;
+
+	/** */
+	public static String CommitJob_CompleteHookOutput;
+
+	/** */
+	public static String CommitJob_HookOutput;
+
+	/** */
+	public static String CommitJob_NoFailureReason;
 
 	/** */
 	public static String CommitResultLabelProvider_SectionAuthor;

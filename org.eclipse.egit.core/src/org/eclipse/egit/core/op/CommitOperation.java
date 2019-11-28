@@ -17,8 +17,12 @@ package org.eclipse.egit.core.op;
 
 import static java.lang.Boolean.FALSE;
 import static java.lang.Boolean.TRUE;
+import static java.nio.charset.StandardCharsets.UTF_8;
 
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.io.PrintStream;
+import java.io.UnsupportedEncodingException;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Date;
@@ -85,6 +89,10 @@ public class CommitOperation implements IEGitOperation {
 	private boolean createChangeId;
 
 	private boolean commitIndex;
+
+	private boolean redirectOutput = false;
+
+	private ByteArrayOutputStream combinedHookOutput = new ByteArrayOutputStream();
 
 	RevCommit commit = null;
 
@@ -246,6 +254,7 @@ public class CommitOperation implements IEGitOperation {
 		try (Git git = new Git(repo)) {
 			CommitCommand commitCommand = git.commit();
 			setAuthorAndCommitter(commitCommand);
+			setHookCombinedOutput(commitCommand);
 			commitCommand.setAmend(amending)
 					.setMessage(message)
 					.setInsertChangeId(createChangeId);
@@ -257,6 +266,25 @@ public class CommitOperation implements IEGitOperation {
 			throw new TeamException(
 					CoreText.MergeOperation_InternalError, e);
 		}
+	}
+
+	/**
+	 * Set whether to redirect the hook output.
+	 * <p>
+	 * If set to {@code true} will redirect the hook output into a buffer. The
+	 * content of this buffer can be retrieved by
+	 * {@link #getHookCombinedOutput()}.
+	 * </p>
+	 * <p>
+	 * If set to {@code false} the output will go to {@code stdout} and
+	 * {@code stderr} respectively.
+	 * </p>
+	 *
+	 * @param redirect
+	 *            whether to redirect the output
+	 */
+	public void setRedirectHookOutput(boolean redirect) {
+		redirectOutput = redirect;
 	}
 
 	/**
@@ -292,6 +320,20 @@ public class CommitOperation implements IEGitOperation {
 	}
 
 	/**
+	 * If the hook output was redirected using
+	 * {@link #setRedirectHookOutput(boolean)}, get the content of the buffer
+	 * all hook output was redirected to.
+	 * <p>
+	 * If the hook output was not redirected will return an empty string.
+	 * </p>
+	 *
+	 * @return the combined (stdout and stderr) output of all commit hooks
+	 */
+	public String getHookCombinedOutput() {
+		return new String(combinedHookOutput.toByteArray(), UTF_8);
+	}
+
+	/**
 	 * @return the newly created commit if committing was successful, null otherwise.
 	 */
 	public RevCommit getCommit() {
@@ -303,6 +345,7 @@ public class CommitOperation implements IEGitOperation {
 		try (Git git = new Git(repo)) {
 			CommitCommand commitCommand = git.commit();
 			setAuthorAndCommitter(commitCommand);
+			setHookCombinedOutput(commitCommand);
 			commit = commitCommand.setAll(true).setMessage(message)
 					.setInsertChangeId(createChangeId).call();
 		} catch (JGitInternalException e) {
@@ -310,6 +353,19 @@ public class CommitOperation implements IEGitOperation {
 		} catch (GitAPIException e) {
 			throw new TeamException(e.getLocalizedMessage(), e);
 		}
+	}
+
+	private void setHookCombinedOutput(CommitCommand commitCommand) {
+		if (!redirectOutput)
+			return;
+		PrintStream ps = null;
+		try {
+			ps = new PrintStream(combinedHookOutput, false, UTF_8.name());
+		} catch (UnsupportedEncodingException e) {
+			// UTF-8 is guaranteed to be available
+		}
+		commitCommand.setHookOutputStream(ps);
+		commitCommand.setHookErrorStream(ps);
 	}
 
 	private void setAuthorAndCommitter(CommitCommand commitCommand) throws TeamException {

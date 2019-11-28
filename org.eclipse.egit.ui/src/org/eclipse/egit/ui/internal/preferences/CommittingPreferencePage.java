@@ -145,6 +145,11 @@ public class CommittingPreferencePage extends DoublePreferencesPreferencePage
 				generalGroup);
 		addField(historySize);
 
+		BooleanFieldEditor showHookOutput = new BooleanFieldEditor(
+				UIPreferences.SHOW_COMMIT_HOOK_OUTPUT,
+				UIText.CommittingPreferencePage_ShowHookOutput, generalGroup);
+		addField(showHookOutput);
+
 		updateMargins(generalGroup);
 
 		Group formattingGroup = new Group(main, SWT.SHADOW_ETCHED_IN);
