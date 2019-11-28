@@ -15,6 +15,7 @@
 package org.eclipse.egit.ui.internal.commit;
 
 import java.io.IOException;
+import java.text.MessageFormat;
 
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IProgressMonitor;
@@ -109,7 +110,7 @@ public class CommitJob extends Job {
 				return Activator.createErrorStatus(e.getLocalizedMessage(),
 						e.getCause());
 			} else if (e.getCause() instanceof AbortedByHookException) {
-				showAbortedByHook(e.getCause());
+				showAbortedByHook((AbortedByHookException) e.getCause());
 				return Status.CANCEL_STATUS;
 			} else if (e.getCause() instanceof CanceledException) {
 				return Status.CANCEL_STATUS;
@@ -132,15 +133,19 @@ public class CommitJob extends Job {
 		return Status.OK_STATUS;
 	}
 
-	private void showAbortedByHook(final Throwable cause) {
+	private void showAbortedByHook(final AbortedByHookException cause) {
 		PlatformUI.getWorkbench().getDisplay().asyncExec(new Runnable() {
+
+			private String createTitle() {
+				return MessageFormat.format(UIText.CommitJob_AbortedByHook,
+						cause.getHookName());
+			}
 
 			@Override
 			public void run() {
 				MessageDialog.openWarning(PlatformUI.getWorkbench()
-						.getDisplay().getActiveShell(),
-						UIText.CommitJob_AbortedByHook,
-						cause.getLocalizedMessage());
+						.getDisplay().getActiveShell(), createTitle(),
+						cause.getHookStdErr());
 			}
 		});
 	}
