@@ -15,6 +15,8 @@ import static org.junit.Assert.assertTrue;
 
 import java.text.MessageFormat;
 
+import org.eclipse.egit.core.test.TestUtils;
+import org.eclipse.egit.ui.JobFamilies;
 import org.eclipse.egit.ui.common.LocalRepositoryTestCase;
 import org.eclipse.egit.ui.internal.UIText;
 import org.eclipse.egit.ui.test.ContextMenuHelper;
@@ -66,6 +68,8 @@ public class StashesMenuTest extends LocalRepositoryTestCase {
 		enterMessageText.setText(stashMessage);
 		createDialog.bot().button(UIText.StashCreateCommand_ButtonOK).click();
 
+		TestUtils.waitForJobs(5000, JobFamilies.STASH);
+
 		assertEquals(originalContent, getTestFileContent());
 
 		ContextMenuHelper.clickContextMenu(selectProject(), "Team", STASHES,
@@ -80,6 +84,8 @@ public class StashesMenuTest extends LocalRepositoryTestCase {
 				.toolbarButtonWithTooltip(
 						util.getPluginLocalizedValue("StashApplyCommand.label"))
 				.click();
+
+		TestUtils.waitForJobs(5000, JobFamilies.STASH);
 
 		assertEquals(modifiedContent, getTestFileContent());
 	}
