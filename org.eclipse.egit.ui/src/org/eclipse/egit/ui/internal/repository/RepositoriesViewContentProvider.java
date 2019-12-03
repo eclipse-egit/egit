@@ -82,8 +82,6 @@ import org.eclipse.jface.viewers.ITreeContentProvider;
 import org.eclipse.jface.viewers.Viewer;
 import org.eclipse.jgit.api.Git;
 import org.eclipse.jgit.events.ListenerHandle;
-import org.eclipse.jgit.events.RefsChangedEvent;
-import org.eclipse.jgit.events.RefsChangedListener;
 import org.eclipse.jgit.lib.ConfigConstants;
 import org.eclipse.jgit.lib.Constants;
 import org.eclipse.jgit.lib.ObjectId;
@@ -635,25 +633,22 @@ public class RepositoriesViewContentProvider implements ITreeContentProvider {
 			allRefs = repo.getRefDatabase().getRefs(RefDatabase.ALL);
 			branchRefs.put(repo, allRefs);
 			if (refsChangedListeners.get(repo) == null) {
-				RefsChangedListener listener = new RefsChangedListener() {
-					@Override
-					public void onRefsChanged(RefsChangedEvent event) {
-						synchronized (RepositoriesViewContentProvider.this) {
-							branchRefs.remove(repo);
-						}
-					}
-				};
 				refsChangedListeners.put(repo, repo.getListenerList()
-						.addRefsChangedListener(listener));
+						.addRefsChangedListener(event -> {
+							synchronized (this) {
+								branchRefs.remove(event.getRepository());
+							}
+						}));
 			}
 		}
-		if (prefix.equals(RefDatabase.ALL))
+		if (prefix.equals(RefDatabase.ALL)) {
 			return allRefs;
-
+		}
 		Map<String, Ref> filtered = new HashMap<>();
 		for (Map.Entry<String, Ref> entry : allRefs.entrySet()) {
-			if (entry.getKey().startsWith(prefix))
+			if (entry.getKey().startsWith(prefix)) {
 				filtered.put(entry.getKey(), entry.getValue());
+			}
 		}
 		return filtered;
 	}
