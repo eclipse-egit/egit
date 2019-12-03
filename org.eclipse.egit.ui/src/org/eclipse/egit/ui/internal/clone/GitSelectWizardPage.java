@@ -200,7 +200,7 @@ public class GitSelectWizardPage extends WizardPage {
 		tv.setContentProvider(cp);
 		GridDataFactory.fillDefaults().grab(true, true).hint(SWT.DEFAULT, 200)
 				.applyTo(tv.getTree());
-		tv.setLabelProvider(new RepositoryTreeNodeLabelProvider());
+		tv.setLabelProvider(new RepositoryTreeNodeLabelProvider(true));
 		tv.addSelectionChangedListener(new ISelectionChangedListener() {
 
 			@Override

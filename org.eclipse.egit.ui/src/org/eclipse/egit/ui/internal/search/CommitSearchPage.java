@@ -312,7 +312,7 @@ public class CommitSearchPage extends DialogPage implements ISearchPage {
 				repositoryGroup, SWT.SINGLE | SWT.V_SCROLL | SWT.H_SCROLL
 						| SWT.BORDER);
 		this.repositoryViewer
-				.setLabelProvider(new RepositoryTreeNodeLabelProvider());
+				.setLabelProvider(new RepositoryTreeNodeLabelProvider(true));
 		this.repositoryViewer
 				.setContentProvider(new RepositoriesViewContentProvider());
 		this.repositoryViewer
