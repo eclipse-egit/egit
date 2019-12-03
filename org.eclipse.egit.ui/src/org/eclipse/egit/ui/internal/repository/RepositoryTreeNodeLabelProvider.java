@@ -15,7 +15,8 @@
  *******************************************************************************/
 package org.eclipse.egit.ui.internal.repository;
 
-import java.util.WeakHashMap;
+import java.util.Arrays;
+import java.util.function.Consumer;
 
 import org.eclipse.egit.ui.internal.GitLabels;
 import org.eclipse.egit.ui.internal.groups.RepositoryGroup;
@@ -28,10 +29,13 @@ import org.eclipse.egit.ui.internal.repository.tree.RepositoryTreeNodeType;
 import org.eclipse.egit.ui.internal.repository.tree.WorkingDirNode;
 import org.eclipse.jface.viewers.DecoratingStyledCellLabelProvider;
 import org.eclipse.jface.viewers.DelegatingStyledCellLabelProvider.IStyledLabelProvider;
+import org.eclipse.jface.viewers.IDecorationContext;
+import org.eclipse.jface.viewers.ILabelDecorator;
 import org.eclipse.jface.viewers.StyledString;
+import org.eclipse.jface.viewers.ViewerCell;
 import org.eclipse.jgit.lib.Ref;
 import org.eclipse.jgit.lib.Repository;
-import org.eclipse.swt.graphics.Image;
+import org.eclipse.swt.custom.StyleRange;
 import org.eclipse.ui.IMemento;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.model.WorkbenchLabelProvider;
@@ -50,103 +54,41 @@ public class RepositoryTreeNodeLabelProvider
 	private final boolean showPaths;
 
 	/**
-	 * Keeps the last label. If the label we originally get is undecorated, we
-	 * return this last decorated label instead to prevent flickering. When the
-	 * asynchronous lightweight decorator then has computed the decoration, the
-	 * label will be updated. Note that this works only because our
-	 * RepositoryTreeNodeDecorator always decorates! (If there's no decoration,
-	 * it appends a single blank to ensure the decorated label is different from
-	 * the undecorated one.)
-	 * <p>
-	 * For images, there is no such work-around, and thus we need to do the
-	 * image decorations in the label provider (in the
-	 * RepositoryTreeNodeWorkbenchAdapter in our case) in the UI thread.
-	 */
-	private final WeakHashMap<Object, StyledString> previousDecoratedLabels = new WeakHashMap<>();
-
-	/**
-	 * Creates a new {@link RepositoryTreeNodeLabelProvider} that shows the
-	 * paths for repositories and working tree nodes.
+	 * Creates a new {@link RepositoryTreeNodeLabelProvider} that neither
+	 * decorates nor shows paths.
 	 */
 	public RepositoryTreeNodeLabelProvider() {
-		this(true);
+		this(new WorkbenchLabelProvider(), null, null, false);
 	}
 
 	/**
-	 * Creates a new {@link RepositoryTreeNodeLabelProvider}.
+	 * Creates a new {@link RepositoryTreeNodeLabelProvider} that decorates and
+	 * optionally shows paths.
 	 *
 	 * @param showPaths
-	 *            whether to show the file system paths for repositories and
-	 *            working tree nodes
+	 *            whether to show paths
 	 */
 	public RepositoryTreeNodeLabelProvider(boolean showPaths) {
-		this(new WorkbenchLabelProvider(), showPaths);
+		this(new WorkbenchLabelProvider(), PlatformUI.getWorkbench()
+				.getDecoratorManager().getLabelDecorator(), null, showPaths);
 	}
 
 	private RepositoryTreeNodeLabelProvider(
-			WorkbenchLabelProvider labelProvider, boolean showPaths) {
-		super(labelProvider, PlatformUI.getWorkbench()
-				.getDecoratorManager().getLabelDecorator(), null);
+			WorkbenchLabelProvider labelProvider, ILabelDecorator decorator,
+			IDecorationContext decorationContext, boolean showPaths) {
+		super(labelProvider, decorator, decorationContext);
 		this.labelProvider = labelProvider;
 		this.showPaths = showPaths;
 	}
 
 	@Override
-	public void dispose() {
-		super.dispose();
-		previousDecoratedLabels.clear();
-	}
-
-	@Override
 	public StyledString getStyledText(Object element) {
-		StyledString decoratedLabel = super.getStyledText(element);
-		String decoratedValue = decoratedLabel.getString();
-		String simpleValue = labelProvider.getText(element);
-		if (decoratedValue.equals(simpleValue)) {
-			// Decoration not available yet... but may be shortly. Try to
-			// prevent flickering by returning the previous decorated label, if
-			// any.
-			StyledString previousLabel = previousDecoratedLabels.get(element);
-			if (previousLabel != null) {
-				return previousLabel;
-			}
-		} else if (decoratedValue.trim().equals(simpleValue)) {
-			// No decoration...
-			decoratedLabel = labelProvider.getStyledText(element);
-		}
-		if (showPaths) {
-			if (element instanceof RepositoryNode) {
-				Repository repository = ((RepositoryNode) element)
-						.getRepository();
-				if (repository != null) {
-					decoratedLabel.append(" - ", StyledString.QUALIFIER_STYLER) //$NON-NLS-1$
-							.append(repository.getDirectory().getAbsolutePath(),
-									StyledString.QUALIFIER_STYLER);
-				}
-			} else if (element instanceof WorkingDirNode) {
-				Repository repository = ((WorkingDirNode) element)
-						.getRepository();
-				if (repository != null) {
-					decoratedLabel.append(" - ", StyledString.QUALIFIER_STYLER) //$NON-NLS-1$
-							.append(repository.getWorkTree().getAbsolutePath(),
-									StyledString.QUALIFIER_STYLER);
-				}
-			}
-		}
-		previousDecoratedLabels.put(element, decoratedLabel);
-		return decoratedLabel;
+		return super.getStyledText(element);
 	}
 
 	@Override
 	public String getText(Object element) {
 		return labelProvider.getText(element);
-	}
-
-	@Override
-	public Image getImage(Object element) {
-		// We know that the decorator for RepositoryTreeNodes will not decorate
-		// the image; our label provider will do so already.
-		return labelProvider.getImage(element);
 	}
 
 	@Override
@@ -157,6 +99,15 @@ public class RepositoryTreeNodeLabelProvider
 			return GitLabels.getRefDescription(ref);
 		}
 		return null;
+	}
+
+	@Override
+	public void update(ViewerCell cell) {
+		if (showPaths) {
+			update(cell, super::update);
+		} else {
+			super.update(cell);
+		}
 	}
 
 	@Override
@@ -197,5 +148,44 @@ public class RepositoryTreeNodeLabelProvider
 	@Override
 	public void init(ICommonContentExtensionSite config) {
 		// empty
+	}
+
+	static void update(ViewerCell cell, Consumer<ViewerCell> updater) {
+		Object element = cell.getElement();
+		if (element instanceof RepositoryNode
+				|| element instanceof WorkingDirNode) {
+			String textBefore = cell.getText();
+			StyleRange[] rangesBefore = cell.getStyleRanges();
+			updater.accept(cell);
+			String textAfter = cell.getText();
+			StyleRange[] rangesAfter = cell.getStyleRanges();
+			if (textBefore.equals(textAfter)
+					&& Arrays.equals(rangesBefore, rangesAfter)) {
+				// Decorating delegate decided to wait.
+				return;
+			}
+			Repository repository = ((RepositoryTreeNode<?>) element)
+					.getRepository();
+			if (repository == null) {
+				return;
+			}
+			String newText = " - "; //$NON-NLS-1$
+			if (element instanceof RepositoryNode) {
+				newText += repository.getDirectory().getAbsolutePath();
+			} else if (element instanceof WorkingDirNode) {
+				newText += repository.getWorkTree().getAbsolutePath();
+			}
+			StyleRange style = new StyleRange();
+			style.start = textAfter.length();
+			style.length = newText.length();
+			StyledString.QUALIFIER_STYLER.applyStyles(style);
+			StyleRange[] newRanges = new StyleRange[rangesAfter.length + 1];
+			System.arraycopy(rangesAfter, 0, newRanges, 0, rangesAfter.length);
+			newRanges[newRanges.length - 1] = style;
+			cell.setText(textAfter + newText);
+			cell.setStyleRanges(newRanges);
+		} else {
+			updater.accept(cell);
+		}
 	}
 }
