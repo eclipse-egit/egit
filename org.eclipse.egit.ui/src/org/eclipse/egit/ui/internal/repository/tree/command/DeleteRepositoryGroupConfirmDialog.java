@@ -77,7 +77,8 @@ public class DeleteRepositoryGroupConfirmDialog extends TitleAreaDialog {
 				SWT.BORDER | SWT.V_SCROLL);
 		GridDataFactory.fillDefaults().grab(true, true)
 				.applyTo(groupsViewer.getControl());
-		groupsViewer.setLabelProvider(new RepositoryTreeNodeLabelProvider());
+		groupsViewer
+				.setLabelProvider(new RepositoryTreeNodeLabelProvider(true));
 		groupsViewer.setContentProvider(
 				new DeleteRepositoryGroupTreeContentProvider());
 		groupsViewer.setInput(groupsToDelete);
