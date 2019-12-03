@@ -30,6 +30,7 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.concurrent.atomic.AtomicReference;
 
 import org.eclipse.core.commands.IStateListener;
 import org.eclipse.core.commands.State;
@@ -959,7 +960,7 @@ public class RepositoriesView extends CommonNavigator implements IShowInSource, 
 		}
 
 		refreshUiJob.cancel();
-		refreshUiJob.uiTask = uiTask;
+		refreshUiJob.uiTask.compareAndSet(null, uiTask);
 
 		if (scheduledJob != null) {
 			schedule(scheduledJob, delay);
@@ -1008,7 +1009,7 @@ public class RepositoriesView extends CommonNavigator implements IShowInSource, 
 
 	class RefreshUiJob extends WorkbenchJob {
 		volatile boolean needsNewInput;
-		volatile Runnable uiTask;
+		final AtomicReference<Runnable> uiTask = new AtomicReference<>();
 
 		RefreshUiJob() {
 			super(PlatformUI.getWorkbench().getDisplay(),
@@ -1060,15 +1061,12 @@ public class RepositoriesView extends CommonNavigator implements IShowInSource, 
 					((PropertySheetPage) page).refresh();
 				}
 			}
-			if (monitor.isCanceled()) {
-				return Status.CANCEL_STATUS;
-			}
 
 			if (monitor.isCanceled()) {
 				return Status.CANCEL_STATUS;
 			}
 
-			Runnable task = uiTask;
+			Runnable task = uiTask.getAndSet(null);
 			if (task != null) {
 				task.run();
 			}
