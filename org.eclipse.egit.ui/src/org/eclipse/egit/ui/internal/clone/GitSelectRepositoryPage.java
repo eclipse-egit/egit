@@ -179,7 +179,7 @@ public class GitSelectRepositoryPage extends WizardPage {
 				return false;
 			}
 		});
-		tv.setLabelProvider(new RepositoryTreeNodeLabelProvider());
+		tv.setLabelProvider(new RepositoryTreeNodeLabelProvider(true));
 		tv.addSelectionChangedListener(new ISelectionChangedListener() {
 
 			@Override
