@@ -35,16 +35,13 @@ import java.util.concurrent.atomic.AtomicReference;
 import org.eclipse.core.commands.IStateListener;
 import org.eclipse.core.commands.State;
 import org.eclipse.core.resources.IResource;
-import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.Adapters;
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Path;
 import org.eclipse.core.runtime.Status;
-import org.eclipse.core.runtime.jobs.Job;
 import org.eclipse.core.runtime.preferences.IEclipsePreferences.IPreferenceChangeListener;
-import org.eclipse.core.runtime.preferences.IEclipsePreferences.PreferenceChangeEvent;
 import org.eclipse.egit.core.AdapterUtils;
 import org.eclipse.egit.core.RepositoryCache;
 import org.eclipse.egit.core.RepositoryUtil;
@@ -97,12 +94,11 @@ import org.eclipse.jface.viewers.CellEditor;
 import org.eclipse.jface.viewers.ColumnViewerEditor;
 import org.eclipse.jface.viewers.ColumnViewerEditorActivationEvent;
 import org.eclipse.jface.viewers.ColumnViewerEditorActivationStrategy;
-import org.eclipse.jface.viewers.DecoratingStyledCellLabelProvider;
 import org.eclipse.jface.viewers.DoubleClickEvent;
 import org.eclipse.jface.viewers.FocusCellHighlighter;
-import org.eclipse.jface.viewers.IBaseLabelProvider;
 import org.eclipse.jface.viewers.ICellModifier;
 import org.eclipse.jface.viewers.IDoubleClickListener;
+import org.eclipse.jface.viewers.ILabelProvider;
 import org.eclipse.jface.viewers.IOpenListener;
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.ISelectionProvider;
@@ -114,13 +110,11 @@ import org.eclipse.jface.viewers.TextCellEditor;
 import org.eclipse.jface.viewers.TreeSelection;
 import org.eclipse.jface.viewers.TreeViewerEditor;
 import org.eclipse.jface.viewers.TreeViewerFocusCellManager;
+import org.eclipse.jface.viewers.ViewerCell;
 import org.eclipse.jface.window.Window;
-import org.eclipse.jgit.events.ConfigChangedEvent;
 import org.eclipse.jgit.events.ConfigChangedListener;
-import org.eclipse.jgit.events.IndexChangedEvent;
 import org.eclipse.jgit.events.IndexChangedListener;
 import org.eclipse.jgit.events.ListenerHandle;
-import org.eclipse.jgit.events.RefsChangedEvent;
 import org.eclipse.jgit.events.RefsChangedListener;
 import org.eclipse.jgit.lib.Repository;
 import org.eclipse.osgi.util.NLS;
@@ -174,7 +168,7 @@ import org.eclipse.ui.views.properties.PropertySheet;
 import org.eclipse.ui.views.properties.PropertySheetPage;
 
 /**
- * The "Git Repositories View"
+ * The "Git Repositories View".
  */
 public class RepositoriesView extends CommonNavigator implements IShowInSource, IShowInTargetList {
 
@@ -200,19 +194,21 @@ public class RepositoriesView extends CommonNavigator implements IShowInSource, 
 	private static final String SINGLE_REPO_CONTEXT_ID = VIEW_ID
 			+ ".SingleRepository"; //$NON-NLS-1$
 
-	private static final long DEFAULT_REFRESH_DELAY = 1000;
+	/**
+	 * Delay between refreshes in milliseconds. Used to avoid overwhelming the
+	 * viewer with refreshes when many change events arrive from repositories.
+	 */
+	private static final long DEFAULT_REFRESH_DELAY = 300L;
 
 	private final Set<Repository> repositories = new HashSet<>();
 
-	private final RefsChangedListener myRefsChangedListener;
+	private final RefsChangedListener myRefsChangedListener = event -> scheduleRefresh();
 
-	private final IndexChangedListener myIndexChangedListener;
+	private final IndexChangedListener myIndexChangedListener = event -> scheduleRefresh();
 
-	private final ConfigChangedListener myConfigChangeListener;
+	private final ConfigChangedListener myConfigChangeListener = event -> scheduleRefresh();
 
 	private final List<ListenerHandle> myListeners = new LinkedList<>();
-
-	private Job scheduledJob;
 
 	private RefreshUiJob refreshUiJob;
 
@@ -223,10 +219,6 @@ public class RepositoriesView extends CommonNavigator implements IShowInSource, 
 	private Composite emptyArea;
 
 	private StackLayout layout;
-
-	private volatile long lastInputChange = 0L;
-
-	private volatile long lastInputUpdate = -1L;
 
 	private State reactOnSelection;
 
@@ -285,7 +277,11 @@ public class RepositoriesView extends CommonNavigator implements IShowInSource, 
 	private final IStateListener stateChangeListener = (state,
 			oldValue) -> refresh();
 
-	private final IPreferenceChangeListener configurationListener;
+	private final IPreferenceChangeListener configurationListener = event -> {
+		if (RepositoryUtil.PREFS_DIRECTORIES_REL.equals(event.getKey())) {
+			refresh();
+		}
+	};
 
 	private IContextActivation renameContext;
 
@@ -301,39 +297,6 @@ public class RepositoriesView extends CommonNavigator implements IShowInSource, 
 		repositoryUtil = Activator.getDefault().getRepositoryUtil();
 		repositoryCache = org.eclipse.egit.core.Activator.getDefault()
 				.getRepositoryCache();
-
-		configurationListener = new IPreferenceChangeListener() {
-			@Override
-			public void preferenceChange(PreferenceChangeEvent event) {
-				if (RepositoryUtil.PREFS_DIRECTORIES_REL
-						.equals(event.getKey())) {
-					lastInputChange = System.currentTimeMillis();
-					scheduleRefresh(DEFAULT_REFRESH_DELAY, null);
-				}
-			}
-		};
-
-		myRefsChangedListener = new RefsChangedListener() {
-			@Override
-			public void onRefsChanged(RefsChangedEvent e) {
-				scheduleRefresh(DEFAULT_REFRESH_DELAY, null);
-			}
-		};
-
-		myIndexChangedListener = new IndexChangedListener() {
-			@Override
-			public void onIndexChanged(IndexChangedEvent event) {
-				scheduleRefresh(DEFAULT_REFRESH_DELAY, null);
-
-			}
-		};
-
-		myConfigChangeListener = new ConfigChangedListener() {
-			@Override
-			public void onConfigChanged(ConfigChangedEvent event) {
-				scheduleRefresh(DEFAULT_REFRESH_DELAY, null);
-			}
-		};
 	}
 
 	/**
@@ -773,7 +736,7 @@ public class RepositoriesView extends CommonNavigator implements IShowInSource, 
 	private void initRepositoriesAndListeners() {
 		synchronized (repositories) {
 			repositories.clear();
-			unregisterRepositoryListener();
+			unregisterRepositoryListeners();
 			Set<File> dirs = new HashSet<>();
 			// listen for repository changes
 			for (String dir : repositoryUtil.getConfiguredRepositories()) {
@@ -823,11 +786,6 @@ public class RepositoriesView extends CommonNavigator implements IShowInSource, 
 		if (branchHierarchy != null) {
 			branchHierarchy.removeListener(stateChangeListener);
 		}
-		// make sure to cancel the refresh job
-		if (this.scheduledJob != null) {
-			this.scheduledJob.cancel();
-			this.scheduledJob = null;
-		}
 		refreshUiJob.cancel();
 
 		repositoryUtil.getPreferences().removePreferenceChangeListener(
@@ -836,8 +794,7 @@ public class RepositoriesView extends CommonNavigator implements IShowInSource, 
 		ISelectionService srv = CommonUtils.getService(getSite(), ISelectionService.class);
 		srv.removePostSelectionListener(selectionChangedListener);
 
-		// remove RepositoryChangedListener
-		unregisterRepositoryListener();
+		unregisterRepositoryListeners();
 		repositories.clear();
 
 		super.dispose();
@@ -945,7 +902,7 @@ public class RepositoriesView extends CommonNavigator implements IShowInSource, 
 	 * Refresh Repositories View
 	 */
 	public void refresh() {
-		lastInputUpdate = -1L;
+		initRepositoriesAndListeners();
 		scheduleRefresh(0, null);
 	}
 
@@ -954,61 +911,16 @@ public class RepositoriesView extends CommonNavigator implements IShowInSource, 
 				GitTraceLocation.REPOSITORIESVIEW.getLocation(), message);
 	}
 
+	private void scheduleRefresh() {
+		scheduleRefresh(DEFAULT_REFRESH_DELAY, null);
+	}
+
 	private synchronized void scheduleRefresh(long delay, Runnable uiTask) {
-		if (GitTraceLocation.REPOSITORIESVIEW.isActive()) {
-			trace("Entering scheduleRefresh()"); //$NON-NLS-1$
-		}
-
-		refreshUiJob.cancel();
 		refreshUiJob.uiTask.compareAndSet(null, uiTask);
-
-		if (scheduledJob != null) {
-			schedule(scheduledJob, delay);
-			return;
-		}
-
-		Job job = new Job("Refreshing Git Repositories data") { //$NON-NLS-1$
-
-			@Override
-			protected IStatus run(IProgressMonitor monitor) {
-				final CommonViewer tv = getCommonViewer();
-				if (!UIUtils.isUsable(tv)) {
-					return Status.CANCEL_STATUS;
-				}
-				final boolean trace = GitTraceLocation.REPOSITORIESVIEW
-						.isActive();
-				final boolean needsNewInput = lastInputChange > lastInputUpdate;
-				if (trace) {
-					trace("Running the update, new input required: " //$NON-NLS-1$
-									+ (lastInputChange > lastInputUpdate));
-				}
-				lastInputUpdate = System.currentTimeMillis();
-				if (needsNewInput) {
-					initRepositoriesAndListeners();
-				}
-
-				refreshUiJob.needsNewInput = needsNewInput;
-				refreshUiJob.schedule();
-				if (monitor.isCanceled()) {
-					return Status.CANCEL_STATUS;
-				}
-				return Status.OK_STATUS;
-			}
-
-			@Override
-			public boolean belongsTo(Object family) {
-				return JobFamilies.REPO_VIEW_REFRESH.equals(family);
-			}
-
-		};
-		job.setSystem(true);
-		job.setUser(false);
-		schedule(job, delay);
-		scheduledJob = job;
+		refreshUiJob.schedule(delay);
 	}
 
 	class RefreshUiJob extends WorkbenchJob {
-		volatile boolean needsNewInput;
 		final AtomicReference<Runnable> uiTask = new AtomicReference<>();
 
 		RefreshUiJob() {
@@ -1036,16 +948,8 @@ public class RepositoriesView extends CommonNavigator implements IShowInSource, 
 				return Status.CANCEL_STATUS;
 			}
 
-			if (needsNewInput) {
-				// keep expansion state and selection so that we can
-				// restore the tree after update
-				Object[] expanded = tv.getExpandedElements();
-				tv.setInput(ResourcesPlugin.getWorkspace().getRoot());
-				tv.setExpandedElements(expanded);
-				afterRefresh(tv);
-			} else {
-				tv.refresh(true);
-			}
+			tv.refresh(true);
+
 			if (monitor.isCanceled()) {
 				return Status.CANCEL_STATUS;
 			}
@@ -1079,20 +983,8 @@ public class RepositoriesView extends CommonNavigator implements IShowInSource, 
 		}
 	}
 
-	private void schedule(Job job, long delay) {
-		IWorkbenchSiteProgressService service = CommonUtils.getService(getSite(), IWorkbenchSiteProgressService.class);
-
-		if (GitTraceLocation.REPOSITORIESVIEW.isActive()) {
-			GitTraceLocation.getTrace().trace(
-					GitTraceLocation.REPOSITORIESVIEW.getLocation(),
-					"Scheduling refresh job"); //$NON-NLS-1$
-		}
-		service.schedule(job, delay);
-	}
-
-	private void unregisterRepositoryListener() {
-		for (ListenerHandle lh : myListeners)
-			lh.remove();
+	private void unregisterRepositoryListeners() {
+		myListeners.forEach(ListenerHandle::remove);
 		myListeners.clear();
 	}
 
@@ -1394,9 +1286,9 @@ public class RepositoriesView extends CommonNavigator implements IShowInSource, 
 	}
 
 	/**
-	 * Customized {@link CommonViewer} that doesn't create a decorating label
-	 * provider -- our label provider already does so, and we don't want double
-	 * decorations.
+	 * Customized {@link CommonViewer} that switches back to the empty area if
+	 * the tree view becomes empty, and that adds additional information at the
+	 * end of labels.
 	 */
 	private class RepositoriesCommonViewer extends CommonViewer {
 
@@ -1408,12 +1300,8 @@ public class RepositoriesView extends CommonNavigator implements IShowInSource, 
 		@Override
 		protected void init() {
 			super.init();
-			IBaseLabelProvider labelProvider = getLabelProvider();
-			// Our label provider already decorates. Avoid double decorating.
-			if (labelProvider instanceof DecoratingStyledCellLabelProvider) {
-				((DecoratingStyledCellLabelProvider) labelProvider)
-						.setLabelDecorator(null);
-			}
+			setLabelProvider(new PathAddingLabelProvider(
+					getNavigatorContentService().createCommonLabelProvider()));
 		}
 
 		@Override
@@ -1426,6 +1314,20 @@ public class RepositoriesView extends CommonNavigator implements IShowInSource, 
 		public void refresh(boolean updateLabels) {
 			super.refresh(updateLabels);
 			afterRefresh(this);
+		}
+	}
+
+	@SuppressWarnings("restriction")
+	private static class PathAddingLabelProvider extends
+			org.eclipse.ui.internal.navigator.NavigatorDecoratingLabelProvider {
+
+		public PathAddingLabelProvider(ILabelProvider commonLabelProvider) {
+			super(commonLabelProvider);
+		}
+
+		@Override
+		public void update(ViewerCell cell) {
+			RepositoryTreeNodeLabelProvider.update(cell, super::update);
 		}
 	}
 }

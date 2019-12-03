@@ -44,7 +44,7 @@ public class GitRepositoriesViewTestUtils {
 
 			@Override
 			public void run() {
-				providerRef.set(new RepositoryTreeNodeLabelProvider());
+				providerRef.set(new RepositoryTreeNodeLabelProvider(true));
 			}
 
 		});

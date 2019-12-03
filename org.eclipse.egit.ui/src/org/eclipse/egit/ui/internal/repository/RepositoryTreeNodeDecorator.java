@@ -28,6 +28,7 @@ import org.eclipse.egit.core.internal.indexdiff.IndexDiffCacheEntry;
 import org.eclipse.egit.core.internal.indexdiff.IndexDiffData;
 import org.eclipse.egit.ui.Activator;
 import org.eclipse.egit.ui.internal.CommonUtils;
+import org.eclipse.egit.ui.internal.UIIcons;
 import org.eclipse.egit.ui.internal.UIText;
 import org.eclipse.egit.ui.internal.decorators.DecoratorRepositoryStateCache;
 import org.eclipse.egit.ui.internal.decorators.GitDecorator;
@@ -42,6 +43,7 @@ import org.eclipse.egit.ui.internal.repository.tree.TagNode;
 import org.eclipse.egit.ui.internal.repository.tree.command.ToggleBranchCommitCommand;
 import org.eclipse.jface.viewers.IDecoration;
 import org.eclipse.jgit.annotations.NonNull;
+import org.eclipse.jgit.lib.Constants;
 import org.eclipse.jgit.lib.ObjectId;
 import org.eclipse.jgit.lib.Ref;
 import org.eclipse.jgit.lib.Repository;
@@ -124,44 +126,118 @@ public class RepositoryTreeNodeDecorator extends GitDecorator
 		Repository repository = node.getRepository();
 		if (repository != null) {
 			UnitOfWork.execute(repository,
-					() -> decorateText(node, repository, decoration));
+					() -> decorateNode(node, repository, decoration));
 		} else if (node.getType() == RepositoryTreeNodeType.REPOGROUP) {
 			decorateRepositoryGroup(node, decoration);
 		}
 	}
 
+	private void decorateNode(RepositoryTreeNode<?> node,
+			@NonNull Repository repository, IDecoration decoration) {
+		decorateText(node, repository, decoration);
+		decorateIcon(node, repository, decoration);
+	}
+
+	private void decorateIcon(RepositoryTreeNode<?> node,
+			@NonNull Repository repository, IDecoration decoration) {
+		switch (node.getType()) {
+		case TAG:
+		case ADDITIONALREF:
+		case REF:
+			// if the branch or tag is checked out,
+			// we want to decorate the corresponding
+			// node with a little check indicator
+			String refName = ((Ref) node.getObject()).getName();
+			Ref leaf = ((Ref) node.getObject()).getLeaf();
+
+			String compareString = null;
+			String branchName = DecoratorRepositoryStateCache.INSTANCE
+					.getFullBranchName(repository);
+			if (branchName == null) {
+				return;
+			}
+			if (refName.startsWith(Constants.R_HEADS)) {
+				// local branch: HEAD would be on the branch
+				compareString = refName;
+			} else if (refName.startsWith(Constants.R_TAGS)) {
+				// tag: HEAD would be on the commit id to which the tag is
+				// pointing
+				TagNode tagNode = (TagNode) node;
+				compareString = tagNode.getCommitId();
+			} else if (refName.startsWith(Constants.R_REMOTES)) {
+				// remote branch: branch name is object id in detached HEAD
+				// state
+				ObjectId objectId = leaf.getObjectId();
+				if (objectId != null) {
+					String leafName = objectId.getName();
+					if (leafName.equals(branchName)) {
+						decoration.addOverlay(UIIcons.OVR_CHECKEDOUT,
+								IDecoration.TOP_LEFT);
+						return;
+					}
+				}
+			} else if (refName.equals(Constants.HEAD)) {
+				decoration.addOverlay(UIIcons.OVR_CHECKEDOUT,
+						IDecoration.TOP_LEFT);
+				return;
+			} else {
+				String leafname = leaf.getName();
+				if (leafname.startsWith(Constants.R_REFS)
+						&& leafname.equals(branchName)) {
+					decoration.addOverlay(UIIcons.OVR_CHECKEDOUT,
+							IDecoration.TOP_LEFT);
+					return;
+				}
+				ObjectId objectId = leaf.getObjectId();
+				if (objectId != null && objectId
+						.equals(DecoratorRepositoryStateCache.INSTANCE
+								.getHead(repository))) {
+					decoration.addOverlay(UIIcons.OVR_CHECKEDOUT,
+							IDecoration.TOP_LEFT);
+				}
+				// some other symbolic reference
+				return;
+			}
+
+			if (compareString != null && compareString.equals(branchName)) {
+				decoration.addOverlay(UIIcons.OVR_CHECKEDOUT,
+						IDecoration.TOP_LEFT);
+			}
+
+			break;
+		default:
+			break;
+		}
+	}
+
 	private void decorateText(RepositoryTreeNode<?> node,
 			@NonNull Repository repository, IDecoration decoration) {
-		boolean decorated = false;
 		switch (node.getType()) {
 		case REPO:
-			decorated = decorateRepository(node, repository, decoration);
+			decorateRepository(node, repository, decoration);
 			break;
 		case ADDITIONALREF:
-			decorated = decorateAdditionalRef((AdditionalRefNode) node,
+			decorateAdditionalRef((AdditionalRefNode) node,
 					decoration);
 			break;
 		case REF:
-			decorated = decorateRef((RefNode) node, decoration);
+			decorateRef((RefNode) node, decoration);
 			break;
 		case TAG:
-			decorated = decorateTag((TagNode) node, decoration);
+			decorateTag((TagNode) node, decoration);
 			break;
 		case STASHED_COMMIT:
-			decorated = decorateStash((StashedCommitNode) node, decoration);
+			decorateStash((StashedCommitNode) node, decoration);
 			break;
 		case SUBMODULES:
-			decorated = decorateSubmodules(repository, decoration);
+			decorateSubmodules(repository, decoration);
 			break;
 		default:
 			return;
 		}
-		if (!decorated) {
-			ensureCorrectLabelCaching(decoration);
-		}
 	}
 
-	private boolean decorateAdditionalRef(AdditionalRefNode node,
+	private void decorateAdditionalRef(AdditionalRefNode node,
 			IDecoration decoration) {
 		Ref ref = node.getObject();
 		StringBuilder suffix = new StringBuilder();
@@ -182,22 +258,19 @@ public class RepositoryTreeNodeDecorator extends GitDecorator
 					UIText.RepositoriesViewLabelProvider_UnbornBranchText);
 		}
 		decoration.addSuffix(suffix.toString());
-		return true;
 	}
 
-	private boolean decorateRef(RefNode node, IDecoration decoration) {
+	private void decorateRef(RefNode node, IDecoration decoration) {
 		if (verboseBranchMode) {
 			RevCommit latest = getLatestCommit(node);
 			if (latest != null) {
 				decoration.addSuffix(" " + abbreviate(latest) + ' ' //$NON-NLS-1$
 						+ latest.getShortMessage());
-				return true;
 			}
 		}
-		return false;
 	}
 
-	private boolean decorateRepository(RepositoryTreeNode<?> node,
+	private void decorateRepository(RepositoryTreeNode<?> node,
 			@NonNull Repository repository, IDecoration decoration) {
 		boolean isSubModule = node.getParent() != null && node.getParent()
 				.getType() == RepositoryTreeNodeType.SUBMODULES;
@@ -209,7 +282,7 @@ public class RepositoryTreeNodeDecorator extends GitDecorator
 			Ref head = DecoratorRepositoryStateCache.INSTANCE
 					.getHeadRef(repository);
 			if (head == null) {
-				return false;
+				return;
 			}
 			suffix.append(OPEN_BRACKET);
 			if (head.isSymbolic()) {
@@ -231,7 +304,7 @@ public class RepositoryTreeNodeDecorator extends GitDecorator
 			String branch = DecoratorRepositoryStateCache.INSTANCE
 					.getCurrentBranchLabel(repository);
 			if (branch == null) {
-				return false;
+				return;
 			}
 			suffix.append(OPEN_BRACKET);
 			suffix.append(branch);
@@ -250,7 +323,6 @@ public class RepositoryTreeNodeDecorator extends GitDecorator
 			suffix.append(']');
 		}
 		decoration.addSuffix(suffix.toString());
-		return true;
 	}
 
 	private void decorateRepositoryGroup(RepositoryTreeNode<?> node,
@@ -289,58 +361,40 @@ public class RepositoryTreeNodeDecorator extends GitDecorator
 				}
 			}
 		}
-		boolean decorated = false;
 		if (markGroupDirty) {
-			decorated = true;
 			decoration.addPrefix(HAS_CHANGES_PREFIX);
 		}
 		if (numberOfBranches == 1) {
-			decorated = true;
 			String repoLabel = singleRepoName != null ? singleRepoName
 					: MULTIPLE_REPOSITORIES;
 			decoration.addSuffix(
 					OPEN_BRACKET + repoLabel + ' ' + singleBranch + ']');
 		} else if (numberOfDirectories > 1) {
-			decorated = true;
 			decoration.addSuffix(OPEN_PARENTHESIS + numberOfDirectories + ')');
 		}
-		if (!decorated) {
-			ensureCorrectLabelCaching(decoration);
-		}
 	}
 
-	private void ensureCorrectLabelCaching(IDecoration decoration) {
-		// Ensure the caching of last labels in
-		// RepositoryTreeNodeLabelProvider works
-		decoration.addSuffix(" ");//$NON-NLS-1$
-	}
-
-	private boolean decorateStash(StashedCommitNode node,
+	private void decorateStash(StashedCommitNode node,
 			IDecoration decoration) {
 		RevCommit commit = node.getObject();
 		decoration.addSuffix(
 				OPEN_BRACKET + abbreviate(commit) + "] " //$NON-NLS-1$
 				+ commit.getShortMessage());
-		return true;
 	}
 
-	private boolean decorateSubmodules(@NonNull Repository repository,
+	private void decorateSubmodules(@NonNull Repository repository,
 			IDecoration decoration) {
 		if (haveSubmoduleChanges(repository)) {
 			decoration.addPrefix(HAS_CHANGES_PREFIX);
-			return true;
 		}
-		return false;
 	}
 
-	private boolean decorateTag(TagNode node, IDecoration decoration) {
+	private void decorateTag(TagNode node, IDecoration decoration) {
 		if (verboseBranchMode && node.getCommitId() != null
 				&& node.getCommitId().length() > 0) {
 			decoration.addSuffix(" " + node.getCommitId().substring(0, 7) + ' ' //$NON-NLS-1$
 					+ node.getCommitShortMessage());
-			return true;
 		}
-		return false;
 	}
 
 	private RevCommit getLatestCommit(RepositoryTreeNode node) {
