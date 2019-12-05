@@ -415,7 +415,7 @@ public abstract class AbstractConfigureRemoteDialog
 		specViewer.getTable().addKeyListener(new KeyAdapter() {
 			@Override
 			public void keyPressed(KeyEvent e) {
-				if (e.keyCode == SWT.DEL) {
+				if (e.keyCode == SWT.DEL && deleteRefSpecAction.isEnabled()) {
 					doDeleteRefSpecs();
 				}
 			}
