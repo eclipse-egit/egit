@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2018, 2019 Thomas Wolf <thomas.wolf@paranor.ch>
+ * Copyright (c) 2018, 2019 Thomas Wolf <thomas.wolf@paranor.ch> and others
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License 2.0
@@ -7,6 +7,9 @@
  * https://www.eclipse.org/legal/epl-2.0/
  *
  * SPDX-License-Identifier: EPL-2.0
+ *
+ * Contributors:
+ *    Simon Muschel <smuschel@gmx.de> - Bug 422365
  *******************************************************************************/
 package org.eclipse.egit.ui.internal.repository;
 
@@ -25,6 +28,9 @@ import org.eclipse.egit.ui.internal.repository.tree.RepositoryTreeNode;
 import org.eclipse.egit.ui.internal.repository.tree.RepositoryTreeNodeType;
 import org.eclipse.egit.ui.internal.repository.tree.StashedCommitNode;
 import org.eclipse.egit.ui.internal.repository.tree.TagNode;
+import org.eclipse.egit.ui.internal.repository.tree.WorkingDirNode;
+import org.eclipse.egit.ui.internal.resources.IResourceState;
+import org.eclipse.egit.ui.internal.resources.ResourceStateFactory;
 import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.jface.viewers.IDecoration;
 import org.eclipse.jgit.annotations.NonNull;
@@ -169,8 +175,25 @@ public class RepositoryTreeNodeWorkbenchAdapter extends WorkbenchAdapter {
 			}
 
 			break;
+		case WORKINGDIR:
+			WorkingDirNode workingDir = (WorkingDirNode) node;
+			return addConflictDecorationIfNecessary(workingDir.getPath().toFile(), base);
+		case FILE:
+		case FOLDER:
+			File file = (File) node.getObject();
+			return addConflictDecorationIfNecessary(file, base);
 		default:
 			break;
+		}
+		return base;
+	}
+
+	private ImageDescriptor addConflictDecorationIfNecessary(File file,
+			ImageDescriptor base) {
+		IResourceState state = ResourceStateFactory.getInstance().get(file);
+		if (state.hasConflicts()) {
+			return new DecorationOverlayDescriptor(base, UIIcons.OVR_CONFLICT,
+					IDecoration.BOTTOM_RIGHT);
 		}
 		return base;
 	}
