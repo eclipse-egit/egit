@@ -792,6 +792,8 @@ public class CommitFileDiffViewer extends TableViewer {
 		public UpdateJob(String name, FileDiffLoader loadJob) {
 			super(name);
 			this.loadJob = loadJob;
+			setUser(false); // always triggered by FileDiffLoader
+			setSystem(true);
 		}
 
 		@Override
