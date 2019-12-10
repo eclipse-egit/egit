@@ -84,7 +84,7 @@
 		</dl>
 		<h3 id="Creating_a_new_empty_Git_Repository">Creating a new empty Git Repository</h3>
 		<p>You can create a project first and share it afterwards. The Share Project Wizard supports creation of Git repositories  (see 
-			<a href="http://wiki.eclipse.org/EGit/User_Guide/Sharing#Adding_a_project_to_version_control" title="EGit/User Guide/Sharing#Adding_a_project_to_version_control" target="egit_external">Adding a project to version control</a>).
+			<a href="https://wiki.eclipse.org/EGit/User_Guide/Sharing#Adding_a_project_to_version_control" title="EGit/User Guide/Sharing#Adding_a_project_to_version_control" target="egit_external">Adding a project to version control</a>).
 		</p>
 		<p>You can also create a new empty Git Repository from the Git Repositories View (see 
 			<a href="#Creating_a_Repository" title="EGit/User_Guide#Creating_a_Repository">Creating a Repository</a>).
@@ -1985,6 +1985,9 @@ Sein oder nicht sein
 				<b>OK</b> to create the annotated tag
 			</li>
 		</ul>
+		<p>To create a 
+			<i>lightweight</i> tag storing neither message nor author information leave the tag message empty.
+		</p>
 		<p>Tags can also be created from the team menu, click 
 			<b>Team &gt; Advanced &gt; Tag...</b>, enter the tag name and message, select the commit you want to tag (default is HEAD) and click 
 			<b>OK</b>.
@@ -2016,6 +2019,7 @@ Sein oder nicht sein
 				<b>OK</b>
 			</li>
 		</ul>
+		<p>You can also change annotated tags into lightweight tags by removing the message or vice versa by adding a message.</p>
 		<h3 id="Deletion_of_tags">Deletion of tags</h3>
 		<p>In order to delete a tag, select the tag to be deleted and click 
 			<b>Delete Tag</b>.
@@ -2025,8 +2029,7 @@ Sein oder nicht sein
 			<a href="http://schacon.github.com/git/git-tag.html" target="egit_external">section "On re-tagging"</a> in the Git reference documentation of the tag command.
 		</p>
 		<h3 id="Light-weight_and_Signed_Tags">Light-weight and Signed Tags</h3>
-		<p>Light-weight tags are shown in the Repositories View as well as in the Create Tag dialog, but can not be edited.
-			Tags are shown with a blue icon in the Repositories View, annotated tags are decorated with a yellow person.</p>
+		<p>Light-weight tags are shown in the Repositories View as well as in the Create Tag dialog. Tags are shown with a blue icon in the Repositories View; annotated tags are decorated with a yellow person icon.</p>
 		<p>
 			<img border="0" src="images/Egit-1.1-tags.png"/>
 		</p>
@@ -2177,7 +2180,7 @@ Sein oder nicht sein
 		</p>
 		<p>
 			<b>Attention</b>: deleting the working tree (second checkbox) along with the repository (the <code>.git</code> directory; first checkbox) of course removes everything contained in that working tree directory. This includes Eclipse projects that were ever shared (see 
-			<a href="http://wiki.eclipse.org/EGit/User_Guide/Sharing#Adding_a_project_to_version_control" title="EGit/User Guide/Sharing#Adding_a_project_to_version_control" target="egit_external">Adding a project to version control</a>) with that git repository, even if later disconnected (
+			<a href="https://wiki.eclipse.org/EGit/User_Guide/Sharing#Adding_a_project_to_version_control" title="EGit/User Guide/Sharing#Adding_a_project_to_version_control" target="egit_external">Adding a project to version control</a>) with that git repository, even if later disconnected (
 			<b>Team&rarr;Disconnect</b>)! Sharing a project copies it into the git working tree; disconnecting it does 
 			<b>
 				<i>not</i>
@@ -2193,6 +2196,12 @@ Sein oder nicht sein
 		</p>
 		<p>The "Working Directory" node displays the location and structure of the working directory on the local file system (only in case of a development, or non-bare Repository, for bare Repositories, this node is always a leaf).</p>
 		<p>Finally, the "Remotes" node allows browsing and manipulating the remote configurations used for Fetch and Push.</p>
+		<h3 id="Repository_Groups">Repository Groups</h3>
+		<p>The repositories shown in the Git Repositories View can also be organized into groups. Groups are like logical folders; they are a purely visual structuring aid: moving a repository into or out of a group does not move the repository on disk. A group does not have a folder on the disk.</p>
+		<p>
+			<img border="0" src="images/EGit_5_6_Repository_Groups.png"/>
+		</p>
+		<p>Repository groups can be created via the context menu, sub-menu "Repository Groups", or via the view menu, entry "Create Repository Group...". Repositories can be moved into or between groups by drag'n'drop or via the context menu. Dragging a repository from a group into the white unused area of the view moves the repository out of the group, back to top-level. Groups can be renamed or deleted via the context menu. Deleting a group never deletes the repositories contained, those just go back to the top level. Nested groups are not supported.</p>
 		<h3 id="Functions_of_the_Git_Repositories_View">Functions of the Git Repositories View</h3>
 		<h4 id="Project_Import">Project Import</h4>
 		<p>In order to work with the contents of a Git Repository, its files and folders must be imported into the Eclipse workspace in the form of projects. While the Git Clone wizard allows to do such imports directly after cloning, the Git Repositories View allows to trigger project imports independently of the clone operation.</p>

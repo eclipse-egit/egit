@@ -38,7 +38,7 @@
 			<a href="https://wiki.eclipse.org/Gerrit#Doing_Code_Reviews_with_Gerrit" target="egit_external">Eclipse Gerrit wiki</a>.
 		</p>
 		<p>Both projects can accept contributions 
-			<i>only</i> via Gerrit. Please do not send patches by e-mail. Although both projects are mirrored to Gihub, EGit and JGit also cannot accept Github pull requests.
+			<i>only</i> via Gerrit. Please do not send patches by e-mail. Although both projects are mirrored to Github, EGit and JGit also cannot accept Github pull requests.
 		</p>
 		<h3 id="User_Account">User Account</h3>
 		<ul>
@@ -193,7 +193,7 @@ git config remote.review.push HEAD:refs/for/master
 			<li>
 				<a href="../../EGit/User_Guide/Tasks.html#Cloning_Remote_Repositories" title="EGit/User_Guide#Cloning_Remote_Repositories">Clone the JGit and EGit repositories</a> and select 
 				<b>Gerrit Configuration...</b> in the context menu of the remote "origin" in the Git Repositories view to 
-				<a href="http://wiki.eclipse.org/EGit/User_Guide#Gerrit_Configuration" target="egit_external">configure pushing to the code review queue</a>.
+				<a href="https://wiki.eclipse.org/EGit/User_Guide#Gerrit_Configuration" target="egit_external">configure pushing to the code review queue</a>.
 			</li>
 			<li>Alternative approach: Add a new review remote in the Git Repositories view and select 
 				<b>Gerrit Configuration...</b> in the context menu of the remote
@@ -225,7 +225,7 @@ git config remote.review.push HEAD:refs/for/master
 		</ul>
 		<h3 id="Using_the_Mylyn_Gerrit_Connector">Using the Mylyn Gerrit Connector</h3>
 		<p>The Mylyn Gerrit Connector can be installed from the Mylyn p2 repository, e.g. for juno from 
-			<a href="http://download.eclipse.org/mylyn/releases/juno" target="egit_external">http://download.eclipse.org/mylyn/releases/juno</a>.
+			<a href="https://download.eclipse.org/mylyn/releases/juno" target="egit_external">https://download.eclipse.org/mylyn/releases/juno</a>.
 		</p>
 		<p>It contains several useful features:</p>
 		<ul>
@@ -260,10 +260,10 @@ git config remote.review.push HEAD:refs/for/master
 		<h2 id="Coding_standards">Coding standards</h2>
 		<p>Eclipse has standards for how to write code.</p>
 		<p>
-			<a href="http://wiki.eclipse.org/Coding_Conventions" title="Coding_Conventions" target="egit_external">Coding conventions</a>
+			<a href="https://wiki.eclipse.org/Coding_Conventions" title="Coding_Conventions" target="egit_external">Coding conventions</a>
 		</p>
 		<p>
-			<a href="http://wiki.eclipse.org/User_Interface_Guidelines" title="User_Interface_Guidelines" target="egit_external">Use interface guidelines</a>
+			<a href="https://wiki.eclipse.org/User_Interface_Guidelines" title="User_Interface_Guidelines" target="egit_external">Use interface guidelines</a>
 		</p>
 		<p>These documents have links to other document. Browse through them without expecting to learn everything, just so you know roughly what areas and types of details they covert. When you are
 			not sure about how to write a piece of code or design the user interface, these are the two
@@ -323,7 +323,7 @@ git config remote.review.push HEAD:refs/for/master
 		</ul>
 		<h2 id="Commit_message_guidelines">Commit message guidelines</h2>
 		<ul>
-			<li>The commit message header should fit on one line. A blank line separates it from the body of the message.</li>
+			<li>The commit message header should fit on one line, try to keep it shorter than 50 characters, at most 72. A blank line separates it from the body of the message.</li>
 			<li>The first line should be a clear and concise description about the change. It is recommended to start with the modified subsystem, followed by a colon and a description starting with capital letter and without period at the end. For example: <code>UploadPack: Use reachability checker to validate non-advertised wants</code></li>
 			<li>In case of release engineering tasks without bugzilla entries the commit message header may look like "[findbugs] Fix warning XYZ for String constructor". The prefix in brackets is an indication why this comes without a corresponding bug. </li>
 			<li>Enter a newline before providing a more detailed description about the change.</li>
@@ -367,26 +367,46 @@ Signed-off-by: Your Name &lt;your.email@example.org&gt;
 </pre>
 		<p>If you use Mylyn to fetch a bug from bugzilla, and then activate the task, the commit message will automatically be formatted exactly like requested above.</p>
 		<h2 id="License_Header">License Header</h2>
-		<p>JGit is licensed under the 
+		<p>All new code files, including test code, must have a license header.</p>
+		<p>
+			<b>JGit</b> is licensed under the 
 			<a href="https://www.eclipse.org/org/documents/edl-v10.php" target="egit_external">Eclipse Distribution License</a> which is a form of the 
 			<a href="https://opensource.org/licenses/BSD-3-Clause" target="egit_external">New BSD License</a>.
 			Use of this license by an Eclipse project requires unanimous approval by the Board of Directors of the Eclipse Foundation
 			which was approved in a 
 			<a href="https://www.eclipse.org/org/foundation/boardminutes/2009_09_16_Minutes.php" target="egit_external">meeting of the board in Sep 2009</a>.
 		</p>
-		<p>The license and copyright header to be used for JGit is</p>
+		<p>The license and copyright header to be used for 
+			<b>JGit</b> is
+		</p>
 		<pre>/*
  * Copyright &#169; YEAR CONTRIBUTOR[ and others]
  * 
  * This program and the accompanying materials are made available under the
  * terms of the Eclipse Distribution License v. 1.0 which is available at
- * <a href="http://www.eclipse.org/org/documents/edl-v10.php" target="egit_external">http://www.eclipse.org/org/documents/edl-v10.php</a>.
+ * <a href="https://www.eclipse.org/org/documents/edl-v10.php" target="egit_external">https://www.eclipse.org/org/documents/edl-v10.php</a>.
  * 
  * SPDX-License-Identifier: BSD-3-Clause
  */
 </pre>
+		<p>
+			<b>EGit</b> is licensed under the 
+			<a href="https://www.eclipse.org/legal/epl-2.0/" target="egit_external">Eclipse Public License 2.0</a> and uses the license header
+		</p>
+		<pre>/*******************************************************************************
+ * Copyright &#169; YEAR CONTRIBUTOR[ and others.]
+ *
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License 2.0
+ * which accompanies this distribution, and is available at
+ * <a href="https://www.eclipse.org/legal/epl-2.0/" target="egit_external">https://www.eclipse.org/legal/epl-2.0/</a>
+ *
+ * SPDX-License-Identifier: EPL-2.0
+ *******************************************************************************/
+</pre>
+		<p>The license header is placed at the very beginning of a file; in Java files above the "package" line.</p>
 		<p>See 
-			<a href="http://www.eclipse.org/legal/copyrightandlicensenotice.php" target="egit_external">http://www.eclipse.org/legal/copyrightandlicensenotice.php</a> for more information.
+			<a href="https://www.eclipse.org/legal/copyrightandlicensenotice.php" target="egit_external">https://www.eclipse.org/legal/copyrightandlicensenotice.php</a> for more information.
 		</p>
 		<h2 id="Copyright">Copyright</h2>
 		<p>When contributing patches, you have to update the copyright section at the beginning of the file if there is one. Please follow the style that is already present in the file. Some examples follow.</p>
