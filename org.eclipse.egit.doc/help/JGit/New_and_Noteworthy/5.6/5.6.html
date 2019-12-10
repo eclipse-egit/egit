@@ -2,13 +2,13 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 	<head>
 		<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
-		<title>JGit 5.5 New and Noteworthy</title>
+		<title>JGit 5.6 New and Noteworthy</title>
 		<link type="text/css" rel="stylesheet" href="../../../book.css"/>
 	</head>
 	<body>
 		<table class="navigation" style="width: 100%;" border="0" summary="navigation">
 			<tr>
-				<th style="width: 100%" align="center" colspan="3">JGit 5.5 New and Noteworthy</th>
+				<th style="width: 100%" align="center" colspan="3">JGit 5.6 New and Noteworthy</th>
 			</tr>
 			<tr>
 				<td style="width: 20%" align="left"></td>
@@ -26,21 +26,23 @@
 			</tr>
 		</table><hr class="navigation-separator"/>
 		<h1 id="JGit">JGit</h1>
-		<h2 id="sshd">sshd</h2>
+		<h2 id="Reftable">Reftable</h2>
+		<p>FileReftableDatabase is a new Reftable implementation for JGit's standard file storage backend besides DfsReftableDatabase providing a Reftable implementation for dfs storage API based backends.</p>
+		<p>Reftable is a binary, block-based storage format for the ref-database. It provides several advantages over the traditional packed + loose refs storage.</p>
+		<p>Storage format:</p>
 		<ul>
-			<li>Support the HashKnownHosts configuration (see the 
-				<a href="https://man.openbsd.org/ssh_config.5" target="egit_external">SSH config</a> file documentation).
-			</li>
-			<li>Support configurable server key verification allowing clients to substitute their own database of known hosts keys instead of the default file-based mechanism.</li>
-			<li>Allow setting a null ssh config to permanently switch off handling of the <tt>~/.ssh/config</tt> file.</li>
+			<li>O(1) write performance, even for deletions and transactions.</li>
+			<li>atomic updates to the ref database.</li>
+			<li>O(log N) lookup and prefix scans</li>
+			<li>free from restrictions imposed by the file system: it is case-sensitive even on case-insensitive file systems, and has no inherent limitations for directory/file conflicts</li>
+		</ul>
+		<ul>
+			<li>Prefix compression reduces space usage for repetitive ref names, such as gerrit's refs/changes/xx/xxxxx format.</li>
+			<li>FileReftableDatabase is based on FileReftableStack, which does compactions inline. This is simple, and has good median performance, but every so often it will rewrite the entire ref database.</li>
 		</ul>
 		<h2 id="Other_Changes">Other Changes</h2>
 		<p>The complete list of new features and bug fixes is available in the 
-			<a href="https://projects.eclipse.org/projects/technology.jgit/releases/5.5.0/" target="egit_external">release notes</a>.
-		</p>
-		<p>Also the fixes from 
-			<a href="https://projects.eclipse.org/projects/technology.jgit/releases/5.4.2" target="egit_external">JGit 5.4.2</a> and 
-			<a href="https://projects.eclipse.org/projects/technology.jgit/releases/5.4.3" target="egit_external">JGit 5.4.3</a> are included
+			<a href="https://projects.eclipse.org/projects/technology.jgit/releases/5.6.0/" target="egit_external">release notes</a>.
 		</p><hr class="navigation-separator"/>
 		<table class="navigation" style="width: 100%;" border="0" summary="navigation">
 			<tr>
