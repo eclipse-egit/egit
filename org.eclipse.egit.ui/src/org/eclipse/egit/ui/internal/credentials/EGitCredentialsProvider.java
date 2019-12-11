@@ -120,18 +120,15 @@ public class EGitCredentialsProvider extends CredentialsProvider {
 		// special handling for non-user,non-password type items
 		final boolean[] result = new boolean[1];
 
-		PlatformUI.getWorkbench().getDisplay().syncExec(new Runnable() {
-			@Override
-			public void run() {
-				Shell shell = PlatformUI.getWorkbench()
-						.getActiveWorkbenchWindow().getShell();
+		PlatformUI.getWorkbench().getDisplay().syncExec(() -> {
+			Shell shell = PlatformUI.getWorkbench()
+					.getModalDialogShellProvider().getShell();
 
-				if (items.length == 1) {
-					CredentialItem item = items[0];
-					result[0] = getSingleSpecial(shell, uri, item);
-				} else {
-					result[0] = getMultiSpecial(shell, uri, items);
-				}
+			if (items.length == 1) {
+				CredentialItem item = items[0];
+				result[0] = getSingleSpecial(shell, uri, item);
+			} else {
+				result[0] = getMultiSpecial(shell, uri, items);
 			}
 		});
 
@@ -170,21 +167,18 @@ public class EGitCredentialsProvider extends CredentialsProvider {
 					MessageDialog.QUESTION_WITH_CANCEL,
 					labels,
 					0);
-			dialog.setBlockOnOpen(true);
 			int r = dialog.open();
 			if (r < 0) {
 				return false;
 			}
 
 			switch (resultIDs[r]) {
-			case IDialogConstants.YES_ID: {
+			case IDialogConstants.YES_ID:
 				v.setValue(true);
 				return true;
-			}
-			case IDialogConstants.NO_ID: {
+			case IDialogConstants.NO_ID:
 				v.setValue(false);
 				return true;
-			}
 			default:
 				// abort
 				return false;
@@ -205,9 +199,7 @@ public class EGitCredentialsProvider extends CredentialsProvider {
 	 */
 	private boolean getMultiSpecial(Shell shell, URIish uri, CredentialItem... items) {
 		CustomPromptDialog dialog = new CustomPromptDialog(shell, uri, UIText.EGitCredentialsProvider_information, items);
-		dialog.setBlockOnOpen(true);
-		int r = dialog.open();
-		if (r == Window.OK) {
+		if (dialog.open() == Window.OK) {
 			return true;
 		}
 		return false;
@@ -216,13 +208,10 @@ public class EGitCredentialsProvider extends CredentialsProvider {
 	private UserPasswordCredentials getCredentialsFromUser(final URIish uri) {
 		final AtomicReference<UserPasswordCredentials> aRef = new AtomicReference<>(
 				null);
-		PlatformUI.getWorkbench().getDisplay().syncExec(new Runnable() {
-			@Override
-			public void run() {
-				Shell shell = PlatformUI.getWorkbench()
-						.getActiveWorkbenchWindow().getShell();
-				aRef.set(LoginService.login(shell, uri));
-			}
+		PlatformUI.getWorkbench().getDisplay().syncExec(() -> {
+			Shell shell = PlatformUI.getWorkbench()
+					.getModalDialogShellProvider().getShell();
+			aRef.set(LoginService.login(shell, uri));
 		});
 		return aRef.get();
 	}
