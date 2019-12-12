@@ -46,6 +46,30 @@
       "revId": "a33fd1060e6925523810b808af8bfaf065fe2dbc",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "586ad867_13115a0f",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/repository/RepositoriesView.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 921,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2019-12-12T18:31:32Z",
+      "side": 1,
+      "message": "I went with removing the cancel(). With the decorator in the background, I\u0027m not sure all this background refresh is still needed at all. Without the cancel, we have either:\n\n* No job is running. schedule(delay) is called, job is waiting.\n* Job is waiting and schedule(delay) is called: is ignored.\n* Job is running and schedule(delay) is called: job will be re-scheduled with the delay of the last schedule() while it was running.\n\nWhich gives us exactly what we want.",
+      "parentUuid": "101a7bbe_c2932314",
+      "range": {
+        "startLine": 919,
+        "startChar": 0,
+        "endLine": 921,
+        "endChar": 31
+      },
+      "revId": "a33fd1060e6925523810b808af8bfaf065fe2dbc",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
     }
   ]
 }
