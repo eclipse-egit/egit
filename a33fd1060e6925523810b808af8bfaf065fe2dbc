@@ -22,6 +22,30 @@
       "revId": "a33fd1060e6925523810b808af8bfaf065fe2dbc",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "101a7bbe_c2932314",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/repository/RepositoriesView.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 921,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2019-12-12T15:29:24Z",
+      "side": 1,
+      "message": "Good suggestion, simply re-scheduling would work only if there was no cancel().",
+      "parentUuid": "74547f4c_5f7850fd",
+      "range": {
+        "startLine": 919,
+        "startChar": 0,
+        "endLine": 921,
+        "endChar": 31
+      },
+      "revId": "a33fd1060e6925523810b808af8bfaf065fe2dbc",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
     }
   ]
 }
