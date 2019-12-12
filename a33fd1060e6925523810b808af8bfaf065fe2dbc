@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "74547f4c_5f7850fd",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/repository/RepositoriesView.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 921,
+      "author": {
+        "id": 440
+      },
+      "writtenOn": "2019-12-12T15:21:20Z",
+      "side": 1,
+      "message": "Doesn\u0027t that mean, that the job never starts if events are coming in every 200 ms (less than the 300 ms schedule delay)? An alternative would be to remember the time the job finished during last run, and to schedule the next with a delay of max(0, now-last_finish_time + 300). That way events could not defer jobs endlessly, and they would still not run more often than 300 ms.\n\nI\u0027m not sure if it was egit or another project, where we recently discussed re-using job instances versus creating new job instances. But I remember that we had an issue that resulted from setting a member to prepare the next scheduling, while that same job was still running on the previous schedule. By creating a new job instance every time that became a no-issue. Wondering if we should do that here, too.",
+      "range": {
+        "startLine": 919,
+        "startChar": 0,
+        "endLine": 921,
+        "endChar": 31
+      },
+      "revId": "a33fd1060e6925523810b808af8bfaf065fe2dbc",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
