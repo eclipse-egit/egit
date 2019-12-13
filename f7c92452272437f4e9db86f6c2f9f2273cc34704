@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "b9d802cb_85f1721c",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/commit/CommitJob.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 122,
+      "author": {
+        "id": 228343
+      },
+      "writtenOn": "2019-12-13T12:47:11Z",
+      "side": 1,
+      "message": "This is done, so that the output is not shown again in line 133. I know this is not a very nice way to handle this. Do you have any suggestions on how to refactor this?",
+      "parentUuid": "8e778ca3_773a0e38",
+      "revId": "f7c92452272437f4e9db86f6c2f9f2273cc34704",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3a6d0675_37315a5d",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/uitext.properties",
         "patchSetId": 2
@@ -30,6 +48,24 @@
       "writtenOn": "2019-12-11T20:50:41Z",
       "side": 1,
       "message": "where is this used ?",
+      "revId": "f7c92452272437f4e9db86f6c2f9f2273cc34704",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "d45c3dc3_babc4069",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/uitext.properties",
+        "patchSetId": 2
+      },
+      "lineNbr": 1109,
+      "author": {
+        "id": 228343
+      },
+      "writtenOn": "2019-12-13T12:47:11Z",
+      "side": 1,
+      "message": "You are right. This is never used.",
+      "parentUuid": "3a6d0675_37315a5d",
       "revId": "f7c92452272437f4e9db86f6c2f9f2273cc34704",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
