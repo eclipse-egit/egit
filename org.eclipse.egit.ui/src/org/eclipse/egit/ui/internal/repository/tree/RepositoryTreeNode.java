@@ -14,6 +14,7 @@
 package org.eclipse.egit.ui.internal.repository.tree;
 
 import java.io.File;
+import java.util.Objects;
 
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.Path;
@@ -366,10 +367,16 @@ public abstract class RepositoryTreeNode<T> extends PlatformObject implements Co
 			return ((Repository) myObject).getDirectory().equals(
 					((Repository) otherObject).getDirectory());
 		case REF:
-		case TAG:
 		case ADDITIONALREF:
 			return ((Ref) myObject).getName().equals(
 					((Ref) otherObject).getName());
+		case TAG: {
+			Ref myRef = (Ref) myObject;
+			Ref otherRef = (Ref) otherObject;
+			return Objects.equals(myRef.getName(), otherRef.getName())
+					&& Objects.equals(myRef.getObjectId(),
+							otherRef.getObjectId());
+		}
 		case FOLDER:
 		case FILE:
 			return ((File) myObject).getPath().equals(

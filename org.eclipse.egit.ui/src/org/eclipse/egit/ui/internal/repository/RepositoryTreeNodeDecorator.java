@@ -15,6 +15,7 @@ package org.eclipse.egit.ui.internal.repository;
 
 import java.io.File;
 import java.io.IOException;
+import java.text.MessageFormat;
 import java.util.Set;
 
 import org.eclipse.core.commands.IStateListener;
@@ -76,6 +77,8 @@ public class RepositoryTreeNodeDecorator extends GitDecorator
 
 	private boolean verboseBranchMode = false;
 
+	private final RefCache.Cache refCache = RefCache.get();
+
 	/**
 	 * Constructs a repositories view label provider
 	 */
@@ -96,6 +99,7 @@ public class RepositoryTreeNodeDecorator extends GitDecorator
 	@Override
 	public void dispose() {
 		verboseBranchModeState.removeListener(this);
+		refCache.dispose();
 		super.dispose();
 	}
 
@@ -134,84 +138,110 @@ public class RepositoryTreeNodeDecorator extends GitDecorator
 
 	private void decorateNode(RepositoryTreeNode<?> node,
 			@NonNull Repository repository, IDecoration decoration) {
-		decorateText(node, repository, decoration);
-		decorateIcon(node, repository, decoration);
+		try {
+			decorateText(node, repository, decoration);
+			decorateIcon(node, repository, decoration);
+		} catch (IOException e) {
+			Activator.logError(MessageFormat.format(
+					UIText.GitLabelProvider_UnableToRetrieveLabel,
+					node.toString()), e);
+		}
 	}
 
 	private void decorateIcon(RepositoryTreeNode<?> node,
-			@NonNull Repository repository, IDecoration decoration) {
+			@NonNull Repository repository, IDecoration decoration)
+			throws IOException {
 		switch (node.getType()) {
-		case TAG:
-		case ADDITIONALREF:
-		case REF:
-			// if the branch or tag is checked out,
-			// we want to decorate the corresponding
-			// node with a little check indicator
-			String refName = ((Ref) node.getObject()).getName();
-			Ref leaf = ((Ref) node.getObject()).getLeaf();
-
-			String compareString = null;
+		case TAG: {
 			String branchName = DecoratorRepositoryStateCache.INSTANCE
 					.getFullBranchName(repository);
 			if (branchName == null) {
 				return;
 			}
-			if (refName.startsWith(Constants.R_HEADS)) {
-				// local branch: HEAD would be on the branch
-				compareString = refName;
-			} else if (refName.startsWith(Constants.R_TAGS)) {
-				// tag: HEAD would be on the commit id to which the tag is
-				// pointing
-				TagNode tagNode = (TagNode) node;
-				compareString = tagNode.getCommitId();
-			} else if (refName.startsWith(Constants.R_REMOTES)) {
-				// remote branch: branch name is object id in detached HEAD
-				// state
-				ObjectId objectId = leaf.getObjectId();
-				if (objectId != null) {
-					String leafName = objectId.getName();
-					if (leafName.equals(branchName)) {
-						decoration.addOverlay(UIIcons.OVR_CHECKEDOUT,
-								IDecoration.TOP_LEFT);
-						return;
-					}
-				}
-			} else if (refName.equals(Constants.HEAD)) {
-				decoration.addOverlay(UIIcons.OVR_CHECKEDOUT,
-						IDecoration.TOP_LEFT);
-				return;
-			} else {
-				String leafname = leaf.getName();
-				if (leafname.startsWith(Constants.R_REFS)
-						&& leafname.equals(branchName)) {
-					decoration.addOverlay(UIIcons.OVR_CHECKEDOUT,
-							IDecoration.TOP_LEFT);
-					return;
-				}
-				ObjectId objectId = leaf.getObjectId();
-				if (objectId != null && objectId
-						.equals(DecoratorRepositoryStateCache.INSTANCE
-								.getHead(repository))) {
-					decoration.addOverlay(UIIcons.OVR_CHECKEDOUT,
-							IDecoration.TOP_LEFT);
-				}
-				// some other symbolic reference
-				return;
-			}
-
-			if (compareString != null && compareString.equals(branchName)) {
+			// HEAD would be on the commit id to which the tag is pointing
+			if (branchName.equals(((TagNode) node).getCommitId())) {
 				decoration.addOverlay(UIIcons.OVR_CHECKEDOUT,
 						IDecoration.TOP_LEFT);
 			}
-
 			break;
+		}
+		case ADDITIONALREF: {
+			Ref ref = refCache.findAdditional(repository,
+					((Ref) node.getObject()).getName());
+			if (ref != null) {
+				decorateRefIcon(repository, ref, decoration);
+			}
+			break;
+		}
+		case REF: {
+			Ref ref = refCache.exact(repository,
+					((Ref) node.getObject()).getName());
+			if (ref != null) {
+				decorateRefIcon(repository, ref, decoration);
+			}
+			break;
+		}
 		default:
 			break;
 		}
 	}
 
+	private void decorateRefIcon(@NonNull Repository repository, Ref ref,
+			IDecoration decoration) {
+		String branchName = DecoratorRepositoryStateCache.INSTANCE
+				.getFullBranchName(repository);
+		if (branchName == null) {
+			return;
+		}
+		String refName = ref.getName();
+		Ref leaf = ref.getLeaf();
+
+		String compareString = null;
+		if (refName.startsWith(Constants.R_HEADS)) {
+			// local branch: HEAD would be on the branch
+			compareString = refName;
+		} else if (refName.startsWith(Constants.R_REMOTES)) {
+			// remote branch: branch name is object id in detached HEAD
+			// state
+			ObjectId objectId = leaf.getObjectId();
+			if (objectId != null) {
+				String leafName = objectId.getName();
+				if (leafName.equals(branchName)) {
+					decoration.addOverlay(UIIcons.OVR_CHECKEDOUT,
+							IDecoration.TOP_LEFT);
+					return;
+				}
+			}
+		} else if (refName.equals(Constants.HEAD)) {
+			decoration.addOverlay(UIIcons.OVR_CHECKEDOUT, IDecoration.TOP_LEFT);
+			return;
+		} else {
+			String leafname = leaf.getName();
+			if (leafname.startsWith(Constants.R_REFS)
+					&& leafname.equals(branchName)) {
+				decoration.addOverlay(UIIcons.OVR_CHECKEDOUT,
+						IDecoration.TOP_LEFT);
+				return;
+			}
+			ObjectId objectId = leaf.getObjectId();
+			if (objectId != null
+					&& objectId.equals(DecoratorRepositoryStateCache.INSTANCE
+							.getHead(repository))) {
+				decoration.addOverlay(UIIcons.OVR_CHECKEDOUT,
+						IDecoration.TOP_LEFT);
+			}
+			// some other symbolic reference
+			return;
+		}
+
+		if (branchName.equals(compareString)) {
+			decoration.addOverlay(UIIcons.OVR_CHECKEDOUT, IDecoration.TOP_LEFT);
+		}
+	}
+
 	private void decorateText(RepositoryTreeNode<?> node,
-			@NonNull Repository repository, IDecoration decoration) {
+			@NonNull Repository repository, IDecoration decoration)
+			throws IOException {
 		switch (node.getType()) {
 		case REPO:
 			decorateRepository(node, repository, decoration);
@@ -238,8 +268,12 @@ public class RepositoryTreeNodeDecorator extends GitDecorator
 	}
 
 	private void decorateAdditionalRef(AdditionalRefNode node,
-			IDecoration decoration) {
-		Ref ref = node.getObject();
+			IDecoration decoration) throws IOException {
+		String name = node.getObject().getName();
+		Ref ref = refCache.findAdditional(node.getRepository(), name);
+		if (ref == null) {
+			return;
+		}
 		StringBuilder suffix = new StringBuilder();
 		if (ref.isSymbolic()) {
 			suffix.append(OPEN_BRACKET).append(ref.getLeaf().getName())
@@ -247,7 +281,7 @@ public class RepositoryTreeNodeDecorator extends GitDecorator
 		}
 		ObjectId refId = ref.getObjectId();
 		suffix.append(' ');
-		RevCommit commit = getLatestCommit(node);
+		RevCommit commit = getLatestCommit(node.getRepository(), ref);
 		if (commit != null) {
 			suffix.append(abbreviate(commit)).append(' ')
 					.append(commit.getShortMessage());
@@ -260,9 +294,15 @@ public class RepositoryTreeNodeDecorator extends GitDecorator
 		decoration.addSuffix(suffix.toString());
 	}
 
-	private void decorateRef(RefNode node, IDecoration decoration) {
+	private void decorateRef(RefNode node, IDecoration decoration)
+			throws IOException {
 		if (verboseBranchMode) {
-			RevCommit latest = getLatestCommit(node);
+			Ref ref = refCache.exact(node.getRepository(),
+					node.getObject().getName());
+			if (ref == null) {
+				return;
+			}
+			RevCommit latest = getLatestCommit(node.getRepository(), ref);
 			if (latest != null) {
 				decoration.addSuffix(" " + abbreviate(latest) + ' ' //$NON-NLS-1$
 						+ latest.getShortMessage());
@@ -397,8 +437,7 @@ public class RepositoryTreeNodeDecorator extends GitDecorator
 		}
 	}
 
-	private RevCommit getLatestCommit(RepositoryTreeNode node) {
-		Ref ref = (Ref) node.getObject();
+	private RevCommit getLatestCommit(Repository repository, Ref ref) {
 		ObjectId id;
 		if (ref.isSymbolic()) {
 			id = ref.getLeaf().getObjectId();
@@ -408,7 +447,7 @@ public class RepositoryTreeNodeDecorator extends GitDecorator
 		if (id == null) {
 			return null;
 		}
-		try (RevWalk walk = new RevWalk(node.getRepository())) {
+		try (RevWalk walk = new RevWalk(repository)) {
 			walk.setRetainBody(true);
 			return walk.parseCommit(id);
 		} catch (IOException ignored) {

@@ -29,14 +29,12 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.EnumSet;
-import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Objects;
 import java.util.Set;
-import java.util.WeakHashMap;
 import java.util.stream.Collectors;
 
 import org.eclipse.core.commands.State;
@@ -81,7 +79,6 @@ import org.eclipse.egit.ui.internal.repository.tree.command.ToggleBranchHierarch
 import org.eclipse.jface.viewers.ITreeContentProvider;
 import org.eclipse.jface.viewers.Viewer;
 import org.eclipse.jgit.api.Git;
-import org.eclipse.jgit.events.ListenerHandle;
 import org.eclipse.jgit.lib.ConfigConstants;
 import org.eclipse.jgit.lib.Constants;
 import org.eclipse.jgit.lib.ObjectId;
@@ -115,9 +112,7 @@ public class RepositoriesViewContentProvider implements ITreeContentProvider {
 
 	private boolean showRepositoryGroups = false;
 
-	private Map<Repository, Map<String, Ref>> branchRefs = new WeakHashMap<>();
-
-	private Map<Repository, ListenerHandle> refsChangedListeners = new WeakHashMap<>();
+	private RefCache.Cache refCache = RefCache.get();
 
 	/**
 	 * Constructs a new {@link RepositoriesViewContentProvider} that doesn't
@@ -193,8 +188,7 @@ public class RepositoriesViewContentProvider implements ITreeContentProvider {
 
 	@Override
 	public void dispose() {
-		refsChangedListeners.values().forEach(ListenerHandle::remove);
-		refsChangedListeners.clear();
+		refCache.dispose();
 	}
 
 	@Override
@@ -240,7 +234,7 @@ public class RepositoriesViewContentProvider implements ITreeContentProvider {
 						refs.add(new AdditionalRefNode(node, repo, refEntry
 								.getValue()));
 				}
-				for (Ref r : repo.getRefDatabase().getAdditionalRefs()) {
+				for (Ref r : refCache.additional(repo)) {
 					refs.add(new AdditionalRefNode(node, repo, r));
 				}
 				if (showUnbornHead) {
@@ -601,7 +595,7 @@ public class RepositoriesViewContentProvider implements ITreeContentProvider {
 	 */
 	private boolean hasTagsChildren(Repository repo) {
 		try {
-			if (branchRefs.get(repo) == null) {
+			if (!refCache.isLoaded(repo)) {
 				WorkspaceJob job = new WorkspaceJob(
 						UIText.RepositoriesViewContentProvider_ReadReferencesJob) {
 
@@ -627,30 +621,9 @@ public class RepositoriesViewContentProvider implements ITreeContentProvider {
 		}
 	}
 
-	private synchronized Map<String, Ref> getRefs(final Repository repo, final String prefix) throws IOException {
-		Map<String, Ref> allRefs = branchRefs.get(repo);
-		if (allRefs == null) {
-			allRefs = repo.getRefDatabase().getRefs(RefDatabase.ALL);
-			branchRefs.put(repo, allRefs);
-			if (refsChangedListeners.get(repo) == null) {
-				refsChangedListeners.put(repo, repo.getListenerList()
-						.addRefsChangedListener(event -> {
-							synchronized (this) {
-								branchRefs.remove(event.getRepository());
-							}
-						}));
-			}
-		}
-		if (prefix.equals(RefDatabase.ALL)) {
-			return allRefs;
-		}
-		Map<String, Ref> filtered = new HashMap<>();
-		for (Map.Entry<String, Ref> entry : allRefs.entrySet()) {
-			if (entry.getKey().startsWith(prefix)) {
-				filtered.put(entry.getKey(), entry.getValue());
-			}
-		}
-		return filtered;
+	private Map<String, Ref> getRefs(final Repository repo, final String prefix)
+			throws IOException {
+		return refCache.byPrefix(repo, prefix);
 	}
 
 	/**
