@@ -104,13 +104,6 @@ public class RepositoryTreeNodeDecorator extends GitDecorator
 	}
 
 	@Override
-	public void indexDiffChanged(Repository repository,
-			IndexDiffData indexDiffData) {
-		DecoratorRepositoryStateCache.INSTANCE.clear(repository);
-		super.indexDiffChanged(repository, indexDiffData);
-	}
-
-	@Override
 	public void handleStateChange(State state, Object oldValue) {
 		try {
 			boolean newValue = ((Boolean) state.getValue())

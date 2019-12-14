@@ -22,6 +22,9 @@ import org.eclipse.egit.ui.internal.UIText;
 import org.eclipse.jface.viewers.ILightweightLabelDecorator;
 import org.eclipse.jface.viewers.LabelProvider;
 import org.eclipse.jface.viewers.LabelProviderChangedEvent;
+import org.eclipse.jgit.events.ConfigChangedEvent;
+import org.eclipse.jgit.events.ConfigChangedListener;
+import org.eclipse.jgit.events.ListenerHandle;
 import org.eclipse.jgit.lib.Repository;
 import org.eclipse.ui.PlatformUI;
 
@@ -31,12 +34,15 @@ import org.eclipse.ui.PlatformUI;
  * changes.
  */
 public abstract class GitDecorator extends LabelProvider
-		implements ILightweightLabelDecorator, IndexDiffChangedListener {
+		implements ILightweightLabelDecorator, IndexDiffChangedListener,
+		ConfigChangedListener {
 
 	private Object lock = new Object();
 
 	/** Protected by lock's monitor. */
 	private EventJob eventJob;
+
+	private ListenerHandle configListener;
 
 	/**
 	 * Creates a new {@link GitDecorator}, registering to receive notifications
@@ -45,12 +51,17 @@ public abstract class GitDecorator extends LabelProvider
 	public GitDecorator() {
 		org.eclipse.egit.core.Activator.getDefault().getIndexDiffCache()
 				.addIndexDiffChangedListener(this);
+		configListener = org.eclipse.egit.core.Activator.getDefault()
+				.getRepositoryCache().getGlobalListenerList()
+				.addConfigChangedListener(this);
 	}
 
 	@Override
 	public void dispose() {
 		org.eclipse.egit.core.Activator.getDefault().getIndexDiffCache()
 				.removeIndexDiffChangedListener(this);
+		configListener.remove();
+		configListener = null;
 		Job job;
 		synchronized (lock) {
 			job = eventJob;
@@ -82,6 +93,14 @@ public abstract class GitDecorator extends LabelProvider
 	@Override
 	public void indexDiffChanged(Repository repository,
 			IndexDiffData indexDiffData) {
+		DecoratorRepositoryStateCache.INSTANCE.clear(repository);
+		postLabelEvent();
+	}
+
+	@Override
+	public void onConfigChanged(ConfigChangedEvent event) {
+		DecoratorRepositoryStateCache.INSTANCE
+				.resetBranchState(event.getRepository());
 		postLabelEvent();
 	}
 

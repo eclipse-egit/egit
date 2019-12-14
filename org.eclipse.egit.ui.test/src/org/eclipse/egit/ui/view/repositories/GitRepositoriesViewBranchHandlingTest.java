@@ -86,6 +86,11 @@ public class GitRepositoriesViewBranchHandlingTest extends
 		setVerboseBranchMode(false);
 		repositoryFile = createProjectAndCommitToRepository();
 		remoteRepositoryFile = createRemoteRepository(repositoryFile);
+		// Create one more branch on HEAD^1
+		try (Git git = new Git(lookupRepository(remoteRepositoryFile))) {
+			git.branchCreate().setName("initial").setStartPoint("HEAD^1")
+					.call();
+		}
 		// now let's clone the remote repository
 		final URIish uri = new URIish(remoteRepositoryFile.getPath());
 		final File workdir = new File(getTestDirectory(), "Cloned");
@@ -233,7 +238,9 @@ public class GitRepositoriesViewBranchHandlingTest extends
 		item = TestUtil.expandAndWait(myRepoViewUtil.getRemoteBranchesItem(tree,
 				clonedRepositoryFile));
 		children = item.getNodes();
-		assertEquals("Wrong number of children", 2, children.size());
+		assertEquals("Wrong number of children", 3, children.size());
+		assertTrue("Missing remote branch",
+				children.contains("origin/initial"));
 		assertTrue("Missing remote branch", children.contains("origin/master"));
 		assertTrue("Missing remote branch", children.contains("origin/stable"));
 		item.getNode("origin/stable").select();
@@ -270,7 +277,7 @@ public class GitRepositoriesViewBranchHandlingTest extends
 		item = TestUtil.expandAndWait(myRepoViewUtil.getRemoteBranchesItem(tree,
 				clonedRepositoryFile));
 		List<String> children = item.getNodes();
-		assertEquals("Wrong number of remote children", 2, children.size());
+		assertEquals("Wrong number of remote children", 3, children.size());
 
 		item.getNode("origin/stable").select();
 		ContextMenuHelper.clickContextMenuSync(tree,
@@ -536,5 +543,53 @@ public class GitRepositoriesViewBranchHandlingTest extends
 		rebaseItem = TestUtil.expandAndWait(rootItem)
 				.getNode(UIText.BranchPropertySource_RebaseDescriptor);
 		assertEquals("true", rebaseItem.cell(1));
+	}
+
+	@Test
+	public void testBranchConfigurationDecoration() throws Exception {
+		SWTBotView view = getOrOpenView();
+
+		SWTBotTreeItem repoItem = myRepoViewUtil.getRootItem(view.bot().tree(),
+				clonedRepositoryFile);
+		TestUtil.waitForDecorations();
+		String label = repoItem.getText();
+		assertTrue("Expected branch decoration to be present: " + label,
+				label.contains("[master]"));
+		SWTBotTreeItem localItem = myRepoViewUtil
+				.getLocalBranchesItem(view.bot().tree(), clonedRepositoryFile);
+		TestUtil.expandAndWait(localItem).getNode("master").select();
+		ContextMenuHelper.clickContextMenu(view.bot().tree(),
+				myUtil.getPluginLocalizedValue("ConfigurBranchCommand.label"));
+
+		SWTBotShell configureBranchDialog = bot.shell(
+				UIText.BranchConfigurationDialog_BranchConfigurationTitle);
+		configureBranchDialog.bot()
+				.comboBoxWithLabel(
+						UIText.BranchConfigurationDialog_UpstreamBranchLabel)
+				.setSelection(0);
+		// add a listener to wait for the configuration changed event
+		final AtomicBoolean changed = new AtomicBoolean();
+		ConfigChangedListener listener = new ConfigChangedListener() {
+			@Override
+			public void onConfigChanged(ConfigChangedEvent event) {
+				changed.set(true);
+			}
+		};
+		ListenerHandle handle = lookupRepository(clonedRepositoryFile)
+				.getConfig().addChangeListener(listener);
+		// only now click ok
+		configureBranchDialog.bot()
+				.button(UIText.BranchConfigurationDialog_ButtonOK).click();
+		bot.waitUntil(Conditions.shellCloses(configureBranchDialog));
+		// cleanup behind ourselves
+		handle.remove();
+		assertTrue("Expected a ConfigChangeEvent", changed.get());
+		TestUtil.waitForJobs(100, 5000);
+		TestUtil.waitForDecorations();
+		repoItem = myRepoViewUtil.getRootItem(view.bot().tree(),
+				clonedRepositoryFile);
+		label = repoItem.getText();
+		assertTrue("Expected branch decoration to be updated: " + label,
+				label.contains("[master \u21911]"));
 	}
 }

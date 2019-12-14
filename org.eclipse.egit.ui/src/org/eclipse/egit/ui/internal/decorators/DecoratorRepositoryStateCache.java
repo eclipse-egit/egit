@@ -13,6 +13,7 @@ package org.eclipse.egit.ui.internal.decorators;
 import java.io.File;
 import java.io.IOException;
 import java.util.Map;
+import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 
 import org.eclipse.egit.core.UnitOfWork;
@@ -41,6 +42,8 @@ public class DecoratorRepositoryStateCache extends RepositoryStateCache {
 
 	private final Map<File, String> branchStateLabels = new ConcurrentHashMap<>();
 
+	private final Set<File> branchStatesToClear = ConcurrentHashMap.newKeySet();
+
 	private DecoratorRepositoryStateCache() {
 		// No public instantiation
 	}
@@ -56,13 +59,26 @@ public class DecoratorRepositoryStateCache extends RepositoryStateCache {
 		super.clear();
 		branchLabels.clear();
 		branchStateLabels.clear();
+		branchStatesToClear.clear();
 	}
 
 	@Override
 	public void clear(Repository repository) {
 		super.clear(repository);
-		branchLabels.remove(repository.getDirectory());
-		branchStateLabels.remove(repository.getDirectory());
+		File gitDir = repository.getDirectory();
+		branchLabels.remove(gitDir);
+		branchStateLabels.remove(gitDir);
+		branchStatesToClear.remove(gitDir);
+	}
+
+	/**
+	 * Clears the cache for {@link #getBranchStatus(Repository)}.
+	 *
+	 * @param repository
+	 *            to clear the state of
+	 */
+	public void resetBranchState(Repository repository) {
+		branchStatesToClear.add(repository.getDirectory());
 	}
 
 	/**
@@ -127,8 +143,13 @@ public class DecoratorRepositoryStateCache extends RepositoryStateCache {
 	 * @return the label, or {@code null} if none
 	 */
 	public String getBranchStatus(Repository repository) {
+		File gitDir = repository.getDirectory();
+		// Clear if needed
+		if (branchStatesToClear.remove(gitDir)) {
+			branchStateLabels.remove(gitDir);
+		}
 		String label = branchStateLabels
-				.computeIfAbsent(repository.getDirectory(), dir -> {
+				.computeIfAbsent(gitDir, dir -> {
 					return UnitOfWork.get(repository, () -> {
 						String branchName = getFullBranchName(repository);
 						if (branchName == null) {
