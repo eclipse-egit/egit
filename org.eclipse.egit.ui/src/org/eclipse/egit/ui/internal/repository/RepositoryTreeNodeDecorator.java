@@ -41,6 +41,8 @@ import org.eclipse.egit.ui.internal.repository.tree.RepositoryTreeNodeType;
 import org.eclipse.egit.ui.internal.repository.tree.StashedCommitNode;
 import org.eclipse.egit.ui.internal.repository.tree.TagNode;
 import org.eclipse.egit.ui.internal.repository.tree.command.ToggleBranchCommitCommand;
+import org.eclipse.egit.ui.internal.resources.IResourceState;
+import org.eclipse.egit.ui.internal.resources.ResourceStateFactory;
 import org.eclipse.jface.viewers.IDecoration;
 import org.eclipse.jgit.annotations.NonNull;
 import org.eclipse.jgit.lib.Constants;
@@ -204,6 +206,11 @@ public class RepositoryTreeNodeDecorator extends GitDecorator
 						IDecoration.TOP_LEFT);
 			}
 
+			break;
+		case WORKINGDIR:
+		case FOLDER:
+		case FILE:
+			addConflictDecoration(node.getPath().toFile(), decoration);
 			break;
 		default:
 			break;
@@ -394,6 +401,13 @@ public class RepositoryTreeNodeDecorator extends GitDecorator
 				&& node.getCommitId().length() > 0) {
 			decoration.addSuffix(" " + node.getCommitId().substring(0, 7) + ' ' //$NON-NLS-1$
 					+ node.getCommitShortMessage());
+		}
+	}
+
+	private void addConflictDecoration(File file, IDecoration decoration) {
+		IResourceState state = ResourceStateFactory.getInstance().get(file);
+		if (state.hasConflicts()) {
+			decoration.addOverlay(UIIcons.OVR_CONFLICT);
 		}
 	}
 
