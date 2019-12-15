@@ -22,6 +22,30 @@
       "revId": "abe200b39063142a5e8846db36baf0cde61cfe1f",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "fe26adb4_cbbbc0f5",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/decorators/DecoratorRepositoryStateCache.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2019-12-15T20:10:54Z",
+      "side": 1,
+      "message": "Done. Thanks for the hint. I was looking for a ConcurrentHashSet and didn\u0027t look further when I didn\u0027t find one. Had completely forgotten about newKeySet().",
+      "parentUuid": "d2b0c979_9c06d6d4",
+      "range": {
+        "startLine": 44,
+        "startChar": 56,
+        "endLine": 44,
+        "endChar": 82
+      },
+      "revId": "abe200b39063142a5e8846db36baf0cde61cfe1f",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
     }
   ]
 }
