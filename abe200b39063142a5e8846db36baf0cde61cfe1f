@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d2b0c979_9c06d6d4",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/decorators/DecoratorRepositoryStateCache.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 440
+      },
+      "writtenOn": "2019-12-15T14:27:24Z",
+      "side": 1,
+      "message": "since you only need the set view, you could use new ConcurrentHashMap().newKeySet() instead. That way you get rid of the dummy Boolean values.",
+      "range": {
+        "startLine": 44,
+        "startChar": 56,
+        "endLine": 44,
+        "endChar": 82
+      },
+      "revId": "abe200b39063142a5e8846db36baf0cde61cfe1f",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
