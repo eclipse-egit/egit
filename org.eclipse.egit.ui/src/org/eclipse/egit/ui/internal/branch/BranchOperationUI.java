@@ -428,7 +428,8 @@ public class BranchOperationUI {
 	public static void handleSingleRepositoryCheckoutOperationResult(
 			Repository repository, CheckoutResult result, String target) {
 
-		if (result.getStatus() == CheckoutResult.Status.CONFLICTS) {
+		switch (result.getStatus()) {
+		case CONFLICTS:
 			PlatformUI.getWorkbench().getDisplay().asyncExec(() -> {
 				Shell shell = PlatformUI.getWorkbench()
 						.getActiveWorkbenchWindow().getShell();
@@ -440,7 +441,8 @@ public class BranchOperationUI {
 							.start();
 				}
 			});
-		} else if (result.getStatus() == CheckoutResult.Status.NONDELETED) {
+			break;
+		case NONDELETED:
 			// double-check if the files are still there
 			boolean show = false;
 			List<String> pathList = result.getUndeletedList();
@@ -459,7 +461,11 @@ public class BranchOperationUI {
 				new NonDeletedFilesDialog(shell, repository,
 						result.getUndeletedList()).open();
 			});
-		} else {
+			break;
+		case OK:
+			return;
+		case NOT_TRIED:
+		case ERROR:
 			String repoName = Activator.getDefault().getRepositoryUtil()
 					.getRepositoryName(repository);
 			String message = NLS.bind(
