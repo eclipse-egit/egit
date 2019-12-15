@@ -459,6 +459,8 @@ public class BranchOperationUI {
 				new NonDeletedFilesDialog(shell, repository,
 						result.getUndeletedList()).open();
 			});
+		} else if (result.getStatus() == CheckoutResult.Status.OK) {
+			return;
 		} else {
 			String repoName = Activator.getDefault().getRepositoryUtil()
 					.getRepositoryName(repository);
