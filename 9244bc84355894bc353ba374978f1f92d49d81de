@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "62b826d1_956db3d4",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/repository/RefCache.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2019-12-15T20:52:59Z",
+      "side": 1,
+      "message": "Not sure. The inner one, yes. But I think getRefs() itself may cause a RefsChangedEvent, and then we may deadlock if we change this outer one also to computeIfAbsent() because the listener would be called on the same thread and try to remove the refs again while we\u0027re still inside the compueIfAbsent.",
+      "parentUuid": "d9b47649_b4a20daf",
+      "range": {
+        "startLine": 60,
+        "startChar": 29,
+        "endLine": 63,
+        "endChar": 39
+      },
+      "revId": "9244bc84355894bc353ba374978f1f92d49d81de",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ae2a2328_8ce0f887",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/repository/RefCache.java",
         "patchSetId": 1
