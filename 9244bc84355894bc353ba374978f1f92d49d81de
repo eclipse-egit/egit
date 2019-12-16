@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "136e7d5d_300f5707",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/repository/RefCache.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 440
+      },
+      "writtenOn": "2019-12-16T07:25:39Z",
+      "side": 1,
+      "message": "It doesn\u0027t work for the outer for sure. I tried after I merged, and run into a showstopper: the IOException thrown by getRefs(). That\u0027s probably also why the code didn\u0027t use it before your change already, since I remember to have done that conversion at some point already.",
+      "parentUuid": "62b826d1_956db3d4",
+      "range": {
+        "startLine": 60,
+        "startChar": 29,
+        "endLine": 63,
+        "endChar": 39
+      },
+      "revId": "9244bc84355894bc353ba374978f1f92d49d81de",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ae2a2328_8ce0f887",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/repository/RefCache.java",
         "patchSetId": 1
