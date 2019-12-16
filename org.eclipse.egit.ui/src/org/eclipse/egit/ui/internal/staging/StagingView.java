@@ -30,6 +30,7 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.EnumSet;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.LinkedHashMap;
@@ -159,6 +160,7 @@ import org.eclipse.jface.viewers.TreeViewer;
 import org.eclipse.jface.viewers.Viewer;
 import org.eclipse.jface.viewers.ViewerComparator;
 import org.eclipse.jface.viewers.ViewerFilter;
+import org.eclipse.jface.viewers.ViewerLabel;
 import org.eclipse.jgit.annotations.NonNull;
 import org.eclipse.jgit.annotations.Nullable;
 import org.eclipse.jgit.api.AddCommand;
@@ -175,6 +177,7 @@ import org.eclipse.jgit.lib.Ref;
 import org.eclipse.jgit.lib.Repository;
 import org.eclipse.jgit.lib.RepositoryState;
 import org.eclipse.jgit.revwalk.RevCommit;
+import org.eclipse.jgit.util.StringUtils;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.SashForm;
 import org.eclipse.swt.custom.VerifyKeyListener;
@@ -269,7 +272,9 @@ public class StagingView extends ViewPart
 
 	private RepositoryNode titleNode;
 
-	private RepositoryTreeNodeLabelProvider titleLabelProvider;
+	private Map<File, ViewerLabel> titleLabels = new HashMap<>();
+
+	private DecoratingLabelProvider titleLabelProvider;
 
 	private SashForm mainSashForm;
 
@@ -734,11 +739,12 @@ public class StagingView extends ViewPart
 		GridLayoutFactory.fillDefaults().applyTo(parent);
 
 		titleNode = null;
-		titleLabelProvider = new RepositoryTreeNodeLabelProvider(false);
+		titleLabelProvider = new DecoratingLabelProvider(
+				new RepositoryTreeNodeLabelProvider(),
+				PlatformUI.getWorkbench().getDecoratorManager());
 		titleLabelProvider.addListener(e -> {
 			if (titleNode != null && form != null && !form.isDisposed()) {
-				form.setText(titleLabelProvider.getStyledText(titleNode)
-						.getString());
+				updateTitle(false);
 			}
 		});
 		toolkit = new FormToolkit(parent.getDisplay());
@@ -1305,6 +1311,27 @@ public class StagingView extends ViewPart
 			// that the view is busy (e.g. reload() will trigger this job in
 			// background!).
 			service.showBusyForFamily(org.eclipse.egit.core.JobFamilies.INDEX_DIFF_CACHE_UPDATE);
+	}
+
+	private void updateTitle(boolean force) {
+		ViewerLabel label = titleLabels.computeIfAbsent(
+				titleNode.getRepository().getDirectory(),
+				r -> new ViewerLabel(null, null));
+		if (force) {
+			if (label.getImage() != null) {
+				form.setImage(label.getImage());
+			}
+			if (!StringUtils.isEmptyOrNull(label.getText())) {
+				form.setText(label.getText());
+			}
+		}
+		titleLabelProvider.updateLabel(label, titleNode);
+		if (label.hasNewImage()) {
+			form.setImage(label.getImage());
+		}
+		if (label.hasNewText()) {
+			form.setText(label.getText());
+		}
 	}
 
 	/**
@@ -3652,6 +3679,7 @@ public class StagingView extends ViewPart
 		refreshAction.setEnabled(false);
 		updateSectionText();
 		titleNode = null;
+		form.setImage(getImage(UIIcons.REPOSITORY));
 		if (repository != null && repository.isBare()) {
 			form.setText(UIText.StagingView_BareRepoSelection);
 		} else {
@@ -3737,8 +3765,7 @@ public class StagingView extends ViewPart
 
 			if (repositoryChanged) {
 				titleNode = new RepositoryNode(null, repository);
-				form.setText(titleLabelProvider.getStyledText(titleNode)
-						.getString());
+				updateTitle(true);
 				// Reset paths, they're from the old repository
 				resetPathsToExpand();
 				removeRepositoryListeners();
@@ -3752,8 +3779,7 @@ public class StagingView extends ViewPart
 										repository));
 			} else if (titleNode != null) {
 				// The label decoration may need an update.
-				form.setText(titleLabelProvider.getStyledText(titleNode)
-						.getString());
+				updateTitle(false);
 			}
 			final StagingViewUpdate update = new StagingViewUpdate(repository,
 					indexDiff, null);
@@ -4380,6 +4406,7 @@ public class StagingView extends ViewPart
 			titleLabelProvider = null;
 		}
 		titleNode = null;
+		titleLabels.clear();
 		currentRepository = null;
 		lastSelection = null;
 		disposed = true;
