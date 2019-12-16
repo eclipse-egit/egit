@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8494088e_977ba2f1",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/branch/BranchOperationUI.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 463,
+      "author": {
+        "id": 440
+      },
+      "writtenOn": "2019-12-16T07:11:34Z",
+      "side": 1,
+      "message": "This surely works. but testing _the same_ variable for multiple different cases should be done using switch-case instead of multiple if-then to make it more clear that the same variable is tested.\nAlso since this is an enum, a switch case (without default branch) would immediately have shown the issue by a compiler error.",
+      "range": {
+        "startLine": 462,
+        "startChar": 0,
+        "endLine": 463,
+        "endChar": 10
+      },
+      "revId": "696810e0aafe13d4d9eb9439e0098c7024a8175b",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
