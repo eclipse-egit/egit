@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "bef49f93_0c973dd0",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/commit/CommitJob.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 122,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2019-12-17T09:46:21Z",
+      "side": 1,
+      "message": "move the call to showHookOutput in line 132-134 to line 136 below the finally block and handle the exception case in this catch block",
+      "parentUuid": "b9d802cb_85f1721c",
+      "revId": "f7c92452272437f4e9db86f6c2f9f2273cc34704",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3a6d0675_37315a5d",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/uitext.properties",
         "patchSetId": 2
