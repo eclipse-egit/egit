@@ -10,6 +10,7 @@
  *
  * Contributors:
  *    Alexander Nittka <alex@nittka.de> - Bug 545123
+ *    Simon Muschel <smuschel@gmx.de> - Bug 422365
  *******************************************************************************/
 package org.eclipse.egit.ui.internal.repository;
 
@@ -42,6 +43,8 @@ import org.eclipse.egit.ui.internal.repository.tree.RepositoryTreeNodeType;
 import org.eclipse.egit.ui.internal.repository.tree.StashedCommitNode;
 import org.eclipse.egit.ui.internal.repository.tree.TagNode;
 import org.eclipse.egit.ui.internal.repository.tree.command.ToggleBranchCommitCommand;
+import org.eclipse.egit.ui.internal.resources.IResourceState;
+import org.eclipse.egit.ui.internal.resources.ResourceStateFactory;
 import org.eclipse.jface.viewers.IDecoration;
 import org.eclipse.jgit.annotations.NonNull;
 import org.eclipse.jgit.lib.Constants;
@@ -174,6 +177,11 @@ public class RepositoryTreeNodeDecorator extends GitDecorator
 			}
 			break;
 		}
+		case WORKINGDIR:
+		case FOLDER:
+		case FILE:
+			decorateConflict(node.getPath().toFile(), decoration);
+			break;
 		default:
 			break;
 		}
@@ -229,6 +237,13 @@ public class RepositoryTreeNodeDecorator extends GitDecorator
 
 		if (branchName.equals(compareString)) {
 			decoration.addOverlay(UIIcons.OVR_CHECKEDOUT, IDecoration.TOP_LEFT);
+		}
+	}
+
+	private void decorateConflict(File file, IDecoration decoration) {
+		IResourceState state = ResourceStateFactory.getInstance().get(file);
+		if (state.hasConflicts()) {
+			decoration.addOverlay(UIIcons.OVR_CONFLICT);
 		}
 	}
 
