@@ -1,0 +1,90 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5f5f3a48_3ef1a4eb",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/UIPreferences.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 212,
+      "author": {
+        "id": 440
+      },
+      "writtenOn": "2019-12-18T07:46:48Z",
+      "side": 1,
+      "message": "missing t",
+      "revId": "23cadd40cd58d94da45fcdacbe4b8849196b1755",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "69cb1845_a00613de",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/commit/CommitJob.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 173,
+      "author": {
+        "id": 440
+      },
+      "writtenOn": "2019-12-18T07:46:48Z",
+      "side": 1,
+      "message": "please move all the appending and line separators into the localized string and use an NLS call here to create the string. e.g. use something like \\nComplete output:\\n{0} in the properties",
+      "range": {
+        "startLine": 170,
+        "startChar": 5,
+        "endLine": 173,
+        "endChar": 26
+      },
+      "revId": "23cadd40cd58d94da45fcdacbe4b8849196b1755",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "58080ce3_236ce7cc",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/commit/CommitJob.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 184,
+      "author": {
+        "id": 440
+      },
+      "writtenOn": "2019-12-18T07:46:48Z",
+      "side": 1,
+      "message": "Even though these are very short operations, they could be done outside the UI thread, before invoking asyncExec. That way, even changing them later to include more stuff will not lead to suddenly using more UI thread time.",
+      "range": {
+        "startLine": 183,
+        "startChar": 0,
+        "endLine": 184,
+        "endChar": 21
+      },
+      "revId": "23cadd40cd58d94da45fcdacbe4b8849196b1755",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "2febbd94_ca35c0a1",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/commit/CommitJob.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 189,
+      "author": {
+        "id": 440
+      },
+      "writtenOn": "2019-12-18T07:46:48Z",
+      "side": 1,
+      "message": "wrong indentation",
+      "range": {
+        "startLine": 189,
+        "startChar": 0,
+        "endLine": 189,
+        "endChar": 8
+      },
+      "revId": "23cadd40cd58d94da45fcdacbe4b8849196b1755",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
