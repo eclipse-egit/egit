@@ -333,7 +333,7 @@ public class GitSubscriberMergeContextTest extends ModelTestCase {
 		assertTrue(mergeStatus instanceof IMergeStatus);
 		assertEquals(2,
 				((IMergeStatus) mergeStatus).getConflictingMappings().length);
-		Set<IFile> conflictingFiles = new LinkedHashSet<IFile>();
+		Set<IFile> conflictingFiles = new LinkedHashSet<>();
 		for (ResourceMapping conflictingMapping : ((IMergeStatus) mergeStatus)
 				.getConflictingMappings()) {
 			assertTrue(conflictingMapping instanceof SampleResourceMapping

@@ -26,7 +26,7 @@ public class TestRepositoryServerProvider implements IRepositoryServerProvider {
 
 	@Override
 	public Collection<RepositoryServerInfo> getRepositoryServerInfos() {
-		List<RepositoryServerInfo> info = new ArrayList<RepositoryServerInfo>();
+		List<RepositoryServerInfo> info = new ArrayList<>();
 		try {
 			info.add(new RepositoryServerInfo("EGit Gerrit", new URI(
 					"http://egit.eclipse.org/r")));

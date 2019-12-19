@@ -60,7 +60,7 @@ public class GitResourceDeltaTestHelper {
 	public GitResourceDeltaTestHelper(Repository repository,
 			boolean ignoreTeamPrivateMember) {
 		this.repository = repository;
-		this.changedResources = new HashSet<IResource>();
+		this.changedResources = new HashSet<>();
 		this.ignoreTeamPrivateMember = ignoreTeamPrivateMember;
 	}
 

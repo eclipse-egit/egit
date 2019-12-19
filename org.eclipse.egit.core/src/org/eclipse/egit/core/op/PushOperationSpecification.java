@@ -37,7 +37,7 @@ public class PushOperationSpecification {
 	 * {@link #addURIRefUpdates(URIish, Collection)} method.
 	 */
 	public PushOperationSpecification() {
-		this.urisRefUpdates = new LinkedHashMap<URIish, Collection<RemoteRefUpdate>>();
+		this.urisRefUpdates = new LinkedHashMap<>();
 	}
 
 	/**

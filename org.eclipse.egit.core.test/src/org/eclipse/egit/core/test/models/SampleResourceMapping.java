@@ -51,7 +51,7 @@ public class SampleResourceMapping extends ResourceMapping {
 	public ResourceTraversal[] getTraversals(
 			ResourceMappingContext context, IProgressMonitor monitor)
 			throws CoreException {
-		Set<IFile> sampleSiblings = new LinkedHashSet<IFile>();
+		Set<IFile> sampleSiblings = new LinkedHashSet<>();
 		for (IResource res : file.getParent().members()) {
 			if (res instanceof IFile && SampleModelProvider.SAMPLE_FILE_EXTENSION.equals(res.getFileExtension())) {
 				sampleSiblings.add((IFile) res);

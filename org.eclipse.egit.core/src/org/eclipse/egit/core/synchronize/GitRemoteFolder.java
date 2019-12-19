@@ -80,7 +80,7 @@ class GitRemoteFolder extends GitRemoteResource {
 		if (members == null || members.isEmpty())
 			return new GitRemoteResource[0];
 
-		List<IResourceVariant> result = new ArrayList<IResourceVariant>();
+		List<IResourceVariant> result = new ArrayList<>();
 
 		monitor.beginTask(
 				NLS.bind(CoreText.GitRemoteFolder_fetchingMembers, getPath()),

@@ -112,7 +112,7 @@ abstract class IndexDiffUpdateJob extends Job {
 	private void cleanup() {
 		synchronized (lock) {
 			files = new HashSet<>();
-			resources = new HashSet<IResource>();
+			resources = new HashSet<>();
 		}
 	}
 

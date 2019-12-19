@@ -127,7 +127,7 @@ public class IndexDiffData {
 			Collection<IResource> changedResources,
 			IndexDiff diffForChangedFiles) {
 		this.changedResources = Collections
-				.unmodifiableCollection(new HashSet<IResource>(changedResources));
+				.unmodifiableCollection(new HashSet<>(changedResources));
 		Set<String> added2 = new HashSet<>(baseDiff.getAdded());
 		Set<String> assumeUnchanged2 = new HashSet<>(
 				baseDiff.getAssumeUnchanged());

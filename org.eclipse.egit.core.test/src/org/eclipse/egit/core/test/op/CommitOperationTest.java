@@ -42,9 +42,9 @@ import org.junit.Test;
 
 public class CommitOperationTest extends GitTestCase {
 
-	private static List<IFile> EMPTY_FILE_LIST = new ArrayList<IFile>();
+	private static List<IFile> EMPTY_FILE_LIST = new ArrayList<>();
 
-	private List<IResource> resources = new ArrayList<IResource>();
+	private List<IResource> resources = new ArrayList<>();
 
 	TestRepository testRepository;
 
@@ -199,9 +199,9 @@ public class CommitOperationTest extends GitTestCase {
 		}
 		project.getProject().getFolder("sub2").delete(IResource.FORCE, null);
 		IFile[] filesToCommit = { project.getProject().getFile("sub2/b.txt") };
-		ArrayList<IFile> notIndexed = new ArrayList<IFile>();
+		ArrayList<IFile> notIndexed = new ArrayList<>();
 		notIndexed.add(filesToCommit[0]);
-		ArrayList<IFile> notTracked = new ArrayList<IFile>();
+		ArrayList<IFile> notTracked = new ArrayList<>();
 		commitOperation = new CommitOperation(filesToCommit, notTracked, TestUtils.AUTHOR, TestUtils.COMMITTER, "second commit");
 		commitOperation.setCommitAll(false);
 		commitOperation.execute(null);

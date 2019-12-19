@@ -57,7 +57,7 @@ abstract class GitResourceVariantTree extends ResourceVariantTree {
 
 	@Override
 	public IResource[] roots() {
-		Set<IResource> roots = new HashSet<IResource>();
+		Set<IResource> roots = new HashSet<>();
 		for (GitSynchronizeData gsd : gsds)
 			if (gsd.getPathFilter() == null)
 				roots.addAll(gsd.getProjects());

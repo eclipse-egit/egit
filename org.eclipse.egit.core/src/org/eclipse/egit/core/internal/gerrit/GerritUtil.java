@@ -106,7 +106,7 @@ public class GerritUtil {
 	 */
 	public static void configurePushURI(RemoteConfig remoteConfig,
 			URIish pushURI) {
-		List<URIish> pushURIs = new ArrayList<URIish>(
+		List<URIish> pushURIs = new ArrayList<>(
 				remoteConfig.getPushURIs());
 		for (URIish urIish : pushURIs) {
 			remoteConfig.removePushURI(urIish);
@@ -124,7 +124,7 @@ public class GerritUtil {
 	 */
 	public static void configurePushRefSpec(RemoteConfig remoteConfig,
 			String gerritBranch) {
-		List<RefSpec> pushRefSpecs = new ArrayList<RefSpec>(
+		List<RefSpec> pushRefSpecs = new ArrayList<>(
 				remoteConfig.getPushRefSpecs());
 		for (RefSpec refSpec : pushRefSpecs) {
 			remoteConfig.removePushRefSpec(refSpec);

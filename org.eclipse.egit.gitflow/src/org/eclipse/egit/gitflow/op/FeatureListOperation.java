@@ -41,7 +41,7 @@ public final class FeatureListOperation extends GitFlowOperation {
 	private static final String REMOTE_ORIGIN_FEATURE_PREFIX = R_REMOTES
 			+ DEFAULT_REMOTE_NAME + SEP;
 
-	private List<Ref> result = new ArrayList<Ref>();
+	private List<Ref> result = new ArrayList<>();
 
 	private int timeout;
 

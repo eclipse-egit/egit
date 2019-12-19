@@ -31,7 +31,7 @@ import org.junit.Test;
 
 public class AddOperationTest extends GitTestCase {
 
-	private List<IResource> resources = new ArrayList<IResource>();
+	private List<IResource> resources = new ArrayList<>();
 
 	TestRepository testRepository;
 

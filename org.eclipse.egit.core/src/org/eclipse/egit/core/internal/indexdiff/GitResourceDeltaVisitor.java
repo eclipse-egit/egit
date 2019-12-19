@@ -89,7 +89,7 @@ public class GitResourceDeltaVisitor implements IResourceDeltaVisitor {
 		this.repository = repository;
 
 		filesToUpdate = new HashSet<>();
-		resourcesToUpdate = new HashSet<IResource>();
+		resourcesToUpdate = new HashSet<>();
 		this.deletedProjects = deletedProjects;
 	}
 
@@ -266,7 +266,7 @@ public class GitResourceDeltaVisitor implements IResourceDeltaVisitor {
 	 * @return collection of files to update
 	 */
 	public Collection<IFile> getFileResourcesToUpdate() {
-		Collection<IFile> result = new ArrayList<IFile>();
+		Collection<IFile> result = new ArrayList<>();
 		for (IResource resource : resourcesToUpdate)
 			if (resource instanceof IFile)
 				result.add((IFile) resource);

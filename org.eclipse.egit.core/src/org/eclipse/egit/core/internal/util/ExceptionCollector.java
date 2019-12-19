@@ -34,7 +34,7 @@ import org.eclipse.core.runtime.Status;
  */
 public class ExceptionCollector {
 
-	private final List<IStatus> statuses = new ArrayList<IStatus>();
+	private final List<IStatus> statuses = new ArrayList<>();
 
 	private final String message;
 

@@ -111,11 +111,11 @@ public class CommonUtilsTest {
 				new LinkedHashSet<>(expected));
 		List<String> shuffeled = new ArrayList<>(expected);
 		Collections.shuffle(shuffeled, new Random(1));
-		TreeSet<String> sortedSet = new TreeSet<String>(
+		TreeSet<String> sortedSet = new TreeSet<>(
 				CommonUtils.STRING_ASCENDING_COMPARATOR);
 		sortedSet.addAll(shuffeled);
 		assertEquals(expectedWithoutDuplicates,
-				new ArrayList<String>(sortedSet));
+				new ArrayList<>(sortedSet));
 	}
 
 	@Test
@@ -128,7 +128,7 @@ public class CommonUtilsTest {
 		IFile f2 = p.createFile("test/d.txt", "d".getBytes("UTF-8"));
 		IFile f3 = p.createFile("test/a.txt", "a".getBytes("UTF-8"));
 		List<IResource> expected = Arrays.asList(f3, f2, f1);
-		List<IResource> tmp = new ArrayList<IResource>(expected);
+		List<IResource> tmp = new ArrayList<>(expected);
 		Collections.shuffle(tmp, new Random(1));
 		Collections.sort(tmp, CommonUtils.RESOURCE_NAME_COMPARATOR);
 		assertEquals(expected, tmp);
