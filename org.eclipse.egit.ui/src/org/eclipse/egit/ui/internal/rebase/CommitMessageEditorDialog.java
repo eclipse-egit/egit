@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2013 SAP AG and others.
+ * Copyright (c) 2013, 2019 SAP AG and others.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License 2.0
@@ -10,6 +10,7 @@
  *
  * Contributors:
  *    Matthias Sohn (SAP AG) - initial implementation
+ *    Simon Muschel <smuschel@gmx.de> - Bug 451817
  *******************************************************************************/
 package org.eclipse.egit.ui.internal.rebase;
 
@@ -46,9 +47,15 @@ public class CommitMessageEditorDialog extends TitleAreaDialog {
 
 	private String title;
 
+	private String okButtonLabel;
+
+	private String cancelButtonLabel;
+
 	/**
 	 * @param parentShell
+	 *            the parent SWT shell
 	 * @param commitMessage
+	 *            the commit message to be edited
 	 */
 	public CommitMessageEditorDialog(Shell parentShell,
 			String commitMessage) {
@@ -58,14 +65,37 @@ public class CommitMessageEditorDialog extends TitleAreaDialog {
 
 	/**
 	 * @param parentShell
+	 *            the parent SWT shell
 	 * @param commitMessage
+	 *            the commit message to be edited
 	 * @param title
+	 *            the dialog title
 	 */
 	public CommitMessageEditorDialog(Shell parentShell, String commitMessage,
 			String title) {
+		this(parentShell, commitMessage,
+				UIText.CommitMessageEditorDialog_OkButton,
+				IDialogConstants.CANCEL_LABEL);
+		this.title = title;
+	}
+
+	/**
+	 * @param parentShell
+	 *            the parent SWT shell
+	 * @param commitMessage
+	 *            the commit message to be edited
+	 * @param okButtonLabel
+	 *            the label for the Ok button
+	 * @param cancelButtonLabel
+	 *            the label for the Cancel button
+	 */
+	public CommitMessageEditorDialog(Shell parentShell, String commitMessage,
+			String okButtonLabel, String cancelButtonLabel) {
 		super(parentShell);
 		this.commitMessage = commitMessage;
-		this.title = title;
+		this.title = UIText.CommitMessageEditorDialog_EditCommitMessageTitle;
+		this.okButtonLabel = okButtonLabel;
+		this.cancelButtonLabel = cancelButtonLabel;
 	}
 
 	@Override
@@ -136,9 +166,9 @@ public class CommitMessageEditorDialog extends TitleAreaDialog {
 	@Override
 	protected void createButtonsForButtonBar(Composite parent) {
 		createButton(parent, IDialogConstants.OK_ID,
-				UIText.RebaseInteractiveHandler_EditMessageDialogOkButton,
+				okButtonLabel,
 				true);
 		createButton(parent, IDialogConstants.CANCEL_ID,
-				IDialogConstants.CANCEL_LABEL, false);
+				cancelButtonLabel, false);
 	}
 }

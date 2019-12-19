@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2014 Maik Schreiber
+ * Copyright (c) 2014, 2019 Maik Schreiber
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License 2.0
@@ -10,6 +10,7 @@
  *
  * Contributors:
  *    Maik Schreiber - initial implementation
+ *    Simon Muschel <smuschel@gmx.de> - Bug 451817
  *******************************************************************************/
 package org.eclipse.egit.ui.internal.commit.command;
 
@@ -111,7 +112,9 @@ public class SquashHandler extends SelectionHandler {
 			@Override
 			public void run() {
 				CommitMessageEditorDialog dialog = new CommitMessageEditorDialog(
-						shell, msg[0]);
+						shell, msg[0],
+						UIText.CommitMessageEditorDialog_OkButton,
+						UIText.SquashHandler_EditMessageDialogCancelButton);
 				if (dialog.open() == Window.OK)
 					msg[0] = dialog.getCommitMessage();
 				else
