@@ -456,7 +456,7 @@ public class CompareTreeView extends ViewPart implements IMenuListener, IShowInS
 		tree.setContentProvider(new PathNodeContentProvider());
 		tree.setComparator(new PathNodeTreeComparator());
 		tree.setLabelProvider(new PathNodeLabelProvider());
-		tree.setFilters(new PathNodeFilter[] { new PathNodeFilter() });
+		tree.setFilters(new PathNodeFilter());
 
 		for (IWorkbenchAction action : actionsToDispose)
 			action.setEnabled(false);

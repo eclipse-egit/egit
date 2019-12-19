@@ -330,14 +330,14 @@ public class GitCreatePatchWizard extends Wizard {
 				}
 			});
 			formatCombo.setInput(DiffHeaderFormat.values());
-			formatCombo.setFilters(new ViewerFilter[] { new ViewerFilter() {
+			formatCombo.setFilters(new ViewerFilter() {
 				@Override
 				public boolean select(Viewer viewer, Object parentElement,
 						Object element) {
 					return commit != null
 							|| !((DiffHeaderFormat) element).isCommitRequired();
 				}
-			}});
+			});
 
 			String formatName = getDialogSettings().get(FORMAT_KEY);
 			DiffHeaderFormat selection = DiffHeaderFormat.NONE;

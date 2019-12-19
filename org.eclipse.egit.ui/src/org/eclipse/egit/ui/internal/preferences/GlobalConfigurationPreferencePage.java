@@ -152,7 +152,8 @@ public class GlobalConfigurationPreferencePage extends PreferencePage implements
 			repoCombo.select(0);
 			showRepositoryConfiguration(0);
 		} else {
-			repoCombo.setItems(new String[] {UIText.GlobalConfigurationPreferencePage_repositorySettingNoRepositories});
+			repoCombo.setItems(
+					UIText.GlobalConfigurationPreferencePage_repositorySettingNoRepositories);
 			repoCombo.select(0);
 			repoCombo.setEnabled(false);
 		}

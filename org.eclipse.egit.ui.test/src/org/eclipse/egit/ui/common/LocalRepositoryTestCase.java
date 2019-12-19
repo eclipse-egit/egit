@@ -744,7 +744,7 @@ public abstract class LocalRepositoryTestCase extends EGitTestCase {
 
 	protected static void stage(IFile file) throws Exception {
 		ArrayList<IFile> unstaged = new ArrayList<>();
-		unstaged.addAll(Arrays.asList(new IFile[] { file }));
+		unstaged.addAll(Arrays.asList(file));
 		AddToIndexOperation op = new AddToIndexOperation(unstaged);
 		op.execute(null);
 	}

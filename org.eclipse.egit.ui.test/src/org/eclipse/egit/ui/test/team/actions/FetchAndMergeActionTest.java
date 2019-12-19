@@ -141,8 +141,8 @@ public class FetchAndMergeActionTest extends LocalRepositoryTestCase {
 
 	private void mergeBranch(String branchToMerge, boolean squash) throws Exception {
 		SWTBotShell mergeDialog = openMergeDialog();
-		TestUtil.navigateTo(mergeDialog.bot().tree(),
-				new String[] { LOCAL_BRANCHES, branchToMerge }).select();
+		TestUtil.navigateTo(mergeDialog.bot().tree(), LOCAL_BRANCHES,
+				branchToMerge).select();
 		if (squash)
 			mergeDialog.bot().radio(UIText.MergeTargetSelectionDialog_MergeTypeSquashButton).click();
 		mergeDialog.bot().button(UIText.MergeTargetSelectionDialog_ButtonMerge).click();

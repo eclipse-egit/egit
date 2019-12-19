@@ -128,9 +128,8 @@ public abstract class DoublePreferencesPreferencePage
 			try {
 				((IPersistentPreferenceStore) store).save();
 			} catch (IOException e) {
-				String message = JFaceResources.format(
-						"PreferenceDialog.saveErrorMessage", //$NON-NLS-1$
-						new Object[] { getTitle(), e.getMessage() });
+				String message = JFaceResources.format("PreferenceDialog.saveErrorMessage",
+						getTitle(), e.getMessage());
 				Policy.getStatusHandler().show(
 						new Status(IStatus.ERROR, Activator.getPluginId(),
 								message, e),

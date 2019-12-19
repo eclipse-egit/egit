@@ -123,7 +123,7 @@ public class CommitUI  {
 		if (!UIUtils.saveAllEditors(repo))
 			return false;
 
-		BasicConfigurationDialog.show(new Repository[]{repo});
+		BasicConfigurationDialog.show(repo);
 
 		resetState();
 		final IProject[] projects = getProjectsOfRepositories();
