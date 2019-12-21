@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a3ce25e4_25e4e266",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/preferences/StorageSizeFieldEditor.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1638
+      },
+      "writtenOn": "2019-12-21T11:01:14Z",
+      "side": 0,
+      "message": "Looks like the refactoring removed NON-NLS tags unnecessarily.\nSame in \n\nDoublePreferencesPreferencePage.java\nSynchronizePreferencePage.java\nCachedCheckboxTreeViewer.java\n\nThis is also why the build for Iadd8c3071d51710fdd48d40bcaacee7a2f1d7074 fails.",
+      "revId": "d40a44ea6f43c832cd2b0dbb98df88af974bc6c9",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
