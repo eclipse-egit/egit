@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c23f318d_8dbfaaf5",
+        "filename": "org.eclipse.egit.ui.test/src/org/eclipse/egit/ui/common/LocalRepositoryTestCase.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 747,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2019-12-21T14:10:15Z",
+      "side": 1,
+      "message": "This is nonsense anyway. Why not simply remove that \"unstaged\" list completely and simply do\n\n  AddToIndexOperation op \u003d new AddToIndexOperation(Collections.singletonList(file));\n  op.execute(null);\n\n??",
+      "revId": "944507aff0bae806bdadfdf81d0d4f5ddd78d260",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
