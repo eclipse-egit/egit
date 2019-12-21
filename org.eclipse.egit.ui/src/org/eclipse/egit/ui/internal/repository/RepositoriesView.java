@@ -98,7 +98,6 @@ import org.eclipse.jface.viewers.ColumnViewerEditorActivationEvent;
 import org.eclipse.jface.viewers.ColumnViewerEditorActivationStrategy;
 import org.eclipse.jface.viewers.DecoratingStyledCellLabelProvider;
 import org.eclipse.jface.viewers.DoubleClickEvent;
-import org.eclipse.jface.viewers.FocusCellHighlighter;
 import org.eclipse.jface.viewers.IBaseLabelProvider;
 import org.eclipse.jface.viewers.ICellModifier;
 import org.eclipse.jface.viewers.IDoubleClickListener;
@@ -112,7 +111,6 @@ import org.eclipse.jface.viewers.StructuredSelection;
 import org.eclipse.jface.viewers.TextCellEditor;
 import org.eclipse.jface.viewers.TreeSelection;
 import org.eclipse.jface.viewers.TreeViewerEditor;
-import org.eclipse.jface.viewers.TreeViewerFocusCellManager;
 import org.eclipse.jface.window.Window;
 import org.eclipse.jgit.events.ConfigChangedEvent;
 import org.eclipse.jgit.events.ConfigChangedListener;
@@ -612,11 +610,6 @@ public class RepositoriesView extends CommonNavigator implements IShowInSource, 
 	}
 
 	private void setupInlineEditing(CommonViewer viewer) {
-		TreeViewerFocusCellManager focusCellManager = new TreeViewerFocusCellManager(
-				viewer, new FocusCellHighlighter(viewer) {
-					// Empty; SWT highlights already.
-				});
-
 		ColumnViewerEditorActivationStrategy editorActivation = new ColumnViewerEditorActivationStrategy(
 				viewer) {
 
@@ -633,7 +626,7 @@ public class RepositoriesView extends CommonNavigator implements IShowInSource, 
 		// tabbing. It may jump otherwise into an open editor (closing the cell
 		// editor), and when the user is typing he may then inadvertently modify
 		// that file.
-		TreeViewerEditor.create(viewer, focusCellManager, editorActivation,
+		TreeViewerEditor.create(viewer, editorActivation,
 				ColumnViewerEditor.TABBING_HORIZONTAL);
 
 		// Record the initial value so that the validator can avoid producing an
