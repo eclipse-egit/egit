@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (C) 2018, Max Hohenegger <eclipse@hohenegger.eu>
+ * Copyright (C) 2019, Max Hohenegger <eclipse@hohenegger.eu>
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License 2.0
@@ -11,11 +11,13 @@
 package org.eclipse.egit.gitflow.ui.internal.actions;
 
 import org.eclipse.egit.gitflow.ui.internal.UIText;
+import org.eclipse.egit.ui.internal.components.BranchNameNormalizer;
 import org.eclipse.jface.dialogs.IDialogConstants;
 import org.eclipse.jface.dialogs.IInputValidator;
 import org.eclipse.jface.dialogs.InputDialog;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Shell;
 
 class StartDialog extends InputDialog {
@@ -40,6 +42,14 @@ class StartDialog extends InputDialog {
 			getText().setText(getValue());
 			getText().selectAll();
 		}
+	}
+
+	@Override
+	protected Control createDialogArea(Composite parent) {
+		Control result = super.createDialogArea(parent);
+		BranchNameNormalizer normalizer = new BranchNameNormalizer(getText());
+		normalizer.setVisible(false);
+		return result;
 	}
 
 	@Override
