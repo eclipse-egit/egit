@@ -42,6 +42,7 @@ import org.eclipse.jface.resource.JFaceResources;
 import org.eclipse.jgit.lib.Repository;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swtbot.swt.finder.junit.SWTBotJunit4ClassRunner;
+import org.eclipse.swtbot.swt.finder.waits.Conditions;
 import org.eclipse.swtbot.swt.finder.widgets.SWTBotButton;
 import org.eclipse.swtbot.swt.finder.widgets.SWTBotShell;
 import org.eclipse.swtbot.swt.finder.widgets.SWTBotTable;
@@ -713,6 +714,21 @@ public class GitHistoryRefFilterConfigurationDialogTest
 		typeTextAndApply("edited");
 
 		clickCancel();
+		verify(refFilterHelper, Mockito.never())
+				.setRefFilters(ArgumentMatchers.any());
+	}
+
+	@Test
+	public void testCancelWhileEditing() throws Exception {
+		SWTBotTable table = dialogBot.bot().table();
+		table.getTableItem(5).select();
+		click(UIText.GitHistoryPage_filterRefDialog_button_edit);
+
+		bot.text(0).setText("edited");
+
+		clickCancel();
+		bot.waitUntil(Conditions.shellCloses(dialogBot));
+
 		verify(refFilterHelper, Mockito.never())
 				.setRefFilters(ArgumentMatchers.any());
 	}

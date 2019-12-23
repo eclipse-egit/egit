@@ -393,6 +393,9 @@ public class GitHistoryRefFilterConfigurationDialog
 	}
 
 	private void setMessage(String text) {
+		if (message.isDisposed()) {
+			return;
+		}
 		if (text == null) {
 			message.setImage(null);
 			message.setText(
