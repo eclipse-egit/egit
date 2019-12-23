@@ -4407,14 +4407,17 @@
                         value="+">
                   </count>
                   <iterate>
-                     <and>
+                     <or>
                         <instanceof
                               value="org.eclipse.egit.ui.internal.repository.tree.RepositoryNode">
                         </instanceof>
-                        <test
-                              property="GitRepository.canMerge">
-                        </test>
-                     </and>
+                        <instanceof
+                              value="org.eclipse.egit.ui.internal.repository.tree.RepositoryGroupNode">
+                        </instanceof>
+                     </or>
+                     <test
+                           property="GitRepository.canMerge">
+                     </test>
                   </iterate>
                </and>
             </visibleWhen>

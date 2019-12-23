@@ -10,7 +10,15 @@
  *******************************************************************************/
 package org.eclipse.egit.ui.internal.repository.tree;
 
+import java.io.File;
+import java.io.IOException;
+import java.util.Collection;
+import java.util.LinkedHashSet;
+import java.util.List;
+
+import org.eclipse.egit.core.RepositoryCache;
 import org.eclipse.egit.ui.internal.groups.RepositoryGroup;
+import org.eclipse.jgit.lib.Repository;
 
 /**
  * This class represents the tree node of a repository group.
@@ -34,5 +42,27 @@ public class RepositoryGroupNode extends RepositoryTreeNode<RepositoryGroup> {
 	 */
 	public boolean hasChildren() {
 		return group.hasRepositories();
+	}
+
+	/**
+	 * @return contained repositories
+	 */
+	public Collection<? extends Repository> getRepositories() {
+		LinkedHashSet<Repository> result = new LinkedHashSet<>();
+		RepositoryCache repositoryCache = org.eclipse.egit.core.Activator
+				.getDefault().getRepositoryCache();
+		List<File> repoDirs = getObject().getRepositoryDirectories();
+		for (File repoDir : repoDirs) {
+			Repository repo = null;
+			try {
+				repo = repositoryCache.lookupRepository(repoDir);
+			} catch (IOException e) {
+				// ignore
+			}
+			if (repo != null) {
+				result.add(repo);
+			}
+		}
+		return result;
 	}
 }

@@ -14,6 +14,8 @@ package org.eclipse.egit.ui.internal.repository.tree;
 
 import java.io.IOException;
 import java.net.URISyntaxException;
+import java.util.Collection;
+import java.util.Collections;
 
 import org.eclipse.egit.ui.internal.ResourcePropertyTester;
 import org.eclipse.egit.ui.internal.expressions.AbstractPropertyTester;
@@ -41,11 +43,22 @@ public class RepositoriesViewPropertyTester extends AbstractPropertyTester {
 		}
 		RepositoryTreeNode node = (RepositoryTreeNode) receiver;
 
-		Repository repository = node.getRepository();
-		if (repository == null) {
+		Collection<? extends Repository> repositories = null;
+		if (node instanceof RepositoryGroupNode) {
+			repositories = ((RepositoryGroupNode) node).getRepositories();
+		} else {
+			Repository repository = node.getRepository();
+			if (repository != null) {
+				repositories = Collections.singleton(repository);
+			}
+		}
+		if (repositories == null || repositories.isEmpty()) {
 			return false;
 		}
-		boolean value = internalTest(node, repository, property);
+		boolean value = true;
+		for (Repository repository : repositories) {
+			value &= internalTest(node, repository, property);
+		}
 		boolean trace = GitTraceLocation.PROPERTIESTESTER.isActive();
 		if (trace) {
 			GitTraceLocation
