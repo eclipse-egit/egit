@@ -74,6 +74,9 @@ import org.eclipse.ui.preferences.ViewSettingsDialog;
 public class GitHistoryRefFilterConfigurationDialog
 		extends ViewSettingsDialog {
 
+	/** Standard binding for the rename command. */
+	private static final int EDITOR_ACTIVATION_KEY = SWT.F2;
+
 	private static final String FILTER_COLUMN_NAME = "filter"; //$NON-NLS-1$
 
 	private static final String NEW_FILTER_INITIAL_STRING = "refs/*"; //$NON-NLS-1$
@@ -280,11 +283,14 @@ public class GitHistoryRefFilterConfigurationDialog
 				boolean isLeftDoubleClick = event.eventType == ColumnViewerEditorActivationEvent.MOUSE_DOUBLE_CLICK_SELECTION
 						&& ((MouseEvent) event.sourceEvent).button == 1;
 				return singleSelect && (isLeftDoubleClick
-						|| event.eventType == ColumnViewerEditorActivationEvent.PROGRAMMATIC);
+						|| event.eventType == ColumnViewerEditorActivationEvent.PROGRAMMATIC
+						|| event.eventType == ColumnViewerEditorActivationEvent.KEY_PRESSED
+								&& event.keyCode == EDITOR_ACTIVATION_KEY);
 			}
 		};
 		TableViewerEditor.create(configsTable, focusCellManager,
-				editorActivation, ColumnViewerEditor.DEFAULT);
+				editorActivation, ColumnViewerEditor.DEFAULT
+						| ColumnViewerEditor.KEYBOARD_ACTIVATION);
 
 		editor = new TextCellEditor(configsTable.getTable()) {
 
@@ -339,7 +345,8 @@ public class GitHistoryRefFilterConfigurationDialog
 					@Override
 					public void beforeEditorActivated(
 							ColumnViewerEditorActivationEvent event) {
-						// Nothing
+						configsTable.reveal(configsTable
+								.getStructuredSelection().getFirstElement());
 					}
 
 					@Override
