@@ -1318,9 +1318,14 @@
                      property="GitSelection.resourcesAllInRepository">
                </test>
                <iterate>
-                  <instanceof
-                        value="org.eclipse.egit.ui.internal.repository.tree.RepositoryTreeNode">
-                  </instanceof>
+                  <or>
+                     <instanceof
+                           value="org.eclipse.egit.ui.internal.repository.tree.RepositoryTreeNode">
+                     </instanceof>
+                     <instanceof
+                           value="org.eclipse.egit.ui.internal.repository.tree.RepositoryGroupNode">
+                     </instanceof>
+                  </or>
                   <not>
                      <instanceof
                            value="org.eclipse.egit.ui.internal.selection.RepositoryVirtualNode">
@@ -4407,14 +4412,17 @@
                         value="+">
                   </count>
                   <iterate>
-                     <and>
+                     <or>
                         <instanceof
                               value="org.eclipse.egit.ui.internal.repository.tree.RepositoryNode">
                         </instanceof>
-                        <test
-                              property="GitRepository.canMerge">
-                        </test>
-                     </and>
+                        <instanceof
+                              value="org.eclipse.egit.ui.internal.repository.tree.RepositoryGroupNode">
+                        </instanceof>
+                     </or>
+                     <test
+                           property="GitRepository.canMerge">
+                     </test>
                   </iterate>
                </and>
             </visibleWhen>

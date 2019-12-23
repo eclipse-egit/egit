@@ -34,6 +34,7 @@ import org.eclipse.egit.core.project.RepositoryMapping;
 import org.eclipse.egit.ui.internal.CommonUtils;
 import org.eclipse.egit.ui.internal.UIText;
 import org.eclipse.egit.ui.internal.history.HistoryPageInput;
+import org.eclipse.egit.ui.internal.repository.tree.RepositoryGroupNode;
 import org.eclipse.egit.ui.internal.revision.FileRevisionEditorInput;
 import org.eclipse.egit.ui.internal.trace.GitTraceLocation;
 import org.eclipse.jface.dialogs.MessageDialog;
@@ -103,12 +104,16 @@ public class SelectionUtils {
 
 		Set<Repository> repos = new LinkedHashSet<>();
 		for (Object o : selection.toArray()) {
-			Repository repo = Adapters.adapt(o, Repository.class);
-			if (repo != null) {
-				repos.add(repo);
+			if (o instanceof RepositoryGroupNode) {
+				repos.addAll(((RepositoryGroupNode) o).getRepositories());
 			} else {
-				// no repository found for one of the objects!
-				return new Repository[0];
+				Repository repo = Adapters.adapt(o, Repository.class);
+				if (repo != null) {
+					repos.add(repo);
+				} else {
+					// no repository found for one of the objects!
+					return new Repository[0];
+				}
 			}
 		}
 		return repos.toArray(new Repository[0]);
