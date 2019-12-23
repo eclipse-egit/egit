@@ -22,6 +22,30 @@
       "revId": "ac4738027269e1eb2ec7730a807f6488e98e3136",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9204f268_16b6e6e7",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2019-12-23T08:59:34Z",
+      "side": 1,
+      "message": "Bug 558496 was originally reported against EGit. By now, it has component Platform/SWT and is entitled \"[gtk] [regression] Tree.showItem() scrolls even if the item is visible\". So bug 558496 is that bug to track the regression in SWT, and merging this change should not close bug 558496.",
+      "parentUuid": "ae9040ce_842e032d",
+      "range": {
+        "startLine": 17,
+        "startChar": 8,
+        "endLine": 17,
+        "endChar": 18
+      },
+      "revId": "ac4738027269e1eb2ec7730a807f6488e98e3136",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
     }
   ]
 }
