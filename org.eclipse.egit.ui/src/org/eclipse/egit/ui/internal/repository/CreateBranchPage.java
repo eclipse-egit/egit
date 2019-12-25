@@ -26,11 +26,11 @@ import org.eclipse.core.runtime.IExtensionRegistry;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Platform;
-import org.eclipse.core.runtime.SafeRunner;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.core.runtime.SubMonitor;
 import org.eclipse.core.runtime.jobs.Job;
 import org.eclipse.egit.core.Activator;
+import org.eclipse.egit.core.internal.SafeRunnable;
 import org.eclipse.egit.core.internal.Utils;
 import org.eclipse.egit.core.op.CreateLocalBranchOperation;
 import org.eclipse.egit.ui.IBranchNameProvider;
@@ -48,7 +48,6 @@ import org.eclipse.jface.dialogs.IMessageProvider;
 import org.eclipse.jface.layout.GridDataFactory;
 import org.eclipse.jface.resource.JFaceResources;
 import org.eclipse.jface.resource.LocalResourceManager;
-import org.eclipse.jface.util.SafeRunnable;
 import org.eclipse.jface.window.Window;
 import org.eclipse.jface.wizard.WizardPage;
 import org.eclipse.jgit.lib.BranchConfig.BranchRebaseMode;
@@ -489,13 +488,10 @@ class CreateBranchPage extends WizardPage {
 	private String getBranchNameSuggestionFromProvider() {
 		final AtomicReference<String> ref = new AtomicReference<>();
 		final IBranchNameProvider branchNameProvider = getBranchNameProvider();
-		if (branchNameProvider != null)
-			SafeRunner.run(new SafeRunnable() {
-				@Override
-				public void run() throws Exception {
-					ref.set(branchNameProvider.getBranchNameSuggestion());
-				}
-			});
+		if (branchNameProvider != null) {
+			SafeRunnable.run(() -> ref
+					.set(branchNameProvider.getBranchNameSuggestion()));
+		}
 		return ref.get();
 	}
 

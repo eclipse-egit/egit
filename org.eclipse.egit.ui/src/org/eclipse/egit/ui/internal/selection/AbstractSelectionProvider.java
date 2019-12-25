@@ -12,8 +12,7 @@ package org.eclipse.egit.ui.internal.selection;
 
 import java.util.concurrent.CopyOnWriteArrayList;
 
-import org.eclipse.core.runtime.SafeRunner;
-import org.eclipse.jface.util.SafeRunnable;
+import org.eclipse.egit.core.internal.SafeRunnable;
 import org.eclipse.jface.viewers.IPostSelectionProvider;
 import org.eclipse.jface.viewers.ISelectionChangedListener;
 import org.eclipse.jface.viewers.SelectionChangedEvent;
@@ -77,13 +76,7 @@ public abstract class AbstractSelectionProvider
 		SelectionChangedEvent event = new SelectionChangedEvent(this,
 				getSelection());
 		for (ISelectionChangedListener listener : listeners) {
-			SafeRunner.run(new SafeRunnable() {
-
-				@Override
-				public void run() throws Exception {
-					listener.selectionChanged(event);
-				}
-			});
+			SafeRunnable.run(() -> listener.selectionChanged(event));
 		}
 	}
 
