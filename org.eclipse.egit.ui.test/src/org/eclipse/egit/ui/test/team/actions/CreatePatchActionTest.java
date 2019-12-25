@@ -91,9 +91,9 @@ public class CreatePatchActionTest extends LocalRepositoryTestCase {
 	public void setup() throws Exception {
 		createProjectAndCommitToRepository();
 
-		IFile[] commitables = getAllFiles();
-		CommitOperation cop = new CommitOperation(commitables,
-				Arrays.asList(commitables), TestUtil.TESTAUTHOR,
+		IFile[] committableFiles = getAllFiles();
+		CommitOperation cop = new CommitOperation(committableFiles,
+				Arrays.asList(committableFiles), TestUtil.TESTAUTHOR,
 				TestUtil.TESTCOMMITTER, "Initial commit");
 		cop.setAmending(true);
 		cop.execute(null);

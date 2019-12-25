@@ -177,10 +177,10 @@ public class SynchronizeViewRemoteAwareChangeSetModelTest
 						"Content 2".getBytes(project.getDefaultCharset())),
 				false, null);
 
-		IFile[] commitables = new IFile[] { mockLogicalFile, file1, file2 };
+		IFile[] committableFiles = new IFile[] { mockLogicalFile, file1, file2 };
 		List<IFile> untracked = new ArrayList<>();
-		untracked.addAll(Arrays.asList(commitables));
-		CommitOperation op = new CommitOperation(commitables, untracked,
+		untracked.addAll(Arrays.asList(committableFiles));
+		CommitOperation op = new CommitOperation(committableFiles, untracked,
 				TestUtil.TESTAUTHOR, TestUtil.TESTCOMMITTER, "Initial commit");
 		op.execute(null);
 		RevCommit firstCommit = op.getCommit();
@@ -199,10 +199,10 @@ public class SynchronizeViewRemoteAwareChangeSetModelTest
 				new ByteArrayInputStream(
 						"Content 3".getBytes(project.getDefaultCharset())),
 				false, null);
-		commitables = new IFile[] { mockLogicalFile, file1, file2, file3 };
+		committableFiles = new IFile[] { mockLogicalFile, file1, file2, file3 };
 		untracked = new ArrayList<>();
 		untracked.add(file3);
-		op = new CommitOperation(commitables, untracked, TestUtil.TESTAUTHOR,
+		op = new CommitOperation(committableFiles, untracked, TestUtil.TESTAUTHOR,
 				TestUtil.TESTCOMMITTER, "Second commit");
 		op.execute(null);
 	}
