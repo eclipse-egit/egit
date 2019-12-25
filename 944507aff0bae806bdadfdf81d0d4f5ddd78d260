@@ -33,6 +33,24 @@
       "revId": "944507aff0bae806bdadfdf81d0d4f5ddd78d260",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7107cb13_4009f64a",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/components/CachedCheckboxTreeViewer.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 119,
+      "author": {
+        "id": 440
+      },
+      "writtenOn": "2019-12-25T09:53:52Z",
+      "side": 1,
+      "message": "I\u0027ve raised a bug for that in JDT: https://bugs.eclipse.org/bugs/show_bug.cgi?id\u003d558614",
+      "parentUuid": "063817b1_29a9f973",
+      "revId": "944507aff0bae806bdadfdf81d0d4f5ddd78d260",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
     }
   ]
 }
