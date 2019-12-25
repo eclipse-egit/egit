@@ -379,21 +379,21 @@ public abstract class LocalRepositoryTestCase extends EGitTestCase {
 		IFolder folder = firstProject.getFolder(FOLDER);
 		IFile textFile = folder.getFile(FILE1);
 		IFile textFile2 = folder.getFile(FILE2);
-		IFile[] commitables = null;
+		IFile[] committables = null;
 		if (secondProject != null) {
 			folder = secondProject.getFolder(FOLDER);
 			IFile secondtextFile = folder.getFile(FILE1);
 			IFile secondtextFile2 = folder.getFile(FILE2);
 
-			commitables = new IFile[] { dotProject, textFile, textFile2,
+			committables = new IFile[] { dotProject, textFile, textFile2,
 					secondtextFile, secondtextFile2 };
 		} else {
-			commitables = new IFile[] { dotProject, textFile, textFile2 };
+			committables = new IFile[] { dotProject, textFile, textFile2 };
 		}
 		ArrayList<IFile> untracked = new ArrayList<>();
-		untracked.addAll(Arrays.asList(commitables));
+		untracked.addAll(Arrays.asList(committables));
 		// commit to stable
-		CommitOperation op = new CommitOperation(commitables,
+		CommitOperation op = new CommitOperation(committables,
 				untracked, TestUtil.TESTAUTHOR, TestUtil.TESTCOMMITTER,
 				"Initial commit");
 		op.execute(null);
@@ -688,13 +688,13 @@ public abstract class LocalRepositoryTestCase extends EGitTestCase {
 			throws Exception {
 		IFile file = touch(newContent);
 
-		IFile[] commitables = new IFile[] { file };
+		IFile[] committables = new IFile[] { file };
 		ArrayList<IFile> untracked = new ArrayList<>();
-		untracked.addAll(Arrays.asList(commitables));
+		untracked.addAll(Arrays.asList(committables));
 		String message = commitMessage;
 		if (message == null)
 			message = newContent;
-		CommitOperation op = new CommitOperation(commitables,
+		CommitOperation op = new CommitOperation(committables,
 				untracked, TestUtil.TESTAUTHOR, TestUtil.TESTCOMMITTER,
 				message);
 		op.execute(null);
@@ -754,10 +754,10 @@ public abstract class LocalRepositoryTestCase extends EGitTestCase {
 		IProject prj = file.getProject();
 		if (!prj.isAccessible())
 			throw new IllegalStateException("No project to touch");
-		IFile[] commitables = new IFile[] { file };
+		IFile[] committables = new IFile[] { file };
 		ArrayList<IFile> untracked = new ArrayList<>();
-		untracked.addAll(Arrays.asList(commitables));
-		CommitOperation op = new CommitOperation(commitables,
+		untracked.addAll(Arrays.asList(committables));
+		CommitOperation op = new CommitOperation(committables,
 				untracked, TestUtil.TESTAUTHOR, TestUtil.TESTCOMMITTER,
 				commitMessage);
 		op.execute(null);

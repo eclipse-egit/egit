@@ -258,11 +258,11 @@ public abstract class AbstractSynchronizeViewTest extends
 				new ByteArrayInputStream("/.project\n".getBytes(secondPoject
 						.getDefaultCharset())), false, null);
 
-		IFile[] commitables = new IFile[] { gitignore };
+		IFile[] committables = new IFile[] { gitignore };
 		ArrayList<IFile> untracked = new ArrayList<IFile>();
-		untracked.addAll(Arrays.asList(commitables));
+		untracked.addAll(Arrays.asList(committables));
 
-		CommitOperation op = new CommitOperation(commitables,
+		CommitOperation op = new CommitOperation(committables,
 				untracked, TestUtil.TESTAUTHOR, TestUtil.TESTCOMMITTER,
 				"Add .gitignore file");
 		op.execute(null);

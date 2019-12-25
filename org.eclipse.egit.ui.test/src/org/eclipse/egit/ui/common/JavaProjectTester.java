@@ -98,11 +98,11 @@ public class JavaProjectTester {
 				.getFolder(PACKAGE_NAME);
 		IFile file = folder.getFile(JAVA_FILE_NAME);
 
-		IFile[] commitables = new IFile[] { file };
+		IFile[] committables = new IFile[] { file };
 		ArrayList<IFile> untracked = new ArrayList<>();
-		untracked.addAll(Arrays.asList(commitables));
+		untracked.addAll(Arrays.asList(committables));
 		// commit to master
-		CommitOperation op = new CommitOperation(commitables, untracked,
+		CommitOperation op = new CommitOperation(committables, untracked,
 				TestUtil.TESTAUTHOR, TestUtil.TESTCOMMITTER, "Initial commit");
 		op.execute(null);
 
