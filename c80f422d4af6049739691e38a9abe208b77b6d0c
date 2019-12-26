@@ -22,6 +22,30 @@
       "revId": "c80f422d4af6049739691e38a9abe208b77b6d0c",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7d6536dc_1d24a1a0",
+        "filename": "org.eclipse.egit.ui.test/src/org/eclipse/egit/ui/common/JavaProjectTester.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 440
+      },
+      "writtenOn": "2019-12-26T09:03:33Z",
+      "side": 1,
+      "message": "Thanks. I had not even thought about that yet, since I looked only into the \"double consonant for \"-able\" issue. Learnt something new today.",
+      "parentUuid": "3f3dbe69_6be20ec7",
+      "range": {
+        "startLine": 101,
+        "startChar": 10,
+        "endLine": 101,
+        "endChar": 22
+      },
+      "revId": "c80f422d4af6049739691e38a9abe208b77b6d0c",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
     }
   ]
 }
