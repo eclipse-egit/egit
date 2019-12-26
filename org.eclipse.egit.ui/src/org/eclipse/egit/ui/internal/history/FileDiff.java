@@ -287,7 +287,7 @@ public class FileDiff {
 	private void outputEclipseDiff(final StringBuilder d, final Repository db,
 			final ObjectReader reader, final DiffFormatter diffFmt)
 			throws IOException {
-		if (!(getBlobs().length == 2))
+		if (getBlobs().length != 2)
 			throw new UnsupportedOperationException(
 					"Not supported yet if the number of parents is different from one"); //$NON-NLS-1$
 

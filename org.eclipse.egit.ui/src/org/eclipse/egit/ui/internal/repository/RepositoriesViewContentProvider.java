@@ -230,7 +230,7 @@ public class RepositoriesViewContentProvider implements ITreeContentProvider {
 			try {
 				for (Entry<String, Ref> refEntry : getRefs(repo, RefDatabase.ALL).entrySet()) {
 					String name=refEntry.getKey();
-					if (!(name.startsWith(Constants.R_HEADS) || name.startsWith(Constants.R_TAGS)|| name.startsWith(Constants.R_REMOTES)))
+					if (!name.startsWith(Constants.R_HEADS) && !name.startsWith(Constants.R_TAGS) && !name.startsWith(Constants.R_REMOTES))
 						refs.add(new AdditionalRefNode(node, repo, refEntry
 								.getValue()));
 				}

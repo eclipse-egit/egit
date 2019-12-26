@@ -580,7 +580,7 @@ public class LocationPage extends WizardPage {
 		}
 
 		final File parent = file.getParentFile();
-		if (!(parent.exists() && parent.isDirectory())) {
+		if (!parent.isDirectory()) {
 			setErrorMessage(UIText.GitCreatePatchWizard_FilesystemDirectoryNotExistsError);
 			return false;
 		}
