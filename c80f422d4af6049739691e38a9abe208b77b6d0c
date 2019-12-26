@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3f3dbe69_6be20ec7",
+        "filename": "org.eclipse.egit.ui.test/src/org/eclipse/egit/ui/common/JavaProjectTester.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2019-12-26T08:16:48Z",
+      "side": 1,
+      "message": "AFAIK there\u0027s no plural for adjectives in English, and this doesn\u0027t seem to be a noun. I guess committableFiles would work.\n\nhttps://english.stackexchange.com/questions/301116/can-adjectives-get-plural-s",
+      "range": {
+        "startLine": 101,
+        "startChar": 10,
+        "endLine": 101,
+        "endChar": 22
+      },
+      "revId": "c80f422d4af6049739691e38a9abe208b77b6d0c",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
