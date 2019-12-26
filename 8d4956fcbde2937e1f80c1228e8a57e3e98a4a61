@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6ca54208_150e124d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/commit/command/SquashHandler.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 116,
+      "author": {
+        "id": 440
+      },
+      "writtenOn": "2019-12-26T08:50:13Z",
+      "side": 1,
+      "message": "This is confusing, even though it was the same message key before your refactoring. Can we create a new UIText entry where the name reflects the real usage, please?",
+      "range": {
+        "startLine": 116,
+        "startChar": 13,
+        "endLine": 116,
+        "endChar": 63
+      },
+      "revId": "8d4956fcbde2937e1f80c1228e8a57e3e98a4a61",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "fb563139_1a56f9dc",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/rebase/CommitMessageEditorDialog.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 440
+      },
+      "writtenOn": "2019-12-26T08:50:13Z",
+      "side": 1,
+      "message": "same here",
+      "range": {
+        "startLine": 77,
+        "startChar": 4,
+        "endLine": 77,
+        "endChar": 62
+      },
+      "revId": "8d4956fcbde2937e1f80c1228e8a57e3e98a4a61",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1380bfd1_460d86ac",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/rebase/CommitMessageEditorDialog.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 111,
+      "author": {
+        "id": 440
+      },
+      "writtenOn": "2019-12-26T08:50:13Z",
+      "side": 1,
+      "message": "If I get it right, you only call one new variant, but you declare two new variants of the constructor. I suggest to remove the one that is not really used. It\u0027s YAGNI.",
+      "range": {
+        "startLine": 91,
+        "startChar": 0,
+        "endLine": 111,
+        "endChar": 66
+      },
+      "revId": "8d4956fcbde2937e1f80c1228e8a57e3e98a4a61",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
