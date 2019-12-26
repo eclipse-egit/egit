@@ -174,7 +174,7 @@ public class CommitCombo extends Composite {
 	public ObjectId getItem(int index) {
 		checkWidget();
 
-		if (!(0 <= index && index < commits.size())) {
+		if (index < 0 || commits.size() <= index) {
 			SWT.error(SWT.ERROR_INVALID_RANGE);
 		}
 		return commits.get(index).objectId;

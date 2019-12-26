@@ -92,17 +92,17 @@ public class TestDecoratableResource extends DecoratableResource {
 			return false;
 
 		IDecoratableResource decoratableResource = (IDecoratableResource) obj;
-		if (!(decoratableResource.getType() == getType()))
+		if (decoratableResource.getType() != getType())
 			return false;
 		if (!decoratableResource.getName().equals(getName()))
 			return false;
-		if (!(decoratableResource.isTracked() == isTracked()))
+		if (decoratableResource.isTracked() != isTracked())
 			return false;
-		if (!(decoratableResource.isIgnored() == isIgnored()))
+		if (decoratableResource.isIgnored() != isIgnored())
 			return false;
-		if (!(decoratableResource.isDirty() == isDirty()))
+		if (decoratableResource.isDirty() != isDirty())
 			return false;
-		if (!(decoratableResource.hasConflicts() == hasConflicts()))
+		if (decoratableResource.hasConflicts() != hasConflicts())
 			return false;
 		if (!decoratableResource.getStagingState().equals(getStagingState()))
 			return false;
