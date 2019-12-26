@@ -390,7 +390,7 @@ public abstract class FixedJFaceToolTip {
 				bounds = control.getDisplay().getBounds();
 			}
 
-			if (!(bounds.contains(location) && bounds.contains(rightBounds))) {
+			if (!bounds.contains(location) || !bounds.contains(rightBounds)) {
 				if (rightBounds.x > bounds.x + bounds.width) {
 					location.x -= rightBounds.x - (bounds.x + bounds.width);
 				}

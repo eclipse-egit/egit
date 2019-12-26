@@ -148,7 +148,7 @@ class GenerateHistoryJob extends Job {
 			GitTraceLocation.getTrace().traceEntry(
 					GitTraceLocation.HISTORYVIEW.getLocation());
 		try {
-			if (!(forcedRedrawsAfterListIsCompleted == 1) && !incomplete
+			if (forcedRedrawsAfterListIsCompleted != 1 && !incomplete
 					&& loadedCommits.size() == lastUpdateCnt)
 				return;
 			if (forcedRedrawsAfterListIsCompleted == 1)

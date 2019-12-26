@@ -162,7 +162,7 @@ public class GitCreatePatchWizard extends Wizard {
 
 		final File file = locationPage.getFile();
 
-		if (!(file == null || validateFile(file)))
+		if (file != null && !validateFile(file))
 			return false;
 
 		try {
