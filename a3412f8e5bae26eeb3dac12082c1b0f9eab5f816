@@ -1,0 +1,78 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a2de2472_d3f0ab8c",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/dialogs/CommitCombo.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 177,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2019-12-27T17:17:57Z",
+      "side": 1,
+      "message": "Personally I find\n\n  index \u003c 0\n\nsimpler to parse.",
+      "range": {
+        "startLine": 177,
+        "startChar": 6,
+        "endLine": 177,
+        "endChar": 15
+      },
+      "revId": "a3412f8e5bae26eeb3dac12082c1b0f9eab5f816",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c88cd2fc_715050a0",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/history/GitCreatePatchWizard.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 165,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2019-12-27T17:17:57Z",
+      "side": 1,
+      "message": "That\u0027s *much* clearer!",
+      "revId": "a3412f8e5bae26eeb3dac12082c1b0f9eab5f816",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "92add9fc_f5f991ac",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/history/LocationPage.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 583,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2019-12-27T17:17:57Z",
+      "side": 1,
+      "message": "isDirectory() \u003d\u003e exists(), so just\n\n  if (!parent.isDirectory()) {\n\nwould be good enough?",
+      "revId": "a3412f8e5bae26eeb3dac12082c1b0f9eab5f816",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "16e7c8b0_fbb43faa",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/repository/RepositoriesView.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1160,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2019-12-27T17:17:57Z",
+      "side": 1,
+      "message": "I don\u0027t find that any clearer.",
+      "revId": "a3412f8e5bae26eeb3dac12082c1b0f9eab5f816",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
