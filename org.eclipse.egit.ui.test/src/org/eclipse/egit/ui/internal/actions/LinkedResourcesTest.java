@@ -72,7 +72,7 @@ public class LinkedResourcesTest extends LocalRepositoryTestCase {
 		IExtensionRegistry registry = Platform.getExtensionRegistry();
 		IExtensionPoint point = registry.getExtensionPoint("org.eclipse.ui.commands");
 		IConfigurationElement[] elements = point.getConfigurationElements();
-		ArrayList<RepositoryActionHandler> result = new ArrayList<RepositoryActionHandler>();
+		ArrayList<RepositoryActionHandler> result = new ArrayList<>();
 		for (IConfigurationElement e: elements) {
 			String categoryId = e.getAttribute("categoryId");
 			if ("org.eclipse.egit.ui.commandCategory".equals(categoryId)) {

@@ -289,7 +289,7 @@ public class GitResourceVariantTreeTest extends GitTestCase {
 						new NullProgressMonitor());
 
 		Set<IResource> includedResource = collectResources(mappings);
-		Set<IResource> expectedIncludedResources = new HashSet<IResource>();
+		Set<IResource> expectedIncludedResources = new HashSet<>();
 		expectedIncludedResources.add(iModifiedFile);
 		expectedIncludedResources.add(iUnchangedFile);
 		expectedIncludedResources.add(iRemovedFile);
@@ -362,7 +362,7 @@ public class GitResourceVariantTreeTest extends GitTestCase {
 
 	private static Set<IResource> collectResources(ResourceMapping[] mappings)
 			throws CoreException {
-		final Set<IResource> resources = new HashSet<IResource>();
+		final Set<IResource> resources = new HashSet<>();
 		ResourceMappingContext context = ResourceMappingContext.LOCAL_CONTEXT;
 		for (ResourceMapping mapping : mappings) {
 			ResourceTraversal[] traversals = mapping.getTraversals(context,

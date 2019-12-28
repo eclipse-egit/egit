@@ -39,7 +39,7 @@ public class PushOperationResult {
 	 * Construct empty push operation result.
 	 */
 	public PushOperationResult() {
-		this.urisEntries = new LinkedHashMap<URIish, Entry>();
+		this.urisEntries = new LinkedHashMap<>();
 	}
 
 	/**
@@ -171,7 +171,7 @@ public class PushOperationResult {
 
 			final Collection<RemoteRefUpdate> oldUpdates = pr
 					.getRemoteUpdates();
-			final ArrayList<RemoteRefUpdate> newUpdates = new ArrayList<RemoteRefUpdate>(
+			final ArrayList<RemoteRefUpdate> newUpdates = new ArrayList<>(
 					oldUpdates.size());
 			for (final RemoteRefUpdate rru : oldUpdates) {
 				final ObjectId expectedOldObjectId;

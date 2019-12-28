@@ -55,7 +55,7 @@ public class GitProjectSetCapabilityTest {
 
 	private GitProjectSetCapability capability;
 
-	private List<IProject> createdProjects = new ArrayList<IProject>();
+	private List<IProject> createdProjects = new ArrayList<>();
 	private List<File> pathsToClean = new ArrayList<>();
 
 	protected final static TestUtils testUtils = new TestUtils();

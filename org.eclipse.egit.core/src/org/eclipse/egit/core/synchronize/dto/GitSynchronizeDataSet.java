@@ -126,7 +126,7 @@ public class GitSynchronizeDataSet implements Iterable<GitSynchronizeData> {
 	 * @return list of all resources
 	 */
 	public IProject[] getAllProjects() {
-		Set<IProject> resource = new HashSet<IProject>();
+		Set<IProject> resource = new HashSet<>();
 		for (GitSynchronizeData data : gsdSet) {
 			resource.addAll(data.getProjects());
 		}

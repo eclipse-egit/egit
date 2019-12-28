@@ -131,7 +131,7 @@ public class PushOperationTest extends DualRepositoryTestCase {
 
 		// let's add a new file to the project shared with repository1
 		IProject proj = importProject(repository1, projectName);
-		ArrayList<IFile> files = new ArrayList<IFile>();
+		ArrayList<IFile> files = new ArrayList<>();
 		IFile newFile = testUtils.addFileToProject(proj, "folder2/file2.txt",
 				"New file");
 		files.add(newFile);
@@ -266,7 +266,7 @@ public class PushOperationTest extends DualRepositoryTestCase {
 		// the remote is repo2
 		URIish remote = repository2.getUri();
 		// update master upon master
-		List<RemoteRefUpdate> refUpdates = new ArrayList<RemoteRefUpdate>();
+		List<RemoteRefUpdate> refUpdates = new ArrayList<>();
 		RemoteRefUpdate update = new RemoteRefUpdate(repository1
 				.getRepository(), "HEAD", "refs/heads/test", false, null, null);
 		refUpdates.add(update);
@@ -328,7 +328,7 @@ public class PushOperationTest extends DualRepositoryTestCase {
 		URIish remote = new URIish("file:///"
 				+ repository2.getRepository().getDirectory().toString());
 		// update master upon master
-		List<RemoteRefUpdate> refUpdates = new ArrayList<RemoteRefUpdate>();
+		List<RemoteRefUpdate> refUpdates = new ArrayList<>();
 		RemoteRefUpdate update = new RemoteRefUpdate(repository1
 				.getRepository(), "HEAD", "refs/heads/test", false, null, null);
 		refUpdates.add(update);

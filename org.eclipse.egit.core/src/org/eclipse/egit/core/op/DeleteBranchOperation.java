@@ -73,7 +73,7 @@ public class DeleteBranchOperation implements IEGitOperation {
 	 */
 	public DeleteBranchOperation(Repository repository, Ref branch,
 			boolean force) {
-		this(repository, new HashSet<Ref>(asList(branch)), force);
+		this(repository, new HashSet<>(asList(branch)), force);
 	}
 
 	/**

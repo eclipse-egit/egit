@@ -65,7 +65,7 @@ public class UntrackOperation implements IEGitOperation {
 	public UntrackOperation(final Collection<? extends IResource> rsrcs) {
 		rsrcList = rsrcs;
 		locations = Collections.emptyList();
-		edits = new IdentityHashMap<Repository, DirCacheEditor>();
+		edits = new IdentityHashMap<>();
 	}
 
 	/**
@@ -82,7 +82,7 @@ public class UntrackOperation implements IEGitOperation {
 		rsrcList = Collections.emptyList();
 		this.locations = locations;
 		this.db = repository;
-		edits = new IdentityHashMap<Repository, DirCacheEditor>();
+		edits = new IdentityHashMap<>();
 	}
 
 	@Override

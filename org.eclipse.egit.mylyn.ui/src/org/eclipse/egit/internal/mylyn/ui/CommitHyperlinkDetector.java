@@ -233,7 +233,7 @@ public class CommitHyperlinkDetector extends AbstractHyperlinkDetector {
 				continue;
 			}
 			if (links == null) {
-				links = new ArrayList<IHyperlink>();
+				links = new ArrayList<>();
 			}
 			int start = matcher.start(1);
 			Region region = new Region(contentOffset + start, matcher.end(1)

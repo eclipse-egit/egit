@@ -51,7 +51,7 @@ public class HistoryTest extends GitTestCase {
 
 	private IFile iFile2;
 
-	private final List<RevCommit> commits = new ArrayList<RevCommit>();
+	private final List<RevCommit> commits = new ArrayList<>();
 
 	private RevCommit masterCommit1;
 
@@ -142,7 +142,7 @@ public class HistoryTest extends GitTestCase {
 
 			final IFileRevision[] revisions = history.getFileRevisions();
 			assertEquals(expectedHistory.size(), revisions.length);
-			final List<RevCommit> commitList = new ArrayList<RevCommit>(
+			final List<RevCommit> commitList = new ArrayList<>(
 					expectedHistory);
 			assertMatchingRevisions(Arrays.asList(revisions), commitList);
 		}
@@ -285,7 +285,7 @@ public class HistoryTest extends GitTestCase {
 		final IFileRevision[] masterCommit1Children = history
 				.getTargets(masterFileRevision1);
 		assertEquals(2, masterCommit1Children.length);
-		final List<RevCommit> expected = new ArrayList<RevCommit>(
+		final List<RevCommit> expected = new ArrayList<>(
 				Arrays.asList(masterCommit3, branchCommit1));
 		assertMatchingRevisions(Arrays.asList(masterCommit1Children), expected);
 
@@ -382,7 +382,7 @@ public class HistoryTest extends GitTestCase {
 		 * (branching point) in file2's history is branchCommit2.
 		 */
 		IFileRevision[] children = history.getTargets(baseRevision);
-		List<RevCommit> expectedChildren = new ArrayList<RevCommit>(
+		List<RevCommit> expectedChildren = new ArrayList<>(
 				Arrays.asList(masterCommit3, branchCommit2));
 		assertEquals(expectedChildren.size(), children.length);
 		assertMatchingRevisions(Arrays.asList(children), expectedChildren);

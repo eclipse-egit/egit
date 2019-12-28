@@ -55,7 +55,7 @@ public class RebaseInteractivePlanTest extends GitTestCase {
 		testRepository = new TestRepository(gitDir);
 		testRepository.connect(project.getProject());
 		plan = RebaseInteractivePlan.getPlan(testRepository.getRepository());
-		toDoElements = new ArrayList<PlanElement>();
+		toDoElements = new ArrayList<>();
 		moveHelper = new RebaseInteractivePlan.MoveHelper(toDoElements, plan);
 	}
 

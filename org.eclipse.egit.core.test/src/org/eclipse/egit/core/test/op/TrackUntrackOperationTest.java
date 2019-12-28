@@ -69,7 +69,7 @@ public class TrackUntrackOperationTest extends DualRepositoryTestCase {
 	@Test
 	public void testTrackFiles() throws Exception {
 
-		final ArrayList<IFile> files = new ArrayList<IFile>();
+		final ArrayList<IFile> files = new ArrayList<>();
 
 		project.accept(new IResourceVisitor() {
 
@@ -112,10 +112,10 @@ public class TrackUntrackOperationTest extends DualRepositoryTestCase {
 	@Test
 	public void testTrackProject() throws Exception {
 
-		final ArrayList<IContainer> containers = new ArrayList<IContainer>();
+		final ArrayList<IContainer> containers = new ArrayList<>();
 		containers.add(project);
 
-		final ArrayList<IFile> files = new ArrayList<IFile>();
+		final ArrayList<IFile> files = new ArrayList<>();
 
 		project.accept(new IResourceVisitor() {
 

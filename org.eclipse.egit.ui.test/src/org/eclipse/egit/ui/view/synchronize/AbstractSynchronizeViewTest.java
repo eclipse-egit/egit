@@ -259,7 +259,7 @@ public abstract class AbstractSynchronizeViewTest extends
 						.getDefaultCharset())), false, null);
 
 		IFile[] committableFiles = new IFile[] { gitignore };
-		ArrayList<IFile> untracked = new ArrayList<IFile>();
+		ArrayList<IFile> untracked = new ArrayList<>();
 		untracked.addAll(Arrays.asList(committableFiles));
 
 		CommitOperation op = new CommitOperation(committableFiles,
