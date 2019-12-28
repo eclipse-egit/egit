@@ -133,6 +133,24 @@
       "revId": "a3412f8e5bae26eeb3dac12082c1b0f9eab5f816",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "f48e3d04_ce48cd15",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/repository/RepositoriesView.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1160,
+      "author": {
+        "id": 440
+      },
+      "writtenOn": "2019-12-28T08:43:03Z",
+      "side": 1,
+      "message": "Forget the last part about not being able to enable the cleanup due to the bug. When the bug occurs, it can be fixed manually and will not occur again. Therefore I\u0027ve now enabled the cleanup-on-save in PS3.",
+      "parentUuid": "9d1b82ca_ec7038ef",
+      "revId": "a3412f8e5bae26eeb3dac12082c1b0f9eab5f816",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
     }
   ]
 }
