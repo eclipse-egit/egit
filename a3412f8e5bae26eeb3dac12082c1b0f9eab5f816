@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "9a1694bf_b486797a",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/dialogs/CommitCombo.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 177,
+      "author": {
+        "id": 440
+      },
+      "writtenOn": "2019-12-28T08:33:24Z",
+      "side": 1,
+      "message": "Indeed. I wasn\u0027t aware that the refactoring can lead to \"unusal order\" of expressions due to the negation, since I had focused on boolean operations when I investigated its bugs.\n\nI will change both comparisons to be in the expected order.",
+      "parentUuid": "a2de2472_d3f0ab8c",
+      "range": {
+        "startLine": 177,
+        "startChar": 6,
+        "endLine": 177,
+        "endChar": 15
+      },
+      "revId": "a3412f8e5bae26eeb3dac12082c1b0f9eab5f816",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c88cd2fc_715050a0",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/history/GitCreatePatchWizard.java",
         "patchSetId": 1
@@ -59,6 +83,24 @@
     },
     {
       "key": {
+        "uuid": "b9a1135c_f3b07aea",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/history/LocationPage.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 583,
+      "author": {
+        "id": 440
+      },
+      "writtenOn": "2019-12-28T08:33:24Z",
+      "side": 1,
+      "message": "Yes",
+      "parentUuid": "92add9fc_f5f991ac",
+      "revId": "a3412f8e5bae26eeb3dac12082c1b0f9eab5f816",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "16e7c8b0_fbb43faa",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/repository/RepositoriesView.java",
         "patchSetId": 1
@@ -70,6 +112,24 @@
       "writtenOn": "2019-12-27T17:17:57Z",
       "side": 1,
       "message": "I don\u0027t find that any clearer.",
+      "revId": "a3412f8e5bae26eeb3dac12082c1b0f9eab5f816",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9d1b82ca_ec7038ef",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/repository/RepositoriesView.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1160,
+      "author": {
+        "id": 440
+      },
+      "writtenOn": "2019-12-28T08:33:24Z",
+      "side": 1,
+      "message": "I guess you don\u0027t find that any cleaner because the instanceof requires additional braces for the negation due to operator precendence. In the other refactorings the number of braces was reduced, here it isn\u0027t.\n\nStill, I would want to merge this change, because it is created by the cleanup-on-save, when we enable \"push down negations\". And the cleanup itself should be enabled, since it _generally_ makes the distance between the negation and the negated operator shorter, thereby reducing the chance if mis-interpretation of the negation during reading.\n\nUnfortunately this is exactly the line that revealed a bug in the cleanup (it does not add braces around instanceof), therefore we cannot enabled the cleanup _yet_.",
+      "parentUuid": "16e7c8b0_fbb43faa",
       "revId": "a3412f8e5bae26eeb3dac12082c1b0f9eab5f816",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
