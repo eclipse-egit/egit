@@ -46,9 +46,6 @@ public class CoreText extends NLS {
 	public static String FeatureListOperation_unableToParse;
 
 	/** */
-	public static String pushToRemoteFailed;
-
-	/** */
 	public static String unableToStoreGitConfig;
 
 	/** */
