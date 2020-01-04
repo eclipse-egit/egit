@@ -16,10 +16,13 @@
  *******************************************************************************/
 package org.eclipse.egit.ui.internal.commit;
 
+import java.io.File;
 import java.io.IOException;
+import java.util.Optional;
 
 import org.eclipse.egit.ui.Activator;
 import org.eclipse.egit.ui.internal.UIText;
+import org.eclipse.jgit.lib.CommitConfig;
 import org.eclipse.jgit.lib.Constants;
 import org.eclipse.jgit.lib.ObjectId;
 import org.eclipse.jgit.lib.PersonIdent;
@@ -28,6 +31,8 @@ import org.eclipse.jgit.lib.RepositoryState;
 import org.eclipse.jgit.lib.UserConfig;
 import org.eclipse.jgit.revwalk.RevCommit;
 import org.eclipse.jgit.revwalk.RevWalk;
+import org.eclipse.jgit.util.IO;
+import org.eclipse.jgit.util.RawParseUtils;
 import org.eclipse.osgi.util.NLS;
 import org.eclipse.swt.widgets.Text;
 
@@ -48,6 +53,8 @@ public class CommitHelper {
 	String author;
 
 	String committer;
+
+	private Optional<String> commitTemplate;
 
 	boolean isMergedResolved;
 
@@ -82,13 +89,13 @@ public class CommitHelper {
 			mergeRepository = repository;
 		}
 		previousCommit = getHeadCommit(repository);
-		final UserConfig config = repository.getConfig().get(UserConfig.KEY);
-		author = config.getAuthorName();
-		final String authorEmail = config.getAuthorEmail();
+		final UserConfig userConfig = repository.getConfig().get(UserConfig.KEY);
+		author = userConfig.getAuthorName();
+		final String authorEmail = userConfig.getAuthorEmail();
 		author = author + " <" + authorEmail + ">"; //$NON-NLS-1$ //$NON-NLS-2$
 
-		committer = config.getCommitterName();
-		final String committerEmail = config.getCommitterEmail();
+		committer = userConfig.getCommitterName();
+		final String committerEmail = userConfig.getCommitterEmail();
 		committer = committer + " <" + committerEmail + ">"; //$NON-NLS-1$ //$NON-NLS-2$
 
 		if (isMergedResolved || isCherryPickResolved) {
@@ -98,6 +105,33 @@ public class CommitHelper {
 		if (isCherryPickResolved) {
 			author = getCherryPickOriginalAuthor(mergeRepository);
 		}
+
+		final CommitConfig commitConfig = repository.getConfig()
+				.get(CommitConfig.KEY);
+		commitTemplate = commitConfig.getCommitTemplatePath()
+				.map(this::getTemplateContent);
+	}
+
+	private String getTemplateContent(String templatePath) {
+
+		File commitTemplatePath = new File(templatePath);
+
+		if (commitTemplatePath.exists()) {
+			try {
+				return RawParseUtils.decode(IO.readFully(commitTemplatePath));
+			} catch (IOException e) {
+				return e.getMessage();
+			}
+		}
+		return null;
+	}
+
+	/**
+	 * @return if the commit template should be applied
+	 */
+	public boolean shouldUseCommitTemplate() {
+		return getCommitMessage() == null
+				&& getCommitTemplate().isPresent();
 	}
 
 	private static RevCommit getHeadCommit(Repository repository) {
@@ -174,6 +208,13 @@ public class CommitHelper {
 	 */
 	public String getCommitMessage() {
 		return commitMessage;
+	}
+
+	/**
+	 * @return commit message template
+	 */
+	public Optional<String> getCommitTemplate() {
+		return commitTemplate;
 	}
 
 	/**
