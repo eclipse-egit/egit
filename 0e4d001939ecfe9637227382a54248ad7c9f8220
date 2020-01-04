@@ -22,6 +22,30 @@
       "revId": "0e4d001939ecfe9637227382a54248ad7c9f8220",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "0c862f81_ed554928",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/selection/SelectionUtils.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 119,
+      "author": {
+        "id": 440
+      },
+      "writtenOn": "2020-01-04T16:40:59Z",
+      "side": 1,
+      "message": "No. Current JVMs are faster with 0, and it is easier to read: https://shipilev.net/blog/2016/arrays-wisdom-ancients/. I had done refactorings towards new Array[0] also in the past.",
+      "parentUuid": "73646ebe_9dab87ea",
+      "range": {
+        "startLine": 119,
+        "startChar": 38,
+        "endLine": 119,
+        "endChar": 39
+      },
+      "revId": "0e4d001939ecfe9637227382a54248ad7c9f8220",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
     }
   ]
 }
