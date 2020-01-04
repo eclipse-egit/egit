@@ -2808,6 +2808,15 @@ public class UIText extends NLS {
 	public static String CreateBranchWizard_NewBranchTitle;
 
 	/** */
+	public static String CreateBranchBulkDialog_Title;
+
+	/** */
+	public static String CreateBranchBulkDialog_Description;
+
+	/** */
+	public static String CreateBranchBulkDialog_Error;
+
+	/** */
 	public static String CreateRepositoryCommand_CreateButtonLabel;
 
 	/** */

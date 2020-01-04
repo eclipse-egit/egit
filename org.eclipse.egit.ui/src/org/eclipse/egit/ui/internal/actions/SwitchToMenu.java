@@ -16,6 +16,7 @@ package org.eclipse.egit.ui.internal.actions;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -25,17 +26,23 @@ import java.util.Set;
 import java.util.TreeSet;
 import java.util.stream.Stream;
 
+import org.eclipse.core.runtime.IStatus;
 import org.eclipse.egit.core.RepositoryUtil;
+import org.eclipse.egit.core.internal.Utils;
+import org.eclipse.egit.core.op.CreateLocalBranchOperation;
 import org.eclipse.egit.ui.Activator;
 import org.eclipse.egit.ui.internal.CommonUtils;
 import org.eclipse.egit.ui.internal.UIIcons;
 import org.eclipse.egit.ui.internal.UIText;
 import org.eclipse.egit.ui.internal.branch.BranchOperationUI;
+import org.eclipse.egit.ui.internal.components.BranchNameNormalizer;
 import org.eclipse.egit.ui.internal.dialogs.CheckoutDialog;
 import org.eclipse.egit.ui.internal.history.CommitSelectionDialog;
 import org.eclipse.egit.ui.internal.repository.CreateBranchWizard;
 import org.eclipse.egit.ui.internal.selection.SelectionUtils;
 import org.eclipse.jface.action.ContributionItem;
+import org.eclipse.jface.dialogs.IInputValidator;
+import org.eclipse.jface.dialogs.InputDialog;
 import org.eclipse.jface.resource.ResourceManager;
 import org.eclipse.jface.window.Window;
 import org.eclipse.jface.wizard.WizardDialog;
@@ -46,10 +53,15 @@ import org.eclipse.jgit.lib.ObjectId;
 import org.eclipse.jgit.lib.Ref;
 import org.eclipse.jgit.lib.ReflogEntry;
 import org.eclipse.jgit.lib.Repository;
+import org.eclipse.jgit.lib.RepositoryState;
+import org.eclipse.jgit.revwalk.RevCommit;
+import org.eclipse.jgit.util.StringUtils;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.graphics.Image;
+import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Menu;
 import org.eclipse.swt.widgets.MenuItem;
 import org.eclipse.ui.handlers.IHandlerService;
@@ -113,12 +125,18 @@ public class SwitchToMenu extends ContributionItem implements
 
 	private void createDynamicMenu(Menu menu, final Repository[] repositories) {
 
+		boolean showCreateBranchItem = true;
 		if (!isMultipleSelection(repositories)) {
 			Repository repository = repositories[0];
 			createNewBranchMenuItem(menu, repository);
-			if (hasBranches(repository)) {
-				createSeparator(menu);
-			}
+		} else if (canBulkCreateNewBranch(repositories)) {
+			createBulkNewBranchMenuItem(menu, repositories);
+		} else {
+			showCreateBranchItem = false;
+		}
+		if (showCreateBranchItem
+				&& Arrays.stream(repositories).anyMatch(this::hasBranches)) {
+			createSeparator(menu);
 		}
 
 		int itemCount = createMostActiveBranchesMenuItems(menu, repositories);
@@ -138,6 +156,99 @@ public class SwitchToMenu extends ContributionItem implements
 		}
 	}
 
+	private boolean canBulkCreateNewBranch(Repository[] repositories) {
+		for (Repository repo : repositories) {
+			if (!hasBranches(repo)) {
+				return false;
+			}
+			if (repo.isBare()) {
+				return false;
+			}
+			if (repo.getRepositoryState() != RepositoryState.SAFE) {
+				return false;
+			}
+		}
+		return true;
+	}
+
+	private void createBulkNewBranchMenuItem(Menu menu,
+			final Repository[] repositories) {
+		MenuItem newBranch = getNewBranchMenuItem(menu);
+		newBranch.addSelectionListener(new SelectionAdapter() {
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				InputDialog dialog = new InputDialog(e.display.getActiveShell(),
+						UIText.CreateBranchBulkDialog_Title,
+						UIText.CreateBranchBulkDialog_Description, "", //$NON-NLS-1$
+						new IInputValidator() {
+							@Override
+							public String isValid(String newBranchName) {
+								return validateNewBulkBranchName(newBranchName,
+										repositories);
+							}
+						}) {
+
+					@Override
+					protected Control createDialogArea(Composite parent) {
+						Control result = super.createDialogArea(parent);
+						BranchNameNormalizer normalizer = new BranchNameNormalizer(
+								getText());
+						normalizer.setVisible(false);
+						return result;
+					}
+				};
+				if (dialog.open() == Window.OK) {
+					String name = dialog.getValue();
+					try {
+						for (Repository repository : repositories) {
+							Ref headRef = repository.exactRef(Constants.HEAD);
+							if (headRef != null) {
+								ObjectId headId = headRef.getLeaf()
+										.getObjectId();
+								RevCommit head = repository.parseCommit(headId);
+								CreateLocalBranchOperation op = new CreateLocalBranchOperation(
+										repository, name, head);
+								op.execute(null);
+							}
+						}
+						BranchOperationUI.checkout(repositories, name).start();
+					} catch (Exception exception) {
+						Activator.handleError(
+								UIText.CreateBranchBulkDialog_Error, exception,
+								true);
+					}
+				}
+			}
+		});
+	}
+
+	private MenuItem getNewBranchMenuItem(Menu parentMenu) {
+		MenuItem newBranch = new MenuItem(parentMenu, SWT.PUSH);
+		newBranch.setText(UIText.SwitchToMenu_NewBranchMenuLabel);
+		newBranch.setImage(newBranchImage);
+		return newBranch;
+	}
+
+	private String validateNewBulkBranchName(String newBranchName,
+			Repository[] repositories) {
+		if (StringUtils.isEmptyOrNull(newBranchName)
+				|| newBranchName.trim().isEmpty()) {
+			return UIText.CreateBranchPage_ChooseNameMessage;
+		}
+		for (Repository repo : repositories) {
+			IStatus status = Utils.validateNewRefName(newBranchName, repo,
+					Constants.R_HEADS, true);
+			if (status.getException() != null) {
+				Activator.handleStatus(status, false);
+			}
+			if (!status.isOK()) {
+				return Activator.getDefault().getRepositoryUtil()
+						.getRepositoryName(repo) + ": " + status.getMessage(); //$NON-NLS-1$
+			}
+		}
+		return null;
+	}
+
 	private boolean hasBranches(Repository repository) {
 		try {
 			return !repository.getRefDatabase()
@@ -150,9 +261,7 @@ public class SwitchToMenu extends ContributionItem implements
 	}
 
 	private void createNewBranchMenuItem(Menu menu, Repository repository) {
-		MenuItem newBranch = new MenuItem(menu, SWT.PUSH);
-		newBranch.setText(UIText.SwitchToMenu_NewBranchMenuLabel);
-		newBranch.setImage(newBranchImage);
+		MenuItem newBranch = getNewBranchMenuItem(menu);
 		newBranch.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
