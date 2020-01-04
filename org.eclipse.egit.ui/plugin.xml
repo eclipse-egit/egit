@@ -4173,6 +4173,9 @@
                      <and>
                         <or>
                            <instanceof
+                                 value="org.eclipse.egit.ui.internal.repository.tree.RepositoryGroupNode">
+                           </instanceof>
+                           <instanceof
                                  value="org.eclipse.egit.ui.internal.repository.tree.RepositoryNode">
                            </instanceof>
                            <instanceof
