@@ -1,0 +1,106 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "54383bfa_f01ef759",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/commit/CommitHelper.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 118,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2020-01-04T16:52:14Z",
+      "side": 1,
+      "message": "we use IO.readFully to read file content and RawParseUtils to decode the bytes to a String, see e.g. Repository.readCommitMsgFile()",
+      "revId": "add5e5383b45ff88a652953015dbe73139555637",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9ae33ba7_deae0963",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/commit/CommitHelper.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 134,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2020-01-04T16:52:14Z",
+      "side": 1,
+      "message": "why is this needed ?",
+      "revId": "add5e5383b45ff88a652953015dbe73139555637",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "d25f6dd5_4194e645",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/commit/CommitHelper.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 144,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2020-01-04T16:52:14Z",
+      "side": 1,
+      "message": "why is this needed ?",
+      "revId": "add5e5383b45ff88a652953015dbe73139555637",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "114c6ee0_dea59a2e",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/commit/CommitHelper.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 153,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2020-01-04T16:52:14Z",
+      "side": 1,
+      "message": "why is this needed ?",
+      "revId": "add5e5383b45ff88a652953015dbe73139555637",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "e2792ae0_438c2e12",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/preferences/CommittingPreferencePage.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 174,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2020-01-04T16:52:14Z",
+      "side": 1,
+      "message": "why is this needed ? If commit.template is configured it should be used otherwise not. EGit and native git should respect the same configuration options as far as possible.",
+      "revId": "add5e5383b45ff88a652953015dbe73139555637",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1757a19c_d7a7e7bd",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/preferences/CommittingPreferencePage.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 182,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2020-01-04T16:52:14Z",
+      "side": 1,
+      "message": "why is this needed ? I think if there are comments in the template they should be shown. Skipping them when writing the commit object should be handled in the code writing the commit object",
+      "revId": "add5e5383b45ff88a652953015dbe73139555637",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
