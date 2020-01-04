@@ -20,6 +20,7 @@ import java.io.IOException;
 
 import org.eclipse.egit.ui.Activator;
 import org.eclipse.egit.ui.internal.UIText;
+import org.eclipse.jgit.lib.CommitConfig;
 import org.eclipse.jgit.lib.Constants;
 import org.eclipse.jgit.lib.ObjectId;
 import org.eclipse.jgit.lib.PersonIdent;
@@ -37,6 +38,7 @@ import org.eclipse.swt.widgets.Text;
  */
 public class CommitHelper {
 
+
 	private Repository repository;
 
 	boolean canCommit;
@@ -48,6 +50,8 @@ public class CommitHelper {
 	String author;
 
 	String committer;
+
+	private String commitTemplate;
 
 	boolean isMergedResolved;
 
@@ -82,13 +86,13 @@ public class CommitHelper {
 			mergeRepository = repository;
 		}
 		previousCommit = getHeadCommit(repository);
-		final UserConfig config = repository.getConfig().get(UserConfig.KEY);
-		author = config.getAuthorName();
-		final String authorEmail = config.getAuthorEmail();
+		final UserConfig userConfig = repository.getConfig().get(UserConfig.KEY);
+		author = userConfig.getAuthorName();
+		final String authorEmail = userConfig.getAuthorEmail();
 		author = author + " <" + authorEmail + ">"; //$NON-NLS-1$ //$NON-NLS-2$
 
-		committer = config.getCommitterName();
-		final String committerEmail = config.getCommitterEmail();
+		committer = userConfig.getCommitterName();
+		final String committerEmail = userConfig.getCommitterEmail();
 		committer = committer + " <" + committerEmail + ">"; //$NON-NLS-1$ //$NON-NLS-2$
 
 		if (isMergedResolved || isCherryPickResolved) {
@@ -98,6 +102,23 @@ public class CommitHelper {
 		if (isCherryPickResolved) {
 			author = getCherryPickOriginalAuthor(mergeRepository);
 		}
+
+		CommitConfig commitConfig = repository.getConfig()
+				.get(CommitConfig.KEY);
+		try {
+			commitTemplate = commitConfig.getCommitTemplateContent();
+		} catch (IOException e) {
+			Activator.handleError(UIText.CommitAction_CommitTemplateFailed, e,
+					true);
+		}
+	}
+
+	/**
+	 * @return if the commit template should be applied
+	 */
+	public boolean shouldUseCommitTemplate() {
+		return getCommitMessage() == null
+				&& getCommitTemplate() != null;
 	}
 
 	private static RevCommit getHeadCommit(Repository repository) {
@@ -174,6 +195,13 @@ public class CommitHelper {
 	 */
 	public String getCommitMessage() {
 		return commitMessage;
+	}
+
+	/**
+	 * @return commit message template
+	 */
+	public String getCommitTemplate() {
+		return commitTemplate;
 	}
 
 	/**

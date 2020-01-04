@@ -1027,6 +1027,7 @@ public class StagingView extends ViewPart
 				return CommitMessageHistory.getCommitHistory();
 			}
 		};
+
 		commitMessageText = new CommitMessageArea(commitMessageTextComposite,
 				EMPTY_STRING, SWT.NONE) {
 			@Override
@@ -4147,7 +4148,14 @@ public class StagingView extends ViewPart
 		commitMessageComponent.enableListeners(false);
 		commitMessageComponent.resetState();
 		commitMessageComponent.setAuthor(helper.getAuthor());
-		commitMessageComponent.setCommitMessage(helper.getCommitMessage());
+
+		if (helper.shouldUseCommitTemplate()) {
+			commitMessageComponent
+					.setCommitMessage(helper.getCommitTemplate());
+		} else {
+			commitMessageComponent.setCommitMessage(helper.getCommitMessage());
+		}
+
 		commitMessageComponent.setCommitter(helper.getCommitter());
 		commitMessageComponent.setHeadCommit(getCommitId(helper
 				.getPreviousCommit()));
