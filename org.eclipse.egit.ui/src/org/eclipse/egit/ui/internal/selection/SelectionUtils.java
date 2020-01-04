@@ -376,6 +376,10 @@ public class SelectionUtils {
 			@NonNull IStructuredSelection selection) {
 		Set<Object> result = new HashSet<>();
 		for (Object o : selection.toList()) {
+			if (o instanceof RepositoryGroupNode) {
+				result.addAll(((RepositoryGroupNode) o).getRepositories());
+				continue;
+			}
 			Repository r = Adapters.adapt(o, Repository.class);
 			if (r != null) {
 				result.add(r);
