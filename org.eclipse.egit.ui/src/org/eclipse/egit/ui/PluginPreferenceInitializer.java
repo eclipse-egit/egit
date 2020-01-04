@@ -107,6 +107,9 @@ public class PluginPreferenceInitializer extends AbstractPreferenceInitializer {
 		store.setDefault(UIPreferences.ALWAYS_USE_STAGING_VIEW, true);
 		store.setDefault(UIPreferences.AUTO_STAGE_ON_COMMIT, true);
 		store.setDefault(UIPreferences.COMMIT_DIALOG_HARD_WRAP_MESSAGE, true);
+		store.setDefault(UIPreferences.COMMIT_DIALOG_MESSAGE_TEMPLATE, false);
+		store.setDefault(UIPreferences.COMMIT_DIALOG_MESSAGE_TEMPLATE_COMMENTS,
+				false);
 		store.setDefault(UIPreferences.COMMIT_DIALOG_WARN_ABOUT_MESSAGE_SECOND_LINE, true);
 		store.setDefault(UIPreferences.COMMIT_DIALOG_SIGNED_OFF_BY, false);
 

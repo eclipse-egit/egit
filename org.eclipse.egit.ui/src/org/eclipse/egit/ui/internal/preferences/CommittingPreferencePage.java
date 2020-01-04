@@ -59,6 +59,12 @@ public class CommittingPreferencePage extends DoublePreferencesPreferencePage
 
 	private Group generalGroup;
 
+	private BooleanFieldEditor useTemplate;
+
+	private BooleanFieldEditor showComments;
+
+	private Group formattingGroup;
+
 	/** */
 	public CommittingPreferencePage() {
 		super(GRID);
@@ -147,7 +153,7 @@ public class CommittingPreferencePage extends DoublePreferencesPreferencePage
 
 		updateMargins(generalGroup);
 
-		Group formattingGroup = new Group(main, SWT.SHADOW_ETCHED_IN);
+		formattingGroup = new Group(main, SWT.SHADOW_ETCHED_IN);
 		formattingGroup.setText(UIText.CommittingPreferencePage_formatting);
 		GridDataFactory.fillDefaults().grab(true, false).span(3, 1)
 				.applyTo(formattingGroup);
@@ -164,6 +170,28 @@ public class CommittingPreferencePage extends DoublePreferencesPreferencePage
 				UIText.CommittingPreferencePage_warnAboutCommitMessageSecondLine,
 				formattingGroup);
 		addField(secondLineCheck);
+
+		useTemplate = new BooleanFieldEditor(
+				UIPreferences.COMMIT_DIALOG_MESSAGE_TEMPLATE,
+				UIText.CommittingPreferencePage_useMessageTemplate,
+				formattingGroup);
+		useTemplate.getDescriptionControl(formattingGroup).setToolTipText(
+				UIText.CommittingPreferencePage_useMessageTemplateTooltip);
+		addField(useTemplate);
+
+		showComments = new BooleanFieldEditor(
+				UIPreferences.COMMIT_DIALOG_MESSAGE_TEMPLATE_COMMENTS,
+				UIText.CommittingPreferencePage_useMessageTemplateShowComments,
+				formattingGroup);
+		showComments.getDescriptionControl(formattingGroup).setToolTipText(
+				UIText.CommittingPreferencePage_useMessageTemplateShowCommentsTooltip);
+		GridDataFactory.fillDefaults().indent(UIUtils.getControlIndent(), 0)
+				.applyTo(showComments.getDescriptionControl(formattingGroup));
+		addField(showComments);
+		showComments.setEnabled(
+				getPreferenceStore().getBoolean(
+						UIPreferences.COMMIT_DIALOG_MESSAGE_TEMPLATE),
+				formattingGroup);
 
 		updateMargins(formattingGroup);
 
@@ -248,6 +276,17 @@ public class CommittingPreferencePage extends DoublePreferencesPreferencePage
 					autoStage.setEnabled(
 							((Boolean) event.getNewValue()).booleanValue(),
 							generalGroup);
+				}
+			}
+		});
+
+		useTemplate.setPropertyChangeListener(new IPropertyChangeListener() {
+			@Override
+			public void propertyChange(PropertyChangeEvent event) {
+				if (FieldEditor.VALUE.equals(event.getProperty())) {
+					showComments.setEnabled(
+							((Boolean) event.getNewValue()).booleanValue(),
+							formattingGroup);
 				}
 			}
 		});
