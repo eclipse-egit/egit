@@ -18,6 +18,7 @@ import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -33,6 +34,7 @@ import org.eclipse.egit.core.AdapterUtils;
 import org.eclipse.egit.core.project.RepositoryMapping;
 import org.eclipse.egit.ui.internal.ResourcePropertyTester;
 import org.eclipse.egit.ui.internal.expressions.AbstractPropertyTester;
+import org.eclipse.egit.ui.internal.repository.tree.RepositoryGroupNode;
 import org.eclipse.jface.text.ITextSelection;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.viewers.StructuredSelection;
@@ -77,7 +79,7 @@ public class SelectionPropertyTester extends AbstractPropertyTester {
 
 		} else if ("selectionMultipleRepositories".equals(property)) { //$NON-NLS-1$
 			return selectionContainsMoreThanOneRepository(collection,
-					args);
+					args) || selectionContainsRepositoryGroup(collection);
 
 		} else if ("resourcesSingleRepository".equals(property)) { //$NON-NLS-1$
 			IStructuredSelection selection = getStructuredSelection(collection);
@@ -150,6 +152,12 @@ public class SelectionPropertyTester extends AbstractPropertyTester {
 		IStructuredSelection selection = getStructuredSelection(collection);
 		Repository[] repos = SelectionUtils.getAllRepositories(selection);
 		return testMultipleRepositoryProperties(Arrays.asList(repos), args);
+	}
+
+	private boolean selectionContainsRepositoryGroup(Collection<?> collection) {
+		IStructuredSelection selection = getStructuredSelection(collection);
+		return ((List<?>) selection.toList()).stream()
+				.anyMatch(s -> s instanceof RepositoryGroupNode);
 	}
 
 	private boolean testMultipleRepositoryProperties(
