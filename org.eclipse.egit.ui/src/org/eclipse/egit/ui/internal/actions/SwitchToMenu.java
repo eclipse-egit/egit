@@ -16,6 +16,7 @@ package org.eclipse.egit.ui.internal.actions;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -25,7 +26,9 @@ import java.util.Set;
 import java.util.TreeSet;
 import java.util.stream.Stream;
 
+import org.eclipse.core.runtime.CoreException;
 import org.eclipse.egit.core.RepositoryUtil;
+import org.eclipse.egit.core.op.CreateLocalBranchOperation;
 import org.eclipse.egit.ui.Activator;
 import org.eclipse.egit.ui.internal.CommonUtils;
 import org.eclipse.egit.ui.internal.UIIcons;
@@ -36,9 +39,12 @@ import org.eclipse.egit.ui.internal.history.CommitSelectionDialog;
 import org.eclipse.egit.ui.internal.repository.CreateBranchWizard;
 import org.eclipse.egit.ui.internal.selection.SelectionUtils;
 import org.eclipse.jface.action.ContributionItem;
+import org.eclipse.jface.dialogs.IInputValidator;
+import org.eclipse.jface.dialogs.InputDialog;
 import org.eclipse.jface.resource.ResourceManager;
 import org.eclipse.jface.window.Window;
 import org.eclipse.jface.wizard.WizardDialog;
+import org.eclipse.jgit.lib.BranchConfig.BranchRebaseMode;
 import org.eclipse.jgit.lib.CheckoutEntry;
 import org.eclipse.jgit.lib.ConfigConstants;
 import org.eclipse.jgit.lib.Constants;
@@ -46,6 +52,7 @@ import org.eclipse.jgit.lib.ObjectId;
 import org.eclipse.jgit.lib.Ref;
 import org.eclipse.jgit.lib.ReflogEntry;
 import org.eclipse.jgit.lib.Repository;
+import org.eclipse.jgit.lib.RepositoryState;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
@@ -113,12 +120,19 @@ public class SwitchToMenu extends ContributionItem implements
 
 	private void createDynamicMenu(Menu menu, final Repository[] repositories) {
 
+		boolean showCreateBranchItem=true;
 		if (!isMultipleSelection(repositories)) {
 			Repository repository = repositories[0];
 			createNewBranchMenuItem(menu, repository);
-			if (hasBranches(repository)) {
-				createSeparator(menu);
-			}
+		} else if (Arrays.stream(repositories).allMatch(
+				r -> (r.getRepositoryState() == RepositoryState.SAFE)
+						&& hasBranches(r))) {
+				createBulkNewBranchMenuItem(menu, repositories);
+		}else {
+			showCreateBranchItem=false;
+		}
+		if (showCreateBranchItem && Arrays.stream(repositories).anyMatch(this::hasBranches)) {
+			createSeparator(menu);
 		}
 
 		int itemCount = createMostActiveBranchesMenuItems(menu, repositories);
@@ -136,6 +150,67 @@ public class SwitchToMenu extends ContributionItem implements
 			// user that no common branches among the selection were found
 			createDisabledMenu(menu, UIText.SwitchToMenu_NoCommonBranchesFound);
 		}
+	}
+
+	private void createBulkNewBranchMenuItem(Menu menu,
+			final Repository[] repositories) {
+		// TODO extract common menu item creation code
+		MenuItem newBranch = new MenuItem(menu, SWT.PUSH);
+		newBranch.setText(UIText.SwitchToMenu_NewBranchMenuLabel);
+		newBranch.setImage(newBranchImage);
+		newBranch.addSelectionListener(new SelectionAdapter() {
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				// TODO extract and refine texts
+				InputDialog dialog = new InputDialog(e.display.getActiveShell(),
+						"Create Branch (Bulk)", //$NON-NLS-1$
+						"Create branches from the current head of all selected repositories. Enter the new branch name:", //$NON-NLS-1$
+						"", new IInputValidator() { //$NON-NLS-1$
+							@Override
+							public String isValid(String newBranchName) {
+								return validateNewBulkBranchName(newBranchName,
+										repositories);
+							}
+						});
+				if (dialog.open() == Window.OK) {
+					String name = dialog.getValue();
+					try {
+						for (Repository repository : repositories) {
+							Ref ref = repository.getRefDatabase()
+									.findRef("HEAD");//$NON-NLS-1$
+							CreateLocalBranchOperation op = new CreateLocalBranchOperation(
+									repository, name, ref,
+									BranchRebaseMode.REBASE);
+							op.execute(null);
+						}
+						BranchOperationUI.checkout(repositories, name).start();
+					} catch (IOException | CoreException exception) {
+						Activator.logError("error during bulk branch creation", //$NON-NLS-1$
+								exception);
+					}
+				}
+			}
+		});
+	}
+
+	// TODO more thorough validation?
+	// TODO extract and refine texts
+	private String validateNewBulkBranchName(String newBranchName,
+			Repository[] repositories) {
+		if (newBranchName.isEmpty()) {
+			return "Branch name must not be empty."; //$NON-NLS-1$
+		}
+		for (Repository repository : repositories) {
+			try {
+				if (repository.getRefDatabase()
+						.findRef(newBranchName) != null) {
+					return "Branch already exists for at least one selected repository"; //$NON-NLS-1$
+				}
+			} catch (IOException e) {
+				Activator.handleError(e.getMessage(), e, true);
+			}
+		}
+		return null;
 	}
 
 	private boolean hasBranches(Repository repository) {
