@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "d05749ae_d5eaa132",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/commit/CommitHelper.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 118,
+      "author": {
+        "id": 252514
+      },
+      "writtenOn": "2020-01-04T20:09:35Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "54383bfa_f01ef759",
+      "revId": "add5e5383b45ff88a652953015dbe73139555637",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9ae33ba7_deae0963",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/commit/CommitHelper.java",
         "patchSetId": 3
@@ -30,6 +48,24 @@
       "writtenOn": "2020-01-04T16:52:14Z",
       "side": 1,
       "message": "why is this needed ?",
+      "revId": "add5e5383b45ff88a652953015dbe73139555637",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "710fe5aa_acd9cd7a",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/commit/CommitHelper.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 134,
+      "author": {
+        "id": 252514
+      },
+      "writtenOn": "2020-01-04T20:09:35Z",
+      "side": 1,
+      "message": "To only fill the commit message area with the template if the user has not yet written an own message",
+      "parentUuid": "9ae33ba7_deae0963",
       "revId": "add5e5383b45ff88a652953015dbe73139555637",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "28df9d6b_a2ff5cfb",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/commit/CommitHelper.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 144,
+      "author": {
+        "id": 252514
+      },
+      "writtenOn": "2020-01-04T20:09:35Z",
+      "side": 1,
+      "message": "will delete it",
+      "parentUuid": "d25f6dd5_4194e645",
+      "revId": "add5e5383b45ff88a652953015dbe73139555637",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "114c6ee0_dea59a2e",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/commit/CommitHelper.java",
         "patchSetId": 3
@@ -64,6 +118,24 @@
       "writtenOn": "2020-01-04T16:52:14Z",
       "side": 1,
       "message": "why is this needed ?",
+      "revId": "add5e5383b45ff88a652953015dbe73139555637",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "2ab71c86_768f80cb",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/commit/CommitHelper.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 153,
+      "author": {
+        "id": 252514
+      },
+      "writtenOn": "2020-01-04T20:09:35Z",
+      "side": 1,
+      "message": "This is needed to avoid committing commented lines.",
+      "parentUuid": "114c6ee0_dea59a2e",
       "revId": "add5e5383b45ff88a652953015dbe73139555637",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "3c79a1ee_e9e068d1",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/preferences/CommittingPreferencePage.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 174,
+      "author": {
+        "id": 252514
+      },
+      "writtenOn": "2020-01-04T20:09:35Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e2792ae0_438c2e12",
+      "revId": "add5e5383b45ff88a652953015dbe73139555637",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1757a19c_d7a7e7bd",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/preferences/CommittingPreferencePage.java",
         "patchSetId": 3
@@ -98,6 +188,24 @@
       "writtenOn": "2020-01-04T16:52:14Z",
       "side": 1,
       "message": "why is this needed ? I think if there are comments in the template they should be shown. Skipping them when writing the commit object should be handled in the code writing the commit object",
+      "revId": "add5e5383b45ff88a652953015dbe73139555637",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "86823ed5_55a55104",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/preferences/CommittingPreferencePage.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 182,
+      "author": {
+        "id": 252514
+      },
+      "writtenOn": "2020-01-04T20:09:35Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1757a19c_d7a7e7bd",
       "revId": "add5e5383b45ff88a652953015dbe73139555637",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
