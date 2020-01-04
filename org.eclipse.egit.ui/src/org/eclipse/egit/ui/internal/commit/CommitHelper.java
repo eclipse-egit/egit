@@ -17,8 +17,13 @@
 package org.eclipse.egit.ui.internal.commit;
 
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.util.Optional;
 
 import org.eclipse.egit.ui.Activator;
+import org.eclipse.egit.ui.UIPreferences;
 import org.eclipse.egit.ui.internal.UIText;
 import org.eclipse.jgit.lib.Constants;
 import org.eclipse.jgit.lib.ObjectId;
@@ -48,6 +53,8 @@ public class CommitHelper {
 	String author;
 
 	String committer;
+
+	private Optional<String> commitTemplate;
 
 	boolean isMergedResolved;
 
@@ -98,6 +105,53 @@ public class CommitHelper {
 		if (isCherryPickResolved) {
 			author = getCherryPickOriginalAuthor(mergeRepository);
 		}
+
+		commitTemplate = config.getCommitTemplatePath()
+				.map(this::getTemplateContent);
+	}
+
+	private String getTemplateContent(String templatePath) {
+		Path commitTemplatePath = Paths.get(templatePath);
+		if (Files.exists(commitTemplatePath)) {
+			byte[] fileBytes;
+			try {
+				fileBytes = Files.readAllBytes(commitTemplatePath);
+
+				String rawTemplate = new String(fileBytes).trim();
+				return shouldShowCommentsInCommitTemplate()
+						? rawTemplate
+						: cleanTemplate(rawTemplate);
+			} catch (IOException e) {
+				// do nothing
+			}
+		}
+		return null;
+	}
+
+	/**
+	 * @return if the commit template should be applied
+	 */
+	public boolean shouldUseCommitTemplate() {
+		return Activator.getDefault().getPreferenceStore()
+				.getBoolean(UIPreferences.COMMIT_DIALOG_MESSAGE_TEMPLATE)
+				&& getCommitMessage() == null
+				&& getCommitTemplate().isPresent();
+	}
+
+	/**
+	 * @return if the # comments shall be shown
+	 */
+	public static boolean shouldShowCommentsInCommitTemplate() {
+		return Activator.getDefault().getPreferenceStore().getBoolean(
+				UIPreferences.COMMIT_DIALOG_MESSAGE_TEMPLATE_COMMENTS);
+	}
+
+	/**
+	 * @param multiLineTemplate
+	 * @return removes lines that start with #
+	 */
+	public static String cleanTemplate(String multiLineTemplate) {
+		return multiLineTemplate.replaceAll("(?m)^#.*", "").trim(); //$NON-NLS-1$//$NON-NLS-2$
 	}
 
 	private static RevCommit getHeadCommit(Repository repository) {
@@ -174,6 +228,13 @@ public class CommitHelper {
 	 */
 	public String getCommitMessage() {
 		return commitMessage;
+	}
+
+	/**
+	 * @return commit message template
+	 */
+	public Optional<String> getCommitTemplate() {
+		return commitTemplate;
 	}
 
 	/**

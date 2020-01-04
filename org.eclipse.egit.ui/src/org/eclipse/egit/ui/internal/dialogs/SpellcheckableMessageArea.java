@@ -32,6 +32,7 @@ import org.eclipse.egit.ui.UIUtils;
 import org.eclipse.egit.ui.internal.ActionUtils;
 import org.eclipse.egit.ui.internal.ActionUtils.UpdateableAction;
 import org.eclipse.egit.ui.internal.CommonUtils;
+import org.eclipse.egit.ui.internal.commit.CommitHelper;
 import org.eclipse.jface.action.Action;
 import org.eclipse.jface.action.IAction;
 import org.eclipse.jface.action.IMenuListener;
@@ -594,13 +595,20 @@ public class SpellcheckableMessageArea extends Composite {
 	public String getCommitMessage() {
 		String text = getText();
 		text = Utils.normalizeLineEndings(text);
+
+		if (CommitHelper.shouldShowCommentsInCommitTemplate()) {
+			text = CommitHelper.cleanTemplate(text);
+		}
+
 		if (shouldHardWrap()) {
 			text = wrapCommitMessage(text);
 		}
+
 		text = TRAILING_WHITE_SPACE_ON_LINES.matcher(text).replaceAll(""); //$NON-NLS-1$
 		text = TRAILING_NEWLINES.matcher(text).replaceFirst("\n"); //$NON-NLS-1$
 		return text;
 	}
+
 
 	/**
 	 * Wraps a commit message, leaving the footer as defined by
