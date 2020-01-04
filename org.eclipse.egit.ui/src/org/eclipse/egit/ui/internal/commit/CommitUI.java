@@ -184,7 +184,13 @@ public class CommitUI  {
 		commitDialog.setAuthor(commitHelper.getAuthor());
 		commitDialog.setCommitter(commitHelper.getCommitter());
 		commitDialog.setAllowToChangeSelection(!commitHelper.isMergedResolved && !commitHelper.isCherryPickResolved);
-		commitDialog.setCommitMessage(commitHelper.getCommitMessage());
+
+		if (commitHelper.shouldUseCommitTemplate()) {
+			commitDialog
+					.setCommitMessage(commitHelper.getCommitTemplate().get());
+		} else {
+			commitDialog.setCommitMessage(commitHelper.getCommitMessage());
+		}
 
 		if (commitDialog.open() != IDialogConstants.OK_ID)
 			return false;
