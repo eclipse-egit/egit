@@ -23,7 +23,6 @@ import org.eclipse.egit.core.op.PushOperation;
 import org.eclipse.egit.core.op.PushOperationResult;
 import org.eclipse.egit.gitflow.GitFlowRepository;
 import org.eclipse.egit.gitflow.internal.CoreText;
-import org.eclipse.osgi.util.NLS;
 
 /**
  * git flow * publish
@@ -55,12 +54,6 @@ public class CurrentBranchPublishOperation extends GitFlowOperation {
 					timeout);
 			pushOperation.run(monitor);
 			operationResult = pushOperation.getOperationResult();
-
-			if (!operationResult.isSuccessfulConnectionForAnyURI()) {
-				String errorMessage = NLS.bind(CoreText.pushToRemoteFailed,
-						operationResult.getErrorStringForAllURis());
-				throw new CoreException(error(errorMessage));
-			}
 		} catch (InvocationTargetException e) {
 			Throwable targetException = e.getTargetException();
 			throw new CoreException(error(targetException.getMessage(),

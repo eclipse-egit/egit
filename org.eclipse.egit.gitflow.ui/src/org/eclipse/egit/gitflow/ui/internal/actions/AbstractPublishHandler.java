@@ -35,10 +35,11 @@ public abstract class AbstractPublishHandler extends AbstractHandler {
 		try {
 			int timeout = Activator.getDefault().getPreferenceStore()
 					.getInt(UIPreferences.REMOTE_CONNECTION_TIMEOUT);
-			CurrentBranchPublishOperation featurePublishOperation = new CurrentBranchPublishOperation(
+			CurrentBranchPublishOperation publishOperation = new CurrentBranchPublishOperation(
 					gfRepo, timeout);
-			JobUtil.scheduleUserWorkspaceJob(featurePublishOperation,
-					getProgressText(), JobFamilies.REBASE);
+			JobUtil.scheduleUserWorkspaceJob(publishOperation,
+					getProgressText(), JobFamilies.REBASE,
+					new PostPublishUiTask(gfRepo, publishOperation));
 		} catch (CoreException e) {
 			return error(e.getMessage(), e);
 		}
