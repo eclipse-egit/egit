@@ -209,13 +209,15 @@ public class SwitchToMenuTest extends LocalRepositoryTestCase {
 		mockMultiProjectSelection(PROJ1, PROJ2);
 
 		MenuItem[] items = fillMenu();
-		assertTextEquals("change/15", items[0]);
-		assertTextEquals("change/16", items[1]);
-		assertTextEquals("change/17", items[2]);
-		assertTextEquals("change/18", items[3]);
-		assertTextEquals("change/19", items[4]);
-		assertTextEquals("master", items[5]);
-		assertTextEquals("stable", items[6]);
+		assertTextEquals(UIText.SwitchToMenu_NewBranchMenuLabel, items[0]);
+		// item[1] is separator
+		assertTextEquals("change/15", items[2]);
+		assertTextEquals("change/16", items[3]);
+		assertTextEquals("change/17", items[4]);
+		assertTextEquals("change/18", items[5]);
+		assertTextEquals("change/19", items[6]);
+		assertTextEquals("master", items[7]);
+		assertTextEquals("stable", items[8]);
 	}
 
 	@Test
@@ -273,7 +275,9 @@ public class SwitchToMenuTest extends LocalRepositoryTestCase {
 		mockMultiProjectSelection(PROJ1, PROJ2);
 
 		MenuItem[] items = fillMenu();
-		assertTextEquals(UIText.SwitchToMenu_NoCommonBranchesFound, items[0]);
+		assertTextEquals(UIText.SwitchToMenu_NewBranchMenuLabel, items[0]);
+		// item[1] is separator
+		assertTextEquals(UIText.SwitchToMenu_NoCommonBranchesFound, items[2]);
 
 		// delete reflog again to not confuse other tests
 		new File(gitOne, Constants.LOGS + "/" + Constants.HEAD).delete();
