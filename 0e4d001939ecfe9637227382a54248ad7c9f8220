@@ -46,6 +46,30 @@
       "revId": "0e4d001939ecfe9637227382a54248ad7c9f8220",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "b0349c32_43d8b41e",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/selection/SelectionUtils.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 119,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2020-01-05T19:35:59Z",
+      "side": 1,
+      "message": "interesting, thanks for the link",
+      "parentUuid": "0c862f81_ed554928",
+      "range": {
+        "startLine": 119,
+        "startChar": 38,
+        "endLine": 119,
+        "endChar": 39
+      },
+      "revId": "0e4d001939ecfe9637227382a54248ad7c9f8220",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
     }
   ]
 }
