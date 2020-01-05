@@ -142,6 +142,24 @@
     },
     {
       "key": {
+        "uuid": "172acf47_b124f2de",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/commit/CommitHelper.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 153,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2020-01-05T21:00:56Z",
+      "side": 1,
+      "message": "stripping off comments should be done in JGit, see https://bugs.eclipse.org/bugs/show_bug.cgi?id\u003d553065",
+      "parentUuid": "2ab71c86_768f80cb",
+      "revId": "add5e5383b45ff88a652953015dbe73139555637",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e2792ae0_438c2e12",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/preferences/CommittingPreferencePage.java",
         "patchSetId": 3
