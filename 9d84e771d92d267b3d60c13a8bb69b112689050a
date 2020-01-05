@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5a1de5e3_25f43574",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/commit/CommitHelper.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 142,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2020-01-05T21:00:56Z",
+      "side": 1,
+      "message": "That\u0027s a bug I think in JGit. If there are any comments in the commit message entered in the commit message editor they should be stripped when the commit object is created in jgit. See https://bugs.eclipse.org/bugs/show_bug.cgi?id\u003d553065",
+      "revId": "9d84e771d92d267b3d60c13a8bb69b112689050a",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
