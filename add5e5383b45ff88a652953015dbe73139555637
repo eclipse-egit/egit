@@ -178,6 +178,24 @@
     },
     {
       "key": {
+        "uuid": "50c5fc56_7f01fd61",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/commit/CommitHelper.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 153,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2020-01-06T14:35:10Z",
+      "side": 1,
+      "message": "This warning should be raised if there\u0027s no empty line after the first line which isn\u0027t commented out. In this example the empty line is missing when removing all the commented out lines so the warning should be shown.\n\nI think raising the warning before the commit button is pressed needs to be handled in EGit, there could be a method\n\n public static String CommitCommand.cleanup(String message, CleanupMode mode)\n\nin JGit which computes the net commit message removing comments from the original message. See https://git-scm.com/docs/git-commit#Documentation/git-commit.txt---cleanupltmodegt",
+      "parentUuid": "4afc6a1b_c3a7ce16",
+      "revId": "add5e5383b45ff88a652953015dbe73139555637",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e2792ae0_438c2e12",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/preferences/CommittingPreferencePage.java",
         "patchSetId": 3
