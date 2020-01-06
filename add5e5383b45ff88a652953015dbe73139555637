@@ -196,6 +196,24 @@
     },
     {
       "key": {
+        "uuid": "8fae42db_ac62de15",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/commit/CommitHelper.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 153,
+      "author": {
+        "id": 252514
+      },
+      "writtenOn": "2020-01-06T18:08:25Z",
+      "side": 1,
+      "message": "Would this be a new change or should this be here in this change?",
+      "parentUuid": "50c5fc56_7f01fd61",
+      "revId": "add5e5383b45ff88a652953015dbe73139555637",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e2792ae0_438c2e12",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/preferences/CommittingPreferencePage.java",
         "patchSetId": 3
