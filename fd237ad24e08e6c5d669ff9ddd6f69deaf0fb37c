@@ -1,0 +1,78 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "37e656ed_e6d4d85b",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/commit/CommitHelper.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 109,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2020-01-06T14:35:10Z",
+      "side": 1,
+      "message": "see https://wiki.eclipse.org/EGit/Contributor_Guide#Use_of_the_.22final.22_modifier",
+      "range": {
+        "startLine": 109,
+        "startChar": 2,
+        "endLine": 109,
+        "endChar": 7
+      },
+      "revId": "fd237ad24e08e6c5d669ff9ddd6f69deaf0fb37c",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5cc5a826_ebb4f368",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/commit/CommitHelper.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 115,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2020-01-06T14:35:10Z",
+      "side": 1,
+      "message": "looks like this method could be moved to CommitConfig in JGit then in EGit you only have to call this method and leave the details to JGit",
+      "revId": "fd237ad24e08e6c5d669ff9ddd6f69deaf0fb37c",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "73cd7653_d8c848fa",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/commit/CommitHelper.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 123,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2020-01-06T14:35:10Z",
+      "side": 1,
+      "message": "the exception should not end up in the commit message editor, if there is an exception in EGit show it to the user or log it depending on how important it is",
+      "revId": "fd237ad24e08e6c5d669ff9ddd6f69deaf0fb37c",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "28f3fcec_c0a58433",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/commit/CommitHelper.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 126,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2020-01-06T14:35:10Z",
+      "side": 1,
+      "message": "why do you return null here but use Optional below ?",
+      "revId": "fd237ad24e08e6c5d669ff9ddd6f69deaf0fb37c",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
