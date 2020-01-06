@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "836aa1be_012eb479",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/commit/CommitHelper.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 109,
+      "author": {
+        "id": 252514
+      },
+      "writtenOn": "2020-01-06T18:08:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "37e656ed_e6d4d85b",
+      "range": {
+        "startLine": 109,
+        "startChar": 2,
+        "endLine": 109,
+        "endChar": 7
+      },
+      "revId": "fd237ad24e08e6c5d669ff9ddd6f69deaf0fb37c",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5cc5a826_ebb4f368",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/commit/CommitHelper.java",
         "patchSetId": 5
@@ -36,6 +60,24 @@
       "writtenOn": "2020-01-06T14:35:10Z",
       "side": 1,
       "message": "looks like this method could be moved to CommitConfig in JGit then in EGit you only have to call this method and leave the details to JGit",
+      "revId": "fd237ad24e08e6c5d669ff9ddd6f69deaf0fb37c",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "e95246c6_6e99acf5",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/commit/CommitHelper.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 115,
+      "author": {
+        "id": 252514
+      },
+      "writtenOn": "2020-01-06T18:08:25Z",
+      "side": 1,
+      "message": "Will move it to jgit",
+      "parentUuid": "5cc5a826_ebb4f368",
       "revId": "fd237ad24e08e6c5d669ff9ddd6f69deaf0fb37c",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
@@ -59,6 +101,24 @@
     },
     {
       "key": {
+        "uuid": "6506a561_cc1d0ad0",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/commit/CommitHelper.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 123,
+      "author": {
+        "id": 252514
+      },
+      "writtenOn": "2020-01-06T18:08:25Z",
+      "side": 1,
+      "message": "will log.error",
+      "parentUuid": "73cd7653_d8c848fa",
+      "revId": "fd237ad24e08e6c5d669ff9ddd6f69deaf0fb37c",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "28f3fcec_c0a58433",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/commit/CommitHelper.java",
         "patchSetId": 5
@@ -70,6 +130,24 @@
       "writtenOn": "2020-01-06T14:35:10Z",
       "side": 1,
       "message": "why do you return null here but use Optional below ?",
+      "revId": "fd237ad24e08e6c5d669ff9ddd6f69deaf0fb37c",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "668e71c2_e834ec99",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/commit/CommitHelper.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 126,
+      "author": {
+        "id": 252514
+      },
+      "writtenOn": "2020-01-06T18:08:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "28f3fcec_c0a58433",
       "revId": "fd237ad24e08e6c5d669ff9ddd6f69deaf0fb37c",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
