@@ -160,6 +160,24 @@
     },
     {
       "key": {
+        "uuid": "4afc6a1b_c3a7ce16",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/commit/CommitHelper.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 153,
+      "author": {
+        "id": 252514
+      },
+      "writtenOn": "2020-01-06T13:28:44Z",
+      "side": 1,
+      "message": "Ok, I see. makes sense. However, the following template \n\n########50 characters############################\nSubject\n########72 characters##################################################\nDescription\n\nwould lead to the warning \"Second line should be empty to separate commit message header from body\" since it evaluates the comment lines as \"real\" lines.  \n\nHow to proceed with this? Is this a proper behavior? I don\u0027t think so. The correct handling of the warning message should be handled in the bug you linked above, as well.",
+      "parentUuid": "172acf47_b124f2de",
+      "revId": "add5e5383b45ff88a652953015dbe73139555637",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e2792ae0_438c2e12",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/preferences/CommittingPreferencePage.java",
         "patchSetId": 3
