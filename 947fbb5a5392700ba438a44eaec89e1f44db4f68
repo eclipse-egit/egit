@@ -16,6 +16,29 @@
       "revId": "947fbb5a5392700ba438a44eaec89e1f44db4f68",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3323b4a2_d53e6d60",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/actions/MergeToolActionHandler.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 195,
+      "author": {
+        "id": 119988
+      },
+      "writtenOn": "2020-01-13T10:44:59Z",
+      "side": 1,
+      "message": "IMO passing down 11 arguments into 1 method is not OK.\n\nSo far I\u0027ve no idea how to use this in a test, even when using this code as an example.",
+      "range": {
+        "startLine": 190,
+        "startChar": 3,
+        "endLine": 195,
+        "endChar": 8
+      },
+      "revId": "947fbb5a5392700ba438a44eaec89e1f44db4f68",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
     }
   ]
 }
