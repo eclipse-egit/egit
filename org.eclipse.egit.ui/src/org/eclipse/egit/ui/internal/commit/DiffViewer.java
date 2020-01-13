@@ -180,10 +180,10 @@ public class DiffViewer extends HyperlinkSourceViewer {
 			PresentationReconciler reconciler = new PresentationReconciler();
 			reconciler.setDocumentPartitioning(
 					getConfiguredDocumentPartitioning(viewer));
-			for (String contentType : viewer.tokens.keySet()) {
+			for (Map.Entry<String, IToken> entry : viewer.tokens.entrySet()) {
+				String contentType = entry.getKey();
 				DefaultDamagerRepairer damagerRepairer = new DefaultDamagerRepairer(
-						new SingleTokenScanner(
-								() -> viewer.tokens.get(contentType)));
+						new SingleTokenScanner(entry::getValue));
 				reconciler.setDamager(damagerRepairer, contentType);
 				reconciler.setRepairer(damagerRepairer, contentType);
 			}
