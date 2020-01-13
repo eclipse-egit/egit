@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ef34c4d5_d18e507a",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/actions/MergeToolActionHandler.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 123,
+      "author": {
+        "id": 119988
+      },
+      "writtenOn": "2020-01-13T10:33:40Z",
+      "side": 1,
+      "message": "Please log this and all other stack trace prints.",
+      "revId": "947fbb5a5392700ba438a44eaec89e1f44db4f68",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
