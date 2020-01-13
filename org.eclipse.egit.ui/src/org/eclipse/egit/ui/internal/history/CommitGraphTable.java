@@ -123,7 +123,7 @@ class CommitGraphTable {
 		return UIUtils.getBoldFont(UIPreferences.THEME_CommitGraphNormalFont);
 	}
 
-	private static final String LINESEP = System.getProperty("line.separator"); //$NON-NLS-1$
+	private static final String LINESEP = System.lineSeparator();
 
 	private final Composite tableContainer;
 
