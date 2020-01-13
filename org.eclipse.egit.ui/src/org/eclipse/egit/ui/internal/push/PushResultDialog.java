@@ -123,7 +123,7 @@ class PushResultDialog extends TitleAndImageDialog {
 			String errorMessage = result.getErrorMessage(uri);
 			if (errorMessage != null && errorMessage.length() > 0) {
 				if (messages.length() > 0)
-					messages.append(System.getProperty("line.separator")); //$NON-NLS-1$
+					messages.append(System.lineSeparator()); //$NON-NLS-1$
 				messages.append(errorMessage);
 			}
 		}
