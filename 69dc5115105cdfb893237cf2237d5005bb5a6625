@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "489f3ef9_739bcdb0",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/push/PushResultDialog.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 125,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2020-01-15T16:08:53Z",
+      "side": 1,
+      "message": "nit: add braces around the modified one line block to follow  formatting rules",
+      "revId": "69dc5115105cdfb893237cf2237d5005bb5a6625",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
