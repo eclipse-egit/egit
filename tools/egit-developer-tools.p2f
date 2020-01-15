@@ -94,7 +94,7 @@
     </iu>
     <iu id='org.eclipse.jetty.bundles.f.feature.group' name='Jetty - Bundles: all the jetty bundles' version='0.0.0'>
       <repositories size='1'>
-        <repository location='https://download.eclipse.org/jetty/updates/jetty-bundles-9.x/9.4.20.v20190813/'/>
+        <repository location='https://download.eclipse.org/jetty/updates/jetty-bundles-9.x/9.4.25.v20191220/'/>
       </repositories>
     </iu>
     <iu id='org.eclipse.egit.feature.group' name='Eclipse EGit' version='0.0.0'>
