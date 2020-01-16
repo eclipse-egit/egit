@@ -16,6 +16,24 @@
       "revId": "69dc5115105cdfb893237cf2237d5005bb5a6625",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "17397f4a_a936c0b8",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/push/PushResultDialog.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 125,
+      "author": {
+        "id": 1093
+      },
+      "writtenOn": "2020-01-16T18:09:47Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "489f3ef9_739bcdb0",
+      "revId": "69dc5115105cdfb893237cf2237d5005bb5a6625",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
     }
   ]
 }
