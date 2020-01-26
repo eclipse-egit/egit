@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "41f2a9fa_52677b9a",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/history/RefFilterHelper.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 680,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2020-01-26T21:48:59Z",
+      "side": 1,
+      "message": "This is strange. Why not simply \u0027/\u0027?",
+      "range": {
+        "startLine": 680,
+        "startChar": 6,
+        "endLine": 680,
+        "endChar": 28
+      },
+      "revId": "3be4998cf54056c1d747975b8c4a5edb5ec1c20a",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
