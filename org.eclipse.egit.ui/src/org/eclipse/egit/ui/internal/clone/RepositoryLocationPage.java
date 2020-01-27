@@ -68,8 +68,9 @@ public class RepositoryLocationPage extends WizardPage {
 
 		GridDataFactory.fillDefaults().grab(true, true).applyTo(main);
 		// use a filtered tree
-		FilteredTree tree = new FilteredTree(main, SWT.SINGLE | SWT.BORDER
-				| SWT.H_SCROLL | SWT.V_SCROLL, new PatternFilter(), true);
+		FilteredTree tree = new FilteredTree(main,
+				SWT.SINGLE | SWT.BORDER | SWT.H_SCROLL | SWT.V_SCROLL,
+				new PatternFilter(), true, true);
 
 		tv = tree.getViewer();
 		GridDataFactory.fillDefaults().grab(true, true).applyTo(tree);

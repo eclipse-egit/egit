@@ -197,9 +197,10 @@ public class ReflogView extends ViewPart implements RefsChangedListener, IShowIn
 
 		final TreeColumnLayout layout = new TreeColumnLayout();
 
-		FilteredTree filteredTree = new FilteredTree(tableComposite, SWT.NONE
-				| SWT.BORDER | SWT.FULL_SELECTION,
-				new TreeColumnPatternFilter(), true) {
+		FilteredTree filteredTree = new FilteredTree(tableComposite,
+				SWT.NONE | SWT.BORDER | SWT.FULL_SELECTION,
+				new TreeColumnPatternFilter(), true, true) {
+
 			@Override
 			protected void createControl(Composite composite, int treeStyle) {
 				super.createControl(composite, treeStyle);
