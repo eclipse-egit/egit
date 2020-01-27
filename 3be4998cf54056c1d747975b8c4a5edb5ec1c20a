@@ -70,6 +70,30 @@
       "revId": "3be4998cf54056c1d747975b8c4a5edb5ec1c20a",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "fe0c9f3b_d148bd81",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/history/RefFilterHelper.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 680,
+      "author": {
+        "id": 1179
+      },
+      "writtenOn": "2020-01-27T07:47:50Z",
+      "side": 1,
+      "message": "But this ticket is for a different problem?",
+      "parentUuid": "a39b9a42_4fcc42cf",
+      "range": {
+        "startLine": 680,
+        "startChar": 6,
+        "endLine": 680,
+        "endChar": 28
+      },
+      "revId": "3be4998cf54056c1d747975b8c4a5edb5ec1c20a",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
     }
   ]
 }
