@@ -13,7 +13,7 @@ package org.eclipse.egit.core.synchronize;
 import static org.eclipse.jgit.junit.JGitTestUtil.deleteTrashFile;
 import static org.eclipse.jgit.junit.JGitTestUtil.writeTrashFile;
 import static org.hamcrest.CoreMatchers.is;
-import static org.junit.Assert.assertThat;
+import static org.hamcrest.MatcherAssert.assertThat;
 
 import java.util.Map;
 

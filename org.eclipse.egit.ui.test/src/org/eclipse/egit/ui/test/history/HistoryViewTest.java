@@ -13,6 +13,7 @@
 package org.eclipse.egit.ui.test.history;
 
 import static org.eclipse.swtbot.swt.finder.matchers.WidgetMatcherFactory.withRegex;
+import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.arrayContainingInAnyOrder;
 import static org.hamcrest.Matchers.emptyArray;
 import static org.hamcrest.Matchers.equalTo;
@@ -84,7 +85,6 @@ import org.hamcrest.BaseMatcher;
 import org.hamcrest.Description;
 import org.hamcrest.Matcher;
 import org.hamcrest.TypeSafeMatcher;
-import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Test;
@@ -609,7 +609,7 @@ public class HistoryViewTest extends GitRepositoriesViewTestBase {
 			}
 
 		});
-		Assert.assertThat("Expected no commit", getCommitMsgsFromUi(table),
+		assertThat("Expected no commit", getCommitMsgsFromUi(table),
 				emptyArray());
 	}
 
@@ -642,7 +642,7 @@ public class HistoryViewTest extends GitRepositoriesViewTestBase {
 			matchers.add(equalTo(msg));
 		}
 
-		Assert.assertThat("Expected different commits",
+		assertThat("Expected different commits",
 				getCommitMsgsFromUi(table),
 				is(arrayContainingInAnyOrder(matchers)));
 	}

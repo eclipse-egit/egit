@@ -13,8 +13,8 @@
  *******************************************************************************/
 package org.eclipse.egit.core.test;
 
+import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.hasItem;
-import static org.junit.Assert.assertThat;
 
 import java.util.Collection;
 import java.util.HashSet;

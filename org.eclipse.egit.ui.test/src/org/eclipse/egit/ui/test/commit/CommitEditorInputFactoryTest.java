@@ -14,9 +14,9 @@
 package org.eclipse.egit.ui.test.commit;
 
 import static org.eclipse.egit.ui.test.commit.RepositoryCommitMatcher.isSameCommit;
+import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.core.IsInstanceOf.instanceOf;
 import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertThat;
 
 import java.io.File;
 

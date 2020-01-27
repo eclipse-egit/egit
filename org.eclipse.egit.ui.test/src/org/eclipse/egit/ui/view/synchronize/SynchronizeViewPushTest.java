@@ -10,8 +10,8 @@
  *******************************************************************************/
 package org.eclipse.egit.ui.view.synchronize;
 
+import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
-import static org.junit.Assert.assertThat;
 
 import java.util.concurrent.TimeUnit;
 
