@@ -94,6 +94,30 @@
       "revId": "3be4998cf54056c1d747975b8c4a5edb5ec1c20a",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "e7f6d8df_97c1c400",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/history/RefFilterHelper.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 680,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2020-01-27T08:32:27Z",
+      "side": 1,
+      "message": "Sure. Just if you agree with that assessment it might be worth doing that (i.e., cleaning up that PathMatcher interface) in JGit first before starting to use this in EGit.",
+      "parentUuid": "fe0c9f3b_d148bd81",
+      "range": {
+        "startLine": 680,
+        "startChar": 6,
+        "endLine": 680,
+        "endChar": 28
+      },
+      "revId": "3be4998cf54056c1d747975b8c4a5edb5ec1c20a",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
     }
   ]
 }
