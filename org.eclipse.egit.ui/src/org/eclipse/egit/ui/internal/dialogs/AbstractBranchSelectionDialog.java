@@ -294,7 +294,7 @@ public abstract class AbstractBranchSelectionDialog extends TitleAreaDialog {
 		PatternFilter filter = new RefNamePatternFilter();
 		filter.setIncludeLeadingWildcard(true);
 		FilteredTree tree = new FilteredTree(composite,
-				selectionModel | SWT.BORDER, filter, true);
+				selectionModel | SWT.BORDER, filter, true, true);
 		branchTree = tree.getViewer();
 		branchTree.setUseHashlookup(true);
 		branchTree.setLabelProvider(new RepositoryTreeNodeLabelProvider(true));
