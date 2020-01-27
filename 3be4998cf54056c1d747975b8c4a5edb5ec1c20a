@@ -46,6 +46,30 @@
       "revId": "3be4998cf54056c1d747975b8c4a5edb5ec1c20a",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a39b9a42_4fcc42cf",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/history/RefFilterHelper.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 680,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2020-01-27T07:28:07Z",
+      "side": 1,
+      "message": "Well... looks like the parameter could just be declared as char, or be dropped completely and FastIgnoreRule.PATH_SEPARATOR be used always and unconditionally. The javadoc claims \"if this parameter isn\u0027t null then this character will not match at wildcards(* and ? are wildcards)\", but I don\u0027t see any code for the null case, and if it\u0027s null, FastIgnoreRule.PATH_SEPARATOR is used. Also, there don\u0027t seem to be any tests for the null case, and all existing uses do pass in FastIgnoreRule.PATH_SEPARATOR.\n\nSeems to me that PathMatcher always matches paths and wildcards (other than ** never match the separator, while FileNameMatcher implements the other case where wildcards do match the separator.",
+      "parentUuid": "b7bef435_50ef1ddb",
+      "range": {
+        "startLine": 680,
+        "startChar": 6,
+        "endLine": 680,
+        "endChar": 28
+      },
+      "revId": "3be4998cf54056c1d747975b8c4a5edb5ec1c20a",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
     }
   ]
 }
