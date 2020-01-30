@@ -99,7 +99,7 @@
              <layout>p2</layout>
             </repository>
             <repository>
-             <url>https://download.eclipse.org/staging/neon/</url>
+             <url>https://download.eclipse.org/releases/neon/201705151400/</url>
              <layout>p2</layout>
             </repository>
            </repositories>
