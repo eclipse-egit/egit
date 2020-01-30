@@ -1,6 +1,6 @@
 target "4.13-2019-09" with source configurePhase
 
-location "https://download.eclipse.org/releases/2019-09/" {
+location "https://download.eclipse.org/releases/2019-09/201909181001/" {
 	// Eclipse platform
 	org.eclipse.sdk.ide lazy
 	org.eclipse.ecf.core.feature.feature.group lazy
