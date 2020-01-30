@@ -64,7 +64,7 @@
     <tycho-version>1.6.0</tycho-version>
     <tycho-extras-version>${tycho-version}</tycho-extras-version>
     <jboss-tycho-plugins-version>1.5.1</jboss-tycho-plugins-version>
-    <spotbugs-maven-plugin-version>3.1.11</spotbugs-maven-plugin-version>
+    <spotbugs-maven-plugin-version>3.1.12</spotbugs-maven-plugin-version>
     <jgit-site>file:/${basedir}/../../jgit/org.eclipse.jgit.packaging/org.eclipse.jgit.repository/target/repository</jgit-site>
     <license-site>https://download.eclipse.org/cbi/updates/license</license-site>
     <signer-input-directory>/home/data/httpd/download-staging.priv/egit</signer-input-directory>
@@ -468,7 +468,7 @@
         <plugin>
           <groupId>org.apache.maven.plugins</groupId>
           <artifactId>maven-enforcer-plugin</artifactId>
-          <version>3.0.0-M2</version>
+          <version>3.0.0-M3</version>
         </plugin>
         <plugin>
           <groupId>org.apache.maven.plugins</groupId>
@@ -494,7 +494,7 @@
         <plugin>
           <groupId>org.apache.maven.plugins</groupId>
           <artifactId>maven-pmd-plugin</artifactId>
-          <version>3.11.0</version>
+          <version>3.12.0</version>
           <configuration>
             <sourceEncoding>utf-8</sourceEncoding>
             <minimumTokens>100</minimumTokens>
@@ -514,7 +514,7 @@
         <plugin>
           <groupId>org.apache.maven.plugins</groupId>
           <artifactId>maven-assembly-plugin</artifactId>
-          <version>3.1.1</version>
+          <version>3.2.0</version>
         </plugin>
         <plugin>
           <groupId>org.codehaus.mojo</groupId>
