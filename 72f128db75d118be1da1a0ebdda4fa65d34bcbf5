@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1da0a9cb_973d133b",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2020-02-01T15:24:14Z",
+      "side": 1,
+      "message": "- thanks, that\u0027s a good idea\n- why only Neon and not all the other versions ? I think we should do this for all release train versions except staging (which is updated a couple of times until it is released)",
+      "range": {
+        "startLine": 9,
+        "startChar": 18,
+        "endLine": 9,
+        "endChar": 22
+      },
+      "revId": "72f128db75d118be1da1a0ebdda4fa65d34bcbf5",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
