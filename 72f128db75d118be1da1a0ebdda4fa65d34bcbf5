@@ -22,6 +22,30 @@
       "revId": "72f128db75d118be1da1a0ebdda4fa65d34bcbf5",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "391d5ab1_f37397ee",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 440
+      },
+      "writtenOn": "2020-02-02T19:14:48Z",
+      "side": 1,
+      "message": "Mostly because I did not find an ad-hoc way of reading the directories underneath the release sites (tried via Oomphs repository explorer). For Neon I knew it from another work related file.\n\nWill probably have to run the Maven build for each target to see the actual URL being used for target resolution.",
+      "parentUuid": "1da0a9cb_973d133b",
+      "range": {
+        "startLine": 9,
+        "startChar": 18,
+        "endLine": 9,
+        "endChar": 22
+      },
+      "revId": "72f128db75d118be1da1a0ebdda4fa65d34bcbf5",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
     }
   ]
 }
