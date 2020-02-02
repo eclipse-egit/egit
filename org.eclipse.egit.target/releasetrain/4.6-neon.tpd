@@ -1,6 +1,6 @@
 target "4.6-neon" with source configurePhase
 
-location "https://download.eclipse.org/releases/neon/" {
+location "https://download.eclipse.org/releases/neon/201705151400/" {
 	// Eclipse platform
 	org.eclipse.sdk.ide lazy
 	org.eclipse.emf.sdk.feature.group lazy

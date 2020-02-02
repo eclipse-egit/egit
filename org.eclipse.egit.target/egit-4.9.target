@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <?pde?>
 <!-- generated with https://github.com/eclipse-cbi/targetplatform-dsl -->
-<target name="egit-4.9" sequenceNumber="1580290264">
+<target name="egit-4.9" sequenceNumber="1580672890">
   <locations>
     <location includeMode="slicer" includeAllPlatforms="false" includeSource="true" includeConfigurePhase="true" type="InstallableUnit">
       <unit id="org.eclipse.jetty.client" version="9.4.25.v20191220"/>
@@ -120,7 +120,7 @@
       <unit id="org.eclipse.mylyn.context_feature.feature.group" version="0.0.0"/>
       <unit id="org.eclipse.mylyn.bugzilla_feature.feature.group" version="0.0.0"/>
       <unit id="org.eclipse.tools.layout.spy" version="0.0.0"/>
-      <repository location="https://download.eclipse.org/releases/2018-09/"/>
+      <repository location="https://download.eclipse.org/releases/2018-09/201809191002/"/>
     </location>
     <location includeMode="slicer" includeAllPlatforms="false" includeSource="true" includeConfigurePhase="true" type="InstallableUnit">
       <unit id="javax.xml" version="0.0.0"/>
