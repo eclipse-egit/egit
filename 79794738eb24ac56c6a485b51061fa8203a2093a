@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7702c3e2_6df6cb08",
+        "filename": "tools/oomph/EGit.setup",
+        "patchSetId": 1
+      },
+      "lineNbr": 233,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2020-02-02T11:30:10Z",
+      "side": 1,
+      "message": "Shouldn\u0027t that be *. instead of .* ? Also below.",
+      "range": {
+        "startLine": 233,
+        "startChar": 25,
+        "endLine": 233,
+        "endChar": 27
+      },
+      "revId": "79794738eb24ac56c6a485b51061fa8203a2093a",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
