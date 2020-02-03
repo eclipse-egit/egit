@@ -397,11 +397,11 @@ class ExistingOrNewPage extends WizardPage {
 			public void widgetSelected(SelectionEvent e) {
 				File gitDir = new File(repositoryToCreate.getText(),
 						Constants.DOT_GIT);
-				try {
-					try (Repository repository = FileRepositoryBuilder
-							.create(gitDir)) {
-						repository.create();
-					}
+				try (Repository repository = FileRepositoryBuilder
+						.create(gitDir)) {
+					{
+repository.create();
+}
 					for (IProject project : getProjects(false).keySet()) {
 						// If we don't refresh the project directories right
 						// now we won't later know that a .git directory
