@@ -50,6 +50,7 @@ import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.core.runtime.jobs.Job;
+import org.eclipse.egit.ui.Activator;
 import org.eclipse.egit.ui.internal.merge.GitMergeEditorInput;
 
 /**
@@ -84,7 +85,10 @@ public class DiffContainerJob extends Job {
 		try {
 			diffCont = gitMergeInput.getDiffContainer(monitor);
 		} catch (InvocationTargetException | InterruptedException e) {
-			e.printStackTrace();
+			String errorMessage = "Failed to retrieve diff contents."; //$NON-NLS-1$
+			IStatus error = new Status(IStatus.ERROR, Activator.PLUGIN_ID,
+					errorMessage, e);
+			return error;
 		}
 		return Status.OK_STATUS;
 	}
