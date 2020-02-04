@@ -40,7 +40,7 @@ public enum DiffToolMode implements DiffMergeMode {
 	INTERNAL(0),
 	/**
 	 * Use external diff tools only for data types specifically specified in git
-	 * attributes.
+	 * attributes or preferences.
 	 */
 	EXTERNAL_FOR_TYPE(1),
 	/**
