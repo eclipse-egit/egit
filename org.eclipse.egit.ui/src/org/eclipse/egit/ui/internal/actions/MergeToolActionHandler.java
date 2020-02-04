@@ -93,7 +93,8 @@ public class MergeToolActionHandler extends RepositoryActionHandler {
 		CompareUI.openCompareEditor(input);
 	}
 
-	private static void openMergeToolExternal(CompareEditorInput input) {
+	private static void openMergeToolExternal(CompareEditorInput input)
+			throws ExecutionException {
 		final GitMergeEditorInput gitMergeInput = (GitMergeEditorInput) input;
 		DiffContainerJob job = new DiffContainerJob(
 				"Prepare filelist for external merge tools", gitMergeInput); //$NON-NLS-1$
@@ -101,14 +102,16 @@ public class MergeToolActionHandler extends RepositoryActionHandler {
 		try {
 			job.join();
 		} catch (InterruptedException e) {
-			e.printStackTrace();
+			throw new ExecutionException(
+					"Interrupted while computing merge contents.", //$NON-NLS-1$
+					e);
 		}
 		IDiffContainer diffCont = job.getDiffContainer();
 		executeExternalToolForChildren(diffCont);
 	}
 
 	private static void executeExternalToolForChildren(
-			IDiffContainer diffCont) {
+			IDiffContainer diffCont) throws ExecutionException {
 		if (diffCont != null && diffCont.hasChildren()) {
 			IDiffElement[] difContChilds = diffCont.getChildren();
 			for (IDiffElement diffElement : difContChilds) {
@@ -120,8 +123,8 @@ public class MergeToolActionHandler extends RepositoryActionHandler {
 					try {
 						mergeModified((DiffNode) diffElement);
 					} catch (IOException | CoreException e) {
-						e.printStackTrace();
-						return;
+						throw new ExecutionException(
+								"Failed to run external merge tool.", e); //$NON-NLS-1$
 					}
 				}
 			}
@@ -194,7 +197,7 @@ public class MergeToolActionHandler extends RepositoryActionHandler {
 					});
 		} catch (ToolException e) {
 			isMergeSuccessful = false;
-			e.printStackTrace();
+			Activator.logWarning("Failed to run external merge tool.", e); //$NON-NLS-1$
 			if (e.isCommandExecutionError()) {
 				ToolsUtils.informUserAboutError("mergetool - error", //$NON-NLS-1$
 						e.getMessage() + "\n\nMerge aborted!"); //$NON-NLS-1$
@@ -223,7 +226,7 @@ public class MergeToolActionHandler extends RepositoryActionHandler {
 			try {
 				git.add().addFilepattern(mergedFilePath).call();
 			} catch (GitAPIException e) {
-				e.printStackTrace();
+				Activator.logError("Failed to add merged file to git.", e); //$NON-NLS-1$
 			}
 			git.close();
 			repository.close();
