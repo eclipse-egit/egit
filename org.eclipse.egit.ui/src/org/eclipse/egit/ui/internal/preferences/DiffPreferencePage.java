@@ -33,6 +33,7 @@ import org.eclipse.egit.ui.internal.diffmerge.MergeMode;
 import org.eclipse.egit.ui.internal.diffmerge.MergeToolMode;
 import org.eclipse.jface.preference.IPreferenceStore;
 import org.eclipse.jface.preference.PreferencePage;
+import org.eclipse.jgit.util.StringUtils;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
@@ -111,9 +112,13 @@ public class DiffPreferencePage extends PreferencePage
 
 		// Warning text
 
-		Text warningText = new Text(diffGroup, SWT.READ_ONLY);
-		warningText.setText(UIText.DiffPreferencePage_WarningMessage);
-		warningText.setEditable(false);
+		String externalDiffToolPreference = DiffMergeSettings
+				.getExternalDiffToolPreference();
+		if (StringUtils.isEmptyOrNull(externalDiffToolPreference)) {
+			Text warningText = new Text(diffGroup, SWT.READ_ONLY);
+			warningText.setText(UIText.DiffPreferencePage_WarningMessage);
+			warningText.setEditable(false);
+		}
 
 		// Tool selection radio buttons
 
