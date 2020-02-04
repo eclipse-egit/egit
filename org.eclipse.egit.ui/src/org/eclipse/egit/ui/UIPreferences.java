@@ -215,6 +215,13 @@ public final class UIPreferences {
 	/** */
 	public static final String DIFF_TOOL_MODE = "diff_tool_mode"; //$NON-NLS-1$
 
+	/**
+	 * A preference that specifies an external diff tool to use for specific
+	 * file extensions. The value format is comma separated alternating pairs of
+	 * extension and command, e.g. {@code ext1,command1,ext2,command2}.
+	 */
+	public static final String EXTERNAL_DIFF_TOOL_FOR_EXTENSION = "external_diff_tool_per_extension"; //$NON-NLS-1$
+
 	/** */
 	public static final String SHOW_REBASE_CONFIRM = "show_rebase_confirm"; //$NON-NLS-1$
 	/** */
