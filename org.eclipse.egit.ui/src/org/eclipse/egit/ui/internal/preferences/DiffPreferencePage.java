@@ -34,6 +34,7 @@ import org.eclipse.egit.ui.internal.diffmerge.MergeToolMode;
 import org.eclipse.jface.preference.BooleanFieldEditor;
 import org.eclipse.jface.preference.FieldEditorPreferencePage;
 import org.eclipse.jface.preference.IPreferenceStore;
+import org.eclipse.jgit.util.StringUtils;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
@@ -108,9 +109,13 @@ public class DiffPreferencePage extends FieldEditorPreferencePage
 
 		// Warning text
 
-		Text warningText = new Text(diffGroup, SWT.READ_ONLY);
-		warningText.setText(UIText.DiffPreferencePage_WarningMessage);
-		warningText.setEditable(false);
+		String externalDiffToolPreference = DiffMergeSettings
+				.getExternalDiffToolPreference();
+		if (StringUtils.isEmptyOrNull(externalDiffToolPreference)) {
+			Text warningText = new Text(diffGroup, SWT.READ_ONLY);
+			warningText.setText(UIText.DiffPreferencePage_WarningMessage);
+			warningText.setEditable(false);
+		}
 
 		Label diffToolToUseLabel = new Label(diffGroup, SWT.READ_ONLY);
 		diffToolToUseLabel.setText(UIText.DiffPreferencePage_DiffToolToUse);

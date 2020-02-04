@@ -11,13 +11,16 @@
 package org.eclipse.egit.ui.internal.diffmerge;
 
 import java.io.IOException;
+import java.util.Objects;
 import java.util.Optional;
 import java.util.Set;
 
+import org.eclipse.core.runtime.Platform;
 import org.eclipse.egit.ui.Activator;
 import org.eclipse.egit.ui.UIPreferences;
 import org.eclipse.egit.ui.internal.UIText;
 import org.eclipse.jface.preference.IPreferenceStore;
+import org.eclipse.jgit.annotations.Nullable;
 import org.eclipse.jgit.errors.ConfigInvalidException;
 import org.eclipse.jgit.internal.diffmergetool.DiffTools;
 import org.eclipse.jgit.internal.diffmergetool.MergeTools;
@@ -25,6 +28,7 @@ import org.eclipse.jgit.internal.diffmergetool.ToolException;
 import org.eclipse.jgit.lib.Repository;
 import org.eclipse.jgit.storage.file.FileBasedConfig;
 import org.eclipse.jgit.util.FS;
+import org.eclipse.jgit.util.StringUtils;
 import org.eclipse.jgit.util.SystemReader;
 
 /**
@@ -235,5 +239,64 @@ public final class DiffMergeSettings {
 
 	private static IPreferenceStore getStore() {
 		return Activator.getDefault().getPreferenceStore();
+	}
+
+	/**
+	 * @param filePath
+	 *            The file for which to retrieve the external diff tool command.
+	 * @return The external diff tool command, as specified by product
+	 *         customization, for the file extension of the specified file path.
+	 */
+	@Nullable
+	public static String getDiffToolCommandFromPreferences(String filePath) {
+		DiffToolMode diffToolMode = getDiffToolMode();
+		if (diffToolMode == DiffToolMode.EXTERNAL_FOR_TYPE) {
+			String fileExtension = getFileExtension(filePath);
+			if (!StringUtils.isEmptyOrNull(fileExtension)) {
+				String preference = getExternalDiffToolPreference();
+				String[] tools = preference.split(","); //$NON-NLS-1$
+				for (int i = 0; i < tools.length; i += 2) {
+					String extension = tools[i].trim();
+					String command = tools[i + 1].trim();
+					if (Objects.equals(extension, fileExtension)) {
+						return command;
+					}
+				}
+			}
+		}
+		return null;
+	}
+
+	/**
+	 * @return The external diff tools configured by product customization. An
+	 *         empty string when the preference is not specified.
+	 *
+	 * @see UIPreferences#EXTERNAL_DIFF_TOOL_FOR_EXTENSION
+	 */
+	public static String getExternalDiffToolPreference() {
+		String preference = Platform.getPreferencesService().getString(
+				Activator.PLUGIN_ID,
+				UIPreferences.EXTERNAL_DIFF_TOOL_FOR_EXTENSION,
+				"", //$NON-NLS-1$
+				null);
+		return preference;
+	}
+
+	/**
+	 *
+	 * @param path
+	 *            The file path.
+	 * @return Returns the file extension of the specified file path. Empty
+	 *         string if the path has no extension.
+	 */
+	public static String getFileExtension(String path) {
+		int index = path.lastIndexOf('.');
+		if (index == -1) {
+			return ""; //$NON-NLS-1$
+		}
+		if (index == (path.length() - 1)) {
+			return ""; //$NON-NLS-1$
+		}
+		return path.substring(index + 1);
 	}
 }
