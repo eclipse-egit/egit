@@ -1,5 +1,5 @@
 /*******************************************************************************
- *  Copyright (c) 2011, 2016 GitHub Inc. and others.
+ *  Copyright (c) 2011, 2020 GitHub Inc. and others.
  *  All rights reserved. This program and the accompanying materials
  *  are made available under the terms of the Eclipse Public License 2.0
  *  which accompanies this distribution, and is available at
@@ -23,7 +23,6 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Objects;
 
 import org.eclipse.core.resources.IMarker;
 import org.eclipse.core.runtime.Adapters;
@@ -67,6 +66,7 @@ import org.eclipse.jface.text.source.projection.ProjectionViewer;
 import org.eclipse.jface.util.IPropertyChangeListener;
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.StructuredSelection;
+import org.eclipse.jgit.annotations.NonNull;
 import org.eclipse.jgit.revwalk.RevCommit;
 import org.eclipse.swt.graphics.Font;
 import org.eclipse.swt.graphics.RGB;
@@ -268,7 +268,7 @@ public class DiffEditorPage extends TextEditor
 			currentFileDiffRange = region;
 			setOverviewAnnotations();
 		} else if (input instanceof CommitEditorInput) {
-			formatDiff();
+			formatDiff((CommitEditorInput) input);
 			currentFileDiffRange = null;
 		}
 		if (outlinePage != null) {
@@ -561,15 +561,17 @@ public class DiffEditorPage extends TextEditor
 	 * {@link CommitEditorInput}, formats it into a {@link DiffDocument}, and
 	 * then re-sets this editors's input to a {@link DiffEditorInput} which will
 	 * cause this document to be shown.
+	 *
+	 * @param input
+	 *            of this editor
 	 */
-	private void formatDiff() {
-		RepositoryCommit commit = Adapters.adapt(getEditor(),
-				RepositoryCommit.class);
+	private void formatDiff(@NonNull CommitEditorInput input) {
+		RepositoryCommit commit = input.getCommit();
 		if (commit == null) {
 			return;
 		}
 		if (!commit.isStash() && commit.getRevCommit().getParentCount() > 1) {
-			setInput(new DiffEditorInput(commit, null));
+			setInput(new DiffEditorInput(null));
 			return;
 		}
 
@@ -601,8 +603,9 @@ public class DiffEditorPage extends TextEditor
 
 					@Override
 					public IStatus runInUIThread(IProgressMonitor uiMonitor) {
-						if (UIUtils.isUsable(getPartControl())) {
-							setInput(new DiffEditorInput(commit, document));
+						if (UIUtils
+								.isUsable(getSourceViewer().getTextWidget())) {
+							setInput(new DiffEditorInput(document));
 						}
 						return Status.OK_STATUS;
 					}
@@ -611,41 +614,6 @@ public class DiffEditorPage extends TextEditor
 			}
 		};
 		job.schedule();
-	}
-
-	/**
-	 * An editor input that gives access to the document created by the diff
-	 * formatter.
-	 */
-	private static class DiffEditorInput extends CommitEditorInput {
-
-		private IDocument document;
-
-		public DiffEditorInput(RepositoryCommit commit, IDocument diff) {
-			super(commit);
-			document = diff;
-		}
-
-		public IDocument getDocument() {
-			return document;
-		}
-
-		@Override
-		public String getName() {
-			return UIText.DiffEditorPage_Title;
-		}
-
-		@Override
-		public boolean equals(Object obj) {
-			return super.equals(obj) && (obj instanceof DiffEditorInput)
-					&& Objects.equals(document,
-							((DiffEditorInput) obj).document);
-		}
-
-		@Override
-		public int hashCode() {
-			return super.hashCode() ^ Objects.hashCode(document);
-		}
 	}
 
 	/**
