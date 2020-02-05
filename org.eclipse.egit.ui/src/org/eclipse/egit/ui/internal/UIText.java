@@ -3965,19 +3965,31 @@ public class UIText extends NLS {
 	public static String DialogsPreferencePage_ShowCloneFailedDialog;
 
 	/** */
-	public static String DiffEditorPage_TaskGeneratingDiff;
+	public static String DiffEditor_TaskGeneratingDiff;
 
 	/** */
-	public static String DiffEditorPage_TaskUpdatingViewer;
+	public static String DiffEditor_TaskUpdatingViewer;
 
 	/** */
-	public static String DiffEditorPage_Title;
+	public static String DiffEditor_Title;
 
 	/** */
-	public static String DiffEditorPage_ToggleLineNumbers;
+	public static String DiffEditor_ToggleLineNumbers;
 
 	/** */
-	public static String DiffEditorPage_WarningNoDiffForMerge;
+	public static String DiffEditor_WarningNoDiffForMerge;
+
+	/** */
+	public static String DiffEditorInput_Title1;
+
+	/** */
+	public static String DiffEditorInput_Title2;
+
+	/** */
+	public static String DiffEditorInput_Tooltip1;
+
+	/** */
+	public static String DiffEditorInput_Tooltip2;
 
 	/** */
 	public static String DiscardChangesAction_confirmActionTitle;

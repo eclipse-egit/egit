@@ -129,6 +129,11 @@ public class JobFamilies {
 	public final static Object COMMIT_EDITOR = new JobFamily();
 
 	/**
+	 * Commit editor job
+	 */
+	public final static Object DIFF = new JobFamily(UIIcons.CHANGESET);
+
+	/**
 	 * Fill tag list
 	 */
 	public final static Object FILL_TAG_LIST = new JobFamily(UIIcons.TAGS);

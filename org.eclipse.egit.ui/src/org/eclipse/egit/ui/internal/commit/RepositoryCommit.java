@@ -171,20 +171,15 @@ public class RepositoryCommit extends WorkbenchAdapter
 				TreeWalk treewalk = new TreeWalk(revWalk.getObjectReader())) {
 			treewalk.setRecursive(true);
 			treewalk.setFilter(TreeFilter.ANY_DIFF);
-			loadParents();
+			for (RevCommit parent : commit.getParents()) {
+				revWalk.parseBody(parent);
+			}
 			diffsResult = FileDiff.compute(repository, treewalk, commit,
 					parents, null, TreeFilter.ALL);
 		} catch (IOException e) {
 			diffsResult = new FileDiff[0];
 		}
 		return diffsResult;
-	}
-
-	private void loadParents() throws IOException {
-		try (RevWalk revWalk = new RevWalk(repository)) {
-			for (RevCommit parent : commit.getParents())
-				revWalk.parseBody(parent);
-		}
 	}
 
 	/**
