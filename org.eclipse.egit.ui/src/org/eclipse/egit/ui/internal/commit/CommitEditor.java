@@ -237,11 +237,14 @@ public class CommitEditor extends SharedHeaderFormEditor implements
 				commitPage = new CommitEditorPage(this);
 			}
 			addPage(commitPage);
-			diffPage = new DiffEditorPage(this);
-			addPage(diffPage, getEditorInput());
-			if (getCommit().getNotes().length > 0) {
-				notePage = new NotesEditorPage(this);
-				addPage(notePage);
+			RepositoryCommit commit = getCommit();
+			if (commit != null) {
+				diffPage = new DiffEditorPage(this);
+				addPage(diffPage, new DiffEditorInput(commit));
+				if (commit.getNotes().length > 0) {
+					notePage = new NotesEditorPage(this);
+					addPage(notePage);
+				}
 			}
 		} catch (PartInitException e) {
 			Activator.error("Error adding page", e); //$NON-NLS-1$

@@ -118,6 +118,11 @@
          <adapter type="org.eclipse.team.ui.history.IHistoryPageSource" />
       </factory>
       <factory
+            adaptableType="org.eclipse.egit.core.internal.IRepositoryCommit"
+            class="org.eclipse.egit.ui.internal.factories.GitAdapterFactory">
+         <adapter type="org.eclipse.team.ui.history.IHistoryPageSource" />
+      </factory>
+      <factory
             adaptableType="org.eclipse.egit.ui.internal.history.HistoryPageInput"
             class="org.eclipse.egit.ui.internal.factories.GitAdapterFactory">
          <adapter type="org.eclipse.team.ui.history.IHistoryPageSource" />
@@ -7058,6 +7063,14 @@
             id="org.eclipse.egit.ui.commitEditor"
             name="%CommitEditor.name">
       </editor>
+      <editor
+            class="org.eclipse.egit.ui.internal.commit.DiffEditor"
+            contributorClass="org.eclipse.ui.editors.text.TextEditorActionContributor"
+            default="false"
+            icon="icons/obj16/changelog_obj.png"
+            id="org.eclipse.egit.ui.diffEditor"
+            name="%DiffEditor.name">
+      </editor>
    </extension>
    <extension
          point="org.eclipse.ui.actionSetPartAssociations">
@@ -7065,6 +7078,9 @@
             targetID="org.eclipse.ui.edit.text.actionSet.presentation">
          <part
                id="org.eclipse.egit.ui.commitEditor">
+         </part>
+         <part
+               id="org.eclipse.egit.ui.diffEditor">
          </part>
       </actionSetPartAssociation>
    </extension>
