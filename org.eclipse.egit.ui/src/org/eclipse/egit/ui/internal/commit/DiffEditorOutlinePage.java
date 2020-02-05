@@ -53,12 +53,13 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Menu;
 import org.eclipse.ui.ISharedImages;
 import org.eclipse.ui.PlatformUI;
+import org.eclipse.ui.views.contentoutline.ContentOutlinePage;
 
 /**
- * A {@link NestedContentOutlinePage} for the {DiffEditorPage}, displaying an
- * outline for {@link DiffDocument}s.
+ * A {@link ContentOutlinePage} for the {DiffEditorPage}, displaying an outline
+ * for {@link DiffDocument}s.
  */
-public class DiffEditorOutlinePage extends NestedContentOutlinePage {
+public class DiffEditorOutlinePage extends ContentOutlinePage {
 
 	private IDocument input;
 
