@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "212b7ec0_df15ea35",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/sharing/ExistingOrNewPage.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 402,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2020-02-06T13:37:46Z",
+      "side": 1,
+      "message": "The old code was using try with resource already.\n\nThis moves closing this repository to the end of the outer block, not sure if we want this.\n\nIf this is what we want then the braces for the inner block are unnecessary and formatting should be fixed.",
+      "revId": "2e15f21da6ee89f951cfd97cc48eb9d88ec29b5f",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
