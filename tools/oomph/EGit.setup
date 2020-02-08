@@ -80,7 +80,7 @@
   <setupTask
       xsi:type="setup:EclipseIniTask"
       option="-Xmx"
-      value="1g"
+      value="2g"
       vm="true"/>
   <setupTask
       xsi:type="setup:EclipseIniTask"
@@ -284,7 +284,7 @@
               project="org.eclipse.mylyn.github.core"/>
           <operand
               xsi:type="workingsets:ExclusionPredicate"
-              excludedWorkingSet="//@streams[name='master']/@setupTasks.5/@workingSets.6 //@streams[name='master']/@setupTasks.5/@workingSets.1"/>
+              excludedWorkingSet="//'egit.workingsets'/@workingSets[name='Releng'] //'egit.workingsets'/@workingSets[name='EGit%20Github%20Connector%20Tests']"/>
         </predicate>
       </workingSet>
       <workingSet
@@ -309,7 +309,7 @@
               project="org.eclipse.egit.core"/>
           <operand
               xsi:type="workingsets:ExclusionPredicate"
-              excludedWorkingSet="//@streams[name='master']/@setupTasks.5/@workingSets.6 //@streams[name='master']/@setupTasks.5/@workingSets.3"/>
+              excludedWorkingSet="//'egit.workingsets'/@workingSets[name='Releng'] //'egit.workingsets'/@workingSets[name='EGit%20Tests']"/>
         </predicate>
       </workingSet>
       <workingSet
@@ -334,7 +334,7 @@
               project="org.eclipse.jgit"/>
           <operand
               xsi:type="workingsets:ExclusionPredicate"
-              excludedWorkingSet="//@streams[name='master']/@setupTasks.5/@workingSets.6 //@streams[name='master']/@setupTasks.5/@workingSets.5"/>
+              excludedWorkingSet="//'egit.workingsets'/@workingSets[name='Releng'] //'egit.workingsets'/@workingSets[name='JGit%20Tests']"/>
         </predicate>
       </workingSet>
       <workingSet
