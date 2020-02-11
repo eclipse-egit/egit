@@ -10,10 +10,13 @@
  *****************************************************************************/
 package org.eclipse.egit.ui.internal.commit.command;
 
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.commands.ExecutionException;
+import org.eclipse.core.runtime.Assert;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Status;
@@ -40,6 +43,12 @@ public class UnifiedDiffHandler extends CommitCommandHandler {
 	public Object execute(ExecutionEvent event) throws ExecutionException {
 		List<IRepositoryCommit> commits = getCommits(event);
 		if (commits.size() == 2) {
+			// Ensure the newer commit is the tip, and the older one the base.
+			Collections.sort(commits,
+					Comparator.<IRepositoryCommit> comparingInt(
+							repoCommit -> repoCommit.getRevCommit()
+									.getCommitTime())
+							.reversed());
 			show(commits.get(0), commits.get(1));
 		}
 		return null;
@@ -55,9 +64,7 @@ public class UnifiedDiffHandler extends CommitCommandHandler {
 	 *            to diff against
 	 */
 	public static void show(IRepositoryCommit tip, IRepositoryCommit base) {
-		if (tip == null) {
-			return;
-		}
+		Assert.isNotNull(tip);
 		DiffEditorInput input = new DiffEditorInput(tip, base);
 		IWorkbenchWindow window = PlatformUI.getWorkbench()
 				.getActiveWorkbenchWindow();
