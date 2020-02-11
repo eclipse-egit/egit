@@ -34,7 +34,6 @@ import org.eclipse.egit.ui.internal.PreferenceBasedDateFormatter;
 import org.eclipse.egit.ui.internal.TreeColumnPatternFilter;
 import org.eclipse.egit.ui.internal.UIIcons;
 import org.eclipse.egit.ui.internal.UIText;
-import org.eclipse.egit.ui.internal.actions.ResetMenu;
 import org.eclipse.egit.ui.internal.commit.CommitEditor;
 import org.eclipse.egit.ui.internal.commit.RepositoryCommit;
 import org.eclipse.egit.ui.internal.components.PartVisibilityListener;
@@ -197,9 +196,10 @@ public class ReflogView extends ViewPart implements RefsChangedListener, IShowIn
 
 		final TreeColumnLayout layout = new TreeColumnLayout();
 
-		FilteredTree filteredTree = new FilteredTree(tableComposite, SWT.NONE
-				| SWT.BORDER | SWT.FULL_SELECTION,
+		FilteredTree filteredTree = new FilteredTree(tableComposite,
+				SWT.BORDER | SWT.FULL_SELECTION | SWT.MULTI,
 				new TreeColumnPatternFilter(), true) {
+
 			@Override
 			protected void createControl(Composite composite, int treeStyle) {
 				super.createControl(composite, treeStyle);
@@ -445,9 +445,6 @@ public class ReflogView extends ViewPart implements RefsChangedListener, IShowIn
 		menuManager.add(new Separator(IWorkbenchActionConstants.MB_ADDITIONS));
 		Tree tree = refLogTreeViewer.getTree();
 		tree.setMenu(menuManager.createContextMenu(tree));
-
-		MenuManager resetManager = ResetMenu.createMenu(getSite());
-		menuManager.add(resetManager);
 
 		getSite().registerContextMenu(POPUP_MENU_ID, menuManager, refLogTreeViewer);
 	}

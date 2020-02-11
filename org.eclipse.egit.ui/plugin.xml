@@ -2802,6 +2802,20 @@
          </activeWhen>
       </handler>
       <handler
+            commandId="org.eclipse.egit.ui.commit.UnifiedDiffCommand">
+         <class
+               class="org.eclipse.egit.ui.internal.reflog.command.ReflogUnifiedDiffHandler">
+         </class>
+         <activeWhen>
+            <and>
+               <count value="2" />
+               <iterate>
+                  <adapt type="org.eclipse.jgit.lib.ReflogEntry" />
+               </iterate>
+            </and>
+         </activeWhen>
+      </handler>
+      <handler
             commandId="org.eclipse.egit.ui.history.CompareWithWorkingTree">
          <class
                class="org.eclipse.egit.ui.internal.history.command.CompareWithWorkingTreeHandler">
@@ -3722,6 +3736,12 @@
                label="%RefLogViewOpenInCommitViewer.label"
                style="push">
          </command>
+         <command
+              commandId="org.eclipse.egit.ui.commit.UnifiedDiffCommand"
+              label="%RefLogShowUnifiedDiff.label"
+              style="push">
+            <visibleWhen checkEnabled="true" />
+         </command>
          <separator
                name="##Checkout" visible="true">
          </separator>
@@ -3735,6 +3755,33 @@
                label="%ReflogCopyCommand.label"
                style="push">
          </command>
+         <!-- Reset submenu -->
+         <menu
+               icon="icons/obj16/reset.png"
+               id="org.eclipse.egit.ui.reflog.resetMenu"
+               label="%ReflogResetMenu.label">
+            <command
+                 commandId="org.eclipse.egit.ui.history.Reset"
+                 label="%ReflogResetSoft.label"
+                 style="push">
+               <parameter name="org.eclipse.egit.ui.history.ResetMode" value="SOFT" />
+               <visibleWhen checkEnabled="true" />
+            </command>
+            <command
+                 commandId="org.eclipse.egit.ui.history.Reset"
+                 label="%ReflogResetMixed.label"
+                 style="push">
+               <parameter name="org.eclipse.egit.ui.history.ResetMode" value="MIXED" />
+               <visibleWhen checkEnabled="true" />
+            </command>
+            <command
+                 commandId="org.eclipse.egit.ui.history.Reset"
+                 label="%ReflogResetHard.label"
+                 style="push">
+               <parameter name="org.eclipse.egit.ui.history.ResetMode" value="HARD" />
+               <visibleWhen checkEnabled="true" />
+            </command>
+         </menu>
       </menuContribution>
       <menuContribution
             locationURI="popup:org.eclipse.egit.ui.RepositoriesView?after=branch">
