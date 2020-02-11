@@ -2788,6 +2788,20 @@
          </activeWhen>
       </handler>
       <handler
+            commandId="org.eclipse.egit.ui.commit.UnifiedDiffCommand">
+         <class
+               class="org.eclipse.egit.ui.internal.commit.command.UnifiedDiffHandler">
+         </class>
+         <activeWhen>
+            <and>
+               <count value="2" />
+               <iterate>
+                  <adapt type="org.eclipse.egit.core.internal.IRepositoryCommit" />
+               </iterate>
+            </and>
+         </activeWhen>
+      </handler>
+      <handler
             commandId="org.eclipse.egit.ui.history.CompareWithWorkingTree">
          <class
                class="org.eclipse.egit.ui.internal.history.command.CompareWithWorkingTreeHandler">
@@ -3466,6 +3480,12 @@
          <command
               commandId="org.eclipse.egit.ui.history.CompareVersionsInTree"
               label="%HistoryCompareVersionsInTree.label"
+              style="push">
+            <visibleWhen checkEnabled="true" />
+         </command>
+         <command
+              commandId="org.eclipse.egit.ui.commit.UnifiedDiffCommand"
+              label="%HistoryShowUnifiedDiff.label"
               style="push">
             <visibleWhen checkEnabled="true" />
          </command>
@@ -6548,6 +6568,10 @@
             commandId="org.eclipse.egit.ui.RepositoriesCreateGroup"
             icon="icons/etool16/newgroup_wiz.png">
       </image>
+      <image
+            commandId="org.eclipse.egit.ui.commit.UnifiedDiffCommand"
+            icon="icons/obj16/changelog_obj.png">
+      </image>
    </extension>
    <extension
          point="org.eclipse.core.expressions.propertyTesters">
@@ -7008,6 +7032,10 @@
             id="org.eclipse.egit.ui.history.OpenInCommitViewerCommand"
             name="%OpenInCommitViewerCommand.name">
       </command>
+      <command
+            id="org.eclipse.egit.ui.commit.UnifiedDiffCommand"
+            name="%ShowUnifiedDiffCommand.name">
+         </command>
    </extension>
    <extension
          name="%CommitViewerCommands.extension.name"
@@ -7065,7 +7093,7 @@
       </editor>
       <editor
             class="org.eclipse.egit.ui.internal.commit.DiffEditor"
-            contributorClass="org.eclipse.ui.editors.text.TextEditorActionContributor"
+            contributorClass="org.eclipse.ui.texteditor.BasicTextEditorActionContributor"
             default="false"
             icon="icons/obj16/changelog_obj.png"
             id="org.eclipse.egit.ui.diffEditor"
