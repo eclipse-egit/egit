@@ -594,18 +594,6 @@ public class UIText extends NLS {
 	public static String GitHistoryPage_ResetBaselineToParentOfHeadMenuLabel;
 
 	/** */
-	public static String GitHistoryPage_ResetHardMenuLabel;
-
-	/** */
-	public static String GitHistoryPage_ResetMenuLabel;
-
-	/** */
-	public static String GitHistoryPage_ResetMixedMenuLabel;
-
-	/** */
-	public static String GitHistoryPage_ResetSoftMenuLabel;
-
-	/** */
 	public static String GitHistoryPage_revertMenuItem;
 
 	/** */

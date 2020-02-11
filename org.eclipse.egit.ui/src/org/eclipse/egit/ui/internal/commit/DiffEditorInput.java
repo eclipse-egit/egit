@@ -168,17 +168,41 @@ public class DiffEditorInput implements IEditorInput {
 
 	@Override
 	public boolean equals(Object obj) {
+		if (obj == null) {
+			return false;
+		}
 		if (obj == this) {
 			return true;
 		}
-		return (obj instanceof DiffEditorInput)
-				&& Objects.equals(tip, ((DiffEditorInput) obj).tip)
-				&& Objects.equals(base, ((DiffEditorInput) obj).base);
+		if (!(obj instanceof DiffEditorInput)) {
+			return false;
+		}
+		DiffEditorInput other = (DiffEditorInput) obj;
+		if (!Objects.equals(tip.getRepository().getDirectory(),
+				other.tip.getRepository().getDirectory())) {
+			return false;
+		}
+		if (!Objects.equals(tip.getObjectId(), other.tip.getObjectId())) {
+			return false;
+		}
+		if (base == null) {
+			if (other.base != null) {
+				return false;
+			}
+		} else {
+			if (other.base == null || !Objects.equals(base.getObjectId(),
+					other.base.getObjectId())) {
+				return false;
+			}
+		}
+		return true;
 	}
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(tip, base);
+		return Objects.hash(tip.getObjectId(),
+				tip.getRepository().getDirectory(),
+				base == null ? null : base.getObjectId());
 	}
 
 	@Override
