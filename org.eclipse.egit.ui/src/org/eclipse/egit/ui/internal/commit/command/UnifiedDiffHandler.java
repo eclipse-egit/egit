@@ -10,6 +10,8 @@
  *****************************************************************************/
 package org.eclipse.egit.ui.internal.commit.command;
 
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 import org.eclipse.core.commands.ExecutionEvent;
@@ -23,9 +25,11 @@ import org.eclipse.egit.core.internal.IRepositoryCommit;
 import org.eclipse.egit.ui.internal.UIText;
 import org.eclipse.egit.ui.internal.commit.DiffEditor;
 import org.eclipse.egit.ui.internal.commit.DiffEditorInput;
+import org.eclipse.egit.ui.internal.rebase.RebaseInteractiveView;
 import org.eclipse.ui.IEditorPart;
 import org.eclipse.ui.IEditorReference;
 import org.eclipse.ui.IWorkbenchPage;
+import org.eclipse.ui.IWorkbenchPart;
 import org.eclipse.ui.IWorkbenchWindow;
 import org.eclipse.ui.PartInitException;
 import org.eclipse.ui.PlatformUI;
@@ -40,6 +44,19 @@ public class UnifiedDiffHandler extends CommitCommandHandler {
 	public Object execute(ExecutionEvent event) throws ExecutionException {
 		List<IRepositoryCommit> commits = getCommits(event);
 		if (commits.size() == 2) {
+			IWorkbenchPart part = getPart(event);
+			if (part instanceof RebaseInteractiveView) {
+				// In a rebase plan, the items are from oldest to newest.
+				// Eclipse appears to provide items in the order they appear in
+				// the table. Such a comparison is almost always confusing since
+				// it'll show all additions as removals and vice versa. Make
+				// sure the newer one gets taken as tip.
+				Collections.sort(commits,
+						Comparator.<IRepositoryCommit> comparingInt(
+								repoCommit -> repoCommit.getRevCommit()
+										.getCommitTime())
+								.reversed());
+			}
 			show(commits.get(0), commits.get(1));
 		}
 		return null;
