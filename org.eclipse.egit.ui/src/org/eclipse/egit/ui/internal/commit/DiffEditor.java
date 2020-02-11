@@ -30,7 +30,9 @@ import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.core.runtime.SubMonitor;
+import org.eclipse.core.runtime.jobs.IJobChangeEvent;
 import org.eclipse.core.runtime.jobs.Job;
+import org.eclipse.core.runtime.jobs.JobChangeAdapter;
 import org.eclipse.egit.core.internal.IRepositoryCommit;
 import org.eclipse.egit.ui.Activator;
 import org.eclipse.egit.ui.JobFamilies;
@@ -442,57 +444,6 @@ public class DiffEditor extends TextEditor
 	}
 
 	/**
-	 * Gets the full unified diff.
-	 *
-	 * @param tip
-	 *            for the diff
-	 * @param base
-	 *            to compare against, may be {@code null}
-	 *
-	 * @return the diff as a sorted (by file path) array of {@link FileDiff}s
-	 */
-	protected FileDiff[] getDiffs(IRepositoryCommit tip,
-			IRepositoryCommit base) {
-		List<FileDiff> diffResult = new ArrayList<>();
-
-		if (base == null) {
-			if (tip instanceof RepositoryCommit) {
-				diffResult.addAll(asList(((RepositoryCommit) tip).getDiffs()));
-				if (tip.getRevCommit().getParentCount() > 2) {
-					RevCommit untrackedCommit = tip.getRevCommit()
-							.getParent(StashEditorPage.PARENT_COMMIT_UNTRACKED);
-					diffResult.addAll(
-							asList(new RepositoryCommit(tip.getRepository(),
-									untrackedCommit).getDiffs()));
-				}
-			}
-		} else {
-			// Compute the diffs between tip and base
-			Repository repository = tip.getRepository();
-			RevCommit tipCommit = tip.getRevCommit();
-			RevCommit baseCommit = base.getRevCommit();
-			FileDiff[] diffsResult = null;
-			try (RevWalk revWalk = new RevWalk(repository);
-					TreeWalk treewalk = new TreeWalk(
-							revWalk.getObjectReader())) {
-				treewalk.setRecursive(true);
-				treewalk.setFilter(TreeFilter.ANY_DIFF);
-				revWalk.parseBody(tipCommit);
-				revWalk.parseBody(baseCommit);
-				diffsResult = FileDiff.compute(repository, treewalk, tipCommit,
-						new RevCommit[] { baseCommit }, null, TreeFilter.ALL);
-			} catch (IOException e) {
-				diffsResult = new FileDiff[0];
-			}
-			return diffsResult;
-		}
-
-		FileDiff[] result = diffResult.toArray(new FileDiff[0]);
-		Arrays.sort(result, FileDiff.PATH_COMPARATOR);
-		return result;
-	}
-
-	/**
 	 * Asynchronously gets the diff of the commit set on our
 	 * {@link CommitEditorInput}, formats it into a {@link DiffDocument}, and
 	 * then re-sets this editors's input to a {@link DiffEditorInput} which will
@@ -503,26 +454,142 @@ public class DiffEditor extends TextEditor
 	 */
 	private void formatDiff(@NonNull DiffEditorInput input) {
 		IRepositoryCommit commit = input.getTip();
-		if (commit instanceof RepositoryCommit) {
-			RepositoryCommit repoCommit = (RepositoryCommit) commit;
-			if (!repoCommit.isStash()
-					&& repoCommit.getRevCommit().getParentCount() > 1) {
+		IRepositoryCommit base = input.getBase();
+		if (base == null && commit.getRevCommit().getParentCount() > 1) {
+			if (!(commit instanceof RepositoryCommit)
+					|| !((RepositoryCommit) commit).isStash()) {
 				input.setDocument(new Document());
 				setInput(input);
 				return;
 			}
 		}
-		IRepositoryCommit base = input.getBase();
-		Job job = new Job(UIText.DiffEditor_TaskGeneratingDiff) {
+		DiffJob job = getDiffer(commit, base);
+		job.addJobChangeListener(new JobChangeAdapter() {
+			@Override
+			public void done(IJobChangeEvent event) {
+				if (!event.getResult().isOK()) {
+					return;
+				}
+				new UIJob(UIText.DiffEditor_TaskUpdatingViewer) {
+
+					@Override
+					public IStatus runInUIThread(IProgressMonitor uiMonitor) {
+						if (UIUtils
+								.isUsable(getSourceViewer().getTextWidget())) {
+							input.setDocument(job.getDocument());
+							setInput(input);
+						}
+						return Status.OK_STATUS;
+					}
+				}.schedule();
+			}
+		});
+		job.schedule();
+	}
+
+	/**
+	 * A {@link Job} computing a diff.
+	 */
+	public static abstract class DiffJob extends Job {
+
+		private DiffDocument document;
+
+		/**
+		 * Creates a new {@link DiffJob}.
+		 */
+		protected DiffJob() {
+			super(UIText.DiffEditor_TaskGeneratingDiff);
+		}
+
+		/**
+		 * @return the final {@link DiffDocument}
+		 */
+		public DiffDocument getDocument() {
+			return document;
+		}
+
+		/**
+		 * Sets the final document.
+		 *
+		 * @param document
+		 *            to set
+		 */
+		public void setDocument(DiffDocument document) {
+			this.document = document;
+		}
+	}
+
+	/**
+	 * Obtains a {@link DiffJob} computing the diff between the two commits, or
+	 * between the {@code tip} and its parent.
+	 *
+	 * @param tip
+	 *            commit to diff
+	 * @param base
+	 *            commit to diff against; may be {@code null}
+	 * @return the job
+	 */
+	public static DiffJob getDiffer(@NonNull IRepositoryCommit tip,
+			IRepositoryCommit base) {
+		return new DiffJob() {
 
 			@Override
 			protected IStatus run(IProgressMonitor monitor) {
-				FileDiff diffs[] = getDiffs(commit, base);
+				SubMonitor progress = SubMonitor.convert(monitor, 2);
+				FileDiff diffs[] = getDiffs(progress.newChild(1));
+				setDocument(formatDiffs(diffs, progress.newChild(1)));
+				return Status.OK_STATUS;
+			}
+
+			private FileDiff[] getDiffs(IProgressMonitor monitor) {
+				List<FileDiff> diffResult = new ArrayList<>();
+
+				if (base == null) {
+					if (tip instanceof RepositoryCommit) {
+						diffResult.addAll(
+								asList(((RepositoryCommit) tip).getDiffs()));
+						if (tip.getRevCommit().getParentCount() > 2) {
+							RevCommit untrackedCommit = tip.getRevCommit()
+									.getParent(
+											StashEditorPage.PARENT_COMMIT_UNTRACKED);
+							diffResult.addAll(asList(
+									new RepositoryCommit(tip.getRepository(),
+											untrackedCommit).getDiffs()));
+						}
+					}
+				} else {
+					// Compute the diffs between tip and base
+					Repository repository = tip.getRepository();
+					RevCommit tipCommit = tip.getRevCommit();
+					RevCommit baseCommit = base.getRevCommit();
+					FileDiff[] diffsResult = null;
+					try (RevWalk revWalk = new RevWalk(repository);
+							TreeWalk treewalk = new TreeWalk(
+									revWalk.getObjectReader())) {
+						treewalk.setRecursive(true);
+						treewalk.setFilter(TreeFilter.ANY_DIFF);
+						revWalk.parseBody(tipCommit);
+						revWalk.parseBody(baseCommit);
+						diffsResult = FileDiff.compute(repository, treewalk,
+								tipCommit, new RevCommit[] { baseCommit },
+								monitor, TreeFilter.ALL);
+					} catch (IOException e) {
+						diffsResult = new FileDiff[0];
+					}
+					return diffsResult;
+				}
+
+				FileDiff[] result = diffResult.toArray(new FileDiff[0]);
+				Arrays.sort(result, FileDiff.PATH_COMPARATOR);
+				return result;
+			}
+
+			private DiffDocument formatDiffs(FileDiff[] diffs,
+					IProgressMonitor monitor) {
+				SubMonitor progress = SubMonitor.convert(monitor, diffs.length);
 				DiffDocument document = new DiffDocument();
 				try (DiffRegionFormatter formatter = new DiffRegionFormatter(
 						document)) {
-					SubMonitor progress = SubMonitor.convert(monitor,
-							diffs.length);
 					for (FileDiff diff : diffs) {
 						if (progress.isCanceled()) {
 							break;
@@ -537,19 +604,7 @@ public class DiffEditor extends TextEditor
 					}
 					document.connect(formatter);
 				}
-				new UIJob(UIText.DiffEditor_TaskUpdatingViewer) {
-
-					@Override
-					public IStatus runInUIThread(IProgressMonitor uiMonitor) {
-						if (UIUtils
-								.isUsable(getSourceViewer().getTextWidget())) {
-							input.setDocument(document);
-							setInput(input);
-						}
-						return Status.OK_STATUS;
-					}
-				}.schedule();
-				return Status.OK_STATUS;
+				return document;
 			}
 
 			@Override
@@ -557,7 +612,6 @@ public class DiffEditor extends TextEditor
 				return JobFamilies.DIFF == family || super.belongsTo(family);
 			}
 		};
-		job.schedule();
 	}
 
 	/**
