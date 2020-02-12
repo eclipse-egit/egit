@@ -18,14 +18,19 @@ import static org.eclipse.egit.ui.UIPreferences.THEME_DiffAddBackgroundColor;
 import static org.eclipse.egit.ui.UIPreferences.THEME_DiffRemoveBackgroundColor;
 
 import java.io.IOException;
+import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.eclipse.core.resources.IFile;
+import org.eclipse.core.resources.IWorkspace;
+import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.Adapters;
 import org.eclipse.core.runtime.CoreException;
+import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Status;
@@ -78,17 +83,22 @@ import org.eclipse.jgit.treewalk.filter.TreeFilter;
 import org.eclipse.swt.graphics.Font;
 import org.eclipse.swt.graphics.RGB;
 import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.Shell;
 import org.eclipse.team.ui.history.IHistoryView;
 import org.eclipse.ui.IEditorInput;
 import org.eclipse.ui.PlatformUI;
+import org.eclipse.ui.actions.WorkspaceModifyOperation;
+import org.eclipse.ui.dialogs.SaveAsDialog;
 import org.eclipse.ui.editors.text.EditorsUI;
+import org.eclipse.ui.editors.text.FileDocumentProvider;
 import org.eclipse.ui.editors.text.TextEditor;
+import org.eclipse.ui.part.FileEditorInput;
 import org.eclipse.ui.part.IShowInSource;
 import org.eclipse.ui.part.IShowInTargetList;
 import org.eclipse.ui.part.ShowInContext;
+import org.eclipse.ui.progress.IProgressService;
 import org.eclipse.ui.progress.UIJob;
 import org.eclipse.ui.texteditor.AbstractDecoratedTextEditorPreferenceConstants;
-import org.eclipse.ui.texteditor.AbstractDocumentProvider;
 import org.eclipse.ui.texteditor.ChainedPreferenceStore;
 import org.eclipse.ui.texteditor.IDocumentProvider;
 import org.eclipse.ui.texteditor.ITextEditorActionConstants;
@@ -195,7 +205,49 @@ public class DiffEditor extends TextEditor
 
 	@Override
 	public boolean isSaveAsAllowed() {
-		return false;
+		IDocumentProvider provider = getDocumentProvider();
+		return provider != null && provider
+				.getDocument(getEditorInput()) instanceof DiffDocument;
+	}
+
+	@Override
+	protected void performSaveAs(IProgressMonitor progressMonitor) {
+		Shell shell = getSite().getShell();
+		SaveAsDialog dialog = new SaveAsDialog(shell);
+		dialog.open();
+		IPath path = dialog.getResult();
+
+		if (path == null) {
+			if (progressMonitor != null) {
+				progressMonitor.setCanceled(true);
+			}
+			return;
+		}
+
+		IWorkspace workspace = ResourcesPlugin.getWorkspace();
+		IFile file = workspace.getRoot().getFile(path);
+		IEditorInput newInput = new FileEditorInput(file);
+
+		WorkspaceModifyOperation op = new WorkspaceModifyOperation() {
+			@Override
+			public void execute(final IProgressMonitor monitor)
+					throws CoreException {
+				IDocumentProvider provider = getDocumentProvider();
+				if (provider != null) {
+					provider.saveDocument(monitor, newInput,
+							provider.getDocument(getEditorInput()), true);
+				}
+			}
+		};
+
+		try {
+			getSite().getService(IProgressService.class).busyCursorWhile(op);
+		} catch (InterruptedException e) {
+			// Cancelled.
+		} catch (InvocationTargetException e) {
+			Activator.handleError(UIText.DiffEditor_SaveError, e.getCause(),
+					true);
+		}
 	}
 
 	@Override
@@ -615,9 +667,11 @@ public class DiffEditor extends TextEditor
 	}
 
 	/**
-	 * A document provider that knows about {@link DiffEditorInput}.
+	 * A document provider that knows about {@link DiffEditorInput}. Derived
+	 * from {@link FileDocumentProvider} to get the default save implementation
+	 * needed for "Save As...".
 	 */
-	private static class DiffDocumentProvider extends AbstractDocumentProvider {
+	private static class DiffDocumentProvider extends FileDocumentProvider {
 
 		@Override
 		public IStatus getStatus(Object element) {
@@ -654,12 +708,6 @@ public class DiffEditor extends TextEditor
 		protected IAnnotationModel createAnnotationModel(Object element)
 				throws CoreException {
 			return new AnnotationModel();
-		}
-
-		@Override
-		protected void doSaveDocument(IProgressMonitor monitor, Object element,
-				IDocument document, boolean overwrite) throws CoreException {
-			// Cannot save
 		}
 
 		@Override
