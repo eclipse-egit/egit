@@ -3953,6 +3953,9 @@ public class UIText extends NLS {
 	public static String DialogsPreferencePage_ShowCloneFailedDialog;
 
 	/** */
+	public static String DiffEditor_SaveError;
+
+	/** */
 	public static String DiffEditor_TaskGeneratingDiff;
 
 	/** */
