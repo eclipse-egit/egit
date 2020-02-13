@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e533ff0e_d8955985",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/CompareUtils.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 384,
+      "author": {
+        "id": 119988
+      },
+      "writtenOn": "2020-02-13T11:53:16Z",
+      "side": 1,
+      "message": "This should be:\n\nleftResource.getRawLocation().toOSString();\n\nOr something similar.",
+      "range": {
+        "startLine": 382,
+        "startChar": 5,
+        "endLine": 384,
+        "endChar": 19
+      },
+      "revId": "1241ce56e623373eebb1972314d197c2b3815dad",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
