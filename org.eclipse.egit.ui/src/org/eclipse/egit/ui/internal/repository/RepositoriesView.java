@@ -597,7 +597,13 @@ public class RepositoriesView extends CommonNavigator implements IShowInSource, 
 		// error if the text is the same again during editing.
 		String initialValue[] = { null };
 
-		textCellEditor = new MessagePopupTextCellEditor(viewer.getTree(), true);
+		textCellEditor = new MessagePopupTextCellEditor(viewer.getTree(), true) {
+			
+			@Override
+			protected boolean withBorder() {
+				return true;
+			}
+		};
 		textCellEditor.setValidator(value -> {
 			String currentText = value.toString().trim();
 			if (currentText.isEmpty()) {
