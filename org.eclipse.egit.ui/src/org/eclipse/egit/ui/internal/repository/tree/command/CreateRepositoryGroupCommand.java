@@ -28,6 +28,7 @@ import org.eclipse.egit.ui.internal.repository.tree.RepositoryTreeNodeType;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.viewers.StructuredSelection;
 import org.eclipse.jgit.annotations.NonNull;
+import org.eclipse.swt.SWT;
 import org.eclipse.ui.navigator.CommonViewer;
 
 /**
@@ -61,7 +62,16 @@ public class CreateRepositoryGroupCommand
 		viewer.setSelection(
 				new StructuredSelection(new RepositoryGroupNode(group)), true);
 		IStructuredSelection sel = viewer.getStructuredSelection();
-		viewer.editElement(sel.getFirstElement(), 0);
+		if ("gtk".equals(SWT.getPlatform())) { //$NON-NLS-1$
+			// If run immediately GTK sizes the editor wrongly, and sizes it
+			// correctly only once the user clicks into it.
+			viewer.getControl().getDisplay().asyncExec(
+					() -> viewer.editElement(sel.getFirstElement(), 0));
+		} else {
+			// But on other platforms Display.asyncExec() leads to noticeable
+			// flickering.
+			viewer.editElement(sel.getFirstElement(), 0);
+		}
 		return null;
 	}
 
