@@ -19,8 +19,11 @@ import org.eclipse.jface.window.ToolTip;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.graphics.RGB;
+import org.eclipse.swt.graphics.Rectangle;
+import org.eclipse.swt.layout.FillLayout;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
+import org.eclipse.swt.widgets.Event;
 
 /**
  * A {@link TextCellEditor} that automatically shows any message from an
@@ -46,6 +49,8 @@ public class MessagePopupTextCellEditor extends TextCellEditor {
 	private final boolean cancelOnFocusLost;
 
 	private DefaultToolTip errorPopup;
+
+	private Composite outer;
 
 	/**
 	 * Creates a new {@link MessagePopupTextCellEditor} parented under the given
@@ -136,9 +141,35 @@ public class MessagePopupTextCellEditor extends TextCellEditor {
 		}
 	}
 
+	/**
+	 * Whether to adjust the size of the inline editor to the text size and draw
+	 * it with a black border if it is a single-line editor.
+	 * <p>
+	 * Note that this is called from code invoked during a super constructor, so
+	 * it mustn't depend on any local fields being set.
+	 * </p>
+	 *
+	 * @return {@code false}
+	 */
+	protected boolean withBorder() {
+		return false;
+	}
+
 	@Override
 	protected Control createControl(Composite parent) {
-		Control control = super.createControl(parent);
+		Control control = null;
+		if ((getStyle() & SWT.SINGLE) != 0 && withBorder()) {
+			outer = new Composite(parent, SWT.NONE);
+			outer.setVisible(false);
+			outer.setLayout(new FillLayout());
+			super.createControl(outer);
+			control = outer;
+			outer.setBackground(text.getBackground());
+			outer.addListener(SWT.Paint, this::drawRectangle);
+			text.addListener(SWT.Modify, event -> adjustSize());
+		} else {
+			control = super.createControl(parent);
+		}
 		errorPopup = new DefaultToolTip(control, ToolTip.NO_RECREATE, true);
 		// A delay enables us to cancel showing the tooltip if the user keeps
 		// typing and the value is valid again.
@@ -172,9 +203,6 @@ public class MessagePopupTextCellEditor extends TextCellEditor {
 				errorPopup.hide();
 			}
 		});
-		// Since "text" in the super class is protected, we may rely on (a)
-		// super.createControl() having created and returned a Text, and (b) it
-		// having actually set "text", and (c) control == text.
 		if ((text.getStyle() & SWT.SINGLE) != 0) {
 			// Prevent pasting multi-line text into a single-line control. See
 			// bug 273470.
@@ -182,6 +210,66 @@ public class MessagePopupTextCellEditor extends TextCellEditor {
 					event -> event.text = Utils.firstLine(event.text));
 		}
 		return control;
+	}
+
+	private void drawRectangle(Event event) {
+		Rectangle textBounds = text.getBounds();
+		if (textBounds.x < 2 || textBounds.y < 1) {
+			textBounds = resizeText();
+		}
+		Rectangle parentSize = outer.getClientArea();
+		event.gc.setForeground(text.getForeground());
+		event.gc.drawRectangle(0, 0,
+				Math.min(textBounds.width + 4 - 1, parentSize.width - 1),
+				parentSize.height - 1);
+	}
+
+	private Rectangle resizeText() {
+		Rectangle area = outer.getClientArea();
+		Point size = text.computeSize(SWT.DEFAULT, SWT.DEFAULT);
+		size.x += size.y;
+		if (text.getText().isEmpty()) {
+			// Text enforces a minimum width of 60px if the text is empty,
+			// which makes the editor grow when the last character is
+			// removed.
+			size.x = size.y;
+		}
+		Rectangle bounds = new Rectangle(2, 1, Math.min(size.x, area.width - 4),
+				area.height - 2);
+		text.setBounds(bounds);
+		return bounds;
+	}
+
+	private void adjustSize() {
+		resizeText();
+		outer.redraw();
+	}
+
+	@Override
+	public void performDelete() {
+		super.performDelete();
+		// At least on SWT/Cocoa, no Modify event is sent
+		if (outer != null) {
+			adjustSize();
+		}
+	}
+
+	@Override
+	public void performPaste() {
+		super.performPaste();
+		text.showSelection();
+		if (outer != null) {
+			adjustSize();
+		}
+	}
+
+	@Override
+	public void dispose() {
+		super.dispose();
+		if (outer != null) {
+			outer.dispose();
+			outer = null;
+		}
 	}
 
 	/**
