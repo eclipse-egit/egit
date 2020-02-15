@@ -58,8 +58,9 @@ public class CreateRepositoryGroupCommand
 		}
 		CommonViewer viewer = getView(event).getCommonViewer();
 		viewer.refresh();
-		viewer.setSelection(
-				new StructuredSelection(new RepositoryGroupNode(group)), true);
+		RepositoryGroupNode groupNode = new RepositoryGroupNode(group);
+		viewer.setSelection(new StructuredSelection(groupNode), true);
+		viewer.expandToLevel(groupNode, 1);
 		IStructuredSelection sel = viewer.getStructuredSelection();
 		viewer.editElement(sel.getFirstElement(), 0);
 		return null;
