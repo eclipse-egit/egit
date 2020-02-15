@@ -21,6 +21,7 @@ import org.eclipse.core.commands.ExecutionException;
 import org.eclipse.egit.ui.internal.UIText;
 import org.eclipse.egit.ui.internal.groups.RepositoryGroup;
 import org.eclipse.egit.ui.internal.groups.RepositoryGroups;
+import org.eclipse.egit.ui.internal.repository.RepositoriesView;
 import org.eclipse.egit.ui.internal.repository.tree.RepositoryGroupNode;
 import org.eclipse.egit.ui.internal.repository.tree.RepositoryNode;
 import org.eclipse.egit.ui.internal.repository.tree.RepositoryTreeNode;
@@ -57,10 +58,12 @@ public class CreateRepositoryGroupCommand
 		if (!repoDirs.isEmpty()) {
 			groupsUtil.addRepositoriesToGroup(group, repoDirs);
 		}
-		CommonViewer viewer = getView(event).getCommonViewer();
+		RepositoriesView view = getView(event);
+		CommonViewer viewer = view.getCommonViewer();
 		viewer.refresh();
 		viewer.setSelection(
 				new StructuredSelection(new RepositoryGroupNode(group)), true);
+		view.expandNodeForGroup(group);
 		IStructuredSelection sel = viewer.getStructuredSelection();
 		if ("gtk".equals(SWT.getPlatform())) { //$NON-NLS-1$
 			// If run immediately GTK sizes the editor wrongly, and sizes it

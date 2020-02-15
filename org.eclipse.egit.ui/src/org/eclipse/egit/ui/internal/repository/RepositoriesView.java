@@ -882,6 +882,17 @@ public class RepositoriesView extends CommonNavigator implements IShowInSource, 
 	}
 
 	/**
+	 * Expands the tree element for the given group
+	 *
+	 * @param group
+	 */
+	public void expandNodeForGroup(RepositoryGroup group) {
+		if (group != null) {
+			getCommonViewer().expandToLevel(new RepositoryGroupNode(group), 1);
+		}
+	}
+
+	/**
 	 * Reveals and shows the given repository in the view.
 	 *
 	 * @param repositoryToShow
