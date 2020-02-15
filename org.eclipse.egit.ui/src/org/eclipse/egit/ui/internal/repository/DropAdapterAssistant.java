@@ -127,7 +127,7 @@ public class DropAdapterAssistant extends CommonDropAdapterAssistant {
 				}
 				RepositoryGroups.getInstance().addRepositoriesToGroup(
 						group.getObject(), reposToAdd);
-				refreshRepositoriesView();
+				refreshRepositoriesView(group);
 				return Status.OK_STATUS;
 			}
 		}
@@ -144,17 +144,20 @@ public class DropAdapterAssistant extends CommonDropAdapterAssistant {
 					reposToRemove.add(repo.getRepository().getDirectory());
 				}
 				RepositoryGroups.getInstance().removeFromGroups(reposToRemove);
-				refreshRepositoriesView();
+				refreshRepositoriesView(null);
 				return Status.OK_STATUS;
 			}
 		}
 		return Status.CANCEL_STATUS;
 	}
 
-	private void refreshRepositoriesView() {
+	private void refreshRepositoriesView(RepositoryGroupNode groupNode) {
 		RepositoriesView view = (RepositoriesView) PlatformUI.getWorkbench()
 				.getActiveWorkbenchWindow().getActivePage().getActivePart();
 		view.refresh();
+		if (groupNode != null) {
+			view.expandNodeForGroup(groupNode.getObject());
+		}
 	}
 
 	private boolean onlyRepositoryNodesSelected(ISelection selection) {
