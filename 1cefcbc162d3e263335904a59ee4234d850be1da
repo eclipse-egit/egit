@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a1326096_8dfef020",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/uitext.properties",
+        "patchSetId": 1
+      },
+      "lineNbr": 1945,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2020-02-15T21:51:48Z",
+      "side": 1,
+      "message": "Superfluous comma.",
+      "range": {
+        "startLine": 1945,
+        "startChar": 53,
+        "endLine": 1945,
+        "endChar": 54
+      },
+      "revId": "1cefcbc162d3e263335904a59ee4234d850be1da",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
