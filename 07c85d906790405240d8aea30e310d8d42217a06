@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fea567c4_5930cdb2",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/repository/tree/command/CloneCommand.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2020-02-19T09:03:21Z",
+      "side": 1,
+      "message": "Shouldn\u0027t this be done only if cloning was successful? Same in the other creation operations.",
+      "revId": "07c85d906790405240d8aea30e310d8d42217a06",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
