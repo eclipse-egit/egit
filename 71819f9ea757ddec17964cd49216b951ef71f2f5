@@ -1,0 +1,95 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "be44583e_54e9046c",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/actions/SwitchToMenu.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 163,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2020-02-19T08:50:44Z",
+      "side": 1,
+      "message": "It\u0027s also insufficient. On a repo group containing a repo that is currently in interactive rebase and a bare repo, branch creation is enabled. When executed, it creates the branch only in the interactive rebase repo, and checkout doesn\u0027t do anything. An exception is logged:\n\n  !ENTRY org.eclipse.ui 4 0 2020-02-19 09:21:51.534\n  !MESSAGE Unhandled event loop exception\n  !STACK 0\n  org.eclipse.jgit.errors.NoWorkTreeException: Bare Repository has neither a working tree, nor an index\n    at org.eclipse.jgit.lib.Repository.getWorkTree(Repository.java:1557)\n    at org.eclipse.egit.core.RepositoryHandle.getWorkTree(RepositoryHandle.java:333)\n    at org.eclipse.egit.core.internal.job.RuleUtil.getProjects(RuleUtil.java:132)\n    at org.eclipse.egit.core.internal.job.RuleUtil.getRule(RuleUtil.java:55)\n    at org.eclipse.egit.core.op.CreateLocalBranchOperation.getSchedulingRule(CreateLocalBranchOperation.java:134)\n    at org.eclipse.egit.core.op.CreateLocalBranchOperation.execute(CreateLocalBranchOperation.java:128)\n    at org.eclipse.egit.ui.internal.actions.SwitchToMenu$1.widgetSelected(SwitchToMenu.java:195)\n\nWhen I move the two repos out of the group and select them, I don\u0027t even get the \"Switch Repositories To...\" menu item.",
+      "revId": "71819f9ea757ddec17964cd49216b951ef71f2f5",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ac1162cd_1deea884",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/actions/SwitchToMenu.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 177,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2020-02-19T08:50:44Z",
+      "side": 1,
+      "message": "This says \"Create Branch (Bulk)\". Maybe better \"Create Branch in Multiple Repositories\"?",
+      "range": {
+        "startLine": 177,
+        "startChar": 13,
+        "endLine": 177,
+        "endChar": 41
+      },
+      "revId": "71819f9ea757ddec17964cd49216b951ef71f2f5",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "b8a270fc_60767b16",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/actions/SwitchToMenu.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 194,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2020-02-19T08:50:44Z",
+      "side": 1,
+      "message": "So if local branch \"master\" is currently checked out and I create a new branch, I get a new local branch with remote tracking branch set to that local master? That\u0027s not good. Perhaps better to get the commit HEAD is pointing to, and just create the branch there using the other constructor?",
+      "revId": "71819f9ea757ddec17964cd49216b951ef71f2f5",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "661c4526_b6066557",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/actions/SwitchToMenu.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 200,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2020-02-19T08:50:44Z",
+      "side": 1,
+      "message": "Should probably present the error to the user.",
+      "revId": "71819f9ea757ddec17964cd49216b951ef71f2f5",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "2009fcd8_2c2fcffd",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/actions/SwitchToMenu.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 223,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2020-02-19T08:50:44Z",
+      "side": 1,
+      "message": "Should probably prefix with the repo name here, otherwise the user doesn\u0027t know in which repo the branch exists already. Anyway, if the branch already exists in some repos, we could simply not create it there and just check it out?",
+      "revId": "71819f9ea757ddec17964cd49216b951ef71f2f5",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
