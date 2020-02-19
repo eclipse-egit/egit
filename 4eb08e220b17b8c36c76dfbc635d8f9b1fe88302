@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "cfb8de49_3bda8039",
+        "filename": "org.eclipse.egit.ui/plugin.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 3922,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2020-02-19T12:54:44Z",
+      "side": 1,
+      "message": "Yes. The same command may have different handlers, active on different conditions.\n\nBut the label also contains the accelerator (\u0026E here: Compare with \u0026Each Other). In this particular case I think using E is fine in the repo view, too (no conflict), but in the general case we might need to give the same command different accelerators in different views. Should be avoided, of course, but sometimes cannot be helped. That\u0027s why individual appearances of the same command in different menus should have different label strings.\n\nAt least that\u0027s my take on it. Don\u0027t know what (if anything) the official stand on this is, though.",
+      "parentUuid": "8955ba2d_3e5b76d5",
+      "revId": "4eb08e220b17b8c36c76dfbc635d8f9b1fe88302",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0d4557b3_c8d7ccaa",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/repository/tree/command/CompareCommand.java",
         "patchSetId": 1
