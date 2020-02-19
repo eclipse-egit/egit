@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "d3c14d58_fb8514a1",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/actions/SwitchToMenu.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 163,
+      "author": {
+        "id": 236689
+      },
+      "writtenOn": "2020-02-19T16:10:44Z",
+      "side": 1,
+      "message": "I excluded bare and rebasing repositories. I still think that no changes is too strict, but I don\u0027t know what the correct condition would be.\n\nI cannot reproduce the menu item not being present for multiple repositories outside of groups!?",
+      "parentUuid": "be44583e_54e9046c",
+      "revId": "71819f9ea757ddec17964cd49216b951ef71f2f5",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ac1162cd_1deea884",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/actions/SwitchToMenu.java",
         "patchSetId": 4
@@ -30,6 +48,30 @@
       "writtenOn": "2020-02-19T08:50:44Z",
       "side": 1,
       "message": "This says \"Create Branch (Bulk)\". Maybe better \"Create Branch in Multiple Repositories\"?",
+      "range": {
+        "startLine": 177,
+        "startChar": 13,
+        "endLine": 177,
+        "endChar": 41
+      },
+      "revId": "71819f9ea757ddec17964cd49216b951ef71f2f5",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "0178cf84_09f3a5c4",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/actions/SwitchToMenu.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 177,
+      "author": {
+        "id": 236689
+      },
+      "writtenOn": "2020-02-19T16:10:44Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ac1162cd_1deea884",
       "range": {
         "startLine": 177,
         "startChar": 13,
@@ -59,6 +101,24 @@
     },
     {
       "key": {
+        "uuid": "56cb93c2_7a6005b1",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/actions/SwitchToMenu.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 194,
+      "author": {
+        "id": 236689
+      },
+      "writtenOn": "2020-02-19T16:10:44Z",
+      "side": 1,
+      "message": "I changed the code, extracting head as done in HistoryViewTest. I hope, this is what you meant.",
+      "parentUuid": "b8a270fc_60767b16",
+      "revId": "71819f9ea757ddec17964cd49216b951ef71f2f5",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "661c4526_b6066557",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/actions/SwitchToMenu.java",
         "patchSetId": 4
@@ -76,6 +136,24 @@
     },
     {
       "key": {
+        "uuid": "166adba3_2b51b6b5",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/actions/SwitchToMenu.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 200,
+      "author": {
+        "id": 236689
+      },
+      "writtenOn": "2020-02-19T16:10:44Z",
+      "side": 1,
+      "message": "Done, hopefully in the correct way.",
+      "parentUuid": "661c4526_b6066557",
+      "revId": "71819f9ea757ddec17964cd49216b951ef71f2f5",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2009fcd8_2c2fcffd",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/actions/SwitchToMenu.java",
         "patchSetId": 4
@@ -87,6 +165,24 @@
       "writtenOn": "2020-02-19T08:50:44Z",
       "side": 1,
       "message": "Should probably prefix with the repo name here, otherwise the user doesn\u0027t know in which repo the branch exists already. Anyway, if the branch already exists in some repos, we could simply not create it there and just check it out?",
+      "revId": "71819f9ea757ddec17964cd49216b951ef71f2f5",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "35b14cde_48dd9a11",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/actions/SwitchToMenu.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 223,
+      "author": {
+        "id": 236689
+      },
+      "writtenOn": "2020-02-19T16:10:44Z",
+      "side": 1,
+      "message": "I added the repo name prefix.\n\nThe current behaviour is consistent with creating a branch for a single repository. Also, it might be dangerous to simply check out the existing branch. The user may not be aware of its existence and the branch may originate from a completely different commit!",
+      "parentUuid": "2009fcd8_2c2fcffd",
       "revId": "71819f9ea757ddec17964cd49216b951ef71f2f5",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
