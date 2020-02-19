@@ -3077,6 +3077,60 @@
          </activeWhen>
       </handler>
       <handler
+            commandId="org.eclipse.egit.ui.history.CompareVersions">
+         <class
+               class="org.eclipse.egit.ui.internal.repository.tree.command.CompareCommand">
+         </class>
+         <activeWhen>
+            <and>
+               <count value="2" />
+               <iterate>
+                  <or>
+                     <instanceof value="org.eclipse.egit.ui.internal.repository.tree.TagNode" />
+                     <instanceof value="org.eclipse.egit.ui.internal.repository.tree.RefNode" />
+                     <instanceof value="org.eclipse.egit.ui.internal.repository.tree.AdditionalRefNode" />
+                  </or>
+               </iterate>
+            </and>
+         </activeWhen>
+      </handler>
+      <handler
+            commandId="org.eclipse.egit.ui.history.CompareVersionsInTree">
+         <class
+               class="org.eclipse.egit.ui.internal.repository.tree.command.CompareInTreeCommand">
+         </class>
+         <activeWhen>
+            <and>
+               <count value="2" />
+               <iterate>
+                  <or>
+                     <instanceof value="org.eclipse.egit.ui.internal.repository.tree.TagNode" />
+                     <instanceof value="org.eclipse.egit.ui.internal.repository.tree.RefNode" />
+                     <instanceof value="org.eclipse.egit.ui.internal.repository.tree.AdditionalRefNode" />
+                  </or>
+               </iterate>
+            </and>
+         </activeWhen>
+      </handler>
+      <handler
+            commandId="org.eclipse.egit.ui.commit.UnifiedDiffCommand">
+         <class
+               class="org.eclipse.egit.ui.internal.repository.tree.command.CompareUnifiedCommand">
+         </class>
+         <activeWhen>
+            <and>
+               <count value="2" />
+               <iterate>
+                  <or>
+                     <instanceof value="org.eclipse.egit.ui.internal.repository.tree.TagNode" />
+                     <instanceof value="org.eclipse.egit.ui.internal.repository.tree.RefNode" />
+                     <instanceof value="org.eclipse.egit.ui.internal.repository.tree.AdditionalRefNode" />
+                  </or>
+               </iterate>
+            </and>
+         </activeWhen>
+      </handler>
+      <handler
             commandId="org.eclipse.egit.ui.history.CompareVersionsInTree">
          <class
                class="org.eclipse.egit.ui.internal.history.command.CompareVersionsInTreeHandler">
@@ -3960,6 +4014,24 @@
                   </iterate>
                </and>
             </visibleWhen>
+         </command>
+         <command
+              commandId="org.eclipse.egit.ui.history.CompareVersions"
+              label="%RepoViewCompareVersions.label"
+              style="push">
+            <visibleWhen checkEnabled="true" />
+         </command>
+         <command
+              commandId="org.eclipse.egit.ui.history.CompareVersionsInTree"
+              label="%RepoViewCompareVersionsInTree.label"
+              style="push">
+            <visibleWhen checkEnabled="true" />
+         </command>
+         <command
+              commandId="org.eclipse.egit.ui.commit.UnifiedDiffCommand"
+              label="%RepoViewCompareUnified.label"
+              style="push">
+            <visibleWhen checkEnabled="true" />
          </command>
       </menuContribution>
       <menuContribution
