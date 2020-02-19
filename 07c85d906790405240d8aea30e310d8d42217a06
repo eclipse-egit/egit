@@ -16,6 +16,24 @@
       "revId": "07c85d906790405240d8aea30e310d8d42217a06",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7c736770_bb99ab22",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/repository/tree/command/CloneCommand.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 236689
+      },
+      "writtenOn": "2020-02-19T13:08:17Z",
+      "side": 1,
+      "message": "I am not sure about the overhead this would produce. The attempt was to do the expansion at the point where the view and the group are already present.\n\nThe WizardDialog sets the return code to OK, regardless of the results of the nested wizards (WizardDialog lind 797); those boolean values are ignored. You would either have to expand the group in the wizard itself or store the execution result. \n\nMaybe get a third opinion?",
+      "parentUuid": "fea567c4_5930cdb2",
+      "revId": "07c85d906790405240d8aea30e310d8d42217a06",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
     }
   ]
 }
