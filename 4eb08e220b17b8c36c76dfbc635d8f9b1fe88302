@@ -73,6 +73,24 @@
     },
     {
       "key": {
+        "uuid": "8e0c76eb_73d0f67e",
+        "filename": "org.eclipse.egit.ui/plugin.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 3922,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2020-02-19T13:20:09Z",
+      "side": 1,
+      "message": "\u003e I was wondering if \"ui.history.CompareVersions\" is still\n \u003e appropriate if the command is not restricted to the history view\n \u003e anymore.\n\nI generally try to avoid changing command ids. External code might use them.\n\n \u003e Also, there seems to be a conflict because \u0026E is used for the paste\n \u003e command...\n\nYou\u0027re right. In that case we need to change one of them.",
+      "parentUuid": "7e5d16d9_cfd58a4f",
+      "revId": "4eb08e220b17b8c36c76dfbc635d8f9b1fe88302",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0d4557b3_c8d7ccaa",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/repository/tree/command/CompareCommand.java",
         "patchSetId": 1
