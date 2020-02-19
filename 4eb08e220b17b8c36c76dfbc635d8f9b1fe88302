@@ -1,0 +1,118 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "22df8256_fb5c8494",
+        "filename": "org.eclipse.egit.ui/plugin.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 3922,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2020-02-19T11:02:24Z",
+      "side": 1,
+      "message": "Use a different label, even if the text is the same.\n\n  %RepoViewCompareVersions.label\n\nSame below.",
+      "revId": "4eb08e220b17b8c36c76dfbc635d8f9b1fe88302",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "0d4557b3_c8d7ccaa",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/repository/tree/command/CompareCommand.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2020-02-19T11:02:24Z",
+      "side": 1,
+      "message": "Shouldn\u0027t that be \"Alexander Nittka\"?",
+      "range": {
+        "startLine": 2,
+        "startChar": 22,
+        "endLine": 2,
+        "endChar": 28
+      },
+      "revId": "4eb08e220b17b8c36c76dfbc635d8f9b1fe88302",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "e65cbbd8_853c2891",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/repository/tree/command/CompareCommand.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2020-02-19T11:02:24Z",
+      "side": 1,
+      "message": "Actually, compares the commits referenced by two refs.",
+      "revId": "4eb08e220b17b8c36c76dfbc635d8f9b1fe88302",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ed27bed8_9486ea24",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/repository/tree/command/CompareInTreeCommand.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2020-02-19T11:02:24Z",
+      "side": 1,
+      "message": "See CompareCommand.",
+      "range": {
+        "startLine": 2,
+        "startChar": 22,
+        "endLine": 2,
+        "endChar": 28
+      },
+      "revId": "4eb08e220b17b8c36c76dfbc635d8f9b1fe88302",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "abfb35c7_e627d3bf",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/repository/tree/command/CompareInTreeCommand.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2020-02-19T11:02:24Z",
+      "side": 1,
+      "message": "See CompareCommand",
+      "revId": "4eb08e220b17b8c36c76dfbc635d8f9b1fe88302",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "b863898f_f9c856c0",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/repository/tree/command/CompareInTreeCommand.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2020-02-19T11:02:24Z",
+      "side": 1,
+      "message": "Re-throw as ExecutionException instead and let the platform handle it?",
+      "revId": "4eb08e220b17b8c36c76dfbc635d8f9b1fe88302",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
