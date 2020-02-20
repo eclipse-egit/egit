@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c90e3180_53305fda",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/repository/tree/command/CompareCommand.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2020-02-20T19:11:41Z",
+      "side": 1,
+      "message": "This should be exactly inverted. Comparing HEAD (at this commit) against the v5.6.1 tag shows this file as removed.",
+      "revId": "8e0b5c95255b79a4fec25f0ff831c6f16e41c91e",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
