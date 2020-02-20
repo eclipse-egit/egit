@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9f053356_6c7ea0ce",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/actions/SwitchToMenu.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 170,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2020-02-20T20:12:22Z",
+      "side": 1,
+      "message": "Probably the check for SAFE would be better.",
+      "range": {
+        "startLine": 162,
+        "startChar": 3,
+        "endLine": 170,
+        "endChar": 4
+      },
+      "revId": "13a9628b55b97cd6accdc4d0b8e29612838c6826",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
