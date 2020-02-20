@@ -16,6 +16,24 @@
       "revId": "8e0b5c95255b79a4fec25f0ff831c6f16e41c91e",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5443a534_b1f671c0",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/repository/tree/command/CompareCommand.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2020-02-20T19:16:30Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c90e3180_53305fda",
+      "revId": "8e0b5c95255b79a4fec25f0ff831c6f16e41c91e",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
     }
   ]
 }
