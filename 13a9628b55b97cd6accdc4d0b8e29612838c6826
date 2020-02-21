@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "3e00c1bb_86325eda",
+        "filename": "org.eclipse.egit.ui/plugin.xml",
+        "patchSetId": 5
+      },
+      "lineNbr": 4190,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2020-02-21T20:52:25Z",
+      "side": 1,
+      "message": "Instead of removing this and changing the propertytester, I think just adding here (after the \u003c/iterate\u003e)\n\n  \u003ctest property\u003d\"GitSelection.selectionMultipleRepositories\" value\u003d\"false\" /\u003e\n\nwould do the trick.",
+      "revId": "13a9628b55b97cd6accdc4d0b8e29612838c6826",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9f053356_6c7ea0ce",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/actions/SwitchToMenu.java",
         "patchSetId": 5
