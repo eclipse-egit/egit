@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5260fbd4_d1e084be",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/selection/SelectionPropertyTester.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2020-02-21T20:52:25Z",
+      "side": 1,
+      "message": "Is wrong for a group with only one repo.",
+      "range": {
+        "startLine": 82,
+        "startChar": 14,
+        "endLine": 82,
+        "endChar": 58
+      },
+      "revId": "8b907e7780ffdb1ad420de28194728c932c745a1",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
