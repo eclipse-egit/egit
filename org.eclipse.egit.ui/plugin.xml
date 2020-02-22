@@ -4291,6 +4291,25 @@
       </menuContribution>
       <menuContribution
             locationURI="popup:org.eclipse.egit.ui.RepositoriesView?after=repo-commit">
+         <dynamic
+               class="org.eclipse.egit.ui.internal.repository.tree.command.DynamicSimplePushCommand"
+               id="org.eclipse.egit.ui.dynamicSimplePush">
+            <visibleWhen
+                  checkEnabled="false">
+               <and>
+                  <count
+                        value="1">
+                  </count>
+                  <iterate
+                        ifEmpty="false"
+                        operator="and">
+                     <instanceof
+                           value="org.eclipse.egit.ui.internal.repository.tree.RepositoryNode">
+                     </instanceof>
+                  </iterate>
+               </and>
+            </visibleWhen>
+         </dynamic>
          <command
                commandId="org.eclipse.egit.ui.team.SimplePush"
                icon="icons/obj16/push.png"
@@ -5204,6 +5223,16 @@
                   </test>
                </visibleWhen>
             </menu>
+            <dynamic
+                  class="org.eclipse.egit.ui.internal.repository.tree.command.DynamicSimplePushCommand"
+                  id="org.eclipse.egit.ui.dynamicSimplePush">
+               <visibleWhen
+                     checkEnabled="false">
+                  <test
+                        property="GitSelection.projectsSingleRepository">
+                  </test>
+               </visibleWhen>
+            </dynamic>
             <command
                   commandId="org.eclipse.egit.ui.team.SimplePush"
                   label="%PushToUpstreamAction.label"
