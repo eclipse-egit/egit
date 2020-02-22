@@ -35,6 +35,7 @@ import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.viewers.TableViewer;
 import org.eclipse.jface.window.Window;
 import org.eclipse.jface.wizard.WizardDialog;
+import org.eclipse.jgit.annotations.NonNull;
 import org.eclipse.jgit.lib.Config;
 import org.eclipse.jgit.lib.ConfigConstants;
 import org.eclipse.jgit.lib.Constants;
@@ -129,6 +130,19 @@ public class SimpleConfigurePushDialog extends AbstractConfigureRemoteDialog {
 		branch = Repository.shortenRefName(branch);
 		return getConfiguredRemote(branch,
 				SelectionRepositoryStateCache.INSTANCE.getConfig(repository));
+	}
+
+	/**
+	 * Computes a specific push label for the given remote config
+	 *
+	 * @param config
+	 * @return the menu item label
+	 *
+	 */
+	public static String getSimplePushCommandLabel(
+			@NonNull RemoteConfig config) {
+		String target = config.getName();
+		return NLS.bind(UIText.SimpleConfigurePushDialog_PushToLabel, target);
 	}
 
 	private static RemoteConfig getConfiguredRemote(String branch,

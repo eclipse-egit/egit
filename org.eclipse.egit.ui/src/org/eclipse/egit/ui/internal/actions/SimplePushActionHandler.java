@@ -10,6 +10,8 @@
  *******************************************************************************/
 package org.eclipse.egit.ui.internal.actions;
 
+import java.util.Map;
+
 import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.commands.ExecutionException;
 import org.eclipse.egit.ui.internal.UIText;
@@ -18,11 +20,14 @@ import org.eclipse.egit.ui.internal.push.SimpleConfigurePushDialog;
 import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jgit.lib.Repository;
 import org.eclipse.jgit.transport.RemoteConfig;
+import org.eclipse.ui.commands.IElementUpdater;
+import org.eclipse.ui.menus.UIElement;
 
 /**
  * Action for "Simple Push"
  */
-public class SimplePushActionHandler extends RepositoryActionHandler {
+public class SimplePushActionHandler extends RepositoryActionHandler
+		implements IElementUpdater {
 	@Override
 	public Object execute(ExecutionEvent event) throws ExecutionException {
 		final Repository repository = getRepository(true, event);
@@ -48,5 +53,15 @@ public class SimplePushActionHandler extends RepositoryActionHandler {
 		return repository != null
 				&& SimpleConfigurePushDialog
 						.getConfiguredRemoteCached(repository) != null;
+	}
+
+	@Override
+	public void updateElement(UIElement element, Map parameters) {
+		RemoteConfig config = SimpleConfigurePushDialog
+				.getConfiguredRemoteCached(getRepository());
+		if (config != null) {
+			element.setText(SimpleConfigurePushDialog
+					.getSimplePushCommandLabel(config));
+		}
 	}
 }
