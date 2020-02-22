@@ -10,6 +10,8 @@
  *******************************************************************************/
 package org.eclipse.egit.ui.internal.actions;
 
+import java.util.Map;
+
 import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.commands.ExecutionException;
 import org.eclipse.egit.ui.Activator;
@@ -20,11 +22,14 @@ import org.eclipse.egit.ui.internal.fetch.SimpleConfigureFetchDialog;
 import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jgit.lib.Repository;
 import org.eclipse.jgit.transport.RemoteConfig;
+import org.eclipse.ui.commands.IElementUpdater;
+import org.eclipse.ui.menus.UIElement;
 
 /**
  * Action for "Simple fetch"
  */
-public class SimpleFetchActionHandler extends RepositoryActionHandler {
+public class SimpleFetchActionHandler extends RepositoryActionHandler
+		implements IElementUpdater {
 	@Override
 	public Object execute(ExecutionEvent event) throws ExecutionException {
 		final Repository repository = getRepository(true, event);
@@ -52,5 +57,15 @@ public class SimpleFetchActionHandler extends RepositoryActionHandler {
 		return repository != null
 				&& SimpleConfigureFetchDialog
 						.getConfiguredRemoteCached(repository) != null;
+	}
+
+	@Override
+	public void updateElement(UIElement element, Map parameters) {
+		RemoteConfig config = SimpleConfigureFetchDialog
+				.getConfiguredRemoteCached(getRepository());
+		if (config != null) {
+			element.setText(SimpleConfigureFetchDialog
+					.getSimpleFetchCommandLabel(config));
+		}
 	}
 }
