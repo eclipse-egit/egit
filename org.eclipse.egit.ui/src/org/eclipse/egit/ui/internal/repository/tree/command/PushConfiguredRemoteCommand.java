@@ -17,6 +17,8 @@
 package org.eclipse.egit.ui.internal.repository.tree.command;
 
 import java.net.URISyntaxException;
+import java.util.List;
+import java.util.Map;
 
 import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.commands.ExecutionException;
@@ -30,12 +32,15 @@ import org.eclipse.egit.ui.internal.repository.tree.RepositoryTreeNode;
 import org.eclipse.egit.ui.internal.selection.SelectionRepositoryStateCache;
 import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jgit.transport.RemoteConfig;
+import org.eclipse.ui.commands.IElementUpdater;
+import org.eclipse.ui.menus.UIElement;
 
 /**
  * Pushes to the remote
  */
 public class PushConfiguredRemoteCommand extends
-		RepositoriesViewCommandHandler<RepositoryTreeNode<?>> {
+		RepositoriesViewCommandHandler<RepositoryTreeNode<?>>
+		implements IElementUpdater {
 	@Override
 	public Object execute(ExecutionEvent event) throws ExecutionException {
 		RepositoryTreeNode node = getSelectedNodes(event).get(0);
@@ -109,5 +114,22 @@ public class PushConfiguredRemoteCommand extends
 			return config;
 		}
 		return null;
+	}
+
+	@Override
+	public void updateElement(UIElement element, Map parameters) {
+		List<RepositoryTreeNode<?>> nodes = getSelectedNodes();
+		if (nodes.size() == 1) {
+			RepositoryTreeNode<?> node = nodes.get(0);
+			if (node instanceof PushNode || node instanceof RemoteNode) {
+				// do nothing
+			} else {
+				RemoteConfig config = getRemoteConfigCached(node);
+				if (config != null) {
+					element.setText(SimpleConfigurePushDialog
+							.getSimplePushCommandLabel(config));
+				}
+			}
+		}
 	}
 }
