@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c8e42666_f7d57824",
+        "filename": "org.eclipse.egit.ui/plugin.xml",
+        "patchSetId": 6
+      },
+      "lineNbr": 3059,
+      "author": {
+        "id": 440
+      },
+      "writtenOn": "2020-02-22T16:41:27Z",
+      "side": 1,
+      "message": "would it also work correctly for stashed commits? might be useful...",
+      "range": {
+        "startLine": 3055,
+        "startChar": 18,
+        "endLine": 3059,
+        "endChar": 23
+      },
+      "revId": "fbda10b6d5f5b2e8ecb0a0f8477364abbe947745",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "679bce97_85d6da28",
+        "filename": "org.eclipse.egit.ui/plugin.xml",
+        "patchSetId": 6
+      },
+      "lineNbr": 3077,
+      "author": {
+        "id": 440
+      },
+      "writtenOn": "2020-02-22T16:41:27Z",
+      "side": 1,
+      "message": "same here",
+      "range": {
+        "startLine": 3073,
+        "startChar": 18,
+        "endLine": 3077,
+        "endChar": 23
+      },
+      "revId": "fbda10b6d5f5b2e8ecb0a0f8477364abbe947745",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "39a411e1_56834bd1",
+        "filename": "org.eclipse.egit.ui/plugin.xml",
+        "patchSetId": 6
+      },
+      "lineNbr": 3927,
+      "author": {
+        "id": 440
+      },
+      "writtenOn": "2020-02-22T16:41:27Z",
+      "side": 1,
+      "message": "please add the same command image as in this change: https://git.eclipse.org/r/#/c/157567/3/org.eclipse.egit.ui/plugin.xml",
+      "range": {
+        "startLine": 3922,
+        "startChar": 10,
+        "endLine": 3927,
+        "endChar": 19
+      },
+      "revId": "fbda10b6d5f5b2e8ecb0a0f8477364abbe947745",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
