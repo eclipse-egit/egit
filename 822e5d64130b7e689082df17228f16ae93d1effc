@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "a92b9f35_dfcb1f3b",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2020-02-22T20:59:21Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3a5519b4_49bffbc1",
+      "range": {
+        "startLine": 9,
+        "startChar": 16,
+        "endLine": 9,
+        "endChar": 20
+      },
+      "revId": "822e5d64130b7e689082df17228f16ae93d1effc",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ec8451e1_923fa09b",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/commit/command/UnifiedDiffHandler.java",
         "patchSetId": 2
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "267fe3e7_b0a5cf62",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/commit/command/UnifiedDiffHandler.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2020-02-22T20:59:21Z",
+      "side": 1,
+      "message": "Is changed in a later commit anyway.",
+      "parentUuid": "ec8451e1_923fa09b",
+      "range": {
+        "startLine": 43,
+        "startChar": 27,
+        "endLine": 43,
+        "endChar": 41
+      },
+      "revId": "822e5d64130b7e689082df17228f16ae93d1effc",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b07c40b5_9d615df5",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/commit/command/UnifiedDiffHandler.java",
         "patchSetId": 2
@@ -59,6 +107,30 @@
       "writtenOn": "2020-02-22T09:20:02Z",
       "side": 1,
       "message": "Is that really possible? I\u0027m always in alert mode if I see a collection with null elements, since that is almost always a bug at the place creating the list.",
+      "range": {
+        "startLine": 44,
+        "startChar": 3,
+        "endLine": 44,
+        "endChar": 21
+      },
+      "revId": "822e5d64130b7e689082df17228f16ae93d1effc",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "f2b71d8f_4cf809aa",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/commit/command/UnifiedDiffHandler.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2020-02-22T20:59:21Z",
+      "side": 1,
+      "message": "Changes in a later commit.",
+      "parentUuid": "b07c40b5_9d615df5",
       "range": {
         "startLine": 44,
         "startChar": 3,
