@@ -119,6 +119,23 @@ public class SimpleConfigureFetchDialog extends AbstractConfigureRemoteDialog {
 	}
 
 	/**
+	 * Computes a specific fetch label for the given remote config (if not
+	 * null); generic "Fetch from Upstream" otherwise
+	 *
+	 * @param config
+	 * @return the menu item label
+	 *
+	 */
+	public static String getSimpleFetchCommandLabel(RemoteConfig config) {
+		String target = UIText.SimpleConfigureFetchDialog_UpstreamSource;
+		if (config != null) {
+			target = config.getName();
+		}
+		return NLS.bind(UIText.SimpleConfigureFetchDialog_FetchFromLabel,
+				target);
+	}
+
+	/**
 	 * @param branch
 	 *            currently checked out
 	 * @param config

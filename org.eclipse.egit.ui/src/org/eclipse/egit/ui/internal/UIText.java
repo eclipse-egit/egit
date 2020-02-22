@@ -5242,6 +5242,12 @@ public class UIText extends NLS {
 	public static String SimpleConfigureFetchDialog_WindowTitle;
 
 	/** */
+	public static String SimpleConfigureFetchDialog_FetchFromLabel;
+
+	/** */
+	public static String SimpleConfigureFetchDialog_UpstreamSource;
+
+	/** */
 	public static String SimpleConfigurePushDialog_AddPushUriButton;
 
 	/** */
@@ -5270,6 +5276,12 @@ public class UIText extends NLS {
 
 	/** */
 	public static String SimpleConfigurePushDialog_WindowTitle;
+
+	/** */
+	public static String SimpleConfigurePushDialog_PushToLabel;
+
+	/** */
+	public static String SimpleConfigurePushDialog_UpstreamTarget;
 
 	/** */
 	public static String SimpleFetchActionHandler_NothingToFetchDialogMessage;
