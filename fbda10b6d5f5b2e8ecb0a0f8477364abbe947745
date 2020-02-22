@@ -68,6 +68,30 @@
       "revId": "fbda10b6d5f5b2e8ecb0a0f8477364abbe947745",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "52e5549a_bf21f936",
+        "filename": "org.eclipse.egit.ui/plugin.xml",
+        "patchSetId": 6
+      },
+      "lineNbr": 3927,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2020-02-22T21:18:04Z",
+      "side": 1,
+      "message": "The other change adds it globally. Should appear here with image, too, once the other change is in.",
+      "parentUuid": "39a411e1_56834bd1",
+      "range": {
+        "startLine": 3922,
+        "startChar": 10,
+        "endLine": 3927,
+        "endChar": 19
+      },
+      "revId": "fbda10b6d5f5b2e8ecb0a0f8477364abbe947745",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
     }
   ]
 }
