@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "987ee4cf_dd39f3f7",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/commit/command/UnifiedDiffHandler.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 440
+      },
+      "writtenOn": "2020-02-22T10:18:34Z",
+      "side": 1,
+      "message": "I just asked about that order in another commit of that series. Wouldn\u0027t it make sense to _always_ call the sort, such that we know we definitely compare old to new, independent of where those commits are coming from?",
+      "range": {
+        "startLine": 49,
+        "startChar": 4,
+        "endLine": 53,
+        "endChar": 44
+      },
+      "revId": "98f46037ec9b2d1eac175f301a0a0b6af7977e54",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
