@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "e3ca49f3_a055bd27",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/repository/tree/command/DynamicSimplePushCommand.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2020-02-22T21:13:06Z",
+      "side": 1,
+      "message": "If it\u0027s a simple handler, can\u0027t we just make it implement IElementUpdater? See for instance org.eclipse.egit.ui.internal.repository.tree.command.CheckoutCommand where this is used already.",
+      "range": {
+        "startLine": 29,
+        "startChar": 3,
+        "endLine": 29,
+        "endChar": 44
+      },
+      "revId": "dc79f869b373e89ea1c1a3c09a948f3e5f8c2fc7",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "adbd5ea7_cd2d16c1",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/repository/tree/command/DynamicSimplePushCommand.java",
         "patchSetId": 1
