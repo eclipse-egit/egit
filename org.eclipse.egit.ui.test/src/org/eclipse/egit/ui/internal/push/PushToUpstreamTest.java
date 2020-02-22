@@ -57,24 +57,26 @@ public class PushToUpstreamTest extends LocalRepositoryTestCase {
 	public void pushWithExistingUpstreamConfiguration() throws Exception {
 		checkoutNewLocalBranch("bar");
 		// Existing configuration
+		String remoteName = "fetch";
 		repository.getConfig().setString(ConfigConstants.CONFIG_BRANCH_SECTION,
-				"bar", ConfigConstants.CONFIG_KEY_REMOTE, "fetch");
+				"bar", ConfigConstants.CONFIG_KEY_REMOTE, remoteName);
 		repository.getConfig().setString(ConfigConstants.CONFIG_BRANCH_SECTION,
 				"bar", ConfigConstants.CONFIG_KEY_MERGE, "refs/heads/bar");
 
-		pushToUpstream();
+		pushToUpstream(remoteName);
 		assertBranchPushed("bar", remoteRepository);
 	}
 
 	@Test
 	public void pushWithDefaultRemoteWithPushRefSpecs() throws Exception {
 		checkoutNewLocalBranch("baz");
-		repository.getConfig().setString("remote", "origin", "pushurl",
+		String remoteName = "origin";
+		repository.getConfig().setString("remote", remoteName, "pushurl",
 				repository.getConfig().getString("remote", "push", "pushurl"));
-		repository.getConfig().setString("remote", "origin", "push",
+		repository.getConfig().setString("remote", remoteName, "push",
 				"refs/heads/*:refs/heads/*");
 
-		pushToUpstream();
+		pushToUpstream(remoteName);
 		assertBranchPushed("baz", remoteRepository);
 	}
 
@@ -105,12 +107,13 @@ public class PushToUpstreamTest extends LocalRepositoryTestCase {
 		return projectExplorerTree;
 	}
 
-	private void pushToUpstream() {
+	private void pushToUpstream(String remoteName) {
 		SWTBotTree project = selectProject();
 		JobJoiner joiner = JobJoiner.startListening(JobFamilies.PUSH, 20,
 				TimeUnit.SECONDS);
 		ContextMenuHelper
-				.clickContextMenu(project, getPushToUpstreamMenuPath());
+				.clickContextMenu(project,
+						getPushToUpstreamMenuPath(remoteName));
 		TestUtil.openJobResultDialog(joiner.join());
 		SWTBotShell resultDialog = TestUtil
 				.botForShellStartingWith("Push Results");
@@ -120,12 +123,11 @@ public class PushToUpstreamTest extends LocalRepositoryTestCase {
 	private void assertPushToUpstreamDisabled() {
 		SWTBotTree project = selectProject();
 		boolean enabled = ContextMenuHelper.isContextMenuItemEnabled(project,
-				getPushToUpstreamMenuPath());
+				getPushToUpstreamMenuPath("Upstream"));
 		assertFalse("Expected Push to Upstream to be disabled", enabled);
 	}
 
-	private String[] getPushToUpstreamMenuPath() {
-		return new String[] { "Team",
-				util.getPluginLocalizedValue("PushToUpstreamCommand.label") };
+	private String[] getPushToUpstreamMenuPath(String remoteName) {
+		return new String[] { "Team", "Push to " + remoteName };
 	}
 }

@@ -131,6 +131,22 @@ public class SimpleConfigurePushDialog extends AbstractConfigureRemoteDialog {
 				SelectionRepositoryStateCache.INSTANCE.getConfig(repository));
 	}
 
+	/**
+	 * Computes a specific push label for the given remote config (if not null);
+	 * generic "Push to Upstream" otherwise
+	 *
+	 * @param config
+	 * @return the menu item label
+	 *
+	 */
+	public static String getSimplePushCommandLabel(RemoteConfig config) {
+		String target = UIText.SimpleConfigurePushDialog_UpstreamTarget;
+		if (config != null) {
+			target = config.getName();
+		}
+		return NLS.bind(UIText.SimpleConfigurePushDialog_PushToLabel, target);
+	}
+
 	private static RemoteConfig getConfiguredRemote(String branch,
 			Config config) {
 		if (branch == null) {
