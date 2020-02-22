@@ -1,0 +1,119 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "05e151dd_e62ca83b",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/commit/DiffEditor.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 515,
+      "author": {
+        "id": 440
+      },
+      "writtenOn": "2020-02-22T09:13:09Z",
+      "side": 1,
+      "message": "Would you mind making the job(s) belonging to some of our predefined families? I always like it, when jobs show via icon where they are coming from.",
+      "range": {
+        "startLine": 515,
+        "startChar": 2,
+        "endLine": 515,
+        "endChar": 9
+      },
+      "revId": "333421025554165034de2215607970193ac0e103",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "16d56349_136fc035",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/commit/DiffEditor.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 528,
+      "author": {
+        "id": 440
+      },
+      "writtenOn": "2020-02-22T09:13:09Z",
+      "side": 1,
+      "message": "I just tried this with a huge diff, and of course it works well. Afterwards I was wondering if that cancellation should be indicated somewhere. For example by labeling the resulting editor \"Incomplete diff ...\" instead of \"Diff ...\".\nBut I\u0027m also not sure if that is really relevant, and if the effort is worth the benefit.",
+      "range": {
+        "startLine": 526,
+        "startChar": 6,
+        "endLine": 528,
+        "endChar": 7
+      },
+      "revId": "333421025554165034de2215607970193ac0e103",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c71ed9dc_96f3deef",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/commit/DiffEditorInput.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 161,
+      "author": {
+        "id": 440
+      },
+      "writtenOn": "2020-02-22T09:13:09Z",
+      "side": 1,
+      "message": "maybe Util.getShortObjectId() instead of putting 7 here?",
+      "range": {
+        "startLine": 156,
+        "startChar": 24,
+        "endLine": 161,
+        "endChar": 37
+      },
+      "revId": "333421025554165034de2215607970193ac0e103",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "addac18e_d7f682da",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/commit/DiffEditorInput.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 221,
+      "author": {
+        "id": 440
+      },
+      "writtenOn": "2020-02-22T09:13:09Z",
+      "side": 1,
+      "message": "same here",
+      "range": {
+        "startLine": 215,
+        "startChar": 24,
+        "endLine": 221,
+        "endChar": 36
+      },
+      "revId": "333421025554165034de2215607970193ac0e103",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "17c88071_a7d22d5a",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/uitext.properties",
+        "patchSetId": 1
+      },
+      "lineNbr": 1408,
+      "author": {
+        "id": 440
+      },
+      "writtenOn": "2020-02-22T09:13:09Z",
+      "side": 1,
+      "message": "Is that some convention from command line git? Otherwise I would have thought that \"... {0} ({1})\" might be more readable.",
+      "range": {
+        "startLine": 1408,
+        "startChar": 31,
+        "endLine": 1408,
+        "endChar": 32
+      },
+      "revId": "333421025554165034de2215607970193ac0e103",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
