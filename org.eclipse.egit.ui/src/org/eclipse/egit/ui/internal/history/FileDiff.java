@@ -77,8 +77,8 @@ public class FileDiff {
 				if (p != 0) {
 					return p;
 				}
-				return leftPath.substring(i + 1)
-						.compareTo(rightPath.substring(j + 1));
+				return leftPath.substring(i + 1).compareToIgnoreCase(
+						rightPath.substring(j + 1));
 			};
 
 	private final RevCommit commit;
@@ -96,7 +96,7 @@ public class FileDiff {
 	}
 
 	/**
-	 * Computer file diffs for specified tree walk and commit
+	 * Compute file diffs for specified tree walk and commit
 	 *
 	 * @param repository
 	 * @param walk
@@ -121,7 +121,7 @@ public class FileDiff {
 	}
 
 	/**
-	 * Computer file diffs for specified tree walk and commit
+	 * Compute file diffs for specified tree walk and commit
 	 *
 	 * @param repository
 	 * @param walk
