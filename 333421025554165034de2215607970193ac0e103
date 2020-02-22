@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "a06c18d2_71256991",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/commit/DiffEditor.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 515,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2020-02-22T20:58:38Z",
+      "side": 1,
+      "message": "Done, but using a new family.",
+      "parentUuid": "05e151dd_e62ca83b",
+      "range": {
+        "startLine": 515,
+        "startChar": 2,
+        "endLine": 515,
+        "endChar": 9
+      },
+      "revId": "333421025554165034de2215607970193ac0e103",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "16d56349_136fc035",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/commit/DiffEditor.java",
         "patchSetId": 1
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "f96fa700_d9848193",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/commit/DiffEditor.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 528,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2020-02-22T20:58:38Z",
+      "side": 1,
+      "message": "That might require a somewhat larger change that I\u0027d prefer not to do in this change. I\u0027ll keep it in mind and will try to see what I can do in a follow-up commit at the top of this series.",
+      "parentUuid": "16d56349_136fc035",
+      "range": {
+        "startLine": 526,
+        "startChar": 6,
+        "endLine": 528,
+        "endChar": 7
+      },
+      "revId": "333421025554165034de2215607970193ac0e103",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c71ed9dc_96f3deef",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/commit/DiffEditorInput.java",
         "patchSetId": 1
@@ -59,6 +107,30 @@
       "writtenOn": "2020-02-22T09:13:09Z",
       "side": 1,
       "message": "maybe Util.getShortObjectId() instead of putting 7 here?",
+      "range": {
+        "startLine": 156,
+        "startChar": 24,
+        "endLine": 161,
+        "endChar": 37
+      },
+      "revId": "333421025554165034de2215607970193ac0e103",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ceed4051_2ff88598",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/commit/DiffEditorInput.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 161,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2020-02-22T20:58:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c71ed9dc_96f3deef",
       "range": {
         "startLine": 156,
         "startChar": 24,
@@ -105,6 +177,30 @@
       "writtenOn": "2020-02-22T09:13:09Z",
       "side": 1,
       "message": "Is that some convention from command line git? Otherwise I would have thought that \"... {0} ({1})\" might be more readable.",
+      "range": {
+        "startLine": 1408,
+        "startChar": 31,
+        "endLine": 1408,
+        "endChar": 32
+      },
+      "revId": "333421025554165034de2215607970193ac0e103",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "96e921d0_9f805c83",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/uitext.properties",
+        "patchSetId": 1
+      },
+      "lineNbr": 1408,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2020-02-22T20:58:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "17c88071_a7d22d5a",
       "range": {
         "startLine": 1408,
         "startChar": 31,
