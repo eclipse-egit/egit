@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a328a159_0f26d2db",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/commit/CommitEditor.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 262,
+      "author": {
+        "id": 440
+      },
+      "writtenOn": "2020-02-23T19:08:52Z",
+      "side": 1,
+      "message": "learning new things all the time by reviewing your changes... :)",
+      "range": {
+        "startLine": 261,
+        "startChar": 3,
+        "endLine": 262,
+        "endChar": 43
+      },
+      "revId": "545dc7bf11f00e1cff7cc88ae3277949c7460625",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
