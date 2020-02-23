@@ -1255,7 +1255,7 @@ public class RepositoriesView extends CommonNavigator implements IShowInSource, 
 	public String[] getShowInTargetIds() {
 		IStructuredSelection selection = (IStructuredSelection) getCommonViewer()
 				.getSelection();
-		for (Object element : selection.toList())
+		for (Object element : selection)
 			if (element instanceof RepositoryNode) {
 				return new String[] { IHistoryView.VIEW_ID, ReflogView.VIEW_ID,
 						StagingView.VIEW_ID };
@@ -1270,7 +1270,7 @@ public class RepositoriesView extends CommonNavigator implements IShowInSource, 
 
 	private static List<Object> getShowInElements(IStructuredSelection selection) {
 		List<Object> elements = new ArrayList<>();
-		for (Object element : selection.toList()) {
+		for (Object element : selection) {
 			if (element instanceof FileNode || element instanceof FolderNode
 					|| element instanceof WorkingDirNode) {
 				RepositoryTreeNode treeNode = (RepositoryTreeNode) element;
@@ -1302,7 +1302,7 @@ public class RepositoriesView extends CommonNavigator implements IShowInSource, 
 	private static HistoryPageInput getHistoryPageInput(IStructuredSelection selection) {
 		List<File> files = new ArrayList<>();
 		Repository repo = null;
-		for (Object element : selection.toList()) {
+		for (Object element : selection) {
 			Repository nodeRepository;
 			if (element instanceof FileNode) {
 				FileNode fileNode = (FileNode) element;

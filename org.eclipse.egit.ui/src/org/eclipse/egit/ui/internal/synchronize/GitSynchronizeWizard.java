@@ -99,7 +99,7 @@ public class GitSynchronizeWizard extends Wizard {
 				return null;
 
 			File workTree = repo.getWorkTree();
-			for (Object o : sel.toArray()) {
+			for (Object o : sel) {
 				if (o == null) {
 					continue;
 				}

@@ -1448,7 +1448,7 @@ public class GitHistoryPage extends HistoryPage implements RefsChangedListener,
 				List<FileDiff> diffs = new ArrayList<>();
 				if (selection instanceof IStructuredSelection) {
 					IStructuredSelection sel = (IStructuredSelection) selection;
-					for (Object obj : sel.toList())
+					for (Object obj : sel)
 						if (obj instanceof FileDiff)
 							diffs.add((FileDiff) obj);
 				}

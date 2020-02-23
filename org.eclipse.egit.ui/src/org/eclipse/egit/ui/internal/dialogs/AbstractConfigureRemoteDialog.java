@@ -651,8 +651,7 @@ public abstract class AbstractConfigureRemoteDialog
 	}
 
 	private void doDeleteRefSpecs() {
-		for (Object spec : ((IStructuredSelection) specViewer.getSelection())
-				.toArray()) {
+		for (Object spec : ((IStructuredSelection) specViewer.getSelection())) {
 			removeRefSpec((RefSpec) spec);
 		}
 		updateControls();

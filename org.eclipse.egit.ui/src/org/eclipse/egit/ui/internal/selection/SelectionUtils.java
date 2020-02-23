@@ -103,7 +103,7 @@ public class SelectionUtils {
 		}
 
 		Set<Repository> repos = new LinkedHashSet<>();
-		for (Object o : selection.toArray()) {
+		for (Object o : selection) {
 			if (o instanceof RepositoryGroupNode) {
 				repos.addAll(((RepositoryGroupNode) o).getRepositories());
 			} else {
@@ -253,7 +253,7 @@ public class SelectionUtils {
 	public static IPath[] getSelectedLocations(
 			@NonNull IStructuredSelection selection) {
 		Set<IPath> result = new LinkedHashSet<>();
-		for (Object o : selection.toList()) {
+		for (Object o : selection) {
 			IResource resource = AdapterUtils.adaptToAnyResource(o);
 			if (resource != null) {
 				IPath location = resource.getLocation();
@@ -297,7 +297,7 @@ public class SelectionUtils {
 	private static Set<IResource> getSelectedResourcesSet(
 			@NonNull IStructuredSelection selection) {
 		Set<IResource> result = new LinkedHashSet<>();
-		for (Object o : selection.toList()) {
+		for (Object o : selection) {
 			IResource resource = AdapterUtils.adaptToAnyResource(o);
 			if (resource != null)
 				result.add(resource);
@@ -375,7 +375,7 @@ public class SelectionUtils {
 	private static Set<Object> getSelectionContents(
 			@NonNull IStructuredSelection selection) {
 		Set<Object> result = new HashSet<>();
-		for (Object o : selection.toList()) {
+		for (Object o : selection) {
 			if (o instanceof RepositoryGroupNode) {
 				result.addAll(((RepositoryGroupNode) o).getRepositories());
 				continue;
@@ -456,7 +456,7 @@ public class SelectionUtils {
 		}
 
 		if (result == null) {
-			for (Object o : selection.toArray()) {
+			for (Object o : selection) {
 				Repository nextRepo = Adapters.adapt(o, Repository.class);
 				if (nextRepo != null && result != null && result != nextRepo) {
 					if (warn)

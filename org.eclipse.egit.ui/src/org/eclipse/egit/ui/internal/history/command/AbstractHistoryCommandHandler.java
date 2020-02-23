@@ -245,7 +245,7 @@ abstract class AbstractHistoryCommandHandler extends AbstractHandler {
 			return Collections.emptyList();
 		List<RevCommit> commits = new ArrayList<>();
 		try (RevWalk walk = new RevWalk(repository)) {
-			for (Object element : selection.toList()) {
+			for (Object element : selection) {
 				RevCommit commit = Adapters.adapt(element, RevCommit.class);
 				if (commit != null) {
 					// Re-parse commit to clear effects of TreeFilter

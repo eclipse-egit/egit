@@ -121,7 +121,7 @@ public class DropAdapterAssistant extends CommonDropAdapterAssistant {
 			IStructuredSelection selection = (IStructuredSelection) event.data;
 			if (onlyRepositoryNodesSelected(selection)) {
 				List<File> reposToAdd = new ArrayList<>();
-				for (Object treeNode : selection.toList()) {
+				for (Object treeNode : selection) {
 					RepositoryNode repo = (RepositoryNode) treeNode;
 					reposToAdd.add(repo.getRepository().getDirectory());
 				}
@@ -139,7 +139,7 @@ public class DropAdapterAssistant extends CommonDropAdapterAssistant {
 			IStructuredSelection selection = (IStructuredSelection) event.data;
 			if (onlyRepositoryNodesSelected(selection)) {
 				List<File> reposToRemove = new ArrayList<>();
-				for (Object treeNode : selection.toList()) {
+				for (Object treeNode : selection) {
 					RepositoryNode repo = (RepositoryNode) treeNode;
 					reposToRemove.add(repo.getRepository().getDirectory());
 				}

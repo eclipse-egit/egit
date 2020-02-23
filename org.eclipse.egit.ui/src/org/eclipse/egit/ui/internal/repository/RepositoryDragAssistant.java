@@ -49,7 +49,7 @@ public class RepositoryDragAssistant extends CommonDragAdapterAssistant {
 
 		if (FileTransfer.getInstance().isSupportedType(event.dataType)) {
 			final List<String> files = new ArrayList<>();
-			for (Object selected : selection.toList())
+			for (Object selected : selection)
 				if (selected instanceof FileNode) {
 					File file = ((FileNode) selected).getObject();
 					if (file != null && file.exists())

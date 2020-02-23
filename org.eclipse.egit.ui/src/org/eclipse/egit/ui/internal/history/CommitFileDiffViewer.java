@@ -552,7 +552,7 @@ public class CommitFileDiffViewer extends TableViewer {
 		List<File> files = new ArrayList<>();
 		Repository repo = null;
 		IPath workTreePath = null;
-		for (Object selectedElement : selection.toList()) {
+		for (Object selectedElement : selection) {
 			FileDiff fileDiff = (FileDiff) selectedElement;
 			if (repo == null || workTreePath == null) {
 				repo = fileDiff.getRepository();
@@ -920,7 +920,7 @@ public class CommitFileDiffViewer extends TableViewer {
 		private Collection<FileDiff> getFileDiffs(
 				IStructuredSelection selection) {
 			List<FileDiff> result = new ArrayList<>();
-			for (Object obj : selection.toList()) {
+			for (Object obj : selection) {
 				FileDiff diff = Adapters.adapt(obj, FileDiff.class);
 				if (diff != null && diff.getChange() != ChangeType.DELETE
 						&& !diff.isSubmodule()) {

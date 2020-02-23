@@ -361,7 +361,7 @@ public class ReflogView extends ViewPart implements RefsChangedListener, IShowIn
 				if (repo == null)
 					return;
 				try (RevWalk walk = new RevWalk(repo)) {
-					for (Object element : ((IStructuredSelection)selection).toArray()) {
+					for (Object element : (IStructuredSelection) selection) {
 						ReflogEntry entry = (ReflogEntry) element;
 						ObjectId id = entry.getNewId();
 						if (id == null || id.equals(ObjectId.zeroId()))
@@ -575,7 +575,7 @@ public class ReflogView extends ViewPart implements RefsChangedListener, IShowIn
 		ISelection selection = context.getSelection();
 		if (selection instanceof IStructuredSelection) {
 			IStructuredSelection structuredSelection = (IStructuredSelection) selection;
-			for (Object element : structuredSelection.toList()) {
+			for (Object element : structuredSelection) {
 				if (element instanceof RefNode) {
 					RefNode node = (RefNode) element;
 					Ref ref = node.getObject();
