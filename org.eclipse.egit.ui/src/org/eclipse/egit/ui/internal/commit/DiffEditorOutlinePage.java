@@ -279,7 +279,7 @@ public class DiffEditorOutlinePage extends ContentOutlinePage {
 		IStructuredSelection currentSelection = getStructuredSelection();
 		List<FileDiffRegion> result = new ArrayList<>();
 		if (!currentSelection.isEmpty()) {
-			for (Object selected : ((StructuredSelection) currentSelection).toList()) {
+			for (Object selected : (StructuredSelection) currentSelection) {
 				if (selected instanceof FileDiffRegion
 						&& !((FileDiffRegion) selected).getDiff()
 								.isSubmodule()) {

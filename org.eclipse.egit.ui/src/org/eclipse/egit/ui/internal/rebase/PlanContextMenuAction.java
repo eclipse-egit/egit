@@ -56,7 +56,7 @@ class PlanContextMenuAction extends Action {
 		ISelection selection = planViewer.getSelection();
 		if (selection instanceof IStructuredSelection) {
 			IStructuredSelection structuredSelection = (IStructuredSelection) selection;
-			for (Object selectedRow : structuredSelection.toList()) {
+			for (Object selectedRow : structuredSelection) {
 				if (selectedRow instanceof PlanElement) {
 					PlanElement planElement = (PlanElement) selectedRow;
 					planElement.setPlanElementAction(action);

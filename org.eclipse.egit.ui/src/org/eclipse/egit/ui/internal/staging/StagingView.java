@@ -481,7 +481,7 @@ public class StagingView extends ViewPart
 
 			if (FileTransfer.getInstance().isSupportedType(event.dataType)) {
 				Set<String> files = new HashSet<>();
-				for (Object selected : selection.toList())
+				for (Object selected : selection)
 					if (selected instanceof StagingEntry) {
 						add((StagingEntry) selected, files);
 					} else if (selected instanceof StagingFolderEntry) {
@@ -1690,7 +1690,7 @@ public class StagingView extends ViewPart
 		ISelection selection = context.getSelection();
 		if (selection instanceof IStructuredSelection) {
 			IStructuredSelection structuredSelection = (IStructuredSelection) selection;
-			for (Object element : structuredSelection.toList()) {
+			for (Object element : structuredSelection) {
 				if (element instanceof RepositoryTreeNode) {
 					RepositoryTreeNode node = (RepositoryTreeNode) element;
 					reload(node.getRepository());
@@ -1704,7 +1704,7 @@ public class StagingView extends ViewPart
 	private ShowInContext getShowInContext(TreeViewer treeViewer) {
 		IStructuredSelection selection = treeViewer.getStructuredSelection();
 		List<Object> elements = new ArrayList<>();
-		for (Object selectedElement : selection.toList()) {
+		for (Object selectedElement : selection) {
 			if (selectedElement instanceof StagingEntry) {
 				StagingEntry entry = (StagingEntry) selectedElement;
 				IFile file = entry.getFile();
@@ -2798,7 +2798,7 @@ public class StagingView extends ViewPart
 				boolean submoduleSelected = false;
 				boolean folderSelected = false;
 				boolean onlyFoldersSelected = true;
-				for (Object element : selection.toArray()) {
+				for (Object element : selection) {
 					if (element instanceof StagingFolderEntry) {
 						StagingFolderEntry folder = (StagingFolderEntry) element;
 						folderSelected = true;
@@ -2968,7 +2968,7 @@ public class StagingView extends ViewPart
 	}
 
 	private boolean anyElementIsExistingFile(IStructuredSelection s) {
-		for (Object element : s.toList()) {
+		for (Object element : s) {
 			if (element instanceof StagingEntry) {
 				StagingEntry entry = (StagingEntry) element;
 				if (entry.getType() != IResource.FILE) {
@@ -3210,7 +3210,7 @@ public class StagingView extends ViewPart
 			if (selection.isEmpty())
 				return false;
 
-			for (Object element : selection.toList()) {
+			for (Object element : selection) {
 				if (!(element instanceof StagingEntry))
 					return false;
 				StagingEntry entry = (StagingEntry) element;
@@ -3264,7 +3264,7 @@ public class StagingView extends ViewPart
 			return;
 		}
 		final IStructuredSelection iss = (IStructuredSelection) s;
-		for (Object element : iss.toList()) {
+		for (Object element : iss) {
 			if (element instanceof StagingEntry) {
 				StagingEntry entry = (StagingEntry) element;
 				String relativePath = entry.getPath();
