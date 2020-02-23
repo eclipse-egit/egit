@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "874b09aa_dbf0b13b",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/actions/SwitchToMenu.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 187,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2020-02-23T21:00:56Z",
+      "side": 1,
+      "message": "I would add a BranchNameNormalizer to the Text widget here.",
+      "range": {
+        "startLine": 187,
+        "startChar": 6,
+        "endLine": 187,
+        "endChar": 9
+      },
+      "revId": "bf6ec6afd28561113c81a6049de8004327eec9cb",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "41dd199d_33875c50",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/actions/SwitchToMenu.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 224,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2020-02-23T21:00:56Z",
+      "side": 1,
+      "message": "UIText.CreateBranchPage_ChooseNameMessage is better here.",
+      "range": {
+        "startLine": 224,
+        "startChar": 10,
+        "endLine": 224,
+        "endChar": 57
+      },
+      "revId": "bf6ec6afd28561113c81a6049de8004327eec9cb",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "968a059b_59b561d9",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/uitext.properties",
+        "patchSetId": 8
+      },
+      "lineNbr": 948,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2020-02-23T21:00:56Z",
+      "side": 1,
+      "message": "While \"input\" is a verb, I think most people will read it as a noun and do a double-take on it. \"Enter\" is more common.",
+      "range": {
+        "startLine": 948,
+        "startChar": 35,
+        "endLine": 948,
+        "endChar": 40
+      },
+      "revId": "bf6ec6afd28561113c81a6049de8004327eec9cb",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
