@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "20d8363f_996ebc88",
+        "filename": "org.eclipse.egit.ui/plugin.xml",
+        "patchSetId": 6
+      },
+      "lineNbr": 3059,
+      "author": {
+        "id": 236689
+      },
+      "writtenOn": "2020-02-23T10:31:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c8e42666_f7d57824",
+      "range": {
+        "startLine": 3055,
+        "startChar": 18,
+        "endLine": 3059,
+        "endChar": 23
+      },
+      "revId": "fbda10b6d5f5b2e8ecb0a0f8477364abbe947745",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "679bce97_85d6da28",
         "filename": "org.eclipse.egit.ui/plugin.xml",
         "patchSetId": 6
@@ -36,6 +60,30 @@
       "writtenOn": "2020-02-22T16:41:27Z",
       "side": 1,
       "message": "same here",
+      "range": {
+        "startLine": 3073,
+        "startChar": 18,
+        "endLine": 3077,
+        "endChar": 23
+      },
+      "revId": "fbda10b6d5f5b2e8ecb0a0f8477364abbe947745",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9155b65c_75734f1a",
+        "filename": "org.eclipse.egit.ui/plugin.xml",
+        "patchSetId": 6
+      },
+      "lineNbr": 3077,
+      "author": {
+        "id": 236689
+      },
+      "writtenOn": "2020-02-23T10:31:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "679bce97_85d6da28",
       "range": {
         "startLine": 3073,
         "startChar": 18,
