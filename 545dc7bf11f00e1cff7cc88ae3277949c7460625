@@ -22,6 +22,30 @@
       "revId": "545dc7bf11f00e1cff7cc88ae3277949c7460625",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a32eac19_8ec50bce",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/commit/CommitEditor.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 262,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2020-02-23T20:05:26Z",
+      "side": 1,
+      "message": "If you knew how long I searched until I figured this one out :-) I tried various other ways first to get this ACTIVE_PART_NAME re-evaluated until I found this.\n\nIt\u0027s a hack; it relies on the implementation of AbstractSaveHandler telling the framework it accessed ACTIVE_PART_NAME.\n\nMoreover, it works without this hack *if* one switches to another editor and then back to the compare editor. The hack is only there to make it work right away when the compare editor opens.\n\nEither MultiPageEditorPart is buggy, or maybe we\u0027re doing something wrong with our nested sites, or there\u0027s some bug in the Eclipse platform that doesn\u0027t re-evaluate this on its own when it should.",
+      "parentUuid": "a328a159_0f26d2db",
+      "range": {
+        "startLine": 261,
+        "startChar": 3,
+        "endLine": 262,
+        "endChar": 43
+      },
+      "revId": "545dc7bf11f00e1cff7cc88ae3277949c7460625",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
     }
   ]
 }
