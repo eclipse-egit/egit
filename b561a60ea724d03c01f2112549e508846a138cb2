@@ -16,6 +16,24 @@
       "revId": "b561a60ea724d03c01f2112549e508846a138cb2",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "70e19640_b555a3fe",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/repository/tree/command/PushConfiguredRemoteCommand.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 128,
+      "author": {
+        "id": 236689
+      },
+      "writtenOn": "2020-02-23T18:41:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d5ba2e18_6fd64906",
+      "revId": "b561a60ea724d03c01f2112549e508846a138cb2",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
     }
   ]
 }
