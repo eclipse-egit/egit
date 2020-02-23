@@ -1,0 +1,61 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d9852d0b_8bc32f36",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/repository/tree/command/CompareCommand.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2020-02-23T16:12:24Z",
+      "side": 1,
+      "message": "Superfluous parentheses.",
+      "range": {
+        "startLine": 44,
+        "startChar": 22,
+        "endLine": 44,
+        "endChar": 23
+      },
+      "revId": "81833ec92d5dac249a66ee7a10e31322dc130016",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "42aa2a89_1caa2d4f",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/repository/tree/command/CompareCommand.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2020-02-23T16:12:24Z",
+      "side": 1,
+      "message": "Indentation problem.",
+      "revId": "81833ec92d5dac249a66ee7a10e31322dc130016",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5706c3a2_e09bdbde",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/repository/tree/command/CompareCommand.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2020-02-23T16:12:24Z",
+      "side": 1,
+      "message": "Hmmm... with a stashed commit, we should probably always treat the stash as tip and the other commit as base? What if we have two stashes?\n\nAlso note that a stash is actually several commits:\n\n* stash commit itself (unstaged changes to tracked files)\n* parent(0): HEAD at that time\n* parent(1): staged changes\n* parent(2): untracked files\n\nSo just showing a diff of the stash commit against something else is going to be misleading if the stash contains staged or untracked changes.\n\nI suggest not to enable this for stashes now. Let\u0027s deal with that at a later time.",
+      "revId": "81833ec92d5dac249a66ee7a10e31322dc130016",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
