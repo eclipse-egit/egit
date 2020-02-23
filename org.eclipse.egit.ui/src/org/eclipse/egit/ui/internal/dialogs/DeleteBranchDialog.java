@@ -74,7 +74,7 @@ public class DeleteBranchDialog extends AbstractBranchSelectionDialog {
 		selectedRefs.clear();
 		Set<String> selected = new HashSet<>();
 		IStructuredSelection selection = (IStructuredSelection) branchTree.getSelection();
-		for (Object sel : selection.toArray()) {
+		for (Object sel : selection) {
 			if (!(sel instanceof RefNode))
 				continue;
 
@@ -132,10 +132,9 @@ public class DeleteBranchDialog extends AbstractBranchSelectionDialog {
 
 	private List<Ref> extractSelectedRefs() {
 		List<Ref> refs = new ArrayList<>();
-		Object[] array = ((IStructuredSelection) super.branchTree
-				.getSelection()).toArray();
 
-		for (Object selected : array)
+		for (Object selected : ((IStructuredSelection) super.branchTree
+				.getSelection()))
 			if (selected instanceof RefNode)
 				refs.add(((RefNode) selected).getObject());
 

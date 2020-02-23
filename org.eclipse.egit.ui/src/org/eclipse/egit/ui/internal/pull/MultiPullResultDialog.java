@@ -116,7 +116,7 @@ public class MultiPullResultDialog extends Dialog {
 				IStructuredSelection sel = (IStructuredSelection) event
 						.getSelection();
 				boolean enabled = false;
-				for (Object obj : sel.toList()) {
+				for (Object obj : sel) {
 					@SuppressWarnings("unchecked")
 					Entry<Repository, Object> entry = (Entry<Repository, Object>) obj;
 					enabled |= entry.getValue() instanceof PullResult;
@@ -278,7 +278,7 @@ public class MultiPullResultDialog extends Dialog {
 
 			final LinkedList<PullResultDialog> dialogs= new LinkedList<>();
 			IStructuredSelection sel = (IStructuredSelection) tv.getSelection();
-			for (Object obj : sel.toList()) {
+			for (Object obj : sel) {
 				@SuppressWarnings("unchecked")
 				Entry<Repository, Object> item = (Entry<Repository, Object>) obj;
 				if (item.getValue() instanceof PullResult) {

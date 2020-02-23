@@ -417,8 +417,7 @@ class FetchResultTable {
 			}
 			private void handleOpen(ISelection selection, boolean activateOnOpen) {
 				if (selection instanceof IStructuredSelection)
-					for (Object element : ((IStructuredSelection) selection)
-							.toArray())
+					for (Object element : ((IStructuredSelection) selection))
 						if (element instanceof RepositoryCommit)
 							CommitEditor.openQuiet((RepositoryCommit) element, activateOnOpen);
 			}

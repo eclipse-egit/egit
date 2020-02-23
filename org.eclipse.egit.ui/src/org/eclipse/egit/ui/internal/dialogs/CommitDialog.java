@@ -1270,7 +1270,7 @@ public class CommitDialog extends TitleAreaDialog {
 				}
 
 				boolean hasUnselected = false;
-				for (Object element : selection.toList()) {
+				for (Object element : selection) {
 					if (!filesViewer.getChecked(element)) {
 						hasUnselected = true;
 						break;
@@ -1328,7 +1328,7 @@ public class CommitDialog extends TitleAreaDialog {
 		return new Action(UIText.CommitDialog_SelectForCommit) {
 			@Override
 			public void run() {
-				for (Object item : selection.toList())
+				for (Object item : selection)
 					filesViewer.setChecked(item, true);
 			}
 		};

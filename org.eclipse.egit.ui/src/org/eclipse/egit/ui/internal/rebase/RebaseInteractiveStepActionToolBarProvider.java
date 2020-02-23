@@ -261,9 +261,7 @@ public class RebaseInteractiveStepActionToolBarProvider {
 				.getSelection();
 		List<RebaseInteractivePlan.PlanElement> planEntries = new ArrayList<>(
 				selection.size());
-		@SuppressWarnings("unchecked")
-		List<RebaseInteractivePlan.PlanElement> candidates = selection.toList();
-		for (Object candidate : candidates) {
+		for (Object candidate : selection) {
 			if (candidate instanceof RebaseInteractivePlan.PlanElement)
 				planEntries.add((RebaseInteractivePlan.PlanElement) candidate);
 		}
@@ -299,7 +297,7 @@ public class RebaseInteractiveStepActionToolBarProvider {
 
 			if (structured.size() > 1) {
 				// multi selection
-				for (Object selectedObj : structured.toList()) {
+				for (Object selectedObj : structured) {
 					if (!(selectedObj instanceof PlanElement))
 						continue;
 					PlanElement entry = (PlanElement) selectedObj;
