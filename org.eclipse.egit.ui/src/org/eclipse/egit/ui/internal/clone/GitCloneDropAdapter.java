@@ -296,7 +296,7 @@ public class GitCloneDropAdapter implements EventHandler {
 			// Depending on the form the link and browser/os,
 			// we get the url twice in the data separated by new lines
 			String[] dataLines = ((String) eventData)
-					.split(System.getProperty("line.separator")); //$NON-NLS-1$
+					.split(System.lineSeparator());
 			String url = dataLines[0];
 			return url;
 		}

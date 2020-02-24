@@ -21,6 +21,7 @@ import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.stream.Collectors;
 
 import org.eclipse.core.runtime.Path;
+import org.eclipse.egit.ui.internal.CommonUtils;
 import org.eclipse.egit.ui.internal.UIIcons;
 import org.eclipse.egit.ui.internal.UIText;
 import org.eclipse.egit.ui.internal.commit.DiffRegionFormatter.FileDiffRegion;
@@ -46,6 +47,7 @@ import org.eclipse.jface.viewers.OpenEvent;
 import org.eclipse.jface.viewers.StructuredSelection;
 import org.eclipse.jface.viewers.TreeViewer;
 import org.eclipse.jface.viewers.Viewer;
+import org.eclipse.jface.viewers.ViewerComparator;
 import org.eclipse.jgit.diff.DiffEntry;
 import org.eclipse.jgit.lib.RepositoryState;
 import org.eclipse.swt.graphics.Image;
@@ -53,12 +55,13 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Menu;
 import org.eclipse.ui.ISharedImages;
 import org.eclipse.ui.PlatformUI;
+import org.eclipse.ui.views.contentoutline.ContentOutlinePage;
 
 /**
- * A {@link NestedContentOutlinePage} for the {DiffEditorPage}, displaying an
- * outline for {@link DiffDocument}s.
+ * A {@link ContentOutlinePage} for the {DiffEditorPage}, displaying an outline
+ * for {@link DiffDocument}s.
  */
-public class DiffEditorOutlinePage extends NestedContentOutlinePage {
+public class DiffEditorOutlinePage extends ContentOutlinePage {
 
 	private IDocument input;
 
@@ -74,6 +77,8 @@ public class DiffEditorOutlinePage extends NestedContentOutlinePage {
 		viewer.setUseHashlookup(true);
 		viewer.setContentProvider(new DiffContentProvider());
 		viewer.setLabelProvider(new DiffLabelProvider());
+		viewer.setComparator(
+				new ViewerComparator(CommonUtils.STRING_ASCENDING_COMPARATOR));
 		viewer.addDoubleClickListener(
 				event -> openFolder(event.getSelection()));
 		viewer.addOpenListener(this::fireOpenEvent);

@@ -118,6 +118,11 @@
          <adapter type="org.eclipse.team.ui.history.IHistoryPageSource" />
       </factory>
       <factory
+            adaptableType="org.eclipse.egit.core.internal.IRepositoryCommit"
+            class="org.eclipse.egit.ui.internal.factories.GitAdapterFactory">
+         <adapter type="org.eclipse.team.ui.history.IHistoryPageSource" />
+      </factory>
+      <factory
             adaptableType="org.eclipse.egit.ui.internal.history.HistoryPageInput"
             class="org.eclipse.egit.ui.internal.factories.GitAdapterFactory">
          <adapter type="org.eclipse.team.ui.history.IHistoryPageSource" />
@@ -2783,6 +2788,34 @@
          </activeWhen>
       </handler>
       <handler
+            commandId="org.eclipse.egit.ui.commit.UnifiedDiffCommand">
+         <class
+               class="org.eclipse.egit.ui.internal.commit.command.UnifiedDiffHandler">
+         </class>
+         <activeWhen>
+            <and>
+               <count value="2" />
+               <iterate>
+                  <adapt type="org.eclipse.egit.core.internal.IRepositoryCommit" />
+               </iterate>
+            </and>
+         </activeWhen>
+      </handler>
+      <handler
+            commandId="org.eclipse.egit.ui.commit.UnifiedDiffCommand">
+         <class
+               class="org.eclipse.egit.ui.internal.reflog.command.ReflogUnifiedDiffHandler">
+         </class>
+         <activeWhen>
+            <and>
+               <count value="2" />
+               <iterate>
+                  <adapt type="org.eclipse.jgit.lib.ReflogEntry" />
+               </iterate>
+            </and>
+         </activeWhen>
+      </handler>
+      <handler
             commandId="org.eclipse.egit.ui.history.CompareWithWorkingTree">
          <class
                class="org.eclipse.egit.ui.internal.history.command.CompareWithWorkingTreeHandler">
@@ -3464,6 +3497,12 @@
               style="push">
             <visibleWhen checkEnabled="true" />
          </command>
+         <command
+              commandId="org.eclipse.egit.ui.commit.UnifiedDiffCommand"
+              label="%HistoryShowUnifiedDiff.label"
+              style="push">
+            <visibleWhen checkEnabled="true" />
+         </command>
          <separator name="##Checkout" visible="true" />
          <command
               commandId="org.eclipse.egit.ui.CheckoutCommand"
@@ -3689,6 +3728,12 @@
                style="push">
             <visibleWhen checkEnabled="true" />
          </command>
+         <command
+               commandId="org.eclipse.egit.ui.commit.UnifiedDiffCommand"
+               label="%RebaseInteractiveShowUnifiedDiff.label"
+               style="push">
+            <visibleWhen checkEnabled="true" />
+         </command>
       </menuContribution>
       <menuContribution
             locationURI="popup:org.eclipse.egit.ui.internal.reflogview.popup">
@@ -3696,6 +3741,12 @@
                commandId="org.eclipse.egit.ui.internal.reflog.OpenInCommitViewerCommand"
                label="%RefLogViewOpenInCommitViewer.label"
                style="push">
+         </command>
+         <command
+              commandId="org.eclipse.egit.ui.commit.UnifiedDiffCommand"
+              label="%RefLogShowUnifiedDiff.label"
+              style="push">
+            <visibleWhen checkEnabled="true" />
          </command>
          <separator
                name="##Checkout" visible="true">
@@ -3710,6 +3761,33 @@
                label="%ReflogCopyCommand.label"
                style="push">
          </command>
+         <!-- Reset submenu -->
+         <menu
+               icon="icons/obj16/reset.png"
+               id="org.eclipse.egit.ui.reflog.resetMenu"
+               label="%ReflogResetMenu.label">
+            <command
+                 commandId="org.eclipse.egit.ui.history.Reset"
+                 label="%ReflogResetSoft.label"
+                 style="push">
+               <parameter name="org.eclipse.egit.ui.history.ResetMode" value="SOFT" />
+               <visibleWhen checkEnabled="true" />
+            </command>
+            <command
+                 commandId="org.eclipse.egit.ui.history.Reset"
+                 label="%ReflogResetMixed.label"
+                 style="push">
+               <parameter name="org.eclipse.egit.ui.history.ResetMode" value="MIXED" />
+               <visibleWhen checkEnabled="true" />
+            </command>
+            <command
+                 commandId="org.eclipse.egit.ui.history.Reset"
+                 label="%ReflogResetHard.label"
+                 style="push">
+               <parameter name="org.eclipse.egit.ui.history.ResetMode" value="HARD" />
+               <visibleWhen checkEnabled="true" />
+            </command>
+         </menu>
       </menuContribution>
       <menuContribution
             locationURI="popup:org.eclipse.egit.ui.RepositoriesView?after=branch">
@@ -6464,6 +6542,10 @@
             icon="icons/obj16/open-commit.png">
       </image>
       <image
+            commandId="org.eclipse.egit.ui.history.CompareVersions"
+            icon="icons/elcl16/compare_view.png">
+      </image>
+      <image
             commandId="org.eclipse.egit.ui.RepositoriesViewOpen"
             icon="icons/obj16/open-commit.png">
       </image>
@@ -6542,6 +6624,10 @@
       <image
             commandId="org.eclipse.egit.ui.RepositoriesCreateGroup"
             icon="icons/etool16/newgroup_wiz.png">
+      </image>
+      <image
+            commandId="org.eclipse.egit.ui.commit.UnifiedDiffCommand"
+            icon="icons/obj16/changelog_obj.png">
       </image>
    </extension>
    <extension
@@ -7003,6 +7089,10 @@
             id="org.eclipse.egit.ui.history.OpenInCommitViewerCommand"
             name="%OpenInCommitViewerCommand.name">
       </command>
+      <command
+            id="org.eclipse.egit.ui.commit.UnifiedDiffCommand"
+            name="%ShowUnifiedDiffCommand.name">
+         </command>
    </extension>
    <extension
          name="%CommitViewerCommands.extension.name"
@@ -7058,6 +7148,14 @@
             id="org.eclipse.egit.ui.commitEditor"
             name="%CommitEditor.name">
       </editor>
+      <editor
+            class="org.eclipse.egit.ui.internal.commit.DiffEditor"
+            contributorClass="org.eclipse.ui.texteditor.BasicTextEditorActionContributor"
+            default="false"
+            icon="icons/obj16/changelog_obj.png"
+            id="org.eclipse.egit.ui.diffEditor"
+            name="%DiffEditor.name">
+      </editor>
    </extension>
    <extension
          point="org.eclipse.ui.actionSetPartAssociations">
@@ -7065,6 +7163,9 @@
             targetID="org.eclipse.ui.edit.text.actionSet.presentation">
          <part
                id="org.eclipse.egit.ui.commitEditor">
+         </part>
+         <part
+               id="org.eclipse.egit.ui.diffEditor">
          </part>
       </actionSetPartAssociation>
    </extension>

@@ -64,6 +64,7 @@
               </symbols>
               <associateSites>
                 <site>https://download.eclipse.org/e4/snapshots/org.eclipse.e4.ui</site>
+                <site>https://download.eclipse.org/tools/orbit/downloads/drops/S20200219023850/repository</site>
               </associateSites>
             </configuration>
           </execution>
@@ -99,7 +100,7 @@
              <layout>p2</layout>
             </repository>
             <repository>
-             <url>https://download.eclipse.org/staging/neon/</url>
+             <url>https://download.eclipse.org/releases/neon/201705151400/</url>
              <layout>p2</layout>
             </repository>
            </repositories>

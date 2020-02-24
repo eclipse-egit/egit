@@ -10,7 +10,6 @@
  *******************************************************************************/
 package org.eclipse.egit.ui.internal.history;
 
-import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -22,14 +21,15 @@ import java.util.Set;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
-import org.apache.tools.ant.types.selectors.TokenizedPath;
-import org.apache.tools.ant.types.selectors.TokenizedPattern;
 import org.eclipse.egit.ui.Activator;
 import org.eclipse.egit.ui.UIPreferences;
 import org.eclipse.egit.ui.internal.variables.GitVariableResolver;
 import org.eclipse.jface.preference.IPersistentPreferenceStore;
 import org.eclipse.jface.preference.IPreferenceStore;
 import org.eclipse.jgit.annotations.NonNull;
+import org.eclipse.jgit.annotations.Nullable;
+import org.eclipse.jgit.errors.InvalidPatternException;
+import org.eclipse.jgit.ignore.IMatcher;
 import org.eclipse.jgit.lib.Constants;
 import org.eclipse.jgit.lib.Ref;
 import org.eclipse.jgit.lib.RefDatabase;
@@ -434,8 +434,7 @@ public class RefFilterHelper {
 				.collect(Collectors.toCollection(LinkedHashSet::new));
 
 		for (Ref ref : db.getRefs()) {
-			TokenizedPath refPath = new TokenizedPath(
-					ref.getName().replace('/', File.separatorChar));
+			String refPath = ref.getName();
 			for (RefFilter filter : selectedFilters) {
 				if (filter.matches(refPath)) {
 					result.add(ref);
@@ -583,10 +582,12 @@ public class RefFilterHelper {
 
 		private final boolean preconfigured;
 
+		@NonNull
 		private String filterString;
-		private TokenizedPattern filterPattern;
 
-		private TokenizedPattern expandedFilterPattern;
+		private IMatcher filterPattern;
+
+		private IMatcher expandedFilterPattern;
 
 		private boolean selected;
 
@@ -648,30 +649,44 @@ public class RefFilterHelper {
 			return preconfigured;
 		}
 
-		private TokenizedPattern patternWithExpandedMacros() {
+		private IMatcher patternWithExpandedMacros() {
 			if (expandedFilterPattern == null) {
-				expandedFilterPattern = expandMacros();
+				IMatcher expanded = expandMacros();
+				if (expanded != null) {
+					expandedFilterPattern = expanded;
+				} else {
+					expandedFilterPattern = filterPattern;
+				}
 			}
 			return expandedFilterPattern;
 		}
 
-		private TokenizedPattern expandMacros() {
-			TokenizedPattern currentPattern = filterPattern;
+		@Nullable
+		private IMatcher expandMacros() {
+			String currentPattern = filterString;
 			for(Map.Entry<String, Function<Repository, String>> macro : macros.entrySet()) {
 				String macroString = macro.getKey();
-				if (currentPattern.containsPattern(macroString)) {
+				if (currentPattern.contains(macroString)) {
 					String replacingString = macro.getValue().apply(repository);
-					String newString = currentPattern.getPattern()
-							.replace(macroString, replacingString);
-					currentPattern = createPattern(newString);
+					String newString = currentPattern.replace(macroString,
+							replacingString);
+					currentPattern = newString;
 				}
 			}
-			return currentPattern;
+			return createPattern(currentPattern);
 		}
 
-		private TokenizedPattern createPattern(String pattern) {
-			return new TokenizedPattern(
-					pattern.replace('/', File.separatorChar));
+		@Nullable
+		private IMatcher createPattern(@Nullable String pattern) {
+			if (pattern == null) {
+				return null;
+			}
+			try {
+				return IMatcher.createPathMatcher(pattern, false);
+			} catch (InvalidPatternException e) {
+				// ignore
+				return null;
+			}
 		}
 
 		/**
@@ -681,9 +696,12 @@ public class RefFilterHelper {
 		 *            The path of the ref to match
 		 * @return true if the ref path matches the pattern of this filter
 		 */
-		public boolean matches(TokenizedPath refPath) {
-			return patternWithExpandedMacros().matchPath(refPath,
-					true);
+		public boolean matches(String refPath) {
+			IMatcher matcher = patternWithExpandedMacros();
+			if(matcher == null){
+				return false;
+			}
+			return matcher.matches(refPath, false, true);
 		}
 
 		/**
@@ -733,7 +751,7 @@ public class RefFilterHelper {
 
 		@Override
 		public int hashCode() {
-			return filterPattern.hashCode();
+			return filterString.hashCode();
 		}
 
 		@Override
@@ -741,7 +759,7 @@ public class RefFilterHelper {
 			if (!(obj instanceof RefFilter)) {
 				return false;
 			}
-			return filterPattern.equals(((RefFilter) obj).filterPattern);
+			return filterString.equals(((RefFilter) obj).filterString);
 		}
 
 		@Override

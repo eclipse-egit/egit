@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2010, 2019 SAP AG and others.
+ * Copyright (c) 2010, 2020 SAP AG and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License 2.0
  * which accompanies this distribution, and is available at
@@ -597,7 +597,13 @@ public class RepositoriesView extends CommonNavigator implements IShowInSource, 
 		// error if the text is the same again during editing.
 		String initialValue[] = { null };
 
-		textCellEditor = new MessagePopupTextCellEditor(viewer.getTree(), true);
+		textCellEditor = new MessagePopupTextCellEditor(viewer.getTree(), true) {
+
+			@Override
+			protected boolean withBorder() {
+				return true;
+			}
+		};
 		textCellEditor.setValidator(value -> {
 			String currentText = value.toString().trim();
 			if (currentText.isEmpty()) {

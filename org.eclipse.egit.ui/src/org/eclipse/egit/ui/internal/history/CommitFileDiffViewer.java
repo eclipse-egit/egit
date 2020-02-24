@@ -129,7 +129,7 @@ public class CommitFileDiffViewer extends TableViewer {
 		return style;
 	}
 
-	private static final String LINESEP = System.getProperty("line.separator"); //$NON-NLS-1$
+	private static final String LINESEP = System.lineSeparator();
 
 	private Clipboard clipboard;
 

@@ -12,7 +12,7 @@ package org.eclipse.egit.ui.internal.synchronize.model;
 
 import static org.eclipse.jgit.lib.Constants.HEAD;
 import static org.hamcrest.CoreMatchers.is;
-import static org.junit.Assert.assertThat;
+import static org.hamcrest.MatcherAssert.assertThat;
 
 import java.io.File;
 

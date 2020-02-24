@@ -71,7 +71,7 @@ public class PushOperationSpecification {
 	 * @return number of remote repositories URI for this push operation.
 	 */
 	public int getURIsNumber() {
-		return urisRefUpdates.keySet().size();
+		return urisRefUpdates.size();
 	}
 
 	/**

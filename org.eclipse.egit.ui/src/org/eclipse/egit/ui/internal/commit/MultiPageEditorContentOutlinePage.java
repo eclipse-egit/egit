@@ -29,6 +29,7 @@ import org.eclipse.swt.widgets.Control;
 import org.eclipse.ui.IEditorPart;
 import org.eclipse.ui.SubActionBars;
 import org.eclipse.ui.part.IPage;
+import org.eclipse.ui.part.IPageSite;
 import org.eclipse.ui.part.MessagePage;
 import org.eclipse.ui.part.MultiPageEditorPart;
 import org.eclipse.ui.part.Page;
@@ -224,14 +225,18 @@ public class MultiPageEditorContentOutlinePage extends ContentOutlinePage {
 	private IPage createOutlinePage(IEditorPart editor) {
 		IContentOutlinePage outlinePage = Adapters.adapt(editor,
 				IContentOutlinePage.class);
-		if (outlinePage == null) {
+		if (!(outlinePage instanceof Page)) {
 			pages.put(editor, emptyPage);
 			return emptyPage;
 		}
 		pages.put(editor, outlinePage);
-		if (outlinePage instanceof NestedContentOutlinePage) {
-			((Page) outlinePage).init(getSite());
-		}
+		// ContentOutlinePage insists on setting itself as selection provider.
+		// For pages nested inside a MultiPageEditorContentOutlinePage this is
+		// wrong. Save and restore the selection provider.
+		IPageSite pageSite = getSite();
+		ISelectionProvider provider = pageSite.getSelectionProvider();
+		((Page) outlinePage).init(getSite());
+		pageSite.setSelectionProvider(provider);
 		SubActionBars pageBars = new SubActionBars(getSite().getActionBars());
 		bars.put(outlinePage, pageBars);
 		return outlinePage;

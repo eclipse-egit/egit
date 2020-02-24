@@ -1,5 +1,5 @@
 /*******************************************************************************
- *  Copyright (c) 2011, 2016 GitHub Inc. and others.
+ *  Copyright (c) 2011, 2020 GitHub Inc. and others.
  *  All rights reserved. This program and the accompanying materials
  *  are made available under the terms of the Eclipse Public License 2.0
  *  which accompanies this distribution, and is available at
@@ -34,6 +34,7 @@ import org.eclipse.jface.action.IAction;
 import org.eclipse.jface.action.IContributionItem;
 import org.eclipse.jface.action.IToolBarManager;
 import org.eclipse.jface.action.ToolBarManager;
+import org.eclipse.jface.dialogs.IPageChangedListener;
 import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.jface.resource.JFaceResources;
 import org.eclipse.jface.viewers.ISelection;
@@ -57,6 +58,7 @@ import org.eclipse.ui.IEditorSite;
 import org.eclipse.ui.IPartListener;
 import org.eclipse.ui.IPartService;
 import org.eclipse.ui.ISharedImages;
+import org.eclipse.ui.ISources;
 import org.eclipse.ui.IWorkbenchPart;
 import org.eclipse.ui.PartInitException;
 import org.eclipse.ui.PlatformUI;
@@ -76,6 +78,7 @@ import org.eclipse.ui.part.IShowInTargetList;
 import org.eclipse.ui.part.MultiPageEditorSite;
 import org.eclipse.ui.part.ShowInContext;
 import org.eclipse.ui.progress.UIJob;
+import org.eclipse.ui.services.IEvaluationService;
 import org.eclipse.ui.views.contentoutline.IContentOutlinePage;
 
 /**
@@ -160,6 +163,8 @@ public class CommitEditor extends SharedHeaderFormEditor implements
 
 	private IToolBarManager toolbar;
 
+	private IPageChangedListener pageListener;
+
 	/** Ensures that the toolbar buttons in the header are properly updated. */
 	private final IPartListener activationListener = new IPartListener() {
 
@@ -237,11 +242,14 @@ public class CommitEditor extends SharedHeaderFormEditor implements
 				commitPage = new CommitEditorPage(this);
 			}
 			addPage(commitPage);
-			diffPage = new DiffEditorPage(this);
-			addPage(diffPage, getEditorInput());
-			if (getCommit().getNotes().length > 0) {
-				notePage = new NotesEditorPage(this);
-				addPage(notePage);
+			RepositoryCommit commit = getCommit();
+			if (commit != null) {
+				diffPage = new DiffEditorPage(this);
+				addPage(diffPage, new DiffEditorInput(commit));
+				if (commit.getNotes().length > 0) {
+					notePage = new NotesEditorPage(this);
+					addPage(notePage);
+				}
 			}
 		} catch (PartInitException e) {
 			Activator.error("Error adding page", e); //$NON-NLS-1$
@@ -249,6 +257,15 @@ public class CommitEditor extends SharedHeaderFormEditor implements
 		refListenerHandle = org.eclipse.egit.core.Activator.getDefault()
 				.getRepositoryCache().getGlobalListenerList()
 				.addRefsChangedListener(this);
+		pageListener = event -> {
+			IEvaluationService service = PlatformUI.getWorkbench()
+					.getService(IEvaluationService.class);
+			if (service != null) {
+				// Update enablement of "Save As..."
+				service.requestEvaluation(ISources.ACTIVE_PART_NAME);
+			}
+		};
+		addPageChangedListener(pageListener);
 	}
 
 	private IContributionItem createActionContributionItem(String commandId,
@@ -486,6 +503,10 @@ public class CommitEditor extends SharedHeaderFormEditor implements
 
 	@Override
 	public void dispose() {
+		if (pageListener != null) {
+			removePageChangedListener(pageListener);
+			pageListener = null;
+		}
 		CommonUtils.getService(getSite(), IPartService.class)
 				.removePartListener(activationListener);
 		refListenerHandle.remove();
@@ -506,7 +527,10 @@ public class CommitEditor extends SharedHeaderFormEditor implements
 	 */
 	@Override
 	public void doSaveAs() {
-		// Save as not supported
+		IEditorPart editor = getActiveEditor();
+		if (editor != null && editor.isSaveAsAllowed()) {
+			editor.doSaveAs();
+		}
 	}
 
 	/**
@@ -514,7 +538,8 @@ public class CommitEditor extends SharedHeaderFormEditor implements
 	 */
 	@Override
 	public boolean isSaveAsAllowed() {
-		return false;
+		IEditorPart editor = getActiveEditor();
+		return editor != null && editor.isSaveAsAllowed();
 	}
 
 	@Override
