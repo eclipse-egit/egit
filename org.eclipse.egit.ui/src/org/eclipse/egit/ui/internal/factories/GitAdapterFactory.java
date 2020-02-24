@@ -216,6 +216,6 @@ public class GitAdapterFactory implements IAdapterFactory {
 		return new Class<?>[] { IHistoryPageSource.class,
 				ISynchronizationCompareAdapter.class, ResourceMapping.class,
 				IResource.class, IWorkbenchAdapter.class, IShowInSource.class,
-				Repository.class, File.class, IHistoryPageSource.class};
+				Repository.class, File.class };
 	}
 }
