@@ -84,58 +84,66 @@
             class="org.eclipse.egit.ui.internal.factories.GitAdapterFactory">
          <adapter type="java.io.File" />
          <adapter type="org.eclipse.jgit.lib.Repository" />
+      </factory>
+      <factory
+            adaptableType="org.eclipse.ui.IURIEditorInput"
+            class="org.eclipse.egit.ui.history.GitHistoryAdapterFactory">
          <adapter type="org.eclipse.team.ui.history.IHistoryPageSource" />
       </factory>
       <factory
             adaptableType="org.eclipse.egit.core.internal.storage.GitFileHistoryProvider"
-            class="org.eclipse.egit.ui.internal.factories.GitAdapterFactory">
+            class="org.eclipse.egit.ui.history.GitHistoryAdapterFactory">
          <adapter type="org.eclipse.team.ui.history.IHistoryPageSource" />
       </factory>
       <factory
             adaptableType="org.eclipse.core.resources.IResource"
-            class="org.eclipse.egit.ui.internal.factories.GitAdapterFactory">
+            class="org.eclipse.egit.ui.history.GitHistoryAdapterFactory">
          <adapter type="org.eclipse.team.ui.history.IHistoryPageSource" />
       </factory>
       <factory
             adaptableType="org.eclipse.core.runtime.Path"
-            class="org.eclipse.egit.ui.internal.factories.GitAdapterFactory">
+            class="org.eclipse.egit.ui.history.GitHistoryAdapterFactory">
+         <adapter type="org.eclipse.team.ui.history.IHistoryPageSource" />
+      </factory>
+      <factory
+            adaptableType="org.eclipse.ui.IWorkingSet"
+            class="org.eclipse.egit.ui.history.GitHistoryAdapterFactory">
+         <adapter type="org.eclipse.team.ui.history.IHistoryPageSource" />
+      </factory>
+      <factory
+            adaptableType="org.eclipse.egit.ui.internal.repository.tree.RepositoryTreeNode"
+            class="org.eclipse.egit.ui.history.GitHistoryAdapterFactory">
+         <adapter type="org.eclipse.team.ui.history.IHistoryPageSource" />
+      </factory>
+      <factory
+            adaptableType="org.eclipse.egit.ui.internal.commit.RepositoryCommit"
+            class="org.eclipse.egit.ui.history.GitHistoryAdapterFactory">
+         <adapter type="org.eclipse.team.ui.history.IHistoryPageSource" />
+      </factory>
+      <factory
+            adaptableType="org.eclipse.egit.core.internal.IRepositoryCommit"
+            class="org.eclipse.egit.ui.history.GitHistoryAdapterFactory">
+         <adapter type="org.eclipse.team.ui.history.IHistoryPageSource" />
+      </factory>
+      <factory
+            adaptableType="org.eclipse.egit.ui.internal.history.HistoryPageInput"
+            class="org.eclipse.egit.ui.history.GitHistoryAdapterFactory">
+         <adapter type="org.eclipse.team.ui.history.IHistoryPageSource" />
+      </factory>
+      <factory
+            adaptableType="org.eclipse.egit.ui.internal.reflog.ReflogItem"
+            class="org.eclipse.egit.ui.history.GitHistoryAdapterFactory">
+         <adapter type="org.eclipse.team.ui.history.IHistoryPageSource" />
+      </factory>
+      <factory
+            adaptableType="org.eclipse.egit.core.internal.rebase.RebaseInteractivePlan$PlanElement"
+            class="org.eclipse.egit.ui.history.GitHistoryAdapterFactory">
          <adapter type="org.eclipse.team.ui.history.IHistoryPageSource" />
       </factory>
       <factory
             adaptableType="org.eclipse.ui.IWorkingSet"
             class="org.eclipse.egit.ui.internal.factories.GitAdapterFactory">
-         <adapter type="org.eclipse.team.ui.history.IHistoryPageSource" />
          <adapter type="org.eclipse.jgit.lib.Repository" />
-      </factory>
-      <factory
-            adaptableType="org.eclipse.egit.ui.internal.repository.tree.RepositoryTreeNode"
-            class="org.eclipse.egit.ui.internal.factories.GitAdapterFactory">
-         <adapter type="org.eclipse.team.ui.history.IHistoryPageSource" />
-      </factory>
-      <factory
-            adaptableType="org.eclipse.egit.ui.internal.commit.RepositoryCommit"
-            class="org.eclipse.egit.ui.internal.factories.GitAdapterFactory">
-         <adapter type="org.eclipse.team.ui.history.IHistoryPageSource" />
-      </factory>
-      <factory
-            adaptableType="org.eclipse.egit.core.internal.IRepositoryCommit"
-            class="org.eclipse.egit.ui.internal.factories.GitAdapterFactory">
-         <adapter type="org.eclipse.team.ui.history.IHistoryPageSource" />
-      </factory>
-      <factory
-            adaptableType="org.eclipse.egit.ui.internal.history.HistoryPageInput"
-            class="org.eclipse.egit.ui.internal.factories.GitAdapterFactory">
-         <adapter type="org.eclipse.team.ui.history.IHistoryPageSource" />
-      </factory>
-      <factory
-            adaptableType="org.eclipse.egit.ui.internal.reflog.ReflogItem"
-            class="org.eclipse.egit.ui.internal.factories.GitAdapterFactory">
-         <adapter type="org.eclipse.team.ui.history.IHistoryPageSource" />
-      </factory>
-      <factory
-            adaptableType="org.eclipse.egit.core.internal.rebase.RebaseInteractivePlan$PlanElement"
-            class="org.eclipse.egit.ui.internal.factories.GitAdapterFactory">
-         <adapter type="org.eclipse.team.ui.history.IHistoryPageSource" />
       </factory>
       <factory
             adaptableType="org.eclipse.egit.ui.internal.synchronize.model.GitModelRoot"
