@@ -256,11 +256,13 @@ public class Activator extends Plugin implements DebugOptionsListener {
 
 		repositoryCache = new RepositoryCache();
 		indexDiffCache = new IndexDiffCache();
-		try {
-			GitProjectData.reconfigureWindowCache();
-		} catch (RuntimeException e) {
-			logError(CoreText.Activator_ReconfigureWindowCacheError, e);
-		}
+		Job.create("Reconfiguring window cache for EGit", (monitor) -> {//$NON-NLS-1$
+			try {
+				GitProjectData.reconfigureWindowCache();
+			} catch (RuntimeException e) {
+				logError(CoreText.Activator_ReconfigureWindowCacheError, e);
+			}
+		}).schedule();
 		GitProjectData.attachToWorkspace();
 		setupResourceRefresh();
 
