@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7a167b5f_1e1bc8bc",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/Activator.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 237,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2020-02-25T22:51:42Z",
+      "side": 1,
+      "message": "Wrong indentation caused by a bug in the JDT formatter since 4.14 :-(",
+      "range": {
+        "startLine": 237,
+        "startChar": 2,
+        "endLine": 237,
+        "endChar": 4
+      },
+      "revId": "2dd661c1442bc81e1ea1ff76fba9b09253e7bc6f",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "88302d6f_6db8bfee",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/Activator.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 287,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2020-02-25T22:51:42Z",
+      "side": 1,
+      "message": "Is the JobManager already up?",
+      "revId": "2dd661c1442bc81e1ea1ff76fba9b09253e7bc6f",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
