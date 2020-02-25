@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "7faa3e28_30a4be0d",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2020-02-25T12:56:44Z",
+      "side": 1,
+      "message": "My idea is: mention the new API in the EGit N\u0026N, warn users that they should not use the internal GitAdapterFactory. Remove adaptation to IHistoryPageSource in GitAdapterFactory early in 5.8.0.",
+      "revId": "ea7ab919bd6a98cd22bbab3f8dd24a15b5852f07",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3ac86bf9_f48dcde6",
         "filename": "org.eclipse.egit.ui/META-INF/MANIFEST.MF",
         "patchSetId": 1
