@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3ac86bf9_f48dcde6",
+        "filename": "org.eclipse.egit.ui/META-INF/MANIFEST.MF",
+        "patchSetId": 1
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2020-02-25T12:51:39Z",
+      "side": 1,
+      "message": "The first public API in EGit UI.",
+      "revId": "ea7ab919bd6a98cd22bbab3f8dd24a15b5852f07",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
