@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1e790cc9_208252ce",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/Activator.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 259,
+      "author": {
+        "id": 1179
+      },
+      "writtenOn": "2020-02-25T22:33:50Z",
+      "side": 1,
+      "message": "This would mean, all access to WindowCache started *before* the job runs will use *not* the settings from current workspace. In worst case this can lead to crashes on Linux / Windows, where mmap access could be configured differently as expected.",
+      "revId": "afadaf55e8eca0c9bb7530025004178ed0715d57",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
