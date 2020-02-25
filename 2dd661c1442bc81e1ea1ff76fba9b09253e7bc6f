@@ -74,6 +74,24 @@
       "revId": "2dd661c1442bc81e1ea1ff76fba9b09253e7bc6f",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "03e5c2fa_9b298f94",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/Activator.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 287,
+      "author": {
+        "id": 1093
+      },
+      "writtenOn": "2020-02-25T22:57:04Z",
+      "side": 1,
+      "message": "Please clarify. Any class access to this bundle will have to wait for bundle activation to finish.",
+      "parentUuid": "1f95fe54_e6831a8c",
+      "revId": "2dd661c1442bc81e1ea1ff76fba9b09253e7bc6f",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
     }
   ]
 }
