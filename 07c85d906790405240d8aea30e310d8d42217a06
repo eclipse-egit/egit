@@ -34,6 +34,24 @@
       "revId": "07c85d906790405240d8aea30e310d8d42217a06",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ac292e3b_13e410df",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/repository/tree/command/CloneCommand.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2020-02-25T19:22:36Z",
+      "side": 1,
+      "message": "It\u0027s OK. Anyway the clone runs asynchronously, so one would have to get the result of the clone job. But behavior as is is fine. (Tested by making CloneOperation wait a few seconds, then throw an exception.)",
+      "parentUuid": "7c736770_bb99ab22",
+      "revId": "07c85d906790405240d8aea30e310d8d42217a06",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
     }
   ]
 }
