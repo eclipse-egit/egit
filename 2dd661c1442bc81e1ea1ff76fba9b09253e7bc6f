@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "e8460928_9b1c533b",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/Activator.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 231,
+      "author": {
+        "id": 1179
+      },
+      "writtenOn": "2020-02-25T23:01:03Z",
+      "side": 1,
+      "message": "I haven\u0027t tried, but please try to throw new RuntimeException() here - will it deadlock or not? If CoreText class is not loaded yet, I believe it will.",
+      "revId": "2dd661c1442bc81e1ea1ff76fba9b09253e7bc6f",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7a167b5f_1e1bc8bc",
         "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/Activator.java",
         "patchSetId": 3
