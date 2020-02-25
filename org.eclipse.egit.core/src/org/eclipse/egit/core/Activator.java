@@ -222,8 +222,18 @@ public class Activator extends Plugin implements DebugOptionsListener {
 	public void start(final BundleContext context) throws Exception {
 
 		super.start(context);
+
 		pluginId = context.getBundle().getSymbolicName();
 
+		Job createCache = Job.create("Reconfiguring window cache for EGit", //$NON-NLS-1$
+				(monitor) -> {
+					try {
+						GitProjectData.reconfigureWindowCache();
+					} catch (RuntimeException e) {
+						logError(CoreText.Activator_ReconfigureWindowCacheError,
+								e);
+					}
+				});
 		FS.FileStoreAttributes.setBackground(true);
 
 		SystemReader.setInstance(
@@ -256,11 +266,9 @@ public class Activator extends Plugin implements DebugOptionsListener {
 
 		repositoryCache = new RepositoryCache();
 		indexDiffCache = new IndexDiffCache();
-		try {
-			GitProjectData.reconfigureWindowCache();
-		} catch (RuntimeException e) {
-			logError(CoreText.Activator_ReconfigureWindowCacheError, e);
-		}
+
+		createCache.schedule();
+
 		GitProjectData.attachToWorkspace();
 		setupResourceRefresh();
 
@@ -273,6 +281,7 @@ public class Activator extends Plugin implements DebugOptionsListener {
 		registerPreDeleteResourceChangeListener();
 		registerMergeStrategyRegistryListener();
 		registerBuiltinLFS();
+		createCache.join();
 	}
 
 	@SuppressWarnings("unchecked")
