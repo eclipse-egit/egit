@@ -16,6 +16,23 @@
       "revId": "afadaf55e8eca0c9bb7530025004178ed0715d57",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1428e614_440ecd84",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/Activator.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 265,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2020-02-25T22:39:49Z",
+      "side": 1,
+      "message": "Also, strictly speaking it needs to be ensured that this job is not left running after Activator.stop().",
+      "revId": "afadaf55e8eca0c9bb7530025004178ed0715d57",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
     }
   ]
 }
