@@ -224,7 +224,7 @@ public class Activator extends Plugin implements DebugOptionsListener {
 		super.start(context);
 		pluginId = context.getBundle().getSymbolicName();
 
-		FS.setAsyncFileStoreAttributes(true);
+		FS.FileStoreAttributes.setBackground(true);
 
 		SystemReader.setInstance(
 				new EclipseSystemReader(SystemReader.getInstance()));
