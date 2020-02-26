@@ -22,6 +22,64 @@
       "revId": "de0f23f85a488e08569c05c7baf98c12ce0fbf8c",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "91a8bb24_cc0c8132",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/Activator.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 925,
+      "author": {
+        "id": 3
+      },
+      "writtenOn": "2020-02-26T08:50:56Z",
+      "side": 1,
+      "message": "I\u0027m not sure it makes sense to have a `join()` here; it will delay stopping them and potentially blocks if there is an error. If we\u0027ve cancelled it, and the bundle is being stopped, then if the job is outstanding it will pin the bundlecontext in memory anyway until it stops, but there\u0027s no need to explicitly wait for it.",
+      "parentUuid": "a8ceaf2e_7889f39e",
+      "range": {
+        "startLine": 919,
+        "startChar": 2,
+        "endLine": 925,
+        "endChar": 20
+      },
+      "revId": "de0f23f85a488e08569c05c7baf98c12ce0fbf8c",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "57b9474b_284fb002",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/RepositoryChangeScannerStarter.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 3
+      },
+      "writtenOn": "2020-02-26T08:50:56Z",
+      "side": 1,
+      "message": "Nit: OSGi",
+      "revId": "de0f23f85a488e08569c05c7baf98c12ce0fbf8c",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ae6497bb_f06337f4",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/RepositoryChangeScannerStarter.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 3
+      },
+      "writtenOn": "2020-02-26T08:50:56Z",
+      "side": 1,
+      "message": "General observation: I think in general we should try and move away from the Activator.getDefault() patterns, but it is probably a good change in the meantime and we can tackle that later.",
+      "revId": "de0f23f85a488e08569c05c7baf98c12ce0fbf8c",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
     }
   ]
 }
