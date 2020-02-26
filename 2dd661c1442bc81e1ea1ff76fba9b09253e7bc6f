@@ -175,6 +175,24 @@
       "revId": "2dd661c1442bc81e1ea1ff76fba9b09253e7bc6f",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "8969cdb7_229576b5",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/Activator.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 287,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2020-02-26T07:46:31Z",
+      "side": 1,
+      "message": "That\u0027s what I meant when I asked whether it was \"up\". You\u0027ve explained it better.\n\nMoreover, if the JobManager is suspended when the job is scheduled, the job won\u0027t even run until the manager is resumed.",
+      "parentUuid": "81115df3_08fc46c5",
+      "revId": "2dd661c1442bc81e1ea1ff76fba9b09253e7bc6f",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
     }
   ]
 }
