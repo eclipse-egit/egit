@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9f31e1ff_4d16b696",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/UIUtils.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 544,
+      "author": {
+        "id": 236689
+      },
+      "writtenOn": "2020-02-26T19:36:45Z",
+      "side": 1,
+      "message": "Would\n\n\"refs/(heads|tags|notes)/.*\\\\Q\" + input.trim() + \"\\\\E.*\"\n+\"|\"+\n\"\\\\Q\" + input.trim() + \"\\\\E.*\"\n\nachieve what you want?",
+      "revId": "bb4510404e49cb9c9461ee0477c2aefa81845f3d",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
