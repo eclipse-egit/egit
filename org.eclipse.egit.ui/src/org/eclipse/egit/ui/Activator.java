@@ -345,7 +345,6 @@ public class Activator extends AbstractUIPlugin implements DebugOptionsListener 
 				props);
 
 		SelectionRepositoryStateCache.INSTANCE.initialize();
-		setupRepoChangeScanner();
 		setupFocusHandling();
 		setupCredentialsProvider();
 		ConfigurationChecker.checkConfiguration();
@@ -446,7 +445,9 @@ public class Activator extends AbstractUIPlugin implements DebugOptionsListener 
 			public void windowActivated(IWorkbenchWindow window) {
 				updateUiState();
 				// 500: give the UI task a chance to update the active state
-				rcs.schedule(500);
+				if (rcs != null) {
+					rcs.schedule(500);
+				}
 			}
 		};
 		Job job = new Job(UIText.Activator_setupFocusListener) {
@@ -892,7 +893,7 @@ public class Activator extends AbstractUIPlugin implements DebugOptionsListener 
 		}
 	}
 
-	private void setupRepoChangeScanner() {
+	void setupRepoChangeScanner() {
 		refreshJob = new ResourceRefreshJob();
 		rcs = new RepositoryChangeScanner(refreshJob);
 		getPreferenceStore().addPropertyChangeListener(rcs);
