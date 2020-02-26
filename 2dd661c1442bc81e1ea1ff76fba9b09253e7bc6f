@@ -66,6 +66,30 @@
     },
     {
       "key": {
+        "uuid": "ad331057_db7aaef8",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/Activator.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 237,
+      "author": {
+        "id": 1179
+      },
+      "writtenOn": "2020-02-26T06:34:26Z",
+      "side": 1,
+      "message": "That should be fixed in 4.15, if that is same what I\u0027ve seen.",
+      "parentUuid": "75a6a8db_7873d53b",
+      "range": {
+        "startLine": 237,
+        "startChar": 2,
+        "endLine": 237,
+        "endChar": 4
+      },
+      "revId": "2dd661c1442bc81e1ea1ff76fba9b09253e7bc6f",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "88302d6f_6db8bfee",
         "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/Activator.java",
         "patchSetId": 3
