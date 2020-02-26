@@ -42,6 +42,30 @@
     },
     {
       "key": {
+        "uuid": "75a6a8db_7873d53b",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/Activator.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 237,
+      "author": {
+        "id": 440
+      },
+      "writtenOn": "2020-02-26T06:26:55Z",
+      "side": 1,
+      "message": "@Thomas: Do you know the root cause of that bug by chance? At work I have to rework at least 1 out of 10 changes because of that wrong indentation found in review, and would like to investigate some time into fixing.",
+      "parentUuid": "7a167b5f_1e1bc8bc",
+      "range": {
+        "startLine": 237,
+        "startChar": 2,
+        "endLine": 237,
+        "endChar": 4
+      },
+      "revId": "2dd661c1442bc81e1ea1ff76fba9b09253e7bc6f",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "88302d6f_6db8bfee",
         "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/Activator.java",
         "patchSetId": 3
