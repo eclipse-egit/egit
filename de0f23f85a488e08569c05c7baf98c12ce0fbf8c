@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a8ceaf2e_7889f39e",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/Activator.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 925,
+      "author": {
+        "id": 1179
+      },
+      "writtenOn": "2020-02-26T08:21:06Z",
+      "side": 1,
+      "message": "I think this could fail on too \"fast\" stop. If that all is needed by the new service only, all the init/dispose could be done by the service on start/stop hooks.",
+      "range": {
+        "startLine": 919,
+        "startChar": 2,
+        "endLine": 925,
+        "endChar": 20
+      },
+      "revId": "de0f23f85a488e08569c05c7baf98c12ce0fbf8c",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
