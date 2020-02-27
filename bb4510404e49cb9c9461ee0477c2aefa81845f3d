@@ -16,6 +16,24 @@
       "revId": "bb4510404e49cb9c9461ee0477c2aefa81845f3d",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "cc136fb1_162a14fc",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/UIUtils.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 544,
+      "author": {
+        "id": 440
+      },
+      "writtenOn": "2020-02-27T07:12:06Z",
+      "side": 1,
+      "message": "Ah, to avoid the wrong matching inside the \"refs/heads/\" part? Yes, I think that is much better.\n\nDone.",
+      "parentUuid": "9f31e1ff_4d16b696",
+      "revId": "bb4510404e49cb9c9461ee0477c2aefa81845f3d",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
     }
   ]
 }
