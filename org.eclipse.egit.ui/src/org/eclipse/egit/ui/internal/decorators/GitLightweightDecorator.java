@@ -148,12 +148,12 @@ public class GitLightweightDecorator extends GitDecorator
 			@Override
 			public void run() {
 				ITheme theme  = PlatformUI.getWorkbench().getThemeManager().getCurrentTheme();
-				for (int i = 0; i < actColors.size(); i++) {
-					theme.getColorRegistry().get(actColors.get(i));
+				for (String actColor : actColors) {
+					theme.getColorRegistry().get(actColor);
 
 				}
-				for (int i = 0; i < actFonts.size(); i++) {
-					theme.getFontRegistry().get(actFonts.get(i));
+				for (String actFont : actFonts) {
+					theme.getFontRegistry().get(actFont);
 				}
 				defaultBackgroundRgb = display.getSystemColor(
 						SWT.COLOR_LIST_BACKGROUND).getRGB();

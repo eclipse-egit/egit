@@ -13,7 +13,6 @@
 package org.eclipse.egit.ui.internal.decorators;
 
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 
 import org.eclipse.jface.resource.ImageDescriptor;
@@ -121,8 +120,8 @@ public class DecorationResult implements IDecoration {
 	 */
 	public String getPrefix() {
 		StringBuilder sb = new StringBuilder();
-		for (Iterator<String> iter = prefixes.iterator(); iter.hasNext();) {
-			sb.append(iter.next());
+		for (String string : prefixes) {
+			sb.append(string);
 		}
 		return sb.toString();
 	}
@@ -132,8 +131,8 @@ public class DecorationResult implements IDecoration {
 	 */
 	public String getSuffix() {
 		StringBuilder sb = new StringBuilder();
-		for (Iterator<String> iter = suffixes.iterator(); iter.hasNext();) {
-			sb.append(iter.next());
+		for (String string : suffixes) {
+			sb.append(string);
 		}
 		return sb.toString();
 	}
