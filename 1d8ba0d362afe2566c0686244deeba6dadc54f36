@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5d469e77_9ceb3b8a",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/UIUtils.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 526,
+      "author": {
+        "id": 236689
+      },
+      "writtenOn": "2020-02-27T16:30:43Z",
+      "side": 1,
+      "message": "I would change the calling method as well. Match only the complete ref name and not the shortened name. With an appropriate pattern (which we have now) this is not necessary anymore. It reduces the complexity of making sure the pattern matches in the intended cases.",
+      "revId": "1d8ba0d362afe2566c0686244deeba6dadc54f36",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "39c2853c_f9170e1d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/UIUtils.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 546,
+      "author": {
+        "id": 236689
+      },
+      "writtenOn": "2020-02-27T16:30:43Z",
+      "side": 1,
+      "message": "Repository#shortenRefName also eliminates \"refs/remotes\", so \"remotes\" might also be added to the list of alternatives.",
+      "revId": "1d8ba0d362afe2566c0686244deeba6dadc54f36",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "e51a5ccb_e73bae75",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/UIUtils.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 547,
+      "author": {
+        "id": 236689
+      },
+      "writtenOn": "2020-02-27T16:30:43Z",
+      "side": 1,
+      "message": "Maybe add \"refs/\"+quotedInput+\".*\" for matching the input \"heads\" (if the user wants to filter out tags)?",
+      "revId": "1d8ba0d362afe2566c0686244deeba6dadc54f36",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
