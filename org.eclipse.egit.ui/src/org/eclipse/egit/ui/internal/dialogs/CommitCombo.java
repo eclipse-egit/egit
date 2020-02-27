@@ -68,8 +68,8 @@ public class CommitCombo extends Composite {
 			List<IContentProposal> list = new ArrayList<>();
 			Pattern pattern = Pattern.compile(contents,
 					Pattern.CASE_INSENSITIVE);
-			for (int i = 0; i < commits.size(); i++) {
-				String message = commits.get(i).message;
+			for (ComboCommitEnt commit : commits) {
+				String message = commit.message;
 				if (message.length() >= contents.length()
 						&& pattern.matcher(message).find()) {
 					list.add(makeContentProposal(message));
