@@ -22,6 +22,30 @@
       "revId": "6dde8fbf8891ba15cf80d7c849ebc29a42843157",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "4b78d9ff_3fcbb285",
+        "filename": "org.eclipse.egit/about.ini",
+        "patchSetId": 1
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2020-02-28T22:39:46Z",
+      "side": 1,
+      "message": "Perhaps. I\u0027m not a lawyer, so I don\u0027t know. I generally don\u0027t remove copyright lines mentioning people or companies, it\u0027s a kind of attribution line, and I\u0027m not sure it would be OK to remove them and replace them by some generic text.\n\nIt doesn\u0027t bother me at all, as long as it says \"and others\" or \"et al\". (Which it does.)",
+      "parentUuid": "b46f5829_838bec00",
+      "range": {
+        "startLine": 9,
+        "startChar": 28,
+        "endLine": 9,
+        "endChar": 62
+      },
+      "revId": "6dde8fbf8891ba15cf80d7c849ebc29a42843157",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
     }
   ]
 }
