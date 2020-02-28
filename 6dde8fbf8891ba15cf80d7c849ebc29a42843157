@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b46f5829_838bec00",
+        "filename": "org.eclipse.egit/about.ini",
+        "patchSetId": 1
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2020-02-28T22:17:01Z",
+      "side": 1,
+      "message": "Can we use this phrase in all these places ? Why point out those who started the project a long time ago and many, many others also contributed since then",
+      "range": {
+        "startLine": 9,
+        "startChar": 28,
+        "endLine": 9,
+        "endChar": 62
+      },
+      "revId": "6dde8fbf8891ba15cf80d7c849ebc29a42843157",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
