@@ -1,5 +1,8 @@
 target "jetty-9.4.x" with source configurePhase
 
+// Jetty is used by jgit only. Therefore the version number in this file must match the version number in
+// org.eclipse.jgit.target/projects/jetty-x.y.z.tpd
+
 location jetty-9.4.25 "https://download.eclipse.org/jetty/updates/jetty-bundles-9.x/9.4.25.v20191220/" {
 	org.eclipse.jetty.client [9.4.25.v20191220,9.4.25.v20191220]
 	org.eclipse.jetty.client.source [9.4.25.v20191220,9.4.25.v20191220]
