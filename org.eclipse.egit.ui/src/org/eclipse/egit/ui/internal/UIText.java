@@ -564,6 +564,9 @@ public class UIText extends NLS {
 	public static String GitHistoryPage_MultiResourcesType;
 
 	/** */
+	public static String GitHistoryPage_OpenAllInCommitViewerLabel;
+
+	/** */
 	public static String GitHistoryPage_OpenInTextEditorLabel;
 
 	/** */

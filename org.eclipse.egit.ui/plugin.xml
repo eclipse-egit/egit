@@ -3561,6 +3561,7 @@
          <command
               commandId="org.eclipse.egit.ui.history.OpenInCommitViewerCommand"
               label="%HistoryOpenInCommitViewer.label"
+              tooltip="%OpenInCommitViewerCommand.tooltip"
               style="push">
             <visibleWhen checkEnabled="true" />
          </command>
@@ -3804,6 +3805,7 @@
          <command
                commandId="org.eclipse.egit.ui.history.OpenInCommitViewerCommand"
                label="%RebaseInteractiveOpenInCommitViewer.label"
+               tooltip="%OpenInCommitViewerCommand.tooltip"
                style="push">
             <visibleWhen checkEnabled="true" />
          </command>
@@ -7232,7 +7234,8 @@
       </command>
       <command
             id="org.eclipse.egit.ui.history.OpenInCommitViewerCommand"
-            name="%OpenInCommitViewerCommand.name">
+            name="%OpenInCommitViewerCommand.name"
+            description="%OpenInCommitViewerCommand.tooltip">
       </command>
       <command
             id="org.eclipse.egit.ui.commit.UnifiedDiffCommand"
