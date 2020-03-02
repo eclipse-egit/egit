@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d5cbb7cb_27bdec09",
+        "filename": "org.eclipse.egit.target/projects/jetty-9.4.x.tpd",
+        "patchSetId": 1
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2020-03-02T08:22:08Z",
+      "side": 1,
+      "message": "that\u0027s not true SampleTestRepository is using Jetty and is used by PushTest and the GitCloneWizard*Tests",
+      "revId": "ccdbd81c1df19ac99d38676942b33c65f541a347",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
