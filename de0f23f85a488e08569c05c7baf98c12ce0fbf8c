@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "5f8e3614_e560cbd8",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/Activator.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 925,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2020-03-05T23:59:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "91a8bb24_cc0c8132",
+      "range": {
+        "startLine": 919,
+        "startChar": 2,
+        "endLine": 925,
+        "endChar": 20
+      },
+      "revId": "de0f23f85a488e08569c05c7baf98c12ce0fbf8c",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d0693bd5_b0170f03",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/RepositoryChangeScannerStarter.java",
         "patchSetId": 1
@@ -66,6 +90,24 @@
     },
     {
       "key": {
+        "uuid": "592ded84_a12d075a",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/RepositoryChangeScannerStarter.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2020-03-05T23:59:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d0693bd5_b0170f03",
+      "revId": "de0f23f85a488e08569c05c7baf98c12ce0fbf8c",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "57b9474b_284fb002",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/RepositoryChangeScannerStarter.java",
         "patchSetId": 1
@@ -77,6 +119,24 @@
       "writtenOn": "2020-02-26T08:50:56Z",
       "side": 1,
       "message": "Nit: OSGi",
+      "revId": "de0f23f85a488e08569c05c7baf98c12ce0fbf8c",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "beb58a4e_d3cf8c93",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/RepositoryChangeScannerStarter.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2020-03-05T23:59:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "57b9474b_284fb002",
       "revId": "de0f23f85a488e08569c05c7baf98c12ce0fbf8c",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
