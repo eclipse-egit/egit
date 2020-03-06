@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7f595284_f7543896",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/Activator.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 920,
+      "author": {
+        "id": 1179
+      },
+      "writtenOn": "2020-03-06T06:07:05Z",
+      "side": 1,
+      "message": "Can we please add a NP check here? We have a headless application that unfortunately uses lot of xtext that initializes lot of UI bundles that in theory could trigger egit ui activation, all without proper workbench startup. I fear we may end with the case where this code is called without the service ever activated.",
+      "revId": "326025d228c8ddb740a5bc6f28abfa898df58321",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
