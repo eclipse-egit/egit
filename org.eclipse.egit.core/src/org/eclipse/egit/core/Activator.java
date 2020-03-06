@@ -18,11 +18,9 @@ import java.text.MessageFormat;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Dictionary;
-import java.util.HashMap;
 import java.util.Hashtable;
 import java.util.LinkedHashMap;
 import java.util.LinkedHashSet;
-import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
@@ -40,12 +38,10 @@ import org.eclipse.core.runtime.IExtension;
 import org.eclipse.core.runtime.IExtensionPoint;
 import org.eclipse.core.runtime.IExtensionRegistry;
 import org.eclipse.core.runtime.IPath;
-import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IRegistryEventListener;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.core.runtime.OperationCanceledException;
-import org.eclipse.core.runtime.Path;
 import org.eclipse.core.runtime.Platform;
 import org.eclipse.core.runtime.Plugin;
 import org.eclipse.core.runtime.Status;
@@ -63,14 +59,11 @@ import org.eclipse.egit.core.internal.indexdiff.IndexDiffCache;
 import org.eclipse.egit.core.internal.job.JobUtil;
 import org.eclipse.egit.core.internal.trace.GitTraceLocation;
 import org.eclipse.egit.core.internal.util.ResourceUtil;
-import org.eclipse.egit.core.op.ConnectProviderOperation;
 import org.eclipse.egit.core.op.IgnoreOperation;
 import org.eclipse.egit.core.project.GitProjectData;
-import org.eclipse.egit.core.project.RepositoryFinder;
 import org.eclipse.egit.core.project.RepositoryMapping;
 import org.eclipse.egit.core.securestorage.EGitSecureStore;
 import org.eclipse.equinox.security.storage.SecurePreferencesFactory;
-import org.eclipse.jgit.annotations.NonNull;
 import org.eclipse.jgit.errors.ConfigInvalidException;
 import org.eclipse.jgit.events.ListenerHandle;
 import org.eclipse.jgit.lib.Config;
@@ -89,7 +82,6 @@ import org.eclipse.jsch.core.IJSchService;
 import org.eclipse.osgi.service.debug.DebugOptions;
 import org.eclipse.osgi.service.debug.DebugOptionsListener;
 import org.eclipse.osgi.util.NLS;
-import org.eclipse.team.core.RepositoryProvider;
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.ServiceReference;
 import org.osgi.util.tracker.ServiceTracker;
@@ -114,7 +106,8 @@ public class Activator extends Plugin implements DebugOptionsListener {
 	private IndexDiffCache indexDiffCache;
 	private RepositoryUtil repositoryUtil;
 	private EGitSecureStore secureStore;
-	private AutoShareProjects shareGitProjectsJob;
+
+	// private AutoShareProjects shareGitProjectsJob;
 	private IResourceChangeListener preDeleteProjectListener;
 	private IgnoreDerivedResources ignoreDerivedResourcesListener;
 	private MergeStrategyRegistryListener mergeStrategyRegistryListener;
@@ -268,7 +261,7 @@ public class Activator extends Plugin implements DebugOptionsListener {
 
 		secureStore = new EGitSecureStore(SecurePreferencesFactory.getDefault());
 
-		registerAutoShareProjects();
+		// registerAutoShareProjects();
 		registerAutoIgnoreDerivedResources();
 		registerPreDeleteResourceChangeListener();
 		registerMergeStrategyRegistryListener();
@@ -533,12 +526,12 @@ public class Activator extends Plugin implements DebugOptionsListener {
 			refreshHandle.remove();
 			refreshHandle = null;
 		}
-		if (shareGitProjectsJob != null) {
-			ResourcesPlugin.getWorkspace().removeResourceChangeListener(
-					shareGitProjectsJob);
-			shareGitProjectsJob.stop();
-			shareGitProjectsJob = null;
-		}
+		// if (shareGitProjectsJob != null) {
+		// ResourcesPlugin.getWorkspace().removeResourceChangeListener(
+		// shareGitProjectsJob);
+		// shareGitProjectsJob.stop();
+		// shareGitProjectsJob = null;
+		// }
 		GitProjectData.detachFromWorkspace();
 		indexDiffCache.dispose();
 		indexDiffCache = null;
@@ -552,245 +545,13 @@ public class Activator extends Plugin implements DebugOptionsListener {
 		plugin = null;
 	}
 
-	private void registerAutoShareProjects() {
-		shareGitProjectsJob = new AutoShareProjects();
-		ResourcesPlugin.getWorkspace().addResourceChangeListener(
-				shareGitProjectsJob, IResourceChangeEvent.POST_CHANGE);
-	}
+	// private void registerAutoShareProjects() {
+	// // shareGitProjectsJob = new AutoShareProjects();
+	// ResourcesPlugin.getWorkspace().addResourceChangeListener(
+	// shareGitProjectsJob, IResourceChangeEvent.POST_CHANGE);
+	// }
 
-	private static class AutoShareProjects implements IResourceChangeListener {
 
-		private static int INTERESTING_CHANGES = IResourceDelta.ADDED
-				| IResourceDelta.OPEN;
-
-		private final CheckProjectsToShare checkProjectsJob;
-
-		public AutoShareProjects() {
-			checkProjectsJob = new CheckProjectsToShare();
-		}
-
-		private boolean doAutoShare() {
-			IEclipsePreferences d = DefaultScope.INSTANCE.getNode(Activator
-					.getPluginId());
-			IEclipsePreferences p = InstanceScope.INSTANCE.getNode(Activator
-					.getPluginId());
-			return p.getBoolean(GitCorePreferences.core_autoShareProjects, d
-					.getBoolean(GitCorePreferences.core_autoShareProjects,
-							true));
-		}
-
-		public void stop() {
-			boolean isRunning = !checkProjectsJob.cancel();
-			Job.getJobManager().cancel(JobFamilies.AUTO_SHARE);
-			try {
-				if (isRunning) {
-					checkProjectsJob.join();
-				}
-				Job.getJobManager().join(JobFamilies.AUTO_SHARE,
-						new NullProgressMonitor());
-			} catch (OperationCanceledException e) {
-				// Ignore
-			} catch (InterruptedException e) {
-				logError(e.getLocalizedMessage(), e);
-			}
-		}
-
-		@Override
-		public void resourceChanged(IResourceChangeEvent event) {
-			if (!doAutoShare()) {
-				return;
-			}
-			try {
-				final Set<IProject> projectCandidates = new LinkedHashSet<>();
-				event.getDelta().accept(new IResourceDeltaVisitor() {
-					@Override
-					public boolean visit(IResourceDelta delta)
-							throws CoreException {
-						return collectOpenedProjects(delta,
-								projectCandidates);
-					}
-				});
-				if(!projectCandidates.isEmpty()){
-					checkProjectsJob.addProjectsToCheck(projectCandidates);
-				}
-			} catch (CoreException e) {
-				Activator.logError(e.getMessage(), e);
-				return;
-			}
-		}
-
-		/*
-		 * This method should not use RepositoryMapping.getMapping(project) or
-		 * RepositoryProvider.getProvider(project) which can trigger
-		 * RepositoryProvider.map(project) and deadlock current thread. See
-		 * https://bugs.eclipse.org/bugs/show_bug.cgi?id=468270
-		 */
-		private boolean collectOpenedProjects(IResourceDelta delta,
-				Set<IProject> projects) {
-			if (delta.getKind() == IResourceDelta.CHANGED
-					&& (delta.getFlags() & INTERESTING_CHANGES) == 0) {
-				return true;
-			}
-			final IResource resource = delta.getResource();
-			if (resource.getType() == IResource.ROOT) {
-				return true;
-			}
-			if (resource.getType() != IResource.PROJECT) {
-				return false;
-			}
-			if (!resource.isAccessible() || resource.getLocation() == null) {
-				return false;
-			}
-			projects.add((IProject) resource);
-			return false;
-		}
-
-	}
-
-	private static class CheckProjectsToShare extends Job {
-		private Object lock = new Object();
-
-		private Set<IProject> projectCandidates;
-
-		public CheckProjectsToShare() {
-			super(CoreText.Activator_AutoShareJobName);
-			this.projectCandidates = new LinkedHashSet<>();
-			setUser(false);
-			setSystem(true);
-		}
-
-		public void addProjectsToCheck(Set<IProject> projects) {
-			synchronized (lock) {
-				this.projectCandidates.addAll(projects);
-				if (!projectCandidates.isEmpty()) {
-					schedule(100);
-				}
-			}
-		}
-
-		@Override
-		protected IStatus run(IProgressMonitor monitor) {
-			Set<IProject> projectsToCheck;
-			synchronized (lock) {
-				projectsToCheck = projectCandidates;
-				projectCandidates = new LinkedHashSet<>();
-			}
-			if (projectsToCheck.isEmpty()) {
-				return Status.OK_STATUS;
-			}
-
-			final Map<IProject, File> projects = new HashMap<>();
-			for (IProject project : projectsToCheck) {
-				if (monitor.isCanceled()) {
-					return Status.CANCEL_STATUS;
-				}
-				if (project.isAccessible()) {
-					try {
-						visitConnect(project, projects);
-					} catch (CoreException e) {
-						logError(e.getMessage(), e);
-					}
-				}
-			}
-			if (monitor.isCanceled()) {
-				return Status.CANCEL_STATUS;
-			}
-			if (projects.size() > 0) {
-				ConnectProviderOperation op = new ConnectProviderOperation(
-						projects);
-				op.setRefreshResources(false);
-				JobUtil.scheduleUserJob(op,
-						CoreText.Activator_AutoShareJobName,
-						JobFamilies.AUTO_SHARE);
-			}
-			return Status.OK_STATUS;
-		}
-
-		private void visitConnect(IProject project,
-				final Map<IProject, File> projects) throws CoreException {
-
-			if (RepositoryMapping.getMapping(project) != null) {
-				return;
-			}
-			RepositoryProvider provider = RepositoryProvider
-					.getProvider(project);
-			// respect if project is already shared with another
-			// team provider
-			if (provider != null) {
-				return;
-			}
-			RepositoryFinder f = new RepositoryFinder(project);
-			f.setFindInChildren(false);
-			List<RepositoryMapping> mappings = f
-					.find(new NullProgressMonitor());
-			if (mappings.isEmpty()) {
-				return;
-			}
-			RepositoryMapping m = mappings.get(0);
-			IPath gitDirPath = m.getGitDirAbsolutePath();
-			if (gitDirPath == null || !isValidRepositoryPath(gitDirPath)) {
-				return;
-			}
-
-			// connect
-			File repositoryDir = gitDirPath.toFile();
-			projects.put(project, repositoryDir);
-
-			Set<String> configured = Activator.getDefault().getRepositoryUtil()
-					.getRepositories();
-			if (configured.contains(gitDirPath.toString())) {
-				return;
-			}
-			int nofMappings = mappings.size();
-			if (nofMappings > 1) {
-				// We don't want to add submodules, that would only lead to
-				// problems when a configured repository is deleted. Walk up the
-				// hierarchy of nested repositories found. If we hit an already
-				// configured repository, we're done anyway. Otherwise add the
-				// topmost not yet configured repository that has a valid path.
-				IPath lastPath = gitDirPath;
-				for (int i = 1; i < nofMappings; i++) {
-					IPath nextPath = mappings.get(i).getGitDirAbsolutePath();
-					if (nextPath == null) {
-						continue;
-					}
-					if (configured.contains(nextPath.toString())) {
-						return;
-					} else if (!isValidRepositoryPath(nextPath)) {
-						break;
-					}
-					lastPath = nextPath;
-				}
-				repositoryDir = lastPath.toFile();
-			}
-			try {
-				Activator.getDefault().getRepositoryUtil()
-						.addConfiguredRepository(repositoryDir);
-			} catch (IllegalArgumentException e) {
-				logError(CoreText.Activator_AutoSharingFailed, e);
-			}
-		}
-	}
-
-	private static boolean isValidRepositoryPath(@NonNull IPath gitDirPath) {
-		if (gitDirPath.segmentCount() == 0) {
-			return false;
-		}
-		IPath workingDir = gitDirPath.removeLastSegments(1);
-		// Don't connect "/" or "C:\"
-		if (workingDir.isRoot()) {
-			return false;
-		}
-		File userHome = FS.DETECTED.userHome();
-		if (userHome != null) {
-			Path userHomePath = new Path(userHome.getAbsolutePath());
-			// Don't connect "/home" or "/home/username"
-			if (workingDir.isPrefixOf(userHomePath)) {
-				return false;
-			}
-		}
-		return true;
-	}
 
 	private void registerAutoIgnoreDerivedResources() {
 		ignoreDerivedResourcesListener = new IgnoreDerivedResources();
