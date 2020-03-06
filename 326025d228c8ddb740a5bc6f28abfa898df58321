@@ -34,6 +34,24 @@
       "revId": "326025d228c8ddb740a5bc6f28abfa898df58321",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "50d26cde_248644c3",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/Activator.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 920,
+      "author": {
+        "id": 1179
+      },
+      "writtenOn": "2020-03-06T14:32:25Z",
+      "side": 1,
+      "message": "Thanks. I haven\u0027t tested this, but I would sleep better now.",
+      "parentUuid": "cd0b6d06_3fb370e5",
+      "revId": "326025d228c8ddb740a5bc6f28abfa898df58321",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
     }
   ]
 }
