@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "71d8c219_a947aad7",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/internal/AutoShareProjects.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2020-03-07T08:39:33Z",
+      "side": 1,
+      "message": "missing license header",
+      "revId": "46e4aeeede604d60d5b677772b15757ad6356081",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3ee24462_a2507003",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/internal/CheckProjectsToShare.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2020-03-07T08:39:33Z",
+      "side": 1,
+      "message": "missing license header",
+      "revId": "46e4aeeede604d60d5b677772b15757ad6356081",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
