@@ -2808,6 +2808,15 @@ public class UIText extends NLS {
 	public static String CreateBranchWizard_NewBranchTitle;
 
 	/** */
+	public static String CreateBranchBulkDialog_Title;
+
+	/** */
+	public static String CreateBranchBulkDialog_Description;
+
+	/** */
+	public static String CreateBranchBulkDialog_Error;
+
+	/** */
 	public static String CreateRepositoryCommand_CreateButtonLabel;
 
 	/** */
@@ -5233,6 +5242,9 @@ public class UIText extends NLS {
 	public static String SimpleConfigureFetchDialog_WindowTitle;
 
 	/** */
+	public static String SimpleConfigureFetchDialog_FetchFromLabel;
+
+	/** */
 	public static String SimpleConfigurePushDialog_AddPushUriButton;
 
 	/** */
@@ -5261,6 +5273,9 @@ public class UIText extends NLS {
 
 	/** */
 	public static String SimpleConfigurePushDialog_WindowTitle;
+
+	/** */
+	public static String SimpleConfigurePushDialog_PushToLabel;
 
 	/** */
 	public static String SimpleFetchActionHandler_NothingToFetchDialogMessage;

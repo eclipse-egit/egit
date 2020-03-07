@@ -84,58 +84,66 @@
             class="org.eclipse.egit.ui.internal.factories.GitAdapterFactory">
          <adapter type="java.io.File" />
          <adapter type="org.eclipse.jgit.lib.Repository" />
+      </factory>
+      <factory
+            adaptableType="org.eclipse.ui.IURIEditorInput"
+            class="org.eclipse.egit.ui.history.GitHistoryAdapterFactory">
          <adapter type="org.eclipse.team.ui.history.IHistoryPageSource" />
       </factory>
       <factory
             adaptableType="org.eclipse.egit.core.internal.storage.GitFileHistoryProvider"
-            class="org.eclipse.egit.ui.internal.factories.GitAdapterFactory">
+            class="org.eclipse.egit.ui.history.GitHistoryAdapterFactory">
          <adapter type="org.eclipse.team.ui.history.IHistoryPageSource" />
       </factory>
       <factory
             adaptableType="org.eclipse.core.resources.IResource"
-            class="org.eclipse.egit.ui.internal.factories.GitAdapterFactory">
+            class="org.eclipse.egit.ui.history.GitHistoryAdapterFactory">
          <adapter type="org.eclipse.team.ui.history.IHistoryPageSource" />
       </factory>
       <factory
             adaptableType="org.eclipse.core.runtime.Path"
-            class="org.eclipse.egit.ui.internal.factories.GitAdapterFactory">
+            class="org.eclipse.egit.ui.history.GitHistoryAdapterFactory">
+         <adapter type="org.eclipse.team.ui.history.IHistoryPageSource" />
+      </factory>
+      <factory
+            adaptableType="org.eclipse.ui.IWorkingSet"
+            class="org.eclipse.egit.ui.history.GitHistoryAdapterFactory">
+         <adapter type="org.eclipse.team.ui.history.IHistoryPageSource" />
+      </factory>
+      <factory
+            adaptableType="org.eclipse.egit.ui.internal.repository.tree.RepositoryTreeNode"
+            class="org.eclipse.egit.ui.history.GitHistoryAdapterFactory">
+         <adapter type="org.eclipse.team.ui.history.IHistoryPageSource" />
+      </factory>
+      <factory
+            adaptableType="org.eclipse.egit.ui.internal.commit.RepositoryCommit"
+            class="org.eclipse.egit.ui.history.GitHistoryAdapterFactory">
+         <adapter type="org.eclipse.team.ui.history.IHistoryPageSource" />
+      </factory>
+      <factory
+            adaptableType="org.eclipse.egit.core.internal.IRepositoryCommit"
+            class="org.eclipse.egit.ui.history.GitHistoryAdapterFactory">
+         <adapter type="org.eclipse.team.ui.history.IHistoryPageSource" />
+      </factory>
+      <factory
+            adaptableType="org.eclipse.egit.ui.internal.history.HistoryPageInput"
+            class="org.eclipse.egit.ui.history.GitHistoryAdapterFactory">
+         <adapter type="org.eclipse.team.ui.history.IHistoryPageSource" />
+      </factory>
+      <factory
+            adaptableType="org.eclipse.egit.ui.internal.reflog.ReflogItem"
+            class="org.eclipse.egit.ui.history.GitHistoryAdapterFactory">
+         <adapter type="org.eclipse.team.ui.history.IHistoryPageSource" />
+      </factory>
+      <factory
+            adaptableType="org.eclipse.egit.core.internal.rebase.RebaseInteractivePlan$PlanElement"
+            class="org.eclipse.egit.ui.history.GitHistoryAdapterFactory">
          <adapter type="org.eclipse.team.ui.history.IHistoryPageSource" />
       </factory>
       <factory
             adaptableType="org.eclipse.ui.IWorkingSet"
             class="org.eclipse.egit.ui.internal.factories.GitAdapterFactory">
-         <adapter type="org.eclipse.team.ui.history.IHistoryPageSource" />
          <adapter type="org.eclipse.jgit.lib.Repository" />
-      </factory>
-      <factory
-            adaptableType="org.eclipse.egit.ui.internal.repository.tree.RepositoryTreeNode"
-            class="org.eclipse.egit.ui.internal.factories.GitAdapterFactory">
-         <adapter type="org.eclipse.team.ui.history.IHistoryPageSource" />
-      </factory>
-      <factory
-            adaptableType="org.eclipse.egit.ui.internal.commit.RepositoryCommit"
-            class="org.eclipse.egit.ui.internal.factories.GitAdapterFactory">
-         <adapter type="org.eclipse.team.ui.history.IHistoryPageSource" />
-      </factory>
-      <factory
-            adaptableType="org.eclipse.egit.core.internal.IRepositoryCommit"
-            class="org.eclipse.egit.ui.internal.factories.GitAdapterFactory">
-         <adapter type="org.eclipse.team.ui.history.IHistoryPageSource" />
-      </factory>
-      <factory
-            adaptableType="org.eclipse.egit.ui.internal.history.HistoryPageInput"
-            class="org.eclipse.egit.ui.internal.factories.GitAdapterFactory">
-         <adapter type="org.eclipse.team.ui.history.IHistoryPageSource" />
-      </factory>
-      <factory
-            adaptableType="org.eclipse.egit.ui.internal.reflog.ReflogItem"
-            class="org.eclipse.egit.ui.internal.factories.GitAdapterFactory">
-         <adapter type="org.eclipse.team.ui.history.IHistoryPageSource" />
-      </factory>
-      <factory
-            adaptableType="org.eclipse.egit.core.internal.rebase.RebaseInteractivePlan$PlanElement"
-            class="org.eclipse.egit.ui.internal.factories.GitAdapterFactory">
-         <adapter type="org.eclipse.team.ui.history.IHistoryPageSource" />
       </factory>
       <factory
             adaptableType="org.eclipse.egit.ui.internal.synchronize.model.GitModelRoot"
@@ -3077,6 +3085,60 @@
          </activeWhen>
       </handler>
       <handler
+            commandId="org.eclipse.egit.ui.history.CompareVersions">
+         <class
+               class="org.eclipse.egit.ui.internal.repository.tree.command.CompareCommand">
+         </class>
+         <activeWhen>
+            <and>
+               <count value="2" />
+               <iterate>
+                  <or>
+                     <instanceof value="org.eclipse.egit.ui.internal.repository.tree.TagNode" />
+                     <instanceof value="org.eclipse.egit.ui.internal.repository.tree.RefNode" />
+                     <instanceof value="org.eclipse.egit.ui.internal.repository.tree.AdditionalRefNode" />
+                  </or>
+               </iterate>
+            </and>
+         </activeWhen>
+      </handler>
+      <handler
+            commandId="org.eclipse.egit.ui.history.CompareVersionsInTree">
+         <class
+               class="org.eclipse.egit.ui.internal.repository.tree.command.CompareInTreeCommand">
+         </class>
+         <activeWhen>
+            <and>
+               <count value="2" />
+               <iterate>
+                  <or>
+                     <instanceof value="org.eclipse.egit.ui.internal.repository.tree.TagNode" />
+                     <instanceof value="org.eclipse.egit.ui.internal.repository.tree.RefNode" />
+                     <instanceof value="org.eclipse.egit.ui.internal.repository.tree.AdditionalRefNode" />
+                  </or>
+               </iterate>
+            </and>
+         </activeWhen>
+      </handler>
+      <handler
+            commandId="org.eclipse.egit.ui.commit.UnifiedDiffCommand">
+         <class
+               class="org.eclipse.egit.ui.internal.repository.tree.command.CompareUnifiedCommand">
+         </class>
+         <activeWhen>
+            <and>
+               <count value="2" />
+               <iterate>
+                  <or>
+                     <instanceof value="org.eclipse.egit.ui.internal.repository.tree.TagNode" />
+                     <instanceof value="org.eclipse.egit.ui.internal.repository.tree.RefNode" />
+                     <instanceof value="org.eclipse.egit.ui.internal.repository.tree.AdditionalRefNode" />
+                  </or>
+               </iterate>
+            </and>
+         </activeWhen>
+      </handler>
+      <handler
             commandId="org.eclipse.egit.ui.history.CompareVersionsInTree">
          <class
                class="org.eclipse.egit.ui.internal.history.command.CompareVersionsInTreeHandler">
@@ -3961,6 +4023,24 @@
                </and>
             </visibleWhen>
          </command>
+         <command
+              commandId="org.eclipse.egit.ui.history.CompareVersions"
+              label="%RepoViewCompareVersions.label"
+              style="push">
+            <visibleWhen checkEnabled="true" />
+         </command>
+         <command
+              commandId="org.eclipse.egit.ui.history.CompareVersionsInTree"
+              label="%RepoViewCompareVersionsInTree.label"
+              style="push">
+            <visibleWhen checkEnabled="true" />
+         </command>
+         <command
+              commandId="org.eclipse.egit.ui.commit.UnifiedDiffCommand"
+              label="%RepoViewCompareUnified.label"
+              style="push">
+            <visibleWhen checkEnabled="true" />
+         </command>
       </menuContribution>
       <menuContribution
             locationURI="popup:org.eclipse.egit.ui.RepositoriesView?after=remotes">
@@ -4251,6 +4331,9 @@
                      <and>
                         <or>
                            <instanceof
+                                 value="org.eclipse.egit.ui.internal.repository.tree.RepositoryGroupNode">
+                           </instanceof>
+                           <instanceof
                                  value="org.eclipse.egit.ui.internal.repository.tree.RepositoryNode">
                            </instanceof>
                            <instanceof
@@ -4263,6 +4346,9 @@
                         <test property="GitRepository.isBare" value="false" />
                      </and>
                   </iterate>
+                  <test
+                        property="GitSelection.selectionMultipleRepositories" value="false">
+                  </test>
                </and>
             </visibleWhen>
          </menu>

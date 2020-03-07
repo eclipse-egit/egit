@@ -15,7 +15,9 @@ package org.eclipse.egit.ui.internal.repository.tree.command;
 import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.commands.ExecutionException;
 import org.eclipse.egit.ui.internal.clone.GitCloneWizard;
+import org.eclipse.egit.ui.internal.groups.RepositoryGroup;
 import org.eclipse.egit.ui.internal.repository.tree.RepositoryTreeNode;
+import org.eclipse.jface.window.Window;
 import org.eclipse.jface.wizard.WizardDialog;
 
 /**
@@ -49,11 +51,14 @@ public class CloneCommand extends
 		} else {
 			wizard = new GitCloneWizard(presetURI);
 		}
-		wizard.setRepositoryGroup(getSelectedRepositoryGroup(event));
+		RepositoryGroup group = getSelectedRepositoryGroup(event);
+		wizard.setRepositoryGroup(group);
 		wizard.setShowProjectImport(true);
 		WizardDialog dlg = new WizardDialog(getShell(event), wizard);
 		dlg.setHelpAvailable(true);
-		dlg.open();
+		if (dlg.open() == Window.OK) {
+			getView(event).expandNodeForGroup(group);
+		}
 		return null;
 	}
 }

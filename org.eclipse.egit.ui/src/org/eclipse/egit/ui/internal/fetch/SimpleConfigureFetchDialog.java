@@ -29,6 +29,7 @@ import org.eclipse.jface.dialogs.Dialog;
 import org.eclipse.jface.dialogs.IDialogConstants;
 import org.eclipse.jface.window.Window;
 import org.eclipse.jface.wizard.WizardDialog;
+import org.eclipse.jgit.annotations.NonNull;
 import org.eclipse.jgit.lib.Config;
 import org.eclipse.jgit.lib.ConfigConstants;
 import org.eclipse.jgit.lib.Constants;
@@ -116,6 +117,20 @@ public class SimpleConfigureFetchDialog extends AbstractConfigureRemoteDialog {
 		branch = Repository.shortenRefName(branch);
 		return getConfiguredRemote(branch,
 				SelectionRepositoryStateCache.INSTANCE.getConfig(repository));
+	}
+
+	/**
+	 * Computes a specific fetch label for the given remote config
+	 *
+	 * @param config
+	 * @return the menu item label
+	 *
+	 */
+	public static String getSimpleFetchCommandLabel(
+			@NonNull RemoteConfig config) {
+		String target = config.getName();
+		return NLS.bind(UIText.SimpleConfigureFetchDialog_FetchFromLabel,
+				target);
 	}
 
 	/**

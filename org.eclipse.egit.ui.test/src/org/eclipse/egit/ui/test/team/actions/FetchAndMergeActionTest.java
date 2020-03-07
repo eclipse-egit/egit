@@ -160,8 +160,7 @@ public class FetchAndMergeActionTest extends LocalRepositoryTestCase {
 	private void fetch() throws Exception {
 		SWTBotTree projectExplorerTree = TestUtil.getExplorerTree();
 		getProjectItem(projectExplorerTree, PROJ1).select();
-		String menuString = util
-				.getPluginLocalizedValue("FetchFromUpstreamAction.label");
+		String menuString = "Fetch from origin";
 		JobJoiner jobJoiner = JobJoiner.startListening(JobFamilies.FETCH, 20, TimeUnit.SECONDS);
 		ContextMenuHelper.clickContextMenu(projectExplorerTree, "Team",
 				menuString);

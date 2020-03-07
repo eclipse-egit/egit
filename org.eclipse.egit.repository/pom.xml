@@ -64,7 +64,7 @@
               </symbols>
               <associateSites>
                 <site>https://download.eclipse.org/e4/snapshots/org.eclipse.e4.ui</site>
-                <site>https://download.eclipse.org/tools/orbit/downloads/drops/S20200219023850/repository</site>
+                <site>https://download.eclipse.org/tools/orbit/downloads/drops/R20200224183213/repository</site>
               </associateSites>
             </configuration>
           </execution>

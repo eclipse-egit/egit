@@ -120,7 +120,7 @@ public class RepositoryGroupsMenu extends CompoundContributionItem
 					@Override
 					public void runWithEvent(Event event) {
 						groupsUtil.removeFromGroups(selectedRepoDirectories);
-						refreshRepositoriesView();
+						refreshRepositoriesView(null);
 					}
 				}));
 				break;
@@ -137,7 +137,7 @@ public class RepositoryGroupsMenu extends CompoundContributionItem
 			public void runWithEvent(Event event) {
 				groupsUtil.addRepositoriesToGroup(group,
 						selectedRepoDirectories);
-				refreshRepositoriesView();
+				refreshRepositoriesView(group);
 			}
 		});
 	}
@@ -155,9 +155,10 @@ public class RepositoryGroupsMenu extends CompoundContributionItem
 		return result;
 	}
 
-	private void refreshRepositoriesView() {
+	private void refreshRepositoriesView(RepositoryGroup group) {
 		RepositoriesView view = (RepositoriesView) PlatformUI.getWorkbench()
 				.getActiveWorkbenchWindow().getActivePage().getActivePart();
 		view.refresh();
+		view.expandNodeForGroup(group);
 	}
 }

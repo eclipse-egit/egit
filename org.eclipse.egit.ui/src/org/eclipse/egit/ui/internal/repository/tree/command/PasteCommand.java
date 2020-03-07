@@ -106,6 +106,7 @@ public class PasteCommand extends
 				if (group != null) {
 					RepositoryGroups.getInstance().addRepositoriesToGroup(group,
 							Collections.singletonList(file));
+					view.expandNodeForGroup(group);
 				}
 				// let's do the auto-refresh the rest
 			} else {

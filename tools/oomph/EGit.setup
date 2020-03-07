@@ -80,7 +80,7 @@
   <setupTask
       xsi:type="setup:EclipseIniTask"
       option="-Xmx"
-      value="1g"
+      value="2g"
       vm="true"/>
   <setupTask
       xsi:type="setup:EclipseIniTask"
