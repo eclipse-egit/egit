@@ -19,10 +19,12 @@ import static org.eclipse.swtbot.swt.finder.matchers.WidgetMatcherFactory.withTe
 import static org.eclipse.swtbot.swt.finder.waits.Conditions.waitForWidget;
 import static org.eclipse.swtbot.swt.finder.waits.Conditions.widgetIsEnabled;
 
+import org.eclipse.jgit.transport.TagOpt;
 import org.eclipse.swt.widgets.Text;
 import org.eclipse.swtbot.eclipse.finder.SWTWorkbenchBot;
 import org.eclipse.swtbot.swt.finder.widgets.SWTBotTree;
 import org.eclipse.swtbot.swt.finder.widgets.SWTBotTreeItem;
+import org.junit.Assert;
 
 public class RepoRemoteBranchesPage {
 	private static final SWTWorkbenchBot bot = new SWTWorkbenchBot();
@@ -64,6 +66,24 @@ public class RepoRemoteBranchesPage {
 		bot.waitUntil(
 				waitForWidget(allOf(widgetOfType(Text.class), withText(" "
 						+ errorMessage))), 20000);
+	}
+
+	public void selectTagOption(TagOpt option) {
+		int index = 0;
+		switch (option) {
+		case AUTO_FOLLOW:
+			break;
+		case FETCH_TAGS:
+			index = 1;
+			break;
+		case NO_TAGS:
+			index = 2;
+			break;
+		default:
+			Assert.fail("unsupported tag option");
+			break;
+		}
+		bot.radio(index).click();
 	}
 
 	public void assertNextIsDisabled() {
