@@ -15,6 +15,7 @@ package org.eclipse.egit.ui.test.team.actions;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 
 import java.io.File;
 
@@ -195,6 +196,10 @@ public class TagActionTest extends LocalRepositoryTestCase {
 		tagDialog = openTagDialog();
 		tagDialog.bot().tableWithLabel(UIText.CreateTagDialog_existingTags)
 				.getTableItem("MessageChangeTag").select();
+		assertEquals("Why was the wrong tag selected in the table!?",
+				"MessageChangeTag",
+				tagDialog.bot().textWithLabel(UIText.CreateTagDialog_tagName)
+						.getText());
 		assertFalse("Ok should be disabled", tagDialog.bot()
 				.button(UIText.CreateTagDialog_CreateTagButton).isEnabled());
 		String oldText = tagDialog.bot()
@@ -222,6 +227,10 @@ public class TagActionTest extends LocalRepositoryTestCase {
 		SWTBotShell tagDialog = openTagDialog();
 		tagDialog.bot().tableWithLabel(UIText.CreateTagDialog_existingTags)
 				.getTableItem("SomeLightTag").select();
+		assertEquals("Why was the wrong tag selected in the table!?",
+				"SomeLightTag",
+				tagDialog.bot().textWithLabel(UIText.CreateTagDialog_tagName)
+						.getText());
 		assertFalse("Ok should be disabled", tagDialog.bot()
 				.button(UIText.CreateTagDialog_CreateTagButton).isEnabled());
 		tagDialog.bot().checkBox(UIText.CreateTagDialog_overwriteTag).click();
@@ -237,11 +246,17 @@ public class TagActionTest extends LocalRepositoryTestCase {
 		SWTBotShell tagDialog = openTagDialog();
 		tagDialog.bot().tableWithLabel(UIText.CreateTagDialog_existingTags)
 				.getTableItem("SomeLightTag").select();
+		assertEquals("Why was the wrong tag selected in the table!?",
+				"SomeLightTag",
+				tagDialog.bot().textWithLabel(UIText.CreateTagDialog_tagName)
+						.getText());
 		assertFalse("Ok should be disabled", tagDialog.bot()
 				.button(UIText.CreateTagDialog_CreateTagButton).isEnabled());
 		tagDialog.bot().styledTextWithLabel(UIText.CreateTagDialog_tagMessage)
 				.setText("New message");
 		tagDialog.bot().checkBox(UIText.CreateTagDialog_overwriteTag).click();
+		assertTrue("Ok should be enabled", tagDialog.bot()
+				.button(UIText.CreateTagDialog_CreateTagButton).isEnabled());
 		tagDialog.bot().button(UIText.CreateTagDialog_CreateTagButton).click();
 		TestUtil.joinJobs(JobFamilies.TAG);
 		assertIsAnnotated("SomeLightTag", headCommit, "New message");
