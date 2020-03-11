@@ -76,6 +76,7 @@ import org.eclipse.egit.ui.internal.repository.tree.TagNode;
 import org.eclipse.egit.ui.internal.repository.tree.WorkingDirNode;
 import org.eclipse.egit.ui.internal.repository.tree.command.ToggleBranchHierarchyCommand;
 import org.eclipse.egit.ui.internal.repository.tree.command.ToggleLinkWithSelectionCommand;
+import org.eclipse.egit.ui.internal.repository.tree.command.ToggleTagSortingCommand;
 import org.eclipse.egit.ui.internal.selection.RepositoryVirtualNode;
 import org.eclipse.egit.ui.internal.selection.SelectionUtils;
 import org.eclipse.egit.ui.internal.staging.StagingView;
@@ -272,6 +273,8 @@ public class RepositoriesView extends CommonNavigator implements IShowInSource, 
 
 	private State branchHierarchy;
 
+	private State tagSorting;
+
 	private final IStateListener stateChangeListener = (state,
 			oldValue) -> refresh();
 
@@ -417,6 +420,9 @@ public class RepositoriesView extends CommonNavigator implements IShowInSource, 
 		branchHierarchy = csrv.getCommand(ToggleBranchHierarchyCommand.ID)
 				.getState(RegistryToggleState.STATE_ID);
 		branchHierarchy.addListener(stateChangeListener);
+		tagSorting = csrv.getCommand(ToggleTagSortingCommand.ID)
+				.getState(RegistryToggleState.STATE_ID);
+		tagSorting.addListener(stateChangeListener);
 		IWorkbenchSiteProgressService service = CommonUtils.getService(getSite(), IWorkbenchSiteProgressService.class);
 		if (service != null) {
 			service.showBusyForFamily(JobFamilies.REPO_VIEW_REFRESH);

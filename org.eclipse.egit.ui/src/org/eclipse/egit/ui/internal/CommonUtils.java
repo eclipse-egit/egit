@@ -27,11 +27,14 @@ import java.util.regex.Pattern;
 
 import org.eclipse.core.commands.Command;
 import org.eclipse.core.commands.ParameterizedCommand;
+import org.eclipse.core.commands.State;
 import org.eclipse.core.commands.common.CommandException;
 import org.eclipse.core.expressions.EvaluationContext;
 import org.eclipse.core.resources.IResource;
+import org.eclipse.egit.ui.Activator;
 import org.eclipse.jface.util.Policy;
 import org.eclipse.jface.viewers.IStructuredSelection;
+import org.eclipse.jgit.lib.Constants;
 import org.eclipse.jgit.lib.Ref;
 import org.eclipse.jgit.util.StringUtils;
 import org.eclipse.swt.graphics.GC;
@@ -41,6 +44,7 @@ import org.eclipse.ui.ISources;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.commands.ICommandService;
 import org.eclipse.ui.handlers.IHandlerService;
+import org.eclipse.ui.handlers.RegistryToggleState;
 import org.eclipse.ui.services.IServiceLocator;
 
 /**
@@ -57,11 +61,18 @@ public class CommonUtils {
 			.compile("(?:\n(?:[A-Za-z0-9-]+:[^\n]*))+\\s*$"); //$NON-NLS-1$
 
 	/**
+	 * The toggle tag sorting command id.
+	 */
+	public static String TOGGLE_TAG_SORTING_COMMAND_ID = "org.eclipse.egit.ui.RepositoriesToggleTagSorting";//$NON-NLS-1$
+
+	/**
 	 * Minimum inset to draw table column text without shortening on Windows.
 	 * The code of {@link Table} suggests 4, but that lead to shortening of
 	 * text.
 	 */
 	private static final int TABLE_INSET = 5;
+
+	private static volatile Boolean sortTagsAscending;
 
 	private CommonUtils() {
 		// non-instantiable utility class
@@ -148,8 +159,67 @@ public class CommonUtils {
 	 * Instance of comparator which sorts {@link Ref} names using
 	 * {@link CommonUtils#STRING_ASCENDING_COMPARATOR}.
 	 */
-	public static final Comparator<Ref> REF_ASCENDING_COMPARATOR = Comparator
-			.comparing(Ref::getName, STRING_ASCENDING_COMPARATOR);
+	public static final Comparator<Ref> REF_ASCENDING_COMPARATOR = new Comparator<Ref>() {
+		@Override
+		public int compare(Ref o1, Ref o2) {
+			String name1 = o1.getName();
+			String name2 = o2.getName();
+			if (name1.startsWith(Constants.R_TAGS)
+					&& name2.startsWith(Constants.R_TAGS)
+					&& !isSortTagsAscending()) {
+				name1 = name2;
+				name2 = o1.getName();
+			}
+			return STRING_ASCENDING_COMPARATOR.compare(name1, name2);
+		}
+	};
+
+	private static boolean isSortTagsAscending() {
+		if (sortTagsAscending == null) {
+			ICommandService srv = CommonUtils.getService(
+					PlatformUI.getWorkbench(), ICommandService.class);
+			State currentToggleState = srv
+					.getCommand(TOGGLE_TAG_SORTING_COMMAND_ID)
+					.getState(RegistryToggleState.STATE_ID);
+			if (currentToggleState != null) {
+				Object value = currentToggleState.getValue();
+				if (value instanceof Boolean) {
+					sortTagsAscending = ((Boolean) value);
+				}
+			}
+			if (sortTagsAscending == null) {
+				Activator.logError("Using default sort order", //$NON-NLS-1$
+						new IllegalStateException(
+								"Could not determine current tag sorting toggle state"));//$NON-NLS-1$
+				sortTagsAscending = Boolean.TRUE;
+			}
+		}
+		return sortTagsAscending.booleanValue();
+	}
+
+	/**
+	 * Force re-evaluation of the sort direction toggle state when next sorting
+	 * tags.
+	 */
+	public static void unsetTagSortingOrder() {
+		sortTagsAscending = null;
+	}
+
+	/**
+	 * Instance of comparator for tag names using
+	 * {@link CommonUtils#STRING_ASCENDING_COMPARATOR}. The sort order depends
+	 * on the state of the tag sorting toggle.
+	 */
+	public static final Comparator<String> TAG_STRING_COMPARATOR = new Comparator<String>() {
+		@Override
+		public int compare(String o1, String o2) {
+			if (isSortTagsAscending()) {
+				return STRING_ASCENDING_COMPARATOR.compare(o1, o2);
+			} else {
+				return STRING_ASCENDING_COMPARATOR.compare(o2, o1);
+			}
+		}
+	};
 
 	/**
 	 * Comparator for comparing {@link IResource} by the result of
