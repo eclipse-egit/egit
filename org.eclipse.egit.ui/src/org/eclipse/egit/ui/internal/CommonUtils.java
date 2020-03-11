@@ -27,11 +27,15 @@ import java.util.regex.Pattern;
 
 import org.eclipse.core.commands.Command;
 import org.eclipse.core.commands.ParameterizedCommand;
+import org.eclipse.core.commands.State;
 import org.eclipse.core.commands.common.CommandException;
 import org.eclipse.core.expressions.EvaluationContext;
 import org.eclipse.core.resources.IResource;
+import org.eclipse.egit.ui.Activator;
+import org.eclipse.egit.ui.internal.repository.tree.command.ToggleTagSortingCommand;
 import org.eclipse.jface.util.Policy;
 import org.eclipse.jface.viewers.IStructuredSelection;
+import org.eclipse.jgit.lib.Constants;
 import org.eclipse.jgit.lib.Ref;
 import org.eclipse.jgit.util.StringUtils;
 import org.eclipse.swt.graphics.GC;
@@ -63,8 +67,35 @@ public class CommonUtils {
 	 */
 	private static final int TABLE_INSET = 5;
 
+	private static boolean sortTagsAscending;
+
 	private CommonUtils() {
 		// non-instantiable utility class
+	}
+
+	static {
+		try {
+			ICommandService srv = CommonUtils.getService(
+					PlatformUI.getWorkbench(), ICommandService.class);
+			State currentToggleState = srv
+					.getCommand(ToggleTagSortingCommand.ID)
+					.getState(ToggleTagSortingCommand.TOGGLE_STATE);
+			setSortTagsAscending(currentToggleState);
+			currentToggleState.addListener(
+					(state, oldValue) -> setSortTagsAscending(state));
+		} catch (Exception e) {
+			Activator.logError(
+					"exception while restoring tag sort toggle state", e); //$NON-NLS-1$
+		}
+	}
+
+	private static final void setSortTagsAscending(State toggleState) {
+		if (toggleState != null) {
+			Object value = toggleState.getValue();
+			if (value instanceof Boolean) {
+				sortTagsAscending = ((Boolean) value).booleanValue();
+			}
+		}
 	}
 
 	/**
@@ -148,8 +179,36 @@ public class CommonUtils {
 	 * Instance of comparator which sorts {@link Ref} names using
 	 * {@link CommonUtils#STRING_ASCENDING_COMPARATOR}.
 	 */
-	public static final Comparator<Ref> REF_ASCENDING_COMPARATOR = Comparator
-			.comparing(Ref::getName, STRING_ASCENDING_COMPARATOR);
+	public static final Comparator<Ref> REF_ASCENDING_COMPARATOR = new Comparator<Ref>() {
+		@Override
+		public int compare(Ref o1, Ref o2) {
+			String name1 = o1.getName();
+			String name2 = o2.getName();
+			if (name1.startsWith(Constants.R_TAGS)
+					&& name2.startsWith(Constants.R_TAGS)
+					&& !sortTagsAscending) {
+				name1 = name2;
+				name2 = o1.getName();
+			}
+			return STRING_ASCENDING_COMPARATOR.compare(name1, name2);
+		}
+	};
+
+	/**
+	 * Instance of comparator for tag names using
+	 * {@link CommonUtils#STRING_ASCENDING_COMPARATOR}. The sort order depends
+	 * on the state of the tag sorting toggle.
+	 */
+	public static final Comparator<String> TAG_STRING_COMPARATOR = new Comparator<String>() {
+		@Override
+		public int compare(String o1, String o2) {
+			if (sortTagsAscending) {
+				return STRING_ASCENDING_COMPARATOR.compare(o1, o2);
+			} else {
+				return STRING_ASCENDING_COMPARATOR.compare(o2, o1);
+			}
+		}
+	};
 
 	/**
 	 * Comparator for comparing {@link IResource} by the result of
