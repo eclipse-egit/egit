@@ -157,7 +157,7 @@
       name="EGit"
       version="5.7.0"
       location="${workspace.location/../api.baseline/5.7.0}"
-      remoteURI="https://download.eclipse.org/egit/updates-5.7/org.eclipse.egit.repository-5.7.0.202003090808-r.zip">
+      remoteURI="https://download.eclipse.org/egit/updates-5.7/org.eclipse.egit.repository-5.7.0.202003110725-r.zip">
     <description>EGit 5.7.0 API baseline; to be used with branch master</description>
   </setupTask>
   <stream name="master"
