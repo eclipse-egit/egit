@@ -954,6 +954,7 @@ public class StagingView extends ViewPart
 			public void run() {
 				commitMessageComponent.setAmendingButtonSelection(isChecked());
 				updateMessage();
+				updateCommitButtons();
 			}
 		};
 		amendPreviousCommitAction.setImageDescriptor(UIIcons.AMEND_COMMIT);
@@ -1388,7 +1389,10 @@ public class StagingView extends ViewPart
 		boolean indexDiffAvailable = indexDiffAvailable(indexDiff);
 		boolean noConflicts = noConflicts(indexDiff);
 
-		boolean commitEnabled = noConflicts && indexDiffAvailable
+		boolean hasChange = amendPreviousCommitAction.isChecked()
+				|| stagedViewer.getTree().getItemCount() > 0;
+
+		boolean commitEnabled = noConflicts && indexDiffAvailable && hasChange
 				&& !isCommitBlocked();
 
 		boolean commitAndPushEnabled = commitAndPushEnabled(commitEnabled);
@@ -1756,8 +1760,12 @@ public class StagingView extends ViewPart
 		signedOffByAction.setEnabled(enabled);
 		signCommitAction.setEnabled(enabled);
 		addChangeIdAction.setEnabled(enabled);
-		commitButton.setEnabled(enabled);
-		commitAndPushButton.setEnabled(enabled);
+		if (enabled) {
+			updateCommitButtons();
+		} else {
+			commitButton.setEnabled(enabled);
+			commitAndPushButton.setEnabled(enabled);
+		}
 	}
 
 	private void enableAuthorText(boolean enabled) {
