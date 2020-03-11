@@ -379,10 +379,7 @@ public class CommitEditorPage extends FormPage
 		Repository repository = getCommit().getRepository();
 		List<Ref> tags = new ArrayList<>(
 				repository.getRefDatabase().getRefsByPrefix(Constants.R_TAGS));
-		Collections.sort(tags,
-				Comparator.comparing(
-						ref -> Repository.shortenRefName(ref.getName()),
-						CommonUtils.STRING_ASCENDING_COMPARATOR));
+		Collections.sort(tags, CommonUtils.REF_ASCENDING_COMPARATOR);
 		return tags;
 	}
 

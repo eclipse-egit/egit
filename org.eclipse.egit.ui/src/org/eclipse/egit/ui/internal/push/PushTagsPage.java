@@ -132,7 +132,7 @@ public class PushTagsPage extends WizardPage {
 		treeViewer.setContentProvider(contentProvider);
 		treeViewer.setLabelProvider(new RepositoryTreeNodeLabelProvider(true));
 		treeViewer.setComparator(new ViewerComparator(
-				CommonUtils.STRING_ASCENDING_COMPARATOR));
+				CommonUtils.TAG_STRING_COMPARATOR));
 		treeViewer.setInput(tagsNode);
 
 		final Object[] tagNodes = contentProvider.getElements(tagsNode);
