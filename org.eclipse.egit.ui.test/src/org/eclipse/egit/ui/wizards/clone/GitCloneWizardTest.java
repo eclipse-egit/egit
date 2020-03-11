@@ -18,6 +18,7 @@ import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 
 import java.io.File;
+import java.util.List;
 
 import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.Platform;
@@ -26,10 +27,13 @@ import org.eclipse.egit.ui.common.RepoRemoteBranchesPage;
 import org.eclipse.egit.ui.common.WorkingCopyPage;
 import org.eclipse.egit.ui.internal.UIText;
 import org.eclipse.jgit.lib.Constants;
+import org.eclipse.jgit.lib.Ref;
 import org.eclipse.jgit.lib.RefDatabase;
 import org.eclipse.jgit.lib.Repository;
 import org.eclipse.jgit.storage.file.FileRepositoryBuilder;
+import org.eclipse.jgit.transport.TagOpt;
 import org.eclipse.osgi.util.NLS;
+import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Ignore;
 import org.junit.Test;
@@ -206,8 +210,32 @@ public class GitCloneWizardTest extends GitCloneWizardTestBase {
 		RepoRemoteBranchesPage remoteBranches = propertiesPage
 				.nextToRemoteBranches(r.getUri());
 
-		cloneRepo(destRepo, remoteBranches);
+		Repository cloned = cloneRepo(destRepo, remoteBranches);
 		bot.button("Cancel").click();
+		List<Ref> tags = cloned.getRefDatabase()
+				.getRefsByPrefix(Constants.R_TAGS);
+		Assert.assertFalse(tags.isEmpty());
+	}
+
+	@Test
+	public void cloneWithTagOption() throws Exception {
+		destRepo = new File(
+				ResourcesPlugin.getWorkspace().getRoot().getLocation().toFile(),
+				"test1");
+		tagOptionToSelect = TagOpt.NO_TAGS;
+
+		importWizard.openWizard();
+		RepoPropertiesPage propertiesPage = importWizard
+				.openRepoPropertiesPage();
+
+		RepoRemoteBranchesPage remoteBranches = propertiesPage
+				.nextToRemoteBranches(r.getUri());
+
+		Repository cloned = cloneRepo(destRepo, remoteBranches);
+		bot.button("Cancel").click();
+		List<Ref> tags = cloned.getRefDatabase()
+				.getRefsByPrefix(Constants.R_TAGS);
+		Assert.assertTrue(tags.isEmpty());
 	}
 
 	@Test
