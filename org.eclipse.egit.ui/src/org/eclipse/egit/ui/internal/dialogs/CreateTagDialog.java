@@ -631,7 +631,7 @@ public class CreateTagDialog extends TitleAreaDialog {
 		tagViewer.setComparator(new ViewerComparator() {
 			@Override
 			protected Comparator<? super String> getComparator() {
-				return CommonUtils.STRING_ASCENDING_COMPARATOR;
+				return CommonUtils.TAG_STRING_COMPARATOR;
 			}
 		});
 		tagViewer.addFilter(new ViewerFilter() {
