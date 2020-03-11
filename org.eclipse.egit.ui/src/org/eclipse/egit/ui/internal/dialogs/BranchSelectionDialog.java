@@ -182,8 +182,7 @@ public class BranchSelectionDialog<T> extends MessageDialog {
 			});
 
 			viewer.setLabelProvider(new GitLabelProvider());
-			viewer.setComparator(new ViewerComparator(
-					CommonUtils.STRING_ASCENDING_COMPARATOR));
+			viewer.setComparator(getViewerComparator());
 			viewer.setInput(nodes);
 
 			preselectBranchMultiMode(nodes, fTree);
@@ -194,8 +193,7 @@ public class BranchSelectionDialog<T> extends MessageDialog {
 					.applyTo(branchesList.getControl());
 			branchesList.setContentProvider(ArrayContentProvider.getInstance());
 			branchesList.setLabelProvider(new GitLabelProvider());
-			branchesList.setComparator(new ViewerComparator(
-					CommonUtils.STRING_ASCENDING_COMPARATOR));
+			branchesList.setComparator(getViewerComparator());
 			branchesList.setInput(nodes);
 
 			preselectBranchSingleMode(nodes, branchesList);
@@ -215,6 +213,19 @@ public class BranchSelectionDialog<T> extends MessageDialog {
 			});
 		}
 		return area;
+	}
+
+	private ViewerComparator getViewerComparator() {
+		return new ViewerComparator(CommonUtils.STRING_ASCENDING_COMPARATOR) {
+			@Override
+			public int compare(Viewer viewer, Object e1, Object e2) {
+				if(e1 instanceof Ref && e2 instanceof Ref) {
+					return CommonUtils.REF_ASCENDING_COMPARATOR
+							.compare((Ref) e1, (Ref) e2);
+				}
+				return super.compare(viewer, e1, e2);
+			}
+		};
 	}
 
 	private Set<Ref> getLocalBranches(List<T> list) {
