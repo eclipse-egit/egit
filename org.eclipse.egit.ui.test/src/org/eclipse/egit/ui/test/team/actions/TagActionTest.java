@@ -15,6 +15,7 @@ package org.eclipse.egit.ui.test.team.actions;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 
 import java.io.File;
 
@@ -80,6 +81,17 @@ public class TagActionTest extends LocalRepositoryTestCase {
 
 		touchAndSubmit(null);
 		headCommit = repo.exactRef(Constants.HEAD).getObjectId();
+	}
+
+	private void selectTagInTree(SWTBotShell tagDialog, int rowOfTag,
+			String expectedTag) {
+		TestUtil.waitForJobs(100, 200);// wait for the sorting?
+		tagDialog.bot().tableWithLabel(UIText.CreateTagDialog_existingTags)
+				.getTableItem(rowOfTag).select();
+		assertEquals("You gave the wrong row for the expected tag!",
+				expectedTag,
+				tagDialog.bot().textWithLabel(UIText.CreateTagDialog_tagName)
+						.getText());
 	}
 
 	private void assertIsAnnotated(String tag, ObjectId target, String message)
@@ -193,8 +205,7 @@ public class TagActionTest extends LocalRepositoryTestCase {
 		assertIsAnnotated("MessageChangeTag", headCommit,
 				"Here's the first message");
 		tagDialog = openTagDialog();
-		tagDialog.bot().tableWithLabel(UIText.CreateTagDialog_existingTags)
-				.getTableItem("MessageChangeTag").select();
+		selectTagInTree(tagDialog, 2, "MessageChangeTag");
 		assertFalse("Ok should be disabled", tagDialog.bot()
 				.button(UIText.CreateTagDialog_CreateTagButton).isEnabled());
 		String oldText = tagDialog.bot()
@@ -220,8 +231,7 @@ public class TagActionTest extends LocalRepositoryTestCase {
 	public void testForceOverwriteLightWeightTag() throws Exception {
 		assertIsLightweight("SomeLightTag", someLightTagCommit);
 		SWTBotShell tagDialog = openTagDialog();
-		tagDialog.bot().tableWithLabel(UIText.CreateTagDialog_existingTags)
-				.getTableItem("SomeLightTag").select();
+		selectTagInTree(tagDialog, 1, "SomeLightTag");
 		assertFalse("Ok should be disabled", tagDialog.bot()
 				.button(UIText.CreateTagDialog_CreateTagButton).isEnabled());
 		tagDialog.bot().checkBox(UIText.CreateTagDialog_overwriteTag).click();
@@ -235,13 +245,14 @@ public class TagActionTest extends LocalRepositoryTestCase {
 		assertIsLightweight("SomeLightTag", someLightTagCommit);
 
 		SWTBotShell tagDialog = openTagDialog();
-		tagDialog.bot().tableWithLabel(UIText.CreateTagDialog_existingTags)
-				.getTableItem("SomeLightTag").select();
+		selectTagInTree(tagDialog, 1, "SomeLightTag");
 		assertFalse("Ok should be disabled", tagDialog.bot()
 				.button(UIText.CreateTagDialog_CreateTagButton).isEnabled());
 		tagDialog.bot().styledTextWithLabel(UIText.CreateTagDialog_tagMessage)
 				.setText("New message");
 		tagDialog.bot().checkBox(UIText.CreateTagDialog_overwriteTag).click();
+		assertTrue("Ok should be enabled", tagDialog.bot()
+				.button(UIText.CreateTagDialog_CreateTagButton).isEnabled());
 		tagDialog.bot().button(UIText.CreateTagDialog_CreateTagButton).click();
 		TestUtil.joinJobs(JobFamilies.TAG);
 		assertIsAnnotated("SomeLightTag", headCommit, "New message");
