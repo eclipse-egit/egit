@@ -1,0 +1,119 @@
+<?xml version='1.0' encoding='utf-8' ?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+		<title>EGit 5.7 New and Noteworthy</title>
+		<link type="text/css" rel="stylesheet" href="../../../book.css"/>
+	</head>
+	<body>
+		<table class="navigation" style="width: 100%;" border="0" summary="navigation">
+			<tr>
+				<th style="width: 100%" align="center" colspan="3">EGit 5.7 New and Noteworthy</th>
+			</tr>
+			<tr>
+				<td style="width: 20%" align="left"></td>
+				<td style="width: 60%" align="center"></td>
+				<td style="width: 20%" align="right">
+					<a href="Contributors.html" title="Contributors">
+						<img alt="Next" border="0" src="../../../images/next.gif"/>
+					</a>
+				</td>
+			</tr>
+			<tr>
+				<td style="width: 20%" align="left" valign="top"></td>
+				<td style="width: 60%" align="center"></td>
+				<td style="width: 20%" align="right" valign="top">Contributors</td>
+			</tr>
+		</table><hr class="navigation-separator"/>
+		<h1 id="EGit">EGit</h1>
+		<h2 id="Repository_Groups">Repository Groups</h2>
+		<p>When a repository group is renamed in the Git Repositories view, a border is drawn around the editor inside the tree for better visual identification of the rename operation:</p>
+		<p>
+			<img alt="&quot;Screenshot showing the inline renaming of repository groups in EGit 5.7.0.&quot;" border="0" src="images/Repo_Group_Rename.png"/>
+		</p>
+		<p>Some commands that can work on multiple repositories have been enabled on repository groups. The context menu on a repository group now also has the 
+			<i>Pull</i> and 
+			<i>Switch Repositories To</i> commands.
+		</p>
+		<p>
+			<img alt="&quot;Screenshot of the Git Repositories view showing multi-operations enabled on repository groups in EGit 5.7.0.&quot;" border="0" src="images/Repo_Group_Multi_Operations.png"/>
+		</p>
+		<p>
+			<i>Pull</i> pulls all repositories contained in the group. 
+			<i>Switch Repositories To</i> allows the user to do a branch switch in all repositories, provided there is a local branch with a name common between them all. Both commands were already available if multiple repositories were selected; newly they are also active when repository 
+			<i>groups</i> are selected.
+		</p>
+		<p>
+			<i>Switch Repositories To&rarr;New Branch...</i> creates a new local branch at the current HEAD in all the selected repositories.
+		</p>
+		<h2 id="Comparing_Commits">Comparing Commits</h2>
+		<h3 id="Unified_Diffs">Unified Diffs</h3>
+		<p>There is a new command 
+			<i>Show Unified Diff</i> available when two commits or branches or tags from the same repository are selected.
+		</p>
+		<p>
+			<img alt="&quot;Screenshot showing the &apos;Show Unified Diff&apos; command in the Git History view in Egit 5.7.0.&quot;" border="0" src="images/Show_Unified_Diff.png"/>
+		</p>
+		<p>The command opens a diff viewer in the editor area of Eclipse showing the unified diff with the older commit as base. This diff viewer already existed in the Commit Viewer, "Diff" tab, where it showed the unified diff of the commit against its parent. This viewer is now available stand-alone, and can show the diff between any two commits.</p>
+		<p>This is a read-only editor; many editor commands such as 
+			<i>Find...</i> are enabled. 
+			<i>Save</i> is disabled, but 
+			<i>Save As...</i> is available.
+		</p>
+		<h3 id="Comparing_Branches_and_Tags_in_the_Git_Repositories_view">Comparing Branches and Tags in the Git Repositories view</h3>
+		<p>It is now possible to compare two branches or tags in the Git Repositories view via the commands formerly available only in the Git History view: 
+			<i>Compare with Each Other</i>, 
+			<i>Compare in Tree</i>, and the new 
+			<i>Show Unified Diff</i>.
+		</p>
+		<h3 id="Searching_for_Commits_in_the_Commit_Selection_Dialog">Searching for Commits in the Commit Selection Dialog</h3>
+		<p>The commit selection dialog openend from the 
+			<i>Compare With&rarr;Commit...</i> command now allows the user to search in the commit list using the same UI as in the Git History view.
+		</p>
+		<p>
+			<img alt="&quot;Screenshot of the commit selection dialog showing the new &apos;find&apos; toolbar in EGit 5.7.0.&quot;" border="0" src="images/Find_Commit.png"/>
+		</p>
+		<h2 id="API">API</h2>
+		<p>The <code>org.eclipse.egit.ui</code> bundle has a new public API: it provides a public <tt>
+			<a href="https://help.eclipse.org/index.jsp?topic=%2Forg.eclipse.platform.doc.isv%2Freference%2Fapi%2Forg%2Feclipse%2Fcore%2Fruntime%2FIAdapterFactory.html" target="egit_external">IAdapterFactory</a></tt> that can be used to define an input for the Git History page. This is useful for Eclipse bundles that have their own objects that correspond to some Git repository, commit, or branch and that want to make the Git History page show that repository or commit when such an object is selected. To use it, include an 
+			<a href="https://help.eclipse.org/index.jsp?topic=%2Forg.eclipse.platform.doc.isv%2Freference%2Fextension-points%2Forg_eclipse_core_runtime_adapters.html" target="egit_external">adapter definition</a> in your bundle's <code>plugin.xml</code> as follows:
+		</p>
+		<pre>
+&lt;extension point="org.eclipse.core.runtime.adapters"&gt;
+  &lt;factory
+      adaptableType="org.example.myproduct.gitobjects.MyGitObject"
+      class="org.eclipse.egit.ui.history.GitHistoryAdapterFactory"&gt;
+    &lt;adapter type="org.eclipse.team.ui.history.IHistoryPageSource" /&gt;
+  &lt;/factory&gt;
+&lt;/extension&gt;
+</pre>
+		<p>The <tt>adaptableType</tt> objects (<tt>MyGitObject</tt> in the example) also need to be adaptable to <code>org.eclipse.jgit.lib.Repository</code>, and optionally to <code>org.eclipse.jgit.revwalk.RevCommit</code>. The Git History view, if set to follow the selection in other views, will then show the history of that repository whenever the current selection is a <tt>MyGitObject</tt>.</p>
+		<dl>
+			<dd>
+				<b>Deprecation Warning</b>: EGit UI already included an 
+				<i>internal</i> adapter factory <tt>org.eclipse.egit.ui.internal.factories.GitAdapterFactory</tt> for this. External bundles using that internal factory should switch to using the new public API <code>org.eclipse.egit.ui.history.GitHistoryAdapterFactory</code>. Adaptation to <code>IHistoryPageSource</code> 
+				<i>will be removed from the internal factory</i> in the next EGit release.
+			</dd>
+		</dl>
+		<h2 id="Other_Changes">Other Changes</h2>
+		<p>EGit 5.7 includes lots of less noticeable improvements in the UI, plus a number of bug fixes. The complete list of new features and bug fixes is available in the 
+			<a href="https://projects.eclipse.org/projects/technology.egit/releases/5.7.0/" target="egit_external">release notes</a>.
+		</p><hr class="navigation-separator"/>
+		<table class="navigation" style="width: 100%;" border="0" summary="navigation">
+			<tr>
+				<td style="width: 20%" align="left"></td>
+				<td style="width: 60%" align="center"></td>
+				<td style="width: 20%" align="right">
+					<a href="Contributors.html" title="Contributors">
+						<img alt="Next" border="0" src="../../../images/next.gif"/>
+					</a>
+				</td>
+			</tr>
+			<tr>
+				<td style="width: 20%" align="left" valign="top"></td>
+				<td style="width: 60%" align="center"></td>
+				<td style="width: 20%" align="right" valign="top">Contributors</td>
+			</tr>
+		</table>
+	</body>
+</html>

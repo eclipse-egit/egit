@@ -447,28 +447,28 @@
 		</topic>
 		<topic href="help/JGit/User_Guide/Updating-This-Document.html" label="Updating This Document"></topic>
 	</topic>
-	<topic href="help/EGit/New_and_Noteworthy/5.6/5.6.html" label="EGit 5.6 New and Noteworthy">
-		<topic href="help/EGit/New_and_Noteworthy/5.6/5.6.html" label="EGit">
-			<topic href="help/EGit/New_and_Noteworthy/5.6/5.6.html#Preferences" label="Preferences">
-				<topic href="help/EGit/New_and_Noteworthy/5.6/5.6.html#Pulling_in_Parallel" label="Pulling in Parallel"></topic>
-				<topic href="help/EGit/New_and_Noteworthy/5.6/5.6.html#HTTP_Library" label="HTTP Library"></topic>
+	<topic href="help/EGit/New_and_Noteworthy/5.7/5.7.html" label="EGit 5.7 New and Noteworthy">
+		<topic href="help/EGit/New_and_Noteworthy/5.7/5.7.html" label="EGit">
+			<topic href="help/EGit/New_and_Noteworthy/5.7/5.7.html#Repository_Groups" label="Repository Groups"></topic>
+			<topic href="help/EGit/New_and_Noteworthy/5.7/5.7.html#Comparing_Commits" label="Comparing Commits">
+				<topic href="help/EGit/New_and_Noteworthy/5.7/5.7.html#Unified_Diffs" label="Unified Diffs"></topic>
+				<topic href="help/EGit/New_and_Noteworthy/5.7/5.7.html#Comparing_Branches_and_Tags_in_the_Git_Repositories_view" label="Comparing Branches and Tags in the Git Repositories view"></topic>
+				<topic href="help/EGit/New_and_Noteworthy/5.7/5.7.html#Searching_for_Commits_in_the_Commit_Selection_Dialog" label="Searching for Commits in the Commit Selection Dialog"></topic>
 			</topic>
-			<topic href="help/EGit/New_and_Noteworthy/5.6/5.6.html#History_View:_Select_the_Branches_to_Show" label="History View: Select the Branches to Show"></topic>
-			<topic href="help/EGit/New_and_Noteworthy/5.6/5.6.html#Repositories_View:_Repository_Groups" label="Repositories View: Repository Groups"></topic>
-			<topic href="help/EGit/New_and_Noteworthy/5.6/5.6.html#Performance_Improvements" label="Performance Improvements"></topic>
-			<topic href="help/EGit/New_and_Noteworthy/5.6/5.6.html#Other_Changes" label="Other Changes"></topic>
+			<topic href="help/EGit/New_and_Noteworthy/5.7/5.7.html#API" label="API"></topic>
+			<topic href="help/EGit/New_and_Noteworthy/5.7/5.7.html#Other_Changes" label="Other Changes"></topic>
 		</topic>
-		<topic href="help/EGit/New_and_Noteworthy/5.6/Contributors.html" label="Contributors"></topic>
-		<topic href="help/EGit/New_and_Noteworthy/5.6/See-Also.html" label="See Also"></topic>
-		<topic href="help/EGit/New_and_Noteworthy/5.6/Updating-This-Document.html" label="Updating This Document"></topic>
+		<topic href="help/EGit/New_and_Noteworthy/5.7/Contributors.html" label="Contributors"></topic>
+		<topic href="help/EGit/New_and_Noteworthy/5.7/See-Also.html" label="See Also"></topic>
+		<topic href="help/EGit/New_and_Noteworthy/5.7/Updating-This-Document.html" label="Updating This Document"></topic>
 	</topic>
-	<topic href="help/JGit/New_and_Noteworthy/5.6/5.6.html" label="JGit 5.6 New and Noteworthy">
-		<topic href="help/JGit/New_and_Noteworthy/5.6/5.6.html" label="JGit">
-			<topic href="help/JGit/New_and_Noteworthy/5.6/5.6.html#Reftable" label="Reftable"></topic>
-			<topic href="help/JGit/New_and_Noteworthy/5.6/5.6.html#Other_Changes" label="Other Changes"></topic>
+	<topic href="help/JGit/New_and_Noteworthy/5.7/5.7.html" label="JGit 5.7 New and Noteworthy">
+		<topic href="help/JGit/New_and_Noteworthy/5.7/5.7.html" label="JGit">
+			<topic href="help/JGit/New_and_Noteworthy/5.7/5.7.html#Reftable" label="Reftable"></topic>
+			<topic href="help/JGit/New_and_Noteworthy/5.7/5.7.html#Other_Changes" label="Other Changes"></topic>
 		</topic>
-		<topic href="help/JGit/New_and_Noteworthy/5.6/Contributors.html" label="Contributors"></topic>
-		<topic href="help/JGit/New_and_Noteworthy/5.6/Updating-This-Document.html" label="Updating This Document"></topic>
+		<topic href="help/JGit/New_and_Noteworthy/5.7/Contributors.html" label="Contributors"></topic>
+		<topic href="help/JGit/New_and_Noteworthy/5.7/Updating-This-Document.html" label="Updating This Document"></topic>
 	</topic>
 	<topic href="help/EGit/Git_For_Eclipse_Users/Git-For-Eclipse-Users.html" label="Git for Eclipse Users">
 		<topic href="help/EGit/Git_For_Eclipse_Users/Git-For-Eclipse-Users.html" label="Centralised version control systems"></topic>
