@@ -132,16 +132,16 @@ public class RefSpecPage extends WizardPage {
 			final Group tagsGroup = new Group(panel, SWT.NULL);
 			tagsGroup.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true,
 					false));
-			tagsGroup.setText(UIText.RefSpecPage_annotatedTagsGroup);
+			tagsGroup.setText(UIText.TagOptions_groupName);
 			tagsGroup.setLayout(new GridLayout());
 			tagsAutoFollowButton = new Button(tagsGroup, SWT.RADIO);
 			tagsAutoFollowButton
-					.setText(UIText.RefSpecPage_annotatedTagsAutoFollow);
+					.setText(UIText.TagOptions_autoFollow);
 			tagsFetchTagsButton = new Button(tagsGroup, SWT.RADIO);
 			tagsFetchTagsButton
-					.setText(UIText.RefSpecPage_annotatedTagsFetchTags);
+					.setText(UIText.TagOptions_fetchTags);
 			tagsNoTagsButton = new Button(tagsGroup, SWT.RADIO);
-			tagsNoTagsButton.setText(UIText.RefSpecPage_annotatedTagsNoTags);
+			tagsNoTagsButton.setText(UIText.TagOptions_noTags);
 		}
 
 		saveButton = new Button(panel, SWT.CHECK);

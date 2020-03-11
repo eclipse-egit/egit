@@ -51,6 +51,7 @@ import org.eclipse.jgit.api.errors.TransportException;
 import org.eclipse.jgit.lib.Constants;
 import org.eclipse.jgit.lib.ObjectId;
 import org.eclipse.jgit.lib.Ref;
+import org.eclipse.jgit.transport.TagOpt;
 import org.eclipse.jgit.transport.URIish;
 import org.eclipse.osgi.util.NLS;
 import org.eclipse.swt.SWT;
@@ -62,6 +63,7 @@ import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.layout.RowLayout;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.Group;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.dialogs.PatternFilter;
@@ -83,6 +85,8 @@ class SourceBranchPage extends WizardPage {
 
 	private Button unselectB;
 
+	private TagOpt tagOption = TagOpt.AUTO_FOLLOW;
+
 	private CachedCheckboxTreeViewer refsViewer;
 
 	private UserPasswordCredentials credentials;
@@ -100,6 +104,10 @@ class SourceBranchPage extends WizardPage {
 		Ref[] checkedRefs = new Ref[checkedElements.length];
 		System.arraycopy(checkedElements, 0, checkedRefs, 0, checkedElements.length);
 		return Arrays.asList(checkedRefs);
+	}
+
+	TagOpt getTagOption() {
+		return tagOption;
 	}
 
 	List<Ref> getAvailableBranches() {
@@ -229,11 +237,38 @@ class SourceBranchPage extends WizardPage {
 				checkPage();
 			}
 		});
+		createTagOptionGroup(panel);
 		bPanel.setLayoutData(new GridData(SWT.FILL, SWT.TOP, true, false));
 
 		Dialog.applyDialogFont(panel);
 		setControl(panel);
 		checkPage();
+	}
+
+	private void createTagOptionGroup(Composite parent) {
+		final Group tagsGroup = new Group(parent, SWT.NULL);
+		tagsGroup.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false));
+		tagsGroup.setText(UIText.TagOptions_groupName);
+		tagsGroup.setLayout(new GridLayout());
+		createTagOptionButton(tagsGroup, TagOpt.AUTO_FOLLOW,
+				UIText.TagOptions_autoFollow);
+		createTagOptionButton(tagsGroup, TagOpt.FETCH_TAGS,
+				UIText.TagOptions_fetchTags);
+		createTagOptionButton(tagsGroup, TagOpt.NO_TAGS,
+				UIText.TagOptions_noTags);
+	}
+
+	private void createTagOptionButton(Group tagsGroup, final TagOpt option,
+			String text) {
+		Button button = new Button(tagsGroup, SWT.RADIO);
+		button.setText(text);
+		button.setSelection(option == tagOption);
+		button.addSelectionListener(new SelectionAdapter() {
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				tagOption = option;
+			}
+		});
 	}
 
 	public void setSelection(@NonNull RepositorySelection selection) {

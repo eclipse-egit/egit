@@ -268,6 +268,7 @@ public abstract class AbstractGitCloneWizard extends Wizard {
 		}
 		op.setCredentialsProvider(credentialsProvider);
 		op.setCloneSubmodules(cloneDestination.isCloneSubmodules());
+		op.setTagOption(validSource.getTagOption());
 
 		rememberHttpHost(op, uri);
 		configureFetchSpec(op, gitRepositoryInfo, remoteName);
