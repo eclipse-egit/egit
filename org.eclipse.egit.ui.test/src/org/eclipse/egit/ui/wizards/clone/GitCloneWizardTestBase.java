@@ -34,6 +34,7 @@ import org.eclipse.jgit.lib.Constants;
 import org.eclipse.jgit.lib.RefDatabase;
 import org.eclipse.jgit.lib.Repository;
 import org.eclipse.jgit.storage.file.FileRepositoryBuilder;
+import org.eclipse.jgit.transport.TagOpt;
 import org.eclipse.jgit.util.FileUtils;
 import org.junit.After;
 import org.junit.AfterClass;
@@ -46,6 +47,8 @@ public abstract class GitCloneWizardTestBase extends LocalRepositoryTestCase {
 	protected static final int NUMBER_RANDOM_COMMITS = 100;
 	protected GitImportRepoWizard importWizard;
 	protected File destRepo;
+
+	protected TagOpt tagOptionToSelect = null;
     // package private for FindBugs
 	static SampleTestRepository r;
 	@AfterClass
@@ -57,12 +60,15 @@ public abstract class GitCloneWizardTestBase extends LocalRepositoryTestCase {
 		super();
 	}
 
-	protected void cloneRepo(File destinationRepo,
+	protected Repository cloneRepo(File destinationRepo,
 			RepoRemoteBranchesPage remoteBranches) throws Exception {
 		remoteBranches.assertRemoteBranches(SampleTestRepository.FIX,
 				Constants.MASTER);
 		remoteBranches.selectBranches(SampleTestRepository.FIX,
 				Constants.MASTER);
+		if (tagOptionToSelect != null) {
+			remoteBranches.selectTagOption(tagOptionToSelect);
+		}
 
 		WorkingCopyPage workingCopy = remoteBranches.nextToWorkingCopy();
 		workingCopy.setDirectory(destinationRepo.toString());
@@ -83,9 +89,12 @@ public abstract class GitCloneWizardTestBase extends LocalRepositoryTestCase {
 		// and a local master initialized from origin/master (default!)
 		assertEquals(repository.resolve("master"), repository
 				.resolve("origin/master"));
-		// A well known tag
-		assertNotNull(repository.resolve(
-				Constants.R_TAGS + SampleTestRepository.v1_0_name).name());
+		if (tagOptionToSelect == null) {
+			// A well known tag, in case the test defines its own tag option
+			assertNotNull(repository
+					.resolve(Constants.R_TAGS + SampleTestRepository.v1_0_name)
+					.name());
+		}
 		// lots of refs
 		int refs = repository.getRefDatabase().getRefsByPrefix(RefDatabase.ALL)
 				.size();
@@ -102,6 +111,7 @@ public abstract class GitCloneWizardTestBase extends LocalRepositoryTestCase {
 		// No project has been imported
 		assertEquals(0,
 				ResourcesPlugin.getWorkspace().getRoot().getProjects().length);
+		return repository;
 	}
 
 	@BeforeClass
