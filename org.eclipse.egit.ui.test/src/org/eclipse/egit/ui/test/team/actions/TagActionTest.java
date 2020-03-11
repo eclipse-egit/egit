@@ -15,6 +15,8 @@ package org.eclipse.egit.ui.test.team.actions;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertTrue;
 
 import java.io.File;
 
@@ -36,7 +38,9 @@ import org.eclipse.swtbot.swt.finder.junit.SWTBotJunit4ClassRunner;
 import org.eclipse.swtbot.swt.finder.widgets.SWTBotButton;
 import org.eclipse.swtbot.swt.finder.widgets.SWTBotShell;
 import org.eclipse.swtbot.swt.finder.widgets.SWTBotTable;
+import org.eclipse.swtbot.swt.finder.widgets.SWTBotTableItem;
 import org.eclipse.swtbot.swt.finder.widgets.SWTBotTree;
+import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -80,6 +84,46 @@ public class TagActionTest extends LocalRepositoryTestCase {
 
 		touchAndSubmit(null);
 		headCommit = repo.exactRef(Constants.HEAD).getObjectId();
+	}
+
+	// This looks like overkill and part of it probably is, but the previous
+	// simple select by label version sporadically failed (on Jenkins) and the
+	// existing assertions made determining the reason for failure difficult.
+	// So what is now done is:
+	// * wait a bit, giving the UI thread time to populate the tree (potential
+	// reason - not all tags were present)
+	// * clear the tag name field and clear the tree selection (no tree
+	// filtering before the selection)
+	// * check the number of expected tags (not all tags present)
+	// The purpose of the additional asserts is to make investigating a
+	// potential fail reason easier
+	private void selectTagInTree(SWTBotShell tagDialog, int numberOfRows,
+			String expectedTag) {
+		// setup - wait, clear any possible selection
+		try {
+			Thread.sleep(500);
+			TestUtil.joinJobs(JobFamilies.FILL_TAG_LIST);
+		} catch (InterruptedException e1) {
+			// waiting for tag list to be filled
+		}
+		tagDialog.bot().tableWithLabel(UIText.CreateTagDialog_existingTags)
+				.unselect();
+		tagDialog.bot().textWithLabel(UIText.CreateTagDialog_tagName)
+				.setText("");
+		try {
+			SWTBotTableItem item = tagDialog.bot()
+					.tableWithLabel(UIText.CreateTagDialog_existingTags)
+					.getTableItem(numberOfRows - 1);
+			assertNotNull("Not all expected tags were present!", item);
+		} catch (Exception e) {
+			Assert.fail("Not all expected tags were present!");
+		}
+		// select by label and check selected tag
+		tagDialog.bot().tableWithLabel(UIText.CreateTagDialog_existingTags)
+				.getTableItem(expectedTag).select();
+		assertEquals("Did not find the expected tag in the list", expectedTag,
+				tagDialog.bot().textWithLabel(UIText.CreateTagDialog_tagName)
+						.getText());
 	}
 
 	private void assertIsAnnotated(String tag, ObjectId target, String message)
@@ -193,8 +237,7 @@ public class TagActionTest extends LocalRepositoryTestCase {
 		assertIsAnnotated("MessageChangeTag", headCommit,
 				"Here's the first message");
 		tagDialog = openTagDialog();
-		tagDialog.bot().tableWithLabel(UIText.CreateTagDialog_existingTags)
-				.getTableItem("MessageChangeTag").select();
+		selectTagInTree(tagDialog, 3, "MessageChangeTag");
 		assertFalse("Ok should be disabled", tagDialog.bot()
 				.button(UIText.CreateTagDialog_CreateTagButton).isEnabled());
 		String oldText = tagDialog.bot()
@@ -207,8 +250,7 @@ public class TagActionTest extends LocalRepositoryTestCase {
 		tagDialog.bot().button(UIText.CreateTagDialog_CreateTagButton).click();
 		TestUtil.joinJobs(JobFamilies.TAG);
 		tagDialog = openTagDialog();
-		tagDialog.bot().tableWithLabel(UIText.CreateTagDialog_existingTags)
-				.getTableItem("MessageChangeTag").select();
+		selectTagInTree(tagDialog, 3, "MessageChangeTag");
 		String newText = tagDialog.bot()
 				.styledTextWithLabel(UIText.CreateTagDialog_tagMessage)
 				.getText();
@@ -220,8 +262,7 @@ public class TagActionTest extends LocalRepositoryTestCase {
 	public void testForceOverwriteLightWeightTag() throws Exception {
 		assertIsLightweight("SomeLightTag", someLightTagCommit);
 		SWTBotShell tagDialog = openTagDialog();
-		tagDialog.bot().tableWithLabel(UIText.CreateTagDialog_existingTags)
-				.getTableItem("SomeLightTag").select();
+		selectTagInTree(tagDialog, 2, "SomeLightTag");
 		assertFalse("Ok should be disabled", tagDialog.bot()
 				.button(UIText.CreateTagDialog_CreateTagButton).isEnabled());
 		tagDialog.bot().checkBox(UIText.CreateTagDialog_overwriteTag).click();
@@ -235,13 +276,14 @@ public class TagActionTest extends LocalRepositoryTestCase {
 		assertIsLightweight("SomeLightTag", someLightTagCommit);
 
 		SWTBotShell tagDialog = openTagDialog();
-		tagDialog.bot().tableWithLabel(UIText.CreateTagDialog_existingTags)
-				.getTableItem("SomeLightTag").select();
+		selectTagInTree(tagDialog, 2, "SomeLightTag");
 		assertFalse("Ok should be disabled", tagDialog.bot()
 				.button(UIText.CreateTagDialog_CreateTagButton).isEnabled());
 		tagDialog.bot().styledTextWithLabel(UIText.CreateTagDialog_tagMessage)
 				.setText("New message");
 		tagDialog.bot().checkBox(UIText.CreateTagDialog_overwriteTag).click();
+		assertTrue("Ok should be enabled", tagDialog.bot()
+				.button(UIText.CreateTagDialog_CreateTagButton).isEnabled());
 		tagDialog.bot().button(UIText.CreateTagDialog_CreateTagButton).click();
 		TestUtil.joinJobs(JobFamilies.TAG);
 		assertIsAnnotated("SomeLightTag", headCommit, "New message");
