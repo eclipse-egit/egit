@@ -35,6 +35,7 @@ import org.eclipse.jgit.lib.Constants;
 import org.eclipse.jgit.lib.Ref;
 import org.eclipse.jgit.lib.Repository;
 import org.eclipse.jgit.transport.CredentialsProvider;
+import org.eclipse.jgit.transport.TagOpt;
 import org.eclipse.jgit.transport.URIish;
 import org.eclipse.jgit.util.FileUtils;
 import org.eclipse.osgi.util.NLS;
@@ -64,6 +65,8 @@ public class CloneOperation {
 	private CredentialsProvider credentialsProvider;
 
 	private final List<PostCloneTask> postCloneTasks = new CopyOnWriteArrayList<>();
+
+	private TagOpt tagOption;
 
 	/**
 	 * Create a new clone operation.
@@ -119,6 +122,14 @@ public class CloneOperation {
 	}
 
 	/**
+	 * @param tagOption
+	 *            set the tag option to be used for the remote configuration
+	 */
+	public void setTagOption(TagOpt tagOption) {
+		this.tagOption = tagOption;
+	}
+
+	/**
 	 * @param monitor
 	 *            the monitor to be used for reporting progress and responding
 	 *            to cancellation. The monitor is never <code>null</code>
@@ -167,6 +178,9 @@ public class CloneOperation {
 			cloneRepository.setTimeout(timeout);
 			cloneRepository.setCloneAllBranches(allSelected);
 			cloneRepository.setCloneSubmodules(cloneSubmodules);
+			if (tagOption != null) {
+				cloneRepository.setTagOption(tagOption);
+			}
 			if (cloneSubmodules) {
 				cloneRepository.setCallback(callback);
 			}
