@@ -40,7 +40,6 @@ import org.eclipse.egit.core.project.RepositoryMapping;
 import org.eclipse.egit.ui.internal.history.FileDiff;
 import org.eclipse.egit.ui.internal.history.FileDiffWorkbenchAdapter;
 import org.eclipse.egit.ui.internal.history.GitHistoryPage;
-import org.eclipse.egit.ui.internal.history.GitHistoryPageSource;
 import org.eclipse.egit.ui.internal.repository.RepositoryTreeNodeWorkbenchAdapter;
 import org.eclipse.egit.ui.internal.repository.tree.RepositoryTreeNode;
 import org.eclipse.egit.ui.internal.selection.SelectionUtils;
@@ -53,7 +52,6 @@ import org.eclipse.jface.viewers.StructuredSelection;
 import org.eclipse.jgit.annotations.Nullable;
 import org.eclipse.jgit.lib.Repository;
 import org.eclipse.team.ui.history.IHistoryPage;
-import org.eclipse.team.ui.history.IHistoryPageSource;
 import org.eclipse.team.ui.history.IHistoryView;
 import org.eclipse.team.ui.mapping.ISynchronizationCompareAdapter;
 import org.eclipse.ui.IURIEditorInput;
@@ -74,10 +72,6 @@ public class GitAdapterFactory implements IAdapterFactory {
 
 	@Override
 	public <T> T getAdapter(Object adaptableObject, Class<T> adapterType) {
-		if (adapterType.isAssignableFrom(IHistoryPageSource.class)) {
-			return adapterType.cast(GitHistoryPageSource.INSTANCE);
-		}
-
 		if (IWorkbenchAdapter.class == adapterType) {
 			if (adaptableObject instanceof RepositoryTreeNode) {
 				return adapterType
@@ -213,9 +207,8 @@ public class GitAdapterFactory implements IAdapterFactory {
 
 	@Override
 	public Class<?>[] getAdapterList() {
-		return new Class<?>[] { IHistoryPageSource.class,
-				ISynchronizationCompareAdapter.class, ResourceMapping.class,
-				IResource.class, IWorkbenchAdapter.class, IShowInSource.class,
-				Repository.class, File.class };
+		return new Class<?>[] { ISynchronizationCompareAdapter.class,
+				ResourceMapping.class, IResource.class, IWorkbenchAdapter.class,
+				IShowInSource.class, Repository.class, File.class };
 	}
 }
