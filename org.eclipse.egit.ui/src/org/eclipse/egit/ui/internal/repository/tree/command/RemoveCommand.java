@@ -240,6 +240,9 @@ public class RemoveCommand extends
 			final boolean deleteWorkDir) throws IOException {
 		for (RepositoryNode node : selectedNodes) {
 			Repository repo = node.getRepository();
+			if (!repo.isBare()) {
+				closeSubmoduleRepositories(repo);
+			}
 			File workTree = deleteWorkDir && !repo.isBare() ? repo.getWorkTree() : null;
 			if (workTree != null) {
 				File[] files = workTree.listFiles();
@@ -251,9 +254,6 @@ public class RemoveCommand extends
 					}
 			}
 			repo.close();
-
-			if (!repo.isBare())
-				closeSubmoduleRepositories(repo);
 
 			FileUtils.delete(repo.getDirectory(),
 					FileUtils.RECURSIVE | FileUtils.RETRY
