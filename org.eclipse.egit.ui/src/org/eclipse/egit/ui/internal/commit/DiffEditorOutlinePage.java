@@ -42,6 +42,7 @@ import org.eclipse.jface.resource.LocalResourceManager;
 import org.eclipse.jface.resource.ResourceManager;
 import org.eclipse.jface.text.IDocument;
 import org.eclipse.jface.util.SafeRunnable;
+import org.eclipse.jface.viewers.AbstractTreeViewer;
 import org.eclipse.jface.viewers.DecorationOverlayIcon;
 import org.eclipse.jface.viewers.IDecoration;
 import org.eclipse.jface.viewers.IOpenListener;
@@ -85,12 +86,21 @@ public class DiffEditorOutlinePage extends ContentOutlinePage {
 	public void createControl(Composite parent) {
 		super.createControl(parent);
 		TreeViewer viewer = getTreeViewer();
-		viewer.setAutoExpandLevel(2);
+		viewer.setAutoExpandLevel(AbstractTreeViewer.ALL_LEVELS);
 		viewer.setUseHashlookup(true);
 		viewer.setContentProvider(new DiffContentProvider());
 		viewer.setLabelProvider(new DiffLabelProvider());
 		viewer.setComparator(
-				new ViewerComparator(CommonUtils.STRING_ASCENDING_COMPARATOR));
+				new ViewerComparator(CommonUtils.STRING_ASCENDING_COMPARATOR) {
+					@Override
+					public int category(Object element) {
+						if (element instanceof DiffContentProvider.Folder) {
+							return 0;
+						} else {
+							return 1;
+						}
+					}
+				});
 		viewer.addDoubleClickListener(
 				event -> openFolder(event.getSelection()));
 		viewer.addOpenListener(this::fireOpenEvent);
@@ -367,7 +377,22 @@ public class DiffEditorOutlinePage extends ContentOutlinePage {
 				.getService(IHandlerService.class);
 		handlerService.activateHandler(collapseAction.getActionDefinitionId(),
 				collapseHandler);
+
+		Action toggleTreeModeAction = new Action(
+				UIText.DiffEditor_OutlineTreeToggle, UIIcons.FLAT) {
+			@Override
+			public void run() {
+				if (((DiffContentProvider) getTreeViewer().getContentProvider())
+						.toggleTreeMode()) {
+					setImageDescriptor(UIIcons.COMPACT);
+				} else {
+					setImageDescriptor(UIIcons.FLAT);
+				}
+				getTreeViewer().setInput(getTreeViewer().getInput());
+			}
+		};
 		toolbarManager.add(collapseAction);
+		toolbarManager.add(toggleTreeModeAction);
 	}
 
 	@Override
@@ -382,36 +407,54 @@ public class DiffEditorOutlinePage extends ContentOutlinePage {
 
 		private static final Object[] NOTHING = new Object[0];
 
+		private static String SLASH = "/"; //$NON-NLS-1$
+
+		private boolean compactTree = false;
+
 		public static class Folder {
+
+			public Folder(String name) {
+				this.name = name;
+				this.folders = new ArrayList<>();
+				this.files = new ArrayList<>();
+			}
+
 			public String name;
+
+			public List<Folder> folders;
 
 			public List<FileDiffRegion> files;
 		}
 
-		private HashMap<String, Folder> folders = new LinkedHashMap<>();
+		private HashMap<String, Folder> rootFolders = new LinkedHashMap<>();
 
-		private Map<FileDiffRegion, Folder> parents = new HashMap<>();
+		private Map<Object, Folder> parents = new HashMap<>();
 
 		@Override
 		public void inputChanged(Viewer viewer, Object oldInput,
 				Object newInput) {
-			folders.clear();
+			rootFolders.clear();
 			parents.clear();
 			if (newInput instanceof DiffDocument) {
 				computeFolders(((DiffDocument) newInput).getFileRegions());
 			}
 		}
 
+		public boolean toggleTreeMode() {
+			compactTree = !compactTree;
+			return compactTree;
+		}
+
 		@Override
 		public void dispose() {
-			folders.clear();
+			rootFolders.clear();
 			parents.clear();
 		}
 
 		@Override
 		public Object[] getElements(Object inputElement) {
 			if (inputElement instanceof DiffDocument) {
-				return folders.values().toArray();
+				return rootFolders.values().toArray();
 			}
 			return NOTHING;
 		}
@@ -419,14 +462,19 @@ public class DiffEditorOutlinePage extends ContentOutlinePage {
 		@Override
 		public Object[] getChildren(Object parentElement) {
 			if (parentElement instanceof Folder) {
-				return ((Folder) parentElement).files.toArray();
+				List<Object> children = new ArrayList<>();
+				Folder parentFolder = (Folder) parentElement;
+				children.addAll(parentFolder.folders);
+				children.addAll(parentFolder.files);
+				return children.toArray();
 			}
 			return NOTHING;
 		}
 
 		@Override
 		public Object getParent(Object element) {
-			if (element instanceof FileDiffRegion) {
+			if (element instanceof FileDiffRegion
+					|| element instanceof Folder) {
 				return parents.get(element);
 			}
 			return null;
@@ -438,23 +486,79 @@ public class DiffEditorOutlinePage extends ContentOutlinePage {
 		}
 
 		private void computeFolders(FileDiffRegion[] ranges) {
-			for (FileDiffRegion range : ranges) {
-				String path = range.getDiff().getPath();
-				int i = path.lastIndexOf('/');
-				if (i > 0) {
-					path = path.substring(0, i);
-				} else {
-					path = "/"; //$NON-NLS-1$
+			if (compactTree) {
+				for (FileDiffRegion range : ranges) {
+					String path = range.getDiff().getPath();
+					Folder folder = computeRootFolder(SLASH);
+					String[] segments = path.split(SLASH);
+					for (int i = 0; i < segments.length - 1; i++) {
+						String segment = segments[i];
+						Folder newFolder = null;
+						for (Folder childFolder : folder.folders) {
+							if (childFolder.name.equals(segment)) {
+								newFolder = childFolder;
+								break;
+							}
+						}
+						if (newFolder == null) {
+							newFolder = new Folder(segment);
+							folder.folders.add(newFolder);
+						}
+						parents.put(newFolder, folder);
+						folder = newFolder;
+					}
+					folder.files.add(range);
+					parents.put(range, folder);
 				}
-				Folder folder = folders.computeIfAbsent(path, key -> {
-					Folder newFolder = new Folder();
-					newFolder.name = key;
-					newFolder.files = new ArrayList<>();
-					return newFolder;
-				});
-				folder.files.add(range);
-				parents.put(range, folder);
+				compactify();
+			} else {
+				for (FileDiffRegion range : ranges) {
+					String path = range.getDiff().getPath();
+					int i = path.lastIndexOf('/');
+					if (i > 0) {
+						path = path.substring(0, i);
+					} else {
+						path = SLASH;
+					}
+					Folder folder = computeRootFolder(path);
+					folder.files.add(range);
+					parents.put(range, folder);
+				}
 			}
+		}
+
+		private void compactify() {
+			Folder root = rootFolders.get(SLASH);
+			compactify(root);
+			if (root.files.isEmpty()) {
+				rootFolders.clear();
+				root.folders.forEach(f -> {
+					parents.remove(f);
+					rootFolders.put(f.name, f);
+				});
+			}
+		}
+
+		private void compactify(Folder folder) {
+			if (folder.files.isEmpty() && folder.folders.size() == 1) {
+				Folder parent = parents.get(folder);
+				Folder child = folder.folders.get(0);
+				if (parent != null) {
+					child.name = folder.name + SLASH + child.name;
+					parent.folders.remove(folder);
+					parent.folders.add(child);
+					parents.remove(folder);
+					parents.put(child, parent);
+				}
+			}
+			new ArrayList<>(folder.folders).forEach(f -> compactify(f));
+		}
+
+		private Folder computeRootFolder(String path) {
+			return rootFolders.computeIfAbsent(path, key -> {
+				Folder newFolder = new Folder(key);
+				return newFolder;
+			});
 		}
 	}
 
