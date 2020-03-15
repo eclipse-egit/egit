@@ -28,6 +28,7 @@ import org.eclipse.egit.ui.internal.commit.DiffRegionFormatter.FileDiffRegion;
 import org.eclipse.egit.ui.internal.history.CommitFileDiffViewer.CheckoutAction;
 import org.eclipse.egit.ui.internal.history.FileDiff;
 import org.eclipse.jface.action.Action;
+import org.eclipse.jface.action.IToolBarManager;
 import org.eclipse.jface.action.MenuManager;
 import org.eclipse.jface.action.Separator;
 import org.eclipse.jface.resource.ImageDescriptor;
@@ -55,6 +56,7 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Menu;
 import org.eclipse.ui.ISharedImages;
 import org.eclipse.ui.PlatformUI;
+import org.eclipse.ui.part.IPageSite;
 import org.eclipse.ui.views.contentoutline.ContentOutlinePage;
 
 /**
@@ -292,6 +294,24 @@ public class DiffEditorOutlinePage extends ContentOutlinePage {
 			}
 		}
 		return result;
+	}
+
+	@Override
+	public void init(IPageSite pageSite) {
+		super.init(pageSite);
+		addToolbarActions(pageSite.getActionBars().getToolBarManager());
+	}
+
+	private void addToolbarActions(IToolBarManager toolbarManager) {
+		Action collapseAction = new Action(UIText.UIUtils_CollapseAll,
+				PlatformUI.getWorkbench().getSharedImages().getImageDescriptor(
+						ISharedImages.IMG_ELCL_COLLAPSEALL)) {
+			@Override
+			public void run() {
+				getTreeViewer().collapseAll();
+			}
+		};
+		toolbarManager.add(collapseAction);
 	}
 
 	private static class DiffContentProvider implements ITreeContentProvider {
