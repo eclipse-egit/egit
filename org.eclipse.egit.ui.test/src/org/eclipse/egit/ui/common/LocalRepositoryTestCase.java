@@ -498,7 +498,7 @@ public abstract class LocalRepositoryTestCase extends EGitTestCase {
 
 		// now we configure the remote
 		myRepository.getConfig().setString("remote", "origin", "url",
-				"file:///" + myRemoteRepository.getDirectory().getPath());
+				"file://" + myRemoteRepository.getDirectory().getPath());
 		myRepository.getConfig().setString("remote", "origin", "fetch",
 				"+refs/heads/*:refs/remotes/origin/*");
 		myRepository.getConfig().save();
@@ -523,23 +523,23 @@ public abstract class LocalRepositoryTestCase extends EGitTestCase {
 
 		// now we configure a pure push destination
 		myRepository.getConfig().setString("remote", "push", "pushurl",
-				"file:///" + myRemoteRepository.getDirectory().getPath());
+				"file://" + myRemoteRepository.getDirectory().getPath());
 		myRepository.getConfig().setString("remote", "push", "push",
 				"+refs/heads/*:refs/heads/*");
 
 		// and a pure fetch destination
 		myRepository.getConfig().setString("remote", "fetch", "url",
-				"file:///" + myRemoteRepository.getDirectory().getPath());
+				"file://" + myRemoteRepository.getDirectory().getPath());
 		myRepository.getConfig().setString("remote", "fetch", "fetch",
 				"+refs/heads/*:refs/heads/*");
 
 		// a destination with both fetch and push urls and specs
 		myRepository.getConfig().setString("remote", "both", "pushurl",
-				"file:///" + myRemoteRepository.getDirectory().getPath());
+				"file://" + myRemoteRepository.getDirectory().getPath());
 		myRepository.getConfig().setString("remote", "both", "push",
 				"+refs/heads/*:refs/heads/*");
 		myRepository.getConfig().setString("remote", "both", "url",
-				"file:///" + myRemoteRepository.getDirectory().getPath());
+				"file://" + myRemoteRepository.getDirectory().getPath());
 		myRepository.getConfig().setString("remote", "both", "fetch",
 				"+refs/heads/*:refs/heads/*");
 
@@ -547,7 +547,7 @@ public abstract class LocalRepositoryTestCase extends EGitTestCase {
 		myRepository.getConfig().setString("remote", "mixed", "push",
 				"+refs/heads/*:refs/heads/*");
 		myRepository.getConfig().setString("remote", "mixed", "url",
-				"file:///" + myRemoteRepository.getDirectory().getPath());
+				"file://" + myRemoteRepository.getDirectory().getPath());
 		myRepository.getConfig().setString("remote", "mixed", "fetch",
 				"+refs/heads/*:refs/heads/*");
 
@@ -575,7 +575,7 @@ public abstract class LocalRepositoryTestCase extends EGitTestCase {
 	protected File createChildRepository(File repositoryDir)
 			throws Exception {
 		Repository myRepository = lookupRepository(repositoryDir);
-		URIish uri = new URIish("file:///" + myRepository.getDirectory());
+		URIish uri = new URIish("file://" + myRepository.getDirectory());
 		File workdir = new File(testDirectory, CHILDREPO);
 		CloneOperation clop = new CloneOperation(uri, true, null, workdir,
 				"refs/heads/master", "origin", 0);
