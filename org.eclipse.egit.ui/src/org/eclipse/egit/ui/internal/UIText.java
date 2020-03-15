@@ -3980,6 +3980,9 @@ public class UIText extends NLS {
 	public static String DiffEditor_WarningNoDiffForMerge;
 
 	/** */
+	public static String DiffEditor_OutlineTreeToggle;
+
+	/** */
 	public static String DiffEditorInput_Title1;
 
 	/** */
