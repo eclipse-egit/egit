@@ -28,6 +28,7 @@ import org.eclipse.egit.ui.internal.commit.DiffRegionFormatter.FileDiffRegion;
 import org.eclipse.egit.ui.internal.history.CommitFileDiffViewer.CheckoutAction;
 import org.eclipse.egit.ui.internal.history.FileDiff;
 import org.eclipse.jface.action.Action;
+import org.eclipse.jface.action.IToolBarManager;
 import org.eclipse.jface.action.MenuManager;
 import org.eclipse.jface.action.Separator;
 import org.eclipse.jface.resource.ImageDescriptor;
@@ -53,8 +54,11 @@ import org.eclipse.jgit.lib.RepositoryState;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Menu;
+import org.eclipse.ui.IActionBars;
 import org.eclipse.ui.ISharedImages;
 import org.eclipse.ui.PlatformUI;
+import org.eclipse.ui.handlers.CollapseAllHandler;
+import org.eclipse.ui.handlers.IHandlerService;
 import org.eclipse.ui.views.contentoutline.ContentOutlinePage;
 
 /**
@@ -68,6 +72,8 @@ public class DiffEditorOutlinePage extends ContentOutlinePage {
 	private CopyOnWriteArrayList<IOpenListener> openListeners = new CopyOnWriteArrayList<>();
 
 	private ISelection selection;
+
+	private CollapseAllHandler collapseHandler;
 
 	@Override
 	public void createControl(Composite parent) {
@@ -292,6 +298,38 @@ public class DiffEditorOutlinePage extends ContentOutlinePage {
 			}
 		}
 		return result;
+	}
+
+	@Override
+	public void setActionBars(IActionBars actionBars) {
+		super.setActionBars(actionBars);
+		addToolbarActions(actionBars.getToolBarManager());
+	}
+
+	private void addToolbarActions(IToolBarManager toolbarManager) {
+		Action collapseAction = new Action(UIText.UIUtils_CollapseAll,
+				PlatformUI.getWorkbench().getSharedImages().getImageDescriptor(
+						ISharedImages.IMG_ELCL_COLLAPSEALL)) {
+			@Override
+			public void run() {
+				getTreeViewer().collapseAll();
+			}
+		};
+		collapseAction.setActionDefinitionId(CollapseAllHandler.COMMAND_ID);
+		collapseHandler = new CollapseAllHandler(getTreeViewer());
+		IHandlerService handlerService = getSite()
+				.getService(IHandlerService.class);
+		handlerService.activateHandler(CollapseAllHandler.COMMAND_ID,
+				collapseHandler);
+		toolbarManager.add(collapseAction);
+	}
+
+	@Override
+	public void dispose() {
+		if (collapseHandler != null) {
+			collapseHandler.dispose();
+		}
+		super.dispose();
 	}
 
 	private static class DiffContentProvider implements ITreeContentProvider {
