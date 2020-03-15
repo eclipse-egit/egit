@@ -1497,7 +1497,10 @@ public class UIText extends NLS {
 	public static String RepositorySearchDialog_UncheckAllRepositories;
 
 	/** */
-	public static String RepositorySelectionPage_BrowseLocalFile;
+	public static String RepositorySelectionPage_BrowseLocalFolder;
+
+	/** */
+	public static String RepositorySelectionPage_BrowseLocalBundleFile;
 
 	/** */
 	public static String RepositorySelectionPage_sourceSelectionTitle;

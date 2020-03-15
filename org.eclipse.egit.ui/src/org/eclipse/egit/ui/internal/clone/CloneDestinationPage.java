@@ -284,7 +284,7 @@ public class CloneDestinationPage extends WizardPage {
 	}
 
 	private static GridData createFieldGridData() {
-		return new GridData(SWT.FILL, SWT.DEFAULT, true, false);
+		return new GridData(SWT.FILL, SWT.CENTER, true, false);
 	}
 
 	/**
