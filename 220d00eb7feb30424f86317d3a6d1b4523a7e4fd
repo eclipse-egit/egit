@@ -72,6 +72,24 @@
     },
     {
       "key": {
+        "uuid": "5289a424_7f5d3d63",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/commit/DiffEditorOutlinePage.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 300,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2020-03-16T21:20:16Z",
+      "side": 1,
+      "message": "Didn\u0027t see that... it\u0027s not deprecated, though. Neither in Page nor in IPage. If you prefer init(), then let\u0027s not use CollapseAllHandler but instead new ActionHandler(collapseAction) below. Is a bit nicer anyway since it delegates to our action, so there\u0027s only one implementation of the \"collapse all\". Then also use UIUtils.collapseAll(getTreeViewer()) in the Action\u0027s run method. (Is more efficient for large trees on Eclipse \u003c 4.8. And we could use ActionHandler instead of CollapseAllHandler in any case.)",
+      "parentUuid": "d01e8470_1af532e5",
+      "revId": "220d00eb7feb30424f86317d3a6d1b4523a7e4fd",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "191b545d_c3a33a18",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/commit/DiffEditorOutlinePage.java",
         "patchSetId": 1
