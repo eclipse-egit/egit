@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "34310cc4_af413edd",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/CommonUtils.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 236689
+      },
+      "writtenOn": "2020-03-16T13:41:58Z",
+      "side": 1,
+      "message": "I understand. How about keeping a command state because it already integrates well with the Repositories View\u0027s refresh but inversing the dependency.",
+      "parentUuid": "02b8e381_421fcd76",
+      "range": {
+        "startLine": 35,
+        "startChar": 7,
+        "endLine": 35,
+        "endChar": 60
+      },
+      "revId": "532359e00be57198e2838f8ca1018f2f5ad80ee7",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b07f96dc_1a8bf056",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/CommonUtils.java",
         "patchSetId": 4
@@ -42,6 +66,24 @@
     },
     {
       "key": {
+        "uuid": "c7d3ce34_58a64976",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/CommonUtils.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 236689
+      },
+      "writtenOn": "2020-03-16T13:41:58Z",
+      "side": 1,
+      "message": "Done\n\nThe proposed change does not need the sate listener here. (How - or more precisely when - could you unregister the listener if the class is static?)",
+      "parentUuid": "b07f96dc_1a8bf056",
+      "revId": "532359e00be57198e2838f8ca1018f2f5ad80ee7",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "448a27ac_265e724b",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/repository/tree/command/ToggleTagSortingCommand.java",
         "patchSetId": 4
@@ -53,6 +95,24 @@
       "writtenOn": "2020-03-15T21:57:58Z",
       "side": 1,
       "message": "Not needed. The framework maintains this, and if you need the constant, there\u0027s RegistryToggleState.STATE_ID.",
+      "revId": "532359e00be57198e2838f8ca1018f2f5ad80ee7",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1ccd7757_8959c389",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/repository/tree/command/ToggleTagSortingCommand.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 236689
+      },
+      "writtenOn": "2020-03-16T13:41:58Z",
+      "side": 1,
+      "message": "Done. This was a leftover from when I copied the pattern used in the existing toggle commands... Are they still necessary at all? They do nothing but define the ID. These IDs could get different names and move to the AbstractToggleCommand.",
+      "parentUuid": "448a27ac_265e724b",
       "revId": "532359e00be57198e2838f8ca1018f2f5ad80ee7",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
