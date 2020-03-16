@@ -585,6 +585,8 @@ public class HistoryViewTest extends GitRepositoriesViewTestBase {
 		assertTrue("Expected " + refFilter + " to be checked",
 				filter.isChecked());
 		filter.click();
+		assertFalse("Expected " + refFilter + " to be unchecked",
+				filter.isChecked());
 	}
 
 	private void checkRefFilter(SWTBotToolbarDropDownButton selectedRefs,
@@ -605,7 +607,12 @@ public class HistoryViewTest extends GitRepositoriesViewTestBase {
 
 			@Override
 			public String getFailureMessage() {
-				return "CommitGraphTable did not become empty";
+				StringBuilder b = new StringBuilder(
+						"CommitGraphTable did not become empty\n");
+				for (int i = 0; i < table.rowCount(); i++) {
+					b.append(table.getTableItem(i).getText() + "\n");
+				}
+				return b.toString();
 			}
 
 		});
