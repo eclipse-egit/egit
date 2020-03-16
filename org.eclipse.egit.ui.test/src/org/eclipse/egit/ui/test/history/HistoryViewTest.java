@@ -596,6 +596,7 @@ public class HistoryViewTest extends GitRepositoriesViewTestBase {
 	}
 
 	private void assertNoCommit(SWTBotTable table) {
+		TestUtil.waitForJobs(50, 5000);
 		bot.waitUntil(new DefaultCondition() {
 
 			@Override
@@ -607,8 +608,8 @@ public class HistoryViewTest extends GitRepositoriesViewTestBase {
 			public String getFailureMessage() {
 				return "CommitGraphTable did not become empty";
 			}
-
 		});
+
 		assertThat("Expected no commit", getCommitMsgsFromUi(table),
 				emptyArray());
 	}
