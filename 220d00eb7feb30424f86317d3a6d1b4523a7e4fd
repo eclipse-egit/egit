@@ -90,6 +90,24 @@
     },
     {
       "key": {
+        "uuid": "829662ac_5255446f",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/commit/DiffEditorOutlinePage.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 300,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2020-03-16T21:21:51Z",
+      "side": 1,
+      "message": "CollapseAllHandler.COMMAND_ID would then be replaced by IWorkbenchCommandConstants.NAVIGATE_COLLAPSE_ALL directly, of course.",
+      "parentUuid": "5289a424_7f5d3d63",
+      "revId": "220d00eb7feb30424f86317d3a6d1b4523a7e4fd",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "191b545d_c3a33a18",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/commit/DiffEditorOutlinePage.java",
         "patchSetId": 1
