@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "46d56094_94ee9447",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/commit/DiffEditorOutlinePage.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 236689
+      },
+      "writtenOn": "2020-03-16T12:40:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "dd9ece9c_5945e2a7",
+      "revId": "220d00eb7feb30424f86317d3a6d1b4523a7e4fd",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0f46727a_af523a8b",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/commit/DiffEditorOutlinePage.java",
         "patchSetId": 1
@@ -30,6 +48,24 @@
       "writtenOn": "2020-03-15T20:47:37Z",
       "side": 1,
       "message": "I would override setActionBars(IActionBars actionBars) instead. First, it gives direct access to the IActionBars. Second, it gets called by the framework just after createControl. init is called earlier, before the viewer exists.",
+      "revId": "220d00eb7feb30424f86317d3a6d1b4523a7e4fd",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "d01e8470_1af532e5",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/commit/DiffEditorOutlinePage.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 300,
+      "author": {
+        "id": 236689
+      },
+      "writtenOn": "2020-03-16T12:40:07Z",
+      "side": 1,
+      "message": "Done\n\nI chose init because in #makeContributions which I initially wanted to override it said that the method is present for downward compatibility and overriding #init should be considered.",
+      "parentUuid": "0f46727a_af523a8b",
       "revId": "220d00eb7feb30424f86317d3a6d1b4523a7e4fd",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "59d0d5f0_1d59bac7",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/commit/DiffEditorOutlinePage.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 313,
+      "author": {
+        "id": 236689
+      },
+      "writtenOn": "2020-03-16T12:40:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "191b545d_c3a33a18",
+      "revId": "220d00eb7feb30424f86317d3a6d1b4523a7e4fd",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "dd5d2f37_dba613e7",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/commit/DiffEditorOutlinePage.java",
         "patchSetId": 1
@@ -64,6 +118,24 @@
       "writtenOn": "2020-03-15T20:47:37Z",
       "side": 1,
       "message": "Add here\n\n  collapseHandler \u003d new CollapseAllHandler(getTreeViewer());\n  IHandlerService handlerService \u003d getSite().getService(IHandlerService.class);\n  handlerService.activateHandler(CollapseAllHandler.COMMAND_ID, collapseHandler);\n\nto handle the standard key binding for the collapse all command.",
+      "revId": "220d00eb7feb30424f86317d3a6d1b4523a7e4fd",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "368167fa_62fd5b39",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/commit/DiffEditorOutlinePage.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 314,
+      "author": {
+        "id": 236689
+      },
+      "writtenOn": "2020-03-16T12:40:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "dd5d2f37_dba613e7",
       "revId": "220d00eb7feb30424f86317d3a6d1b4523a7e4fd",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
