@@ -116,6 +116,24 @@
       "revId": "532359e00be57198e2838f8ca1018f2f5ad80ee7",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "11b5715d_165624d3",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/repository/tree/command/ToggleTagSortingCommand.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2020-03-16T22:10:01Z",
+      "side": 1,
+      "message": "If you don\u0027t have the concrete class, how\u0027d you write the plugin.xml? Or did you mean change AbstractToggleCommand to a concrete class ToggleCommand, move all IDs there, perhaps move the class over to egit.ui.internal.commands? That might be a solution... thinking about it: funny that there is no such general ToggleCommand class in platform already.",
+      "parentUuid": "1ccd7757_8959c389",
+      "revId": "532359e00be57198e2838f8ca1018f2f5ad80ee7",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
     }
   ]
 }
