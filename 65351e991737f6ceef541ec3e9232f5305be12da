@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "937cb42f_8f33a055",
+        "filename": "org.eclipse.egit.ui.test/src/org/eclipse/egit/ui/test/history/HistoryViewTest.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 599,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2020-03-16T22:16:14Z",
+      "side": 1,
+      "message": "We can try this, but why does it help? The waitUntil below should wait for 30 seconds anyway for the condition to become true. Or is the problem that we don\u0027t spin the event loop during the wait?",
+      "revId": "65351e991737f6ceef541ec3e9232f5305be12da",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
