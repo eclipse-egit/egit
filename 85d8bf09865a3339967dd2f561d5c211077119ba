@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "44b334b5_c35a8180",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/CommonUtils.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2020-03-16T22:10:01Z",
+      "side": 1,
+      "message": "Should this perhaps be volatile or are we sure it\u0027s accessed only in one thread (UI thread, probably)?",
+      "revId": "85d8bf09865a3339967dd2f561d5c211077119ba",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "53017f0b_ba577e19",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/repository/tree/command/ToggleTagSortingCommand.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2020-03-16T22:10:01Z",
+      "side": 1,
+      "message": "Wouldn\u0027t it make more sense to have a CommonUtils.setTagSortingOrder(boolean). HandlerUtil.toggleCommandState() returns the state before toggling, so ! would tell what the new state is.",
+      "revId": "85d8bf09865a3339967dd2f561d5c211077119ba",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
