@@ -134,6 +134,24 @@
       "revId": "532359e00be57198e2838f8ca1018f2f5ad80ee7",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3e621d5c_e4406f60",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/repository/tree/command/ToggleTagSortingCommand.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 236689
+      },
+      "writtenOn": "2020-03-17T06:45:21Z",
+      "side": 1,
+      "message": "Indeed, I meant using one concrete generic ToggleCommandClass (possibly with a callback providing the new state, in case a subclass has to react to the new toggle state). After all the state to toggle is not determined by the class but by the command id.\n\nHowever, I think this refactoring should not be done in this change.",
+      "parentUuid": "11b5715d_165624d3",
+      "revId": "532359e00be57198e2838f8ca1018f2f5ad80ee7",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
     }
   ]
 }
