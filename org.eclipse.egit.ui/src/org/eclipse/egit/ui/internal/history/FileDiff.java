@@ -83,6 +83,8 @@ public class FileDiff {
 
 	private final RevCommit commit;
 
+	private final RevCommit base;
+
 	private final DiffEntry diffEntry;
 
 	private final Repository repository;
@@ -157,6 +159,7 @@ public class FileDiff {
 		if (walk.getTreeCount() <= 2) {
 			// TODO: make JGit DiffEntry.scan and RenameDetector.compute
 			// cancelable
+			RevCommit base = parents.length == 1 ? parents[0] : null;
 			SubMonitor progress = SubMonitor.convert(monitor, 3);
 			List<DiffEntry> entries = DiffEntry.scan(walk, false,
 					markTreeFilters);
@@ -179,7 +182,8 @@ public class FileDiff {
 			if (!cancelled) {
 				progress.setWorkRemaining(renames.size());
 				for (DiffEntry m : renames) {
-					final FileDiff d = new FileDiff(repository, commit, m);
+					final FileDiff d = new FileDiff(repository, commit, base,
+							m);
 					r.add(d);
 					for (Iterator<DiffEntry> i = xentries.iterator(); i
 							.hasNext();) {
@@ -193,7 +197,7 @@ public class FileDiff {
 				}
 			}
 			for (DiffEntry m : xentries) {
-				final FileDiff d = new FileDiff(repository, commit, m);
+				final FileDiff d = new FileDiff(repository, commit, base, m);
 				r.add(d);
 			}
 		}
@@ -362,6 +366,16 @@ public class FileDiff {
 	}
 
 	/**
+	 * Retrieves the base commit of the diff, if set. If not set, the caller
+	 * must determine from context what the base commit was.
+	 *
+	 * @return the base commit, or {@code null} if not set
+	 */
+	public RevCommit getBase() {
+		return base;
+	}
+
+	/**
 	 * Retrieves the repository the {@link FileDiff} and its commit belong to.
 	 *
 	 * @return the {@link Repository}
@@ -460,9 +474,28 @@ public class FileDiff {
 	 */
 	public FileDiff(final Repository repo, final RevCommit c,
 			final DiffEntry entry) {
+		this(repo, c, null, entry);
+	}
+
+	/**
+	 * Create a file diff for a specified {@link RevCommit} and
+	 * {@link DiffEntry}
+	 *
+	 * @param repo
+	 *            the diff is in
+	 * @param tip
+	 *            tip {@link RevCommit}
+	 * @param base
+	 *            base {@link RevCommit}
+	 * @param entry
+	 *            describing the diff
+	 */
+	public FileDiff(Repository repo, RevCommit tip, RevCommit base,
+			DiffEntry entry) {
 		repository = repo;
 		diffEntry = entry;
-		commit = c;
+		commit = tip;
+		this.base = base;
 	}
 
 	/**

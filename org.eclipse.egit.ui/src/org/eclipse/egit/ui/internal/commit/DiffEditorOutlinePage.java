@@ -11,6 +11,7 @@
 package org.eclipse.egit.ui.internal.commit;
 
 import java.io.File;
+import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
@@ -21,6 +22,7 @@ import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.stream.Collectors;
 
 import org.eclipse.core.runtime.Path;
+import org.eclipse.egit.core.internal.Utils;
 import org.eclipse.egit.ui.UIUtils;
 import org.eclipse.egit.ui.internal.CommonUtils;
 import org.eclipse.egit.ui.internal.UIIcons;
@@ -29,6 +31,7 @@ import org.eclipse.egit.ui.internal.commit.DiffRegionFormatter.FileDiffRegion;
 import org.eclipse.egit.ui.internal.history.CommitFileDiffViewer.CheckoutAction;
 import org.eclipse.egit.ui.internal.history.FileDiff;
 import org.eclipse.jface.action.Action;
+import org.eclipse.jface.action.IAction;
 import org.eclipse.jface.action.IToolBarManager;
 import org.eclipse.jface.action.MenuManager;
 import org.eclipse.jface.action.Separator;
@@ -53,6 +56,7 @@ import org.eclipse.jface.viewers.Viewer;
 import org.eclipse.jface.viewers.ViewerComparator;
 import org.eclipse.jgit.diff.DiffEntry;
 import org.eclipse.jgit.lib.RepositoryState;
+import org.eclipse.jgit.revwalk.RevCommit;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Menu;
@@ -188,15 +192,15 @@ public class DiffEditorOutlinePage extends ContentOutlinePage {
 			if (selected.isEmpty()) {
 				return;
 			}
-			Collection<FileDiffRegion> haveNew = selected.stream()
+			List<FileDiffRegion> haveNew = selected.stream()
 					.filter(diff -> !diff.getDiff().getChange()
 							.equals(DiffEntry.ChangeType.DELETE))
 					.collect(Collectors.toList());
-			Collection<FileDiffRegion> haveOld = selected.stream()
+			List<FileDiffRegion> haveOld = selected.stream()
 					.filter(diff -> !diff.getDiff().getChange()
 							.equals(DiffEntry.ChangeType.ADD))
 					.collect(Collectors.toList());
-			Collection<FileDiffRegion> existing = haveNew.stream()
+			List<FileDiffRegion> existing = haveNew.stream()
 					.filter(diff -> new Path(diff.getDiff().getRepository()
 							.getWorkTree().getAbsolutePath())
 									.append(diff.getDiff().getNewPath())
@@ -221,8 +225,14 @@ public class DiffEditorOutlinePage extends ContentOutlinePage {
 				});
 			}
 			if (!haveNew.isEmpty()) {
-				menuManager.add(new Action(
-						UIText.CommitFileDiffViewer_OpenInEditorMenuLabel) {
+				RevCommit commit = haveNew.get(0).getDiff().getCommit();
+				String title = MessageFormat.format(
+						UIText.CommitFileDiffViewer_OpenInEditorMenuWithCommitLabel,
+						Utils.getShortObjectId(commit));
+				String tooltip = MessageFormat.format(
+						UIText.CommitFileDiffViewer_OpenInEditorMenuTooltip,
+						UIUtils.menuText(commit.getShortMessage(), 80));
+				IAction action = new Action(title) {
 
 					@Override
 					public void run() {
@@ -231,11 +241,32 @@ public class DiffEditorOutlinePage extends ContentOutlinePage {
 									DiffEntry.Side.NEW, -1);
 						}
 					}
-				});
+				};
+				if (tooltip != null) {
+					action.setToolTipText(tooltip);
+				}
+				menuManager.add(action);
 			}
 			if (!haveOld.isEmpty()) {
-				menuManager.add(new Action(
-						UIText.CommitFileDiffViewer_OpenPreviousInEditorMenuLabel) {
+				FileDiff diff = haveOld.get(0).getDiff();
+				RevCommit commit = diff.getCommit();
+				RevCommit base = diff.getBase();
+				String msg;
+				if (base == null || base.equals(commit.getParent(0))) {
+					msg = UIText.CommitFileDiffViewer_OpenPreviousInEditorMenuWithCommitLabel;
+					if (base == null) {
+						base = commit.getParent(0);
+					}
+				} else {
+					msg = UIText.CommitFileDiffViewer_OpenBaseInEditorMenuWithCommitLabel;
+				}
+
+				String title = MessageFormat.format(msg,
+						Utils.getShortObjectId(base));
+				String tooltip = MessageFormat.format(
+						UIText.CommitFileDiffViewer_OpenInEditorMenuTooltip,
+						UIUtils.menuText(base.getShortMessage(), 80));
+				IAction action = new Action(title) {
 
 					@Override
 					public void run() {
@@ -244,7 +275,11 @@ public class DiffEditorOutlinePage extends ContentOutlinePage {
 									DiffEntry.Side.OLD, -1);
 						}
 					}
-				});
+				};
+				if (tooltip != null) {
+					action.setToolTipText(tooltip);
+				}
+				menuManager.add(action);
 			}
 			if (!haveNew.isEmpty()) {
 				boolean hasFiles = haveNew.stream()
@@ -263,9 +298,17 @@ public class DiffEditorOutlinePage extends ContentOutlinePage {
 					&& !haveOld.isEmpty()) {
 				// "Compare with previous" makes only sense if there are
 				// both a new and a previous version.
+				FileDiff diff = haveNew.get(0).getDiff();
+				RevCommit base = diff.getBase();
+				String title;
+				if (base == null
+						|| base.equals(diff.getCommit().getParent(0))) {
+					title = UIText.CommitFileDiffViewer_CompareMenuLabel;
+				} else {
+					title = UIText.CommitFileDiffViewer_CompareSideBySideMenuLabel;
+				}
 				menuManager.add(new Separator());
-				menuManager.add(new Action(
-						UIText.CommitFileDiffViewer_CompareMenuLabel) {
+				menuManager.add(new Action(title) {
 
 					@Override
 					public void run() {

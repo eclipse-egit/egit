@@ -30,6 +30,7 @@ import org.eclipse.core.commands.common.NotDefinedException;
 import org.eclipse.core.expressions.IEvaluationContext;
 import org.eclipse.core.runtime.Adapters;
 import org.eclipse.core.runtime.Path;
+import org.eclipse.egit.core.internal.Utils;
 import org.eclipse.egit.ui.internal.CommonUtils;
 import org.eclipse.egit.ui.internal.RepositorySaveableFilter;
 import org.eclipse.egit.ui.internal.UIIcons;
@@ -115,6 +116,9 @@ public class UIUtils {
 	 * special chars
 	 */
 	private static final char[] VALUE_HELP_ACTIVATIONCHARS = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123457890*@ <>".toCharArray(); //$NON-NLS-1$
+
+	/** Vertical or horizontal spaces. */
+	private static final Pattern SPACES = Pattern.compile("(?:\\v|\\h)+"); //$NON-NLS-1$
 
 	/**
 	 * A keystroke for a "submit" action, see {@link #isSubmitKeyEvent(KeyEvent)}
@@ -1038,5 +1042,21 @@ public class UIUtils {
 		} finally {
 			viewer.getControl().setRedraw(true);
 		}
+	}
+
+	/**
+	 * Truncates a text to at most {@code maxLength} characters and replaces any
+	 * white space by single blanks.
+	 *
+	 * @param text
+	 *            to process
+	 * @param maxLength
+	 *            of the result
+	 * @return the resulting shortened string, may be shorter than
+	 *         {@code maxLength} characters
+	 */
+	public static String menuText(String text, int maxLength) {
+		String result = Utils.shortenText(text, maxLength);
+		return SPACES.matcher(result).replaceAll(" "); //$NON-NLS-1$
 	}
 }

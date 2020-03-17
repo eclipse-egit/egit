@@ -4747,6 +4747,9 @@ public class UIText extends NLS {
 	public static String CommitFileDiffViewer_CompareMenuLabel;
 
 	/** */
+	public static String CommitFileDiffViewer_CompareSideBySideMenuLabel;
+
+	/** */
 	public static String CommitFileDiffViewer_CompareWorkingDirectoryMenuLabel;
 
 	/** */
@@ -4759,10 +4762,25 @@ public class UIText extends NLS {
 	public static String CommitFileDiffViewer_MergeCommitMultiAncestorMessage;
 
 	/** */
+	public static String CommitFileDiffViewer_OpenBaseInEditorMenuLabel;
+
+	/** */
+	public static String CommitFileDiffViewer_OpenBaseInEditorMenuWithCommitLabel;
+
+	/** */
 	public static String CommitFileDiffViewer_OpenInEditorMenuLabel;
 
 	/** */
+	public static String CommitFileDiffViewer_OpenInEditorMenuTooltip;
+
+	/** */
+	public static String CommitFileDiffViewer_OpenInEditorMenuWithCommitLabel;
+
+	/** */
 	public static String CommitFileDiffViewer_OpenPreviousInEditorMenuLabel;
+
+	/** */
+	public static String CommitFileDiffViewer_OpenPreviousInEditorMenuWithCommitLabel;
 
 	/** */
 	public static String CommitFileDiffViewer_ShowAnnotationsMenuLabel;
@@ -4778,6 +4796,9 @@ public class UIText extends NLS {
 
 	/** */
 	public static String DiffViewer_OpenWorkingTreeLinkLabel;
+
+	/** */
+	public static String DiffViewer_OpenBaseLinkLabel;
 
 	/** */
 	public static String DiffViewer_OpenInEditorLinkLabel;
