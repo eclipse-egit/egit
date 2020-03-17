@@ -26,6 +26,7 @@ import static org.eclipse.egit.ui.UIPreferences.THEME_DiffRemoveForegroundColor;
 
 import java.io.File;
 import java.io.IOException;
+import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -41,6 +42,7 @@ import org.eclipse.core.runtime.Assert;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.core.runtime.Path;
+import org.eclipse.egit.core.internal.Utils;
 import org.eclipse.egit.core.internal.util.ResourceUtil;
 import org.eclipse.egit.ui.Activator;
 import org.eclipse.egit.ui.internal.CompareUtils;
@@ -705,9 +707,22 @@ public class DiffViewer extends HyperlinkSourceViewer {
 		public String getHyperlinkText() {
 			switch (side) {
 			case OLD:
-				return UIText.DiffViewer_OpenPreviousLinkLabel;
+				RevCommit commit = fileDiff.getCommit();
+				RevCommit base = fileDiff.getBase();
+				String msg;
+				if (base == null || base.equals(commit.getParent(0))) {
+					if (base == null) {
+						base = commit.getParent(0);
+					}
+					msg = UIText.DiffViewer_OpenPreviousLinkLabel;
+				} else {
+					msg = UIText.DiffViewer_OpenBaseLinkLabel;
+				}
+				return MessageFormat.format(msg, Utils.getShortObjectId(base));
 			default:
-				return UIText.DiffViewer_OpenInEditorLinkLabel;
+				return MessageFormat.format(
+						UIText.DiffViewer_OpenInEditorLinkLabel,
+						Utils.getShortObjectId(fileDiff.getCommit()));
 			}
 		}
 
@@ -756,9 +771,12 @@ public class DiffViewer extends HyperlinkSourceViewer {
 		ObjectId[] blobs = d.getBlobs();
 		switch (side) {
 		case OLD:
-			openInEditor(d.getRepository(), d.getOldPath(),
-					d.getCommit().getParent(0),
-					blobs[0], lineNoToReveal);
+			RevCommit base = d.getBase();
+			if (base == null) {
+				base = d.getCommit().getParent(0);
+			}
+			openInEditor(d.getRepository(), d.getOldPath(), base, blobs[0],
+					lineNoToReveal);
 			break;
 		default:
 			openInEditor(d.getRepository(), d.getNewPath(), d.getCommit(),
@@ -813,10 +831,13 @@ public class DiffViewer extends HyperlinkSourceViewer {
 		RevCommit c = d.getCommit();
 
 		// extract commits
-		final RevCommit oldCommit;
-		final ObjectId oldObjectId;
+		RevCommit oldCommit;
+		ObjectId oldObjectId;
 		if (!d.getChange().equals(ChangeType.ADD)) {
-			oldCommit = c.getParent(0);
+			oldCommit = d.getBase();
+			if (oldCommit == null) {
+				oldCommit = c.getParent(0);
+			}
 			oldObjectId = blobs[0];
 		} else {
 			// Initial import
@@ -824,8 +845,8 @@ public class DiffViewer extends HyperlinkSourceViewer {
 			oldObjectId = null;
 		}
 
-		final RevCommit newCommit;
-		final ObjectId newObjectId;
+		RevCommit newCommit;
+		ObjectId newObjectId;
 		if (d.getChange().equals(ChangeType.DELETE)) {
 			newCommit = null;
 			newObjectId = null;
