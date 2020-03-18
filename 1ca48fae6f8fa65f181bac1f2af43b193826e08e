@@ -1,0 +1,89 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "553a09ff_685d0d2d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/UIUtils.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1060,
+      "author": {
+        "id": 236689
+      },
+      "writtenOn": "2020-03-18T14:20:17Z",
+      "side": 1,
+      "message": "How about first replacing the spaces and shortening afterwards? (This may be an academic case, but what if there are very many white spaces and the text would already be short enough after replacing?)",
+      "revId": "1ca48fae6f8fa65f181bac1f2af43b193826e08e",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "f0bbb635_63a68bef",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/commit/DiffEditorOutlinePage.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 234,
+      "author": {
+        "id": 236689
+      },
+      "writtenOn": "2020-03-18T14:20:17Z",
+      "side": 1,
+      "message": "For now, I can check this only with Windows... For menu entries, I have never seen tooltips and I still don\u0027t. Often they would be helpful (and often, I wondered, why I should define one in the plugin.xml when it does not appear)",
+      "revId": "1ca48fae6f8fa65f181bac1f2af43b193826e08e",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3d9b818e_3a851003",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/history/FileDiff.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 481,
+      "author": {
+        "id": 236689
+      },
+      "writtenOn": "2020-03-18T14:20:17Z",
+      "side": 1,
+      "message": "Delegate to the new Constructor?",
+      "revId": "1ca48fae6f8fa65f181bac1f2af43b193826e08e",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "074f59f0_3b5cc7d9",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/uitext.properties",
+        "patchSetId": 1
+      },
+      "lineNbr": 1666,
+      "author": {
+        "id": 236689
+      },
+      "writtenOn": "2020-03-18T14:20:17Z",
+      "side": 1,
+      "message": "Include commit id here as well?",
+      "revId": "1ca48fae6f8fa65f181bac1f2af43b193826e08e",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "4507b51e_34cb6fdb",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/uitext.properties",
+        "patchSetId": 1
+      },
+      "lineNbr": 1674,
+      "author": {
+        "id": 236689
+      },
+      "writtenOn": "2020-03-18T14:20:17Z",
+      "side": 1,
+      "message": "Just \"Version ({0})\"? I guess the problem, \"Commit\" becomes redundant after having seen the entry twice; but only then.",
+      "revId": "1ca48fae6f8fa65f181bac1f2af43b193826e08e",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
