@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "aa4db5a6_ddd409a6",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/UIUtils.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1060,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2020-03-18T21:32:37Z",
+      "side": 1,
+      "message": "I chose this order on purpose because of an academic case, which unfortunately I know occurs at least once in the wild. See bug 535092. Some commit message may be huge, and perhaps don\u0027t even have a proper title-body separation (two LFs). It\u0027s already bad enough that getShortMessage() will return the whole message in that case. But I see no need to replace spaces in a few thousand lines and then truncate, so I chose to truncate first.\n\nThe whole space replacing thing is just a safety measure to avoid having tabs and LFs and other crazy things in the text because I wasn\u0027t sure what SWT would do with them. I think nobody will complain if the final message is only 76 characters long. The javadoc mentions that the final result may be shorter.",
+      "parentUuid": "553a09ff_685d0d2d",
+      "revId": "1ca48fae6f8fa65f181bac1f2af43b193826e08e",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f0bbb635_63a68bef",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/commit/DiffEditorOutlinePage.java",
         "patchSetId": 1
@@ -30,6 +48,24 @@
       "writtenOn": "2020-03-18T14:20:17Z",
       "side": 1,
       "message": "For now, I can check this only with Windows... For menu entries, I have never seen tooltips and I still don\u0027t. Often they would be helpful (and often, I wondered, why I should define one in the plugin.xml when it does not appear)",
+      "revId": "1ca48fae6f8fa65f181bac1f2af43b193826e08e",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "b5bd530b_7e3eefb5",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/commit/DiffEditorOutlinePage.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 234,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2020-03-18T21:32:37Z",
+      "side": 1,
+      "message": "They should appear on Eclipse 4.14 or newer. They also used to appear in old Eclipse version, but during tswitch to E4 the functionality somehow got lost and was restored only recently.\n\nIf the tooltips don\u0027t on Windows in Eclipse 4.14, then that\u0027s either a SWT/Windows bug, or an expected platform difference of SWT. They do appear on Mac OS X 14.6 in Eclipse 4.14 (manually verified by installing this in an STS 4.5.1).",
+      "parentUuid": "f0bbb635_63a68bef",
       "revId": "1ca48fae6f8fa65f181bac1f2af43b193826e08e",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "21ca3f58_ec20f8ab",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/history/FileDiff.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 481,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2020-03-18T21:32:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3d9b818e_3a851003",
+      "revId": "1ca48fae6f8fa65f181bac1f2af43b193826e08e",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "074f59f0_3b5cc7d9",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/uitext.properties",
         "patchSetId": 1
@@ -70,6 +124,24 @@
     },
     {
       "key": {
+        "uuid": "7f867be2_c6e2a85e",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/uitext.properties",
+        "patchSetId": 1
+      },
+      "lineNbr": 1666,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2020-03-18T21:32:37Z",
+      "side": 1,
+      "message": "I think this would be overkill. Whenever this menu item is visible, the \"Open This Version (Commit {0})\" item also is. There\u0027s no need to repeat this on later items. I tried it and really feels redundant and heavy.",
+      "parentUuid": "074f59f0_3b5cc7d9",
+      "revId": "1ca48fae6f8fa65f181bac1f2af43b193826e08e",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4507b51e_34cb6fdb",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/uitext.properties",
         "patchSetId": 1
@@ -81,6 +153,24 @@
       "writtenOn": "2020-03-18T14:20:17Z",
       "side": 1,
       "message": "Just \"Version ({0})\"? I guess the problem, \"Commit\" becomes redundant after having seen the entry twice; but only then.",
+      "revId": "1ca48fae6f8fa65f181bac1f2af43b193826e08e",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "84a3433b_055aefc6",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/uitext.properties",
+        "patchSetId": 1
+      },
+      "lineNbr": 1674,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2020-03-18T21:32:37Z",
+      "side": 1,
+      "message": "What does \"Version feeb1e\" refer to? Commit id or blob id? I feel it\u0027s clearer if we include the \"Commit\" in the text.",
+      "parentUuid": "4507b51e_34cb6fdb",
       "revId": "1ca48fae6f8fa65f181bac1f2af43b193826e08e",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
