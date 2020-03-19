@@ -16,6 +16,24 @@
       "revId": "4c62943183a83bfec57c590d56fa09ade0ff5c69",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "cf07aebd_8b75a039",
+        "filename": "org.eclipse.egit.ui.test/src/org/eclipse/egit/ui/test/team/actions/TagActionTest.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 236689
+      },
+      "writtenOn": "2020-03-19T09:09:40Z",
+      "side": 1,
+      "message": "Should this be done within this change or rather in a separate one? I understand about avoiding arbitrary waits, but in this case the precondition for the asserts was not met due to not waiting long enough... and tracking the (a) reason was a nightmare, in particular as locally in Eclipse the tests pass and a simple maven install on EGit did not work locally (no thorough investigation yet).",
+      "parentUuid": "a38f0d48_36d1453c",
+      "revId": "4c62943183a83bfec57c590d56fa09ade0ff5c69",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
     }
   ]
 }
