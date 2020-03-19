@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a38f0d48_36d1453c",
+        "filename": "org.eclipse.egit.ui.test/src/org/eclipse/egit/ui/test/team/actions/TagActionTest.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2020-03-19T08:56:26Z",
+      "side": 1,
+      "message": "We tried hard to avoid most arbitrary waits from our tests. (I know there\u0027s still quite a few, and the various joinJobs or similar operations contains some themselves.)\n\nLooking at that FILL_TAG_LIST job, I think this job should work differently:\n\n1. It must return Job.ASYNC_FINISH.\n2. It must call done(Status.OK_STATUS) from within the asyncExec runnable (in a try-finally).\n\nUnfortunately this pattern of \"run normal job, perform asyncExec, return OK_STATUS\" is fairly common in EGit, but it\u0027s wrong and makes testing a nightmare.\n\nAnother approach is to use a normal job and a job change listener that then schedules a UIJob or WorkbenchJob, but for testing that probably also would need to have a family.",
+      "revId": "4c62943183a83bfec57c590d56fa09ade0ff5c69",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
