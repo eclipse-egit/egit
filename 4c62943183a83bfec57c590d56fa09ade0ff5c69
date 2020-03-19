@@ -34,6 +34,64 @@
       "revId": "4c62943183a83bfec57c590d56fa09ade0ff5c69",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "d978991b_b4241a1f",
+        "filename": "org.eclipse.egit.ui.test/src/org/eclipse/egit/ui/test/team/actions/TagActionTest.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2020-03-19T09:23:33Z",
+      "side": 1,
+      "message": "Give it a try with that FILL_TAG_LIST job. Just schedule a UIJob instead of doing the asyncExec, and give that UIJob also the FILL_TAG_LIST family. Then just wait for the family in the test.",
+      "parentUuid": "cf07aebd_8b75a039",
+      "revId": "4c62943183a83bfec57c590d56fa09ade0ff5c69",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "dfdda8c2_8dbde436",
+        "filename": "org.eclipse.egit.ui.test/src/org/eclipse/egit/ui/test/team/actions/TagActionTest.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 116,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2020-03-19T09:23:33Z",
+      "side": 1,
+      "message": "There is a rowCount() method. Would be clearer to use that and compare against the expected value.",
+      "range": {
+        "startLine": 116,
+        "startChar": 6,
+        "endLine": 116,
+        "endChar": 36
+      },
+      "revId": "4c62943183a83bfec57c590d56fa09ade0ff5c69",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "45e1d6f7_4d7e897d",
+        "filename": "org.eclipse.egit.ui.test/src/org/eclipse/egit/ui/test/team/actions/TagActionTest.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 119,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2020-03-19T09:23:33Z",
+      "side": 1,
+      "message": "That\u0027s an anti-pattern in tests. Just let the exception propagate.",
+      "revId": "4c62943183a83bfec57c590d56fa09ade0ff5c69",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
     }
   ]
 }
