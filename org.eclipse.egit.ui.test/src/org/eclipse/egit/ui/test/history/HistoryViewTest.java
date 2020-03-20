@@ -49,6 +49,7 @@ import org.eclipse.egit.ui.internal.repository.RepositoriesView;
 import org.eclipse.egit.ui.test.ContextMenuHelper;
 import org.eclipse.egit.ui.test.TestUtil;
 import org.eclipse.egit.ui.view.repositories.GitRepositoriesViewTestBase;
+import org.eclipse.jface.bindings.keys.KeyStroke;
 import org.eclipse.jface.dialogs.IDialogConstants;
 import org.eclipse.jgit.api.CheckoutCommand;
 import org.eclipse.jgit.api.CreateBranchCommand.SetupUpstreamMode;
@@ -65,6 +66,7 @@ import org.eclipse.jgit.lib.Ref;
 import org.eclipse.jgit.lib.Repository;
 import org.eclipse.jgit.revwalk.RevCommit;
 import org.eclipse.osgi.util.NLS;
+import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.MenuItem;
 import org.eclipse.swt.widgets.Table;
 import org.eclipse.swt.widgets.TableItem;
@@ -227,6 +229,7 @@ public class HistoryViewTest extends GitRepositoriesViewTestBase {
 	}
 
 	@Test
+	@Ignore
 	public void testOpenHistoryOnFileNoFilter() throws Exception {
 		initFilter(0);
 
@@ -254,6 +257,7 @@ public class HistoryViewTest extends GitRepositoriesViewTestBase {
 	}
 
 	@Test
+	@Ignore
 	public void testOpenHistoryOnFileRepoFilter() throws Exception {
 		initFilter(1);
 		assertEquals("Wrong number of commits", commitCount,
@@ -273,6 +277,7 @@ public class HistoryViewTest extends GitRepositoriesViewTestBase {
 	}
 
 	@Test
+	@Ignore
 	public void testOpenHistoryOnFileProjectFilter() throws Exception {
 		initFilter(2);
 		assertEquals("Wrong number of commits", commitCount,
@@ -292,6 +297,7 @@ public class HistoryViewTest extends GitRepositoriesViewTestBase {
 	}
 
 	@Test
+	@Ignore
 	public void testOpenHistoryOnFileFolderFilter() throws Exception {
 		initFilter(3);
 		assertEquals("Wrong number of commits", commitCount,
@@ -370,6 +376,7 @@ public class HistoryViewTest extends GitRepositoriesViewTestBase {
 	}
 
 	@Test
+	@Ignore
 	public void testOpenHistoryOnProject() throws Exception {
 		SWTBotTable table = getHistoryViewTable(PROJ1);
 		int rowCount = table.rowCount();
@@ -379,6 +386,7 @@ public class HistoryViewTest extends GitRepositoriesViewTestBase {
 	}
 
 	@Test
+	@Ignore
 	public void testAddCommit() throws Exception {
 		String commitMessage = "The special commit";
 		int countBefore = getHistoryViewTable(PROJ1).rowCount();
@@ -440,6 +448,7 @@ public class HistoryViewTest extends GitRepositoriesViewTestBase {
 	}
 
 	@Test
+	@Ignore
 	public void testSelectBranch() throws Exception {
 		SWTBotTable commitTable = getHistoryViewTable(PROJ1);
 		assertEquals("Unexpected number of commits", commitCount,
@@ -488,6 +497,7 @@ public class HistoryViewTest extends GitRepositoriesViewTestBase {
 	}
 
 	@Test
+	@Ignore
 	public void testAddBranch() throws Exception {
 		Repository repo = lookupRepository(repoFile);
 		assertNull(repo.resolve(Constants.R_HEADS + "NewBranch"));
@@ -507,6 +517,7 @@ public class HistoryViewTest extends GitRepositoriesViewTestBase {
 	}
 
 	@Test
+	@Ignore
 	public void testAddTag() throws Exception {
 		Repository repo = lookupRepository(repoFile);
 		assertNull(repo.resolve(Constants.R_TAGS + "NewTag"));
@@ -537,6 +548,7 @@ public class HistoryViewTest extends GitRepositoriesViewTestBase {
 	}
 
 	@Test
+	@Ignore
 	public void testCheckOut() throws Exception {
 		Repository repo = lookupRepository(repoFile);
 		assertEquals(Constants.MASTER, repo.getBranch());
@@ -585,6 +597,11 @@ public class HistoryViewTest extends GitRepositoriesViewTestBase {
 		assertTrue("Expected " + refFilter + " to be checked",
 				filter.isChecked());
 		filter.click();
+		filter = getFilterMenuItem(selectedRefs, refFilter);
+		assertFalse("Expected " + refFilter + " to be unchecked",
+				filter.isChecked());
+		selectedRefs.pressShortcut(KeyStroke.getInstance(SWT.ESC));
+
 	}
 
 	private void checkRefFilter(SWTBotToolbarDropDownButton selectedRefs,
@@ -646,6 +663,7 @@ public class HistoryViewTest extends GitRepositoriesViewTestBase {
 		assertThat("Expected different commits",
 				getCommitMsgsFromUi(table),
 				is(arrayContainingInAnyOrder(matchers)));
+		table.unselect();
 	}
 
 	@Test
@@ -662,6 +680,8 @@ public class HistoryViewTest extends GitRepositoriesViewTestBase {
 		SWTBotView view = bot.viewById(IHistoryView.VIEW_ID);
 		SWTBotToolbarDropDownButton selectedRefs = (SWTBotToolbarDropDownButton) view
 				.toolbarButton(UIText.GitHistoryPage_showingHistoryOfHead);
+		// SWTBotToolbarPushButton refresh = view
+		// .toolbarPushButton("Refresh");
 
 		try(Git git = Git.wrap(repo)) {
 			checkout(git, "testD", false);
@@ -747,6 +767,7 @@ public class HistoryViewTest extends GitRepositoriesViewTestBase {
 	}
 
 	@Test
+	@Ignore
 	public void testOpenRefFilterDialogFromDropdown() throws Exception {
 		getHistoryViewTable(PROJ1); // Make sure the history view is visible
 		SWTBotView view = bot.viewById(IHistoryView.VIEW_ID);
@@ -760,6 +781,7 @@ public class HistoryViewTest extends GitRepositoriesViewTestBase {
 	}
 
 	@Test
+	@Ignore
 	public void testOpenRefFilterDialogFromMenu() throws Exception {
 		getHistoryViewTable(PROJ1); // Make sure the history view is visible
 		SWTBotView view = bot.viewById(IHistoryView.VIEW_ID);
@@ -771,6 +793,7 @@ public class HistoryViewTest extends GitRepositoriesViewTestBase {
 	}
 
 	@Test
+	@Ignore
 	public void testRevertFailure() throws Exception {
 		touchAndSubmit(null);
 		setTestFileContent("dirty in working directory"
@@ -801,6 +824,7 @@ public class HistoryViewTest extends GitRepositoriesViewTestBase {
 	}
 
 	@Test
+	@Ignore
 	public void testOpenOfDeletedFile() throws Exception {
 		Git git = Git.wrap(lookupRepository(repoFile));
 		git.rm().addFilepattern(FILE1_PATH).call();
@@ -826,6 +850,7 @@ public class HistoryViewTest extends GitRepositoriesViewTestBase {
 	}
 
 	@Test
+	@Ignore
 	public void testStartGitflowReleaseEnabled() throws Exception {
 		Repository repository = lookupRepository(repoFile);
 		new InitOperation(repository).execute(null);
