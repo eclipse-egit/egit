@@ -93,7 +93,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 
 @RunWith(SWTBotJunit4ClassRunner.class)
-public class HistoryViewTest extends GitRepositoriesViewTestBase {
+public class HistoryViewTest4 extends GitRepositoriesViewTestBase {
 	private static final String SECONDFOLDER = "secondFolder";
 
 	private static final String ADDEDFILE = "another.txt";
@@ -245,8 +245,8 @@ public class HistoryViewTest extends GitRepositoriesViewTestBase {
 				getHistoryViewTable(PROJ1, SECONDFOLDER).rowCount());
 		assertEquals("Wrong number of commits", 1,
 				getHistoryViewTable(PROJ1, SECONDFOLDER, ADDEDFILE).rowCount());
-		assertEquals("Wrong number of commits", 1, getHistoryViewTable(PROJ2)
-				.rowCount());
+		assertEquals("Wrong number of commits", 1,
+				getHistoryViewTable(PROJ2).rowCount());
 
 		assertEquals("Wrong commit message", ADDEDMESSAGE,
 				getHistoryViewTable(PROJ1, SECONDFOLDER, ADDEDFILE)
@@ -292,8 +292,8 @@ public class HistoryViewTest extends GitRepositoriesViewTestBase {
 				getHistoryViewTable(PROJ1, SECONDFOLDER).rowCount());
 		assertEquals("Wrong number of commits", commitCount,
 				getHistoryViewTable(PROJ1, SECONDFOLDER, ADDEDFILE).rowCount());
-		assertEquals("Wrong number of commits", 1, getHistoryViewTable(PROJ2)
-				.rowCount());
+		assertEquals("Wrong number of commits", 1,
+				getHistoryViewTable(PROJ2).rowCount());
 	}
 
 	@Test
@@ -323,8 +323,7 @@ public class HistoryViewTest extends GitRepositoriesViewTestBase {
 	 */
 	private void initFilter(int filter) throws Exception {
 		getHistoryViewTable(PROJ1);
-		SWTBotView view = bot
-				.viewById(IHistoryView.VIEW_ID);
+		SWTBotView view = bot.viewById(IHistoryView.VIEW_ID);
 		SWTBotMenu filterMenu = view
 				.viewMenu(UIText.GitHistoryPage_FilterSubMenuLabel);
 		switch (filter) {
@@ -415,7 +414,8 @@ public class HistoryViewTest extends GitRepositoriesViewTestBase {
 	private SWTBotTable getHistoryViewTable(String... path) throws Exception {
 		SWTBotTree projectExplorerTree = TestUtil.getExplorerTree();
 		SWTBotTreeItem explorerItem;
-		SWTBotTreeItem projectItem = getProjectItem(projectExplorerTree, path[0]);
+		SWTBotTreeItem projectItem = getProjectItem(projectExplorerTree,
+				path[0]);
 		if (path.length == 1)
 			explorerItem = projectItem;
 		else if (path.length == 2)
@@ -660,8 +660,7 @@ public class HistoryViewTest extends GitRepositoriesViewTestBase {
 			matchers.add(equalTo(msg));
 		}
 
-		assertThat("Expected different commits",
-				getCommitMsgsFromUi(table),
+		assertThat("Expected different commits", getCommitMsgsFromUi(table),
 				is(arrayContainingInAnyOrder(matchers)));
 		table.unselect();
 	}
@@ -683,7 +682,7 @@ public class HistoryViewTest extends GitRepositoriesViewTestBase {
 		// SWTBotToolbarPushButton refresh = view
 		// .toolbarPushButton("Refresh");
 
-		try(Git git = Git.wrap(repo)) {
+		try (Git git = Git.wrap(repo)) {
 			checkout(git, "testD", false);
 		}
 		assertCommitsAfterBase(table, "testDb");
@@ -796,8 +795,8 @@ public class HistoryViewTest extends GitRepositoriesViewTestBase {
 	@Ignore
 	public void testRevertFailure() throws Exception {
 		touchAndSubmit(null);
-		setTestFileContent("dirty in working directory"
-				+ System.currentTimeMillis());
+		setTestFileContent(
+				"dirty in working directory" + System.currentTimeMillis());
 		final SWTBotTable table = getHistoryViewTable(PROJ1);
 		assertTrue(table.rowCount() > 0);
 		table.getTableItem(0).select();
@@ -838,8 +837,9 @@ public class HistoryViewTest extends GitRepositoriesViewTestBase {
 		assertEquals(1, fileDiffTable.rowCount());
 
 		fileDiffTable.select(0);
-		assertFalse(fileDiffTable.contextMenu(
-				UIText.CommitFileDiffViewer_OpenInEditorMenuLabel).isEnabled());
+		assertFalse(fileDiffTable
+				.contextMenu(UIText.CommitFileDiffViewer_OpenInEditorMenuLabel)
+				.isEnabled());
 		fileDiffTable.contextMenu(
 				UIText.CommitFileDiffViewer_OpenPreviousInEditorMenuLabel)
 				.click();
@@ -858,10 +858,11 @@ public class HistoryViewTest extends GitRepositoriesViewTestBase {
 		final SWTBotTable table = getHistoryViewTable(PROJ1);
 		table.getTableItem(1).select();
 
-		String itemLabelRegex = NLS.bind(org.eclipse.egit.gitflow.ui.internal.
-						UIText.DynamicHistoryMenu_startGitflowReleaseFrom, ".*");
-		SWTBotMenu startReleaseMenu = table.contextMenu().menu(withRegex(itemLabelRegex),
-				true, 0);
+		String itemLabelRegex = NLS.bind(
+				org.eclipse.egit.gitflow.ui.internal.UIText.DynamicHistoryMenu_startGitflowReleaseFrom,
+				".*");
+		SWTBotMenu startReleaseMenu = table.contextMenu()
+				.menu(withRegex(itemLabelRegex), true, 0);
 
 		assertTrue(startReleaseMenu.isEnabled());
 	}
@@ -872,7 +873,8 @@ public class HistoryViewTest extends GitRepositoriesViewTestBase {
 		Repository repo = lookupRepository(repoFile);
 		Ref stable = repo.findRef("stable");
 		SWTBotTable table = getHistoryViewTable(PROJ1);
-		SWTBotTableItem stableItem = getTableItemWithId(table, stable.getObjectId());
+		SWTBotTableItem stableItem = getTableItemWithId(table,
+				stable.getObjectId());
 
 		stableItem.contextMenu(UIText.GitHistoryPage_rebaseMenuItem).click();
 		TestUtil.joinJobs(JobFamilies.REBASE);
@@ -924,6 +926,7 @@ public class HistoryViewTest extends GitRepositoriesViewTestBase {
 				return table.getTableItem(i);
 		}
 
-		throw new IllegalStateException("TableItem for commit with ID " + wantedId + " not found.");
+		throw new IllegalStateException(
+				"TableItem for commit with ID " + wantedId + " not found.");
 	}
 }
