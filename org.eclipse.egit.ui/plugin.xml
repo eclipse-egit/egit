@@ -5332,6 +5332,11 @@
                label="%BranchCommit.label"
                style="toggle">
          </command>
+         <command
+               commandId="org.eclipse.egit.ui.RepositoriesToggleTagSorting"
+               label="%SortTagsAscMenu.label"
+               style="toggle">
+         </command>
       </menuContribution>
       <menuContribution
             locationURI="popup:org.eclipse.ui.popup.any?after=additions">
@@ -6301,7 +6306,17 @@
                id="org.eclipse.ui.commands.toggleState">
          </state>
       </command>
-       <command
+      <command
+            categoryId="org.eclipse.egit.ui.commandCategory"
+            defaultHandler="org.eclipse.egit.ui.internal.repository.tree.command.ToggleTagSortingCommand"
+            id="org.eclipse.egit.ui.RepositoriesToggleTagSorting"
+            name="%SortTagsAscCommand.name">
+         <state
+               class="org.eclipse.ui.handlers.RegistryToggleState:false"
+               id="org.eclipse.ui.commands.toggleState">
+         </state>
+      </command>
+      <command
             categoryId="org.eclipse.egit.ui.commandCategory"
             defaultHandler="org.eclipse.egit.ui.internal.repository.tree.command.ToggleBranchCommitCommand"
             id="org.eclipse.egit.ui.RepositoriesToggleBranchCommit"
