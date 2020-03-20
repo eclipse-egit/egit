@@ -1965,9 +1965,18 @@
                class="org.eclipse.egit.ui.internal.repository.tree.command.PasteCommand">
          </class>
          <activeWhen>
-            <with variable="activePart">
-               <instanceof value="org.eclipse.egit.ui.internal.repository.RepositoriesView" />
-            </with>
+            <and>
+               <with variable="activePart">
+                  <instanceof value="org.eclipse.egit.ui.internal.repository.RepositoriesView" />
+               </with>
+               <or>
+                  <count value="0"/>
+                  <and>
+                     <count value="1"/>
+                     <reference definitionId="org.eclipse.egit.ui.repoGroups.onlyGroupsSelected"/>
+                  </and>
+               </or>
+            </and>
          </activeWhen>
       </handler>
       <handler
@@ -5205,6 +5214,9 @@
                commandId="org.eclipse.ui.edit.paste"
                label="%RepoViewPastePath.label"
                style="push">
+            <visibleWhen
+                  checkEnabled="true">
+            </visibleWhen>
          </command>
       </menuContribution>
       <menuContribution
