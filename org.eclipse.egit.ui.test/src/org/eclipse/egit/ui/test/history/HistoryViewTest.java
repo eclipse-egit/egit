@@ -49,6 +49,7 @@ import org.eclipse.egit.ui.internal.repository.RepositoriesView;
 import org.eclipse.egit.ui.test.ContextMenuHelper;
 import org.eclipse.egit.ui.test.TestUtil;
 import org.eclipse.egit.ui.view.repositories.GitRepositoriesViewTestBase;
+import org.eclipse.jface.bindings.keys.KeyStroke;
 import org.eclipse.jface.dialogs.IDialogConstants;
 import org.eclipse.jgit.api.CheckoutCommand;
 import org.eclipse.jgit.api.CreateBranchCommand.SetupUpstreamMode;
@@ -65,6 +66,7 @@ import org.eclipse.jgit.lib.Ref;
 import org.eclipse.jgit.lib.Repository;
 import org.eclipse.jgit.revwalk.RevCommit;
 import org.eclipse.osgi.util.NLS;
+import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.MenuItem;
 import org.eclipse.swt.widgets.Table;
 import org.eclipse.swt.widgets.TableItem;
@@ -585,6 +587,11 @@ public class HistoryViewTest extends GitRepositoriesViewTestBase {
 		assertTrue("Expected " + refFilter + " to be checked",
 				filter.isChecked());
 		filter.click();
+		filter = getFilterMenuItem(selectedRefs, refFilter);
+		assertFalse("Expected " + refFilter + " to be unchecked",
+				filter.isChecked());
+		selectedRefs.pressShortcut(KeyStroke.getInstance(SWT.ESC));
+
 	}
 
 	private void checkRefFilter(SWTBotToolbarDropDownButton selectedRefs,
@@ -646,6 +653,7 @@ public class HistoryViewTest extends GitRepositoriesViewTestBase {
 		assertThat("Expected different commits",
 				getCommitMsgsFromUi(table),
 				is(arrayContainingInAnyOrder(matchers)));
+		table.unselect();
 	}
 
 	@Test
@@ -662,6 +670,8 @@ public class HistoryViewTest extends GitRepositoriesViewTestBase {
 		SWTBotView view = bot.viewById(IHistoryView.VIEW_ID);
 		SWTBotToolbarDropDownButton selectedRefs = (SWTBotToolbarDropDownButton) view
 				.toolbarButton(UIText.GitHistoryPage_showingHistoryOfHead);
+		// SWTBotToolbarPushButton refresh = view
+		// .toolbarPushButton("Refresh");
 
 		try(Git git = Git.wrap(repo)) {
 			checkout(git, "testD", false);
