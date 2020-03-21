@@ -91,6 +91,8 @@ import org.eclipse.jgit.lib.Repository;
 import org.eclipse.jgit.revwalk.RevCommit;
 import org.eclipse.osgi.util.NLS;
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.events.FocusAdapter;
+import org.eclipse.swt.events.FocusEvent;
 import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.graphics.Rectangle;
 import org.eclipse.swt.widgets.Composite;
@@ -100,6 +102,8 @@ import org.eclipse.ui.IEditorPart;
 import org.eclipse.ui.IWorkbenchPage;
 import org.eclipse.ui.IWorkbenchWindow;
 import org.eclipse.ui.PlatformUI;
+import org.eclipse.ui.contexts.IContextActivation;
+import org.eclipse.ui.contexts.IContextService;
 import org.eclipse.ui.themes.IThemeManager;
 
 /**
@@ -204,7 +208,7 @@ public class DiffViewer extends HyperlinkSourceViewer {
 	 *            for the viewer
 	 */
 	public DiffViewer(Composite parent, IVerticalRuler ruler, int styles) {
-		this(parent, ruler, null, false, styles);
+		this(parent, ruler, null, false, styles, null);
 	}
 
 	/**
@@ -220,15 +224,18 @@ public class DiffViewer extends HyperlinkSourceViewer {
 	 *            whether to show overview annotations
 	 * @param styles
 	 *            for the viewer
+	 * @param ctx
+	 *            context service for activating/deactivating diff viewer
+	 *            context
 	 */
 	public DiffViewer(Composite parent, IVerticalRuler ruler,
 			IOverviewRuler overviewRuler, boolean showsAnnotationOverview,
-			int styles) {
+			int styles, IContextService ctx) {
 		super(parent, ruler, overviewRuler, showsAnnotationOverview, styles);
 		getTextWidget().setAlwaysShowScrollBars(false);
 		setEditable(false);
 		setDocument(new Document());
-		initListeners();
+		initListeners(ctx);
 		getTextWidget()
 				.setFont(JFaceResources.getFont(JFaceResources.TEXT_FONT));
 		refreshDiffStyles();
@@ -308,7 +315,7 @@ public class DiffViewer extends HyperlinkSourceViewer {
 				col.get(THEME_DiffRemoveBackgroundColor));
 	}
 
-	private void initListeners() {
+	private void initListeners(IContextService ctx) {
 		PlatformUI.getWorkbench().getThemeManager()
 				.addPropertyChangeListener(this.themeListener);
 		getTextWidget().addLineBackgroundListener((event) -> {
@@ -331,6 +338,24 @@ public class DiffViewer extends HyperlinkSourceViewer {
 				}
 			}
 		});
+		if (ctx != null) {
+			getTextWidget().addFocusListener(new FocusAdapter() {
+				IContextActivation context;
+
+				@Override
+				public void focusGained(FocusEvent e) {
+					context = ctx
+							.activateContext("org.eclipse.egit.ui.DiffViewer"); //$NON-NLS-1$
+				}
+
+				@Override
+				public void focusLost(FocusEvent e) {
+					if (context != null) {
+						ctx.deactivateContext(context);
+					}
+				}
+			});
+		}
 	}
 
 	@Override
