@@ -119,6 +119,8 @@ public class DiffEditor extends TextEditor
 
 	private static final String REMOVE_ANNOTATION_TYPE = "org.eclipse.egit.ui.commitEditor.diffRemoved"; //$NON-NLS-1$
 
+	private static final String QUICK_OUTLINE_COMMAND = "org.eclipse.egit.ui.commit.DiffEditorQuickOutlineCommand"; //$NON-NLS-1$
+
 	private DiffEditorOutlinePage outlinePage;
 
 	private Annotation[] currentFoldingAnnotations;
@@ -353,6 +355,28 @@ public class DiffEditor extends TextEditor
 		// TextEditor always adds these, even if the document is not editable.
 		menu.remove(ITextEditorActionConstants.SHIFT_RIGHT);
 		menu.remove(ITextEditorActionConstants.SHIFT_LEFT);
+		menu.appendToGroup(ITextEditorActionConstants.GROUP_OPEN,
+				getAction(QUICK_OUTLINE_COMMAND));
+	}
+
+	@Override
+	protected void createActions() {
+		super.createActions();
+		createQuickOutlineAction();
+	}
+
+	private void createQuickOutlineAction() {
+		Action outlineAction = new Action(
+				UIText.DiffEditor_QuickOutlineAction) {
+			@Override
+			public void run() {
+				DiffEditorOutlinePage.openQuickOutline(
+						getDocumentProvider().getDocument(getEditorInput()),
+						getEditorSite().getSelectionProvider());
+			}
+		};
+		outlineAction.setActionDefinitionId(QUICK_OUTLINE_COMMAND);
+		setAction(outlineAction.getActionDefinitionId(), outlineAction);
 	}
 
 	@Override

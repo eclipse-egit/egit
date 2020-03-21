@@ -23,6 +23,7 @@ import java.util.stream.Collectors;
 
 import org.eclipse.core.runtime.Path;
 import org.eclipse.egit.core.internal.Utils;
+import org.eclipse.egit.ui.Activator;
 import org.eclipse.egit.ui.UIUtils;
 import org.eclipse.egit.ui.internal.CommonUtils;
 import org.eclipse.egit.ui.internal.UIIcons;
@@ -36,6 +37,9 @@ import org.eclipse.jface.action.IToolBarManager;
 import org.eclipse.jface.action.MenuManager;
 import org.eclipse.jface.action.Separator;
 import org.eclipse.jface.commands.ActionHandler;
+import org.eclipse.jface.dialogs.Dialog;
+import org.eclipse.jface.dialogs.IDialogSettings;
+import org.eclipse.jface.dialogs.PopupDialog;
 import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.jface.resource.JFaceResources;
 import org.eclipse.jface.resource.LocalResourceManager;
@@ -47,20 +51,33 @@ import org.eclipse.jface.viewers.DecorationOverlayIcon;
 import org.eclipse.jface.viewers.IDecoration;
 import org.eclipse.jface.viewers.IOpenListener;
 import org.eclipse.jface.viewers.ISelection;
+import org.eclipse.jface.viewers.ISelectionProvider;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.viewers.ITreeContentProvider;
+import org.eclipse.jface.viewers.ITreeSelection;
 import org.eclipse.jface.viewers.LabelProvider;
 import org.eclipse.jface.viewers.OpenEvent;
 import org.eclipse.jface.viewers.StructuredSelection;
 import org.eclipse.jface.viewers.TreeViewer;
 import org.eclipse.jface.viewers.Viewer;
 import org.eclipse.jface.viewers.ViewerComparator;
+import org.eclipse.jface.viewers.ViewerFilter;
 import org.eclipse.jgit.diff.DiffEntry;
 import org.eclipse.jgit.lib.RepositoryState;
 import org.eclipse.jgit.revwalk.RevCommit;
+import org.eclipse.swt.SWT;
+import org.eclipse.swt.events.KeyAdapter;
+import org.eclipse.swt.events.KeyEvent;
+import org.eclipse.swt.events.SelectionAdapter;
+import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.graphics.Image;
+import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Menu;
+import org.eclipse.swt.widgets.Shell;
+import org.eclipse.swt.widgets.Text;
+import org.eclipse.swt.widgets.Tree;
 import org.eclipse.ui.IActionBars;
 import org.eclipse.ui.ISharedImages;
 import org.eclipse.ui.IWorkbenchCommandConstants;
@@ -618,5 +635,163 @@ public class DiffEditorOutlinePage extends ContentOutlinePage {
 		}
 	}
 
-}
+	/**
+	 * Opens a quick outline analgous to the outline page with tree filter
+	 * capability.
+	 *
+	 * @param document
+	 *            the diff document
+	 * @param selectionProvider
+	 *            the editor's selection provider for revealing the selected
+	 *            region
+	 */
+	static void openQuickOutline(IDocument document,
+			ISelectionProvider selectionProvider) {
+		new QuickOutlinePopup(document, selectionProvider).open();
+	}
 
+	// The outline popup is adapted from Xtext's
+	// org.eclipse.xtext.ui.editor.outline.quickoutline.QuickOutlinePopup
+	// with a simplified filtering
+	private static class QuickOutlinePopup extends PopupDialog {
+		private DiffEditorOutlinePage delegate;
+
+		private ISelectionProvider selectionProvider;
+
+		private Text filterText;
+
+		public QuickOutlinePopup(IDocument document,
+				ISelectionProvider selectionProvider) {
+			this(null, document, selectionProvider);
+		}
+
+		public QuickOutlinePopup(Shell parent, IDocument document,
+				ISelectionProvider selectionProvider) {
+			super(parent, SWT.RESIZE, true, false, true, true, true,
+					UIText.DiffEditor_QuickOutlineAction,
+					UIText.DiffEditor_QuickOutlineFilterDescription);
+			delegate = new DiffEditorOutlinePage();
+			delegate.setInput(document);
+			this.selectionProvider = selectionProvider;
+		}
+
+		@Override
+		protected Control createTitleControl(Composite parent) {
+			filterText = createFilterText(parent);
+			return filterText;
+		}
+
+		@Override
+		protected Control getFocusControl() {
+			return filterText;
+		}
+
+		protected Text createFilterText(Composite parent) {
+			filterText = new Text(parent, SWT.NONE);
+			Dialog.applyDialogFont(filterText);
+
+			GridData data = new GridData(GridData.FILL_HORIZONTAL);
+			data.horizontalAlignment = GridData.FILL;
+			data.verticalAlignment = GridData.CENTER;
+			filterText.setLayoutData(data);
+
+			filterText.addKeyListener(new KeyAdapter() {
+				@Override
+				public void keyPressed(KeyEvent e) {
+					// TODO open first match on Return?
+					// if (e.keyCode == 0x0D) // return
+					// gotoSelectedElement();
+					if (e.keyCode == SWT.ARROW_DOWN) {
+						delegate.getTreeViewer().getTree().setFocus();
+					} else if (e.character == SWT.ESC) {
+						dispose();
+					}
+				}
+			});
+			filterText.setText(""); //$NON-NLS-1$
+			filterText.addModifyListener(e -> {
+				TreeViewer viewer = delegate.getTreeViewer();
+				viewer.getControl().setRedraw(false);
+				viewer.setFilters(new ViewerFilter() {
+
+					@Override
+					public boolean select(Viewer v, Object parentElement,
+							Object element) {
+						return isMatch(filterText.getText(), element);
+					}
+				});
+				viewer.expandAll();
+				viewer.getControl().setRedraw(true);
+			});
+			return filterText;
+		}
+
+		private boolean isMatch(String text, Object treeElement) {
+			if (treeElement instanceof FileDiffRegion) {
+				return ((FileDiffRegion) treeElement).getDiff().getPath()
+						.toLowerCase().contains(text.toLowerCase());
+			} else if (treeElement instanceof DiffContentProvider.Folder) {
+				DiffContentProvider.Folder folder = (DiffContentProvider.Folder) treeElement;
+				return folder.files.stream().anyMatch(r -> isMatch(text, r))
+						|| folder.folders.stream()
+								.anyMatch(f -> isMatch(text, f));
+			}
+			return false;
+		}
+
+		@Override
+		protected Control createDialogArea(Composite parent) {
+			delegate.createControl(parent);
+
+			final Tree tree = delegate.getTreeViewer().getTree();
+			tree.addKeyListener(new KeyAdapter() {
+				@Override
+				public void keyPressed(KeyEvent e) {
+					if (e.character == SWT.ESC) {
+						dispose();
+					}
+				}
+			});
+
+			tree.addSelectionListener(new SelectionAdapter() {
+
+				@Override
+				public void widgetSelected(SelectionEvent e) {
+					selectionProvider.setSelection(
+							delegate.getTreeViewer().getSelection());
+				}
+
+				@Override
+				public void widgetDefaultSelected(SelectionEvent e) {
+					widgetSelected(e);
+					ITreeSelection selection = delegate.getTreeViewer()
+							.getStructuredSelection();
+					if (selection.getFirstElement() instanceof FileDiffRegion) {
+						dispose();
+					}
+				}
+			});
+			tree.setMenu(null);
+			return delegate.getTreeViewer().getControl();
+		}
+
+		private void dispose() {
+			delegate.dispose();
+			close();
+		}
+
+		@Override
+		protected IDialogSettings getDialogSettings() {
+			String sectionName = "diffEditor.quickoutline"; //$NON-NLS-1$
+
+			IDialogSettings settings = Activator.getDefault()
+					.getDialogSettings().getSection(sectionName);
+			if (settings == null) {
+				settings = Activator.getDefault().getDialogSettings()
+						.addNewSection(sectionName);
+			}
+
+			return settings;
+		}
+	}
+}
