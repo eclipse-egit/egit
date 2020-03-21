@@ -3983,6 +3983,12 @@ public class UIText extends NLS {
 	public static String DiffEditor_OutlineTreeToggle;
 
 	/** */
+	public static String DiffEditor_QuickOutlineAction;
+
+	/** */
+	public static String DiffEditor_QuickOutlineFilterDescription;
+
+	/** */
 	public static String DiffEditorInput_Title1;
 
 	/** */

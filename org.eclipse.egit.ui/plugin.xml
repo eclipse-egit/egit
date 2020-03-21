@@ -7059,11 +7059,17 @@
             schemeId="org.eclipse.ui.defaultAcceleratorConfiguration"
             sequence="F2">
       </key>
-       <key
+      <key
             commandId="org.eclipse.egit.ui.RepositoriesViewCollapseWorkingTree"
             contextId="org.eclipse.egit.ui.RepositoriesView"
             schemeId="org.eclipse.ui.defaultAcceleratorConfiguration"
             sequence="M1+ARROW_LEFT">
+      </key>
+      <key
+            commandId="org.eclipse.egit.ui.commit.DiffEditorQuickOutlineCommand"
+            contextId="org.eclipse.egit.ui.DiffViewer"
+            schemeId="org.eclipse.ui.defaultAcceleratorConfiguration"
+            sequence="M1+O">
       </key>
    </extension>
    <extension
@@ -7178,7 +7184,11 @@
       <command
             id="org.eclipse.egit.ui.commit.UnifiedDiffCommand"
             name="%ShowUnifiedDiffCommand.name">
-         </command>
+      </command>
+      <command
+            id="org.eclipse.egit.ui.commit.DiffEditorQuickOutlineCommand"
+            name="%UnifiedDiffQuickOutlineCommand.name">
+      </command>
    </extension>
    <extension
          name="%CommitViewerCommands.extension.name"
@@ -7221,6 +7231,11 @@
       <context
             id="org.eclipse.egit.ui.ReflogView"
             name="%ReflogViewContext"
+            parentId="org.eclipse.ui.contexts.window">
+      </context>
+      <context
+            id="org.eclipse.egit.ui.DiffViewer"
+            name="%DiffViewerContext"
             parentId="org.eclipse.ui.contexts.window">
       </context>
    </extension>
