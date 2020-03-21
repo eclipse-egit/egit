@@ -1,0 +1,67 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "98a14027_ef2c3040",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/commit/DiffEditorOutlinePage.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 489,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2020-03-21T22:07:37Z",
+      "side": 1,
+      "message": "Is this still needed? We don\u0027t add any other elements, so parent.get(anythingElse) should return null anyway.",
+      "range": {
+        "startLine": 488,
+        "startChar": 3,
+        "endLine": 489,
+        "endChar": 36
+      },
+      "revId": "0ccc1485fa43e56a17b10273b5b6954064c565b5",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "73723ab1_c7eebd30",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/commit/DiffEditorOutlinePage.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 566,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2020-03-21T22:07:37Z",
+      "side": 1,
+      "message": "A pity this copy is needed because the list may get modified in the recursion. But I don\u0027t see a better way.",
+      "revId": "0ccc1485fa43e56a17b10273b5b6954064c565b5",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "80c86aa0_9b7a3afd",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/commit/DiffEditorOutlinePage.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 573,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2020-03-21T22:07:37Z",
+      "side": 1,
+      "message": "This could be replaced by Folder::new.",
+      "range": {
+        "startLine": 570,
+        "startChar": 44,
+        "endLine": 573,
+        "endChar": 4
+      },
+      "revId": "0ccc1485fa43e56a17b10273b5b6954064c565b5",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
