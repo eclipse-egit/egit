@@ -88,6 +88,7 @@ import org.eclipse.team.ui.history.IHistoryView;
 import org.eclipse.ui.IEditorInput;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.actions.WorkspaceModifyOperation;
+import org.eclipse.ui.contexts.IContextService;
 import org.eclipse.ui.dialogs.SaveAsDialog;
 import org.eclipse.ui.editors.text.EditorsUI;
 import org.eclipse.ui.editors.text.FileDocumentProvider;
@@ -118,6 +119,8 @@ public class DiffEditor extends TextEditor
 	private static final String ADD_ANNOTATION_TYPE = "org.eclipse.egit.ui.commitEditor.diffAdded"; //$NON-NLS-1$
 
 	private static final String REMOVE_ANNOTATION_TYPE = "org.eclipse.egit.ui.commitEditor.diffRemoved"; //$NON-NLS-1$
+
+	private static final String QUICK_OUTLINE_COMMAND = "org.eclipse.egit.ui.commit.DiffEditorQuickOutlineCommand"; //$NON-NLS-1$
 
 	private DiffEditorOutlinePage outlinePage;
 
@@ -254,7 +257,8 @@ public class DiffEditor extends TextEditor
 	protected ISourceViewer createSourceViewer(Composite parent,
 			IVerticalRuler ruler, int styles) {
 		DiffViewer viewer = new DiffViewer(parent, ruler, getOverviewRuler(),
-				isOverviewRulerVisible(), styles) {
+				isOverviewRulerVisible(), styles,
+				getSite().getService(IContextService.class)) {
 			@Override
 			protected void setFont(Font font) {
 				// Don't do anything; AbstractTextEditor handles this.
@@ -338,6 +342,10 @@ public class DiffEditor extends TextEditor
 				if (!newRange.equals(currentFileDiffRange)) {
 					currentFileDiffRange = newRange;
 					selectAndReveal(newRange.getOffset(), 0);
+					if (outlinePage != null) {
+						outlinePage.setSelection(
+								new StructuredSelection(selected));
+					}
 				}
 				return;
 			}
@@ -353,6 +361,28 @@ public class DiffEditor extends TextEditor
 		// TextEditor always adds these, even if the document is not editable.
 		menu.remove(ITextEditorActionConstants.SHIFT_RIGHT);
 		menu.remove(ITextEditorActionConstants.SHIFT_LEFT);
+		menu.appendToGroup(ITextEditorActionConstants.GROUP_OPEN,
+				getAction(QUICK_OUTLINE_COMMAND));
+	}
+
+	@Override
+	protected void createActions() {
+		super.createActions();
+		createQuickOutlineAction();
+	}
+
+	private void createQuickOutlineAction() {
+		Action outlineAction = new Action(
+				UIText.DiffEditor_QuickOutlineAction) {
+			@Override
+			public void run() {
+				DiffEditorOutlinePage.openQuickOutline(
+						getDocumentProvider().getDocument(getEditorInput()),
+						getEditorSite().getSelectionProvider());
+			}
+		};
+		outlineAction.setActionDefinitionId(QUICK_OUTLINE_COMMAND);
+		setAction(outlineAction.getActionDefinitionId(), outlineAction);
 	}
 
 	@Override
