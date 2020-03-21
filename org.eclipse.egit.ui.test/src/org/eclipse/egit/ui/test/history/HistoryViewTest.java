@@ -596,7 +596,6 @@ public class HistoryViewTest extends GitRepositoriesViewTestBase {
 	}
 
 	private void assertNoCommit(SWTBotTable table) {
-		TestUtil.waitForJobs(50, 5000);
 		bot.waitUntil(new DefaultCondition() {
 
 			@Override
@@ -646,6 +645,7 @@ public class HistoryViewTest extends GitRepositoriesViewTestBase {
 		assertThat("Expected different commits",
 				getCommitMsgsFromUi(table),
 				is(arrayContainingInAnyOrder(matchers)));
+		table.unselect();
 	}
 
 	@Test
