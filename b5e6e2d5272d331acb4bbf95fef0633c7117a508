@@ -1,0 +1,95 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7042b46a_f580af43",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/CommonUtils.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2020-03-23T22:24:13Z",
+      "side": 1,
+      "message": "I\u0027d move this to ToggleTagSortingCommand",
+      "revId": "b5e6e2d5272d331acb4bbf95fef0633c7117a508",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "6e1babd6_c9fa542f",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/CommonUtils.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2020-03-23T22:24:13Z",
+      "side": 1,
+      "message": "seems a bit strange to keep tag specific state in a class called CommonUtils, can we move this to ToggleTagSortingCommand ?",
+      "revId": "b5e6e2d5272d331acb4bbf95fef0633c7117a508",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "99b87220_04452539",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/CommonUtils.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 169,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2020-03-23T22:24:13Z",
+      "side": 1,
+      "message": "I think a Comparator called ASCENDING_COMPARATOR should not sort in descending order. Instead the caller should find out if it\u0027s reverse and then call reversed() on this ascending comparator\n\nhttps://docs.oracle.com/javase/8/docs/api/java/util/Comparator.html#reversed--\n\nIt also seems strange that this reverse handling is only done for tags but not for other refs within the same method",
+      "revId": "b5e6e2d5272d331acb4bbf95fef0633c7117a508",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "064ed987_81933531",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/CommonUtils.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 211,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2020-03-23T22:24:13Z",
+      "side": 1,
+      "message": "I\u0027d move that to the caller and use reversed() to reverse the sort order which makes this method obsolete",
+      "range": {
+        "startLine": 210,
+        "startChar": 53,
+        "endLine": 211,
+        "endChar": 42
+      },
+      "revId": "b5e6e2d5272d331acb4bbf95fef0633c7117a508",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "125494b6_766b8172",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/dialogs/BranchSelectionDialog.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 220,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2020-03-23T22:24:13Z",
+      "side": 1,
+      "message": "nit: start body of anonymous class with a blank line",
+      "revId": "b5e6e2d5272d331acb4bbf95fef0633c7117a508",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
