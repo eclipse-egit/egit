@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "ce6a20e2_92d76427",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/CommonUtils.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 236689
+      },
+      "writtenOn": "2020-03-24T18:02:08Z",
+      "side": 1,
+      "message": "This might lead to an infinite review loop. See the comment by Thomas Wolf for PS 4 on March, 15.",
+      "parentUuid": "7042b46a_f580af43",
+      "revId": "b5e6e2d5272d331acb4bbf95fef0633c7117a508",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6e1babd6_c9fa542f",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/CommonUtils.java",
         "patchSetId": 10
@@ -30,6 +48,24 @@
       "writtenOn": "2020-03-23T22:24:13Z",
       "side": 1,
       "message": "seems a bit strange to keep tag specific state in a class called CommonUtils, can we move this to ToggleTagSortingCommand ?",
+      "revId": "b5e6e2d5272d331acb4bbf95fef0633c7117a508",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c6955305_73832baa",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/CommonUtils.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 236689
+      },
+      "writtenOn": "2020-03-24T18:02:08Z",
+      "side": 1,
+      "message": "Without a dependency from here to the Toggle-Command, this was the easiest way. The final location may depend on design decisions made elsewhere.",
+      "parentUuid": "6e1babd6_c9fa542f",
       "revId": "b5e6e2d5272d331acb4bbf95fef0633c7117a508",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "0af09032_e4478808",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/CommonUtils.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 169,
+      "author": {
+        "id": 236689
+      },
+      "writtenOn": "2020-03-24T18:02:08Z",
+      "side": 1,
+      "message": "So far, all refs were always sorted ascending. I\u0027d have no problem renaming the comparator to \"REF_COMPARATOR\".\nThe caller does not always now which ref types are sorted, so it cannot make the decision.\n\nRegarding the restriction to tags. My original bug report claimed that for tags (only) the ascending sort order (in the repositories view) was not what the user generally wanted. One of the replies to the repo-view-only-fix was that the sorting of tags should be the same everywhere.\nThe \"correct\" change would be not to sort by tag name at all, but by tag date (well or let the user choose by name/date ascending/descending).\nOther sort methods for other ref types was never in the scope of this change and would possibly require a completely different approach (sort preference page for all types).",
+      "parentUuid": "99b87220_04452539",
+      "revId": "b5e6e2d5272d331acb4bbf95fef0633c7117a508",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "064ed987_81933531",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/CommonUtils.java",
         "patchSetId": 10
@@ -64,6 +118,30 @@
       "writtenOn": "2020-03-23T22:24:13Z",
       "side": 1,
       "message": "I\u0027d move that to the caller and use reversed() to reverse the sort order which makes this method obsolete",
+      "range": {
+        "startLine": 210,
+        "startChar": 53,
+        "endLine": 211,
+        "endChar": 42
+      },
+      "revId": "b5e6e2d5272d331acb4bbf95fef0633c7117a508",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "d86915b8_c3a89544",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/CommonUtils.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 211,
+      "author": {
+        "id": 236689
+      },
+      "writtenOn": "2020-03-24T18:02:08Z",
+      "side": 1,
+      "message": "This would duplicate a lot of code. Maybe CommonUtils is just not the right place for the comparators. A UiComparators class could be used instead.\nBut I still think that it is not a good idea to force every class that wants to get tag strings sorted to know that there are different sortings and when to use which.",
+      "parentUuid": "064ed987_81933531",
       "range": {
         "startLine": 210,
         "startChar": 53,
