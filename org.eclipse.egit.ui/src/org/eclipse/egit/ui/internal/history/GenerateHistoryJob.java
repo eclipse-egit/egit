@@ -82,9 +82,9 @@ class GenerateHistoryJob extends Job {
 			final boolean loadIncrementally = !Activator.getDefault()
 					.getPreferenceStore()
 					.getBoolean(UIPreferences.RESOURCEHISTORY_SHOW_FINDTOOLBAR);
+			int initialSize = loadedCommits.size();
 			try {
-				for (;;) {
-					int oldsz = loadedCommits.size();
+				for (int oldsz = initialSize;;) {
 					if (trace)
 						GitTraceLocation.getTrace().trace(
 								GitTraceLocation.HISTORYVIEW.getLocation(),
@@ -116,9 +116,10 @@ class GenerateHistoryJob extends Job {
 						incomplete = true;
 						break;
 					}
+					oldsz = loadedCommits.size();
 					monitor.setTaskName(MessageFormat.format(
 							UIText.GenerateHistoryJob_taskFoundCommits,
-							Integer.valueOf(loadedCommits.size())));
+							Integer.valueOf(oldsz)));
 				}
 			} catch (IOException e) {
 				status = new Status(IStatus.ERROR, Activator.getPluginId(),
@@ -128,9 +129,14 @@ class GenerateHistoryJob extends Job {
 				GitTraceLocation.getTrace().trace(
 						GitTraceLocation.HISTORYVIEW.getLocation(),
 						"Loaded " + loadedCommits.size() + " commits"); //$NON-NLS-1$ //$NON-NLS-2$
-			if (commitNotFound) {
-				if (forcedRedrawsAfterListIsCompleted < 1 && !loadIncrementally)
+			if (commitNotFound && !loadedCommits.isEmpty()) {
+				if (forcedRedrawsAfterListIsCompleted < 1
+						&& !loadIncrementally) {
 					page.setWarningTextInUIThread(this);
+				}
+				if (initialSize != loadedCommits.size()) {
+					updateUI(incomplete);
+				}
 			}
 			else
 				updateUI(incomplete);
@@ -149,8 +155,9 @@ class GenerateHistoryJob extends Job {
 					GitTraceLocation.HISTORYVIEW.getLocation());
 		try {
 			if (forcedRedrawsAfterListIsCompleted != 1 && !incomplete
-					&& loadedCommits.size() == lastUpdateCnt)
+					&& loadedCommits.size() == lastUpdateCnt) {
 				return;
+			}
 			if (forcedRedrawsAfterListIsCompleted == 1)
 				forcedRedrawsAfterListIsCompleted++;
 			final SWTCommit[] asArray = new SWTCommit[loadedCommits.size()];

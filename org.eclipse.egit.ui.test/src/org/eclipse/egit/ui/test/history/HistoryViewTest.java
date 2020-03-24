@@ -615,7 +615,6 @@ public class HistoryViewTest extends GitRepositoriesViewTestBase {
 
 	private void assertCommitsAfterBase(SWTBotTable table, String... commitMsgs)
 			throws Exception {
-		TestUtil.waitForJobs(50, 5000);
 		// There are three expected fixed commits, plus then the ones given in
 		// the parameter.
 		int expectedNumberOfCommits = commitMsgs.length + 3;
@@ -645,7 +644,6 @@ public class HistoryViewTest extends GitRepositoriesViewTestBase {
 		assertThat("Expected different commits",
 				getCommitMsgsFromUi(table),
 				is(arrayContainingInAnyOrder(matchers)));
-		table.unselect();
 	}
 
 	@Test
