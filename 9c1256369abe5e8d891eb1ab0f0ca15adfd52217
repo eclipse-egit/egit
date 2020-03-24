@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "93cb277f_edf9e1e4",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/history/GenerateHistoryJob.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 137,
+      "author": {
+        "id": 236689
+      },
+      "writtenOn": "2020-03-24T17:25:14Z",
+      "side": 1,
+      "message": "If I understand correctly, the essential change is to force an update if the new list is empty and this guard covers the update call which is not done anymore by the original else branch (due to the added not-empty condition).\n\nI wonder if there is a case where the initial size equals the new size but the commits are different, so that no update is called although it should.\n\nMaybe the code becomes easier to read, if a boolean doUiUpdate is introduced and set to true in the appropriate places. This would allow a simple\nif(doUiUpdate){updateUI(incomplete;}\njust before the finally without having to worry about the \"missing\" else-branches.",
+      "revId": "9c1256369abe5e8d891eb1ab0f0ca15adfd52217",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "e4ab04d6_3f04c218",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/history/GenerateHistoryJob.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 158,
+      "author": {
+        "id": 236689
+      },
+      "writtenOn": "2020-03-24T17:25:14Z",
+      "side": 1,
+      "message": "Did you intentionally only fix this \"missing braces\" location (as there are many more)? If you wanted to only make functionally relevant changes, this would (and fix missing braces along the way), this change is not necessary.",
+      "revId": "9c1256369abe5e8d891eb1ab0f0ca15adfd52217",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
