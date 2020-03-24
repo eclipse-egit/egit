@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "167f2b17_b71a25eb",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/history/GenerateHistoryJob.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 137,
+      "author": {
+        "id": 236689
+      },
+      "writtenOn": "2020-03-24T19:30:38Z",
+      "side": 1,
+      "message": "I don\u0027t insist on extracting the updateUI-call into a separate \"if\" (although I\u0027d find it more readable, in particular if the conditions when to do it are not complete, yet). Also, the if seems to deal with two different issues at once - ui update and show warning. The original nested if looks suspicious anyway - isn\u0027t the intention really \"show warning or do an UI-update\"; possibly not, if you want to prevent unnecessary updates...\n\nBut I want to ask again. Can you think of a szenario where 5 commits are shown originally and due to a filter change (possibly switch from one complicated ref-filter definition to another) 5 other commits are loaded? Or rather can you guarantee that there is no such scenario?",
+      "parentUuid": "f7486f65_f6c8518b",
+      "revId": "9c1256369abe5e8d891eb1ab0f0ca15adfd52217",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e4ab04d6_3f04c218",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/history/GenerateHistoryJob.java",
         "patchSetId": 1
@@ -66,6 +84,24 @@
       "side": 1,
       "message": "That\u0027s a remnant of my having had a System.err.println here while tracking this down. Noticed after the commit that the braces were still in, but I don\u0027t think it\u0027s worth removing it.",
       "parentUuid": "e4ab04d6_3f04c218",
+      "revId": "9c1256369abe5e8d891eb1ab0f0ca15adfd52217",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "be8cb547_f75458ad",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/history/GenerateHistoryJob.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 158,
+      "author": {
+        "id": 236689
+      },
+      "writtenOn": "2020-03-24T19:30:38Z",
+      "side": 1,
+      "message": "Fine with me.",
+      "parentUuid": "0e2dcc98_fb255880",
       "revId": "9c1256369abe5e8d891eb1ab0f0ca15adfd52217",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
