@@ -73,6 +73,24 @@
     },
     {
       "key": {
+        "uuid": "2b84e598_bc691b83",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/history/GenerateHistoryJob.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 137,
+      "author": {
+        "id": 236689
+      },
+      "writtenOn": "2020-03-25T15:57:49Z",
+      "side": 1,
+      "message": "Thanks for the clarification.",
+      "parentUuid": "e0c684f6_fbc246b3",
+      "revId": "9c1256369abe5e8d891eb1ab0f0ca15adfd52217",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e4ab04d6_3f04c218",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/history/GenerateHistoryJob.java",
         "patchSetId": 1
