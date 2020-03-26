@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "2b9283ac_81e23c6e",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/repository/tree/command/RemoveCommand.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 243,
+      "author": {
+        "id": 236689
+      },
+      "writtenOn": "2020-03-26T16:17:01Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7636c57a_1d5c1d52",
+      "range": {
+        "startLine": 243,
+        "startChar": 22,
+        "endLine": 243,
+        "endChar": 23
+      },
+      "revId": "caa6636c9dbc75b6141cf0b50ee3f453ad7978dd",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b8a79831_c745d7f3",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/repository/tree/command/RemoveCommand.java",
         "patchSetId": 1
@@ -36,6 +60,24 @@
       "writtenOn": "2020-03-25T21:33:45Z",
       "side": 1,
       "message": "This seems like a no-brainer. But I\u0027m not sure the whole design of repository removal is entirely correct. Looks like we may be left with closed repo instances in the RepositoryCache, which might lead at least to warnings when the last reference get gc\u0027ed. Note that at least the IndexDiffCacheEntry of repo also still has references to the submodule repos. But if this change makes deletion work on Windows in practice, all right.",
+      "revId": "caa6636c9dbc75b6141cf0b50ee3f453ad7978dd",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "b1098d38_65d1d224",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/repository/tree/command/RemoveCommand.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 245,
+      "author": {
+        "id": 236689
+      },
+      "writtenOn": "2020-03-26T16:17:01Z",
+      "side": 1,
+      "message": "Indeed this is not about fixing potential Java object refernces but only about open file handles that prevented a deletion on Windows.",
+      "parentUuid": "b8a79831_c745d7f3",
       "revId": "caa6636c9dbc75b6141cf0b50ee3f453ad7978dd",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
