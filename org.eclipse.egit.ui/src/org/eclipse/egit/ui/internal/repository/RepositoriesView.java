@@ -56,6 +56,7 @@ import org.eclipse.egit.ui.internal.UIIcons;
 import org.eclipse.egit.ui.internal.UIText;
 import org.eclipse.egit.ui.internal.actions.ActionCommands;
 import org.eclipse.egit.ui.internal.branch.BranchOperationUI;
+import org.eclipse.egit.ui.internal.commands.ToggleCommand;
 import org.eclipse.egit.ui.internal.components.MessagePopupTextCellEditor;
 import org.eclipse.egit.ui.internal.groups.RepositoryGroup;
 import org.eclipse.egit.ui.internal.groups.RepositoryGroups;
@@ -74,8 +75,6 @@ import org.eclipse.egit.ui.internal.repository.tree.RepositoryTreeNodeType;
 import org.eclipse.egit.ui.internal.repository.tree.StashedCommitNode;
 import org.eclipse.egit.ui.internal.repository.tree.TagNode;
 import org.eclipse.egit.ui.internal.repository.tree.WorkingDirNode;
-import org.eclipse.egit.ui.internal.repository.tree.command.ToggleBranchHierarchyCommand;
-import org.eclipse.egit.ui.internal.repository.tree.command.ToggleLinkWithSelectionCommand;
 import org.eclipse.egit.ui.internal.selection.RepositoryVirtualNode;
 import org.eclipse.egit.ui.internal.selection.SelectionUtils;
 import org.eclipse.egit.ui.internal.staging.StagingView;
@@ -191,6 +190,9 @@ public class RepositoriesView extends CommonNavigator implements IShowInSource, 
 	/** Sub-context active when a single repository is selected. */
 	private static final String SINGLE_REPO_CONTEXT_ID = VIEW_ID
 			+ ".SingleRepository"; //$NON-NLS-1$
+
+	/** The command id for toggling "link with selection". */
+	public static final String LINK_WITH_SELECTION_ID = "org.eclipse.egit.ui.RepositoriesLinkWithSelection"; //$NON-NLS-1$
 
 	/**
 	 * Delay between refreshes in milliseconds. Used to avoid overwhelming the
@@ -411,10 +413,10 @@ public class RepositoriesView extends CommonNavigator implements IShowInSource, 
 		IWorkbenchWindow w = PlatformUI.getWorkbench()
 				.getActiveWorkbenchWindow();
 		ICommandService csrv = CommonUtils.getService(w, ICommandService.class);
-		reactOnSelection = csrv.getCommand(ToggleLinkWithSelectionCommand.ID)
+		reactOnSelection = csrv.getCommand(LINK_WITH_SELECTION_ID)
 				.getState(RegistryToggleState.STATE_ID);
 		reactOnSelection.addListener(reactOnSelectionListener);
-		branchHierarchy = csrv.getCommand(ToggleBranchHierarchyCommand.ID)
+		branchHierarchy = csrv.getCommand(ToggleCommand.BRANCH_HIERARCHY_ID)
 				.getState(RegistryToggleState.STATE_ID);
 		branchHierarchy.addListener(stateChangeListener);
 		IWorkbenchSiteProgressService service = CommonUtils.getService(getSite(), IWorkbenchSiteProgressService.class);

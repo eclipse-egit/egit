@@ -50,6 +50,7 @@ import org.eclipse.egit.core.RepositoryUtil;
 import org.eclipse.egit.ui.Activator;
 import org.eclipse.egit.ui.internal.CommonUtils;
 import org.eclipse.egit.ui.internal.UIText;
+import org.eclipse.egit.ui.internal.commands.ToggleCommand;
 import org.eclipse.egit.ui.internal.groups.RepositoryGroup;
 import org.eclipse.egit.ui.internal.groups.RepositoryGroups;
 import org.eclipse.egit.ui.internal.repository.tree.AdditionalRefNode;
@@ -75,7 +76,6 @@ import org.eclipse.egit.ui.internal.repository.tree.SubmodulesNode;
 import org.eclipse.egit.ui.internal.repository.tree.TagNode;
 import org.eclipse.egit.ui.internal.repository.tree.TagsNode;
 import org.eclipse.egit.ui.internal.repository.tree.WorkingDirNode;
-import org.eclipse.egit.ui.internal.repository.tree.command.ToggleBranchHierarchyCommand;
 import org.eclipse.jface.viewers.ITreeContentProvider;
 import org.eclipse.jface.viewers.Viewer;
 import org.eclipse.jgit.api.Git;
@@ -132,7 +132,7 @@ public class RepositoriesViewContentProvider implements ITreeContentProvider {
 		super();
 		this.showUnbornHead = showUnbornHead;
 		ICommandService srv = CommonUtils.getService(PlatformUI.getWorkbench(), ICommandService.class);
-		branchHierarchy = srv.getCommand(ToggleBranchHierarchyCommand.ID)
+		branchHierarchy = srv.getCommand(ToggleCommand.BRANCH_HIERARCHY_ID)
 				.getState(RegistryToggleState.STATE_ID);
 	}
 

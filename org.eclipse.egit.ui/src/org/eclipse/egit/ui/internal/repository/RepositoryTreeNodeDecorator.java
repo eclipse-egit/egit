@@ -31,6 +31,7 @@ import org.eclipse.egit.ui.Activator;
 import org.eclipse.egit.ui.internal.CommonUtils;
 import org.eclipse.egit.ui.internal.UIIcons;
 import org.eclipse.egit.ui.internal.UIText;
+import org.eclipse.egit.ui.internal.commands.ToggleCommand;
 import org.eclipse.egit.ui.internal.decorators.DecoratorRepositoryStateCache;
 import org.eclipse.egit.ui.internal.decorators.GitDecorator;
 import org.eclipse.egit.ui.internal.groups.RepositoryGroup;
@@ -41,7 +42,6 @@ import org.eclipse.egit.ui.internal.repository.tree.RepositoryTreeNode;
 import org.eclipse.egit.ui.internal.repository.tree.RepositoryTreeNodeType;
 import org.eclipse.egit.ui.internal.repository.tree.StashedCommitNode;
 import org.eclipse.egit.ui.internal.repository.tree.TagNode;
-import org.eclipse.egit.ui.internal.repository.tree.command.ToggleBranchCommitCommand;
 import org.eclipse.jface.viewers.IDecoration;
 import org.eclipse.jgit.annotations.NonNull;
 import org.eclipse.jgit.lib.Constants;
@@ -84,7 +84,8 @@ public class RepositoryTreeNodeDecorator extends GitDecorator
 	 */
 	public RepositoryTreeNodeDecorator() {
 		ICommandService srv = CommonUtils.getService(PlatformUI.getWorkbench(), ICommandService.class);
-		verboseBranchModeState = srv.getCommand(ToggleBranchCommitCommand.ID)
+		verboseBranchModeState = srv
+				.getCommand(ToggleCommand.COMMIT_MESSAGE_DECORATION_ID)
 				.getState(RegistryToggleState.STATE_ID);
 		verboseBranchModeState.addListener(this);
 		try {

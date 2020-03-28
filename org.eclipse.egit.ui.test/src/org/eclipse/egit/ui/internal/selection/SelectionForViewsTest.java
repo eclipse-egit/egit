@@ -32,7 +32,6 @@ import org.eclipse.egit.ui.internal.rebase.RebaseInteractiveView;
 import org.eclipse.egit.ui.internal.reflog.ReflogView;
 import org.eclipse.egit.ui.internal.repository.RepositoriesView;
 import org.eclipse.egit.ui.internal.repository.tree.RepositoryNode;
-import org.eclipse.egit.ui.internal.repository.tree.command.ToggleLinkWithSelectionCommand;
 import org.eclipse.egit.ui.internal.staging.StagingView;
 import org.eclipse.egit.ui.test.TestUtil;
 import org.eclipse.egit.ui.view.repositories.GitRepositoriesViewTestBase;
@@ -104,7 +103,7 @@ public class SelectionForViewsTest extends GitRepositoriesViewTestBase {
 		ICommandService srv = CommonUtils.getService(PlatformUI.getWorkbench(),
 				ICommandService.class);
 		linkWithSelectionState = srv
-				.getCommand(ToggleLinkWithSelectionCommand.ID)
+				.getCommand(RepositoriesView.LINK_WITH_SELECTION_ID)
 				.getState(RegistryToggleState.STATE_ID);
 		initialLinkingWithSelection = (Boolean) linkWithSelectionState
 				.getValue();

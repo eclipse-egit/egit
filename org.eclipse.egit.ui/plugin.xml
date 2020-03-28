@@ -6262,7 +6262,7 @@
       <command
             categoryId="org.eclipse.egit.ui.commandCategory"
             id="org.eclipse.egit.ui.RepositoriesLinkWithSelection"
-            defaultHandler="org.eclipse.egit.ui.internal.repository.tree.command.ToggleLinkWithSelectionCommand"
+            defaultHandler="org.eclipse.egit.ui.internal.commands.ToggleCommand"
             name="%LinkWithSelectionCommand">
           <state
                 class="org.eclipse.ui.handlers.RegistryToggleState:false"
@@ -6293,8 +6293,8 @@
       </command>
       <command
             categoryId="org.eclipse.egit.ui.commandCategory"
-            defaultHandler="org.eclipse.egit.ui.internal.repository.tree.command.ToggleBranchHierarchyCommand"
             id="org.eclipse.egit.ui.RepositoriesToggleBranchHierarchy"
+            defaultHandler="org.eclipse.egit.ui.internal.commands.ToggleCommand"
             name="%ToggleLayoutCommand.name">
          <state
                class="org.eclipse.ui.handlers.RegistryToggleState:false"
@@ -6303,8 +6303,8 @@
       </command>
        <command
             categoryId="org.eclipse.egit.ui.commandCategory"
-            defaultHandler="org.eclipse.egit.ui.internal.repository.tree.command.ToggleBranchCommitCommand"
             id="org.eclipse.egit.ui.RepositoriesToggleBranchCommit"
+            defaultHandler="org.eclipse.egit.ui.internal.commands.ToggleCommand"
             name="%ToggleBranchCommitCommand.name">
          <state
                class="org.eclipse.ui.handlers.RegistryToggleState:true"

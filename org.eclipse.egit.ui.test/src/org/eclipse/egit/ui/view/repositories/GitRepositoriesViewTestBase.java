@@ -33,9 +33,8 @@ import org.eclipse.egit.ui.JobFamilies;
 import org.eclipse.egit.ui.common.LocalRepositoryTestCase;
 import org.eclipse.egit.ui.internal.CommonUtils;
 import org.eclipse.egit.ui.internal.UIText;
+import org.eclipse.egit.ui.internal.commands.ToggleCommand;
 import org.eclipse.egit.ui.internal.repository.RepositoriesView;
-import org.eclipse.egit.ui.internal.repository.tree.command.ToggleBranchCommitCommand;
-import org.eclipse.egit.ui.internal.repository.tree.command.ToggleLinkWithSelectionCommand;
 import org.eclipse.egit.ui.test.TestUtil;
 import org.eclipse.jgit.lib.ObjectId;
 import org.eclipse.jgit.lib.Ref;
@@ -109,7 +108,7 @@ public abstract class GitRepositoriesViewTestBase extends
 		ICommandService srv = CommonUtils.getService(PlatformUI.getWorkbench(),
 				ICommandService.class);
 		State verboseBranchModeState = srv
-				.getCommand(ToggleBranchCommitCommand.ID)
+				.getCommand(ToggleCommand.COMMIT_MESSAGE_DECORATION_ID)
 				.getState(RegistryToggleState.STATE_ID);
 		verboseBranchModeState.setValue(Boolean.valueOf(state));
 	}
@@ -117,7 +116,8 @@ public abstract class GitRepositoriesViewTestBase extends
 	protected static boolean setLinkWithSelection(boolean state) {
 		ICommandService srv = CommonUtils.getService(PlatformUI.getWorkbench(),
 				ICommandService.class);
-		State linkingState = srv.getCommand(ToggleLinkWithSelectionCommand.ID)
+		State linkingState = srv
+				.getCommand(RepositoriesView.LINK_WITH_SELECTION_ID)
 				.getState(RegistryToggleState.STATE_ID);
 		boolean previousState = ((Boolean) linkingState.getValue())
 				.booleanValue();

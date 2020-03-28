@@ -32,8 +32,8 @@ import org.eclipse.egit.ui.Activator;
 import org.eclipse.egit.ui.JobFamilies;
 import org.eclipse.egit.ui.internal.CommonUtils;
 import org.eclipse.egit.ui.internal.UIText;
+import org.eclipse.egit.ui.internal.commands.ToggleCommand;
 import org.eclipse.egit.ui.internal.decorators.GitLightweightDecorator;
-import org.eclipse.egit.ui.internal.repository.tree.command.ToggleBranchHierarchyCommand;
 import org.eclipse.egit.ui.test.ContextMenuHelper;
 import org.eclipse.egit.ui.test.TestUtil;
 import org.eclipse.jface.dialogs.IDialogConstants;
@@ -385,7 +385,7 @@ public class GitRepositoriesViewBranchHandlingTest extends
 	public void testRebaseDialogOnRepo() throws Exception {
 		ICommandService srv = CommonUtils.getService(PlatformUI.getWorkbench(),
 				ICommandService.class);
-		State commandState = srv.getCommand(ToggleBranchHierarchyCommand.ID)
+		State commandState = srv.getCommand(ToggleCommand.BRANCH_HIERARCHY_ID)
 				.getState(RegistryToggleState.STATE_ID);
 		Boolean isHierarchical = (Boolean) commandState.getValue();
 		commandState.setValue(Boolean.TRUE);

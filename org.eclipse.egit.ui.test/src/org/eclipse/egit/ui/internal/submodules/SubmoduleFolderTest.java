@@ -46,7 +46,6 @@ import org.eclipse.egit.ui.internal.UIText;
 import org.eclipse.egit.ui.internal.clone.ProjectRecord;
 import org.eclipse.egit.ui.internal.clone.ProjectUtils;
 import org.eclipse.egit.ui.internal.repository.RepositoriesView;
-import org.eclipse.egit.ui.internal.repository.tree.command.ToggleLinkWithSelectionCommand;
 import org.eclipse.egit.ui.internal.resources.IResourceState;
 import org.eclipse.egit.ui.internal.resources.ResourceStateFactory;
 import org.eclipse.egit.ui.test.ContextMenuHelper;
@@ -266,7 +265,8 @@ public class SubmoduleFolderTest extends LocalRepositoryTestCase {
 	public void testRepoViewFollowSelection() throws Exception {
 		ICommandService srv = CommonUtils.getService(PlatformUI.getWorkbench(),
 				ICommandService.class);
-		State commandState = srv.getCommand(ToggleLinkWithSelectionCommand.ID)
+		State commandState = srv
+				.getCommand(RepositoriesView.LINK_WITH_SELECTION_ID)
 				.getState(RegistryToggleState.STATE_ID);
 		Boolean followsSelection = (Boolean) commandState.getValue();
 		commandState.setValue(Boolean.TRUE);
