@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "0de4b6b4_b2a49a2d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/CommonUtils.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2020-03-28T20:00:18Z",
+      "side": 1,
+      "message": "I had objected to the import of ...internal.repository.tree.command.ToggleTagSortingCommand here in CommonUtils, which I somehow perceived as rather out of place.\n\nAfter https://git.eclipse.org/r/#/c/160136/ this new ID could be placed in...internal.commands.ToggleCommand.",
+      "parentUuid": "ce6a20e2_92d76427",
+      "revId": "b5e6e2d5272d331acb4bbf95fef0633c7117a508",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6e1babd6_c9fa542f",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/CommonUtils.java",
         "patchSetId": 10
@@ -101,6 +119,24 @@
       "side": 1,
       "message": "So far, all refs were always sorted ascending. I\u0027d have no problem renaming the comparator to \"REF_COMPARATOR\".\nThe caller does not always now which ref types are sorted, so it cannot make the decision.\n\nRegarding the restriction to tags. My original bug report claimed that for tags (only) the ascending sort order (in the repositories view) was not what the user generally wanted. One of the replies to the repo-view-only-fix was that the sorting of tags should be the same everywhere.\nThe \"correct\" change would be not to sort by tag name at all, but by tag date (well or let the user choose by name/date ascending/descending).\nOther sort methods for other ref types was never in the scope of this change and would possibly require a completely different approach (sort preference page for all types).",
       "parentUuid": "99b87220_04452539",
+      "revId": "b5e6e2d5272d331acb4bbf95fef0633c7117a508",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9ab39fed_0107ffdf",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/CommonUtils.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 169,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2020-03-28T20:00:18Z",
+      "side": 1,
+      "message": "I\u0027m honestly not sure if reversing the sort order based on the name is indeed the correct implementation for bug 545240. As I understand it, the goal is to have the most recent tags at the top. To achieve that reliably, one would need to sort by commit date of the commit the tag points to.\n\nIn the EGit repo reversing the order based on the name would bring the newest tags to the top. In the JDT repo, you\u0027d first get all Y-tags, then the R-tags, then the P-tags, then the M-tags, and finally the I-tags. Is that really what\u0027s wanted? (No matter whether ascending or descending, yesterday\u0027s I-tag will always be somewhere in the middle of a long list.)\n\nPerhaps use a preference for this after all? I\u0027d suggest to let the user choose between sorting refs alphabetically ascending or descending or sorting by commit date. If you want, give the user the possibility to choose different orders for branches vs. tags. Keep the sort order for \"branch hierarchy\" nodes fixed at alphabetically ascending.",
+      "parentUuid": "0af09032_e4478808",
       "revId": "b5e6e2d5272d331acb4bbf95fef0633c7117a508",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
