@@ -92,6 +92,7 @@ import org.eclipse.jgit.revwalk.RevWalk;
 import org.eclipse.jgit.submodule.SubmoduleWalk;
 import org.eclipse.jgit.transport.RemoteConfig;
 import org.eclipse.jgit.transport.URIish;
+import org.eclipse.jgit.util.StringUtils;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.commands.ICommandService;
 import org.eclipse.ui.handlers.RegistryToggleState;
@@ -223,7 +224,7 @@ public class RepositoriesViewContentProvider implements ITreeContentProvider {
 							.toPortableString());
 
 		case TAGS:
-			return getTagsChildren(node, repo);
+			return getTagsChildren((TagsNode) node, repo);
 
 		case ADDITIONALREFS: {
 			List<RepositoryTreeNode<Ref>> refs = new ArrayList<>();
@@ -493,13 +494,18 @@ public class RepositoriesViewContentProvider implements ITreeContentProvider {
 		return children.toArray();
 	}
 
-	private Object[] getTagsChildren(RepositoryTreeNode parentNode,
+	private Object[] getTagsChildren(TagsNode parentNode,
 			Repository repo) {
 		List<RepositoryTreeNode<Ref>> nodes = new ArrayList<>();
 
 		try (RevWalk walk = new RevWalk(repo)) {
 			walk.setRetainBody(true);
+			String filter = parentNode.getFilter();
 			for (Ref tagRef : getRefs(repo, Constants.R_TAGS).values()) {
+				if (!StringUtils.isEmptyOrNull(filter) && !Repository
+						.shortenRefName(tagRef.getName()).contains(filter)) {
+					continue;
+				}
 				ObjectId objectId = tagRef.getLeaf().getObjectId();
 				RevObject revObject = walk.parseAny(objectId);
 				RevObject peeledObject = walk.peel(revObject);

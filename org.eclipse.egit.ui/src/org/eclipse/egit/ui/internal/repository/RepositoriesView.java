@@ -108,6 +108,7 @@ import org.eclipse.jface.viewers.TextCellEditor;
 import org.eclipse.jface.viewers.TreeSelection;
 import org.eclipse.jface.viewers.TreeViewerEditor;
 import org.eclipse.jface.viewers.ViewerCell;
+import org.eclipse.jface.viewers.ViewerRow;
 import org.eclipse.jface.window.Window;
 import org.eclipse.jgit.events.ConfigChangedListener;
 import org.eclipse.jgit.events.IndexChangedListener;
@@ -128,6 +129,7 @@ import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Item;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Menu;
+import org.eclipse.swt.widgets.Widget;
 import org.eclipse.team.ui.history.IHistoryView;
 import org.eclipse.ui.IEditorInput;
 import org.eclipse.ui.IEditorPart;
@@ -1298,12 +1300,26 @@ public class RepositoriesView extends CommonNavigator implements IShowInSource, 
 	}
 
 	/**
-	 * Customized {@link CommonViewer} that switches back to the empty area if
-	 * the tree view becomes empty, and that adds additional information at the
-	 * end of labels.
+	 * Customized {@link CommonViewer} that
+	 * <ul>
+	 * <li>switches back to the empty area if the tree view becomes empty,
+	 * and</li>
+	 * <li>adds additional information at the end of labels, and</li>
+	 * <li>provides access to the {@link ViewerCell} of an element.</li>
+	 * </ul>
 	 */
-	private class RepositoriesCommonViewer extends CommonViewer {
+	public class RepositoriesCommonViewer extends CommonViewer {
 
+		/**
+		 * Creates a new {@link RepositoriesCommonViewer}.
+		 *
+		 * @param viewId
+		 *            of the view containing the viewer
+		 * @param parent
+		 *            for the new viewer
+		 * @param style
+		 *            of the new viewer
+		 */
 		public RepositoriesCommonViewer(String viewId, Composite parent,
 				int style) {
 			super(viewId, parent, style);
@@ -1326,6 +1342,28 @@ public class RepositoriesView extends CommonNavigator implements IShowInSource, 
 		public void refresh(boolean updateLabels) {
 			super.refresh(updateLabels);
 			afterRefresh(this);
+		}
+
+		/**
+		 * Retrieves the {@link ViewerCell} corresponding to the given
+		 * {@code column} of the given element.
+		 *
+		 * @param element
+		 *            to get the cell of
+		 * @param column
+		 *            to get the cell of
+		 * @return the {@link ViewerCell}, or {@code null} if none can be
+		 *         determined.
+		 */
+		public ViewerCell getCell(Object element, int column) {
+			Widget item = findItem(element);
+			if (item != null) {
+				ViewerRow row = getViewerRowFromItem(item);
+				if (row != null) {
+					return row.getCell(column);
+				}
+			}
+			return null;
 		}
 	}
 
