@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "999ca1dd_da0ccbd9",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/commit/DiffEditorOutlinePage.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 708,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2020-03-29T20:34:46Z",
+      "side": 1,
+      "message": "SWT.LF.",
+      "range": {
+        "startLine": 708,
+        "startChar": 22,
+        "endLine": 708,
+        "endChar": 26
+      },
+      "revId": "c56e9f5a6ee7b133f4e6bc4260486beea5104c16",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "e1d5ed68_a4557eab",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/commit/DiffEditorOutlinePage.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 738,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2020-03-29T20:34:46Z",
+      "side": 1,
+      "message": "The canonical pattern for this is\n\n  try {\n    viewer.getControl().setRedraw(false);\n    ...\n  } finally {\n    viewer.getControl().setRedraw(true);\n  }",
+      "range": {
+        "startLine": 738,
+        "startChar": 4,
+        "endLine": 738,
+        "endChar": 40
+      },
+      "revId": "c56e9f5a6ee7b133f4e6bc4260486beea5104c16",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
