@@ -16,6 +16,24 @@
       "revId": "1ab99c08a8e8f15a5e2fe3cffbe492ee3b4cbd0c",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "4dcaa1e8_828b1288",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/commands/ToggleCommand.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2020-03-29T10:50:47Z",
+      "side": 1,
+      "message": "If we need that at all. If we have a \"toggle\" command that needs to do more in response to the state changing, it would override execute anyway, and then it can just call HandlerUtil.toggleCommandState() directly and examine its return value.\n\nCurrently, reacting on these toggle state changes is done via listeners on these states.",
+      "parentUuid": "a96abcfd_e8f5bc58",
+      "revId": "1ab99c08a8e8f15a5e2fe3cffbe492ee3b4cbd0c",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
     }
   ]
 }
