@@ -30,7 +30,8 @@ import org.eclipse.jgit.lib.Repository;
  * @param <T>
  *            the type
  */
-public abstract class RepositoryTreeNode<T> extends PlatformObject implements Comparable<RepositoryTreeNode> {
+public abstract class RepositoryTreeNode<T> extends PlatformObject
+		implements Node, Comparable<RepositoryTreeNode> {
 
 	private Repository myRepository;
 
@@ -70,6 +71,7 @@ public abstract class RepositoryTreeNode<T> extends PlatformObject implements Co
 	/**
 	 * @return the type
 	 */
+	@Override
 	public RepositoryTreeNodeType getType() {
 		return myType;
 	}
@@ -77,6 +79,7 @@ public abstract class RepositoryTreeNode<T> extends PlatformObject implements Co
 	/**
 	 * @return the repository
 	 */
+	@Override
 	public Repository getRepository() {
 		return myRepository;
 	}
