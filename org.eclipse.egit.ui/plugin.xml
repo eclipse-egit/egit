@@ -1310,6 +1310,23 @@
          </activeWhen>
       </handler>
       <handler
+            commandId="org.eclipse.ui.edit.findReplace">
+         <class
+               class="org.eclipse.egit.ui.internal.repository.tree.command.FilterCommand">
+         </class>
+         <activeWhen>
+            <and>
+               <with variable="activePartId">
+                  <equals value="org.eclipse.egit.ui.RepositoriesView" />
+               </with>
+               <count value="1" />
+               <iterate>
+                  <instanceof value="org.eclipse.egit.ui.internal.repository.tree.TagsNode" />
+               </iterate>
+            </and>
+         </activeWhen>
+      </handler>
+      <handler
             commandId="org.eclipse.egit.ui.team.SimplePush">
          <class
                class="org.eclipse.egit.ui.internal.actions.SimplePushActionHandler">
@@ -4130,6 +4147,14 @@
                   </iterate>
                </and>
             </visibleWhen>
+         </command>
+         <command
+               commandId="org.eclipse.ui.edit.findReplace"
+               label="%RepoViewFilterTagCommand.label"
+               icon="icons/elcl16/find.png"
+               tooltip="%RepoViewFilterTagCommand.tooltip"
+               style="push">
+            <visibleWhen checkEnabled="true" />
          </command>
       </menuContribution>
       <menuContribution

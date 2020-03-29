@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2018, 2019 Thomas Wolf <thomas.wolf@paranor.ch> and others.
+ * Copyright (c) 2018, 2020 Thomas Wolf <thomas.wolf@paranor.ch> and others.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License 2.0
@@ -25,7 +25,8 @@ public class RepositoriesViewExtensionFactory
 	@Override
 	public Object create() throws CoreException {
 		return new RepositoriesViewContentProvider(true)
-				.showingRepositoryGroups(true);
+				.showingRepositoryGroups(true)
+				.withFilterCache(FilterCache.INSTANCE);
 	}
 
 }
