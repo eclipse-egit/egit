@@ -3812,6 +3812,21 @@ public class UIText extends NLS {
 	public static String RepositoriesView_ExceptionLookingUpRepoMessage;
 
 	/** */
+	public static String RepositoriesView_FilteredSuffix;
+
+	/** */
+	public static String RepositoriesView_FilterErrorRead;
+
+	/** */
+	public static String RepositoriesView_FilterErrorSave;
+
+	/** */
+	public static String RepositoriesView_FilterJob;
+
+	/** */
+	public static String RepositoriesView_FilterMessage;
+
+	/** */
 	public static String RepositoriesView_linkAdd;
 
 	/** */

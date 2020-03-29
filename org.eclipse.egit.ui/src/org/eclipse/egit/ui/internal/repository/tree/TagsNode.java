@@ -17,7 +17,10 @@ import org.eclipse.jgit.lib.Repository;
 /**
  * Represents the "Tags" node
  */
-public class TagsNode extends RepositoryTreeNode<Repository> {
+public class TagsNode extends RepositoryTreeNode<Repository>
+		implements FilterableNode {
+
+	private String filter;
 
 	/**
 	 * Constructs the node.
@@ -31,4 +34,25 @@ public class TagsNode extends RepositoryTreeNode<Repository> {
 		super(parent, RepositoryTreeNodeType.TAGS, repository, repository);
 	}
 
+	@Override
+	public String getFilter() {
+		return filter;
+	}
+
+	@Override
+	public void setFilter(String filter) {
+		this.filter = filter;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		// "filter" doesn't participate
+		return super.equals(obj);
+	}
+
+	@Override
+	public int hashCode() {
+		// "filter" doesn't participate
+		return super.hashCode();
+	}
 }

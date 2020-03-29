@@ -45,6 +45,7 @@ import org.eclipse.core.runtime.preferences.IEclipsePreferences.IPreferenceChang
 import org.eclipse.egit.core.AdapterUtils;
 import org.eclipse.egit.core.RepositoryCache;
 import org.eclipse.egit.core.RepositoryUtil;
+import org.eclipse.egit.core.internal.Utils;
 import org.eclipse.egit.core.internal.util.ResourceUtil;
 import org.eclipse.egit.ui.Activator;
 import org.eclipse.egit.ui.JobFamilies;
@@ -64,6 +65,7 @@ import org.eclipse.egit.ui.internal.history.HistoryPageInput;
 import org.eclipse.egit.ui.internal.reflog.ReflogView;
 import org.eclipse.egit.ui.internal.repository.tree.FetchNode;
 import org.eclipse.egit.ui.internal.repository.tree.FileNode;
+import org.eclipse.egit.ui.internal.repository.tree.FilterableNode;
 import org.eclipse.egit.ui.internal.repository.tree.FolderNode;
 import org.eclipse.egit.ui.internal.repository.tree.PushNode;
 import org.eclipse.egit.ui.internal.repository.tree.RefNode;
@@ -82,6 +84,7 @@ import org.eclipse.egit.ui.internal.trace.GitTraceLocation;
 import org.eclipse.jface.action.IMenuListener;
 import org.eclipse.jface.action.IMenuManager;
 import org.eclipse.jface.action.MenuManager;
+import org.eclipse.jface.bindings.keys.SWTKeySupport;
 import org.eclipse.jface.dialogs.IDialogConstants;
 import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.dialogs.MessageDialogWithToggle;
@@ -95,6 +98,7 @@ import org.eclipse.jface.viewers.ColumnViewerEditorActivationEvent;
 import org.eclipse.jface.viewers.ColumnViewerEditorActivationStrategy;
 import org.eclipse.jface.viewers.DoubleClickEvent;
 import org.eclipse.jface.viewers.ICellModifier;
+import org.eclipse.jface.viewers.IContentProvider;
 import org.eclipse.jface.viewers.IDoubleClickListener;
 import org.eclipse.jface.viewers.ILabelProvider;
 import org.eclipse.jface.viewers.IOpenListener;
@@ -109,6 +113,7 @@ import org.eclipse.jface.viewers.TreeSelection;
 import org.eclipse.jface.viewers.TreeViewerEditor;
 import org.eclipse.jface.viewers.ViewerCell;
 import org.eclipse.jface.window.Window;
+import org.eclipse.jgit.annotations.NonNull;
 import org.eclipse.jgit.events.ConfigChangedListener;
 import org.eclipse.jgit.events.IndexChangedListener;
 import org.eclipse.jgit.events.ListenerHandle;
@@ -116,18 +121,29 @@ import org.eclipse.jgit.events.RefsChangedListener;
 import org.eclipse.jgit.lib.Repository;
 import org.eclipse.osgi.util.NLS;
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.custom.ControlEditor;
 import org.eclipse.swt.custom.StackLayout;
 import org.eclipse.swt.events.DisposeEvent;
 import org.eclipse.swt.events.DisposeListener;
+import org.eclipse.swt.events.FocusAdapter;
 import org.eclipse.swt.events.FocusEvent;
 import org.eclipse.swt.events.FocusListener;
+import org.eclipse.swt.events.KeyAdapter;
+import org.eclipse.swt.events.KeyEvent;
 import org.eclipse.swt.graphics.Color;
+import org.eclipse.swt.graphics.GC;
 import org.eclipse.swt.graphics.Image;
+import org.eclipse.swt.graphics.Point;
+import org.eclipse.swt.graphics.Rectangle;
+import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Item;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Menu;
+import org.eclipse.swt.widgets.Text;
+import org.eclipse.swt.widgets.TreeItem;
+import org.eclipse.swt.widgets.Widget;
 import org.eclipse.team.ui.history.IHistoryView;
 import org.eclipse.ui.IEditorInput;
 import org.eclipse.ui.IEditorPart;
@@ -159,6 +175,7 @@ import org.eclipse.ui.part.IShowInTargetList;
 import org.eclipse.ui.part.MultiPageEditorPart;
 import org.eclipse.ui.part.ShowInContext;
 import org.eclipse.ui.progress.IWorkbenchSiteProgressService;
+import org.eclipse.ui.progress.UIJob;
 import org.eclipse.ui.progress.WorkbenchJob;
 import org.eclipse.ui.views.properties.IPropertySheetPage;
 import org.eclipse.ui.views.properties.PropertySheet;
@@ -226,6 +243,8 @@ public class RepositoriesView extends CommonNavigator implements IShowInSource, 
 
 	private File lastSelectedRepository;
 
+	private boolean filterCacheLoaded;
+
 	private final ISelectionListener selectionChangedListener = (part,
 			selection) -> {
 		if (part == RepositoriesView.this) {
@@ -288,6 +307,8 @@ public class RepositoriesView extends CommonNavigator implements IShowInSource, 
 	private IContextService ctxSrv;
 
 	private TextCellEditor textCellEditor;
+
+	private Text filterField;
 
 	/**
 	 * The default constructor
@@ -406,6 +427,8 @@ public class RepositoriesView extends CommonNavigator implements IShowInSource, 
 
 	@Override
 	public void createPartControl(Composite aParent) {
+		FilterCache.INSTANCE.load();
+		filterCacheLoaded = true;
 		Composite displayArea = new Composite(aParent, SWT.NONE);
 		layout = new StackLayout();
 		displayArea.setLayout(layout);
@@ -681,12 +704,163 @@ public class RepositoriesView extends CommonNavigator implements IShowInSource, 
 	 *         {@code false} otherwise
 	 */
 	public boolean pasteInEditor() {
+		if (filterField != null && !filterField.isDisposed()) {
+			// We're editing
+			filterField.paste();
+			return true;
+		}
 		if (textCellEditor != null && textCellEditor.isActivated()) {
 			// We're editing
 			textCellEditor.performPaste();
 			return true;
 		}
 		return false;
+	}
+
+	/**
+	 * Opens a text input to filter the node's children.
+	 *
+	 * @param node
+	 *            to filter
+	 */
+	public void filter(@NonNull FilterableNode node) {
+		if (filterField != null) {
+			// Allow only one tree editor
+			return;
+		}
+		CommonViewer rawViewer = getCommonViewer();
+		if (!(rawViewer instanceof RepositoriesCommonViewer)) {
+			return; // Cannot happen
+		}
+		RepositoriesCommonViewer viewer = (RepositoriesCommonViewer) rawViewer;
+		IContentProvider rawProvider = viewer.getContentProvider();
+		if (!(rawProvider instanceof ITreeContentProvider)) {
+			return; // Doesn't occur
+		}
+		ITreeContentProvider provider = (ITreeContentProvider) rawProvider;
+		if (!provider.hasChildren(node)) {
+			return;
+		}
+		TreeItem treeItem = viewer.getItem(node);
+		if (treeItem == null) {
+			return;
+		}
+		if (!viewer.getExpandedState(node)) {
+			try {
+				viewer.getTree().setRedraw(false);
+				viewer.setExpandedState(node, true);
+			} finally {
+				viewer.getTree().setRedraw(true);
+			}
+		}
+		// Pop up search field with initial pattern set; update pattern and
+		// request a refresh of the node on each change with a small delay.
+		AtomicReference<String> currentPattern = new AtomicReference<>();
+		UIJob refresher = new UIJob(UIText.RepositoriesView_FilterJob) {
+
+			@Override
+			public boolean belongsTo(Object family) {
+				return JobFamilies.REPO_VIEW_REFRESH.equals(family)
+						|| super.belongsTo(family);
+			}
+
+			@Override
+			public IStatus runInUIThread(IProgressMonitor monitor) {
+				if (!monitor.isCanceled()) {
+					filter(viewer, node, currentPattern.get());
+					return Status.OK_STATUS;
+				}
+				return Status.CANCEL_STATUS;
+			}
+
+		};
+		refresher.setUser(false);
+		Composite container = new Composite(viewer.getTree(), SWT.NONE);
+		container.setVisible(false);
+		GridLayoutFactory.fillDefaults().applyTo(container);
+		// Use a text field without icons. With icons, we'd get a focusLost
+		// event when the icons are selected at least on Cocoa.
+		Text field = new Text(container, SWT.SEARCH);
+		GridData textData = GridDataFactory.fillDefaults().grab(true, false)
+				.create();
+		textData.minimumWidth = 150;
+		field.setLayoutData(textData);
+		field.setMessage(UIText.RepositoriesView_FilterMessage);
+		String pattern = node.getFilter();
+		if (pattern != null) {
+			field.setText(pattern);
+			field.selectAll();
+		}
+		TreeFilterEditor filterEditor = new TreeFilterEditor(viewer.getTree(),
+				treeItem, 0, container);
+		field.addVerifyListener(e -> e.text = Utils.firstLine(e.text));
+		field.addModifyListener(e -> {
+			refresher.cancel();
+			currentPattern.set(field.getText());
+			refresher.schedule(200L);
+		});
+		FocusAdapter closeOnFocusLost = new FocusAdapter() {
+
+			@Override
+			public void focusLost(FocusEvent e) {
+				filterField = null;
+				filterEditor.dispose();
+				if (!container.isDisposed()) {
+					container.setVisible(false);
+					container.dispose();
+				}
+			}
+		};
+		field.addKeyListener(new KeyAdapter() {
+
+			@Override
+			public void keyPressed(KeyEvent e) {
+				int key = SWTKeySupport.convertEventToUnmodifiedAccelerator(e);
+				if (key == SWT.ESC) {
+					// Reset
+					refresher.cancel();
+					currentPattern.set(pattern);
+					refresher.schedule();
+				}
+				if (key == SWT.ESC || key == SWT.CR || key == SWT.LF
+						|| e.character == '\r' || e.character == '\n') {
+					// Character tests catch NUMPAD-ENTER
+					filterField = null;
+					filterEditor.dispose();
+					field.removeFocusListener(closeOnFocusLost);
+					container.setVisible(false);
+					container.dispose();
+					viewer.getTree().setFocus();
+					viewer.setSelection(new StructuredSelection(node));
+				}
+			}
+		});
+		container.getDisplay().asyncExec(() -> {
+			if (!container.isDisposed()) {
+				container.setVisible(true);
+				filterField = field;
+				field.setFocus();
+				field.addFocusListener(closeOnFocusLost);
+			}
+		});
+	}
+
+	private void filter(RepositoriesCommonViewer viewer,
+			FilterableNode filterNode, String filter) {
+		FilterCache.INSTANCE.set(filterNode, filter);
+		try {
+			viewer.getTree().setRedraw(false);
+			TreeItem item = viewer.getItem(filterNode);
+			Object currentNode = item.getData();
+			if (filterNode != currentNode && filterNode.equals(currentNode)) {
+				((FilterableNode) currentNode)
+						.setFilter(filterNode.getFilter());
+				viewer.update(currentNode, null);
+			}
+			viewer.refresh(filterNode);
+		} finally {
+			viewer.getTree().setRedraw(true);
+		}
 	}
 
 	private void executeOpenCommandWithConfirmation(RepositoryTreeNode element,
@@ -781,6 +955,12 @@ public class RepositoriesView extends CommonNavigator implements IShowInSource, 
 
 	@Override
 	public void dispose() {
+		if (filterCacheLoaded) {
+			// Don't save if didn't load for whatever reason. Otherwise we might
+			// overwrite existing persisted data with an empty cache.
+			filterCacheLoaded = false;
+			FilterCache.INSTANCE.save();
+		}
 		if (textCellEditor != null) {
 			textCellEditor.dispose();
 			textCellEditor = null;
@@ -1302,12 +1482,26 @@ public class RepositoriesView extends CommonNavigator implements IShowInSource, 
 	}
 
 	/**
-	 * Customized {@link CommonViewer} that switches back to the empty area if
-	 * the tree view becomes empty, and that adds additional information at the
-	 * end of labels.
+	 * Customized {@link CommonViewer} that
+	 * <ul>
+	 * <li>switches back to the empty area if the tree view becomes empty,
+	 * and</li>
+	 * <li>adds additional information at the end of labels, and</li>
+	 * <li>provides access to the {@link TreeItem} of an element.</li>
+	 * </ul>
 	 */
 	private class RepositoriesCommonViewer extends CommonViewer {
 
+		/**
+		 * Creates a new {@link RepositoriesCommonViewer}.
+		 *
+		 * @param viewId
+		 *            of the view containing the viewer
+		 * @param parent
+		 *            for the new viewer
+		 * @param style
+		 *            of the new viewer
+		 */
 		public RepositoriesCommonViewer(String viewId, Composite parent,
 				int style) {
 			super(viewId, parent, style);
@@ -1331,6 +1525,14 @@ public class RepositoriesView extends CommonNavigator implements IShowInSource, 
 			super.refresh(updateLabels);
 			afterRefresh(this);
 		}
+
+		public TreeItem getItem(Object element) {
+			Widget item = findItem(element);
+			if (item instanceof TreeItem) {
+				return (TreeItem) item;
+			}
+			return null;
+		}
 	}
 
 	@SuppressWarnings("restriction")
@@ -1344,6 +1546,67 @@ public class RepositoriesView extends CommonNavigator implements IShowInSource, 
 		@Override
 		public void update(ViewerCell cell) {
 			RepositoryTreeNodeLabelProvider.update(cell, super::update);
+		}
+	}
+
+	/**
+	 * A customized {@link ControlEditor} that keeps the editor control just
+	 * behind the label of the node.
+	 * <p>
+	 * Note that the super class handles scolling and invokes {@link #layout()}
+	 * when the parent is scrolled.
+	 * </p>
+	 */
+	private static class TreeFilterEditor extends ControlEditor {
+
+		private Composite parent;
+
+		private TreeItem item;
+
+		private int columnIndex;
+
+		private Point editorSize;
+
+		public TreeFilterEditor(Composite parent, TreeItem item,
+				int columnIndex, Control editor) {
+			super(parent);
+			this.parent = parent;
+			this.item = item;
+			this.columnIndex = columnIndex;
+			editorSize = editor.computeSize(SWT.DEFAULT, SWT.DEFAULT);
+			setEditor(editor);
+		}
+
+		@Override
+		public void layout() {
+			Point textSize = null;
+			GC gc = null;
+			try {
+				gc = new GC(parent.getDisplay());
+				gc.setFont(item.getFont(columnIndex));
+				textSize = gc.stringExtent(item.getText(columnIndex));
+			} finally {
+				if (gc != null) {
+					gc.dispose();
+				}
+			}
+			Rectangle cell = item.getBounds(columnIndex);
+			Rectangle text = item.getTextBounds(columnIndex);
+			Rectangle area = parent.getClientArea();
+			area.y = cell.y;
+			area.x = Math.max(area.x, Math.min(text.x + textSize.x + 5,
+					area.x + area.width - editorSize.x));
+			area.width = editorSize.x;
+			area.height = editorSize.y;
+			getEditor().setBounds(area);
+		}
+
+		@Override
+		public void dispose() {
+			super.dispose();
+			parent = null;
+			item = null;
+			editorSize = null;
 		}
 	}
 }
