@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2010, 2019 SAP AG and others.
+ * Copyright (c) 2010, 2020 SAP AG and others.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License 2.0
@@ -92,6 +92,7 @@ import org.eclipse.jgit.revwalk.RevWalk;
 import org.eclipse.jgit.submodule.SubmoduleWalk;
 import org.eclipse.jgit.transport.RemoteConfig;
 import org.eclipse.jgit.transport.URIish;
+import org.eclipse.jgit.util.StringUtils;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.commands.ICommandService;
 import org.eclipse.ui.handlers.RegistryToggleState;
@@ -113,6 +114,8 @@ public class RepositoriesViewContentProvider implements ITreeContentProvider {
 	private boolean showRepositoryGroups = false;
 
 	private RefCache.Cache refCache = RefCache.get();
+
+	private FilterCache filters;
 
 	/**
 	 * Constructs a new {@link RepositoriesViewContentProvider} that doesn't
@@ -189,6 +192,9 @@ public class RepositoriesViewContentProvider implements ITreeContentProvider {
 	@Override
 	public void dispose() {
 		refCache.dispose();
+		if (filters != null) {
+			filters.clear();
+		}
 	}
 
 	@Override
@@ -223,7 +229,7 @@ public class RepositoriesViewContentProvider implements ITreeContentProvider {
 							.toPortableString());
 
 		case TAGS:
-			return getTagsChildren(node, repo);
+			return getTagsChildren((TagsNode) node, repo);
 
 		case ADDITIONALREFS: {
 			List<RepositoryTreeNode<Ref>> refs = new ArrayList<>();
@@ -268,7 +274,11 @@ public class RepositoriesViewContentProvider implements ITreeContentProvider {
 		case REPO: {
 			List<RepositoryTreeNode<? extends Object>> nodeList = new ArrayList<>();
 			nodeList.add(new BranchesNode(node, repo));
-			nodeList.add(new TagsNode(node, repo));
+			TagsNode tags = new TagsNode(node, repo);
+			if (filters != null) {
+				tags.setFilter(filters.get(tags));
+			}
+			nodeList.add(tags);
 			nodeList.add(new AdditionalRefsNode(node, repo));
 			final boolean bare = repo.isBare();
 			if (!bare)
@@ -395,9 +405,12 @@ public class RepositoriesViewContentProvider implements ITreeContentProvider {
 			RepositoryGroups groupsUtil, RepositoryTreeNode<?> parent,
 			List<File> directories) {
 		List<RepositoryNode> result = new ArrayList<>();
+		List<File> filtersToKeep = new ArrayList<>();
 		for (File gitDir : directories) {
 			try {
 				if (gitDir.exists()) {
+					filtersToKeep
+							.add(new Path(gitDir.getAbsolutePath()).toFile());
 					boolean addRepo = (groupsUtil == null
 							|| !showRepositoryGroups
 							|| !groupsUtil.belongsToGroup(gitDir));
@@ -412,6 +425,9 @@ public class RepositoriesViewContentProvider implements ITreeContentProvider {
 			} catch (IOException e) {
 				// ignore for now
 			}
+		}
+		if (filters != null) {
+			filters.keepOnly(filtersToKeep);
 		}
 		return result;
 	}
@@ -493,13 +509,18 @@ public class RepositoriesViewContentProvider implements ITreeContentProvider {
 		return children.toArray();
 	}
 
-	private Object[] getTagsChildren(RepositoryTreeNode parentNode,
+	private Object[] getTagsChildren(TagsNode parentNode,
 			Repository repo) {
 		List<RepositoryTreeNode<Ref>> nodes = new ArrayList<>();
 
 		try (RevWalk walk = new RevWalk(repo)) {
 			walk.setRetainBody(true);
+			String filter = filters != null ? filters.get(parentNode) : null;
 			for (Ref tagRef : getRefs(repo, Constants.R_TAGS).values()) {
+				if (!StringUtils.isEmptyOrNull(filter) && !Repository
+						.shortenRefName(tagRef.getName()).contains(filter)) {
+					continue;
+				}
 				ObjectId objectId = tagRef.getLeaf().getObjectId();
 				RevObject revObject = walk.parseAny(objectId);
 				RevObject peeledObject = walk.peel(revObject);
@@ -670,5 +691,17 @@ public class RepositoriesViewContentProvider implements ITreeContentProvider {
 	 */
 	public boolean isHierarchical() {
 		return ((Boolean) branchHierarchy.getValue()).booleanValue();
+	}
+
+	/**
+	 * Sets a {@link FilterCache} for this content provider.
+	 *
+	 * @param cache
+	 *            to set
+	 * @return this
+	 */
+	public RepositoriesViewContentProvider withFilterCache(FilterCache cache) {
+		this.filters = cache;
+		return this;
 	}
 }
