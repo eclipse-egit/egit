@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2010, 2019 SAP AG and others.
+ * Copyright (c) 2010, 2020 SAP AG and others.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License 2.0
@@ -92,6 +92,7 @@ import org.eclipse.jgit.revwalk.RevWalk;
 import org.eclipse.jgit.submodule.SubmoduleWalk;
 import org.eclipse.jgit.transport.RemoteConfig;
 import org.eclipse.jgit.transport.URIish;
+import org.eclipse.jgit.util.StringUtils;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.commands.ICommandService;
 import org.eclipse.ui.handlers.RegistryToggleState;
@@ -113,6 +114,8 @@ public class RepositoriesViewContentProvider implements ITreeContentProvider {
 	private boolean showRepositoryGroups = false;
 
 	private RefCache.Cache refCache = RefCache.get();
+
+	private FilterCache filters;
 
 	/**
 	 * Constructs a new {@link RepositoriesViewContentProvider} that doesn't
@@ -189,6 +192,9 @@ public class RepositoriesViewContentProvider implements ITreeContentProvider {
 	@Override
 	public void dispose() {
 		refCache.dispose();
+		if (filters != null) {
+			filters.clear();
+		}
 	}
 
 	@Override
@@ -223,7 +229,7 @@ public class RepositoriesViewContentProvider implements ITreeContentProvider {
 							.toPortableString());
 
 		case TAGS:
-			return getTagsChildren(node, repo);
+			return getTagsChildren((TagsNode) node, repo);
 
 		case ADDITIONALREFS: {
 			List<RepositoryTreeNode<Ref>> refs = new ArrayList<>();
@@ -268,7 +274,11 @@ public class RepositoriesViewContentProvider implements ITreeContentProvider {
 		case REPO: {
 			List<RepositoryTreeNode<? extends Object>> nodeList = new ArrayList<>();
 			nodeList.add(new BranchesNode(node, repo));
-			nodeList.add(new TagsNode(node, repo));
+			TagsNode tags = new TagsNode(node, repo);
+			if (filters != null) {
+				tags.setFilter(filters.get(tags));
+			}
+			nodeList.add(tags);
 			nodeList.add(new AdditionalRefsNode(node, repo));
 			final boolean bare = repo.isBare();
 			if (!bare)
@@ -395,9 +405,12 @@ public class RepositoriesViewContentProvider implements ITreeContentProvider {
 			RepositoryGroups groupsUtil, RepositoryTreeNode<?> parent,
 			List<File> directories) {
 		List<RepositoryNode> result = new ArrayList<>();
+		List<File> filtersToKeep = new ArrayList<>();
 		for (File gitDir : directories) {
 			try {
 				if (gitDir.exists()) {
+					filtersToKeep
+							.add(new Path(gitDir.getAbsolutePath()).toFile());
 					boolean addRepo = (groupsUtil == null
 							|| !showRepositoryGroups
 							|| !groupsUtil.belongsToGroup(gitDir));
@@ -412,6 +425,9 @@ public class RepositoriesViewContentProvider implements ITreeContentProvider {
 			} catch (IOException e) {
 				// ignore for now
 			}
+		}
+		if (filters != null) {
+			filters.keepOnly(filtersToKeep);
 		}
 		return result;
 	}
@@ -493,13 +509,24 @@ public class RepositoriesViewContentProvider implements ITreeContentProvider {
 		return children.toArray();
 	}
 
-	private Object[] getTagsChildren(RepositoryTreeNode parentNode,
+	@FunctionalInterface
+	private interface Matcher {
+		boolean matches(String s);
+	}
+
+	private Object[] getTagsChildren(TagsNode parentNode,
 			Repository repo) {
 		List<RepositoryTreeNode<Ref>> nodes = new ArrayList<>();
 
 		try (RevWalk walk = new RevWalk(repo)) {
 			walk.setRetainBody(true);
+			Matcher filter = matcher(
+					filters != null ? filters.get(parentNode) : null);
 			for (Ref tagRef : getRefs(repo, Constants.R_TAGS).values()) {
+				if (!filter
+						.matches(Repository.shortenRefName(tagRef.getName()))) {
+					continue;
+				}
 				ObjectId objectId = tagRef.getLeaf().getObjectId();
 				RevObject revObject = walk.parseAny(objectId);
 				RevObject peeledObject = walk.peel(revObject);
@@ -512,6 +539,74 @@ public class RepositoriesViewContentProvider implements ITreeContentProvider {
 		}
 
 		return nodes.toArray();
+	}
+
+	/**
+	 * Returns a matcher that matches strings against the given filter pattern.
+	 *
+	 * @param filter
+	 *            pattern to filter by
+	 * @return a {@link Matcher}
+	 */
+	private static Matcher matcher(String filter) {
+		String pattern = filter;
+		if (StringUtils.isEmptyOrNull(pattern)) {
+			return s -> true;
+		}
+		boolean frontAnchored = pattern.charAt(0) == '^';
+		if (frontAnchored) {
+			pattern = pattern.substring(1);
+		}
+		boolean endAnchored = !pattern.isEmpty()
+				&& pattern.charAt(pattern.length() - 1) == '$';
+		if (endAnchored) {
+			pattern = pattern.substring(0, pattern.length() - 1);
+		}
+		if (pattern.isEmpty()) {
+			return s -> true;
+		}
+		if (!frontAnchored) {
+			pattern = '*' + pattern;
+		}
+		if (!endAnchored) {
+			pattern = fixTrailingBackslash(pattern) + '*';
+		}
+		return getMatcher(pattern);
+	}
+
+	@SuppressWarnings("restriction")
+	private static Matcher getMatcher(String pattern) {
+		// Eclipse has umpteen copies of StringMatcher. It originated apparently
+		// in JDT. Today there are copies at least in JDT, PDE,
+		// org.eclipse.core.resources, org.eclipse.team, org.eclipse.net,
+		// org.eclipse.ui.ide, org.eclipse.ui.navigator,
+		// org.eclipse.ui.workbench, E4 (two copies), and in Equinox. All of
+		// them are internal. Let's *not* create another copy.
+		org.eclipse.team.internal.core.StringMatcher matcher = new org.eclipse.team.internal.core.StringMatcher(
+				pattern, true, false);
+		return matcher::match;
+	}
+
+	/**
+	 * Ensures the text doesn't end with a lone escape character '\': if there's
+	 * an odd number of backslashes at the end, add one backslash.
+	 *
+	 * @param text
+	 *            to fix
+	 * @return fixed text
+	 */
+	private static String fixTrailingBackslash(String text) {
+		int l = text.length();
+		int i = l;
+		for (; i > 0; i--) {
+			if (text.charAt(i - 1) != '\\') {
+				break;
+			}
+		}
+		if ((l - i) % 2 == 1) {
+			return text + '\\';
+		}
+		return text;
 	}
 
 	private TagNode createTagNode(RepositoryTreeNode parentNode,
@@ -670,5 +765,17 @@ public class RepositoriesViewContentProvider implements ITreeContentProvider {
 	 */
 	public boolean isHierarchical() {
 		return ((Boolean) branchHierarchy.getValue()).booleanValue();
+	}
+
+	/**
+	 * Sets a {@link FilterCache} for this content provider.
+	 *
+	 * @param cache
+	 *            to set
+	 * @return this
+	 */
+	public RepositoriesViewContentProvider withFilterCache(FilterCache cache) {
+		this.filters = cache;
+		return this;
 	}
 }

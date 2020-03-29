@@ -19,6 +19,7 @@ import org.eclipse.egit.ui.internal.ResourcePropertyTester;
 import org.eclipse.egit.ui.internal.UIIcons;
 import org.eclipse.egit.ui.internal.UIText;
 import org.eclipse.egit.ui.internal.groups.RepositoryGroup;
+import org.eclipse.egit.ui.internal.repository.tree.FilterableNode;
 import org.eclipse.egit.ui.internal.repository.tree.RepositoryTreeNode;
 import org.eclipse.egit.ui.internal.repository.tree.RepositoryTreeNodeType;
 import org.eclipse.egit.ui.internal.repository.tree.StashedCommitNode;
@@ -27,6 +28,7 @@ import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.jgit.lib.Constants;
 import org.eclipse.jgit.lib.Ref;
 import org.eclipse.jgit.lib.Repository;
+import org.eclipse.jgit.util.StringUtils;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.model.WorkbenchAdapter;
 
@@ -88,6 +90,18 @@ public class RepositoryTreeNodeWorkbenchAdapter extends WorkbenchAdapter {
 
 	@Override
 	public String getLabel(Object object) {
+		String label = internalGetLabel(object);
+		if (object instanceof FilterableNode) {
+			String filter = ((FilterableNode) object).getFilter();
+			if (!StringUtils.isEmptyOrNull(filter)) {
+				label += MessageFormat
+						.format(UIText.RepositoriesView_FilteredSuffix, filter);
+			}
+		}
+		return label;
+	}
+
+	private String internalGetLabel(Object object) {
 		RepositoryTreeNode<?> node = (RepositoryTreeNode) object;
 		switch (node.getType()) {
 		case REPO:
