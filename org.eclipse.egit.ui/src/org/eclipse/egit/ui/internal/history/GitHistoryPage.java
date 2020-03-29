@@ -163,6 +163,7 @@ import org.eclipse.team.ui.history.HistoryPage;
 import org.eclipse.team.ui.history.IHistoryView;
 import org.eclipse.ui.IActionBars;
 import org.eclipse.ui.ISharedImages;
+import org.eclipse.ui.IWorkbenchCommandConstants;
 import org.eclipse.ui.IWorkbenchPart;
 import org.eclipse.ui.IWorkbenchPartSite;
 import org.eclipse.ui.PlatformUI;
@@ -462,11 +463,6 @@ public class GitHistoryPage extends HistoryPage implements RefsChangedListener,
 			createActions();
 		}
 
-		private static String formatAccelerator(int accelerator) {
-			return SWTKeySupport.getKeyFormatterForPlatform().format(
-					SWTKeySupport.convertAcceleratorToKeyStroke(accelerator));
-		}
-
 		private void createActions() {
 			createRepositorySwitchAction();
 			createFindToolbarAction();
@@ -534,21 +530,16 @@ public class GitHistoryPage extends HistoryPage implements RefsChangedListener,
 				@Override
 				public void setChecked(boolean checked) {
 					super.setChecked(checked);
-					int accelerator = getAccelerator();
 					if (checked) {
-						setToolTipText(
-								NLS.bind(UIText.GitHistoryPage_FindHideTooltip,
-										formatAccelerator(accelerator)));
+						setToolTipText(UIText.GitHistoryPage_FindHideTooltip);
 					} else {
-						setToolTipText(
-								NLS.bind(UIText.GitHistoryPage_FindShowTooltip,
-										formatAccelerator(accelerator)));
+						setToolTipText(UIText.GitHistoryPage_FindShowTooltip);
 					}
 				}
 
 			};
-			// TODO: how not to hard-wire this?
-			findAction.setAccelerator(SWT.MOD1 | 'F');
+			findAction.setActionDefinitionId(
+					IWorkbenchCommandConstants.EDIT_FIND_AND_REPLACE);
 			findAction.setEnabled(false);
 			// Gets enabled once we have commits
 			boolean isChecked = historyPage.store
