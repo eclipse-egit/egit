@@ -143,6 +143,24 @@
     },
     {
       "key": {
+        "uuid": "2a9a8980_113e4cab",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/CommonUtils.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 169,
+      "author": {
+        "id": 236689
+      },
+      "writtenOn": "2020-03-29T14:07:05Z",
+      "side": 1,
+      "message": "When writing the bug report, I had simple tag verions in mind. 9.0.0, 9.0.1, 9.1.2, 10.0.0, where the inverse \"natural\" ordering already more or less corrensponds to the time. For finding a version in the list, this variant will be easiest (what if there is a 10.0.0-Version, but many, many 9.x bugfix-versions created later? And it sounds like for JDT, a hierarchical structure would be needed as well).\n\nAll I wanted was to reverse the current ordering of tags in the Repositories View, because when comparing a local branch with a recent tag, you always may have to scroll through a long list of old tags; while allowing the user to restore the current sorting as the new one was to be default.\n\nIs it really worth the effort to turn this into a make-everything-configurable-in-all-possible-ways change? I am also not convinced of the usefulness of sorting branches by last commit date. This may cause the order of branches to change with every fetch.",
+      "parentUuid": "9ab39fed_0107ffdf",
+      "revId": "b5e6e2d5272d331acb4bbf95fef0633c7117a508",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "064ed987_81933531",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/CommonUtils.java",
         "patchSetId": 10
