@@ -41,7 +41,6 @@ import org.eclipse.egit.core.project.GitProjectData;
 import org.eclipse.egit.core.project.RepositoryMapping;
 import org.eclipse.egit.core.test.TestRepository;
 import org.eclipse.egit.ui.common.LocalRepositoryTestCase;
-import org.eclipse.egit.ui.internal.CommonUtils;
 import org.eclipse.egit.ui.internal.UIText;
 import org.eclipse.egit.ui.internal.clone.ProjectRecord;
 import org.eclipse.egit.ui.internal.clone.ProjectUtils;
@@ -263,8 +262,8 @@ public class SubmoduleFolderTest extends LocalRepositoryTestCase {
 
 	@Test
 	public void testRepoViewFollowSelection() throws Exception {
-		ICommandService srv = CommonUtils.getService(PlatformUI.getWorkbench(),
-				ICommandService.class);
+		ICommandService srv = PlatformUI.getWorkbench()
+				.getService(ICommandService.class);
 		State commandState = srv
 				.getCommand(RepositoriesView.LINK_WITH_SELECTION_ID)
 				.getState(RegistryToggleState.STATE_ID);

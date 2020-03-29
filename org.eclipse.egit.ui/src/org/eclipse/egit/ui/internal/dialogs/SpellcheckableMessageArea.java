@@ -495,7 +495,7 @@ public class SpellcheckableMessageArea extends Composite {
 	 *         found.
 	 */
 	protected IHandlerService getHandlerService() {
-		return CommonUtils.getService(PlatformUI.getWorkbench(), IHandlerService.class);
+		return PlatformUI.getWorkbench().getService(IHandlerService.class);
 	}
 
 	private SourceViewerDecorationSupport configureAnnotationPreferences() {

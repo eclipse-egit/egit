@@ -19,9 +19,9 @@ import static org.eclipse.egit.ui.internal.UIIcons.PUSH;
 import static org.eclipse.egit.ui.internal.UIText.GitActionContributor_ExpandAll;
 import static org.eclipse.egit.ui.internal.actions.ActionCommands.ADD_TO_INDEX;
 import static org.eclipse.egit.ui.internal.actions.ActionCommands.COMMIT_ACTION;
+import static org.eclipse.egit.ui.internal.actions.ActionCommands.CREATE_PATCH;
 import static org.eclipse.egit.ui.internal.actions.ActionCommands.IGNORE_ACTION;
 import static org.eclipse.egit.ui.internal.actions.ActionCommands.MERGE_TOOL_ACTION;
-import static org.eclipse.egit.ui.internal.actions.ActionCommands.CREATE_PATCH;
 import static org.eclipse.egit.ui.internal.actions.ActionCommands.PUSH_ACTION;
 import static org.eclipse.egit.ui.internal.actions.ActionCommands.REMOVE_FROM_INDEX;
 import static org.eclipse.egit.ui.internal.synchronize.model.SupportedContextActionsHelper.canPush;
@@ -35,7 +35,6 @@ import static org.eclipse.ui.menus.CommandContributionItem.STYLE_PUSH;
 import org.eclipse.core.expressions.IEvaluationContext;
 import org.eclipse.core.resources.IResource;
 import org.eclipse.core.runtime.IPath;
-import org.eclipse.egit.ui.internal.CommonUtils;
 import org.eclipse.egit.ui.internal.UIText;
 import org.eclipse.egit.ui.internal.resources.IResourceState;
 import org.eclipse.egit.ui.internal.resources.ResourceStateFactory;
@@ -149,7 +148,8 @@ class GitActionContributor extends SynchronizePageActionGroup {
 
 		IWorkbenchWindow activeWorkbenchWindow = workbench
 				.getActiveWorkbenchWindow();
-		IHandlerService hsr = CommonUtils.getService(activeWorkbenchWindow, IHandlerService.class);
+		IHandlerService hsr = activeWorkbenchWindow
+				.getService(IHandlerService.class);
 		IEvaluationContext ctx = hsr.getCurrentState();
 		ctx.addVariable(ACTIVE_MENU_SELECTION_NAME, getContext().getSelection());
 

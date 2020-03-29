@@ -31,7 +31,6 @@ import org.eclipse.core.expressions.IEvaluationContext;
 import org.eclipse.core.runtime.Adapters;
 import org.eclipse.core.runtime.Path;
 import org.eclipse.egit.core.internal.Utils;
-import org.eclipse.egit.ui.internal.CommonUtils;
 import org.eclipse.egit.ui.internal.RepositorySaveableFilter;
 import org.eclipse.egit.ui.internal.UIIcons;
 import org.eclipse.egit.ui.internal.UIText;
@@ -990,7 +989,8 @@ public class UIUtils {
 	 */
 	public static void notifySelectionChangedWithCurrentSelection(
 			ISelectionListener selectionListener, IServiceLocator serviceLocator) {
-		IHandlerService handlerService = CommonUtils.getService(serviceLocator, IHandlerService.class);
+		IHandlerService handlerService = serviceLocator
+				.getService(IHandlerService.class);
 		IEvaluationContext state = handlerService.getCurrentState();
 		// This seems to be the most reliable way to get the active part, it
 		// also returns a part when it is called while creating a view that is

@@ -28,7 +28,6 @@ import org.eclipse.egit.core.internal.indexdiff.IndexDiffCache;
 import org.eclipse.egit.core.internal.indexdiff.IndexDiffCacheEntry;
 import org.eclipse.egit.core.internal.indexdiff.IndexDiffData;
 import org.eclipse.egit.ui.Activator;
-import org.eclipse.egit.ui.internal.CommonUtils;
 import org.eclipse.egit.ui.internal.UIIcons;
 import org.eclipse.egit.ui.internal.UIText;
 import org.eclipse.egit.ui.internal.commands.ToggleCommand;
@@ -83,7 +82,8 @@ public class RepositoryTreeNodeDecorator extends GitDecorator
 	 * Constructs a repositories view label provider
 	 */
 	public RepositoryTreeNodeDecorator() {
-		ICommandService srv = CommonUtils.getService(PlatformUI.getWorkbench(), ICommandService.class);
+		ICommandService srv = PlatformUI.getWorkbench()
+				.getService(ICommandService.class);
 		verboseBranchModeState = srv
 				.getCommand(ToggleCommand.COMMIT_MESSAGE_DECORATION_ID)
 				.getState(RegistryToggleState.STATE_ID);

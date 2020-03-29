@@ -29,7 +29,6 @@ import org.eclipse.egit.core.project.RepositoryMapping;
 import org.eclipse.egit.ui.Activator;
 import org.eclipse.egit.ui.UIPreferences;
 import org.eclipse.egit.ui.UIUtils;
-import org.eclipse.egit.ui.internal.CommonUtils;
 import org.eclipse.egit.ui.internal.PreferenceBasedDateFormatter;
 import org.eclipse.egit.ui.internal.TreeColumnPatternFilter;
 import org.eclipse.egit.ui.internal.UIIcons;
@@ -416,9 +415,9 @@ public class ReflogView extends ViewPart implements RefsChangedListener, IShowIn
 
 		partListener = new VisibilityListener();
 		IWorkbenchPartSite site = getSite();
-		CommonUtils.getService(site, IPartService.class)
+		site.getService(IPartService.class)
 				.addPartListener(partListener);
-		ISelectionService service = CommonUtils.getService(site, ISelectionService.class);
+		ISelectionService service = site.getService(ISelectionService.class);
 		service.addPostSelectionListener(selectionChangedListener);
 
 		// Use current selection to populate reflog view
@@ -456,7 +455,8 @@ public class ReflogView extends ViewPart implements RefsChangedListener, IShowIn
 	}
 
 	private void activateContextService() {
-		IContextService contextService = CommonUtils.getService(getSite(), IContextService.class);
+		IContextService contextService = getSite()
+				.getService(IContextService.class);
 		if (contextService != null)
 			contextService.activateContext(VIEW_ID);
 
@@ -467,9 +467,10 @@ public class ReflogView extends ViewPart implements RefsChangedListener, IShowIn
 		InstanceScope.INSTANCE
 				.getNode(org.eclipse.egit.core.Activator.getPluginId())
 				.removePreferenceChangeListener(prefListener);
-		CommonUtils.getService(getSite(), IPartService.class)
+		getSite().getService(IPartService.class)
 				.removePartListener(partListener);
-		ISelectionService service = CommonUtils.getService(getSite(), ISelectionService.class);
+		ISelectionService service = getSite()
+				.getService(ISelectionService.class);
 		service.removePostSelectionListener(selectionChangedListener);
 		if (addRefsChangedListener != null) {
 			addRefsChangedListener.remove();

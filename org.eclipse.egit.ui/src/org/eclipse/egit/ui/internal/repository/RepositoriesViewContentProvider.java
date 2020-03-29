@@ -48,7 +48,6 @@ import org.eclipse.core.runtime.Status;
 import org.eclipse.egit.core.RepositoryCache;
 import org.eclipse.egit.core.RepositoryUtil;
 import org.eclipse.egit.ui.Activator;
-import org.eclipse.egit.ui.internal.CommonUtils;
 import org.eclipse.egit.ui.internal.UIText;
 import org.eclipse.egit.ui.internal.commands.ToggleCommand;
 import org.eclipse.egit.ui.internal.groups.RepositoryGroup;
@@ -131,7 +130,8 @@ public class RepositoriesViewContentProvider implements ITreeContentProvider {
 	public RepositoriesViewContentProvider(boolean showUnbornHead) {
 		super();
 		this.showUnbornHead = showUnbornHead;
-		ICommandService srv = CommonUtils.getService(PlatformUI.getWorkbench(), ICommandService.class);
+		ICommandService srv = PlatformUI.getWorkbench()
+				.getService(ICommandService.class);
 		branchHierarchy = srv.getCommand(ToggleCommand.BRANCH_HIERARCHY_ID)
 				.getState(RegistryToggleState.STATE_ID);
 	}

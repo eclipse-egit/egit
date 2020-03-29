@@ -1035,7 +1035,7 @@ public class StagingView extends ViewPart
 			}
 			@Override
 			protected IHandlerService getHandlerService() {
-				return CommonUtils.getService(getSite(), IHandlerService.class);
+				return getSite().getService(IHandlerService.class);
 			}
 		};
 		commitMessageText.setData(FormToolkit.KEY_DRAW_BORDER,
@@ -1276,11 +1276,9 @@ public class StagingView extends ViewPart
 				selectionChangedListener, site);
 
 		// react on selection changes
-		ISelectionService srv = CommonUtils.getService(site, ISelectionService.class);
+		ISelectionService srv = site.getService(ISelectionService.class);
 		srv.addPostSelectionListener(selectionChangedListener);
-		CommonUtils.getService(site, IPartService.class).addPartListener(
-				partListener);
-
+		site.getService(IPartService.class).addPartListener(partListener);
 
 		site.setSelectionProvider(new RepositorySelectionProvider(
 				new MultiViewerSelectionProvider(unstagedViewer, stagedViewer),
@@ -1304,8 +1302,8 @@ public class StagingView extends ViewPart
 
 		restoreSashFormWeights();
 
-		IWorkbenchSiteProgressService service = CommonUtils.getService(
-				getSite(), IWorkbenchSiteProgressService.class);
+		IWorkbenchSiteProgressService service = getSite()
+				.getService(IWorkbenchSiteProgressService.class);
 		if (service != null && reactOnSelection)
 			// If we are linked, each time IndexDiffUpdateJob starts, indicate
 			// that the view is busy (e.g. reload() will trigger this job in
@@ -4333,7 +4331,8 @@ public class StagingView extends ViewPart
 	private void schedule(Job job, boolean useRepositoryRule) {
 		if (useRepositoryRule)
 			job.setRule(RuleUtil.getRule(currentRepository));
-		IWorkbenchSiteProgressService service = CommonUtils.getService(getSite(), IWorkbenchSiteProgressService.class);
+		IWorkbenchSiteProgressService service = getSite()
+				.getService(IWorkbenchSiteProgressService.class);
 		if (service != null)
 			service.schedule(job, 0, true);
 		else
@@ -4370,9 +4369,9 @@ public class StagingView extends ViewPart
 	public void dispose() {
 		super.dispose();
 
-		ISelectionService srv = CommonUtils.getService(getSite(), ISelectionService.class);
+		ISelectionService srv = getSite().getService(ISelectionService.class);
 		srv.removePostSelectionListener(selectionChangedListener);
-		CommonUtils.getService(getSite(), IPartService.class)
+		getSite().getService(IPartService.class)
 				.removePartListener(partListener);
 
 		if (cacheEntry != null) {

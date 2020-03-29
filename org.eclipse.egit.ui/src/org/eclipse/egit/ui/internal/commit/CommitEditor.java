@@ -350,7 +350,7 @@ public class CommitEditor extends SharedHeaderFormEditor implements
 			}
 		};
 		toolbar.add(repositoryLabelControl);
-		CommonUtils.getService(getSite(), IPartService.class)
+		getSite().getService(IPartService.class)
 				.addPartListener(activationListener);
 		if (commit.isStash()) {
 			toolbar.add(createActionContributionItem(ActionCommands.STASH_APPLY,
@@ -459,7 +459,7 @@ public class CommitEditor extends SharedHeaderFormEditor implements
 	}
 
 	private void addContributions(IToolBarManager toolBarManager) {
-		IMenuService menuService = CommonUtils.getService(getSite(), IMenuService.class);
+		IMenuService menuService = getSite().getService(IMenuService.class);
 		if (menuService != null
 				&& toolBarManager instanceof ContributionManager) {
 			ContributionManager contributionManager = (ContributionManager) toolBarManager;
@@ -507,7 +507,7 @@ public class CommitEditor extends SharedHeaderFormEditor implements
 			removePageChangedListener(pageListener);
 			pageListener = null;
 		}
-		CommonUtils.getService(getSite(), IPartService.class)
+		getSite().getService(IPartService.class)
 				.removePartListener(activationListener);
 		refListenerHandle.remove();
 		headerFocusTracker.dispose();

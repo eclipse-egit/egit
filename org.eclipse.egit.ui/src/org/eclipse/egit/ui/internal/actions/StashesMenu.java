@@ -18,7 +18,6 @@ import java.util.List;
 
 import org.eclipse.core.expressions.IEvaluationContext;
 import org.eclipse.egit.ui.Activator;
-import org.eclipse.egit.ui.internal.CommonUtils;
 import org.eclipse.egit.ui.internal.UIIcons;
 import org.eclipse.egit.ui.internal.UIText;
 import org.eclipse.egit.ui.internal.commit.CommitEditor;
@@ -129,7 +128,8 @@ public class StashesMenu extends CompoundContributionItem implements
 		if (serviceLocator == null)
 			return null;
 
-		IHandlerService handlerService = CommonUtils.getService(serviceLocator, IHandlerService.class);
+		IHandlerService handlerService = serviceLocator
+				.getService(IHandlerService.class);
 		if (handlerService == null)
 			return null;
 

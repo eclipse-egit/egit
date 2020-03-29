@@ -24,7 +24,6 @@ import org.eclipse.core.runtime.SubMonitor;
 import org.eclipse.core.runtime.jobs.Job;
 import org.eclipse.egit.core.op.GarbageCollectOperation;
 import org.eclipse.egit.ui.Activator;
-import org.eclipse.egit.ui.internal.CommonUtils;
 import org.eclipse.egit.ui.internal.UIText;
 import org.eclipse.egit.ui.internal.repository.tree.RepositoryNode;
 import org.eclipse.jgit.lib.Repository;
@@ -91,8 +90,8 @@ public class GarbageCollectCommand extends
 		job.setUser(true);
 		IServiceLocator serviceLocator = HandlerUtil.getActiveSite(event);
 		if (serviceLocator != null) {
-			IWorkbenchSiteProgressService service = CommonUtils.getService(
-					serviceLocator, IWorkbenchSiteProgressService.class);
+			IWorkbenchSiteProgressService service = serviceLocator
+					.getService(IWorkbenchSiteProgressService.class);
 			service.schedule(job);
 		} else {
 			job.schedule();

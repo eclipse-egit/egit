@@ -42,7 +42,6 @@ import org.eclipse.core.runtime.jobs.Job;
 import org.eclipse.egit.core.RepositoryCache;
 import org.eclipse.egit.ui.Activator;
 import org.eclipse.egit.ui.JobFamilies;
-import org.eclipse.egit.ui.internal.CommonUtils;
 import org.eclipse.egit.ui.internal.UIText;
 import org.eclipse.egit.ui.internal.groups.RepositoryGroups;
 import org.eclipse.egit.ui.internal.repository.tree.RepositoryNode;
@@ -90,8 +89,8 @@ public class RemoveCommand extends
 		IServiceLocator serviceLocator = HandlerUtil.getActiveSite(event);
 		IWorkbenchSiteProgressService service = null;
 		if (serviceLocator != null) {
-			service = CommonUtils.getService(serviceLocator,
-					IWorkbenchSiteProgressService.class);
+			service = serviceLocator
+					.getService(IWorkbenchSiteProgressService.class);
 		}
 
 		// get selected nodes

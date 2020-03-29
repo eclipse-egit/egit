@@ -13,7 +13,6 @@
  *******************************************************************************/
 package org.eclipse.egit.ui.internal.actions;
 
-import org.eclipse.egit.ui.internal.CommonUtils;
 import org.eclipse.egit.ui.internal.UIText;
 import org.eclipse.egit.ui.internal.selection.SelectionRepositoryStateCache;
 import org.eclipse.egit.ui.internal.selection.SelectionUtils;
@@ -59,7 +58,7 @@ public class PushMenu extends CompoundContributionItem implements
 	@Override
 	public void initialize(IServiceLocator locator) {
 		this.serviceLocator = locator;
-		this.handlerService = CommonUtils.getService(locator, IHandlerService.class);
+		this.handlerService = locator.getService(IHandlerService.class);
 	}
 
 	@Override

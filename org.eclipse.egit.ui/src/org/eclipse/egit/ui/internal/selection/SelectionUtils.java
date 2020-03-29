@@ -529,7 +529,8 @@ public class SelectionUtils {
 		if (activeWorkbenchWindow == null) {
 			return null;
 		}
-		IHandlerService hsr = CommonUtils.getService(activeWorkbenchWindow, IHandlerService.class);
+		IHandlerService hsr = activeWorkbenchWindow
+				.getService(IHandlerService.class);
 		return hsr != null ? hsr.getCurrentState() : null;
 	}
 

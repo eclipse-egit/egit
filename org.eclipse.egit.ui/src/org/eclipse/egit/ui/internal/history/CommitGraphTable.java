@@ -324,8 +324,8 @@ class CommitGraphTable {
 				if (input == null || !input.isSingleFile())
 					return;
 
-				ICommandService srv = CommonUtils.getService(site, ICommandService.class);
-				IHandlerService hsrv = CommonUtils.getService(site, IHandlerService.class);
+				ICommandService srv = site.getService(ICommandService.class);
+				IHandlerService hsrv = site.getService(IHandlerService.class);
 				Command cmd = srv.getCommand(ShowVersionsHandler.COMMAND_ID);
 				Parameterization[] parms;
 				if (Activator.getDefault().getPreferenceStore().getBoolean(

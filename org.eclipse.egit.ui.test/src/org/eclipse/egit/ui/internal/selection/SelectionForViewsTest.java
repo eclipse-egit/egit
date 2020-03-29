@@ -26,7 +26,6 @@ import org.eclipse.egit.core.RepositoryUtil;
 import org.eclipse.egit.core.op.CloneOperation;
 import org.eclipse.egit.ui.Activator;
 import org.eclipse.egit.ui.JobFamilies;
-import org.eclipse.egit.ui.internal.CommonUtils;
 import org.eclipse.egit.ui.internal.UIText;
 import org.eclipse.egit.ui.internal.rebase.RebaseInteractiveView;
 import org.eclipse.egit.ui.internal.reflog.ReflogView;
@@ -100,8 +99,8 @@ public class SelectionForViewsTest extends GitRepositoriesViewTestBase {
 		repoUtil.addConfiguredRepository(localRepositoryDir);
 		repoUtil.addConfiguredRepository(clonedRepositoryDir);
 		repoUtil.addConfiguredRepository(remoteRepositoryDir); // it's bare
-		ICommandService srv = CommonUtils.getService(PlatformUI.getWorkbench(),
-				ICommandService.class);
+		ICommandService srv = PlatformUI.getWorkbench()
+				.getService(ICommandService.class);
 		linkWithSelectionState = srv
 				.getCommand(RepositoriesView.LINK_WITH_SELECTION_ID)
 				.getState(RegistryToggleState.STATE_ID);

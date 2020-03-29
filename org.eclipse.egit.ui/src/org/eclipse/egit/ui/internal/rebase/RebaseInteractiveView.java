@@ -256,7 +256,7 @@ public class RebaseInteractiveView extends ViewPart implements
 	}
 
 	private void removeListeners() {
-		ISelectionService srv = CommonUtils.getService(getSite(), ISelectionService.class);
+		ISelectionService srv = getSite().getService(ISelectionService.class);
 		srv.removePostSelectionListener(RepositoriesView.VIEW_ID,
 				selectionChangedListener);
 		if (currentPlan != null)
@@ -538,7 +538,7 @@ public class RebaseInteractiveView extends ViewPart implements
 			}
 		};
 
-		ISelectionService srv = CommonUtils.getService(getSite(), ISelectionService.class);
+		ISelectionService srv = getSite().getService(ISelectionService.class);
 		srv.addPostSelectionListener(selectionChangedListener);
 	}
 

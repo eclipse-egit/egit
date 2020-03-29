@@ -29,7 +29,6 @@ import org.eclipse.egit.core.synchronize.GitResourceVariantTreeSubscriber;
 import org.eclipse.egit.core.synchronize.dto.GitSynchronizeDataSet;
 import org.eclipse.egit.ui.Activator;
 import org.eclipse.egit.ui.UIPreferences;
-import org.eclipse.egit.ui.internal.CommonUtils;
 import org.eclipse.egit.ui.internal.UIText;
 import org.eclipse.jface.operation.IRunnableWithProgress;
 import org.eclipse.jgit.annotations.Nullable;
@@ -158,7 +157,8 @@ public class GitScopeUtil {
 
 		};
 
-		IProgressService progressService = CommonUtils.getService(part.getSite(), IProgressService.class);
+		IProgressService progressService = part.getSite()
+				.getService(IProgressService.class);
 		progressService.run(true, true, runnable);
 
 		return relatedChanges.toArray(new IResource[0]);

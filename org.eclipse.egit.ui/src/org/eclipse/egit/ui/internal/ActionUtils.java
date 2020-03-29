@@ -286,8 +286,8 @@ public final class ActionUtils {
 	 */
 	public static void setGlobalActions(Control control,
 			Collection<? extends IAction> actions) {
-		setGlobalActions(control, actions, CommonUtils
-				.getService(PlatformUI.getWorkbench(), IHandlerService.class));
+		setGlobalActions(control, actions,
+				PlatformUI.getWorkbench().getService(IHandlerService.class));
 	}
 
 	/**
