@@ -161,6 +161,24 @@
     },
     {
       "key": {
+        "uuid": "81dafbc9_58570a1e",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/CommonUtils.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 169,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2020-03-29T17:47:19Z",
+      "side": 1,
+      "message": "\u003e Is it really worth the effort to turn this into a make-everything-configurable-in-all-possible-ways\n \u003e change?\n\nHow about a completely different approach: keep the sort orders unchanged, but give the user a way to filter in the repositories view. Proof-of-concept in https://git.eclipse.org/r/#/c/160160/ .",
+      "parentUuid": "2a9a8980_113e4cab",
+      "revId": "b5e6e2d5272d331acb4bbf95fef0633c7117a508",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "064ed987_81933531",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/CommonUtils.java",
         "patchSetId": 10
