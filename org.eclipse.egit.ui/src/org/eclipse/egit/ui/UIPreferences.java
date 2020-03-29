@@ -26,6 +26,8 @@ package org.eclipse.egit.ui;
  */
 public class UIPreferences {
 	/** */
+	public final static String REPOSITORIES_VIEW_FILTERS = "repositories_view_filters"; //$NON-NLS-1$
+	/** */
 	public final static String RESOURCEHISTORY_SHOW_RELATIVE_DATE = "resourcehistory_show_relative_date"; //$NON-NLS-1$
 	/** */
 	public final static String RESOURCEHISTORY_SHOW_EMAIL_ADDRESSES = "resourcehistory_show_email_addresses"; //$NON-NLS-1$
