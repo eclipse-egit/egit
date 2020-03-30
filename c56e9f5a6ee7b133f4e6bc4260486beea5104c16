@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "0abf7da0_c07e5514",
+        "filename": "org.eclipse.egit.ui/plugin.xml",
+        "patchSetId": 2
+      },
+      "lineNbr": 7238,
+      "author": {
+        "id": 236689
+      },
+      "writtenOn": "2020-03-30T17:11:40Z",
+      "side": 1,
+      "message": "Done... forgot the %",
+      "parentUuid": "cec1ea74_f939083a",
+      "range": {
+        "startLine": 7238,
+        "startChar": 18,
+        "endLine": 7238,
+        "endChar": 35
+      },
+      "revId": "c56e9f5a6ee7b133f4e6bc4260486beea5104c16",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c69b4dbf_291f3116",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/commit/DiffEditor.java",
         "patchSetId": 2
@@ -36,6 +60,30 @@
       "writtenOn": "2020-03-29T20:42:25Z",
       "side": 1,
       "message": "Could use getSite().getService(IContextService.class) directly.",
+      "range": {
+        "startLine": 262,
+        "startChar": 4,
+        "endLine": 262,
+        "endChar": 60
+      },
+      "revId": "c56e9f5a6ee7b133f4e6bc4260486beea5104c16",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "0f30e043_89d73bee",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/commit/DiffEditor.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 262,
+      "author": {
+        "id": 236689
+      },
+      "writtenOn": "2020-03-30T17:11:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c69b4dbf_291f3116",
       "range": {
         "startLine": 262,
         "startChar": 4,
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "03fb933c_ccf772ff",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/commit/DiffEditorOutlinePage.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 708,
+      "author": {
+        "id": 236689
+      },
+      "writtenOn": "2020-03-30T17:11:40Z",
+      "side": 1,
+      "message": "Done, although LF did not work with Windows, used CR instead.",
+      "parentUuid": "999ca1dd_da0ccbd9",
+      "range": {
+        "startLine": 708,
+        "startChar": 22,
+        "endLine": 708,
+        "endChar": 26
+      },
+      "revId": "c56e9f5a6ee7b133f4e6bc4260486beea5104c16",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e1d5ed68_a4557eab",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/commit/DiffEditorOutlinePage.java",
         "patchSetId": 2
@@ -94,6 +166,30 @@
     },
     {
       "key": {
+        "uuid": "f35750a8_c5681b56",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/commit/DiffEditorOutlinePage.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 738,
+      "author": {
+        "id": 236689
+      },
+      "writtenOn": "2020-03-30T17:11:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e1d5ed68_a4557eab",
+      "range": {
+        "startLine": 738,
+        "startChar": 4,
+        "endLine": 738,
+        "endChar": 40
+      },
+      "revId": "c56e9f5a6ee7b133f4e6bc4260486beea5104c16",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7590f1a2_baf4a093",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/commit/DiffViewer.java",
         "patchSetId": 2
@@ -105,6 +201,24 @@
       "writtenOn": "2020-03-29T20:42:25Z",
       "side": 1,
       "message": "Set context \u003d null again?",
+      "revId": "c56e9f5a6ee7b133f4e6bc4260486beea5104c16",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9743a249_590bd5f6",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/commit/DiffViewer.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 354,
+      "author": {
+        "id": 236689
+      },
+      "writtenOn": "2020-03-30T17:11:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7590f1a2_baf4a093",
       "revId": "c56e9f5a6ee7b133f4e6bc4260486beea5104c16",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
