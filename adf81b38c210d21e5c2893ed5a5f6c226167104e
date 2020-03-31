@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fcedf259_c1d439e2",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/commit/DiffEditorOutlinePage.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2020-03-31T20:58:08Z",
+      "side": 1,
+      "message": "Sorry, a dependency on JDT is a no go for EGit.",
+      "revId": "adf81b38c210d21e5c2893ed5a5f6c226167104e",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "d0cf7e7b_d499ecb3",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/commit/DiffEditorOutlinePage.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 731,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2020-03-31T20:58:08Z",
+      "side": 1,
+      "message": "This won\u0027t do. It logs PatternSyntaxExceptions. Just enter [ or \\g.",
+      "revId": "adf81b38c210d21e5c2893ed5a5f6c226167104e",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
