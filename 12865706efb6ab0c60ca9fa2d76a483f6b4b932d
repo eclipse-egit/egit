@@ -55,6 +55,24 @@
     },
     {
       "key": {
+        "uuid": "4ad88546_594c5c51",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/commit/DiffEditor.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 344,
+      "author": {
+        "id": 236689
+      },
+      "writtenOn": "2020-04-01T11:03:44Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5390480b_f918a6f0",
+      "revId": "12865706efb6ab0c60ca9fa2d76a483f6b4b932d",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7e7d5066_a93aa944",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/commit/DiffEditorOutlinePage.java",
         "patchSetId": 6
@@ -66,6 +84,24 @@
       "writtenOn": "2020-04-01T07:39:58Z",
       "side": 1,
       "message": "Missing blank line. Don\u0027t know why the formatter doesn\u0027t add it in some cases.",
+      "revId": "12865706efb6ab0c60ca9fa2d76a483f6b4b932d",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "bce09e89_5c5ee852",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/commit/DiffEditorOutlinePage.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 708,
+      "author": {
+        "id": 236689
+      },
+      "writtenOn": "2020-04-01T11:03:44Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7e7d5066_a93aa944",
       "revId": "12865706efb6ab0c60ca9fa2d76a483f6b4b932d",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
@@ -89,6 +125,24 @@
     },
     {
       "key": {
+        "uuid": "10f19e94_23ca255a",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/commit/DiffEditorOutlinePage.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 711,
+      "author": {
+        "id": 236689
+      },
+      "writtenOn": "2020-04-01T11:03:44Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fcc0ddde_0610a4a5",
+      "revId": "12865706efb6ab0c60ca9fa2d76a483f6b4b932d",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0642c15b_c0571488",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/commit/DiffEditorOutlinePage.java",
         "patchSetId": 6
@@ -106,6 +160,24 @@
     },
     {
       "key": {
+        "uuid": "ec2a8423_c96899e4",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/commit/DiffEditorOutlinePage.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 733,
+      "author": {
+        "id": 236689
+      },
+      "writtenOn": "2020-04-01T11:03:44Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0642c15b_c0571488",
+      "revId": "12865706efb6ab0c60ca9fa2d76a483f6b4b932d",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9712c1fc_264d5ce2",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/commit/DiffEditorOutlinePage.java",
         "patchSetId": 6
@@ -117,6 +189,24 @@
       "writtenOn": "2020-04-01T07:39:58Z",
       "side": 1,
       "message": "And then here\n\n  if (result \u0026\u0026 element instanceof FileDiffRegion \u0026\u0026 firstMatch) {\n    firstMatch \u003d false;\n    // set selection\n  }",
+      "revId": "12865706efb6ab0c60ca9fa2d76a483f6b4b932d",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "f0301203_acbc3e66",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/commit/DiffEditorOutlinePage.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 740,
+      "author": {
+        "id": 236689
+      },
+      "writtenOn": "2020-04-01T11:03:44Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9712c1fc_264d5ce2",
       "revId": "12865706efb6ab0c60ca9fa2d76a483f6b4b932d",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
@@ -205,6 +295,24 @@
       "writtenOn": "2020-04-01T07:39:58Z",
       "side": 1,
       "message": "Missing blank line.",
+      "revId": "12865706efb6ab0c60ca9fa2d76a483f6b4b932d",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c3015a46_dcb2841e",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/commit/DiffEditorOutlinePage.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 784,
+      "author": {
+        "id": 236689
+      },
+      "writtenOn": "2020-04-01T11:03:44Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a6e8ebcd_ed696457",
       "revId": "12865706efb6ab0c60ca9fa2d76a483f6b4b932d",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
