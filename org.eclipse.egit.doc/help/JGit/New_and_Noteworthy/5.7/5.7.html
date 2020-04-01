@@ -2,13 +2,13 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 	<head>
 		<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
-		<title>JGit 5.6 New and Noteworthy</title>
+		<title>JGit 5.7 New and Noteworthy</title>
 		<link type="text/css" rel="stylesheet" href="../../../book.css"/>
 	</head>
 	<body>
 		<table class="navigation" style="width: 100%;" border="0" summary="navigation">
 			<tr>
-				<th style="width: 100%" align="center" colspan="3">JGit 5.6 New and Noteworthy</th>
+				<th style="width: 100%" align="center" colspan="3">JGit 5.7 New and Noteworthy</th>
 			</tr>
 			<tr>
 				<td style="width: 20%" align="left"></td>
@@ -27,22 +27,28 @@
 		</table><hr class="navigation-separator"/>
 		<h1 id="JGit">JGit</h1>
 		<h2 id="Reftable">Reftable</h2>
-		<p>FileReftableDatabase is a new Reftable implementation for JGit's standard file storage backend besides DfsReftableDatabase providing a Reftable implementation for dfs storage API based backends.</p>
-		<p>Reftable is a binary, block-based storage format for the ref-database. It provides several advantages over the traditional packed + loose refs storage.</p>
-		<p>Storage format:</p>
 		<ul>
-			<li>O(1) write performance, even for deletions and transactions.</li>
-			<li>atomic updates to the ref database.</li>
-			<li>O(log N) lookup and prefix scans</li>
-			<li>free from restrictions imposed by the file system: it is case-sensitive even on case-insensitive file systems, and has no inherent limitations for directory/file conflicts</li>
+			<li>The repository layout for reftable format was improved. Previously, the list of tables was in <code>.git/refs</code>. This makes repository detection fail in older clients, which is undesirable. This proposal was discussed and approved on the git@vger list at [1]. For backward compatibility, JGit could detect a file under <code>.git/refs</code> and use it as a reftable list.</li>
 		</ul>
+		<p>
+			<br/>
+			The new layout addresses the following problems:
+		</p>
 		<ul>
-			<li>Prefix compression reduces space usage for repetitive ref names, such as gerrit's refs/changes/xx/xxxxx format.</li>
-			<li>FileReftableDatabase is based on FileReftableStack, which does compactions inline. This is simple, and has good median performance, but every so often it will rewrite the entire ref database.</li>
+			<li>old git clients will not recognize reftable-based repositories, and look at encompassing directories.</li>
+			<li>Poorly written tools might write directly into <code>.git/refs/heads/BRANCH</code>.</li>
 		</ul>
+		<p>Since we consider JGit reftable as experimental (git-core doesn't support it yet), we have no backward compatibility. If you created a repository with reftable between mid-Nov 2019 and now, you can do the following to convert:</p>
+		<pre>mv .git/refs .git/reftable/tables.list
+git config core.repositoryformatversion 1
+git config extensions.refStorage reftable
+</pre>
+		<p>[1] 
+			<a href="https://lore.kernel.org/git/CAFQ2z_PvKiz==GyS6J1H1uG0FRPL86JvDj+LjX1We4-yCSVQ+g@mail.gmail.com" target="egit_external">https://lore.kernel.org/git/CAFQ2z_PvKiz==GyS6J1H1uG0FRPL86JvDj+LjX1We4-yCSVQ+g@mail.gmail.com</a>
+		</p>
 		<h2 id="Other_Changes">Other Changes</h2>
 		<p>The complete list of new features and bug fixes is available in the 
-			<a href="https://projects.eclipse.org/projects/technology.jgit/releases/5.6.0/" target="egit_external">release notes</a>.
+			<a href="https://projects.eclipse.org/projects/technology.jgit/releases/5.7.0/" target="egit_external">release notes</a>.
 		</p><hr class="navigation-separator"/>
 		<table class="navigation" style="width: 100%;" border="0" summary="navigation">
 			<tr>
