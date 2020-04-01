@@ -1,0 +1,129 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5390480b_f918a6f0",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/commit/DiffEditor.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 344,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2020-04-01T07:39:58Z",
+      "side": 1,
+      "message": "Add here\n\n  if (outlinePage !\u003d null) {\n    outlinePage.setSelection(new StructuredSelection(selected));\n  }\n\nto make the normal outline page follow the selection in the quick outline.",
+      "revId": "12865706efb6ab0c60ca9fa2d76a483f6b4b932d",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7e7d5066_a93aa944",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/commit/DiffEditorOutlinePage.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 708,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2020-04-01T07:39:58Z",
+      "side": 1,
+      "message": "Missing blank line. Don\u0027t know why the formatter doesn\u0027t add it in some cases.",
+      "revId": "12865706efb6ab0c60ca9fa2d76a483f6b4b932d",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "fcc0ddde_0610a4a5",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/commit/DiffEditorOutlinePage.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 711,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2020-04-01T07:39:58Z",
+      "side": 1,
+      "message": "Doesn\u0027t react on NumPad-Enter. In the tag filtering, I had to check for e.character \u003d\u003d \u0027\\n\u0027 || e.character \u003d\u003d \u0027\\r\u0027. (Perhaps one of them would be sfficient, but I don\u0027t know which one on which platforms, so I check both.)",
+      "revId": "12865706efb6ab0c60ca9fa2d76a483f6b4b932d",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "0642c15b_c0571488",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/commit/DiffEditorOutlinePage.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 733,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2020-04-01T07:39:58Z",
+      "side": 1,
+      "message": "Is that AtomicBoolean needed? I would have given this ViewerFilter a field\n\n  private boolean firstMatch \u003d true;",
+      "revId": "12865706efb6ab0c60ca9fa2d76a483f6b4b932d",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9712c1fc_264d5ce2",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/commit/DiffEditorOutlinePage.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 740,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2020-04-01T07:39:58Z",
+      "side": 1,
+      "message": "And then here\n\n  if (result \u0026\u0026 element instanceof FileDiffRegion \u0026\u0026 firstMatch) {\n    firstMatch \u003d false;\n    // set selection\n  }",
+      "revId": "12865706efb6ab0c60ca9fa2d76a483f6b4b932d",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3209f3a2_4ef605d0",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/commit/DiffEditorOutlinePage.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 768,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2020-04-01T07:39:58Z",
+      "side": 1,
+      "message": "All this can be simplified to\n\n  return pattern.matches(path.substring(path.lastIndexOf(\u0027/\u0027) + 1));",
+      "range": {
+        "startLine": 760,
+        "startChar": 4,
+        "endLine": 768,
+        "endChar": 33
+      },
+      "revId": "12865706efb6ab0c60ca9fa2d76a483f6b4b932d",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a6e8ebcd_ed696457",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/commit/DiffEditorOutlinePage.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 784,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2020-04-01T07:39:58Z",
+      "side": 1,
+      "message": "Missing blank line.",
+      "revId": "12865706efb6ab0c60ca9fa2d76a483f6b4b932d",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
