@@ -34,6 +34,24 @@
       "revId": "72e0c8cfd1de01d9e8a374eb7c94cfed46f4e7e8",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a7810312_a91766ab",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/repository/RepositoriesViewContentProvider.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 558,
+      "author": {
+        "id": 236689
+      },
+      "writtenOn": "2020-04-01T11:39:11Z",
+      "side": 1,
+      "message": "I can live with both versions and maybe the implicit start wildcard is indeed more user-friendly. It is easier to understand what is happening if \"unexpected\" matches are shown rather than noting.",
+      "parentUuid": "ec6b5caf_70266c0e",
+      "revId": "72e0c8cfd1de01d9e8a374eb7c94cfed46f4e7e8",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
     }
   ]
 }
