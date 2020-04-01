@@ -73,6 +73,24 @@
     },
     {
       "key": {
+        "uuid": "8f677ced_f96aeb2a",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/commit/DiffEditorOutlinePage.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2020-04-01T06:33:45Z",
+      "side": 1,
+      "message": "Yes, we have that optional dependency (i.e., needed at compile time, but it\u0027ll work if not present at runtime). But here it would be required at run-time. Which means it\u0027d fail for users using the Eclipse CDT package, which AFAIK doesn\u0027t include JDT at all.\n\nSearchPattern does do CamelCase search. Should be as simple as\n\n  SearchPattern matcher \u003d new SearchPattern();\n  matcher.setPattern(pattern);\n\nand then using matcher.matches(). The class figures out from the pattern itself which kind of match to use. Regexps are not needed.\n\nBTW converting a wildcard string into a regexp is not that trivial. Easiest way I know is to use \\Q and \\E to quote everything that is not an un-escaped * or ? and then remove all empty \\Q\\E pairs at the end, then compile the pattern. Regexps are also *slow*. See also bug 508611. But with SearchPattern I don\u0027t think we need regexps here at all.\n\nIn fact, I learned about SearchPattern from this code here, and it helped me avoid a dependency on the internal StringMatcher in org.eclipse.team in the tag filtering. :-)",
+      "parentUuid": "1d6f496d_e5557982",
+      "revId": "adf81b38c210d21e5c2893ed5a5f6c226167104e",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d0cf7e7b_d499ecb3",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/commit/DiffEditorOutlinePage.java",
         "patchSetId": 5
