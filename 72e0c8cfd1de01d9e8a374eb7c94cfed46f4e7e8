@@ -16,6 +16,24 @@
       "revId": "72e0c8cfd1de01d9e8a374eb7c94cfed46f4e7e8",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ec6b5caf_70266c0e",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/repository/RepositoriesViewContentProvider.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 558,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2020-04-01T07:47:52Z",
+      "side": 1,
+      "message": "I was wondering about that, too. But EGit tags are named \"v5.6...\", so if we flip this and I type any character except v the list will be empty.",
+      "parentUuid": "38041128_e193895a",
+      "revId": "72e0c8cfd1de01d9e8a374eb7c94cfed46f4e7e8",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
     }
   ]
 }
