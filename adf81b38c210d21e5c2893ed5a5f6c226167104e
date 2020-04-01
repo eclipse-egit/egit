@@ -37,6 +37,42 @@
     },
     {
       "key": {
+        "uuid": "b07e0c0b_d0bb00a9",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/commit/DiffEditorOutlinePage.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 236689
+      },
+      "writtenOn": "2020-04-01T06:17:39Z",
+      "side": 1,
+      "message": "I\u0027ll give it a try. I was looking for an easy way not to reimplement the camel case matching.",
+      "parentUuid": "aba6c9bf_1728bfce",
+      "revId": "adf81b38c210d21e5c2893ed5a5f6c226167104e",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1d6f496d_e5557982",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/commit/DiffEditorOutlinePage.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 236689
+      },
+      "writtenOn": "2020-04-01T06:17:39Z",
+      "side": 1,
+      "message": "Oh. There already was an optional dependency in the Manifest and without it Activator does not compile...",
+      "parentUuid": "fcedf259_c1d439e2",
+      "revId": "adf81b38c210d21e5c2893ed5a5f6c226167104e",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d0cf7e7b_d499ecb3",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/commit/DiffEditorOutlinePage.java",
         "patchSetId": 5
@@ -48,6 +84,24 @@
       "writtenOn": "2020-03-31T20:58:08Z",
       "side": 1,
       "message": "This won\u0027t do. It logs PatternSyntaxExceptions. Just enter [ or \\g.",
+      "revId": "adf81b38c210d21e5c2893ed5a5f6c226167104e",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1daf1de9_e5b3d04b",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/commit/DiffEditorOutlinePage.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 731,
+      "author": {
+        "id": 236689
+      },
+      "writtenOn": "2020-04-01T06:17:39Z",
+      "side": 1,
+      "message": "I\u0027ll have a look at what you did for the tag matching ;-)",
+      "parentUuid": "d0cf7e7b_d499ecb3",
       "revId": "adf81b38c210d21e5c2893ed5a5f6c226167104e",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
