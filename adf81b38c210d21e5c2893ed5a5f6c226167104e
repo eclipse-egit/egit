@@ -91,6 +91,24 @@
     },
     {
       "key": {
+        "uuid": "6172cb19_f16d07b3",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/commit/DiffEditorOutlinePage.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 236689
+      },
+      "writtenOn": "2020-04-01T06:58:53Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8f677ced_f96aeb2a",
+      "revId": "adf81b38c210d21e5c2893ed5a5f6c226167104e",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d0cf7e7b_d499ecb3",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/commit/DiffEditorOutlinePage.java",
         "patchSetId": 5
