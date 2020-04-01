@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "38041128_e193895a",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/repository/RepositoriesViewContentProvider.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 558,
+      "author": {
+        "id": 236689
+      },
+      "writtenOn": "2020-04-01T07:19:08Z",
+      "side": 1,
+      "message": "I am wondering if this is necessary. Isn\u0027t new SearchPattern() enough? Basically, you make infix search the default. But prefix search is more likely to be wanted, isn\u0027t it? If I look  for a version 8.7.0 and start typing 8. the list will contain 1.8.X, 2.8.X,... before coming to 8.7 (which is way down due to the sorting).\nI\u0027d be happy to type \"*8\" when looking for a version having an 8 somewhere in the middle.",
+      "revId": "72e0c8cfd1de01d9e8a374eb7c94cfed46f4e7e8",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
