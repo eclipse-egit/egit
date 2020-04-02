@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "c7160a47_672f7938",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/repository/FilterCache.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2020-04-02T16:21:54Z",
+      "side": 1,
+      "message": "Perhaps this is not needed. Removed.",
+      "parentUuid": "317862e3_82e8520d",
+      "revId": "23ef310b6416ab42d726bad945fe251d6aac6725",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "154e17c5_c3da51fd",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/repository/FilterCache.java",
         "patchSetId": 9
