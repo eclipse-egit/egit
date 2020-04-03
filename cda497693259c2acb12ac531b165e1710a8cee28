@@ -1,0 +1,147 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d3b73b19_16ae7703",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/commit/DiffEditorOutlinePage.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 698,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2020-04-03T14:47:08Z",
+      "side": 1,
+      "message": "private",
+      "range": {
+        "startLine": 698,
+        "startChar": 2,
+        "endLine": 698,
+        "endChar": 11
+      },
+      "revId": "cda497693259c2acb12ac531b165e1710a8cee28",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "22b6b91e_2fc6d68a",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/commit/DiffEditorOutlinePage.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 705,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2020-04-03T14:47:08Z",
+      "side": 1,
+      "message": "FILL_HORIZONTAL is \"Not recommended\" according to its javadoc.\n\nThe modern way to do this would be\n\n  GridDataFactory.fillDefaults().align(SWT.FILL, SWT.CENTER)\n    .grab(true, false).applyTo(filterText);",
+      "range": {
+        "startLine": 702,
+        "startChar": 3,
+        "endLine": 705,
+        "endChar": 34
+      },
+      "revId": "cda497693259c2acb12ac531b165e1710a8cee28",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "0c90737a_f16eb1ee",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/commit/DiffEditorOutlinePage.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 716,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2020-04-03T14:47:08Z",
+      "side": 1,
+      "message": "I need to hit ARROW-DOWN twice to get something selected if there\u0027s no selection yet. Perhaps select the first item then?",
+      "revId": "cda497693259c2acb12ac531b165e1710a8cee28",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1700590e_726f360d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/commit/DiffEditorOutlinePage.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 722,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2020-04-03T14:47:08Z",
+      "side": 1,
+      "message": "Not needed; since the Text object is created above, it is empty anyway.\n\nPerhaps add filterText.setMessage() with a hint as to what to do? Just \"Filter...\" would be OK; the footer gives a more elaborate hint anyway.",
+      "range": {
+        "startLine": 722,
+        "startChar": 3,
+        "endLine": 722,
+        "endChar": 21
+      },
+      "revId": "cda497693259c2acb12ac531b165e1710a8cee28",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "2acd4292_53063973",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/commit/DiffEditorOutlinePage.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 733,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2020-04-03T14:47:08Z",
+      "side": 1,
+      "message": "Hmmm. Open commit e9fbd502f7b1b8d46a8cbb2aea4ddd3b9745157d of EGit, open the diff tab. Invoke the quick outline. Type DO -\u003e no match. That\u0027s fine. Now hit Backspace, deleting the \"O\": DiffEditorOutlinePage.java is shown twice.",
+      "revId": "cda497693259c2acb12ac531b165e1710a8cee28",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "80fc1bb5_4aba78c0",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/commit/DiffEditorOutlinePage.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 827,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2020-04-03T14:47:08Z",
+      "side": 1,
+      "message": "I would have overridden close instead.",
+      "revId": "cda497693259c2acb12ac531b165e1710a8cee28",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "36cfa87a_ae0b8971",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/commit/DiffViewer.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 348,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2020-04-03T14:47:08Z",
+      "side": 1,
+      "message": "Factor out into a constant at the top of the class.",
+      "range": {
+        "startLine": 348,
+        "startChar": 24,
+        "endLine": 348,
+        "endChar": 56
+      },
+      "revId": "cda497693259c2acb12ac531b165e1710a8cee28",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
