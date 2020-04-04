@@ -592,7 +592,7 @@ public class RepositoriesViewContentProvider implements ITreeContentProvider {
 				break;
 			}
 		}
-		if ((l - i) % 2 == 1) {
+		if ((l - i) % 2 != 0) {
 			return text + '\\';
 		}
 		return text;
