@@ -1389,11 +1389,8 @@ public class StagingView extends ViewPart
 		boolean indexDiffAvailable = indexDiffAvailable(indexDiff);
 		boolean noConflicts = noConflicts(indexDiff);
 
-		boolean hasChange = amendPreviousCommitAction.isChecked()
-				|| stagedViewer.getTree().getItemCount() > 0;
-
-		boolean commitEnabled = noConflicts && indexDiffAvailable && hasChange
-				&& !isCommitBlocked();
+		boolean commitEnabled = noConflicts && indexDiffAvailable
+				&& isCommitPossible() && !isCommitBlocked();
 
 		boolean commitAndPushEnabled = commitAndPushEnabled(commitEnabled);
 
@@ -4264,7 +4261,7 @@ public class StagingView extends ViewPart
 	 * @return whether a job was scheduled
 	 */
 	private boolean internalCommit(boolean pushUpstream, Runnable afterJob) {
-		if (!isCommitWithoutFilesAllowed()) {
+		if (!isCommitPossible()) {
 			MessageDialog md = new MessageDialog(getSite().getShell(),
 					UIText.StagingView_committingNotPossible, null,
 					UIText.StagingView_noStagedFiles, MessageDialog.ERROR,
@@ -4347,14 +4344,10 @@ public class StagingView extends ViewPart
 			job.schedule();
 	}
 
-	private boolean isCommitWithoutFilesAllowed() {
-		if (stagedViewer.getTree().getItemCount() > 0)
-			return true;
-
-		if (amendPreviousCommitAction.isChecked())
-			return true;
-
-		return CommitHelper.isCommitWithoutFilesAllowed(currentRepository);
+	private boolean isCommitPossible() {
+		return stagedViewer.getTree().getItemCount() > 0
+				|| amendPreviousCommitAction.isChecked()
+				|| CommitHelper.isCommitWithoutFilesAllowed(currentRepository);
 	}
 
 	@Override
