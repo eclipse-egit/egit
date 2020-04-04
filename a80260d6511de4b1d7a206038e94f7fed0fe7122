@@ -16,6 +16,24 @@
       "revId": "a80260d6511de4b1d7a206038e94f7fed0fe7122",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "bf75f434_2a0cc9b3",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 236689
+      },
+      "writtenOn": "2020-04-04T05:29:18Z",
+      "side": 1,
+      "message": "Done.\nIndeed. When I was scanning through the bug list, I saw this one and the double-clicking happened to me as well. I did not check whether there was an earlier bug for the same issue.",
+      "parentUuid": "f3591bdd_f47378da",
+      "revId": "a80260d6511de4b1d7a206038e94f7fed0fe7122",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
     }
   ]
 }
