@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "e73a485f_cebd9024",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/staging/StagingView.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 4274,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2020-04-04T12:08:42Z",
+      "side": 1,
+      "message": "Answering myself: yes, it is, because it can be invoked also via Ctrl-Enter in the text area.",
+      "parentUuid": "d578fec8_482d256f",
+      "range": {
+        "startLine": 4267,
+        "startChar": 2,
+        "endLine": 4274,
+        "endChar": 3
+      },
+      "revId": "0498bada02b90e1c5505cf21b7000278a5eaae91",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "38adfe6f_56213755",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/staging/StagingView.java",
         "patchSetId": 6
@@ -36,6 +60,30 @@
       "writtenOn": "2020-04-04T11:17:19Z",
       "side": 1,
       "message": "Hmmm. This is missing now in the enablement checks. It looks for repo state MERGE_RESOLVED.",
+      "range": {
+        "startLine": 4357,
+        "startChar": 9,
+        "endLine": 4357,
+        "endChar": 49
+      },
+      "revId": "0498bada02b90e1c5505cf21b7000278a5eaae91",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "8a2e3085_1c234a54",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/staging/StagingView.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 4357,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2020-04-04T12:08:42Z",
+      "side": 1,
+      "message": "See https://git.eclipse.org/r/#/c/160478/ .",
+      "parentUuid": "38adfe6f_56213755",
       "range": {
         "startLine": 4357,
         "startChar": 9,
