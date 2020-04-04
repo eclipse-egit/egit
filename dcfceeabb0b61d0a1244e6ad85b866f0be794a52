@@ -42,6 +42,24 @@
     },
     {
       "key": {
+        "uuid": "581eb433_134c38fe",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/clone/SourceBranchPage.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 249,
+      "author": {
+        "id": 236689
+      },
+      "writtenOn": "2020-04-04T15:16:23Z",
+      "side": 1,
+      "message": "The code is basically the same as in the advanced fetch configuration - same layout, same texts. a) For the initial functional review, b) so users can easily recognize that they configure the same thing",
+      "parentUuid": "7a215a15_be0976e5",
+      "revId": "dcfceeabb0b61d0a1244e6ad85b866f0be794a52",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "27926942_f1633fda",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/clone/SourceBranchPage.java",
         "patchSetId": 4
@@ -53,6 +71,24 @@
       "writtenOn": "2020-04-04T14:54:35Z",
       "side": 1,
       "message": "The messages are a bit strange. First, who is \"we\"? Second, since the repo isn\u0027t cloned yet, of course it doesn\u0027t have anything yet. Third, I believe this applies to all tags, not just annotated tags.",
+      "revId": "dcfceeabb0b61d0a1244e6ad85b866f0be794a52",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "8aa4fbfc_4f54fe31",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/clone/SourceBranchPage.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 258,
+      "author": {
+        "id": 236689
+      },
+      "writtenOn": "2020-04-04T15:16:23Z",
+      "side": 1,
+      "message": "I must admit, I did not pay close attention to the actual texts. For the above mentioned reasons, I reused everything.",
+      "parentUuid": "27926942_f1633fda",
       "revId": "dcfceeabb0b61d0a1244e6ad85b866f0be794a52",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
