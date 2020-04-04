@@ -93,6 +93,30 @@
       "revId": "0498bada02b90e1c5505cf21b7000278a5eaae91",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "e51b114c_fc8cbfe4",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/staging/StagingView.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 4357,
+      "author": {
+        "id": 236689
+      },
+      "writtenOn": "2020-04-04T15:08:32Z",
+      "side": 1,
+      "message": "So basically the hasChange-Variable from line 1392 can be set via isCommitWithoutFilesAllowed().\nShouldn\u0027t the method name be isCommitAllowed (if the stageViewer-tree has items there are files)?",
+      "parentUuid": "8a2e3085_1c234a54",
+      "range": {
+        "startLine": 4357,
+        "startChar": 9,
+        "endLine": 4357,
+        "endChar": 49
+      },
+      "revId": "0498bada02b90e1c5505cf21b7000278a5eaae91",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
     }
   ]
 }
