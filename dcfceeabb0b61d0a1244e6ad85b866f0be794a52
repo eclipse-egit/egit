@@ -1,0 +1,61 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a5e62b78_9a02b60a",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/clone/SourceBranchPage.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2020-04-04T14:54:35Z",
+      "side": 1,
+      "message": "Typo.",
+      "range": {
+        "startLine": 88,
+        "startChar": 16,
+        "endLine": 88,
+        "endChar": 24
+      },
+      "revId": "dcfceeabb0b61d0a1244e6ad85b866f0be794a52",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7a215a15_be0976e5",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/clone/SourceBranchPage.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 249,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2020-04-04T14:54:35Z",
+      "side": 1,
+      "message": "This gives a fairly large group with three radio buttons. Would a drop-down combo look better?",
+      "revId": "dcfceeabb0b61d0a1244e6ad85b866f0be794a52",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "27926942_f1633fda",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/clone/SourceBranchPage.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 258,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2020-04-04T14:54:35Z",
+      "side": 1,
+      "message": "The messages are a bit strange. First, who is \"we\"? Second, since the repo isn\u0027t cloned yet, of course it doesn\u0027t have anything yet. Third, I believe this applies to all tags, not just annotated tags.",
+      "revId": "dcfceeabb0b61d0a1244e6ad85b866f0be794a52",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
