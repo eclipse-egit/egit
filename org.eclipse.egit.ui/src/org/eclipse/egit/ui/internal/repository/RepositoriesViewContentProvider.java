@@ -75,6 +75,7 @@ import org.eclipse.egit.ui.internal.repository.tree.SubmodulesNode;
 import org.eclipse.egit.ui.internal.repository.tree.TagNode;
 import org.eclipse.egit.ui.internal.repository.tree.TagsNode;
 import org.eclipse.egit.ui.internal.repository.tree.WorkingDirNode;
+import org.eclipse.egit.ui.internal.repository.tree.filter.NodesByCommitTimeFilter;
 import org.eclipse.jface.viewers.ITreeContentProvider;
 import org.eclipse.jface.viewers.Viewer;
 import org.eclipse.jgit.api.Git;
@@ -514,14 +515,17 @@ public class RepositoriesViewContentProvider implements ITreeContentProvider {
 
 	private Object[] getTagsChildren(TagsNode parentNode,
 			Repository repo) {
-		List<RepositoryTreeNode<Ref>> nodes = new ArrayList<>();
+		List<RepositoryTreeNode<?>> nodes = new ArrayList<>();
 
 		try (RevWalk walk = new RevWalk(repo)) {
 			walk.setRetainBody(true);
-			Matcher filter = matcher(
-					filters != null ? filters.get(parentNode) : null);
+			String filterText = filters != null ? filters.get(parentNode)
+					: null;
+			NodesByCommitTimeFilter timeFilter = new NodesByCommitTimeFilter(
+					filterText);
+			Matcher nameFilter = matcher(filterText);
 			for (Ref tagRef : getRefs(repo, Constants.R_TAGS).values()) {
-				if (!filter
+				if (!timeFilter.isFilterActive() && !nameFilter
 						.matches(Repository.shortenRefName(tagRef.getName()))) {
 					continue;
 				}
@@ -530,8 +534,9 @@ public class RepositoriesViewContentProvider implements ITreeContentProvider {
 				RevObject peeledObject = walk.peel(revObject);
 				TagNode tagNode = createTagNode(parentNode, repo, tagRef,
 						revObject, peeledObject);
-				nodes.add(tagNode);
+				timeFilter.addNode(tagNode, peeledObject);
 			}
+			nodes.addAll(timeFilter.getFilteredNodes());
 		} catch (IOException e) {
 			return handleException(e, parentNode);
 		}
