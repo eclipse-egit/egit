@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "47aa0432_3dd62d4c",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/clone/SourceBranchPage.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 236689
+      },
+      "writtenOn": "2020-04-05T07:08:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a5e62b78_9a02b60a",
+      "range": {
+        "startLine": 88,
+        "startChar": 16,
+        "endLine": 88,
+        "endChar": 24
+      },
+      "revId": "dcfceeabb0b61d0a1244e6ad85b866f0be794a52",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7a215a15_be0976e5",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/clone/SourceBranchPage.java",
         "patchSetId": 4
@@ -60,6 +84,24 @@
     },
     {
       "key": {
+        "uuid": "edda3167_6aa3e2f9",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/clone/SourceBranchPage.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 249,
+      "author": {
+        "id": 236689
+      },
+      "writtenOn": "2020-04-05T07:08:39Z",
+      "side": 1,
+      "message": "I\u0027d like to keep radio buttons. A drop-down would require less space, but the user can\u0027t see all options at once and would have to click twice instead of once to change the option.\n\nHow about very short texts and tooltip explanations. Basically you could almost show the enum-value \"auto-follow\", \"all tags\", \"no tags\".",
+      "parentUuid": "581eb433_134c38fe",
+      "revId": "dcfceeabb0b61d0a1244e6ad85b866f0be794a52",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "27926942_f1633fda",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/clone/SourceBranchPage.java",
         "patchSetId": 4
@@ -89,6 +131,24 @@
       "side": 1,
       "message": "I must admit, I did not pay close attention to the actual texts. For the above mentioned reasons, I reused everything.",
       "parentUuid": "27926942_f1633fda",
+      "revId": "dcfceeabb0b61d0a1244e6ad85b866f0be794a52",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ea39f967_4e6f807e",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/clone/SourceBranchPage.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 258,
+      "author": {
+        "id": 236689
+      },
+      "writtenOn": "2020-04-05T07:08:39Z",
+      "side": 1,
+      "message": "As mentioned before, layout and texts are taken from the Fetch Ref Specifications page (Configure Fetch... -\u003e Advanced). My feeling is that if we change the texts here, they should also be changed on that page.",
+      "parentUuid": "8aa4fbfc_4f54fe31",
       "revId": "dcfceeabb0b61d0a1244e6ad85b866f0be794a52",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
