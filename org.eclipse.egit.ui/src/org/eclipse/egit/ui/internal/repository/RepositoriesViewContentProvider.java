@@ -29,6 +29,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.EnumSet;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
@@ -518,10 +519,12 @@ public class RepositoriesViewContentProvider implements ITreeContentProvider {
 
 		try (RevWalk walk = new RevWalk(repo)) {
 			walk.setRetainBody(true);
-			Matcher filter = matcher(
-					filters != null ? filters.get(parentNode) : null);
+			String filterText=filters.get(parentNode);
+			Matcher nameFilter = matcher(
+					filters != null ? filterText : null);
+			Map<Integer, List<TagNode>> tagNodes = new HashMap<>();
 			for (Ref tagRef : getRefs(repo, Constants.R_TAGS).values()) {
-				if (!filter
+				if (!nameFilter
 						.matches(Repository.shortenRefName(tagRef.getName()))) {
 					continue;
 				}
@@ -530,13 +533,43 @@ public class RepositoriesViewContentProvider implements ITreeContentProvider {
 				RevObject peeledObject = walk.peel(revObject);
 				TagNode tagNode = createTagNode(parentNode, repo, tagRef,
 						revObject, peeledObject);
-				nodes.add(tagNode);
+				addTagNode(tagNodes, tagNode, peeledObject);
 			}
+			nodes.addAll(getTimeFilteredNodes(tagNodes, filterText));
 		} catch (IOException e) {
 			return handleException(e, parentNode);
 		}
 
 		return nodes.toArray();
+	}
+
+	private void addTagNode(Map<Integer, List<TagNode>> timedNodes,
+			TagNode tagNode, RevObject peeledObject) {
+		int time=Integer.MIN_VALUE;
+		if (peeledObject instanceof RevCommit) {
+			time = ((RevCommit) peeledObject).getCommitTime();
+		}
+		List<TagNode> nodes = timedNodes.computeIfAbsent(Integer.valueOf(time),
+				i -> new ArrayList<>());
+		nodes.add(tagNode);
+
+	}
+
+	// TODO this could be simplified if we added a timestamp field to TagNode
+	private Collection<TagNode> getTimeFilteredNodes(
+			Map<Integer, List<TagNode>> timedNodes,
+			String filterText) {
+		if (filterText != null && filterText.matches("#\\d+")) { //$NON-NLS-1$
+			int count = Integer
+					.parseInt(filterText.substring(1));
+			return timedNodes.keySet().stream()
+					.sorted(Collections.reverseOrder())
+					.flatMap(i -> timedNodes.get(i).stream()).limit(count)
+					.collect(Collectors.toList());
+		} else {
+			return timedNodes.values().stream().flatMap(l -> l.stream())
+					.collect(Collectors.toList());
+		}
 	}
 
 	/**
@@ -548,7 +581,7 @@ public class RepositoriesViewContentProvider implements ITreeContentProvider {
 	 */
 	private static Matcher matcher(String filter) {
 		String pattern = filter;
-		if (StringUtils.isEmptyOrNull(pattern)) {
+		if (StringUtils.isEmptyOrNull(pattern) || filter.matches("#\\d*")) { //$NON-NLS-1$
 			return s -> true;
 		}
 		boolean frontAnchored = pattern.charAt(0) == '^';
