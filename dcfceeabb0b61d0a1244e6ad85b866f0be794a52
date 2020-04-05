@@ -120,6 +120,24 @@
     },
     {
       "key": {
+        "uuid": "ebe15030_f331c5bc",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/clone/SourceBranchPage.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 249,
+      "author": {
+        "id": 236689
+      },
+      "writtenOn": "2020-04-05T10:20:57Z",
+      "side": 1,
+      "message": "There is a difference between \"auto-follow\" and \"all tags\" - see the original bug report. Auto-follow will only fetch tags that are \"on\" the selected branches and tags may exist that are not on any existing branch.",
+      "parentUuid": "ddd4a9b0_0b9e5775",
+      "revId": "dcfceeabb0b61d0a1244e6ad85b866f0be794a52",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "27926942_f1633fda",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/clone/SourceBranchPage.java",
         "patchSetId": 4
