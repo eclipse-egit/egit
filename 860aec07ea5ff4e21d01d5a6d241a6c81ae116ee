@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4e473994_cea55d00",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/reflog/ReflogView.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 642,
+      "author": {
+        "id": 440
+      },
+      "writtenOn": "2020-04-05T09:59:53Z",
+      "side": 1,
+      "message": "I really don\u0027t like this complicated code myself. So I would be very happy about learning a more simple way to compare the old commit and the current commit behind the ref.",
+      "revId": "860aec07ea5ff4e21d01d5a6d241a6c81ae116ee",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
