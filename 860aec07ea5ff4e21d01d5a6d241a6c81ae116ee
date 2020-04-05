@@ -16,6 +16,24 @@
       "revId": "860aec07ea5ff4e21d01d5a6d241a6c81ae116ee",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "585b5187_8200fa74",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/reflog/ReflogView.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 642,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2020-04-05T18:12:34Z",
+      "side": 1,
+      "message": "Is this even correct? With HEAD as ref: When I\u0027m on branch A and the reflog has as last entry \"checkout A\", and I then switch to branch B and back to A, the reflog of HEAD will have two new entries \"checkout B\" and \"checkout A\", but the top ref will still point to the same commit. But this code would conclude no update was needed, wouldn\u0027t it?\n\nPerhaps base the decision on the last-modified-timestamp of the reflog? (Might get us some raciness conditions, though...)",
+      "parentUuid": "4e473994_cea55d00",
+      "revId": "860aec07ea5ff4e21d01d5a6d241a6c81ae116ee",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
     }
   ]
 }
