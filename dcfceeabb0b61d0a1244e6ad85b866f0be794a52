@@ -102,6 +102,24 @@
     },
     {
       "key": {
+        "uuid": "ddd4a9b0_0b9e5775",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/clone/SourceBranchPage.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 249,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2020-04-05T09:42:28Z",
+      "side": 1,
+      "message": "OK, let\u0027s keep it.\n\nNo, I wouldn\u0027t show the enum values only. So keep as is. Maybe this whole page needs to be refactored. By default, all branches are fetched, so I don\u0027t think there\u0027s any difference between \"auto-follow\" and \"all tags\".",
+      "parentUuid": "edda3167_6aa3e2f9",
+      "revId": "dcfceeabb0b61d0a1244e6ad85b866f0be794a52",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "27926942_f1633fda",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/clone/SourceBranchPage.java",
         "patchSetId": 4
