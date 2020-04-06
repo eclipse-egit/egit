@@ -63,8 +63,14 @@ class FilterCache {
 	 *            to record
 	 */
 	public void set(FilterableNode node, String filter) {
-		cache.computeIfAbsent(node.getRepository().getDirectory(),
-				k -> new ConcurrentHashMap<>()).put(node.getType(), filter);
+		Map<RepositoryTreeNodeType, String> map = cache.computeIfAbsent(
+				node.getRepository().getDirectory(),
+				k -> new ConcurrentHashMap<>());
+		if (filter == null) {
+			map.remove(node.getType());
+		} else {
+			map.put(node.getType(), filter);
+		}
 		node.setFilter(filter);
 	}
 
