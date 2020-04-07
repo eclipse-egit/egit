@@ -142,6 +142,7 @@ import org.eclipse.swt.widgets.Item;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Menu;
 import org.eclipse.swt.widgets.Text;
+import org.eclipse.swt.widgets.Tree;
 import org.eclipse.swt.widgets.TreeItem;
 import org.eclipse.swt.widgets.Widget;
 import org.eclipse.team.ui.history.IHistoryView;
@@ -175,7 +176,6 @@ import org.eclipse.ui.part.IShowInTargetList;
 import org.eclipse.ui.part.MultiPageEditorPart;
 import org.eclipse.ui.part.ShowInContext;
 import org.eclipse.ui.progress.IWorkbenchSiteProgressService;
-import org.eclipse.ui.progress.UIJob;
 import org.eclipse.ui.progress.WorkbenchJob;
 import org.eclipse.ui.views.properties.IPropertySheetPage;
 import org.eclipse.ui.views.properties.PropertySheet;
@@ -756,7 +756,8 @@ public class RepositoriesView extends CommonNavigator implements IShowInSource, 
 		// Pop up search field with initial pattern set; update pattern and
 		// request a refresh of the node on each change with a small delay.
 		AtomicReference<String> currentPattern = new AtomicReference<>();
-		UIJob refresher = new UIJob(UIText.RepositoriesView_FilterJob) {
+		WorkbenchJob refresher = new WorkbenchJob(
+				UIText.RepositoriesView_FilterJob) {
 
 			@Override
 			public boolean belongsTo(Object family) {
@@ -831,7 +832,6 @@ public class RepositoriesView extends CommonNavigator implements IShowInSource, 
 					container.setVisible(false);
 					container.dispose();
 					viewer.getTree().setFocus();
-					viewer.setSelection(new StructuredSelection(node));
 				}
 			}
 		});
@@ -848,8 +848,12 @@ public class RepositoriesView extends CommonNavigator implements IShowInSource, 
 	private void filter(RepositoriesCommonViewer viewer,
 			FilterableNode filterNode, String filter) {
 		FilterCache.INSTANCE.set(filterNode, filter);
+		Tree tree = viewer.getTree();
+		if (tree == null || tree.isDisposed()) {
+			return;
+		}
 		try {
-			viewer.getTree().setRedraw(false);
+			tree.setRedraw(false);
 			TreeItem item = viewer.getItem(filterNode);
 			Object currentNode = item.getData();
 			if (filterNode != currentNode && filterNode.equals(currentNode)) {
@@ -859,8 +863,10 @@ public class RepositoriesView extends CommonNavigator implements IShowInSource, 
 			}
 			viewer.refresh(filterNode);
 		} finally {
-			viewer.getTree().setRedraw(true);
+			tree.setRedraw(true);
 		}
+		// Force an update of the status bar
+		viewer.setSelection(viewer.getSelection());
 	}
 
 	private void executeOpenCommandWithConfirmation(RepositoryTreeNode element,
