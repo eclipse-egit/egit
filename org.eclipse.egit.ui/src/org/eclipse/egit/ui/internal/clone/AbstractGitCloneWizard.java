@@ -140,20 +140,24 @@ public abstract class AbstractGitCloneWizard extends Wizard {
 				}
 				super.setVisible(visible);
 			}
-		};
-		cloneDestination = new CloneDestinationPage() {
+
 			@Override
-			public void setVisible(boolean visible) {
-				RepositorySelection selection = getRepositorySelection();
-				if (selection != null && visible) {
-					setSelection(selection,
-							validSource.getAvailableBranches(),
-							validSource.getSelectedBranches(),
-							validSource.getHEAD());
+			public void setPageComplete(boolean complete) {
+				if (complete) {
+					RepositorySelection selection = getRepositorySelection();
+					if (selection != null) {
+						cloneDestination.setSelection(selection,
+								validSource.getAvailableBranches(),
+								validSource.getSelectedBranches(),
+								validSource.getHEAD());
+					}
+				} else {
+					cloneDestination.setPageComplete(false);
 				}
-				super.setVisible(visible);
+				super.setPageComplete(complete);
 			}
 		};
+		cloneDestination = new CloneDestinationPage();
 	}
 
 	/**
