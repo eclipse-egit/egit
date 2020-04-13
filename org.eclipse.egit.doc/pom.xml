@@ -61,6 +61,27 @@
           </execution>
         </executions>
       </plugin>
+      <!-- skip pack200 compression, since the normal and the packed egit.doc are both 5 MB -->
+      <plugin>
+        <groupId>org.eclipse.tycho.extras</groupId>
+        <artifactId>tycho-pack200a-plugin</artifactId>
+        <executions>
+          <execution>
+            <id>pack200-normalize</id>
+            <phase>none</phase>
+          </execution>
+        </executions>
+      </plugin>
+      <plugin>
+        <groupId>org.eclipse.tycho.extras</groupId>
+        <artifactId>tycho-pack200b-plugin</artifactId>
+        <executions>
+          <execution>
+            <id>pack200-pack</id>
+            <phase>none</phase>
+          </execution>
+        </executions>
+      </plugin>
     </plugins>
   </build>
 </project>
