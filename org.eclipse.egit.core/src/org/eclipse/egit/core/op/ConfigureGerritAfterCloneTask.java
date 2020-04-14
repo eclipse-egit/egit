@@ -123,8 +123,6 @@ public class ConfigureGerritAfterCloneTask implements PostCloneTask {
 			throws CoreException {
 		try {
 			if (isGerrit(repository)) {
-				Activator.logInfo(uri
-						+ " was detected to be hosted by a Gerrit server"); //$NON-NLS-1$
 				configureGerrit(repository);
 			}
 		} catch (Exception e) {
