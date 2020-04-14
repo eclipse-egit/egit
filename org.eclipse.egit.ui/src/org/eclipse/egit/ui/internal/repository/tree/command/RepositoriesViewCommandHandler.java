@@ -39,10 +39,12 @@ import org.eclipse.egit.ui.internal.repository.tree.WorkingDirNode;
 import org.eclipse.egit.ui.internal.selection.SelectionRepositoryStateCache;
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.IStructuredSelection;
+import org.eclipse.jface.viewers.StructuredSelection;
 import org.eclipse.jgit.lib.Repository;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.ui.ISources;
 import org.eclipse.ui.IWorkbenchPart;
+import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.handlers.HandlerUtil;
 
 abstract class RepositoriesViewCommandHandler<T extends RepositoryTreeNode<?>>
@@ -72,12 +74,51 @@ abstract class RepositoriesViewCommandHandler<T extends RepositoryTreeNode<?>>
 
 	public RepositoryGroup getSelectedRepositoryGroup(ExecutionEvent event)
 			throws ExecutionException {
-		List<?> selected = getSelectedNodes(event);
-		if (selected.size() == 1
-				&& selected.get(0) instanceof RepositoryGroupNode) {
-			return ((RepositoryGroupNode) selected.get(0)).getObject();
+		Object singleSelection = null;
+		if (HandlerUtil
+				.getActivePartChecked(event) instanceof RepositoriesView) {
+			List<?> selected = getSelectedNodes(event);
+			if (selected.size() == 1
+					&& selected.get(0) instanceof RepositoryTreeNode) {
+				singleSelection = selected.get(0);
+			}
+		} else {
+			RepositoriesView view = getRepositoriesView();
+			if (view != null) {
+				StructuredSelection selection = (StructuredSelection) view
+						.getCommonViewer().getSelection();
+				if (selection != null && selection.size() == 1) {
+					singleSelection = selection.getFirstElement();
+				}
+			}
 		}
-		return null;
+		if (singleSelection instanceof RepositoryGroupNode) {
+			return ((RepositoryGroupNode) singleSelection).getObject();
+		} else {
+			return null;
+		}
+	}
+
+	protected void expandRepositoryGroup(ExecutionEvent event,
+			RepositoryGroup group) throws ExecutionException {
+		if (group != null) {
+			RepositoriesView view = null;
+			IWorkbenchPart part = HandlerUtil.getActivePartChecked(event);
+			if (part instanceof RepositoriesView) {
+				view = ((RepositoriesView) part);
+			} else {
+				view = getRepositoriesView();
+			}
+			if (view != null) {
+				view.expandNodeForGroup(group);
+			}
+		}
+	}
+
+	private RepositoriesView getRepositoriesView() {
+		return (RepositoriesView) PlatformUI.getWorkbench()
+				.getActiveWorkbenchWindow().getActivePage()
+				.findViewReference(RepositoriesView.VIEW_ID).getView(false);
 	}
 
 	@SuppressWarnings("unchecked")
