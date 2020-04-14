@@ -1,0 +1,157 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "51757109_3a4b8dfd",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/Activator.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 353,
+      "author": {
+        "id": 1179
+      },
+      "writtenOn": "2020-04-14T10:52:54Z",
+      "side": 1,
+      "message": "why is this needed?",
+      "revId": "dfbfc76cf6bf6d40ea8d78493907e6842d6bdc09",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "d00e5506_7c1e3c9b",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/Activator.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 365,
+      "author": {
+        "id": 1179
+      },
+      "writtenOn": "2020-04-14T10:52:54Z",
+      "side": 1,
+      "message": "same here",
+      "revId": "dfbfc76cf6bf6d40ea8d78493907e6842d6bdc09",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "19f160e0_d43ea5db",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/Activator.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 864,
+      "author": {
+        "id": 1179
+      },
+      "writtenOn": "2020-04-14T10:52:54Z",
+      "side": 1,
+      "message": "indentation looks broken now, also below",
+      "revId": "dfbfc76cf6bf6d40ea8d78493907e6842d6bdc09",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "fb86c138_1beebaf4",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/op/ConnectProviderOperation.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 208,
+      "author": {
+        "id": 1179
+      },
+      "writtenOn": "2020-04-14T10:52:54Z",
+      "side": 1,
+      "message": "indentation broken",
+      "revId": "dfbfc76cf6bf6d40ea8d78493907e6842d6bdc09",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "f0df0d4b_67123600",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/op/CreateLocalBranchOperation.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 1179
+      },
+      "writtenOn": "2020-04-14T10:52:54Z",
+      "side": 1,
+      "message": "renaming unneeded, also below",
+      "revId": "dfbfc76cf6bf6d40ea8d78493907e6842d6bdc09",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "68e228fa_4646fef6",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/op/DeleteBranchOperation.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 131,
+      "author": {
+        "id": 1179
+      },
+      "writtenOn": "2020-04-14T10:52:54Z",
+      "side": 1,
+      "message": "renaming again, also below",
+      "revId": "dfbfc76cf6bf6d40ea8d78493907e6842d6bdc09",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "fc22a180_f31b8a68",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/op/MergeOperation.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 199,
+      "author": {
+        "id": 1179
+      },
+      "writtenOn": "2020-04-14T10:52:54Z",
+      "side": 1,
+      "message": "renaming again, also below",
+      "revId": "dfbfc76cf6bf6d40ea8d78493907e6842d6bdc09",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7c5ac91c_10ebd2ce",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/op/SubmoduleUpdateOperation.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 1179
+      },
+      "writtenOn": "2020-04-14T10:52:54Z",
+      "side": 1,
+      "message": "renaming again, also below",
+      "revId": "dfbfc76cf6bf6d40ea8d78493907e6842d6bdc09",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "0ff58c67_9dc00273",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/project/GitProjectData.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 296,
+      "author": {
+        "id": 1179
+      },
+      "writtenOn": "2020-04-14T10:52:54Z",
+      "side": 1,
+      "message": "broken indentation, also below",
+      "revId": "dfbfc76cf6bf6d40ea8d78493907e6842d6bdc09",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
