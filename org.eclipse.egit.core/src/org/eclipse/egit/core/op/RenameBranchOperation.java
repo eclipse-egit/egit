@@ -53,21 +53,17 @@ public class RenameBranchOperation implements IEGitOperation {
 
 	@Override
 	public void execute(IProgressMonitor monitor) throws CoreException {
-		IWorkspaceRunnable action = new IWorkspaceRunnable() {
-
-			@Override
-			public void run(IProgressMonitor actMonitor) throws CoreException {
-				String taskName = NLS.bind(
-						CoreText.RenameBranchOperation_TaskName, branch
-								.getName(), newName);
-				SubMonitor progress = SubMonitor.convert(actMonitor);
-				progress.setTaskName(taskName);
-				try (Git git = new Git(repository)) {
-					git.branchRename().setOldName(
-							branch.getName()).setNewName(newName).call();
-				} catch (JGitInternalException | GitAPIException e) {
-					throw new CoreException(Activator.error(e.getMessage(), e));
-				}
+		IWorkspaceRunnable action = actMonitor -> {
+			String taskName = NLS.bind(
+					CoreText.RenameBranchOperation_TaskName, branch
+							.getName(), newName);
+			SubMonitor progress = SubMonitor.convert(actMonitor);
+			progress.setTaskName(taskName);
+			try (Git git = new Git(repository)) {
+				git.branchRename().setOldName(
+						branch.getName()).setNewName(newName).call();
+			} catch (JGitInternalException | GitAPIException e) {
+				throw new CoreException(Activator.error(e.getMessage(), e));
 			}
 		};
 		// lock workspace to protect working tree changes

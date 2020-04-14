@@ -59,12 +59,7 @@ public class DeletePathsOperation implements IEGitOperation {
 
 	@Override
 	public void execute(IProgressMonitor m) throws CoreException {
-		IWorkspaceRunnable action = new IWorkspaceRunnable() {
-			@Override
-			public void run(IProgressMonitor actMonitor) throws CoreException {
-				deletePaths(actMonitor);
-			}
-		};
+		IWorkspaceRunnable action = actMonitor -> deletePaths(actMonitor);
 		ResourcesPlugin.getWorkspace().run(action, getSchedulingRule(),
 				IWorkspace.AVOID_UPDATE, m);
 	}

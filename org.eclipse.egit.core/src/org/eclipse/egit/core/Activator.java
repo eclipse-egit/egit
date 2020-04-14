@@ -32,7 +32,6 @@ import org.eclipse.core.resources.IResource;
 import org.eclipse.core.resources.IResourceChangeEvent;
 import org.eclipse.core.resources.IResourceChangeListener;
 import org.eclipse.core.resources.IResourceDelta;
-import org.eclipse.core.resources.IResourceDeltaVisitor;
 import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IConfigurationElement;
@@ -345,32 +344,28 @@ public class Activator extends Plugin implements DebugOptionsListener {
 
 	private void registerPreDeleteResourceChangeListener() {
 		if (preDeleteProjectListener == null) {
-			preDeleteProjectListener = new IResourceChangeListener() {
-
-				@Override
-				public void resourceChanged(IResourceChangeEvent event) {
-					IResource resource = event.getResource();
-					if (resource instanceof IProject) {
-						IProject project = (IProject) resource;
-						if (project.isAccessible()) {
-							if (ResourceUtil.isSharedWithGit(project)) {
-								IResource dotGit = project
-										.findMember(Constants.DOT_GIT);
-								if (dotGit != null && dotGit
-										.getType() == IResource.FOLDER) {
-									GitProjectData.reconfigureWindowCache();
-								}
+			preDeleteProjectListener = event -> {
+				IResource resource = event.getResource();
+				if (resource instanceof IProject) {
+					IProject project = (IProject) resource;
+					if (project.isAccessible()) {
+						if (ResourceUtil.isSharedWithGit(project)) {
+							IResource dotGit1 = project
+									.findMember(Constants.DOT_GIT);
+							if (dotGit1 != null && dotGit1
+									.getType() == IResource.FOLDER) {
+								GitProjectData.reconfigureWindowCache();
 							}
-						} else {
-							// bug 419706: project is closed - use java.io API
-							IPath locationPath = project.getLocation();
-							if (locationPath != null) {
-								File locationDir = locationPath.toFile();
-								File dotGit = new File(locationDir,
-										Constants.DOT_GIT);
-								if (dotGit.exists() && dotGit.isDirectory()) {
-									GitProjectData.reconfigureWindowCache();
-								}
+						}
+					} else {
+						// bug 419706: project is closed - use java.io API
+						IPath locationPath = project.getLocation();
+						if (locationPath != null) {
+							File locationDir = locationPath.toFile();
+							File dotGit2 = new File(locationDir,
+									Constants.DOT_GIT);
+							if (dotGit2.exists() && dotGit2.isDirectory()) {
+								GitProjectData.reconfigureWindowCache();
 							}
 						}
 					}
@@ -602,14 +597,8 @@ public class Activator extends Plugin implements DebugOptionsListener {
 			}
 			try {
 				final Set<IProject> projectCandidates = new LinkedHashSet<>();
-				event.getDelta().accept(new IResourceDeltaVisitor() {
-					@Override
-					public boolean visit(IResourceDelta delta)
-							throws CoreException {
-						return collectOpenedProjects(delta,
-								projectCandidates);
-					}
-				});
+				event.getDelta().accept(delta -> collectOpenedProjects(delta,
+						projectCandidates));
 				if(!projectCandidates.isEmpty()){
 					checkProjectsJob.addProjectsToCheck(projectCandidates);
 				}
@@ -869,44 +858,39 @@ public class Activator extends Plugin implements DebugOptionsListener {
 
 				final Set<IPath> toBeIgnored = new LinkedHashSet<>();
 
-				d.accept(new IResourceDeltaVisitor() {
+				d.accept(delta -> {
+if ((delta.getKind() & (IResourceDelta.ADDED | IResourceDelta.CHANGED)) == 0)
+				return false;
+int flags = delta.getFlags();
+if ((flags != 0)
+					&& ((flags & IResourceDelta.DERIVED_CHANGED) == 0))
+				return false;
 
-					@Override
-					public boolean visit(IResourceDelta delta)
-							throws CoreException {
-						if ((delta.getKind() & (IResourceDelta.ADDED | IResourceDelta.CHANGED)) == 0)
-							return false;
-						int flags = delta.getFlags();
-						if ((flags != 0)
-								&& ((flags & IResourceDelta.DERIVED_CHANGED) == 0))
-							return false;
+final IResource r = delta.getResource();
+// don't consider resources contained in a project not
+// shared with Git team provider
+if ((r.getProject() != null)
+					&& (RepositoryMapping.getMapping(r) == null))
+				return false;
+if (r.isTeamPrivateMember())
+				return false;
 
-						final IResource r = delta.getResource();
-						// don't consider resources contained in a project not
-						// shared with Git team provider
-						if ((r.getProject() != null)
-								&& (RepositoryMapping.getMapping(r) == null))
-							return false;
-						if (r.isTeamPrivateMember())
-							return false;
-
-						if (r.isDerived()) {
-							try {
-								IPath location = r.getLocation();
-								if (RepositoryUtil.canBeAutoIgnored(location)) {
-									toBeIgnored.add(location);
-								}
-							} catch (IOException e) {
-								logError(
-										MessageFormat.format(
-												CoreText.Activator_ignoreResourceFailed,
-												r.getFullPath()), e);
-							}
-							return false;
-						}
-						return true;
+if (r.isDerived()) {
+				try {
+					IPath location = r.getLocation();
+					if (RepositoryUtil.canBeAutoIgnored(location)) {
+						toBeIgnored.add(location);
 					}
-				});
+				} catch (IOException e) {
+					logError(
+							MessageFormat.format(
+									CoreText.Activator_ignoreResourceFailed,
+									r.getFullPath()), e);
+				}
+				return false;
+}
+return true;
+});
 				if (toBeIgnored.size() > 0)
 					JobUtil.scheduleUserJob(new IgnoreOperation(toBeIgnored),
 							CoreText.Activator_autoIgnoreDerivedResources,

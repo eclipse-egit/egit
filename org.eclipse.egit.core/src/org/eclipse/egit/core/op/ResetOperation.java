@@ -71,12 +71,7 @@ public class ResetOperation implements IEGitOperation {
 	@Override
 	public void execute(IProgressMonitor m) throws CoreException {
 		if (type == ResetType.HARD) {
-			IWorkspaceRunnable action = new IWorkspaceRunnable() {
-				@Override
-				public void run(IProgressMonitor actMonitor) throws CoreException {
-					reset(actMonitor);
-				}
-			};
+			IWorkspaceRunnable action = actMonitor -> reset(actMonitor);
 			// lock workspace to protect working tree changes
 			ResourcesPlugin.getWorkspace().run(action, getSchedulingRule(),
 					IWorkspace.AVOID_UPDATE, m);

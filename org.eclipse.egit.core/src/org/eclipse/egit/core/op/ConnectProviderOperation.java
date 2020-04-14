@@ -29,8 +29,6 @@ import java.util.Set;
 import org.eclipse.core.resources.IContainer;
 import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.IResource;
-import org.eclipse.core.resources.IResourceProxy;
-import org.eclipse.core.resources.IResourceProxyVisitor;
 import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IPath;
@@ -206,20 +204,16 @@ public class ConnectProviderOperation implements IEGitOperation {
 	private void touchGitResources(IProject project, IProgressMonitor monitor) {
 		final SubMonitor progress = SubMonitor.convert(monitor, 1);
 		try {
-			project.accept(new IResourceProxyVisitor() {
-				@Override
-				public boolean visit(IResourceProxy resource)
-						throws CoreException {
-					int type = resource.getType();
-					if ((type == IResource.FILE || type == IResource.FOLDER)
-							&& Constants.DOT_GIT.equals(resource.getName())) {
-						progress.setWorkRemaining(2);
-						resource.requestResource().touch(progress.newChild(1));
-						return false;
-					}
-					return true;
-				}
-			}, IResource.NONE);
+			project.accept(resource -> {
+int type = resource.getType();
+if ((type == IResource.FILE || type == IResource.FOLDER)
+				&& Constants.DOT_GIT.equals(resource.getName())) {
+			progress.setWorkRemaining(2);
+			resource.requestResource().touch(progress.newChild(1));
+			return false;
+}
+return true;
+}, IResource.NONE);
 		} catch (CoreException e) {
 			Activator.logError(e.getMessage(), e);
 		}

@@ -174,12 +174,7 @@ public class DiscardChangesOperation implements IEGitOperation {
 
 	@Override
 	public void execute(IProgressMonitor m) throws CoreException {
-		IWorkspaceRunnable action = new IWorkspaceRunnable() {
-			@Override
-			public void run(IProgressMonitor actMonitor) throws CoreException {
-				discardChanges(actMonitor);
-			}
-		};
+		IWorkspaceRunnable action = actMonitor -> discardChanges(actMonitor);
 		ResourcesPlugin.getWorkspace().run(action, getSchedulingRule(),
 				IWorkspace.AVOID_UPDATE, m);
 	}
