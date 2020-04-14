@@ -80,7 +80,7 @@ public class AddCommand extends
 				File repositoryDir = FileUtils.canonicalize(new File(dir));
 				addRepository(repositoryDir, group);
 			}
-			getView(event).expandNodeForGroup(group);
+			expandRepositoryGroup(event, group);
 		}
 		return null;
 	}

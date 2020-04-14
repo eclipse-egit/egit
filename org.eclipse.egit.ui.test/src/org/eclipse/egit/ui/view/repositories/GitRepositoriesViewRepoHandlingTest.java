@@ -25,6 +25,7 @@ import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.Path;
 import org.eclipse.egit.ui.Activator;
 import org.eclipse.egit.ui.JobFamilies;
+import org.eclipse.egit.ui.internal.CommonUtils;
 import org.eclipse.egit.ui.internal.UIText;
 import org.eclipse.egit.ui.test.ContextMenuHelper;
 import org.eclipse.egit.ui.test.TestUtil;
@@ -39,6 +40,7 @@ import org.eclipse.swt.dnd.TextTransfer;
 import org.eclipse.swt.dnd.Transfer;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swtbot.eclipse.finder.widgets.SWTBotView;
+import org.eclipse.swtbot.swt.finder.finders.UIThreadRunnable;
 import org.eclipse.swtbot.swt.finder.junit.SWTBotJunit4ClassRunner;
 import org.eclipse.swtbot.swt.finder.utils.TableCollection;
 import org.eclipse.swtbot.swt.finder.widgets.SWTBotLabel;
@@ -323,6 +325,36 @@ public class GitRepositoriesViewRepoHandlingTest extends
 		shell.bot().button("Next >").click();		// for some reason, textWithLabel doesn't seem to work
 		shell.bot()
 				.textInGroup(UIText.RepositorySelectionPage_groupLocation, 0)
+				.setText(repositoryFile.getPath());
+		shell.bot().button(IDialogConstants.NEXT_LABEL).click();
+		bot.waitUntil(widgetIsEnabled(shell.bot().tree()), 60000);
+		shell.bot().button(IDialogConstants.NEXT_LABEL).click();
+		waitInUI();
+		// for some reason textWithLabel doesn't work; 0 is path text
+		SWTBotText pathText = shell.bot().text(0);
+		pathText.setText(pathText.getText() + "Cloned");
+		shell.bot().button(IDialogConstants.FINISH_LABEL).click();
+		TestUtil.joinJobs(JobFamilies.CLONE);
+		refreshAndWait();
+		assertHasClonedRepo();
+	}
+
+	@Test
+	public void testCloneWithViewClosed() throws Exception {
+		clearView();
+		refreshAndWait();
+		assertEmpty();
+		getOrOpenView().close();
+		UIThreadRunnable.asyncExec(() -> {
+			CommonUtils.runCommand("org.eclipse.egit.ui.RepositoriesViewClone",
+					null);
+		});
+		SWTBotShell shell = bot.shell(UIText.GitCloneWizard_title);
+		shell.bot().tree().select("Clone URI");
+
+		shell.bot().button("Next >").click(); // for some reason, textWithLabel
+												// doesn't seem to work
+		shell.bot().textInGroup(UIText.RepositorySelectionPage_groupLocation, 0)
 				.setText(repositoryFile.getPath());
 		shell.bot().button(IDialogConstants.NEXT_LABEL).click();
 		bot.waitUntil(widgetIsEnabled(shell.bot().tree()), 60000);
