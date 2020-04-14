@@ -55,7 +55,6 @@ import org.eclipse.jgit.dircache.DirCacheIterator;
 import org.eclipse.jgit.lib.Constants;
 import org.eclipse.jgit.lib.ObjectId;
 import org.eclipse.jgit.lib.Repository;
-import org.eclipse.jgit.lib.RepositoryState;
 import org.eclipse.jgit.revwalk.RevCommit;
 import org.eclipse.jgit.revwalk.RevWalk;
 import org.eclipse.jgit.revwalk.filter.RevFilter;
@@ -166,17 +165,25 @@ public class GitMergeEditorInput extends CompareEditorInput {
 			final RevCommit rightCommit;
 			try {
 				String target;
-				if (repo.getRepositoryState().equals(RepositoryState.MERGING))
+				switch (repo.getRepositoryState()) {
+				case MERGING:
 					target = Constants.MERGE_HEAD;
-				else if (repo.getRepositoryState().equals(RepositoryState.CHERRY_PICKING))
+					break;
+				case CHERRY_PICKING:
 					target = Constants.CHERRY_PICK_HEAD;
-				else if (repo.getRepositoryState().equals(
-						RepositoryState.REBASING_INTERACTIVE))
+					break;
+				case REBASING_INTERACTIVE:
 					target = readFile(repo.getDirectory(),
 							RebaseCommand.REBASE_MERGE + File.separatorChar
 									+ RebaseCommand.STOPPED_SHA);
-				else
+					break;
+				case REVERTING:
+					target = Constants.REVERT_HEAD;
+					break;
+				default:
 					target = Constants.ORIG_HEAD;
+					break;
+				}
 				ObjectId mergeHead = repo.resolve(target);
 				if (mergeHead == null)
 					throw new IOException(NLS.bind(
