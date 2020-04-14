@@ -109,7 +109,7 @@ features:
 
 ## Support
 
-Post question or comments to the egit-dev@eclipse.org mailing list.
+Post questions or comments to the egit-dev@eclipse.org mailing list.
 You need to be [subscribed](https://dev.eclipse.org/mailman/listinfo/egit-dev)
 to post.
 
