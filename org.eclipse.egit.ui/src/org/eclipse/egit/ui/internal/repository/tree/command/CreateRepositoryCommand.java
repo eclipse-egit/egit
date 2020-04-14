@@ -48,7 +48,7 @@ public class CreateRepositoryCommand extends
 		};
 		dlg.setHelpAvailable(false);
 		if (dlg.open() == Window.OK) {
-			getView(event).expandNodeForGroup(group);
+			expandRepositoryGroup(event, group);
 		}
 		return null;
 	}
