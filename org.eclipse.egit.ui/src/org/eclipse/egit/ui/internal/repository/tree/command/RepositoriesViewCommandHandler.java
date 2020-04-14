@@ -58,6 +58,14 @@ abstract class RepositoriesViewCommandHandler<T extends RepositoryTreeNode<?>>
 		return (RepositoriesView) part;
 	}
 
+	protected void expandRepositoryGroup(ExecutionEvent event,
+			RepositoryGroup group) throws ExecutionException {
+		IWorkbenchPart part = HandlerUtil.getActivePartChecked(event);
+		if (part instanceof RepositoriesView) {
+			((RepositoriesView) part).expandNodeForGroup(group);
+		}
+	}
+
 	public Shell getShell(ExecutionEvent event) {
 		return HandlerUtil.getActiveShell(event);
 	}

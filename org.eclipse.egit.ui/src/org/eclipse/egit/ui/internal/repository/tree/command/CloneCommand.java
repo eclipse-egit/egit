@@ -57,7 +57,7 @@ public class CloneCommand extends
 		WizardDialog dlg = new WizardDialog(getShell(event), wizard);
 		dlg.setHelpAvailable(true);
 		if (dlg.open() == Window.OK) {
-			getView(event).expandNodeForGroup(group);
+			expandRepositoryGroup(event, group);
 		}
 		return null;
 	}
