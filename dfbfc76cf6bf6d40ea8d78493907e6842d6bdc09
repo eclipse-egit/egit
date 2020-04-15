@@ -53,6 +53,46 @@
     },
     {
       "key": {
+        "uuid": "acd7e1d2_5d186298",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/GitProjectSetCapability.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 118,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2020-04-15T09:14:41Z",
+      "side": 1,
+      "message": "Is that cast needed?",
+      "range": {
+        "startLine": 118,
+        "startChar": 38,
+        "endLine": 118,
+        "endChar": 58
+      },
+      "revId": "dfbfc76cf6bf6d40ea8d78493907e6842d6bdc09",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "209172e6_289e31f6",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/op/ConnectProviderOperation.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 207,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2020-04-15T09:14:41Z",
+      "side": 1,
+      "message": "Here I\u0027d like to have an explicit indication that we\u0027re using an IResourceProxyVisitor, not an IResourceVisitor. It just so happens to work because by chance we use the one unambiguous accept(). Rather fragile.",
+      "revId": "dfbfc76cf6bf6d40ea8d78493907e6842d6bdc09",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fb86c138_1beebaf4",
         "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/op/ConnectProviderOperation.java",
         "patchSetId": 1
@@ -104,6 +144,46 @@
     },
     {
       "key": {
+        "uuid": "13982ee0_b51a630d",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/op/DeletePathsOperation.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2020-04-15T09:14:41Z",
+      "side": 1,
+      "message": "this::deletePaths, and then the assignment to action isn\u0027t needed at all. Just\n\n  ResourcesPlugin.getWorkspace().run(this::deletePaths, getSchedulingRule(), IWorkspace.AVOID_UPDATE, m)\n\nis good enough.",
+      "range": {
+        "startLine": 62,
+        "startChar": 30,
+        "endLine": 62,
+        "endChar": 67
+      },
+      "revId": "dfbfc76cf6bf6d40ea8d78493907e6842d6bdc09",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3103dec4_fba51c9c",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/op/DiscardChangesOperation.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 179,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2020-04-15T09:14:41Z",
+      "side": 1,
+      "message": "Same here:\n\n  ResourcesPlugin.getWorkspace().run(thsi::discardChanges, getSchedulingRule(), IWorkspace.AVOID_UPDATE, m);",
+      "revId": "dfbfc76cf6bf6d40ea8d78493907e6842d6bdc09",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fc22a180_f31b8a68",
         "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/op/MergeOperation.java",
         "patchSetId": 1
@@ -115,6 +195,23 @@
       "writtenOn": "2020-04-14T10:52:54Z",
       "side": 1,
       "message": "renaming again, also below",
+      "revId": "dfbfc76cf6bf6d40ea8d78493907e6842d6bdc09",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7eca2d47_4127c07c",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/op/ResetOperation.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2020-04-15T09:14:41Z",
+      "side": 1,
+      "message": "Just\n\n  ResourcesPlugin.getWorkspace().run(this::reset, getSchedulingRule(), IWorkspace.AVOID_UPDATE, m);\n\nshould be good enough.",
       "revId": "dfbfc76cf6bf6d40ea8d78493907e6842d6bdc09",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
