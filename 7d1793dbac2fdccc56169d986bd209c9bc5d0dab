@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "34af9166_7237ff71",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/repository/tree/command/RepositoriesViewCommandHandler.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 440
+      },
+      "writtenOn": "2020-04-16T15:38:18Z",
+      "side": 1,
+      "message": "looks superfluous, since the type check in line 96 will already deal with non-fitting objects",
+      "range": {
+        "startLine": 83,
+        "startChar": 4,
+        "endLine": 83,
+        "endChar": 53
+      },
+      "revId": "7d1793dbac2fdccc56169d986bd209c9bc5d0dab",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
