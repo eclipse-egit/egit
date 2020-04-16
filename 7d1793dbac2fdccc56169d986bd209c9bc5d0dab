@@ -46,6 +46,30 @@
       "revId": "7d1793dbac2fdccc56169d986bd209c9bc5d0dab",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c3099d8a_a1818191",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/repository/tree/command/RepositoriesViewCommandHandler.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 236689
+      },
+      "writtenOn": "2020-04-16T16:40:27Z",
+      "side": 1,
+      "message": "Yes, sorry. That was a left-over from a previous version of checking whether the RepositoriesView is active or not.",
+      "parentUuid": "9ad6ad3c_7ac23e64",
+      "range": {
+        "startLine": 83,
+        "startChar": 4,
+        "endLine": 83,
+        "endChar": 53
+      },
+      "revId": "7d1793dbac2fdccc56169d986bd209c9bc5d0dab",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
     }
   ]
 }
