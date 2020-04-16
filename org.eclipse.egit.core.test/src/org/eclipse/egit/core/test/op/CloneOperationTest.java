@@ -108,19 +108,20 @@ public class CloneOperationTest extends DualRepositoryTestCase {
 				refName, "origin", 0);
 		clop.run(null);
 
-		Repository clonedRepo = FileRepositoryBuilder.create(new File(workdir2,
-				Constants.DOT_GIT));
-		assertEquals(
-				"",
-				uri.toString(),
-				clonedRepo.getConfig().getString(
-						ConfigConstants.CONFIG_REMOTE_SECTION, "origin", "url"));
-		assertEquals(
-				"",
-				"+refs/heads/*:refs/remotes/origin/*",
-				clonedRepo.getConfig().getString(
-						ConfigConstants.CONFIG_REMOTE_SECTION, "origin",
-						"fetch"));
+		try (Repository clonedRepo = FileRepositoryBuilder.create(new File(workdir2,
+				Constants.DOT_GIT))) {
+			assertEquals(
+					"",
+					uri.toString(),
+					clonedRepo.getConfig().getString(
+							ConfigConstants.CONFIG_REMOTE_SECTION, "origin", "url"));
+			assertEquals(
+					"",
+					"+refs/heads/*:refs/remotes/origin/*",
+					clonedRepo.getConfig().getString(
+							ConfigConstants.CONFIG_REMOTE_SECTION, "origin",
+							"fetch"));
+		}
 	}
 
 	@Test
@@ -155,20 +156,21 @@ public class CloneOperationTest extends DualRepositoryTestCase {
 		clop.addPostCloneTask(new ConfigurePushAfterCloneTask("origin",
 				"HEAD:refs/for/master", new URIish("file:///pushtarget")));
 		clop.run(null);
-		Repository clonedRepo = FileRepositoryBuilder.create(new File(workdir2,
-				Constants.DOT_GIT));
-		assertEquals(
-				"",
-				"HEAD:refs/for/master",
-				clonedRepo.getConfig()
-				.getString(ConfigConstants.CONFIG_REMOTE_SECTION,
-						"origin", "push"));
-		assertEquals(
-				"",
-				"file:///pushtarget",
-				clonedRepo.getConfig().getString(
-						ConfigConstants.CONFIG_REMOTE_SECTION, "origin",
-						"pushurl"));
+		try (Repository clonedRepo = FileRepositoryBuilder.create(new File(workdir2,
+				Constants.DOT_GIT))) {
+			assertEquals(
+					"",
+					"HEAD:refs/for/master",
+					clonedRepo.getConfig()
+					.getString(ConfigConstants.CONFIG_REMOTE_SECTION,
+							"origin", "push"));
+			assertEquals(
+					"",
+					"file:///pushtarget",
+					clonedRepo.getConfig().getString(
+							ConfigConstants.CONFIG_REMOTE_SECTION, "origin",
+							"pushurl"));
+		}
 	}
 
 	@Test
@@ -183,15 +185,17 @@ public class CloneOperationTest extends DualRepositoryTestCase {
 		clop.addPostCloneTask(new ConfigureFetchAfterCloneTask("origin",
 				"refs/notes/review:refs/notes/review"));
 		clop.run(null);
-		Repository clonedRepo = FileRepositoryBuilder.create(new File(workdir2,
-				Constants.DOT_GIT));
-		assertTrue(
-				clonedRepo.getConfig()
-				.getStringList(ConfigConstants.CONFIG_REMOTE_SECTION,
-						"origin", "fetch")[1].equals("refs/notes/review:refs/notes/review"));
-		Git clonedGit = new Git(clonedRepo);
-		assertEquals(1, clonedGit.notesList().setNotesRef("refs/notes/review").call().size());
-		clonedGit.close();
+		try (Repository clonedRepo = FileRepositoryBuilder.create(new File(workdir2,
+				Constants.DOT_GIT))) {
+			assertTrue(
+					clonedRepo.getConfig()
+					.getStringList(ConfigConstants.CONFIG_REMOTE_SECTION,
+							"origin", "fetch")[1].equals("refs/notes/review:refs/notes/review"));
+			try (Git clonedGit = new Git(clonedRepo)) {
+				assertEquals(1, clonedGit.notesList()
+						.setNotesRef("refs/notes/review").call().size());
+			}
+		}
 	}
 
 	protected void createNoteInOrigin() throws GitAPIException {
