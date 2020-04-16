@@ -63,6 +63,30 @@
       "revId": "ad64ba1c99b3bf6825e64de42c6cba895abb6114",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7ab8792f_dfc19b99",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/components/RepositorySelectionPage.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 546,
+      "author": {
+        "id": 40012
+      },
+      "writtenOn": "2020-04-16T18:06:44Z",
+      "side": 1,
+      "message": "That is a part I haven\u0027t really touched in this PR, but seems indeed like a bug (which has been there before). Gonna fix as well.",
+      "parentUuid": "09f7b1ed_674a4aa4",
+      "range": {
+        "startLine": 546,
+        "startChar": 28,
+        "endLine": 546,
+        "endChar": 31
+      },
+      "revId": "ad64ba1c99b3bf6825e64de42c6cba895abb6114",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
     }
   ]
 }
