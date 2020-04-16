@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "30f84b8a_64693014",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2020-04-16T08:02:04Z",
+      "side": 1,
+      "message": "nit: add a colon after Bug and remove the blank line below so that this is recognized as a footer (in last paragraph of the commit message)\n\nBug: 560903",
+      "revId": "ad64ba1c99b3bf6825e64de42c6cba895abb6114",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "997fccbd_1ccba69c",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/components/RepositorySelectionPage.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 546,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2020-04-16T08:02:04Z",
+      "side": 1,
+      "message": "this yields 4 slashes on Mac OS which seems wrong, I\u0027d expect only 3 slashes (\"://\" for separation of protocol and path and another \"/\" for the root path)",
+      "range": {
+        "startLine": 546,
+        "startChar": 28,
+        "endLine": 546,
+        "endChar": 31
+      },
+      "revId": "ad64ba1c99b3bf6825e64de42c6cba895abb6114",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
