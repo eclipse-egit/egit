@@ -22,6 +22,30 @@
       "revId": "7d1793dbac2fdccc56169d986bd209c9bc5d0dab",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9ad6ad3c_7ac23e64",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/repository/tree/command/RepositoriesViewCommandHandler.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2020-04-16T15:57:46Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "34af9166_7237ff71",
+      "range": {
+        "startLine": 83,
+        "startChar": 4,
+        "endLine": 83,
+        "endChar": 53
+      },
+      "revId": "7d1793dbac2fdccc56169d986bd209c9bc5d0dab",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
     }
   ]
 }
