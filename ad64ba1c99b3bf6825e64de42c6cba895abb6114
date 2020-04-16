@@ -39,6 +39,30 @@
       "revId": "ad64ba1c99b3bf6825e64de42c6cba895abb6114",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "09f7b1ed_674a4aa4",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/components/RepositorySelectionPage.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 546,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2020-04-16T08:39:23Z",
+      "side": 1,
+      "message": "Line 527, too? Just noticed that in another context... Might be different on Windows, though.",
+      "parentUuid": "997fccbd_1ccba69c",
+      "range": {
+        "startLine": 546,
+        "startChar": 28,
+        "endLine": 546,
+        "endChar": 31
+      },
+      "revId": "ad64ba1c99b3bf6825e64de42c6cba895abb6114",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
     }
   ]
 }
