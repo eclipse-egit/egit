@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "58fe93b6_26b7c8c1",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/components/RepositorySelectionPage.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 1007,
+      "author": {
+        "id": 440
+      },
+      "writtenOn": "2020-04-17T10:17:55Z",
+      "side": 1,
+      "message": "here can fix the folder name by adding something like\n\n   String path \u003d u.getPath();\n   if (path.endsWith(\".bundle\")) {\n       path \u003d path.substring(0, path.size()-\".bundle\".size())\n   }\n\nmight be good to extract \".bundle\" to a constant.",
+      "range": {
+        "startLine": 1007,
+        "startChar": 21,
+        "endLine": 1007,
+        "endChar": 32
+      },
+      "revId": "cf186286d536ceffacfd77c6553c1e5f364bb163",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
