@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "ee7d05ff_2ce8cd72",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/components/RepositorySelectionPage.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 604,
+      "author": {
+        "id": 440
+      },
+      "writtenOn": "2020-04-17T10:22:55Z",
+      "side": 1,
+      "message": "It\u0027s completely unrelated, but if we add\n\n    GridDataFactory.fillDefaults().span(2, 1).applyTo(storeCheckbox);\n\nhere, then the layout of the authentication box also gets improved a lot. The labels are then not as wide as the checkbox underneath, but just wide as the widest of the 2 labels.",
+      "range": {
+        "startLine": 603,
+        "startChar": 43,
+        "endLine": 604,
+        "endChar": 2
+      },
+      "revId": "cf186286d536ceffacfd77c6553c1e5f364bb163",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "58fe93b6_26b7c8c1",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/components/RepositorySelectionPage.java",
         "patchSetId": 7
