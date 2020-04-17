@@ -45,6 +45,30 @@
       "revId": "cf186286d536ceffacfd77c6553c1e5f364bb163",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3fa9c2cc_771e5364",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/components/RepositorySelectionPage.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 1007,
+      "author": {
+        "id": 440
+      },
+      "writtenOn": "2020-04-17T10:34:35Z",
+      "side": 1,
+      "message": "Sorry, I misunderstood the comment of Matthias. That suggestion is probably wrong. You rather need to modify CloneDestinationPage, line 450 ff.",
+      "parentUuid": "58fe93b6_26b7c8c1",
+      "range": {
+        "startLine": 1007,
+        "startChar": 21,
+        "endLine": 1007,
+        "endChar": 32
+      },
+      "revId": "cf186286d536ceffacfd77c6553c1e5f364bb163",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
     }
   ]
 }
