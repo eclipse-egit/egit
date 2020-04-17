@@ -14,6 +14,7 @@ package org.eclipse.egit.ui.internal.repository.tree.command;
 
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
+import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.LinkedHashMap;
@@ -114,7 +115,10 @@ public class DeleteBranchCommand extends
 						refs.put(ref, node.getRepository());
 					}
 				} catch (IOException e) {
-					// ignore
+					Activator.logError(MessageFormat.format(
+							UIText.RepositoriesView_BranchCollectionError,
+							node.getPath(),
+							node.getRepository().getDirectory()), e);
 				}
 			} else if (node instanceof RefNode) {
 				refs.put((Ref) node.getObject(), node.getRepository());

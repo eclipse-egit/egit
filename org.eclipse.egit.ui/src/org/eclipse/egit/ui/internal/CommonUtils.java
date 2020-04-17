@@ -18,6 +18,7 @@
 package org.eclipse.egit.ui.internal;
 
 import java.nio.file.Path;
+import java.text.MessageFormat;
 import java.util.Comparator;
 import java.util.Iterator;
 import java.util.LinkedList;
@@ -30,6 +31,7 @@ import org.eclipse.core.commands.ParameterizedCommand;
 import org.eclipse.core.commands.common.CommandException;
 import org.eclipse.core.expressions.EvaluationContext;
 import org.eclipse.core.resources.IResource;
+import org.eclipse.egit.ui.Activator;
 import org.eclipse.jface.util.Policy;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jgit.lib.Ref;
@@ -201,8 +203,9 @@ public class CommonUtils {
 				handlerService.executeCommand(commandId, null);
 
 			return true;
-		} catch (CommandException ignored) {
-			// Ignored
+		} catch (CommandException e) {
+			Activator.logError(MessageFormat
+					.format(UIText.CommonUtils_CommandError, commandId), e);
 		}
 		return false;
 	}

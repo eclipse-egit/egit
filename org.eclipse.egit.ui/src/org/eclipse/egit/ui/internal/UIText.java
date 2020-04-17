@@ -186,6 +186,9 @@ public class UIText extends NLS {
 	public static String BlameInformationControl_ShowInHistoryLink;
 
 	/** */
+	public static String CommonUtils_CommandError;
+
+	/** */
 	public static String AssumeUnchanged_assumeUnchanged;
 
 	/** */
@@ -3762,6 +3765,9 @@ public class UIText extends NLS {
 
 	/** */
 	public static String IgnoreActionHandler_manyFilesToBeIgnoredQuestion;
+
+	/** */
+	public static String RepositoriesView_BranchCollectionError;
 
 	/** */
 	public static String RepositoriesView_BranchDeletionFailureMessage;
