@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "bef5fb8d_33228785",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/repository/tree/filter/NodesByCommitTimeFilter.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 236689
+      },
+      "writtenOn": "2020-04-19T17:26:53Z",
+      "side": 1,
+      "message": "I wanted to make sure the tag list does not become empty when entering \"#\" (not a valid number filter and not likely to be a text filter) and then have entries for \"#9\".\nSo \"#\" is used to switch from text filter to time filter without actually filtering, yet. With two flags this distinction becomes clearly visible.",
+      "parentUuid": "a9ce63b1_13415959",
+      "revId": "3e5fb6a717cacdd569f541f41e54e19a34677267",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "48c94344_b4fd0c56",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/repository/tree/filter/NodesByCommitTimeFilter.java",
         "patchSetId": 5
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "ade00036_0c79f41e",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/repository/tree/filter/NodesByCommitTimeFilter.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 236689
+      },
+      "writtenOn": "2020-04-19T17:26:53Z",
+      "side": 1,
+      "message": "I guess restricting the length of the number would be the simplest solution.",
+      "parentUuid": "48c94344_b4fd0c56",
+      "revId": "3e5fb6a717cacdd569f541f41e54e19a34677267",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e3fb9485_04a4c6f7",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/repository/tree/filter/NodesByCommitTimeFilter.java",
         "patchSetId": 5
@@ -47,6 +83,24 @@
       "writtenOn": "2020-04-19T13:08:23Z",
       "side": 1,
       "message": "So once we have maxCount elements, we have O(n * log(n)) for each insert (sorting n elements, n \u003d\u003d maxCount). Moreover, the list is sorted except for the last element.\n\nSeems to me this is a job for a PriorityQueue, ordered such that the oldest tag is at the front of the queue. Then we can just add, and if size \u003e maxCount, poll and discard the first one (it\u0027ll be too old), and set thresholdTime \u003d queue.peek().time;\n\naddNode then has O(log(n)).",
+      "revId": "3e5fb6a717cacdd569f541f41e54e19a34677267",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "0dc00d78_b6fe8c10",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/repository/tree/filter/NodesByCommitTimeFilter.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 236689
+      },
+      "writtenOn": "2020-04-19T17:26:53Z",
+      "side": 1,
+      "message": "I\u0027ll have a look, did not know about PriorityQueue.",
+      "parentUuid": "e3fb9485_04a4c6f7",
       "revId": "3e5fb6a717cacdd569f541f41e54e19a34677267",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
