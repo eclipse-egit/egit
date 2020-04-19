@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e3fb9485_04a4c6f7",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/repository/tree/filter/NodesByCommitTimeFilter.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2020-04-19T13:08:23Z",
+      "side": 1,
+      "message": "So once we have maxCount elements, we have O(n * log(n)) for each insert (sorting n elements, n \u003d\u003d maxCount). Moreover, the list is sorted except for the last element.\n\nSeems to me this is a job for a PriorityQueue, ordered such that the oldest tag is at the front of the queue. Then we can just add, and if size \u003e maxCount, poll and discard the first one (it\u0027ll be too old), and set thresholdTime \u003d queue.peek().time;\n\naddNode then has O(log(n)).",
+      "revId": "3e5fb6a717cacdd569f541f41e54e19a34677267",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
