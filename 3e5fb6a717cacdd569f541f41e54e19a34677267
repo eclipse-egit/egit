@@ -2,6 +2,40 @@
   "comments": [
     {
       "key": {
+        "uuid": "a9ce63b1_13415959",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/repository/tree/filter/NodesByCommitTimeFilter.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2020-04-19T15:24:58Z",
+      "side": 1,
+      "message": "Why do we need two flags? Doesn\u0027t a single active flag suffice?",
+      "revId": "3e5fb6a717cacdd569f541f41e54e19a34677267",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "48c94344_b4fd0c56",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/repository/tree/filter/NodesByCommitTimeFilter.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2020-04-19T15:24:58Z",
+      "side": 1,
+      "message": "This produces a NumberFormatExpection if I enter \"#2000000000000000000000\".",
+      "revId": "3e5fb6a717cacdd569f541f41e54e19a34677267",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e3fb9485_04a4c6f7",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/repository/tree/filter/NodesByCommitTimeFilter.java",
         "patchSetId": 5
