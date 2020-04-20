@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "03625e76_417dc0fc",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/repository/tree/filter/NodesByCommitTimeFilter.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 236689
+      },
+      "writtenOn": "2020-04-20T16:19:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bef5fb8d_33228785",
+      "revId": "3e5fb6a717cacdd569f541f41e54e19a34677267",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "48c94344_b4fd0c56",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/repository/tree/filter/NodesByCommitTimeFilter.java",
         "patchSetId": 5
@@ -90,6 +108,24 @@
     },
     {
       "key": {
+        "uuid": "09ba4f8a_d239c593",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/repository/tree/filter/NodesByCommitTimeFilter.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 236689
+      },
+      "writtenOn": "2020-04-20T16:19:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "25e52c7a_e493fadd",
+      "revId": "3e5fb6a717cacdd569f541f41e54e19a34677267",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e3fb9485_04a4c6f7",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/repository/tree/filter/NodesByCommitTimeFilter.java",
         "patchSetId": 5
@@ -119,6 +155,24 @@
       "side": 1,
       "message": "I\u0027ll have a look, did not know about PriorityQueue.",
       "parentUuid": "e3fb9485_04a4c6f7",
+      "revId": "3e5fb6a717cacdd569f541f41e54e19a34677267",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ca2869f9_29b7400d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/repository/tree/filter/NodesByCommitTimeFilter.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 236689
+      },
+      "writtenOn": "2020-04-20T16:19:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0dc00d78_b6fe8c10",
       "revId": "3e5fb6a717cacdd569f541f41e54e19a34677267",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
