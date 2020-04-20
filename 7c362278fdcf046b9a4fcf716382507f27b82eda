@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8f95d231_8575c0fb",
+        "filename": "org.eclipse.egit.ui/plugin.xml",
+        "patchSetId": 2
+      },
+      "lineNbr": 6227,
+      "author": {
+        "id": 587
+      },
+      "writtenOn": "2020-04-20T21:18:52Z",
+      "side": 1,
+      "message": "The name is a translatable label.",
+      "revId": "7c362278fdcf046b9a4fcf716382507f27b82eda",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "e3c4100d_ac1d7893",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/repository/tree/command/CloneCommand.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 587
+      },
+      "writtenOn": "2020-04-20T21:18:52Z",
+      "side": 1,
+      "message": "This should be the id of the paramter, not the name.",
+      "revId": "7c362278fdcf046b9a4fcf716382507f27b82eda",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
