@@ -46,11 +46,14 @@ public class CloneCommand extends
 	@Override
 	public Object execute(ExecutionEvent event) throws ExecutionException {
 		GitCloneWizard wizard;
+		String uriCommand = event.getParameter("repositoryUrl"); //$NON-NLS-1$
 		if (presetURI == null) {
-			wizard = new GitCloneWizard();
+			wizard = uriCommand != null ? new GitCloneWizard(uriCommand)
+					: new GitCloneWizard();
 		} else {
 			wizard = new GitCloneWizard(presetURI);
 		}
+
 		RepositoryGroup group = getSelectedRepositoryGroup(event);
 		wizard.setRepositoryGroup(group);
 		wizard.setShowProjectImport(true);
