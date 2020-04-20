@@ -16,6 +16,24 @@
       "revId": "c8c4b068ab3c1fc1726120d487c6366d20ebd2a6",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "8b9c8dfe_5419275c",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/repository/tree/command/CloneCommand.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2020-04-20T19:00:56Z",
+      "side": 1,
+      "message": "Don\u0027t you have to define it in plugin.xml?",
+      "parentUuid": "3cb7fa38_b41a76b6",
+      "revId": "c8c4b068ab3c1fc1726120d487c6366d20ebd2a6",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
     }
   ]
 }
