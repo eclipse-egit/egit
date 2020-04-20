@@ -34,6 +34,24 @@
       "revId": "c8c4b068ab3c1fc1726120d487c6366d20ebd2a6",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "0c6e7eb1_65115eb7",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/repository/tree/command/CloneCommand.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 246338
+      },
+      "writtenOn": "2020-04-20T19:45:02Z",
+      "side": 1,
+      "message": "I\u0027m not entirely sure myself, to be honest.\n\nLooking at https://git.eclipse.org/r/#/c/161152/ (specifically EclipseCommandURIHandler.java) it seems that the eclipse+command URI would have the form of:\t\t\n\neclipse+command://org.eclipse.egit.ui.RepositoriesViewClone?URI\u003dgit://git.eclipse.org/gitroot/egit/egit.git\n\nThe \"URI\u003dgit://git.eclipse.org/gitroot/egit/egit.git\" would be a part of the ExecutionEvent\u0027s parameter map, but the key used (in my example, \"URI\") seems to be up to the implementer.",
+      "parentUuid": "8b9c8dfe_5419275c",
+      "revId": "c8c4b068ab3c1fc1726120d487c6366d20ebd2a6",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
     }
   ]
 }
