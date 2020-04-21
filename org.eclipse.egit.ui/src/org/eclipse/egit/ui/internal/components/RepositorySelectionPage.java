@@ -61,6 +61,7 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.DirectoryDialog;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Event;
+import org.eclipse.swt.widgets.FileDialog;
 import org.eclipse.swt.widgets.Group;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Text;
@@ -481,7 +482,7 @@ public class RepositorySelectionPage extends WizardPage implements IRepositorySe
 		final Group g = createGroup(parent,
 				UIText.RepositorySelectionPage_groupLocation);
 
-		g.setLayout(new GridLayout(3, false));
+		g.setLayout(new GridLayout(4, false));
 
 		newLabel(g, UIText.RepositorySelectionPage_promptURI + ":"); //$NON-NLS-1$
 		uriText = new Text(g, SWT.BORDER);
@@ -502,9 +503,13 @@ public class RepositorySelectionPage extends WizardPage implements IRepositorySe
 		uriProposalHandler = UIUtils.addPreviousValuesContentProposalToText(
 				uriText, USED_URIS_PREF);
 
-		Button browseButton = new Button(g, SWT.NULL);
-		browseButton.setText(UIText.RepositorySelectionPage_BrowseLocalFile);
-		browseButton.addSelectionListener(new SelectionAdapter() {
+		Button browseLocalFolderButton = new Button(g, SWT.NULL);
+		if (!sourceSelection) {
+			GridDataFactory.fillDefaults().span(3, 1)
+					.applyTo(browseLocalFolderButton);
+		}
+		browseLocalFolderButton.setText(UIText.RepositorySelectionPage_BrowseLocalFolder);
+		browseLocalFolderButton.addSelectionListener(new SelectionAdapter() {
 
 			@Override
 			public void widgetSelected(SelectionEvent evt) {
@@ -516,47 +521,38 @@ public class RepositorySelectionPage extends WizardPage implements IRepositorySe
 					dialog.setMessage(
 							UIText.RepositorySelectionPage_destinationSelectionTitle);
 				}
-				// if a file was selected before, let's try to open
-				// the directory dialog on the same directory
-				if (!uriText.getText().isEmpty()) {
-					try {
-						// first we try if this is a simple file name
-						File testFile = new File(uriText.getText());
-						if (testFile.exists()) {
-							dialog.setFilterPath(testFile.getPath());
-						} else {
-							// this could still be a file URIish
-							URIish testUri = new URIish(uriText.getText());
-							if (Protocol.FILE.defaultScheme
-									.equals(testUri.getScheme())) {
-								testFile = new File(testUri.getPath());
-								if (testFile.exists()) {
-									dialog.setFilterPath(testFile.getPath());
-								}
-							}
-						}
-					} catch (IllegalArgumentException | URISyntaxException e) {
-						// ignore here, we just' don't set the directory in the
-						// browser
-					}
-				}
-				// if nothing else, we start the search from the default folder for repositories
-				String filterPath = dialog.getFilterPath();
-				if (filterPath == null || filterPath.isEmpty()) {
-					dialog.setFilterPath(
-							RepositoryUtil.getDefaultRepositoryDir());
-				}
+				dialog.setFilterPath(getUriFilterPath());
 				String result = dialog.open();
 				if (result != null) {
-					uriText.setText("file:///" + result); //$NON-NLS-1$
+					uriText.setText(
+							Protocol.FILE.getDefaultScheme() + "://" + result); //$NON-NLS-1$
 				}
 			}
 
 		});
 
+		if (sourceSelection) {
+			Button browseLocalBundleFileButton = new Button(g, SWT.NULL);
+			browseLocalBundleFileButton.setText(UIText.RepositorySelectionPage_BrowseLocalBundleFile);
+			browseLocalBundleFileButton.addSelectionListener(new SelectionAdapter() {
+
+				@Override
+				public void widgetSelected(SelectionEvent evt) {
+					FileDialog dialog = new FileDialog(getShell());
+					dialog.setText(UIText.RepositorySelectionPage_sourceSelectionTitle);
+					dialog.setFilterPath(getUriFilterPath());
+
+					String result = dialog.open();
+					if (result != null) {
+								uriText.setText(Protocol.FILE.getDefaultScheme()
+										+ "://" + result); //$NON-NLS-1$
+					}
+				}
+			});
+		}
 		newLabel(g, UIText.RepositorySelectionPage_promptHost + ":"); //$NON-NLS-1$
 		hostText = new Text(g, SWT.BORDER);
-		GridDataFactory.fillDefaults().span(2, 1).applyTo(hostText);
+		GridDataFactory.fillDefaults().span(3, 1).applyTo(hostText);
 		hostText.addModifyListener(new ModifyListener() {
 			@Override
 			public void modifyText(final ModifyEvent e) {
@@ -566,7 +562,7 @@ public class RepositorySelectionPage extends WizardPage implements IRepositorySe
 
 		newLabel(g, UIText.RepositorySelectionPage_promptPath + ":"); //$NON-NLS-1$
 		pathText = new Text(g, SWT.BORDER);
-		GridDataFactory.fillDefaults().span(2, 1).applyTo(pathText);
+		GridDataFactory.fillDefaults().span(3, 1).applyTo(pathText);
 		pathText.addModifyListener(new ModifyListener() {
 			@Override
 			public void modifyText(final ModifyEvent e) {
@@ -605,6 +601,7 @@ public class RepositorySelectionPage extends WizardPage implements IRepositorySe
 		});
 
 		storeCheckbox = new Button(g, SWT.CHECK);
+		GridDataFactory.fillDefaults().span(2, 1).applyTo(storeCheckbox);
 		storeCheckbox
 				.setText(UIText.RepositorySelectionPage_storeInSecureStore);
 		storeCheckbox.setSelection(storeInSecureStore);
@@ -693,7 +690,7 @@ public class RepositorySelectionPage extends WizardPage implements IRepositorySe
 	}
 
 	private GridData createFieldGridData() {
-		return new GridData(SWT.FILL, SWT.DEFAULT, true, false);
+		return new GridData(SWT.FILL, SWT.CENTER, true, false);
 	}
 
 	private String nullString(final String value) {
@@ -1052,6 +1049,39 @@ public class RepositorySelectionPage extends WizardPage implements IRepositorySe
 		info.setShouldSaveCredentialsInSecureStore(storeInSecureStore);
 		uriProposalHandler.updateProposals();
 		return info;
+	}
+
+	private String getUriFilterPath() {
+		String filterPath = null;
+		// if a file was selected before, let's try to open
+		// the directory dialog on the same directory
+		if (!uriText.getText().isEmpty()) {
+			try {
+				// first we try if this is a simple file name
+				File testFile = new File(uriText.getText());
+				if (testFile.exists()) {
+					filterPath = testFile.getPath();
+				} else {
+					// this could still be a file URIish
+					URIish testUri = new URIish(uriText.getText());
+					if (Protocol.FILE.defaultScheme
+							.equals(testUri.getScheme())) {
+						testFile = new File(testUri.getPath());
+						if (testFile.exists()) {
+							filterPath = testFile.getPath();
+						}
+					}
+				}
+			} catch (IllegalArgumentException | URISyntaxException e) {
+				// ignore here, we just' don't set the directory in the
+				// browser
+			}
+		}
+		// if nothing else, we start the search from the default folder for repositories
+		if (filterPath == null || filterPath.isEmpty()) {
+			filterPath = RepositoryUtil.getDefaultRepositoryDir();
+		}
+		return filterPath;
 	}
 
 }
