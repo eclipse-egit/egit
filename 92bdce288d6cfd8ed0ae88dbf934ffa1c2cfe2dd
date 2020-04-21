@@ -105,6 +105,30 @@
       "revId": "92bdce288d6cfd8ed0ae88dbf934ffa1c2cfe2dd",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "feddb21b_6b10a3e2",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/repository/tree/filter/NodesByCommitTimeFilter.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2020-04-21T17:19:09Z",
+      "side": 1,
+      "message": "\u003e I can change it back to the previous pattern.\n\nYes, please. As you wrote yourself, there can never be more than one node that needs removing, so a while loop is actually misleading.",
+      "parentUuid": "5d92133d_4d98533e",
+      "range": {
+        "startLine": 81,
+        "startChar": 5,
+        "endLine": 84,
+        "endChar": 36
+      },
+      "revId": "92bdce288d6cfd8ed0ae88dbf934ffa1c2cfe2dd",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
     }
   ]
 }
