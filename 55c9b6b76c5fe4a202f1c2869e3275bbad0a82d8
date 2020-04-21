@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9fa8155f_ea0abf1d",
+        "filename": "org.eclipse.egit.ui/plugin.xml",
+        "patchSetId": 4
+      },
+      "lineNbr": 6227,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2020-04-21T15:41:44Z",
+      "side": 1,
+      "message": "Sorry, you copied my typos. My fault. Should be \"Clone\", not \"Close\", and the value should read \"URI\", not \"URL\".",
+      "revId": "55c9b6b76c5fe4a202f1c2869e3275bbad0a82d8",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "4fa95731_91970597",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/repository/tree/command/CloneCommand.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2020-04-21T15:41:44Z",
+      "side": 1,
+      "message": "Right, sanitizing is a good idea, too. But then also use the sanitized value for passing on to the wizard.",
+      "revId": "55c9b6b76c5fe4a202f1c2869e3275bbad0a82d8",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
