@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "16929072_c1b1ac55",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/repository/tree/command/CloneCommand.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 246338
+      },
+      "writtenOn": "2020-04-21T15:47:35Z",
+      "side": 1,
+      "message": "Maybe I should be caching the sanitized Git URL as a variable instead of calling sanitizeAsGitUrl twice? What do you think Thomas",
+      "revId": "258c21d476d806c217915316d2c5caadde7253ef",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
