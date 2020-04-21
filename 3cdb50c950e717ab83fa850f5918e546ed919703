@@ -1,0 +1,90 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "07d250d1_5bb0afea",
+        "filename": "org.eclipse.egit.ui/plugin.xml",
+        "patchSetId": 3
+      },
+      "lineNbr": 6226,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2020-04-21T07:00:57Z",
+      "side": 1,
+      "message": "This can be a short id; doesn\u0027t need to be qualified as it\u0027s particular to this command. Just \"repositoryUri\" is fine.\n\nWith a qualified name, the HTML link would need to use also this long qualified name.\n\nBTW, let\u0027s use \"URI\", not \"URL\".",
+      "range": {
+        "startLine": 6226,
+        "startChar": 19,
+        "endLine": 6226,
+        "endChar": 74
+      },
+      "revId": "3cdb50c950e717ab83fa850f5918e546ed919703",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a0ae800a_80639c0c",
+        "filename": "org.eclipse.egit.ui/plugin.xml",
+        "patchSetId": 3
+      },
+      "lineNbr": 6227,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2020-04-21T07:00:57Z",
+      "side": 1,
+      "message": "Should be translateable. \"%RepositoriesViewClose_repositoryUri_Name\" and then define in plugin.properties\n\n  RepositoriesViewClose_repositoryUri_Name\u003dRepository URL",
+      "range": {
+        "startLine": 6227,
+        "startChar": 21,
+        "endLine": 6227,
+        "endChar": 35
+      },
+      "revId": "3cdb50c950e717ab83fa850f5918e546ed919703",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "0756c98d_99853d60",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/repository/tree/command/CloneCommand.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2020-04-21T07:00:57Z",
+      "side": 1,
+      "message": "This is not a command; it\u0027s a parameter. Rename to \"uriParameter\".",
+      "range": {
+        "startLine": 49,
+        "startChar": 9,
+        "endLine": 49,
+        "endChar": 19
+      },
+      "revId": "3cdb50c950e717ab83fa850f5918e546ed919703",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "074a243d_5ef30d29",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/repository/tree/command/CloneCommand.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2020-04-21T07:00:57Z",
+      "side": 1,
+      "message": "Move this inside the \"if (presetURI \u003d\u003d null)\" case below, and provide the parameter id as a constant:\n\n  public static final String REPOSITORY_URI_PARAMETER_ID \u003d \"repositoryUri\"; // $NON-NLS-1$\n\nAlso note: this parameter value apparently can come from untrusted external sources. Guard it with GitUrlChecker.isValidGitUrl(uriParameter).",
+      "revId": "3cdb50c950e717ab83fa850f5918e546ed919703",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
