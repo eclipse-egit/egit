@@ -129,6 +129,30 @@
       "revId": "92bdce288d6cfd8ed0ae88dbf934ffa1c2cfe2dd",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1170bdd8_230e0586",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/repository/tree/filter/NodesByCommitTimeFilter.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 236689
+      },
+      "writtenOn": "2020-04-21T18:09:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "feddb21b_6b10a3e2",
+      "range": {
+        "startLine": 81,
+        "startChar": 5,
+        "endLine": 84,
+        "endChar": 36
+      },
+      "revId": "92bdce288d6cfd8ed0ae88dbf934ffa1c2cfe2dd",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
     }
   ]
 }
