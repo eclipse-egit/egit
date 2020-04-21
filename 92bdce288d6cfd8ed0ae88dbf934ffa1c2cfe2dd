@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "a17fdc23_ecd56265",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/repository/tree/filter/NodesByCommitTimeFilter.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 236689
+      },
+      "writtenOn": "2020-04-21T15:32:31Z",
+      "side": 1,
+      "message": "Yes, the condition in isFiltering() was changed as well. The intended behaviour is \"show the last n tags\". It seems strange to do no filtering for \"#0\". The behaviour for \"#0100\" should not have changed.",
+      "parentUuid": "5b6111a3_1a252006",
+      "revId": "92bdce288d6cfd8ed0ae88dbf934ffa1c2cfe2dd",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "bd8e6ffc_f6f72112",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/repository/tree/filter/NodesByCommitTimeFilter.java",
         "patchSetId": 7
@@ -30,6 +48,30 @@
       "writtenOn": "2020-04-20T16:40:12Z",
       "side": 1,
       "message": "Looks a bit complicated. What was wrong with the previous logic?\n\n  if (nodes.size() \u003e maxCount) {\n    nodes.poll();\n    thresholdTime \u003d nodes.peek().time;\n  }",
+      "range": {
+        "startLine": 81,
+        "startChar": 5,
+        "endLine": 84,
+        "endChar": 36
+      },
+      "revId": "92bdce288d6cfd8ed0ae88dbf934ffa1c2cfe2dd",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5d92133d_4d98533e",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/repository/tree/filter/NodesByCommitTimeFilter.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 236689
+      },
+      "writtenOn": "2020-04-21T15:32:31Z",
+      "side": 1,
+      "message": "Probably nothing. This version would handle the the case node.size\u003emaxcount+1 correctly, but as only one node is added at a time, it cannot occur.\n\nThe change is due to desperate attempts to get this running (the wrong sort order of the comparable yields very strange results, and I went through numerous iterations before figuring out that *that* was the problem).\n\nI can change it back to the previous pattern.",
+      "parentUuid": "bd8e6ffc_f6f72112",
       "range": {
         "startLine": 81,
         "startChar": 5,
