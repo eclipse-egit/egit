@@ -5590,6 +5590,9 @@ public class UIText extends NLS {
 	public static String GitTemplateVariableResolver_GitConfigDescription;
 
 	/** */
+	public static String StagingView_CompareWithHeadMenuLabel;
+
+	/** */
 	public static String StagingView_CompareWithIndexMenuLabel;
 
 	/** */
