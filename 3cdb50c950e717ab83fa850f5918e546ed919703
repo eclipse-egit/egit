@@ -48,6 +48,30 @@
     },
     {
       "key": {
+        "uuid": "fa11f941_86c7779f",
+        "filename": "org.eclipse.egit.ui/plugin.xml",
+        "patchSetId": 3
+      },
+      "lineNbr": 6227,
+      "author": {
+        "id": 246338
+      },
+      "writtenOn": "2020-04-21T15:36:57Z",
+      "side": 1,
+      "message": "Sounds good. Should it be \"RepositoriesViewClose_repositoryUri_Name\u003dRepository URL\" or \"RepositoriesViewClose_repositoryUri_Name\u003dRepository URi\"?",
+      "parentUuid": "a0ae800a_80639c0c",
+      "range": {
+        "startLine": 6227,
+        "startChar": 21,
+        "endLine": 6227,
+        "endChar": 35
+      },
+      "revId": "3cdb50c950e717ab83fa850f5918e546ed919703",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0756c98d_99853d60",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/repository/tree/command/CloneCommand.java",
         "patchSetId": 3
