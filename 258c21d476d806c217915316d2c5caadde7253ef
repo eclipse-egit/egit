@@ -57,6 +57,24 @@
       "revId": "258c21d476d806c217915316d2c5caadde7253ef",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c81f31f4_a78a1d62",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/repository/tree/command/CloneCommand.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 246338
+      },
+      "writtenOn": "2020-04-21T16:10:13Z",
+      "side": 1,
+      "message": "Agreed :)",
+      "parentUuid": "4e048b3d_fc11db0c",
+      "revId": "258c21d476d806c217915316d2c5caadde7253ef",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
     }
   ]
 }
