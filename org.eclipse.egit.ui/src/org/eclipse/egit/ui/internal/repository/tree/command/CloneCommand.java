@@ -1,5 +1,6 @@
 /*******************************************************************************
- * Copyright (c) 2010 SAP AG.
+ * Copyright (c) 2010, 2020 SAP AG and others.
+ *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License 2.0
  * which accompanies this distribution, and is available at
@@ -26,25 +27,30 @@ import org.eclipse.jface.wizard.WizardDialog;
  */
 public class CloneCommand
 		extends RepositoriesViewCommandHandler<RepositoryTreeNode> {
-	/**
-	 * Repository Uri parameter, potentially present in the ExecutionEvent in
-	 * the case eclipse+command handler is used to evoke the CloneCommand
-	 */
+
+	/** The command id. */
+	public static final String COMMAND_ID = "org.eclipse.egit.ui.RepositoriesViewClone"; //$NON-NLS-1$
+
+	/** Id of the optional command parameter for the repository URI. */
 	public static final String REPOSITORY_URI_PARAMETER_ID = "repositoryUri"; //$NON-NLS-1$
 
 	private String presetURI;
 
 	/**
-	 * Default constructor
+	 * Creates a command that will open the clone wizard pre-filled from either
+	 * the {@link #REPOSITORY_URI_PARAMETER_ID} command parameter or from the
+	 * clipboard contents.
 	 */
 	public CloneCommand() {
 		this(null);
 	}
 
 	/**
-	 * Constructor support presetURI
+	 * Creates a command that will open the clone wizard and pre-fill it with
+	 * the given URI, which is assumed to be valid.
 	 *
 	 * @param presetURI
+	 *            to fill the dialog with.
 	 */
 	public CloneCommand(String presetURI) {
 		this.presetURI = presetURI;

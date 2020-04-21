@@ -1,11 +1,10 @@
 /*******************************************************************************
- * Copyright (C) 2011, Dariusz Luksza <dariusz@luksza.org>
+ * Copyright (C) 2011, 2020 Dariusz Luksza <dariusz@luksza.org> and others.
  * Copyright (C) 2011, 2013 Robin Stocker <robin@nibor.org>
  * Copyright (C) 2011, Bernard Leach <leachbj@bouncycastle.org>
  * Copyright (C) 2013, Michael Keppler <michael.keppler@gmx.de>
  * Copyright (C) 2014, IBM Corporation (Markus Keller <markus_keller@ch.ibm.com>)
  * Copyright (C) 2015, IBM Corporation (Dani Megert <daniel_megert@ch.ibm.com>)
- * Copyright (C) 2015, Thomas Wolf <thomas.wolf@paranor.ch>
  * Copyright (C) 2016, Stefan Dirix <sdirix@eclipsesource.com>
  *
  * All rights reserved. This program and the accompanying materials
@@ -23,6 +22,7 @@ import java.util.Comparator;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -168,7 +168,7 @@ public class CommonUtils {
 					STRING_ASCENDING_COMPARATOR);
 
 	/**
-	 * Programmatically run command based on its id and given selection
+	 * Programmatically run a command based on its id and given selection.
 	 *
 	 * @param commandId
 	 *            id of command that should be run
@@ -179,12 +179,30 @@ public class CommonUtils {
 	 */
 	public static boolean runCommand(String commandId,
 			IStructuredSelection selection) {
+		return runCommand(commandId, selection, null);
+	}
+
+	/**
+	 * Programmatically run a command based on its id and given selection,
+	 * optionally passing parameters to the command.
+	 *
+	 * @param commandId
+	 *            id of command that should be run
+	 * @param selection
+	 *            given selection
+	 * @param params
+	 *            optional command parameters to apply, may be {@code null}
+	 * @return {@code true} when command was successfully executed,
+	 *         {@code false} otherwise
+	 */
+	public static boolean runCommand(String commandId,
+			IStructuredSelection selection, Map<String, Object> params) {
 		ICommandService commandService = PlatformUI.getWorkbench()
 				.getService(ICommandService.class);
 		Command cmd = commandService.getCommand(commandId);
-		if (!cmd.isDefined())
+		if (!cmd.isDefined()) {
 			return false;
-
+		}
 		IHandlerService handlerService = PlatformUI.getWorkbench()
 				.getService(IHandlerService.class);
 		EvaluationContext c = null;
@@ -196,12 +214,15 @@ public class CommonUtils {
 			c.removeVariable(ISources.ACTIVE_MENU_SELECTION_NAME);
 		}
 		try {
-			if (c != null)
+			if (c != null) {
 				handlerService.executeCommandInContext(
-						new ParameterizedCommand(cmd, null), null, c);
-			else
-				handlerService.executeCommand(commandId, null);
-
+						ParameterizedCommand.generateCommand(cmd, params), null,
+						c);
+			} else {
+				handlerService.executeCommand(
+						ParameterizedCommand.generateCommand(cmd, params),
+						null);
+			}
 			return true;
 		} catch (CommandException e) {
 			Activator.logError(MessageFormat

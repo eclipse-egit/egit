@@ -1,5 +1,6 @@
 /*******************************************************************************
- * Copyright (c) 2011, 2017 The Eclipse Foundation and others.
+ * Copyright (c) 2011, 2020 The Eclipse Foundation and others.
+ *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License 2.0
  * which accompanies this distribution, and is available at
@@ -13,14 +14,14 @@
  *******************************************************************************/
 package org.eclipse.egit.ui.internal.clone;
 
-import org.eclipse.core.commands.ExecutionEvent;
-import org.eclipse.core.commands.ExecutionException;
+import java.util.Collections;
+
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.core.runtime.jobs.Job;
 import org.eclipse.e4.ui.workbench.UIEvents;
-import org.eclipse.egit.ui.Activator;
+import org.eclipse.egit.ui.internal.CommonUtils;
 import org.eclipse.egit.ui.internal.repository.tree.command.CloneCommand;
 import org.eclipse.jface.util.Util;
 import org.eclipse.swt.dnd.DND;
@@ -172,12 +173,8 @@ public class GitCloneDropAdapter implements EventHandler {
 	 * @param url
 	 */
 	protected void proceedClone(String url) {
-		CloneCommand command = new CloneCommand(url);
-		try {
-			command.execute(new ExecutionEvent());
-		} catch (ExecutionException e) {
-			Activator.logError(e.getLocalizedMessage(), e);
-		}
+		CommonUtils.runCommand(CloneCommand.COMMAND_ID, null, Collections
+				.singletonMap(CloneCommand.REPOSITORY_URI_PARAMETER_ID, url));
 	}
 
 	private class GitDropTargetListener extends DropTargetAdapter {
