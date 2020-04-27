@@ -179,7 +179,7 @@
     </iu>
     <iu id='fr.obeo.releng.targetplatform-feature.feature.group' name='Target Platform Definition DSL and Generator' version='0.0.0'>
       <repositories size='1'>
-        <repository location='http://mbarbero.github.io/fr.obeo.releng.targetplatform/p2/latest/'/>
+        <repository location='https://download.eclipse.org/cbi/tpd/3.0.0-SNAPSHOT/'/>
       </repositories>
     </iu>
   </ius>
