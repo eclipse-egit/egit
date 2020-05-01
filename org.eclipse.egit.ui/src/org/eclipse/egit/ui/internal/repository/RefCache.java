@@ -11,6 +11,7 @@
 package org.eclipse.egit.ui.internal.repository;
 
 import java.io.IOException;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
@@ -101,6 +102,13 @@ final class RefCache {
 		return result;
 	}
 
+	protected synchronized void remove(Collection<Repository> repositories) {
+		refsChangedListeners.keySet().removeAll(repositories);
+		indexChangedListeners.keySet().removeAll(repositories);
+		branchRefs.keySet().removeAll(repositories);
+		additionalRefs.keySet().removeAll(repositories);
+	}
+
 	protected synchronized void unregister() {
 		if (refCount == 0) {
 			return;
@@ -111,6 +119,7 @@ final class RefCache {
 			indexChangedListeners.values().forEach(ListenerHandle::remove);
 			indexChangedListeners.clear();
 			branchRefs.clear();
+			additionalRefs.clear();
 		}
 	}
 
@@ -152,6 +161,8 @@ final class RefCache {
 
 		}
 
+		void remove(Collection<Repository> repositories);
+
 		void dispose();
 	}
 
@@ -162,6 +173,11 @@ final class RefCache {
 		@Override
 		public boolean isLoaded(Repository repository) {
 			return INSTANCE.isLoaded(repository);
+		}
+
+		@Override
+		public void remove(Collection<Repository> repositories) {
+			INSTANCE.remove(repositories);
 		}
 
 		@Override
