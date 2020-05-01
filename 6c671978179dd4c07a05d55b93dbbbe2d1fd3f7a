@@ -16,6 +16,24 @@
       "revId": "6c671978179dd4c07a05d55b93dbbbe2d1fd3f7a",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "e94d6675_d0688638",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/repository/RepositoriesView.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 236,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2020-05-01T12:04:52Z",
+      "side": 1,
+      "message": "It returns a (new) handle actually. Maybe it could be improved by renaming the variable to refCacheHandle, or renaming RefCache.Cache to CacheHandle, or renaming RefCache.get() to newHandle() or some such, as you suggest. Feel free to improve the naming in this area.",
+      "parentUuid": "85a0cc0d_372f6693",
+      "revId": "6c671978179dd4c07a05d55b93dbbbe2d1fd3f7a",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
     }
   ]
 }
