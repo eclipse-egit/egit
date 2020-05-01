@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "85a0cc0d_372f6693",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/repository/RepositoriesView.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 236,
+      "author": {
+        "id": 440
+      },
+      "writtenOn": "2020-05-01T08:18:00Z",
+      "side": 1,
+      "message": "The change looks okay to me. However, I was first very confused by the pair of Refcache.get() and refcache.dispose(). At least for me the \"get\" name did not sound like some \"new instance creation\" method, which is why I suspected the dispose call to be wrong there. However, \"get\" really returns new instances (of the accessor class). Maybe it would be useful to change the name of the get() method to make it a bit more clear that this is basically a factory method, e.g. \"create\", \"newInstance\", \"getNewInstance\", \"getNewAccessor\" or something along those lines?\n\nNevertheless, if it perfectly fits your mental model as it is right now, feel free to leave it as is, since you are probably the only one modifying this code area anyway. :)",
+      "revId": "6c671978179dd4c07a05d55b93dbbbe2d1fd3f7a",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
