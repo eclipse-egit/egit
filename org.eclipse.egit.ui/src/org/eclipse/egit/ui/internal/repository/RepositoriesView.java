@@ -233,6 +233,8 @@ public class RepositoriesView extends CommonNavigator implements IShowInSource, 
 
 	private final RepositoryCache repositoryCache;
 
+	private RefCache.Cache refCache = RefCache.get();
+
 	private Composite emptyArea;
 
 	private StackLayout layout;
@@ -920,6 +922,7 @@ public class RepositoriesView extends CommonNavigator implements IShowInSource, 
 
 	private void initRepositoriesAndListeners() {
 		synchronized (repositories) {
+			refCache.remove(repositories);
 			repositories.clear();
 			unregisterRepositoryListeners();
 			Set<File> dirs = new HashSet<>();
@@ -986,6 +989,8 @@ public class RepositoriesView extends CommonNavigator implements IShowInSource, 
 		srv.removePostSelectionListener(selectionChangedListener);
 
 		unregisterRepositoryListeners();
+		refCache.remove(repositories);
+		refCache.dispose();
 		repositories.clear();
 
 		super.dispose();
