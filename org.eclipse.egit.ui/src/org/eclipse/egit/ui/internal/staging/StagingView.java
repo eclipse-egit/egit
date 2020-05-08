@@ -23,6 +23,7 @@ import static org.eclipse.egit.ui.internal.CommonUtils.runCommand;
 
 import java.io.File;
 import java.io.IOException;
+import java.net.URISyntaxException;
 import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -177,6 +178,7 @@ import org.eclipse.jgit.lib.Ref;
 import org.eclipse.jgit.lib.Repository;
 import org.eclipse.jgit.lib.RepositoryState;
 import org.eclipse.jgit.revwalk.RevCommit;
+import org.eclipse.jgit.transport.RemoteConfig;
 import org.eclipse.jgit.util.StringUtils;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.SashForm;
@@ -4306,13 +4308,23 @@ public class StagingView extends ViewPart
 		}
 		if (amendPreviousCommitAction.isChecked())
 			commitOperation.setAmending(true);
-		final boolean gerritMode = addChangeIdAction.isChecked();
-		commitOperation.setComputeChangeId(gerritMode);
+		final boolean withChangeId = addChangeIdAction.isChecked();
+		commitOperation.setComputeChangeId(withChangeId);
 		commitOperation.setSign(signCommitAction.isChecked());
 
 		PushMode pushMode = null;
-		if (pushUpstream) {
-			pushMode = gerritMode ? PushMode.GERRIT : PushMode.UPSTREAM;
+		final Repository repository = currentRepository;
+		if (pushUpstream && repository != null) {
+			pushMode = PushMode.UPSTREAM; // default mode
+			try {
+				if (withChangeId && RemoteConfig
+						.getAllRemoteConfigs(repository.getConfig()).stream()
+						.anyMatch(GerritUtil::isGerritPush)) {
+					pushMode = PushMode.GERRIT;
+				}
+			} catch (URISyntaxException ex) {
+				// ignore, stick to default
+			}
 		}
 		Job commitJob = new CommitJob(currentRepository, commitOperation)
 				.setOpenCommitEditor(openNewCommitsAction.isChecked())
