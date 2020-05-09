@@ -22,6 +22,30 @@
       "revId": "e6158ad4626a10a5f1d8771a94a64ad842129507",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "70184b66_c2b8e11e",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/staging/StagingView.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 4320,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2020-05-09T20:58:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b7c86926_9ceef27f",
+      "range": {
+        "startLine": 4320,
+        "startChar": 8,
+        "endLine": 4320,
+        "endChar": 24
+      },
+      "revId": "e6158ad4626a10a5f1d8771a94a64ad842129507",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
     }
   ]
 }
