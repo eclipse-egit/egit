@@ -23,6 +23,7 @@ import static org.eclipse.egit.ui.internal.CommonUtils.runCommand;
 
 import java.io.File;
 import java.io.IOException;
+import java.net.URISyntaxException;
 import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -108,6 +109,7 @@ import org.eclipse.egit.ui.internal.dialogs.ICommitMessageComponentNotifications
 import org.eclipse.egit.ui.internal.dialogs.SpellcheckableMessageArea;
 import org.eclipse.egit.ui.internal.operations.DeletePathsOperationUI;
 import org.eclipse.egit.ui.internal.operations.IgnoreOperationUI;
+import org.eclipse.egit.ui.internal.push.PushBranchWizard;
 import org.eclipse.egit.ui.internal.push.PushMode;
 import org.eclipse.egit.ui.internal.repository.RepositoryTreeNodeLabelProvider;
 import org.eclipse.egit.ui.internal.repository.tree.RepositoryNode;
@@ -161,6 +163,7 @@ import org.eclipse.jface.viewers.Viewer;
 import org.eclipse.jface.viewers.ViewerComparator;
 import org.eclipse.jface.viewers.ViewerFilter;
 import org.eclipse.jface.viewers.ViewerLabel;
+import org.eclipse.jface.wizard.WizardDialog;
 import org.eclipse.jgit.annotations.NonNull;
 import org.eclipse.jgit.annotations.Nullable;
 import org.eclipse.jgit.api.AddCommand;
@@ -170,6 +173,7 @@ import org.eclipse.jgit.api.RmCommand;
 import org.eclipse.jgit.api.errors.GitAPIException;
 import org.eclipse.jgit.api.errors.JGitInternalException;
 import org.eclipse.jgit.api.errors.NoFilepatternException;
+import org.eclipse.jgit.errors.RevisionSyntaxException;
 import org.eclipse.jgit.events.ListenerHandle;
 import org.eclipse.jgit.lib.Constants;
 import org.eclipse.jgit.lib.ObjectId;
@@ -177,6 +181,7 @@ import org.eclipse.jgit.lib.Ref;
 import org.eclipse.jgit.lib.Repository;
 import org.eclipse.jgit.lib.RepositoryState;
 import org.eclipse.jgit.revwalk.RevCommit;
+import org.eclipse.jgit.transport.RemoteConfig;
 import org.eclipse.jgit.util.StringUtils;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.SashForm;
@@ -1117,18 +1122,6 @@ public class StagingView extends ViewPart
 				.applyTo(commitButtonsContainer);
 
 
-		this.commitAndPushButton = toolkit.createButton(commitButtonsContainer,
-				UIText.StagingView_CommitAndPush, SWT.PUSH);
-		commitAndPushButton.setImage(getImage(UIIcons.PUSH));
-		commitAndPushButton.addSelectionListener(new SelectionAdapter() {
-			@Override
-			public void widgetSelected(SelectionEvent e) {
-				commit(true);
-			}
-		});
-		GridDataFactory.fillDefaults().align(SWT.FILL, SWT.CENTER)
-				.applyTo(commitAndPushButton);
-
 		this.commitButton = toolkit.createButton(commitButtonsContainer,
 				UIText.StagingView_Commit, SWT.PUSH);
 		commitButton.setImage(getImage(UIIcons.COMMIT));
@@ -1141,6 +1134,36 @@ public class StagingView extends ViewPart
 		});
 		GridDataFactory.fillDefaults().align(SWT.FILL, SWT.CENTER)
 				.applyTo(commitButton);
+
+		this.commitAndPushButton = toolkit.createButton(commitButtonsContainer,
+				UIText.StagingView_CommitAndPush, SWT.PUSH);
+		commitAndPushButton.setImage(getImage(UIIcons.PUSH));
+		commitAndPushButton.addSelectionListener(new SelectionAdapter() {
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				if (canPushHeadOnly()) {
+					pushHead(currentRepository);
+				} else {
+					commit(true);
+				}
+			}
+
+			private void pushHead(final Repository repository) {
+				if (repository == null) {
+					return;
+				}
+				try {
+					PushBranchWizard wizard = new PushBranchWizard(repository,
+							repository.resolve(Constants.HEAD));
+					new WizardDialog(commitAndPushButton.getShell(), wizard)
+							.open();
+				} catch (RevisionSyntaxException | IOException e) {
+					Activator.logWarning(e.getMessage(), e);
+				}
+			}
+		});
+		GridDataFactory.fillDefaults().align(SWT.FILL, SWT.CENTER)
+				.applyTo(commitAndPushButton);
 
 		stagedSection = toolkit.createSection(stagingSashForm,
 				ExpandableComposite.SHORT_TITLE_BAR);
@@ -1225,9 +1248,7 @@ public class StagingView extends ViewPart
 			@Override
 			public void updateChangeIdToggleSelection(boolean selection) {
 				addChangeIdAction.setChecked(selection);
-				commitAndPushButton
-						.setImage(getImage(
-								selection ? UIIcons.GERRIT : UIIcons.PUSH));
+				updateCommitButtons();
 			}
 
 			@Override
@@ -1346,14 +1367,6 @@ public class StagingView extends ViewPart
 		}
 	}
 
-	private boolean commitAndPushEnabled(boolean commitEnabled) {
-		Repository repo = currentRepository;
-		if (repo == null) {
-			return false;
-		}
-		return commitEnabled && !repo.getRepositoryState().isRebasing();
-	}
-
 	private void updateIgnoreErrorsButtonVisibility() {
 		boolean visible = getPreferenceStore()
 				.getBoolean(UIPreferences.WARN_BEFORE_COMMITTING)
@@ -1388,14 +1401,21 @@ public class StagingView extends ViewPart
 		}
 		boolean indexDiffAvailable = indexDiffAvailable(indexDiff);
 		boolean noConflicts = noConflicts(indexDiff);
-
 		boolean commitEnabled = noConflicts && indexDiffAvailable
 				&& isCommitPossible() && !isCommitBlocked();
-
-		boolean commitAndPushEnabled = commitAndPushEnabled(commitEnabled);
-
 		commitButton.setEnabled(commitEnabled);
-		commitAndPushButton.setEnabled(commitAndPushEnabled);
+
+		final Repository repo = currentRepository;
+		commitAndPushButton.setEnabled(
+				repo != null && !repo.getRepositoryState().isRebasing());
+		PushMode pushMode = getPushMode();
+		commitAndPushButton.setImage(getImage(
+				pushMode != null && pushMode == PushMode.GERRIT ? UIIcons.GERRIT
+						: UIIcons.PUSH));
+		commitAndPushButton
+				.setText(canPushHeadOnly() ? UIText.StagingView_PushHEAD
+						: UIText.StagingView_CommitAndPush);
+
 	}
 
 	private void saveSashFormWeightsOnDisposal(final SashForm sashForm,
@@ -4312,7 +4332,7 @@ public class StagingView extends ViewPart
 
 		PushMode pushMode = null;
 		if (pushUpstream) {
-			pushMode = gerritMode ? PushMode.GERRIT : PushMode.UPSTREAM;
+			pushMode = getPushMode();
 		}
 		Job commitJob = new CommitJob(currentRepository, commitOperation)
 				.setOpenCommitEditor(openNewCommitsAction.isChecked())
@@ -4336,6 +4356,24 @@ public class StagingView extends ViewPart
 		CommitMessageHistory.saveCommitHistory(commitMessage);
 		clearCommitMessageToggles();
 		return true;
+	}
+
+	private PushMode getPushMode() {
+		final Repository repository = currentRepository;
+		PushMode pushMode = null;
+		if (repository != null) {
+			pushMode = PushMode.UPSTREAM; // default mode
+			try {
+				if (addChangeIdAction.isChecked() && RemoteConfig
+						.getAllRemoteConfigs(repository.getConfig()).stream()
+						.anyMatch(GerritUtil::isGerritPush)) {
+					pushMode = PushMode.GERRIT;
+				}
+			} catch (URISyntaxException ex) {
+				// ignore, stick to default
+			}
+		}
+		return pushMode;
 	}
 
 	/**
@@ -4657,5 +4695,9 @@ public class StagingView extends ViewPart
 				}
 			}
 		}
+	}
+
+	private boolean canPushHeadOnly() {
+		return currentRepository != null && !isCommitPossible();
 	}
 }
