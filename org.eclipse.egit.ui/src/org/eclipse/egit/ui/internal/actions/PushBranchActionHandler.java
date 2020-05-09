@@ -21,6 +21,7 @@ import org.eclipse.jgit.lib.Constants;
 import org.eclipse.jgit.lib.ObjectId;
 import org.eclipse.jgit.lib.Ref;
 import org.eclipse.jgit.lib.Repository;
+import org.eclipse.swt.widgets.Shell;
 
 /**
  * "Push Branch..." action for repository
@@ -29,7 +30,21 @@ public class PushBranchActionHandler extends RepositoryActionHandler {
 	@Override
 	public Object execute(ExecutionEvent event) throws ExecutionException {
 		Repository repository = getRepository(true, event);
+		Shell shell = getShell(event);
 
+		openPushHEADWizard(repository, shell);
+
+		return null;
+	}
+
+	/**
+	 * Opens a {@link PushBranchWizard}, for the current branch or, if detached
+	 * HEAD, from HEAD commit.
+	 *
+	 * @param repository
+	 * @param shell
+	 */
+	public static void openPushHEADWizard(Repository repository, Shell shell) {
 		try {
 			PushBranchWizard wizard = null;
 			Ref ref = getBranchRef(repository);
@@ -39,14 +54,12 @@ public class PushBranchActionHandler extends RepositoryActionHandler {
 				ObjectId id = repository.resolve(repository.getFullBranch());
 				wizard = new PushBranchWizard(repository, id);
 			}
-			PushWizardDialog dlg = new PushWizardDialog(getShell(event),
+			PushWizardDialog dlg = new PushWizardDialog(shell,
 					wizard);
 			dlg.open();
 		} catch (IOException ex) {
 			Activator.handleError(ex.getLocalizedMessage(), ex, false);
 		}
-
-		return null;
 	}
 
 	@Override
@@ -58,7 +71,7 @@ public class PushBranchActionHandler extends RepositoryActionHandler {
 		return SelectionRepositoryStateCache.INSTANCE.getHead(repository) != null;
 	}
 
-	private Ref getBranchRef(Repository repository) {
+	private static Ref getBranchRef(Repository repository) {
 		try {
 			String fullBranch = repository.getFullBranch();
 			if (fullBranch != null && fullBranch.startsWith(Constants.R_HEADS))
