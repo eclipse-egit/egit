@@ -5623,6 +5623,9 @@ public class UIText extends NLS {
 	public static String StagingView_CommitAndPush;
 
 	/** */
+	public static String StagingView_PushHEAD;
+
+	/** */
 	public static String StagingView_Committer;
 
 	/** */

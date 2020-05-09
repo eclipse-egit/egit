@@ -15,7 +15,7 @@ package org.eclipse.egit.ui.internal.commands.shared;
 import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.commands.ExecutionException;
 import org.eclipse.egit.ui.internal.push.PushToGerritWizard;
-import org.eclipse.jface.wizard.WizardDialog;
+import org.eclipse.egit.ui.internal.push.PushWizardDialog;
 import org.eclipse.jgit.lib.Repository;
 import org.eclipse.ui.handlers.HandlerUtil;
 
@@ -30,8 +30,8 @@ public class PushHeadToGerritCommand extends AbstractSharedCommandHandler {
 			return null;
 
 		PushToGerritWizard wiz = new PushToGerritWizard(repository);
-		WizardDialog dlg = new WizardDialog(HandlerUtil
-				.getActiveShellChecked(event), wiz);
+		PushWizardDialog dlg = new PushWizardDialog(
+				HandlerUtil.getActiveShellChecked(event), wiz);
 		dlg.setHelpAvailable(false);
 		dlg.open();
 		return null;
