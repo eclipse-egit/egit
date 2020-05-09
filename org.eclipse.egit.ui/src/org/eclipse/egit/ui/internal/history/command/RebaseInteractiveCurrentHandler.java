@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2013, 2017 SAP AG and others.
+ * Copyright (c) 2013, 2020 SAP AG and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License 2.0
  * which accompanies this distribution, and is available at
@@ -13,14 +13,10 @@ package org.eclipse.egit.ui.internal.history.command;
 import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.commands.ExecutionException;
 import org.eclipse.egit.core.op.RebaseOperation;
-import org.eclipse.egit.ui.Activator;
 import org.eclipse.egit.ui.internal.branch.LaunchFinder;
 import org.eclipse.egit.ui.internal.rebase.RebaseInteractiveHandler;
-import org.eclipse.egit.ui.internal.rebase.RebaseInteractiveView;
 import org.eclipse.jgit.lib.Ref;
 import org.eclipse.jgit.lib.Repository;
-import org.eclipse.ui.PartInitException;
-import org.eclipse.ui.handlers.HandlerUtil;
 
 
 /**
@@ -38,16 +34,7 @@ public class RebaseInteractiveCurrentHandler extends AbstractRebaseHistoryComman
 				null)) {
 			return null;
 		}
-		super.execute(event);
-		try {
-			RebaseInteractiveView rebaseInteractiveView = (RebaseInteractiveView) HandlerUtil
-					.getActiveWorkbenchWindowChecked(event).getActivePage()
-					.showView(RebaseInteractiveView.VIEW_ID);
-			rebaseInteractiveView.setInput(repository);
-		} catch (PartInitException e) {
-			Activator.showError(e.getMessage(), e);
-		}
-		return null;
+		return super.execute(event);
 	}
 
 	@Override
