@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2010, 2016 SAP AG and others.
+ * Copyright (c) 2010, 2020 SAP AG and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License 2.0
  * which accompanies this distribution, and is available at
@@ -30,6 +30,7 @@ import org.eclipse.egit.ui.Activator;
 import org.eclipse.egit.ui.JobFamilies;
 import org.eclipse.egit.ui.internal.UIRepositoryUtils;
 import org.eclipse.egit.ui.internal.UIText;
+import org.eclipse.egit.ui.internal.rebase.RebaseInteractiveView;
 import org.eclipse.egit.ui.internal.rebase.RebaseResultDialog;
 import org.eclipse.egit.ui.internal.staging.StagingView;
 import org.eclipse.jface.dialogs.MessageDialog;
@@ -128,17 +129,39 @@ public abstract class AbstractRebaseCommandHandler extends AbstractSharedCommand
 								}
 							});
 						else if (result.isOK()) {
-							if (rebase.getResult().getStatus() == Status.UNCOMMITTED_CHANGES) {
+							Status status = rebase.getResult().getStatus();
+							switch (status) {
+							case UNCOMMITTED_CHANGES:
 								handleUncommittedChanges(repository,
 										rebase.getResult()
 												.getUncommittedChanges());
-							} else {
+								break;
+							case INTERACTIVE_PREPARED:
+								PlatformUI.getWorkbench().getDisplay()
+										.asyncExec(() -> {
+											try {
+												RebaseInteractiveView view = (RebaseInteractiveView) PlatformUI
+														.getWorkbench()
+														.getActiveWorkbenchWindow()
+														.getActivePage()
+														.showView(
+																RebaseInteractiveView.VIEW_ID);
+												view.setInput(repository);
+											} catch (PartInitException e) {
+												Activator.logError(
+														e.getMessage(), e);
+											}
+										});
+								break;
+							default:
 								RebaseResultDialog.show(rebase.getResult(),
 										repository);
-								if (operation == Operation.ABORT)
+								if (operation == Operation.ABORT) {
 									setAmending(false, false);
-								if (rebase.getResult().getStatus() == Status.EDIT)
+								} else if (status == Status.EDIT) {
 									setAmending(true, true);
+								}
+								break;
 							}
 						}
 					}
