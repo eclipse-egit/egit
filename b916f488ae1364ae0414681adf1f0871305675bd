@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "14e1d5db_11c43d06",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/staging/StagingView.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 1161,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2020-05-09T22:01:07Z",
+      "side": 1,
+      "message": "I\u0027d use Activator.handleError(...,true); here. If we just log: the user clicked something, but nothing happens (except a log entry, which he might not see). Better show him an error dialog.",
+      "revId": "b916f488ae1364ae0414681adf1f0871305675bd",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "55d4877b_341326c2",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/staging/StagingView.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 1166,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2020-05-09T22:01:07Z",
+      "side": 1,
+      "message": "Can we keep the order the same, please? \"Commit and Push/Push HEAD\" on the left, \"Commit\" on the right.",
+      "revId": "b916f488ae1364ae0414681adf1f0871305675bd",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "4d668904_63a4c4c6",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/staging/StagingView.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 1417,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2020-05-09T22:01:07Z",
+      "side": 1,
+      "message": "This needs a re-layout of the button container when the text changes. Currently, when I start with no changes, the button says \"Push HEAD\". When I then make a change and stage it, the button text changes to the longer \"Commit and Push\", but the button size remains the same: the new text is not shown fully.",
+      "revId": "b916f488ae1364ae0414681adf1f0871305675bd",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
