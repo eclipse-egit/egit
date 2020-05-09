@@ -11,9 +11,9 @@
 package org.eclipse.egit.ui.internal.repository.tree.filter;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 import java.util.PriorityQueue;
-import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
@@ -30,35 +30,39 @@ public class NodesByCommitTimeFilter {
 	private static final Pattern FILTER_ACTIVE_PATTERN = Pattern
 			.compile("#\\d*"); //$NON-NLS-1$
 
-	private boolean active;
+	private final boolean active;
 
-	private int maxCount = -1;
+	private final int maxCount;
+
+	private final PriorityQueue<TimedNode> nodes = new PriorityQueue<>(
+			Comparator.comparing(TimedNode::getTime));
+
+	private final List<RepositoryTreeNode<?>> allNodes = new ArrayList<>();
 
 	private int thresholdTime = Integer.MIN_VALUE;
-
-	PriorityQueue<TimedNode> nodes = new PriorityQueue<>();
-
-	List<RepositoryTreeNode<?>> allNodes = new ArrayList<>();
 
 	/**
 	 * @param filterText
 	 *            user defined filter pattern
 	 */
 	public NodesByCommitTimeFilter(String filterText) {
+		boolean doFilter = false;
+		int count = -1;
 		if (filterText != null) {
-			Matcher matcher = FILTER_ACTIVE_PATTERN.matcher(filterText);
-			active = matcher.matches();
-			if (active) {
+			doFilter = FILTER_ACTIVE_PATTERN.matcher(filterText).matches();
+			if (doFilter) {
 				if (filterText.length() > 1) {
 					try {
-						maxCount = Integer.parseInt(filterText.substring(1));
+						count = Integer.parseInt(filterText.substring(1));
 					} catch (NumberFormatException e) {
 						// ignore - the number must be so large that filtering
-						// is not necessary; maxCount stays negative
+						// is not necessary; count stays negative
 					}
 				}
 			}
 		}
+		active = doFilter;
+		maxCount = count;
 	}
 
 	/**
@@ -80,7 +84,7 @@ public class NodesByCommitTimeFilter {
 					nodes.add(node);
 					if (nodes.size() > maxCount) {
 						nodes.poll();
-						thresholdTime = nodes.peek().time;
+						thresholdTime = nodes.peek().getTime();
 					}
 				}
 			}
@@ -95,7 +99,7 @@ public class NodesByCommitTimeFilter {
 	 */
 	public List<RepositoryTreeNode<?>> getFilteredNodes() {
 		if (isFiltering()) {
-			return nodes.stream().map(node -> node.node)
+			return nodes.stream().map(TimedNode::getNode)
 					.collect(Collectors.toList());
 		} else {
 			return allNodes;
@@ -113,20 +117,23 @@ public class NodesByCommitTimeFilter {
 		return maxCount >= 0; // implies active==true
 	}
 
-	private static class TimedNode implements Comparable<TimedNode> {
+	private static class TimedNode {
 
-		RepositoryTreeNode<?> node;
+		private final RepositoryTreeNode<?> node;
 
-		int time;
+		private final int time;
 
 		TimedNode(RepositoryTreeNode<?> node, int time) {
 			this.node = node;
 			this.time = time;
 		}
 
-		@Override
-		public int compareTo(TimedNode o) {
-			return Integer.compare(time, o.time);
+		int getTime() {
+			return time;
+		}
+
+		RepositoryTreeNode<?> getNode() {
+			return node;
 		}
 	}
 }
