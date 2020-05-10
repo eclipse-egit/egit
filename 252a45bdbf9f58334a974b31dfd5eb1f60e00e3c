@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "64cb2c59_3314c349",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/uitext.properties",
+        "patchSetId": 5
+      },
+      "lineNbr": 1976,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2020-05-10T09:31:17Z",
+      "side": 1,
+      "message": "Is \u0027P\u0027 already taken as accelerator here? Would be nice if the accelerator remained the same when the text changes. (Can\u0027t really test this; on OS X there are no accelerators anyway.)",
+      "revId": "252a45bdbf9f58334a974b31dfd5eb1f60e00e3c",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
