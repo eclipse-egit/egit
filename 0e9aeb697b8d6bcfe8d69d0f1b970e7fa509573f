@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "52d00f1c_2a6f49c2",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/uitext.properties",
+        "patchSetId": 6
+      },
+      "lineNbr": 1975,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2020-05-10T18:59:37Z",
+      "side": 1,
+      "message": "Ok, now it needs to be \"\u0026Push HEAD\" here, too.",
+      "revId": "0e9aeb697b8d6bcfe8d69d0f1b970e7fa509573f",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
