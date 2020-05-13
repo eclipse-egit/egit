@@ -655,6 +655,7 @@ public class CommitFileDiffViewer extends TableViewer {
 			Table table = getTable();
 			if (table != null) {
 				table.selectAll();
+				setSelection(getSelection());
 			}
 		}
 	}
