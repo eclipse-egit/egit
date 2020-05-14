@@ -2328,25 +2328,30 @@ public class StagingView extends ViewPart
 							additionalPaths);
 				}
 
-				// Update the selection.
-				StagingViewerUpdate stagingViewerUpdate = updateSelection(
-						stagingViewer, contentProvider, oldPaths,
-						buildElementMap(stagingViewer, contentProvider,
-								comparator));
-
-				// If something has been removed, the element before the removed
-				// item has been selected, in which case we want to preserve the
-				// scroll state as much as possible, keeping the selection in
-				// view. If something has been added, those added things have
-				// been selected and revealed, so we don't want to preserve the
-				// top but rather leave the revealed selection alone. If nothing
-				// has changed, we want to preserve the top, regardless of where
-				// the current unmodified selection might be, which is what's
-				// done by default anyway.
-				if (stagingViewerUpdate == StagingViewerUpdate.REMOVED) {
-					keepSelectionVisible = true;
-				} else if (stagingViewerUpdate == StagingViewerUpdate.ADDED) {
+				Map<String, Object> newPaths = buildElementMap(stagingViewer,
+						contentProvider, comparator);
+				if (newPaths.isEmpty()) {
 					preserveTop = false;
+				} else {
+					// Update the selection.
+					StagingViewerUpdate stagingViewerUpdate = updateSelection(
+							stagingViewer, contentProvider, oldPaths, newPaths);
+
+					// If something has been removed, the element before the
+					// removed item has been selected, in which case we want to
+					// preserve the scroll state as much as possible, keeping
+					// the selection in view. If something has been added, those
+					// added things have been selected and revealed, so we don't
+					// want to preserve the top but rather leave the revealed
+					// selection alone. If nothing has changed, we want to
+					// preserve the top, regardless of where the current
+					// unmodified selection might be, which is what's done by
+					// default anyway.
+					if (stagingViewerUpdate == StagingViewerUpdate.REMOVED) {
+						keepSelectionVisible = true;
+					} else if (stagingViewerUpdate == StagingViewerUpdate.ADDED) {
+						preserveTop = false;
+					}
 				}
 			} else {
 				// The update is completely different so don't do any of the
@@ -2540,7 +2545,8 @@ public class StagingView extends ViewPart
 				// element in the viewer failing those. The general idea is that
 				// it's really annoying to have the viewer scroll to the top
 				// element whenever you drag something out of a staging viewer.
-				Collection<Object> removedElements = removedPaths.values();
+				Collection<Object> removedElements = new LinkedHashSet<>(
+						removedPaths.values());
 				Object firstRemovedElement = removedElements.iterator()
 						.next();
 				Object parent = contentProvider.getParent(firstRemovedElement);
