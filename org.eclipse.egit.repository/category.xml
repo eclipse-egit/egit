@@ -33,6 +33,9 @@
    <feature url="features/org.eclipse.jgit.ssh.apache_0.0.0.qualifier.jar" id="org.eclipse.jgit.ssh.apache" version="0.0.0">
       <category name="JGit"/>
    </feature>
+   <feature url="features/org.eclipse.jgit.ssh.jsch_0.0.0.qualifier.jar" id="org.eclipse.jgit.ssh.jsch" version="0.0.0">
+      <category name="JGit"/>
+   </feature>
    <feature url="features/org.eclipse.egit.gitflow.feature_0.0.0.qualifier.jar" id="org.eclipse.egit.gitflow.feature" version="0.0.0">
       <category name="EGit.experimental"/>
    </feature>

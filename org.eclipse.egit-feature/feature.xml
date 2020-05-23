@@ -42,6 +42,8 @@
       <import plugin="com.jcraft.jsch" version="0.1.55" match="compatible"/>
       <import feature="org.eclipse.jgit" version="5.8.0" match="equivalent"/>
       <import feature="org.eclipse.jgit.gpg.bc" version="5.8.0" match="equivalent"/>
+      <import feature="org.eclipse.jgit.ssh.apache" version="5.8.0" match="equivalent"/>
+      <import feature="org.eclipse.jgit.ssh.jsch" version="5.8.0" match="equivalent"/>
       <import feature="org.eclipse.jgit.http.apache" version="5.8.0" match="equivalent"/>
       <import feature="org.eclipse.jgit.ssh.apache" version="5.8.0" match="equivalent"/>
    </requires>
