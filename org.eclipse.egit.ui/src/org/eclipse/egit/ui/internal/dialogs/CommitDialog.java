@@ -90,6 +90,7 @@ import org.eclipse.jgit.api.AddCommand;
 import org.eclipse.jgit.api.Git;
 import org.eclipse.jgit.lib.Constants;
 import org.eclipse.jgit.lib.FileMode;
+import org.eclipse.jgit.lib.GpgSigner;
 import org.eclipse.jgit.lib.IndexDiff;
 import org.eclipse.jgit.lib.Repository;
 import org.eclipse.jgit.lib.RepositoryState;
@@ -1153,6 +1154,12 @@ public class CommitDialog extends TitleAreaDialog {
 			}
 		});
 
+		boolean canSign = GpgSigner.getDefault() != null;
+		signCommitItem.setEnabled(canSign);
+		if (!canSign) {
+			signCommitItem
+					.setToolTipText(UIText.CommitDialog_Sign_Not_Available);
+		}
 		signCommitItem.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
