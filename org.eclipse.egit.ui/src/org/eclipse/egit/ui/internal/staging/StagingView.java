@@ -1418,7 +1418,8 @@ public class StagingView extends ViewPart
 
 		final Repository repo = currentRepository;
 		commitAndPushButton.setEnabled(
-				repo != null && !repo.getRepositoryState().isRebasing());
+				repo != null && (commitEnabled || canPushHeadOnly())
+						&& !repo.getRepositoryState().isRebasing());
 		PushMode pushMode = getPushMode();
 		commitAndPushButton.setImage(getImage(
 				pushMode != null && pushMode == PushMode.GERRIT ? UIIcons.GERRIT
