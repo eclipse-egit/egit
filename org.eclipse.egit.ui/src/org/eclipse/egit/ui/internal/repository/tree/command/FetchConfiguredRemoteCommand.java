@@ -21,8 +21,6 @@ import java.util.Map;
 
 import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.commands.ExecutionException;
-import org.eclipse.egit.ui.Activator;
-import org.eclipse.egit.ui.UIPreferences;
 import org.eclipse.egit.ui.internal.UIText;
 import org.eclipse.egit.ui.internal.fetch.FetchOperationUI;
 import org.eclipse.egit.ui.internal.fetch.SimpleConfigureFetchDialog;
@@ -54,10 +52,7 @@ public class FetchConfiguredRemoteCommand extends
 							UIText.SimpleFetchActionHandler_NothingToFetchDialogMessage);
 			return null;
 		}
-		int timeout = Activator.getDefault().getPreferenceStore()
-				.getInt(UIPreferences.REMOTE_CONNECTION_TIMEOUT);
-		new FetchOperationUI(node.getRepository(), config, timeout, false)
-				.start();
+		new FetchOperationUI(node.getRepository(), config, false).start();
 		return null;
 	}
 

@@ -27,13 +27,12 @@ import org.eclipse.core.runtime.Status;
 import org.eclipse.core.runtime.jobs.IJobManager;
 import org.eclipse.core.runtime.jobs.Job;
 import org.eclipse.egit.core.internal.job.JobUtil;
+import org.eclipse.egit.core.settings.GitSettings;
 import org.eclipse.egit.gitflow.GitFlowRepository;
 import org.eclipse.egit.gitflow.op.FeatureListOperation;
 import org.eclipse.egit.gitflow.op.FeatureTrackOperation;
 import org.eclipse.egit.gitflow.ui.internal.UIText;
 import org.eclipse.egit.gitflow.ui.internal.dialogs.FeatureBranchSelectionDialog;
-import org.eclipse.egit.ui.Activator;
-import org.eclipse.egit.ui.UIPreferences;
 import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.window.Window;
 import org.eclipse.jgit.lib.Ref;
@@ -53,8 +52,7 @@ public class FeatureTrackHandler extends AbstractHandler {
 		final List<Ref> refs = new ArrayList<>();
 		Shell activeShell = HandlerUtil.getActiveShell(event);
 
-		int timeout = Activator.getDefault().getPreferenceStore()
-				.getInt(UIPreferences.REMOTE_CONNECTION_TIMEOUT);
+		int timeout = GitSettings.getRemoteConnectionTimeout();
 		FeatureListOperation featureListOperation = new FeatureListOperation(
 				gfRepo, timeout);
 		JobUtil.scheduleUserWorkspaceJob(featureListOperation,

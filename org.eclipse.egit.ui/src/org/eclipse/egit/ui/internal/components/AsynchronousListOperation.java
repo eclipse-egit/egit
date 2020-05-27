@@ -17,8 +17,7 @@ import java.util.Collection;
 
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.egit.core.op.ListRemoteOperation;
-import org.eclipse.egit.ui.Activator;
-import org.eclipse.egit.ui.UIPreferences;
+import org.eclipse.egit.core.settings.GitSettings;
 import org.eclipse.egit.ui.internal.UIText;
 import org.eclipse.egit.ui.internal.dialogs.CancelableFuture;
 import org.eclipse.jgit.lib.Ref;
@@ -65,8 +64,7 @@ public abstract class AsynchronousListOperation<T>
 	protected void prepareRun() throws InvocationTargetException {
 		try {
 			listOp = new ListRemoteOperation(repository, new URIish(uriText),
-					Activator.getDefault().getPreferenceStore()
-							.getInt(UIPreferences.REMOTE_CONNECTION_TIMEOUT));
+					GitSettings.getRemoteConnectionTimeout());
 		} catch (URISyntaxException e) {
 			throw new InvocationTargetException(e);
 		}

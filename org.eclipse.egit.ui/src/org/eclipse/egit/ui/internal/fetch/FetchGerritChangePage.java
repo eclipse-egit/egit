@@ -1115,9 +1115,6 @@ public class FetchGerritChangePage extends WizardPage {
 	private RevCommit fetchChange(String uri, RefSpec spec,
 			IProgressMonitor monitor) throws CoreException, URISyntaxException,
 			IOException {
-		int timeout = Activator.getDefault().getPreferenceStore()
-				.getInt(UIPreferences.REMOTE_CONNECTION_TIMEOUT);
-
 		List<RefSpec> specs = new ArrayList<>(1);
 		specs.add(spec);
 
@@ -1125,8 +1122,8 @@ public class FetchGerritChangePage extends WizardPage {
 				.bind(UIText.FetchGerritChangePage_FetchingTaskName,
 						spec.getSource());
 		monitor.subTask(taskName);
-		FetchResult fetchRes = new FetchOperationUI(repository,
-				new URIish(uri), specs, timeout, false).execute(monitor);
+		FetchResult fetchRes = new FetchOperationUI(repository, new URIish(uri),
+				specs, false).execute(monitor);
 
 		monitor.worked(1);
 		try (RevWalk rw = new RevWalk(repository)) {

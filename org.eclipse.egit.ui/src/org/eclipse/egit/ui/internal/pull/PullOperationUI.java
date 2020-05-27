@@ -35,9 +35,9 @@ import org.eclipse.core.runtime.jobs.Job;
 import org.eclipse.core.runtime.jobs.JobChangeAdapter;
 import org.eclipse.egit.core.op.PullOperation;
 import org.eclipse.egit.core.op.PullOperation.PullReferenceConfig;
+import org.eclipse.egit.core.settings.GitSettings;
 import org.eclipse.egit.ui.Activator;
 import org.eclipse.egit.ui.JobFamilies;
-import org.eclipse.egit.ui.UIPreferences;
 import org.eclipse.egit.ui.internal.UIRepositoryUtils;
 import org.eclipse.egit.ui.internal.UIText;
 import org.eclipse.egit.ui.internal.branch.LaunchFinder;
@@ -81,9 +81,8 @@ public class PullOperationUI extends JobChangeAdapter {
 	 */
 	public PullOperationUI(Set<Repository> repositories) {
 		this.repositories = repositories.toArray(new Repository[0]);
-		int timeout = Activator.getDefault().getPreferenceStore().getInt(
-				UIPreferences.REMOTE_CONNECTION_TIMEOUT);
-		pullOperation = new PullOperation(repositories, timeout);
+		pullOperation = new PullOperation(repositories,
+				GitSettings.getRemoteConnectionTimeout());
 		pullOperation.setCredentialsProvider(new EGitCredentialsProvider());
 		for (Repository repository : repositories)
 			results.put(repository, NOT_TRIED_STATUS);
@@ -95,9 +94,8 @@ public class PullOperationUI extends JobChangeAdapter {
 	public PullOperationUI(Map<Repository, PullReferenceConfig> configs) {
 		this.repositories = configs.keySet()
 				.toArray(new Repository[0]);
-		int timeout = Activator.getDefault().getPreferenceStore()
-				.getInt(UIPreferences.REMOTE_CONNECTION_TIMEOUT);
-		pullOperation = new PullOperation(configs, timeout);
+		pullOperation = new PullOperation(configs,
+				GitSettings.getRemoteConnectionTimeout());
 		pullOperation.setCredentialsProvider(new EGitCredentialsProvider());
 		for (Repository repository : repositories) {
 			results.put(repository, NOT_TRIED_STATUS);
