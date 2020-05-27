@@ -39,6 +39,7 @@ public class GitCorePreferenceInitializer extends AbstractPreferenceInitializer 
 		p.putInt(GitCorePreferences.core_maxPullThreadsCount, 3);
 		p.put(GitCorePreferences.core_sshClient, "apache"); //$NON-NLS-1$
 		p.put(GitCorePreferences.core_httpClient, "apache"); //$NON-NLS-1$
+		p.putInt(GitCorePreferences.core_remoteConnectionTimeout, 30);
 	}
 
 }

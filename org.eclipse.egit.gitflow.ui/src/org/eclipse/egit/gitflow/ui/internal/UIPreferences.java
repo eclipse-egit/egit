@@ -15,7 +15,12 @@ package org.eclipse.egit.gitflow.ui.internal;
  * <p>
  * All plug-in preferences shall be referenced by a constant in this class.
  */
-public class UIPreferences {
+public final class UIPreferences {
+
+	private UIPreferences() {
+		// No instantiation
+	}
+
 	/** */
 	public final static String FEATURE_FINISH_SQUASH = "feature_finish_squash"; //$NON-NLS-1$
 

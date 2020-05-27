@@ -94,4 +94,10 @@ public final class GitCorePreferences {
 	 */
 	public static final String core_sshClient = "core_ssh_client"; //$NON-NLS-1$
 
+	/**
+	 * The timeout in seconds for establishing a remote connection for cloning,
+	 * pushing, or fetching.
+	 */
+	public static final String core_remoteConnectionTimeout = "core_remote_connection_timeout"; //$NON-NLS-1$
+
 }

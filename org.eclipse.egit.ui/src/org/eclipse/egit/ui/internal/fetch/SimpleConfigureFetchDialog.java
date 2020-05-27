@@ -21,7 +21,6 @@ import java.util.List;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.egit.ui.Activator;
-import org.eclipse.egit.ui.UIPreferences;
 import org.eclipse.egit.ui.internal.UIText;
 import org.eclipse.egit.ui.internal.dialogs.AbstractConfigureRemoteDialog;
 import org.eclipse.egit.ui.internal.selection.SelectionRepositoryStateCache;
@@ -266,10 +265,8 @@ public class SimpleConfigureFetchDialog extends AbstractConfigureRemoteDialog {
 
 	@Override
 	protected void dryRun(IProgressMonitor monitor) {
-		int timeout = Activator.getDefault().getPreferenceStore()
-				.getInt(UIPreferences.REMOTE_CONNECTION_TIMEOUT);
 		final FetchOperationUI op = new FetchOperationUI(getRepository(),
-				getConfig(), timeout, true);
+				getConfig(), true);
 		try {
 			final FetchResult result = op.execute(monitor);
 			getShell().getDisplay().asyncExec(new Runnable() {
@@ -290,10 +287,8 @@ public class SimpleConfigureFetchDialog extends AbstractConfigureRemoteDialog {
 
 	@Override
 	protected void performOperation() {
-		int timeout = Activator.getDefault().getPreferenceStore()
-				.getInt(UIPreferences.REMOTE_CONNECTION_TIMEOUT);
 		FetchOperationUI op = new FetchOperationUI(getRepository(), getConfig(),
-				timeout, false);
+				false);
 		op.start();
 	}
 }

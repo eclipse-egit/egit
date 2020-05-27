@@ -17,8 +17,7 @@ import java.util.List;
 
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.egit.core.op.ListRemoteOperation;
-import org.eclipse.egit.ui.Activator;
-import org.eclipse.egit.ui.UIPreferences;
+import org.eclipse.egit.core.settings.GitSettings;
 import org.eclipse.egit.ui.UIUtils;
 import org.eclipse.egit.ui.internal.CommonUtils;
 import org.eclipse.egit.ui.internal.UIText;
@@ -135,8 +134,7 @@ public class FetchSourcePage extends WizardPage {
 			List<Ref> proposals = new ArrayList<>();
 			uriToCheck = config.getURIs().get(0);
 			final ListRemoteOperation lop = new ListRemoteOperation(repository,
-					uriToCheck, Activator.getDefault().getPreferenceStore()
-							.getInt(UIPreferences.REMOTE_CONNECTION_TIMEOUT));
+					uriToCheck, GitSettings.getRemoteConnectionTimeout());
 			try {
 				new ProgressMonitorDialog(getShell()).run(true, true,
 						new IRunnableWithProgress() {

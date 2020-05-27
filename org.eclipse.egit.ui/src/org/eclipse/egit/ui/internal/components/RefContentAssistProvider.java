@@ -18,8 +18,8 @@ import java.util.List;
 
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.egit.core.op.ListRemoteOperation;
+import org.eclipse.egit.core.settings.GitSettings;
 import org.eclipse.egit.ui.Activator;
-import org.eclipse.egit.ui.UIPreferences;
 import org.eclipse.egit.ui.internal.CommonUtils;
 import org.eclipse.egit.ui.internal.UIText;
 import org.eclipse.jface.dialogs.ProgressMonitorDialog;
@@ -88,9 +88,7 @@ public class RefContentAssistProvider {
 			boolean local = pushMode == source;
 			if (!local) {
 				final ListRemoteOperation lop = new ListRemoteOperation(repo,
-						uri,
-						Activator.getDefault().getPreferenceStore().getInt(
-								UIPreferences.REMOTE_CONNECTION_TIMEOUT));
+						uri, GitSettings.getRemoteConnectionTimeout());
 				IRunnableWithProgress runnable = new IRunnableWithProgress() {
 					@Override
 					public void run(IProgressMonitor monitor)
