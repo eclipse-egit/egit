@@ -20,7 +20,6 @@ import org.eclipse.core.runtime.SubMonitor;
 import org.eclipse.egit.core.synchronize.dto.GitSynchronizeData;
 import org.eclipse.egit.core.synchronize.dto.GitSynchronizeDataSet;
 import org.eclipse.egit.ui.Activator;
-import org.eclipse.egit.ui.UIPreferences;
 import org.eclipse.egit.ui.internal.UIText;
 import org.eclipse.egit.ui.internal.credentials.EGitCredentialsProvider;
 import org.eclipse.egit.ui.internal.fetch.FetchOperationUI;
@@ -34,15 +33,11 @@ import org.eclipse.ui.PlatformUI;
 
 class SynchronizeFetchJob extends WorkspaceJob {
 
-	private final int timeout;
-
 	private final GitSynchronizeDataSet gsdSet;
 
 	SynchronizeFetchJob(GitSynchronizeDataSet gsdSet) {
 		super(UIText.SynchronizeFetchJob_JobName);
 		this.gsdSet = gsdSet;
-		timeout = Activator.getDefault().getPreferenceStore()
-				.getInt(UIPreferences.REMOTE_CONNECTION_TIMEOUT);
 	}
 
 	@Override
@@ -72,7 +67,7 @@ class SynchronizeFetchJob extends WorkspaceJob {
 			}
 
 			FetchOperationUI fetchOperationUI = new FetchOperationUI(repo,
-					config, timeout, false);
+					config, false);
 			fetchOperationUI.setCredentialsProvider(new EGitCredentialsProvider());
 			try {
 				fetchOperationUI.execute(progress.newChild(1));

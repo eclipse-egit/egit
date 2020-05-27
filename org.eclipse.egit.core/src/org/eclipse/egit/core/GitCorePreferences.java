@@ -94,4 +94,11 @@ public final class GitCorePreferences {
 	 */
 	public static final String core_sshClient = "core_ssh_client"; //$NON-NLS-1$
 
+	/**
+	 * Ssh client library to use. Currently allowed values are "jsch" and
+	 * "apache", case insensitive, if undefined or any other value the default
+	 * "apache" will be used.
+	 */
+	public static final String core_remoteConnectionTimeout = "core_remote_connection_timeout"; //$NON-NLS-1$
+
 }

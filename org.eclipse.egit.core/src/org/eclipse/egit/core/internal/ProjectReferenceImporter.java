@@ -40,6 +40,7 @@ import org.eclipse.egit.core.ProjectReference;
 import org.eclipse.egit.core.RepositoryUtil;
 import org.eclipse.egit.core.op.CloneOperation;
 import org.eclipse.egit.core.op.ConnectProviderOperation;
+import org.eclipse.egit.core.settings.GitSettings;
 import org.eclipse.jgit.lib.Config;
 import org.eclipse.jgit.lib.ConfigConstants;
 import org.eclipse.jgit.lib.Constants;
@@ -139,7 +140,7 @@ public class ProjectReferenceImporter {
 			}
 		} else {
 			try {
-				int timeout = 60;
+				int timeout = GitSettings.getRemoteConnectionTimeout();
 				final CloneOperation cloneOperation = new CloneOperation(
 						gitUrl, true, null, workDir.toFile(), refToCheckout,
 						Constants.DEFAULT_REMOTE_NAME, timeout);

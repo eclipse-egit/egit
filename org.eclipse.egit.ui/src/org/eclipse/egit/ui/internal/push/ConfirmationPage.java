@@ -25,8 +25,8 @@ import org.eclipse.egit.core.op.PushOperation;
 import org.eclipse.egit.core.op.PushOperationResult;
 import org.eclipse.egit.core.op.PushOperationSpecification;
 import org.eclipse.egit.core.securestorage.UserPasswordCredentials;
+import org.eclipse.egit.core.settings.GitSettings;
 import org.eclipse.egit.ui.Activator;
-import org.eclipse.egit.ui.UIPreferences;
 import org.eclipse.egit.ui.internal.UIText;
 import org.eclipse.egit.ui.internal.components.RepositorySelection;
 import org.eclipse.egit.ui.internal.credentials.EGitCredentialsProvider;
@@ -198,9 +198,8 @@ class ConfirmationPage extends WizardPage {
 			final PushOperationSpecification spec = new PushOperationSpecification();
 			for (final URIish uri : displayedRepoSelection.getPushURIs())
 				spec.addURIRefUpdates(uri, copyUpdates(updates));
-			int timeout = Activator.getDefault().getPreferenceStore().getInt(
-					UIPreferences.REMOTE_CONNECTION_TIMEOUT);
-			operation = new PushOperation(local, spec, true, timeout);
+			operation = new PushOperation(local, spec, true,
+					GitSettings.getRemoteConnectionTimeout());
 			if (credentials != null)
 				operation.setCredentialsProvider(new EGitCredentialsProvider(
 						credentials.getUser(), credentials.getPassword()));

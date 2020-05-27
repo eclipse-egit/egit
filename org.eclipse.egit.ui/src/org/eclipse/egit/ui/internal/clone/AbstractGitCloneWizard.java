@@ -45,9 +45,9 @@ import org.eclipse.egit.core.op.ConfigureGerritAfterCloneTask;
 import org.eclipse.egit.core.op.ConfigurePushAfterCloneTask;
 import org.eclipse.egit.core.op.SetRepositoryConfigPropertyTask;
 import org.eclipse.egit.core.securestorage.UserPasswordCredentials;
+import org.eclipse.egit.core.settings.GitSettings;
 import org.eclipse.egit.ui.Activator;
 import org.eclipse.egit.ui.JobFamilies;
-import org.eclipse.egit.ui.UIPreferences;
 import org.eclipse.egit.ui.internal.SecureStoreUtils;
 import org.eclipse.egit.ui.internal.UIText;
 import org.eclipse.egit.ui.internal.clone.GitCloneSourceProviderExtension.CloneSourceProvider;
@@ -254,8 +254,7 @@ public abstract class AbstractGitCloneWizard extends Wizard {
 			return false;
 		}
 
-		int timeout = Activator.getDefault().getPreferenceStore()
-				.getInt(UIPreferences.REMOTE_CONNECTION_TIMEOUT);
+		int timeout = GitSettings.getRemoteConnectionTimeout();
 		final CloneOperation op = new CloneOperation(uri, allSelected,
 				selectedBranches, workdir, ref != null ? ref.getName() : null,
 				remoteName, timeout);

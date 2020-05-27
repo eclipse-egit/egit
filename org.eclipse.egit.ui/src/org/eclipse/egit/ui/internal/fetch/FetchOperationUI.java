@@ -22,6 +22,7 @@ import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.core.runtime.jobs.Job;
 import org.eclipse.egit.core.op.FetchOperation;
+import org.eclipse.egit.core.settings.GitSettings;
 import org.eclipse.egit.ui.Activator;
 import org.eclipse.egit.ui.JobFamilies;
 import org.eclipse.egit.ui.UIPreferences;
@@ -55,14 +56,14 @@ public class FetchOperationUI {
 	/**
 	 * @param repository
 	 * @param config
-	 * @param timeout
 	 * @param dryRun
 	 *
 	 */
 	public FetchOperationUI(Repository repository, RemoteConfig config,
-			int timeout, boolean dryRun) {
+			boolean dryRun) {
 		this.repository = repository;
-		op = new FetchOperation(repository, config, timeout, dryRun);
+		op = new FetchOperation(repository, config,
+				GitSettings.getRemoteConnectionTimeout(), dryRun);
 		sourceString = NLS.bind("{0} - {1}", repository.getDirectory() //$NON-NLS-1$
 				.getParentFile().getName(), config.getName());
 
@@ -72,13 +73,13 @@ public class FetchOperationUI {
 	 * @param repository
 	 * @param uri
 	 * @param specs
-	 * @param timeout
 	 * @param dryRun
 	 */
 	public FetchOperationUI(Repository repository, URIish uri,
-			List<RefSpec> specs, int timeout, boolean dryRun) {
+			List<RefSpec> specs, boolean dryRun) {
 		this.repository = repository;
-		op = new FetchOperation(repository, uri, specs, timeout, dryRun);
+		op = new FetchOperation(repository, uri, specs,
+				GitSettings.getRemoteConnectionTimeout(), dryRun);
 		sourceString = uri.toPrivateString();
 	}
 

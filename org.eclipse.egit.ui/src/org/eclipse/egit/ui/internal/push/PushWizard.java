@@ -26,8 +26,8 @@ import org.eclipse.egit.core.op.PushOperation;
 import org.eclipse.egit.core.op.PushOperationResult;
 import org.eclipse.egit.core.op.PushOperationSpecification;
 import org.eclipse.egit.core.securestorage.UserPasswordCredentials;
+import org.eclipse.egit.core.settings.GitSettings;
 import org.eclipse.egit.ui.Activator;
-import org.eclipse.egit.ui.UIPreferences;
 import org.eclipse.egit.ui.internal.SecureStoreUtils;
 import org.eclipse.egit.ui.internal.UIIcons;
 import org.eclipse.egit.ui.internal.UIText;
@@ -252,8 +252,7 @@ public class PushWizard extends Wizard {
 					spec.addURIRefUpdates(uri, ConfirmationPage
 							.copyUpdates(updates));
 			}
-			int timeout = Activator.getDefault().getPreferenceStore().getInt(
-					UIPreferences.REMOTE_CONNECTION_TIMEOUT);
+			int timeout = GitSettings.getRemoteConnectionTimeout();
 			return new PushOperation(localDb, spec, false, timeout);
 		} catch (final IOException e) {
 			ErrorDialog.openError(getShell(),

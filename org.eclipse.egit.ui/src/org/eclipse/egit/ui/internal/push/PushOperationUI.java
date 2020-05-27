@@ -25,8 +25,8 @@ import org.eclipse.core.runtime.jobs.Job;
 import org.eclipse.egit.core.op.PushOperation;
 import org.eclipse.egit.core.op.PushOperationResult;
 import org.eclipse.egit.core.op.PushOperationSpecification;
+import org.eclipse.egit.core.settings.GitSettings;
 import org.eclipse.egit.ui.Activator;
-import org.eclipse.egit.ui.UIPreferences;
 import org.eclipse.egit.ui.internal.UIText;
 import org.eclipse.egit.ui.internal.credentials.EGitCredentialsProvider;
 import org.eclipse.jgit.annotations.NonNull;
@@ -176,7 +176,8 @@ public class PushOperationUI {
 
 	private void createPushOperation() throws CoreException {
 		if (remoteName != null) {
-			op = new PushOperation(repository, remoteName, dryRun, getTimeout());
+			op = new PushOperation(repository, remoteName, dryRun,
+					GitSettings.getRemoteConnectionTimeout());
 			return;
 		}
 
@@ -214,7 +215,8 @@ public class PushOperationUI {
 				}
 			}
 		}
-		op = new PushOperation(repository, spec, dryRun, getTimeout());
+		op = new PushOperation(repository, spec, dryRun,
+				GitSettings.getRemoteConnectionTimeout());
 	}
 
 	/**
@@ -249,11 +251,6 @@ public class PushOperationUI {
 	 */
 	public String getDestinationString() {
 		return destinationString;
-	}
-
-	private int getTimeout() {
-		return Activator.getDefault().getPreferenceStore()
-				.getInt(UIPreferences.REMOTE_CONNECTION_TIMEOUT);
 	}
 
 	/**

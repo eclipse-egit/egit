@@ -19,7 +19,6 @@ import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.egit.core.securestorage.UserPasswordCredentials;
 import org.eclipse.egit.ui.Activator;
-import org.eclipse.egit.ui.UIPreferences;
 import org.eclipse.egit.ui.internal.SecureStoreUtils;
 import org.eclipse.egit.ui.internal.UIIcons;
 import org.eclipse.egit.ui.internal.UIText;
@@ -110,20 +109,18 @@ public class FetchWizard extends Wizard {
 		}
 
 		final FetchOperationUI op;
-		int timeout = Activator.getDefault().getPreferenceStore().getInt(
-				UIPreferences.REMOTE_CONNECTION_TIMEOUT);
 		final RepositorySelection repoSelection = repoPage.getSelection();
 
 		if (calledFromRepoPage)
 			op = new FetchOperationUI(localDb, repoSelection.getConfig(),
-					timeout, false);
+					false);
 		else if (repoSelection.isConfigSelected())
 			op = new FetchOperationUI(localDb, repoSelection.getConfig()
-					.getURIs().get(0), refSpecPage.getRefSpecs(), timeout,
+					.getURIs().get(0), refSpecPage.getRefSpecs(),
 					false);
 		else
 			op = new FetchOperationUI(localDb, repoSelection.getURI(false),
-					refSpecPage.getRefSpecs(), timeout, false);
+					refSpecPage.getRefSpecs(), false);
 
 		UserPasswordCredentials credentials = repoPage.getCredentials();
 		if (credentials != null)

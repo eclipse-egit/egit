@@ -216,9 +216,16 @@ public class GitPreferenceRoot extends DoublePreferencesPreferencePage
 		addField(pullEditor);
 
 		IntegerFieldEditor timeoutEditor = new IntegerFieldEditor(
-				UIPreferences.REMOTE_CONNECTION_TIMEOUT,
+				GitCorePreferences.core_remoteConnectionTimeout,
 				UIText.RemoteConnectionPreferencePage_TimeoutLabel,
-				remoteConnectionsGroup);
+				remoteConnectionsGroup) {
+
+			@Override
+			public void setPreferenceStore(IPreferenceStore store) {
+				super.setPreferenceStore(
+						store == null ? null : getSecondaryPreferenceStore());
+			}
+		};
 		timeoutEditor.getLabelControl(remoteConnectionsGroup).setToolTipText(
 				UIText.RemoteConnectionPreferencePage_ZeroValueTooltip);
 		addField(timeoutEditor);

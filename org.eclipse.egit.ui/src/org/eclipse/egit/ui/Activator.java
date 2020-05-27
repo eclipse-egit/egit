@@ -343,7 +343,6 @@ public class Activator extends AbstractUIPlugin implements DebugOptionsListener 
 				.getSymbolicName());
 		context.registerService(DebugOptionsListener.class.getName(), this,
 				props);
-
 		SelectionRepositoryStateCache.INSTANCE.initialize();
 		setupRepoChangeScanner();
 		setupFocusHandling();
