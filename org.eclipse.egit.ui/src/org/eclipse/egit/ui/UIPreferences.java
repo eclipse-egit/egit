@@ -24,7 +24,12 @@ package org.eclipse.egit.ui;
  * <p>
  * All plug-in preferences shall be referenced by a constant in this class.
  */
-public class UIPreferences {
+public final class UIPreferences {
+
+	private UIPreferences() {
+		// No instantiation
+	}
+
 	/** */
 	public final static String REPOSITORIES_VIEW_FILTERS = "repositories_view_filters"; //$NON-NLS-1$
 	/** */
@@ -184,8 +189,6 @@ public class UIPreferences {
 	public static final String REFRESH_ON_INDEX_CHANGE = "refesh_on_index_change"; //$NON-NLS-1$
 	/** */
 	public static final String REFRESH_ONLY_WHEN_ACTIVE = "refesh_only_when_active"; //$NON-NLS-1$
-	/** */
-	public static final String REMOTE_CONNECTION_TIMEOUT = "remote_connection_timeout"; //$NON-NLS-1$
 
 	/** Holds true if the logical model should be used. */
 	public static final String USE_LOGICAL_MODEL = "enable_logical_model"; //$NON-NLS-1$

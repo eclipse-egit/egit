@@ -14,14 +14,13 @@ import org.eclipse.core.commands.AbstractHandler;
 import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.commands.ExecutionException;
 import org.eclipse.egit.core.internal.job.JobUtil;
+import org.eclipse.egit.core.settings.GitSettings;
 import org.eclipse.egit.gitflow.GitFlowRepository;
 import org.eclipse.egit.gitflow.op.FeatureStartOperation;
 import org.eclipse.egit.gitflow.op.GitFlowOperation;
 import org.eclipse.egit.gitflow.ui.internal.JobFamilies;
 import org.eclipse.egit.gitflow.ui.internal.UIText;
 import org.eclipse.egit.gitflow.ui.internal.validation.FeatureNameValidator;
-import org.eclipse.egit.ui.Activator;
-import org.eclipse.egit.ui.UIPreferences;
 import org.eclipse.jface.dialogs.InputDialog;
 import org.eclipse.jface.window.Window;
 import org.eclipse.ui.handlers.HandlerUtil;
@@ -50,10 +49,9 @@ public class FeatureStartHandler extends AbstractHandler {
 		}
 
 		final String featureName = inputDialog.getValue();
-		int timeout = Activator.getDefault().getPreferenceStore()
-				.getInt(UIPreferences.REMOTE_CONNECTION_TIMEOUT);
 		GitFlowOperation operation = new FeatureStartOperation(
-				gfRepo, featureName, timeout);
+				gfRepo, featureName,
+				GitSettings.getRemoteConnectionTimeout());
 		String fullBranchName = gfRepo.getConfig()
 				.getFullFeatureBranchName(featureName);
 		JobUtil.scheduleUserWorkspaceJob(operation,

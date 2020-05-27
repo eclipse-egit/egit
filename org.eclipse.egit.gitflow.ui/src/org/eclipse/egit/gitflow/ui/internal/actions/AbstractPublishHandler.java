@@ -17,11 +17,10 @@ import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.commands.ExecutionException;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.egit.core.internal.job.JobUtil;
+import org.eclipse.egit.core.settings.GitSettings;
 import org.eclipse.egit.gitflow.GitFlowRepository;
 import org.eclipse.egit.gitflow.op.CurrentBranchPublishOperation;
-import org.eclipse.egit.ui.Activator;
 import org.eclipse.egit.ui.JobFamilies;
-import org.eclipse.egit.ui.UIPreferences;
 
 /**
  * git flow {feature,release,hotfix} finish
@@ -33,10 +32,8 @@ public abstract class AbstractPublishHandler extends AbstractHandler {
 		final GitFlowRepository gfRepo = GitFlowHandlerUtil.getRepository(event);
 
 		try {
-			int timeout = Activator.getDefault().getPreferenceStore()
-					.getInt(UIPreferences.REMOTE_CONNECTION_TIMEOUT);
 			CurrentBranchPublishOperation publishOperation = new CurrentBranchPublishOperation(
-					gfRepo, timeout);
+					gfRepo, GitSettings.getRemoteConnectionTimeout());
 			JobUtil.scheduleUserWorkspaceJob(publishOperation,
 					getProgressText(), JobFamilies.REBASE,
 					new PostPublishUiTask(gfRepo, publishOperation));

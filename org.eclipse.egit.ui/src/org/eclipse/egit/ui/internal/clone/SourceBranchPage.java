@@ -26,6 +26,7 @@ import org.eclipse.core.runtime.jobs.IJobChangeEvent;
 import org.eclipse.core.runtime.jobs.JobChangeAdapter;
 import org.eclipse.egit.core.op.ListRemoteOperation;
 import org.eclipse.egit.core.securestorage.UserPasswordCredentials;
+import org.eclipse.egit.core.settings.GitSettings;
 import org.eclipse.egit.ui.Activator;
 import org.eclipse.egit.ui.UIPreferences;
 import org.eclipse.egit.ui.internal.CommonUtils;
@@ -360,9 +361,8 @@ class SourceBranchPage extends WizardPage {
 		final ListRemoteOperation listRemoteOp;
 		final URIish uri = newRepoSelection.getURI();
 		try {
-			int timeout = Activator.getDefault().getPreferenceStore().getInt(
-					UIPreferences.REMOTE_CONNECTION_TIMEOUT);
-			listRemoteOp = new ListRemoteOperation(uri, timeout);
+			listRemoteOp = new ListRemoteOperation(uri,
+					GitSettings.getRemoteConnectionTimeout());
 			if (credentials != null)
 				listRemoteOp
 						.setCredentialsProvider(new EGitCredentialsProvider(
