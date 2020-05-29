@@ -258,7 +258,7 @@ public class Activator extends Plugin implements DebugOptionsListener {
 		indexDiffCache = new IndexDiffCache();
 		try {
 			GitProjectData.reconfigureWindowCache();
-		} catch (RuntimeException e) {
+		} catch (RuntimeException | ExceptionInInitializerError e) {
 			logError(CoreText.Activator_ReconfigureWindowCacheError, e);
 		}
 		GitProjectData.attachToWorkspace();
