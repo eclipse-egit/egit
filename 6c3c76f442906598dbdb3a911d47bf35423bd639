@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6e6881e4_7f8197c2",
+        "filename": "org.eclipse.egit.core/META-INF/MANIFEST.MF",
+        "patchSetId": 4
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2020-06-02T11:21:50Z",
+      "side": 1,
+      "message": "What is this good for? Doesn\u0027t seem to be needed if the fragment is required by the feature.xml.",
+      "revId": "6c3c76f442906598dbdb3a911d47bf35423bd639",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
