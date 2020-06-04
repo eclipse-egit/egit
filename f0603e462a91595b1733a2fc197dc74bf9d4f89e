@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4513fe98_5935b519",
+        "filename": "org.eclipse.egit.doc/pom.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2020-06-04T21:26:44Z",
+      "side": 1,
+      "message": "I think it would be cleaner to configure skip\u003dtrue which is supported by this plugin, see https://git.eclipse.org/r/plugins/gitiles/tycho/org.eclipse.tycho/+/refs/heads/1.7.x/tycho-extras/pack200/tycho-pack200a-plugin/src/main/java/org/eclipse/tycho/extras/pack200/mojo/Pack200NormalizeMojo.java#48",
+      "revId": "f0603e462a91595b1733a2fc197dc74bf9d4f89e",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
