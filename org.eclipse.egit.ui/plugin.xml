@@ -1160,6 +1160,12 @@
             id="org.eclipse.egit.ui.team.Revert"
             name="%RevertCommand.name">
       </command>
+      <command
+            categoryId="org.eclipse.egit.ui.commandCategory"
+            id="org.eclipse.egit.ui.commit.DiffEditorQuickOutlineCommand"
+            name="%UnifiedDiffQuickOutlineCommand.name"
+            description="%UnifiedDiffQuickOutlineCommand.description">
+      </command>
    </extension>
    <extension
          point="org.eclipse.ui.handlers">
@@ -7241,10 +7247,6 @@
             id="org.eclipse.egit.ui.commit.UnifiedDiffCommand"
             name="%ShowUnifiedDiffCommand.name">
       </command>
-      <command
-            id="org.eclipse.egit.ui.commit.DiffEditorQuickOutlineCommand"
-            name="%UnifiedDiffQuickOutlineCommand.name">
-      </command>
    </extension>
    <extension
          name="%CommitViewerCommands.extension.name"
@@ -7292,7 +7294,7 @@
       <context
             id="org.eclipse.egit.ui.DiffViewer"
             name="%DiffViewerContext"
-            parentId="org.eclipse.ui.contexts.window">
+            parentId="org.eclipse.ui.textEditorScope">
       </context>
    </extension>
    <extension

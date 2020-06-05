@@ -116,6 +116,8 @@ public class DiffEditor extends TextEditor
 	/** External ID used in plugin.xml for this stand-alone editor. */
 	public static final String EDITOR_ID = "org.eclipse.egit.ui.diffEditor"; //$NON-NLS-1$
 
+	private static final String CONTEXT_ID = "org.eclipse.egit.ui.DiffViewer"; //$NON-NLS-1$
+
 	private static final String ADD_ANNOTATION_TYPE = "org.eclipse.egit.ui.commitEditor.diffAdded"; //$NON-NLS-1$
 
 	private static final String REMOVE_ANNOTATION_TYPE = "org.eclipse.egit.ui.commitEditor.diffRemoved"; //$NON-NLS-1$
@@ -280,6 +282,11 @@ public class DiffEditor extends TextEditor
 			}
 		});
 		return viewer;
+	}
+
+	@Override
+	protected void initializeKeyBindingScopes() {
+		setKeyBindingScopes(new String[] { CONTEXT_ID });
 	}
 
 	@Override
