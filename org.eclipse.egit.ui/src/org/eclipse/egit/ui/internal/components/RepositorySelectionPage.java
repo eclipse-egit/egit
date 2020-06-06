@@ -505,7 +505,7 @@ public class RepositorySelectionPage extends WizardPage implements IRepositorySe
 
 		Button browseLocalFolderButton = new Button(g, SWT.NULL);
 		if (!sourceSelection) {
-			GridDataFactory.fillDefaults().span(3, 1)
+			GridDataFactory.fillDefaults().span(2, 1)
 					.applyTo(browseLocalFolderButton);
 		}
 		browseLocalFolderButton.setText(UIText.RepositorySelectionPage_BrowseLocalFolder);
