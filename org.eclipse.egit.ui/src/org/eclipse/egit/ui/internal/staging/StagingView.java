@@ -2748,10 +2748,11 @@ public class StagingView extends ViewPart
 		StagingViewContentProvider contentProvider = getContentProvider(viewer);
 		int count = contentProvider.getCount();
 		int shownCount = contentProvider.getShownCount();
-		if (shownCount == count)
-			return Integer.toString(count);
-		else
+		if (getFilterPattern() != null && count > 0) {
 			return shownCount + "/" + count; //$NON-NLS-1$
+		} else {
+			return Integer.toString(count);
+		}
 	}
 
 	private void updateMessage() {
@@ -3046,7 +3047,7 @@ public class StagingView extends ViewPart
 	}
 
 	/**
-	 * @return the trimmed string which is the current filter, empty string for
+	 * @return the trimmed string which is the current filter, {@code null} for
 	 *         no filter
 	 */
 	Pattern getFilterPattern() {
