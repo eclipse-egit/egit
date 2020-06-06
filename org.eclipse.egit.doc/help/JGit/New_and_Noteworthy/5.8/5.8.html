@@ -1,0 +1,99 @@
+<?xml version='1.0' encoding='utf-8' ?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+		<title>JGit 5.8 New and Noteworthy</title>
+		<link type="text/css" rel="stylesheet" href="../../../book.css"/>
+	</head>
+	<body>
+		<table class="navigation" style="width: 100%;" border="0" summary="navigation">
+			<tr>
+				<th style="width: 100%" align="center" colspan="3">JGit 5.8 New and Noteworthy</th>
+			</tr>
+			<tr>
+				<td style="width: 20%" align="left"></td>
+				<td style="width: 60%" align="center"></td>
+				<td style="width: 20%" align="right">
+					<a href="Contributors.html" title="Contributors">
+						<img alt="Next" border="0" src="../../../images/next.gif"/>
+					</a>
+				</td>
+			</tr>
+			<tr>
+				<td style="width: 20%" align="left" valign="top"></td>
+				<td style="width: 60%" align="center"></td>
+				<td style="width: 20%" align="right" valign="top">Contributors</td>
+			</tr>
+		</table><hr class="navigation-separator"/>
+		<h1 id="JGit">JGit</h1>
+		<h2 id="New_Bundles">New Bundles</h2>
+		<p>The core bundle <code>org.eclipse.jgit</code> has been refactored to move some dependencies into optional extra bundles:</p>
+		<ul>
+			<li>Support for SSH connections via the old <tt>JSch</tt> implementation has been moved to new bundle <code>org.eclipse.jgit.ssh.jsch</code>. This bundle is an OSGi fragment.</li>
+			<li>Support for GPG-signing commits via 
+				<a href="https://www.bouncycastle.org" target="egit_external">Bouncy Castle</a> has been moved to new bundle <code>org.eclipse.jgit.gpg.bc</code>. This bundle is an OSGi fragment.
+			</li>
+		</ul>
+		<h3 id="SSH">SSH</h3>
+		<p>For 
+			<b>SSH</b>, this means an application using JGit can now include only exactly what it needs:
+		</p>
+		<ul>
+			<li>include <code>org.eclipse.jgit.ssh.jsch</code> in the application if it wants to use <tt>JSch</tt> for SSH connections. If this bundle is present, it will provide the default <tt>SshConnectionFactory</tt>.</li>
+			<li>include <code>org.eclipse.jgit.ssh.apache</code> in the application if it wants to use 
+				<a href="https://mina.apache.org/sshd-project/" target="egit_external">Apache MINA sshd</a> for SSH connections. In an OSGi application set the <tt>SshConnectionFactory</tt> explicitly to a <code>org.eclipse.jgit.ssh.apache.SshdConnectionFactory</code> in this case.
+			</li>
+		</ul>
+		<p>As before, it's also possible to use an external SSH application by setting the environment variable <code>GIT_SSH</code> to contain the path to an SSH executable. If neither bundle is included in the application that's the only built-in support for git SSH connections.</p>
+		<p>It is also possible to include both bundles and use one or the other for different SSH connections.</p>
+		<h3 id="GPG">GPG</h3>
+		<p>For 
+			<b>GPG signing of Commits</b>, an application not using this feature no longer needs to contain the fairly large Bouncy Castle libraries. If the application 
+			<i>does</i> use this feature, then it needs to include bundle <code>org.eclipse.jgit.gpg.bc</code> and the Bouncy Castle libraries, or provide its own implementation of <tt>org.eclipse.jgit.lib.GpgSigner</tt>. If bundle <code>org.eclipse.jgit.gpg.bc</code> is present, the implementation from this bundle will be taken as default for the <tt>org.eclipse.jgit.lib.GpgSigner</tt>.
+		</p>
+		<p>GPG signing is used if:</p>
+		<ul>
+			<li>the application calls <tt>org.eclipse.jgit.api.CommitCommand.setSigning(true)</tt>, or</li>
+			<li>the user has configured 
+				<a href="https://git-scm.com/docs/git-config#Documentation/git-config.txt-commitgpgSign" target="egit_external">git config</a> <tt>commit.gpgSign = true</tt>.
+			</li>
+		</ul>
+		<p>If GPG-signing a commit is requested but no <tt>GpgSigner</tt> is installed, an <code>org.eclipse.jgit.api.errors.ServiceUnavailableException</code> will be thrown.</p>
+		<h2 id="Dependencies">Dependencies</h2>
+		<ul>
+			<li>Bundle <code>org.eclipse.jgit</code> has no dependency on JSch (<tt>com.jcraft.jsch</tt>) anymore.</li>
+			<li>Bundle <code>org.eclipse.jgit</code> has no dependency on Bouncy Castle (<tt>org.bouncycastle.*</tt>) anymore.</li>
+		</ul>
+		<ul>
+			<li>Bundle <code>org.eclipse.jgit.ssh.apache</code> newly requires 
+				<a href="https://mina.apache.org/sshd-project/" target="egit_external">Apache MINA sshd</a> 
+				<b>2.4.0</b> (previously 2.2.0). As always, this bundle may not work with newer versions of Apache MINA sshd because of incompatible upstream API changes.
+			</li>
+			<li>Bundle <code>org.eclipse.jgit.ssh.jsch</code> depends on <tt>JSch</tt> (<tt>com.jcraft.jsch</tt>). Minimum required version is 0.1.37, but if you have to use this at all, use the latest version 0.1.55. (Versions unchanged from JGit 5.7.0.)</li>
+			<li>Bundle <code>org.eclipse.jgit.gpg.bc</code> newly requires at least 
+				<a href="https://www.bouncycastle.org" target="egit_external">Bouncy Castle</a> 
+				<b>1.65</b>. (Previously JGit required at least 1.61.)
+			</li>
+		</ul>
+		<h2 id="Other_Changes">Other Changes</h2>
+		<p>The complete list of new features and bug fixes is available in the 
+			<a href="https://projects.eclipse.org/projects/technology.jgit/releases/5.8.0/" target="egit_external">release notes</a>.
+		</p><hr class="navigation-separator"/>
+		<table class="navigation" style="width: 100%;" border="0" summary="navigation">
+			<tr>
+				<td style="width: 20%" align="left"></td>
+				<td style="width: 60%" align="center"></td>
+				<td style="width: 20%" align="right">
+					<a href="Contributors.html" title="Contributors">
+						<img alt="Next" border="0" src="../../../images/next.gif"/>
+					</a>
+				</td>
+			</tr>
+			<tr>
+				<td style="width: 20%" align="left" valign="top"></td>
+				<td style="width: 60%" align="center"></td>
+				<td style="width: 20%" align="right" valign="top">Contributors</td>
+			</tr>
+		</table>
+	</body>
+</html>

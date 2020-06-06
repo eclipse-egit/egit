@@ -285,13 +285,9 @@ git config remote.review.push HEAD:refs/for/master
     doSomething();
 }
 </pre>
-		<p>The main reason to the change was to simplify the review process, coding guidelines and to make them more consistent with Eclipse code formatter, see 
-			<a href="https://bugs.eclipse.org/bugs/show_bug.cgi?id=457592" target="egit_external">bug 457592</a>.
-		</p>
+		<p>The main reason to the change was to simplify the review process, coding guidelines and to make them more consistent with Eclipse code formatter, see .</p>
 		<h3 id="Removing_trailing_whitespace">Removing trailing whitespace</h3>
-		<p>In JGit and EGit we have enabled the save action "Remove trailing white spaces on all lines" for Java sources. This works except for empty comment lines, see 
-			<a href="https://bugs.eclipse.org/bugs/show_bug.cgi?id=414421" target="egit_external">bug 414421</a>.
-		</p>
+		<p>In JGit and EGit we have enabled the save action "Remove trailing white spaces on all lines" for Java sources. This works except for empty comment lines, see .</p>
 		<p>As a workaround, use the following sequence of commands in the Java editor to trick the save action:</p>
 		<ul>
 			<li>remove the offending trailing whitespace</li>
