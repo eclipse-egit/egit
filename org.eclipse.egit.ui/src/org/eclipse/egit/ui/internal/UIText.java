@@ -564,6 +564,9 @@ public class UIText extends NLS {
 	public static String GitHistoryPage_MultiResourcesType;
 
 	/** */
+	public static String GitHistoryPage_OpenAllInCommitViewerLabel;
+
+	/** */
 	public static String GitHistoryPage_OpenInTextEditorLabel;
 
 	/** */
@@ -2470,6 +2473,9 @@ public class UIText extends NLS {
 
 	/** */
 	public static String CommitDialog_SignCommit;
+
+	/** */
+	public static String CommitDialog_Sign_Not_Available;
 
 	/** */
 	public static String CommitDialog_ShowUntrackedFiles;
@@ -5620,6 +5626,9 @@ public class UIText extends NLS {
 	public static String StagingView_CommitAndPush;
 
 	/** */
+	public static String StagingView_PushHEAD;
+
+	/** */
 	public static String StagingView_Committer;
 
 	/** */
@@ -5633,6 +5642,9 @@ public class UIText extends NLS {
 
 	/** */
 	public static String StagingView_Sign_Commit;
+
+	/** */
+	public static String StagingView_Sign_Not_Available;
 
 	/** */
 	public static String StagingView_Add_Change_ID;

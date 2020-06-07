@@ -23,6 +23,7 @@ import static org.eclipse.egit.ui.internal.CommonUtils.runCommand;
 
 import java.io.File;
 import java.io.IOException;
+import java.net.URISyntaxException;
 import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -109,6 +110,7 @@ import org.eclipse.egit.ui.internal.dialogs.SpellcheckableMessageArea;
 import org.eclipse.egit.ui.internal.operations.DeletePathsOperationUI;
 import org.eclipse.egit.ui.internal.operations.IgnoreOperationUI;
 import org.eclipse.egit.ui.internal.push.PushMode;
+import org.eclipse.egit.ui.internal.push.PushWizardDialog;
 import org.eclipse.egit.ui.internal.repository.RepositoryTreeNodeLabelProvider;
 import org.eclipse.egit.ui.internal.repository.tree.RepositoryNode;
 import org.eclipse.egit.ui.internal.repository.tree.RepositoryTreeNode;
@@ -161,6 +163,7 @@ import org.eclipse.jface.viewers.Viewer;
 import org.eclipse.jface.viewers.ViewerComparator;
 import org.eclipse.jface.viewers.ViewerFilter;
 import org.eclipse.jface.viewers.ViewerLabel;
+import org.eclipse.jface.wizard.Wizard;
 import org.eclipse.jgit.annotations.NonNull;
 import org.eclipse.jgit.annotations.Nullable;
 import org.eclipse.jgit.api.AddCommand;
@@ -172,11 +175,13 @@ import org.eclipse.jgit.api.errors.JGitInternalException;
 import org.eclipse.jgit.api.errors.NoFilepatternException;
 import org.eclipse.jgit.events.ListenerHandle;
 import org.eclipse.jgit.lib.Constants;
+import org.eclipse.jgit.lib.GpgSigner;
 import org.eclipse.jgit.lib.ObjectId;
 import org.eclipse.jgit.lib.Ref;
 import org.eclipse.jgit.lib.Repository;
 import org.eclipse.jgit.lib.RepositoryState;
 import org.eclipse.jgit.revwalk.RevCommit;
+import org.eclipse.jgit.transport.RemoteConfig;
 import org.eclipse.jgit.util.StringUtils;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.SashForm;
@@ -982,6 +987,12 @@ public class StagingView extends ViewPart
 		};
 		signCommitAction.setImageDescriptor(UIIcons.SIGN_COMMIT);
 		commitMessageToolBarManager.add(signCommitAction);
+		boolean canSign = GpgSigner.getDefault() != null;
+		signCommitAction.setEnabled(canSign);
+		if (!canSign) {
+			signCommitAction
+					.setToolTipText(UIText.StagingView_Sign_Not_Available);
+		}
 
 		addChangeIdAction = new Action(UIText.StagingView_Add_Change_ID,
 				IAction.AS_CHECK_BOX) {
@@ -1113,9 +1124,8 @@ public class StagingView extends ViewPart
 				.createComposite(buttonsContainer);
 		GridDataFactory.fillDefaults().align(SWT.FILL, SWT.CENTER)
 				.applyTo(commitButtonsContainer);
-		GridLayoutFactory.fillDefaults().numColumns(2).equalWidth(true)
+		GridLayoutFactory.fillDefaults().numColumns(2)
 				.applyTo(commitButtonsContainer);
-
 
 		this.commitAndPushButton = toolkit.createButton(commitButtonsContainer,
 				UIText.StagingView_CommitAndPush, SWT.PUSH);
@@ -1123,7 +1133,31 @@ public class StagingView extends ViewPart
 		commitAndPushButton.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
-				commit(true);
+				if (canPushHeadOnly()) {
+					pushHead(currentRepository);
+				} else {
+					commit(true);
+				}
+			}
+
+			private void pushHead(Repository repository) {
+				if (repository == null) {
+					return;
+				}
+				PushMode mode = getPushMode();
+				if (mode == null) {
+					return;
+				}
+				try {
+					Wizard wizard = mode.getWizard(repository, null);
+					if (wizard != null) {
+						PushWizardDialog dialog = new PushWizardDialog(
+								commitAndPushButton.getShell(), wizard);
+						dialog.open();
+					}
+				} catch (IOException e) {
+					Activator.handleError(e.getMessage(), e, true);
+				}
 			}
 		});
 		GridDataFactory.fillDefaults().align(SWT.FILL, SWT.CENTER)
@@ -1225,9 +1259,7 @@ public class StagingView extends ViewPart
 			@Override
 			public void updateChangeIdToggleSelection(boolean selection) {
 				addChangeIdAction.setChecked(selection);
-				commitAndPushButton
-						.setImage(getImage(
-								selection ? UIIcons.GERRIT : UIIcons.PUSH));
+				updateCommitButtons();
 			}
 
 			@Override
@@ -1346,14 +1378,6 @@ public class StagingView extends ViewPart
 		}
 	}
 
-	private boolean commitAndPushEnabled(boolean commitEnabled) {
-		Repository repo = currentRepository;
-		if (repo == null) {
-			return false;
-		}
-		return commitEnabled && !repo.getRepositoryState().isRebasing();
-	}
-
 	private void updateIgnoreErrorsButtonVisibility() {
 		boolean visible = getPreferenceStore()
 				.getBoolean(UIPreferences.WARN_BEFORE_COMMITTING)
@@ -1388,14 +1412,22 @@ public class StagingView extends ViewPart
 		}
 		boolean indexDiffAvailable = indexDiffAvailable(indexDiff);
 		boolean noConflicts = noConflicts(indexDiff);
-
 		boolean commitEnabled = noConflicts && indexDiffAvailable
 				&& isCommitPossible() && !isCommitBlocked();
-
-		boolean commitAndPushEnabled = commitAndPushEnabled(commitEnabled);
-
 		commitButton.setEnabled(commitEnabled);
-		commitAndPushButton.setEnabled(commitAndPushEnabled);
+
+		final Repository repo = currentRepository;
+		commitAndPushButton.setEnabled(
+				repo != null && (commitEnabled || canPushHeadOnly())
+						&& !repo.getRepositoryState().isRebasing());
+		PushMode pushMode = getPushMode();
+		commitAndPushButton.setImage(getImage(
+				pushMode != null && pushMode == PushMode.GERRIT ? UIIcons.GERRIT
+						: UIIcons.PUSH));
+		commitAndPushButton
+				.setText(canPushHeadOnly() ? UIText.StagingView_PushHEAD
+						: UIText.StagingView_CommitAndPush);
+		commitAndPushButton.requestLayout();
 	}
 
 	private void saveSashFormWeightsOnDisposal(final SashForm sashForm,
@@ -1755,7 +1787,7 @@ public class StagingView extends ViewPart
 		enableAuthorText(enabled);
 		amendPreviousCommitAction.setEnabled(enabled);
 		signedOffByAction.setEnabled(enabled);
-		signCommitAction.setEnabled(enabled);
+		signCommitAction.setEnabled(enabled && GpgSigner.getDefault() != null);
 		addChangeIdAction.setEnabled(enabled);
 		if (enabled) {
 			updateCommitButtons();
@@ -2304,25 +2336,30 @@ public class StagingView extends ViewPart
 							additionalPaths);
 				}
 
-				// Update the selection.
-				StagingViewerUpdate stagingViewerUpdate = updateSelection(
-						stagingViewer, contentProvider, oldPaths,
-						buildElementMap(stagingViewer, contentProvider,
-								comparator));
-
-				// If something has been removed, the element before the removed
-				// item has been selected, in which case we want to preserve the
-				// scroll state as much as possible, keeping the selection in
-				// view. If something has been added, those added things have
-				// been selected and revealed, so we don't want to preserve the
-				// top but rather leave the revealed selection alone. If nothing
-				// has changed, we want to preserve the top, regardless of where
-				// the current unmodified selection might be, which is what's
-				// done by default anyway.
-				if (stagingViewerUpdate == StagingViewerUpdate.REMOVED) {
-					keepSelectionVisible = true;
-				} else if (stagingViewerUpdate == StagingViewerUpdate.ADDED) {
+				Map<String, Object> newPaths = buildElementMap(stagingViewer,
+						contentProvider, comparator);
+				if (newPaths.isEmpty()) {
 					preserveTop = false;
+				} else {
+					// Update the selection.
+					StagingViewerUpdate stagingViewerUpdate = updateSelection(
+							stagingViewer, contentProvider, oldPaths, newPaths);
+
+					// If something has been removed, the element before the
+					// removed item has been selected, in which case we want to
+					// preserve the scroll state as much as possible, keeping
+					// the selection in view. If something has been added, those
+					// added things have been selected and revealed, so we don't
+					// want to preserve the top but rather leave the revealed
+					// selection alone. If nothing has changed, we want to
+					// preserve the top, regardless of where the current
+					// unmodified selection might be, which is what's done by
+					// default anyway.
+					if (stagingViewerUpdate == StagingViewerUpdate.REMOVED) {
+						keepSelectionVisible = true;
+					} else if (stagingViewerUpdate == StagingViewerUpdate.ADDED) {
+						preserveTop = false;
+					}
 				}
 			} else {
 				// The update is completely different so don't do any of the
@@ -2516,7 +2553,8 @@ public class StagingView extends ViewPart
 				// element in the viewer failing those. The general idea is that
 				// it's really annoying to have the viewer scroll to the top
 				// element whenever you drag something out of a staging viewer.
-				Collection<Object> removedElements = removedPaths.values();
+				Collection<Object> removedElements = new LinkedHashSet<>(
+						removedPaths.values());
 				Object firstRemovedElement = removedElements.iterator()
 						.next();
 				Object parent = contentProvider.getParent(firstRemovedElement);
@@ -2710,10 +2748,11 @@ public class StagingView extends ViewPart
 		StagingViewContentProvider contentProvider = getContentProvider(viewer);
 		int count = contentProvider.getCount();
 		int shownCount = contentProvider.getShownCount();
-		if (shownCount == count)
-			return Integer.toString(count);
-		else
+		if (getFilterPattern() != null && count > 0) {
 			return shownCount + "/" + count; //$NON-NLS-1$
+		} else {
+			return Integer.toString(count);
+		}
 	}
 
 	private void updateMessage() {
@@ -3008,7 +3047,7 @@ public class StagingView extends ViewPart
 	}
 
 	/**
-	 * @return the trimmed string which is the current filter, empty string for
+	 * @return the trimmed string which is the current filter, {@code null} for
 	 *         no filter
 	 */
 	Pattern getFilterPattern() {
@@ -4306,13 +4345,13 @@ public class StagingView extends ViewPart
 		}
 		if (amendPreviousCommitAction.isChecked())
 			commitOperation.setAmending(true);
-		final boolean gerritMode = addChangeIdAction.isChecked();
-		commitOperation.setComputeChangeId(gerritMode);
+		final boolean withChangeId = addChangeIdAction.isChecked();
+		commitOperation.setComputeChangeId(withChangeId);
 		commitOperation.setSign(signCommitAction.isChecked());
 
 		PushMode pushMode = null;
 		if (pushUpstream) {
-			pushMode = gerritMode ? PushMode.GERRIT : PushMode.UPSTREAM;
+			pushMode = getPushMode();
 		}
 		Job commitJob = new CommitJob(currentRepository, commitOperation)
 				.setOpenCommitEditor(openNewCommitsAction.isChecked())
@@ -4336,6 +4375,24 @@ public class StagingView extends ViewPart
 		CommitMessageHistory.saveCommitHistory(commitMessage);
 		clearCommitMessageToggles();
 		return true;
+	}
+
+	private PushMode getPushMode() {
+		final Repository repository = currentRepository;
+		PushMode pushMode = null;
+		if (repository != null) {
+			pushMode = PushMode.UPSTREAM; // default mode
+			try {
+				if (addChangeIdAction.isChecked() && RemoteConfig
+						.getAllRemoteConfigs(repository.getConfig()).stream()
+						.anyMatch(GerritUtil::isGerritPush)) {
+					pushMode = PushMode.GERRIT;
+				}
+			} catch (URISyntaxException ex) {
+				// ignore, stick to default
+			}
+		}
+		return pushMode;
 	}
 
 	/**
@@ -4656,6 +4713,16 @@ public class StagingView extends ViewPart
 					return;
 				}
 			}
+		}
+	}
+
+	private boolean canPushHeadOnly() {
+		Repository repo = currentRepository;
+		try {
+			return repo != null && repo.resolve(Constants.HEAD) != null
+					&& !isCommitPossible();
+		} catch (IOException e) {
+			return false;
 		}
 	}
 }

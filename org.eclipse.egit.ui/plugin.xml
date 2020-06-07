@@ -1160,6 +1160,12 @@
             id="org.eclipse.egit.ui.team.Revert"
             name="%RevertCommand.name">
       </command>
+      <command
+            categoryId="org.eclipse.egit.ui.commandCategory"
+            id="org.eclipse.egit.ui.commit.DiffEditorQuickOutlineCommand"
+            name="%UnifiedDiffQuickOutlineCommand.name"
+            description="%UnifiedDiffQuickOutlineCommand.description">
+      </command>
    </extension>
    <extension
          point="org.eclipse.ui.handlers">
@@ -3561,6 +3567,7 @@
          <command
               commandId="org.eclipse.egit.ui.history.OpenInCommitViewerCommand"
               label="%HistoryOpenInCommitViewer.label"
+              tooltip="%OpenInCommitViewerCommand.tooltip"
               style="push">
             <visibleWhen checkEnabled="true" />
          </command>
@@ -3804,6 +3811,7 @@
          <command
                commandId="org.eclipse.egit.ui.history.OpenInCommitViewerCommand"
                label="%RebaseInteractiveOpenInCommitViewer.label"
+               tooltip="%OpenInCommitViewerCommand.tooltip"
                style="push">
             <visibleWhen checkEnabled="true" />
          </command>
@@ -7232,15 +7240,12 @@
       </command>
       <command
             id="org.eclipse.egit.ui.history.OpenInCommitViewerCommand"
-            name="%OpenInCommitViewerCommand.name">
+            name="%OpenInCommitViewerCommand.name"
+            description="%OpenInCommitViewerCommand.tooltip">
       </command>
       <command
             id="org.eclipse.egit.ui.commit.UnifiedDiffCommand"
             name="%ShowUnifiedDiffCommand.name">
-      </command>
-      <command
-            id="org.eclipse.egit.ui.commit.DiffEditorQuickOutlineCommand"
-            name="%UnifiedDiffQuickOutlineCommand.name">
       </command>
    </extension>
    <extension
@@ -7289,7 +7294,7 @@
       <context
             id="org.eclipse.egit.ui.DiffViewer"
             name="%DiffViewerContext"
-            parentId="org.eclipse.ui.contexts.window">
+            parentId="org.eclipse.ui.textEditorScope">
       </context>
    </extension>
    <extension

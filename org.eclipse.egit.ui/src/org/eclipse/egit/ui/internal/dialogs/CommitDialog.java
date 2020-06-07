@@ -41,6 +41,7 @@ import org.eclipse.egit.ui.Activator;
 import org.eclipse.egit.ui.UIPreferences;
 import org.eclipse.egit.ui.UIUtils;
 import org.eclipse.egit.ui.internal.CompareUtils;
+import org.eclipse.egit.ui.internal.GitLabels;
 import org.eclipse.egit.ui.internal.UIIcons;
 import org.eclipse.egit.ui.internal.UIText;
 import org.eclipse.egit.ui.internal.commit.CommitHelper;
@@ -90,11 +91,13 @@ import org.eclipse.jgit.api.AddCommand;
 import org.eclipse.jgit.api.Git;
 import org.eclipse.jgit.lib.Constants;
 import org.eclipse.jgit.lib.FileMode;
+import org.eclipse.jgit.lib.GpgSigner;
 import org.eclipse.jgit.lib.IndexDiff;
 import org.eclipse.jgit.lib.Repository;
 import org.eclipse.jgit.lib.RepositoryState;
 import org.eclipse.jgit.treewalk.FileTreeIterator;
 import org.eclipse.jgit.treewalk.filter.PathFilterGroup;
+import org.eclipse.osgi.util.NLS;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.SashForm;
 import org.eclipse.swt.events.DisposeEvent;
@@ -735,7 +738,8 @@ public class CommitDialog extends TitleAreaDialog {
 		Image titleImage = UIIcons.WIZBAN_COMMIT.createImage();
 		UIUtils.hookDisposal(parent, titleImage);
 		setTitleImage(titleImage);
-		setTitle(UIText.CommitDialog_Title);
+		setTitle(NLS.bind(UIText.CommitDialog_Title,
+				GitLabels.getPlainShortLabel(repository)));
 		if (ignoreErrors != null) {
 			setMessage(UIText.CommitDialog_MessageErrors,
 					IMessageProvider.WARNING);
@@ -1153,6 +1157,12 @@ public class CommitDialog extends TitleAreaDialog {
 			}
 		});
 
+		boolean canSign = GpgSigner.getDefault() != null;
+		signCommitItem.setEnabled(canSign);
+		if (!canSign) {
+			signCommitItem
+					.setToolTipText(UIText.CommitDialog_Sign_Not_Available);
+		}
 		signCommitItem.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {

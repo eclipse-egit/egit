@@ -9,15 +9,15 @@
       license-feature-version="0.0.0">
 
    <description url="https://www.eclipse.org/egit/">
-     %description
+      %description
    </description>
 
    <copyright>
-     %copyright
+      %copyright
    </copyright>
 
    <license url="%licenseURL">
-     %license
+      %license
    </license>
 
    <url>
@@ -41,8 +41,10 @@
       <import plugin="org.eclipse.jsch.core" version="1.3.0" match="compatible"/>
       <import plugin="com.jcraft.jsch" version="0.1.55" match="compatible"/>
       <import feature="org.eclipse.jgit" version="5.8.0" match="equivalent"/>
-      <import feature="org.eclipse.jgit.ssh.apache" version="5.8.0" match="equivalent"/>
+      <import feature="org.eclipse.jgit.gpg.bc" version="5.8.0" match="equivalent"/>
       <import feature="org.eclipse.jgit.http.apache" version="5.8.0" match="equivalent"/>
+      <import feature="org.eclipse.jgit.ssh.apache" version="5.8.0" match="equivalent"/>
+      <import feature="org.eclipse.jgit.ssh.jsch" version="5.8.0" match="equivalent"/>
    </requires>
 
    <plugin
@@ -72,4 +74,5 @@
          install-size="0"
          version="0.0.0"
          unpack="false"/>
+
 </feature>

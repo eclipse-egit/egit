@@ -14,20 +14,29 @@
 package org.eclipse.egit.ui.internal.history.command;
 
 import java.util.List;
+import java.util.Map;
 
 import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.commands.ExecutionException;
 import org.eclipse.egit.ui.Activator;
+import org.eclipse.egit.ui.internal.UIText;
 import org.eclipse.egit.ui.internal.commit.CommitEditor;
 import org.eclipse.egit.ui.internal.commit.RepositoryCommit;
+import org.eclipse.egit.ui.internal.selection.SelectionUtils;
+import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jgit.lib.Repository;
 import org.eclipse.jgit.revwalk.RevCommit;
 import org.eclipse.ui.PartInitException;
+import org.eclipse.ui.PlatformUI;
+import org.eclipse.ui.commands.IElementUpdater;
+import org.eclipse.ui.menus.UIElement;
+import org.eclipse.ui.services.IEvaluationService;
 
 /**
- * Opens a {@link RevCommit} in the commit editor
+ * Opens a {@link RevCommit} in the commit editor.
  */
-public class OpenInCommitViewerHandler extends AbstractHistoryCommandHandler {
+public class OpenInCommitViewerHandler extends AbstractHistoryCommandHandler
+		implements IElementUpdater {
 
 	@Override
 	public Object execute(ExecutionEvent event) throws ExecutionException {
@@ -41,5 +50,15 @@ public class OpenInCommitViewerHandler extends AbstractHistoryCommandHandler {
 			}
 		}
 		return null;
+	}
+
+	@Override
+	public void updateElement(UIElement element, Map parameters) {
+		IStructuredSelection selection = SelectionUtils.getSelection(
+				PlatformUI.getWorkbench().getService(IEvaluationService.class)
+						.getCurrentState());
+		if (selection.size() > 1) {
+			element.setText(UIText.GitHistoryPage_OpenAllInCommitViewerLabel);
+		}
 	}
 }
