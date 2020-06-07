@@ -10,7 +10,7 @@
       <category name="EGit"/>
    </feature>
    <feature url="features/org.eclipse.egit.mylyn_0.0.0.qualifier.jar" id="org.eclipse.egit.mylyn" version="0.0.0">
-      <category name="EGit"/>
+      <category name="EGit.additional"/>
    </feature>
    <feature url="features/org.eclipse.jgit_0.0.0.qualifier.jar" id="org.eclipse.jgit" version="0.0.0" patch="true">
       <category name="JGit"/>
@@ -37,11 +37,11 @@
       <category name="JGit"/>
    </feature>
    <feature url="features/org.eclipse.egit.gitflow.feature_0.0.0.qualifier.jar" id="org.eclipse.egit.gitflow.feature" version="0.0.0">
-      <category name="EGit.experimental"/>
+      <category name="EGit.additional"/>
    </feature>
    <category-def name="EGit" label="Git integration for Eclipse">
       <description>
-         Versioning with Git, integration with Gerrit, GitHub, Gitflow, and Task repositories
+         Versioning with Git and integration with Gerrit Code Review
       </description>
    </category-def>
    <category-def name="JGit" label="Java implementation of Git">
@@ -49,6 +49,10 @@
          Java implementation of Git
       </description>
    </category-def>
-   <category-def name="EGit.experimental" label="Git integration for Eclipse - experimental features  (incubation)"/>
+   <category-def name="EGit.additional" label="Git integration for Eclipse - additional features">
+      <description>
+         Gitflow support and integration with Task repositories
+      </description>
+   </category-def>
    <repository-reference location="https://download.eclipse.org/e4/snapshots/org.eclipse.e4.ui" enabled="true" />
 </site>
