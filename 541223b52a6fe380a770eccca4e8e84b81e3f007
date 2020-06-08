@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c5cffb4d_f9dee037",
+        "filename": "org.eclipse.egit.repository/category.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2020-06-08T08:42:41Z",
+      "side": 0,
+      "message": "I think it\u0027ll be re-added by the JBoss repo plugin in pom.xml. Also, what is \"a long time ago\"? Is it still needed for Neon, or was the wizard already in the standard repo by then?",
+      "revId": "541223b52a6fe380a770eccca4e8e84b81e3f007",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
