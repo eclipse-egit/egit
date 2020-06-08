@@ -65,16 +65,22 @@
       <plugin>
         <groupId>org.eclipse.tycho.extras</groupId>
         <artifactId>tycho-pack200a-plugin</artifactId>
-        <configuration>
-          <skip>true</skip>
-        </configuration>
+        <executions>
+          <execution>
+            <id>pack200-normalize</id>
+            <phase>none</phase>
+          </execution>
+        </executions>
       </plugin>
       <plugin>
         <groupId>org.eclipse.tycho.extras</groupId>
         <artifactId>tycho-pack200b-plugin</artifactId>
-        <configuration>
-          <skip>true</skip>
-        </configuration>
+        <executions>
+          <execution>
+            <id>pack200-pack</id>
+            <phase>none</phase>
+          </execution>
+        </executions>
       </plugin>
     </plugins>
   </build>
