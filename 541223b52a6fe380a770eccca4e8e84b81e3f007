@@ -16,6 +16,23 @@
       "revId": "541223b52a6fe380a770eccca4e8e84b81e3f007",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "f109f086_f83884a4",
+        "filename": "org.eclipse.egit.repository/category.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2020-06-08T08:40:21Z",
+      "side": 1,
+      "message": "should we also add the nightly p2 repository to help users using snapshot builds ?",
+      "revId": "541223b52a6fe380a770eccca4e8e84b81e3f007",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
     }
   ]
 }
