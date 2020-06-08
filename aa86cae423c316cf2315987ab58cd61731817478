@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "14216f8e_bd166f83",
+        "filename": "org.eclipse.egit.doc/build-help.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2020-06-08T19:12:39Z",
+      "side": 1,
+      "message": "this fixed 400 errors I got without this, found here https://www.eclipse.org/forums/index.php/t/167198/",
+      "revId": "aa86cae423c316cf2315987ab58cd61731817478",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
