@@ -87,6 +87,24 @@
       "revId": "541223b52a6fe380a770eccca4e8e84b81e3f007",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "2c487c38_312327c7",
+        "filename": "org.eclipse.egit.repository/category.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2020-06-08T16:32:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "dd99be08_06f27775",
+      "revId": "541223b52a6fe380a770eccca4e8e84b81e3f007",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
     }
   ]
 }
