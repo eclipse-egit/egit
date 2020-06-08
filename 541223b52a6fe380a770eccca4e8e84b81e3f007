@@ -69,6 +69,24 @@
       "revId": "541223b52a6fe380a770eccca4e8e84b81e3f007",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "dd99be08_06f27775",
+        "filename": "org.eclipse.egit.repository/category.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2020-06-08T08:54:09Z",
+      "side": 1,
+      "message": "Probably a good idea to add the egit.github nightly.",
+      "parentUuid": "c16ef360_29510403",
+      "revId": "541223b52a6fe380a770eccca4e8e84b81e3f007",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
     }
   ]
 }
