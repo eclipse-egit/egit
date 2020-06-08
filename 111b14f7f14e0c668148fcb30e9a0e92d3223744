@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "036904bf_7252f2c5",
+        "filename": "org.eclipse.egit.doc/pom.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2020-06-08T19:13:37Z",
+      "side": 1,
+      "message": "this is the original proposal by Michael Keppler, we can only try this on the build server since we need the Eclipse signing service",
+      "revId": "111b14f7f14e0c668148fcb30e9a0e92d3223744",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
