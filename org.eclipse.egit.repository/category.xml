@@ -54,5 +54,4 @@
          Gitflow support and integration with Task repositories
       </description>
    </category-def>
-   <repository-reference location="https://download.eclipse.org/e4/snapshots/org.eclipse.e4.ui" enabled="true" />
 </site>
