@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1cc90194_3f94c62d",
+        "filename": "org.eclipse.egit.repository/category.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2020-06-08T08:39:54Z",
+      "side": 1,
+      "message": "Isn\u0027t this going to be rewritten via the \u003cassociateSites\u003e from that JBoss repo plugin? I notice that we added the Orbit link only there. So perhaps this would also need to be there? Or will the final repository have the union of the references specified here and in associateSites?",
+      "revId": "541223b52a6fe380a770eccca4e8e84b81e3f007",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
