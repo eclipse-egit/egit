@@ -1,0 +1,102 @@
+<?xml version='1.0' encoding='utf-8' ?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+		<title>EGit 5.8 New and Noteworthy</title>
+		<link type="text/css" rel="stylesheet" href="../../../book.css"/>
+	</head>
+	<body>
+		<table class="navigation" style="width: 100%;" border="0" summary="navigation">
+			<tr>
+				<th style="width: 100%" align="center" colspan="3">EGit 5.8 New and Noteworthy</th>
+			</tr>
+			<tr>
+				<td style="width: 20%" align="left"></td>
+				<td style="width: 60%" align="center"></td>
+				<td style="width: 20%" align="right">
+					<a href="Contributors.html" title="Contributors">
+						<img alt="Next" border="0" src="../../../images/next.gif"/>
+					</a>
+				</td>
+			</tr>
+			<tr>
+				<td style="width: 20%" align="left" valign="top"></td>
+				<td style="width: 60%" align="center"></td>
+				<td style="width: 20%" align="right" valign="top">Contributors</td>
+			</tr>
+		</table><hr class="navigation-separator"/>
+		<h1 id="EGit">EGit</h1>
+		<h2 id="Diff_Viewer">Diff Viewer</h2>
+		<p>The outline view of the diff viewer has now a toolbar:</p>
+		<p>
+			<img alt="&quot;Screenshot showing the toolbar of the outline view of the diff viewer in EGit 5.8.0.&quot;" border="0" src="images/EGit_5.8_DiffViewer_Toolbar.png"/>
+		</p>
+		<p>There's a button to collapse all folders, and a button to toggle the presentation from a flat folder list to a hierarchical display.</p>
+		<p>
+			<img alt="&quot;Screenshot showing nested folders in the outline view of the diff viewer in EGit 5.8.0.&quot;" border="0" src="images/EGit_5.8_DiffViewer_CompactOutline.png"/>
+		</p>
+		<p>When clicked, the content is shown using nested folders.</p>
+		<p>Additionally, the diff viewer now also has a "quick outline" that can be opened with the standard keybinding Ctrl/Cmd-O.</p>
+		<p>
+			<img alt="&quot;Screenshot showing the quick outline in the diff viewer in EGit 5.8.0.&quot;" border="0" src="images/EGit_5.8_DiffViewer_QuickOutline.png"/>
+		</p>
+		<h2 id="Repositories_View">Repositories View</h2>
+		<p>In the Git Repositories view, there is a new command on the "Tags" node to filter the tags.</p>
+		<p>
+			<img alt="&quot;Screenshot showing the tag filter command in the repositories view in EGit 5.8.0.&quot;" border="0" src="images/EGit_5.8_RepoView_TagFilterCommand.png"/>
+		</p>
+		<p>It opens a text box where the user can enter a filter expression to restrict which tags will be shown:</p>
+		<p>
+			<img alt="&quot;Screenshot showing tag filtering in the repositories view in EGit 5.8.0.&quot;" border="0" src="images/EGit_5.8_RepoView_TagFilter.png"/>
+		</p>
+		<p>A filter expression can be either of</p>
+		<ul>
+			<li>a name pattern: only tags with names matching the pattern are shown. The pattern can be any text and may include the wildcards '<tt>?</tt>' to denote any single character or '<tt>*</tt>' to mean any number of arbitrary characters. By default, the filter does a substring match. By prefixing the pattern with '<tt>^</tt>', it can be made to match only at the beginning, and if the last character is '<tt>$</tt>', the pattern will match only at the end.
+				<ul>
+					<li>"<tt>foobar</tt>" will match any tag with a name containing "<tt>foobar</tt>"</li>
+					<li>"<tt>foo*bar</tt>" matches any tag whose name contains "<tt>foo</tt>" and later "<tt>bar</tt>"</li>
+					<li>"<tt>^foo</tt>" matches tags with names starting with "<tt>foo</tt>"</li>
+					<li>"<tt>foo$</tt>" matches any tag whose name ends with "<tt>foo</tt>"</li>
+					<li>"<tt>^foo$</tt>" only matches a tag named "<tt>foo</tt>"</li>
+					<li>"<tt>foo*bar$</tt>" matches tags with names that contain "<tt>foo</tt>" and that end with "<tt>bar</tt>"</li>
+					<li>To match '<tt>^</tt>' or '<tt>#</tt>' or '<tt>$</tt>' in a name, make sure it's not the first (or last, if '<tt>$</tt>') character. For instance "<tt>*^foo</tt>" or "<tt>^^foo</tt>" or "<tt>foo$*</tt>".</li>
+					<li>To match '<tt>*</tt>' or '<tt>?</tt>' or '<tt>\</tt>' in a name, escape it with an additional '<tt>\</tt>': "<tt>foo\?</tt>" will match any tag whose name contains "<tt>foo?</tt>".</li>
+				</ul>
+			</li>
+			<li>a '<tt>#</tt>' followed by a number, for instance "<tt>#10</tt>". This shows only the 10 most recent tags determined by the commit date of the commit they point to.</li>
+		</ul>
+		<p>If the user hits <tt>&lt;return&gt;</tt>, the filter pattern is saved. The filter is persisted and will be re-applied when Eclipse is re-started. Different repositories can have different tag filters. A filter can be removed by clearing its filter expression: all tags will be shown again.</p>
+		<p><tt>&lt;ESC&gt;</tt> cancels the filter change.</p>
+		<h2 id="Cloning">Cloning</h2>
+		<p>
+			<img alt="&quot;Screenshot of the Clone wizard of EGit 5.8.0 with the button to select a local bundle file highlighted.&quot;" border="0" src="images/EGit_5.8_CloneWizard_Bundle.png"/>
+		</p>
+		<p>EGit 5.8.0 supports cloning from a local 
+			<a href="https://git-scm.com/docs/git-bundle" target="egit_external">git bundle file</a>. There is a new button in the "Clone" wizard to open a file selection dialog to select the bundle file to clone from.
+		</p>
+		<h2 id="API">API</h2>
+		<p>The command that opens the "Clone" wizard shown above is registered in the Eclipse platform with ID <code>org.eclipse.egit.ui.RepositoriesViewClone</code>. This command newly accepts an optional 
+			<a href="https://help.eclipse.org/index.jsp?topic=%2Forg.eclipse.platform.doc.isv%2Freference%2Fextension-points%2Forg_eclipse_ui_commands.html" target="egit_external">command parameter</a> named <code>repositoryUri</code>. The value is supposed to be a string containing a git clone URI. If set and the value can indeed be parsed as a git clone URI, it is used to pre-fill the dialog with the values from that URI. If <tt>repositoryUri</tt> is not set or contains an invalid value it is silently ignored.
+		</p>
+		<h2 id="Other_Changes">Other Changes</h2>
+		<p>EGit 5.8 includes lots of less noticeable improvements in the UI, plus a number of bug fixes. The complete list of new features and bug fixes is available in the 
+			<a href="https://projects.eclipse.org/projects/technology.egit/releases/5.8.0/" target="egit_external">release notes</a>.
+		</p><hr class="navigation-separator"/>
+		<table class="navigation" style="width: 100%;" border="0" summary="navigation">
+			<tr>
+				<td style="width: 20%" align="left"></td>
+				<td style="width: 60%" align="center"></td>
+				<td style="width: 20%" align="right">
+					<a href="Contributors.html" title="Contributors">
+						<img alt="Next" border="0" src="../../../images/next.gif"/>
+					</a>
+				</td>
+			</tr>
+			<tr>
+				<td style="width: 20%" align="left" valign="top"></td>
+				<td style="width: 60%" align="center"></td>
+				<td style="width: 20%" align="right" valign="top">Contributors</td>
+			</tr>
+		</table>
+	</body>
+</html>
