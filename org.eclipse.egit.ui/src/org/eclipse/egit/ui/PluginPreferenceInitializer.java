@@ -105,6 +105,7 @@ public class PluginPreferenceInitializer extends AbstractPreferenceInitializer {
 		store.setDefault(UIPreferences.FINDTOOLBAR_FIND_IN,
 				FindToolbar.PREFS_FINDIN_ALL);
 		store.setDefault(UIPreferences.ALWAYS_USE_STAGING_VIEW, true);
+		store.setDefault(UIPreferences.ALWAYS_SHOW_PUSH_WIZARD_ON_COMMIT, false);
 		store.setDefault(UIPreferences.AUTO_STAGE_ON_COMMIT, true);
 		store.setDefault(UIPreferences.COMMIT_DIALOG_HARD_WRAP_MESSAGE, true);
 		store.setDefault(UIPreferences.COMMIT_DIALOG_WARN_ABOUT_MESSAGE_SECOND_LINE, true);

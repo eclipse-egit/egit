@@ -111,6 +111,7 @@ import org.eclipse.egit.ui.internal.operations.DeletePathsOperationUI;
 import org.eclipse.egit.ui.internal.operations.IgnoreOperationUI;
 import org.eclipse.egit.ui.internal.push.PushMode;
 import org.eclipse.egit.ui.internal.push.PushWizardDialog;
+import org.eclipse.egit.ui.internal.push.SimpleConfigurePushDialog;
 import org.eclipse.egit.ui.internal.repository.RepositoryTreeNodeLabelProvider;
 import org.eclipse.egit.ui.internal.repository.tree.RepositoryNode;
 import org.eclipse.egit.ui.internal.repository.tree.RepositoryTreeNode;
@@ -1128,7 +1129,7 @@ public class StagingView extends ViewPart
 				.applyTo(commitButtonsContainer);
 
 		this.commitAndPushButton = toolkit.createButton(commitButtonsContainer,
-				UIText.StagingView_CommitAndPush, SWT.PUSH);
+				UIText.StagingView_CommitAndPushWithEllipsis, SWT.PUSH);
 		commitAndPushButton.setImage(getImage(UIIcons.PUSH));
 		commitAndPushButton.addSelectionListener(new SelectionAdapter() {
 			@Override
@@ -1426,7 +1427,9 @@ public class StagingView extends ViewPart
 						: UIIcons.PUSH));
 		commitAndPushButton
 				.setText(canPushHeadOnly() ? UIText.StagingView_PushHEAD
-						: UIText.StagingView_CommitAndPush);
+						: canPushWithoutConfirmation(pushMode)
+								? UIText.StagingView_CommitAndPush
+								: UIText.StagingView_CommitAndPushWithEllipsis);
 		commitAndPushButton.requestLayout();
 	}
 
@@ -4735,5 +4738,18 @@ public class StagingView extends ViewPart
 		} catch (IOException e) {
 			return false;
 		}
+	}
+
+	private boolean canPushWithoutConfirmation(PushMode pushMode) {
+		Repository repo = currentRepository;
+		if (repo != null && pushMode != PushMode.GERRIT) {
+			final RemoteConfig config = SimpleConfigurePushDialog
+					.getConfiguredRemote(repo);
+			boolean alwaysShowPushWizard = Activator.getDefault()
+					.getPreferenceStore().getBoolean(
+							UIPreferences.ALWAYS_SHOW_PUSH_WIZARD_ON_COMMIT);
+			return config != null && !alwaysShowPushWizard;
+		}
+		return false;
 	}
 }

@@ -3495,6 +3495,15 @@ public class UIText extends NLS {
 	public static String CommittingPreferencePage_general;
 
 	/** */
+	public static String CommittingPreferencePage_push;
+
+	/** */
+	public static String DialogsPreferencePage_alwaysShowPushWizard;
+
+	/** */
+	public static String DialogsPreferencePage_alwaysShowPushWizardTooltip;
+
+	/** */
 	public static String DateFormatPreferencePage_title;
 
 	/** */
@@ -5624,6 +5633,9 @@ public class UIText extends NLS {
 
 	/** */
 	public static String StagingView_CommitAndPush;
+
+	/** */
+	public static String StagingView_CommitAndPushWithEllipsis;
 
 	/** */
 	public static String StagingView_PushHEAD;
