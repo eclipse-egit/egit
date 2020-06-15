@@ -29,14 +29,17 @@ import org.eclipse.egit.ui.internal.UIText;
 import org.eclipse.egit.ui.internal.decorators.GitLightweightDecorator;
 import org.eclipse.egit.ui.internal.dialogs.CommitMessageComponentStateManager;
 import org.eclipse.egit.ui.internal.push.PushMode;
-import org.eclipse.egit.ui.internal.push.PushWizardDialog;
+import org.eclipse.egit.ui.internal.push.PushOperationUI;
+import org.eclipse.egit.ui.internal.push.SimpleConfigurePushDialog;
 import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.wizard.Wizard;
+import org.eclipse.jface.wizard.WizardDialog;
 import org.eclipse.jgit.api.errors.AbortedByHookException;
 import org.eclipse.jgit.api.errors.CanceledException;
 import org.eclipse.jgit.api.errors.JGitInternalException;
 import org.eclipse.jgit.lib.Repository;
 import org.eclipse.jgit.revwalk.RevCommit;
+import org.eclipse.jgit.transport.RemoteConfig;
 import org.eclipse.osgi.util.NLS;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.ui.PlatformUI;
@@ -155,15 +158,29 @@ public class CommitJob extends Job {
 	}
 
 	private void pushUpstream(final RevCommit commit, final PushMode pushTo) {
-		final Display display = PlatformUI.getWorkbench().getDisplay();
-		display.asyncExec(() -> {
-			Wizard wizard = getPushWizard(commit, pushTo);
-			if (wizard != null) {
-				PushWizardDialog dialog = new PushWizardDialog(
-						display.getActiveShell(), wizard);
-				dialog.open();
-			}
-		});
+		final RemoteConfig config = SimpleConfigurePushDialog
+				.getConfiguredRemote(repository);
+
+		if (pushTo == PushMode.GERRIT || config == null) {
+			final Display display = PlatformUI.getWorkbench().getDisplay();
+			display.asyncExec(new Runnable() {
+
+				@Override
+				public void run() {
+					Wizard pushWizard = getPushWizard(commit, pushTo);
+					if (pushWizard != null) {
+						WizardDialog wizardDialog = new WizardDialog(
+								display.getActiveShell(), pushWizard);
+						wizardDialog.setHelpAvailable(true);
+						wizardDialog.open();
+					}
+				}
+			});
+		} else {
+			PushOperationUI op = new PushOperationUI(repository,
+					config.getName(), false);
+			op.start();
+		}
 	}
 
 	private Wizard getPushWizard(final RevCommit commit,
