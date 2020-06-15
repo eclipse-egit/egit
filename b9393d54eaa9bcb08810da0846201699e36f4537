@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "28762f35_714f9732",
+        "filename": "org.eclipse.egit.repository/pom.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2020-06-15T12:08:53Z",
+      "side": 0,
+      "message": "This got lost?",
+      "revId": "b9393d54eaa9bcb08810da0846201699e36f4537",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
