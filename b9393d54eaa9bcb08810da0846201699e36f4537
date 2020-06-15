@@ -34,6 +34,24 @@
       "revId": "b9393d54eaa9bcb08810da0846201699e36f4537",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "484af2d3_854f1ac7",
+        "filename": "org.eclipse.egit.repository/pom.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2020-06-15T20:28:05Z",
+      "side": 0,
+      "message": "fixed in https://git.eclipse.org/r/#/c/164939/",
+      "parentUuid": "0cede3cf_8523b99f",
+      "revId": "b9393d54eaa9bcb08810da0846201699e36f4537",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
     }
   ]
 }
