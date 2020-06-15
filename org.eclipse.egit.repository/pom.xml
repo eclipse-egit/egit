@@ -63,6 +63,8 @@
                 <target.eclipse.version>4.6.0 (Neon) or newer</target.eclipse.version>
               </symbols>
               <associateSites>
+                <site>https://download.eclipse.org/egit/github/updates</site>
+                <site>https://download.eclipse.org/egit/github/updates-nightly</site>
                 <site>https://download.eclipse.org/e4/snapshots/org.eclipse.e4.ui</site>
                 <site>https://download.eclipse.org/tools/orbit/downloads/drops/R20200529191137/repository</site>
               </associateSites>
