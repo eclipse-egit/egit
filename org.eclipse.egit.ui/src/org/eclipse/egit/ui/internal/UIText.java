@@ -3495,6 +3495,15 @@ public class UIText extends NLS {
 	public static String CommittingPreferencePage_general;
 
 	/** */
+	public static String CommittingPreferencePage_push;
+
+	/** */
+	public static String CommittingPreferencePage_alwaysShowPushWizard;
+
+	/** */
+	public static String CommittingPreferencePage_alwaysShowPushWizardTooltip;
+
+	/** */
 	public static String DateFormatPreferencePage_title;
 
 	/** */
