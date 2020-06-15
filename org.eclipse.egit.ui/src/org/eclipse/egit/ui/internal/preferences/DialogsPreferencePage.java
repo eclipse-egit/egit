@@ -86,6 +86,14 @@ public class DialogsPreferencePage extends FieldEditorPreferencePage implements
 		addField(new BooleanFieldEditor(UIPreferences.LFS_AUTO_CONFIGURATION,
 				UIText.DialogsPreferencePage_autoConfigureLfs,
 				confirmDialogsGroup));
+		BooleanFieldEditor editor = new BooleanFieldEditor(
+				UIPreferences.ALWAYS_SHOW_PUSH_WIZARD_ON_COMMIT,
+				UIText.DialogsPreferencePage_alwaysShowPushWizard,
+				confirmDialogsGroup);
+		addField(editor);
+		editor.getDescriptionControl(confirmDialogsGroup).setToolTipText(
+				UIText.DialogsPreferencePage_alwaysShowPushWizardTooltip);
+
 		updateMargins(confirmDialogsGroup);
 
 		Group infoGroup = new Group(main, SWT.SHADOW_ETCHED_IN);
@@ -93,7 +101,7 @@ public class DialogsPreferencePage extends FieldEditorPreferencePage implements
 				.applyTo(infoGroup);
 		infoGroup.setText(UIText.DialogsPreferencePage_ShowInfoGroupHeader);
 
-		BooleanFieldEditor editor = new BooleanFieldEditor(
+		editor = new BooleanFieldEditor(
 				UIPreferences.SHOW_FETCH_POPUP_SUCCESS,
 				UIText.DialogsPreferencePage_ShowFetchInfoDialog, infoGroup);
 		addField(editor);
