@@ -39,8 +39,11 @@ import org.eclipse.core.runtime.Path;
 import org.eclipse.egit.core.internal.indexdiff.IndexDiffData;
 import org.eclipse.egit.ui.internal.staging.StagingView.Presentation;
 import org.eclipse.egit.ui.internal.staging.StagingView.StagingViewUpdate;
+import org.eclipse.jface.viewers.TreeViewer;
 import org.eclipse.jface.viewers.Viewer;
 import org.eclipse.jgit.lib.Repository;
+import org.eclipse.swt.SWT;
+import org.eclipse.swt.widgets.Tree;
 import org.eclipse.ui.model.WorkbenchContentProvider;
 
 /**
@@ -58,14 +61,17 @@ public class StagingViewContentProvider extends WorkbenchContentProvider {
 
 	private StagingView stagingView;
 	private boolean unstagedSection;
+	private TreeViewer treeViewer;
 
 	private Repository repository;
 
 	private final EntryComparator comparator;
 
-	StagingViewContentProvider(StagingView stagingView, boolean unstagedSection) {
+	StagingViewContentProvider(StagingView stagingView, boolean unstagedSection,
+			TreeViewer treeViewer) {
 		this.stagingView = stagingView;
 		this.unstagedSection = unstagedSection;
+		this.treeViewer = treeViewer;
 		comparator = new EntryComparator();
 	}
 
@@ -287,6 +293,24 @@ public class StagingViewContentProvider extends WorkbenchContentProvider {
 
 	StagingEntry[] getStagingEntries() {
 		return content;
+	}
+
+	void setInput(StagingViewUpdate input) {
+		if ((treeViewer.getControl().getStyle() & SWT.VIRTUAL) == 0) {
+			treeViewer.setInput(input);
+			return;
+		}
+		final Tree tree = treeViewer.getTree();
+		inputChanged(treeViewer, tree.getData(), input);
+		tree.setData(input);
+		tree.setItemCount(getCount());
+	}
+
+	StagingViewUpdate getInput() {
+		if ((treeViewer.getControl().getStyle() & SWT.VIRTUAL) == 0) {
+			return (StagingViewUpdate) treeViewer.getInput();
+		}
+		return (StagingViewUpdate) treeViewer.getTree().getData();
 	}
 
 	@Override
