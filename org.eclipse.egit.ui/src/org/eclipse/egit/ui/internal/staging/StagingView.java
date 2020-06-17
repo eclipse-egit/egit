@@ -213,7 +213,9 @@ import org.eclipse.swt.layout.RowLayout;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
+import org.eclipse.swt.widgets.Event;
 import org.eclipse.swt.widgets.Label;
+import org.eclipse.swt.widgets.Listener;
 import org.eclipse.swt.widgets.Text;
 import org.eclipse.swt.widgets.Tree;
 import org.eclipse.swt.widgets.TreeItem;
@@ -2110,11 +2112,26 @@ public class StagingView extends ViewPart
 		return contentProvider.getCount() <= getMaxLimitForListMode();
 	}
 
-	private TreeViewer createTree(Composite composite) {
+	private TreeViewer createTree(Composite composite, boolean virtual) {
 		Tree tree = toolkit.createTree(composite, SWT.FULL_SELECTION
-				| SWT.MULTI);
+				| SWT.MULTI | (virtual ? SWT.VIRTUAL : SWT.VIRTUAL));
 		TreeViewer treeViewer = new TreeViewer(tree);
 		treeViewer.setUseHashlookup(true);
+		tree.addListener(SWT.SetData, new Listener() {
+
+			@Override
+			public void handleEvent(Event event) {
+				StagingViewContentProvider contentProvider = getContentProvider(
+						treeViewer);
+				StagingEntry[] content = contentProvider.getStagingEntries();
+				StagingEntry entry = content[event.index];
+				TreeItem item = (TreeItem) event.item;
+				ILabelProvider labelProvider = (ILabelProvider) treeViewer
+						.getLabelProvider();
+				item.setImage(labelProvider.getImage(entry));
+				item.setText(labelProvider.getText(entry));
+			}
+		});
 		return treeViewer;
 	}
 
@@ -2129,9 +2146,9 @@ public class StagingView extends ViewPart
 	}
 
 	private StagingViewContentProvider createStagingContentProvider(
-			boolean unstaged) {
+			boolean unstaged, TreeViewer treeViewer) {
 		StagingViewContentProvider provider = new StagingViewContentProvider(
-				this, unstaged) {
+				this, unstaged, treeViewer) {
 
 			@Override
 			public void inputChanged(Viewer viewer, Object oldInput,
@@ -2154,14 +2171,14 @@ public class StagingView extends ViewPart
 	private TreeViewer createViewer(Composite parent, boolean unstaged,
 			final Consumer<IStructuredSelection> dropAction,
 			IAction... tooltipActions) {
-		final TreeViewer viewer = createTree(parent);
+		final TreeViewer viewer = createTree(parent, unstaged);
 		GridDataFactory.fillDefaults().grab(true, true)
 				.applyTo(viewer.getControl());
 		viewer.getTree().setData(FormToolkit.KEY_DRAW_BORDER,
 				FormToolkit.TREE_BORDER);
 		viewer.setLabelProvider(createLabelProvider(viewer));
 		StagingViewContentProvider contentProvider = createStagingContentProvider(
-				unstaged);
+				unstaged, viewer);
 		viewer.setContentProvider(contentProvider);
 		if (tooltipActions != null && tooltipActions.length > 0) {
 			StagingViewTooltips tooltips = new StagingViewTooltips(viewer,
@@ -2315,21 +2332,20 @@ public class StagingView extends ViewPart
 			// are selected and revealed.
 			boolean preserveTop = true;
 			boolean keepSelectionVisible = false;
-			StagingViewUpdate oldInput = (StagingViewUpdate) stagingViewer
-					.getInput();
+			StagingViewContentProvider contentProvider = getContentProvider(
+					stagingViewer);
+			StagingViewUpdate oldInput = contentProvider.getInput();
 			if (oldInput != null && oldInput.repository == newInput.repository
 					&& oldInput.indexDiff != null) {
 				// If the input has changed and wasn't empty before or wasn't
 				// for a different repository before, record the contents of the
 				// viewer before the input is changed.
-				StagingViewContentProvider contentProvider = getContentProvider(
-						stagingViewer);
 				ViewerComparator comparator = stagingViewer.getComparator();
 				Map<String, Object> oldPaths = buildElementMap(stagingViewer,
 						contentProvider, comparator);
 
 				// Update the input.
-				stagingViewer.setInput(newInput);
+				contentProvider.setInput(newInput);
 				// Restore the previous expansion state, if there is one.
 				if (previous != null) {
 					expandPreviousExpandedAndPaths(previous, stagingViewer,
@@ -2364,7 +2380,7 @@ public class StagingView extends ViewPart
 			} else {
 				// The update is completely different so don't do any of the
 				// above analysis to see what's different.
-				stagingViewer.setInput(newInput);
+				contentProvider.setInput(newInput);
 				// Restore the previous expansion state, if there is one.
 				if (previous != null) {
 					expandPreviousExpandedAndPaths(previous, stagingViewer,
