@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (C) 2011, 2019 Bernard Leach <leachbj@bouncycastle.org> and others.
+ * Copyright (C) 2011, 2020 Bernard Leach <leachbj@bouncycastle.org> and others.
  * Copyright (C) 2015 SAP SE (Christian Georgi <christian.georgi@sap.com>)
  * Copyright (C) 2015 Denis Zygann <d.zygann@web.de>
  * Copyright (C) 2016 IBM (Daniel Megert <daniel_megert@ch.ibm.com>)
@@ -3116,8 +3116,19 @@ public class StagingView extends ViewPart
 	}
 
 	private void refreshViewersInternal() {
+		// Refreshing without selected elements is much faster.
+		IStructuredSelection selection = unstagedViewer
+				.getStructuredSelection();
+		unstagedViewer.setSelection(StructuredSelection.EMPTY);
 		unstagedViewer.refresh();
+		// Create a *new* selection to avoid the viewer uses the original tree
+		// paths, which may no longer exist if the presentation has changed.
+		unstagedViewer
+				.setSelection(new StructuredSelection(selection.toList()));
+		selection = stagedViewer.getStructuredSelection();
+		stagedViewer.setSelection(StructuredSelection.EMPTY);
 		stagedViewer.refresh();
+		stagedViewer.setSelection(new StructuredSelection(selection.toList()));
 		updateSectionText();
 	}
 
