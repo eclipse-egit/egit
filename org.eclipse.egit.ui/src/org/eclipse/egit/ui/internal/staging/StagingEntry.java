@@ -3,7 +3,7 @@
  * Copyright (C) 2011, Dariusz Luksza <dariusz@luksza.org>
  * Copyright (C) 2012, 2013 Robin Stocker <robin@nibor.org>
  * Copyright (C) 2014, Axel Richard <axel.richard@obeo.fr>
- * Copyright (C) 2016, Thomas Wolf <thomas.wolf@paranor.ch>
+ * Copyright (C) 2016, 2020 Thomas Wolf <thomas.wolf@paranor.ch>
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License 2.0
@@ -19,6 +19,7 @@ package org.eclipse.egit.ui.internal.staging;
 
 import java.util.EnumSet;
 import java.util.Set;
+import java.util.function.Function;
 
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IMarker;
@@ -27,7 +28,6 @@ import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.Path;
 import org.eclipse.core.runtime.PlatformObject;
-import org.eclipse.egit.core.internal.util.ResourceUtil;
 import org.eclipse.egit.ui.internal.decorators.IDecoratableResource;
 import org.eclipse.egit.ui.internal.decorators.IProblemDecoratable;
 import org.eclipse.jgit.annotations.NonNull;
@@ -112,6 +112,8 @@ public class StagingEntry extends PlatformObject
 	private final State state;
 	private final String path;
 
+	private final Function<StagingEntry, IFile> fileProvider;
+
 	private boolean fileLoaded;
 
 	private IFile file;
@@ -130,11 +132,15 @@ public class StagingEntry extends PlatformObject
 	 * @param state
 	 * @param path
 	 *            repo-relative path for this entry
+	 * @param fileProvider
+	 *            to get the file for this {@link StagingEntry} from
 	 */
-	public StagingEntry(Repository repository, State state, String path) {
+	public StagingEntry(Repository repository, State state, String path,
+			Function<StagingEntry, IFile> fileProvider) {
 		this.repository = repository;
 		this.state = state;
 		this.path = path;
+		this.fileProvider = fileProvider;
 	}
 
 	/**
@@ -204,7 +210,7 @@ public class StagingEntry extends PlatformObject
 	public IFile getFile() {
 		if (!fileLoaded) {
 			fileLoaded = true;
-			file = ResourceUtil.getFileForLocation(repository, path, false);
+			file = fileProvider.apply(this);
 		}
 		return file;
 	}

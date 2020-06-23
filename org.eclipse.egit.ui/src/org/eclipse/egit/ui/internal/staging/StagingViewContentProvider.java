@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (C) 2011, 2014 Bernard Leach <leachbj@bouncycastle.org> and others.
+ * Copyright (C) 2011, 2020 Bernard Leach <leachbj@bouncycastle.org> and others.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License 2.0
@@ -34,6 +34,9 @@ import java.util.Set;
 import java.util.TreeSet;
 import java.util.regex.Pattern;
 
+import org.eclipse.core.resources.IContainer;
+import org.eclipse.core.resources.IFile;
+import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.Path;
 import org.eclipse.egit.core.internal.indexdiff.IndexDiffData;
@@ -60,6 +63,10 @@ public class StagingViewContentProvider extends WorkbenchContentProvider {
 	private boolean unstagedSection;
 
 	private Repository repository;
+
+	private boolean rootDetermined;
+
+	private IContainer rootContainer;
 
 	private final EntryComparator comparator;
 
@@ -98,11 +105,39 @@ public class StagingViewContentProvider extends WorkbenchContentProvider {
 			return ((StagingFolderEntry) parentElement).getChildren();
 		} else {
 			// Return the root nodes
-			if (stagingView.getPresentation() == Presentation.LIST)
+			if (stagingView.getPresentation() == Presentation.LIST) {
+				getTreeRoots();
 				return content;
-			else
-				return getTreePresentationRoots();
+			}
+			return getTreePresentationRoots();
 		}
+	}
+
+	IFile getFile(StagingEntry entry) {
+		StagingFolderEntry parent = entry.getParent();
+		IContainer container = null;
+		if (parent == null) {
+			if (rootDetermined) {
+				container = rootContainer;
+			} else {
+				rootDetermined = true;
+				Repository repo = entry.getRepository();
+				if (repo != null) {
+					IPath path = new Path(
+							repository.getWorkTree().getAbsolutePath());
+					rootContainer = ResourcesPlugin.getWorkspace().getRoot()
+							.getContainerForLocation(path);
+				}
+				container = rootContainer;
+			}
+		} else {
+			container = parent.getContainer();
+		}
+		if (container == null) {
+			return null;
+		}
+		IFile file = container.getFile(new Path(entry.getName()));
+		return file.exists() ? file : null;
 	}
 
 	Object[] getTreePresentationRoots() {
@@ -300,12 +335,16 @@ public class StagingViewContentProvider extends WorkbenchContentProvider {
 			content = new StagingEntry[0];
 			treeRoots = new Object[0];
 			compactTreeRoots = new Object[0];
+			rootDetermined = false;
+			rootContainer = null;
 			return;
 		}
 
 		if (update.repository != repository) {
 			treeRoots = null;
 			compactTreeRoots = null;
+			rootDetermined = false;
+			rootContainer = null;
 		}
 
 		repository = update.repository;
@@ -328,29 +367,36 @@ public class StagingViewContentProvider extends WorkbenchContentProvider {
 			for (String file : indexDiff.getMissing())
 				if (indexDiff.getChanged().contains(file))
 					nodes.add(new StagingEntry(repository, MISSING_AND_CHANGED,
-							file));
+							file, s -> null));
 				else
-					nodes.add(new StagingEntry(repository, MISSING, file));
+					nodes.add(new StagingEntry(repository, MISSING, file,
+							s -> null));
 			for (String file : indexDiff.getModified())
 				if (indexDiff.getChanged().contains(file))
 					nodes.add(new StagingEntry(repository, MODIFIED_AND_CHANGED,
-							file));
+							file, this::getFile));
 				else if (indexDiff.getAdded().contains(file))
 					nodes.add(new StagingEntry(repository, MODIFIED_AND_ADDED,
-							file));
+							file, this::getFile));
 				else
-					nodes.add(new StagingEntry(repository, MODIFIED, file));
+					nodes.add(new StagingEntry(repository, MODIFIED, file,
+							this::getFile));
 			for (String file : indexDiff.getUntracked())
-				nodes.add(new StagingEntry(repository, UNTRACKED, file));
+				nodes.add(new StagingEntry(repository, UNTRACKED, file,
+						this::getFile));
 			for (String file : indexDiff.getConflicting())
-				nodes.add(new StagingEntry(repository, CONFLICTING, file));
+				nodes.add(new StagingEntry(repository, CONFLICTING, file,
+						this::getFile));
 		} else {
 			for (String file : indexDiff.getAdded())
-				nodes.add(new StagingEntry(repository, ADDED, file));
+				nodes.add(new StagingEntry(repository, ADDED, file,
+						this::getFile));
 			for (String file : indexDiff.getChanged())
-				nodes.add(new StagingEntry(repository, CHANGED, file));
+				nodes.add(new StagingEntry(repository, CHANGED, file,
+						this::getFile));
 			for (String file : indexDiff.getRemoved())
-				nodes.add(new StagingEntry(repository, REMOVED, file));
+				nodes.add(new StagingEntry(repository, REMOVED, file,
+						this::getFile));
 		}
 
 		setSymlinkFileMode(indexDiff, nodes);
