@@ -24,7 +24,6 @@ import java.util.Collection;
 import java.util.Dictionary;
 import java.util.HashSet;
 import java.util.Hashtable;
-import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -45,7 +44,6 @@ import org.eclipse.egit.core.RepositoryUtil;
 import org.eclipse.egit.core.internal.ResourceRefreshHandler;
 import org.eclipse.egit.core.internal.job.RuleUtil;
 import org.eclipse.egit.core.project.RepositoryMapping;
-import org.eclipse.egit.ui.internal.ConfigurationChecker;
 import org.eclipse.egit.ui.internal.KnownHosts;
 import org.eclipse.egit.ui.internal.RepositoryCacheRule;
 import org.eclipse.egit.ui.internal.UIIcons;
@@ -53,13 +51,9 @@ import org.eclipse.egit.ui.internal.UIText;
 import org.eclipse.egit.ui.internal.credentials.EGitCredentialsProvider;
 import org.eclipse.egit.ui.internal.selection.SelectionRepositoryStateCache;
 import org.eclipse.egit.ui.internal.trace.GitTraceLocation;
-import org.eclipse.egit.ui.internal.variables.GitTemplateVariableResolver;
-import org.eclipse.jdt.internal.ui.JavaPlugin;
 import org.eclipse.jface.resource.JFaceResources;
 import org.eclipse.jface.resource.LocalResourceManager;
 import org.eclipse.jface.resource.ResourceManager;
-import org.eclipse.jface.text.templates.ContextTypeRegistry;
-import org.eclipse.jface.text.templates.TemplateContextType;
 import org.eclipse.jface.util.IPropertyChangeListener;
 import org.eclipse.jface.util.PropertyChangeEvent;
 import org.eclipse.jgit.events.IndexChangedListener;
@@ -79,7 +73,6 @@ import org.eclipse.ui.IWorkbenchWindow;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.plugin.AbstractUIPlugin;
 import org.eclipse.ui.progress.IProgressService;
-import org.eclipse.ui.progress.WorkbenchJob;
 import org.eclipse.ui.statushandlers.StatusManager;
 import org.eclipse.ui.themes.ITheme;
 import org.osgi.framework.BundleContext;
@@ -320,7 +313,6 @@ public class Activator extends AbstractUIPlugin implements DebugOptionsListener 
 	private DebugOptions debugOptions;
 
 	private volatile boolean uiIsActive;
-	private IWindowListener focusListener;
 
 	/**
 	 * Construct the {@link Activator} egit ui plugin singleton instance
@@ -348,49 +340,10 @@ public class Activator extends AbstractUIPlugin implements DebugOptionsListener 
 		setupRepoChangeScanner();
 		setupFocusHandling();
 		setupCredentialsProvider();
-		ConfigurationChecker.checkConfiguration();
-
-		registerTemplateVariableResolvers();
 	}
 
 	private void setupCredentialsProvider() {
 		CredentialsProvider.setDefault(new EGitCredentialsProvider());
-	}
-
-	private void registerTemplateVariableResolvers() {
-		if (!hasJavaPlugin()) {
-			return;
-		}
-		WorkbenchJob job = new WorkbenchJob(
-				UIText.Activator_setupJdtTemplateResolver) {
-
-			@Override
-			public IStatus runInUIThread(IProgressMonitor monitor) {
-				try {
-					final ContextTypeRegistry codeTemplateContextRegistry = JavaPlugin
-							.getDefault().getCodeTemplateContextRegistry();
-					final Iterator<?> ctIter = codeTemplateContextRegistry
-							.contextTypes();
-
-					while (ctIter.hasNext()) {
-						final TemplateContextType contextType = (TemplateContextType) ctIter
-								.next();
-						contextType.addResolver(new GitTemplateVariableResolver(
-								"git_config", //$NON-NLS-1$
-								UIText.GitTemplateVariableResolver_GitConfigDescription));
-					}
-				} catch (Throwable e) {
-					// while catching Throwable is an anti-pattern, we may
-					// experience NoClassDefFoundErrors here
-					logError("Cannot register git support for Java templates", //$NON-NLS-1$
-							e);
-				}
-				return Status.OK_STATUS;
-			}
-		};
-		job.setSystem(true);
-		job.setUser(false);
-		job.schedule();
 	}
 
 	/**
@@ -402,58 +355,11 @@ public class Activator extends AbstractUIPlugin implements DebugOptionsListener 
 
 
 	private void setupFocusHandling() {
-		focusListener = new IWindowListener() {
-
-			private void updateUiState() {
-				Display.getCurrent().asyncExec(new Runnable() {
-					@Override
-					public void run() {
-						boolean wasActive = uiIsActive;
-						uiIsActive = Display.getCurrent().getActiveShell() != null;
-						if (uiIsActive != wasActive
-								&& GitTraceLocation.REPOSITORYCHANGESCANNER
-										.isActive())
-							traceUiIsActive();
-					}
-
-					private void traceUiIsActive() {
-						StringBuilder message = new StringBuilder(
-								"workbench is "); //$NON-NLS-1$
-						message.append(uiIsActive ? "active" : "inactive"); //$NON-NLS-1$//$NON-NLS-2$
-						GitTraceLocation.getTrace().trace(
-								GitTraceLocation.REPOSITORYCHANGESCANNER
-										.getLocation(), message.toString());
-					}
-				});
-			}
-
-			@Override
-			public void windowOpened(IWorkbenchWindow window) {
-				updateUiState();
-			}
-
-			@Override
-			public void windowDeactivated(IWorkbenchWindow window) {
-				updateUiState();
-			}
-
-			@Override
-			public void windowClosed(IWorkbenchWindow window) {
-				updateUiState();
-			}
-
-			@Override
-			public void windowActivated(IWorkbenchWindow window) {
-				updateUiState();
-				// 500: give the UI task a chance to update the active state
-				rcs.schedule(500);
-			}
-		};
 		Job job = new Job(UIText.Activator_setupFocusListener) {
 			@Override
 			protected IStatus run(IProgressMonitor monitor) {
 				if (PlatformUI.isWorkbenchRunning()) {
-					PlatformUI.getWorkbench().addWindowListener(focusListener);
+					PlatformUI.getWorkbench().addWindowListener(rcs);
 					registerCoreJobFamilyIcons();
 				} else {
 					schedule(1000L);
@@ -540,7 +446,7 @@ public class Activator extends AbstractUIPlugin implements DebugOptionsListener 
 	 * the resources in the affected projects.
 	 */
 	private static class RepositoryChangeScanner extends Job
-			implements IPropertyChangeListener {
+			implements IPropertyChangeListener, IWindowListener {
 
 		// volatile in order to ensure thread synchronization
 		private volatile boolean doReschedule;
@@ -744,6 +650,27 @@ public class Activator extends AbstractUIPlugin implements DebugOptionsListener 
 			return 1000 * getDefault().getPreferenceStore()
 					.getInt(UIPreferences.REFRESH_INDEX_INTERVAL);
 		}
+
+		@Override
+		public void windowOpened(IWorkbenchWindow window) {
+			// Ignore
+		}
+
+		@Override
+		public void windowDeactivated(IWorkbenchWindow window) {
+			// Ignore
+		}
+
+		@Override
+		public void windowClosed(IWorkbenchWindow window) {
+			// Ignore
+		}
+
+		@Override
+		public void windowActivated(IWorkbenchWindow window) {
+			// 500: give the UI task a chance to update the active state
+			schedule(500);
+		}
 	}
 
 	/**
@@ -902,11 +829,10 @@ public class Activator extends AbstractUIPlugin implements DebugOptionsListener 
 	public void stop(final BundleContext context) throws Exception {
 		SelectionRepositoryStateCache.INSTANCE.dispose();
 
-		if (focusListener != null) {
+		if (rcs != null) {
 			if (PlatformUI.isWorkbenchRunning()) {
-				PlatformUI.getWorkbench().removeWindowListener(focusListener);
+				PlatformUI.getWorkbench().removeWindowListener(rcs);
 			}
-			focusListener = null;
 		}
 
 		if (GitTraceLocation.REPOSITORYCHANGESCANNER.isActive()) {

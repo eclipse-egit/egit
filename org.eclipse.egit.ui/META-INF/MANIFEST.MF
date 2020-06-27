@@ -129,4 +129,6 @@ Export-Package: org.eclipse.egit.ui;version="5.11.0";x-friends:="org.eclipse.egi
  org.eclipse.egit.ui.internal.synchronize.model;version="5.11.0";x-friends:="org.eclipse.egit.mylyn.ui",
  org.eclipse.egit.ui.internal.trace;version="5.11.0";x-internal:=true,
  org.eclipse.egit.ui.internal.variables;version="5.11.0";x-internal:=true
-Service-Component: OSGI-INF/org.eclipse.egit.ui.internal.clone.GitCloneDropAdapter.xml
+Service-Component: OSGI-INF/org.eclipse.egit.ui.internal.clone.GitCloneDropAdapter.xml,
+ OSGI-INF/org.eclipse.egit.ui.internal.jobs.TemplateResolverSetupJob.xml,
+ OSGI-INF/org.eclipse.egit.ui.internal.jobs.ConfigurationCheckerSetupJob.xml

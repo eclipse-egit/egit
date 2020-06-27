@@ -9,7 +9,7 @@
  *
  * SPDX-License-Identifier: EPL-2.0
  *******************************************************************************/
-package org.eclipse.egit.ui.internal;
+package org.eclipse.egit.ui.internal.jobs;
 
 import java.io.File;
 
@@ -19,6 +19,7 @@ import org.eclipse.core.runtime.Status;
 import org.eclipse.core.runtime.jobs.Job;
 import org.eclipse.egit.ui.Activator;
 import org.eclipse.egit.ui.UIPreferences;
+import org.eclipse.egit.ui.internal.UIText;
 import org.eclipse.jface.preference.IPreferenceStore;
 import org.eclipse.jgit.lib.ConfigConstants;
 import org.eclipse.jgit.lib.StoredConfig;
@@ -28,39 +29,40 @@ import org.eclipse.jgit.util.LfsFactory.LfsInstallCommand;
 import org.eclipse.jgit.util.SystemReader;
 import org.eclipse.osgi.util.NLS;
 import org.eclipse.ui.PlatformUI;
+import org.osgi.service.component.annotations.Activate;
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Deactivate;
 
 /**
  * Checks the system configuration
- *
  */
-public class ConfigurationChecker {
+@Component
+public class ConfigurationCheckerSetupJob extends Job {
+
+	private static final int DELAY = 1000;
 
 	/**
-	 * Checks the system configuration.
+	 * Creates a job for checking configuration after start
 	 */
-	public static void checkConfiguration() {
-		// Schedule a job
-		// This avoids that the check is executed too early
-		// because in startup phase the JobManager is suspended
-		// and scheduled Jobs are executed later
-		Job job = new Job(UIText.ConfigurationChecker_checkConfiguration) {
-			@Override
-			protected IStatus run(IProgressMonitor monitor) {
-				if (PlatformUI.isWorkbenchRunning()) {
-					PlatformUI.getWorkbench().getDisplay()
-							.asyncExec(new Runnable() {
-								@Override
-								public void run() {
-									check();
-								}
-							});
-				} else {
-					schedule(1000L);
+	public ConfigurationCheckerSetupJob() {
+		super(UIText.ConfigurationChecker_checkConfiguration);
+		setSystem(true);
+		setUser(false);
+	}
+
+	@Override
+	protected IStatus run(IProgressMonitor monitor) {
+		if (PlatformUI.isWorkbenchRunning()) {
+			PlatformUI.getWorkbench().getDisplay().asyncExec(new Runnable() {
+				@Override
+				public void run() {
+					check();
 				}
-				return Status.OK_STATUS;
-			}
-		};
-		job.schedule();
+			});
+		} else {
+			schedule(DELAY);
+		}
+		return Status.OK_STATUS;
 	}
 
 	private static void check() {
@@ -95,7 +97,8 @@ public class ConfigurationChecker {
 					.contains("lfs"); //$NON-NLS-1$
 		} catch (Exception e) {
 			Activator.handleIssue(IStatus.WARNING,
-					UIText.ConfigurationChecker_installLfsCannotLoadConfig, e, false);
+					UIText.ConfigurationChecker_installLfsCannotLoadConfig, e,
+					false);
 		}
 		return false;
 	}
@@ -136,4 +139,13 @@ public class ConfigurationChecker {
 		return os.contains("Windows"); //$NON-NLS-1$
 	}
 
+	@Activate
+	void start() {
+		schedule(DELAY);
+	}
+
+	@Deactivate
+	void stop() {
+		cancel();
+	}
 }
