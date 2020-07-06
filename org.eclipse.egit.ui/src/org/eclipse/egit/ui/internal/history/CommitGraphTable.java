@@ -26,6 +26,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStreamWriter;
 import java.io.Writer;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Iterator;
 
@@ -100,6 +101,7 @@ import org.eclipse.swt.widgets.TableColumn;
 import org.eclipse.swt.widgets.TableItem;
 import org.eclipse.swt.widgets.Widget;
 import org.eclipse.ui.IWorkbenchActionConstants;
+import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.actions.ActionFactory;
 import org.eclipse.ui.commands.ICommandService;
 import org.eclipse.ui.handlers.IHandlerService;
@@ -114,12 +116,9 @@ class CommitGraphTable {
 
 		final FontData[] nData = n.getFontData();
 		final FontData[] hData = h.getFontData();
-		if (nData.length != hData.length)
+		if (!Arrays.equals(nData, hData)) {
 			return h;
-		for (int i = 0; i < nData.length; i++)
-			if (!nData[i].equals(hData[i]))
-				return h;
-
+		}
 		return UIUtils.getBoldFont(UIPreferences.THEME_CommitGraphNormalFont);
 	}
 
@@ -141,9 +140,9 @@ class CommitGraphTable {
 
 	private final SWTPlotRenderer renderer;
 
-	private final Font nFont;
+	private Font nFont;
 
-	private final Font hFont;
+	private Font hFont;
 
 	private SWTCommitList allCommits;
 
@@ -207,6 +206,35 @@ class CommitGraphTable {
 
 		createColumns(rawTable);
 		createPaintListener(rawTable);
+
+		IPropertyChangeListener fontPrefListener = event -> {
+			String property = event.getProperty();
+			if (property == null) {
+				return;
+			}
+			switch (property) {
+			case UIPreferences.THEME_CommitGraphNormalFont:
+			case UIPreferences.THEME_CommitGraphHighlightFont:
+				rawTable.getDisplay().asyncExec(() -> {
+					if (rawTable.isDisposed()) {
+						return;
+					}
+					nFont = UIUtils
+							.getFont(UIPreferences.THEME_CommitGraphNormalFont);
+					hFont = highlightFont();
+					rawTable.setFont(nFont);
+					rawTable.requestLayout();
+				});
+				break;
+			default:
+				break;
+			}
+		};
+		PlatformUI.getWorkbench().getThemeManager()
+				.addPropertyChangeListener(fontPrefListener);
+		rawTable.addDisposeListener(
+				event -> PlatformUI.getWorkbench().getThemeManager()
+						.removePropertyChangeListener(fontPrefListener));
 
 		System.arraycopy(columnLayouts, 0, defaultLayouts, 0,
 				columnLayouts.length);
