@@ -70,6 +70,7 @@ import org.eclipse.ui.IContributorResourceAdapter;
 import org.eclipse.ui.IWorkingSet;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.themes.ITheme;
+import org.eclipse.ui.themes.IThemeManager;
 
 /**
  * Supplies annotations for displayed resources
@@ -94,7 +95,10 @@ public class GitLightweightDecorator extends GitDecorator
 			UIText.Decorator_exceptionMessageCommon, Activator.getPluginId(),
 			IStatus.ERROR, Activator.getDefault().getLog());
 
-	private static final List<String> FONT_IDS = Arrays.asList(
+	/** ID of the new symbolic font for trees and tables since Eclipse 4.17. */
+	private static final String TREE_TABLE_FONT = "org.eclipse.ui.workbench.TREE_TABLE_FONT"; //$NON-NLS-1$
+
+	private static final List<String> FONT_IDS = Arrays.asList(TREE_TABLE_FONT,
 			UIPreferences.THEME_UncommittedChangeFont,
 			UIPreferences.THEME_IgnoredResourceFont);
 
@@ -124,7 +128,7 @@ public class GitLightweightDecorator extends GitDecorator
 	public GitLightweightDecorator() {
 		// This is an optimization to ensure that while decorating our fonts and
 		// colors are pre-created and decoration can occur without having to syncExec.
-		ensureFontAndColorsCreated(FONT_IDS, COLOR_IDS);
+		ensureFontAndColorsCreated();
 		TeamUI.addPropertyChangeListener(this);
 		Activator.addPropertyChangeListener(this);
 		PlatformUI.getWorkbench().getThemeManager().getCurrentTheme()
@@ -137,27 +141,22 @@ public class GitLightweightDecorator extends GitDecorator
 	 * This method will ensure that the fonts and colors used by the decorator
 	 * are cached in the registries. This avoids having to syncExec when
 	 * decorating since we ensure that the fonts and colors are pre-created.
-	 *
-	 * @param actFonts fonts ids to cache
-	 * @param actColors color ids to cache
 	 */
-	private void ensureFontAndColorsCreated(final List<String> actFonts,
-			final List<String> actColors) {
+	private void ensureFontAndColorsCreated() {
 		final Display display = PlatformUI.getWorkbench().getDisplay();
-		display.syncExec(new Runnable() {
-			@Override
-			public void run() {
-				ITheme theme  = PlatformUI.getWorkbench().getThemeManager().getCurrentTheme();
-				for (String actColor : actColors) {
-					theme.getColorRegistry().get(actColor);
+		display.syncExec(() -> {
+			ITheme theme = PlatformUI.getWorkbench().getThemeManager()
+					.getCurrentTheme();
+			for (String actColor : COLOR_IDS) {
+				theme.getColorRegistry().get(actColor);
 
-				}
-				for (String actFont : actFonts) {
-					theme.getFontRegistry().get(actFont);
-				}
-				defaultBackgroundRgb = display.getSystemColor(
-						SWT.COLOR_LIST_BACKGROUND).getRGB();
 			}
+			for (String actFont : FONT_IDS) {
+				theme.getFontRegistry().get(actFont);
+			}
+			theme.getFontRegistry().defaultFont();
+			defaultBackgroundRgb = display
+					.getSystemColor(SWT.COLOR_LIST_BACKGROUND).getRGB();
 		});
 	}
 
@@ -438,9 +437,23 @@ public class GitLightweightDecorator extends GitDecorator
 			if (fc != null) {
 				decoration.setForegroundColor(fc);
 			}
+			if (f == null
+					|| isSameFont(f, current.getFontRegistry().defaultFont())) {
+				// Try the TREE_TABLE_FONT new in Eclipse 4.17
+				Font treeTableFont = current.getFontRegistry()
+						.get(TREE_TABLE_FONT);
+				if (treeTableFont != null) {
+					f = treeTableFont;
+				}
+			}
 			if (f != null) {
 				decoration.setFont(f);
 			}
+		}
+
+		private boolean isSameFont(Font a, Font b) {
+			return a.equals(b)
+					|| Arrays.equals(a.getFontData(), b.getFontData());
 		}
 
 		private void setBackgroundColor(IDecoration decoration, Color color) {
@@ -670,19 +683,28 @@ public class GitLightweightDecorator extends GitDecorator
 	@Override
 	public void propertyChange(PropertyChangeEvent event) {
 		final String prop = event.getProperty();
-		// If the property is of any interest to us
-		if (prop.equals(TeamUI.GLOBAL_IGNORES_CHANGED)
-				|| prop.equals(TeamUI.GLOBAL_FILE_TYPES_CHANGED)
-				|| prop.equals(Activator.DECORATORS_CHANGED)) {
+		if (prop == null) {
+			return;
+		}
+		switch (prop) {
+		case TeamUI.GLOBAL_IGNORES_CHANGED:
+		case TeamUI.GLOBAL_FILE_TYPES_CHANGED:
+		case Activator.DECORATORS_CHANGED:
 			postLabelEvent();
-		} else if (prop.equals(UIPreferences.THEME_UncommittedChangeBackgroundColor)
-				|| prop.equals(UIPreferences.THEME_UncommittedChangeFont)
-				|| prop.equals(UIPreferences.THEME_UncommittedChangeForegroundColor)
-				|| prop.equals(UIPreferences.THEME_IgnoredResourceFont)
-				|| prop.equals(UIPreferences.THEME_IgnoredResourceBackgroundColor)
-				|| prop.equals(UIPreferences.THEME_IgnoredResourceForegroundColor)) {
-			ensureFontAndColorsCreated(FONT_IDS, COLOR_IDS);
+			break;
+		case IThemeManager.CHANGE_CURRENT_THEME:
+		case TREE_TABLE_FONT:
+		case UIPreferences.THEME_UncommittedChangeBackgroundColor:
+		case UIPreferences.THEME_UncommittedChangeFont:
+		case UIPreferences.THEME_UncommittedChangeForegroundColor:
+		case UIPreferences.THEME_IgnoredResourceFont:
+		case UIPreferences.THEME_IgnoredResourceBackgroundColor:
+		case UIPreferences.THEME_IgnoredResourceForegroundColor:
+			ensureFontAndColorsCreated();
 			postLabelEvent(); // TODO do I really need this?
+			break;
+		default:
+			break;
 		}
 	}
 
