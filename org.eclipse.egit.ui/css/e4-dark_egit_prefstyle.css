@@ -26,9 +26,9 @@ IEclipsePreferences#org-eclipse-ui-workbench:org-eclipse-egit-ui {
 			'org.eclipse.egit.ui.DiffHunkForegroundColor=233,242,254'
 			'org.eclipse.egit.ui.DiffRemoveBackgroundColor=117,2,36'
 			'org.eclipse.egit.ui.DiffRemoveForegroundColor=255,232,237'
-			'org.eclipse.egit.ui.IgnoredResourceBackgroundColor=42,42,42'
+			'org.eclipse.egit.ui.IgnoredResourceBackgroundColor=47,47,47'
 			'org.eclipse.egit.ui.IgnoredResourceForegroundColor=120,120,120'
-			'org.eclipse.egit.ui.UncommittedChangeBackgroundColor=42,42,42'
+			'org.eclipse.egit.ui.UncommittedChangeBackgroundColor=47,47,47'
 			'org.eclipse.egit.ui.UncommittedChangeForegroundColor=114,157,186'
 }
 
