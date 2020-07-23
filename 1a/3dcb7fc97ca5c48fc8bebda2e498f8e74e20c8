@@ -1,0 +1,8 @@
+Code-Review+2: Matthias Sohn <matthias.sohn@sap.com>
+Code-Review+1: Andrew Obuchowicz <aobuchow@redhat.com>
+Verified+1: EGit Bot <egit-bot@eclipse.org>
+Submitted-by: Thomas Wolf <thomas.wolf@paranor.ch>
+Submitted-at: Thu, 23 Jul 2020 08:42:46 -0400
+Reviewed-on: https://git.eclipse.org/r/c/egit/egit/+/166185
+Project: egit/egit
+Branch: refs/heads/master
