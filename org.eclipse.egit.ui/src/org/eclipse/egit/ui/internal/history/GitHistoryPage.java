@@ -35,6 +35,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Objects;
 import java.util.Set;
+import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
 import org.eclipse.core.resources.IResource;
@@ -1277,16 +1278,16 @@ public class GitHistoryPage extends HistoryPage implements RefsChangedListener,
 		}
 
 		Object oldValue = event.getOldValue();
-		String pathSep = File.pathSeparator;
+		Pattern pathSep = Pattern.compile(File.pathSeparator);
 
 		if (oldValue != null) {
-			String[] oldPaths = oldValue.toString().split(pathSep);
+			String[] oldPaths = pathSep.split(oldValue.toString());
 			List<String> removedPaths = new ArrayList<>(
 					Arrays.asList(oldPaths));
 
 			Object newValue = event.getNewValue();
 			if (newValue != null) {
-				String[] newPaths = newValue.toString().split(pathSep);
+				String[] newPaths = pathSep.split(newValue.toString());
 				for (String path : newPaths) {
 					removedPaths.remove(path);
 				}
