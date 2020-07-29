@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2011, 2019 SAP AG and others.
+ * Copyright (c) 2011, 2019, 2020 SAP AG and others.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License 2.0
@@ -15,6 +15,7 @@
  *    Marc Khouzam <marc.khouzam@ericsson.com> - Add compare mode toggle
  *    Marc Khouzam <marc.khouzam@ericsson.com> - Skip expensive computations for equal content (bug 431610)
  *    Thomas Wolf <thomas.wolf@paranor.ch> - Prevent NPE on empty content; git attributes
+ *    Andre Bossert <andre.bossert@siemens.com> - external merge and diff tools
  *******************************************************************************/
 package org.eclipse.egit.ui.internal.dialogs;
 
@@ -279,6 +280,7 @@ public class CompareTreeView extends ViewPart implements IMenuListener, IShowInS
 								.getActiveWorkbenchWindow().getActivePage());
 				CompareUtils.openInCompare(PlatformUI.getWorkbench()
 						.getActiveWorkbenchWindow().getActivePage(),
+						getRepository(),
 						compareInput);
 			} else {
 				IFile file = fileNode.getFile();

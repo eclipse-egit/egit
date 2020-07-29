@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (C) 2010, 2019 Mathias Kinzler <mathias.kinzler@sap.com> and others.
+ * Copyright (C) 2010, 2019, 2020 Mathias Kinzler <mathias.kinzler@sap.com> and others.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License 2.0
@@ -7,6 +7,9 @@
  * https://www.eclipse.org/legal/epl-2.0/
  *
  * SPDX-License-Identifier: EPL-2.0
+ *
+ * Contributors:
+ *    Andre Bossert <andre.bossert@siemens.com> - external merge and diff tools
  *******************************************************************************/
 package org.eclipse.egit.ui.internal.merge;
 
@@ -132,6 +135,17 @@ public class GitMergeEditorInput extends CompareEditorInput {
 
 	private static boolean isUIThread() {
 		return Display.getCurrent() != null;
+	}
+
+	/**
+	 * @param monitor
+	 * @return return the diff container
+	 * @throws InterruptedException
+	 * @throws InvocationTargetException
+	 */
+	public IDiffContainer getDiffContainer(IProgressMonitor monitor)
+			throws InvocationTargetException, InterruptedException {
+		return (IDiffContainer) prepareInput(monitor);
 	}
 
 	@Override
