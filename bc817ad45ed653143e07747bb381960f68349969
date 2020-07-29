@@ -16,6 +16,24 @@
       "revId": "bc817ad45ed653143e07747bb381960f68349969",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9f1c941e_19f084ea",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/history/GitHistoryPage.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1281,
+      "author": {
+        "id": 1093
+      },
+      "writtenOn": "2020-07-29T13:13:06Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "326f3a1b_8211f773",
+      "revId": "bc817ad45ed653143e07747bb381960f68349969",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
     }
   ]
 }
