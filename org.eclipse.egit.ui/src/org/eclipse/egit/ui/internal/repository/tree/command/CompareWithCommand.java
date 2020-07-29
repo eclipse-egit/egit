@@ -83,7 +83,7 @@ public abstract class CompareWithCommand extends
 				compareInput = new GitCompareEditorInput(null, ref, repository,
 						paths.toArray(new IPath[0]));
 			}
-			CompareUtils.openInCompare(workbenchPage, compareInput);
+			CompareUtils.openInCompare(workbenchPage, repository, compareInput);
 		}
 		return null;
 	}

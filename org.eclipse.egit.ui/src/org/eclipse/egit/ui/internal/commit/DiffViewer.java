@@ -1,5 +1,5 @@
 /*******************************************************************************
- *  Copyright (c) 2011, 2016 GitHub Inc. and others.
+ *  Copyright (c) 2011, 2016, 2019, 2020 GitHub Inc. and others.
  *  All rights reserved. This program and the accompanying materials
  *  are made available under the terms of the Eclipse Public License 2.0
  *  which accompanies this distribution, and is available at
@@ -11,6 +11,7 @@
  *    Kevin Sawicki (GitHub Inc.) - initial API and implementation
  *    Tobias Pfeifer (SAP AG) - customizable font and color for the first header line - https://bugs.eclipse.org/397723
  *    Thomas Wolf <thomas.wolf@paranor.ch> - add hyperlinks, and use JFace syntax coloring
+ *    Andre Bossert <andre.bossert@siemens.com> - external merge and diff tools
  *******************************************************************************/
 package org.eclipse.egit.ui.internal.commit;
 
@@ -943,7 +944,7 @@ public class DiffViewer extends HyperlinkSourceViewer {
 				oldCommit, oldObjectId);
 		final ITypedElement newSide = createTypedElement(repository, np,
 				newCommit, newObjectId);
-		CompareUtils.openInCompare(page,
+		CompareUtils.openInCompare(page, repository,
 				new GitCompareFileRevisionEditorInput(newSide, oldSide, null));
 	}
 
