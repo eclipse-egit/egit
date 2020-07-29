@@ -320,6 +320,7 @@ public class CommitFileDiffViewer extends TableViewer {
 							paths.toArray(new IPath[0]));
 					CompareUtils.openInCompare(
 							CommitFileDiffViewer.this.site.getPage(),
+							repository,
 							comparison);
 				}
 			}
