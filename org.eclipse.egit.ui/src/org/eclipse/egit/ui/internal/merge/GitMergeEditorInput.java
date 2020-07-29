@@ -7,6 +7,9 @@
  * https://www.eclipse.org/legal/epl-2.0/
  *
  * SPDX-License-Identifier: EPL-2.0
+ *
+ * Contributors:
+ *    Andre Bossert <andre.bossert@siemens.com> - external merge and diff tools
  *******************************************************************************/
 package org.eclipse.egit.ui.internal.merge;
 
@@ -168,6 +171,17 @@ public class GitMergeEditorInput extends AbstractGitCompareEditorInput {
 			toggleCurrentChanges = null;
 		}
 		super.disposeActions();
+	}
+
+	/**
+	 * @param monitor
+	 * @return return the diff container
+	 * @throws InterruptedException
+	 * @throws InvocationTargetException
+	 */
+	public IDiffContainer getDiffContainer(IProgressMonitor monitor)
+			throws InvocationTargetException, InterruptedException {
+		return (IDiffContainer) prepareInput(monitor);
 	}
 
 	@Override

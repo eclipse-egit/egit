@@ -2,6 +2,7 @@
  * Copyright (C) 2010, Mathias Kinzler <mathias.kinzler@sap.com>
  * Copyright (C) 2012, Gunnar Wagenknecht <gunnar@wagenknecht.org>
  * Copyright (C) 2013, Laurent Goubet <laurent.goubet@obeo.fr>
+ * Copyright (C) 2020, Andre Bossert <andre.bossert@siemens.com>
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License 2.0
@@ -71,7 +72,8 @@ public class CompareWithWorkingTreeHandler extends
 				CompareEditorInput in = new GitCompareFileRevisionEditorInput(
 						SaveableCompareEditorInput.createFileElement(file),
 						right, null);
-				CompareUtils.openInCompare(workbenchPage, in);
+				CompareUtils.openInCompare(workbenchPage,
+						mapping.getRepository(), in);
 			}
 		} else if (input instanceof File) {
 			File file = (File) input;
@@ -86,7 +88,7 @@ public class CompareWithWorkingTreeHandler extends
 						new LocalNonWorkspaceTypedElement(repo,
 								new Path(file.getAbsolutePath())),
 						right, null);
-				CompareUtils.openInCompare(workbenchPage, in);
+				CompareUtils.openInCompare(workbenchPage, repo, in);
 			}
 		} else {
 			Repository repo = getRepository(event);
@@ -104,7 +106,7 @@ public class CompareWithWorkingTreeHandler extends
 				}
 				GitCompareEditorInput comparison = new GitCompareEditorInput(
 						null, commit.name(), repo, paths.toArray(new IPath[0]));
-				CompareUtils.openInCompare(workbenchPage, comparison);
+				CompareUtils.openInCompare(workbenchPage, repo, comparison);
 			}
 		}
 		return null;

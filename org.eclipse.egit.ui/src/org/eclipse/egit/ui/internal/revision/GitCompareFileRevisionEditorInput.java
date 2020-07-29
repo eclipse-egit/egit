@@ -4,6 +4,7 @@
  * Copyright (C) 2013, Robin Stocker <robin@nibor.org>
  * Copyright (C) 2016, Daniel Megert <daniel_megert@ch.ibm.com>
  * Copyright (C) 2019, Thomas Wolf <thomas.wolf@paranor.ch>
+ * Copyright (C) 2020, Andre Bossert <andre.bossert@siemens.com>
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License 2.0
@@ -101,14 +102,20 @@ public class GitCompareFileRevisionEditorInput extends SaveableCompareEditorInpu
 		this.ancestor = ancestor;
 	}
 
-	FileRevisionTypedElement getRightRevision() {
+	/**
+	 * @return the revision
+	 */
+	public FileRevisionTypedElement getRightRevision() {
 		if (right instanceof FileRevisionTypedElement) {
 			return (FileRevisionTypedElement) right;
 		}
 		return null;
 	}
 
-	FileRevisionTypedElement getLeftRevision() {
+	/**
+	 * @return the revision
+	 */
+	public FileRevisionTypedElement getLeftRevision() {
 		if (left instanceof FileRevisionTypedElement) {
 			return (FileRevisionTypedElement) left;
 		}
@@ -384,7 +391,11 @@ public class GitCompareFileRevisionEditorInput extends SaveableCompareEditorInpu
 		return element.getName();
 	}
 
-	private String getLongName(ITypedElement element) {
+	/**
+	 * @param element
+	 * @return the long name / e.g. path
+	 */
+	public String getLongName(ITypedElement element) {
 		if (element instanceof FileRevisionTypedElement){
 			FileRevisionTypedElement fileRevisionElement = (FileRevisionTypedElement) element;
 			return fileRevisionElement.getPath();

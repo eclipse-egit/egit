@@ -7,6 +7,9 @@
  * https://www.eclipse.org/legal/epl-2.0/
  *
  * SPDX-License-Identifier: EPL-2.0
+ *
+ * Contributors:
+ *    Andre Bossert <andre.bossert@siemens.com> - external merge and diff tools
  *******************************************************************************/
 package org.eclipse.egit.ui.internal.history.command;
 
@@ -66,11 +69,11 @@ public class CompareVersionsHandler extends AbstractHistoryCommandHandler {
 				GitCompareEditorInput compareInput = new GitCompareEditorInput(
 						commit1.name(), commit2.name(), repo,
 						((IResource) input).getLocation());
-				CompareUtils.openInCompare(workbenchPage, compareInput);
+				CompareUtils.openInCompare(workbenchPage, repo, compareInput);
 			} else if (input == null) {
 				GitCompareEditorInput compareInput = new GitCompareEditorInput(
 						commit1.name(), commit2.name(), repo);
-				CompareUtils.openInCompare(workbenchPage, compareInput);
+				CompareUtils.openInCompare(workbenchPage, repo, compareInput);
 			}
 		}
 		return null;
