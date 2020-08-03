@@ -2111,8 +2111,9 @@ public class StagingView extends ViewPart
 	}
 
 	private TreeViewer createTree(Composite composite) {
+		int virtual = SWT.VIRTUAL; // WIP: for easy disabling in debugger
 		Tree tree = toolkit.createTree(composite, SWT.FULL_SELECTION
-				| SWT.MULTI);
+				| SWT.MULTI | virtual);
 		TreeViewer treeViewer = new TreeViewer(tree);
 		treeViewer.setUseHashlookup(true);
 		return treeViewer;
@@ -2129,9 +2130,9 @@ public class StagingView extends ViewPart
 	}
 
 	private StagingViewContentProvider createStagingContentProvider(
-			boolean unstaged) {
+			TreeViewer treeViewer, boolean unstaged) {
 		StagingViewContentProvider provider = new StagingViewContentProvider(
-				this, unstaged) {
+				this, treeViewer, unstaged) {
 
 			@Override
 			public void inputChanged(Viewer viewer, Object oldInput,
@@ -2161,7 +2162,7 @@ public class StagingView extends ViewPart
 				FormToolkit.TREE_BORDER);
 		viewer.setLabelProvider(createLabelProvider(viewer));
 		StagingViewContentProvider contentProvider = createStagingContentProvider(
-				unstaged);
+				viewer, unstaged);
 		viewer.setContentProvider(contentProvider);
 		if (tooltipActions != null && tooltipActions.length > 0) {
 			StagingViewTooltips tooltips = new StagingViewTooltips(viewer,
@@ -2315,21 +2316,20 @@ public class StagingView extends ViewPart
 			// are selected and revealed.
 			boolean preserveTop = true;
 			boolean keepSelectionVisible = false;
-			StagingViewUpdate oldInput = (StagingViewUpdate) stagingViewer
-					.getInput();
+			StagingViewContentProvider contentProvider = getContentProvider(
+					stagingViewer);
+			StagingViewUpdate oldInput = contentProvider.getInput();
 			if (oldInput != null && oldInput.repository == newInput.repository
 					&& oldInput.indexDiff != null) {
 				// If the input has changed and wasn't empty before or wasn't
 				// for a different repository before, record the contents of the
 				// viewer before the input is changed.
-				StagingViewContentProvider contentProvider = getContentProvider(
-						stagingViewer);
 				ViewerComparator comparator = stagingViewer.getComparator();
 				Map<String, Object> oldPaths = buildElementMap(stagingViewer,
 						contentProvider, comparator);
 
 				// Update the input.
-				stagingViewer.setInput(newInput);
+				contentProvider.setInput(newInput);
 				// Restore the previous expansion state, if there is one.
 				if (previous != null) {
 					expandPreviousExpandedAndPaths(previous, stagingViewer,
@@ -2364,7 +2364,7 @@ public class StagingView extends ViewPart
 			} else {
 				// The update is completely different so don't do any of the
 				// above analysis to see what's different.
-				stagingViewer.setInput(newInput);
+				contentProvider.setInput(newInput);
 				// Restore the previous expansion state, if there is one.
 				if (previous != null) {
 					expandPreviousExpandedAndPaths(previous, stagingViewer,
