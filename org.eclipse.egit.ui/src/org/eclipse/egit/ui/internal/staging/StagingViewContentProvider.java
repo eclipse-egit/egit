@@ -42,8 +42,15 @@ import org.eclipse.core.runtime.Path;
 import org.eclipse.egit.core.internal.indexdiff.IndexDiffData;
 import org.eclipse.egit.ui.internal.staging.StagingView.Presentation;
 import org.eclipse.egit.ui.internal.staging.StagingView.StagingViewUpdate;
+import org.eclipse.jface.viewers.ILabelProvider;
+import org.eclipse.jface.viewers.TreeViewer;
 import org.eclipse.jface.viewers.Viewer;
 import org.eclipse.jgit.lib.Repository;
+import org.eclipse.swt.SWT;
+import org.eclipse.swt.widgets.Event;
+import org.eclipse.swt.widgets.Listener;
+import org.eclipse.swt.widgets.Tree;
+import org.eclipse.swt.widgets.TreeItem;
 import org.eclipse.ui.model.WorkbenchContentProvider;
 
 /**
@@ -60,6 +67,9 @@ public class StagingViewContentProvider extends WorkbenchContentProvider {
 	private Object[] compactTreeRoots;
 
 	private StagingView stagingView;
+
+	private TreeViewer treeViewer;
+
 	private boolean unstagedSection;
 
 	private Repository repository;
@@ -70,10 +80,32 @@ public class StagingViewContentProvider extends WorkbenchContentProvider {
 
 	private final EntryComparator comparator;
 
-	StagingViewContentProvider(StagingView stagingView, boolean unstagedSection) {
+	StagingViewContentProvider(StagingView stagingView, TreeViewer treeViewer,
+			boolean unstagedSection) {
 		this.stagingView = stagingView;
+		this.treeViewer = treeViewer;
 		this.unstagedSection = unstagedSection;
 		comparator = new EntryComparator();
+
+		Tree tree = treeViewer.getTree();
+		tree.addListener(SWT.SetData, new Listener() {
+			@Override
+			public void handleEvent(Event event) {
+				TreeItem item = (TreeItem) event.item;
+				TreeItem parentItem = item.getParentItem();
+				Object parent = parentItem == null ? null
+						: parentItem.getData();
+				Object[] children = getChildren(parent);
+				if (event.index < children.length) {
+					ILabelProvider labelProvider = (ILabelProvider) treeViewer
+						.getLabelProvider();
+					Object entry = children[event.index];
+					item.setImage(labelProvider.getImage(entry));
+					item.setText(labelProvider.getText(entry));
+					item.setData(entry);
+				}
+			}
+		});
 	}
 
 	@Override
@@ -324,10 +356,33 @@ public class StagingViewContentProvider extends WorkbenchContentProvider {
 		return content;
 	}
 
+	void setInput(StagingViewUpdate input) {
+		if (!haveVirtualTree()) {
+			treeViewer.setInput(input);
+			return;
+		}
+		final Tree tree = treeViewer.getTree();
+		inputChanged(treeViewer, tree.getData(), input);
+		tree.setData(input);
+		internalRedraw();
+	}
+
+	StagingViewUpdate getInput() {
+		if (!haveVirtualTree()) {
+			return (StagingViewUpdate) treeViewer.getInput();
+		}
+		return (StagingViewUpdate) treeViewer.getTree().getData();
+	}
+
 	@Override
 	public void inputChanged(Viewer viewer, Object oldInput, Object newInput) {
 		if (!(newInput instanceof StagingViewUpdate))
 			return;
+
+		if (viewer != treeViewer) {
+			throw new UnsupportedOperationException(
+					"Changing tree viewer is not supported."); //$NON-NLS-1$
+		}
 
 		StagingViewUpdate update = (StagingViewUpdate) newInput;
 
@@ -519,4 +574,20 @@ public class StagingViewContentProvider extends WorkbenchContentProvider {
 				stagingEntry.setSubmodule(true);
 		}
 	}
+
+	private boolean haveVirtualTree() {
+		return (treeViewer.getControl().getStyle() & SWT.VIRTUAL) != 0;
+	}
+
+	private void internalRedraw() {
+		if (!haveVirtualTree()) {
+			return;
+		}
+		Tree tree = treeViewer.getTree();
+		// tree.clearAll(true) does neither clear item data, child count
+		// nor expanded state: need to remove all elements instead.
+		tree.setItemCount(0);
+		tree.setItemCount(getChildren(null).length);
+	}
+
 }
