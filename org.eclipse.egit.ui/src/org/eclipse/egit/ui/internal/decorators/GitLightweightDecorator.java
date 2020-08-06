@@ -8,7 +8,7 @@
  * Copyright (C) 2011, Dariusz Luksza <dariusz@luksza.org>
  * Copyright (C) 2011, Christian Halstrick <christian.halstrick@sap.com>
  * Copyright (C) 2015, IBM Corporation (Dani Megert <daniel_megert@ch.ibm.com>)
- * Copyright (C) 2016, 2018 Thomas Wolf <thomas.wolf@paranor.ch>
+ * Copyright (C) 2016, 2020 Thomas Wolf <thomas.wolf@paranor.ch>
  * Copyright (C) 2016, Stefan Dirix <sdirix@eclipsesource.com>
  *
  * All rights reserved. This program and the accompanying materials
@@ -40,7 +40,6 @@ import org.eclipse.core.runtime.IStatus;
 import org.eclipse.egit.core.internal.indexdiff.IndexDiffData;
 import org.eclipse.egit.core.internal.util.ExceptionCollector;
 import org.eclipse.egit.core.project.GitProjectData;
-import org.eclipse.egit.core.project.RepositoryMapping;
 import org.eclipse.egit.core.project.RepositoryMappingChangeListener;
 import org.eclipse.egit.ui.Activator;
 import org.eclipse.egit.ui.UIPreferences;
@@ -50,6 +49,7 @@ import org.eclipse.egit.ui.internal.resources.IResourceState.StagingState;
 import org.eclipse.egit.ui.internal.resources.ResourceStateFactory;
 import org.eclipse.jface.preference.IPreferenceStore;
 import org.eclipse.jface.resource.ImageDescriptor;
+import org.eclipse.jface.resource.JFaceResources;
 import org.eclipse.jface.util.IPropertyChangeListener;
 import org.eclipse.jface.util.PropertyChangeEvent;
 import org.eclipse.jface.viewers.IDecoration;
@@ -108,19 +108,11 @@ public class GitLightweightDecorator extends GitDecorator
 			UIPreferences.THEME_IgnoredResourceBackgroundColor,
 			UIPreferences.THEME_IgnoredResourceForegroundColor);
 
-	private static RGB defaultBackgroundRgb;
+	private final ReloadableColorsAndFonts resources;
 
-	private final DecorationHelper helper = new DecorationHelper(
-			Activator.getDefault().getPreferenceStore());
+	private final DecorationHelper helper;
 
-	private RepositoryMappingChangeListener mappingChangeListener = new RepositoryMappingChangeListener() {
-
-		@Override
-		public void repositoryChanged(RepositoryMapping which) {
-			fireLabelEvent();
-		}
-
-	};
+	private RepositoryMappingChangeListener mappingChangeListener = changed -> fireLabelEvent();
 
 	/**
 	 * Constructs a new Git resource decorator
@@ -128,36 +120,16 @@ public class GitLightweightDecorator extends GitDecorator
 	public GitLightweightDecorator() {
 		// This is an optimization to ensure that while decorating our fonts and
 		// colors are pre-created and decoration can occur without having to syncExec.
-		ensureFontAndColorsCreated();
+		resources = new ReloadableColorsAndFonts();
+		resources.reload();
+		helper = new DecorationHelper(
+				Activator.getDefault().getPreferenceStore(), resources);
 		TeamUI.addPropertyChangeListener(this);
 		Activator.addPropertyChangeListener(this);
 		PlatformUI.getWorkbench().getThemeManager().getCurrentTheme()
 				.addPropertyChangeListener(this);
 
 		GitProjectData.addRepositoryChangeListener(mappingChangeListener);
-	}
-
-	/**
-	 * This method will ensure that the fonts and colors used by the decorator
-	 * are cached in the registries. This avoids having to syncExec when
-	 * decorating since we ensure that the fonts and colors are pre-created.
-	 */
-	private void ensureFontAndColorsCreated() {
-		final Display display = PlatformUI.getWorkbench().getDisplay();
-		display.syncExec(() -> {
-			ITheme theme = PlatformUI.getWorkbench().getThemeManager()
-					.getCurrentTheme();
-			for (String actColor : COLOR_IDS) {
-				theme.getColorRegistry().get(actColor);
-
-			}
-			for (String actFont : FONT_IDS) {
-				theme.getFontRegistry().get(actFont);
-			}
-			theme.getFontRegistry().defaultFont();
-			defaultBackgroundRgb = display
-					.getSystemColor(SWT.COLOR_LIST_BACKGROUND).getRGB();
-		});
 	}
 
 	@Override
@@ -273,6 +245,86 @@ public class GitLightweightDecorator extends GitDecorator
 		helper.decorate(decoration, decoRes);
 	}
 
+	private static interface ColorsAndFonts {
+
+		Color getColor(String id);
+
+		Font getFont(String id);
+
+		Font getDefaultFont();
+
+		RGB getDefaultBackground();
+
+	}
+
+	/**
+	 * Our own private cache of current colors and fonts. Do not rely on the
+	 * platform's current theme caching them: when a theme switch occurs, the
+	 * decorator running asynchronously in the background may get not only wrong
+	 * but even disposed values, and somehow it never really worked for the
+	 * default font. The main idea behind caching colors and fonts is to do load
+	 * them on the UI thread once, and then access them from the decorators
+	 * background thread. Otherwise the decorator would need to syncExec(),
+	 * which kind of obviates running in the background.
+	 */
+	private static class ReloadableColorsAndFonts implements ColorsAndFonts {
+
+		private volatile Map<String, Object> colorsOrFonts = new HashMap<>();
+
+		private volatile RGB defaultBackground;
+
+		public void reload() {
+			final Display display = PlatformUI.getWorkbench().getDisplay();
+			display.syncExec(() -> {
+				Map<String, Object> newResources = new HashMap<>();
+				ITheme theme = PlatformUI.getWorkbench().getThemeManager()
+						.getCurrentTheme();
+				for (String actColor : COLOR_IDS) {
+					newResources.put(actColor,
+							theme.getColorRegistry().get(actColor));
+				}
+				for (String actFont : FONT_IDS) {
+					newResources.put(actFont,
+							theme.getFontRegistry().get(actFont));
+				}
+				newResources.put(JFaceResources.DEFAULT_FONT,
+						theme.getFontRegistry().defaultFont());
+				colorsOrFonts = newResources;
+				defaultBackground = display
+						.getSystemColor(SWT.COLOR_LIST_BACKGROUND).getRGB();
+			});
+		}
+
+		@Override
+		public Color getColor(String id) {
+			Color color = (Color) colorsOrFonts.get(id);
+			if (color != null && color.isDisposed()) {
+				return null;
+			}
+			return color;
+		}
+
+		@Override
+		public Font getFont(String id) {
+			Font font = (Font) colorsOrFonts.get(id);
+			if (font != null && font.isDisposed()) {
+				return null;
+			}
+			return font;
+		}
+
+		@Override
+		public Font getDefaultFont() {
+			return getFont(JFaceResources.DEFAULT_FONT);
+		}
+
+		@Override
+		public RGB getDefaultBackground() {
+			return defaultBackground;
+		}
+
+	}
+
 	/**
 	 * Helper class for doing resource decoration, based on the given
 	 * preferences
@@ -316,6 +368,8 @@ public class GitLightweightDecorator extends GitDecorator
 		public static final String SUBMODULE_FORMAT_DEFAULT = "{dirty:>} {name} [{branch}{ branch_status}]{ short_message}"; //$NON-NLS-1$
 
 		private IPreferenceStore store;
+
+		private ColorsAndFonts resources;
 
 		/**
 		 * Define a cached image descriptor which only creates the image data
@@ -378,13 +432,69 @@ public class GitLightweightDecorator extends GitDecorator
 
 		/**
 		 * Constructs a decorator using the rules from the given
-		 * <code>preferencesStore</code>
+		 * {@code preferencesStore}.
+		 * <p>
+		 * Intended to be used in the GitDecoratorPreferencesPage only. The
+		 * decorator assumes that colors, fonts, and the theme do not change
+		 * while it is in use.
+		 * </p>
 		 *
 		 * @param preferencesStore
 		 *            the preferences store with the preferred decorator rules
 		 */
 		public DecorationHelper(IPreferenceStore preferencesStore) {
+			this(preferencesStore, new ColorsAndFonts() {
+
+				private final ITheme current = PlatformUI.getWorkbench()
+						.getThemeManager().getCurrentTheme();
+
+				private volatile RGB defaultBackground;
+
+				@Override
+				public Color getColor(String id) {
+					return current.getColorRegistry().get(id);
+				}
+
+				@Override
+				public Font getFont(String id) {
+					return current.getFontRegistry().get(id);
+				}
+
+				@Override
+				public Font getDefaultFont() {
+					return current.getFontRegistry().defaultFont();
+				}
+
+				@Override
+				public RGB getDefaultBackground() {
+					if (defaultBackground == null) {
+						Display display = PlatformUI.getWorkbench()
+								.getDisplay();
+						display.syncExec(() -> {
+							defaultBackground = display
+									.getSystemColor(SWT.COLOR_LIST_BACKGROUND)
+									.getRGB();
+						});
+					}
+					return defaultBackground;
+				}
+			});
+		}
+
+		/**
+		 * Internal constructor; also used by the
+		 * {@link GitLightweightDecorator} to provide a {@link ColorsAndFonts}
+		 * registry that reacts to color, font, or theme changes.
+		 *
+		 * @param preferencesStore
+		 *            to get decoration settings from
+		 * @param resources
+		 *            to get colors and fonts from
+		 */
+		private DecorationHelper(IPreferenceStore preferencesStore,
+				ColorsAndFonts resources) {
 			store = preferencesStore;
+			this.resources = resources;
 		}
 
 		/**
@@ -410,25 +520,24 @@ public class GitLightweightDecorator extends GitDecorator
 
 		private void decorateFontAndColour(IDecoration decoration,
 				IDecoratableResource resource) {
-			ITheme current = PlatformUI.getWorkbench().getThemeManager().getCurrentTheme();
 			Color bc = null;
 			Color fc = null;
 			Font f = null;
 			if (resource.isIgnored()) {
-				bc = current.getColorRegistry().get(
+				bc = resources.getColor(
 						UIPreferences.THEME_IgnoredResourceBackgroundColor);
-				fc = current.getColorRegistry().get(
+				fc = resources.getColor(
 						UIPreferences.THEME_IgnoredResourceForegroundColor);
-				f = current.getFontRegistry().get(
+				f = resources.getFont(
 						UIPreferences.THEME_IgnoredResourceFont);
 			} else if (!resource.isTracked()
 					|| resource.isDirty()
 					|| resource.isStaged()) {
-				bc = current.getColorRegistry().get(
+				bc = resources.getColor(
 						UIPreferences.THEME_UncommittedChangeBackgroundColor);
-				fc = current.getColorRegistry().get(
+				fc = resources.getColor(
 						UIPreferences.THEME_UncommittedChangeForegroundColor);
-				f = current.getFontRegistry().get(
+				f = resources.getFont(
 						UIPreferences.THEME_UncommittedChangeFont);
 			}
 			if (bc != null) {
@@ -438,10 +547,9 @@ public class GitLightweightDecorator extends GitDecorator
 				decoration.setForegroundColor(fc);
 			}
 			if (f == null
-					|| isSameFont(f, current.getFontRegistry().defaultFont())) {
+					|| isSameFont(f, resources.getDefaultFont())) {
 				// Try the TREE_TABLE_FONT new in Eclipse 4.17
-				Font treeTableFont = current.getFontRegistry()
-						.get(TREE_TABLE_FONT);
+				Font treeTableFont = resources.getFont(TREE_TABLE_FONT);
 				if (treeTableFont != null) {
 					f = treeTableFont;
 				}
@@ -451,16 +559,17 @@ public class GitLightweightDecorator extends GitDecorator
 			}
 		}
 
-		private boolean isSameFont(Font a, Font b) {
-			return a.equals(b)
-					|| Arrays.equals(a.getFontData(), b.getFontData());
+		private boolean isSameFont(@NonNull Font a, Font b) {
+			return a.equals(b) //
+					|| (b != null
+							&& Arrays.equals(a.getFontData(), b.getFontData()));
 		}
 
 		private void setBackgroundColor(IDecoration decoration, Color color) {
 			// In case the color is not changed from the default, do not set the
 			// background because it paints over things from the theme such as
 			// alternating line colors (see bug 412183).
-			if (!color.getRGB().equals(defaultBackgroundRgb))
+			if (!color.getRGB().equals(resources.getDefaultBackground()))
 				decoration.setBackgroundColor(color);
 		}
 
@@ -663,13 +772,8 @@ public class GitLightweightDecorator extends GitDecorator
 	 * Perform a blanket refresh of all decorations
 	 */
 	public static void refresh() {
-		PlatformUI.getWorkbench().getDisplay().asyncExec(new Runnable() {
-			@Override
-			public void run() {
-				PlatformUI.getWorkbench().getDecoratorManager()
-						.update(DECORATOR_ID);
-			}
-		});
+		PlatformUI.getWorkbench().getDisplay().asyncExec(() -> PlatformUI
+				.getWorkbench().getDecoratorManager().update(DECORATOR_ID));
 	}
 
 	/**
@@ -700,8 +804,8 @@ public class GitLightweightDecorator extends GitDecorator
 		case UIPreferences.THEME_IgnoredResourceFont:
 		case UIPreferences.THEME_IgnoredResourceBackgroundColor:
 		case UIPreferences.THEME_IgnoredResourceForegroundColor:
-			ensureFontAndColorsCreated();
-			postLabelEvent(); // TODO do I really need this?
+			resources.reload();
+			postLabelEvent();
 			break;
 		default:
 			break;
