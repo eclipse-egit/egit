@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "42f16541_108b4ff7",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/uitext.properties",
+        "patchSetId": 3
+      },
+      "lineNbr": 1399,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2020-08-06T18:09:29Z",
+      "side": 1,
+      "message": "Maybe \"If checked,\" if you want to be descriptive, or \"Check\" if you want to address the user directly. Period at the end or not? Personally I\u0027d put one; it\u0027s a complete sentence.",
+      "range": {
+        "startLine": 1399,
+        "startChar": 50,
+        "endLine": 1399,
+        "endChar": 60
+      },
+      "revId": "ad3a295de062f39ae0d6e229ceb1222a280e8ac7",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": true
+    }
+  ]
+}
