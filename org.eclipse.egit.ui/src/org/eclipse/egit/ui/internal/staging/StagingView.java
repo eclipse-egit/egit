@@ -156,6 +156,7 @@ import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.ISelectionProvider;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.viewers.ITreeViewerListener;
+import org.eclipse.jface.viewers.IViewerLabelProvider;
 import org.eclipse.jface.viewers.OpenEvent;
 import org.eclipse.jface.viewers.StructuredSelection;
 import org.eclipse.jface.viewers.TreeExpansionEvent;
@@ -574,13 +575,23 @@ public class StagingView extends ViewPart
 	 * significantly.
 	 */
 	private static class TreeDecoratingLabelProvider extends BaseLabelProvider
-			implements ILabelProvider {
+			implements ILabelProvider, IViewerLabelProvider {
 
 		private final DecoratingLabelProvider provider;
 
-		public TreeDecoratingLabelProvider(ILabelProvider provider,
+		private final StagingViewLabelProvider base;
+
+		public TreeDecoratingLabelProvider(StagingViewLabelProvider base,
 				ILabelDecorator decorator) {
-			this.provider = new DecoratingLabelProvider(provider, decorator);
+			this.base = base;
+			this.provider = new DecoratingLabelProvider(
+					new DecoratingLabelProvider(base, decorator),
+					PlatformUI.getWorkbench().getDecoratorManager()
+							.getLabelDecorator());
+		}
+
+		public StagingViewLabelProvider getBaseLabelProvider() {
+			return base;
 		}
 
 		@Override
@@ -608,8 +619,9 @@ public class StagingView extends ViewPart
 			provider.dispose();
 		}
 
-		public ILabelProvider getLabelProvider() {
-			return provider.getLabelProvider();
+		@Override
+		public void updateLabel(ViewerLabel label, Object element) {
+			provider.updateLabel(label, element);
 		}
 
 	}
@@ -2729,9 +2741,7 @@ public class StagingView extends ViewPart
 
 	private StagingViewLabelProvider getLabelProvider(ContentViewer viewer) {
 		IBaseLabelProvider base = viewer.getLabelProvider();
-		ILabelProvider labelProvider = ((TreeDecoratingLabelProvider) base)
-				.getLabelProvider();
-		return (StagingViewLabelProvider) labelProvider;
+		return ((TreeDecoratingLabelProvider) base).getBaseLabelProvider();
 	}
 
 	private StagingViewContentProvider getContentProvider(ContentViewer viewer) {
