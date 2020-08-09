@@ -22,6 +22,30 @@
       "revId": "ad3a295de062f39ae0d6e229ceb1222a280e8ac7",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8348811f_9938f6a7",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/uitext.properties",
+        "patchSetId": 3
+      },
+      "lineNbr": 1399,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2020-08-09T10:23:51Z",
+      "side": 1,
+      "message": "Done. Chose the descriptive phrasing similar to other existing tooltips.",
+      "parentUuid": "42f16541_108b4ff7",
+      "range": {
+        "startLine": 1399,
+        "startChar": 50,
+        "endLine": 1399,
+        "endChar": 60
+      },
+      "revId": "ad3a295de062f39ae0d6e229ceb1222a280e8ac7",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
     }
   ]
 }
