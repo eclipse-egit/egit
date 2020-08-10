@@ -3133,14 +3133,14 @@ public class StagingView extends ViewPart
 		IStructuredSelection selection = unstagedViewer
 				.getStructuredSelection();
 		unstagedViewer.setSelection(StructuredSelection.EMPTY);
-		unstagedViewer.refresh();
+		getContentProvider(unstagedViewer).refreshView();
 		// Create a *new* selection to avoid the viewer uses the original tree
 		// paths, which may no longer exist if the presentation has changed.
 		unstagedViewer
 				.setSelection(new StructuredSelection(selection.toList()));
 		selection = stagedViewer.getStructuredSelection();
 		stagedViewer.setSelection(StructuredSelection.EMPTY);
-		stagedViewer.refresh();
+		getContentProvider(stagedViewer).refreshView();
 		stagedViewer.setSelection(new StructuredSelection(selection.toList()));
 		updateSectionText();
 	}
