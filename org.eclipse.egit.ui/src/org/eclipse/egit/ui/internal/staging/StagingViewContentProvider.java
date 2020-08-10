@@ -43,6 +43,7 @@ import org.eclipse.egit.core.internal.indexdiff.IndexDiffData;
 import org.eclipse.egit.ui.internal.staging.StagingView.Presentation;
 import org.eclipse.egit.ui.internal.staging.StagingView.StagingViewUpdate;
 import org.eclipse.jface.viewers.ILabelProvider;
+import org.eclipse.jface.viewers.ILazyTreeContentProvider;
 import org.eclipse.jface.viewers.TreeViewer;
 import org.eclipse.jface.viewers.Viewer;
 import org.eclipse.jgit.lib.Repository;
@@ -56,7 +57,9 @@ import org.eclipse.ui.model.WorkbenchContentProvider;
 /**
  * ContentProvider for staged and unstaged tree nodes
  */
-public class StagingViewContentProvider extends WorkbenchContentProvider {
+public class StagingViewContentProvider extends WorkbenchContentProvider
+		implements ILazyTreeContentProvider {
+
 	/** All files for the section (staged or unstaged). */
 	private StagingEntry[] content = new StagingEntry[0];
 
@@ -103,6 +106,10 @@ public class StagingViewContentProvider extends WorkbenchContentProvider {
 					item.setImage(labelProvider.getImage(entry));
 					item.setText(labelProvider.getText(entry));
 					item.setData(entry);
+					if (entry instanceof StagingFolderEntry) {
+						StagingFolderEntry folder = (StagingFolderEntry) entry;
+						item.setItemCount(folder.getChildren().length);
+					}
 				}
 			}
 		});
@@ -363,8 +370,6 @@ public class StagingViewContentProvider extends WorkbenchContentProvider {
 		}
 		final Tree tree = treeViewer.getTree();
 		inputChanged(treeViewer, tree.getData(), input);
-		tree.setData(input);
-		tree.setItemCount(getCount());
 	}
 
 	StagingViewUpdate getInput() {
@@ -461,6 +466,13 @@ public class StagingViewContentProvider extends WorkbenchContentProvider {
 
 		treeRoots = null;
 		compactTreeRoots = null;
+
+		if ((treeViewer.getControl().getStyle() & SWT.VIRTUAL) == 0) {
+			return;
+		}
+
+		treeViewer.getTree().setData(newInput);
+		internalRedraw();
 	}
 
 	@Override
@@ -573,4 +585,47 @@ public class StagingViewContentProvider extends WorkbenchContentProvider {
 				stagingEntry.setSubmodule(true);
 		}
 	}
+
+	/**
+	 * Clear the widget tree item data, to obtain information freshly from
+	 * content provider as becoming visible.
+	 */
+	public void refreshView() {
+		if ((treeViewer.getControl().getStyle() & SWT.VIRTUAL) == 0) {
+			treeViewer.refresh();
+			return;
+		}
+
+		internalRedraw();
+	}
+
+	@Override
+	public void updateElement(Object parent, int index) {
+		Object[] children = getChildren(parent);
+		if (index < children.length) {
+			treeViewer.replace(parent, index, children[index]);
+		}
+		treeViewer.setHasChildren(parent, children.length > 0);
+	}
+
+	@Override
+	public void updateChildCount(Object element, int currentChildCount) {
+		Object[] children = getChildren(element);
+		int newChildCount = children.length;
+		if (newChildCount != currentChildCount) {
+			treeViewer.setChildCount(element, newChildCount);
+		}
+	}
+
+	private void internalRedraw() {
+		if ((treeViewer.getControl().getStyle() & SWT.VIRTUAL) == 0) {
+			return;
+		}
+		Tree tree = treeViewer.getTree();
+		// tree.clearAll(true) does neither clear item data, child count
+		// nor expanded state: need to remove all elements instead.
+		tree.setItemCount(0);
+		tree.setItemCount(getChildren(null).length);
+	}
+
 }
