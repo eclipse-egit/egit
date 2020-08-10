@@ -1591,8 +1591,8 @@ public class StagingView extends ViewPart
 				IAction.AS_PUSH_BUTTON) {
 			@Override
 			public void run() {
-				UIUtils.expandAll(unstagedViewer);
 				enableAutoExpand(unstagedViewer);
+				getContentProvider(unstagedViewer).expandAll();
 			}
 		};
 		unstagedExpandAllAction.setImageDescriptor(UIIcons.EXPAND_ALL);
@@ -1602,8 +1602,8 @@ public class StagingView extends ViewPart
 				IAction.AS_PUSH_BUTTON) {
 			@Override
 			public void run() {
-				UIUtils.collapseAll(unstagedViewer);
 				disableAutoExpand(unstagedViewer);
+				getContentProvider(unstagedViewer).collapseAll();
 			}
 		};
 		unstagedCollapseAllAction.setImageDescriptor(UIIcons.COLLAPSEALL);
@@ -1651,8 +1651,8 @@ public class StagingView extends ViewPart
 				IAction.AS_PUSH_BUTTON) {
 			@Override
 			public void run() {
-				UIUtils.expandAll(stagedViewer);
 				enableAutoExpand(stagedViewer);
+				getContentProvider(stagedViewer).expandAll();
 			}
 		};
 		stagedExpandAllAction.setImageDescriptor(UIIcons.EXPAND_ALL);
@@ -1662,8 +1662,8 @@ public class StagingView extends ViewPart
 				IAction.AS_PUSH_BUTTON) {
 			@Override
 			public void run() {
-				UIUtils.collapseAll(stagedViewer);
 				disableAutoExpand(stagedViewer);
+				getContentProvider(stagedViewer).collapseAll();
 			}
 		};
 		stagedCollapseAllAction.setImageDescriptor(UIIcons.COLLAPSEALL);
@@ -2744,7 +2744,8 @@ public class StagingView extends ViewPart
 		return ((TreeDecoratingLabelProvider) base).getBaseLabelProvider();
 	}
 
-	private StagingViewContentProvider getContentProvider(ContentViewer viewer) {
+	private static StagingViewContentProvider getContentProvider(
+			ContentViewer viewer) {
 		return (StagingViewContentProvider) viewer.getContentProvider();
 	}
 
@@ -4085,15 +4086,15 @@ public class StagingView extends ViewPart
 			}
 		}
 
-		List<StagingFolderEntry> expand = new ArrayList<>();
+		Set<StagingFolderEntry> expand = new HashSet<>();
 
 		calculateNodesToExpand(paths, stagedContentProvider.getElements(null),
 				expand);
-		viewer.setExpandedElements(expand.toArray());
+		stagedContentProvider.setExpandedElements(expand);
 	}
 
 	private void calculateNodesToExpand(Set<IPath> paths, Object[] elements,
-			List<StagingFolderEntry> result) {
+			Set<StagingFolderEntry> result) {
 		if (elements == null)
 			return;
 
