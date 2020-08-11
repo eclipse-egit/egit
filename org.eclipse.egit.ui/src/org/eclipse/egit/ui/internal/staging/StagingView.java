@@ -315,6 +315,8 @@ public class StagingView extends ViewPart
 	/** Tracks the last selection while the view is not active. */
 	private StructuredSelection lastSelection;
 
+	private ILabelProviderListener labelProviderChangedListener;
+
 	private ISelectionListener selectionChangedListener;
 
 	private PartVisibilityListener partListener;
@@ -1202,10 +1204,15 @@ public class StagingView extends ViewPart
 
 		stagedViewer = createViewer(stagedComposite, false,
 				selection -> stage(selection.toList()), unstageAction);
-		stagedViewer.getLabelProvider().addListener(event -> {
+		labelProviderChangedListener = event -> {
 			updateMessage();
 			updateCommitButtons();
-		});
+		};
+		stagedComposite
+				.addDisposeListener(event -> stagedViewer.getLabelProvider()
+						.removeListener(labelProviderChangedListener));
+		stagedViewer.getLabelProvider()
+				.addListener(labelProviderChangedListener);
 		stagedViewer.addSelectionChangedListener(event -> {
 			boolean hasSelection = !event.getSelection().isEmpty();
 			if (hasSelection != unstageAction.isEnabled()) {
