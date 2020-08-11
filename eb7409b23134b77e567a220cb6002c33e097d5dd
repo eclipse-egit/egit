@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ea942bd6_43a6130c",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/staging/StagingView.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1215,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2020-08-11T15:53:05Z",
+      "side": 1,
+      "message": "I think I\u0027ll have to investigate a bit more. This should not be necessary, a label provider should clear its listeners when disposed, and a viewer should dispose its label provider.",
+      "revId": "eb7409b23134b77e567a220cb6002c33e097d5dd",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": true
+    }
+  ]
+}
