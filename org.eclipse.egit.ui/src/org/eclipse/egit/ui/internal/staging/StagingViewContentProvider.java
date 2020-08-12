@@ -43,6 +43,7 @@ import org.eclipse.egit.core.internal.indexdiff.IndexDiffData;
 import org.eclipse.egit.ui.internal.staging.StagingView.Presentation;
 import org.eclipse.egit.ui.internal.staging.StagingView.StagingViewUpdate;
 import org.eclipse.jface.viewers.ILabelProvider;
+import org.eclipse.jface.viewers.ILazyTreeContentProvider;
 import org.eclipse.jface.viewers.TreeViewer;
 import org.eclipse.jface.viewers.Viewer;
 import org.eclipse.jgit.lib.Repository;
@@ -57,6 +58,7 @@ import org.eclipse.ui.model.WorkbenchContentProvider;
  * ContentProvider for staged and unstaged tree nodes
  */
 public class StagingViewContentProvider extends WorkbenchContentProvider {
+
 	/** All files for the section (staged or unstaged). */
 	private StagingEntry[] content = new StagingEntry[0];
 
@@ -79,6 +81,37 @@ public class StagingViewContentProvider extends WorkbenchContentProvider {
 	private IContainer rootContainer;
 
 	private final EntryComparator comparator;
+
+	static class VirtualProvider extends
+			StagingViewContentProvider implements ILazyTreeContentProvider {
+
+		private TreeViewer treeViewer;
+
+		VirtualProvider(StagingView stagingView,
+				TreeViewer treeViewer, boolean unstagedSection) {
+			super(stagingView, treeViewer, unstagedSection);
+			this.treeViewer = treeViewer;
+		}
+
+		@Override
+		public void updateElement(Object parent, int index) {
+			Object[] children = getChildren(parent);
+			if (index < children.length) {
+				Object child = children[index];
+				treeViewer.replace(parent, index, child);
+				treeViewer.setChildCount(child, getChildren(child).length);
+			}
+		}
+
+		@Override
+		public void updateChildCount(Object element, int currentChildCount) {
+			Object[] children = getChildren(element);
+			int newChildCount = children.length;
+			if (newChildCount != currentChildCount) {
+				treeViewer.setChildCount(element, newChildCount);
+			}
+		}
+	}
 
 	StagingViewContentProvider(StagingView stagingView, TreeViewer treeViewer,
 			boolean unstagedSection) {
@@ -103,6 +136,10 @@ public class StagingViewContentProvider extends WorkbenchContentProvider {
 					item.setImage(labelProvider.getImage(entry));
 					item.setText(labelProvider.getText(entry));
 					item.setData(entry);
+					if (entry instanceof StagingFolderEntry) {
+						StagingFolderEntry folder = (StagingFolderEntry) entry;
+						item.setItemCount(folder.getChildren().length);
+					}
 				}
 			}
 		});
@@ -363,8 +400,6 @@ public class StagingViewContentProvider extends WorkbenchContentProvider {
 		}
 		final Tree tree = treeViewer.getTree();
 		inputChanged(treeViewer, tree.getData(), input);
-		tree.setData(input);
-		internalRedraw();
 	}
 
 	StagingViewUpdate getInput() {
@@ -462,6 +497,13 @@ public class StagingViewContentProvider extends WorkbenchContentProvider {
 
 		treeRoots = null;
 		compactTreeRoots = null;
+
+		if (!haveVirtualTree()) {
+			return;
+		}
+
+		treeViewer.getTree().setData(newInput);
+		internalRedraw();
 	}
 
 	@Override
@@ -573,6 +615,19 @@ public class StagingViewContentProvider extends WorkbenchContentProvider {
 			if (submodules.contains(stagingEntry.getPath()))
 				stagingEntry.setSubmodule(true);
 		}
+	}
+
+	/**
+	 * Clear the widget tree item data, to obtain information freshly from
+	 * content provider as becoming visible.
+	 */
+	public void refreshView() {
+		if (!haveVirtualTree()) {
+			treeViewer.refresh();
+			return;
+		}
+
+		internalRedraw();
 	}
 
 	private boolean haveVirtualTree() {

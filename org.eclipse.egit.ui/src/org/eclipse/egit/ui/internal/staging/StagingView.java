@@ -2147,22 +2147,43 @@ public class StagingView extends ViewPart
 
 	private StagingViewContentProvider createStagingContentProvider(
 			TreeViewer treeViewer, boolean unstaged) {
-		StagingViewContentProvider provider = new StagingViewContentProvider(
-				this, treeViewer, unstaged) {
 
-			@Override
-			public void inputChanged(Viewer viewer, Object oldInput,
-					Object newInput) {
-				super.inputChanged(viewer, oldInput, newInput);
-				if (unstaged) {
-					stageAllAction.setEnabled(getCount() > 0);
-					unstagedToolBarManager.update(true);
-				} else {
-					unstageAllAction.setEnabled(getCount() > 0);
-					stagedToolBarManager.update(true);
+		StagingViewContentProvider provider;
+		if ((treeViewer.getTree().getStyle() & SWT.VIRTUAL) == 0) {
+			provider = new StagingViewContentProvider(
+					this, treeViewer, unstaged) {
+
+				@Override
+				public void inputChanged(Viewer viewer, Object oldInput,
+						Object newInput) {
+					super.inputChanged(viewer, oldInput, newInput);
+					if (unstaged) {
+						stageAllAction.setEnabled(getCount() > 0);
+						unstagedToolBarManager.update(true);
+					} else {
+						unstageAllAction.setEnabled(getCount() > 0);
+						stagedToolBarManager.update(true);
+					}
 				}
-			}
-		};
+			};
+		} else {
+			provider = new StagingViewContentProvider.VirtualProvider(
+					this, treeViewer, unstaged) {
+
+				@Override
+				public void inputChanged(Viewer viewer, Object oldInput,
+						Object newInput) {
+					super.inputChanged(viewer, oldInput, newInput);
+					if (unstaged) {
+						stageAllAction.setEnabled(getCount() > 0);
+						unstagedToolBarManager.update(true);
+					} else {
+						unstageAllAction.setEnabled(getCount() > 0);
+						stagedToolBarManager.update(true);
+					}
+				}
+			};
+		}
 		provider.setFileNameMode(getPreferenceStore().getBoolean(
 				UIPreferences.STAGING_VIEW_FILENAME_MODE));
 		return provider;
@@ -3134,14 +3155,14 @@ public class StagingView extends ViewPart
 		IStructuredSelection selection = unstagedViewer
 				.getStructuredSelection();
 		unstagedViewer.setSelection(StructuredSelection.EMPTY);
-		unstagedViewer.refresh();
+		getContentProvider(unstagedViewer).refreshView();
 		// Create a *new* selection to avoid the viewer uses the original tree
 		// paths, which may no longer exist if the presentation has changed.
 		unstagedViewer
 				.setSelection(new StructuredSelection(selection.toList()));
 		selection = stagedViewer.getStructuredSelection();
 		stagedViewer.setSelection(StructuredSelection.EMPTY);
-		stagedViewer.refresh();
+		getContentProvider(stagedViewer).refreshView();
 		stagedViewer.setSelection(new StructuredSelection(selection.toList()));
 		updateSectionText();
 	}
