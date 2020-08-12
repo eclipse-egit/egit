@@ -584,10 +584,7 @@ public class StagingView extends ViewPart
 		public TreeDecoratingLabelProvider(StagingViewLabelProvider base,
 				ILabelDecorator decorator) {
 			this.base = base;
-			this.provider = new DecoratingLabelProvider(
-					new DecoratingLabelProvider(base, decorator),
-					PlatformUI.getWorkbench().getDecoratorManager()
-							.getLabelDecorator());
+			this.provider = new DecoratingLabelProvider(base, decorator);
 		}
 
 		public StagingViewLabelProvider getBaseLabelProvider() {
@@ -1203,8 +1200,12 @@ public class StagingView extends ViewPart
 		stagedViewer = createViewer(stagedComposite, false,
 				selection -> stage(selection.toList()), unstageAction);
 		stagedViewer.getLabelProvider().addListener(event -> {
-			updateMessage();
-			updateCommitButtons();
+			if (event.getSource() instanceof ProblemLabelDecorator
+					&& !isDisposed()) {
+				// Update UI when problem markers on staged items change
+				updateMessage();
+				updateCommitButtons();
+			}
 		});
 		stagedViewer.addSelectionChangedListener(event -> {
 			boolean hasSelection = !event.getSelection().isEmpty();

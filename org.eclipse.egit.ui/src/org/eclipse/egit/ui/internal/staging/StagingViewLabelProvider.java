@@ -14,17 +14,24 @@ package org.eclipse.egit.ui.internal.staging;
 
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.Path;
+import org.eclipse.egit.ui.Activator;
 import org.eclipse.egit.ui.UIUtils;
 import org.eclipse.egit.ui.internal.UIIcons;
+import org.eclipse.egit.ui.internal.decorators.DecorationResult;
+import org.eclipse.egit.ui.internal.decorators.GitLightweightDecorator.ChangeTrackingColorsAndFonts;
+import org.eclipse.egit.ui.internal.decorators.GitLightweightDecorator.DecorationHelper;
 import org.eclipse.egit.ui.internal.staging.StagingView.Presentation;
+import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.jface.resource.JFaceResources;
 import org.eclipse.jface.resource.LocalResourceManager;
 import org.eclipse.jface.resource.ResourceManager;
 import org.eclipse.jface.viewers.DecorationOverlayIcon;
 import org.eclipse.jface.viewers.IDecoration;
 import org.eclipse.jface.viewers.LabelProvider;
+import org.eclipse.jface.viewers.LabelProviderChangedEvent;
 import org.eclipse.jgit.annotations.Nullable;
 import org.eclipse.swt.graphics.Image;
+import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.TreeItem;
 import org.eclipse.ui.ISharedImages;
 import org.eclipse.ui.PlatformUI;
@@ -45,6 +52,10 @@ public class StagingViewLabelProvider extends LabelProvider {
 	private ResourceManager resourceManager = new LocalResourceManager(
 			JFaceResources.getResources());
 
+	private final DecorationHelper decorationHelper;
+
+	private final ChangeTrackingColorsAndFonts colorsAndFonts;
+
 	private boolean fileNameMode = false;
 
 	/**
@@ -52,6 +63,10 @@ public class StagingViewLabelProvider extends LabelProvider {
 	 */
 	public StagingViewLabelProvider(StagingView stagingView) {
 		super();
+		colorsAndFonts = new ChangeTrackingColorsAndFonts();
+		decorationHelper = new DecorationHelper(
+				Activator.getDefault().getPreferenceStore(), colorsAndFonts);
+		colorsAndFonts.addListener(this::postLabelEvent);
 		this.stagingView = stagingView;
 	}
 
@@ -70,8 +85,16 @@ public class StagingViewLabelProvider extends LabelProvider {
 
 	@Override
 	public void dispose() {
+		this.colorsAndFonts.dispose();
 		this.resourceManager.dispose();
 		super.dispose();
+	}
+
+	private void postLabelEvent() {
+		Display display = PlatformUI.getWorkbench().getDisplay();
+		display.asyncExec(() -> {
+			fireLabelProviderChanged(new LabelProviderChangedEvent(this));
+		});
 	}
 
 	private Image getEditorImage(StagingEntry diff) {
@@ -95,6 +118,12 @@ public class StagingViewLabelProvider extends LabelProvider {
 		return image;
 	}
 
+	private Image getDecoratedImage(Image base, ImageDescriptor decorator) {
+		DecorationOverlayIcon decorated = new DecorationOverlayIcon(base,
+				decorator, IDecoration.BOTTOM_RIGHT);
+		return (Image) this.resourceManager.get(decorated);
+	}
+
 	private Image addSymlinkDecorationToImage(Image base) {
 		DecorationOverlayIcon decorated = new DecorationOverlayIcon(base,
 				UIIcons.OVR_SYMLINK, IDecoration.TOP_RIGHT);
@@ -114,7 +143,9 @@ public class StagingViewLabelProvider extends LabelProvider {
 		}
 
 		StagingEntry c = (StagingEntry) element;
-		return getEditorImage(c);
+		DecorationResult decoration = new DecorationResult();
+		decorationHelper.decorate(decoration, c);
+		return getDecoratedImage(getEditorImage(c), decoration.getOverlay());
 	}
 
 	@Override
@@ -131,17 +162,35 @@ public class StagingViewLabelProvider extends LabelProvider {
 			return ""; //$NON-NLS-1$
 		}
 
+		DecorationResult decoration = new DecorationResult();
+		decorationHelper.decorate(decoration, stagingEntry);
+		String prefix = decoration.getPrefix();
+		String suffix = decoration.getSuffix();
+		StringBuilder label = new StringBuilder();
+		if (prefix != null) {
+			label.append(prefix);
+		}
 		if (stagingView.getPresentation() == Presentation.LIST) {
 			if (fileNameMode) {
 				IPath parsed = Path.fromOSString(stagingEntry.getPath());
 				if (parsed.segmentCount() > 1) {
-					return parsed.lastSegment() + " - " //$NON-NLS-1$
-							+ parsed.removeLastSegments(1).toString();
+					label.append(parsed.lastSegment());
+					if (suffix != null) {
+						label.append(suffix);
+					}
+					label.append(" - ") //$NON-NLS-1$
+							.append(parsed.removeLastSegments(1).toString());
+					return label.toString();
 				}
 			}
-			return stagingEntry.getPath();
+			label.append(stagingEntry.getPath());
+		} else {
+			label.append(stagingEntry.getName());
 		}
-		return stagingEntry.getName();
+		if (suffix != null) {
+			label.append(suffix);
+		}
+		return label.toString();
 	}
 
 	@Nullable

@@ -29,6 +29,7 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 import org.eclipse.core.resources.IResource;
 import org.eclipse.core.resources.ResourcesPlugin;
@@ -37,6 +38,7 @@ import org.eclipse.core.runtime.Adapters;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IAdaptable;
 import org.eclipse.core.runtime.IStatus;
+import org.eclipse.egit.core.internal.SafeRunnable;
 import org.eclipse.egit.core.internal.indexdiff.IndexDiffData;
 import org.eclipse.egit.core.internal.util.ExceptionCollector;
 import org.eclipse.egit.core.project.GitProjectData;
@@ -108,7 +110,7 @@ public class GitLightweightDecorator extends GitDecorator
 			UIPreferences.THEME_IgnoredResourceBackgroundColor,
 			UIPreferences.THEME_IgnoredResourceForegroundColor);
 
-	private final ReloadableColorsAndFonts resources;
+	private final ChangeTrackingColorsAndFonts resources;
 
 	private final DecorationHelper helper;
 
@@ -120,14 +122,12 @@ public class GitLightweightDecorator extends GitDecorator
 	public GitLightweightDecorator() {
 		// This is an optimization to ensure that while decorating our fonts and
 		// colors are pre-created and decoration can occur without having to syncExec.
-		resources = new ReloadableColorsAndFonts();
-		resources.reload();
+		resources = new ChangeTrackingColorsAndFonts();
 		helper = new DecorationHelper(
 				Activator.getDefault().getPreferenceStore(), resources);
+		resources.addListener(this::postLabelEvent);
 		TeamUI.addPropertyChangeListener(this);
 		Activator.addPropertyChangeListener(this);
-		PlatformUI.getWorkbench().getThemeManager().getCurrentTheme()
-				.addPropertyChangeListener(this);
 
 		GitProjectData.addRepositoryChangeListener(mappingChangeListener);
 	}
@@ -135,8 +135,7 @@ public class GitLightweightDecorator extends GitDecorator
 	@Override
 	public void dispose() {
 		super.dispose();
-		PlatformUI.getWorkbench().getThemeManager().getCurrentTheme()
-				.removePropertyChangeListener(this);
+		resources.dispose();
 		TeamUI.removePropertyChangeListener(this);
 		Activator.removePropertyChangeListener(this);
 		GitProjectData.removeRepositoryChangeListener(mappingChangeListener);
@@ -245,36 +244,95 @@ public class GitLightweightDecorator extends GitDecorator
 		helper.decorate(decoration, decoRes);
 	}
 
-	private static interface ColorsAndFonts {
+	/**
+	 * A repository of colors and fonts.
+	 */
+	public static interface ColorsAndFonts {
 
+		/**
+		 * Retrieves the {@link Color} identified by {@code id}.
+		 *
+		 * @param id
+		 *            of the color to get
+		 * @return the color, or {@code null} if none
+		 */
 		Color getColor(String id);
 
+		/**
+		 * Retrieves the {@link Font} identified by {@code id}.
+		 *
+		 * @param id
+		 *            of the font to get
+		 * @return the font, or {@code null} if none
+		 */
 		Font getFont(String id);
 
+		/**
+		 * Retrieves the default font.
+		 *
+		 * @return the font
+		 */
 		Font getDefaultFont();
 
+		/**
+		 * Retrieves the default background color.
+		 *
+		 * @return the {@link RGB} of the color
+		 */
 		RGB getDefaultBackground();
 
 	}
 
 	/**
-	 * Our own private cache of current colors and fonts. Do not rely on the
-	 * platform's current theme caching them: when a theme switch occurs, the
-	 * decorator running asynchronously in the background may get not only wrong
-	 * but even disposed values, and somehow it never really worked for the
-	 * default font. The main idea behind caching colors and fonts is to do load
-	 * them on the UI thread once, and then access them from the decorators
-	 * background thread. Otherwise the decorator would need to syncExec(),
-	 * which kind of obviates running in the background.
+	 * A font and color cache that tracks changes to the fonts and colors used
+	 * by Git decoration and that fires a notification when they have changed.
+	 * <p>
+	 * The main idea behind caching colors and fonts is to do load them on the
+	 * UI thread once, and then access them from the decorators background
+	 * thread. Otherwise the decorator would need to syncExec(), which kind of
+	 * obviates running in the background.
+	 * </p>
 	 */
-	private static class ReloadableColorsAndFonts implements ColorsAndFonts {
+	public static class ChangeTrackingColorsAndFonts implements ColorsAndFonts {
+
+		private final CopyOnWriteArrayList<Runnable> listeners = new CopyOnWriteArrayList<>();
+
+		private final IPropertyChangeListener themeListener = event -> {
+			final String prop = event.getProperty();
+			if (prop == null) {
+				return;
+			}
+			switch (prop) {
+			case IThemeManager.CHANGE_CURRENT_THEME:
+			case TREE_TABLE_FONT:
+			case UIPreferences.THEME_UncommittedChangeBackgroundColor:
+			case UIPreferences.THEME_UncommittedChangeFont:
+			case UIPreferences.THEME_UncommittedChangeForegroundColor:
+			case UIPreferences.THEME_IgnoredResourceFont:
+			case UIPreferences.THEME_IgnoredResourceBackgroundColor:
+			case UIPreferences.THEME_IgnoredResourceForegroundColor:
+				reload();
+				break;
+			default:
+				break;
+			}
+		};
 
 		private volatile Map<String, Object> colorsOrFonts = new HashMap<>();
 
 		private volatile RGB defaultBackground;
 
-		public void reload() {
-			final Display display = PlatformUI.getWorkbench().getDisplay();
+		/**
+		 * Creates a new {@link ChangeTrackingColorsAndFonts} object.
+		 */
+		public ChangeTrackingColorsAndFonts() {
+			PlatformUI.getWorkbench().getThemeManager().getCurrentTheme()
+					.addPropertyChangeListener(themeListener);
+			reload();
+		}
+
+		private void reload() {
+			Display display = PlatformUI.getWorkbench().getDisplay();
 			display.syncExec(() -> {
 				Map<String, Object> newResources = new HashMap<>();
 				ITheme theme = PlatformUI.getWorkbench().getThemeManager()
@@ -293,6 +351,45 @@ public class GitLightweightDecorator extends GitDecorator
 				defaultBackground = display
 						.getSystemColor(SWT.COLOR_LIST_BACKGROUND).getRGB();
 			});
+			notifyListeners();
+		}
+
+		private void notifyListeners() {
+			for (Runnable listener : listeners) {
+				SafeRunnable.run(listener::run);
+			}
+		}
+
+		/**
+		 * Register a listener to be called when the colors or fonts have
+		 * changed. A no-op if the listener is already registered.
+		 *
+		 * @param runnable
+		 *            to invoke
+		 */
+		public void addListener(Runnable runnable) {
+			listeners.addIfAbsent(runnable);
+		}
+
+		/**
+		 * Unregister a previously registered listener. A no-op if the listener
+		 * is not currently registered.
+		 *
+		 * @param runnable
+		 *            to unregister
+		 */
+		public void removeListener(Runnable runnable) {
+			listeners.remove(runnable);
+		}
+
+		/**
+		 * Disposes internal resources, removes all listeners, and stops
+		 * reacting on color or font changes.
+		 */
+		public void dispose() {
+			listeners.clear();
+			PlatformUI.getWorkbench().getThemeManager().getCurrentTheme()
+					.removePropertyChangeListener(themeListener);
 		}
 
 		@Override
@@ -482,16 +579,15 @@ public class GitLightweightDecorator extends GitDecorator
 		}
 
 		/**
-		 * Internal constructor; also used by the
-		 * {@link GitLightweightDecorator} to provide a {@link ColorsAndFonts}
-		 * registry that reacts to color, font, or theme changes.
+		 * Creates a new {@link DecorationHelper} based on the given
+		 * {@link IPreferenceStore} using the given {@link ColorsAndFonts}.
 		 *
 		 * @param preferencesStore
 		 *            to get decoration settings from
 		 * @param resources
 		 *            to get colors and fonts from
 		 */
-		private DecorationHelper(IPreferenceStore preferencesStore,
+		public DecorationHelper(IPreferenceStore preferencesStore,
 				ColorsAndFonts resources) {
 			store = preferencesStore;
 			this.resources = resources;
@@ -794,17 +890,6 @@ public class GitLightweightDecorator extends GitDecorator
 		case TeamUI.GLOBAL_IGNORES_CHANGED:
 		case TeamUI.GLOBAL_FILE_TYPES_CHANGED:
 		case Activator.DECORATORS_CHANGED:
-			postLabelEvent();
-			break;
-		case IThemeManager.CHANGE_CURRENT_THEME:
-		case TREE_TABLE_FONT:
-		case UIPreferences.THEME_UncommittedChangeBackgroundColor:
-		case UIPreferences.THEME_UncommittedChangeFont:
-		case UIPreferences.THEME_UncommittedChangeForegroundColor:
-		case UIPreferences.THEME_IgnoredResourceFont:
-		case UIPreferences.THEME_IgnoredResourceBackgroundColor:
-		case UIPreferences.THEME_IgnoredResourceForegroundColor:
-			resources.reload();
 			postLabelEvent();
 			break;
 		default:
