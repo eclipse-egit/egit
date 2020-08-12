@@ -16,6 +16,24 @@
       "revId": "eb7409b23134b77e567a220cb6002c33e097d5dd",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d04cb826_a8ce0545",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/staging/StagingView.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1215,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2020-08-12T11:01:50Z",
+      "side": 1,
+      "message": "The real fix would be to change above line 1207 to\n\n  stagedViewer.getLabelProvider().addListener(event -\u003e {\n    if (event.getSource instanceof ProblemLabelDecorator \u0026\u0026 !isDisposed()) {\n      updateMessage();\n      updateCommitButtons();\n    }\n  }\n\nBut using the asynchronous lightweight decorator was a bad idea anyway.",
+      "parentUuid": "ea942bd6_43a6130c",
+      "revId": "eb7409b23134b77e567a220cb6002c33e097d5dd",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
     }
   ]
 }
