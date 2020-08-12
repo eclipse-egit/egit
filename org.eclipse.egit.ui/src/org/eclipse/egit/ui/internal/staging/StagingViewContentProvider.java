@@ -32,6 +32,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.TreeSet;
+import java.util.function.Consumer;
 import java.util.regex.Pattern;
 
 import org.eclipse.core.resources.IContainer;
@@ -40,10 +41,14 @@ import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.Path;
 import org.eclipse.egit.core.internal.indexdiff.IndexDiffData;
+import org.eclipse.egit.ui.UIUtils;
 import org.eclipse.egit.ui.internal.staging.StagingView.Presentation;
 import org.eclipse.egit.ui.internal.staging.StagingView.StagingViewUpdate;
+import org.eclipse.jface.viewers.AbstractTreeViewer;
 import org.eclipse.jface.viewers.ILabelProvider;
 import org.eclipse.jface.viewers.ILazyTreeContentProvider;
+import org.eclipse.jface.viewers.ITreeViewerListener;
+import org.eclipse.jface.viewers.TreeExpansionEvent;
 import org.eclipse.jface.viewers.TreeViewer;
 import org.eclipse.jface.viewers.Viewer;
 import org.eclipse.jgit.lib.Repository;
@@ -67,6 +72,10 @@ public class StagingViewContentProvider extends WorkbenchContentProvider {
 
 	/** Root nodes for the "Compact Tree" presentation. */
 	private Object[] compactTreeRoots;
+
+	// The virtual tree maintains expansion for been visible folders only,
+	// so we need to maintain our own set of folders to view expanded.
+	private Set<StagingFolderEntry> expandedFolders = new HashSet<>();
 
 	private StagingView stagingView;
 
@@ -139,10 +148,49 @@ public class StagingViewContentProvider extends WorkbenchContentProvider {
 					if (entry instanceof StagingFolderEntry) {
 						StagingFolderEntry folder = (StagingFolderEntry) entry;
 						item.setItemCount(folder.getChildren().length);
+						if (needsExpansion(folder)) {
+							expandedFolders.add(folder);
+							item.setExpanded(true);
+						}
 					}
 				}
 			}
 		});
+
+		treeViewer.addTreeListener(new ITreeViewerListener() {
+			@Override
+			public void treeCollapsed(TreeExpansionEvent event) {
+				expandedFolders.remove(event.getElement());
+			}
+
+			@Override
+			public void treeExpanded(TreeExpansionEvent event) {
+				Object element = event.getElement();
+				if (element instanceof StagingFolderEntry) {
+					expandedFolders.add((StagingFolderEntry) element);
+				}
+			}
+		});
+	}
+
+	private boolean needsExpansion(StagingFolderEntry folder) {
+		int autoExpandLevel = treeViewer.getAutoExpandLevel();
+		if (autoExpandLevel == AbstractTreeViewer.ALL_LEVELS) {
+			return true;
+		}
+		if (expandedFolders.contains(folder)) {
+			return true;
+		}
+		StagingFolderEntry parent = folder.getParent();
+		while (autoExpandLevel > 1) {
+			if (parent == null) {
+				// auto expand level is higher than our tree depth
+				return true;
+			}
+			parent = parent.getParent();
+			autoExpandLevel--;
+		}
+		return false;
 	}
 
 	@Override
@@ -628,6 +676,50 @@ public class StagingViewContentProvider extends WorkbenchContentProvider {
 		}
 
 		internalRedraw();
+	}
+
+	void setExpandedElements(Set<StagingFolderEntry> expanded) {
+		if (!haveVirtualTree()) {
+			treeViewer.setExpandedElements(expanded.toArray());
+			return;
+		}
+
+		expandedFolders = expanded;
+		internalRedraw();
+	}
+
+	void collapseAll() {
+		if (!haveVirtualTree()) {
+			UIUtils.collapseAll(treeViewer);
+			return;
+		}
+
+		expandedFolders = new HashSet<>();
+		internalRedraw();
+	}
+
+	void expandAll() {
+		if (!haveVirtualTree()) {
+			UIUtils.expandAll(treeViewer);
+			return;
+		}
+
+		expandedFolders = new HashSet<>();
+		for (Object root : getTreePresentationRoots()) {
+			visitFoldersRecursive(root, (folder) -> expandedFolders.add(folder));
+		}
+		internalRedraw();
+	}
+
+	private void visitFoldersRecursive(Object start,
+			Consumer<StagingFolderEntry> consumer) {
+		if (start instanceof StagingFolderEntry) {
+			StagingFolderEntry folder = (StagingFolderEntry) start;
+			consumer.accept(folder);
+			for (Object child : folder.getChildren()) {
+				visitFoldersRecursive(child, consumer);
+			}
+		}
 	}
 
 	private boolean haveVirtualTree() {
