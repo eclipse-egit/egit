@@ -4632,10 +4632,16 @@ public class StagingView extends ViewPart
 			// Replace slashes by ASCII \001 to make e.g.
 			// "org.eclipse.egit.gitflow/..." sort before
 			// "org.eclipse.egit.gitflow.ui/...".
+			// Use ASCII \255 to separate the file name to make e.g.
+			// "org.eclipse.egit.gitflow/subdir/file" sort before
+			// "org.eclipse.egit.gitflow/file".
 			if (stagingEntry != null) {
-				text = stagingEntry.getPath().replace('/', '\001');
+				text = stagingEntry.getParentPath().toString().replace('/',
+						'\001');
 				if (isFileNamesFirst()) {
-					text = stagingEntry.getName() + '\001' + text;
+					text = '\255' + stagingEntry.getName() + '\001' + text;
+				} else {
+					text = text + '\255' + stagingEntry.getName();
 				}
 			} else if (element instanceof StagingFolderEntry) {
 				text = ((StagingFolderEntry) element).getNodePath().toString()
