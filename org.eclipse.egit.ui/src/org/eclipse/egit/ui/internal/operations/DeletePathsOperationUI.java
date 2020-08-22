@@ -15,10 +15,14 @@ import java.util.Collection;
 import java.util.List;
 
 import org.eclipse.core.resources.IResource;
+import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IPath;
+import org.eclipse.core.runtime.IProgressMonitor;
+import org.eclipse.core.runtime.jobs.ISchedulingRule;
 import org.eclipse.egit.core.internal.job.JobUtil;
 import org.eclipse.egit.core.internal.util.ResourceUtil;
 import org.eclipse.egit.core.op.DeletePathsOperation;
+import org.eclipse.egit.core.op.IEGitOperation;
 import org.eclipse.egit.ui.JobFamilies;
 import org.eclipse.egit.ui.internal.UIText;
 import org.eclipse.jface.dialogs.IDialogConstants;
@@ -80,8 +84,25 @@ public class DeletePathsOperationUI {
 		if (dialog.open() != Window.OK) {
 			return;
 		}
-		JobUtil.scheduleUserWorkspaceJob(new DeletePathsOperation(paths),
-				UIText.DeletePathsOperationUI_DeleteFilesJobName,
+		// Do not schedule the DeletePathsOperation directly; the calculation of
+		// the scheduling rule can be expensive. The operation runs in an
+		// IWorkspaceRunnable anyway, so it's not necessary to schedule the
+		// job already with that rule, and we can thus determine the scheduling
+		// rule once we are in the background.
+		JobUtil.scheduleUserWorkspaceJob(new IEGitOperation() {
+
+			@Override
+			public ISchedulingRule getSchedulingRule() {
+				return null;
+			}
+
+			@Override
+			public void execute(IProgressMonitor monitor) throws CoreException {
+				DeletePathsOperation op = new DeletePathsOperation(paths);
+				op.execute(monitor);
+			}
+
+		}, UIText.DeletePathsOperationUI_DeleteFilesJobName,
 				JobFamilies.DELETE);
 	}
 
