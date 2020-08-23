@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ac27c87e_757f2311",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/staging/StagingView.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 4642,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2020-08-23T20:24:27Z",
+      "side": 1,
+      "message": "Adding 0xFF in front doesn\u0027t seem to make sense. I notice that with \"file names first\" I get\n\n  missing - some/sub\n  missing - some/sub/dir\n\nbut with \"file names first\" off I get first all files in some/sub/dir and then all those in some/sub (which I personally find strange, but it\u0027s what \"git status\" also shows, so it\u0027s OK).\n\nAlso, what\u0027s the desired order if I also have\n\n  missing\n  missing - some/suba\n  missing - some/subškoda\n  missing - some/sub/škoda\n\nI have the feeling that one can\u0027t get a consistent ordering with more \"magic\" characters. Perhaps use the category also for alphabetic sort? (I don\u0027t care whether some/sub comes before some/sub/dir or the other way around. But some/suba should not come in between?)",
+      "revId": "aca9e9e335b91d209d9e4fbff8aa07d7ee5d65e4",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": true
+    }
+  ]
+}
