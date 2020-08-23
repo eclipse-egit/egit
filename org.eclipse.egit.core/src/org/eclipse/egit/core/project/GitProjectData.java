@@ -20,7 +20,9 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.nio.file.AtomicMoveNotSupportedException;
 import java.nio.file.Files;
+import java.nio.file.StandardCopyOption;
 import java.text.MessageFormat;
 import java.util.Collection;
 import java.util.HashMap;
@@ -567,9 +569,8 @@ public class GitProjectData {
 	 * @throws CoreException
 	 */
 	public void store() throws CoreException {
-		final File dat = propertyFile();
-		final File tmp;
-		boolean ok = false;
+		File dat = propertyFile();
+		File tmp = null;
 
 		try {
 			trace("save " + dat);  //$NON-NLS-1$
@@ -583,22 +584,23 @@ public class GitProjectData {
 					repoMapping.store(p);
 				}
 				p.store(o, "GitProjectData");  //$NON-NLS-1$
-				ok = true;
-			} finally {
-				if (!ok && tmp.exists()) {
-					FileUtils.delete(tmp);
-				}
 			}
-			if (dat.exists())
-				FileUtils.delete(dat);
-			if (!tmp.renameTo(dat)) {
-				if (tmp.exists())
-					FileUtils.delete(tmp);
-				throw new CoreException(
-						Activator.error(NLS.bind(
-								CoreText.GitProjectData_saveFailed, dat), null));
+
+			try {
+				FileUtils.rename(tmp, dat, StandardCopyOption.ATOMIC_MOVE,
+						StandardCopyOption.REPLACE_EXISTING);
+			} catch (AtomicMoveNotSupportedException e) {
+				// Try non-atomic
+				FileUtils.rename(tmp, dat, StandardCopyOption.REPLACE_EXISTING);
 			}
 		} catch (IOException ioe) {
+			try {
+				if (tmp != null && tmp.exists()) {
+					FileUtils.delete(tmp);
+				}
+			} catch (IOException e) {
+				ioe.addSuppressed(e);
+			}
 			throw new CoreException(Activator.error(
 					NLS.bind(CoreText.GitProjectData_saveFailed, dat), ioe));
 		}
