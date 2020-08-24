@@ -4602,13 +4602,7 @@ public class StagingView extends ViewPart
 
 		@Override
 		public int category(Object element) {
-			if (!isAlphabeticSort()) {
-				StagingEntry stagingEntry = getStagingEntry(element);
-				if (stagingEntry != null) {
-					return getState(stagingEntry);
-				}
-			}
-			return super.category(element);
+			return getState(getStagingObject(element), super.category(element));
 		}
 
 		@Override
@@ -4620,70 +4614,85 @@ public class StagingView extends ViewPart
 				return cat1 - cat2;
 			}
 
-			String name1 = getStagingEntryText(e1);
-			String name2 = getStagingEntryText(e2);
+			String name1 = getStagingObjectText(getStagingObject(e1));
+			String name2 = getStagingObjectText(getStagingObject(e2));
 
 			return comparator.compare(name1, name2);
 		}
 
-		private String getStagingEntryText(Object element) {
+		private String getStagingObjectText(Object stagingObject) {
 			String text = ""; //$NON-NLS-1$
-			StagingEntry stagingEntry = getStagingEntry(element);
 			// Replace slashes by ASCII \001 to make e.g.
 			// "org.eclipse.egit.gitflow/..." sort before
 			// "org.eclipse.egit.gitflow.ui/...".
-			if (stagingEntry != null) {
-				text = stagingEntry.getPath().replace('/', '\001');
+			if (stagingObject instanceof StagingEntry) {
+				StagingEntry stagingEntry = (StagingEntry) stagingObject;
 				if (isFileNamesFirst()) {
-					text = stagingEntry.getName() + '\001' + text;
+					// Avoid trailing file name here, to order folders
+					// independent of the actual file name, see bug 566161.
+					text = stagingEntry.getName() + '\001' + stagingEntry
+							.getParentPath().toString().replace('/', '\001');
+				} else {
+					text = stagingEntry.getPath().toString().replace('/',
+							'\001');
 				}
-			} else if (element instanceof StagingFolderEntry) {
-				text = ((StagingFolderEntry) element).getNodePath().toString()
-						.replace('/', '\001');
+			} else if (stagingObject instanceof StagingFolderEntry) {
+				text = ((StagingFolderEntry) stagingObject).getNodePath()
+						.toString().replace('/', '\001');
 			}
 			return text;
 		}
 
 		@Nullable
-		private StagingEntry getStagingEntry(Object element) {
-			StagingEntry entry = null;
-			if (element instanceof StagingEntry) {
-				entry = (StagingEntry) element;
-			}
+		private Object getStagingObject(Object element) {
 			if (element instanceof TreeItem) {
 				TreeItem item = (TreeItem) element;
-				if (item.getData() instanceof StagingEntry) {
-					entry = (StagingEntry) item.getData();
-				}
+				element = item.getData();
 			}
-			return entry;
+			if (element instanceof StagingEntry) {
+				return element;
+			}
+			if (element instanceof StagingFolderEntry) {
+				return element;
+			}
+			return null;
 		}
 
-		private int getState(StagingEntry entry) {
-			switch (entry.getState()) {
-			case CONFLICTING:
-				return 1;
-			case MODIFIED:
-				return 2;
-			case MODIFIED_AND_ADDED:
-				return 3;
-			case MODIFIED_AND_CHANGED:
-				return 4;
-			case ADDED:
-				return 5;
-			case CHANGED:
-				return 6;
-			case MISSING:
-				return 7;
-			case MISSING_AND_CHANGED:
-				return 8;
-			case REMOVED:
-				return 9;
-			case UNTRACKED:
-				return 10;
-			default:
-				return super.category(entry);
+		private int getState(Object stagingObject, int fallback) {
+			if (stagingObject instanceof StagingFolderEntry) {
+				return -1; // sort folders before files
 			}
+			if (stagingObject instanceof StagingEntry) {
+				// sort files after folders
+				if (isAlphabeticSort()) {
+					return 0;
+				}
+				switch (((StagingEntry) stagingObject).getState()) {
+				case CONFLICTING:
+					return 1;
+				case MODIFIED:
+					return 2;
+				case MODIFIED_AND_ADDED:
+					return 3;
+				case MODIFIED_AND_CHANGED:
+					return 4;
+				case ADDED:
+					return 5;
+				case CHANGED:
+					return 6;
+				case MISSING:
+					return 7;
+				case MISSING_AND_CHANGED:
+					return 8;
+				case REMOVED:
+					return 9;
+				case UNTRACKED:
+					return 10;
+				// no default tag here, to get warning when new state is added
+				}
+			}
+
+			return fallback;
 		}
 
 	}
