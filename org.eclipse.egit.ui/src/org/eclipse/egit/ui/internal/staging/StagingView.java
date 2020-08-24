@@ -1615,13 +1615,9 @@ public class StagingView extends ViewPart
 
 			@Override
 			public void run() {
-				StagingEntryComparator comparator = (StagingEntryComparator) unstagedViewer
-						.getComparator();
-				comparator.setAlphabeticSort(!isChecked());
-				comparator = (StagingEntryComparator) stagedViewer.getComparator();
-				comparator.setAlphabeticSort(!isChecked());
-				unstagedViewer.refresh();
-				stagedViewer.refresh();
+				getContentProvider(stagedViewer).setSortByState(isChecked());
+				getContentProvider(unstagedViewer).setSortByState(isChecked());
+				refreshViewers();
 			}
 		};
 
@@ -2037,11 +2033,6 @@ public class StagingView extends ViewPart
 				getLabelProvider(unstagedViewer).setFileNameMode(enable);
 				getContentProvider(stagedViewer).setFileNameMode(enable);
 				getContentProvider(unstagedViewer).setFileNameMode(enable);
-				StagingEntryComparator comparator = (StagingEntryComparator) unstagedViewer
-						.getComparator();
-				comparator.setFileNamesFirst(enable);
-				comparator = (StagingEntryComparator) stagedViewer.getComparator();
-				comparator.setFileNamesFirst(enable);
 				getPreferenceStore().setValue(
 						UIPreferences.STAGING_VIEW_FILENAME_MODE, enable);
 				refreshViewersPreservingExpandedElements();
@@ -2238,9 +2229,10 @@ public class StagingView extends ViewPart
 					}
 				});
 		viewer.addOpenListener(this::compareWith);
-		viewer.setComparator(new StagingEntryComparator(!getSortCheckState(),
-				getPreferenceStore()
-						.getBoolean(UIPreferences.STAGING_VIEW_FILENAME_MODE)));
+		if ((viewer.getTree().getStyle() & SWT.VIRTUAL) == 0) {
+			viewer.setComparator(new StagingEntryComparator(
+					contentProvider.getComparator()));
+		}
 		viewer.addDoubleClickListener(event -> {
 			IStructuredSelection selection = (IStructuredSelection) event
 					.getSelection();
@@ -2361,7 +2353,7 @@ public class StagingView extends ViewPart
 				// If the input has changed and wasn't empty before or wasn't
 				// for a different repository before, record the contents of the
 				// viewer before the input is changed.
-				ViewerComparator comparator = stagingViewer.getComparator();
+				Comparator<Object> comparator = contentProvider.getComparator();
 				Map<String, Object> oldPaths = buildElementMap(stagingViewer,
 						contentProvider, comparator);
 
@@ -2442,14 +2434,14 @@ public class StagingView extends ViewPart
 
 	private static Map<String, Object> buildElementMap(TreeViewer stagingViewer,
 			StagingViewContentProvider contentProvider,
-			ViewerComparator comparator) {
+			Comparator<Object> comparator) {
 		// Builds a map from paths, represented as strings, to elements visible
 		// in the staging viewer.
 		Map<String, Object> result = new LinkedHashMap<>();
 		// Start visiting the root elements in the order in which they appear in
 		// the UI.
 		Object[] elements = contentProvider.getElements(null);
-		comparator.sort(stagingViewer, elements);
+		Arrays.sort(elements, comparator);
 		for (Object element : elements) {
 			visitElement(stagingViewer, contentProvider, comparator, element,
 					result);
@@ -2459,7 +2451,7 @@ public class StagingView extends ViewPart
 
 	private static boolean visitElement(TreeViewer stagingViewer,
 			StagingViewContentProvider contentProvider,
-			ViewerComparator comparator,
+			Comparator<Object> comparator,
 			Object element, Map<String, Object> paths) {
 		if (element instanceof StagingEntry) {
 			StagingEntry stagingEntry = (StagingEntry) element;
@@ -2481,7 +2473,7 @@ public class StagingView extends ViewPart
 			StagingFolderEntry stagingFolderEntry = (StagingFolderEntry) element;
 			// Visit the children in the order in which they appear in the UI.
 			Object[] children = contentProvider.getChildren(stagingFolderEntry);
-			comparator.sort(stagingViewer, children);
+			Arrays.sort(children, comparator);
 
 			IPath path = stagingFolderEntry.getPath();
 			String pathString = path.toString();
@@ -4593,83 +4585,15 @@ public class StagingView extends ViewPart
 	 */
 	private static class StagingEntryComparator extends ViewerComparator {
 
-		private boolean alphabeticSort;
+		private Comparator<Object> comparator;
 
-		private Comparator<String> comparator;
-
-		private boolean fileNamesFirst;
-
-		private StagingEntryComparator(boolean alphabeticSort,
-				boolean fileNamesFirst) {
-			this.alphabeticSort = alphabeticSort;
-			this.setFileNamesFirst(fileNamesFirst);
-			comparator = CommonUtils.STRING_ASCENDING_COMPARATOR;
-		}
-
-		public boolean isFileNamesFirst() {
-			return fileNamesFirst;
-		}
-
-		public void setFileNamesFirst(boolean fileNamesFirst) {
-			this.fileNamesFirst = fileNamesFirst;
-		}
-
-		private void setAlphabeticSort(boolean sort) {
-			this.alphabeticSort = sort;
-		}
-
-		private boolean isAlphabeticSort() {
-			return alphabeticSort;
-		}
-
-		@Override
-		public int category(Object element) {
-			if (!isAlphabeticSort()) {
-				StagingEntry stagingEntry = getStagingEntry(element);
-				if (stagingEntry != null) {
-					return getState(stagingEntry);
-				}
-			}
-			return super.category(element);
+		private StagingEntryComparator(Comparator<Object> comparator) {
+			this.comparator = comparator;
 		}
 
 		@Override
 		public int compare(Viewer viewer, Object e1, Object e2) {
-			int cat1 = category(e1);
-			int cat2 = category(e2);
-
-			if (cat1 != cat2) {
-				return cat1 - cat2;
-			}
-
-			String name1 = getStagingEntryText(e1);
-			String name2 = getStagingEntryText(e2);
-
-			return comparator.compare(name1, name2);
-		}
-
-		private String getStagingEntryText(Object element) {
-			String text = ""; //$NON-NLS-1$
-			StagingEntry stagingEntry = getStagingEntry(element);
-			// Replace slashes by ASCII \001 to make e.g.
-			// "org.eclipse.egit.gitflow/..." sort before
-			// "org.eclipse.egit.gitflow.ui/...".
-			// Use ASCII \255 to separate the file name to make e.g.
-			// "org.eclipse.egit.gitflow/subdir/file" sort before
-			// "org.eclipse.egit.gitflow/file".
-			if (stagingEntry != null) {
-				text = stagingEntry.getParentPath().toString().replace('/',
-						'\001');
-				if (isFileNamesFirst()) {
-					text = '\255' + stagingEntry.getName() + '\001' + text;
-				} else {
-					text = text + '\255' + stagingEntry.getName();
-				}
-			} else if (element instanceof StagingFolderEntry) {
-				text = ((StagingFolderEntry) element).getNodePath().toString()
-						.replace('/', '\001');
-			}
-			return text;
+			return comparator.compare(getStagingEntry(e1), getStagingEntry(e2));
 		}
 
 		@Nullable
@@ -4685,33 +4609,6 @@ public class StagingView extends ViewPart
 				}
 			}
 			return entry;
-		}
-
-		private int getState(StagingEntry entry) {
-			switch (entry.getState()) {
-			case CONFLICTING:
-				return 1;
-			case MODIFIED:
-				return 2;
-			case MODIFIED_AND_ADDED:
-				return 3;
-			case MODIFIED_AND_CHANGED:
-				return 4;
-			case ADDED:
-				return 5;
-			case CHANGED:
-				return 6;
-			case MISSING:
-				return 7;
-			case MISSING_AND_CHANGED:
-				return 8;
-			case REMOVED:
-				return 9;
-			case UNTRACKED:
-				return 10;
-			default:
-				return super.category(entry);
-			}
 		}
 
 	}
