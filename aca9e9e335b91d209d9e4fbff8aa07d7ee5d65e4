@@ -52,6 +52,24 @@
       "revId": "aca9e9e335b91d209d9e4fbff8aa07d7ee5d65e4",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "21b52d7b_a7359167",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/staging/StagingView.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 4642,
+      "author": {
+        "id": 290492
+      },
+      "writtenOn": "2020-08-24T19:17:04Z",
+      "side": 1,
+      "message": "\u003e Instead, I\u0027m going to try to utilize StagingViewContentProvider$EntryComparator (with added support for state order) by StagingView$StagingEntryComparator for the real comparison.\n\nmh, not yet - will do that during the virtual tree refactoring.",
+      "parentUuid": "b757ef45_6532ab5c",
+      "revId": "aca9e9e335b91d209d9e4fbff8aa07d7ee5d65e4",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": true
     }
   ]
 }
