@@ -16,6 +16,24 @@
       "revId": "aca9e9e335b91d209d9e4fbff8aa07d7ee5d65e4",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "09bbe05e_8a017d1c",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/staging/StagingView.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 4642,
+      "author": {
+        "id": 290492
+      },
+      "writtenOn": "2020-08-24T07:26:11Z",
+      "side": 1,
+      "message": "Having 0xFF in front does not make a difference in the list views, but in the tree views only, where folders are compared against files.\n\nBut agreed, I don\u0027t like those magic characters as well.\n\nInstead, I\u0027m going to try to utilize StagingViewContentProvider$EntryComparator (with added support for state order) by StagingView$StagingEntryComparator for the real comparison.\nOnce the virtual tree does work, the StagingView$StagingEntryComparator is obsolete anyway, but meanwhile I want to keep the non-virtual tree intact.",
+      "parentUuid": "ac27c87e_757f2311",
+      "revId": "aca9e9e335b91d209d9e4fbff8aa07d7ee5d65e4",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": true
     }
   ]
 }
