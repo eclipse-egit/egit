@@ -580,11 +580,28 @@ public class StagingViewContentProvider extends WorkbenchContentProvider {
 		comparator.fileNameMode = enable;
 		if (content != null) {
 			Arrays.sort(content, comparator);
+			treeRoots = null;
+			compactTreeRoots = null;
 		}
+	}
+
+	void setSortByState(boolean enable) {
+		comparator.sortByState = enable;
+		if (content != null) {
+			Arrays.sort(content, comparator);
+			treeRoots = null;
+			compactTreeRoots = null;
+		}
+	}
+
+	Comparator<Object> getComparator() {
+		return comparator;
 	}
 
 	private static class EntryComparator implements Comparator<Object> {
 		boolean fileNameMode;
+
+		boolean sortByState;
 
 		@Override
 		public int compare(Object o1, Object o2) {
@@ -592,6 +609,12 @@ public class StagingViewContentProvider extends WorkbenchContentProvider {
 				if (o2 instanceof StagingEntry) {
 					StagingEntry e1 = (StagingEntry) o1;
 					StagingEntry e2 = (StagingEntry) o2;
+					if (sortByState) {
+						int result = getStateSortKey(e1) - getStateSortKey(e2);
+						if (result != 0) {
+							return result;
+						}
+					}
 					if (fileNameMode) {
 						int result = String.CASE_INSENSITIVE_ORDER
 								.compare(e1.getName(), e2.getName());
@@ -622,6 +645,33 @@ public class StagingViewContentProvider extends WorkbenchContentProvider {
 				return 0;
 			}
 		}
+	}
+
+	static int getStateSortKey(StagingEntry entry) {
+		switch (entry.getState()) {
+		case CONFLICTING:
+			return 1;
+		case MODIFIED:
+			return 2;
+		case MODIFIED_AND_ADDED:
+			return 3;
+		case MODIFIED_AND_CHANGED:
+			return 4;
+		case ADDED:
+			return 5;
+		case CHANGED:
+			return 6;
+		case MISSING:
+			return 7;
+		case MISSING_AND_CHANGED:
+			return 8;
+		case REMOVED:
+			return 9;
+		case UNTRACKED:
+			return 10;
+		// no default tag here, to get warning when new state is added
+		}
+		return 0;
 	}
 
 	/**
