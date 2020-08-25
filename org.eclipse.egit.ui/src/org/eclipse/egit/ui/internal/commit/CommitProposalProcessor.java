@@ -33,6 +33,7 @@ import org.eclipse.jface.text.contentassist.IContentAssistProcessor;
 import org.eclipse.jface.text.contentassist.IContextInformation;
 import org.eclipse.jface.text.contentassist.IContextInformationValidator;
 import org.eclipse.swt.graphics.Image;
+import org.eclipse.swt.graphics.Point;
 
 /**
  * Commit proposal processor
@@ -138,30 +139,49 @@ public abstract class CommitProposalProcessor implements IContentAssistProcessor
 		Collection<String> messages = computeMessageProposals();
 		Set<CommitFile> files = computeFileProposals();
 
+		Point selection = viewer.getSelectedRange();
+		int replacementLength;
 		List<ICompletionProposal> proposals = new ArrayList<>();
 		if (prefix != null && prefix.length() > 0) {
-			int replacementLength = prefix.length();
+			replacementLength = prefix.length();
 			int replacementOffset = offset - replacementLength;
+			if (offset >= selection.x && offset < selection.x + selection.y) {
+				// Remove the rest of the selection when applying the proposal
+				replacementLength = selection.x + selection.y
+						- replacementOffset;
+			}
 			prefix = prefix.toLowerCase(Locale.US);
-			for (CommitFile file : files)
-				if (file.matches(prefix))
+			for (CommitFile file : files) {
+				if (file.matches(prefix)) {
 					proposals.add(file.createProposal(replacementOffset,
 							replacementLength));
-			for (String message : messages)
-				if (message.startsWith(prefix))
+				}
+			}
+			for (String message : messages) {
+				if (message.startsWith(prefix)) {
 					proposals.add(new CompletionProposal(message,
 							replacementOffset, replacementLength, message
 									.length(), (Image) resourceManager
 									.get(UIIcons.ELCL16_COMMENTS),
 							escapeWhitespace(message), null, null));
+				}
+			}
 		} else {
-			for (String message : messages)
-				proposals.add(new CompletionProposal(message, offset, 0,
-						message.length(), (Image) resourceManager
-								.get(UIIcons.ELCL16_COMMENTS),
+			if (offset >= selection.x && offset < selection.x + selection.y) {
+				// Remove the rest of the selection when applying the proposal
+				replacementLength = selection.x + selection.y - offset;
+			} else {
+				replacementLength = 0;
+			}
+			for (String message : messages) {
+				proposals.add(new CompletionProposal(message, offset,
+						replacementLength, message.length(),
+						(Image) resourceManager.get(UIIcons.ELCL16_COMMENTS),
 						escapeWhitespace(message), null, null));
-			for (CommitFile file : files)
-				proposals.add(file.createProposal(offset, 0));
+			}
+			for (CommitFile file : files) {
+				proposals.add(file.createProposal(offset, replacementLength));
+			}
 		}
 		return proposals.toArray(new ICompletionProposal[0]);
 	}
