@@ -293,7 +293,7 @@ class CommitGraphTable {
 		});
 		table.setLabelProvider(graphLabelProvider);
 		table.setContentProvider(new GraphContentProvider());
-		renderer = new SWTPlotRenderer(rawTable.getDisplay(), resources);
+		renderer = new SWTPlotRenderer(rawTable, resources);
 
 		clipboard = new Clipboard(rawTable.getDisplay());
 		rawTable.addDisposeListener(new DisposeListener() {
