@@ -33,6 +33,7 @@ import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.graphics.RGB;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Event;
+import org.eclipse.swt.widgets.Table;
 import org.eclipse.swt.widgets.TableItem;
 
 class SWTPlotRenderer extends AbstractPlotRenderer<SWTLane, Color> {
@@ -85,17 +86,21 @@ class SWTPlotRenderer extends AbstractPlotRenderer<SWTLane, Color> {
 
 	private final ResourceManager resources;
 
-	GC g;
+	private GC g;
 
-	int cellX;
+	private int cellX;
 
-	int cellY;
+	private int cellY;
 
-	Color cellFG;
+	private Color cellFG;
 
-	Color cellBG;
+	private Color cellBG;
+
+	private Color tableBG;
 
 	private Ref headRef;
+
+	private Table table;
 
 	/**
 	 * Number of tags of the current commit being rendered. Reset after each
@@ -103,8 +108,10 @@ class SWTPlotRenderer extends AbstractPlotRenderer<SWTLane, Color> {
 	 */
 	private int tagCount = 0;
 
-	SWTPlotRenderer(final Display d, final ResourceManager resources) {
+	SWTPlotRenderer(final Table table, final ResourceManager resources) {
 		this.resources = resources;
+		this.table = table;
+		Display d = table.getDisplay();
 		sys_black = d.getSystemColor(SWT.COLOR_BLACK);
 		sys_gray = d.getSystemColor(SWT.COLOR_GRAY);
 		sys_white = d.getSystemColor(SWT.COLOR_WHITE);
@@ -120,6 +127,11 @@ class SWTPlotRenderer extends AbstractPlotRenderer<SWTLane, Color> {
 		cellY = event.y;
 		cellFG = g.getForeground();
 		cellBG = g.getBackground();
+		// Can't use cellBG for determining dark mode; it changes for
+		// selected/inactive selected cells. The table background updates fine
+		// on theme changes.
+		tableBG = table.getBackground();
+
 		if (textHeight == 0)
 			textHeight = g.stringExtent("/").y; //$NON-NLS-1$
 
@@ -188,6 +200,9 @@ class SWTPlotRenderer extends AbstractPlotRenderer<SWTLane, Color> {
 		boolean branch = false;
 		RGB labelOuter;
 		RGB labelInner;
+		Color labelTextColor = sys_black;
+		boolean adjustColors = true;
+
 		if (name.startsWith(Constants.R_HEADS)) {
 			branch = true;
 			labelOuter = OUTER_HEAD;
@@ -223,7 +238,22 @@ class SWTPlotRenderer extends AbstractPlotRenderer<SWTLane, Color> {
 			}
 		} else {
 			labelOuter = OUTER_OTHER;
-			labelInner = INNER_OTHER;
+			float hsb[] = tableBG.getRGB().getHSB();
+			if (hsb[2] < 0.5) {
+				// Dark table: use table background a little lightened
+				if (hsb[2] < 0.1) {
+					hsb[2] = 0.3f;
+				} else {
+					hsb[2] *= 1.7;
+				}
+				labelInner = new RGB(hsb[0], hsb[1], hsb[2]);
+				labelTextColor = hsb[2] < 0.5 ? sys_white : sys_black;
+				adjustColors = false;
+			} else {
+				// Light table
+				labelInner = INNER_OTHER;
+				labelTextColor = sys_black;
+			}
 
 			if (name.startsWith(Constants.R_REFS))
 				txt = name.substring(Constants.R_REFS.length());
@@ -231,6 +261,26 @@ class SWTPlotRenderer extends AbstractPlotRenderer<SWTLane, Color> {
 				txt = name; // HEAD and such
 		}
 
+		if (adjustColors) {
+			float hsb[] = tableBG.getRGB().getHSB();
+			if (hsb[2] < 0.5) {
+				// Dark table: darken the fill color
+				hsb = labelInner.getHSB();
+				if (hsb[2] >= 0.5) {
+					// With the very bright, weakly saturated colors we have,
+					// the following works reasonably well: Bump the saturation
+					// up, and darken a little. Unless it's a gray: then darken
+					// only.
+					if (!(labelInner.red == labelInner.blue
+							&& labelInner.blue == labelInner.green)) {
+						hsb[1] = (float) Math.min(1.0, hsb[1] * 1.5);
+					}
+					hsb[2] *= 0.7;
+					labelInner = new RGB(hsb[0], hsb[1], hsb[2]);
+				}
+				labelTextColor = hsb[2] < 0.5 ? sys_white : sys_black;
+			}
+		}
 		int maxLength;
 		if (tag)
 			maxLength = Activator.getDefault().getPreferenceStore()
@@ -276,10 +326,13 @@ class SWTPlotRenderer extends AbstractPlotRenderer<SWTLane, Color> {
 		g.drawRoundRectangle(cellX + x, cellY + texty - 1, outerWidth,
 				textsz.y + 1, arc, arc);
 
-		g.setForeground(sys_black);
+		g.setForeground(labelTextColor);
 
 		// Draw text
 		g.drawString(txt, cellX + x + 4, cellY + texty, true);
+
+		g.setBackground(cellBG);
+		g.setBackground(cellFG);
 
 		if (isHead)
 			g.setFont(oldFont);
