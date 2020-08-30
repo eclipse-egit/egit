@@ -211,6 +211,9 @@ public class CommitHelper {
 	 *         current state
 	 */
 	public static boolean isCommitWithoutFilesAllowed(Repository repository) {
+		if (repository == null) {
+			return false;
+		}
 		RepositoryState state = repository.getRepositoryState();
 		return state == RepositoryState.MERGING_RESOLVED;
 	}
@@ -220,9 +223,13 @@ public class CommitHelper {
 	 * @return info related to the HEAD commit
 	 */
 	public static CommitInfo getHeadCommitInfo(Repository repository) {
-		RevCommit headCommit = getHeadCommit(repository);
-		if (headCommit == null)
+		if (repository == null) {
 			return null;
+		}
+		RevCommit headCommit = getHeadCommit(repository);
+		if (headCommit == null) {
+			return null;
+		}
 		String commitMessage = headCommit.getFullMessage().replaceAll(
 				"\n", Text.DELIMITER); //$NON-NLS-1$
 		PersonIdent authorIdent = headCommit.getAuthorIdent();
