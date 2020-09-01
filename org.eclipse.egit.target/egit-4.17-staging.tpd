@@ -1,0 +1,7 @@
+target "egit-4.17-staging" with source configurePhase
+
+include "projects/jetty-9.4.x.tpd"
+include "projects/license.tpd"
+include "projects/swtbot-snapshot.tpd"
+include "orbit/R20200831200620-2020-09.tpd"
+include "releasetrain/4.17-2020-09.tpd"
