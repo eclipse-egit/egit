@@ -2,7 +2,7 @@
 <feature
       id="org.eclipse.egit"
       label="%featureName"
-      version="5.9.0.202009080501-r"
+      version="5.9.1.qualifier"
       provider-name="%providerName"
       plugin="org.eclipse.egit"
       license-feature="org.eclipse.license"
@@ -40,11 +40,11 @@
       <import plugin="org.eclipse.jsch.ui" version="1.3.0" match="compatible"/>
       <import plugin="org.eclipse.jsch.core" version="1.3.0" match="compatible"/>
       <import plugin="com.jcraft.jsch" version="0.1.55" match="compatible"/>
-      <import feature="org.eclipse.jgit" version="5.9.0" match="equivalent"/>
-      <import feature="org.eclipse.jgit.gpg.bc" version="5.9.0" match="equivalent"/>
-      <import feature="org.eclipse.jgit.http.apache" version="5.9.0" match="equivalent"/>
-      <import feature="org.eclipse.jgit.ssh.apache" version="5.9.0" match="equivalent"/>
-      <import feature="org.eclipse.jgit.ssh.jsch" version="5.9.0" match="equivalent"/>
+      <import feature="org.eclipse.jgit" version="5.9.1" match="equivalent"/>
+      <import feature="org.eclipse.jgit.gpg.bc" version="5.9.1" match="equivalent"/>
+      <import feature="org.eclipse.jgit.http.apache" version="5.9.1" match="equivalent"/>
+      <import feature="org.eclipse.jgit.ssh.apache" version="5.9.1" match="equivalent"/>
+      <import feature="org.eclipse.jgit.ssh.jsch" version="5.9.1" match="equivalent"/>
    </requires>
 
    <plugin
