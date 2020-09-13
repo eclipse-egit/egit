@@ -550,6 +550,15 @@ public class CoreText extends NLS {
 	public static String SshPreferencesMirror_invalidKeyFile;
 
 	/** */
+	public static String EGitSshdSessionFactory_savingPreferencesFailed;
+
+	/** */
+	public static String EGitSshdSessionFactory_sshKeyEncryptedPrompt;
+
+	/** */
+	public static String EGitSshdSessionFactory_sshKeyPassphraseStorePrompt;
+
+	/** */
 	public static String RebaseInteractiveStep_Edit;
 
 	/** */

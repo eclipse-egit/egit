@@ -81,6 +81,11 @@ public final class GitCorePreferences {
 	public static final String core_maxPullThreadsCount = "core_max_pull_threads_count"; //$NON-NLS-1$
 
 	/**
+	 * Whether to store SSH key passphrases in the Eclipse secure store.
+	 */
+	public static final String core_saveCredentialsInSecureStore = "core_save_credentials_in_secure_store"; //$NON-NLS-1$
+
+	/**
 	 * HTTP client library to use. Currently allowed values are "jdk" and
 	 * "apache", case insensitive, if undefined or any other value the default
 	 * "jdk" will be used.

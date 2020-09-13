@@ -18,16 +18,22 @@ import java.net.URI;
 import java.net.URISyntaxException;
 import java.nio.file.Path;
 import java.security.GeneralSecurityException;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
 import org.eclipse.core.net.proxy.IProxyData;
 import org.eclipse.core.net.proxy.IProxyService;
+import org.eclipse.core.runtime.Platform;
+import org.eclipse.core.runtime.preferences.IEclipsePreferences;
+import org.eclipse.core.runtime.preferences.InstanceScope;
 import org.eclipse.egit.core.Activator;
+import org.eclipse.egit.core.GitCorePreferences;
 import org.eclipse.egit.core.securestorage.EGitSecureStore;
 import org.eclipse.egit.core.securestorage.UserPasswordCredentials;
 import org.eclipse.equinox.security.storage.StorageException;
 import org.eclipse.jgit.annotations.NonNull;
+import org.eclipse.jgit.transport.CredentialItem;
 import org.eclipse.jgit.transport.CredentialsProvider;
 import org.eclipse.jgit.transport.URIish;
 import org.eclipse.jgit.transport.sshd.IdentityPasswordProvider;
@@ -35,6 +41,8 @@ import org.eclipse.jgit.transport.sshd.KeyPasswordProvider;
 import org.eclipse.jgit.transport.sshd.ProxyData;
 import org.eclipse.jgit.transport.sshd.ProxyDataFactory;
 import org.eclipse.jgit.transport.sshd.SshdSessionFactory;
+import org.eclipse.jgit.util.StringUtils;
+import org.osgi.service.prefs.BackingStoreException;
 
 /**
  * A bridge between the Eclipse ssh2 configuration (which originally was done
@@ -144,6 +152,8 @@ public class EGitSshdSessionFactory extends SshdSessionFactory {
 
 		private final EGitSecureStore store;
 
+		private boolean useSecureStore;
+
 		public EGitFilePasswordProvider(CredentialsProvider provider,
 				EGitSecureStore store) {
 			super(provider);
@@ -154,27 +164,80 @@ public class EGitSshdSessionFactory extends SshdSessionFactory {
 		protected char[] getPassword(URIish uri, int attempt,
 				@NonNull State state) throws IOException {
 			if (attempt == 0) {
+				useSecureStore = Platform.getPreferencesService().getBoolean(
+						Activator.getPluginId(),
+						GitCorePreferences.core_saveCredentialsInSecureStore,
+						true, null);
 				// Obtain a password from secure store and return it if
 				// successful
-				try {
-					UserPasswordCredentials credentials = store
-							.getCredentials(uri);
-					if (credentials != null) {
-						String password = credentials.getPassword();
-						if (password != null) {
-							char[] pass = password.toCharArray();
-							state.setPassword(pass);
-							// Don't increment the count; this attempt shall not
-							// count against the limit, and we rely on count
-							// still being zero when we handle the result.
-							return pass;
+				if (useSecureStore) {
+					try {
+						UserPasswordCredentials credentials = store
+								.getCredentials(uri);
+						if (credentials != null) {
+							String password = credentials.getPassword();
+							if (password != null) {
+								char[] pass = password.toCharArray();
+								state.setPassword(pass);
+								// Don't increment the count; this attempt shall
+								// not count against the limit, and we rely on
+								// count still being zero when we handle the
+								// result.
+								return pass;
+							}
 						}
+					} catch (StorageException e) {
+						if (e.getErrorCode() == StorageException.NO_PASSWORD) {
+							// User canceled dialog: don't try to use the secure
+							// storage anymore
+							useSecureStore = false;
+							savePrefs();
+						} else {
+							Activator.logError(e.getMessage(), e);
+						}
+					} catch (RuntimeException e) {
+						Activator.logError(e.getMessage(), e);
 					}
-				} catch (StorageException | RuntimeException e) {
-					Activator.logError(e.getMessage(), e);
 				}
 			}
 			return super.getPassword(uri, attempt, state);
+		}
+
+		@Override
+		protected char[] getPassword(URIish uri, String message) {
+			if (store == null) {
+				return super.getPassword(uri, message);
+			}
+			CredentialsProvider provider = getCredentialsProvider();
+			if (provider == null) {
+				return null;
+			}
+			boolean haveMessage = !StringUtils.isEmptyOrNull(message);
+			List<CredentialItem> items = new ArrayList<>(haveMessage ? 3 : 2);
+			if (haveMessage) {
+				items.add(new CredentialItem.InformationalMessage(message));
+			}
+			CredentialItem.Password password = new CredentialItem.Password(
+					CoreText.EGitSshdSessionFactory_sshKeyEncryptedPrompt);
+			items.add(password);
+			CredentialItem.YesNoType storeValue = new CredentialItem.YesNoType(
+					CoreText.EGitSshdSessionFactory_sshKeyPassphraseStorePrompt);
+			storeValue.setValue(useSecureStore);
+			items.add(storeValue);
+			try {
+				if (!provider.get(uri, items)) {
+					cancelAuthentication();
+				}
+				boolean shouldStore = storeValue.getValue();
+				if (useSecureStore != shouldStore) {
+					useSecureStore = shouldStore;
+					savePrefs();
+				}
+				char[] pass = password.getValue();
+				return pass == null ? null : pass.clone();
+			} finally {
+				password.clear();
+			}
 		}
 
 		@Override
@@ -197,18 +260,45 @@ public class EGitSshdSessionFactory extends SshdSessionFactory {
 						return true; // Re-try
 					}
 				} else if (err == null) {
-					// A user-entered password worked: store it in the secure
-					// store. We need a dummy user name to go with it.
-					UserPasswordCredentials credentials = new UserPasswordCredentials(
-							"egit:ssh:resource", new String(password)); //$NON-NLS-1$
-					try {
-						store.putCredentials(uri, credentials);
-					} catch (StorageException | RuntimeException e) {
-						Activator.logError(e.getMessage(), e);
+					if (useSecureStore) {
+						// A user-entered password worked: store it in the
+						// secure store. We need a dummy user name to go with
+						// it.
+						UserPasswordCredentials credentials = new UserPasswordCredentials(
+								"egit:ssh:resource", new String(password)); //$NON-NLS-1$
+						try {
+							store.putCredentials(uri, credentials);
+						} catch (StorageException e) {
+							if (e.getErrorCode() == StorageException.NO_PASSWORD) {
+								// User canceled dialog: don't try to use the
+								// secure storage anymore
+								useSecureStore = false;
+								savePrefs();
+							} else {
+								Activator.logError(e.getMessage(), e);
+							}
+						} catch (RuntimeException e) {
+							Activator.logError(e.getMessage(), e);
+						}
 					}
 				}
 			}
 			return super.keyLoaded(uri, state, password, err);
+		}
+
+		private void savePrefs() {
+			IEclipsePreferences prefs = InstanceScope.INSTANCE
+					.getNode(Activator.getPluginId());
+			prefs.putBoolean(
+					GitCorePreferences.core_saveCredentialsInSecureStore,
+					useSecureStore);
+			try {
+				prefs.flush();
+			} catch (BackingStoreException e) {
+				Activator.logError(
+						CoreText.EGitSshdSessionFactory_savingPreferencesFailed,
+						e);
+			}
 		}
 	}
 }

@@ -313,6 +313,17 @@ public class GitPreferenceRoot extends DoublePreferencesPreferencePage
 		secureGroup.setText(UIText.GitPreferenceRoot_SecureStoreGroupLabel);
 		addField(new BooleanFieldEditor(UIPreferences.CLONE_WIZARD_STORE_SECURESTORE,
 				UIText.GitPreferenceRoot_SecureStoreUseByDefault, secureGroup));
+		addField(new BooleanFieldEditor(
+				GitCorePreferences.core_saveCredentialsInSecureStore,
+				UIText.GitPreferenceRoot_SecureStoreUseForSshKeys,
+				secureGroup) {
+
+			@Override
+			public void setPreferenceStore(IPreferenceStore store) {
+				super.setPreferenceStore(
+						store == null ? null : getSecondaryPreferenceStore());
+			}
+		});
 		updateMargins(secureGroup);
 
 		boolean lfsAvailable = LfsFactory.getInstance().isAvailable()

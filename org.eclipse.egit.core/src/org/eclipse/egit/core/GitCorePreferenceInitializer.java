@@ -33,6 +33,8 @@ public class GitCorePreferenceInitializer extends AbstractPreferenceInitializer 
 		p.putBoolean(GitCorePreferences.core_autoIgnoreDerivedResources, true);
 		p.putBoolean(GitCorePreferences.core_autoStageDeletion, false);
 		p.putBoolean(GitCorePreferences.core_autoStageMoves, true);
+		p.putBoolean(GitCorePreferences.core_saveCredentialsInSecureStore,
+				true);
 
 		String defaultRepoDir = RepositoryUtil.getDefaultDefaultRepositoryDir();
 		p.put(GitCorePreferences.core_defaultRepositoryDir, defaultRepoDir);
