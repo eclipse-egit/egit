@@ -62,8 +62,8 @@ public class EGitSecureStore {
 		}
 		String pathName = calcNodePath(uri);
 		ISecurePreferences node = preferences.node(pathName);
-		node.put(USER, u, false);
 		node.put(PASSWORD, p, true);
+		node.put(USER, u, false);
 		node.flush();
 	}
 
