@@ -97,11 +97,10 @@ public class CustomPromptDialog extends TrayDialog {
 		infoLabel.setText(NLS.bind(tempInfoText, uri.toString()));
 
 		for (CredentialItem item : credentialItems) {
-			Label label = new Label(main, SWT.NONE);
-			label.setText(item.getPromptText());
-			GridDataFactory.defaultsFor(label).applyTo(label);
-
 			if (item instanceof CharArrayType || item instanceof StringType) {
+				Label label = new Label(main, SWT.NONE);
+				label.setText(item.getPromptText());
+				GridDataFactory.defaultsFor(label).applyTo(label);
 				Text text = new Text(main, SWT.BORDER | (item.isValueSecure() ? SWT.PASSWORD : SWT.NONE));
 				GridDataFactory.defaultsFor(text)
 						.align(SWT.BEGINNING, SWT.CENTER).applyTo(text);
@@ -109,12 +108,18 @@ public class CustomPromptDialog extends TrayDialog {
 				editingControls.add(text);
 			} else if (item instanceof YesNoType) {
 				Button checkBox = new Button(main, SWT.CHECK);
+				checkBox.setText(item.getPromptText());
 				checkBox.setData(KEY_ITEM, item);
-				GridDataFactory.defaultsFor(checkBox)
+				GridDataFactory.defaultsFor(checkBox).span(2, 1)
 						.align(SWT.BEGINNING, SWT.CENTER).applyTo(checkBox);
+				if (((YesNoType) item).getValue()) {
+					checkBox.setSelection(true);
+				}
 				editingControls.add(checkBox);
 			} else {
 				// unknown type, not editable
+				Label label = new Label(main, SWT.NONE);
+				label.setText(item.getPromptText());
 				GridDataFactory.defaultsFor(label).span(2, 1).applyTo(label);
 			}
 		}

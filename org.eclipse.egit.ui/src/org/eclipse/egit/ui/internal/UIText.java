@@ -780,6 +780,9 @@ public class UIText extends NLS {
 	public static String GitPreferenceRoot_SecureStoreUseByDefault;
 
 	/** */
+	public static String GitPreferenceRoot_SecureStoreUseForSshKeys;
+
+	/** */
 	public static String GitPreferenceRoot_SshClient_Jsch_Label;
 
 	/** */
