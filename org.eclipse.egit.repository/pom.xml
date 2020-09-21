@@ -98,7 +98,7 @@
            </dependencies>
            <repositories>
             <repository>
-             <url>https://download.eclipse.org/webtools/releng/repository</url>
+             <url>https://download.eclipse.org/webtools/downloads/drops/R3.19.0/R-3.19.0-20200828030223/repositoryunittests/</url>
              <layout>p2</layout>
             </repository>
             <repository>
