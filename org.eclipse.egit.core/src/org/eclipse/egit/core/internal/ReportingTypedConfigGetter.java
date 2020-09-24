@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (C) 2017, Thomas Wolf <thomas.wolf@paranor.ch>
+ * Copyright (C) 2017, 2020 Thomas Wolf <thomas.wolf@paranor.ch>
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License 2.0
@@ -11,6 +11,7 @@
 package org.eclipse.egit.core.internal;
 
 import java.io.File;
+import java.nio.file.Path;
 import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.List;
@@ -23,6 +24,7 @@ import org.eclipse.jgit.lib.Config;
 import org.eclipse.jgit.lib.DefaultTypedConfigGetter;
 import org.eclipse.jgit.storage.file.FileBasedConfig;
 import org.eclipse.jgit.transport.RefSpec;
+import org.eclipse.jgit.util.FS;
 
 /**
  * A {@link org.eclipse.jgit.lib.TypedConfigGetter TypedConfigGetter} that logs
@@ -96,6 +98,20 @@ public class ReportingTypedConfigGetter extends DefaultTypedConfigGetter {
 		} catch (IllegalArgumentException e) {
 			warn(config, join(section, subsection, name),
 					Long.toString(defaultValue) + ' ' + toString(wantUnit), e);
+			return defaultValue;
+		}
+	}
+
+	@Override
+	public Path getPath(Config config, String section, String subsection,
+			String name, @NonNull FS fs, File resolveAgainst,
+			Path defaultValue) {
+		try {
+			return super.getPath(config, section, subsection, name, fs,
+					resolveAgainst, defaultValue);
+		} catch (IllegalArgumentException e) {
+			warn(config, join(section, subsection, name),
+					defaultValue == null ? null : defaultValue.toString(), e);
 			return defaultValue;
 		}
 	}
