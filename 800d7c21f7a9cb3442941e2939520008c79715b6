@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fe6ed5dc_3c6dec77",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/Activator.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 346,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2020-09-26T22:46:31Z",
+      "side": 0,
+      "message": "unrelated change ?",
+      "revId": "800d7c21f7a9cb3442941e2939520008c79715b6",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": true
+    }
+  ]
+}
