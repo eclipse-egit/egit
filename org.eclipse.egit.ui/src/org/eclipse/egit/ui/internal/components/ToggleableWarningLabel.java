@@ -10,6 +10,8 @@
  *******************************************************************************/
 package org.eclipse.egit.ui.internal.components;
 
+import java.util.Objects;
+
 import org.eclipse.jface.layout.GridDataFactory;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.graphics.Image;
@@ -60,22 +62,27 @@ public class ToggleableWarningLabel extends Composite {
 	 * warning icon if it had been changed.
 	 *
 	 * @param message
+	 * @return whether something changed
 	 */
-	public void showMessage(String message) {
+	public boolean showMessage(String message) {
+		boolean changed = false;
 		if (!isBuiltInImage) {
 			image.setImage(PlatformUI.getWorkbench().getSharedImages()
 					.getImage(ISharedImages.IMG_OBJS_WARN_TSK));
 			isBuiltInImage = true;
+			changed = true;
 		}
-		setText(message);
+		changed |= setText(message);
+		return changed;
 	}
 
 	/**
 	 * Hide the warning label.
+	 *
+	 * @return whether the visibility changed
 	 */
-	public void hideMessage() {
-		if (getVisible())
-			changeVisibility(false);
+	public boolean hideMessage() {
+		return changeVisibility(false);
 	}
 
 	/**
@@ -95,11 +102,16 @@ public class ToggleableWarningLabel extends Composite {
 	 *
 	 * @param message
 	 *            to show
+	 * @return whether the Composite changed
 	 */
-	protected void setText(String message) {
-		warningText.setText(message);
-		layout(true);
-		changeVisibility(true);
+	protected boolean setText(String message) {
+		boolean changed = false;
+		if (!Objects.equals(message, warningText.getText())) {
+			warningText.setText(message);
+			changed = true;
+		}
+		changed |= changeVisibility(true);
+		return changed;
 	}
 
 	/**
@@ -107,11 +119,15 @@ public class ToggleableWarningLabel extends Composite {
 	 *
 	 * @param visible
 	 *            whether to show the composite
+	 * @return whether the visibility changed
 	 */
-	protected void changeVisibility(boolean visible) {
-		setVisible(visible);
-		GridData data = (GridData) getLayoutData();
-		data.exclude = !visible;
-		getParent().layout();
+	protected boolean changeVisibility(boolean visible) {
+		if (visible != getVisible()) {
+			setVisible(visible);
+			GridData data = (GridData) getLayoutData();
+			data.exclude = !visible;
+			return true;
+		}
+		return false;
 	}
 }
