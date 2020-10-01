@@ -302,6 +302,9 @@ public final class UIPreferences {
 	/** */
 	public static final String STASH_INCLUDE_UNTRACKED = "stashIncludeUntracked"; //$NON-NLS-1$
 
+	/** */
+	public static final String SHOW_PULL_CONFIRM = "show_pull_confirm"; //$NON-NLS-1$
+
 	/**
 	 * Converts a persisted String separated with commas to an integer array
 	 *

@@ -2770,26 +2770,28 @@ public class StagingView extends ViewPart
 	}
 
 	private void updateMessage() {
-		boolean needsRefresh = false;
 		if (hasErrorsOrWarnings()) {
-			needsRefresh = warningLabel
-					.showMessage(UIText.StagingView_MessageErrors);
+			warningLabel.showMessage(UIText.StagingView_MessageErrors);
+			commitMessageSection.redraw();
 		} else {
 			String message = commitMessageComponent.getStatus().getMessage();
+			boolean needsRedraw = false;
 			if (message != null) {
-				needsRefresh = warningLabel.showMessage(message);
+				warningLabel.showMessage(message);
+				needsRedraw = true;
 			} else if (isUnbornHead) {
-				needsRefresh = warningLabel.showInfo(MessageFormat.format(
+				warningLabel.showInfo(MessageFormat.format(
 						UIText.StagingView_InitialCommitText, currentBranch));
+				needsRedraw = true;
 			} else {
-				needsRefresh = warningLabel.hideMessage();
+				needsRedraw = warningLabel.getVisible();
+				warningLabel.hideMessage();
 			}
-		}
-		// Without this explicit redraw, the ControlDecoration of the
-		// commit message area would not get updated and cause visual
-		// corruption. A simple requestLayout() is not good enough.
-		if (needsRefresh) {
-			commitMessageSection.redraw();
+			// Without this explicit redraw, the ControlDecoration of the
+			// commit message area would not get updated and cause visual
+			// corruption.
+			if (needsRedraw)
+				commitMessageSection.redraw();
 		}
 	}
 

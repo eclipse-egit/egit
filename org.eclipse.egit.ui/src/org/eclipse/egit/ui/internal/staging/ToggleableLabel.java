@@ -40,23 +40,21 @@ public class ToggleableLabel extends ToggleableWarningLabel {
 	 *
 	 * @param message
 	 *            to show
-	 * @return whether the {@link ToggleableLabel} changed appearance
 	 */
-	public boolean showInfo(String message) {
-		boolean changed = false;
+	public void showInfo(String message) {
 		if (!isInfo) {
 			setImage(PlatformUI.getWorkbench().getSharedImages()
 					.getImage(ISharedImages.IMG_OBJS_INFO_TSK));
 			isInfo = true;
-			changed = true;
 		}
-		changed |= setText(message);
-		return changed;
+		setText(message);
+		layout(true);
+		changeVisibility(true);
 	}
 
 	@Override
-	public boolean showMessage(String message) {
+	public void showMessage(String message) {
+		super.showMessage(message);
 		isInfo = false;
-		return super.showMessage(message);
 	}
 }

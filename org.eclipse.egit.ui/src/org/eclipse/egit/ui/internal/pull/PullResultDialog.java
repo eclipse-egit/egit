@@ -14,6 +14,7 @@
 package org.eclipse.egit.ui.internal.pull;
 
 import org.eclipse.egit.ui.Activator;
+import org.eclipse.egit.ui.UIPreferences;
 import org.eclipse.egit.ui.UIUtils;
 import org.eclipse.egit.ui.internal.UIText;
 import org.eclipse.egit.ui.internal.fetch.FetchResultDialog;
@@ -54,6 +55,8 @@ public class PullResultDialog extends Dialog {
 	private final PullResult result;
 
 	private boolean persistSize;
+
+	private Button toggleButton;
 
 	/**
 	 * @param shell
@@ -154,6 +157,16 @@ public class PullResultDialog extends Dialog {
 				IDialogConstants.CLOSE_LABEL,
 				true);
 		okayButton.setFocus();
+		createToggleButton(parent);
+	}
+
+	/**
+	 * @param parent
+	 * @return control
+	 */
+	protected Control createCustomArea(Composite parent) {
+		createToggleButton(parent);
+		return null;
 	}
 
 	@Override
@@ -200,5 +213,23 @@ public class PullResultDialog extends Dialog {
 		} finally {
 			persistSize = oldPersistSize;
 		}
+	}
+
+	private void createToggleButton(Composite parent) {
+		boolean toggleState = !Activator.getDefault().getPreferenceStore()
+				.getBoolean(UIPreferences.SHOW_PULL_CONFIRM);
+		toggleButton = new Button(parent, SWT.CHECK | SWT.LEFT);
+		toggleButton.setText(UIText.PullResultDialog_ToggleShowButton);
+		toggleButton.setSelection(toggleState);
+	}
+
+	@Override
+	protected void buttonPressed(int buttonId) {
+		// store the preference to hide these dialogs
+		if (toggleButton != null)
+			Activator.getDefault().getPreferenceStore().setValue(
+					UIPreferences.SHOW_PULL_CONFIRM,
+					!toggleButton.getSelection());
+		super.buttonPressed(buttonId);
 	}
 }

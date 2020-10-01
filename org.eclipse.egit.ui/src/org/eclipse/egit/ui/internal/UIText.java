@@ -2268,6 +2268,9 @@ public class UIText extends NLS {
 	public static String PullResultDialog_NothingToFetchFromLocal;
 
 	/** */
+	public static String PullResultDialog_ToggleShowButton;
+
+	/** */
 	public static String PushAction_wrongURIDescription;
 
 	/** */
@@ -3987,6 +3990,9 @@ public class UIText extends NLS {
 
 	/** */
 	public static String DialogsPreferencePage_RebaseCheckbox;
+
+	/** */
+	public static String DialogsPreferencePage_PullCheckbox;
 
 	/** */
 	public static String DialogsPreferencePage_RunningLaunchOnCheckout;
