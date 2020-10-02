@@ -39,6 +39,138 @@
    <feature url="features/org.eclipse.egit.gitflow.feature_0.0.0.qualifier.jar" id="org.eclipse.egit.gitflow.feature" version="0.0.0">
       <category name="EGit.additional"/>
    </feature>
+   <bundle id="org.apache.commons.codec">
+      <category name="EGit.dependencies"/>
+   </bundle>
+   <bundle id="org.apache.commons.codec.source">
+      <category name="EGit.dependencies"/>
+   </bundle>
+   <bundle id="net.i2p.crypto.eddsa">
+      <category name="EGit.dependencies"/>
+   </bundle>
+   <bundle id="net.i2p.crypto.eddsa.source">
+      <category name="EGit.dependencies"/>
+   </bundle>
+   <bundle id="org.apache.ant">
+      <category name="EGit.dependencies"/>
+   </bundle>
+   <bundle id="org.apache.ant.source">
+      <category name="EGit.dependencies"/>
+   </bundle>
+   <bundle id="org.apache.httpcomponents.httpclient">
+      <category name="EGit.dependencies"/>
+   </bundle>
+   <bundle id="org.apache.httpcomponents.httpclient.source">
+      <category name="EGit.dependencies"/>
+   </bundle>
+   <bundle id="org.apache.httpcomponents.httpcore">
+      <category name="EGit.dependencies"/>
+   </bundle>
+   <bundle id="org.apache.httpcomponents.httpcore.source">
+      <category name="EGit.dependencies"/>
+   </bundle>
+   <bundle id="org.apache.sshd.osgi">
+      <category name="EGit.dependencies"/>
+   </bundle>
+   <bundle id="org.apache.sshd.osgi.source">
+      <category name="EGit.dependencies"/>
+   </bundle>
+   <bundle id="org.apache.sshd.sftp">
+      <category name="EGit.dependencies"/>
+   </bundle>
+   <bundle id="org.apache.sshd.sftp.source">
+      <category name="EGit.dependencies"/>
+   </bundle>
+   <bundle id="com.jcraft.jzlib">
+      <category name="EGit.dependencies"/>
+   </bundle>
+   <bundle id="com.jcraft.jzlib.source">
+      <category name="EGit.dependencies"/>
+   </bundle>
+   <bundle id="org.slf4j.api">
+      <category name="EGit.dependencies"/>
+   </bundle>
+   <bundle id="org.slf4j.api.source">
+      <category name="EGit.dependencies"/>
+   </bundle>
+   <bundle id="org.slf4j.binding.log4j12">
+      <category name="EGit.dependencies"/>
+   </bundle>
+   <bundle id="org.slf4j.binding.log4j12.source">
+      <category name="EGit.dependencies"/>
+   </bundle>
+   <bundle id="org.tukaani.xz">
+      <category name="EGit.dependencies"/>
+   </bundle>
+   <bundle id="org.tukaani.xz.source">
+      <category name="EGit.dependencies"/>
+   </bundle>
+   <bundle id="org.apache.commons.logging">
+      <category name="EGit.dependencies"/>
+   </bundle>
+   <bundle id="org.apache.commons.logging.source">
+      <category name="EGit.dependencies"/>
+   </bundle>
+   <bundle id="javaewah">
+      <category name="EGit.dependencies"/>
+   </bundle>
+   <bundle id="javaewah.source">
+      <category name="EGit.dependencies"/>
+   </bundle>
+   <bundle id="org.bouncycastle.bcpg">
+      <category name="EGit.dependencies"/>
+   </bundle>
+   <bundle id="org.bouncycastle.bcpg.source">
+      <category name="EGit.dependencies"/>
+   </bundle>
+   <bundle id="org.bouncycastle.bcpkix">
+      <category name="EGit.dependencies"/>
+   </bundle>
+   <bundle id="org.bouncycastle.bcpkix.source">
+      <category name="EGit.dependencies"/>
+   </bundle>
+   <bundle id="org.bouncycastle.bcprov">
+      <category name="EGit.dependencies"/>
+   </bundle>
+   <bundle id="org.bouncycastle.bcprov.source">
+      <category name="EGit.dependencies"/>
+   </bundle>
+   <bundle id="com.google.gson">
+      <category name="EGit.dependencies"/>
+   </bundle>
+   <bundle id="com.google.gson.source">
+      <category name="EGit.dependencies"/>
+   </bundle>
+   <bundle id="com.jcraft.jsch">
+      <category name="EGit.dependencies"/>
+   </bundle>
+   <bundle id="com.jcraft.jsch.source">
+      <category name="EGit.dependencies"/>
+   </bundle>
+   <bundle id="javax.servlet">
+      <category name="EGit.dependencies"/>
+   </bundle>
+   <bundle id="javax.servlet.source">
+      <category name="EGit.dependencies"/>
+   </bundle>
+   <bundle id="org.apache.commons.compress">
+      <category name="EGit.dependencies"/>
+   </bundle>
+   <bundle id="org.apache.commons.compress.source">
+      <category name="EGit.dependencies"/>
+   </bundle>
+   <bundle id="org.kohsuke.args4j">
+      <category name="EGit.dependencies"/>
+   </bundle>
+   <bundle id="org.kohsuke.args4j.source">
+      <category name="EGit.dependencies"/>
+   </bundle>
+   <bundle id="org.apache.log4j">
+      <category name="EGit.dependencies"/>
+   </bundle>
+   <bundle id="org.apache.log4j.source">
+      <category name="EGit.dependencies"/>
+   </bundle>
    <category-def name="EGit" label="Git integration for Eclipse">
       <description>
          Versioning with Git and integration with Gerrit Code Review
@@ -54,4 +186,5 @@
          Gitflow support and integration with Task repositories
       </description>
    </category-def>
+   <category-def name="EGit.dependencies" label="Git integration for Eclipse - dependencies"/>
 </site>
