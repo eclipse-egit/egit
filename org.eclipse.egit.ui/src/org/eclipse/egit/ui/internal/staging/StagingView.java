@@ -226,6 +226,7 @@ import org.eclipse.ui.IFileEditorInput;
 import org.eclipse.ui.IPartService;
 import org.eclipse.ui.ISelectionListener;
 import org.eclipse.ui.ISelectionService;
+import org.eclipse.ui.IWorkbenchCommandConstants;
 import org.eclipse.ui.IWorkbenchPart;
 import org.eclipse.ui.IWorkbenchPartReference;
 import org.eclipse.ui.IWorkbenchPartSite;
@@ -1949,7 +1950,11 @@ public class StagingView extends ViewPart
 			}
 		};
 		refreshAction.setImageDescriptor(UIIcons.ELCL16_REFRESH);
+		refreshAction
+				.setActionDefinitionId(IWorkbenchCommandConstants.FILE_REFRESH);
 		toolbar.add(refreshAction);
+		actionBars.setGlobalActionHandler(ActionFactory.REFRESH.getId(),
+				refreshAction);
 
 		// link with selection
 		Action linkSelectionAction = new BooleanPrefAction(
