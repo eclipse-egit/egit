@@ -487,6 +487,8 @@ public class GitHistoryPage extends HistoryPage implements RefsChangedListener,
 
 			wrapCommentAction.setEnabled(showCommentAction.isChecked());
 			fillCommentAction.setEnabled(showCommentAction.isChecked());
+			historyPage.getSite().getActionBars().updateActionBars();
+
 		}
 
 		private void createRepositorySwitchAction() {
@@ -547,17 +549,26 @@ public class GitHistoryPage extends HistoryPage implements RefsChangedListener,
 			findAction.setChecked(isChecked);
 			historyPage.getSite().getActionBars().setGlobalActionHandler(
 					ActionFactory.FIND.getId(), findAction);
-			historyPage.getSite().getActionBars().updateActionBars();
 		}
 
 		private void createRefreshAction() {
+			// Unfortunately we have no access to the refresh action the
+			// GenericHistoryView puts into the toolbar. Define our own
+			// so we can put it into the view menu and set it as a global
+			// handler for the global retarget action to get the keybinding
+			// to work.
 			refreshAction = new Action(UIText.GitHistoryPage_RefreshMenuLabel,
 					UIIcons.ELCL16_REFRESH) {
+
 				@Override
 				public void run() {
 					historyPage.refresh();
 				}
 			};
+			refreshAction.setActionDefinitionId(
+					IWorkbenchCommandConstants.FILE_REFRESH);
+			historyPage.getSite().getActionBars().setGlobalActionHandler(
+					ActionFactory.REFRESH.getId(), refreshAction);
 		}
 
 		private void createFilterActions() {
