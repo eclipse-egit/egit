@@ -174,7 +174,7 @@ public class FetchGerritChangePage extends WizardPage {
 
 	private Text branchText;
 
-	private String refName;
+	private String initialRefText;
 
 	private Composite warningAdditionalRefNotActive;
 
@@ -200,13 +200,14 @@ public class FetchGerritChangePage extends WizardPage {
 
 	/**
 	 * @param repository
-	 * @param refName initial value for the ref field
+	 * @param initialText
+	 *            initial value for the ref field
 	 */
-	public FetchGerritChangePage(Repository repository, String refName) {
+	public FetchGerritChangePage(Repository repository, String initialText) {
 		super(FetchGerritChangePage.class.getName());
 		Assert.isNotNull(repository);
 		this.repository = repository;
-		this.refName = refName;
+		this.initialRefText = initialText;
 		setTitle(NLS.bind(UIText.FetchGerritChangePage_PageTitle,
 				RepositoryUtil.INSTANCE.getRepositoryName(repository)));
 		setMessage(UIText.FetchGerritChangePage_PageMessage);
@@ -233,26 +234,19 @@ public class FetchGerritChangePage extends WizardPage {
 			}
 			changeRefs.clear();
 		});
-		Clipboard clipboard = new Clipboard(parent.getDisplay());
-		String clipText;
-		try {
-			clipText = (String) clipboard
-					.getContents(TextTransfer.getInstance());
-		} finally {
-			clipboard.dispose();
-		}
 		String defaultUri = null;
 		String defaultCommand = null;
 		String defaultChange = null;
 		Change candidateChange = null;
-		if (clipText != null) {
-			Matcher matcher = GERRIT_FETCH_PATTERN.matcher(clipText);
+		if (initialRefText != null) {
+			Matcher matcher = GERRIT_FETCH_PATTERN.matcher(initialRefText);
 			if (matcher.matches()) {
 				defaultUri = matcher.group(1);
 				defaultChange = matcher.group(2);
 				defaultCommand = matcher.group(3);
 			} else {
-				candidateChange = determineChangeFromString(clipText.trim());
+				candidateChange = determineChangeFromString(
+						initialRefText.trim());
 			}
 		}
 		SelectionAdapter validatePage = new SelectionAdapter() {
@@ -698,13 +692,6 @@ public class FetchGerritChangePage extends WizardPage {
 			}
 		}
 		uriCombo.select(0);
-	}
-
-	@Override
-	public void setVisible(boolean visible) {
-		super.setVisible(visible);
-		if (visible && refName != null)
-			refText.setText(refName);
 	}
 
 	private void checkPage() {
