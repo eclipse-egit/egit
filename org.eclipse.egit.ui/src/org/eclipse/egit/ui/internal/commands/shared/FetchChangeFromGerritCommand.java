@@ -24,9 +24,12 @@ import org.eclipse.jface.window.Window;
 import org.eclipse.jface.wizard.Wizard;
 import org.eclipse.jface.wizard.WizardDialog;
 import org.eclipse.jgit.lib.Repository;
+import org.eclipse.swt.dnd.Clipboard;
+import org.eclipse.swt.dnd.TextTransfer;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Shell;
+import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.handlers.HandlerUtil;
 
 /**
@@ -39,6 +42,16 @@ public class FetchChangeFromGerritCommand extends AbstractSharedCommandHandler {
 	@Override
 	public Object execute(ExecutionEvent event) throws ExecutionException {
 		repository = getRepository(event);
+
+		Clipboard clipboard = new Clipboard(
+				PlatformUI.getWorkbench().getDisplay());
+		String clipText;
+		try {
+			clipText = (String) clipboard
+					.getContents(TextTransfer.getInstance());
+		} finally {
+			clipboard.dispose();
+		}
 
 		if (repository == null) {
 			Shell shell = getShell(event);
@@ -74,7 +87,8 @@ public class FetchChangeFromGerritCommand extends AbstractSharedCommandHandler {
 			}
 		}
 
-		FetchGerritChangeWizard wiz = new FetchGerritChangeWizard(repository);
+		FetchGerritChangeWizard wiz = new FetchGerritChangeWizard(repository,
+				clipText);
 		NonBlockingWizardDialog dlg = new NonBlockingWizardDialog(
 				HandlerUtil.getActiveShellChecked(event), wiz);
 		dlg.setHelpAvailable(false);
