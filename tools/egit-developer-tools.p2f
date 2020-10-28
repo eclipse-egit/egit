@@ -82,14 +82,14 @@
         <repository location='https://download.eclipse.org/tools/orbit/downloads/drops/R20150519210750/repository/'/>
       </repositories>
     </iu>
-    <iu id='org.slf4j.api' name='org.slf4j.api' version='1.7.2.v20121108-1250'>
+    <iu id='org.slf4j.api' name='org.slf4j.api' version='1.7.30.v20200204-2150'>
       <repositories size='1'>
-        <repository location='https://download.eclipse.org/tools/orbit/downloads/drops/R20150519210750/repository/'/>
+        <repository location='https://download.eclipse.org/tools/orbit/downloads/drops/S20201027182932/repository/'/>
       </repositories>
     </iu>
-    <iu id='org.slf4j.impl.log4j12' name='org.slf4j.impl.log4j12' version='1.7.2.v20131105-2200'>
+    <iu id='org.slf4j.impl.log4j12' name='org.slf4j.binding.log4j12' version='1.7.30.v20201016-1131'>
       <repositories size='1'>
-        <repository location='https://download.eclipse.org/tools/orbit/downloads/drops/R20150519210750/repository/'/>
+        <repository location='https://download.eclipse.org/tools/orbit/downloads/drops/S20201027182932/repository/'/>
       </repositories>
     </iu>
     <iu id='org.eclipse.jetty.bundles.f.feature.group' name='Jetty - Bundles: all the jetty bundles' version='0.0.0'>
