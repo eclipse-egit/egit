@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "f45d4799_53214050",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 301446
+      },
+      "writtenOn": "2020-10-29T18:59:15Z",
+      "side": 1,
+      "message": "Ah, I wanted to amend to this branch but forgot to rebase. Thank you for correcting me.",
+      "parentUuid": "c04bb6f8_18432756",
+      "range": {
+        "startLine": 2,
+        "startChar": 0,
+        "endLine": 2,
+        "endChar": 48
+      },
+      "revId": "1de1539aee6b4113a621e143264aed53a5a2f650",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "8f88cdc0_7d5c1ae0",
         "filename": "/COMMIT_MSG",
         "patchSetId": 4
