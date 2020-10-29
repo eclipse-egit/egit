@@ -2,6 +2,52 @@
   "comments": [
     {
       "key": {
+        "uuid": "c04bb6f8_18432756",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2020-10-29T18:01:14Z",
+      "side": 1,
+      "message": "Oh, now I see what you did. You amended my already committed change. That\u0027s not good at all.\n\nCreate a new commit with you as author on top of the current origin/master. Then push again.",
+      "range": {
+        "startLine": 2,
+        "startChar": 0,
+        "endLine": 2,
+        "endChar": 48
+      },
+      "revId": "1de1539aee6b4113a621e143264aed53a5a2f650",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8f88cdc0_7d5c1ae0",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 4,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2020-10-29T18:01:14Z",
+      "side": 1,
+      "message": "Things would definitely be simpler if you used one and the same E-Mail address as committer and for sign-off.",
+      "range": {
+        "startLine": 4,
+        "startChar": 24,
+        "endLine": 4,
+        "endChar": 49
+      },
+      "revId": "1de1539aee6b4113a621e143264aed53a5a2f650",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "33ad9600_b3af3d40",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/history/GitHistoryPage.java",
         "patchSetId": 4
