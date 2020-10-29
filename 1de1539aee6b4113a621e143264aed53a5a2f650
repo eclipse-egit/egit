@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "33ad9600_b3af3d40",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/history/GitHistoryPage.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2020-10-29T17:45:22Z",
+      "side": 1,
+      "message": "What\u0027s going on here? These are the changes from I3a8cde955d6bf024db097df57c1465681ea0c7cc . They should not be in this change. Please rebase onto latest origin/master.",
+      "revId": "1de1539aee6b4113a621e143264aed53a5a2f650",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": true
+    }
+  ]
+}
