@@ -16,7 +16,6 @@ import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.StringTokenizer;
 
 import org.eclipse.egit.ui.Activator;
 import org.eclipse.egit.ui.internal.UIIcons;
@@ -312,25 +311,17 @@ public class RepositoryPropertySource implements IPropertySource {
 	}
 
 	private Object getValueFromConfig(Config config, String keyString) {
-		StringTokenizer tok = new StringTokenizer(keyString, "."); //$NON-NLS-1$
-
-		String section;
-		String subsection;
-		String name;
-
-		String[] valueList = null;
-		if (tok.countTokens() == 2) {
-			section = tok.nextToken();
-			subsection = null;
-			name = tok.nextToken();
-		} else if (tok.countTokens() == 3) {
-			section = tok.nextToken();
-			subsection = tok.nextToken();
-			name = tok.nextToken();
-		} else {
+		int i = keyString.indexOf('.');
+		if (i < 0) {
 			return ""; //$NON-NLS-1$
 		}
+		int j = keyString.lastIndexOf('.');
 
+		String section = keyString.substring(0, i);
+		String subsection = i == j ? null : keyString.substring(i + 1, j);
+		String name = keyString.substring(j + 1);
+
+		String[] valueList = null;
 		if (getSingleValueMode())
 			valueList = new String[] { config.getString(section, subsection,
 					name) };
