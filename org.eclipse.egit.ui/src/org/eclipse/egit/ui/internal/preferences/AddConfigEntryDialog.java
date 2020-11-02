@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2010, 2017 SAP AG and others.
+ * Copyright (c) 2010, 2020 SAP AG and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License 2.0
  * which accompanies this distribution, and is available at
@@ -13,7 +13,6 @@
  *******************************************************************************/
 package org.eclipse.egit.ui.internal.preferences;
 
-import java.util.StringTokenizer;
 import java.util.regex.Pattern;
 
 import org.eclipse.egit.ui.internal.UIText;
@@ -138,8 +137,7 @@ public class AddConfigEntryDialog extends TitleAreaDialog {
 				hasError = true;
 				return;
 			}
-			StringTokenizer st = new StringTokenizer(keyText.getText(), "."); //$NON-NLS-1$
-			if (st.countTokens() < 2) {
+			if (keyText.getText().indexOf('.') < 0) {
 				setErrorMessage(UIText.AddConfigEntryDialog_KeyComponentsMessage);
 				hasError = true;
 				return;

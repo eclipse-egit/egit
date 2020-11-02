@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2010, SAP AG.
+ * Copyright (c) 2010, 2020 SAP AG and others
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License 2.0
  * which accompanies this distribution, and is available at
@@ -19,7 +19,6 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.Set;
-import java.util.StringTokenizer;
 
 import org.eclipse.core.filesystem.EFS;
 import org.eclipse.core.filesystem.IFileStore;
@@ -86,8 +85,6 @@ import org.eclipse.ui.model.WorkbenchContentProvider;
  * non-stored configurations
  */
 public class ConfigurationEditorComponent {
-
-	private final static String DOT = "."; //$NON-NLS-1$
 
 	private StoredConfig editableConfig;
 
@@ -309,17 +306,17 @@ public class ConfigurationEditorComponent {
 						.getSelection();
 				Object first = sel.getFirstElement();
 				if (first instanceof Section)
-					suggestedKey = ((Section) first).name + DOT;
+					suggestedKey = ((Section) first).name + '.';
 				else if (first instanceof SubSection) {
 					SubSection sub = (SubSection) first;
-					suggestedKey = sub.parent.name + DOT + sub.name + DOT;
+					suggestedKey = sub.parent.name + '.' + sub.name + '.';
 				} else if (first instanceof Entry) {
 					Entry entry = (Entry) first;
 					if (entry.sectionparent != null)
-						suggestedKey = entry.sectionparent.name + DOT;
+						suggestedKey = entry.sectionparent.name + '.';
 					else
-						suggestedKey = entry.subsectionparent.parent.name + DOT
-								+ entry.subsectionparent.name + DOT;
+						suggestedKey = entry.subsectionparent.parent.name + '.'
+								+ entry.subsectionparent.name + '.';
 				} else
 					suggestedKey = null;
 
@@ -332,29 +329,21 @@ public class ConfigurationEditorComponent {
 						// https://bugs.eclipse.org/bugs/show_bug.cgi?id=472110
 						return;
 					}
-					StringTokenizer st = new StringTokenizer(result, DOT);
-					if (st.countTokens() == 2) {
-						String sectionName = st.nextToken();
-						String entryName = st.nextToken();
-						Entry entry = ((GitConfig) tv.getInput()).getEntry(
-								sectionName, null, entryName);
-						if (entry == null)
-							editableConfig.setString(sectionName, null,
-									entryName, dlg.getValue());
-						else
-							entry.addValue(dlg.getValue());
-						markDirty();
-						reveal(sectionName, null, entryName);
-					} else if (st.countTokens() > 2) {
-						int n = st.countTokens();
-						String sectionName = st.nextToken();
-						StringBuilder b = new StringBuilder(st.nextToken());
-						for (int i = 0; i < n - 3; i++) {
-							b.append(DOT);
-							b.append(st.nextToken());
+					int i = result.indexOf('.');
+					if (i < 0) {
+						Activator.handleError(
+								UIText.ConfigurationEditorComponent_WrongNumberOfTokensMessage,
+								null, true);
+					} else {
+						int j = result.lastIndexOf('.');
+						String sectionName = result.substring(0, i);
+						String subSectionName = (j <= i + 1) ? null
+								: result.substring(i + 1, j);
+						String entryName = result.substring(j + 1);
+						if (subSectionName != null
+								&& subSectionName.isEmpty()) {
+							subSectionName = null;
 						}
-						String subSectionName = b.toString();
-						String entryName = st.nextToken();
 						Entry entry = ((GitConfig) tv.getInput()).getEntry(
 								sectionName, subSectionName, entryName);
 						if (entry == null)
@@ -364,11 +353,7 @@ public class ConfigurationEditorComponent {
 							entry.addValue(dlg.getValue());
 						markDirty();
 						reveal(sectionName, subSectionName, entryName);
-					} else
-						Activator
-								.handleError(
-										UIText.ConfigurationEditorComponent_WrongNumberOfTokensMessage,
-										null, true);
+					}
 				}
 			}
 
@@ -403,7 +388,7 @@ public class ConfigurationEditorComponent {
 									UIText.ConfigurationEditorComponent_RemoveSubsectionTitle,
 									NLS.bind(
 											UIText.ConfigurationEditorComponent_RemoveSubsectionMessage,
-											section.parent.name + DOT
+											section.parent.name + '.'
 													+ section.name))) {
 						editableConfig.unsetSection(section.parent.name,
 								section.name);
