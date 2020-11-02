@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3c9a07f9_9f9a8b75",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/preferences/ConfigurationEditorComponent.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 380,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2020-11-02T08:11:09Z",
+      "side": 1,
+      "message": "Note: a section containing subsections is not removed by this. This is unrelated to this change; see bug 517268.",
+      "revId": "58f64c9e1c5272de9359aa136f4db6cb1f4ad1f5",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": true
+    }
+  ]
+}
