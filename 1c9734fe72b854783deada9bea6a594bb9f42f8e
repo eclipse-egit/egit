@@ -16,6 +16,24 @@
       "revId": "1c9734fe72b854783deada9bea6a594bb9f42f8e",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2a5962eb_36a103d4",
+        "filename": "org.eclipse.egit.target/egit-4.16.target",
+        "patchSetId": 1
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2020-11-14T20:58:30Z",
+      "side": 1,
+      "message": "done in\nhttps://git.eclipse.org/r/c/jgit/jgit/+/172247\nhttps://git.eclipse.org/r/c/egit/egit/+/172250\nhttps://git.eclipse.org/r/c/egit/egit-github/+/172251",
+      "parentUuid": "a836e335_2cd902f0",
+      "revId": "1c9734fe72b854783deada9bea6a594bb9f42f8e",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": true
     }
   ]
 }
