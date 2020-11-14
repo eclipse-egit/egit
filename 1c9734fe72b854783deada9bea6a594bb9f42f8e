@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a836e335_2cd902f0",
+        "filename": "org.eclipse.egit.target/egit-4.16.target",
+        "patchSetId": 1
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2020-11-14T20:16:49Z",
+      "side": 1,
+      "message": "This is the wrong place to update orbit, instead replace orbit/S20201027182932.tpd, update the reference in all egit-x.tpd files and regenerate all target platforms.\n\nThough I think we could also wait until the next S-build or the final R-build for 2020-12 is available. Otherwise we need to update again when this I-build is purged. In addition the same changes need to be done in jgit.",
+      "revId": "1c9734fe72b854783deada9bea6a594bb9f42f8e",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": true
+    }
+  ]
+}
