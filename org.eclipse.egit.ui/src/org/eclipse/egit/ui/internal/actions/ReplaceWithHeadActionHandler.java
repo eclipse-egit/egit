@@ -1,5 +1,5 @@
 /*******************************************************************************
- *  Copyright (c) 2011 GitHub Inc.
+ *  Copyright (c) 2011, 2020 GitHub Inc. and others.
  *  All rights reserved. This program and the accompanying materials
  *  are made available under the terms of the Eclipse Public License 2.0
  *  which accompanies this distribution, and is available at
@@ -14,10 +14,12 @@
 package org.eclipse.egit.ui.internal.actions;
 
 import org.eclipse.core.commands.ExecutionEvent;
+import org.eclipse.egit.ui.internal.selection.SelectionRepositoryStateCache;
 import org.eclipse.jgit.lib.Constants;
+import org.eclipse.jgit.lib.Repository;
 
 /**
- * Replace with HEAD revision action handler
+ * Replace with HEAD revision action handler.
  */
 public class ReplaceWithHeadActionHandler extends DiscardChangesActionHandler {
 
@@ -26,4 +28,20 @@ public class ReplaceWithHeadActionHandler extends DiscardChangesActionHandler {
 		return Constants.HEAD;
 	}
 
+	@Override
+	public boolean isEnabled() {
+		// ReplaceWithHead is allowed if the repository is not bare and has a
+		// HEAD
+		Repository[] repositories = getRepositories();
+		if (repositories.length == 0) {
+			return false;
+		}
+		for (Repository repository : repositories) {
+			if (repository.isBare() || SelectionRepositoryStateCache.INSTANCE
+					.getHead(repository) == null) {
+				return false;
+			}
+		}
+		return true;
+	}
 }
