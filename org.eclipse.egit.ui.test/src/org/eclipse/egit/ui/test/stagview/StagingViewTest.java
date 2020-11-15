@@ -17,11 +17,16 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
+import java.util.concurrent.TimeUnit;
+
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.egit.core.JobFamilies;
 import org.eclipse.egit.ui.common.StagingViewTester;
+import org.eclipse.egit.ui.internal.UIText;
 import org.eclipse.egit.ui.test.CommitMessageUtil;
+import org.eclipse.egit.ui.test.ContextMenuHelper;
+import org.eclipse.egit.ui.test.JobJoiner;
 import org.eclipse.egit.ui.test.TestUtil;
 import org.eclipse.jgit.api.Git;
 import org.eclipse.jgit.lib.ConfigConstants;
@@ -31,6 +36,8 @@ import org.eclipse.jgit.lib.RepositoryState;
 import org.eclipse.jgit.lib.StoredConfig;
 import org.eclipse.jgit.revwalk.RevCommit;
 import org.eclipse.jgit.util.RawParseUtils;
+import org.eclipse.swtbot.swt.finder.SWTBot;
+import org.eclipse.swtbot.swt.finder.widgets.SWTBotTree;
 import org.junit.Test;
 
 public class StagingViewTest extends AbstractStagingViewTestCase {
@@ -110,6 +117,54 @@ public class StagingViewTest extends AbstractStagingViewTestCase {
 
 		assertEquals(expectedMessage, TestUtil.getHeadCommit(repository)
 				.getShortMessage());
+	}
+
+	@Test
+	public void testMergeConflictCheckoutHead() throws Exception {
+		try (Git git = new Git(repository)) {
+			git.checkout().setCreateBranch(true).setName("side").call();
+			commitOneFileChange("on side");
+
+			git.checkout().setName("master").call();
+			commitOneFileChange("on master");
+
+			git.merge().include(repository.findRef("side")).call();
+		}
+		assertEquals(RepositoryState.MERGING, repository.getRepositoryState());
+
+		StagingViewTester stagingView = StagingViewTester.openStagingView();
+		assertEquals("", stagingView.getCommitMessage());
+		stagingView.assertCommitEnabled(false);
+
+		// Resolve the conflict via "Replace with HEAD"
+		SWTBot viewBot = stagingView.getView().bot();
+		SWTBotTree unstagedTree = viewBot.tree(0);
+
+		TestUtil.waitUntilTreeHasNodeContainsText(viewBot, unstagedTree,
+				FILE1_PATH, 10000);
+
+		TestUtil.getNode(unstagedTree.getAllItems(), FILE1_PATH).select();
+
+		JobJoiner jobJoiner = JobJoiner.startListening(
+				org.eclipse.egit.core.JobFamilies.INDEX_DIFF_CACHE_UPDATE, 30,
+				TimeUnit.SECONDS);
+
+		ContextMenuHelper.clickContextMenu(unstagedTree,
+				UIText.StagingView_replaceWithHeadRevision);
+
+		jobJoiner.join();
+
+		assertEquals(RepositoryState.MERGING_RESOLVED,
+				repository.getRepositoryState());
+		assertEquals("on master", getTestFileContent());
+		String expectedMessage = "Merge branch 'side'";
+		assertThat(stagingView.getCommitMessage(), startsWith(expectedMessage));
+
+		stagingView.commit();
+		assertEquals(RepositoryState.SAFE, repository.getRepositoryState());
+
+		assertEquals(expectedMessage,
+				TestUtil.getHeadCommit(repository).getShortMessage());
 	}
 
 	@Test

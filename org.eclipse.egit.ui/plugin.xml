@@ -2355,7 +2355,7 @@
                class="org.eclipse.egit.ui.internal.actions.ReplaceWithHeadActionHandler">
          </class>
          <activeWhen>
-            <test property="GitSelection.resourcesAllInRepository" args="isSafe" />
+            <test property="GitSelection.resourcesAllInRepository" args="!isBare,hasHead" />
          </activeWhen>
       </handler>
       <handler
