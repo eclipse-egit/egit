@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2011, 2016 SAP AG and others.
+ * Copyright (c) 2011, 2020 SAP AG and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License 2.0
  * which accompanies this distribution, and is available at
@@ -39,7 +39,9 @@ import org.eclipse.jgit.transport.RemoteConfig;
  * <li>isShared <code>true</code> if the resource is mapped to EGit. EGit may
  * still affect a resource if it belongs to the workspace of some shared
  * project.</li>
- * <li>isContainer <code>true</code> if the resource is a project or a folder</li>
+ * <li>isContainer <code>true</code> if the resource is a project or a
+ * folder</li>
+ * <li>hasHead <code>true</code> if the repository has a HEAD</li>
  * <li>is<em>repository state</em>
  * <ul>
  * <li>isSafe - see {@link RepositoryState#SAFE}</li>
@@ -53,16 +55,20 @@ import org.eclipse.jgit.transport.RemoteConfig;
  * <li>isRebasing - see {@link RepositoryState#REBASING}</li>
  * <li>isRebasingRebasing - see {@link RepositoryState#REBASING_REBASING}</li>
  * <li>isRebasingMerge - see {@link RepositoryState#REBASING_MERGE}</li>
- * <li>isRebasingInteractive - see {@link RepositoryState#REBASING_INTERACTIVE}</li>
+ * <li>isRebasingInteractive - see
+ * {@link RepositoryState#REBASING_INTERACTIVE}</li>
  * <li>isApply - see {@link RepositoryState#APPLY}</li>
  * <li>isBisecting - see {@link RepositoryState#BISECTING}</li>
  * </ul>
- * <li>Capabilities/properties of the current state:<ul>
- * <li>canCheckout  - see {@link RepositoryState#canCheckout()}</li>
- * <li>canAmend  - see {@link RepositoryState#canAmend()}</li>
- * <li>canCommit  - see {@link RepositoryState#canCommit()}</li>
- * <li>canResetHead  - see {@link RepositoryState#canResetHead()}</li>
+ * </li>
+ * <li>Capabilities/properties of the current state:
+ * <ul>
+ * <li>canCheckout - see {@link RepositoryState#canCheckout()}</li>
+ * <li>canAmend - see {@link RepositoryState#canAmend()}</li>
+ * <li>canCommit - see {@link RepositoryState#canCommit()}</li>
+ * <li>canResetHead - see {@link RepositoryState#canResetHead()}</li>
  * </ul>
+ * </li>
  * </ul>
  */
 public class ResourcePropertyTester extends AbstractPropertyTester {
@@ -104,9 +110,14 @@ public class ResourcePropertyTester extends AbstractPropertyTester {
 	 *         {@link ResourcePropertyTester}
 	 */
 	public static boolean testRepositoryState(Repository repository, String property) {
-		if ("isShared".equals(property)) //$NON-NLS-1$
+		if ("isShared".equals(property)) { //$NON-NLS-1$
 			return repository != null;
+		}
 		if (repository != null) {
+			if ("hasHead".equals(property)) { //$NON-NLS-1$
+				return SelectionRepositoryStateCache.INSTANCE
+						.getHead(repository) != null;
+			}
 			if ("hasGerritConfiguration".equals(property)) { //$NON-NLS-1$
 				return hasGerritConfiguration(repository);
 			}

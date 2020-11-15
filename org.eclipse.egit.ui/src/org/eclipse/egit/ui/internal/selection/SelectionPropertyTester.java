@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (C) 2014, 2015 Robin Stocker <robin@nibor.org> and others.
+ * Copyright (C) 2014, 2020 Robin Stocker <robin@nibor.org> and others.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License 2.0
@@ -178,8 +178,20 @@ public class SelectionPropertyTester extends AbstractPropertyTester {
 
 		for (Object arg : properties) {
 			String s = (String) arg;
-			if (!ResourcePropertyTester.testRepositoryState(repository, s))
+			if (s == null || s.isEmpty()) {
+				continue;
+			}
+			boolean test;
+			if (s.charAt(0) == '!') {
+				test = !ResourcePropertyTester.testRepositoryState(repository,
+						s.substring(1));
+			} else {
+				test = ResourcePropertyTester.testRepositoryState(repository,
+						s);
+			}
+			if (!test) {
 				return false;
+			}
 		}
 		return true;
 	}
