@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fd18f401_e1e3cabc",
+        "filename": "tools/oomph/EGit.setup",
+        "patchSetId": 1
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2020-11-22T17:53:25Z",
+      "side": 1,
+      "message": "this and the following changes seem unrelated",
+      "revId": "7ba90ab606d240577d99e3cf192828bdd47a9b1c",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": true
+    }
+  ]
+}
