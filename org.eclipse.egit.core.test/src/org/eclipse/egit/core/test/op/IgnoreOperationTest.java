@@ -16,6 +16,7 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
+import static org.junit.Assume.assumeTrue;
 
 import java.io.ByteArrayInputStream;
 import java.io.File;
@@ -35,11 +36,13 @@ import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.core.runtime.jobs.Job;
+import org.eclipse.egit.core.RepositoryUtil;
 import org.eclipse.egit.core.op.IgnoreOperation;
 import org.eclipse.egit.core.test.GitTestCase;
 import org.eclipse.egit.core.test.TestProject;
 import org.eclipse.egit.core.test.TestRepository;
 import org.eclipse.jgit.lib.Constants;
+import org.eclipse.jgit.util.FS;
 import org.eclipse.jgit.util.FileUtils;
 import org.junit.After;
 import org.junit.Before;
@@ -70,6 +73,36 @@ public class IgnoreOperationTest extends GitTestCase {
 			assert !ignoreFile.exists();
 		}
 		super.tearDown();
+	}
+
+	@Test
+	public void testIgnoreLinkToFolder() throws Exception {
+		assumeTrue(FS.DETECTED.supportsSymlinks());
+		IFolder binFolder = project.getProject().getFolder("bin");
+		IPath binPath = binFolder.getLocation();
+		IPath projectPath = project.getProject().getLocation();
+		FS.DETECTED.createSymLink(projectPath.append("sym").toFile(),
+				binPath.toOSString());
+		project.getProject().refreshLocal(IResource.DEPTH_INFINITE, null);
+		IFolder eclipseFolder = project.getProject().getFolder("sym");
+		assertEquals(IResource.FOLDER, eclipseFolder.getType());
+		assertTrue(eclipseFolder.exists());
+		IgnoreOperation operation = executeIgnore(projectPath.append("sym"));
+
+		String content = project.getFileContent(Constants.GITIGNORE_FILENAME);
+		assertFalse(operation.isGitignoreOutsideWSChanged());
+
+		// Should not be added again
+		operation = executeIgnore(projectPath.append("sym"));
+
+		String content2 = project.getFileContent(Constants.GITIGNORE_FILENAME);
+		assertTrue(".gitignore should have an entry for the symlink",
+				content.startsWith("/sym"));
+		assertTrue("Symlink should be ignored",
+				RepositoryUtil.isIgnored(projectPath.append("sym")));
+		assertEquals(".gitignore should not have been modified a second time",
+				content, content2);
+		assertFalse(operation.isGitignoreOutsideWSChanged());
 	}
 
 	@Test

@@ -22,6 +22,7 @@ import java.io.RandomAccessFile;
 import java.nio.ByteBuffer;
 import java.nio.channels.FileChannel;
 import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -50,6 +51,7 @@ import org.eclipse.jgit.lib.Repository;
 import org.eclipse.jgit.treewalk.TreeWalk;
 import org.eclipse.jgit.treewalk.WorkingTreeIterator;
 import org.eclipse.jgit.treewalk.filter.PathFilterGroup;
+import org.eclipse.jgit.util.FileUtils;
 import org.eclipse.osgi.util.NLS;
 
 /**
@@ -216,16 +218,29 @@ public class IgnoreOperation implements IEGitOperation {
 				continue;
 			}
 			StringBuilder builder = new StringBuilder();
-			for (String file : files) {
-				builder.append('/').append(file);
+			for (String fileName : files) {
+				builder.append('/').append(fileName);
 				boolean isDirectory = false;
 				IResource resource = container != null
-						? container.findMember(file) : null;
+						? container.findMember(fileName)
+						: null;
 				if (resource != null) {
-					isDirectory = resource.getType() != IResource.FILE;
+					int rscType = resource.getType();
+					isDirectory = rscType != IResource.FILE;
+					if (isDirectory) {
+						IPath location = resource.getLocation();
+						if (location != null) {
+							isDirectory = !Files.isSymbolicLink(
+									FileUtils.toPath(location.toFile()));
+						}
+					}
 				} else {
-					isDirectory = entry.getKey().append(file).toFile()
-							.isDirectory();
+					File file = entry.getKey().append(fileName).toFile();
+					isDirectory = file.isDirectory();
+					if (isDirectory) {
+						isDirectory = !Files
+								.isSymbolicLink(FileUtils.toPath(file));
+					}
 				}
 				if (isDirectory) {
 					builder.append('/');
