@@ -13,6 +13,8 @@
  *******************************************************************************/
 package org.eclipse.egit.core.internal;
 
+import static org.eclipse.team.core.ProjectSetCapability.SCHEME_SCM;
+
 import java.net.URI;
 import java.net.URISyntaxException;
 
@@ -28,9 +30,6 @@ import org.eclipse.osgi.util.NLS;
  * http://maven.apache.org/scm/scm-url-format.html for the format description.
  */
 public class GitURI {
-	// TODO replace with org.eclipse.team.core.ProjectSetCapability.SCHEME_SCM
-	// when we drop support for Galileo
-	private static final String SCHEME_SCM = "scm"; //$NON-NLS-1$
 
 	private static final String SCHEME_GIT = "git"; //$NON-NLS-1$
 
