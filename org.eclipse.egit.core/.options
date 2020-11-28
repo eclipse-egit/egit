@@ -4,7 +4,5 @@ org.eclipse.egit.core/debug = false
 org.eclipse.egit.core/debug/core = false
 # Trace location for the IndexDiffCache
 org.eclipse.egit.core/debug/core/indexdiffcache = false
-# Trace location for JSch
-org.eclipse.egit.core/debug/core/jsch = false
 # Trace location for ResourceRefreshJob
 org.eclipse.egit.core/debug/core/refresh = false
