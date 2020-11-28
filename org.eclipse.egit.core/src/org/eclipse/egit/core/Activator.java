@@ -85,13 +85,11 @@ import org.eclipse.jgit.transport.http.apache.HttpClientConnectionFactory;
 import org.eclipse.jgit.transport.sshd.SshdSessionFactory;
 import org.eclipse.jgit.util.FS;
 import org.eclipse.jgit.util.SystemReader;
-import org.eclipse.jsch.core.IJSchService;
 import org.eclipse.osgi.service.debug.DebugOptions;
 import org.eclipse.osgi.service.debug.DebugOptionsListener;
 import org.eclipse.osgi.util.NLS;
 import org.eclipse.team.core.RepositoryProvider;
 import org.osgi.framework.BundleContext;
-import org.osgi.framework.ServiceReference;
 import org.osgi.service.prefs.BackingStoreException;
 import org.osgi.util.tracker.ServiceTracker;
 
@@ -100,10 +98,6 @@ import org.osgi.util.tracker.ServiceTracker;
  * is a singleton class.
  */
 public class Activator extends Plugin implements DebugOptionsListener {
-
-	private enum SshClientType {
-		JSCH, APACHE
-	}
 
 	private enum HttpClientType {
 		JDK, APACHE
@@ -243,12 +237,9 @@ public class Activator extends Plugin implements DebugOptionsListener {
 		proxyServiceTracker = new ServiceTracker<>(context,
 				IProxyService.class.getName(), null);
 		proxyServiceTracker.open();
-		setupSSH(context);
+		SshSessionFactory.setInstance(new EGitSshdSessionFactory());
 		preferenceChangeListener = event -> {
-			if (GitCorePreferences.core_sshClient.equals(event.getKey())) {
-				setupSSH(getBundle().getBundleContext());
-			} else if (GitCorePreferences.core_httpClient
-					.equals(event.getKey())) {
+			if (GitCorePreferences.core_httpClient.equals(event.getKey())) {
 				setupHttp();
 			}
 		};
@@ -303,45 +294,6 @@ public class Activator extends Plugin implements DebugOptionsListener {
 			} catch (BackingStoreException e) {
 				logError(e.getMessage(), e);
 			}
-		}
-	}
-
-	@SuppressWarnings("unchecked")
-	private void setupSSH(final BundleContext context) {
-		String sshClient = Platform.getPreferencesService().getString(pluginId,
-				GitCorePreferences.core_sshClient, "apache", null); //$NON-NLS-1$
-		SshSessionFactory previous = SshSessionFactory.getInstance();
-		if (SshClientType.JSCH.name().equalsIgnoreCase(sshClient)) {
-			if (previous instanceof EclipseSshSessionFactory) {
-				return;
-			}
-			ServiceReference ssh = context
-					.getServiceReference(IJSchService.class.getName());
-			if (ssh != null) {
-				SshSessionFactory.setInstance(new EclipseSshSessionFactory(
-						(IJSchService) context.getService(ssh)));
-			} else {
-				// Should never happen
-				logWarning(CoreText.Activator_SshClientNoJsch, null);
-				if (previous instanceof EGitSshdSessionFactory) {
-					return;
-				}
-				SshSessionFactory.setInstance(new EGitSshdSessionFactory());
-			}
-		} else {
-			if (!SshClientType.APACHE.name().equalsIgnoreCase(sshClient)) {
-				logWarning(
-						MessageFormat.format(
-								CoreText.Activator_SshClientUnknown, sshClient),
-						null);
-			}
-			if (previous instanceof EGitSshdSessionFactory) {
-				return;
-			}
-			SshSessionFactory.setInstance(new EGitSshdSessionFactory());
-		}
-		if (previous instanceof SshdSessionFactory) {
-			((SshdSessionFactory) previous).close();
 		}
 	}
 

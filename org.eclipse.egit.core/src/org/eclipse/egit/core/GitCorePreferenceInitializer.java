@@ -39,7 +39,6 @@ public class GitCorePreferenceInitializer extends AbstractPreferenceInitializer 
 		String defaultRepoDir = RepositoryUtil.getDefaultDefaultRepositoryDir();
 		p.put(GitCorePreferences.core_defaultRepositoryDir, defaultRepoDir);
 		p.putInt(GitCorePreferences.core_maxPullThreadsCount, 3);
-		p.put(GitCorePreferences.core_sshClient, "apache"); //$NON-NLS-1$
 		p.put(GitCorePreferences.core_httpClient, "apache"); //$NON-NLS-1$
 		p.putInt(GitCorePreferences.core_remoteConnectionTimeout, 30);
 	}

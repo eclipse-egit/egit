@@ -5098,9 +5098,6 @@ public class UIText extends NLS {
 	public static String RemoteConnectionPreferencePage_HttpClientLabel;
 
 	/** */
-	public static String RemoteConnectionPreferencePage_SshClientLabel;
-
-	/** */
 	public static String RemoteConnectionPreferencePage_TimeoutLabel;
 
 	/** */
