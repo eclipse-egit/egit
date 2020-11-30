@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <?pde?>
 <!-- generated with https://github.com/eclipse-cbi/targetplatform-dsl -->
-<target name="egit-4.18-staging" sequenceNumber="1605867250">
+<target name="egit-4.18-staging" sequenceNumber="1606761356">
   <locations>
     <location includeMode="slicer" includeAllPlatforms="false" includeSource="true" includeConfigurePhase="true" type="InstallableUnit">
       <unit id="org.eclipse.jetty.client" version="9.4.30.v20200611"/>
@@ -105,7 +105,7 @@
       <unit id="org.slf4j.binding.log4j12.source" version="1.7.30.v20201108-2042"/>
       <unit id="org.tukaani.xz" version="1.8.0.v20180207-1613"/>
       <unit id="org.tukaani.xz.source" version="1.8.0.v20180207-1613"/>
-      <repository location="https://download.eclipse.org/tools/orbit/downloads/drops/S20201118210000/repository"/>
+      <repository location="https://download.eclipse.org/tools/orbit/downloads/drops/S20201124213957/repository"/>
     </location>
     <location includeMode="slicer" includeAllPlatforms="false" includeSource="true" includeConfigurePhase="true" type="InstallableUnit">
       <unit id="org.eclipse.sdk.ide" version="0.0.0"/>
@@ -113,7 +113,6 @@
       <unit id="org.eclipse.ecf.filetransfer.feature.feature.group" version="0.0.0"/>
       <unit id="org.eclipse.emf.sdk.feature.group" version="0.0.0"/>
       <unit id="org.eclipse.equinox.concurrent" version="0.0.0"/>
-      <unit id="org.eclipse.mylyn.commons.sdk.feature.group" version="0.0.0"/>
       <unit id="org.eclipse.mylyn.ide_feature.feature.group" version="0.0.0"/>
       <unit id="org.eclipse.mylyn.team_feature.feature.group" version="0.0.0"/>
       <unit id="org.eclipse.mylyn_feature.feature.group" version="0.0.0"/>
@@ -121,6 +120,10 @@
       <unit id="org.eclipse.mylyn.bugzilla_feature.feature.group" version="0.0.0"/>
       <unit id="org.eclipse.tools.layout.spy" version="0.0.0"/>
       <repository location="https://download.eclipse.org/staging/2020-12/"/>
+    </location>
+    <location includeMode="slicer" includeAllPlatforms="false" includeSource="true" includeConfigurePhase="true" type="InstallableUnit">
+      <unit id="org.eclipse.mylyn.commons.sdk.feature.group" version="0.0.0"/>
+      <repository location="https://download.eclipse.org/releases/2020-09/"/>
     </location>
     <location includeMode="slicer" includeAllPlatforms="false" includeSource="true" includeConfigurePhase="true" type="InstallableUnit">
       <unit id="javax.xml" version="0.0.0"/>

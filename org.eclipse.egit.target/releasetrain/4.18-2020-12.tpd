@@ -9,7 +9,8 @@ location "https://download.eclipse.org/staging/2020-12/" {
 	org.eclipse.equinox.concurrent lazy
 
 	// Mylyn integration
-	org.eclipse.mylyn.commons.sdk.feature.group lazy
+	// TODO: removed temporarily in 2020-12 staging repo
+	// org.eclipse.mylyn.commons.sdk.feature.group lazy
 	org.eclipse.mylyn.ide_feature.feature.group lazy
 	org.eclipse.mylyn.team_feature.feature.group lazy
 	org.eclipse.mylyn_feature.feature.group lazy
@@ -18,6 +19,11 @@ location "https://download.eclipse.org/staging/2020-12/" {
 
 	// debugging SWT layouts
 	org.eclipse.tools.layout.spy lazy
+}
+
+location "https://download.eclipse.org/releases/2020-09/" {
+	// TODO: remove this workaround for temporarily removed feature in 2020-12
+	org.eclipse.mylyn.commons.sdk.feature.group lazy
 }
 
 location "https://download.eclipse.org/mylyn/releases/latest" {
