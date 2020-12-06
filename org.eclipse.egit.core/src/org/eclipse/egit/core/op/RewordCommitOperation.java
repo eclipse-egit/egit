@@ -1,6 +1,7 @@
 /*******************************************************************************
  *  Copyright (c) 2014 Maik Schreiber
- *  Copyright (C) 2015, Stephan Hackstedt <stephan.hackstedt@googlemail.com>
+ *  Copyright (C) 2015 Stephan Hackstedt <stephan.hackstedt@googlemail.com>
+ *  Copyright (C) 2020 Thomas Wolf <thomas.wolf@paranor.ch> and others
  *
  *  All rights reserved. This program and the accompanying materials
  *  are made available under the terms of the Eclipse Public License 2.0
@@ -15,8 +16,12 @@
  *******************************************************************************/
 package org.eclipse.egit.core.op;
 
+import java.io.IOException;
 import java.text.MessageFormat;
-import java.util.List;
+import java.util.Deque;
+import java.util.HashMap;
+import java.util.LinkedList;
+import java.util.Map;
 
 import org.eclipse.core.resources.IWorkspace;
 import org.eclipse.core.resources.IWorkspaceRunnable;
@@ -25,24 +30,37 @@ import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.SubMonitor;
 import org.eclipse.core.runtime.jobs.ISchedulingRule;
+import org.eclipse.egit.core.Activator;
 import org.eclipse.egit.core.internal.CoreText;
+import org.eclipse.egit.core.internal.Utils;
 import org.eclipse.egit.core.internal.job.RuleUtil;
-import org.eclipse.egit.core.internal.util.ProjectUtil;
-import org.eclipse.jgit.api.Git;
-import org.eclipse.jgit.api.RebaseCommand;
-import org.eclipse.jgit.api.RebaseCommand.InteractiveHandler;
-import org.eclipse.jgit.api.errors.GitAPIException;
-import org.eclipse.jgit.errors.IllegalTodoFileModification;
-import org.eclipse.jgit.lib.RebaseTodoLine;
+import org.eclipse.jgit.api.errors.CanceledException;
+import org.eclipse.jgit.api.errors.JGitInternalException;
+import org.eclipse.jgit.dircache.DirCache;
+import org.eclipse.jgit.lib.CommitBuilder;
+import org.eclipse.jgit.lib.Constants;
+import org.eclipse.jgit.lib.GpgConfig;
+import org.eclipse.jgit.lib.GpgSigner;
+import org.eclipse.jgit.lib.ObjectId;
+import org.eclipse.jgit.lib.ObjectInserter;
+import org.eclipse.jgit.lib.PersonIdent;
+import org.eclipse.jgit.lib.Ref;
+import org.eclipse.jgit.lib.RefUpdate;
 import org.eclipse.jgit.lib.Repository;
 import org.eclipse.jgit.revwalk.RevCommit;
+import org.eclipse.jgit.revwalk.RevSort;
+import org.eclipse.jgit.revwalk.RevWalk;
+import org.eclipse.jgit.transport.CredentialsProvider;
 import org.eclipse.team.core.TeamException;
 
 /** An operation that rewords a commit's message. */
 public class RewordCommitOperation implements IEGitOperation {
+
 	private Repository repository;
 	private RevCommit commit;
 	private String newMessage;
+
+	private ObjectId headId;
 
 	/**
 	 * Constructs a new reword commit operation.
@@ -56,11 +74,6 @@ public class RewordCommitOperation implements IEGitOperation {
 	 */
 	public RewordCommitOperation(Repository repository, RevCommit commit,
 			String newMessage) {
-		if (commit.getParentCount() != 1) {
-			throw new UnsupportedOperationException(
-					"commit is expected to have exactly one parent"); //$NON-NLS-1$
-		}
-
 		this.repository = repository;
 		this.commit = commit;
 		this.newMessage = newMessage;
@@ -68,50 +81,179 @@ public class RewordCommitOperation implements IEGitOperation {
 
 	@Override
 	public void execute(IProgressMonitor m) throws CoreException {
-		IWorkspaceRunnable action = new IWorkspaceRunnable() {
-			@Override
-			public void run(IProgressMonitor pm) throws CoreException {
-				SubMonitor progress = SubMonitor.convert(pm,2);
-				progress.subTask(MessageFormat.format(CoreText.RewordCommitOperation_rewording,
-						commit.name()));
-
-				InteractiveHandler handler = new InteractiveHandler() {
-					@Override
-					public void prepareSteps(List<RebaseTodoLine> steps) {
-						for (RebaseTodoLine step : steps) {
-							if (step.getCommit().prefixCompare(commit) == 0) {
-								try {
-									step.setAction(RebaseTodoLine.Action.REWORD);
-								} catch (IllegalTodoFileModification e) {
-									// shouldn't happen
-								}
-							}
-						}
-					}
-
-					@Override
-					public String modifyCommitMessage(String oldMessage) {
-						return newMessage;
-					}
-				};
-				try (Git git = new Git(repository)) {
-					git.rebase().setUpstream(commit.getParent(0))
-							.runInteractively(handler)
-							.setOperation(RebaseCommand.Operation.BEGIN).call();
-				} catch (GitAPIException e) {
-					throw new TeamException(e.getLocalizedMessage(),
-							e.getCause());
-				}
-				progress.worked(1);
-
-				ProjectUtil.refreshValidProjects(
-						ProjectUtil.getValidOpenProjects(repository),
-						progress.newChild(1));
+		IWorkspaceRunnable action = monitor -> {
+			try {
+				reword(monitor);
+			} catch (IOException e) {
+				throw new TeamException(e.getMessage(), e);
 			}
 		};
 
 		ResourcesPlugin.getWorkspace().run(action, getSchedulingRule(),
 				IWorkspace.AVOID_UPDATE, m);
+	}
+
+	private void reword(IProgressMonitor monitor)
+			throws IOException, CoreException {
+		SubMonitor progress = SubMonitor.convert(monitor, MessageFormat.format(
+				CoreText.RewordCommitOperation_rewording,
+				Utils.getShortObjectId(commit)), 100);
+
+		DirCache index = repository.lockDirCache();
+		try (RevWalk walk = new RevWalk(repository)) {
+			commit = walk.parseCommit(commit);
+			if (newMessage.equals(commit.getFullMessage())) {
+				// Nothing to do.
+				return;
+			}
+			Ref ref = repository.exactRef(Constants.HEAD);
+			if (ref == null) {
+				// No HEAD: cannot reword
+				throw new TeamException(CoreText.RewordCommitOperation_noHead);
+			}
+			headId = ref.getObjectId();
+			if (headId == null || ObjectId.zeroId().equals(headId)) {
+				throw new TeamException(CoreText.RewordCommitOperation_noHead);
+			}
+			Deque<RevCommit> commits = new LinkedList<>();
+			walk.setRetainBody(true);
+			if (!commit.getId().equals(headId)) {
+				walk.sort(RevSort.TOPO);
+				walk.sort(RevSort.COMMIT_TIME_DESC, true);
+				walk.markStart(walk.parseCommit(headId));
+				for (RevCommit p : commit.getParents()) {
+					RevCommit parsed = walk.parseCommit(p);
+					walk.markUninteresting(parsed);
+				}
+				RevCommit c;
+				while ((c = walk.next()) != null) {
+					if (c.getId().equals(commit.getId())) {
+						break;
+					}
+					commits.push(c);
+				}
+				if (c == null) {
+					throw new TeamException(MessageFormat.format(
+							CoreText.RewordCommitOperation_notReachable,
+							Utils.getShortObjectId(commit)));
+				}
+			}
+			progress.worked(10);
+			progress.setWorkRemaining(commits.size() + 2);
+			PersonIdent committer = new PersonIdent(repository);
+			// Rewrite the message
+			CommitBuilder builder = copy(commit, commit.getParents(), committer,
+					newMessage);
+			// Signature will be invalid for the new commit. Try to re-sign.
+			GpgConfig gpgConfig = new GpgConfig(repository.getConfig());
+			boolean signAllCommits = gpgConfig.isSignCommits();
+			String keyId = gpgConfig.getSigningKey();
+			GpgSigner gpgSigner = GpgSigner.getDefault();
+			if (gpgSigner != null && (signAllCommits
+					|| commit.getRawGpgSignature() != null)) {
+				gpgSigner = sign(builder, gpgSigner, signAllCommits, keyId,
+						committer, commit.getCommitterIdent(), commit);
+			}
+			Map<ObjectId, ObjectId> rewritten = new HashMap<>();
+			try (ObjectInserter inserter = repository.newObjectInserter()) {
+				rewritten.put(commit.getId(), inserter.insert(builder));
+				progress.worked(1);
+				// Now rewrite all others: fill in new parents
+				for (RevCommit c : commits) {
+					RevCommit[] parents = c.getParents();
+					ObjectId[] newParents = new ObjectId[parents.length];
+					int i = 0;
+					boolean hadNew = false;
+					for (RevCommit p : parents) {
+						ObjectId newId = rewritten.get(p.getId());
+						if (newId != null) {
+							hadNew = true;
+						}
+						newParents[i++] = newId != null ? newId : p.getId();
+					}
+					if (!hadNew) {
+						continue;
+					}
+					committer = new PersonIdent(committer); // Update when
+					builder = copy(c, newParents, committer,
+							c.getFullMessage());
+					if (gpgSigner != null && (signAllCommits
+							|| c.getRawGpgSignature() != null)) {
+						gpgSigner = sign(builder, gpgSigner, signAllCommits,
+								keyId, committer, c.getCommitterIdent(), c);
+					}
+					rewritten.put(c.getId(), inserter.insert(builder));
+					progress.worked(1);
+				}
+				inserter.flush();
+			}
+			// Update HEAD, and write ORIG_HEAD
+			ObjectId newHeadId = rewritten.get(headId);
+			RefUpdate ru = repository.updateRef(Constants.HEAD);
+			ru.setExpectedOldObjectId(headId);
+			ru.setNewObjectId(newHeadId);
+			ru.disableRefLog();
+			switch (ru.forceUpdate()) {
+			case NEW:
+			case NO_CHANGE:
+			case FORCED:
+			case FAST_FORWARD:
+				break;
+			default:
+				throw new TeamException(MessageFormat.format(
+						CoreText.RewordCommitOperation_cannotUpdateHead,
+						Utils.getShortObjectId(commit)));
+			}
+			ObjectId origHead = ru.getOldObjectId();
+			if (origHead != null) {
+				repository.writeOrigHead(origHead);
+			}
+			progress.worked(1);
+		} finally {
+			index.unlock();
+		}
+	}
+
+	private CommitBuilder copy(RevCommit toCopy, ObjectId[] parents,
+			PersonIdent committer, String message) {
+		CommitBuilder builder = new CommitBuilder();
+		builder.setParentIds(parents);
+		builder.setAuthor(toCopy.getAuthorIdent());
+		builder.setCommitter(committer);
+		builder.setEncoding(toCopy.getEncoding());
+		builder.setTreeId(toCopy.getTree());
+		builder.setMessage(message);
+		return builder;
+	}
+
+	private GpgSigner sign(CommitBuilder builder, GpgSigner signer,
+			boolean signAll, String keyId, PersonIdent committer,
+			PersonIdent oldCommitter, RevCommit original)
+			throws JGitInternalException {
+		if (committer.getName().equals(oldCommitter.getName()) && committer
+				.getEmailAddress().equals(oldCommitter.getEmailAddress())) {
+			// We don't sign commits that were committed by someone else. If
+			// they were signed, the signature will be dropped.
+			try {
+				signer.sign(builder, keyId, committer,
+						CredentialsProvider.getDefault());
+			} catch (CanceledException e) {
+				// User cancelled signing: don't sign and assume he doesn't want
+				// to sign any other commit.
+				return null;
+			} catch (JGitInternalException e) {
+				if (signAll) {
+					throw e;
+				}
+				Activator.logWarning(MessageFormat.format(
+						CoreText.RewordCommitOperation_cannotSign,
+						Utils.getShortObjectId(commit),
+						Utils.getShortObjectId(headId),
+						Utils.getShortObjectId(original)), e);
+				return null;
+			}
+		}
+		return signer;
 	}
 
 	@Override
