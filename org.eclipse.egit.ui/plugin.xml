@@ -3055,7 +3055,6 @@
                <iterate>
                   <instanceof value="org.eclipse.egit.ui.internal.history.SWTCommit" />
                   <test property="Git.isSafe" />
-                  <test property="Git.parentCount" value="1" />
                </iterate>
             </and>
          </activeWhen>

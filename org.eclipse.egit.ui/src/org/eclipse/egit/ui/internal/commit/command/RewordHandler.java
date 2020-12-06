@@ -1,5 +1,6 @@
 /*******************************************************************************
- *  Copyright (c) 2014 Maik Schreiber
+ *  Copyright (c) 2014, 2020 Maik Schreiber and others.
+ *
  *  All rights reserved. This program and the accompanying materials
  *  are made available under the terms of the Eclipse Public License 2.0
  *  which accompanies this distribution, and is available at
@@ -23,14 +24,11 @@ import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.core.runtime.jobs.Job;
 import org.eclipse.egit.core.op.RewordCommitOperation;
-import org.eclipse.egit.ui.Activator;
 import org.eclipse.egit.ui.JobFamilies;
-import org.eclipse.egit.ui.internal.UIRepositoryUtils;
 import org.eclipse.egit.ui.internal.UIText;
 import org.eclipse.egit.ui.internal.handler.SelectionHandler;
 import org.eclipse.egit.ui.internal.rebase.CommitMessageEditorDialog;
 import org.eclipse.jface.window.Window;
-import org.eclipse.jgit.api.errors.GitAPIException;
 import org.eclipse.jgit.lib.Repository;
 import org.eclipse.jgit.revwalk.RevCommit;
 import org.eclipse.swt.widgets.Shell;
@@ -52,17 +50,10 @@ public class RewordHandler extends SelectionHandler {
 
 		Shell shell = getPart(event).getSite().getShell();
 
-		try {
-			if (!UIRepositoryUtils.handleUncommittedFiles(repo, shell))
-				return null;
-		} catch (GitAPIException e) {
-			Activator.logError(e.getMessage(), e);
+		String newMessage = promptCommitMessage(shell, commit);
+		if (newMessage == null || newMessage.equals(commit.getFullMessage())) {
 			return null;
 		}
-
-		String newMessage = promptCommitMessage(shell, commit);
-		if (newMessage == null)
-			return null;
 
 		final RewordCommitOperation op = new RewordCommitOperation(repo,
 				commit, newMessage);
@@ -76,7 +67,7 @@ public class RewordHandler extends SelectionHandler {
 				try {
 					op.execute(monitor);
 				} catch (CoreException e) {
-					Activator.logError(UIText.RewordHandler_InternalError, e);
+					return e.getStatus();
 				}
 				return Status.OK_STATUS;
 			}
