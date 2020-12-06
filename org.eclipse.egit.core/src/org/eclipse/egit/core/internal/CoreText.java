@@ -400,6 +400,18 @@ public class CoreText extends NLS {
 	public static String RevertCommitOperation_reverting;
 
 	/** */
+	public static String RewordCommitOperation_cannotSign;
+
+	/** */
+	public static String RewordCommitOperation_cannotUpdateHead;
+
+	/** */
+	public static String RewordCommitOperation_noHead;
+
+	/** */
+	public static String RewordCommitOperation_notReachable;
+
+	/** */
 	public static String RewordCommitOperation_rewording;
 
 	/** */
