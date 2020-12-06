@@ -1,5 +1,6 @@
 /*******************************************************************************
- *  Copyright (c) 2014 Maik Schreiber
+ *  Copyright (c) 2014, 2020 Maik Schreiber and others.
+ *
  *  All rights reserved. This program and the accompanying materials
  *  are made available under the terms of the Eclipse Public License 2.0
  *  which accompanies this distribution, and is available at
@@ -31,6 +32,7 @@ import org.eclipse.ui.handlers.HandlerUtil;
 
 /** Prompts to enter a new commit message for a commit. */
 public class RewordHandler extends AbstractHistoryCommandHandler {
+
 	@Override
 	public Object execute(ExecutionEvent event) throws ExecutionException {
 		Repository repository = getRepository(event);
@@ -63,15 +65,14 @@ public class RewordHandler extends AbstractHistoryCommandHandler {
 	@Override
 	public boolean isEnabled() {
 		GitHistoryPage page = getPage();
-		if (page == null)
+		if (page == null) {
 			return false;
+		}
 		IStructuredSelection selection = getSelection(page);
-		if (selection.size() != 1)
+		if (selection.size() != 1) {
 			return false;
+		}
 		Repository repository = getRepository(page);
-		if (repository.getRepositoryState() != RepositoryState.SAFE)
-			return false;
-		RevCommit commit = (RevCommit) selection.getFirstElement();
-		return (commit.getParentCount() == 1);
+		return RepositoryState.SAFE.equals(repository.getRepositoryState());
 	}
 }
