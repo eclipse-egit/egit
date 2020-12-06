@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5be138c1_6aea3051",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/op/RewordCommitOperation.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2020-12-06T22:57:07Z",
+      "side": 1,
+      "message": "Maybe this doesn\u0027t even have to be an IWorkspaceRunnable anymore. reword() doesn\u0027t touch the working tree at all. Scheduling is ensured already by the RewordHandler, which runs this in a WorkspaceJob with this scheduling rule?",
+      "revId": "75f7dc7d30ef27a344c33973a85d8ea7e899045b",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "553ca440_8d84d54e",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/op/RewordCommitOperation.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2020-12-06T22:57:07Z",
+      "side": 1,
+      "message": "We don\u0027t touch the index. Not sure locking the index is 100% correct, but what is the way to guard against concurrent changes to HEAD or the branch HEAD points to?",
+      "revId": "75f7dc7d30ef27a344c33973a85d8ea7e899045b",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "629978b0_33e72a76",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/history/command/RewordHandler.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2020-12-06T22:57:07Z",
+      "side": 1,
+      "message": "Hm. Why are two RewordHandlers? I don\u0027t get it.",
+      "revId": "75f7dc7d30ef27a344c33973a85d8ea7e899045b",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": true
+    }
+  ]
+}
