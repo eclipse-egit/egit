@@ -4559,13 +4559,13 @@ public class UIText extends NLS {
 	public static String TagAction_cannotGetBranchName;
 
 	/** */
+	public static String TagAction_cannotGetCommit;
+
+	/** */
 	public static String TagAction_repositoryState;
 
 	/** */
 	public static String TagAction_errorWhileGettingRevCommits;
-
-	/** */
-	public static String TagAction_unableToResolveHeadObjectId;
 
 	/** */
 	public static String TagAction_creating;

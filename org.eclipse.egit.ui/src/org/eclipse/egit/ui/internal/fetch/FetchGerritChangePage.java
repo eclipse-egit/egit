@@ -84,7 +84,6 @@ import org.eclipse.jgit.lib.Constants;
 import org.eclipse.jgit.lib.PersonIdent;
 import org.eclipse.jgit.lib.Ref;
 import org.eclipse.jgit.lib.Repository;
-import org.eclipse.jgit.lib.TagBuilder;
 import org.eclipse.jgit.revwalk.RevCommit;
 import org.eclipse.jgit.revwalk.RevWalk;
 import org.eclipse.jgit.transport.FetchResult;
@@ -987,6 +986,8 @@ public class FetchGerritChangePage extends WizardPage {
 											innerProgress.newChild(1));
 									break;
 								case CREATE_TAG:
+									assert spec != null;
+									assert textForTag != null;
 									createTag(spec, textForTag, commit,
 											innerProgress.newChild(1));
 									checkout(commit.name(),
@@ -1132,19 +1133,22 @@ public class FetchGerritChangePage extends WizardPage {
 		}
 	}
 
-	private void createTag(final RefSpec spec, final String textForTag,
-			RevCommit commit, IProgressMonitor monitor) throws CoreException {
+	private void createTag(@NonNull RefSpec spec, @NonNull String textForTag,
+			@NonNull RevCommit commit, IProgressMonitor monitor)
+			throws CoreException {
 		monitor.subTask(UIText.FetchGerritChangePage_CreatingTagTaskName);
-		final TagBuilder tag = new TagBuilder();
 		PersonIdent personIdent = new PersonIdent(repository);
 
-		tag.setTag(textForTag);
-		tag.setTagger(personIdent);
-		tag.setMessage(NLS.bind(
-				UIText.FetchGerritChangePage_GeneratedTagMessage,
-				spec.getSource()));
-		tag.setObjectId(commit);
-		new TagOperation(repository, tag, false).execute(monitor);
+		TagOperation operation = new TagOperation(repository)
+				.setAnnotated(true)
+				.setName(textForTag)
+				.setTagger(personIdent)
+				.setMessage(NLS.bind(
+						UIText.FetchGerritChangePage_GeneratedTagMessage,
+						spec.getSource()))
+				.setTarget(commit)
+				.setSign(Boolean.FALSE);
+		operation.execute(monitor);
 		monitor.worked(1);
 	}
 
