@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "52765177_f3df8c69",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/op/RewordCommitOperation.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2020-12-08T23:21:57Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "28718419_039f76cb",
+      "revId": "75f7dc7d30ef27a344c33973a85d8ea7e899045b",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "553ca440_8d84d54e",
         "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/op/RewordCommitOperation.java",
         "patchSetId": 2
@@ -72,6 +90,24 @@
     },
     {
       "key": {
+        "uuid": "d42c6b8d_e275d689",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/op/RewordCommitOperation.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2020-12-08T23:21:57Z",
+      "side": 1,
+      "message": "I\u0027m not worried about concurrent changes to HEAD or to the branch it points to during the RefUpdate. However, since nothing is locked during all this rebasing, some other concurrent operation might have changed HEAD or the branch it points to while we were creating all these new rebased commits. The RefUpdate will then fail, and all the work was in vain.\n\nBut I see nothing in RefDatabase that would allow me to selectively lock some refs.\n\nSo probably this is the best we can do here.",
+      "parentUuid": "bc3a61f2_253e5c1f",
+      "revId": "75f7dc7d30ef27a344c33973a85d8ea7e899045b",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2db01131_2f714b14",
         "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/op/RewordCommitOperation.java",
         "patchSetId": 2
@@ -86,6 +122,24 @@
       "revId": "75f7dc7d30ef27a344c33973a85d8ea7e899045b",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "404465d6_0747ea2f",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/op/RewordCommitOperation.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 195,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2020-12-08T23:21:57Z",
+      "side": 1,
+      "message": "I\u0027ve added a similar reflog message. Exactly the same appears difficult; the current implementation would write \"commit (amend): \u003cNew short message\u003e\" followed by umpteen \"rebase: \u003cshort message\u003e\" entries, and finally a \"rebase finished: returning to ...\" entry.\n\nThe new implementation updates HEAD only once, so one reflog message is appropriate.",
+      "parentUuid": "2db01131_2f714b14",
+      "revId": "75f7dc7d30ef27a344c33973a85d8ea7e899045b",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
     },
     {
       "key": {
@@ -121,6 +175,24 @@
       "revId": "75f7dc7d30ef27a344c33973a85d8ea7e899045b",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a0f745d6_dc636e76",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/history/command/RewordHandler.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2020-12-08T23:21:57Z",
+      "side": 1,
+      "message": "I\u0027ll take a look at this in a later change. The one in internal/commit/command is even a default handler, which definitely looks wrong. It\u0027s accessible via Quick Access, can be invoked via Quick Access on commits not reachable from HEAD (for instance, if such a commit is shown in a commit editor), then appears to do nothing. This is either just plain wrong, or it\u0027s unfinished business.",
+      "parentUuid": "7535fa7e_ddd0abb2",
+      "revId": "75f7dc7d30ef27a344c33973a85d8ea7e899045b",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
     }
   ]
 }
