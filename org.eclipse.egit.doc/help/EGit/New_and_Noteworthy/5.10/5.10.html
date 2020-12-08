@@ -2,13 +2,13 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 	<head>
 		<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
-		<title>JGit 5.9 New and Noteworthy</title>
+		<title>EGit 5.10 New and Noteworthy</title>
 		<link type="text/css" rel="stylesheet" href="../../../book.css"/>
 	</head>
 	<body>
 		<table class="navigation" style="width: 100%;" border="0" summary="navigation">
 			<tr>
-				<th style="width: 100%" align="center" colspan="3">JGit 5.9 New and Noteworthy</th>
+				<th style="width: 100%" align="center" colspan="3">EGit 5.10 New and Noteworthy</th>
 			</tr>
 			<tr>
 				<td style="width: 20%" align="left"></td>
@@ -25,16 +25,14 @@
 				<td style="width: 20%" align="right" valign="top">Contributors</td>
 			</tr>
 		</table><hr class="navigation-separator"/>
-		<h1 id="JGit">JGit</h1>
-		<h2 id="New_Features">New Features</h2>
-		<ul>
-			<li>JGit 5.9.0 supports git repositories using 
-				<a href="https://github.com/git/git/blob/v2.28.0/Documentation/technical/index-format.txt#L116" target="egit_external">git index version 4</a>. In version 4 entry path names are prefix-compressed relative to the path name for the previous entry which reduces the size of the git index and improves performance.
-			</li>
-		</ul>
+		<h1 id="EGit">EGit</h1>
+		<h2 id="SSH">SSH</h2>
+		<p>The Apache MINA sshd client that is used by default now supports the 
+			<a href="https://man.openbsd.org/ssh_config#ProxyJump" target="egit_external">ProxyJump</a> directive in the SSH configuration file <tt>~/.ssh/config</tt>. This is useful to access git repositories behind a bastion server or jump host. The configuration must be done in the <tt>~/.ssh/config</tt> SSH configuration file; there is no UI for this.
+		</p>
 		<h2 id="Other_Changes">Other Changes</h2>
-		<p>The complete list of new features and bug fixes is available in the 
-			<a href="https://projects.eclipse.org/projects/technology.jgit/releases/5.9.0/" target="egit_external">release notes</a>.
+		<p>EGit 5.10 includes some less noticeable improvements in the UI, plus a number of bug fixes. The complete list of new features and bug fixes is available in the 
+			<a href="https://projects.eclipse.org/projects/technology.egit/releases/5.10.0/" target="egit_external">release notes</a>.
 		</p><hr class="navigation-separator"/>
 		<table class="navigation" style="width: 100%;" border="0" summary="navigation">
 			<tr>
