@@ -21,7 +21,6 @@ import org.eclipse.egit.gitflow.GitFlowRepository;
 import org.eclipse.egit.gitflow.WrongGitFlowStateException;
 import org.eclipse.egit.gitflow.internal.CoreText;
 import org.eclipse.jgit.lib.PersonIdent;
-import org.eclipse.jgit.lib.TagBuilder;
 import org.eclipse.jgit.revwalk.RevCommit;
 import org.eclipse.osgi.util.NLS;
 
@@ -82,12 +81,12 @@ abstract public class AbstractVersionFinishOperation extends GitFlowOperation {
 	 */
 	protected void createTag(IProgressMonitor monitor, RevCommit head,
 			String name, String message) throws CoreException {
-		TagBuilder tag = new TagBuilder();
-		tag.setTag(name);
-		tag.setTagger(new PersonIdent(repository.getRepository()));
-		tag.setMessage(message);
-		tag.setObjectId(head);
-		new TagOperation(repository.getRepository(), tag, false)
-				.execute(monitor);
+		TagOperation operation = new TagOperation(repository.getRepository())
+				.setAnnotated(true)
+				.setName(name)
+				.setMessage(message)
+				.setTarget(head)
+				.setTagger(new PersonIdent(repository.getRepository()));
+		operation.execute(monitor);
 	}
 }

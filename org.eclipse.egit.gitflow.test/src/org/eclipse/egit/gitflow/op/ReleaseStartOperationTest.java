@@ -10,13 +10,15 @@
  *******************************************************************************/
 package org.eclipse.egit.gitflow.op;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
+import static org.junit.Assert.fail;
 
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.egit.core.op.TagOperation;
 import org.eclipse.egit.gitflow.GitFlowRepository;
 import org.eclipse.jgit.lib.Repository;
-import org.eclipse.jgit.lib.TagBuilder;
 import org.eclipse.jgit.revwalk.RevCommit;
 import org.junit.Test;
 
@@ -125,10 +127,11 @@ public class ReleaseStartOperationTest extends AbstractGitFlowOperationTest {
 
 	protected void createTag(RevCommit head, String name, String message,
 			Repository repository) throws CoreException {
-		TagBuilder tag = new TagBuilder();
-		tag.setTag(name);
-		tag.setMessage(message);
-		tag.setObjectId(head);
-		new TagOperation(repository, tag, false).execute(null);
+		TagOperation operation = new TagOperation(repository)
+				.setAnnotated(true)
+				.setName(name)
+				.setMessage(message)
+				.setTarget(head);
+		operation.execute(null);
 	}
 }
