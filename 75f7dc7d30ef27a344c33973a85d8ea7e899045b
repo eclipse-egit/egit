@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "28718419_039f76cb",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/op/RewordCommitOperation.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2020-12-08T00:06:05Z",
+      "side": 1,
+      "message": "I agree, this seems unnecessary",
+      "parentUuid": "5be138c1_6aea3051",
+      "revId": "75f7dc7d30ef27a344c33973a85d8ea7e899045b",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "553ca440_8d84d54e",
         "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/op/RewordCommitOperation.java",
         "patchSetId": 2
@@ -36,6 +54,41 @@
     },
     {
       "key": {
+        "uuid": "bc3a61f2_253e5c1f",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/op/RewordCommitOperation.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2020-12-08T00:06:05Z",
+      "side": 1,
+      "message": "I think the index should not be locked since neither working tree nor index content are affected. This reword operation could be even used on a bare repository which doesn\u0027t have an index. Not sure if that\u0027s a use case for EGit. Gerrit has similar in-memory implementations to auto-merge, auto-rebase or cherry-pick a change on the server side when it is submitted and the update of the target branch isn\u0027t a fast-forward so that it requires an auto- merge, cherry-pick or rebase depending on project configuration.\n\nCreating the chain of rewritten commits doesn\u0027t require locking since it\u0027s only creating new immutable objects. Locking the affected ref (the current branch if reword is started from a checked out branch or HEAD if we start from a detached HEAD) is handled by RefUpdate. See e.g. [1]. HEAD doesn\u0027t need to be locked if it refers to a branch since it will not be modified by the reword and after the reword operation HEAD will be unchanged and still refer to the same branch. Only if reword is done from detached HEAD the HEAD needs to be locked.\n\n[1] https://git.eclipse.org/r/plugins/gitiles/jgit/jgit/+/refs/heads/master/org.eclipse.jgit/src/org/eclipse/jgit/api/CheckoutCommand.java#257",
+      "parentUuid": "553ca440_8d84d54e",
+      "revId": "75f7dc7d30ef27a344c33973a85d8ea7e899045b",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2db01131_2f714b14",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/op/RewordCommitOperation.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 195,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2020-12-08T00:06:05Z",
+      "side": 1,
+      "message": "I think reword should write a reflog entry otherwise it doesn\u0027t reflect what happened. How about writing the same reflog entry which interactive rebase would write for the same action ?",
+      "revId": "75f7dc7d30ef27a344c33973a85d8ea7e899045b",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "629978b0_33e72a76",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/history/command/RewordHandler.java",
         "patchSetId": 2
@@ -47,6 +100,24 @@
       "writtenOn": "2020-12-06T22:57:07Z",
       "side": 1,
       "message": "Hm. Why are two RewordHandlers? I don\u0027t get it.",
+      "revId": "75f7dc7d30ef27a344c33973a85d8ea7e899045b",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7535fa7e_ddd0abb2",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/history/command/RewordHandler.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2020-12-08T00:06:05Z",
+      "side": 1,
+      "message": "I can\u0027t remember why this was done",
+      "parentUuid": "629978b0_33e72a76",
       "revId": "75f7dc7d30ef27a344c33973a85d8ea7e899045b",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": true
