@@ -33,6 +33,7 @@ import org.eclipse.egit.ui.internal.UIIcons;
 import org.eclipse.egit.ui.internal.UIText;
 import org.eclipse.egit.ui.internal.ValidationUtils;
 import org.eclipse.egit.ui.internal.components.BranchNameNormalizer;
+import org.eclipse.egit.ui.internal.credentials.SignatureUtils;
 import org.eclipse.jface.dialogs.IDialogConstants;
 import org.eclipse.jface.dialogs.IInputValidator;
 import org.eclipse.jface.dialogs.TitleAreaDialog;
@@ -51,10 +52,14 @@ import org.eclipse.jface.viewers.TableViewer;
 import org.eclipse.jface.viewers.Viewer;
 import org.eclipse.jface.viewers.ViewerComparator;
 import org.eclipse.jface.viewers.ViewerFilter;
+import org.eclipse.jgit.annotations.Nullable;
 import org.eclipse.jgit.errors.RevisionSyntaxException;
 import org.eclipse.jgit.lib.AnyObjectId;
 import org.eclipse.jgit.lib.Constants;
+import org.eclipse.jgit.lib.GpgConfig;
+import org.eclipse.jgit.lib.GpgSigner;
 import org.eclipse.jgit.lib.ObjectId;
+import org.eclipse.jgit.lib.PersonIdent;
 import org.eclipse.jgit.lib.Ref;
 import org.eclipse.jgit.lib.Repository;
 import org.eclipse.jgit.revwalk.RevCommit;
@@ -131,6 +136,20 @@ public class CreateTagDialog extends TitleAreaDialog {
 	private SpellcheckableMessageArea tagMessageText;
 
 	private Button overwriteButton;
+
+	private Button signButton;
+
+	/**
+	 * Set to {@code true} once the user explicitly checks or unchecks the
+	 * signButton.
+	 */
+	private boolean signExplicit;
+
+	private boolean signAll;
+
+	private boolean signAnnotated;
+
+	private boolean signUser;
 
 	private TableViewer tagViewer;
 
@@ -299,6 +318,20 @@ public class CreateTagDialog extends TitleAreaDialog {
 	}
 
 	/**
+	 * Indicates whether the tag should be signed.
+	 *
+	 * @return whether tag should be signed, {@code null} means the user made no
+	 *         choice and the git config decides.
+	 */
+	@Nullable
+	public Boolean shouldSign() {
+		if (signButton == null) {
+			return Boolean.FALSE;
+		}
+		return signExplicit ? Boolean.valueOf(signUser) : null;
+	}
+
+	/**
 	 * @return true if the user wants to start the push wizard after creating
 	 *         the tag, false otherwise
 	 */
@@ -448,6 +481,7 @@ public class CreateTagDialog extends TitleAreaDialog {
 			}
 			overwriteTag = overwriteButton.getSelection();
 			annotated = !tagMessageText.getCommitMessage().isEmpty();
+			signUser = signButton != null && signButton.getSelection();
 			okPressed();
 		} else {
 			super.buttonPressed(buttonId);
@@ -522,6 +556,11 @@ public class CreateTagDialog extends TitleAreaDialog {
 			@Override
 			public void modifyText(ModifyEvent e) {
 				validateInput();
+				if (signButton != null && !signExplicit && !signAll) {
+					String message = tagMessageText.getText();
+					signButton
+							.setSelection(!message.isEmpty() && signAnnotated);
+				}
 			}
 		});
 
@@ -536,6 +575,31 @@ public class CreateTagDialog extends TitleAreaDialog {
 				validateInput();
 			}
 		});
+
+		GpgSigner signer = GpgSigner.getDefault();
+		if (signer != null) {
+			GpgConfig gpgConfig = new GpgConfig(repo.getConfig());
+			PersonIdent tagger = new PersonIdent(repo);
+			if (SignatureUtils.checkSigningKey(signer,
+					gpgConfig.getSigningKey(), tagger)) {
+				// We can sign at all.
+				signAll = gpgConfig.isSignAllTags();
+				signAnnotated = gpgConfig.isSignAnnotated();
+				signButton = new Button(left, SWT.CHECK);
+				signButton.setText("Create a signed annotated tag"); //$NON-NLS-1$
+				signButton.setToolTipText(
+						"If checked the tag will be signed, and will forcibly be an annotated tag, even if it has no message"); //$NON-NLS-1$
+				signButton.setSelection(signAll);
+				signButton.addSelectionListener(new SelectionAdapter() {
+
+					@Override
+					public void widgetSelected(SelectionEvent e) {
+						super.widgetSelected(e);
+						signExplicit = true;
+					}
+				});
+			}
+		}
 
 		createAdvancedSection(left);
 	}

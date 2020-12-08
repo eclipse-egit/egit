@@ -36,6 +36,7 @@ import org.eclipse.egit.ui.internal.CommonUtils;
 import org.eclipse.egit.ui.internal.UIText;
 import org.eclipse.egit.ui.internal.commit.CommitHelper;
 import org.eclipse.egit.ui.internal.commit.CommitHelper.CommitInfo;
+import org.eclipse.egit.ui.internal.credentials.SignatureUtils;
 import org.eclipse.jface.dialogs.IMessageProvider;
 import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.text.BadLocationException;
@@ -44,21 +45,14 @@ import org.eclipse.jface.text.DocumentEvent;
 import org.eclipse.jface.text.IDocument;
 import org.eclipse.jface.text.IDocumentListener;
 import org.eclipse.jface.text.IRegion;
-import org.eclipse.jgit.annotations.NonNull;
-import org.eclipse.jgit.api.errors.CanceledException;
-import org.eclipse.jgit.errors.UnsupportedCredentialItem;
 import org.eclipse.jgit.lib.Constants;
 import org.eclipse.jgit.lib.GpgConfig;
-import org.eclipse.jgit.lib.GpgSigner;
 import org.eclipse.jgit.lib.ObjectId;
 import org.eclipse.jgit.lib.PersonIdent;
 import org.eclipse.jgit.lib.Ref;
 import org.eclipse.jgit.lib.Repository;
 import org.eclipse.jgit.lib.RepositoryState;
 import org.eclipse.jgit.revwalk.RevCommit;
-import org.eclipse.jgit.transport.CredentialItem;
-import org.eclipse.jgit.transport.CredentialsProvider;
-import org.eclipse.jgit.transport.URIish;
 import org.eclipse.jgit.util.ChangeIdUtil;
 import org.eclipse.jgit.util.RawParseUtils;
 import org.eclipse.swt.events.ModifyEvent;
@@ -584,8 +578,8 @@ public class CommitMessageComponent {
 			String signingKey = repository != null
 					? new GpgConfig(repository.getConfig()).getSigningKey()
 					: null;
-			boolean signingKeyAvailable = checkSigningKey(signingKey,
-					committerPersonIdent);
+			boolean signingKeyAvailable = SignatureUtils
+					.checkSigningKey(signingKey, committerPersonIdent);
 			if (!signingKeyAvailable) {
 				MessageDialog.openWarning(getShell(),
 						UIText.CommitMessageComponent_ErrorMissingSigningKey,
@@ -596,41 +590,6 @@ public class CommitMessageComponent {
 		authorHandler.updateProposals();
 		committerHandler.updateProposals();
 		return true;
-	}
-
-	private boolean checkSigningKey(String signingKey,
-			@NonNull PersonIdent personIdent) {
-		GpgSigner signer = GpgSigner.getDefault();
-		if (signer != null) {
-			try {
-				return signer.canLocateSigningKey(signingKey,
-						personIdent,
-						new CredentialsProvider() {
-
-							@Override
-							public boolean supports(CredentialItem... items) {
-								return true;
-							}
-
-							@Override
-							public boolean isInteractive() {
-								return false;
-							}
-
-							@Override
-							public boolean get(URIish uri,
-									CredentialItem... items)
-									throws UnsupportedCredentialItem {
-								return false;
-							}
-						});
-			} catch (CanceledException e) {
-				// interpret this as "ok" - a passphrase was asked and canceled
-				// by our no-op CredentialsProvider
-				return true;
-			}
-		}
-		return false;
 	}
 
 	/**
