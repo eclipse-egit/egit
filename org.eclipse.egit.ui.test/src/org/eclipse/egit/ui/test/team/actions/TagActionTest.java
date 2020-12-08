@@ -18,17 +18,16 @@ import static org.junit.Assert.assertFalse;
 
 import java.io.File;
 
-import org.eclipse.egit.core.op.TagOperation;
 import org.eclipse.egit.ui.JobFamilies;
 import org.eclipse.egit.ui.common.LocalRepositoryTestCase;
 import org.eclipse.egit.ui.internal.UIText;
 import org.eclipse.egit.ui.test.ContextMenuHelper;
 import org.eclipse.egit.ui.test.TestUtil;
+import org.eclipse.jgit.api.Git;
 import org.eclipse.jgit.lib.Constants;
 import org.eclipse.jgit.lib.ObjectId;
 import org.eclipse.jgit.lib.Ref;
 import org.eclipse.jgit.lib.Repository;
-import org.eclipse.jgit.lib.TagBuilder;
 import org.eclipse.jgit.revwalk.RevTag;
 import org.eclipse.jgit.revwalk.RevWalk;
 import org.eclipse.jgit.util.RawParseUtils;
@@ -60,24 +59,25 @@ public class TagActionTest extends LocalRepositoryTestCase {
 		Repository repo = lookupRepository(repositoryFile);
 
 		someTagCommit = repo.exactRef(Constants.HEAD).getObjectId();
-		TagBuilder tag = new TagBuilder();
-		tag.setTag("SomeTag");
-		tag.setTagger(RawParseUtils.parsePersonIdent(TestUtil.TESTAUTHOR));
-		tag.setMessage("I'm just a little tag");
-		tag.setObjectId(someTagCommit, Constants.OBJ_COMMIT);
-		TagOperation top = new TagOperation(repo, tag, false, true);
-		top.execute(null);
+		try (Git git = new Git(repo)) {
+			git.tag()
+				.setName("SomeTag")
+				.setTagger(RawParseUtils.parsePersonIdent(TestUtil.TESTAUTHOR))
+				.setMessage("I'm just a little tag")
+				.setObjectId(repo.parseCommit(someTagCommit))
+				.setSigned(false)
+				.call();
 
-		touchAndSubmit(null);
+			touchAndSubmit(null);
 
-		someLightTagCommit = repo.exactRef(Constants.HEAD).getObjectId();
-		tag = new TagBuilder();
-		tag.setTag("SomeLightTag");
-		tag.setTagger(RawParseUtils.parsePersonIdent(TestUtil.TESTAUTHOR));
-		tag.setObjectId(someLightTagCommit, Constants.OBJ_COMMIT);
-		top = new TagOperation(repo, tag, false, false);
-		top.execute(null);
-
+			someLightTagCommit = repo.exactRef(Constants.HEAD).getObjectId();
+			git.tag()
+				.setAnnotated(false)
+				.setName("SomeLightTag")
+				.setObjectId(repo.parseCommit(someLightTagCommit))
+				.setSigned(false)
+				.call();
+		}
 		touchAndSubmit(null);
 		headCommit = repo.exactRef(Constants.HEAD).getObjectId();
 	}
