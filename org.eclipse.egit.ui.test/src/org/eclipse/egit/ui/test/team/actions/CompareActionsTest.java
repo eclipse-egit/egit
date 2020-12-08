@@ -40,11 +40,9 @@ import org.eclipse.egit.ui.test.JobJoiner;
 import org.eclipse.egit.ui.test.TestUtil;
 import org.eclipse.jgit.api.Git;
 import org.eclipse.jgit.api.ResetCommand.ResetType;
-import org.eclipse.jgit.lib.Constants;
 import org.eclipse.jgit.lib.ObjectId;
 import org.eclipse.jgit.lib.Ref;
 import org.eclipse.jgit.lib.Repository;
-import org.eclipse.jgit.lib.TagBuilder;
 import org.eclipse.jgit.util.RawParseUtils;
 import org.eclipse.swtbot.swt.finder.junit.SWTBotJunit4ClassRunner;
 import org.eclipse.swtbot.swt.finder.waits.Conditions;
@@ -80,14 +78,13 @@ public class CompareActionsTest extends LocalRepositoryTestCase {
 		disablePerspectiveSwitchPrompt();
 		setEnabledModelProvider(ModelProvider.RESOURCE_MODEL_PROVIDER_ID);
 
-		TagBuilder tag = new TagBuilder();
-		tag.setTag("SomeTag");
-		tag.setTagger(RawParseUtils.parsePersonIdent(TestUtil.TESTAUTHOR));
-		tag.setMessage("I'm just a little tag");
-		tag.setObjectId(repo.resolve(repo.getFullBranch()),
-				Constants.OBJ_COMMIT);
-		commitOfTag = tag.getObjectId();
-		TagOperation top = new TagOperation(repo, tag, false);
+		TagOperation top = new TagOperation(repo)
+				.setAnnotated(true)
+				.setName("SomeTag")
+				.setTagger(RawParseUtils.parsePersonIdent(TestUtil.TESTAUTHOR))
+				.setMessage("I'm just a little tag")
+				.setTarget(repo.parseCommit(repo.resolve(repo.getFullBranch())));
+		commitOfTag = top.getTarget();
 		top.execute(null);
 		touchAndSubmit(null);
 

@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (C) 2010, 2019 Dariusz Luksza <dariusz@luksza.org> and others.
+ * Copyright (C) 2010, 2020 Dariusz Luksza <dariusz@luksza.org> and others.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License 2.0
@@ -16,19 +16,16 @@ import java.text.MessageFormat;
 import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.commands.ExecutionException;
 import org.eclipse.core.runtime.Adapters;
-import org.eclipse.core.runtime.CoreException;
-import org.eclipse.core.runtime.IProgressMonitor;
-import org.eclipse.core.runtime.IStatus;
-import org.eclipse.core.runtime.Status;
 import org.eclipse.core.runtime.jobs.IJobChangeEvent;
-import org.eclipse.core.runtime.jobs.Job;
+import org.eclipse.core.runtime.jobs.IJobChangeListener;
 import org.eclipse.core.runtime.jobs.JobChangeAdapter;
 import org.eclipse.egit.core.internal.IRepositoryCommit;
+import org.eclipse.egit.core.internal.job.JobUtil;
 import org.eclipse.egit.core.op.TagOperation;
 import org.eclipse.egit.ui.Activator;
 import org.eclipse.egit.ui.JobFamilies;
 import org.eclipse.egit.ui.internal.UIText;
-import org.eclipse.egit.ui.internal.decorators.GitLightweightDecorator;
+import org.eclipse.egit.ui.internal.credentials.EGitCredentialsProvider;
 import org.eclipse.egit.ui.internal.dialogs.CreateTagDialog;
 import org.eclipse.egit.ui.internal.push.PushTagsWizard;
 import org.eclipse.jface.dialogs.MessageDialog;
@@ -36,16 +33,12 @@ import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.window.Window;
 import org.eclipse.jgit.lib.Constants;
 import org.eclipse.jgit.lib.ObjectId;
-import org.eclipse.jgit.lib.PersonIdent;
 import org.eclipse.jgit.lib.Repository;
-import org.eclipse.jgit.lib.TagBuilder;
-import org.eclipse.jgit.revwalk.RevObject;
+import org.eclipse.jgit.revwalk.RevCommit;
 import org.eclipse.jgit.revwalk.RevWalk;
 
 /**
  * An action for creating a tag.
- *
- * @see TagOperation
  */
 public class TagActionHandler extends RepositoryActionHandler {
 
@@ -80,85 +73,68 @@ public class TagActionHandler extends RepositoryActionHandler {
 					repo);
 		} else {
 			repo = commit.getRepository();
+			if (repo == null) {
+				return null;
+			}
 			dialog = new CreateTagDialog(getShell(event),
 					commit.getRevCommit().getId(), repo);
 		}
 		if (dialog.open() != Window.OK) {
 			return null;
 		}
-		final TagBuilder tag = new TagBuilder();
-		PersonIdent personIdent = new PersonIdent(repo);
-		final String tagName = dialog.getTagName();
 
-		tag.setTag(tagName);
-		tag.setTagger(personIdent);
-		tag.setMessage(dialog.getTagMessage());
-
-		RevObject tagTarget;
+		RevCommit tagTarget;
 		if (commit == null) {
 			try {
 				tagTarget = getTagTarget(repo, dialog.getTagCommit());
-			} catch (IOException e1) {
+			} catch (IOException e) {
 				Activator.handleError(
-						UIText.TagAction_unableToResolveHeadObjectId, e1, true);
+						UIText.TagAction_cannotGetCommit, e, true);
 				return null;
 			}
 		} else {
 			tagTarget = commit.getRevCommit();
 		}
-		tag.setObjectId(tagTarget);
+		String tagName = dialog.getTagName();
 
-		String tagJobName = MessageFormat.format(UIText.TagAction_creating,
-				tagName);
-		final boolean shouldMoveTag = dialog.shouldOverWriteTag();
-		final boolean isAnnotated = dialog.isAnnotated();
+		assert tagName != null;
+		assert tagTarget != null;
 
-		Job tagJob = new Job(tagJobName) {
-			@Override
-			protected IStatus run(IProgressMonitor monitor) {
-				try {
-					new TagOperation(repo, tag, shouldMoveTag, isAnnotated)
-							.execute(monitor);
-				} catch (CoreException e) {
-					return Activator.createErrorStatus(
-							UIText.TagAction_taggingFailed, e);
-				} finally {
-					GitLightweightDecorator.refresh();
-				}
+		TagOperation operation = new TagOperation(repo)
+				.setName(tagName)
+				.setTarget(tagTarget)
+				.setAnnotated(dialog.isAnnotated())
+				.setForce(dialog.shouldOverWriteTag())
+				.setSign(dialog.shouldSign())
+				.setMessage(dialog.getTagMessage())
+				.setCredentialsProvider(new EGitCredentialsProvider());
 
-				return Status.OK_STATUS;
-			}
-
-			@Override
-			public boolean belongsTo(Object family) {
-				return JobFamilies.TAG.equals(family)
-						|| super.belongsTo(family);
-			}
-		};
-
+		IJobChangeListener jobCompleted = null;
 		if (dialog.shouldStartPushWizard()) {
-			tagJob.addJobChangeListener(new JobChangeAdapter() {
+			jobCompleted = new JobChangeAdapter() {
 
 				@Override
-				public void done(IJobChangeEvent jobChangeEvent) {
-					if (jobChangeEvent.getResult().isOK())
+				public void done(IJobChangeEvent jobEvent) {
+					if (jobEvent.getResult().isOK()) {
 						PushTagsWizard.openWizardDialog(repo, tagName);
+					}
 				}
-			});
+			};
 		}
-
-		tagJob.setUser(true);
-		tagJob.schedule();
+		String tagJobName = MessageFormat.format(UIText.TagAction_creating,
+				tagName);
+		JobUtil.scheduleUserJob(operation, tagJobName, JobFamilies.TAG,
+				jobCompleted);
 		return null;
 	}
 
-	private RevObject getTagTarget(Repository repo, ObjectId objectId)
+	private RevCommit getTagTarget(Repository repo, ObjectId objectId)
 			throws IOException {
 		try (RevWalk rw = new RevWalk(repo)) {
-			if (objectId == null)
-				return rw.parseAny(repo.resolve(Constants.HEAD));
-			else
-				return rw.parseAny(objectId);
+			if (objectId == null) {
+				return rw.parseCommit(repo.resolve(Constants.HEAD));
+			}
+			return rw.parseCommit(objectId);
 		}
 	}
 

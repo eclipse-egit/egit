@@ -4559,13 +4559,13 @@ public class UIText extends NLS {
 	public static String TagAction_cannotGetBranchName;
 
 	/** */
+	public static String TagAction_cannotGetCommit;
+
+	/** */
 	public static String TagAction_repositoryState;
 
 	/** */
 	public static String TagAction_errorWhileGettingRevCommits;
-
-	/** */
-	public static String TagAction_unableToResolveHeadObjectId;
 
 	/** */
 	public static String TagAction_creating;
@@ -4587,6 +4587,12 @@ public class UIText extends NLS {
 
 	/** */
 	public static String CreateTagDialog_overwriteTagToolTip;
+
+	/** */
+	public static String CreateTagDialog_signTag;
+
+	/** */
+	public static String CreateTagDialog_signTagToolTip;
 
 	/** */
 	public static String CreateTagDialog_tagMessageToolTip;
