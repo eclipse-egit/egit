@@ -162,6 +162,24 @@
     },
     {
       "key": {
+        "uuid": "d69b5da4_ea32a391",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/op/RewordCommitOperation.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2020-12-09T10:04:07Z",
+      "side": 1,
+      "message": "\u003e bare repos (didn\u0027t try if that would work with this implementation)\n\nEnablement still tests for repo state SAFE, so the command should not be available for bare repos.",
+      "parentUuid": "c51bb0d0_cd3cab1b",
+      "revId": "75f7dc7d30ef27a344c33973a85d8ea7e899045b",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2db01131_2f714b14",
         "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/op/RewordCommitOperation.java",
         "patchSetId": 2
