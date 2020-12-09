@@ -126,6 +126,24 @@
     },
     {
       "key": {
+        "uuid": "326fa3e8_aa88e6c6",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/op/RewordCommitOperation.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2020-12-09T08:00:23Z",
+      "side": 1,
+      "message": "Unless I\u0027m missing something fundamental, writing ORIG_HEAD also is not safe. It\u0027s not a ref in JGit but just a normal file. C git handles it as a ref (with all the locking involved), and even sets it before it sets HEAD, so when setting ORIG_HEAD fails, HEAD is still unchanged. See for instance C git\u0027s \"reset\" implementation.[1] (ORIG_HEAD appears to be written only in reset and rebase.)\n\nPerhaps locking the index wasn\u0027t wrong.\n\n[1] https://github.com/git/git/blob/bf10200/reset.c#L98",
+      "parentUuid": "887b776b_9ebf0665",
+      "revId": "75f7dc7d30ef27a344c33973a85d8ea7e899045b",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2db01131_2f714b14",
         "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/op/RewordCommitOperation.java",
         "patchSetId": 2
