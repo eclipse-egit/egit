@@ -108,6 +108,24 @@
     },
     {
       "key": {
+        "uuid": "887b776b_9ebf0665",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/op/RewordCommitOperation.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2020-12-09T00:10:28Z",
+      "side": 1,
+      "message": "I think we would need another RefUpdate subclass similar to BatchRefUpdate for this local use case. BatchRefUpdate is made to work with ReceiveCommands created by ReceivePack so it seems not suitable for this local use case.",
+      "parentUuid": "d42c6b8d_e275d689",
+      "revId": "75f7dc7d30ef27a344c33973a85d8ea7e899045b",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2db01131_2f714b14",
         "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/op/RewordCommitOperation.java",
         "patchSetId": 2
