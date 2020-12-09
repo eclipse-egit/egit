@@ -144,6 +144,24 @@
     },
     {
       "key": {
+        "uuid": "c51bb0d0_cd3cab1b",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/op/RewordCommitOperation.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2020-12-09T09:57:31Z",
+      "side": 1,
+      "message": "yes, symbolic refs should use class SymbolicRef and RefUpdate which apparently isn\u0027t done for ORIG_HEAD.\n\nyeah, maybe it wasn\u0027t a bad idea to lock the index, except for bare repos (didn\u0027t try if that would work with this implementation)",
+      "parentUuid": "326fa3e8_aa88e6c6",
+      "revId": "75f7dc7d30ef27a344c33973a85d8ea7e899045b",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2db01131_2f714b14",
         "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/op/RewordCommitOperation.java",
         "patchSetId": 2
