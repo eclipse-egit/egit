@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "5400ca04_872105bb",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/op/TagOperation.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 321,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2020-12-10T23:10:37Z",
+      "side": 1,
+      "message": "I tried creating a signed tag from history view and here getCredentialsProvider() returns null. TagOperation#setCredentialsProvider seems to have no callers.",
+      "revId": "09632f0da5e80d87a2892dc0ba1534e35731ad71",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f7da5b17_ad8decec",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/credentials/SignatureUtils.java",
         "patchSetId": 3
