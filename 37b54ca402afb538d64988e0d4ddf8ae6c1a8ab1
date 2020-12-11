@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "58b8da61_00d33e8c",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/ActionUtils.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 231,
+      "author": {
+        "id": 119988
+      },
+      "writtenOn": "2020-12-11T15:56:20Z",
+      "side": 1,
+      "message": "I\u0027ll test next week if we can replace the focus listener with activation/deactivation listeners, as opposed to defining a second set of listeners.\n\nRight now both seem to do work, I\u0027m not sure why. But maybe activation/deactivation can cover also focus gain/lost.",
+      "range": {
+        "startLine": 231,
+        "startChar": 2,
+        "endLine": 231,
+        "endChar": 48
+      },
+      "revId": "37b54ca402afb538d64988e0d4ddf8ae6c1a8ab1",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": true
+    }
+  ]
+}
