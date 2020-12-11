@@ -810,11 +810,23 @@ public class CreateTagDialog extends TitleAreaDialog {
 			return;
 		}
 
-		if (!tagNameText.getText().equals(existingTag.getName()))
-			tagNameText.setText(existingTag.getName());
-		if (commitCombo != null)
-			commitCombo.setSelectedElement(existingTag.getId());
+		String newText = existingTag.getName();
+		String oldText = tagNameText.getText();
+		if (!oldText.equals(newText)) {
+			// Try to keep the caret where it is
+			int oldCaretPos = tagNameText.getSelection().y;
 
+			tagNameText.setText(newText);
+			if (oldCaretPos == oldText.length()
+					|| oldCaretPos > newText.length()) {
+				tagNameText.setSelection(newText.length());
+			} else {
+				tagNameText.setSelection(oldCaretPos);
+			}
+		}
+		if (commitCombo != null) {
+			commitCombo.setSelectedElement(existingTag.getId());
+		}
 		// handle un-annotated tags
 		String message = existingTag.getMessage();
 		tagMessageText.setText(message != null ? message : ""); //$NON-NLS-1$
