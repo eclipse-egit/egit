@@ -21,9 +21,10 @@ import org.eclipse.jface.action.MenuManager;
 import org.eclipse.jface.action.Separator;
 import org.eclipse.jface.commands.ActionHandler;
 import org.eclipse.jface.text.ITextOperationTarget;
-import org.eclipse.swt.events.FocusEvent;
-import org.eclipse.swt.events.FocusListener;
+import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Control;
+import org.eclipse.swt.widgets.Event;
+import org.eclipse.swt.widgets.Listener;
 import org.eclipse.ui.ActiveShellExpression;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.actions.ActionFactory;
@@ -225,34 +226,45 @@ public final class ActionUtils {
 		});
 		final ActiveShellExpression expression = new ActiveShellExpression(
 				control.getShell());
-		control.addFocusListener(new FocusListener() {
-
+		class ActivationListener implements Listener {
 			@Override
-			public void focusLost(FocusEvent e) {
-				if (!handlerActivations.isEmpty()) {
-					service.deactivateHandlers(handlerActivations);
-					handlerActivations.clear();
-				}
-			}
-
-			@Override
-			public void focusGained(FocusEvent e) {
-				if (!handlerActivations.isEmpty()) {
-					// Looks like sometimes we get two focusGained events.
-					return;
-				}
-				for (IAction action : actions) {
-					if (action != null) {
-						handlerActivations.add(service.activateHandler(
-								action.getActionDefinitionId(),
-								new ActionHandler(action), expression, false));
-						if (action instanceof IUpdate) {
-							((IUpdate) action).update();
+			public void handleEvent(Event event) {
+				switch (event.type) {
+				case SWT.Deactivate:
+				case SWT.FocusOut:
+				case SWT.Dispose:
+					if (!handlerActivations.isEmpty()) {
+						service.deactivateHandlers(handlerActivations);
+						handlerActivations.clear();
+					}
+					break;
+				case SWT.Activate:
+				case SWT.FocusIn:
+					if (!handlerActivations.isEmpty()) {
+						// Looks like sometimes we get two focusGained events.
+						return;
+					}
+					for (IAction action : actions) {
+						if (action != null) {
+							handlerActivations.add(service.activateHandler(
+									action.getActionDefinitionId(),
+									new ActionHandler(action), expression,
+									false));
+							if (action instanceof IUpdate) {
+								((IUpdate) action).update();
+							}
 						}
 					}
+					break;
 				}
 			}
-		});
+		}
+		ActivationListener activationListener = new ActivationListener();
+		control.addListener(SWT.Deactivate, activationListener);
+		control.addListener(SWT.FocusOut, activationListener);
+		control.addListener(SWT.Activate, activationListener);
+		control.addListener(SWT.FocusIn, activationListener);
+
 	}
 
 	/**
