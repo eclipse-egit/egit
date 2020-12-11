@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "2d2a60e9_68950e1e",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/op/TagOperation.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 321,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2020-12-11T11:21:40Z",
+      "side": 1,
+      "message": "Done. Strange. I must have tested an earlier version.",
+      "parentUuid": "5400ca04_872105bb",
+      "revId": "09632f0da5e80d87a2892dc0ba1534e35731ad71",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f7da5b17_ad8decec",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/credentials/SignatureUtils.java",
         "patchSetId": 3
@@ -51,6 +69,24 @@
       "revId": "09632f0da5e80d87a2892dc0ba1534e35731ad71",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e989857d_d95f89a7",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/credentials/SignatureUtils.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2020-12-11T11:21:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ad85b463_479a198d",
+      "revId": "09632f0da5e80d87a2892dc0ba1534e35731ad71",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
     }
   ]
 }
