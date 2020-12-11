@@ -780,13 +780,20 @@ public class CreateTagDialog extends TitleAreaDialog {
 
 	private void setExistingTagFromText(String tagName) {
 		try {
-			ObjectId tagObjectId = repo.resolve(Constants.R_TAGS + tagName);
-			if (tagObjectId != null) {
-				try (RevWalk revWalk = new RevWalk(repo)) {
-					RevObject tagObject = revWalk.parseAny(tagObjectId);
-					setExistingTag(tagObject);
+			Ref tagRef = repo.exactRef(Constants.R_TAGS + tagName);
+			if (tagRef != null) {
+				ObjectId tagObjectId = tagRef.getObjectId();
+				if (tagObjectId != null) {
+					try (RevWalk revWalk = new RevWalk(repo)) {
+						RevObject tagObject = revWalk.parseAny(tagObjectId);
+						if (tagObject.getType() == Constants.OBJ_TAG) {
+							setExistingTag(tagObject);
+						} else {
+							setExistingTag(tagRef);
+						}
+					}
+					return;
 				}
-				return;
 			}
 		} catch (IOException e) {
 			// ignore
@@ -801,9 +808,9 @@ public class CreateTagDialog extends TitleAreaDialog {
 	}
 
 	private void setExistingTag(Object tagObject) {
-		if (tagObject instanceof RevTag)
+		if (tagObject instanceof RevTag) {
 			existingTag = new TagWrapper((RevTag) tagObject);
-		else if (tagObject instanceof Ref) {
+		} else if (tagObject instanceof Ref) {
 			existingTag = new TagWrapper((Ref) tagObject);
 		} else {
 			setNoExistingTag();
