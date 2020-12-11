@@ -21,9 +21,12 @@ import org.eclipse.jface.action.MenuManager;
 import org.eclipse.jface.action.Separator;
 import org.eclipse.jface.commands.ActionHandler;
 import org.eclipse.jface.text.ITextOperationTarget;
+import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.FocusEvent;
 import org.eclipse.swt.events.FocusListener;
 import org.eclipse.swt.widgets.Control;
+import org.eclipse.swt.widgets.Event;
+import org.eclipse.swt.widgets.Listener;
 import org.eclipse.ui.ActiveShellExpression;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.actions.ActionFactory;
@@ -229,30 +232,62 @@ public final class ActionUtils {
 
 			@Override
 			public void focusLost(FocusEvent e) {
-				if (!handlerActivations.isEmpty()) {
-					service.deactivateHandlers(handlerActivations);
-					handlerActivations.clear();
-				}
+				handlerDeactivation(service, handlerActivations);
 			}
+
 
 			@Override
 			public void focusGained(FocusEvent e) {
-				if (!handlerActivations.isEmpty()) {
-					// Looks like sometimes we get two focusGained events.
-					return;
-				}
-				for (IAction action : actions) {
-					if (action != null) {
-						handlerActivations.add(service.activateHandler(
-								action.getActionDefinitionId(),
-								new ActionHandler(action), expression, false));
-						if (action instanceof IUpdate) {
-							((IUpdate) action).update();
-						}
-					}
+				handlerActivation(actions, service, handlerActivations,
+						expression);
+			}
+
+		});
+		control.addListener(SWT.Deactivate, new Listener() {
+			@Override
+			public void handleEvent(Event event) {
+				if (event.type == SWT.Deactivate) {
+					handlerDeactivation(service, handlerActivations);
 				}
 			}
 		});
+		control.addListener(SWT.Activate, new Listener() {
+			@Override
+			public void handleEvent(Event event) {
+				if (event.type == SWT.Activate) {
+					handlerActivation(actions, service, handlerActivations,
+							expression);
+				}
+			}
+		});
+	}
+
+	private static void handlerDeactivation(IHandlerService service,
+			Collection<IHandlerActivation> handlerActivations) {
+		if (!handlerActivations.isEmpty()) {
+			service.deactivateHandlers(handlerActivations);
+			handlerActivations.clear();
+		}
+	}
+
+	private static void handlerActivation(Collection<? extends IAction> actions,
+			IHandlerService service,
+			Collection<IHandlerActivation> handlerActivations,
+			final ActiveShellExpression expression) {
+		if (!handlerActivations.isEmpty()) {
+			// Looks like sometimes we get two focusGained events.
+			return;
+		}
+		for (IAction action : actions) {
+			if (action != null) {
+				handlerActivations.add(
+						service.activateHandler(action.getActionDefinitionId(),
+								new ActionHandler(action), expression, false));
+				if (action instanceof IUpdate) {
+					((IUpdate) action).update();
+				}
+			}
+		}
 	}
 
 	/**
