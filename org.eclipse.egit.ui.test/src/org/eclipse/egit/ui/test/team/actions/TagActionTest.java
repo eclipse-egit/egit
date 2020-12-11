@@ -15,6 +15,7 @@ package org.eclipse.egit.ui.test.team.actions;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 
 import java.io.File;
 
@@ -224,6 +225,23 @@ public class TagActionTest extends LocalRepositoryTestCase {
 				.getTableItem("SomeLightTag").select();
 		assertFalse("Ok should be disabled", tagDialog.bot()
 				.button(UIText.CreateTagDialog_CreateTagButton).isEnabled());
+		tagDialog.bot().checkBox(UIText.CreateTagDialog_overwriteTag).click();
+		tagDialog.bot().button(UIText.CreateTagDialog_CreateTagButton).click();
+		TestUtil.joinJobs(JobFamilies.TAG);
+		assertIsLightweight("SomeLightTag", headCommit);
+	}
+
+	@Test
+	public void testForceOverwriteLightWeightTagWithTextInput()
+			throws Exception {
+		assertIsLightweight("SomeLightTag", someLightTagCommit);
+		SWTBotShell tagDialog = openTagDialog();
+		tagDialog.bot().textWithLabel(UIText.CreateTagDialog_tagName)
+				.setText("SomeLightTag");
+		assertFalse("Ok should be disabled", tagDialog.bot()
+				.button(UIText.CreateTagDialog_CreateTagButton).isEnabled());
+		assertTrue("Overwrite checkbox should be enabled", tagDialog.bot()
+				.checkBox(UIText.CreateTagDialog_overwriteTag).isEnabled());
 		tagDialog.bot().checkBox(UIText.CreateTagDialog_overwriteTag).click();
 		tagDialog.bot().button(UIText.CreateTagDialog_CreateTagButton).click();
 		TestUtil.joinJobs(JobFamilies.TAG);
