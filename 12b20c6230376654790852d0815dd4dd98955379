@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "58868bb1_bee7e85b",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/ActionUtils.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 262,
+      "author": {
+        "id": 119988
+      },
+      "writtenOn": "2020-12-16T11:11:33Z",
+      "side": 1,
+      "message": "As far as I can tell, the deactivation and activation listeners are enough here. I can copy text just fine in the message box of the git staging view, and I don\u0027t see errors about handler conflicts.\n\nShould we leave the focus in / out anyway?\n\nI\u0027ve also not tested this on Windows; I have no setup for it.",
+      "range": {
+        "startLine": 259,
+        "startChar": 2,
+        "endLine": 262,
+        "endChar": 55
+      },
+      "revId": "12b20c6230376654790852d0815dd4dd98955379",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": true
+    }
+  ]
+}
