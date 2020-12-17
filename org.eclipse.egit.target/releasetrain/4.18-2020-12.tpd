@@ -1,6 +1,6 @@
 target "4.18-2020-12" with source configurePhase
 
-location "https://download.eclipse.org/staging/2020-12/" {
+location "https://download.eclipse.org/releases/2020-12/" {
 	// Eclipse platform
 	org.eclipse.sdk.ide lazy
 	org.eclipse.ecf.core.feature.feature.group lazy
