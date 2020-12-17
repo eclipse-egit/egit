@@ -103,6 +103,7 @@
   <setupTask
       xsi:type="setup:VariableTask"
       name="egit.target.platform"
+      defaultValue="egit-4.6"
       storageURI="scope://Workspace"
       label="EGit Target Platform">
     <choice
@@ -132,6 +133,15 @@
     <choice
         value="egit-4.14"
         label="EGit 2019-12 (4.14) target"/>
+    <choice
+        value="egit-4.15"
+        label="EGit 2020-03 (4.15) target"/>
+    <choice
+        value="egit-4.16"
+        label="EGit 2020-06 (4.16) target"/>
+    <choice
+        value="egit-4.17"
+        label="EGit 2020-09 (4.17) target"/>
     <description>Default target platform for EGit development.</description>
   </setupTask>
   <setupTask
