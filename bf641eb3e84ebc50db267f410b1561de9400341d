@@ -22,6 +22,30 @@
       "revId": "bf641eb3e84ebc50db267f410b1561de9400341d",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7fb7052e_318e635d",
+        "filename": "org.eclipse.egit.target/egit-4.18.target",
+        "patchSetId": 1
+      },
+      "lineNbr": 4,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2020-12-19T00:09:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d21c5f59_dccf5285",
+      "range": {
+        "startLine": 4,
+        "startChar": 14,
+        "endLine": 4,
+        "endChar": 31
+      },
+      "revId": "bf641eb3e84ebc50db267f410b1561de9400341d",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
     }
   ]
 }
