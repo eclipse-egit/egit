@@ -22,6 +22,30 @@
       "revId": "12b20c6230376654790852d0815dd4dd98955379",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "03f5d1c0_ac6a93d5",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/ActionUtils.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 262,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2020-12-19T13:39:19Z",
+      "side": 1,
+      "message": "I\u0027d keep the focus events. Works fine on Windows, too. (Tested in a Win 10 virtual machine.)\n\nThe dispose event can also be handled in this listener, and maybe using a switch on event.type would give clearer code.",
+      "parentUuid": "58868bb1_bee7e85b",
+      "range": {
+        "startLine": 259,
+        "startChar": 2,
+        "endLine": 262,
+        "endChar": 55
+      },
+      "revId": "12b20c6230376654790852d0815dd4dd98955379",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": true
     }
   ]
 }
