@@ -217,16 +217,12 @@ public final class ActionUtils {
 	 */
 	public static void setGlobalActions(Control control,
 			Collection<? extends IAction> actions, IHandlerService service) {
-		Collection<IHandlerActivation> handlerActivations = new ArrayList<>();
-		control.addDisposeListener(event -> {
-			if (!handlerActivations.isEmpty()) {
-				service.deactivateHandlers(handlerActivations);
-				handlerActivations.clear();
-			}
-		});
-		final ActiveShellExpression expression = new ActiveShellExpression(
+		ActiveShellExpression expression = new ActiveShellExpression(
 				control.getShell());
 		class ActivationListener implements Listener {
+
+			private Collection<IHandlerActivation> handlerActivations = new ArrayList<>();
+
 			@Override
 			public void handleEvent(Event event) {
 				switch (event.type) {
@@ -256,6 +252,8 @@ public final class ActionUtils {
 						}
 					}
 					break;
+				default:
+					break;
 				}
 			}
 		}
@@ -264,7 +262,7 @@ public final class ActionUtils {
 		control.addListener(SWT.FocusOut, activationListener);
 		control.addListener(SWT.Activate, activationListener);
 		control.addListener(SWT.FocusIn, activationListener);
-
+		control.addListener(SWT.Dispose, activationListener);
 	}
 
 	/**
