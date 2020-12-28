@@ -21,6 +21,7 @@
 package org.eclipse.egit.ui.internal.dialogs;
 
 import java.io.IOException;
+import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.regex.Pattern;
@@ -55,6 +56,7 @@ import org.eclipse.jgit.lib.RepositoryState;
 import org.eclipse.jgit.revwalk.RevCommit;
 import org.eclipse.jgit.util.ChangeIdUtil;
 import org.eclipse.jgit.util.RawParseUtils;
+import org.eclipse.jgit.util.StringUtils;
 import org.eclipse.swt.events.ModifyEvent;
 import org.eclipse.swt.events.ModifyListener;
 import org.eclipse.swt.widgets.Shell;
@@ -581,9 +583,14 @@ public class CommitMessageComponent {
 			boolean signingKeyAvailable = SignatureUtils
 					.checkSigningKey(signingKey, committerPersonIdent);
 			if (!signingKeyAvailable) {
+				if (StringUtils.isEmptyOrNull(signingKey)) {
+					signingKey = committerPersonIdent.getEmailAddress();
+				}
 				MessageDialog.openWarning(getShell(),
 						UIText.CommitMessageComponent_ErrorMissingSigningKey,
-						UIText.CommitMessageComponent_ErrorNoSigningKeyFound);
+						MessageFormat.format(
+								UIText.CommitMessageComponent_ErrorNoSigningKeyFound,
+								signingKey));
 				return false;
 			}
 		}
