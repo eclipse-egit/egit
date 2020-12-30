@@ -25,7 +25,6 @@ import org.eclipse.core.runtime.Path;
 import org.eclipse.egit.core.internal.Utils;
 import org.eclipse.egit.ui.Activator;
 import org.eclipse.egit.ui.UIUtils;
-import org.eclipse.egit.ui.internal.CommonUtils;
 import org.eclipse.egit.ui.internal.UIIcons;
 import org.eclipse.egit.ui.internal.UIText;
 import org.eclipse.egit.ui.internal.commit.DiffRegionFormatter.FileDiffRegion;
@@ -114,7 +113,7 @@ public class DiffEditorOutlinePage extends ContentOutlinePage {
 		viewer.setContentProvider(new DiffContentProvider());
 		viewer.setLabelProvider(new DiffLabelProvider());
 		viewer.setComparator(
-				new ViewerComparator(CommonUtils.STRING_ASCENDING_COMPARATOR) {
+				new ViewerComparator(FileDiff.PATH_STRING_COMPARATOR) {
 					@Override
 					public int category(Object element) {
 						if (element instanceof DiffContentProvider.Folder) {
