@@ -423,7 +423,11 @@ public class DiffEditorOutlinePage extends ContentOutlinePage {
 		((DiffContentProvider) getTreeViewer().getContentProvider())
 				.setCompactTree(compact);
 		toggleAction
-				.setImageDescriptor(compact ? UIIcons.COMPACT : UIIcons.FLAT);
+				.setImageDescriptor(compact ? UIIcons.FLAT : UIIcons.COMPACT);
+		toggleAction
+				.setToolTipText(compact
+						? UIText.DiffEditor_OutlineShowFlatListTooltip
+						: UIText.DiffEditor_OutlineShowCompactTreeTooltip);
 		preference.setValue(prefID, compact);
 		getTreeViewer().setInput(getTreeViewer().getInput());
 	}
