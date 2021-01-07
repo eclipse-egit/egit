@@ -234,6 +234,8 @@ public final class UIPreferences {
 	public static final String HISTORY_SHOW_TAG_SEQUENCE = "HistoryView_ShowTagSequence"; //$NON-NLS-1$
 	/** */
 	public static final String HISTORY_SHOW_BRANCH_SEQUENCE = "HistoryView_ShowBranchSequence"; //$NON-NLS-1$
+	/** */
+	public final static String HISTORY_VERIFY_SIGNATURES = "HistoryView_VerifySignatures"; //$NON-NLS-1$
 
 	/** */
 	public static final String HISTORY_COLUMN_ID = "HistoryView_ColumnIdShow"; //$NON-NLS-1$

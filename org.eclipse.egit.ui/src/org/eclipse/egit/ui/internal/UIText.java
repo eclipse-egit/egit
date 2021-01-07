@@ -2112,6 +2112,9 @@ public class UIText extends NLS {
 	public static String ResourceHistory_toggleRevComment;
 
 	/** */
+	public static String ResourceHistory_verifySignatures;
+
+	/** */
 	public static String HardResetToRevisionAction_hardReset;
 
 	/** */
