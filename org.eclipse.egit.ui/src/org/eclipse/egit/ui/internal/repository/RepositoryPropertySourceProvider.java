@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2010, 2019 SAP AG and others.
+ * Copyright (c) 2010, 2021 SAP AG and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License 2.0
  * which accompanies this distribution, and is available at
@@ -26,6 +26,7 @@ import org.eclipse.jgit.lib.Repository;
 import org.eclipse.swt.events.DisposeEvent;
 import org.eclipse.swt.events.DisposeListener;
 import org.eclipse.swt.widgets.Control;
+import org.eclipse.ui.IActionBars;
 import org.eclipse.ui.views.properties.IPropertySource;
 import org.eclipse.ui.views.properties.IPropertySourceProvider;
 import org.eclipse.ui.views.properties.PropertySheetPage;
@@ -87,6 +88,11 @@ public class RepositoryPropertySourceProvider implements
 
 	@Override
 	public IPropertySource getPropertySource(Object object) {
+
+		if (object instanceof IPropertySource) {
+			// Enable nested properties
+			return (IPropertySource) object;
+		}
 
 		if (object == lastObject) {
 			return lastRepositorySource;
@@ -152,19 +158,20 @@ public class RepositoryPropertySourceProvider implements
 		// the different pages contribute different actions, so if we
 		// change to a different page type, we need to clear them
 		if (lastSourceType != type) {
-			IToolBarManager mgr = myPage.getSite().getActionBars()
-					.getToolBarManager();
+			IActionBars bars = myPage.getSite().getActionBars();
+			IToolBarManager mgr = bars.getToolBarManager();
 			boolean update = false;
-			update = update
-					| mgr.remove(RepositoryPropertySource.CHANGEMODEACTIONID) != null;
-			update = update
-					| mgr.remove(RepositoryPropertySource.SINGLEVALUEACTIONID) != null;
-			update = update
-					| mgr.remove(RepositoryPropertySource.EDITACTIONID) != null;
-			update = update
-					| mgr.remove(BranchPropertySource.EDITACTIONID) != null;
-			if (update)
-				mgr.update(false);
+			update |= mgr.remove(
+					RepositoryPropertySource.CHANGEMODEACTIONID) != null;
+			update |= mgr.remove(RepositoryPropertySource.SINGLEVALUEACTIONID) != null;
+			update |= mgr.remove(RepositoryPropertySource.EDITACTIONID) != null;
+			update |= mgr.remove(BranchPropertySource.EDITACTIONID) != null;
+			if (update) {
+				// Need to update the full IActionBars, not just the toolbar
+				// manager, to get proper layout when items are added or
+				// removed.
+				bars.updateActionBars();
+			}
 		}
 		lastSourceType = type;
 	}

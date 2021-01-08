@@ -15,6 +15,7 @@ package org.eclipse.egit.ui.internal.repository;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import org.eclipse.egit.ui.Activator;
@@ -291,7 +292,9 @@ public class RepositoryPropertySource implements IPropertySource {
 			bars.getToolBarManager().add(singleValueToggleAction);
 			bars.getToolBarManager().add(editAction);
 
-			bars.getToolBarManager().update(false);
+			// bars.getToolBarManager().update(true) is not good enough; the
+			// layout of the bar doesn't get updated.
+			bars.updateActionBars();
 		}
 	}
 
@@ -322,27 +325,22 @@ public class RepositoryPropertySource implements IPropertySource {
 		String name = keyString.substring(j + 1);
 
 		String[] valueList = null;
-		if (getSingleValueMode())
+		if (getSingleValueMode()) {
 			valueList = new String[] { config.getString(section, subsection,
 					name) };
-		else
+		} else {
 			valueList = config.getStringList(section, subsection, name);
+		}
 
-		if (valueList == null || valueList.length == 0)
+		if (valueList == null || valueList.length == 0) {
 			return null;
+		}
 
 		if (valueList.length == 1) {
 			return valueList[0];
 		}
 
-		StringBuilder sb = new StringBuilder();
-		for (String value : valueList) {
-			sb.append('[');
-			sb.append(value);
-			sb.append(']');
-		}
-
-		return sb.toString();
+		return new ListPropertySource(Arrays.asList(valueList));
 	}
 
 	@Override
