@@ -18,9 +18,9 @@ import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.commands.ExecutionException;
 import org.eclipse.egit.ui.Activator;
 import org.eclipse.egit.ui.internal.UIText;
-import org.eclipse.egit.ui.internal.repository.RepositoriesView;
 import org.eclipse.egit.ui.internal.repository.tree.RemoteNode;
 import org.eclipse.jface.dialogs.MessageDialog;
+import org.eclipse.jgit.lib.ConfigConstants;
 import org.eclipse.jgit.lib.StoredConfig;
 import org.eclipse.osgi.util.NLS;
 
@@ -40,7 +40,8 @@ public class RemoveRemoteCommand extends
 						configName));
 		if (ok) {
 			StoredConfig config = node.getRepository().getConfig();
-			config.unsetSection(RepositoriesView.REMOTE, configName);
+			config.unsetSection(ConfigConstants.CONFIG_REMOTE_SECTION,
+					configName);
 			try {
 				config.save();
 			} catch (IOException e1) {
