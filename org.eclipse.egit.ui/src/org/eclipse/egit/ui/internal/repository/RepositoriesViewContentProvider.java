@@ -261,7 +261,7 @@ public class RepositoriesViewContentProvider implements ITreeContentProvider {
 			Repository rep = node.getRepository();
 
 			Set<String> configNames = rep.getConfig().getSubsections(
-					RepositoriesView.REMOTE);
+					ConfigConstants.CONFIG_REMOTE_SECTION);
 
 			for (String configName : configNames) {
 				remotes.add(new RemoteNode(node, repo, configName));

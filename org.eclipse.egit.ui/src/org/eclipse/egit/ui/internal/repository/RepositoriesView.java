@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2010, 2020 SAP AG and others.
+ * Copyright (c) 2010, 2021 SAP AG and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License 2.0
  * which accompanies this distribution, and is available at
@@ -185,21 +185,6 @@ import org.eclipse.ui.views.properties.PropertySheetPage;
  * The "Git Repositories View".
  */
 public class RepositoriesView extends CommonNavigator implements IShowInSource, IShowInTargetList {
-
-	/** "remote" */
-	public static final String REMOTE = "remote"; //$NON-NLS-1$
-
-	/** "url" */
-	public static final String URL = "url"; //$NON-NLS-1$
-
-	/** "pushurl" */
-	public static final String PUSHURL = "pushurl"; //$NON-NLS-1$
-
-	/** "push" */
-	public static final String PUSH = "push"; //$NON-NLS-1$
-
-	/** "fetch" */
-	public static final String FETCH = "fetch"; //$NON-NLS-1$
 
 	/** View id; also doubles as context id. */
 	public static final String VIEW_ID = "org.eclipse.egit.ui.RepositoriesView"; //$NON-NLS-1$
