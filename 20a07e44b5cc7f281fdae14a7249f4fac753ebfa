@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f6ae9d0a_da704cb5",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 5
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2021-01-10T00:17:55Z",
+      "side": 1,
+      "message": "The idea would be to run signature verification and show the results; perhaps again using nested properties.",
+      "revId": "20a07e44b5cc7f281fdae14a7249f4fac753ebfa",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4a534caf_2085bf60",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 5
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2021-01-10T00:17:55Z",
+      "side": 1,
+      "message": "For the display of the short message, see also https://git.eclipse.org/r/c/jgit/jgit/+/174405 in JGit.\n\nOne idea to show the full message might be to show a pop-up like the javadoc pop-ups in the Java editor when the property is selected or maybe even when the value is hovered over. But it\u0027s not immediately clear how to do that. A poor-man\u0027s implementation would be a (read-only) DialogCellEditor.",
+      "revId": "20a07e44b5cc7f281fdae14a7249f4fac753ebfa",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": true
+    }
+  ]
+}

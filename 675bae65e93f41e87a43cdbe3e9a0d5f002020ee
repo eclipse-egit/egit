@@ -138,6 +138,24 @@
     },
     {
       "key": {
+        "uuid": "238996ae_e4fc50a3",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/repository/TagPropertySource.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2021-01-10T00:17:55Z",
+      "side": 1,
+      "message": "\u003e Can we show the tag\u0027s data sorted before the commit\u0027s meta data in a similar way how git show shows an annotated or signed tag ?\n\nSorting is managed by the PropertySheetPage itself. By default it sorts categories and labels alphabetically. We might try to add our own PropertySheetSorter when showing a tag to get the \"canonical\" git order.",
+      "parentUuid": "afaa26aa_1c33cfe3",
+      "revId": "675bae65e93f41e87a43cdbe3e9a0d5f002020ee",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1fc02aa7_ae458243",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/uitext.properties",
         "patchSetId": 3
