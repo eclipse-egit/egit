@@ -175,7 +175,7 @@ public class RepositoryPropertySourceProvider implements
 			lastObject = object;
 			checkChangeType(SourceType.TAG);
 			lastRepositorySource = new TagPropertySource(node.getRepository(),
-					(Ref) node.getObject());
+					(Ref) node.getObject(), myPage);
 			return lastRepositorySource;
 		}
 		return null;
