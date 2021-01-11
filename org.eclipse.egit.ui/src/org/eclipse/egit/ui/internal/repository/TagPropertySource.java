@@ -31,6 +31,7 @@ import org.eclipse.jgit.revwalk.RevWalk;
 import org.eclipse.ui.views.properties.IPropertyDescriptor;
 import org.eclipse.ui.views.properties.IPropertySource;
 import org.eclipse.ui.views.properties.PropertyDescriptor;
+import org.eclipse.ui.views.properties.PropertySheetPage;
 
 /**
  * Properties for a tag (read-only).
@@ -57,6 +58,8 @@ public class TagPropertySource implements IPropertySource {
 
 	private final IPropertyDescriptor[] descriptors;
 
+	private final PropertySheetPage page;
+
 	/**
 	 * Create a property source for a tag from a {@link Ref}.
 	 *
@@ -64,9 +67,12 @@ public class TagPropertySource implements IPropertySource {
 	 *            repository
 	 * @param ref
 	 *            ref of the tag
+	 * @param page
+	 *            to show the property in
 	 */
-	public TagPropertySource(Repository repo, Ref ref) {
+	public TagPropertySource(Repository repo, Ref ref, PropertySheetPage page) {
 		this.repository = repo;
+		this.page = page;
 		try (RevWalk refWalk = new RevWalk(repo)) {
 			ObjectId objectId = repo.resolve(ref.getName());
 			RevObject any = refWalk.parseAny(objectId);
@@ -93,10 +99,14 @@ public class TagPropertySource implements IPropertySource {
 	 *            repository
 	 * @param tag
 	 *            to show
+	 * @param page
+	 *            to show the property in
 	 */
-	public TagPropertySource(Repository repo, RevTag tag) {
+	public TagPropertySource(Repository repo, RevTag tag,
+			PropertySheetPage page) {
 		this.repository = repo;
 		this.tag = tag;
+		this.page = page;
 		name = tag.getName();
 		try (RevWalk refWalk = new RevWalk(repo)) {
 			refWalk.parseBody(tag.getObject());
@@ -118,8 +128,10 @@ public class TagPropertySource implements IPropertySource {
 		} else {
 			result.add(new PropertyDescriptor(PROPERTY_TAG_ID,
 					UIText.TagPropertySource_TagId));
-			result.add(new PropertyDescriptor(PROPERTY_TAG_MESSAGE,
-					UIText.TagPropertySource_TagMessage));
+			result.add(
+					new MessagePropertyDescriptor(PROPERTY_TAG_MESSAGE,
+							UIText.TagPropertySource_TagMessage,
+							tag.getFullMessage(), page));
 			result.add(new PropertyDescriptor(PROPERTY_TAG_TAGGER,
 					UIText.TagPropertySource_TagTagger));
 			result.add(new PropertyDescriptor(PROPERTY_TAG_TARGET,
@@ -152,22 +164,21 @@ public class TagPropertySource implements IPropertySource {
 			if (tag != null) {
 				RevObject target = tag.getObject();
 				if (target instanceof RevTag) {
-					return new TagPropertySource(repository, (RevTag) target);
+					return new TagPropertySource(repository, (RevTag) target,
+							page);
 				} else if (target instanceof RevCommit) {
-					return new CommitPropertySource((RevCommit) target);
+					return new CommitPropertySource((RevCommit) target, page);
 				}
 				return Constants.typeString(target.getType()) + ' '
 						+ target.name();
 			}
 			if (commit != null) {
-				return new CommitPropertySource(commit);
+				return new CommitPropertySource(commit, page);
 			}
 			return null;
 		case PROPERTY_TAG_TAGGER:
 			return new PersonIdentPropertySource(tag.getTaggerIdent());
 		case PROPERTY_TAG_MESSAGE:
-			// TODO: figure out a way to show the full message, if different
-			// from the short message.
 			return tag.getShortMessage();
 		default:
 			return null;

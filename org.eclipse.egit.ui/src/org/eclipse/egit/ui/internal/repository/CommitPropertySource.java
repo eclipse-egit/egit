@@ -19,6 +19,7 @@ import org.eclipse.jgit.revwalk.RevCommit;
 import org.eclipse.ui.views.properties.IPropertyDescriptor;
 import org.eclipse.ui.views.properties.IPropertySource;
 import org.eclipse.ui.views.properties.PropertyDescriptor;
+import org.eclipse.ui.views.properties.PropertySheetPage;
 
 /**
  * Properties for a commit (read-only).
@@ -42,14 +43,17 @@ public class CommitPropertySource implements IPropertySource {
 	 *
 	 * @param commit
 	 *            to show
+	 * @param page
+	 *            to show the commit in
 	 */
-	public CommitPropertySource(RevCommit commit) {
+	public CommitPropertySource(RevCommit commit, PropertySheetPage page) {
 		this.commit = commit;
 		List<PropertyDescriptor> result = new ArrayList<>();
 		result.add(new PropertyDescriptor(PROPERTY_COMMIT_ID,
 				UIText.CommitPropertySource_CommitId));
-		result.add(new PropertyDescriptor(PROPERTY_COMMIT_MESSAGE,
-				UIText.CommitPropertySource_CommitMessage));
+		result.add(new MessagePropertyDescriptor(PROPERTY_COMMIT_MESSAGE,
+				UIText.CommitPropertySource_CommitMessage,
+				commit.getFullMessage(), page));
 		result.add(new PropertyDescriptor(PROPERTY_COMMIT_AUTHOR,
 				UIText.CommitPropertySource_CommitAuthor));
 		result.add(new PropertyDescriptor(PROPERTY_COMMITTER,
@@ -76,8 +80,6 @@ public class CommitPropertySource implements IPropertySource {
 		case PROPERTY_COMMIT_ID:
 			return commit.getName();
 		case PROPERTY_COMMIT_MESSAGE:
-			// TODO: figure out a way to show the full message, if different
-			// from the short message.
 			return commit.getShortMessage();
 		case PROPERTY_COMMIT_AUTHOR:
 			return new PersonIdentPropertySource(commit.getAuthorIdent());
