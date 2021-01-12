@@ -22,6 +22,30 @@
       "revId": "9711d9b89578bd3e6036cf06013c20553c4cf6f3",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7dee3da2_a3df212b",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2021-01-12T22:42:26Z",
+      "side": 1,
+      "message": "That would be a rather different implementation.\n\nI\u0027m not sure a hover could be implemented, though. While it should be possible to track mouse movements in the Tree and identify the TreeItem, the PropertySheetEntry obtainable via item.getData() does not give access to the PropertyDescriptor. So it\u0027s not clear to me how to figure out that the mouse pointer is over an item for a MessagePropertyDescriptor and that a hover should be shown. Maybe if we built our own model using a subclass of PropertySheetEntry that would make PropertySheetEntry.getDescriptor() public... (and override createChildEntry(), too).\n\nThe user would have to give the tree in the properties view the focus first anyway (activate the view).\n\nFor keyboard navigation, the user would then have to navigate to the line anyway and then hit F2. Now he has to navigate to the line and hit \u003creturn\u003e to open the CellEditor.\n\nFor mouse navigation, there\u0027s one click to activate the view, then there\u0027d be a mouse move to the item. Now there is a click to activate, then a mouse move and another click. I suspect most of the time the user would click to activate on the item anyway.\n\nMaybe I have some more time to give it a try. But it doesn\u0027t seem to be any simpler to implement.",
+      "parentUuid": "2fa486ab_6236c232",
+      "range": {
+        "startLine": 10,
+        "startChar": 23,
+        "endLine": 10,
+        "endChar": 52
+      },
+      "revId": "9711d9b89578bd3e6036cf06013c20553c4cf6f3",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": true
     }
   ]
 }
