@@ -20,6 +20,7 @@ import java.util.List;
 
 import org.eclipse.egit.ui.Activator;
 import org.eclipse.egit.ui.internal.UIText;
+import org.eclipse.egit.ui.internal.commit.RepositoryCommit;
 import org.eclipse.jgit.lib.Constants;
 import org.eclipse.jgit.lib.ObjectId;
 import org.eclipse.jgit.lib.Ref;
@@ -122,8 +123,9 @@ public class TagPropertySource implements IPropertySource {
 				UIText.TagPropertySource_TagName));
 		if (tag == null) {
 			if (commit != null) {
-				result.add(new PropertyDescriptor(PROPERTY_TAG_TARGET,
-						UIText.TagPropertySource_TagTarget));
+				result.add(new CommitPropertyDescriptor(PROPERTY_TAG_TARGET,
+						UIText.TagPropertySource_TagTarget,
+						new RepositoryCommit(repository, commit)));
 			}
 		} else {
 			result.add(new PropertyDescriptor(PROPERTY_TAG_ID,
@@ -134,8 +136,15 @@ public class TagPropertySource implements IPropertySource {
 							tag.getFullMessage(), page));
 			result.add(new PropertyDescriptor(PROPERTY_TAG_TAGGER,
 					UIText.TagPropertySource_TagTagger));
-			result.add(new PropertyDescriptor(PROPERTY_TAG_TARGET,
-					UIText.TagPropertySource_TagTarget));
+			if (tag.getObject() instanceof RevCommit) {
+				result.add(new CommitPropertyDescriptor(PROPERTY_TAG_TARGET,
+						UIText.TagPropertySource_TagTarget,
+						new RepositoryCommit(repository,
+								(RevCommit) tag.getObject())));
+			} else {
+				result.add(new PropertyDescriptor(PROPERTY_TAG_TARGET,
+						UIText.TagPropertySource_TagTarget));
+			}
 		}
 		for (PropertyDescriptor p : result) {
 			p.setCategory(UIText.TagPropertySource_TagCategory);
