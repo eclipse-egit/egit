@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ced2ab89_61d039a0",
+        "filename": "org.eclipse.egit.target/projects/jetty-9.4.x.tpd",
+        "patchSetId": 3
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2021-01-12T08:56:36Z",
+      "side": 1,
+      "message": "No source bundle?",
+      "revId": "231f97871e70d45c8a670c3ffe1d033059a4f149",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": true
+    }
+  ]
+}
