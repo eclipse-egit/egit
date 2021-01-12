@@ -357,6 +357,12 @@ public class UIIcons {
 	public final static ImageDescriptor MERGE_TOOL;
 
 	/**
+	 * Icon for opening the commit viewer. Don't confuse with {@link #COMMIT}
+	 * operation icon.
+	 */
+	public final static ImageDescriptor OPEN_COMMIT;
+
+	/**
 	 * Icon for removing repositories from groups.
 	 */
 	public final static ImageDescriptor REMOVE_FROM_REPO_GROUP;
@@ -492,6 +498,7 @@ public class UIIcons {
 				OVR_CHECKEDOUT, IDecoration.TOP_LEFT);
 		SIGN_COMMIT = map("obj16/sign-commit.png"); //$NON-NLS-1$
 		MERGE_TOOL = map("obj16/mergetool.png"); //$NON-NLS-1$
+		OPEN_COMMIT = map("obj16/open-commit.png"); //$NON-NLS-1$
 		REMOVE_FROM_REPO_GROUP = map("obj16/clear.png"); //$NON-NLS-1$
 	}
 

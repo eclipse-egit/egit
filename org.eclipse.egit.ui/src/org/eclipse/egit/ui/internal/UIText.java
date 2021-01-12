@@ -4580,6 +4580,12 @@ public class UIText extends NLS {
 	public static String TagAction_taggingFailed;
 
 	/** */
+	public static String CommitPropertyDescriptor_OpenCommitLabel;
+
+	/** */
+	public static String CommitPropertyDescriptor_ShowInHistoryLabel;
+
+	/** */
 	public static String CommitPropertySource_CommitAuthor;
 
 	/** */
