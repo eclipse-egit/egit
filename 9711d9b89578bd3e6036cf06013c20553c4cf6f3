@@ -46,6 +46,30 @@
       "revId": "9711d9b89578bd3e6036cf06013c20553c4cf6f3",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c670b4a6_50f48b32",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2021-01-13T22:32:47Z",
+      "side": 1,
+      "message": "\u003e Maybe I have some more time to give it a try. But it doesn\u0027t seem to be any simpler to implement.\n\nThis is possible, but because InformationControlReplacer is internal and the methods on AbstractInformationControlManager to work with such an InformationControlReplacer are package-visible only and not accessible to EGit, hovers can be focused only via F2, and only when the properties view is active. Working around these framework limitations would require copying an inane amount of code from JFace and modifying it. Without that it\u0027s not really any more comfortable. (In fact, not being able to focus a popup with the mouse is a bloody nuisance.)",
+      "parentUuid": "7dee3da2_a3df212b",
+      "range": {
+        "startLine": 10,
+        "startChar": 23,
+        "endLine": 10,
+        "endChar": 52
+      },
+      "revId": "9711d9b89578bd3e6036cf06013c20553c4cf6f3",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": true
     }
   ]
 }
