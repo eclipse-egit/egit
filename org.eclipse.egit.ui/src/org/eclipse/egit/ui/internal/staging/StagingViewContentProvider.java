@@ -36,6 +36,7 @@ import java.util.regex.Pattern;
 
 import org.eclipse.core.resources.IContainer;
 import org.eclipse.core.resources.IFile;
+import org.eclipse.core.resources.IResource;
 import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.Path;
@@ -127,6 +128,12 @@ public class StagingViewContentProvider extends WorkbenchContentProvider {
 							repository.getWorkTree().getAbsolutePath());
 					rootContainer = ResourcesPlugin.getWorkspace().getRoot()
 							.getContainerForLocation(path);
+					if (rootContainer != null
+							&& rootContainer.getType() == IResource.ROOT) {
+						// Files in the workspace root can't be accessed as
+						// IFiles.
+						rootContainer = null;
+					}
 				}
 				container = rootContainer;
 			}
