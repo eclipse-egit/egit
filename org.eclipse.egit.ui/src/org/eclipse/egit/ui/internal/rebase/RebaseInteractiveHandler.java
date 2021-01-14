@@ -37,8 +37,8 @@ public enum RebaseInteractiveHandler implements InteractiveHandler {
 			@Override
 			public void run() {
 				CommitMessageEditorDialog dialog = new CommitMessageEditorDialog(
-						PlatformUI.getWorkbench()
-						.getDisplay().getActiveShell(),
+						PlatformUI.getWorkbench().getModalDialogShellProvider()
+								.getShell(),
 						commitMessage);
 				if (dialog.open() == Window.OK) {
 					result[0] = dialog.getCommitMessage();

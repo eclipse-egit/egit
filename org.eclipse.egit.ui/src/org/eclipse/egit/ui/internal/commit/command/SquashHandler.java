@@ -38,7 +38,9 @@ import org.eclipse.jgit.api.errors.GitAPIException;
 import org.eclipse.jgit.lib.RebaseTodoLine;
 import org.eclipse.jgit.lib.Repository;
 import org.eclipse.jgit.revwalk.RevCommit;
+import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Shell;
+import org.eclipse.ui.PlatformUI;
 
 /** Handler to squash multiple commits into one. */
 public class SquashHandler extends SelectionHandler {
@@ -67,6 +69,7 @@ public class SquashHandler extends SelectionHandler {
 			return null;
 		}
 
+		Display display = shell.getDisplay();
 		InteractiveHandler messageHandler = new InteractiveHandler() {
 			@Override
 			public void prepareSteps(List<RebaseTodoLine> steps) {
@@ -75,7 +78,7 @@ public class SquashHandler extends SelectionHandler {
 
 			@Override
 			public String modifyCommitMessage(String oldMessage) {
-				return promptCommitMessage(shell, oldMessage);
+				return promptCommitMessage(display, oldMessage);
 			}
 		};
 
@@ -106,19 +109,18 @@ public class SquashHandler extends SelectionHandler {
 		return null;
 	}
 
-	private String promptCommitMessage(final Shell shell, final String message) {
+	private String promptCommitMessage(Display display, String message) {
 		final String[] msg = { message };
-		shell.getDisplay().syncExec(new Runnable() {
-			@Override
-			public void run() {
-				CommitMessageEditorDialog dialog = new CommitMessageEditorDialog(
-						shell, msg[0],
-						UIText.CommitMessageEditorDialog_OkButton,
-						UIText.SquashHandler_EditMessageDialogCancelButton);
-				if (dialog.open() == Window.OK)
-					msg[0] = dialog.getCommitMessage();
-				else
-					msg[0] = message;
+		display.syncExec(() -> {
+			Shell shell = PlatformUI.getWorkbench()
+					.getModalDialogShellProvider().getShell();
+			CommitMessageEditorDialog dialog = new CommitMessageEditorDialog(
+					shell, msg[0], UIText.CommitMessageEditorDialog_OkButton,
+					UIText.SquashHandler_EditMessageDialogCancelButton);
+			if (dialog.open() == Window.OK) {
+				msg[0] = dialog.getCommitMessage();
+			} else {
+				msg[0] = message;
 			}
 		});
 		return msg[0];
