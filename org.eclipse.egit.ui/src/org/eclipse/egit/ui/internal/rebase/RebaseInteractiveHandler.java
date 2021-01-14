@@ -20,29 +20,25 @@ import org.eclipse.jgit.lib.RebaseTodoLine;
 import org.eclipse.ui.PlatformUI;
 
 /**
- * Singleton {@link InteractiveHandler}
+ * Singleton {@link InteractiveHandler}.
  */
 public enum RebaseInteractiveHandler implements InteractiveHandler {
+
 	/**
-	 * Commonly used {@link InteractiveHandler} for (interactive) rebase
+	 * Commonly used {@link InteractiveHandler} for (interactive) rebase.
 	 */
 	INSTANCE;
 
 	@Override
 	public String modifyCommitMessage(final String commitMessage) {
-		final String[] result = new String[1];
-		result[0] = commitMessage;
-		PlatformUI.getWorkbench().getDisplay().syncExec(new Runnable() {
-
-			@Override
-			public void run() {
-				CommitMessageEditorDialog dialog = new CommitMessageEditorDialog(
-						PlatformUI.getWorkbench()
-						.getDisplay().getActiveShell(),
-						commitMessage);
-				if (dialog.open() == Window.OK) {
-					result[0] = dialog.getCommitMessage();
-				}
+		String[] result = { commitMessage };
+		PlatformUI.getWorkbench().getDisplay().syncExec(() -> {
+			CommitMessageEditorDialog dialog = new CommitMessageEditorDialog(
+					PlatformUI.getWorkbench().getModalDialogShellProvider()
+							.getShell(),
+					commitMessage);
+			if (dialog.open() == Window.OK) {
+				result[0] = dialog.getCommitMessage();
 			}
 		});
 		return result[0];
