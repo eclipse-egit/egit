@@ -103,6 +103,7 @@ Export-Package: org.eclipse.egit.ui;version="5.11.0";x-friends:="org.eclipse.egi
  org.eclipse.egit.ui.internal.operations;version="5.11.0";x-friends:="org.eclipse.egit.gitflow.ui",
  org.eclipse.egit.ui.internal.patch;version="5.11.0";x-internal:=true,
  org.eclipse.egit.ui.internal.preferences;version="5.11.0";x-internal:=true,
+ org.eclipse.egit.ui.internal.properties;version="5.11.0";x-internal:=true,
  org.eclipse.egit.ui.internal.provisional.wizards;version="5.11.0";x-internal:=true,
  org.eclipse.egit.ui.internal.pull;version="5.11.0";x-internal:=true,
  org.eclipse.egit.ui.internal.push;version="5.11.0";x-friends:="org.eclipse.egit.gitflow.ui",

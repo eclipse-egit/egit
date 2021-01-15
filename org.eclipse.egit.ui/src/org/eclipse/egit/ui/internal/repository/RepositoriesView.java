@@ -62,6 +62,7 @@ import org.eclipse.egit.ui.internal.components.MessagePopupTextCellEditor;
 import org.eclipse.egit.ui.internal.groups.RepositoryGroup;
 import org.eclipse.egit.ui.internal.groups.RepositoryGroups;
 import org.eclipse.egit.ui.internal.history.HistoryPageInput;
+import org.eclipse.egit.ui.internal.properties.GitPropertySheetPage;
 import org.eclipse.egit.ui.internal.reflog.ReflogView;
 import org.eclipse.egit.ui.internal.repository.tree.FetchNode;
 import org.eclipse.egit.ui.internal.repository.tree.FileNode;
@@ -468,7 +469,7 @@ public class RepositoriesView extends CommonNavigator implements IShowInSource, 
 	public <T> T getAdapter(Class<T> adapter) {
 		// integrate with Properties view
 		if (adapter == IPropertySheetPage.class) {
-			PropertySheetPage page = new PropertySheetPage();
+			PropertySheetPage page = new GitPropertySheetPage();
 			page.setPropertySourceProvider(
 					new RepositoryPropertySourceProvider(page));
 			return adapter.cast(page);

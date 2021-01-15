@@ -22,6 +22,7 @@ import org.eclipse.egit.ui.Activator;
 import org.eclipse.egit.ui.internal.UIIcons;
 import org.eclipse.egit.ui.internal.UIText;
 import org.eclipse.egit.ui.internal.preferences.ConfigurationEditorComponent;
+import org.eclipse.egit.ui.internal.properties.ListPropertySource;
 import org.eclipse.jface.action.Action;
 import org.eclipse.jface.action.ActionContributionItem;
 import org.eclipse.jface.action.IAction;

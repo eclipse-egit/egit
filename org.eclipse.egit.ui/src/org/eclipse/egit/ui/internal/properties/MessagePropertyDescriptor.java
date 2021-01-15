@@ -8,7 +8,7 @@
  *
  * SPDX-License-Identifier: EPL-2.0
  *******************************************************************************/
-package org.eclipse.egit.ui.internal.repository;
+package org.eclipse.egit.ui.internal.properties;
 
 import org.eclipse.jface.action.Action;
 import org.eclipse.jface.action.IAction;
@@ -46,7 +46,7 @@ import org.eclipse.ui.views.properties.PropertySheetPage;
  * selected. The message is shown via the {@link IInformationControl} mechanism
  * from the JFace text editor framework.
  */
-public class MessagePropertyDescriptor extends PropertyDescriptor {
+public class MessagePropertyDescriptor extends GitPropertyDescriptor {
 
 	private final String message;
 
@@ -69,15 +69,6 @@ public class MessagePropertyDescriptor extends PropertyDescriptor {
 		super(id, label);
 		this.message = message;
 		this.page = page;
-	}
-
-	@Override
-	public String getDescription() {
-		String description = super.getDescription();
-		if (description == null) {
-			description = getDisplayName();
-		}
-		return description;
 	}
 
 	@Override

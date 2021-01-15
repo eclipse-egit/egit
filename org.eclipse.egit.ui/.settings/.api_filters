@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<component id="org.eclipse.egit.ui" version="2">
+    <resource path="src/org/eclipse/egit/ui/internal/properties/GitPropertySheetPage.java" type="org.eclipse.egit.ui.internal.properties.GitPropertySheetPage">
+        <filter id="571473929">
+            <message_arguments>
+                <message_argument value="PropertySheetPage"/>
+                <message_argument value="GitPropertySheetPage"/>
+            </message_arguments>
+        </filter>
+    </resource>
+</component>

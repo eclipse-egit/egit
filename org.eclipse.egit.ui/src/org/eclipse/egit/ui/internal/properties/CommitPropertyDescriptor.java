@@ -8,7 +8,7 @@
  *
  * SPDX-License-Identifier: EPL-2.0
  *******************************************************************************/
-package org.eclipse.egit.ui.internal.repository;
+package org.eclipse.egit.ui.internal.properties;
 
 import org.eclipse.egit.ui.Activator;
 import org.eclipse.egit.ui.internal.UIIcons;
@@ -45,7 +45,7 @@ import org.eclipse.ui.views.properties.PropertyDescriptor;
  * editor with two buttons for opening the commit in the EGit commit viewer or
  * to show the commit in the EGit history view.
  */
-public class CommitPropertyDescriptor extends PropertyDescriptor {
+public class CommitPropertyDescriptor extends GitPropertyDescriptor {
 
 	private final RepositoryCommit commit;
 
@@ -65,15 +65,6 @@ public class CommitPropertyDescriptor extends PropertyDescriptor {
 			RepositoryCommit commit) {
 		super(id, label);
 		this.commit = commit;
-	}
-
-	@Override
-	public String getDescription() {
-		String description = super.getDescription();
-		if (description == null) {
-			description = getDisplayName();
-		}
-		return description;
 	}
 
 	@Override
