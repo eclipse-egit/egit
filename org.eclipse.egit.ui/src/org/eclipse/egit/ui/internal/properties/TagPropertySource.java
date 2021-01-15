@@ -11,7 +11,7 @@
  * Contributors:
  *    Michael Keppler - initial implementation
  *******************************************************************************/
-package org.eclipse.egit.ui.internal.repository;
+package org.eclipse.egit.ui.internal.properties;
 
 import java.io.IOException;
 import java.text.MessageFormat;

@@ -20,11 +20,14 @@ import org.eclipse.core.runtime.Adapters;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Status;
+import org.eclipse.egit.core.internal.IRepositoryCommit;
 import org.eclipse.egit.ui.Activator;
 import org.eclipse.egit.ui.internal.CommonUtils;
 import org.eclipse.egit.ui.internal.UIIcons;
 import org.eclipse.egit.ui.internal.UIText;
 import org.eclipse.egit.ui.internal.actions.ActionCommands;
+import org.eclipse.egit.ui.internal.properties.CommitPropertySource;
+import org.eclipse.egit.ui.internal.properties.GitPropertySheetPage;
 import org.eclipse.egit.ui.internal.repository.RepositoriesView;
 import org.eclipse.jface.action.Action;
 import org.eclipse.jface.action.ActionContributionItem;
@@ -80,6 +83,9 @@ import org.eclipse.ui.part.ShowInContext;
 import org.eclipse.ui.progress.UIJob;
 import org.eclipse.ui.services.IEvaluationService;
 import org.eclipse.ui.views.contentoutline.IContentOutlinePage;
+import org.eclipse.ui.views.properties.IPropertySheetPage;
+import org.eclipse.ui.views.properties.IPropertySource;
+import org.eclipse.ui.views.properties.PropertySheetPage;
 
 /**
  * Editor class to view a commit in a form editor.
@@ -482,6 +488,19 @@ public class CommitEditor extends SharedHeaderFormEditor implements
 			return Adapters.adapt(getEditorInput(), adapter);
 		} else if (IContentOutlinePage.class == adapter) {
 			return adapter.cast(getOutlinePage());
+		} else if (IPropertySheetPage.class == adapter) {
+			PropertySheetPage page = new GitPropertySheetPage();
+			page.setPropertySourceProvider(object -> {
+				if (object instanceof IPropertySource) {
+					return (IPropertySource) object;
+				}
+				if (object instanceof IRepositoryCommit) {
+					return new CommitPropertySource(
+							((IRepositoryCommit) object).getRevCommit(), page);
+				}
+				return null;
+			});
+			return adapter.cast(page);
 		}
 		return super.getAdapter(adapter);
 	}

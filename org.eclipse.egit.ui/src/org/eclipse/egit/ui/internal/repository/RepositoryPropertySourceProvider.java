@@ -14,13 +14,10 @@
 package org.eclipse.egit.ui.internal.repository;
 
 import org.eclipse.core.runtime.Adapters;
-import org.eclipse.egit.ui.Activator;
-import org.eclipse.egit.ui.UIPreferences;
+import org.eclipse.egit.ui.internal.properties.TagPropertySource;
 import org.eclipse.egit.ui.internal.repository.tree.RepositoryTreeNode;
 import org.eclipse.egit.ui.internal.repository.tree.RepositoryTreeNodeType;
 import org.eclipse.jface.action.IToolBarManager;
-import org.eclipse.jface.preference.IPreferenceStore;
-import org.eclipse.jface.util.IPropertyChangeListener;
 import org.eclipse.jgit.events.ListenerHandle;
 import org.eclipse.jgit.lib.Constants;
 import org.eclipse.jgit.lib.Ref;
@@ -34,15 +31,12 @@ import org.eclipse.ui.views.properties.IPropertySourceProvider;
 import org.eclipse.ui.views.properties.PropertySheetPage;
 
 /**
- * PropertySource provider for Resource properties
- *
+ * A {@link IPropertySourceProvider} for git repository properties.
  */
 public class RepositoryPropertySourceProvider implements
 		IPropertySourceProvider {
 
 	private final PropertySheetPage myPage;
-
-	private final IPreferenceStore store;
 
 	private Object lastObject;
 
@@ -58,33 +52,12 @@ public class RepositoryPropertySourceProvider implements
 
 	private DisposeListener disposeListener;
 
-	private boolean listenToDateFormatChanges;
-
-	private IPropertyChangeListener dateFormatListener = event -> {
-		if (!listenToDateFormatChanges) {
-			return;
-		}
-		String property = event.getProperty();
-		if (property == null) {
-			return;
-		}
-		switch (property) {
-		case UIPreferences.DATE_FORMAT:
-		case UIPreferences.DATE_FORMAT_CHOICE:
-			refreshPage();
-			break;
-		default:
-			break;
-		}
-	};
-
 	/**
 	 * @param page
 	 *            the page
 	 */
 	public RepositoryPropertySourceProvider(PropertySheetPage page) {
 		myPage = page;
-		store = Activator.getDefault().getPreferenceStore();
 	}
 
 	private void registerDisposal() {
@@ -100,9 +73,6 @@ public class RepositoryPropertySourceProvider implements
 			@Override
 			public void widgetDisposed(DisposeEvent e) {
 				removeListener();
-				if (listenToDateFormatChanges) {
-					store.removePropertyChangeListener(dateFormatListener);
-				}
 			}
 		};
 		control.addDisposeListener(disposeListener);
@@ -198,15 +168,6 @@ public class RepositoryPropertySourceProvider implements
 				// manager, to get proper layout when items are added or
 				// removed.
 				bars.updateActionBars();
-			}
-			if (lastSourceType == SourceType.TAG) {
-				// Remove date format listener
-				store.removePropertyChangeListener(dateFormatListener);
-				listenToDateFormatChanges = false;
-			} else if (type == SourceType.TAG) {
-				// Add date format listener
-				listenToDateFormatChanges = true;
-				store.addPropertyChangeListener(dateFormatListener);
 			}
 		}
 		lastSourceType = type;

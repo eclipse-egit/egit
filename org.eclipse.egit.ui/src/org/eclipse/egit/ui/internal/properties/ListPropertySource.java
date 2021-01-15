@@ -8,7 +8,7 @@
  *
  * SPDX-License-Identifier: EPL-2.0
  *******************************************************************************/
-package org.eclipse.egit.ui.internal.repository;
+package org.eclipse.egit.ui.internal.properties;
 
 import java.util.Collections;
 import java.util.List;
