@@ -14,6 +14,7 @@ import java.io.File;
 import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -96,6 +97,13 @@ import org.eclipse.ui.views.contentoutline.ContentOutlinePage;
  */
 public class DiffEditorOutlinePage extends ContentOutlinePage {
 
+	static final Comparator<String> CMP = (left, right) -> {
+		String l = left.startsWith("/") ? left.substring(1) : left; //$NON-NLS-1$
+		String r = right.startsWith("/") ? right.substring(1) : right; //$NON-NLS-1$
+		return l.replace('/', '\001')
+				.compareToIgnoreCase(r.replace('/', '\001'));
+	};
+
 	private IDocument input;
 
 	private CopyOnWriteArrayList<IOpenListener> openListeners = new CopyOnWriteArrayList<>();
@@ -113,7 +121,7 @@ public class DiffEditorOutlinePage extends ContentOutlinePage {
 		viewer.setContentProvider(new DiffContentProvider());
 		viewer.setLabelProvider(new DiffLabelProvider());
 		viewer.setComparator(
-				new ViewerComparator(FileDiff.PATH_STRING_COMPARATOR) {
+				new ViewerComparator(CMP) {
 					@Override
 					public int category(Object element) {
 						if (element instanceof DiffContentProvider.Folder) {

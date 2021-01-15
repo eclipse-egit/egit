@@ -62,28 +62,24 @@ import org.eclipse.jgit.util.LfsFactory;
 public class FileDiff {
 
 	/**
-	 * Comparator for sorting git paths. Compares first the directory part, if
-	 * those are equal, the filename part.
-	 */
-	public static final Comparator<String> PATH_STRING_COMPARATOR = //
-			(left, right) -> {
-				int i = left.lastIndexOf('/') + 1;
-				int j = right.lastIndexOf('/') + 1;
-				int p = left.substring(0, i).replace('/', '\001')
-						.compareTo(right.substring(0, j).replace('/', '\001'));
-				if (p != 0) {
-					return p;
-				}
-				return left.substring(i)
-						.compareToIgnoreCase(right.substring(j));
-			};
-
-	/**
 	 * Comparator for sorting FileDiffs based on getPath(). Compares first the
 	 * directory part, if those are equal, the filename part.
 	 */
-	public static final Comparator<FileDiff> PATH_COMPARATOR = Comparator
-			.comparing(FileDiff::getPath, PATH_STRING_COMPARATOR);
+	public static final Comparator<FileDiff> PATH_COMPARATOR = //
+			(left, right) -> {
+				String leftPath = left.getPath();
+				String rightPath = right.getPath();
+				int i = leftPath.lastIndexOf('/');
+				int j = rightPath.lastIndexOf('/');
+				int p = leftPath.substring(0, i + 1).replace('/', '\001')
+						.compareTo(rightPath.substring(0, j + 1).replace('/',
+								'\001'));
+				if (p != 0) {
+					return p;
+				}
+				return leftPath.substring(i + 1).compareToIgnoreCase(
+						rightPath.substring(j + 1));
+			};
 
 	private final RevCommit commit;
 
