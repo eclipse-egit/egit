@@ -22,6 +22,30 @@
       "revId": "c3b2996b1daf71082e61c182af4093577b31523f",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dc1d46b7_5beae475",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 119988
+      },
+      "writtenOn": "2021-01-18T15:04:28Z",
+      "side": 1,
+      "message": "Sorry, for some reason I overlooked bug 509486. The fix for it definitely breaks due to this change.",
+      "parentUuid": "124cc24b_3ccf7f64",
+      "range": {
+        "startLine": 9,
+        "startChar": 44,
+        "endLine": 9,
+        "endChar": 69
+      },
+      "revId": "c3b2996b1daf71082e61c182af4093577b31523f",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": true
     }
   ]
 }
