@@ -55,7 +55,6 @@ import org.eclipse.jface.util.IPropertyChangeListener;
 import org.eclipse.jface.viewers.ArrayContentProvider;
 import org.eclipse.jface.viewers.TableViewer;
 import org.eclipse.jface.viewers.ViewerComparator;
-import org.eclipse.jgit.annotations.NonNull;
 import org.eclipse.jgit.lib.Constants;
 import org.eclipse.jgit.lib.ObjectId;
 import org.eclipse.jgit.lib.PersonIdent;
@@ -93,7 +92,6 @@ import org.eclipse.ui.forms.events.ExpansionAdapter;
 import org.eclipse.ui.forms.events.ExpansionEvent;
 import org.eclipse.ui.forms.events.HyperlinkAdapter;
 import org.eclipse.ui.forms.events.HyperlinkEvent;
-import org.eclipse.ui.forms.widgets.AbstractHyperlink;
 import org.eclipse.ui.forms.widgets.ExpandableComposite;
 import org.eclipse.ui.forms.widgets.FormToolkit;
 import org.eclipse.ui.forms.widgets.Hyperlink;
@@ -130,8 +128,6 @@ public class CommitEditorPage extends FormPage
 
 	private CommitFileDiffViewer diffViewer;
 
-	private FocusTracker focusTracker = new FocusTracker();
-
 	/**
 	 * Create commit editor page
 	 *
@@ -150,24 +146,6 @@ public class CommitEditorPage extends FormPage
 	 */
 	public CommitEditorPage(FormEditor editor, String id, String title) {
 		super(editor, id, title);
-	}
-
-	/**
-	 * Add the given {@link Control} to this form's focus tracking.
-	 *
-	 * @param control
-	 *            to add to focus tracking
-	 */
-	protected void addToFocusTracking(@NonNull Control control) {
-		focusTracker.addToFocusTracking(control);
-	}
-
-	private void addSectionTextToFocusTracking(@NonNull Section composite) {
-		for (Control control : composite.getChildren()) {
-			if (control instanceof AbstractHyperlink) {
-				addToFocusTracking(control);
-			}
-		}
 	}
 
 	private void hookExpansionGrabbing(final Section section) {
@@ -192,7 +170,6 @@ public class CommitEditorPage extends FormPage
 		GridDataFactory.fillDefaults().span(span, 1).grab(true, true)
 				.applyTo(section);
 		section.setText(title);
-		addSectionTextToFocusTracking(section);
 		return section;
 	}
 
@@ -249,7 +226,6 @@ public class CommitEditorPage extends FormPage
 		boolean signedOff = isSignedOffBy(person);
 
 		final Text userText = new Text(userArea, SWT.FLAT | SWT.READ_ONLY);
-		addToFocusTracking(userText);
 		setPerson(userText, person, author);
 		toolkit.adapt(userText, false, false);
 		userText.setData(FormToolkit.KEY_DRAW_BORDER, Boolean.FALSE);
@@ -350,7 +326,6 @@ public class CommitEditorPage extends FormPage
 			String sha1 = parentCommit.getName();
 			link.setToolTipText(sha1);
 			createParentContextMenu(link, sha1);
-			addToFocusTracking(link);
 		}
 	}
 
@@ -486,7 +461,6 @@ public class CommitEditorPage extends FormPage
 		GridDataFactory.fillDefaults().hint(SWT.DEFAULT, yHint).minSize(1, 20)
 				.grab(true, true).applyTo(textContent);
 
-		addToFocusTracking(textWidget);
 		updateSectionClient(messageSection, messageArea, toolkit);
 	}
 
@@ -505,7 +479,6 @@ public class CommitEditorPage extends FormPage
 		control.setData(FormToolkit.KEY_DRAW_BORDER, FormToolkit.TREE_BORDER);
 		GridDataFactory.fillDefaults().grab(true, true).hint(SWT.DEFAULT, 50)
 				.applyTo(control);
-		addToFocusTracking(control);
 		branchViewer.setComparator(new ViewerComparator() {
 			@Override
 			protected Comparator<? super String> getComparator() {
@@ -547,7 +520,6 @@ public class CommitEditorPage extends FormPage
 		control.setData(FormToolkit.KEY_DRAW_BORDER, FormToolkit.TREE_BORDER);
 		GridDataFactory.fillDefaults().hint(SWT.DEFAULT, 50).minSize(1, 50)
 				.grab(true, true).applyTo(control);
-		addToFocusTracking(control);
 		updateSectionClient(diffSection, filesArea, toolkit);
 	}
 
@@ -557,13 +529,6 @@ public class CommitEditorPage extends FormPage
 
 	@Override
 	protected void createFormContent(IManagedForm managedForm) {
-		managedForm.addPart(new FocusManagerFormPart(focusTracker) {
-
-			@Override
-			public void setDefaultFocus() {
-				getManagedForm().getForm().setFocus();
-			}
-		});
 		Composite body = managedForm.getForm().getBody();
 		body.addDisposeListener(new DisposeListener() {
 
@@ -579,17 +544,7 @@ public class CommitEditorPage extends FormPage
 
 		FormToolkit toolkit = managedForm.getToolkit();
 
-		Composite displayArea = new Composite(body, toolkit.getOrientation()) {
-
-			@Override
-			public boolean setFocus() {
-				Control control = focusTracker.getLastFocusControl();
-				if (control != null && control.forceFocus()) {
-					return true;
-				}
-				return super.setFocus();
-			}
-		};
+		Composite displayArea = new Composite(body, toolkit.getOrientation());
 		toolkit.adapt(displayArea);
 		GridLayoutFactory.fillDefaults().numColumns(2).applyTo(displayArea);
 
@@ -751,7 +706,6 @@ public class CommitEditorPage extends FormPage
 
 	@Override
 	public void dispose() {
-		focusTracker.dispose();
 		Job.getJobManager().cancel(this);
 		super.dispose();
 	}

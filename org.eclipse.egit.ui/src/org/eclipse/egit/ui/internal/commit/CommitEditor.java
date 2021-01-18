@@ -36,7 +36,6 @@ import org.eclipse.jface.action.ControlContribution;
 import org.eclipse.jface.action.IAction;
 import org.eclipse.jface.action.IContributionItem;
 import org.eclipse.jface.action.IToolBarManager;
-import org.eclipse.jface.action.ToolBarManager;
 import org.eclipse.jface.dialogs.IPageChangedListener;
 import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.jface.resource.JFaceResources;
@@ -165,8 +164,6 @@ public class CommitEditor extends SharedHeaderFormEditor implements
 
 	private ListenerHandle refListenerHandle;
 
-	private FocusTracker headerFocusTracker = new FocusTracker();
-
 	private IToolBarManager toolbar;
 
 	private IPageChangedListener pageListener;
@@ -292,24 +289,13 @@ public class CommitEditor extends SharedHeaderFormEditor implements
 	 */
 	@Override
 	protected void createHeaderContents(IManagedForm headerForm) {
-		headerForm.addPart(new FocusManagerFormPart(headerFocusTracker) {
-
-			@Override
-			public void setDefaultFocus() {
-				headerForm.getForm().getForm().setFocus();
-			}
-		});
 		RepositoryCommit commit = getCommit();
 		ScrolledForm form = headerForm.getForm();
 		String commitName = commit.getRevCommit().name();
 		String title = getFormattedHeaderTitle(commitName);
-		HeaderText text = new HeaderText(form.getForm(), title, commitName);
-		Control textControl = text.getControl();
-		if (textControl != null) {
-			headerFocusTracker.addToFocusTracking(textControl);
-		}
-		form.setToolTipText(commitName);
+		new HeaderText(form.getForm(), title, commitName);
 		getToolkit().decorateFormHeading(form.getForm());
+		form.setToolTipText(commitName);
 
 		toolbar = form.getToolBarManager();
 
@@ -329,7 +315,6 @@ public class CommitEditor extends SharedHeaderFormEditor implements
 				// will always see the toolbar as the last focused control.
 				// Unfortunately there is no other way to get some text onto
 				// the first line of a FormHeading.
-				headerFocusTracker.addToFocusTracking(link);
 				link.setText(label);
 				link.setFont(JFaceResources.getBannerFont());
 				link.setForeground(toolkit.getColors().getColor(
@@ -411,12 +396,6 @@ public class CommitEditor extends SharedHeaderFormEditor implements
 				// Ignored
 			}
 		});
-		if (toolbar instanceof ToolBarManager) {
-			Control control = ((ToolBarManager) toolbar).getControl();
-			if (control != null) {
-				headerFocusTracker.addToFocusTracking(control);
-			}
-		}
 	}
 
 	private void updateToolbar() {
@@ -529,7 +508,6 @@ public class CommitEditor extends SharedHeaderFormEditor implements
 		getSite().getService(IPartService.class)
 				.removePartListener(activationListener);
 		refListenerHandle.remove();
-		headerFocusTracker.dispose();
 		super.dispose();
 	}
 
