@@ -234,7 +234,6 @@ public final class ActionUtils {
 						handlerActivations.clear();
 					}
 					break;
-				case SWT.Activate:
 				case SWT.FocusIn:
 					if (!handlerActivations.isEmpty()) {
 						// Looks like sometimes we get two focusGained events.
@@ -260,7 +259,6 @@ public final class ActionUtils {
 		ActivationListener activationListener = new ActivationListener();
 		control.addListener(SWT.Deactivate, activationListener);
 		control.addListener(SWT.FocusOut, activationListener);
-		control.addListener(SWT.Activate, activationListener);
 		control.addListener(SWT.FocusIn, activationListener);
 		control.addListener(SWT.Dispose, activationListener);
 	}
