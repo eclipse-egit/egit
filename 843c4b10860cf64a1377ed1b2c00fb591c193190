@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2131bc11_dbb13f92",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/commit/CommitEditor.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 310,
+      "author": {
+        "id": 119988
+      },
+      "writtenOn": "2021-01-18T14:40:30Z",
+      "side": 0,
+      "message": "I\u0027ll \"revert\" to creating a HeaderText without the rest of the code\n\nThere is a warning for just calling \"new HeaderText(..)\", but looking at the git history (https://github.com/eclipse/egit/commit/fdf10f1325b4133eba2f31a3e073cee517097611), that is how the code was before the focus tracker. Let me know if it should be something else.",
+      "range": {
+        "startLine": 305,
+        "startChar": 2,
+        "endLine": 310,
+        "endChar": 3
+      },
+      "revId": "843c4b10860cf64a1377ed1b2c00fb591c193190",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": true
+    }
+  ]
+}
