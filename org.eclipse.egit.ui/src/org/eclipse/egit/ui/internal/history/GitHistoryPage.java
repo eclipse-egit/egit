@@ -66,7 +66,6 @@ import org.eclipse.egit.ui.internal.UIText;
 import org.eclipse.egit.ui.internal.commit.DiffDocument;
 import org.eclipse.egit.ui.internal.commit.DiffRegionFormatter;
 import org.eclipse.egit.ui.internal.commit.DiffViewer;
-import org.eclipse.egit.ui.internal.commit.FocusTracker;
 import org.eclipse.egit.ui.internal.components.DropDownMenuAction;
 import org.eclipse.egit.ui.internal.components.RepositoryMenuUtil.RepositoryToolbarAction;
 import org.eclipse.egit.ui.internal.fetch.FetchHeadChangedEvent;
@@ -1330,8 +1329,6 @@ public class GitHistoryPage extends HistoryPage implements RefsChangedListener,
 	/** Toolbar to find commits in the history view. */
 	private SearchBar searchBar;
 
-	private FocusTracker focusTracker;
-
 	/**
 	 * Determine if the input can be shown in this viewer.
 	 *
@@ -1469,13 +1466,6 @@ public class GitHistoryPage extends HistoryPage implements RefsChangedListener,
 					return myInput != null ? myInput.getRepository() : null;
 				}));
 		getSite().registerContextMenu(POPUP_ID, popupMgr, graph.getTableView());
-		// Track which of our controls has the focus, so that we can focus the
-		// last focused one in setFocus().
-		focusTracker = new FocusTracker();
-		trackFocus(graph.getTable());
-		trackFocus(commitAndDiff.getDiffViewer().getControl());
-		trackFocus(commitAndDiff.getCommitViewer().getControl());
-		trackFocus(fileViewer.getControl());
 		layout();
 
 		myRefsChangedHandle = org.eclipse.egit.core.Activator.getDefault()
@@ -1495,12 +1485,6 @@ public class GitHistoryPage extends HistoryPage implements RefsChangedListener,
 		if (trace)
 			GitTraceLocation.getTrace().traceExit(
 					GitTraceLocation.HISTORYVIEW.getLocation());
-	}
-
-	private void trackFocus(Control control) {
-		if (control != null) {
-			focusTracker.addToFocusTracking(control);
-		}
 	}
 
 	private void layoutSashForm(final SashForm sf, final String key) {
@@ -1731,10 +1715,6 @@ public class GitHistoryPage extends HistoryPage implements RefsChangedListener,
 			GitTraceLocation.getTrace().traceEntry(
 					GitTraceLocation.HISTORYVIEW.getLocation());
 
-		if (focusTracker != null) {
-			focusTracker.dispose();
-			focusTracker = null;
-		}
 		detachSelectionTracker();
 
 		Activator.getDefault().getPreferenceStore()
@@ -1776,14 +1756,8 @@ public class GitHistoryPage extends HistoryPage implements RefsChangedListener,
 	public void setFocus() {
 		if (repoHasBeenRemoved(getCurrentRepo())) {
 			clearHistoryPage();
-			graph.getControl().setFocus();
-		} else {
-			Control control = focusTracker.getLastFocusControl();
-			if (control == null) {
-				control = graph.getControl();
-			}
-			control.setFocus();
 		}
+		graph.getControl().setFocus();
 	}
 
 	private boolean repoHasBeenRemoved(final Repository repo) {
