@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "43d820c6_e7578007",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/commit/CommitEditor.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 317,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2021-01-18T14:54:33Z",
+      "side": 1,
+      "message": "Remove this comment, too.",
+      "revId": "d20a36689fc71e4b9a7dd1b5d899adec8cbd528a",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": true
+    }
+  ]
+}

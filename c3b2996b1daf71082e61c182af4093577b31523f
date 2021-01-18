@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "124cc24b_3ccf7f64",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2021-01-18T14:54:33Z",
+      "side": 1,
+      "message": "That\u0027s not what I meant. Watch out for bug 509486, too. (The other purpose of this FocusTracker).",
+      "range": {
+        "startLine": 9,
+        "startChar": 44,
+        "endLine": 9,
+        "endChar": 69
+      },
+      "revId": "c3b2996b1daf71082e61c182af4093577b31523f",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": true
+    }
+  ]
+}
