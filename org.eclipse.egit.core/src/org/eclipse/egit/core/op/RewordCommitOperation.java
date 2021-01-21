@@ -33,10 +33,12 @@ import org.eclipse.egit.core.internal.Utils;
 import org.eclipse.egit.core.internal.job.RuleUtil;
 import org.eclipse.jgit.api.errors.CanceledException;
 import org.eclipse.jgit.api.errors.JGitInternalException;
+import org.eclipse.jgit.api.errors.UnsupportedSigningFormatException;
 import org.eclipse.jgit.dircache.DirCache;
 import org.eclipse.jgit.lib.CommitBuilder;
 import org.eclipse.jgit.lib.Constants;
 import org.eclipse.jgit.lib.GpgConfig;
+import org.eclipse.jgit.lib.GpgObjectSigner;
 import org.eclipse.jgit.lib.GpgSigner;
 import org.eclipse.jgit.lib.ObjectId;
 import org.eclipse.jgit.lib.ObjectInserter;
@@ -150,12 +152,10 @@ public class RewordCommitOperation implements IEGitOperation {
 		// Signature will be invalid for the new commit. Try to re-sign.
 		GpgConfig gpgConfig = new GpgConfig(repository.getConfig());
 		boolean signAllCommits = gpgConfig.isSignCommits();
-		String keyId = gpgConfig.getSigningKey();
 		GpgSigner gpgSigner = GpgSigner.getDefault();
 		if (gpgSigner != null
 				&& (signAllCommits || commit.getRawGpgSignature() != null)) {
-			gpgSigner = sign(builder, gpgSigner, signAllCommits, keyId,
-					committer, commit.getCommitterIdent(), commit);
+			gpgSigner = sign(builder, gpgSigner, gpgConfig, committer, commit);
 		}
 		Map<ObjectId, ObjectId> rewritten = new HashMap<>();
 		String newCommitId = null;
@@ -184,8 +184,8 @@ public class RewordCommitOperation implements IEGitOperation {
 				builder = copy(c, newParents, committer, c.getFullMessage());
 				if (gpgSigner != null
 						&& (signAllCommits || c.getRawGpgSignature() != null)) {
-					gpgSigner = sign(builder, gpgSigner, signAllCommits, keyId,
-							committer, c.getCommitterIdent(), c);
+					gpgSigner = sign(builder, gpgSigner, gpgConfig, committer,
+							c);
 				}
 				rewritten.put(c.getId(), inserter.insert(builder));
 				progress.worked(1);
@@ -235,23 +235,34 @@ public class RewordCommitOperation implements IEGitOperation {
 	}
 
 	private GpgSigner sign(CommitBuilder builder, GpgSigner signer,
-			boolean signAll, String keyId, PersonIdent committer,
-			PersonIdent oldCommitter, RevCommit original)
+			GpgConfig config, PersonIdent committer, RevCommit original)
 			throws JGitInternalException {
+		PersonIdent oldCommitter = original.getCommitterIdent();
 		if (committer.getName().equals(oldCommitter.getName()) && committer
 				.getEmailAddress().equals(oldCommitter.getEmailAddress())) {
 			// We don't sign commits that were committed by someone else. If
 			// they were signed, the signature will be dropped.
 			try {
-				signer.sign(builder, keyId, committer,
-						CredentialsProvider.getDefault());
+				if (signer instanceof GpgObjectSigner) {
+					((GpgObjectSigner) signer).signObject(builder,
+							config.getSigningKey(), committer,
+							CredentialsProvider.getDefault(), config);
+				} else {
+					signer.sign(builder, config.getSigningKey(), committer,
+							CredentialsProvider.getDefault());
+				}
 			} catch (CanceledException e) {
 				// User cancelled signing: don't sign and assume he doesn't want
 				// to sign any other commit.
 				return null;
-			} catch (JGitInternalException e) {
-				if (signAll) {
-					throw e;
+			} catch (JGitInternalException
+					| UnsupportedSigningFormatException e) {
+				if (config.isSignCommits()) {
+					if (e instanceof JGitInternalException) {
+						throw (JGitInternalException) e;
+					} else {
+						throw new JGitInternalException(e.getMessage(), e);
+					}
 				}
 				Activator.logWarning(MessageFormat.format(
 						CoreText.RewordCommitOperation_cannotSign,

@@ -581,8 +581,7 @@ public class CreateTagDialog extends TitleAreaDialog {
 		if (signer instanceof GpgObjectSigner) {
 			GpgConfig gpgConfig = new GpgConfig(repo.getConfig());
 			PersonIdent tagger = new PersonIdent(repo);
-			if (SignatureUtils.checkSigningKey(signer,
-					gpgConfig.getSigningKey(), tagger)) {
+			if (SignatureUtils.checkSigningKey(signer, gpgConfig, tagger)) {
 				// We can sign at all.
 				signAll = gpgConfig.isSignAllTags();
 				signAnnotated = gpgConfig.isSignAnnotated();

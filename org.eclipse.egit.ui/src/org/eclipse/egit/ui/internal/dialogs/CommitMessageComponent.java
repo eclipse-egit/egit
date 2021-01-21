@@ -48,6 +48,7 @@ import org.eclipse.jface.text.IDocumentListener;
 import org.eclipse.jface.text.IRegion;
 import org.eclipse.jgit.lib.Constants;
 import org.eclipse.jgit.lib.GpgConfig;
+import org.eclipse.jgit.lib.GpgConfig.GpgFormat;
 import org.eclipse.jgit.lib.ObjectId;
 import org.eclipse.jgit.lib.PersonIdent;
 import org.eclipse.jgit.lib.Ref;
@@ -577,12 +578,16 @@ public class CommitMessageComponent {
 		}
 
 		if (signCommit) {
-			String signingKey = repository != null
-					? new GpgConfig(repository.getConfig()).getSigningKey()
-					: null;
+			GpgConfig gpgConfig;
+			if (repository != null) {
+				gpgConfig = new GpgConfig(repository.getConfig());
+			} else {
+				gpgConfig = new GpgConfig(null, GpgFormat.OPENPGP, null);
+			}
 			boolean signingKeyAvailable = SignatureUtils
-					.checkSigningKey(signingKey, committerPersonIdent);
+					.checkSigningKey(gpgConfig, committerPersonIdent);
 			if (!signingKeyAvailable) {
+				String signingKey = gpgConfig.getSigningKey();
 				if (StringUtils.isEmptyOrNull(signingKey)) {
 					signingKey = committerPersonIdent.getEmailAddress();
 				}
