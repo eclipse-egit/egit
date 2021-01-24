@@ -16,6 +16,7 @@
  *******************************************************************************/
 package org.eclipse.egit.core.op;
 
+import java.io.File;
 import java.io.IOException;
 import java.text.MessageFormat;
 import java.util.Deque;
@@ -31,6 +32,7 @@ import org.eclipse.egit.core.Activator;
 import org.eclipse.egit.core.internal.CoreText;
 import org.eclipse.egit.core.internal.Utils;
 import org.eclipse.egit.core.internal.job.RuleUtil;
+import org.eclipse.egit.core.settings.GitSettings;
 import org.eclipse.jgit.api.errors.CanceledException;
 import org.eclipse.jgit.api.errors.JGitInternalException;
 import org.eclipse.jgit.api.errors.UnsupportedSigningFormatException;
@@ -150,7 +152,15 @@ public class RewordCommitOperation implements IEGitOperation {
 		CommitBuilder builder = copy(commit, commit.getParents(), committer,
 				newMessage);
 		// Signature will be invalid for the new commit. Try to re-sign.
-		GpgConfig gpgConfig = new GpgConfig(repository.getConfig());
+		File gpgProgram = GitSettings.getGpgExecutable();
+		GpgConfig gpgConfig = new GpgConfig(repository.getConfig()) {
+
+			@Override
+			public String getProgram() {
+				return gpgProgram != null ? gpgProgram.getAbsolutePath()
+						: super.getProgram();
+			}
+		};
 		boolean signAllCommits = gpgConfig.isSignCommits();
 		GpgSigner gpgSigner = GpgSigner.getDefault();
 		if (gpgSigner != null
