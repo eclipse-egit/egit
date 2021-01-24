@@ -10,8 +10,10 @@
  *******************************************************************************/
 package org.eclipse.egit.core.settings;
 
+import java.io.File;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.text.MessageFormat;
 import java.util.Collection;
 import java.util.Objects;
 import java.util.stream.Collectors;
@@ -20,6 +22,8 @@ import org.eclipse.core.runtime.Platform;
 import org.eclipse.egit.core.Activator;
 import org.eclipse.egit.core.GitCorePreferences;
 import org.eclipse.egit.core.RepositoryUtil;
+import org.eclipse.egit.core.internal.CoreText;
+import org.eclipse.jgit.util.StringUtils;
 
 /**
  * API to access some core EGit settings.
@@ -51,6 +55,37 @@ public final class GitSettings {
 	 */
 	public static Path getDefaultRepositoryDir() {
 		return Paths.get(RepositoryUtil.getDefaultRepositoryDir());
+	}
+
+	/**
+	 * Retrieves the {@link File} set in the EGit preferences for a GPG
+	 * executable.
+	 *
+	 * @return the file, {@code null} if not set, invalid or not executable
+	 * @since 5.11
+	 */
+	public static File getGpgExecutable() {
+		String result = Platform.getPreferencesService().getString(
+				Activator.PLUGIN_ID, GitCorePreferences.core_gpgExecutable,
+				null, null);
+		if (!StringUtils.isEmptyOrNull(result)) {
+			try {
+				// Use Paths.get; it validates more.
+				File exe = Paths.get(result).toFile();
+				if (exe.isFile() && exe.canExecute()) {
+					return exe.getAbsoluteFile();
+				} else {
+					Activator.logError(MessageFormat.format(
+							CoreText.GitSettings_gpgNotExecutable, result),
+							null);
+				}
+			} catch (Exception e) {
+				Activator.logError(MessageFormat.format(
+						CoreText.GitSettings_gpgInvalidExecutable, result),
+						e);
+			}
+		}
+		return null;
 	}
 
 	/**

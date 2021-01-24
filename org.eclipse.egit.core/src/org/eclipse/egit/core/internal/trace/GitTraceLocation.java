@@ -23,6 +23,8 @@ import org.eclipse.osgi.service.debug.DebugTrace;
 public enum GitTraceLocation implements ITraceLocation {
 	/** Core */
 	CORE("/debug/core"), //$NON-NLS-1$
+	/** GPG signing */
+	GPG("/debug/core/gpg"), //$NON-NLS-1$
 	/** IndexDiffCache */
 	INDEXDIFFCACHE("/debug/core/indexdiffcache"), //$NON-NLS-1$
 	/** refreshing resources */

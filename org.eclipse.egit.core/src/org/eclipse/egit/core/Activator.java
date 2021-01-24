@@ -61,6 +61,7 @@ import org.eclipse.egit.core.internal.ResourceRefreshHandler;
 import org.eclipse.egit.core.internal.SshPreferencesMirror;
 import org.eclipse.egit.core.internal.indexdiff.IndexDiffCache;
 import org.eclipse.egit.core.internal.job.JobUtil;
+import org.eclipse.egit.core.internal.signing.ExternalGpgSigner;
 import org.eclipse.egit.core.internal.trace.GitTraceLocation;
 import org.eclipse.egit.core.internal.util.ResourceUtil;
 import org.eclipse.egit.core.op.ConnectProviderOperation;
@@ -75,6 +76,7 @@ import org.eclipse.jgit.errors.ConfigInvalidException;
 import org.eclipse.jgit.events.ListenerHandle;
 import org.eclipse.jgit.lib.Config;
 import org.eclipse.jgit.lib.Constants;
+import org.eclipse.jgit.lib.GpgSigner;
 import org.eclipse.jgit.lib.StoredConfig;
 import org.eclipse.jgit.merge.MergeStrategy;
 import org.eclipse.jgit.storage.file.FileBasedConfig;
@@ -225,6 +227,8 @@ public class Activator extends Plugin implements DebugOptionsListener {
 		props.put(DebugOptions.LISTENER_SYMBOLICNAME, PLUGIN_ID);
 		context.registerService(DebugOptionsListener.class.getName(), this,
 				props);
+
+		GpgSigner.setDefault(new ExternalGpgSigner());
 
 		setupHttp();
 		SshPreferencesMirror.INSTANCE.start();
