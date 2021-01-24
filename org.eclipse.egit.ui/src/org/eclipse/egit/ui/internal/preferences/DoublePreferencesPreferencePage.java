@@ -107,6 +107,15 @@ public abstract class DoublePreferencesPreferencePage
 	}
 
 	@Override
+	public void setValid(boolean b) {
+		super.setValid(b);
+		// Super class forgets to clear the error message.
+		if (b) {
+			setErrorMessage(null);
+		}
+	}
+
+	@Override
 	public boolean performOk() {
 		boolean isOk = super.performOk();
 		if (isOk) {

@@ -1,7 +1,7 @@
 /*******************************************************************************
  * Copyright (C) 2010, 2013 Robin Stocker <robin@nibor.org> and others.
  * Copyright (C) 2015 SAP SE (Christian Georgi <christian.georgi@sap.com>)
- * Copyright (C) 2016, 2017 Thomas Wolf <thomas.wolf@paranor.ch>
+ * Copyright (C) 2016, 2021 Thomas Wolf <thomas.wolf@paranor.ch>
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License 2.0
@@ -11,6 +11,10 @@
  * SPDX-License-Identifier: EPL-2.0
  *******************************************************************************/
 package org.eclipse.egit.ui.internal.preferences;
+
+import java.nio.file.Files;
+import java.nio.file.InvalidPathException;
+import java.nio.file.Paths;
 
 import org.eclipse.core.runtime.preferences.InstanceScope;
 import org.eclipse.egit.core.GitCorePreferences;
@@ -23,6 +27,7 @@ import org.eclipse.jface.layout.GridDataFactory;
 import org.eclipse.jface.preference.BooleanFieldEditor;
 import org.eclipse.jface.preference.ComboFieldEditor;
 import org.eclipse.jface.preference.FieldEditor;
+import org.eclipse.jface.preference.FileFieldEditor;
 import org.eclipse.jface.preference.IPreferenceStore;
 import org.eclipse.jface.preference.IntegerFieldEditor;
 import org.eclipse.jface.util.IPropertyChangeListener;
@@ -35,6 +40,7 @@ import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Group;
+import org.eclipse.swt.widgets.Text;
 import org.eclipse.ui.IWorkbench;
 import org.eclipse.ui.IWorkbenchPreferencePage;
 import org.eclipse.ui.preferences.ScopedPreferenceStore;
@@ -144,6 +150,44 @@ public class CommittingPreferencePage extends DoublePreferencesPreferencePage
 				UIText.CommittingPreferencePage_commitMessageHistory,
 				generalGroup);
 		addField(historySize);
+
+		FileFieldEditor gpgExecutable = new FullWidthFileFieldEditor(
+				GitCorePreferences.core_gpgExecutable,
+				UIText.CommittingPreferencePage_gpgExecutableLabel, true,
+				generalGroup) {
+
+			@Override
+			public void setPreferenceStore(IPreferenceStore store) {
+				super.setPreferenceStore(
+						store == null ? null : getSecondaryPreferenceStore());
+			}
+
+			@Override
+			protected boolean doCheckState() {
+				Text text = getTextControl();
+				if (text != null) {
+					String value = text.getText().trim();
+					if (!value.isEmpty()) {
+						try {
+							// Super class resolves symlinks.
+							if (!Files.isExecutable(Paths.get(value))) {
+								setErrorMessage(
+										UIText.CommittingPreferencePage_gpgExecutableNotExecutable);
+								return false;
+							}
+						} catch (InvalidPathException e) {
+							setErrorMessage(
+									UIText.CommittingPreferencePage_gpgExecutableInvalid);
+							return false;
+						}
+					}
+				}
+				return super.doCheckState();
+			}
+		};
+		addField(gpgExecutable);
+		gpgExecutable.getLabelControl(generalGroup).setToolTipText(
+				UIText.CommittingPreferencePage_gpgExecutableTooltip);
 
 		updateMargins(generalGroup);
 
