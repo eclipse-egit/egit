@@ -20,6 +20,7 @@
  *******************************************************************************/
 package org.eclipse.egit.ui.internal.dialogs;
 
+import java.io.File;
 import java.io.IOException;
 import java.text.MessageFormat;
 import java.util.ArrayList;
@@ -28,6 +29,7 @@ import java.util.regex.Pattern;
 
 import org.eclipse.egit.core.RevUtils;
 import org.eclipse.egit.core.internal.gerrit.GerritUtil;
+import org.eclipse.egit.core.settings.GitSettings;
 import org.eclipse.egit.ui.Activator;
 import org.eclipse.egit.ui.CommitMessageWithCaretPosition;
 import org.eclipse.egit.ui.UIPreferences;
@@ -578,11 +580,21 @@ public class CommitMessageComponent {
 		}
 
 		if (signCommit) {
+			// Ensure the Eclipse preference, if set, overrides the git config
+			File gpg = GitSettings.getGpgExecutable();
 			GpgConfig gpgConfig;
 			if (repository != null) {
-				gpgConfig = new GpgConfig(repository.getConfig());
+				gpgConfig = new GpgConfig(repository.getConfig()) {
+
+					@Override
+					public String getProgram() {
+						return gpg != null ? gpg.getAbsolutePath()
+								: super.getProgram();
+					}
+				};
 			} else {
-				gpgConfig = new GpgConfig(null, GpgFormat.OPENPGP, null);
+				gpgConfig = new GpgConfig(null, GpgFormat.OPENPGP,
+						gpg != null ? gpg.getAbsolutePath() : null);
 			}
 			boolean signingKeyAvailable = SignatureUtils
 					.checkSigningKey(gpgConfig, committerPersonIdent);
