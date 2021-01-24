@@ -3453,6 +3453,18 @@ public class UIText extends NLS {
 	public static String CommittingPreferencePage_formatting;
 
 	/** */
+	public static String CommittingPreferencePage_gpgExecutableInvalid;
+
+	/** */
+	public static String CommittingPreferencePage_gpgExecutableLabel;
+
+	/** */
+	public static String CommittingPreferencePage_gpgExecutableNotExecutable;
+
+	/** */
+	public static String CommittingPreferencePage_gpgExecutableTooltip;
+
+	/** */
 	public static String CommittingPreferencePage_includeUntrackedFiles;
 
 	/** */
@@ -3780,6 +3792,9 @@ public class UIText extends NLS {
 
 	/** */
 	public static String DeleteTagCommand_titleConfirm;
+
+	/** */
+	public static String FullWidthFileFieldEditor_buttonTooltipMac;
 
 	/** */
 	public static String IgnoreActionHandler_addToGitignore;
