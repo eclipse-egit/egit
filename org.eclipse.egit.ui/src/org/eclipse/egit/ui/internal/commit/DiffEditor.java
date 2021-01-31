@@ -26,7 +26,6 @@ import java.util.List;
 import java.util.Map;
 
 import org.eclipse.core.resources.IFile;
-import org.eclipse.core.resources.IWorkspace;
 import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.Adapters;
 import org.eclipse.core.runtime.CoreException;
@@ -74,6 +73,7 @@ import org.eclipse.jface.text.source.projection.ProjectionViewer;
 import org.eclipse.jface.util.IPropertyChangeListener;
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.StructuredSelection;
+import org.eclipse.jface.window.Window;
 import org.eclipse.jgit.annotations.NonNull;
 import org.eclipse.jgit.lib.Repository;
 import org.eclipse.jgit.revwalk.RevCommit;
@@ -83,7 +83,6 @@ import org.eclipse.jgit.treewalk.filter.TreeFilter;
 import org.eclipse.swt.graphics.Font;
 import org.eclipse.swt.graphics.RGB;
 import org.eclipse.swt.widgets.Composite;
-import org.eclipse.swt.widgets.Shell;
 import org.eclipse.team.ui.history.IHistoryView;
 import org.eclipse.ui.IEditorInput;
 import org.eclipse.ui.PlatformUI;
@@ -217,10 +216,8 @@ public class DiffEditor extends TextEditor
 
 	@Override
 	protected void performSaveAs(IProgressMonitor progressMonitor) {
-		Shell shell = getSite().getShell();
-		SaveAsDialog dialog = new SaveAsDialog(shell);
-		dialog.open();
-		IPath path = dialog.getResult();
+		SaveAsDialog dialog = new SaveAsDialog(getSite().getShell());
+		IPath path = dialog.open() == Window.CANCEL ? null : dialog.getResult();
 
 		if (path == null) {
 			if (progressMonitor != null) {
@@ -229,11 +226,11 @@ public class DiffEditor extends TextEditor
 			return;
 		}
 
-		IWorkspace workspace = ResourcesPlugin.getWorkspace();
-		IFile file = workspace.getRoot().getFile(path);
+		IFile file = ResourcesPlugin.getWorkspace().getRoot().getFile(path);
 		IEditorInput newInput = new FileEditorInput(file);
 
 		WorkspaceModifyOperation op = new WorkspaceModifyOperation() {
+
 			@Override
 			public void execute(final IProgressMonitor monitor)
 					throws CoreException {
