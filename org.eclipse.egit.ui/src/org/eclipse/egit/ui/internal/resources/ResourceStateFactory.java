@@ -44,7 +44,6 @@ import org.eclipse.egit.core.internal.util.ResourceUtil;
 import org.eclipse.egit.ui.internal.resources.IResourceState.StagingState;
 import org.eclipse.jgit.annotations.NonNull;
 import org.eclipse.jgit.annotations.Nullable;
-import org.eclipse.jgit.lib.Constants;
 import org.eclipse.jgit.lib.Repository;
 
 /**
@@ -361,13 +360,19 @@ public class ResourceStateFactory {
 		for (String entry : collection) {
 			String entryPath;
 			if (entry.endsWith("/")) //$NON-NLS-1$
-				entryPath = entry;
+				if (path.startsWith(entry))
+					return true;
 			else
-				entryPath = entry + "/"; //$NON-NLS-1$
-			if (path.startsWith(entryPath))
+			if (startsWith2(path, entry, "/")) //$NON-NLS-1$
 				return true;
 		}
 		return false;
+	}
+
+	/* same as s.startsWith(prefix1+prefix2) but faster */
+	private static boolean startsWith2(String s, String prefix1,
+			String prefix2) {
+		return s.startsWith(prefix1) && s.startsWith(prefix2, prefix1.length());
 	}
 
 	private interface FileSystemItem {
