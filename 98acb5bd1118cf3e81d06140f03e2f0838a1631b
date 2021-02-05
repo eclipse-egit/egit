@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "77e1b574_1e961338",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 6
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 304382
+      },
+      "writtenOn": "2021-02-05T12:42:58Z",
+      "side": 1,
+      "message": "Very elaborate comment for such a small change.\nThanks for taking your time.",
+      "parentUuid": "8b660493_37ae0f31",
+      "range": {
+        "startLine": 7,
+        "startChar": 0,
+        "endLine": 9,
+        "endChar": 23
+      },
+      "revId": "98acb5bd1118cf3e81d06140f03e2f0838a1631b",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c3e870fe_675c5e69",
         "filename": "/COMMIT_MSG",
         "patchSetId": 6
@@ -39,6 +63,24 @@
       "revId": "98acb5bd1118cf3e81d06140f03e2f0838a1631b",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "46f07f83_ac7ac9d6",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 6
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 304382
+      },
+      "writtenOn": "2021-02-05T12:42:58Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c3e870fe_675c5e69",
+      "revId": "98acb5bd1118cf3e81d06140f03e2f0838a1631b",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
     },
     {
       "key": {
