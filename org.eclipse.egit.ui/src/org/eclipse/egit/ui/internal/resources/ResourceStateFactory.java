@@ -359,15 +359,19 @@ public class ResourceStateFactory {
 
 	private boolean containsPrefixPath(Set<String> collection, String path) {
 		for (String entry : collection) {
-			String entryPath;
-			if (entry.endsWith("/")) //$NON-NLS-1$
-				entryPath = entry;
-			else
-				entryPath = entry + "/"; //$NON-NLS-1$
-			if (path.startsWith(entryPath))
+			if (entry.endsWith("/")) {//$NON-NLS-1$
+				if (path.startsWith(entry))
+					return true;
+			} else if (startsWith2(path, entry, "/")) //$NON-NLS-1$
 				return true;
 		}
 		return false;
+	}
+
+	/* same as s.startsWith(prefix1+prefix2) but faster */
+	private static boolean startsWith2(String s, String prefix1,
+			String prefix2) {
+		return s.startsWith(prefix1) && s.startsWith(prefix2, prefix1.length());
 	}
 
 	private interface FileSystemItem {
