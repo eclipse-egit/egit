@@ -107,6 +107,30 @@
     },
     {
       "key": {
+        "uuid": "09803659_6782fd5b",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/resources/ResourceStateFactory.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 362,
+      "author": {
+        "id": 304382
+      },
+      "writtenOn": "2021-02-05T13:04:26Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "136b99e3_f5ecde32",
+      "range": {
+        "startLine": 362,
+        "startChar": 28,
+        "endLine": 362,
+        "endChar": 42
+      },
+      "revId": "98acb5bd1118cf3e81d06140f03e2f0838a1631b",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c387df42_00ce4321",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/resources/ResourceStateFactory.java",
         "patchSetId": 6
@@ -121,6 +145,24 @@
       "revId": "98acb5bd1118cf3e81d06140f03e2f0838a1631b",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f3fb0ead_b85deee9",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/resources/ResourceStateFactory.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 365,
+      "author": {
+        "id": 304382
+      },
+      "writtenOn": "2021-02-05T13:04:26Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c387df42_00ce4321",
+      "revId": "98acb5bd1118cf3e81d06140f03e2f0838a1631b",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
     },
     {
       "key": {
@@ -144,6 +186,30 @@
       "revId": "98acb5bd1118cf3e81d06140f03e2f0838a1631b",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "652bd38b_ab1a6376",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/resources/ResourceStateFactory.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 371,
+      "author": {
+        "id": 304382
+      },
+      "writtenOn": "2021-02-05T13:04:26Z",
+      "side": 1,
+      "message": "containsPrefixPath stays more readable with abstracting the technical improvement in a seperate method which could also be reused. Considering runtime the compiler may inline it anyway.",
+      "parentUuid": "4c980903_6a467a0a",
+      "range": {
+        "startLine": 371,
+        "startChar": 42,
+        "endLine": 371,
+        "endChar": 52
+      },
+      "revId": "98acb5bd1118cf3e81d06140f03e2f0838a1631b",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
     }
   ]
 }
