@@ -1,0 +1,107 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8b660493_37ae0f31",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 6
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2021-02-05T11:38:15Z",
+      "side": 1,
+      "message": "Very terse :-) Would be helpful if the first line (shown in the history) was more precise, and if the body gave a bit more context. Something like:\n\n  [performance] ResourceStateFactory: avoid string concatenation\n\n  String concatenation allocates new objects, which may put extra\n  pressure on the garbage collector. Avoid ephemeral object\n  allocation in a hot spot in the ResourceStateFactory. In tests,\n  this speeds up X by a factor of Y.\n\n(and fill in X (where does one notice it best) and Y (how much is the improvement worth))",
+      "range": {
+        "startLine": 7,
+        "startChar": 0,
+        "endLine": 9,
+        "endChar": 23
+      },
+      "revId": "98acb5bd1118cf3e81d06140f03e2f0838a1631b",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c3e870fe_675c5e69",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 6
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2021-02-05T11:38:15Z",
+      "side": 1,
+      "message": "Please open an issue in Bugzilla for this, and link it here in the footers as\n\n  Bug: \u003cbugzilla number\u003e\n  Change-Id: ...\n\nCan you give in the Bugzilla issue some indication on the measurable effects of this change?\n\nAs far as I see, this is the only such hot spot for this particular string concatenation. But there may be other places where such ephemeral allocations occur.",
+      "revId": "98acb5bd1118cf3e81d06140f03e2f0838a1631b",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "136b99e3_f5ecde32",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/resources/ResourceStateFactory.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 362,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2021-02-05T11:38:15Z",
+      "side": 1,
+      "message": "Missing space?\n\n  { //$NON-NLS-1$",
+      "range": {
+        "startLine": 362,
+        "startChar": 28,
+        "endLine": 362,
+        "endChar": 42
+      },
+      "revId": "98acb5bd1118cf3e81d06140f03e2f0838a1631b",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c387df42_00ce4321",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/resources/ResourceStateFactory.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 365,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2021-02-05T11:38:15Z",
+      "side": 1,
+      "message": "This is very old code; copied from DecoratableResourceAdapter where it was introduced in commit 45ecae45. That\u0027s why it doesn\u0027t have the curly braces. When we touch such code nowadays, we do supply the missing {} for the code bits touched. Please do so here, too.",
+      "revId": "98acb5bd1118cf3e81d06140f03e2f0838a1631b",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4c980903_6a467a0a",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/resources/ResourceStateFactory.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 371,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2021-02-05T11:38:15Z",
+      "side": 1,
+      "message": "It may be obvious to us now, but if someone else looks at this in a few years I suspect it may not be ovious anymore why this should be faster. Would be worth mentioning \" because it avoids extra String/StringBuilder allocations.\"\n\nIs it worth extracting this into a separate method? I\u0027d just inline that at the single call above (including the comment).",
+      "range": {
+        "startLine": 371,
+        "startChar": 42,
+        "endLine": 371,
+        "endChar": 52
+      },
+      "revId": "98acb5bd1118cf3e81d06140f03e2f0838a1631b",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": true
+    }
+  ]
+}
