@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<scr:component xmlns:scr="http://www.osgi.org/xmlns/scr/v1.1.0" activate="startUp" deactivate="shutDown" name="org.eclipse.egit.ui.internal.ExternalRepositoryScanner">
+   <property name="event.topics" value="org/eclipse/egit/ui/APPLICATION_ACTIVE"/>
+   <service>
+      <provide interface="org.osgi.service.event.EventHandler"/>
+   </service>
+   <implementation class="org.eclipse.egit.ui.internal.ExternalRepositoryScanner"/>
+</scr:component>
