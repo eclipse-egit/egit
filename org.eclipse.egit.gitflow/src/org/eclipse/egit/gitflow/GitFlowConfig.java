@@ -347,4 +347,23 @@ public class GitFlowConfig {
 		return config.getBoolean(GITFLOW_SECTION, FEATURE_START_SUBSECTION,
 				FEATURE_START_FETCH_KEY, false);
 	}
+
+	/**
+	 * @param branchName
+	 * @return TODO
+	 * @since 5.11
+	 */
+	public String getPrefixKey(String branchName) {
+		String featurePrefix = getFeaturePrefix();
+		String releasePrefix = getReleasePrefix();
+		String hotfixPrefix = getHotfixPrefix();
+		if (branchName.startsWith(featurePrefix)) {
+			return FEATURE_KEY;
+		} else if (branchName.startsWith(releasePrefix)) {
+			return RELEASE_KEY;
+		} else if (branchName.startsWith(hotfixPrefix)) {
+			return HOTFIX_KEY;
+		}
+		return null;
+	}
 }

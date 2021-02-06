@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (C) 2015, Max Hohenegger <eclipse@hohenegger.eu>
+ * Copyright (C) 2021, Max Hohenegger <eclipse@hohenegger.eu>
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License 2.0
@@ -11,6 +11,7 @@
 package org.eclipse.egit.gitflow.op;
 
 import static org.eclipse.egit.gitflow.Activator.error;
+import static org.eclipse.egit.gitflow.op.EGitFlowOperation.PUBLISH;
 import static org.eclipse.jgit.lib.Constants.DEFAULT_REMOTE_NAME;
 
 import java.io.IOException;
@@ -47,6 +48,8 @@ public class CurrentBranchPublishOperation extends GitFlowOperation {
 
 	@Override
 	public void execute(IProgressMonitor monitor) throws CoreException {
+		processPreExecutionHooks("TODO: version", "TODO: origin"); //$NON-NLS-1$ //$NON-NLS-2$
+
 		try {
 			PushOperation pushOperation = new PushOperation(
 					repository.getRepository(), DEFAULT_REMOTE_NAME, false,
@@ -67,6 +70,13 @@ public class CurrentBranchPublishOperation extends GitFlowOperation {
 		} catch (IOException e) {
 			throw new CoreException(error(CoreText.unableToStoreGitConfig, e));
 		}
+
+		processPostExecutionHooks("TODO: version", "TODO: origin"); //$NON-NLS-1$ //$NON-NLS-2$
+	}
+
+	@Override
+	protected EGitFlowOperation getOperationHookId() {
+		return PUBLISH;
 	}
 
 	/**
@@ -74,14 +84,6 @@ public class CurrentBranchPublishOperation extends GitFlowOperation {
 	 */
 	public PushOperationResult getOperationResult() {
 		return operationResult;
-	}
-
-	private String getCurrentBranchhName() {
-		try {
-			return repository.getRepository().getBranch();
-		} catch (IOException e) {
-			throw new IllegalStateException(e);
-		}
 	}
 
 	@Override

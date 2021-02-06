@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (C) 2015, Max Hohenegger <eclipse@hohenegger.eu>
+ * Copyright (C) 2021, Max Hohenegger <eclipse@hohenegger.eu>
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License 2.0
@@ -12,6 +12,7 @@ package org.eclipse.egit.gitflow.op;
 
 import static org.eclipse.egit.gitflow.Activator.error;
 import static org.eclipse.jgit.api.MergeCommand.FastForwardMode.NO_FF;
+import static org.eclipse.jgit.util.ProcessResult.Status.OK;
 
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
@@ -27,6 +28,7 @@ import org.eclipse.egit.core.op.DeleteBranchOperation;
 import org.eclipse.egit.core.op.FetchOperation;
 import org.eclipse.egit.core.op.IEGitOperation;
 import org.eclipse.egit.core.op.MergeOperation;
+import org.eclipse.egit.gitflow.Activator;
 import org.eclipse.egit.gitflow.GitFlowRepository;
 import org.eclipse.egit.gitflow.internal.CoreText;
 import org.eclipse.jgit.annotations.NonNull;
@@ -42,6 +44,8 @@ import org.eclipse.jgit.revwalk.RevWalkUtils;
 import org.eclipse.jgit.revwalk.filter.RevFilter;
 import org.eclipse.jgit.transport.FetchResult;
 import org.eclipse.jgit.transport.RemoteConfig;
+import org.eclipse.jgit.util.FS;
+import org.eclipse.jgit.util.ProcessResult;
 import org.eclipse.osgi.util.NLS;
 
 /**
@@ -299,5 +303,89 @@ abstract public class GitFlowOperation implements IEGitOperation {
 	 */
 	public CheckoutResult getCheckoutResult() {
 		return checkoutResult;
+	}
+
+	/**
+	 * TODO
+	 *
+	 * @param version
+	 * @param origin
+	 * @throws CoreException
+	 * @since 5.11
+	 */
+	protected void processPreExecutionHooks(String version,
+			String origin) throws CoreException {
+		String branchHookId = repository.getConfig()
+				.getPrefixKey(getCurrentBranchhName());
+		processHooks(branchHookId, "pre", version, origin, //$NON-NLS-1$
+				getCurrentBranchhName());
+	}
+
+	/**
+	 * TODO
+	 *
+	 * @param version
+	 * @param origin
+	 * @throws CoreException
+	 * @since 5.11
+	 */
+	protected void processPostExecutionHooks(String version,
+			String origin) throws CoreException {
+		String branchHookId = repository.getConfig()
+				.getPrefixKey(getCurrentBranchhName());
+		processHooks(branchHookId, "post", version, origin, //$NON-NLS-1$
+				getCurrentBranchhName());
+	}
+
+	/**
+	 * TODO
+	 *
+	 * @param branchHookId
+	 * @param hookInceptionId
+	 * @param version
+	 * @param origin
+	 * @param branch
+	 * @throws CoreException
+	 * @since 5.11
+	 */
+	protected void processHooks(String branchHookId,
+			String hookInceptionId,
+			String version, String origin, String branch) throws CoreException {
+		String hookName = hookInceptionId + "-flow-" + branchHookId + "-" //$NON-NLS-1$ //$NON-NLS-2$
+				+ getOperationHookId();
+		String[] hookArguments = new String[] { version, origin, branch };
+		ProcessResult processResult = FS.detect().runHookIfPresent(
+				repository.getRepository(), hookName, hookArguments);
+		if (processResult.getStatus() != OK) {
+			Activator.logInfo(hookName + " hook execution ended with status: " //$NON-NLS-1$
+					+ processResult.getStatus().name());
+			return;
+		}
+		if (processResult.getExitCode() != 0) {
+			throw new CoreException(
+					error("Hook did not complete successfully. Exit code: " //$NON-NLS-1$
+							+ processResult.getExitCode())); // TODO
+		}
+	}
+
+	/**
+	 * @return TODO
+	 * @since 5.11
+	 */
+	protected EGitFlowOperation getOperationHookId() {
+		// TODO: this must be abstract
+		return null;
+	}
+
+	/**
+	 * @return TODO
+	 * @since 5.11
+	 */
+	protected String getCurrentBranchhName() {
+		try {
+			return repository.getRepository().getBranch();
+		} catch (IOException e) {
+			throw new IllegalStateException(e);
+		}
 	}
 }
