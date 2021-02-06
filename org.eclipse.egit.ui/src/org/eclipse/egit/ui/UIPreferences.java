@@ -186,8 +186,6 @@ public final class UIPreferences {
 	/** interval in seconds to check for repositories index changes */
 	public static final String REFRESH_INDEX_INTERVAL = "refesh_index_interval"; //$NON-NLS-1$
 	/** */
-	public static final String REFRESH_ON_INDEX_CHANGE = "refesh_on_index_change"; //$NON-NLS-1$
-	/** */
 	public static final String REFRESH_ONLY_WHEN_ACTIVE = "refesh_only_when_active"; //$NON-NLS-1$
 
 	/** Holds true if the logical model should be used. */
