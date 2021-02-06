@@ -60,6 +60,7 @@ import org.eclipse.egit.ui.test.ContextMenuHelper;
 import org.eclipse.egit.ui.test.Eclipse;
 import org.eclipse.egit.ui.test.TestUtil;
 import org.eclipse.jface.dialogs.IDialogConstants;
+import org.eclipse.jface.preference.IPreferenceStore;
 import org.eclipse.jgit.junit.MockSystemReader;
 import org.eclipse.jgit.lib.Config;
 import org.eclipse.jgit.lib.ConfigConstants;
@@ -262,15 +263,14 @@ public abstract class LocalRepositoryTestCase extends EGitTestCase {
 		corePrefs.putBoolean(
 				GitCorePreferences.core_autoIgnoreDerivedResources, false);
 		corePrefs.putBoolean(GitCorePreferences.core_autoShareProjects, false);
+		IPreferenceStore uiPrefs = org.eclipse.egit.ui.Activator.getDefault()
+				.getPreferenceStore();
 		// suppress the configuration dialog
-		org.eclipse.egit.ui.Activator.getDefault().getPreferenceStore()
-				.setValue(UIPreferences.SHOW_INITIAL_CONFIG_DIALOG, false);
+		uiPrefs.setValue(UIPreferences.SHOW_INITIAL_CONFIG_DIALOG, false);
 		// suppress the detached head warning dialog
-		org.eclipse.egit.ui.Activator
-				.getDefault()
-				.getPreferenceStore()
-				.setValue(UIPreferences.SHOW_DETACHED_HEAD_WARNING,
-						false);
+		uiPrefs.setValue(UIPreferences.SHOW_DETACHED_HEAD_WARNING, false);
+		// suppress checking for external changes to git repositories
+		uiPrefs.setValue(UIPreferences.REFRESH_INDEX_INTERVAL, 0);
 		closeGitViews();
 	}
 
@@ -280,9 +280,8 @@ public abstract class LocalRepositoryTestCase extends EGitTestCase {
 		if (tempDir.toString().startsWith("/home") && tempDir.exists()) {
 			// see bug 440182: if test has left opened file streams on NFS
 			// mounted directories "delete" will fail because the directory
-			// would contain "stolen NFS file handles"
-			// (something like .nfs* files)
-			// so the "first round" of delete can ignore failures.
+			// would contain "stolen NFS file handles" (something like .nfs*
+			// files) so the "first round" of delete can ignore failures.
 			FileUtils.delete(tempDir, FileUtils.IGNORE_ERRORS
 					| FileUtils.RECURSIVE | FileUtils.RETRY);
 		}
