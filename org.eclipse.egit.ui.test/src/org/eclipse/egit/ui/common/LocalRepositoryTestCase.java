@@ -255,6 +255,7 @@ public abstract class LocalRepositoryTestCase extends EGitTestCase {
 
 	@BeforeClass
 	public static void beforeClassBase() throws Exception {
+		FS.FileStoreAttributes.setBackground(false);
 		// suppress auto-ignoring and auto-sharing to avoid interference
 		IEclipsePreferences corePrefs = InstanceScope.INSTANCE
 				.getNode(org.eclipse.egit.core.Activator.getPluginId());
