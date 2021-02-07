@@ -133,4 +133,5 @@ Export-Package: org.eclipse.egit.ui;version="5.11.0";x-friends:="org.eclipse.egi
 Service-Component: OSGI-INF/org.eclipse.egit.ui.internal.clone.GitCloneDropAdapter.xml,
  OSGI-INF/org.eclipse.egit.ui.internal.StartEventListener.xml,
  OSGI-INF/org.eclipse.egit.ui.internal.ApplicationActiveListener.xml,
- OSGI-INF/org.eclipse.egit.ui.internal.ExternalRepositoryScanner.xml
+ OSGI-INF/org.eclipse.egit.ui.internal.ExternalRepositoryScanner.xml,
+ OSGI-INF/org.eclipse.egit.ui.internal.trace.DebugOptionsHandler.xml

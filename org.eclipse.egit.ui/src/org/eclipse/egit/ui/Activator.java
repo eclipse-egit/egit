@@ -5,7 +5,7 @@
  * Copyright (C) 2012, Matthias Sohn <matthias.sohn@sap.com>
  * Copyright (C) 2015, Philipp Bumann <bumannp@gmail.com>
  * Copyright (C) 2016, Dani Megert <daniel_megert@ch.ibm.com>
- * Copyright (C) 2018, Thomas Wolf <thomas.wolf@paranor.ch>
+ * Copyright (C) 2018, 2021 Thomas Wolf <thomas.wolf@paranor.ch>
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License 2.0
@@ -18,8 +18,6 @@ package org.eclipse.egit.ui;
 
 import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
-import java.util.Dictionary;
-import java.util.Hashtable;
 import java.util.Iterator;
 import java.util.List;
 
@@ -32,7 +30,6 @@ import org.eclipse.egit.ui.internal.ConfigurationChecker;
 import org.eclipse.egit.ui.internal.KnownHosts;
 import org.eclipse.egit.ui.internal.UIText;
 import org.eclipse.egit.ui.internal.credentials.EGitCredentialsProvider;
-import org.eclipse.egit.ui.internal.trace.GitTraceLocation;
 import org.eclipse.egit.ui.internal.variables.GitTemplateVariableResolver;
 import org.eclipse.jdt.internal.ui.JavaPlugin;
 import org.eclipse.jface.resource.JFaceResources;
@@ -43,8 +40,6 @@ import org.eclipse.jface.text.templates.TemplateContextType;
 import org.eclipse.jface.util.IPropertyChangeListener;
 import org.eclipse.jface.util.PropertyChangeEvent;
 import org.eclipse.jgit.transport.CredentialsProvider;
-import org.eclipse.osgi.service.debug.DebugOptions;
-import org.eclipse.osgi.service.debug.DebugOptionsListener;
 import org.eclipse.swt.graphics.Font;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.ui.PlatformUI;
@@ -53,12 +48,14 @@ import org.eclipse.ui.progress.WorkbenchJob;
 import org.eclipse.ui.statushandlers.StatusManager;
 import org.eclipse.ui.themes.ITheme;
 import org.osgi.framework.BundleContext;
-import org.osgi.framework.ServiceRegistration;
 
 /**
  * This is a plugin singleton mostly controlling logging.
  */
-public class Activator extends AbstractUIPlugin implements DebugOptionsListener {
+public class Activator extends AbstractUIPlugin {
+
+	/** The plug-in ID for the EGit UI. */
+	public static final String PLUGIN_ID = "org.eclipse.egit.ui"; //$NON-NLS-1$
 
 	/**
 	 *  The one and only instance
@@ -286,10 +283,6 @@ public class Activator extends AbstractUIPlugin implements DebugOptionsListener 
 
 	private ResourceManager resourceManager;
 
-	private DebugOptions debugOptions;
-
-	private ServiceRegistration<?> serviceRegistration;
-
 	/**
 	 * Construct the {@link Activator} egit ui plugin singleton instance
 	 */
@@ -305,13 +298,6 @@ public class Activator extends AbstractUIPlugin implements DebugOptionsListener 
 	@Override
 	public void start(final BundleContext context) throws Exception {
 		super.start(context);
-		// we want to be notified about debug options changes
-		Dictionary<String, String> props = new Hashtable<>(4);
-		props.put(DebugOptions.LISTENER_SYMBOLICNAME, context.getBundle()
-				.getSymbolicName());
-		serviceRegistration = context.registerService(
-				DebugOptionsListener.class.getName(), this,
-				props);
 
 		setupCredentialsProvider();
 		ConfigurationChecker.checkConfiguration();
@@ -359,20 +345,6 @@ public class Activator extends AbstractUIPlugin implements DebugOptionsListener 
 		job.schedule();
 	}
 
-	@Override
-	public void optionsChanged(DebugOptions options) {
-		// initialize the trace stuff
-		debugOptions = options;
-		GitTraceLocation.initializeFromOptions(options, isDebugging());
-	}
-
-	/**
-	 * @return the {@link DebugOptions}
-	 */
-	public DebugOptions getDebugOptions() {
-		return debugOptions;
-	}
-
 	/**
 	 * Register for changes made to Team properties.
 	 *
@@ -408,10 +380,6 @@ public class Activator extends AbstractUIPlugin implements DebugOptionsListener 
 
 	@Override
 	public void stop(final BundleContext context) throws Exception {
-		if (serviceRegistration != null) {
-			serviceRegistration.unregister();
-			serviceRegistration = null;
-		}
 		if (resourceManager != null) {
 			resourceManager.dispose();
 			resourceManager = null;

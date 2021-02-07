@@ -15,10 +15,10 @@ package org.eclipse.egit.ui.test.trace;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
-import org.eclipse.egit.ui.Activator;
 import org.eclipse.egit.ui.common.EGitTestCase;
 import org.eclipse.egit.ui.internal.UIText;
 import org.eclipse.egit.ui.internal.dialogs.GitTraceConfigurationDialog;
+import org.eclipse.egit.ui.internal.trace.GitTraceLocation;
 import org.eclipse.jface.dialogs.IDialogConstants;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swtbot.eclipse.finder.SWTWorkbenchBot;
@@ -45,13 +45,13 @@ public class TraceConfigurationDialogTest {
 	public static void beforeClass() throws Exception {
 		EGitTestCase.closeWelcomePage();
 		// make sure tracing is off globally
-		Activator.getDefault().getDebugOptions().setDebugEnabled(false);
+		GitTraceLocation.getOptions().setDebugEnabled(false);
 	}
 
 	@AfterClass
 	public static void afterClass() throws Exception {
 		// make sure tracing is off globally
-		Activator.getDefault().getDebugOptions().setDebugEnabled(false);
+		GitTraceLocation.getOptions().setDebugEnabled(false);
 	}
 
 	@Before
