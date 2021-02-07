@@ -1,5 +1,6 @@
 /*******************************************************************************
- * Copyright (C) 2008, 2015 Shawn O. Pearce <spearce@spearce.org> and others.
+ * Copyright (C) 2008, 2021 Shawn O. Pearce <spearce@spearce.org> and others.
+ *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License 2.0
  * which accompanies this distribution, and is available at
@@ -17,9 +18,7 @@ import java.net.ProxySelector;
 import java.text.MessageFormat;
 import java.util.Collection;
 import java.util.Collections;
-import java.util.Dictionary;
 import java.util.HashMap;
-import java.util.Hashtable;
 import java.util.LinkedHashMap;
 import java.util.LinkedHashSet;
 import java.util.List;
@@ -61,7 +60,6 @@ import org.eclipse.egit.core.internal.ResourceRefreshHandler;
 import org.eclipse.egit.core.internal.SshPreferencesMirror;
 import org.eclipse.egit.core.internal.indexdiff.IndexDiffCache;
 import org.eclipse.egit.core.internal.job.JobUtil;
-import org.eclipse.egit.core.internal.trace.GitTraceLocation;
 import org.eclipse.egit.core.internal.util.ResourceUtil;
 import org.eclipse.egit.core.op.ConnectProviderOperation;
 import org.eclipse.egit.core.op.IgnoreOperation;
@@ -85,8 +83,6 @@ import org.eclipse.jgit.transport.http.apache.HttpClientConnectionFactory;
 import org.eclipse.jgit.transport.sshd.SshdSessionFactory;
 import org.eclipse.jgit.util.FS;
 import org.eclipse.jgit.util.SystemReader;
-import org.eclipse.osgi.service.debug.DebugOptions;
-import org.eclipse.osgi.service.debug.DebugOptionsListener;
 import org.eclipse.osgi.util.NLS;
 import org.eclipse.team.core.RepositoryProvider;
 import org.osgi.framework.BundleContext;
@@ -97,7 +93,10 @@ import org.osgi.util.tracker.ServiceTracker;
  * The plugin class for the org.eclipse.egit.core plugin. This
  * is a singleton class.
  */
-public class Activator extends Plugin implements DebugOptionsListener {
+public class Activator extends Plugin {
+
+	/** The plug-in ID for Egit core. */
+	public static final String PLUGIN_ID = "org.eclipse.egit.core"; //$NON-NLS-1$
 
 	private enum HttpClientType {
 		JDK, APACHE
@@ -226,11 +225,6 @@ public class Activator extends Plugin implements DebugOptionsListener {
 				new EclipseSystemReader(SystemReader.getInstance()));
 
 		Config.setTypedConfigGetter(new ReportingTypedConfigGetter());
-		// we want to be notified about debug options changes
-		Dictionary<String, String> props = new Hashtable<>(4);
-		props.put(DebugOptions.LISTENER_SYMBOLICNAME, pluginId);
-		context.registerService(DebugOptionsListener.class.getName(), this,
-				props);
 
 		setupHttp();
 		SshPreferencesMirror.INSTANCE.start();
@@ -377,12 +371,6 @@ public class Activator extends Plugin implements DebugOptionsListener {
 				logWarning(CoreText.Activator_noBuiltinLfsSupportDetected, e1);
 			}
 		}
-	}
-
-	@Override
-	public void optionsChanged(DebugOptions options) {
-		// initialize the trace stuff
-		GitTraceLocation.initializeFromOptions(options, isDebugging());
 	}
 
 	/**
