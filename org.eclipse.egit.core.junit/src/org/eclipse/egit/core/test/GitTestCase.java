@@ -23,6 +23,7 @@ import org.eclipse.core.runtime.preferences.IEclipsePreferences;
 import org.eclipse.core.runtime.preferences.InstanceScope;
 import org.eclipse.egit.core.Activator;
 import org.eclipse.egit.core.GitCorePreferences;
+import org.eclipse.egit.core.JobFamilies;
 import org.eclipse.jgit.junit.MockSystemReader;
 import org.eclipse.jgit.lib.Config;
 import org.eclipse.jgit.lib.ConfigConstants;
@@ -93,8 +94,15 @@ public abstract class GitTestCase {
 	public void tearDown() throws Exception {
 		project.dispose();
 		Activator.getDefault().getRepositoryCache().clear();
-		if (gitDir.exists())
-			FileUtils.delete(gitDir, FileUtils.RECURSIVE | FileUtils.RETRY);
+		TestUtils.waitForJobs(1000, JobFamilies.INDEX_DIFF_CACHE_UPDATE);
+		if (gitDir.exists()) {
+			try {
+				FileUtils.delete(gitDir, FileUtils.RECURSIVE | FileUtils.RETRY);
+			} catch (Exception e) {
+				TestUtils.dumpThreads();
+				throw e;
+			}
+		}
 		SystemReader.setInstance(null);
 	}
 
