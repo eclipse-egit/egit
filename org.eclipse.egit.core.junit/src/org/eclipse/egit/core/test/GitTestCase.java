@@ -54,6 +54,7 @@ public abstract class GitTestCase {
 				.getPluginId());
 		p.putBoolean(GitCorePreferences.core_autoIgnoreDerivedResources, false);
 		p.putBoolean(GitCorePreferences.core_autoShareProjects, false);
+		FS.FileStoreAttributes.setBackground(false);
 	}
 
 	@Before
@@ -93,8 +94,15 @@ public abstract class GitTestCase {
 	public void tearDown() throws Exception {
 		project.dispose();
 		Activator.getDefault().getRepositoryCache().clear();
-		if (gitDir.exists())
-			FileUtils.delete(gitDir, FileUtils.RECURSIVE | FileUtils.RETRY);
+		if (gitDir.exists()) {
+			try {
+				FileUtils.delete(gitDir, FileUtils.RECURSIVE | FileUtils.RETRY);
+			} catch (Exception e) {
+				System.err.println(TestUtils.dumpThreads());
+				TestUtils.listDirectory(gitDir, true);
+				throw e;
+			}
+		}
 		SystemReader.setInstance(null);
 	}
 
