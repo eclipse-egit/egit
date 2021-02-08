@@ -51,6 +51,24 @@
       "revId": "33e4447a84dd4c1556e7162727463a49efcf990f",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "76c061a3_b08a3564",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/Activator.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 219,
+      "author": {
+        "id": 3
+      },
+      "writtenOn": "2021-02-08T21:33:53Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "3c631a2d_51876c81",
+      "revId": "33e4447a84dd4c1556e7162727463a49efcf990f",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
     }
   ]
 }
