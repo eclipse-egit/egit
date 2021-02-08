@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0131a7b7_6f2d9471",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/Activator.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 130,
+      "author": {
+        "id": 3
+      },
+      "writtenOn": "2021-02-08T19:27:47Z",
+      "side": 1,
+      "message": "Maybe consider replacing this with PLUGIN_ID, and then doing an in-line of this method across callers?",
+      "revId": "33e4447a84dd4c1556e7162727463a49efcf990f",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "861eb2de_31dc1117",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/Activator.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 219,
+      "author": {
+        "id": 3
+      },
+      "writtenOn": "2021-02-08T19:27:47Z",
+      "side": 1,
+      "message": "This seems superfluous now that you\u0027re hard-coding it in PLUGIN_ID above?",
+      "revId": "33e4447a84dd4c1556e7162727463a49efcf990f",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": true
+    }
+  ]
+}
