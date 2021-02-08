@@ -33,6 +33,24 @@
       "revId": "33e4447a84dd4c1556e7162727463a49efcf990f",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3c631a2d_51876c81",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/Activator.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 219,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2021-02-08T20:18:26Z",
+      "side": 1,
+      "message": "Correct, but I wanted these changes to focus on the OSGi service. Once this is in, a further step is of course to get rid of getPluginId().",
+      "parentUuid": "861eb2de_31dc1117",
+      "revId": "33e4447a84dd4c1556e7162727463a49efcf990f",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": true
     }
   ]
 }
