@@ -569,6 +569,9 @@ public class DiffEditorOutlinePage extends ContentOutlinePage {
 
 		private void compactify() {
 			Folder root = rootFolders.get(SLASH);
+			if (root == null) {
+				return;
+			}
 			compactify(root);
 			if (root.files.isEmpty()) {
 				rootFolders.clear();
