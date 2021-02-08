@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "14fb7890_9120cb79",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 5
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2021-02-08T11:18:34Z",
+      "side": 1,
+      "message": "The DebugOptionsListener becomes a separate OSGi declarative service in the follow-up change https://git.eclipse.org/r/c/egit/egit/+/175941 anyway.",
+      "range": {
+        "startLine": 40,
+        "startChar": 0,
+        "endLine": 40,
+        "endChar": 56
+      },
+      "revId": "ff9919019e0733f3c7998c9f20e557cb54d0aea6",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": true
+    }
+  ]
+}
