@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "87c6ccec_9806dc89",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/Activator.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 3
+      },
+      "writtenOn": "2021-02-08T19:28:47Z",
+      "side": 1,
+      "message": "You could replace this with the hard-coded PLUGIN_ID above, and then in-line this method?",
+      "revId": "8115ce83fd72a7f05c2c2f679078f28e6e3b18d7",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": true
+    }
+  ]
+}
