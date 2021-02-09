@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "59469fbc_1aeab924",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/StartEventListener.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2021-02-09T21:46:59Z",
+      "side": 1,
+      "message": "This is rather expensive. It accesses the user\u0027s git config. It also checks $HOME on Windows; I\u0027m not sure this check is still needed. One would have to verify what git-for-windows does nowadays. Compare bug 469391...",
+      "range": {
+        "startLine": 52,
+        "startChar": 24,
+        "endLine": 52,
+        "endChar": 44
+      },
+      "revId": "14dfd468b3868e2e4eb175083a36842658949e15",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c4ef804f_1b223c04",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/StartEventListener.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 123,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2021-02-09T21:46:59Z",
+      "side": 1,
+      "message": "Does this really have to run on the UI thread?",
+      "revId": "14dfd468b3868e2e4eb175083a36842658949e15",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": true
+    }
+  ]
+}
