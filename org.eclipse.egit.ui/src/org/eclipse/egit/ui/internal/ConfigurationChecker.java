@@ -13,10 +13,7 @@ package org.eclipse.egit.ui.internal;
 
 import java.io.File;
 
-import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
-import org.eclipse.core.runtime.Status;
-import org.eclipse.core.runtime.jobs.Job;
 import org.eclipse.egit.ui.Activator;
 import org.eclipse.egit.ui.UIPreferences;
 import org.eclipse.jface.preference.IPreferenceStore;
@@ -27,11 +24,9 @@ import org.eclipse.jgit.util.LfsFactory;
 import org.eclipse.jgit.util.LfsFactory.LfsInstallCommand;
 import org.eclipse.jgit.util.SystemReader;
 import org.eclipse.osgi.util.NLS;
-import org.eclipse.ui.PlatformUI;
 
 /**
- * Checks the system configuration
- *
+ * Checks the system configuration.
  */
 public class ConfigurationChecker {
 
@@ -39,31 +34,6 @@ public class ConfigurationChecker {
 	 * Checks the system configuration.
 	 */
 	public static void checkConfiguration() {
-		// Schedule a job
-		// This avoids that the check is executed too early
-		// because in startup phase the JobManager is suspended
-		// and scheduled Jobs are executed later
-		Job job = new Job(UIText.ConfigurationChecker_checkConfiguration) {
-			@Override
-			protected IStatus run(IProgressMonitor monitor) {
-				if (PlatformUI.isWorkbenchRunning()) {
-					PlatformUI.getWorkbench().getDisplay()
-							.asyncExec(new Runnable() {
-								@Override
-								public void run() {
-									check();
-								}
-							});
-				} else {
-					schedule(1000L);
-				}
-				return Status.OK_STATUS;
-			}
-		};
-		job.schedule();
-	}
-
-	private static void check() {
 		checkHome();
 		checkLfs();
 	}

@@ -18,25 +18,17 @@ package org.eclipse.egit.ui;
 
 import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 
-import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Platform;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.egit.core.RepositoryUtil;
-import org.eclipse.egit.ui.internal.ConfigurationChecker;
 import org.eclipse.egit.ui.internal.KnownHosts;
-import org.eclipse.egit.ui.internal.UIText;
 import org.eclipse.egit.ui.internal.credentials.EGitCredentialsProvider;
-import org.eclipse.egit.ui.internal.variables.GitTemplateVariableResolver;
-import org.eclipse.jdt.internal.ui.JavaPlugin;
 import org.eclipse.jface.resource.JFaceResources;
 import org.eclipse.jface.resource.LocalResourceManager;
 import org.eclipse.jface.resource.ResourceManager;
-import org.eclipse.jface.text.templates.ContextTypeRegistry;
-import org.eclipse.jface.text.templates.TemplateContextType;
 import org.eclipse.jface.util.IPropertyChangeListener;
 import org.eclipse.jface.util.PropertyChangeEvent;
 import org.eclipse.jgit.transport.CredentialsProvider;
@@ -44,7 +36,6 @@ import org.eclipse.swt.graphics.Font;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.plugin.AbstractUIPlugin;
-import org.eclipse.ui.progress.WorkbenchJob;
 import org.eclipse.ui.statushandlers.StatusManager;
 import org.eclipse.ui.themes.ITheme;
 import org.osgi.framework.BundleContext;
@@ -298,51 +289,7 @@ public class Activator extends AbstractUIPlugin {
 	@Override
 	public void start(final BundleContext context) throws Exception {
 		super.start(context);
-
-		setupCredentialsProvider();
-		ConfigurationChecker.checkConfiguration();
-
-		registerTemplateVariableResolvers();
-	}
-
-	private void setupCredentialsProvider() {
 		CredentialsProvider.setDefault(new EGitCredentialsProvider());
-	}
-
-	private void registerTemplateVariableResolvers() {
-		if (!hasJavaPlugin()) {
-			return;
-		}
-		WorkbenchJob job = new WorkbenchJob(
-				UIText.Activator_setupJdtTemplateResolver) {
-
-			@Override
-			public IStatus runInUIThread(IProgressMonitor monitor) {
-				try {
-					final ContextTypeRegistry codeTemplateContextRegistry = JavaPlugin
-							.getDefault().getCodeTemplateContextRegistry();
-					final Iterator<?> ctIter = codeTemplateContextRegistry
-							.contextTypes();
-
-					while (ctIter.hasNext()) {
-						final TemplateContextType contextType = (TemplateContextType) ctIter
-								.next();
-						contextType.addResolver(new GitTemplateVariableResolver(
-								"git_config", //$NON-NLS-1$
-								UIText.GitTemplateVariableResolver_GitConfigDescription));
-					}
-				} catch (Throwable e) {
-					// while catching Throwable is an anti-pattern, we may
-					// experience NoClassDefFoundErrors here
-					logError("Cannot register git support for Java templates", //$NON-NLS-1$
-							e);
-				}
-				return Status.OK_STATUS;
-			}
-		};
-		job.setSystem(true);
-		job.setUser(false);
-		job.schedule();
 	}
 
 	/**
