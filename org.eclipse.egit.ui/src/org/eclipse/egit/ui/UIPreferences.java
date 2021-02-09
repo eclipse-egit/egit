@@ -300,6 +300,9 @@ public final class UIPreferences {
 	/** */
 	public static final String STASH_INCLUDE_UNTRACKED = "stashIncludeUntracked"; //$NON-NLS-1$
 
+	/** */
+	public static final String DIFF_OUTLINE_PRESENTATION = "DiffEditorOutline.compactTree"; //$NON-NLS-1$
+
 	/**
 	 * Converts a persisted String separated with commas to an integer array
 	 *

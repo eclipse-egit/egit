@@ -4025,9 +4025,6 @@ public class UIText extends NLS {
 	public static String DiffEditor_OutlineShowCompactTreeTooltip;
 
 	/** */
-	public static String DiffEditor_OutlineShowFlatListTooltip;
-
-	/** */
 	public static String DiffEditor_OutlineTreeToggle;
 
 	/** */

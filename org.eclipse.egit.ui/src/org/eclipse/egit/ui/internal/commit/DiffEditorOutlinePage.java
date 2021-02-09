@@ -25,6 +25,7 @@ import java.util.stream.Collectors;
 import org.eclipse.core.runtime.Path;
 import org.eclipse.egit.core.internal.Utils;
 import org.eclipse.egit.ui.Activator;
+import org.eclipse.egit.ui.UIPreferences;
 import org.eclipse.egit.ui.UIUtils;
 import org.eclipse.egit.ui.internal.UIIcons;
 import org.eclipse.egit.ui.internal.UIText;
@@ -112,6 +113,10 @@ public class DiffEditorOutlinePage extends ContentOutlinePage {
 
 	private ActionHandler collapseHandler;
 
+	private IAction collapseAction;
+
+	private IAction togglePresentationAction;
+
 	@Override
 	public void createControl(Composite parent) {
 		super.createControl(parent);
@@ -136,6 +141,7 @@ public class DiffEditorOutlinePage extends ContentOutlinePage {
 		viewer.addOpenListener(this::fireOpenEvent);
 		if (input != null) {
 			viewer.setInput(input);
+			updateToolbarActions();
 		}
 		createContextMenu(viewer);
 		if (selection != null) {
@@ -154,6 +160,7 @@ public class DiffEditorOutlinePage extends ContentOutlinePage {
 		TreeViewer viewer = getTreeViewerChecked();
 		if (viewer != null) {
 			viewer.setInput(input);
+			updateToolbarActions();
 		}
 	}
 
@@ -392,7 +399,7 @@ public class DiffEditorOutlinePage extends ContentOutlinePage {
 	}
 
 	private void addToolbarActions(IToolBarManager toolbarManager) {
-		Action collapseAction = new Action(UIText.UIUtils_CollapseAll,
+		collapseAction = new Action(UIText.UIUtils_CollapseAll,
 				PlatformUI.getWorkbench().getSharedImages().getImageDescriptor(
 						ISharedImages.IMG_ELCL_COLLAPSEALL)) {
 			@Override
@@ -408,36 +415,47 @@ public class DiffEditorOutlinePage extends ContentOutlinePage {
 		handlerService.activateHandler(collapseAction.getActionDefinitionId(),
 				collapseHandler);
 
-		Action toggleTreeModeAction = new Action(
-				UIText.DiffEditor_OutlineTreeToggle) {
+		IPreferenceStore preferences = Activator.getDefault()
+				.getPreferenceStore();
+		togglePresentationAction = new Action(
+				UIText.DiffEditor_OutlineTreeToggle, IAction.AS_CHECK_BOX) {
 			@Override
 			public void run() {
-				updateOutlineTreeMode(true, this);
+				boolean compact = isChecked();
+				preferences.setValue(UIPreferences.DIFF_OUTLINE_PRESENTATION,
+						compact);
+				((DiffContentProvider) getTreeViewer().getContentProvider())
+						.setCompactTree(compact);
+				getTreeViewer().setInput(getTreeViewer().getInput());
 			}
 		};
-		updateOutlineTreeMode(false, toggleTreeModeAction);
+		togglePresentationAction.setImageDescriptor(UIIcons.COMPACT);
+		togglePresentationAction.setToolTipText(
+				UIText.DiffEditor_OutlineShowCompactTreeTooltip);
+		boolean compact = preferences
+				.getBoolean(UIPreferences.DIFF_OUTLINE_PRESENTATION);
+		togglePresentationAction.setChecked(compact);
+		updateToolbarActions();
 		toolbarManager.add(collapseAction);
-		toolbarManager.add(toggleTreeModeAction);
-	}
-
-	private void updateOutlineTreeMode(boolean doToggle, Action toggleAction) {
-		IPreferenceStore preference = Activator.getDefault()
-				.getPreferenceStore();
-		String prefID = "DiffEditorOutline.compactTree"; //$NON-NLS-1$
-		boolean compact = preference.getBoolean(prefID);
-		if (doToggle) {
-			compact = !compact;
-		}
+		toolbarManager.add(togglePresentationAction);
 		((DiffContentProvider) getTreeViewer().getContentProvider())
 				.setCompactTree(compact);
-		toggleAction
-				.setImageDescriptor(compact ? UIIcons.FLAT : UIIcons.COMPACT);
-		toggleAction
-				.setToolTipText(compact
-						? UIText.DiffEditor_OutlineShowFlatListTooltip
-						: UIText.DiffEditor_OutlineShowCompactTreeTooltip);
-		preference.setValue(prefID, compact);
 		getTreeViewer().setInput(getTreeViewer().getInput());
+	}
+
+	private void updateToolbarActions() {
+		TreeViewer viewer = getTreeViewerChecked();
+		if (viewer == null) {
+			return;
+		}
+		boolean hasElements = ((DiffContentProvider) viewer
+				.getContentProvider()).hasElements();
+		if (collapseAction != null) {
+			collapseAction.setEnabled(hasElements);
+		}
+		if (togglePresentationAction != null) {
+			togglePresentationAction.setEnabled(hasElements);
+		}
 	}
 
 	@Override
@@ -493,6 +511,10 @@ public class DiffEditorOutlinePage extends ContentOutlinePage {
 		public void dispose() {
 			rootFolders.clear();
 			parents.clear();
+		}
+
+		public boolean hasElements() {
+			return !rootFolders.isEmpty();
 		}
 
 		@Override
