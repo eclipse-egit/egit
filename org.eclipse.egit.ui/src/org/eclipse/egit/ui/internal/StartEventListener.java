@@ -10,14 +10,19 @@
  *******************************************************************************/
 package org.eclipse.egit.ui.internal;
 
+import java.util.Iterator;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 import org.eclipse.e4.ui.workbench.UIEvents;
 import org.eclipse.egit.core.JobFamilies;
+import org.eclipse.egit.ui.Activator;
 import org.eclipse.egit.ui.internal.selection.SelectionRepositoryStateCache;
+import org.eclipse.egit.ui.internal.variables.GitTemplateVariableResolver;
+import org.eclipse.jface.text.templates.ContextTypeRegistry;
+import org.eclipse.jface.text.templates.TemplateContextType;
+import org.eclipse.swt.widgets.Display;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.progress.IProgressService;
-import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Deactivate;
 import org.osgi.service.event.Event;
@@ -38,6 +43,7 @@ public class StartEventListener implements EventHandler {
 		if (started.compareAndSet(false, true)) {
 			SelectionRepositoryStateCache.INSTANCE.initialize();
 			registerCoreJobFamilyIcons();
+			registerTemplateVariableResolvers();
 		}
 	}
 
@@ -45,15 +51,6 @@ public class StartEventListener implements EventHandler {
 	public void handleEvent(Event event) {
 		if (UIEvents.UILifeCycle.APP_STARTUP_COMPLETE
 				.equals(event.getTopic())) {
-			// If the workbench wasn't running yet when we were activated, we'll
-			// initialize on the APP_STARTUP_COMPLETE event.
-			startInternalComponents();
-		}
-	}
-
-	@Activate
-	void startUp() {
-		if (PlatformUI.isWorkbenchRunning()) {
 			startInternalComponents();
 		}
 	}
@@ -65,11 +62,24 @@ public class StartEventListener implements EventHandler {
 		}
 	}
 
+	private void runAsync(Runnable action) {
+		Display display = PlatformUI.getWorkbench().getDisplay();
+		if (display != null && !display.isDisposed()) {
+			display.asyncExec(() -> {
+				if (!display.isDisposed() && PlatformUI.isWorkbenchRunning()) {
+					action.run();
+				}
+			});
+		}
+	}
+
 	private void registerCoreJobFamilyIcons() {
-		PlatformUI.getWorkbench().getDisplay().asyncExec(() -> {
+		runAsync(() -> {
 			IProgressService service = PlatformUI.getWorkbench()
 					.getProgressService();
-
+			if (service == null) {
+				return;
+			}
 			service.registerIconForFamily(UIIcons.PULL, JobFamilies.PULL);
 			service.registerIconForFamily(UIIcons.REPOSITORY,
 					JobFamilies.AUTO_IGNORE);
@@ -79,6 +89,33 @@ public class StartEventListener implements EventHandler {
 					JobFamilies.INDEX_DIFF_CACHE_UPDATE);
 			service.registerIconForFamily(UIIcons.REPOSITORY,
 					JobFamilies.REPOSITORY_CHANGED);
+		});
+	}
+
+	private void registerTemplateVariableResolvers() {
+		if (!Activator.hasJavaPlugin()) {
+			return;
+		}
+		runAsync(() -> {
+			try {
+				ContextTypeRegistry codeTemplateContextRegistry = org.eclipse.jdt.internal.ui.JavaPlugin
+						.getDefault().getCodeTemplateContextRegistry();
+				Iterator<?> ctIter = codeTemplateContextRegistry.contextTypes();
+
+				while (ctIter.hasNext()) {
+					TemplateContextType contextType = (TemplateContextType) ctIter
+							.next();
+					contextType.addResolver(new GitTemplateVariableResolver(
+							"git_config", //$NON-NLS-1$
+							UIText.GitTemplateVariableResolver_GitConfigDescription));
+				}
+			} catch (Throwable e) {
+				// while catching Throwable is an anti-pattern, we may
+				// experience NoClassDefFoundErrors here
+				Activator.logError(
+						"Cannot register git support for Java templates", //$NON-NLS-1$
+						e);
+			}
 		});
 	}
 }
