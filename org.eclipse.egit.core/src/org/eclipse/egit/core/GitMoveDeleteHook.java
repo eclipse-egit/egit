@@ -114,7 +114,7 @@ class GitMoveDeleteHook implements IMoveDeleteHook {
 			if (next < dirc.getEntryCount())
 				edit.keep(next, dirc.getEntryCount() - next);
 			if (!edit.commit())
-				tree.failed(new Status(IStatus.ERROR, Activator.getPluginId(),
+				tree.failed(new Status(IStatus.ERROR, Activator.PLUGIN_ID,
 						0, CoreText.MoveDeleteHook_operationError, null));
 			tree.standardDeleteFile(file, updateFlags, monitor);
 		} catch (LockFailedException e) {
@@ -131,13 +131,13 @@ class GitMoveDeleteHook implements IMoveDeleteHook {
 			// needed, which won't happen for calls triggered by merge
 			// operations from the merge strategies.
 			Activator.getDefault().getLog()
-					.log(new Status(IStatus.WARNING, Activator.getPluginId(),
+					.log(new Status(IStatus.WARNING, Activator.PLUGIN_ID,
 							MessageFormat
 									.format(CoreText.MoveDeleteHook_cannotAutoStageDeletion,
 											file.getLocation())));
 			return FINISH_FOR_ME;
 		} catch (IOException e) {
-			tree.failed(new Status(IStatus.ERROR, Activator.getPluginId(), 0,
+			tree.failed(new Status(IStatus.ERROR, Activator.PLUGIN_ID, 0,
 					CoreText.MoveDeleteHook_operationError, e));
 		} finally {
 			if (dirc != null)
@@ -190,7 +190,7 @@ class GitMoveDeleteHook implements IMoveDeleteHook {
 				return FINISH_FOR_ME;
 
 			if (!sEnt.isMerged()) {
-				tree.failed(new Status(IStatus.WARNING, Activator.getPluginId(),
+				tree.failed(new Status(IStatus.WARNING, Activator.PLUGIN_ID,
 						CoreText.MoveDeleteHook_unmergedFileError));
 				return I_AM_DONE;
 			}
@@ -210,13 +210,13 @@ class GitMoveDeleteHook implements IMoveDeleteHook {
 				}
 				if (!sEdit.commit()) {
 					tree.failed(new Status(IStatus.ERROR,
-							Activator.getPluginId(), 0,
+							Activator.PLUGIN_ID, 0,
 							CoreText.MoveDeleteHook_operationError, null));
 				}
 			}
 			tree.standardMoveFile(srcf, dstf, updateFlags, monitor);
 		} catch (IOException e) {
-			tree.failed(new Status(IStatus.ERROR, Activator.getPluginId(), 0,
+			tree.failed(new Status(IStatus.ERROR, Activator.PLUGIN_ID, 0,
 					CoreText.MoveDeleteHook_operationError, e));
 		} finally {
 			if (sCache != null)
@@ -252,21 +252,21 @@ class GitMoveDeleteHook implements IMoveDeleteHook {
 				case SUCCESS:
 					break;
 				case FAILED:
-					tree.failed(new Status(IStatus.ERROR, Activator.getPluginId(),
+					tree.failed(new Status(IStatus.ERROR, Activator.PLUGIN_ID,
 							0, CoreText.MoveDeleteHook_operationError, null));
 					return I_AM_DONE;
 				case UNTRACKED:
 					// we are not responsible for moving untracked files
 					return FINISH_FOR_ME;
 				case UNMERGED:
-					tree.failed(new Status(IStatus.WARNING, Activator.getPluginId(),
+					tree.failed(new Status(IStatus.WARNING, Activator.PLUGIN_ID,
 							CoreText.MoveDeleteHook_unmergedFileInFolderError));
 					return I_AM_DONE;
 				}
 			}
 			tree.standardMoveFolder(srcf, dstf, updateFlags, monitor);
 		} catch (IOException e) {
-			tree.failed(new Status(IStatus.ERROR, Activator.getPluginId(), 0,
+			tree.failed(new Status(IStatus.ERROR, Activator.PLUGIN_ID, 0,
 					CoreText.MoveDeleteHook_operationError, e));
 		}
 		return true;
@@ -296,7 +296,7 @@ class GitMoveDeleteHook implements IMoveDeleteHook {
 			RepositoryProvider.unmap(source);
 		} catch (TeamException e) {
 			tree.failed(new Status(IStatus.ERROR, Activator
-					.getPluginId(), 0,
+					.PLUGIN_ID, 0,
 					CoreText.MoveDeleteHook_operationError, e));
 					return true; // Do not let Eclipse complete the operation
 		}
@@ -324,7 +324,7 @@ class GitMoveDeleteHook implements IMoveDeleteHook {
 			// Graceful handling of bug, i.e. refuse to destroy your code
 			tree.failed(new Status(
 					IStatus.ERROR,
-					Activator.getPluginId(),
+					Activator.PLUGIN_ID,
 					0,
 					"Cannot move project. See https://bugs.eclipse.org/bugs/show_bug.cgi?id=307140 (not resolved in 3.7)", //$NON-NLS-1$
 					null));
@@ -380,14 +380,14 @@ class GitMoveDeleteHook implements IMoveDeleteHook {
 				break;
 			case FAILED:
 				tree.failed(new Status(IStatus.ERROR, Activator
-						.getPluginId(), 0,
+						.PLUGIN_ID, 0,
 						CoreText.MoveDeleteHook_operationError, null));
 				break;
 			case UNTRACKED:
 				// we are not responsible for moving untracked files
 				return FINISH_FOR_ME;
 			case UNMERGED:
-				tree.failed(new Status(IStatus.WARNING, Activator.getPluginId(),
+				tree.failed(new Status(IStatus.WARNING, Activator.PLUGIN_ID,
 						CoreText.MoveDeleteHook_unmergedFileInFolderError));
 				return I_AM_DONE;
 			}
@@ -401,7 +401,7 @@ class GitMoveDeleteHook implements IMoveDeleteHook {
 							.getProject(description.getName()),
 					description, monitor, gitDir);
 		} catch (IOException | CoreException e) {
-			tree.failed(new Status(IStatus.ERROR, Activator.getPluginId(),
+			tree.failed(new Status(IStatus.ERROR, Activator.PLUGIN_ID,
 					0, CoreText.MoveDeleteHook_operationError, e));
 		}
 		return true;
@@ -431,7 +431,7 @@ class GitMoveDeleteHook implements IMoveDeleteHook {
 		try {
 			mapProject(source, description, monitor, newGitDir);
 		} catch (CoreException e) {
-			tree.failed(new Status(IStatus.ERROR, Activator.getPluginId(),
+			tree.failed(new Status(IStatus.ERROR, Activator.PLUGIN_ID,
 					0, CoreText.MoveDeleteHook_operationError, e));
 		}
 		return true; // We're done with the move
@@ -498,7 +498,7 @@ class GitMoveDeleteHook implements IMoveDeleteHook {
 	}
 
 	private boolean cannotModifyRepository(final IResourceTree tree) {
-		tree.failed(new Status(IStatus.ERROR, Activator.getPluginId(), 0,
+		tree.failed(new Status(IStatus.ERROR, Activator.PLUGIN_ID, 0,
 				CoreText.MoveDeleteHook_cannotModifyFolder, null));
 		return I_AM_DONE;
 	}

@@ -161,9 +161,9 @@ public class AddCommand extends
 
 	private boolean doAutoShare() {
 		IEclipsePreferences d = DefaultScope.INSTANCE.getNode(Activator
-				.getPluginId());
+				.PLUGIN_ID);
 		IEclipsePreferences p = InstanceScope.INSTANCE.getNode(Activator
-				.getPluginId());
+				.PLUGIN_ID);
 		return p.getBoolean(GitCorePreferences.core_autoShareProjects,
 				d.getBoolean(GitCorePreferences.core_autoShareProjects, true));
 	}

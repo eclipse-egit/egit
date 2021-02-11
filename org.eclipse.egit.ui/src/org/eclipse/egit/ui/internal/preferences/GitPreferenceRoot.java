@@ -87,7 +87,7 @@ public class GitPreferenceRoot extends DoublePreferencesPreferencePage
 	@Override
 	protected IPreferenceStore doGetSecondaryPreferenceStore() {
 		return new ScopedPreferenceStore(InstanceScope.INSTANCE,
-				org.eclipse.egit.core.Activator.getPluginId());
+				org.eclipse.egit.core.Activator.PLUGIN_ID);
 	}
 
 	@Override

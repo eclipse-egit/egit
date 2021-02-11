@@ -39,7 +39,7 @@ public final class GitSettings {
 	 *         default.
 	 */
 	public static int getRemoteConnectionTimeout() {
-		return Platform.getPreferencesService().getInt(Activator.getPluginId(),
+		return Platform.getPreferencesService().getInt(Activator.PLUGIN_ID,
 				GitCorePreferences.core_remoteConnectionTimeout, 60, null);
 	}
 

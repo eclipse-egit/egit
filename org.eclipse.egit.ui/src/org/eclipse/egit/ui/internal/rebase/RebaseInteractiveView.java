@@ -262,8 +262,8 @@ public class RebaseInteractiveView extends ViewPart implements
 		if (currentPlan != null)
 			currentPlan.removeRebaseInteractivePlanChangeListener(this);
 
-		InstanceScope.INSTANCE.getNode(
-				org.eclipse.egit.core.Activator.getPluginId())
+		InstanceScope.INSTANCE
+				.getNode(org.eclipse.egit.core.Activator.PLUGIN_ID)
 				.removePreferenceChangeListener(prefListener);
 		Activator.getDefault().getPreferenceStore()
 				.removePropertyChangeListener(uiPrefsListener);
@@ -356,8 +356,8 @@ public class RebaseInteractiveView extends ViewPart implements
 			}
 		};
 
-		InstanceScope.INSTANCE.getNode(
-				org.eclipse.egit.core.Activator.getPluginId())
+		InstanceScope.INSTANCE
+				.getNode(org.eclipse.egit.core.Activator.PLUGIN_ID)
 				.addPreferenceChangeListener(prefListener);
 
 		uiPrefsListener = new IPropertyChangeListener() {

@@ -22,7 +22,8 @@ public class GitCorePreferenceInitializer extends AbstractPreferenceInitializer 
 
 	@Override
 	public void initializeDefaultPreferences() {
-		final IEclipsePreferences p  = DefaultScope.INSTANCE.getNode(Activator.getPluginId());
+		final IEclipsePreferences p = DefaultScope.INSTANCE
+				.getNode(Activator.PLUGIN_ID);
 
 		p.putInt(GitCorePreferences.core_packedGitWindowSize, 8 * 1024);
 		p.putInt(GitCorePreferences.core_packedGitLimit, 10 * MB);

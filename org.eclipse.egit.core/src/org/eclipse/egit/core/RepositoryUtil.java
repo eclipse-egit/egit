@@ -94,7 +94,7 @@ public class RepositoryUtil {
 	private final Map<String, String> repositoryNameCache = new HashMap<>();
 
 	private final IEclipsePreferences prefs = InstanceScope.INSTANCE
-			.getNode(Activator.getPluginId());
+			.getNode(Activator.PLUGIN_ID);
 
 	private final java.nio.file.Path workspacePath;
 
@@ -124,11 +124,11 @@ public class RepositoryUtil {
 		String key = GitCorePreferences.core_defaultRepositoryDir;
 		String dir = migrateRepoRootPreference();
 		IEclipsePreferences p = InstanceScope.INSTANCE
-				.getNode(Activator.getPluginId());
+				.getNode(Activator.PLUGIN_ID);
 		if (dir == null) {
 			dir = Platform.getPreferencesService().getString(
-					Activator.getPluginId(), key,
-					getDefaultDefaultRepositoryDir(), null);
+					Activator.PLUGIN_ID, key, getDefaultDefaultRepositoryDir(),
+					null);
 		} else {
 			p.put(key, dir);
 		}
@@ -589,7 +589,7 @@ public class RepositoryUtil {
 		try {
 			prefs.flush();
 		} catch (BackingStoreException e) {
-			IStatus error = new Status(IStatus.ERROR, Activator.getPluginId(),
+			IStatus error = new Status(IStatus.ERROR, Activator.PLUGIN_ID,
 					e.getMessage(), e);
 			Activator.getDefault().getLog().log(error);
 		}

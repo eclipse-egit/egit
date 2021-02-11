@@ -57,8 +57,8 @@ public class MergeWithPreferredStrategyTest extends GitTestCase {
 	@Before
 	public void setUp() throws Exception {
 		super.setUp();
-		InstanceScope.INSTANCE.getNode(Activator.getPluginId()).put(
-				GitCorePreferences.core_preferredMergeStrategy, "ours");
+		InstanceScope.INSTANCE.getNode(Activator.PLUGIN_ID)
+				.put(GitCorePreferences.core_preferredMergeStrategy, "ours");
 		gitDir = new File(project.getProject().getLocationURI().getPath(),
 				Constants.DOT_GIT);
 		testRepository = new TestRepository(gitDir);
@@ -87,8 +87,8 @@ public class MergeWithPreferredStrategyTest extends GitTestCase {
 	@After
 	public void tearDown() throws Exception {
 		super.tearDown();
-		InstanceScope.INSTANCE.getNode(Activator.getPluginId()).remove(
-				GitCorePreferences.core_preferredMergeStrategy);
+		InstanceScope.INSTANCE.getNode(Activator.PLUGIN_ID)
+				.remove(GitCorePreferences.core_preferredMergeStrategy);
 	}
 
 	@Test
@@ -109,7 +109,7 @@ public class MergeWithPreferredStrategyTest extends GitTestCase {
 	@Test
 	public void testMergeUsesPreferredStrategyRegisteredWithExplicitName()
 			throws Exception {
-		InstanceScope.INSTANCE.getNode(Activator.getPluginId()).put(
+		InstanceScope.INSTANCE.getNode(Activator.PLUGIN_ID).put(
 				GitCorePreferences.core_preferredMergeStrategy,
 				"org.eclipse.egit.core.test.theirs");
 		MergeOperation operation = new MergeOperation(

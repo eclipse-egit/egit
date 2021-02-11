@@ -118,7 +118,7 @@ public class RepositorySearchDialog extends WizardPage {
 			JFaceResources.getResources());
 
 	private final IEclipsePreferences prefs = InstanceScope.INSTANCE
-			.getNode(Activator.getPluginId());
+			.getNode(Activator.PLUGIN_ID);
 
 	private boolean allowBare;
 

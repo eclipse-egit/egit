@@ -354,7 +354,7 @@ public class GitSubscriberMergeContextTest extends ModelTestCase {
 	@Test
 	public void mergeModelWithDeletedFileNoConflict() throws Exception {
 		IEclipsePreferences p = InstanceScope.INSTANCE
-				.getNode(Activator.getPluginId());
+				.getNode(Activator.PLUGIN_ID);
 		p.putBoolean(GitCorePreferences.core_autoStageDeletion, true);
 		File file1 = testRepo.createFile(iProject, "file1."
 				+ SAMPLE_FILE_EXTENSION);

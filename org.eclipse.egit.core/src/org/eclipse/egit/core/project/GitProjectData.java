@@ -413,8 +413,10 @@ public class GitProjectData {
 	 */
 	public static void reconfigureWindowCache() {
 		final WindowCacheConfig c = new WindowCacheConfig();
-		IEclipsePreferences d = DefaultScope.INSTANCE.getNode(Activator.getPluginId());
-		IEclipsePreferences p = InstanceScope.INSTANCE.getNode(Activator.getPluginId());
+		IEclipsePreferences d = DefaultScope.INSTANCE
+				.getNode(Activator.PLUGIN_ID);
+		IEclipsePreferences p = InstanceScope.INSTANCE
+				.getNode(Activator.PLUGIN_ID);
 		c.setPackedGitLimit(p.getInt(GitCorePreferences.core_packedGitLimit, d.getInt(GitCorePreferences.core_packedGitLimit, 0)));
 		c.setPackedGitWindowSize(p.getInt(GitCorePreferences.core_packedGitWindowSize, d.getInt(GitCorePreferences.core_packedGitWindowSize, 0)));
 		if (SystemReader.getInstance().isWindows()) {
@@ -611,7 +613,7 @@ public class GitProjectData {
 	}
 
 	private static File propertyFile(IProject project) {
-		return new File(project.getWorkingLocation(Activator.getPluginId())
+		return new File(project.getWorkingLocation(Activator.PLUGIN_ID)
 				.toFile(), "GitProjectData.properties"); //$NON-NLS-1$
 	}
 
@@ -771,7 +773,7 @@ public class GitProjectData {
 				RepositoryProvider.unmap(project);
 				return Status.OK_STATUS;
 			} catch (TeamException e) {
-				return new Status(IStatus.ERROR, Activator.getPluginId(),
+				return new Status(IStatus.ERROR, Activator.PLUGIN_ID,
 						MessageFormat.format(
 								CoreText.GitProjectData_UnmappingGoneResourceFailed,
 								project.getName()),

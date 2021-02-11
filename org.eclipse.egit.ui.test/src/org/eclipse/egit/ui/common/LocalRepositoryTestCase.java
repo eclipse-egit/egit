@@ -206,7 +206,7 @@ public abstract class LocalRepositoryTestCase extends EGitTestCase {
 			FileUtils.mkdir(repoRoot, true);
 		// make sure the default directory for Repos is not the user home
 		IEclipsePreferences p = InstanceScope.INSTANCE
-				.getNode(Activator.getPluginId());
+				.getNode(Activator.PLUGIN_ID);
 		p.put(GitCorePreferences.core_defaultRepositoryDir, repoRoot.getPath());
 
 		File configFile = File.createTempFile("gitconfigtest", "config");
@@ -259,7 +259,7 @@ public abstract class LocalRepositoryTestCase extends EGitTestCase {
 		FS.FileStoreAttributes.setBackground(false);
 		// suppress auto-ignoring and auto-sharing to avoid interference
 		IEclipsePreferences corePrefs = InstanceScope.INSTANCE
-				.getNode(org.eclipse.egit.core.Activator.getPluginId());
+				.getNode(org.eclipse.egit.core.Activator.PLUGIN_ID);
 		corePrefs.putBoolean(
 				GitCorePreferences.core_autoIgnoreDerivedResources, false);
 		corePrefs.putBoolean(GitCorePreferences.core_autoShareProjects, false);

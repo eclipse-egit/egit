@@ -1483,7 +1483,7 @@ public class GitHistoryPage extends HistoryPage implements RefsChangedListener,
 				.addRefsChangedListener(this);
 
 		InstanceScope.INSTANCE
-				.getNode(org.eclipse.egit.core.Activator.getPluginId())
+				.getNode(org.eclipse.egit.core.Activator.PLUGIN_ID)
 				.addPreferenceChangeListener(prefListener);
 
 		IToolBarManager manager = getSite().getActionBars().getToolBarManager();
@@ -1741,7 +1741,7 @@ public class GitHistoryPage extends HistoryPage implements RefsChangedListener,
 				.removePropertyChangeListener(listener);
 
 		InstanceScope.INSTANCE
-				.getNode(org.eclipse.egit.core.Activator.getPluginId())
+				.getNode(org.eclipse.egit.core.Activator.PLUGIN_ID)
 				.removePreferenceChangeListener(prefListener);
 
 		if (myRefsChangedHandle != null) {

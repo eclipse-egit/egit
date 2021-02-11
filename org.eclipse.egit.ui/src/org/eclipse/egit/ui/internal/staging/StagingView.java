@@ -1249,8 +1249,8 @@ public class StagingView extends ViewPart
 
 		preferenceStore.addPropertyChangeListener(uiPrefsListener);
 
-		InstanceScope.INSTANCE.getNode(
-				org.eclipse.egit.core.Activator.getPluginId())
+		InstanceScope.INSTANCE
+				.getNode(org.eclipse.egit.core.Activator.PLUGIN_ID)
 				.addPreferenceChangeListener(prefListener);
 
 		updateSectionText();
@@ -4483,8 +4483,8 @@ public class StagingView extends ViewPart
 			undoRedoActionGroup.dispose();
 		}
 
-		InstanceScope.INSTANCE.getNode(
-				org.eclipse.egit.core.Activator.getPluginId())
+		InstanceScope.INSTANCE
+				.getNode(org.eclipse.egit.core.Activator.PLUGIN_ID)
 				.removePreferenceChangeListener(prefListener);
 		removeRepositoryListeners();
 

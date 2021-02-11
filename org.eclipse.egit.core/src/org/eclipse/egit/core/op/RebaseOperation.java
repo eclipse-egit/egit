@@ -129,8 +129,8 @@ public class RebaseOperation implements IEGitOperation {
 	@Override
 	public void execute(IProgressMonitor m) throws CoreException {
 		if (result != null)
-			throw new CoreException(new Status(IStatus.ERROR, Activator
-					.getPluginId(), CoreText.OperationAlreadyExecuted));
+			throw new CoreException(new Status(IStatus.ERROR,
+					Activator.PLUGIN_ID, CoreText.OperationAlreadyExecuted));
 		final IProject[] validProjects = ProjectUtil.getValidOpenProjects(repository);
 		IWorkspaceRunnable action = new IWorkspaceRunnable() {
 			@Override

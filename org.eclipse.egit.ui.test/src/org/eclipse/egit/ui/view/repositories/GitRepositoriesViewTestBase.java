@@ -82,9 +82,9 @@ public abstract class GitRepositoriesViewTestBase extends
 	 */
 	@SuppressWarnings("deprecation")
 	protected static void clearView() {
-		InstanceScope.INSTANCE.getNode(Activator.getPluginId())
+		InstanceScope.INSTANCE.getNode(Activator.PLUGIN_ID)
 				.remove(RepositoryUtil.PREFS_DIRECTORIES);
-		InstanceScope.INSTANCE.getNode(Activator.getPluginId())
+		InstanceScope.INSTANCE.getNode(Activator.PLUGIN_ID)
 				.remove(RepositoryUtil.PREFS_DIRECTORIES_REL);
 	}
 

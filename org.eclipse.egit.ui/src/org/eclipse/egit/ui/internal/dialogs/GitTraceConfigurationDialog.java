@@ -228,7 +228,7 @@ public class GitTraceConfigurationDialog extends TitleAreaDialog {
 
 	private static final PluginNode[] PLUGIN_LIST = new PluginNode[] {
 			new PluginNode(Activator.PLUGIN_ID),
-			new PluginNode(org.eclipse.egit.core.Activator.getPluginId()) };
+			new PluginNode(org.eclipse.egit.core.Activator.PLUGIN_ID) };
 
 	private static final int APPLY_ID = 77;
 
