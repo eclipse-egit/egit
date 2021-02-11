@@ -289,7 +289,7 @@ public class LocalNonWorkspaceTypedElement extends LocalResourceTypedElement {
 					throw new CoreException(
 							new Status(
 									IStatus.ERROR,
-									Activator.getPluginId(),
+									Activator.PLUGIN_ID,
 									UIText.LocalNonWorkspaceTypedElement_errorWritingContents,
 									e));
 				} finally {

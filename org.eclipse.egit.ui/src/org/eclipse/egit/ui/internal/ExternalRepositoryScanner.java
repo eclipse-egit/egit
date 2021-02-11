@@ -430,7 +430,7 @@ public class ExternalRepositoryScanner implements EventHandler {
 				} catch (CoreException e) {
 					Activator.handleError(UIText.Activator_refreshFailed, e,
 							false);
-					return new Status(IStatus.ERROR, Activator.getPluginId(),
+					return new Status(IStatus.ERROR, Activator.PLUGIN_ID,
 							e.getMessage());
 				}
 

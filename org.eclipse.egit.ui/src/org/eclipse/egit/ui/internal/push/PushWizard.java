@@ -200,9 +200,9 @@ public class PushWizard extends Wizard {
 			config.save();
 		} catch (final IOException e) {
 			ErrorDialog.openError(getShell(), UIText.PushWizard_cantSaveTitle,
-					UIText.PushWizard_cantSaveMessage, new Status(
-							IStatus.WARNING, Activator.getPluginId(), e
-									.getMessage(), e));
+					UIText.PushWizard_cantSaveMessage,
+					new Status(IStatus.WARNING, Activator.PLUGIN_ID,
+							e.getMessage(), e));
 			// Continue, it's not critical.
 		}
 	}
@@ -242,7 +242,7 @@ public class PushWizard extends Wizard {
 				if (updates.isEmpty()) {
 					ErrorDialog.openError(getShell(),
 							UIText.PushWizard_missingRefsTitle, null,
-							new Status(IStatus.ERROR, Activator.getPluginId(),
+							new Status(IStatus.ERROR, Activator.PLUGIN_ID,
 									UIText.PushWizard_missingRefsMessage));
 					return null;
 				}
@@ -257,9 +257,9 @@ public class PushWizard extends Wizard {
 		} catch (final IOException e) {
 			ErrorDialog.openError(getShell(),
 					UIText.PushWizard_cantPrepareUpdatesTitle,
-					UIText.PushWizard_cantPrepareUpdatesMessage, new Status(
-							IStatus.ERROR, Activator.getPluginId(), e
-									.getMessage(), e));
+					UIText.PushWizard_cantPrepareUpdatesMessage,
+					new Status(IStatus.ERROR, Activator.PLUGIN_ID,
+							e.getMessage(), e));
 			return null;
 		}
 	}

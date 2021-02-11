@@ -54,7 +54,7 @@ public class StashApplyHandler extends SelectionHandler {
 				try {
 					op.execute(monitor);
 				} catch (CoreException e) {
-					return new Status(IStatus.ERROR, Activator.getPluginId(),
+					return new Status(IStatus.ERROR, Activator.PLUGIN_ID,
 							MessageFormat.format(
 									UIText.StashApplyCommand_applyFailed,
 									Utils.getShortObjectId(commit),

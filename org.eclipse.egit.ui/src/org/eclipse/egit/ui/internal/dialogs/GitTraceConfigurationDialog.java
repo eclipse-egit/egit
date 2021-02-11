@@ -227,7 +227,7 @@ public class GitTraceConfigurationDialog extends TitleAreaDialog {
 	private static final String MAINSWITCH = "/debug"; //$NON-NLS-1$
 
 	private static final PluginNode[] PLUGIN_LIST = new PluginNode[] {
-			new PluginNode(Activator.getPluginId()),
+			new PluginNode(Activator.PLUGIN_ID),
 			new PluginNode(org.eclipse.egit.core.Activator.getPluginId()) };
 
 	private static final int APPLY_ID = 77;

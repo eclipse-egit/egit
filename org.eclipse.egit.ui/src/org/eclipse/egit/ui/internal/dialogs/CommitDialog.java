@@ -340,8 +340,8 @@ public class CommitDialog extends TitleAreaDialog {
 
 	private static final String SHOW_UNTRACKED_PREF = "CommitDialog.showUntracked"; //$NON-NLS-1$
 
-	private static final String DIALOG_SETTINGS_SECTION_NAME = Activator
-			.getPluginId() + ".COMMIT_DIALOG_SECTION"; //$NON-NLS-1$
+	private static final String DIALOG_SETTINGS_SECTION_NAME = Activator.PLUGIN_ID
+			+ ".COMMIT_DIALOG_SECTION"; //$NON-NLS-1$
 
 	/**
 	 * A constant used for the 'commit and push button' button

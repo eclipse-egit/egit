@@ -75,8 +75,8 @@ public class GitVariableResolver implements IDynamicVariableResolver {
 			return getGitWorkTree(argument);
 		if (variable.getName().equals(GIT_BRANCH))
 			return getGitBranch(argument);
-		throw new CoreException(new Status(IStatus.ERROR, Activator
-				.getPluginId(), UIText.GitVariableResolver_InternalError));
+		throw new CoreException(new Status(IStatus.ERROR, Activator.PLUGIN_ID,
+				UIText.GitVariableResolver_InternalError));
 	}
 
 	private String getGitRepoRelativePath(String argument) throws CoreException {
@@ -124,7 +124,8 @@ public class GitVariableResolver implements IDynamicVariableResolver {
 			try {
 				return mapping.getRepository().getBranch();
 			} catch (IOException e) {
-				throw new CoreException(new Status(IStatus.ERROR, Activator.getPluginId(), e.getMessage()));
+				throw new CoreException(new Status(IStatus.ERROR,
+						Activator.PLUGIN_ID, e.getMessage()));
 			}
 		else
 			return ""; //$NON-NLS-1$
@@ -146,18 +147,17 @@ public class GitVariableResolver implements IDynamicVariableResolver {
 		if (argument == null) {
 			res = getResource();
 			if (res == null)
-				throw new CoreException(new Status(IStatus.ERROR, Activator
-						.getPluginId(), UIText.GitVariableResolver_NoSelectedResource));
+				throw new CoreException(
+						new Status(IStatus.ERROR, Activator.PLUGIN_ID,
+								UIText.GitVariableResolver_NoSelectedResource));
 		} else {
 			res = ResourcesPlugin.getWorkspace().getRoot().findMember(argument);
 			if (res == null || !res.exists()) {
-				throw new CoreException(
-						new Status(
-								IStatus.ERROR,
-								Activator.getPluginId(),
-								NLS.bind(
-										UIText.GitVariableResolver_VariableReferencesNonExistentResource,
-										argument)));
+				throw new CoreException(new Status(IStatus.ERROR,
+						Activator.PLUGIN_ID,
+						NLS.bind(
+								UIText.GitVariableResolver_VariableReferencesNonExistentResource,
+								argument)));
 			}
 		}
 		return res;

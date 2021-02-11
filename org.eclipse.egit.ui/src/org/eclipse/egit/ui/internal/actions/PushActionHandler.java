@@ -42,9 +42,9 @@ public class PushActionHandler extends RepositoryActionHandler {
 		} catch (URISyntaxException x) {
 			ErrorDialog.openError(getShell(event),
 					UIText.PushAction_wrongURITitle,
-					UIText.PushAction_wrongURIDescription, new Status(
-							IStatus.ERROR, Activator.getPluginId(), x
-									.getMessage(), x));
+					UIText.PushAction_wrongURIDescription,
+					new Status(IStatus.ERROR, Activator.PLUGIN_ID,
+							x.getMessage(), x));
 			return null;
 		}
 		WizardDialog dlg = new WizardDialog(getShell(event), pushWizard);

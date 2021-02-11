@@ -72,13 +72,6 @@ public class Activator extends AbstractUIPlugin {
 	}
 
 	/**
-	 * @return the id of the egit ui plugin
-	 */
-	public static String getPluginId() {
-		return getDefault().getBundle().getSymbolicName();
-	}
-
-	/**
 	 * Creates an {@link IStatus} from the parameters. If the throwable is an
 	 * {@link InvocationTargetException}, the status is created from the first
 	 * exception that is either not an InvocationTargetException or that has a
@@ -110,7 +103,7 @@ public class Activator extends AbstractUIPlugin {
 		if (exc != null && (message == null || message.isEmpty())) {
 			message = exc.getLocalizedMessage();
 		}
-		return new Status(severity, getPluginId(), message, exc);
+		return new Status(severity, PLUGIN_ID, message, exc);
 	}
 
 	/**

@@ -305,8 +305,7 @@ public class CherryPickUI {
 
 	private static IStatus getErrorList(
 			Map<String, MergeFailureReason> failingPaths) {
-		MultiStatus result = new MultiStatus(Activator.getPluginId(),
-				IStatus.ERROR,
+		MultiStatus result = new MultiStatus(Activator.PLUGIN_ID, IStatus.ERROR,
 				UIText.CherryPickHandler_CherryPickFailedMessage, null);
 		for (Entry<String, MergeFailureReason> entry : failingPaths.entrySet()) {
 			String path = entry.getKey();

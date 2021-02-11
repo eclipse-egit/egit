@@ -85,13 +85,13 @@ public class PushJob extends RepositoryJob {
 		try {
 			operation.run(monitor);
 		} catch (final InvocationTargetException e) {
-			return new Status(IStatus.ERROR, Activator.getPluginId(),
+			return new Status(IStatus.ERROR, Activator.PLUGIN_ID,
 					UIText.PushJob_unexpectedError, e.getCause());
 		}
 
 		operationResult = operation.getOperationResult();
 		if (!operationResult.isSuccessfulConnectionForAnyURI()) {
-			return new Status(IStatus.ERROR, Activator.getPluginId(),
+			return new Status(IStatus.ERROR, Activator.PLUGIN_ID,
 					NLS.bind(UIText.PushJob_cantConnectToAny,
 							operationResult.getErrorStringForAllURis()));
 		}
@@ -121,7 +121,7 @@ public class PushJob extends RepositoryJob {
 				case OK:
 					continue;
 				default:
-					return new Status(IStatus.ERROR, Activator.getPluginId(),
+					return new Status(IStatus.ERROR, Activator.PLUGIN_ID,
 							IStatus.ERROR, update.getMessage(), null);
 				}
 			}

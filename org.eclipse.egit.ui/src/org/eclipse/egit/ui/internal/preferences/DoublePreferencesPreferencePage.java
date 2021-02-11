@@ -132,8 +132,8 @@ public abstract class DoublePreferencesPreferencePage
 						"PreferenceDialog.saveErrorMessage", //$NON-NLS-1$
 						new Object[] { getTitle(), e.getMessage() });
 				Policy.getStatusHandler().show(
-						new Status(IStatus.ERROR, Activator.getPluginId(),
-								message, e),
+						new Status(IStatus.ERROR, Activator.PLUGIN_ID, message,
+								e),
 						JFaceResources
 								.getString("PreferenceDialog.saveErrorTitle")); //$NON-NLS-1$
 			}
