@@ -1,6 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2010, 2021 SAP AG and others.
- *
+ * Copyright (c) 2010 SAP AG.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License 2.0
  * which accompanies this distribution, and is available at
@@ -30,15 +29,15 @@ public enum GitTraceLocation implements ITraceLocation {
 	REFRESH("/debug/core/refresh"); //$NON-NLS-1$
 
 	/**
-	 * Initializes the locations.
+	 * Initialize the locations
 	 *
 	 * @param options
-	 *            to initialize from
+	 * @param pluginIsDebugging
 	 */
-	public static void initializeFromOptions(DebugOptions options) {
+	public static void initializeFromOptions(DebugOptions options,
+			boolean pluginIsDebugging) {
+
 		// we evaluate the plug-in switch
-		boolean pluginIsDebugging = options
-				.getBooleanOption(Activator.PLUGIN_ID + "/debug", false); //$NON-NLS-1$
 		if (pluginIsDebugging) {
 			myTrace = options.newDebugTrace(Activator.PLUGIN_ID);
 			for (GitTraceLocation loc : values()) {
@@ -61,7 +60,7 @@ public enum GitTraceLocation implements ITraceLocation {
 
 	private boolean active = false;
 
-	private static volatile DebugTrace myTrace;
+	private static DebugTrace myTrace;
 
 	private GitTraceLocation(String path) {
 		this.fullPath = Activator.PLUGIN_ID + path;
