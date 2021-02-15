@@ -55,8 +55,7 @@ public abstract class RepositoryJobResultAction extends Action {
 	public final void run() {
 		Repository repo = null;
 		if (!repositoryGone) {
-			RepositoryCache repoCache = org.eclipse.egit.core.Activator
-					.getDefault().getRepositoryCache();
+			RepositoryCache repoCache = RepositoryCache.getInstance();
 			repo = repoCache.getRepository(repositoryDir);
 			if (repo == null
 					&& FileKey.isGitRepository(repositoryDir, FS.DETECTED)) {

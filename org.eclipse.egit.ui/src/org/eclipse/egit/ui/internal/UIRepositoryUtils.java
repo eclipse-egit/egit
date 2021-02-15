@@ -18,7 +18,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-import org.eclipse.egit.ui.Activator;
+import org.eclipse.egit.core.RepositoryUtil;
 import org.eclipse.egit.ui.internal.dialogs.CleanupUncomittedChangesDialog;
 import org.eclipse.jgit.api.Git;
 import org.eclipse.jgit.api.Status;
@@ -48,8 +48,7 @@ public final class UIRepositoryUtils {
 	 */
 	public static boolean handleUncommittedFiles(Repository repo, Shell shell)
 			throws GitAPIException {
-		String repoName = Activator.getDefault().getRepositoryUtil()
-				.getRepositoryName(repo);
+		String repoName = RepositoryUtil.getInstance().getRepositoryName(repo);
 		return handleUncommittedFiles(repo, shell,
 				MessageFormat.format(
 						UIText.AbstractRebaseCommandHandler_cleanupDialog_title,

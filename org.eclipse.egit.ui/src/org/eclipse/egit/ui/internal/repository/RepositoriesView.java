@@ -303,9 +303,8 @@ public class RepositoriesView extends CommonNavigator implements IShowInSource, 
 	 */
 	public RepositoriesView() {
 		refreshUiJob = new RefreshUiJob();
-		repositoryUtil = Activator.getDefault().getRepositoryUtil();
-		repositoryCache = org.eclipse.egit.core.Activator.getDefault()
-				.getRepositoryCache();
+		repositoryUtil = RepositoryUtil.getInstance();
+		repositoryCache = RepositoryCache.getInstance();
 	}
 
 	/**
@@ -929,8 +928,8 @@ public class RepositoriesView extends CommonNavigator implements IShowInSource, 
 				}
 			}
 			// Also listen to submodules and nested git repositories.
-			for (Repository repo : org.eclipse.egit.core.Activator.getDefault()
-					.getRepositoryCache().getAllRepositories()) {
+			for (Repository repo : RepositoryCache.getInstance()
+					.getAllRepositories()) {
 				if (!dirs.contains(repo.getDirectory())) {
 					listenToRepository(repo);
 					dirs.add(repo.getDirectory());

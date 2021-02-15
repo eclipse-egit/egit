@@ -23,7 +23,6 @@ import java.util.List;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Platform;
 import org.eclipse.core.runtime.Status;
-import org.eclipse.egit.core.RepositoryUtil;
 import org.eclipse.egit.ui.internal.KnownHosts;
 import org.eclipse.egit.ui.internal.credentials.EGitCredentialsProvider;
 import org.eclipse.jface.resource.JFaceResources;
@@ -332,13 +331,6 @@ public class Activator extends AbstractUIPlugin {
 	protected void saveDialogSettings() {
 		KnownHosts.store();
 		super.saveDialogSettings();
-	}
-
-	/**
-	 * @return the {@link RepositoryUtil} instance
-	 */
-	public RepositoryUtil getRepositoryUtil() {
-		return org.eclipse.egit.core.Activator.getDefault().getRepositoryUtil();
 	}
 
 	/**

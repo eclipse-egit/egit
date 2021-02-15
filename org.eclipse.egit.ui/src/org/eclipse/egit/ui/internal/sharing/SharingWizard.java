@@ -31,6 +31,7 @@ import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Path;
 import org.eclipse.core.runtime.SubMonitor;
+import org.eclipse.egit.core.RepositoryUtil;
 import org.eclipse.egit.core.op.ConnectProviderOperation;
 import org.eclipse.egit.ui.Activator;
 import org.eclipse.egit.ui.internal.UIText;
@@ -168,9 +169,7 @@ public class SharingWizard extends Wizard implements IConfigurationWizard,
 											// add the files to the repository
 											// view
 											for (File file : filesToAdd)
-												Activator
-														.getDefault()
-														.getRepositoryUtil()
+												RepositoryUtil.getInstance()
 														.addConfiguredRepository(
 																file);
 										}

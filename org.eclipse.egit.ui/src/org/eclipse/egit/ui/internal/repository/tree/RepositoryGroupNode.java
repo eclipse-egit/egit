@@ -49,8 +49,7 @@ public class RepositoryGroupNode extends RepositoryTreeNode<RepositoryGroup> {
 	 */
 	public Collection<? extends Repository> getRepositories() {
 		LinkedHashSet<Repository> result = new LinkedHashSet<>();
-		RepositoryCache repositoryCache = org.eclipse.egit.core.Activator
-				.getDefault().getRepositoryCache();
+		RepositoryCache repositoryCache = RepositoryCache.getInstance();
 		List<File> repoDirs = getObject().getRepositoryDirectories();
 		for (File repoDir : repoDirs) {
 			Repository repo = null;

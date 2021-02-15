@@ -33,9 +33,11 @@ import org.eclipse.core.resources.IResource;
 import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.QualifiedName;
 import org.eclipse.core.runtime.jobs.Job;
-import org.eclipse.egit.core.Activator;
 import org.eclipse.egit.core.JobFamilies;
+import org.eclipse.egit.core.RepositoryCache;
+import org.eclipse.egit.core.RepositoryUtil;
 import org.eclipse.egit.core.internal.Utils;
+import org.eclipse.egit.core.internal.indexdiff.IndexDiffCache;
 import org.eclipse.egit.core.internal.indexdiff.IndexDiffCacheEntry;
 import org.eclipse.egit.core.project.GitProjectData;
 import org.eclipse.egit.core.project.RepositoryMapping;
@@ -105,7 +107,7 @@ public class SubmoduleFolderTest extends LocalRepositoryTestCase {
 		parentRepositoryGitDir = createProjectAndCommitToRepository();
 		childRepositoryGitDir = createProjectAndCommitToRepository(CHILDREPO,
 				CHILDPROJECT);
-		Activator.getDefault().getRepositoryUtil()
+		RepositoryUtil.getInstance()
 				.addConfiguredRepository(parentRepositoryGitDir);
 		parentRepository = lookupRepository(parentRepositoryGitDir);
 		childRepository = lookupRepository(childRepositoryGitDir);
@@ -161,12 +163,10 @@ public class SubmoduleFolderTest extends LocalRepositoryTestCase {
 	@After
 	public void removeConfiguredRepositories() {
 		if (parentRepositoryGitDir != null) {
-			Activator.getDefault().getRepositoryUtil()
-					.removeDir(parentRepositoryGitDir);
+			RepositoryUtil.getInstance().removeDir(parentRepositoryGitDir);
 		}
 		if (childRepositoryGitDir != null) {
-			Activator.getDefault().getRepositoryUtil()
-					.removeDir(childRepositoryGitDir);
+			RepositoryUtil.getInstance().removeDir(childRepositoryGitDir);
 		}
 		childRepository = null;
 		parentRepository = null;
@@ -220,7 +220,7 @@ public class SubmoduleFolderTest extends LocalRepositoryTestCase {
 				util.getPluginLocalizedValue("AddToIndexAction_label"));
 		TestUtil.joinJobs(ADD_TO_INDEX);
 		TestUtil.joinJobs(JobFamilies.INDEX_DIFF_CACHE_UPDATE);
-		IndexDiffCacheEntry cache = Activator.getDefault().getIndexDiffCache()
+		IndexDiffCacheEntry cache = IndexDiffCache.getInstance()
 				.getIndexDiffCacheEntry(subRepository);
 		IResourceState state = ResourceStateFactory.getInstance()
 				.get(cache.getIndexDiff(), file);
@@ -395,15 +395,15 @@ public class SubmoduleFolderTest extends LocalRepositoryTestCase {
 	 */
 	@Test
 	public void testRepoRemoval() {
-		Activator.getDefault().getRepositoryUtil()
+		RepositoryUtil.getInstance()
 				.addConfiguredRepository(childRepositoryGitDir);
 		assertTrue("Should still have the subrepo in the cache",
-				containsRepo(Activator.getDefault().getRepositoryCache()
+				containsRepo(RepositoryCache.getInstance()
 						.getAllRepositories(), subRepository));
-		assertTrue("Should have changed the preference", Activator.getDefault()
-				.getRepositoryUtil().removeDir(childRepositoryGitDir));
+		assertTrue("Should have changed the preference",
+				RepositoryUtil.getInstance().removeDir(childRepositoryGitDir));
 		assertTrue("Should still have the subrepo in the cache",
-				containsRepo(Activator.getDefault().getRepositoryCache()
+				containsRepo(RepositoryCache.getInstance()
 						.getAllRepositories(), subRepository));
 	}
 

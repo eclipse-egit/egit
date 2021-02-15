@@ -16,7 +16,7 @@ import java.text.MessageFormat;
 import java.util.Collection;
 
 import org.eclipse.core.resources.IProject;
-import org.eclipse.egit.ui.Activator;
+import org.eclipse.egit.core.RepositoryUtil;
 import org.eclipse.egit.ui.UIUtils;
 import org.eclipse.egit.ui.internal.UIText;
 import org.eclipse.jface.dialogs.IDialogConstants;
@@ -155,8 +155,7 @@ public class DeleteRepositoryConfirmDialog extends TitleAreaDialog {
 		super.create();
 		setTitle(NLS.bind(
 				UIText.DeleteRepositoryConfirmDialog_DeleteRepositoryTitle,
-				Activator.getDefault().getRepositoryUtil()
-						.getRepositoryName(repository)));
+				RepositoryUtil.getInstance().getRepositoryName(repository)));
 	}
 
 	@Override

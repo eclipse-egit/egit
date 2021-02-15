@@ -14,7 +14,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.eclipse.egit.ui.Activator;
+import org.eclipse.egit.core.RepositoryUtil;
 import org.eclipse.egit.ui.UIUtils;
 import org.eclipse.egit.ui.internal.UIText;
 import org.eclipse.jface.dialogs.IMessageProvider;
@@ -73,8 +73,8 @@ public class FetchDestinationPage extends WizardPage {
 		Label repositoryLabel = new Label(main, SWT.NONE);
 		repositoryLabel.setText(UIText.FetchDestinationPage_RepositoryLabel);
 		Text repositoryText = new Text(main, SWT.READ_ONLY | SWT.BORDER);
-		repositoryText.setText(Activator.getDefault().getRepositoryUtil()
-				.getRepositoryName(repository));
+		repositoryText.setText(
+				RepositoryUtil.getInstance().getRepositoryName(repository));
 		GridDataFactory.fillDefaults().grab(true, false)
 				.applyTo(repositoryText);
 

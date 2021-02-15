@@ -29,6 +29,7 @@ import org.eclipse.core.runtime.ILogListener;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.egit.core.Activator;
+import org.eclipse.egit.core.RepositoryCache;
 import org.eclipse.egit.core.op.AddToIndexOperation;
 import org.eclipse.egit.core.op.BranchOperation;
 import org.eclipse.egit.core.op.CloneOperation;
@@ -96,8 +97,8 @@ public class PushOperationTest extends DualRepositoryTestCase {
 				"refs/heads/master", "origin", 0);
 		clop.run(null);
 
-		Repository repo2 = Activator.getDefault().getRepositoryCache().lookupRepository(new File(workdir2,
-				Constants.DOT_GIT));
+		Repository repo2 = RepositoryCache.getInstance()
+				.lookupRepository(new File(workdir2, Constants.DOT_GIT));
 		repository2 = new TestRepository(repo2);
 		// we push to branch "test" of repository2
 		RefUpdate createBranch = repository2.getRepository().updateRef(

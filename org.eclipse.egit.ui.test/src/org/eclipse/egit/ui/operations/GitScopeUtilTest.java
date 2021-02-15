@@ -33,8 +33,8 @@ import org.eclipse.core.runtime.Adapters;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.IProgressMonitor;
-import org.eclipse.egit.core.Activator;
 import org.eclipse.egit.core.JobFamilies;
+import org.eclipse.egit.core.internal.indexdiff.IndexDiffCache;
 import org.eclipse.egit.ui.common.LocalRepositoryTestCase;
 import org.eclipse.egit.ui.internal.operations.GitScopeOperation;
 import org.eclipse.egit.ui.internal.operations.GitScopeOperationFactory;
@@ -132,8 +132,7 @@ public class GitScopeUtilTest extends LocalRepositoryTestCase {
 		final IFile modelFile = createModelFiles();
 
 		Repository repository = lookupRepository(repositoryFile);
-		Activator.getDefault().getIndexDiffCache()
-				.getIndexDiffCacheEntry(repository);
+		IndexDiffCache.getInstance().getIndexDiffCacheEntry(repository);
 		TestUtil.joinJobs(JobFamilies.INDEX_DIFF_CACHE_UPDATE);
 
 		final IResource[] selectedResources = new IResource[] { modelFile };

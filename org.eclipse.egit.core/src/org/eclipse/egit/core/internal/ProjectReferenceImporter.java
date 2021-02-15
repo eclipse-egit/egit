@@ -35,7 +35,6 @@ import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.Path;
 import org.eclipse.core.runtime.SubMonitor;
-import org.eclipse.egit.core.Activator;
 import org.eclipse.egit.core.ProjectReference;
 import org.eclipse.egit.core.RepositoryUtil;
 import org.eclipse.egit.core.op.CloneOperation;
@@ -318,6 +317,6 @@ public class ProjectReferenceImporter {
 	}
 
 	private static RepositoryUtil getRepositoryUtil() {
-		return Activator.getDefault().getRepositoryUtil();
+		return RepositoryUtil.getInstance();
 	}
 }

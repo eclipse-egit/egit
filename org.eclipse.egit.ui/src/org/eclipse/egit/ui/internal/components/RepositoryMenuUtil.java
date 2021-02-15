@@ -97,10 +97,8 @@ public final class RepositoryMenuUtil {
 	public static Collection<IAction> getRepositoryActions(boolean includeBare,
 			@Nullable File currentRepoDir,
 			@NonNull Consumer<Repository> action) {
-		RepositoryUtil util = org.eclipse.egit.core.Activator.getDefault()
-				.getRepositoryUtil();
-		RepositoryCache cache = org.eclipse.egit.core.Activator.getDefault()
-				.getRepositoryCache();
+		RepositoryUtil util = RepositoryUtil.getInstance();
+		RepositoryCache cache = RepositoryCache.getInstance();
 		Set<String> repositories = util.getRepositories();
 		Map<String, Set<File>> repos = new HashMap<>();
 		for (String repo : repositories) {
@@ -154,8 +152,7 @@ public final class RepositoryMenuUtil {
 	 */
 	public static class RepositoryToolbarAction extends DropDownMenuAction {
 
-		private final RepositoryUtil util = org.eclipse.egit.core.Activator
-				.getDefault().getRepositoryUtil();
+		private final RepositoryUtil util = RepositoryUtil.getInstance();
 
 		private final IEclipsePreferences preferences = util.getPreferences();
 

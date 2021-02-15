@@ -15,6 +15,7 @@ import java.io.IOException;
 
 import org.eclipse.equinox.security.storage.EncodingUtils;
 import org.eclipse.equinox.security.storage.ISecurePreferences;
+import org.eclipse.equinox.security.storage.SecurePreferencesFactory;
 import org.eclipse.equinox.security.storage.StorageException;
 import org.eclipse.jgit.transport.URIish;
 import org.eclipse.jgit.util.StringUtils;
@@ -32,6 +33,18 @@ public class EGitSecureStore {
 
 	private static final String GIT_PATH_PREFIX = "/GIT/"; //$NON-NLS-1$
 
+	private static final EGitSecureStore INSTANCE = new EGitSecureStore(
+			SecurePreferencesFactory.getDefault());
+
+	/**
+	 * Retrieves the singleton {@link EGitSecureStore}.
+	 *
+	 * @return the {@link EGitSecureStore}
+	 */
+	public static EGitSecureStore getInstance() {
+		return INSTANCE;
+	}
+
 	private final ISecurePreferences preferences;
 
 	/**
@@ -41,7 +54,7 @@ public class EGitSecureStore {
 	 *            the Eclipse secure store should be passed here if not in test
 	 *            mode
 	 */
-	public EGitSecureStore(ISecurePreferences preferences) {
+	EGitSecureStore(ISecurePreferences preferences) {
 		this.preferences = preferences;
 	}
 

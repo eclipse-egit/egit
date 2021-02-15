@@ -40,7 +40,6 @@ import org.eclipse.core.runtime.Adapters;
 import org.eclipse.core.runtime.jobs.Job;
 import org.eclipse.egit.core.RepositoryUtil;
 import org.eclipse.egit.gitflow.op.InitOperation;
-import org.eclipse.egit.ui.Activator;
 import org.eclipse.egit.ui.JobFamilies;
 import org.eclipse.egit.ui.internal.UIText;
 import org.eclipse.egit.ui.internal.history.RefFilterHelper;
@@ -123,8 +122,7 @@ public class HistoryViewTest extends GitRepositoriesViewTestBase {
 
 		setupAdditionalCommits();
 
-		RepositoryUtil repositoryUtil = Activator.getDefault()
-				.getRepositoryUtil();
+		RepositoryUtil repositoryUtil = RepositoryUtil.getInstance();
 		repositoryUtil.addConfiguredRepository(repoFile);
 
 		Repository repo = myRepoViewUtil.lookupRepository(repoFile);

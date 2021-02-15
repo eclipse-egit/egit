@@ -21,7 +21,7 @@ import java.io.File;
 import java.util.concurrent.atomic.AtomicReference;
 
 import org.eclipse.core.runtime.Adapters;
-import org.eclipse.egit.core.Activator;
+import org.eclipse.egit.core.RepositoryCache;
 import org.eclipse.egit.ui.JobFamilies;
 import org.eclipse.egit.ui.common.LocalRepositoryTestCase;
 import org.eclipse.egit.ui.internal.UIText;
@@ -55,8 +55,7 @@ public class CommitEditorTest extends LocalRepositoryTestCase {
 	public void setup() throws Exception {
 		File repoFile = createProjectAndCommitToRepository();
 		assertNotNull(repoFile);
-		repository = Activator.getDefault().getRepositoryCache()
-				.lookupRepository(repoFile);
+		repository = RepositoryCache.getInstance().lookupRepository(repoFile);
 		assertNotNull(repository);
 
 		try (RevWalk walk = new RevWalk(repository)) {

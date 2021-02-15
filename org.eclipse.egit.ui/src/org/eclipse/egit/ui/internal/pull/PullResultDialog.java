@@ -13,7 +13,7 @@
  *******************************************************************************/
 package org.eclipse.egit.ui.internal.pull;
 
-import org.eclipse.egit.ui.Activator;
+import org.eclipse.egit.core.RepositoryUtil;
 import org.eclipse.egit.ui.UIUtils;
 import org.eclipse.egit.ui.internal.UIText;
 import org.eclipse.egit.ui.internal.fetch.FetchResultDialog;
@@ -161,8 +161,7 @@ public class PullResultDialog extends Dialog {
 		super.configureShell(newShell);
 		newShell.setText(NLS.bind(
 				UIText.PullResultDialog_DialogTitle,
-				Activator.getDefault().getRepositoryUtil()
-						.getRepositoryName(repo)));
+				RepositoryUtil.getInstance().getRepositoryName(repo)));
 	}
 
 	@Override

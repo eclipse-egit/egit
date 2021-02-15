@@ -49,6 +49,7 @@ import org.eclipse.egit.core.EclipseGitProgressTransformer;
 import org.eclipse.egit.core.IteratorService;
 import org.eclipse.egit.core.JobFamilies;
 import org.eclipse.egit.core.RepositoryCache;
+import org.eclipse.egit.core.RepositoryUtil;
 import org.eclipse.egit.core.UnitOfWork;
 import org.eclipse.egit.core.internal.CoreText;
 import org.eclipse.egit.core.internal.SafeRunnable;
@@ -147,7 +148,7 @@ public class IndexDiffCacheEntry {
 	public IndexDiffCacheEntry(Repository repository,
 			@Nullable IndexDiffChangedListener listener) {
 		this.repositoryGitDir = repository.getDirectory();
-		this.repositoryName = Activator.getDefault().getRepositoryUtil()
+		this.repositoryName = RepositoryUtil.getInstance()
 				.getRepositoryName(repository);
 		if (listener != null) {
 			addIndexDiffChangedListener(listener);
@@ -159,8 +160,7 @@ public class IndexDiffCacheEntry {
 				.addRefsChangedListener(refsChangedListener));
 		// Add a listener also to all submodules in order to be notified when
 		// a branch switch or so occurs in a submodule.
-		RepositoryCache cache = org.eclipse.egit.core.Activator.getDefault()
-				.getRepositoryCache();
+		RepositoryCache cache = RepositoryCache.getInstance();
 		try {
 			UnitOfWork.run(repository, () -> {
 				try (SubmoduleWalk walk = SubmoduleWalk.forIndex(repository)) {
@@ -169,8 +169,8 @@ public class IndexDiffCacheEntry {
 						Repository submodule = walk.getRepository();
 						if (submodule != null && !submodule.isBare()) {
 							submodules.put(submodule, walk.getPath());
-							IndexDiffCacheEntry submoduleCache = org.eclipse.egit.core.Activator
-									.getDefault().getIndexDiffCache()
+							IndexDiffCacheEntry submoduleCache = IndexDiffCache
+									.getInstance()
 									.getIndexDiffCacheEntry(submodule);
 							if (submoduleCache != null) {
 								submoduleCache.addIndexDiffChangedListener(
@@ -200,10 +200,7 @@ public class IndexDiffCacheEntry {
 	}
 
 	private @Nullable Repository getRepository() {
-		if (Activator.getDefault() == null) {
-			return null;
-		}
-		Repository repository = Activator.getDefault().getRepositoryCache()
+		Repository repository = RepositoryCache.getInstance()
 				.getRepository(repositoryGitDir);
 		if (repository == null) {
 			return null;
@@ -630,8 +627,7 @@ public class IndexDiffCacheEntry {
 			diffForChangedResources.setFilter(
 					PathFilterGroup.createFromStrings(treeFilterPaths));
 			diffForChangedResources.diff(jgitMonitor, 0, 0, jobName,
-					() -> Activator.getDefault().getRepositoryCache()
-							.getBuilder(true, true));
+					() -> RepositoryCache.getInstance().getBuilder(true, true));
 			IndexDiffData previous = indexDiffData;
 			if (previous == null) {
 				// Can happen when the index diff cache entry is already
@@ -684,8 +680,8 @@ public class IndexDiffCacheEntry {
 				return null; // workspace is closed
 			IndexDiff newDiff = new IndexDiff(repository, Constants.HEAD,
 					iterator);
-			newDiff.diff(jgitMonitor, 0, 0, jobName, () -> Activator
-					.getDefault().getRepositoryCache().getBuilder(true, true));
+			newDiff.diff(jgitMonitor, 0, 0, jobName,
+					() -> RepositoryCache.getInstance().getBuilder(true, true));
 			return new IndexDiffData(newDiff);
 		});
 	}

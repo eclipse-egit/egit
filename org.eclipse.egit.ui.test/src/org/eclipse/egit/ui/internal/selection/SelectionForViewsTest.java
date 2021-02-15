@@ -24,7 +24,6 @@ import org.eclipse.core.commands.State;
 import org.eclipse.core.runtime.Adapters;
 import org.eclipse.egit.core.RepositoryUtil;
 import org.eclipse.egit.core.op.CloneOperation;
-import org.eclipse.egit.ui.Activator;
 import org.eclipse.egit.ui.JobFamilies;
 import org.eclipse.egit.ui.internal.UIText;
 import org.eclipse.egit.ui.internal.rebase.RebaseInteractiveView;
@@ -95,7 +94,7 @@ public class SelectionForViewsTest extends GitRepositoriesViewTestBase {
 				"refs/heads/master", "origin", 0);
 		op.run(null);
 		clonedRepositoryDir = new File(workdir, Constants.DOT_GIT);
-		RepositoryUtil repoUtil = Activator.getDefault().getRepositoryUtil();
+		RepositoryUtil repoUtil = RepositoryUtil.getInstance();
 		repoUtil.addConfiguredRepository(localRepositoryDir);
 		repoUtil.addConfiguredRepository(clonedRepositoryDir);
 		repoUtil.addConfiguredRepository(remoteRepositoryDir); // it's bare
@@ -188,7 +187,7 @@ public class SelectionForViewsTest extends GitRepositoriesViewTestBase {
 	}
 
 	private String repositoryName(File repoDir) throws Exception {
-		return org.eclipse.egit.core.Activator.getDefault().getRepositoryUtil()
+		return RepositoryUtil.getInstance()
 				.getRepositoryName(lookupRepository(repoDir));
 	}
 

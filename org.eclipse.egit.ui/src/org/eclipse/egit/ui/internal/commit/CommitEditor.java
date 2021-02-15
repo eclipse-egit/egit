@@ -20,6 +20,7 @@ import org.eclipse.core.runtime.Adapters;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Status;
+import org.eclipse.egit.core.RepositoryCache;
 import org.eclipse.egit.core.internal.IRepositoryCommit;
 import org.eclipse.egit.ui.Activator;
 import org.eclipse.egit.ui.internal.CommonUtils;
@@ -260,8 +261,8 @@ public class CommitEditor extends SharedHeaderFormEditor implements
 		} catch (PartInitException e) {
 			Activator.error("Error adding page", e); //$NON-NLS-1$
 		}
-		refListenerHandle = org.eclipse.egit.core.Activator.getDefault()
-				.getRepositoryCache().getGlobalListenerList()
+		refListenerHandle = RepositoryCache.getInstance()
+				.getGlobalListenerList()
 				.addRefsChangedListener(this);
 		pageListener = event -> {
 			IEvaluationService service = PlatformUI.getWorkbench()

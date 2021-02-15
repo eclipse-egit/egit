@@ -22,7 +22,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.eclipse.core.runtime.Path;
-import org.eclipse.egit.ui.Activator;
+import org.eclipse.egit.core.RepositoryUtil;
 import org.eclipse.egit.ui.UIUtils;
 import org.eclipse.egit.ui.internal.repository.RepositoriesViewContentProvider;
 import org.eclipse.egit.ui.internal.repository.RepositoryTreeNodeLabelProvider;
@@ -446,7 +446,7 @@ public abstract class AbstractBranchSelectionDialog extends TitleAreaDialog {
 					return false;
 				node = new AdditionalRefNode(references, repo, ref);
 			} else {
-				String mappedRef = Activator.getDefault().getRepositoryUtil()
+				String mappedRef = RepositoryUtil.getInstance()
 						.mapCommitToRef(repo, refName, false);
 				if (mappedRef != null
 						&& mappedRef.startsWith(Constants.R_REMOTES)) {

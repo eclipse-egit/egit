@@ -26,6 +26,7 @@ import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.resources.mapping.ResourceMapping;
 import org.eclipse.core.runtime.IAdaptable;
 import org.eclipse.egit.core.JobFamilies;
+import org.eclipse.egit.core.internal.indexdiff.IndexDiffCache;
 import org.eclipse.egit.core.internal.indexdiff.IndexDiffCacheEntry;
 import org.eclipse.egit.core.internal.indexdiff.IndexDiffData;
 import org.eclipse.egit.ui.test.TestUtil;
@@ -109,8 +110,8 @@ public class DecoratableWorkingSetTest extends GitLightweightDecoratorTest {
 
 		Repository repo = lookupRepository(gitDir);
 		git = new Git(repo);
-		indexDiffCacheEntry = org.eclipse.egit.core.Activator.getDefault()
-				.getIndexDiffCache().getIndexDiffCacheEntry(repo);
+		indexDiffCacheEntry = IndexDiffCache.getInstance()
+				.getIndexDiffCacheEntry(repo);
 		waitForIndexDiff(false);
 	}
 

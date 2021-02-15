@@ -23,6 +23,7 @@ import java.util.List;
 import java.util.regex.PatternSyntaxException;
 
 import org.eclipse.core.resources.ResourcesPlugin;
+import org.eclipse.egit.core.RepositoryCache;
 import org.eclipse.egit.ui.Activator;
 import org.eclipse.egit.ui.UIUtils;
 import org.eclipse.egit.ui.internal.UIIcons;
@@ -480,8 +481,7 @@ public class CommitSearchPage extends DialogPage implements ISearchPage {
 			if (file.exists())
 				try {
 					RepositoryNode node = new RepositoryNode(null,
-							org.eclipse.egit.core.Activator.getDefault()
-									.getRepositoryCache()
+							RepositoryCache.getInstance()
 									.lookupRepository(file));
 					repositories.add(node);
 				} catch (IOException ignore) {
