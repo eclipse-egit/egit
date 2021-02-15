@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "6f5047b9_404b7a2d",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/RepositoryCache.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2021-02-15T20:25:03Z",
+      "side": 1,
+      "message": "Right, the RepositoryCache can be created up front. The cache !\u003d null statements are a leftover from previous code, where Activator.stop() actually set the cache reference to null, and some code could during shutdown run into this.\n\nChanged.",
+      "parentUuid": "e5a31d17_5855a6d4",
+      "revId": "c2e74a8940c4a5bd672ffa0fcf13c4e0558ae931",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "abad710e_18b3306c",
         "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/RepositoryInitializer.java",
         "patchSetId": 2
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "3ba07207_25a97c37",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/RepositoryInitializer.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2021-02-15T20:25:03Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "abad710e_18b3306c",
+      "revId": "c2e74a8940c4a5bd672ffa0fcf13c4e0558ae931",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ed466672_c33883f1",
         "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/RepositoryInitializer.java",
         "patchSetId": 2
@@ -47,6 +83,24 @@
       "writtenOn": "2021-02-15T18:05:07Z",
       "side": 1,
       "message": "What does this do? Does it make the instance field null, so that it\u0027s re-created again, or does it drop the contents of any contained maps?",
+      "revId": "c2e74a8940c4a5bd672ffa0fcf13c4e0558ae931",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0b63e071_788c8e5a",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/RepositoryInitializer.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2021-02-15T20:25:03Z",
+      "side": 1,
+      "message": "It just drops internal caches. Renamed to clear().",
+      "parentUuid": "ed466672_c33883f1",
       "revId": "c2e74a8940c4a5bd672ffa0fcf13c4e0558ae931",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": true
@@ -70,6 +124,24 @@
     },
     {
       "key": {
+        "uuid": "cc8b2f09_dd2053a5",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/RepositoryUtil.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2021-02-15T20:25:03Z",
+      "side": 1,
+      "message": "I don\u0027t like this either. But you\u0027re right, it can be simplified, too. If we\u0027re careful not to cause this class being loaded too early, we can just use a static instance field, too, and then initialize from ResourcesPlugin.getWorkspace(). (As it was before, actually.)\n\nI suppose these complications all arise from my difficulties to figure out what to create when. For quite a while I always ran into that \"instance location not set\".",
+      "parentUuid": "00b87b27_3ec6e361",
+      "revId": "c2e74a8940c4a5bd672ffa0fcf13c4e0558ae931",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "5f3f721f_6684c7fa",
         "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/RepositoryUtil.java",
         "patchSetId": 2
@@ -81,6 +153,24 @@
       "writtenOn": "2021-02-15T18:05:07Z",
       "side": 1,
       "message": "Not clear where this is being called from -- but maybe I\u0027ve just missed it.",
+      "revId": "c2e74a8940c4a5bd672ffa0fcf13c4e0558ae931",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7af6fdc7_632593a6",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/RepositoryUtil.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 124,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2021-02-15T20:25:03Z",
+      "side": 1,
+      "message": "This was called from the RepositoryInitializer OSGi component once the workspace exists. In PS 2 refactored; relying on the class not being accessed early, and when it is accessed, it\u0027s late enough so that a static field should be OK.",
+      "parentUuid": "5f3f721f_6684c7fa",
       "revId": "c2e74a8940c4a5bd672ffa0fcf13c4e0558ae931",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": true
@@ -104,6 +194,24 @@
     },
     {
       "key": {
+        "uuid": "d0cdbce8_f9a18be2",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/internal/EclipseSystemReader.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2021-02-15T20:25:03Z",
+      "side": 1,
+      "message": "Annotated with @NonNull. The parameter is always SystemReader.getInstance(), which is never null.",
+      "parentUuid": "c3afcf54_0f26e6a0",
+      "revId": "c2e74a8940c4a5bd672ffa0fcf13c4e0558ae931",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "077ec010_40e66dd8",
         "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/internal/indexdiff/IndexDiffCache.java",
         "patchSetId": 2
@@ -115,6 +223,24 @@
       "writtenOn": "2021-02-15T18:05:07Z",
       "side": 1,
       "message": "This seems like a lot of overhead to assign a static variable on demand. Why not just have it as `private static final IndexDiffCache instance \u003d new IndexDiffCache()` instead?\n\nIf the only static method you\u0027ve got is `.getInstance()` and the only time you\u0027ll call this cache is when you\u0027re loading the class, by which time you\u0027re not really saving anything by not having it in the instance field.\n\nIs there static behaviour which requires the RepositoryCache to be set up first? If so, you could put that in a `static {}` block for this class ahead of the instance field.",
+      "revId": "c2e74a8940c4a5bd672ffa0fcf13c4e0558ae931",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "94be2b49_37361e8f",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/internal/indexdiff/IndexDiffCache.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2021-02-15T20:25:03Z",
+      "side": 1,
+      "message": "You\u0027re right. For these two caches, that works.\n\nDone.",
+      "parentUuid": "077ec010_40e66dd8",
       "revId": "c2e74a8940c4a5bd672ffa0fcf13c4e0558ae931",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": true
@@ -138,6 +264,24 @@
     },
     {
       "key": {
+        "uuid": "e47fdd76_dbbd2feb",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/pull/MultiPullResultDialog.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2021-02-15T20:25:03Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "cbb61328_d5852c55",
+      "revId": "c2e74a8940c4a5bd672ffa0fcf13c4e0558ae931",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b89dfa44_be4e45ef",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/repository/RepositoriesView.java",
         "patchSetId": 2
@@ -152,6 +296,24 @@
       "revId": "c2e74a8940c4a5bd672ffa0fcf13c4e0558ae931",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f3313de5_00136d0e",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/repository/RepositoriesView.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 306,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2021-02-15T20:25:03Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b89dfa44_be4e45ef",
+      "revId": "c2e74a8940c4a5bd672ffa0fcf13c4e0558ae931",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
     }
   ]
 }
