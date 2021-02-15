@@ -20,6 +20,7 @@ import org.eclipse.core.runtime.Status;
 import org.eclipse.core.runtime.jobs.IJobChangeEvent;
 import org.eclipse.core.runtime.jobs.Job;
 import org.eclipse.core.runtime.jobs.JobChangeAdapter;
+import org.eclipse.egit.core.RepositoryUtil;
 import org.eclipse.egit.ui.Activator;
 import org.eclipse.egit.ui.JobFamilies;
 import org.eclipse.egit.ui.UIPreferences;
@@ -57,8 +58,8 @@ class GenerateHistoryJob extends Job {
 
 	GenerateHistoryJob(final GitHistoryPage ghp, @NonNull RevWalk walk,
 			ResourceManager resources) {
-		super(NLS.bind(UIText.HistoryPage_refreshJob, Activator.getDefault()
-				.getRepositoryUtil().getRepositoryName(
+		super(NLS.bind(UIText.HistoryPage_refreshJob,
+				RepositoryUtil.getInstance().getRepositoryName(
 						ghp.getInputInternal().getRepository())));
 		page = ghp;
 		this.walk = walk;

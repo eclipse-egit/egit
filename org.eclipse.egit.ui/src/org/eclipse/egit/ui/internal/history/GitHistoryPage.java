@@ -52,6 +52,7 @@ import org.eclipse.core.runtime.jobs.Job;
 import org.eclipse.core.runtime.preferences.IEclipsePreferences.IPreferenceChangeListener;
 import org.eclipse.core.runtime.preferences.InstanceScope;
 import org.eclipse.egit.core.AdapterUtils;
+import org.eclipse.egit.core.RepositoryCache;
 import org.eclipse.egit.core.RepositoryUtil;
 import org.eclipse.egit.core.UnitOfWork;
 import org.eclipse.egit.core.internal.util.ResourceUtil;
@@ -798,8 +799,7 @@ public class GitHistoryPage extends HistoryPage implements RefsChangedListener,
 				final String prefKey = UIPreferences.RESOURCEHISTORY_SHOW_FIRST_PARENT_ONLY_DEFAULT;
 				Repository repo = historyPage.getCurrentRepo();
 				if (repo != null) {
-					String repoSpecificKey = Activator.getDefault()
-							.getRepositoryUtil()
+					String repoSpecificKey = RepositoryUtil.getInstance()
 							.getRepositorySpecificPreferenceKey(repo, prefKey);
 					boolean newBoolean = isChecked();
 					if (newBoolean == historyPage.store.getBoolean(prefKey)) {
@@ -854,8 +854,7 @@ public class GitHistoryPage extends HistoryPage implements RefsChangedListener,
 					return;
 				}
 
-				String repoSpecificKey = Activator.getDefault()
-						.getRepositoryUtil()
+				String repoSpecificKey = RepositoryUtil.getInstance()
 						.getRepositorySpecificPreferenceKey(repo, prefKey);
 
 				if (prefKey.equals(event.getProperty())) {
@@ -1275,8 +1274,8 @@ public class GitHistoryPage extends HistoryPage implements RefsChangedListener,
 		if (!RepositoryUtil.PREFS_DIRECTORIES_REL.equals(event.getKey())) {
 			return;
 		}
-		if (getCurrentRepo() == null || !Activator.getDefault()
-				.getRepositoryUtil().contains(getCurrentRepo())) {
+		if (getCurrentRepo() == null
+				|| !RepositoryUtil.getInstance().contains(getCurrentRepo())) {
 			Control control = historyControl;
 			if (!control.isDisposed()) {
 				control.getDisplay().asyncExec(() -> {
@@ -1478,9 +1477,8 @@ public class GitHistoryPage extends HistoryPage implements RefsChangedListener,
 		trackFocus(fileViewer.getControl());
 		layout();
 
-		myRefsChangedHandle = org.eclipse.egit.core.Activator.getDefault()
-				.getRepositoryCache().getGlobalListenerList()
-				.addRefsChangedListener(this);
+		myRefsChangedHandle = RepositoryCache.getInstance()
+				.getGlobalListenerList().addRefsChangedListener(this);
 
 		InstanceScope.INSTANCE
 				.getNode(org.eclipse.egit.core.Activator.PLUGIN_ID)
@@ -2165,8 +2163,8 @@ public class GitHistoryPage extends HistoryPage implements RefsChangedListener,
 		// menus they can expect with the current input
 		// we show the filter hint only upon getDescription()
 		// as it wrongly pollutes the navigation history
-		final String repositoryName = Activator.getDefault()
-				.getRepositoryUtil().getRepositoryName(in.getRepository());
+		final String repositoryName = RepositoryUtil.getInstance()
+				.getRepositoryName(in.getRepository());
 		if (in.getItems() == null && in.getFileList() == null)
 			// plain repository, no files specified
 			return NLS.bind(UIText.GitHistoryPage_RepositoryNamePattern,
@@ -2565,8 +2563,7 @@ public class GitHistoryPage extends HistoryPage implements RefsChangedListener,
 		String newRefFilters = ""; //$NON-NLS-1$
 		Repository repo = getCurrentRepo();
 		if (repo != null) {
-			newRefFilters = store.getString(Activator.getDefault()
-					.getRepositoryUtil()
+			newRefFilters = store.getString(RepositoryUtil.getInstance()
 					.getRepositorySpecificPreferenceKey(repo,
 							UIPreferences.RESOURCEHISTORY_SELECTED_REF_FILTERS));
 		}
@@ -2607,16 +2604,15 @@ public class GitHistoryPage extends HistoryPage implements RefsChangedListener,
 		try {
 			headId = db.resolve(Constants.HEAD);
 		} catch (IOException e) {
-			throw new IllegalStateException(NLS.bind(
-					UIText.GitHistoryPage_errorParsingHead, Activator
-							.getDefault().getRepositoryUtil()
-							.getRepositoryName(db)), e);
+			throw new IllegalStateException(
+					NLS.bind(UIText.GitHistoryPage_errorParsingHead,
+							RepositoryUtil.getInstance().getRepositoryName(db)),
+					e);
 		}
 		if (headId == null && !acceptNull)
 			throw new IllegalStateException(NLS.bind(
-					UIText.GitHistoryPage_errorParsingHead, Activator
-							.getDefault().getRepositoryUtil()
-							.getRepositoryName(db)));
+					UIText.GitHistoryPage_errorParsingHead,
+					RepositoryUtil.getInstance().getRepositoryName(db)));
 		return headId;
 	}
 
@@ -2722,7 +2718,7 @@ public class GitHistoryPage extends HistoryPage implements RefsChangedListener,
 	 */
 	private void unsetRepoSpecificPreference(String repositoryPath,
 			String key) {
-		String prefString = Activator.getDefault().getRepositoryUtil()
+		String prefString = RepositoryUtil.getInstance()
 				.getRepositorySpecificPreferenceKey(repositoryPath, key);
 		store.setToDefault(prefString);
 	}
@@ -2743,7 +2739,7 @@ public class GitHistoryPage extends HistoryPage implements RefsChangedListener,
 		Repository repo = getCurrentRepo();
 
 		if (repo != null) {
-			String repoSpecificKey = Activator.getDefault().getRepositoryUtil()
+			String repoSpecificKey = RepositoryUtil.getInstance()
 					.getRepositorySpecificPreferenceKey(repo, prefKey);
 			if (store.contains(repoSpecificKey)) {
 				firstParent = store.getBoolean(repoSpecificKey);
@@ -2771,10 +2767,10 @@ public class GitHistoryPage extends HistoryPage implements RefsChangedListener,
 			walk.addAdditionalRefs(db.getRefDatabase()
 					.getRefsByPrefix(Constants.R_NOTES));
 		} catch (IOException e) {
-			throw new IllegalStateException(NLS.bind(
-					UIText.GitHistoryPage_errorReadingAdditionalRefs, Activator
-							.getDefault().getRepositoryUtil()
-							.getRepositoryName(db)), e);
+			throw new IllegalStateException(
+					NLS.bind(UIText.GitHistoryPage_errorReadingAdditionalRefs,
+							RepositoryUtil.getInstance().getRepositoryName(db)),
+					e);
 		}
 		walk.sort(RevSort.COMMIT_TIME_DESC, true);
 		walk.sort(RevSort.BOUNDARY, true);

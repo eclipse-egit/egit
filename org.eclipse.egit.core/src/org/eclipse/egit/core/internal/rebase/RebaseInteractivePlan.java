@@ -29,8 +29,10 @@ import java.util.concurrent.CopyOnWriteArrayList;
 import org.eclipse.core.runtime.Assert;
 import org.eclipse.core.runtime.IAdaptable;
 import org.eclipse.egit.core.Activator;
+import org.eclipse.egit.core.RepositoryCache;
 import org.eclipse.egit.core.internal.CoreText;
 import org.eclipse.egit.core.internal.IRepositoryCommit;
+import org.eclipse.egit.core.internal.indexdiff.IndexDiffCache;
 import org.eclipse.egit.core.internal.indexdiff.IndexDiffCacheEntry;
 import org.eclipse.egit.core.internal.indexdiff.IndexDiffChangedListener;
 import org.eclipse.egit.core.internal.indexdiff.IndexDiffData;
@@ -155,8 +157,8 @@ public class RebaseInteractivePlan implements IndexDiffChangedListener,
 	}
 
 	private void registerIndexDiffChangeListener(Repository repository) {
-		IndexDiffCacheEntry entry = org.eclipse.egit.core.Activator.getDefault()
-				.getIndexDiffCache().getIndexDiffCacheEntry(repository);
+		IndexDiffCacheEntry entry = IndexDiffCache.getInstance()
+				.getIndexDiffCacheEntry(repository);
 		if (entry != null) {
 			entry.addIndexDiffChangedListener(this);
 		}
@@ -165,8 +167,7 @@ public class RebaseInteractivePlan implements IndexDiffChangedListener,
 	private void unregisterIndexDiffChangeListener() {
 		Repository repository = getRepository();
 		if (repository != null) {
-			IndexDiffCacheEntry entry = org.eclipse.egit.core.Activator
-					.getDefault().getIndexDiffCache()
+			IndexDiffCacheEntry entry = IndexDiffCache.getInstance()
 					.getIndexDiffCacheEntry(repository);
 			if (entry != null) {
 				entry.removeIndexDiffChangedListener(this);
@@ -175,9 +176,8 @@ public class RebaseInteractivePlan implements IndexDiffChangedListener,
 	}
 
 	private void registerRefChangedListener() {
-		refsChangedListener = org.eclipse.egit.core.Activator.getDefault()
-				.getRepositoryCache().getGlobalListenerList()
-				.addRefsChangedListener(this);
+		refsChangedListener = RepositoryCache.getInstance()
+				.getGlobalListenerList().addRefsChangedListener(this);
 	}
 
 	/**

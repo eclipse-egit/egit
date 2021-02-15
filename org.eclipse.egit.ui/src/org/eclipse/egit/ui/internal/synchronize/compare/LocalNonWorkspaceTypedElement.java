@@ -40,7 +40,10 @@ import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Path;
 import org.eclipse.core.runtime.Platform;
 import org.eclipse.core.runtime.Status;
+import org.eclipse.egit.core.RepositoryCache;
+import org.eclipse.egit.core.RepositoryUtil;
 import org.eclipse.egit.core.UnitOfWork;
+import org.eclipse.egit.core.internal.indexdiff.IndexDiffCache;
 import org.eclipse.egit.core.internal.indexdiff.IndexDiffCacheEntry;
 import org.eclipse.egit.core.internal.util.ResourceUtil;
 import org.eclipse.egit.core.project.RepositoryMapping;
@@ -181,15 +184,12 @@ public class LocalNonWorkspaceTypedElement extends LocalResourceTypedElement {
 							walk.setFilter(PathFilterGroup
 									.createFromStrings(subPath.toString()));
 							walk.setRootTree(iterator);
-							walk.setBuilderFactory(
-									() -> org.eclipse.egit.core.Activator
-											.getDefault().getRepositoryCache()
-											.getBuilder(true, true));
+							walk.setBuilderFactory(() -> RepositoryCache
+									.getInstance().getBuilder(true, true));
 							if (walk.next()) {
 								try (Repository sub = walk.getRepository()) {
-									RevCommit headCommit = Activator
-											.getDefault().getRepositoryUtil()
-											.parseHeadCommit(sub);
+									RevCommit headCommit = RepositoryUtil
+											.getInstance().parseHeadCommit(sub);
 									if (headCommit == null) {
 										return null;
 									}
@@ -348,8 +348,8 @@ public class LocalNonWorkspaceTypedElement extends LocalResourceTypedElement {
 	private boolean refreshRepositoryState(@NonNull Repository repo) {
 		IPath repositoryRoot = new Path(repo.getWorkTree().getPath());
 		IPath relativePath = path.makeRelativeTo(repositoryRoot);
-		IndexDiffCacheEntry indexDiffCacheForRepository = org.eclipse.egit.core.Activator
-				.getDefault().getIndexDiffCache().getIndexDiffCacheEntry(repo);
+		IndexDiffCacheEntry indexDiffCacheForRepository = IndexDiffCache
+				.getInstance().getIndexDiffCacheEntry(repo);
 		if (indexDiffCacheForRepository != null) {
 			indexDiffCacheForRepository.refreshFiles(
 					Collections.singleton(relativePath.toString()));

@@ -18,7 +18,7 @@ import static org.junit.Assert.assertTrue;
 import java.io.File;
 import java.util.List;
 
-import org.eclipse.egit.ui.Activator;
+import org.eclipse.egit.core.RepositoryUtil;
 import org.eclipse.egit.ui.internal.UIText;
 import org.eclipse.egit.ui.test.ContextMenuHelper;
 import org.eclipse.egit.ui.test.TestUtil;
@@ -52,8 +52,7 @@ public class GitRepositoriesViewRemoteHandlingTest extends
 	public void before() throws Exception {
 		repositoryFile = createProjectAndCommitToRepository();
 		remoteRepositoryFile = createRemoteRepository(repositoryFile);
-		Activator.getDefault().getRepositoryUtil().addConfiguredRepository(
-				repositoryFile);
+		RepositoryUtil.getInstance().addConfiguredRepository(repositoryFile);
 		TestUtil.processUIEvents();
 	}
 

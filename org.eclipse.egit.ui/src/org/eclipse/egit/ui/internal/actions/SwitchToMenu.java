@@ -242,8 +242,8 @@ public class SwitchToMenu extends ContributionItem implements
 				Activator.handleStatus(status, false);
 			}
 			if (!status.isOK()) {
-				return Activator.getDefault().getRepositoryUtil()
-						.getRepositoryName(repo) + ": " + status.getMessage(); //$NON-NLS-1$
+				return RepositoryUtil.getInstance().getRepositoryName(repo)
+						+ ": " + status.getMessage(); //$NON-NLS-1$
 			}
 		}
 		return null;

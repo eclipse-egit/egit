@@ -27,6 +27,7 @@ import org.eclipse.core.runtime.jobs.ISchedulingRule;
 import org.eclipse.egit.core.Activator;
 import org.eclipse.egit.core.EclipseGitProgressTransformer;
 import org.eclipse.egit.core.internal.CoreText;
+import org.eclipse.egit.core.internal.MergeStrategies;
 import org.eclipse.egit.core.internal.job.RuleUtil;
 import org.eclipse.egit.core.internal.util.ProjectUtil;
 import org.eclipse.jgit.api.Git;
@@ -140,7 +141,7 @@ public class RebaseOperation implements IEGitOperation {
 					RebaseCommand cmd = git.rebase().setProgressMonitor(
 							new EclipseGitProgressTransformer(
 									progress.newChild(1)));
-					MergeStrategy strategy = Activator.getDefault()
+					MergeStrategy strategy = MergeStrategies
 							.getPreferredMergeStrategy();
 					if (strategy != null) {
 						cmd.setStrategy(strategy);

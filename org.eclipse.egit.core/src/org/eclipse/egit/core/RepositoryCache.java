@@ -3,7 +3,7 @@
  * Copyright (C) 2008, Robin Rosenberg <robin.rosenberg@dewire.com>
  * Copyright (C) 2008, Shawn O. Pearce <spearce@spearce.org>
  * Copyright (C) 2008, Google Inc.
- * Copyright (C) 2016, 2019 Thomas Wolf <thomas.wolf@paranor.ch>
+ * Copyright (C) 2016, 2021 Thomas Wolf <thomas.wolf@paranor.ch>
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License 2.0
@@ -43,6 +43,17 @@ import org.eclipse.jgit.lib.Repository;
  */
 public class RepositoryCache {
 
+	private static final RepositoryCache INSTANCE = new RepositoryCache();
+
+	/**
+	 * Retrieves the singleton {@link RepositoryCache}.
+	 *
+	 * @return the {@link RepositoryCache}
+	 */
+	public static RepositoryCache getInstance() {
+		return INSTANCE;
+	}
+
 	// EGit uses a weak-reference cache. In Eclipse, EGit can never be sure that
 	// a repo instance isn't still used somewhere, and thus it never explicitly
 	// closes repository instances. Instead, this cache wraps any repository
@@ -55,7 +66,7 @@ public class RepositoryCache {
 
 	private final ListenerList globalListeners = new ListenerList();
 
-	RepositoryCache() {
+	private RepositoryCache() {
 		new Closer(queue).start();
 		// Set up listeners on the JGit global listener list to be able to
 		// re-fire events with the correct repository.
@@ -158,7 +169,7 @@ public class RepositoryCache {
 		// a possibly still existing IndexDiffCache outside the synchronized
 		// block, otherwise we may run into a deadlock due to lock inversion
 		// between our repositoryCache and IndexDiffCache.entries.
-		IndexDiffCache cache = Activator.getDefault().getIndexDiffCache();
+		IndexDiffCache cache = IndexDiffCache.getInstance();
 		if (cache != null) {
 			cache.remove(normalizedGitDir);
 		}
@@ -245,8 +256,7 @@ public class RepositoryCache {
 				}
 			} finally {
 				if (removeCache) {
-					IndexDiffCache indexCache = Activator.getDefault()
-							.getIndexDiffCache();
+					IndexDiffCache indexCache = IndexDiffCache.getInstance();
 					if (indexCache != null) {
 						indexCache.remove(gitDir);
 					}
@@ -317,7 +327,7 @@ public class RepositoryCache {
 			}
 			Closer.closeReference(repositoryCache.remove(normalizedGitDir));
 		}
-		IndexDiffCache cache = Activator.getDefault().getIndexDiffCache();
+		IndexDiffCache cache = IndexDiffCache.getInstance();
 		if (cache != null) {
 			cache.remove(normalizedGitDir);
 		}
@@ -433,7 +443,7 @@ public class RepositoryCache {
 
 	private void removeIndexDiffCaches(List<File> gitDirs) {
 		if (!gitDirs.isEmpty()) {
-			IndexDiffCache cache = Activator.getDefault().getIndexDiffCache();
+			IndexDiffCache cache = IndexDiffCache.getInstance();
 			if (cache != null) {
 				for (File f : gitDirs) {
 					cache.remove(f);

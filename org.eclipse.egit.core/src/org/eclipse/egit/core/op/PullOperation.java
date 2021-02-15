@@ -39,6 +39,7 @@ import org.eclipse.egit.core.EclipseGitProgressTransformer;
 import org.eclipse.egit.core.GitCorePreferences;
 import org.eclipse.egit.core.JobFamilies;
 import org.eclipse.egit.core.internal.CoreText;
+import org.eclipse.egit.core.internal.MergeStrategies;
 import org.eclipse.egit.core.internal.job.RuleUtil;
 import org.eclipse.egit.core.internal.util.ProjectUtil;
 import org.eclipse.jgit.annotations.NonNull;
@@ -247,7 +248,7 @@ public class PullOperation implements IEGitOperation {
 					}
 					pull.setRebase(config.getUpstreamConfig());
 				}
-				MergeStrategy strategy = Activator.getDefault()
+				MergeStrategy strategy = MergeStrategies
 						.getPreferredMergeStrategy();
 				if (strategy != null) {
 					pull.setStrategy(strategy);

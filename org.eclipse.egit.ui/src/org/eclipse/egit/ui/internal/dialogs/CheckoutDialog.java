@@ -14,7 +14,7 @@ package org.eclipse.egit.ui.internal.dialogs;
 
 import java.text.MessageFormat;
 
-import org.eclipse.egit.ui.Activator;
+import org.eclipse.egit.core.RepositoryUtil;
 import org.eclipse.egit.ui.internal.UIText;
 import org.eclipse.egit.ui.internal.branch.BranchOperationUI;
 import org.eclipse.jface.window.Window;
@@ -41,8 +41,8 @@ public class CheckoutDialog extends BranchSelectionAndEditDialog {
 
 	@Override
 	protected String getTitle() {
-		return MessageFormat.format(UIText.CheckoutDialog_Title, Activator
-				.getDefault().getRepositoryUtil().getRepositoryName(repo));
+		return MessageFormat.format(UIText.CheckoutDialog_Title,
+				RepositoryUtil.getInstance().getRepositoryName(repo));
 	}
 
 	@Override

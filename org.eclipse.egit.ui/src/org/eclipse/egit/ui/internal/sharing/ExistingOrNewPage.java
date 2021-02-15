@@ -132,7 +132,7 @@ class ExistingOrNewPage extends WizardPage {
 	@SuppressWarnings("unused")
 	@Override
 	public void createControl(Composite parent) {
-		final RepositoryUtil util = Activator.getDefault().getRepositoryUtil();
+		final RepositoryUtil util = RepositoryUtil.getInstance();
 		Composite main = new Composite(parent, SWT.NONE);
 		// use zero spacing to save some real estate here
 		GridLayoutFactory.fillDefaults().spacing(0, 0).applyTo(main);

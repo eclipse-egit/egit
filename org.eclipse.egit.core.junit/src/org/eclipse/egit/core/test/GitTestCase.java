@@ -23,6 +23,7 @@ import org.eclipse.core.runtime.preferences.IEclipsePreferences;
 import org.eclipse.core.runtime.preferences.InstanceScope;
 import org.eclipse.egit.core.Activator;
 import org.eclipse.egit.core.GitCorePreferences;
+import org.eclipse.egit.core.RepositoryCache;
 import org.eclipse.jgit.junit.MockSystemReader;
 import org.eclipse.jgit.lib.Config;
 import org.eclipse.jgit.lib.ConfigConstants;
@@ -61,7 +62,7 @@ public abstract class GitTestCase {
 	public void setUp() throws Exception {
 		// ensure there are no shared Repository instances left
 		// when starting a new test
-		Activator.getDefault().getRepositoryCache().clear();
+		RepositoryCache.getInstance().clear();
 		File configFile = File.createTempFile("gitconfigtest", "config");
 		MockSystemReader mockSystemReader = new MockSystemReader() {
 			@Override
@@ -93,7 +94,7 @@ public abstract class GitTestCase {
 	@After
 	public void tearDown() throws Exception {
 		project.dispose();
-		Activator.getDefault().getRepositoryCache().clear();
+		RepositoryCache.getInstance().clear();
 		if (gitDir.exists()) {
 			try {
 				FileUtils.delete(gitDir, FileUtils.RECURSIVE | FileUtils.RETRY);

@@ -46,6 +46,7 @@ import org.eclipse.core.runtime.OperationCanceledException;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.core.runtime.SubMonitor;
 import org.eclipse.core.runtime.jobs.Job;
+import org.eclipse.egit.core.RepositoryUtil;
 import org.eclipse.egit.core.internal.Utils;
 import org.eclipse.egit.core.internal.gerrit.GerritUtil;
 import org.eclipse.egit.core.op.CreateLocalBranchOperation;
@@ -206,10 +207,8 @@ public class FetchGerritChangePage extends WizardPage {
 		Assert.isNotNull(repository);
 		this.repository = repository;
 		this.refName = refName;
-		setTitle(NLS
-				.bind(UIText.FetchGerritChangePage_PageTitle,
-						Activator.getDefault().getRepositoryUtil()
-								.getRepositoryName(repository)));
+		setTitle(NLS.bind(UIText.FetchGerritChangePage_PageTitle,
+				RepositoryUtil.getInstance().getRepositoryName(repository)));
 		setMessage(UIText.FetchGerritChangePage_PageMessage);
 		settings = getDialogSettings();
 		lastUriKey = repository + GerritDialogSettings.LAST_URI_SUFFIX;

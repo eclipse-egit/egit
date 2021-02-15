@@ -16,8 +16,8 @@ package org.eclipse.egit.core.internal;
 import java.io.IOException;
 
 import org.eclipse.core.runtime.NullProgressMonitor;
-import org.eclipse.egit.core.Activator;
 import org.eclipse.egit.core.GitProjectSetCapability;
+import org.eclipse.egit.core.RepositoryCache;
 import org.eclipse.egit.core.synchronize.GitResourceVariantTreeSubscriber;
 import org.eclipse.egit.core.synchronize.dto.GitSynchronizeData;
 import org.eclipse.egit.core.synchronize.dto.GitSynchronizeDataSet;
@@ -40,8 +40,8 @@ public class GitRepositoryProviderType extends RepositoryProviderType {
 	public GitRepositoryProviderType() {
 		GitSynchronizeDataSet set = new GitSynchronizeDataSet();
 		try {
-			Repository[] repositories = Activator.getDefault()
-					.getRepositoryCache().getAllRepositories();
+			Repository[] repositories = RepositoryCache.getInstance()
+					.getAllRepositories();
 			for (Repository repository : repositories) {
 				if (!repository.isBare()) {
 					GitSynchronizeData data = new GitSynchronizeData(

@@ -17,7 +17,6 @@ import java.io.File;
 import java.io.IOException;
 import java.net.URISyntaxException;
 
-import org.eclipse.egit.core.Activator;
 import org.eclipse.egit.core.RepositoryUtil;
 import org.eclipse.egit.core.test.GitTestCase;
 import org.eclipse.egit.core.test.TestRepository;
@@ -43,14 +42,14 @@ public class ProjectReferenceImporterTest extends GitTestCase {
 		super.setUp();
 		testRepository = new TestRepository(gitDir);
 		repository = testRepository.getRepository();
-		RepositoryUtil util = Activator.getDefault().getRepositoryUtil();
+		RepositoryUtil util = RepositoryUtil.getInstance();
 		util.addConfiguredRepository(repository.getDirectory());
 	}
 
 	@Override
 	@After
 	public void tearDown() throws Exception {
-		RepositoryUtil util = Activator.getDefault().getRepositoryUtil();
+		RepositoryUtil util = RepositoryUtil.getInstance();
 		util.removeDir(repository.getDirectory());
 		testRepository.dispose();
 		repository = null;

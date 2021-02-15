@@ -114,8 +114,7 @@ public class GitLabels {
 	public static @NonNull StyledString getStyledLabel(
 			@NonNull Repository repository)
 			throws IOException {
-		RepositoryUtil repositoryUtil = Activator.getDefault()
-				.getRepositoryUtil();
+		RepositoryUtil repositoryUtil = RepositoryUtil.getInstance();
 
 		StyledString string = getChangedPrefix(repository);
 
@@ -259,8 +258,7 @@ public class GitLabels {
 	}
 
 	private static String getRepositorySimpleLabel(Repository repository) {
-		return Activator.getDefault().getRepositoryUtil()
-				.getRepositoryName(repository);
+		return RepositoryUtil.getInstance().getRepositoryName(repository);
 	}
 
 	private static String getRepositoryAbsolutePath(Repository repository) {

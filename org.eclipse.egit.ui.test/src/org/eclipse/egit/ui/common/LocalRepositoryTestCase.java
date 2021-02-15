@@ -290,7 +290,7 @@ public abstract class LocalRepositoryTestCase extends EGitTestCase {
 
 	@SuppressWarnings("deprecation")
 	protected void clearAllConfiguredRepositories() throws Exception {
-		IEclipsePreferences prefs = Activator.getDefault().getRepositoryUtil()
+		IEclipsePreferences prefs = RepositoryUtil.getInstance()
 				.getPreferences();
 		synchronized (prefs) {
 			prefs.put(RepositoryUtil.PREFS_DIRECTORIES, "");
@@ -300,7 +300,7 @@ public abstract class LocalRepositoryTestCase extends EGitTestCase {
 	}
 
 	protected static void shutDownRepositories() throws Exception {
-		RepositoryCache cache = Activator.getDefault().getRepositoryCache();
+		RepositoryCache cache = RepositoryCache.getInstance();
 		for (Repository repository : cache.getAllRepositories()) {
 			repository.close();
 		}
@@ -407,7 +407,7 @@ public abstract class LocalRepositoryTestCase extends EGitTestCase {
 		addAndCommit(file, newContent);
 
 		// Make sure cache entry is already listening for changes
-		IndexDiffCache cache = Activator.getDefault().getIndexDiffCache();
+		IndexDiffCache cache = IndexDiffCache.getInstance();
 		cache.getIndexDiffCacheEntry(lookupRepository(gitDir));
 
 		return gitDir;
@@ -659,8 +659,7 @@ public abstract class LocalRepositoryTestCase extends EGitTestCase {
 
 	protected static Repository lookupRepository(File directory)
 			throws Exception {
-		return org.eclipse.egit.core.Activator.getDefault()
-				.getRepositoryCache().lookupRepository(directory);
+		return RepositoryCache.getInstance().lookupRepository(directory);
 	}
 
 	/**

@@ -110,12 +110,10 @@ public class PatchOperationUI {
 	}
 
 	private boolean isWorkingTreeClean() {
-		IndexDiffCache diffCache = org.eclipse.egit.core.Activator.getDefault()
-				.getIndexDiffCache();
+		IndexDiffCache diffCache = IndexDiffCache.getInstance();
 		if (diffCache != null) {
 			IndexDiffCacheEntry diffCacheEntry = diffCache
-					.getIndexDiffCacheEntry(
-					repository);
+					.getIndexDiffCacheEntry(repository);
 			if (diffCacheEntry == null) {
 				return true;
 			}

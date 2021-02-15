@@ -79,8 +79,7 @@ class GitMoveDeleteHook implements IMoveDeleteHook {
 			return false;
 
 		String repoRelativePath = map.getRepoRelativePath(file);
-		IndexDiffCache indexDiffCache = Activator.getDefault()
-				.getIndexDiffCache();
+		IndexDiffCache indexDiffCache = IndexDiffCache.getInstance();
 		IndexDiffCacheEntry indexDiffCacheEntry = indexDiffCache
 				.getIndexDiffCacheEntry(map.getRepository());
 		if (indexDiffCacheEntry == null) {
@@ -130,11 +129,9 @@ class GitMoveDeleteHook implements IMoveDeleteHook {
 			// will have to stage the deletion later on _if_ this was truly
 			// needed, which won't happen for calls triggered by merge
 			// operations from the merge strategies.
-			Activator.getDefault().getLog()
-					.log(new Status(IStatus.WARNING, Activator.PLUGIN_ID,
-							MessageFormat
-									.format(CoreText.MoveDeleteHook_cannotAutoStageDeletion,
-											file.getLocation())));
+			Activator.logWarning(MessageFormat.format(
+					CoreText.MoveDeleteHook_cannotAutoStageDeletion,
+					file.getLocation()), null);
 			return FINISH_FOR_ME;
 		} catch (IOException e) {
 			tree.failed(new Status(IStatus.ERROR, Activator.PLUGIN_ID, 0,

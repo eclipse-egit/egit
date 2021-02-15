@@ -16,7 +16,6 @@ import java.util.Map;
 import java.util.Map.Entry;
 
 import org.eclipse.egit.core.RepositoryUtil;
-import org.eclipse.egit.ui.Activator;
 import org.eclipse.egit.ui.internal.LabelColumnComparator;
 import org.eclipse.egit.ui.internal.UIText;
 import org.eclipse.jface.dialogs.IDialogConstants;
@@ -51,8 +50,7 @@ public class MultiBranchOperationResultDialog extends TitleAreaDialog {
 
 	private TableViewer tv;
 
-	private final RepositoryUtil utils = Activator.getDefault()
-			.getRepositoryUtil();
+	private final RepositoryUtil utils = RepositoryUtil.getInstance();
 
 	private EnumMap<CheckoutResult.Status, String> resultMessages;
 

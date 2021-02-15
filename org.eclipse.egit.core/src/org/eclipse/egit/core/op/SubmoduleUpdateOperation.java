@@ -26,10 +26,10 @@ import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.SubMonitor;
 import org.eclipse.core.runtime.jobs.ISchedulingRule;
-import org.eclipse.egit.core.Activator;
 import org.eclipse.egit.core.EclipseGitProgressTransformer;
 import org.eclipse.egit.core.RepositoryUtil;
 import org.eclipse.egit.core.internal.CoreText;
+import org.eclipse.egit.core.internal.MergeStrategies;
 import org.eclipse.egit.core.internal.util.ProjectUtil;
 import org.eclipse.jgit.api.CloneCommand;
 import org.eclipse.jgit.api.Git;
@@ -78,8 +78,7 @@ public class SubmoduleUpdateOperation implements IEGitOperation {
 
 			@Override
 			public void run(IProgressMonitor pm) throws CoreException {
-				RepositoryUtil util = Activator.getDefault()
-						.getRepositoryUtil();
+				RepositoryUtil util = RepositoryUtil.getInstance();
 				SubMonitor progress = SubMonitor.convert(pm, 4);
 				progress.setTaskName(MessageFormat.format(
 						CoreText.SubmoduleUpdateOperation_updating,
@@ -100,7 +99,7 @@ public class SubmoduleUpdateOperation implements IEGitOperation {
 						update.addPath(path);
 					update.setProgressMonitor(new EclipseGitProgressTransformer(
 							progress.newChild(2)));
-					MergeStrategy strategy = Activator.getDefault()
+					MergeStrategy strategy = MergeStrategies
 							.getPreferredMergeStrategy();
 					if (strategy != null) {
 						update.setStrategy(strategy);

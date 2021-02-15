@@ -21,7 +21,7 @@ import java.io.IOException;
 
 import org.eclipse.core.resources.IProject;
 import org.eclipse.core.runtime.CoreException;
-import org.eclipse.egit.core.Activator;
+import org.eclipse.egit.core.RepositoryCache;
 import org.eclipse.egit.core.op.BranchOperation;
 import org.eclipse.egit.core.op.CloneOperation;
 import org.eclipse.egit.core.test.DualRepositoryTestCase;
@@ -85,7 +85,7 @@ public class AbstractDualRepositoryTestCase extends DualRepositoryTestCase {
 				R_HEADS + MY_MASTER, DEFAULT_REMOTE_NAME, 0);
 		clop.run(null);
 
-		Repository repo2 = Activator.getDefault().getRepositoryCache()
+		Repository repo2 = RepositoryCache.getInstance()
 				.lookupRepository(new File(workdir2, DOT_GIT));
 		repository2 = new TestRepository(repo2);
 	}

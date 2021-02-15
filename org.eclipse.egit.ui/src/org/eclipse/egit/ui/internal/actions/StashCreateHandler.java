@@ -12,7 +12,7 @@ package org.eclipse.egit.ui.internal.actions;
 
 import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.commands.ExecutionException;
-import org.eclipse.egit.core.Activator;
+import org.eclipse.egit.core.internal.indexdiff.IndexDiffCache;
 import org.eclipse.egit.core.internal.indexdiff.IndexDiffCacheEntry;
 import org.eclipse.egit.core.internal.indexdiff.IndexDiffData;
 import org.eclipse.egit.ui.internal.stash.StashCreateUI;
@@ -48,8 +48,8 @@ public class StashCreateHandler extends RepositoryActionHandler {
 		if (!repository.getRepositoryState().canCommit())
 			return false;
 
-		IndexDiffCacheEntry entry = Activator.getDefault()
-				.getIndexDiffCache().getIndexDiffCacheEntry(repository);
+		IndexDiffCacheEntry entry = IndexDiffCache.getInstance()
+				.getIndexDiffCacheEntry(repository);
 		if (entry == null)
 			return false;
 

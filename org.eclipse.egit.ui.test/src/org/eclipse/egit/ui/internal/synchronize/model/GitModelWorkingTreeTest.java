@@ -14,7 +14,7 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 import static org.mockito.Mockito.mock;
 
-import org.eclipse.egit.ui.Activator;
+import org.eclipse.egit.core.RepositoryUtil;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -50,8 +50,7 @@ public class GitModelWorkingTreeTest extends GitModelTestCase {
 	public void setupEnvironment() throws Exception {
 		leftRepoFile = createProjectAndCommitToRepository();
 
-		Activator.getDefault().getRepositoryUtil()
-				.addConfiguredRepository(leftRepoFile);
+		RepositoryUtil.getInstance().addConfiguredRepository(leftRepoFile);
 	}
 
 }

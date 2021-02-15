@@ -28,6 +28,8 @@ import org.eclipse.core.runtime.preferences.InstanceScope;
 import org.eclipse.egit.core.Activator;
 import org.eclipse.egit.core.GitCorePreferences;
 import org.eclipse.egit.core.JobFamilies;
+import org.eclipse.egit.core.RepositoryCache;
+import org.eclipse.egit.core.RepositoryUtil;
 import org.eclipse.egit.core.internal.CoreText;
 import org.eclipse.egit.core.internal.job.JobUtil;
 import org.eclipse.egit.core.internal.util.ProjectUtil;
@@ -85,14 +87,13 @@ public class NewRepositoryWizard extends Wizard implements INewWizard {
 							new File(myCreatePage.getDirectory())))
 					.setBare(isBare)
 					.call().getRepository().getDirectory();
-			this.repository = Activator.getDefault().getRepositoryCache()
+			this.repository = RepositoryCache.getInstance()
 					.lookupRepository(gitDir);
 			if (group != null) {
 				RepositoryGroups.getInstance().addRepositoriesToGroup(group,
 						Collections.singletonList(gitDir));
 			}
-			Activator.getDefault().getRepositoryUtil()
-					.addConfiguredRepository(gitDir);
+			RepositoryUtil.getInstance().addConfiguredRepository(gitDir);
 
 			if (!isBare && doAutoShare()) {
 				IPath workTree = new Path(repository.getWorkTree()

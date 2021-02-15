@@ -29,10 +29,10 @@ import org.eclipse.core.resources.IResource;
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.Path;
+import org.eclipse.egit.core.RepositoryUtil;
 import org.eclipse.egit.core.internal.CompareCoreUtils;
 import org.eclipse.egit.core.internal.storage.GitFileRevision;
 import org.eclipse.egit.core.project.RepositoryMapping;
-import org.eclipse.egit.ui.Activator;
 import org.eclipse.egit.ui.internal.CompareUtils;
 import org.eclipse.egit.ui.internal.UIText;
 import org.eclipse.egit.ui.internal.dialogs.CompareTreeView;
@@ -186,7 +186,7 @@ public class GitCompareEditorInput extends CompareEditorInput {
 				// set title and icon
 				if (resources.length == 0) {
 					Object[] titleParameters = new Object[] {
-							Activator.getDefault().getRepositoryUtil()
+							RepositoryUtil.getInstance()
 									.getRepositoryName(repository),
 							CompareUtils.truncatedRevision(compareVersion),
 							CompareUtils.truncatedRevision(baseVersion) };

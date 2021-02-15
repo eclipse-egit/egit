@@ -23,7 +23,7 @@ import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.OperationCanceledException;
 import org.eclipse.core.runtime.Status;
-import org.eclipse.egit.core.Activator;
+import org.eclipse.egit.core.RepositoryCache;
 import org.eclipse.egit.ui.internal.UIText;
 import org.eclipse.egit.ui.internal.commit.RepositoryCommit;
 import org.eclipse.jgit.lib.Constants;
@@ -160,8 +160,7 @@ public class CommitSearchQuery implements ISearchQuery {
 		Repository repository = null;
 		File path = new File(name);
 		if (path.exists())
-			repository = Activator.getDefault().getRepositoryCache()
-					.lookupRepository(path);
+			repository = RepositoryCache.getInstance().lookupRepository(path);
 		return repository;
 	}
 

@@ -23,7 +23,6 @@ import java.util.Map;
 import org.eclipse.core.resources.IResource;
 import org.eclipse.core.resources.mapping.ResourceTraversal;
 import org.eclipse.core.runtime.IProgressMonitor;
-import org.eclipse.egit.core.Activator;
 import org.eclipse.egit.core.internal.indexdiff.IndexDiffCache;
 import org.eclipse.egit.core.internal.indexdiff.IndexDiffCacheEntry;
 import org.eclipse.egit.core.internal.indexdiff.IndexDiffData;
@@ -77,7 +76,7 @@ public class GitScopeOperation extends ModelOperation {
 				.entrySet()) {
 			Repository repository = entry.getKey();
 			Collection<String> paths = entry.getValue();
-			IndexDiffCache cache = Activator.getDefault().getIndexDiffCache();
+			IndexDiffCache cache = IndexDiffCache.getInstance();
 			if (cache == null)
 				continue;
 

@@ -113,7 +113,7 @@ public class GitProjectSetCapabilityTest {
 	}
 
 	protected static void shutDownRepositories() {
-		RepositoryCache cache = Activator.getDefault().getRepositoryCache();
+		RepositoryCache cache = RepositoryCache.getInstance();
 		for (Repository repository : cache.getAllRepositories()) {
 			repository.close();
 		}
@@ -304,7 +304,7 @@ public class GitProjectSetCapabilityTest {
 		IPath otherRepoPath = reposPath.append("other");
 		File otherRepoDir = createRepository(otherRepoPath, "other-url", "master");
 
-		RepositoryUtil util = Activator.getDefault().getRepositoryUtil();
+		RepositoryUtil util = RepositoryUtil.getInstance();
 		util.addConfiguredRepository(repoDir);
 		util.addConfiguredRepository(otherRepoDir);
 
@@ -332,7 +332,7 @@ public class GitProjectSetCapabilityTest {
 		String url = createUrl(repoPath, "ssh", "userName");
 		File repoDir = createRepository(repoPath, url, "master");
 
-		RepositoryUtil util = Activator.getDefault().getRepositoryUtil();
+		RepositoryUtil util = RepositoryUtil.getInstance();
 		util.addConfiguredRepository(repoDir);
 
 		String reference = createProjectReference(repoPath, "ssh", /* no user */

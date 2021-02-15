@@ -14,6 +14,7 @@ package org.eclipse.egit.ui.internal;
 import java.io.IOException;
 import java.text.MessageFormat;
 
+import org.eclipse.egit.core.securestorage.EGitSecureStore;
 import org.eclipse.egit.core.securestorage.UserPasswordCredentials;
 import org.eclipse.egit.ui.Activator;
 import org.eclipse.equinox.security.storage.StorageException;
@@ -35,8 +36,7 @@ public class SecureStoreUtils {
 			URIish uri) {
 		if (credentials != null && uri != null) {
 			try {
-				org.eclipse.egit.core.Activator.getDefault().getSecureStore()
-						.putCredentials(uri, credentials);
+				EGitSecureStore.getInstance().putCredentials(uri, credentials);
 			} catch (StorageException e) {
 				Activator.handleError(MessageFormat.format(
 						UIText.SecureStoreUtils_writingCredentialsFailed, uri),
@@ -63,8 +63,7 @@ public class SecureStoreUtils {
 	public static @Nullable UserPasswordCredentials getCredentials(
 			final URIish uri) {
 		try {
-			return org.eclipse.egit.core.Activator.getDefault()
-					.getSecureStore().getCredentials(uri);
+			return EGitSecureStore.getInstance().getCredentials(uri);
 		} catch (StorageException e) {
 			Activator.logError(MessageFormat.format(
 					UIText.SecureStoreUtils_errorReadingCredentials,
@@ -81,8 +80,7 @@ public class SecureStoreUtils {
 	 */
 	public static void clearCredentials(final URIish uri) {
 		try {
-			org.eclipse.egit.core.Activator.getDefault().getSecureStore()
-					.clearCredentials(uri);
+			EGitSecureStore.getInstance().clearCredentials(uri);
 		} catch (IOException e) {
 			Activator.logError(MessageFormat.format(
 					UIText.SecureStoreUtils_errorClearingCredentials, uri), e);

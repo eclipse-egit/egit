@@ -16,6 +16,7 @@ import static org.junit.Assert.assertSame;
 import org.eclipse.core.runtime.preferences.InstanceScope;
 import org.eclipse.egit.core.Activator;
 import org.eclipse.egit.core.GitCorePreferences;
+import org.eclipse.egit.core.internal.MergeStrategies;
 import org.eclipse.jgit.merge.MergeStrategy;
 import org.junit.After;
 import org.junit.Before;
@@ -23,14 +24,11 @@ import org.junit.Test;
 
 public class PreferredMergeStrategyTest {
 
-	private Activator a;
-
 	/**
 	 * Removes any preference about preferred merge strategy before any test.
 	 */
 	@Before
 	public void setUp() {
-		a = Activator.getDefault();
 		InstanceScope.INSTANCE.getNode(Activator.PLUGIN_ID)
 				.remove(GitCorePreferences.core_preferredMergeStrategy);
 	}
@@ -46,7 +44,7 @@ public class PreferredMergeStrategyTest {
 
 	@Test
 	public void testGetDefaultPreferredMergeStrategy() {
-		assertNull(a.getPreferredMergeStrategy());
+		assertNull(MergeStrategies.getPreferredMergeStrategy());
 	}
 
 	@Test
@@ -54,7 +52,7 @@ public class PreferredMergeStrategyTest {
 		InstanceScope.INSTANCE.getNode(Activator.PLUGIN_ID)
 				.remove(GitCorePreferences.core_preferredMergeStrategy);
 
-		assertNull(a.getPreferredMergeStrategy());
+		assertNull(MergeStrategies.getPreferredMergeStrategy());
 	}
 
 	@Test
@@ -65,7 +63,7 @@ public class PreferredMergeStrategyTest {
 				GitCorePreferences.core_preferredMergeStrategy,
 				"invalid value");
 
-		assertNull(a.getPreferredMergeStrategy());
+		assertNull(MergeStrategies.getPreferredMergeStrategy());
 	}
 
 	@Test
@@ -75,6 +73,7 @@ public class PreferredMergeStrategyTest {
 		InstanceScope.INSTANCE.getNode(Activator.PLUGIN_ID)
 				.put(GitCorePreferences.core_preferredMergeStrategy, "resolve");
 
-		assertSame(MergeStrategy.RESOLVE, a.getPreferredMergeStrategy());
+		assertSame(MergeStrategy.RESOLVE,
+				MergeStrategies.getPreferredMergeStrategy());
 	}
 }

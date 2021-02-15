@@ -22,7 +22,7 @@ import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.SubMonitor;
 import org.eclipse.core.runtime.jobs.ISchedulingRule;
-import org.eclipse.egit.core.Activator;
+import org.eclipse.egit.core.internal.MergeStrategies;
 import org.eclipse.egit.core.internal.job.RuleUtil;
 import org.eclipse.egit.core.internal.util.ProjectUtil;
 import org.eclipse.jgit.api.Git;
@@ -68,7 +68,7 @@ public class StashApplyOperation implements IEGitOperation {
 					progress.worked(1);
 					StashApplyCommand command = Git.wrap(repository)
 							.stashApply().setStashRef(commit.name());
-					MergeStrategy strategy = Activator.getDefault()
+					MergeStrategy strategy = MergeStrategies
 							.getPreferredMergeStrategy();
 					if (strategy != null) {
 						command.setStrategy(strategy);

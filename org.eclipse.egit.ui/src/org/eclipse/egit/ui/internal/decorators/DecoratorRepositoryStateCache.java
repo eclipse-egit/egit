@@ -16,9 +16,9 @@ import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 
+import org.eclipse.egit.core.RepositoryUtil;
 import org.eclipse.egit.core.UnitOfWork;
 import org.eclipse.egit.core.internal.CoreText;
-import org.eclipse.egit.ui.Activator;
 import org.eclipse.egit.ui.internal.GitLabels;
 import org.eclipse.egit.ui.internal.RepositoryStateCache;
 import org.eclipse.jgit.lib.BranchTrackingStatus;
@@ -90,7 +90,7 @@ public class DecoratorRepositoryStateCache extends RepositoryStateCache {
 	 * @return the name
 	 */
 	public String getRepositoryNameAndState(Repository repository) {
-		String repoName = Activator.getDefault().getRepositoryUtil()
+		String repoName = RepositoryUtil.getInstance()
 				.getRepositoryName(repository);
 		RepositoryState state = getRepositoryState(repository);
 		if (state != RepositoryState.SAFE) {
@@ -122,7 +122,7 @@ public class DecoratorRepositoryStateCache extends RepositoryStateCache {
 				if (objectId == null) {
 					return CoreText.RepositoryUtil_noHead;
 				}
-				String ref = Activator.getDefault().getRepositoryUtil()
+				String ref = RepositoryUtil.getInstance()
 						.mapCommitToRef(repository, objectId.name(), false);
 				if (ref != null) {
 					return Repository.shortenRefName(ref) + ' '

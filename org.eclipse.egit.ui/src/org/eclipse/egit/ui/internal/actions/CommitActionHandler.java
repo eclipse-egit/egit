@@ -35,6 +35,7 @@ import org.eclipse.core.runtime.Status;
 import org.eclipse.core.runtime.SubMonitor;
 import org.eclipse.core.runtime.jobs.Job;
 import org.eclipse.egit.core.internal.CoreText;
+import org.eclipse.egit.core.internal.indexdiff.IndexDiffCache;
 import org.eclipse.egit.core.internal.indexdiff.IndexDiffCacheEntry;
 import org.eclipse.egit.core.internal.indexdiff.IndexDiffData;
 import org.eclipse.egit.core.internal.job.RuleUtil;
@@ -128,8 +129,7 @@ public class CommitActionHandler extends RepositoryActionHandler {
 
 	private IndexDiffData getIndexDiffData(final @NonNull Repository repository,
 			final @NonNull Collection<IProject> projects) {
-		IndexDiffCacheEntry diffCacheEntry = org.eclipse.egit.core.Activator
-				.getDefault().getIndexDiffCache()
+		IndexDiffCacheEntry diffCacheEntry = IndexDiffCache.getInstance()
 				.getIndexDiffCacheEntry(repository);
 		IndexDiffData diff = null;
 		if (diffCacheEntry != null) {

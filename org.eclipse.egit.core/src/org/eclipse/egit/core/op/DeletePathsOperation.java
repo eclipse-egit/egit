@@ -126,11 +126,11 @@ public class DeletePathsOperation implements IEGitOperation {
 
 	private void refreshIndexDiffCache(List<IPath> refreshCachePaths, boolean refreshAll) {
 		Map<Repository, Collection<String>> resourcesByRepository = ResourceUtil.splitPathsByRepository(refreshCachePaths);
+		IndexDiffCache cache = IndexDiffCache.getInstance();
 		for (Map.Entry<Repository, Collection<String>> entry : resourcesByRepository.entrySet()) {
 			Repository repository = entry.getKey();
 			Collection<String> files = entry.getValue();
 
-			IndexDiffCache cache = Activator.getDefault().getIndexDiffCache();
 			IndexDiffCacheEntry cacheEntry = cache.getIndexDiffCacheEntry(repository);
 			if (cacheEntry != null)
 				if (refreshAll)
