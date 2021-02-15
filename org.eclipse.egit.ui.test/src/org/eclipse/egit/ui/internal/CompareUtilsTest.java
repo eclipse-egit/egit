@@ -26,7 +26,7 @@ import org.eclipse.compare.ITypedElement;
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IResource;
 import org.eclipse.core.runtime.NullProgressMonitor;
-import org.eclipse.egit.core.Activator;
+import org.eclipse.egit.core.RepositoryCache;
 import org.eclipse.egit.core.op.CommitOperation;
 import org.eclipse.egit.core.op.ResetOperation;
 import org.eclipse.egit.ui.common.LocalRepositoryTestCase;
@@ -60,8 +60,7 @@ public class CompareUtilsTest extends LocalRepositoryTestCase {
 	public void setup() throws Exception {
 		File repoFile = createProjectAndCommitToRepository();
 		assertNotNull(repoFile);
-		repository = Activator.getDefault().getRepositoryCache()
-				.lookupRepository(repoFile);
+		repository = RepositoryCache.getInstance().lookupRepository(repoFile);
 		assertNotNull(repository);
 	}
 

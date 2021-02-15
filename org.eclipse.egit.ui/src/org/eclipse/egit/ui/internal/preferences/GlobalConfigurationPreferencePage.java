@@ -24,6 +24,7 @@ import java.util.Map;
 import java.util.Set;
 
 import org.eclipse.egit.core.RepositoryCache;
+import org.eclipse.egit.core.RepositoryUtil;
 import org.eclipse.egit.ui.Activator;
 import org.eclipse.egit.ui.internal.SWTUtils;
 import org.eclipse.egit.ui.internal.UIText;
@@ -247,8 +248,9 @@ public class GlobalConfigurationPreferencePage extends PreferencePage implements
 			userConfig = SystemReader.getInstance().openUserConfig(null, FS.DETECTED); // no inherit here!
 		if (repositories == null) {
 			repositories = new ArrayList<>();
-			List<String> repoPaths = Activator.getDefault().getRepositoryUtil().getConfiguredRepositories();
-			RepositoryCache repositoryCache = org.eclipse.egit.core.Activator.getDefault().getRepositoryCache();
+			List<String> repoPaths = RepositoryUtil.getInstance()
+					.getConfiguredRepositories();
+			RepositoryCache repositoryCache = RepositoryCache.getInstance();
 			for (String repoPath : repoPaths) {
 				File gitDir = new File(repoPath);
 				if (!gitDir.exists())
@@ -264,8 +266,7 @@ public class GlobalConfigurationPreferencePage extends PreferencePage implements
 	}
 
 	private String getName(final Repository repo) {
-		return Activator.getDefault().getRepositoryUtil()
-				.getRepositoryName(repo);
+		return RepositoryUtil.getInstance().getRepositoryName(repo);
 	}
 
 	private void sortRepositoriesByName() {

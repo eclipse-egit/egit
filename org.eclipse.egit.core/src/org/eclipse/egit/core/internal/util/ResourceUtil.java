@@ -55,6 +55,7 @@ import org.eclipse.egit.core.Activator;
 import org.eclipse.egit.core.GitProvider;
 import org.eclipse.egit.core.RepositoryCache;
 import org.eclipse.egit.core.internal.CoreText;
+import org.eclipse.egit.core.internal.indexdiff.IndexDiffCache;
 import org.eclipse.egit.core.internal.indexdiff.IndexDiffCacheEntry;
 import org.eclipse.egit.core.internal.indexdiff.IndexDiffData;
 import org.eclipse.egit.core.project.RepositoryMapping;
@@ -545,8 +546,7 @@ public class ResourceUtil {
 	 */
 	public static Map<Repository, Collection<String>> splitPathsByRepository(
 			Collection<IPath> paths) {
-		RepositoryCache repositoryCache = Activator.getDefault()
-				.getRepositoryCache();
+		RepositoryCache repositoryCache = RepositoryCache.getInstance();
 		Map<Repository, Collection<String>> result = new HashMap<>();
 		for (IPath path : paths) {
 			Repository repository = repositoryCache.getRepository(path);
@@ -660,8 +660,7 @@ public class ResourceUtil {
 	 * @param repository
 	 */
 	public static void saveLocalHistory(@NonNull Repository repository) {
-		IndexDiffCacheEntry indexDiffCacheEntry = org.eclipse.egit.core.Activator
-				.getDefault().getIndexDiffCache()
+		IndexDiffCacheEntry indexDiffCacheEntry = IndexDiffCache.getInstance()
 				.getIndexDiffCacheEntry(repository);
 		if (indexDiffCacheEntry == null) {
 			return;
@@ -710,8 +709,7 @@ public class ResourceUtil {
 		if (mapping != null) {
 			return mapping.getRepository();
 		}
-		return Activator.getDefault().getRepositoryCache()
-				.getRepository(resource);
+		return RepositoryCache.getInstance().getRepository(resource);
 	}
 
 	/**
@@ -723,7 +721,7 @@ public class ResourceUtil {
 	 */
 	@Nullable
 	public static Repository getRepository(@NonNull IPath path) {
-		return Activator.getDefault().getRepositoryCache().getRepository(path);
+		return RepositoryCache.getInstance().getRepository(path);
 	}
 
 	/**

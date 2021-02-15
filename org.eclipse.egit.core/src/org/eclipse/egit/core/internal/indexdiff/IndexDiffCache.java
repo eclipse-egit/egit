@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (C) 2011, 2016 Jens Baumgart <jens.baumgart@sap.com> and others.
+ * Copyright (C) 2011, 2021 Jens Baumgart <jens.baumgart@sap.com> and others.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License 2.0
@@ -35,6 +35,7 @@ import org.eclipse.core.runtime.Path;
 import org.eclipse.core.runtime.jobs.Job;
 import org.eclipse.egit.core.Activator;
 import org.eclipse.egit.core.JobFamilies;
+import org.eclipse.egit.core.RepositoryCache;
 import org.eclipse.egit.core.internal.SafeRunnable;
 import org.eclipse.jgit.annotations.NonNull;
 import org.eclipse.jgit.annotations.Nullable;
@@ -44,9 +45,21 @@ import org.eclipse.jgit.lib.Repository;
 
 /**
  * This class provides access to a cached {@link IndexDiff} for a given
- * repository
+ * repository.
  */
 public class IndexDiffCache {
+
+	private static IndexDiffCache INSTANCE = new IndexDiffCache(
+			RepositoryCache.getInstance());
+
+	/**
+	 * Retrieves the singleton instance of the {@link IndexDiffCache}.
+	 *
+	 * @return the instance, or {@code null} if not set yet
+	 */
+	public static IndexDiffCache getInstance() {
+		return INSTANCE;
+	}
 
 	private Map<File, IndexDiffCacheEntry> entries = new HashMap<>();
 
@@ -60,6 +73,12 @@ public class IndexDiffCache {
 	 * Listener on buffer changes related to the workspace external files.
 	 */
 	class ExternalFileBufferListener implements IFileBufferListener {
+
+		private final RepositoryCache repositoryCache;
+
+		ExternalFileBufferListener(RepositoryCache cache) {
+			repositoryCache = cache;
+		}
 
 		private void updateRepoState(IFileBuffer buffer) {
 			IFile file = getResource(buffer);
@@ -122,8 +141,7 @@ public class IndexDiffCache {
 		private Repository getRepository(IFileBuffer buffer) {
 			IPath location = getPath(buffer);
 			if (location != null) {
-				return Activator.getDefault().getRepositoryCache()
-						.getRepository(location);
+				return repositoryCache.getRepository(location);
 			}
 			return null;
 		}
@@ -203,16 +221,13 @@ public class IndexDiffCache {
 		}
 	}
 
-	/**
-	 * constructor
-	 */
-	public IndexDiffCache() {
+	private IndexDiffCache(RepositoryCache cache) {
 		globalListener = this::notifyListeners;
-		registerBufferListener();
+		registerBufferListener(cache);
 	}
 
-	private void registerBufferListener() {
-		bufferListener = new ExternalFileBufferListener();
+	private void registerBufferListener(RepositoryCache cache) {
+		bufferListener = new ExternalFileBufferListener(cache);
 		ITextFileBufferManager bufferManager = FileBuffers
 				.getTextFileBufferManager();
 		if (bufferManager != null) {

@@ -17,8 +17,9 @@ import java.util.List;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.core.runtime.preferences.InstanceScope;
-import org.eclipse.egit.core.Activator.MergeStrategyDescriptor;
 import org.eclipse.egit.core.GitCorePreferences;
+import org.eclipse.egit.core.MergeStrategyDescriptor;
+import org.eclipse.egit.core.internal.MergeStrategies;
 import org.eclipse.egit.ui.Activator;
 import org.eclipse.egit.ui.UIPreferences;
 import org.eclipse.egit.ui.internal.UIText;
@@ -98,8 +99,6 @@ public class SynchronizePreferencePage extends FieldEditorPreferencePage
 	}
 
 	private String[][] getAvailableMergeStrategies() {
-		org.eclipse.egit.core.Activator coreActivator = org.eclipse.egit.core.Activator
-				.getDefault();
 		List<String[]> strategies = new ArrayList<>();
 
 		// We need to add a default name for EGit default strategy in order to
@@ -109,7 +108,7 @@ public class SynchronizePreferencePage extends FieldEditorPreferencePage
 		strategies.add(new String[] {
 				UIText.GitPreferenceRoot_defaultMergeStrategyLabel,
 				GitCorePreferences.core_preferredMergeStrategy_Default });
-		for (MergeStrategyDescriptor strategy : coreActivator
+		for (MergeStrategyDescriptor strategy : MergeStrategies
 				.getRegisteredMergeStrategies()) {
 			strategies.add(new String[] { strategy.getLabel(),
 					strategy.getName() });

@@ -22,7 +22,6 @@ import java.io.IOException;
 
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IProject;
-import org.eclipse.egit.core.Activator;
 import org.eclipse.egit.core.RepositoryCache;
 import org.eclipse.jgit.lib.Constants;
 import org.eclipse.jgit.lib.Repository;
@@ -43,7 +42,7 @@ public class RepositoryCacheTest extends GitTestCase {
 		super.setUp();
 		this.testRepository = new TestRepository(gitDir);
 		this.repository = testRepository.getRepository();
-		this.cache = Activator.getDefault().getRepositoryCache();
+		this.cache = RepositoryCache.getInstance();
 	}
 
 	@Override

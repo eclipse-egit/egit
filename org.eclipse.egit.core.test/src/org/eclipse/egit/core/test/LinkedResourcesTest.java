@@ -30,9 +30,9 @@ import org.eclipse.core.resources.IResource;
 import org.eclipse.core.resources.IWorkspaceRoot;
 import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.Path;
-import org.eclipse.egit.core.Activator;
 import org.eclipse.egit.core.GitProvider;
 import org.eclipse.egit.core.IteratorService;
+import org.eclipse.egit.core.RepositoryCache;
 import org.eclipse.jgit.lib.Constants;
 import org.eclipse.jgit.treewalk.FileTreeIterator;
 import org.eclipse.jgit.treewalk.WorkingTreeIterator;
@@ -130,7 +130,7 @@ public class LinkedResourcesTest {
 		repository2 = null;
 		testUtils.deleteTempDirs();
 		testUtils = null;
-		Activator.getDefault().getRepositoryCache().clear();
+		RepositoryCache.getInstance().clear();
 	}
 
 	@Test

@@ -14,6 +14,7 @@ import java.io.IOException;
 import java.text.MessageFormat;
 import java.util.Set;
 
+import org.eclipse.egit.core.RepositoryUtil;
 import org.eclipse.egit.ui.Activator;
 import org.eclipse.egit.ui.UIPreferences;
 import org.eclipse.egit.ui.internal.UIText;
@@ -88,7 +89,7 @@ class GitHistoryWalk extends SWTWalk {
 		} catch (IOException e) {
 			throw new IOException(MessageFormat.format(
 					UIText.GitHistoryPage_errorSettingStartPoints,
-					Activator.getDefault().getRepositoryUtil()
+					RepositoryUtil.getInstance()
 							.getRepositoryName(getRepository())),
 					e);
 		}

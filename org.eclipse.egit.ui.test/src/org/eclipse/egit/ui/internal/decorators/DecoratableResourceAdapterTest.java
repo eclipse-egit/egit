@@ -25,8 +25,8 @@ import org.eclipse.core.resources.IFolder;
 import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.IResource;
 import org.eclipse.core.resources.ResourcesPlugin;
-import org.eclipse.egit.core.Activator;
 import org.eclipse.egit.core.JobFamilies;
+import org.eclipse.egit.core.internal.indexdiff.IndexDiffCache;
 import org.eclipse.egit.core.internal.indexdiff.IndexDiffCacheEntry;
 import org.eclipse.egit.core.internal.indexdiff.IndexDiffData;
 import org.eclipse.egit.ui.common.LocalRepositoryTestCase;
@@ -68,7 +68,7 @@ public class DecoratableResourceAdapterTest extends LocalRepositoryTestCase {
 
 		Repository repo = lookupRepository(gitDir);
 		git = new Git(repo);
-		indexDiffCacheEntry = Activator.getDefault().getIndexDiffCache()
+		indexDiffCacheEntry = IndexDiffCache.getInstance()
 				.getIndexDiffCacheEntry(repo);
 		waitForIndexDiffUpdate(false);
 	}

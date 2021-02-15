@@ -36,6 +36,7 @@ import org.eclipse.core.runtime.jobs.ISchedulingRule;
 import org.eclipse.egit.core.Activator;
 import org.eclipse.egit.core.EclipseGitProgressTransformer;
 import org.eclipse.egit.core.internal.CoreText;
+import org.eclipse.egit.core.internal.MergeStrategies;
 import org.eclipse.egit.core.internal.job.RuleUtil;
 import org.eclipse.egit.core.internal.util.ProjectUtil;
 import org.eclipse.jgit.annotations.NonNull;
@@ -90,7 +91,7 @@ public class MergeOperation implements IEGitOperation {
 			@NonNull String refName) {
 		this.repository = repository;
 		this.refName = refName;
-		this.mergeStrategy = Activator.getDefault().getPreferredMergeStrategy();
+		this.mergeStrategy = MergeStrategies.getPreferredMergeStrategy();
 	}
 
 	/**
@@ -110,8 +111,8 @@ public class MergeOperation implements IEGitOperation {
 		this.refName = refName;
 		MergeStrategy strategy = null;
 		strategy = MergeStrategy.get(mergeStrategyName);
-		this.mergeStrategy = strategy != null ? strategy : Activator.getDefault()
-				.getPreferredMergeStrategy();
+		this.mergeStrategy = strategy != null ? strategy
+				: MergeStrategies.getPreferredMergeStrategy();
 	}
 
 	/**

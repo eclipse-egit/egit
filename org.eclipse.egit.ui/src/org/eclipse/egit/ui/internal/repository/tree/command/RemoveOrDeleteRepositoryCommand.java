@@ -14,7 +14,7 @@ import java.util.List;
 
 import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.commands.ExecutionException;
-import org.eclipse.egit.ui.Activator;
+import org.eclipse.egit.core.RepositoryUtil;
 import org.eclipse.egit.ui.internal.UIText;
 import org.eclipse.egit.ui.internal.repository.tree.RepositoryNode;
 import org.eclipse.jface.dialogs.IDialogConstants;
@@ -35,7 +35,7 @@ public class RemoveOrDeleteRepositoryCommand extends RemoveCommand {
 		if (repository == null) {
 			return null;
 		}
-		String repositoryName = Activator.getDefault().getRepositoryUtil()
+		String repositoryName = RepositoryUtil.getInstance()
 				.getRepositoryName(repository);
 
 		String message = MessageFormat.format(

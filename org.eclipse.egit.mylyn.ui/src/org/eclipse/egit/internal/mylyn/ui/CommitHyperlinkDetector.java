@@ -21,7 +21,6 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import org.eclipse.core.runtime.Assert;
-import org.eclipse.egit.core.Activator;
 import org.eclipse.egit.core.RepositoryCache;
 import org.eclipse.egit.core.RepositoryUtil;
 import org.eclipse.egit.ui.internal.commit.CommitEditor;
@@ -111,12 +110,10 @@ public class CommitHyperlinkDetector extends AbstractHyperlinkDetector {
 		}
 
 		private RepositoryCommit searchCommit() throws IOException {
-			RepositoryUtil repositoryUtil = Activator.getDefault()
-					.getRepositoryUtil();
+			RepositoryUtil repositoryUtil = RepositoryUtil.getInstance();
 			List<String> configuredRepositories = repositoryUtil
 					.getConfiguredRepositories();
-			RepositoryCache repositoryCache = Activator.getDefault()
-					.getRepositoryCache();
+			RepositoryCache repositoryCache = RepositoryCache.getInstance();
 			for (String repoDir : configuredRepositories) {
 				Repository repository = repositoryCache
 						.lookupRepository(new File(repoDir));

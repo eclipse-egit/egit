@@ -23,7 +23,6 @@ import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.Path;
 import org.eclipse.core.runtime.jobs.Job;
-import org.eclipse.egit.core.Activator;
 import org.eclipse.egit.core.JobFamilies;
 import org.eclipse.egit.core.internal.indexdiff.IndexDiffCache;
 import org.eclipse.egit.core.internal.indexdiff.IndexDiffCacheEntry;
@@ -98,7 +97,7 @@ public class DeletePathsOperationTest extends DualRepositoryTestCase {
 
 	private static void initIndexDiffCache(Repository repository)
 			throws Exception {
-		IndexDiffCache cache = Activator.getDefault().getIndexDiffCache();
+		IndexDiffCache cache = IndexDiffCache.getInstance();
 		IndexDiffCacheEntry cacheEntry = cache.getIndexDiffCacheEntry(repository);
 		assertNotNull(cacheEntry);
 		Job.getJobManager().join(JobFamilies.INDEX_DIFF_CACHE_UPDATE, null);

@@ -20,7 +20,7 @@ import java.util.List;
 import org.eclipse.core.resources.IWorkspaceRoot;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Status;
-import org.eclipse.egit.ui.Activator;
+import org.eclipse.egit.core.RepositoryUtil;
 import org.eclipse.egit.ui.internal.groups.RepositoryGroups;
 import org.eclipse.egit.ui.internal.repository.tree.RepositoryGroupNode;
 import org.eclipse.egit.ui.internal.repository.tree.RepositoryNode;
@@ -62,13 +62,12 @@ public class DropAdapterAssistant extends CommonDropAdapterAssistant {
 		for (String folder : data) {
 			File repoFile = new File(folder);
 			if (FileKey.isGitRepository(repoFile, FS.DETECTED))
-				Activator.getDefault().getRepositoryUtil()
-						.addConfiguredRepository(repoFile);
+				RepositoryUtil.getInstance().addConfiguredRepository(repoFile);
 			// also a direct parent of a .git dir is allowed
 			else if (!repoFile.getName().equals(Constants.DOT_GIT)) {
 				File dotgitfile = new File(repoFile, Constants.DOT_GIT);
 				if (FileKey.isGitRepository(dotgitfile, FS.DETECTED))
-					Activator.getDefault().getRepositoryUtil()
+					RepositoryUtil.getInstance()
 							.addConfiguredRepository(dotgitfile);
 			}
 		}

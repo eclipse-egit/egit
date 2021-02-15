@@ -33,7 +33,6 @@ import java.util.List;
 import java.util.Set;
 
 import org.eclipse.egit.core.RepositoryUtil;
-import org.eclipse.egit.ui.Activator;
 import org.eclipse.egit.ui.UIPreferences;
 import org.eclipse.egit.ui.common.LocalRepositoryTestCase;
 import org.eclipse.egit.ui.internal.history.RefFilterHelper;
@@ -72,8 +71,7 @@ public class RefFilterHelperTest extends LocalRepositoryTestCase {
 		File repoFile = createProjectAndCommitToRepository();
 		createSimpleRemoteRepository(repoFile);
 
-		RepositoryUtil repositoryUtil = Activator.getDefault()
-				.getRepositoryUtil();
+		RepositoryUtil repositoryUtil = RepositoryUtil.getInstance();
 		repositoryUtil.addConfiguredRepository(repoFile);
 
 		repo = myRepoViewUtil.lookupRepository(repoFile);
@@ -103,9 +101,8 @@ public class RefFilterHelperTest extends LocalRepositoryTestCase {
 	}
 
 	private String getRepoSpecificPrefKeyForConfiguredFilters() {
-		return Activator.getDefault().getRepositoryUtil()
-				.getRepositorySpecificPreferenceKey(this.repo,
-						UIPreferences.RESOURCEHISTORY_REF_FILTERS);
+		return RepositoryUtil.getInstance().getRepositorySpecificPreferenceKey(
+				this.repo, UIPreferences.RESOURCEHISTORY_REF_FILTERS);
 	}
 
 	@Test
@@ -159,9 +156,8 @@ public class RefFilterHelperTest extends LocalRepositoryTestCase {
 	}
 
 	private String getRepoSpecificPrefKeyForSelectedFilters() {
-		return Activator.getDefault().getRepositoryUtil()
-				.getRepositorySpecificPreferenceKey(this.repo,
-						UIPreferences.RESOURCEHISTORY_SELECTED_REF_FILTERS);
+		return RepositoryUtil.getInstance().getRepositorySpecificPreferenceKey(
+				this.repo, UIPreferences.RESOURCEHISTORY_SELECTED_REF_FILTERS);
 	}
 
 	@Test
@@ -199,9 +195,9 @@ public class RefFilterHelperTest extends LocalRepositoryTestCase {
 	}
 
 	private String getRepoSpecificPrefKeyForLastSelectedFilters() {
-		return Activator.getDefault().getRepositoryUtil()
-				.getRepositorySpecificPreferenceKey(this.repo,
-						UIPreferences.RESOURCEHISTORY_LAST_SELECTED_REF_FILTERS);
+		return RepositoryUtil.getInstance().getRepositorySpecificPreferenceKey(
+				this.repo,
+				UIPreferences.RESOURCEHISTORY_LAST_SELECTED_REF_FILTERS);
 	}
 
 	@Test

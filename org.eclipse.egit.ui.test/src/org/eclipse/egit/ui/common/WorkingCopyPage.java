@@ -17,7 +17,7 @@ import static org.junit.Assert.assertFalse;
 
 import java.io.File;
 
-import org.eclipse.egit.ui.Activator;
+import org.eclipse.egit.core.RepositoryUtil;
 import org.eclipse.jgit.lib.Constants;
 import org.eclipse.swtbot.eclipse.finder.SWTWorkbenchBot;
 import org.eclipse.swtbot.swt.finder.waits.Conditions;
@@ -44,22 +44,22 @@ public class WorkingCopyPage {
 				+ File.separatorChar + Constants.DOT_GIT;
 		assertFalse(
 				"Clone target should not be in the configured repositories list",
-				Activator.getDefault().getRepositoryUtil()
-						.getConfiguredRepositories().contains(targetDir));
+				RepositoryUtil.getInstance().getConfiguredRepositories()
+						.contains(targetDir));
 
 		bot.button("Next >").click();
 
 		// wait until clone operation finished.
 		// wizard executes clone operation using getContainer.run
-		
+
 		bot.waitUntil(Conditions.widgetIsEnabled(bot.radioInGroup("Wizard for project import")));
 
 		// depending on the timing, the clone job may already be run
 		// but the repository is not yet added to our list, of
 		// repositories. Wait until that happend.
 		for (int i = 0; i < 3; i++) {
-			if (Activator.getDefault().getRepositoryUtil()
-					.getConfiguredRepositories().contains(targetDir))
+			if (RepositoryUtil.getInstance().getConfiguredRepositories()
+					.contains(targetDir))
 				return;
 			try {
 				Thread.sleep(1000);

@@ -110,8 +110,8 @@ public class IgnoreOperationUI {
 	private void refresh() {
 		Map<Repository, Collection<String>> pathsByRepository =
 				ResourceUtil.splitPathsByRepository(paths);
+		IndexDiffCache cache = IndexDiffCache.getInstance();
 		for (Repository repository : pathsByRepository.keySet()) {
-			IndexDiffCache cache = org.eclipse.egit.core.Activator.getDefault().getIndexDiffCache();
 			IndexDiffCacheEntry entry = cache.getIndexDiffCacheEntry(repository);
 			if (entry != null)
 				entry.refresh();

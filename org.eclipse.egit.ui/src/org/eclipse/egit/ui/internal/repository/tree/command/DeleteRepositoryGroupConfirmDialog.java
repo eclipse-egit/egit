@@ -14,7 +14,6 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.eclipse.egit.core.Activator;
 import org.eclipse.egit.core.RepositoryCache;
 import org.eclipse.egit.ui.internal.UIText;
 import org.eclipse.egit.ui.internal.repository.RepositoryTreeNodeLabelProvider;
@@ -145,8 +144,7 @@ public class DeleteRepositoryGroupConfirmDialog extends TitleAreaDialog {
 		@Override
 		public Object[] getChildren(Object parentElement) {
 			if (parentElement instanceof RepositoryGroupNode) {
-				RepositoryCache cache = Activator.getDefault()
-						.getRepositoryCache();
+				RepositoryCache cache = RepositoryCache.getInstance();
 				RepositoryGroupNode groupNode = ((RepositoryGroupNode) parentElement);
 				final List<RepositoryNode> result = new ArrayList<>();
 				groupNode.getObject().getRepositoryDirectories().stream()

@@ -50,8 +50,7 @@ public final class RepositoryGroups {
 
 	private final Map<UUID, RepositoryGroup> groupMap = new HashMap<>();
 
-	private final RepositoryUtil util = Activator.getDefault()
-			.getRepositoryUtil();
+	private final RepositoryUtil util = RepositoryUtil.getInstance();
 
 	private final IEclipsePreferences preferences = util.getPreferences();
 

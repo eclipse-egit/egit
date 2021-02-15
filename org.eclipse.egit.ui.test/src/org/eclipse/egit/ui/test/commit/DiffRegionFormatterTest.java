@@ -17,7 +17,7 @@ import static org.junit.Assert.assertTrue;
 
 import java.io.File;
 
-import org.eclipse.egit.core.Activator;
+import org.eclipse.egit.core.RepositoryCache;
 import org.eclipse.egit.ui.common.LocalRepositoryTestCase;
 import org.eclipse.egit.ui.internal.commit.DiffRegionFormatter;
 import org.eclipse.egit.ui.internal.commit.DiffRegionFormatter.DiffRegion;
@@ -43,8 +43,7 @@ public class DiffRegionFormatterTest extends LocalRepositoryTestCase {
 	public void setup() throws Exception {
 		File repoFile = createProjectAndCommitToRepository();
 		assertNotNull(repoFile);
-		repository = Activator.getDefault().getRepositoryCache()
-				.lookupRepository(repoFile);
+		repository = RepositoryCache.getInstance().lookupRepository(repoFile);
 		assertNotNull(repository);
 
 		try (RevWalk walk = new RevWalk(repository)) {

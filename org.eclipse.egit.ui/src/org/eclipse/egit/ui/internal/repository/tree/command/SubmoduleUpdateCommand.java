@@ -30,6 +30,7 @@ import org.eclipse.core.runtime.Status;
 import org.eclipse.core.runtime.SubMonitor;
 import org.eclipse.core.runtime.jobs.Job;
 import org.eclipse.egit.core.RepositoryCache;
+import org.eclipse.egit.core.RepositoryUtil;
 import org.eclipse.egit.core.op.SubmoduleUpdateOperation;
 import org.eclipse.egit.ui.Activator;
 import org.eclipse.egit.ui.JobFamilies;
@@ -54,8 +55,7 @@ public class SubmoduleUpdateCommand extends
 			// Check for uncommitted changes in submodules.
 			try {
 				boolean submodulesNodeSelected = false;
-				RepositoryCache cache = org.eclipse.egit.core.Activator
-						.getDefault().getRepositoryCache();
+				RepositoryCache cache = RepositoryCache.getInstance();
 				List<Repository> subRepos = new ArrayList<>();
 				// If Submodules node is selected, check all submodules.
 				for (RepositoryTreeNode<?> node : getSelectedNodes(event)) {
@@ -93,7 +93,7 @@ public class SubmoduleUpdateCommand extends
 				}
 				Shell parent = getActiveShell(event);
 				for (Repository subRepo : subRepos) {
-					String repoName = Activator.getDefault().getRepositoryUtil()
+					String repoName = RepositoryUtil.getInstance()
 							.getRepositoryName(subRepo);
 					if (!UIRepositoryUtils.handleUncommittedFiles(subRepo,
 							parent,
