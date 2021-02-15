@@ -23,13 +23,13 @@ import org.eclipse.core.runtime.OperationCanceledException;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.core.runtime.jobs.IJobManager;
 import org.eclipse.core.runtime.jobs.Job;
+import org.eclipse.egit.core.RepositoryUtil;
 import org.eclipse.egit.core.internal.job.JobUtil;
 import org.eclipse.egit.gitflow.GitFlowRepository;
 import org.eclipse.egit.gitflow.op.FeatureCheckoutOperation;
 import org.eclipse.egit.gitflow.ui.internal.JobFamilies;
 import org.eclipse.egit.gitflow.ui.internal.UIText;
 import org.eclipse.egit.gitflow.ui.internal.dialogs.FeatureBranchSelectionDialog;
-import org.eclipse.egit.ui.Activator;
 import org.eclipse.egit.ui.internal.UIRepositoryUtils;
 import org.eclipse.jface.window.Window;
 import org.eclipse.jgit.api.CheckoutResult;
@@ -83,7 +83,7 @@ public class FeatureCheckoutHandler extends AbstractHandler {
 			CheckoutResult result = checkoutOperation.getResult();
 			if (!CheckoutResult.Status.OK.equals(result.getStatus())) {
 				Shell shell = HandlerUtil.getActiveShell(event);
-				String repoName = Activator.getDefault().getRepositoryUtil()
+				String repoName = RepositoryUtil.getInstance()
 						.getRepositoryName(gfRepo.getRepository());
 				if (!UIRepositoryUtils.handleUncommittedFiles(
 						gfRepo.getRepository(), shell,

@@ -19,7 +19,7 @@ import java.lang.reflect.InvocationTargetException;
 
 import org.eclipse.core.resources.IProject;
 import org.eclipse.core.runtime.NullProgressMonitor;
-import org.eclipse.egit.core.Activator;
+import org.eclipse.egit.core.RepositoryCache;
 import org.eclipse.egit.core.op.CloneOperation;
 import org.eclipse.egit.core.op.ListRemoteOperation;
 import org.eclipse.egit.core.test.DualRepositoryTestCase;
@@ -74,11 +74,8 @@ public class ListRemoteOperationTest extends DualRepositoryTestCase {
 				"refs/heads/master", "origin", 0);
 		clop.run(null);
 
-		Repository existingRepo = Activator
-				.getDefault()
-				.getRepositoryCache()
-				.lookupRepository(
-						new File(workdir2, Constants.DOT_GIT));
+		Repository existingRepo = RepositoryCache.getInstance()
+				.lookupRepository(new File(workdir2, Constants.DOT_GIT));
 		repository2 = new TestRepository(existingRepo);
 		// we push to branch "test" of repository2
 		RefUpdate createBranch = repository2.getRepository().updateRef(

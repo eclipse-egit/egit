@@ -16,7 +16,7 @@ import java.io.File;
 import java.io.IOException;
 
 import org.eclipse.core.runtime.IAdaptable;
-import org.eclipse.egit.core.Activator;
+import org.eclipse.egit.core.RepositoryCache;
 import org.eclipse.jgit.lib.ObjectId;
 import org.eclipse.jgit.lib.Repository;
 import org.eclipse.jgit.revwalk.RevCommit;
@@ -80,8 +80,7 @@ public class CommitEditorInputFactory implements IElementFactory {
 			return null;
 
 		try {
-			return Activator.getDefault().getRepositoryCache()
-					.lookupRepository(gitDir);
+			return RepositoryCache.getInstance().lookupRepository(gitDir);
 		} catch (IOException e) {
 			return null;
 		}

@@ -114,8 +114,7 @@ class FilterCache {
 			Activator.logError(UIText.RepositoriesView_FilterErrorRead, e);
 			return;
 		}
-		RepositoryUtil util = org.eclipse.egit.core.Activator.getDefault()
-				.getRepositoryUtil();
+		RepositoryUtil util = RepositoryUtil.getInstance();
 		for (IMemento repo : memento.getChildren(TAG_REPO)) {
 			String repoId = repo.getString(ATTR_DIR);
 			if (repoId == null || repoId.isEmpty()) {
@@ -156,8 +155,7 @@ class FilterCache {
 	public void save() {
 		XMLMemento memento = XMLMemento
 				.createWriteRoot(getClass().getSimpleName());
-		RepositoryUtil util = org.eclipse.egit.core.Activator.getDefault()
-				.getRepositoryUtil();
+		RepositoryUtil util = RepositoryUtil.getInstance();
 		cache.entrySet().stream().forEach(entry -> {
 			Map<RepositoryTreeNodeType, String> values = entry.getValue();
 			if (values.isEmpty()) {

@@ -51,11 +51,21 @@ import org.osgi.service.prefs.BackingStoreException;
 public class EGitSshdSessionFactory extends SshdSessionFactory {
 
 	/**
-	 * Creates a new {@link EGitSshdSessionFactory}. It doesn't use a key
-	 * cache, and a proxy database based on the {@link IProxyService}.
+	 * Creates a new {@link EGitSshdSessionFactory}. It doesn't use a key cache,
+	 * and a proxy database based on the {@link IProxyService}.
+	 *
+	 * @param service
+	 *            the {@link IProxyService} to use
 	 */
-	public EGitSshdSessionFactory() {
-		super(null, new EGitProxyDataFactory());
+	public EGitSshdSessionFactory(IProxyService service) {
+		super(null, new EGitProxyDataFactory(service));
+		SshPreferencesMirror.INSTANCE.start();
+	}
+
+	@Override
+	public void close() {
+		SshPreferencesMirror.INSTANCE.stop();
+		super.close();
 	}
 
 	@Override
@@ -95,18 +105,21 @@ public class EGitSshdSessionFactory extends SshdSessionFactory {
 
 	private static class EGitProxyDataFactory implements ProxyDataFactory {
 
+		private final IProxyService proxyService;
+
+		public EGitProxyDataFactory(IProxyService service) {
+			proxyService = service;
+		}
+
 		@Override
 		public ProxyData get(InetSocketAddress remoteAddress) {
-			IProxyService service = Activator.getDefault().getProxyService();
-			if (service == null || !service.isProxiesEnabled()) {
-				return null;
-			}
 			try {
-				IProxyData[] data = service
+				IProxyData[] data = proxyService
 						.select(new URI(IProxyData.SOCKS_PROXY_TYPE,
 						"//" + remoteAddress.getHostString(), null)); //$NON-NLS-1$
 				if (data == null || data.length == 0) {
-					data = service.select(new URI(IProxyData.HTTP_PROXY_TYPE,
+					data = proxyService.select(new URI(
+							IProxyData.HTTP_PROXY_TYPE,
 							"//" + remoteAddress.getHostString(), null)); //$NON-NLS-1$
 					if (data == null || data.length == 0) {
 						return null;

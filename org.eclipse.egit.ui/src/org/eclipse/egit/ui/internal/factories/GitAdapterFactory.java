@@ -33,7 +33,7 @@ import org.eclipse.core.runtime.IAdapterFactory;
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.core.runtime.Path;
-import org.eclipse.egit.core.Activator;
+import org.eclipse.egit.core.RepositoryCache;
 import org.eclipse.egit.core.internal.util.ProjectUtil;
 import org.eclipse.egit.core.internal.util.ResourceUtil;
 import org.eclipse.egit.core.project.RepositoryMapping;
@@ -151,7 +151,7 @@ public class GitAdapterFactory implements IAdapterFactory {
 
 	@Nullable
 	private IResource getWorkspaceResourceFromGitPath(IPath gitPath) {
-		Repository repository = Activator.getDefault().getRepositoryCache()
+		Repository repository = RepositoryCache.getInstance()
 				.getRepository(gitPath);
 		if (repository == null || repository.isBare()) {
 			return null;
@@ -183,8 +183,8 @@ public class GitAdapterFactory implements IAdapterFactory {
 		if (mapping != null) {
 			return mapping.getRepository();
 		}
-		Repository repository = org.eclipse.egit.core.Activator.getDefault()
-				.getRepositoryCache().getRepository(path);
+		Repository repository = RepositoryCache.getInstance()
+				.getRepository(path);
 		return repository;
 	}
 

@@ -38,6 +38,7 @@ import org.eclipse.core.runtime.preferences.InstanceScope;
 import org.eclipse.core.variables.IStringVariableManager;
 import org.eclipse.core.variables.VariablesPlugin;
 import org.eclipse.egit.core.internal.CoreText;
+import org.eclipse.egit.core.internal.indexdiff.IndexDiffCache;
 import org.eclipse.egit.core.internal.indexdiff.IndexDiffCacheEntry;
 import org.eclipse.egit.core.internal.indexdiff.IndexDiffData;
 import org.eclipse.egit.core.project.RepositoryMapping;
@@ -89,6 +90,44 @@ public class RepositoryUtil {
 	 */
 	public static final String PREFS_DIRECTORIES_REL = "GitRepositoriesView.GitDirectories.relative"; //$NON-NLS-1$
 
+	private static final Object LOCK = new Object();
+
+	private static volatile RepositoryUtil instance;
+
+	/**
+	 * Retrieves the singleton {@link RepositoryUtil}.
+	 *
+	 * @return the {@link RepositoryUtil}
+	 */
+	public static RepositoryUtil getInstance() {
+		RepositoryUtil util = instance;
+		if (util == null) {
+			boolean interrupted = false;
+			synchronized (LOCK) {
+				util = instance;
+				while (util == null) {
+					try {
+						LOCK.wait();
+					} catch (InterruptedException e) {
+						interrupted = true;
+					}
+					util = instance;
+				}
+			}
+			if (interrupted) {
+				Thread.currentThread().interrupt();
+			}
+		}
+		return util;
+	}
+
+	static void create(IPath workspaceLocation) {
+		synchronized (LOCK) {
+			instance = new RepositoryUtil(workspaceLocation);
+			LOCK.notifyAll();
+		}
+	}
+
 	private final Map<String, Map<String, String>> commitMappingCache = new HashMap<>();
 
 	private final Map<String, String> repositoryNameCache = new HashMap<>();
@@ -98,17 +137,10 @@ public class RepositoryUtil {
 
 	private final java.nio.file.Path workspacePath;
 
-	/**
-	 * Clients should obtain an instance from {@link Activator}
-	 */
-	RepositoryUtil() {
-		workspacePath = ResourcesPlugin.getWorkspace().getRoot().getLocation()
-				.toFile().toPath();
+	private RepositoryUtil(IPath workspaceLocation) {
+		workspacePath = workspaceLocation.toFile().toPath();
 	}
 
-	/**
-	 * Used by {@link Activator}
-	 */
 	void dispose() {
 		commitMappingCache.clear();
 		repositoryNameCache.clear();
@@ -800,7 +832,7 @@ public class RepositoryUtil {
 	 * @since 4.1.0
 	 */
 	public static boolean canBeAutoIgnored(IPath path) throws IOException {
-		Repository repository = Activator.getDefault().getRepositoryCache()
+		Repository repository = RepositoryCache.getInstance()
 				.getRepository(path);
 		if (repository == null || repository.isBare()) {
 			return false;
@@ -865,7 +897,7 @@ public class RepositoryUtil {
 	 *         otherwise
 	 */
 	public static boolean hasChanges(@NonNull Repository repository) {
-		IndexDiffCacheEntry entry = Activator.getDefault().getIndexDiffCache()
+		IndexDiffCacheEntry entry = IndexDiffCache.getInstance()
 				.getIndexDiffCacheEntry(repository);
 		IndexDiffData data = entry != null ? entry.getIndexDiff() : null;
 		return data != null && data.hasChanges();

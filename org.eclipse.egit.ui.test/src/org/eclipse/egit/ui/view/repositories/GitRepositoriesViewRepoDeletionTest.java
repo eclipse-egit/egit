@@ -31,6 +31,8 @@ import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.core.runtime.jobs.Job;
+import org.eclipse.egit.core.RepositoryCache;
+import org.eclipse.egit.core.RepositoryUtil;
 import org.eclipse.egit.core.internal.indexdiff.IndexDiffCache;
 import org.eclipse.egit.ui.Activator;
 import org.eclipse.egit.ui.JobFamilies;
@@ -74,8 +76,7 @@ public class GitRepositoriesViewRepoDeletionTest extends
 		deleteAllProjects();
 		assertProjectExistence(PROJ1, false);
 		clearView();
-		Activator.getDefault().getRepositoryUtil().addConfiguredRepository(
-				repositoryFile);
+		RepositoryUtil.getInstance().addConfiguredRepository(repositoryFile);
 		shareProjects(repositoryFile);
 		assertProjectExistence(PROJ1, true);
 		refreshAndWait();
@@ -112,8 +113,7 @@ public class GitRepositoriesViewRepoDeletionTest extends
 		deleteAllProjects();
 		assertProjectExistence(PROJ1, false);
 		clearView();
-		Activator.getDefault().getRepositoryUtil()
-				.addConfiguredRepository(repositoryFile);
+		RepositoryUtil.getInstance().addConfiguredRepository(repositoryFile);
 		shareProjects(repositoryFile);
 		assertProjectExistence(PROJ1, true);
 		refreshAndWait();
@@ -160,8 +160,7 @@ public class GitRepositoriesViewRepoDeletionTest extends
 		clearView();
 		refreshAndWait();
 
-		Activator.getDefault().getRepositoryUtil()
-				.addConfiguredRepository(repositoryFile);
+		RepositoryUtil.getInstance().addConfiguredRepository(repositoryFile);
 		refreshAndWait();
 		assertHasRepo(repositoryFile);
 		SWTBotTree tree = getOrOpenView().bot().tree();
@@ -258,11 +257,10 @@ public class GitRepositoriesViewRepoDeletionTest extends
 				// guaranteed! Whether or not it does may also depend on the
 				// configuration of the JVM (such as through command-line
 				// arguments).
-				Repository[] repositories = org.eclipse.egit.core.Activator
-						.getDefault().getRepositoryCache().getAllRepositories();
+				Repository[] repositories = RepositoryCache.getInstance()
+						.getAllRepositories();
 				results[0] = Arrays.asList(repositories).toString();
-				IndexDiffCache indexDiffCache = org.eclipse.egit.core.Activator
-						.getDefault().getIndexDiffCache();
+				IndexDiffCache indexDiffCache = IndexDiffCache.getInstance();
 				results[1] = indexDiffCache.currentCacheEntries().toString();
 				return Status.OK_STATUS;
 			}
@@ -272,8 +270,8 @@ public class GitRepositoriesViewRepoDeletionTest extends
 		verifier.setSystem(true);
 		verifier.schedule();
 		verifier.join();
-		List<String> configuredRepos = org.eclipse.egit.core.Activator
-				.getDefault().getRepositoryUtil().getConfiguredRepositories();
+		List<String> configuredRepos = RepositoryUtil.getInstance()
+				.getConfiguredRepositories();
 		assertTrue("Expected no configured repositories",
 				configuredRepos.isEmpty());
 		assertEquals("Expected no cached repositories", "[]", results[0]);
@@ -288,8 +286,7 @@ public class GitRepositoriesViewRepoDeletionTest extends
 		deleteAllProjects();
 		assertProjectExistence(PROJ1, false);
 		clearView();
-		Activator.getDefault().getRepositoryUtil()
-				.addConfiguredRepository(repositoryFile);
+		RepositoryUtil.getInstance().addConfiguredRepository(repositoryFile);
 		shareProjects(repositoryFile);
 		assertProjectExistence(PROJ1, true);
 		refreshAndWait();

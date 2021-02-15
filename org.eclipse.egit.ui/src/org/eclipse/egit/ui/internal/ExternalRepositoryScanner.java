@@ -223,8 +223,7 @@ public class ExternalRepositoryScanner implements EventHandler {
 			setRule(new RepositoryCacheRule());
 			setSystem(true);
 			setUser(false);
-			repositoryCache = org.eclipse.egit.core.Activator.getDefault()
-					.getRepositoryCache();
+			repositoryCache = RepositoryCache.getInstance();
 			updateRefreshInterval();
 		}
 

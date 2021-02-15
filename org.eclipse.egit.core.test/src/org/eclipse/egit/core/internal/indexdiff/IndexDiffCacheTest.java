@@ -69,8 +69,7 @@ public class IndexDiffCacheTest extends GitTestCase {
 	@Override
 	@After
 	public void tearDown() throws Exception {
-		IndexDiffCache indexDiffCache = Activator.getDefault()
-				.getIndexDiffCache();
+		IndexDiffCache indexDiffCache = IndexDiffCache.getInstance();
 		indexDiffCache.removeIndexDiffChangedListener(indexDiffListener);
 		testRepository.dispose();
 		repository = null;
@@ -307,8 +306,7 @@ public class IndexDiffCacheTest extends GitTestCase {
 		listenerCalled.set(false);
 		indexDiffDataResult.set(null);
 
-		IndexDiffCache indexDiffCache = Activator.getDefault()
-				.getIndexDiffCache();
+		IndexDiffCache indexDiffCache = IndexDiffCache.getInstance();
 		indexDiffCache.addIndexDiffChangedListener(indexDiffListener);
 		// This call should trigger an indexDiffChanged event
 		IndexDiffCacheEntry cacheEntry = indexDiffCache

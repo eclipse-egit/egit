@@ -116,8 +116,7 @@ public class RebaseAction extends RepositoryAction implements
 	}
 
 	private boolean canContinue(Repository repo) {
-		IndexDiffCache diffCache = org.eclipse.egit.core.Activator.getDefault()
-				.getIndexDiffCache();
+		IndexDiffCache diffCache = IndexDiffCache.getInstance();
 		if (diffCache != null) {
 			IndexDiffCacheEntry entry = diffCache.getIndexDiffCacheEntry(repo);
 			return entry != null

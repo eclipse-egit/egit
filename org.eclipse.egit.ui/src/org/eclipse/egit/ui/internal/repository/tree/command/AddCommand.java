@@ -34,6 +34,7 @@ import org.eclipse.core.runtime.preferences.InstanceScope;
 import org.eclipse.egit.core.Activator;
 import org.eclipse.egit.core.GitCorePreferences;
 import org.eclipse.egit.core.JobFamilies;
+import org.eclipse.egit.core.RepositoryCache;
 import org.eclipse.egit.core.internal.CoreText;
 import org.eclipse.egit.core.internal.gerrit.GerritUtil;
 import org.eclipse.egit.core.internal.job.JobUtil;
@@ -101,7 +102,7 @@ public class AddCommand extends
 		// Don't even try to auto-share for bare repositories.
 		IPath workingDirPath;
 		try {
-			Repository repo = Activator.getDefault().getRepositoryCache()
+			Repository repo = RepositoryCache.getInstance()
 					.lookupRepository(repositoryDir);
 			if (repo.isBare()) {
 				return;

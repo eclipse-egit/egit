@@ -13,7 +13,7 @@ package org.eclipse.egit.ui.test.stagview;
 import java.io.File;
 
 import org.eclipse.egit.core.JobFamilies;
-import org.eclipse.egit.ui.Activator;
+import org.eclipse.egit.core.RepositoryUtil;
 import org.eclipse.egit.ui.test.TestUtil;
 import org.eclipse.egit.ui.view.repositories.GitRepositoriesViewTestBase;
 import org.eclipse.jgit.lib.Repository;
@@ -34,8 +34,7 @@ public abstract class AbstractStagingViewTestCase
 		repositoryFile = createProjectAndCommitToRepository();
 		repository = lookupRepository(repositoryFile);
 		TestUtil.configureTestCommitterAsUser(repository);
-		Activator.getDefault().getRepositoryUtil()
-				.addConfiguredRepository(repositoryFile);
+		RepositoryUtil.getInstance().addConfiguredRepository(repositoryFile);
 
 		selectRepositoryNode();
 	}
@@ -43,7 +42,7 @@ public abstract class AbstractStagingViewTestCase
 	@After
 	public void after() {
 		repository = null;
-		Activator.getDefault().getRepositoryUtil().removeDir(repositoryFile);
+		RepositoryUtil.getInstance().removeDir(repositoryFile);
 	}
 
 	protected void setContent(String content) throws Exception {

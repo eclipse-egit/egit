@@ -105,8 +105,8 @@ public class RepositoriesViewContentProvider implements ITreeContentProvider {
 
 	private static final Object[] NO_CHILDREN = new Object[0];
 
-	private final RepositoryCache repositoryCache = org.eclipse.egit.core.Activator
-			.getDefault().getRepositoryCache();
+	private final RepositoryCache repositoryCache = RepositoryCache
+			.getInstance();
 
 	private final State branchHierarchy;
 
@@ -161,8 +161,7 @@ public class RepositoriesViewContentProvider implements ITreeContentProvider {
 
 		List<RepositoryTreeNode> nodes = new ArrayList<>();
 		List<File> directories = new ArrayList<>();
-		RepositoryUtil repositoryUtil = Activator.getDefault()
-				.getRepositoryUtil();
+		RepositoryUtil repositoryUtil = RepositoryUtil.getInstance();
 		RepositoryGroups groupsUtil = RepositoryGroups.getInstance();
 
 		if (inputElement instanceof Collection) {
@@ -294,8 +293,7 @@ public class RepositoriesViewContentProvider implements ITreeContentProvider {
 		case REPOGROUP: {
 			List<File> repoDirs = ((RepositoryGroupNode) node).getObject()
 					.getRepositoryDirectories();
-			return getRepositoryNodes(
-					Activator.getDefault().getRepositoryUtil(), null, node,
+			return getRepositoryNodes(RepositoryUtil.getInstance(), null, node,
 					repoDirs).toArray();
 		}
 

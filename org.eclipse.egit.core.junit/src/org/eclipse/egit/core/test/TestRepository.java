@@ -36,6 +36,7 @@ import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.Path;
 import org.eclipse.egit.core.Activator;
+import org.eclipse.egit.core.RepositoryCache;
 import org.eclipse.egit.core.op.BranchOperation;
 import org.eclipse.egit.core.op.ConnectProviderOperation;
 import org.eclipse.egit.core.op.DisconnectProviderOperation;
@@ -84,7 +85,7 @@ public class TestRepository {
 		tmpRepository.create();
 		tmpRepository.close();
 		// use repository instance from RepositoryCache!
-		repository = Activator.getDefault().getRepositoryCache().lookupRepository(gitDir);
+		repository = RepositoryCache.getInstance().lookupRepository(gitDir);
 		workdirPrefix = repository.getWorkTree().getAbsolutePath();
 		workdirPrefix = workdirPrefix.replace('\\', '/');
 		if (!workdirPrefix.endsWith("/")) //$NON-NLS-1$

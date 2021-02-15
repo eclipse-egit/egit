@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (C) 2011, 2016 Jens Baumgart <jens.baumgart@sap.com> and others.
+ * Copyright (C) 2011, 2021 Jens Baumgart <jens.baumgart@sap.com> and others.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License 2.0
@@ -35,6 +35,7 @@ import org.eclipse.core.runtime.Path;
 import org.eclipse.core.runtime.jobs.Job;
 import org.eclipse.egit.core.Activator;
 import org.eclipse.egit.core.JobFamilies;
+import org.eclipse.egit.core.RepositoryCache;
 import org.eclipse.egit.core.internal.SafeRunnable;
 import org.eclipse.jgit.annotations.NonNull;
 import org.eclipse.jgit.annotations.Nullable;
@@ -47,6 +48,29 @@ import org.eclipse.jgit.lib.Repository;
  * repository
  */
 public class IndexDiffCache {
+
+	private static final Object LOCK = new Object();
+
+	private static volatile IndexDiffCache instance;
+
+	/**
+	 * Retrieves the singleton instance of the {@link IndexDiffCache}.
+	 *
+	 * @return the instance, or {@code null} if not set yet
+	 */
+	public static IndexDiffCache getInstance() {
+		RepositoryCache.getInstance();
+		IndexDiffCache cache = instance;
+		if (cache == null) {
+			synchronized (LOCK) {
+				cache = instance;
+				if (cache == null) {
+					cache = instance = new IndexDiffCache();
+				}
+			}
+		}
+		return cache;
+	}
 
 	private Map<File, IndexDiffCacheEntry> entries = new HashMap<>();
 
@@ -122,8 +146,7 @@ public class IndexDiffCache {
 		private Repository getRepository(IFileBuffer buffer) {
 			IPath location = getPath(buffer);
 			if (location != null) {
-				return Activator.getDefault().getRepositoryCache()
-						.getRepository(location);
+				return RepositoryCache.getInstance().getRepository(location);
 			}
 			return null;
 		}
@@ -203,10 +226,7 @@ public class IndexDiffCache {
 		}
 	}
 
-	/**
-	 * constructor
-	 */
-	public IndexDiffCache() {
+	private IndexDiffCache() {
 		globalListener = this::notifyListeners;
 		registerBufferListener();
 	}

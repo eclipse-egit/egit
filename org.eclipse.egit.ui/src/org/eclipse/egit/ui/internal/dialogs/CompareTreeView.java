@@ -37,6 +37,7 @@ import org.eclipse.core.resources.IResource;
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.Path;
+import org.eclipse.egit.core.RepositoryUtil;
 import org.eclipse.egit.core.internal.CompareCoreUtils;
 import org.eclipse.egit.core.internal.storage.GitFileRevision;
 import org.eclipse.egit.core.internal.storage.WorkingTreeFileRevision;
@@ -430,7 +431,7 @@ public class CompareTreeView extends ViewPart implements IMenuListener, IShowInS
 				else
 					name = UIText.CompareTreeView_MultipleResourcesHeaderText;
 			} else if (input instanceof Repository)
-				name = Activator.getDefault().getRepositoryUtil()
+				name = RepositoryUtil.getInstance()
 						.getRepositoryName(((Repository) input));
 			else
 				throw new IllegalStateException();

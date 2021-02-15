@@ -18,7 +18,7 @@ import java.io.File;
 
 import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.NullProgressMonitor;
-import org.eclipse.egit.core.Activator;
+import org.eclipse.egit.core.RepositoryCache;
 import org.eclipse.egit.core.op.CloneOperation;
 import org.eclipse.egit.ui.common.EGitTestCase;
 import org.eclipse.egit.ui.common.LoginDialogTester;
@@ -67,7 +67,7 @@ public class PushTest extends EGitTestCase {
 		cloneOperation.run(new NullProgressMonitor());
 		file = new File(localRepoPath, SampleTestRepository.A_txt_name);
 		assertTrue(file.exists());
-		localRepository = Activator.getDefault().getRepositoryCache()
+		localRepository = RepositoryCache.getInstance()
 				.lookupRepository(new File(localRepoPath, ".git"));
 		assertNotNull(localRepository);
 	}
@@ -112,7 +112,7 @@ public class PushTest extends EGitTestCase {
 	public void tearDown() throws Exception {
 		if (remoteRepository != null)
 			remoteRepository.shutDown();
-		Activator.getDefault().getRepositoryCache().clear();
+		RepositoryCache.getInstance().clear();
 		if (localRepository != null)
 			localRepository.close();
 		if (localRepoPath != null)
