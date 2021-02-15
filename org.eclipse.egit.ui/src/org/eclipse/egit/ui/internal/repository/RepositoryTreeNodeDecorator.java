@@ -376,8 +376,7 @@ public class RepositoryTreeNodeDecorator extends GitDecorator
 
 	private void decorateRepositoryGroup(RepositoryTreeNode<?> node,
 			IDecoration decoration) {
-		RepositoryCache cache = org.eclipse.egit.core.Activator.getDefault()
-				.getRepositoryCache();
+		RepositoryCache cache = RepositoryCache.getInstance();
 		RepositoryGroup group = ((RepositoryGroupNode) node).getObject();
 		boolean markGroupDirty = false;
 		int numberOfBranches = 0;
@@ -473,8 +472,7 @@ public class RepositoryTreeNodeDecorator extends GitDecorator
 	}
 
 	private boolean haveSubmoduleChanges(@NonNull Repository repository) {
-		IndexDiffCache cache = org.eclipse.egit.core.Activator.getDefault()
-				.getIndexDiffCache();
+		IndexDiffCache cache = IndexDiffCache.getInstance();
 		if (cache == null) {
 			return false;
 		}

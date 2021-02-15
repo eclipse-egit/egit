@@ -18,7 +18,7 @@ import java.io.IOException;
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IProject;
 import org.eclipse.core.runtime.CoreException;
-import org.eclipse.egit.core.Activator;
+import org.eclipse.egit.core.RepositoryCache;
 import org.eclipse.jgit.api.Git;
 import org.eclipse.jgit.api.Status;
 import org.eclipse.jgit.api.errors.GitAPIException;
@@ -89,7 +89,7 @@ public class SubmoduleAndContainerTreeIteratorTest {
 		parentRepository.dispose();
 		childProject.delete(true, true, null);
 		parentProject.delete(true, true, null);
-		Activator.getDefault().getRepositoryCache().clear();
+		RepositoryCache.getInstance().clear();
 		testUtils.deleteTempDirs();
 	}
 

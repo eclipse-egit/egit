@@ -34,10 +34,10 @@ import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.Path;
 import org.eclipse.core.runtime.jobs.Job;
+import org.eclipse.egit.core.RepositoryUtil;
 import org.eclipse.egit.core.op.CommitOperation;
 import org.eclipse.egit.core.op.TagOperation;
 import org.eclipse.egit.core.test.TestUtils;
-import org.eclipse.egit.ui.Activator;
 import org.eclipse.egit.ui.JobFamilies;
 import org.eclipse.egit.ui.common.LocalRepositoryTestCase;
 import org.eclipse.egit.ui.internal.UIText;
@@ -503,8 +503,8 @@ public class BranchAndResetActionTest extends LocalRepositoryTestCase {
 		dialog.bot().button(UIText.CheckoutDialog_OkCheckout).click();
 		TestUtil.joinJobs(JobFamilies.CHECKOUT);
 		if (ObjectId.isId(repo.getBranch())) {
-			String mapped = Activator.getDefault().getRepositoryUtil()
-					.mapCommitToRef(repo, repo.getBranch(), false);
+			String mapped = RepositoryUtil.getInstance().mapCommitToRef(repo,
+					repo.getBranch(), false);
 			assertEquals("Wrong branch", nodeTexts[1],
 					mapped.substring(mapped
 					.lastIndexOf('/') + 1));

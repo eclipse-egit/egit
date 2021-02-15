@@ -20,8 +20,8 @@ import java.io.File;
 import java.util.concurrent.TimeUnit;
 
 import org.eclipse.core.runtime.jobs.Job;
+import org.eclipse.egit.core.RepositoryUtil;
 import org.eclipse.egit.core.op.CloneOperation;
-import org.eclipse.egit.ui.Activator;
 import org.eclipse.egit.ui.JobFamilies;
 import org.eclipse.egit.ui.internal.UIText;
 import org.eclipse.egit.ui.internal.push.PushOperationUI;
@@ -97,8 +97,8 @@ public class GitRepositoriesViewFetchAndPushTest extends
 	}
 
 	private void testPushToOrigin(boolean useRemote) throws Exception {
-		Activator.getDefault().getRepositoryUtil().addConfiguredRepository(
-				clonedRepositoryFile);
+		RepositoryUtil.getInstance()
+				.addConfiguredRepository(clonedRepositoryFile);
 		shareProjects(clonedRepositoryFile);
 
 
@@ -191,8 +191,7 @@ public class GitRepositoriesViewFetchAndPushTest extends
 	public void testNoHeadSimplePushDisabled() throws Exception {
 		Repository emptyRepo = createLocalTestRepository("empty");
 		File gitDir = emptyRepo.getDirectory();
-		Activator.getDefault().getRepositoryUtil()
-				.addConfiguredRepository(gitDir);
+		RepositoryUtil.getInstance().addConfiguredRepository(gitDir);
 		GitRepositoriesViewTestUtils viewUtil = new GitRepositoriesViewTestUtils();
 		SWTBotTree tree = getOrOpenView().bot().tree();
 		SWTBotTreeItem repoItem = viewUtil.getRootItem(tree, gitDir);
@@ -219,10 +218,10 @@ public class GitRepositoriesViewFetchAndPushTest extends
 
 	private void testFetchFromOrigin(boolean useRemote) throws Exception {
 
-		Activator.getDefault().getRepositoryUtil().addConfiguredRepository(
-				clonedRepositoryFile);
-		Activator.getDefault().getRepositoryUtil().addConfiguredRepository(
-				clonedRepositoryFile2);
+		RepositoryUtil.getInstance()
+				.addConfiguredRepository(clonedRepositoryFile);
+		RepositoryUtil.getInstance()
+				.addConfiguredRepository(clonedRepositoryFile2);
 
 		Repository repository = lookupRepository(clonedRepositoryFile2);
 		// add the configuration for push from cloned2

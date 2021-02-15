@@ -24,7 +24,7 @@ import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.core.runtime.Path;
-import org.eclipse.egit.core.Activator;
+import org.eclipse.egit.core.RepositoryUtil;
 import org.eclipse.egit.core.internal.storage.GitFileHistoryProvider;
 import org.eclipse.egit.core.op.ConnectProviderOperation;
 import org.eclipse.egit.core.op.DisconnectProviderOperation;
@@ -86,7 +86,8 @@ public class GitBlobStorageTest extends GitTestCase {
 		singleProjectRepo.create();
 
 		// Repository must be mapped in order to test the GitFileHistory
-		Activator.getDefault().getRepositoryUtil().addConfiguredRepository(singleProjectGitDir);
+		RepositoryUtil.getInstance()
+				.addConfiguredRepository(singleProjectGitDir);
 		ConnectProviderOperation connectOp = new ConnectProviderOperation(proj, singleProjectGitDir);
 		connectOp.execute(progress);
 
@@ -105,7 +106,7 @@ public class GitBlobStorageTest extends GitTestCase {
 		} finally {
 			DisconnectProviderOperation disconnectOp = new DisconnectProviderOperation(Collections.singletonList(proj));
 			disconnectOp.execute(progress);
-			Activator.getDefault().getRepositoryUtil().removeDir(singleProjectGitDir);
+			RepositoryUtil.getInstance().removeDir(singleProjectGitDir);
 			singleProjectRepo.close();
 			singleRepoProject.dispose();
 		}

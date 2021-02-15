@@ -23,6 +23,7 @@ import org.eclipse.core.runtime.Adapters;
 import org.eclipse.core.runtime.preferences.IEclipsePreferences.IPreferenceChangeListener;
 import org.eclipse.core.runtime.preferences.InstanceScope;
 import org.eclipse.egit.core.AdapterUtils;
+import org.eclipse.egit.core.RepositoryCache;
 import org.eclipse.egit.core.RepositoryUtil;
 import org.eclipse.egit.core.internal.Utils;
 import org.eclipse.egit.core.project.RepositoryMapping;
@@ -140,7 +141,7 @@ public class ReflogView extends ViewPart implements RefsChangedListener, IShowIn
 		}
 		Repository repo = getRepository();
 		if (repo == null
-				|| !Activator.getDefault().getRepositoryUtil().contains(repo)) {
+				|| !RepositoryUtil.getInstance().contains(repo)) {
 			Control control = refLogTreeViewer.getControl();
 			if (!control.isDisposed()) {
 				control.getDisplay().asyncExec(() -> {
@@ -427,9 +428,8 @@ public class ReflogView extends ViewPart implements RefsChangedListener, IShowIn
 		site.setSelectionProvider(new RepositorySelectionProvider(
 				refLogTreeViewer, this::getRepository));
 
-		addRefsChangedListener = org.eclipse.egit.core.Activator.getDefault()
-				.getRepositoryCache().getGlobalListenerList()
-				.addRefsChangedListener(this);
+		addRefsChangedListener = RepositoryCache.getInstance()
+				.getGlobalListenerList().addRefsChangedListener(this);
 
 		// Toolbar
 		IToolBarManager toolbar = getViewSite().getActionBars()
@@ -671,7 +671,7 @@ public class ReflogView extends ViewPart implements RefsChangedListener, IShowIn
 	}
 
 	private static String getRepositoryName(Repository repository) {
-		String repoName = Activator.getDefault().getRepositoryUtil()
+		String repoName = RepositoryUtil.getInstance()
 				.getRepositoryName(repository);
 		RepositoryState state = repository.getRepositoryState();
 		if (state != RepositoryState.SAFE)

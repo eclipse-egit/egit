@@ -30,6 +30,7 @@ import org.eclipse.core.runtime.Status;
 import org.eclipse.core.runtime.SubMonitor;
 import org.eclipse.core.runtime.jobs.Job;
 import org.eclipse.egit.core.Activator;
+import org.eclipse.egit.core.RepositoryUtil;
 import org.eclipse.egit.core.internal.SafeRunnable;
 import org.eclipse.egit.core.internal.Utils;
 import org.eclipse.egit.core.op.CreateLocalBranchOperation;
@@ -163,8 +164,8 @@ class CreateBranchPage extends WizardPage {
 		} else {
 			this.upstreamConfig = null;
 		}
-		setTitle(MessageFormat.format(UIText.CreateBranchPage_Title, Activator
-				.getDefault().getRepositoryUtil().getRepositoryName(repo)));
+		setTitle(MessageFormat.format(UIText.CreateBranchPage_Title,
+				RepositoryUtil.getInstance().getRepositoryName(repo)));
 		setMessage(UIText.CreateBranchPage_ChooseBranchAndNameMessage);
 	}
 
@@ -186,8 +187,8 @@ class CreateBranchPage extends WizardPage {
 		this.myValidator = ValidationUtils.getRefNameInputValidator(
 				myRepository, Constants.R_HEADS, false);
 		this.upstreamConfig = null;
-		setTitle(MessageFormat.format(UIText.CreateBranchPage_Title, Activator
-				.getDefault().getRepositoryUtil().getRepositoryName(repo)));
+		setTitle(MessageFormat.format(UIText.CreateBranchPage_Title,
+				RepositoryUtil.getInstance().getRepositoryName(repo)));
 		setMessage(UIText.CreateBranchPage_ChooseNameMessage);
 	}
 

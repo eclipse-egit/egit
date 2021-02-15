@@ -275,8 +275,7 @@ public class RemoveCommand extends
 				if (subRepo != null) {
 					RepositoryCache cache = null;
 					try {
-						cache = org.eclipse.egit.core.Activator.getDefault()
-								.getRepositoryCache();
+						cache = RepositoryCache.getInstance();
 					} finally {
 						if (cache != null)
 							cache.lookupRepository(subRepo.getDirectory())

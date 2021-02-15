@@ -48,12 +48,9 @@ import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.QualifiedName;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.core.runtime.jobs.Job;
-import org.eclipse.core.runtime.preferences.DefaultScope;
-import org.eclipse.core.runtime.preferences.IEclipsePreferences;
-import org.eclipse.core.runtime.preferences.InstanceScope;
 import org.eclipse.egit.core.Activator;
-import org.eclipse.egit.core.GitCorePreferences;
 import org.eclipse.egit.core.JobFamilies;
+import org.eclipse.egit.core.RepositoryCache;
 import org.eclipse.egit.core.internal.CoreText;
 import org.eclipse.egit.core.internal.trace.GitTraceLocation;
 import org.eclipse.egit.core.internal.util.ResourceUtil;
@@ -61,12 +58,10 @@ import org.eclipse.jgit.annotations.NonNull;
 import org.eclipse.jgit.annotations.Nullable;
 import org.eclipse.jgit.lib.Constants;
 import org.eclipse.jgit.lib.Repository;
-import org.eclipse.jgit.lib.RepositoryCache;
+import org.eclipse.jgit.lib.RepositoryCache.FileKey;
 import org.eclipse.jgit.storage.file.FileRepositoryBuilder;
-import org.eclipse.jgit.storage.file.WindowCacheConfig;
 import org.eclipse.jgit.util.FS;
 import org.eclipse.jgit.util.FileUtils;
-import org.eclipse.jgit.util.SystemReader;
 import org.eclipse.osgi.util.NLS;
 import org.eclipse.team.core.RepositoryProvider;
 import org.eclipse.team.core.TeamException;
@@ -339,8 +334,8 @@ public class GitProjectData {
 					// Is its working directory really here? If not,
 					// a submodule folder may have been copied.
 					try {
-						Repository r = Activator.getDefault()
-								.getRepositoryCache().lookupRepository(git);
+						Repository r = RepositoryCache.getInstance()
+								.lookupRepository(git);
 						if (m != null && r != null && !r.isBare()
 								&& gitCandidate.equals(r.getWorkTree())) {
 							if (data.map(m)) {
@@ -406,31 +401,6 @@ public class GitProjectData {
 
 	private synchronized static GitProjectData lookup(final IProject p) {
 		return projectDataCache.get(p);
-	}
-
-	/**
-	 * Update the settings for the global window cache of the workspace.
-	 */
-	public static void reconfigureWindowCache() {
-		final WindowCacheConfig c = new WindowCacheConfig();
-		IEclipsePreferences d = DefaultScope.INSTANCE
-				.getNode(Activator.PLUGIN_ID);
-		IEclipsePreferences p = InstanceScope.INSTANCE
-				.getNode(Activator.PLUGIN_ID);
-		c.setPackedGitLimit(p.getInt(GitCorePreferences.core_packedGitLimit, d.getInt(GitCorePreferences.core_packedGitLimit, 0)));
-		c.setPackedGitWindowSize(p.getInt(GitCorePreferences.core_packedGitWindowSize, d.getInt(GitCorePreferences.core_packedGitWindowSize, 0)));
-		if (SystemReader.getInstance().isWindows()) {
-			c.setPackedGitMMAP(false);
-		} else {
-			c.setPackedGitMMAP(
-					p.getBoolean(GitCorePreferences.core_packedGitMMAP,
-							d.getBoolean(GitCorePreferences.core_packedGitMMAP,
-									false)));
-		}
-		c.setDeltaBaseCacheLimit(p.getInt(GitCorePreferences.core_deltaBaseCacheLimit, d.getInt(GitCorePreferences.core_deltaBaseCacheLimit, 0)));
-		c.setStreamFileThreshold(p.getInt(GitCorePreferences.core_streamFileThreshold, d.getInt(GitCorePreferences.core_streamFileThreshold, 0)));
-		c.setExposeStatsViaJmx(false);
-		c.install();
 	}
 
 	private final IProject project;
@@ -687,14 +657,14 @@ public class GitProjectData {
 		}
 		git = absolutePath.toFile();
 
-		if (!RepositoryCache.FileKey.isGitRepository(git, FS.DETECTED)) {
+		if (!FileKey.isGitRepository(git, FS.DETECTED)) {
 			logAndUnmapGoneMappedResource(m, c);
 			return false;
 		}
 
 		try {
-			m.setRepository(Activator.getDefault().getRepositoryCache()
-					.lookupRepository(git));
+			m.setRepository(
+					RepositoryCache.getInstance().lookupRepository(git));
 		} catch (IOException ioe) {
 			logAndUnmapGoneMappedResource(m, c);
 			return false;

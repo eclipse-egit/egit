@@ -21,6 +21,7 @@ import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.variables.IDynamicVariable;
 import org.eclipse.core.variables.VariablesPlugin;
 import org.eclipse.egit.core.GitProvider;
+import org.eclipse.egit.core.RepositoryCache;
 import org.eclipse.egit.core.project.GitProjectData;
 import org.eclipse.egit.core.project.RepositoryMapping;
 import org.eclipse.egit.ui.common.EGitTestCase;
@@ -133,7 +134,7 @@ public class DynamicVariablesTest extends EGitTestCase {
 		repository.close();
 		repository2.close();
 
-		org.eclipse.egit.core.Activator.getDefault().getRepositoryCache().clear();
+		RepositoryCache.getInstance().clear();
 
 		FileUtils.delete(gitDir, FileUtils.RECURSIVE);
 		// gitDir2 is inside project, already gone

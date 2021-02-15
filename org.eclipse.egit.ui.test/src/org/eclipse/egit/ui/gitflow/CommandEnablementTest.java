@@ -17,8 +17,9 @@ import static org.junit.Assert.assertTrue;
 import java.io.IOException;
 
 import org.eclipse.core.commands.Command;
+import org.eclipse.egit.core.RepositoryCache;
+import org.eclipse.egit.core.RepositoryUtil;
 import org.eclipse.egit.gitflow.ui.internal.UIText;
-import org.eclipse.egit.ui.Activator;
 import org.eclipse.egit.ui.internal.repository.RepositoriesView;
 import org.eclipse.egit.ui.test.TestUtil;
 import org.eclipse.swtbot.eclipse.finder.widgets.SWTBotView;
@@ -88,10 +89,9 @@ public class CommandEnablementTest extends AbstractGitflowHandlerTest {
 	}
 
 	private void initRepositoriesView() throws IOException {
-		Activator.getDefault().getRepositoryUtil()
-				.addConfiguredRepository(repositoryFile);
-		repository = org.eclipse.egit.core.Activator.getDefault()
-				.getRepositoryCache().lookupRepository(repositoryFile);
+		RepositoryUtil.getInstance().addConfiguredRepository(repositoryFile);
+		repository = RepositoryCache.getInstance()
+				.lookupRepository(repositoryFile);
 	}
 
 	public static SWTBotTree getRepositoryTree() {

@@ -27,6 +27,7 @@ import org.eclipse.core.runtime.preferences.IEclipsePreferences.PreferenceChange
 import org.eclipse.core.runtime.preferences.InstanceScope;
 import org.eclipse.egit.core.AdapterUtils;
 import org.eclipse.egit.core.RepositoryUtil;
+import org.eclipse.egit.core.internal.indexdiff.IndexDiffCache;
 import org.eclipse.egit.core.internal.indexdiff.IndexDiffCacheEntry;
 import org.eclipse.egit.core.internal.indexdiff.IndexDiffData;
 import org.eclipse.egit.core.internal.rebase.RebaseInteractivePlan;
@@ -342,7 +343,7 @@ public class RebaseInteractiveView extends ViewPart implements
 				if (repo == null)
 					return;
 
-				if (Activator.getDefault().getRepositoryUtil().contains(repo))
+				if (RepositoryUtil.getInstance().contains(repo))
 					return;
 
 				// Unselect repository as it has been removed
@@ -880,7 +881,7 @@ public class RebaseInteractiveView extends ViewPart implements
 	}
 
 	private static String getRepositoryName(Repository repository) {
-		String repoName = Activator.getDefault().getRepositoryUtil()
+		String repoName = RepositoryUtil.getInstance()
 				.getRepositoryName(repository);
 		RepositoryState state = repository.getRepositoryState();
 		if (state != RepositoryState.SAFE)
@@ -980,8 +981,8 @@ public class RebaseInteractiveView extends ViewPart implements
 				form.setText(getRepositoryName(repo));
 			return;
 		}
-		IndexDiffCacheEntry entry = org.eclipse.egit.core.Activator.getDefault()
-				.getIndexDiffCache().getIndexDiffCacheEntry(repo);
+		IndexDiffCacheEntry entry = IndexDiffCache.getInstance()
+				.getIndexDiffCacheEntry(repo);
 		IndexDiffData data = entry == null ? null : entry.getIndexDiff();
 		boolean hasConflicts = data != null && !data.getConflicting().isEmpty();
 		if (!currentPlan.isRebasingInteractive()) {

@@ -43,9 +43,8 @@ public class GerritSelectRepositoryPage extends GitSelectRepositoryPage {
 	 */
 	public GerritSelectRepositoryPage() {
 		super(false, false);
-		util = Activator.getDefault().getRepositoryUtil();
-		cache = org.eclipse.egit.core.Activator.getDefault()
-				.getRepositoryCache();
+		util = RepositoryUtil.getInstance();
+		cache = RepositoryCache.getInstance();
 		setTitle(UIText.GerritSelectRepositoryPage_PageTitle);
 		setDescription(null);
 		setImageDescriptor(UIIcons.WIZBAN_FETCH_GERRIT);

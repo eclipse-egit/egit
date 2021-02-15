@@ -23,6 +23,7 @@ import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.MultiStatus;
 import org.eclipse.core.runtime.jobs.IJobChangeEvent;
 import org.eclipse.core.runtime.jobs.JobChangeAdapter;
+import org.eclipse.egit.core.RepositoryUtil;
 import org.eclipse.egit.core.internal.job.JobUtil;
 import org.eclipse.egit.core.internal.rebase.RebaseInteractivePlan;
 import org.eclipse.egit.core.op.RebaseOperation;
@@ -219,7 +220,7 @@ public abstract class AbstractRebaseCommandHandler extends AbstractSharedCommand
 			public void run() {
 				Shell shell = PlatformUI.getWorkbench()
 						.getActiveWorkbenchWindow().getShell();
-				String repoName = Activator.getDefault().getRepositoryUtil()
+				String repoName = RepositoryUtil.getInstance()
 						.getRepositoryName(repository);
 				String title = MessageFormat.format(
 						UIText.AbstractRebaseCommandHandler_cleanupDialog_title,

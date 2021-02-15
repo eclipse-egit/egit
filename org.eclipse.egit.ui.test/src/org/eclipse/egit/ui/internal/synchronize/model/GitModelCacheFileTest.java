@@ -18,8 +18,8 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
 import org.eclipse.core.runtime.IPath;
+import org.eclipse.egit.core.RepositoryUtil;
 import org.eclipse.egit.core.synchronize.GitCommitsModelCache.Change;
-import org.eclipse.egit.ui.Activator;
 import org.eclipse.jgit.lib.AbbreviatedObjectId;
 import org.eclipse.jgit.lib.ObjectId;
 import org.junit.Before;
@@ -151,8 +151,7 @@ public class GitModelCacheFileTest extends GitModelTestCase {
 	public void setupEnvironment() throws Exception {
 		leftRepoFile = createProjectAndCommitToRepository();
 
-		Activator.getDefault().getRepositoryUtil()
-				.addConfiguredRepository(leftRepoFile);
+		RepositoryUtil.getInstance().addConfiguredRepository(leftRepoFile);
 	}
 
 	private GitModelCacheFile createCacheFile(ObjectId repoId,

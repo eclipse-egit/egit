@@ -30,7 +30,6 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 import org.eclipse.egit.core.RepositoryUtil;
-import org.eclipse.egit.ui.Activator;
 import org.eclipse.egit.ui.common.LocalRepositoryTestCase;
 import org.eclipse.egit.ui.internal.UIText;
 import org.eclipse.egit.ui.internal.history.GitHistoryRefFilterConfigurationDialog;
@@ -91,8 +90,7 @@ public class GitHistoryRefFilterConfigurationDialogTest
 		myRepoViewUtil = new GitRepositoriesViewTestUtils();
 		File repoFile = createProjectAndCommitToRepository();
 
-		RepositoryUtil repositoryUtil = Activator.getDefault()
-				.getRepositoryUtil();
+		RepositoryUtil repositoryUtil = RepositoryUtil.getInstance();
 		repositoryUtil.addConfiguredRepository(repoFile);
 
 		repo = myRepoViewUtil.lookupRepository(repoFile);

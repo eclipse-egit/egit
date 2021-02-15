@@ -37,7 +37,7 @@ import org.eclipse.core.resources.IContainer;
 import org.eclipse.core.resources.IResource;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IPath;
-import org.eclipse.egit.core.Activator;
+import org.eclipse.egit.core.internal.indexdiff.IndexDiffCache;
 import org.eclipse.egit.core.internal.indexdiff.IndexDiffCacheEntry;
 import org.eclipse.egit.core.internal.indexdiff.IndexDiffData;
 import org.eclipse.egit.core.internal.util.ResourceUtil;
@@ -139,8 +139,8 @@ public class ResourceStateFactory {
 			// For bare repository just return empty data
 			return new IndexDiffData();
 		}
-		IndexDiffCacheEntry diffCacheEntry = Activator.getDefault()
-				.getIndexDiffCache().getIndexDiffCacheEntry(repository);
+		IndexDiffCacheEntry diffCacheEntry = IndexDiffCache.getInstance()
+				.getIndexDiffCacheEntry(repository);
 		if (diffCacheEntry == null) {
 			return null;
 		}

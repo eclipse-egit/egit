@@ -17,7 +17,7 @@ import java.io.IOException;
 
 import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.commands.ExecutionException;
-import org.eclipse.egit.ui.Activator;
+import org.eclipse.egit.core.RepositoryUtil;
 import org.eclipse.egit.ui.internal.UIText;
 import org.eclipse.egit.ui.internal.actions.ResetActionHandler;
 import org.eclipse.egit.ui.internal.actions.ResetMenu;
@@ -59,7 +59,7 @@ public class ResetCommand extends
 		// that ref will be possible.
 		final Ref targetBranch = (Ref) node.getObject();
 
-		final String repoName = Activator.getDefault().getRepositoryUtil()
+		final String repoName = RepositoryUtil.getInstance()
 				.getRepositoryName(node.getRepository());
 
 		Wizard wiz = new Wizard() {

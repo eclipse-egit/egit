@@ -24,7 +24,7 @@ import java.util.List;
 import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.NullProgressMonitor;
-import org.eclipse.egit.core.Activator;
+import org.eclipse.egit.core.RepositoryCache;
 import org.eclipse.egit.ui.JobFamilies;
 import org.eclipse.egit.ui.common.LocalRepositoryTestCase;
 import org.eclipse.egit.ui.test.TestUtil;
@@ -48,8 +48,7 @@ public class BranchProjectTrackerTest extends LocalRepositoryTestCase {
 		closeWelcomePage();
 		File repoFile = createProjectAndCommitToRepository();
 		assertNotNull(repoFile);
-		repository = Activator.getDefault().getRepositoryCache()
-				.lookupRepository(repoFile);
+		repository = RepositoryCache.getInstance().lookupRepository(repoFile);
 		assertNotNull(repository);
 		org.eclipse.egit.ui.Activator.getDefault().getPreferenceStore()
 				.setValue(getPreferenceKey(Constants.MASTER), "");

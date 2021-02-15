@@ -29,7 +29,6 @@ import org.eclipse.core.resources.IResourceDelta;
 import org.eclipse.core.resources.IResourceDeltaVisitor;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IPath;
-import org.eclipse.egit.core.Activator;
 import org.eclipse.egit.core.internal.util.ResourceUtil;
 import org.eclipse.egit.core.project.GitProjectData;
 import org.eclipse.egit.core.project.RepositoryMapping;
@@ -230,7 +229,7 @@ public class GitResourceDeltaVisitor implements IResourceDeltaVisitor {
 			return false;
 		}
 		IndexDiffCacheEntry entry = null;
-		IndexDiffCache cache = Activator.getDefault().getIndexDiffCache();
+		IndexDiffCache cache = IndexDiffCache.getInstance();
 		if (cache != null) {
 			entry = cache.getIndexDiffCacheEntry(repository);
 		}
