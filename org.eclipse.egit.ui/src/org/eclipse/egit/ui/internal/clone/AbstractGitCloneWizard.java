@@ -391,7 +391,7 @@ public abstract class AbstractGitCloneWizard extends Wizard {
 
 	private void importProjects(final Repository repository,
 			final IWorkingSet[] sets) {
-		String repoName = Activator.getDefault().getRepositoryUtil()
+		String repoName = RepositoryUtil.getInstance()
 				.getRepositoryName(repository);
 		Job importJob = new WorkspaceJob(MessageFormat.format(
 				UIText.GitCloneWizard_jobImportProjects, repoName)) {
@@ -483,7 +483,7 @@ public abstract class AbstractGitCloneWizard extends Wizard {
 			final IProgressMonitor monitor) throws InvocationTargetException,
 			InterruptedException {
 
-		final RepositoryUtil util = Activator.getDefault().getRepositoryUtil();
+		final RepositoryUtil util = RepositoryUtil.getInstance();
 
 		op.run(monitor);
 		if (group != null) {

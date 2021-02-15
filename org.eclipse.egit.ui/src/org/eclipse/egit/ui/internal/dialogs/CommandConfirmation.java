@@ -22,7 +22,6 @@ import java.util.Map;
 import java.util.Set;
 
 import org.eclipse.core.runtime.Assert;
-import org.eclipse.egit.core.Activator;
 import org.eclipse.egit.core.internal.indexdiff.IndexDiffCache;
 import org.eclipse.egit.core.internal.indexdiff.IndexDiffCacheEntry;
 import org.eclipse.egit.core.internal.indexdiff.IndexDiffData;
@@ -132,7 +131,7 @@ public class CommandConfirmation {
 	private static boolean haveChanges(
 			Map<Repository, Collection<String>> paths,
 			boolean filesOnly) {
-		IndexDiffCache cache = Activator.getDefault().getIndexDiffCache();
+		IndexDiffCache cache = IndexDiffCache.getInstance();
 		for (Map.Entry<Repository, Collection<String>> entry : paths
 				.entrySet()) {
 			Repository repo = entry.getKey();

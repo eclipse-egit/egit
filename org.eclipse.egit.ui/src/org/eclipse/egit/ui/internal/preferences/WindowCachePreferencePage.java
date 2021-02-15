@@ -13,7 +13,7 @@ package org.eclipse.egit.ui.internal.preferences;
 import org.eclipse.core.runtime.preferences.InstanceScope;
 import org.eclipse.egit.core.Activator;
 import org.eclipse.egit.core.GitCorePreferences;
-import org.eclipse.egit.core.project.GitProjectData;
+import org.eclipse.egit.core.RepositoryInitializer;
 import org.eclipse.egit.ui.internal.UIText;
 import org.eclipse.jface.preference.BooleanFieldEditor;
 import org.eclipse.jface.preference.FieldEditorPreferencePage;
@@ -78,7 +78,7 @@ public class WindowCachePreferencePage extends FieldEditorPreferencePage
 		// first put the editor values into the configuration
 		super.performOk();
 		try {
-			GitProjectData.reconfigureWindowCache();
+			RepositoryInitializer.reconfigureWindowCache();
 			return true;
 		} catch (RuntimeException e) {
 			org.eclipse.egit.ui.Activator.handleError(e.getMessage(), e, true);

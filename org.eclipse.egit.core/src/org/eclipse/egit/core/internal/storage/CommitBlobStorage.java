@@ -18,7 +18,6 @@ package org.eclipse.egit.core.internal.storage;
 
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.Path;
-import org.eclipse.egit.core.Activator;
 import org.eclipse.egit.core.RepositoryUtil;
 import org.eclipse.egit.core.internal.Utils;
 import org.eclipse.egit.core.storage.GitBlobStorage;
@@ -60,8 +59,7 @@ public class CommitBlobStorage extends GitBlobStorage {
 
 	@Override
 	public IPath getFullPath() {
-		final RepositoryUtil repositoryUtil = Activator.getDefault()
-				.getRepositoryUtil();
+		final RepositoryUtil repositoryUtil = RepositoryUtil.getInstance();
 		IPath repoPath = new Path(repositoryUtil.getRepositoryName(db));
 		String pathString = super.getFullPath().toPortableString() + " " //$NON-NLS-1$
 				+ Utils.getShortObjectId(commit.getId());

@@ -78,8 +78,7 @@ public class SubmoduleUpdateOperation implements IEGitOperation {
 
 			@Override
 			public void run(IProgressMonitor pm) throws CoreException {
-				RepositoryUtil util = Activator.getDefault()
-						.getRepositoryUtil();
+				RepositoryUtil util = RepositoryUtil.getInstance();
 				SubMonitor progress = SubMonitor.convert(pm, 4);
 				progress.setTaskName(MessageFormat.format(
 						CoreText.SubmoduleUpdateOperation_updating,

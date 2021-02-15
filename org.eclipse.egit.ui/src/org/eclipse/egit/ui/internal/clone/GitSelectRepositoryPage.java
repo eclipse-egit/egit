@@ -24,6 +24,7 @@ import java.util.Set;
 
 import org.eclipse.core.runtime.preferences.IEclipsePreferences.IPreferenceChangeListener;
 import org.eclipse.core.runtime.preferences.IEclipsePreferences.PreferenceChangeEvent;
+import org.eclipse.egit.core.RepositoryCache;
 import org.eclipse.egit.core.RepositoryUtil;
 import org.eclipse.egit.core.internal.gerrit.GerritUtil;
 import org.eclipse.egit.ui.Activator;
@@ -115,7 +116,7 @@ public class GitSelectRepositoryPage extends WizardPage {
 		super(GitSelectRepositoryPage.class.getName());
 		setTitle(UIText.GitSelectRepositoryPage_PageTitle);
 		setDescription(UIText.GitSelectRepositoryPage_PageMessage);
-		util = Activator.getDefault().getRepositoryUtil();
+		util = RepositoryUtil.getInstance();
 		this.allowBare = allowBare;
 		this.allowAdd = allowAdd;
 	}
@@ -320,8 +321,7 @@ public class GitSelectRepositoryPage extends WizardPage {
 			for (String dir : dirsAfter) {
 				if (!dirsBefore.contains(dir)) {
 					try {
-						Repository newRepository = org.eclipse.egit.core.Activator
-								.getDefault().getRepositoryCache()
+						Repository newRepository = RepositoryCache.getInstance()
 								.lookupRepository(new File(dir));
 						if (!allowBare && newRepository.isBare()) {
 							// Re-set to previous selection, if any

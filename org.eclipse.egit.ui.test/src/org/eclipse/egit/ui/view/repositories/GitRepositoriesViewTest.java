@@ -36,6 +36,7 @@ import org.eclipse.core.resources.IResource;
 import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.Adapters;
 import org.eclipse.core.runtime.IAdaptable;
+import org.eclipse.egit.core.RepositoryUtil;
 import org.eclipse.egit.core.op.StashCreateOperation;
 import org.eclipse.egit.core.project.RepositoryMapping;
 import org.eclipse.egit.ui.Activator;
@@ -100,8 +101,7 @@ public class GitRepositoriesViewTest extends GitRepositoriesViewTestBase {
 		setVerboseBranchMode(false);
 		initialLinkingState = setLinkWithSelection(false);
 		repositoryFile = createProjectAndCommitToRepository();
-		Activator.getDefault().getRepositoryUtil()
-				.addConfiguredRepository(repositoryFile);
+		RepositoryUtil.getInstance().addConfiguredRepository(repositoryFile);
 	}
 
 	@After

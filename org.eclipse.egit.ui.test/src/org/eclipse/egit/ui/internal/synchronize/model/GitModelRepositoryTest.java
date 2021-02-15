@@ -13,7 +13,7 @@ package org.eclipse.egit.ui.internal.synchronize.model;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
-import org.eclipse.egit.ui.Activator;
+import org.eclipse.egit.core.RepositoryUtil;
 import org.eclipse.jgit.lib.Repository;
 import org.junit.Before;
 import org.junit.Test;
@@ -65,8 +65,7 @@ public class GitModelRepositoryTest extends GitModelTestCase {
 		leftRepoFile = createProjectAndCommitToRepository();
 		rightRepoFile = createChildRepository(leftRepoFile);
 
-		Activator.getDefault().getRepositoryUtil()
-				.addConfiguredRepository(leftRepoFile);
+		RepositoryUtil.getInstance().addConfiguredRepository(leftRepoFile);
 	}
 
 }

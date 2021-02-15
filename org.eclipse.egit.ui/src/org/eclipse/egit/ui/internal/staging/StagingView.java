@@ -66,6 +66,7 @@ import org.eclipse.core.runtime.preferences.InstanceScope;
 import org.eclipse.egit.core.AdapterUtils;
 import org.eclipse.egit.core.RepositoryUtil;
 import org.eclipse.egit.core.internal.gerrit.GerritUtil;
+import org.eclipse.egit.core.internal.indexdiff.IndexDiffCache;
 import org.eclipse.egit.core.internal.indexdiff.IndexDiffCacheEntry;
 import org.eclipse.egit.core.internal.indexdiff.IndexDiffChangedListener;
 import org.eclipse.egit.core.internal.indexdiff.IndexDiffData;
@@ -658,8 +659,7 @@ public class StagingView extends ViewPart
 				return;
 			}
 			final Repository repo = currentRepository;
-			if (repo == null || Activator.getDefault().getRepositoryUtil()
-					.contains(repo)) {
+			if (repo == null || RepositoryUtil.getInstance().contains(repo)) {
 				return;
 			}
 			reload(null);
@@ -3206,9 +3206,8 @@ public class StagingView extends ViewPart
 
 					@Override
 					public void done(IJobChangeEvent event) {
-						IndexDiffCacheEntry indexDiffCacheForRepository = org.eclipse.egit.core.Activator
-								.getDefault().getIndexDiffCache()
-								.getIndexDiffCacheEntry(repo);
+						IndexDiffCacheEntry indexDiffCacheForRepository = IndexDiffCache
+								.getInstance().getIndexDiffCacheEntry(repo);
 						if (indexDiffCacheForRepository != null) {
 							indexDiffCacheForRepository
 									.refreshFiles(inaccessibleFiles);
@@ -4042,8 +4041,8 @@ public class StagingView extends ViewPart
 	}
 
 	private IndexDiffData doReload(@NonNull	final Repository repository) {
-		IndexDiffCacheEntry entry = org.eclipse.egit.core.Activator.getDefault()
-				.getIndexDiffCache().getIndexDiffCacheEntry(repository);
+		IndexDiffCacheEntry entry = IndexDiffCache.getInstance()
+				.getIndexDiffCacheEntry(repository);
 
 		if(cacheEntry != null && cacheEntry != entry)
 			cacheEntry.removeIndexDiffChangedListener(myIndexDiffListener);

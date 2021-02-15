@@ -19,8 +19,8 @@ import java.util.Set;
 import java.util.TreeSet;
 import java.util.stream.Collectors;
 
+import org.eclipse.egit.core.RepositoryUtil;
 import org.eclipse.egit.core.internal.gerrit.GerritUtil;
-import org.eclipse.egit.ui.Activator;
 import org.eclipse.egit.ui.UIUtils;
 import org.eclipse.egit.ui.internal.CommonUtils;
 import org.eclipse.egit.ui.internal.SWTUtils;
@@ -89,7 +89,8 @@ class GerritConfigurationPage extends WizardPage {
 		this.repository = repository;
 		this.remoteName = remoteName;
 		setTitle(UIText.GerritConfigurationPage_title);
-		String repositoryName = Activator.getDefault().getRepositoryUtil().getRepositoryName(repository);
+		String repositoryName = RepositoryUtil.getInstance()
+				.getRepositoryName(repository);
 		setDescription(MessageFormat.format(
 				UIText.GerritConfigurationPage_PageDescription, remoteName,
 				repositoryName));

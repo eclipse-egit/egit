@@ -28,7 +28,6 @@ import org.eclipse.egit.core.RepositoryUtil;
 import org.eclipse.egit.core.internal.CoreText;
 import org.eclipse.egit.core.op.BranchOperation;
 import org.eclipse.egit.core.op.CloneOperation;
-import org.eclipse.egit.ui.Activator;
 import org.eclipse.egit.ui.JobFamilies;
 import org.eclipse.egit.ui.internal.UIText;
 import org.eclipse.egit.ui.internal.commands.ToggleCommand;
@@ -100,8 +99,7 @@ public class GitRepositoriesViewBranchHandlingTest extends
 
 		clonedRepositoryFile = new File(workdir, Constants.DOT_GIT);
 
-		RepositoryUtil repositoryUtil = Activator.getDefault()
-				.getRepositoryUtil();
+		RepositoryUtil repositoryUtil = RepositoryUtil.getInstance();
 		repositoryUtil.addConfiguredRepository(repositoryFile);
 		repositoryUtil.addConfiguredRepository(remoteRepositoryFile);
 		repositoryUtil.addConfiguredRepository(clonedRepositoryFile);

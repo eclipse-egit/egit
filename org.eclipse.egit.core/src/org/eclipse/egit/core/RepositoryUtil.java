@@ -38,6 +38,7 @@ import org.eclipse.core.runtime.preferences.InstanceScope;
 import org.eclipse.core.variables.IStringVariableManager;
 import org.eclipse.core.variables.VariablesPlugin;
 import org.eclipse.egit.core.internal.CoreText;
+import org.eclipse.egit.core.internal.indexdiff.IndexDiffCache;
 import org.eclipse.egit.core.internal.indexdiff.IndexDiffCacheEntry;
 import org.eclipse.egit.core.internal.indexdiff.IndexDiffData;
 import org.eclipse.egit.core.project.RepositoryMapping;
@@ -89,6 +90,17 @@ public class RepositoryUtil {
 	 */
 	public static final String PREFS_DIRECTORIES_REL = "GitRepositoriesView.GitDirectories.relative"; //$NON-NLS-1$
 
+	private static final RepositoryUtil INSTANCE = new RepositoryUtil();
+
+	/**
+	 * Retrieves the singleton {@link RepositoryUtil}.
+	 *
+	 * @return the {@link RepositoryUtil}
+	 */
+	public static RepositoryUtil getInstance() {
+		return INSTANCE;
+	}
+
 	private final Map<String, Map<String, String>> commitMappingCache = new HashMap<>();
 
 	private final Map<String, String> repositoryNameCache = new HashMap<>();
@@ -98,18 +110,12 @@ public class RepositoryUtil {
 
 	private final java.nio.file.Path workspacePath;
 
-	/**
-	 * Clients should obtain an instance from {@link Activator}
-	 */
-	RepositoryUtil() {
+	private RepositoryUtil() {
 		workspacePath = ResourcesPlugin.getWorkspace().getRoot().getLocation()
 				.toFile().toPath();
 	}
 
-	/**
-	 * Used by {@link Activator}
-	 */
-	void dispose() {
+	void clear() {
 		commitMappingCache.clear();
 		repositoryNameCache.clear();
 	}
@@ -800,7 +806,7 @@ public class RepositoryUtil {
 	 * @since 4.1.0
 	 */
 	public static boolean canBeAutoIgnored(IPath path) throws IOException {
-		Repository repository = Activator.getDefault().getRepositoryCache()
+		Repository repository = RepositoryCache.getInstance()
 				.getRepository(path);
 		if (repository == null || repository.isBare()) {
 			return false;
@@ -865,7 +871,7 @@ public class RepositoryUtil {
 	 *         otherwise
 	 */
 	public static boolean hasChanges(@NonNull Repository repository) {
-		IndexDiffCacheEntry entry = Activator.getDefault().getIndexDiffCache()
+		IndexDiffCacheEntry entry = IndexDiffCache.getInstance()
 				.getIndexDiffCacheEntry(repository);
 		IndexDiffData data = entry != null ? entry.getIndexDiff() : null;
 		return data != null && data.hasChanges();

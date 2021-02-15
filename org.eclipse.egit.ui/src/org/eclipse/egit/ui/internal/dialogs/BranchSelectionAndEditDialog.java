@@ -19,6 +19,7 @@ import java.io.IOException;
 import java.text.MessageFormat;
 import java.util.Iterator;
 
+import org.eclipse.egit.core.RepositoryUtil;
 import org.eclipse.egit.ui.Activator;
 import org.eclipse.egit.ui.internal.CommonUtils;
 import org.eclipse.egit.ui.internal.UIText;
@@ -93,8 +94,7 @@ public class BranchSelectionAndEditDialog extends
 	@Override
 	protected String getTitle() {
 		return MessageFormat.format(UIText.BranchSelectionAndEditDialog_Title,
-				Activator.getDefault().getRepositoryUtil()
-						.getRepositoryName(repo));
+				RepositoryUtil.getInstance().getRepositoryName(repo));
 	}
 
 	@Override
