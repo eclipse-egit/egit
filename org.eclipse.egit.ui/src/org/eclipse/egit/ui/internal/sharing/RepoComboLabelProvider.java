@@ -10,7 +10,6 @@
  *******************************************************************************/
 package org.eclipse.egit.ui.internal.sharing;
 
-import org.eclipse.egit.core.Activator;
 import org.eclipse.egit.core.RepositoryUtil;
 import org.eclipse.egit.ui.internal.repository.RepositoriesView;
 import org.eclipse.jface.viewers.BaseLabelProvider;
@@ -28,7 +27,7 @@ import org.eclipse.swt.graphics.Image;
  */
 public class RepoComboLabelProvider extends BaseLabelProvider implements
 		ILabelProvider {
-	private RepositoryUtil util = Activator.getDefault().getRepositoryUtil();
+	private RepositoryUtil util = RepositoryUtil.getInstance();
 
 	@Override
 	public Image getImage(Object element) {

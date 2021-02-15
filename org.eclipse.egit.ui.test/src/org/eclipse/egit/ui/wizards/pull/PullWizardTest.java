@@ -18,7 +18,7 @@ import static org.junit.Assert.assertTrue;
 
 import java.io.File;
 
-import org.eclipse.egit.ui.Activator;
+import org.eclipse.egit.core.RepositoryUtil;
 import org.eclipse.egit.ui.internal.UIText;
 import org.eclipse.egit.ui.view.repositories.GitRepositoriesViewTestBase;
 import org.eclipse.jface.dialogs.IDialogConstants;
@@ -81,8 +81,7 @@ public class PullWizardTest extends GitRepositoriesViewTestBase {
 		clearView();
 		repositoryFile = createProjectAndCommitToRepository();
 		createRemoteRepository(repositoryFile);
-		Activator.getDefault().getRepositoryUtil()
-				.addConfiguredRepository(repositoryFile);
+		RepositoryUtil.getInstance().addConfiguredRepository(repositoryFile);
 		refreshAndWait();
 		assertHasRepo(repositoryFile);
 	}

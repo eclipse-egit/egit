@@ -20,6 +20,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.eclipse.egit.core.Activator;
+import org.eclipse.egit.core.RepositoryCache;
 import org.eclipse.egit.core.internal.CoreText;
 import org.eclipse.jgit.annotations.NonNull;
 import org.eclipse.jgit.annotations.Nullable;
@@ -261,8 +262,8 @@ public class GerritUtil {
 			@Nullable File repositoryDir) {
 		if (repositoryDir != null) {
 			try {
-				Repository repository = Activator.getDefault()
-						.getRepositoryCache().lookupRepository(repositoryDir);
+				Repository repository = RepositoryCache.getInstance()
+						.lookupRepository(repositoryDir);
 				if (repository != null) {
 					tryToAutoConfigureForGerrit(repository);
 				}

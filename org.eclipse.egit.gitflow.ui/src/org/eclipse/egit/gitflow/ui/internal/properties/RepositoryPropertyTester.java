@@ -15,6 +15,7 @@ package org.eclipse.egit.gitflow.ui.internal.properties;
 
 import java.io.File;
 
+import org.eclipse.egit.core.RepositoryCache;
 import org.eclipse.egit.gitflow.GitFlowConfig;
 import org.eclipse.egit.ui.internal.expressions.AbstractPropertyTester;
 import org.eclipse.egit.ui.internal.selection.SelectionRepositoryStateCache;
@@ -47,8 +48,8 @@ public class RepositoryPropertyTester extends AbstractPropertyTester {
 		Repository repository = null;
 		if (receiver instanceof String) {
 			String gitDir = (String) receiver;
-			repository = org.eclipse.egit.core.Activator.getDefault()
-					.getRepositoryCache().getRepository(new File(gitDir));
+			repository = RepositoryCache.getInstance()
+					.getRepository(new File(gitDir));
 		} else if (receiver instanceof Repository) {
 			repository = (Repository) receiver;
 		}

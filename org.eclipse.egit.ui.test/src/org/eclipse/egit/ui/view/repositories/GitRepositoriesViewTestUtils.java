@@ -15,6 +15,7 @@ package org.eclipse.egit.ui.view.repositories;
 import java.io.File;
 import java.util.concurrent.atomic.AtomicReference;
 
+import org.eclipse.egit.core.RepositoryCache;
 import org.eclipse.egit.ui.internal.repository.RepositoryTreeNodeLabelProvider;
 import org.eclipse.egit.ui.internal.repository.tree.AdditionalRefsNode;
 import org.eclipse.egit.ui.internal.repository.tree.BranchesNode;
@@ -173,7 +174,6 @@ public class GitRepositoriesViewTestUtils {
 	}
 
 	public Repository lookupRepository(File directory) throws Exception {
-		return org.eclipse.egit.core.Activator.getDefault()
-				.getRepositoryCache().lookupRepository(directory);
+		return RepositoryCache.getInstance().lookupRepository(directory);
 	}
 }

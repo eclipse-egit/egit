@@ -33,6 +33,7 @@ import org.eclipse.core.runtime.jobs.IJobChangeEvent;
 import org.eclipse.core.runtime.jobs.IJobChangeListener;
 import org.eclipse.core.runtime.jobs.Job;
 import org.eclipse.core.runtime.jobs.JobChangeAdapter;
+import org.eclipse.egit.core.RepositoryUtil;
 import org.eclipse.egit.core.op.PullOperation;
 import org.eclipse.egit.core.op.PullOperation.PullReferenceConfig;
 import org.eclipse.egit.core.settings.GitSettings;
@@ -118,7 +119,7 @@ public class PullOperationUI extends JobChangeAdapter {
 		// figure out a job name
 		String jobName;
 		if (this.repositories.length == 1) {
-			String repoName = Activator.getDefault().getRepositoryUtil()
+			String repoName = RepositoryUtil.getInstance()
 					.getRepositoryName(repositories[0]);
 			String shortBranchName;
 			try {
@@ -230,7 +231,7 @@ public class PullOperationUI extends JobChangeAdapter {
 	 */
 	private void handleUncommittedChanges(final Repository repository,
 			final List<String> files, Shell shell) {
-		String repoName = Activator.getDefault().getRepositoryUtil()
+		String repoName = RepositoryUtil.getInstance()
 				.getRepositoryName(repository);
 		String title = MessageFormat.format(
 				UIText.AbstractRebaseCommandHandler_cleanupDialog_title,

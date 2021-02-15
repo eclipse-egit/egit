@@ -16,6 +16,8 @@ import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.core.runtime.jobs.Job;
+import org.eclipse.egit.core.RepositoryCache;
+import org.eclipse.egit.core.internal.indexdiff.IndexDiffCache;
 import org.eclipse.egit.core.internal.indexdiff.IndexDiffChangedListener;
 import org.eclipse.egit.core.internal.indexdiff.IndexDiffData;
 import org.eclipse.egit.ui.internal.UIText;
@@ -49,17 +51,14 @@ public abstract class GitDecorator extends LabelProvider
 	 * about index changes.
 	 */
 	public GitDecorator() {
-		org.eclipse.egit.core.Activator.getDefault().getIndexDiffCache()
-				.addIndexDiffChangedListener(this);
-		configListener = org.eclipse.egit.core.Activator.getDefault()
-				.getRepositoryCache().getGlobalListenerList()
+		IndexDiffCache.getInstance().addIndexDiffChangedListener(this);
+		configListener = RepositoryCache.getInstance().getGlobalListenerList()
 				.addConfigChangedListener(this);
 	}
 
 	@Override
 	public void dispose() {
-		org.eclipse.egit.core.Activator.getDefault().getIndexDiffCache()
-				.removeIndexDiffChangedListener(this);
+		IndexDiffCache.getInstance().removeIndexDiffChangedListener(this);
 		configListener.remove();
 		configListener = null;
 		Job job;

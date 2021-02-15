@@ -17,7 +17,6 @@ import java.util.List;
 
 import org.eclipse.egit.core.RepositoryCache;
 import org.eclipse.egit.core.RepositoryUtil;
-import org.eclipse.egit.ui.Activator;
 import org.eclipse.jface.viewers.IStructuredContentProvider;
 import org.eclipse.jface.viewers.Viewer;
 import org.eclipse.jgit.lib.Repository;
@@ -27,11 +26,9 @@ import org.eclipse.jgit.lib.Repository;
  * Repositories View
  */
 public class RepoComboContentProvider implements IStructuredContentProvider {
-	private final RepositoryUtil util = Activator.getDefault()
-			.getRepositoryUtil();
+	private final RepositoryUtil util = RepositoryUtil.getInstance();
 
-	private final RepositoryCache cache = org.eclipse.egit.core.Activator
-			.getDefault().getRepositoryCache();
+	private final RepositoryCache cache = RepositoryCache.getInstance();
 
 	@Override
 	public void dispose() {

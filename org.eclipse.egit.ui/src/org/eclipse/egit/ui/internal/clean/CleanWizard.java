@@ -11,7 +11,7 @@
 
 package org.eclipse.egit.ui.internal.clean;
 
-import org.eclipse.egit.ui.Activator;
+import org.eclipse.egit.core.RepositoryUtil;
 import org.eclipse.egit.ui.internal.UIText;
 import org.eclipse.jface.wizard.Wizard;
 import org.eclipse.jgit.lib.Repository;
@@ -36,7 +36,7 @@ public class CleanWizard extends Wizard {
 	public CleanWizard(Repository repository) {
 		this.repository = repository;
 		setNeedsProgressMonitor(true);
-		final String repoName = Activator.getDefault().getRepositoryUtil()
+		final String repoName = RepositoryUtil.getInstance()
 				.getRepositoryName(repository);
 		setWindowTitle(NLS.bind(UIText.CleanWizard_title, repoName));
 	}

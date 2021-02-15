@@ -28,7 +28,6 @@ import org.eclipse.core.commands.ExecutionException;
 import org.eclipse.core.expressions.IEvaluationContext;
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.egit.core.RepositoryUtil;
-import org.eclipse.egit.ui.Activator;
 import org.eclipse.egit.ui.internal.groups.RepositoryGroup;
 import org.eclipse.egit.ui.internal.repository.RepositoriesView;
 import org.eclipse.egit.ui.internal.repository.tree.FileNode;
@@ -53,8 +52,7 @@ abstract class RepositoriesViewCommandHandler<T extends RepositoryTreeNode<?>>
 
 	private IEvaluationContext evaluationContext;
 
-	protected final RepositoryUtil util = Activator.getDefault()
-			.getRepositoryUtil();
+	protected final RepositoryUtil util = RepositoryUtil.getInstance();
 
 	public RepositoriesView getView(ExecutionEvent event) throws ExecutionException {
 		IWorkbenchPart part = HandlerUtil.getActivePartChecked(event);

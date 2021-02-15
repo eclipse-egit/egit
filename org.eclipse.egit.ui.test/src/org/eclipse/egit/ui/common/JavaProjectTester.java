@@ -29,6 +29,7 @@ import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.Path;
 import org.eclipse.egit.core.Activator;
+import org.eclipse.egit.core.RepositoryCache;
 import org.eclipse.egit.core.internal.indexdiff.IndexDiffCache;
 import org.eclipse.egit.core.op.CommitOperation;
 import org.eclipse.egit.core.op.ConnectProviderOperation;
@@ -107,9 +108,9 @@ public class JavaProjectTester {
 		op.execute(null);
 
 		// Make sure cache entry is already listening for changes
-		IndexDiffCache cache = Activator.getDefault().getIndexDiffCache();
-		cache.getIndexDiffCacheEntry(Activator.getDefault().getRepositoryCache()
-				.lookupRepository(gitDir));
+		IndexDiffCache cache = IndexDiffCache.getInstance();
+		cache.getIndexDiffCacheEntry(
+				RepositoryCache.getInstance().lookupRepository(gitDir));
 		return jProject;
 	}
 

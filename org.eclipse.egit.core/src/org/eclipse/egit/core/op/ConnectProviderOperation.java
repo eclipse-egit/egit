@@ -37,14 +37,18 @@ import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.MultiStatus;
 import org.eclipse.core.runtime.Path;
+import org.eclipse.core.runtime.Platform;
 import org.eclipse.core.runtime.SubMonitor;
 import org.eclipse.core.runtime.jobs.ISchedulingRule;
 import org.eclipse.core.runtime.jobs.MultiRule;
 import org.eclipse.egit.core.Activator;
+import org.eclipse.egit.core.GitCorePreferences;
 import org.eclipse.egit.core.GitProvider;
 import org.eclipse.egit.core.JobFamilies;
+import org.eclipse.egit.core.RepositoryCache;
 import org.eclipse.egit.core.RepositoryUtil;
 import org.eclipse.egit.core.internal.CoreText;
+import org.eclipse.egit.core.internal.indexdiff.IndexDiffCache;
 import org.eclipse.egit.core.internal.indexdiff.IndexDiffCacheEntry;
 import org.eclipse.egit.core.internal.job.JobUtil;
 import org.eclipse.egit.core.internal.trace.GitTraceLocation;
@@ -170,11 +174,10 @@ public class ConnectProviderOperation implements IEGitOperation {
 			project.refreshLocal(IResource.DEPTH_INFINITE, subMon.newChild(30));
 			if (gitPath != null) {
 				try {
-					Repository repository = org.eclipse.egit.core.Activator
-							.getDefault().getRepositoryCache()
+					Repository repository = RepositoryCache.getInstance()
 							.lookupRepository(gitPath.toFile());
-					IndexDiffCacheEntry cacheEntry = org.eclipse.egit.core.Activator
-							.getDefault().getIndexDiffCache()
+					IndexDiffCacheEntry cacheEntry = IndexDiffCache
+							.getInstance()
 							.getIndexDiffCacheEntry(repository);
 					if (cacheEntry != null) {
 						cacheEntry.refresh();
@@ -235,7 +238,9 @@ public class ConnectProviderOperation implements IEGitOperation {
 
 	private void autoIgnoreDerivedResources(IProject project,
 			IProgressMonitor monitor) throws CoreException {
-		if (!Activator.autoIgnoreDerived()) {
+		if (!Platform.getPreferencesService().getBoolean(Activator.PLUGIN_ID,
+				GitCorePreferences.core_autoIgnoreDerivedResources, true,
+				null)) {
 			return;
 		}
 		List<IPath> paths = findDerivedResources(project);

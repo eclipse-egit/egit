@@ -76,7 +76,7 @@ public class MergeToolActionHandler extends RepositoryActionHandler {
 		if (selectedRepoPaths.isEmpty())
 			return false;
 
-		IndexDiffCache cache = org.eclipse.egit.core.Activator.getDefault().getIndexDiffCache();
+		IndexDiffCache cache = IndexDiffCache.getInstance();
 		if (cache == null)
 			return false;
 

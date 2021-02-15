@@ -42,6 +42,7 @@ import org.eclipse.core.runtime.SubMonitor;
 import org.eclipse.core.runtime.jobs.ISchedulingRule;
 import org.eclipse.egit.core.Activator;
 import org.eclipse.egit.core.IteratorService;
+import org.eclipse.egit.core.RepositoryCache;
 import org.eclipse.egit.core.internal.CoreText;
 import org.eclipse.egit.core.internal.job.RuleUtil;
 import org.eclipse.egit.core.internal.util.ResourceUtil;
@@ -153,7 +154,7 @@ public class IgnoreOperation implements IEGitOperation {
 		if (files.isEmpty()) {
 			return;
 		}
-		Repository repository = Activator.getDefault().getRepositoryCache()
+		Repository repository = RepositoryCache.getInstance()
 				.getRepository(folder);
 		if (repository == null || repository.isBare()) {
 			files.clear();
@@ -262,7 +263,7 @@ public class IgnoreOperation implements IEGitOperation {
 		SubMonitor progress = SubMonitor.convert(monitor, 1);
 		if (container == null) {
 			// .gitignore outside of workspace
-			Repository repository = Activator.getDefault().getRepositoryCache()
+			Repository repository = RepositoryCache.getInstance()
 					.getRepository(parent);
 			if (repository == null || repository.isBare()) {
 				String message = NLS.bind(

@@ -22,6 +22,7 @@ import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.core.runtime.SubMonitor;
+import org.eclipse.egit.core.RepositoryCache;
 import org.eclipse.egit.ui.Activator;
 import org.eclipse.egit.ui.internal.GitLabelProvider;
 import org.eclipse.egit.ui.internal.UIText;
@@ -182,8 +183,7 @@ public class CommitSelectionDialog extends FilteredItemsSelectionDialog {
 	}
 
 	private Repository[] getRepositories() {
-		return org.eclipse.egit.core.Activator.getDefault()
-				.getRepositoryCache().getAllRepositories();
+		return RepositoryCache.getInstance().getAllRepositories();
 	}
 
 	@Override

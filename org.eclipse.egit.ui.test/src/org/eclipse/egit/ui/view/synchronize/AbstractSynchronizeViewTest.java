@@ -36,6 +36,7 @@ import org.eclipse.core.resources.IResource;
 import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.Path;
+import org.eclipse.egit.core.RepositoryUtil;
 import org.eclipse.egit.core.op.CommitOperation;
 import org.eclipse.egit.core.op.ConnectProviderOperation;
 import org.eclipse.egit.core.project.RepositoryMapping;
@@ -116,8 +117,7 @@ public abstract class AbstractSynchronizeViewTest extends
 
 		createTag(INITIAL_TAG);
 
-		Activator.getDefault().getRepositoryUtil()
-				.addConfiguredRepository(repositoryFile);
+		RepositoryUtil.getInstance().addConfiguredRepository(repositoryFile);
 	}
 
 	@BeforeClass

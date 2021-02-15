@@ -25,6 +25,7 @@ import java.util.SortedSet;
 import java.util.TreeSet;
 import java.util.regex.Pattern;
 
+import org.eclipse.egit.core.RepositoryUtil;
 import org.eclipse.egit.core.internal.gerrit.GerritUtil;
 import org.eclipse.egit.core.op.PushOperationSpecification;
 import org.eclipse.egit.ui.Activator;
@@ -125,8 +126,8 @@ public class PushToGerritPage extends WizardPage {
 	PushToGerritPage(Repository repository) {
 		super(PushToGerritPage.class.getName());
 		this.repository = repository;
-		setTitle(NLS.bind(UIText.PushToGerritPage_Title, Activator.getDefault()
-				.getRepositoryUtil().getRepositoryName(repository)));
+		setTitle(NLS.bind(UIText.PushToGerritPage_Title,
+				RepositoryUtil.getInstance().getRepositoryName(repository)));
 		setMessage(UIText.PushToGerritPage_Message);
 		settings = getDialogSettings();
 		lastUriKey = repository + GerritDialogSettings.LAST_URI_SUFFIX;

@@ -35,6 +35,7 @@ import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.Path;
+import org.eclipse.egit.core.RepositoryUtil;
 import org.eclipse.egit.core.internal.CompareCoreUtils;
 import org.eclipse.egit.core.internal.CoreText;
 import org.eclipse.egit.core.internal.storage.GitFileRevision;
@@ -249,7 +250,7 @@ public class GitMergeEditorInput extends CompareEditorInput {
 			// set title and icon
 			setTitle(NLS.bind(UIText.GitMergeEditorInput_MergeEditorTitle,
 					new Object[] {
-							Activator.getDefault().getRepositoryUtil()
+							RepositoryUtil.getInstance()
 									.getRepositoryName(repo),
 							rightCommit.getShortMessage(), fullBranch }));
 

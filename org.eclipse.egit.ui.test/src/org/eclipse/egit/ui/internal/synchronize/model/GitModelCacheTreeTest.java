@@ -15,8 +15,8 @@ import static org.junit.Assert.assertTrue;
 import static org.mockito.Mockito.mock;
 
 import org.eclipse.core.runtime.IPath;
+import org.eclipse.egit.core.RepositoryUtil;
 import org.eclipse.egit.core.synchronize.GitCommitsModelCache.Change;
-import org.eclipse.egit.ui.Activator;
 import org.eclipse.egit.ui.internal.synchronize.model.TreeBuilder.FileModelFactory;
 import org.eclipse.jgit.lib.Repository;
 import org.junit.Before;
@@ -77,8 +77,7 @@ public class GitModelCacheTreeTest extends GitModelTestCase {
 	public void setupEnvironment() throws Exception {
 		leftRepoFile = createProjectAndCommitToRepository();
 
-		Activator.getDefault().getRepositoryUtil()
-				.addConfiguredRepository(leftRepoFile);
+		RepositoryUtil.getInstance().addConfiguredRepository(leftRepoFile);
 	}
 
 	private GitModelCacheTree crateCacheTree(IPath location)

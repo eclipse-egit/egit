@@ -32,6 +32,7 @@ import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.Path;
 import org.eclipse.core.runtime.SubMonitor;
+import org.eclipse.egit.core.RepositoryCache;
 import org.eclipse.egit.core.op.ConnectProviderOperation;
 import org.eclipse.egit.ui.Activator;
 import org.eclipse.egit.ui.internal.UIIcons;
@@ -185,15 +186,12 @@ public class GitImportWizard extends AbstractGitCloneWizard implements IImportWi
 			return existingRepo;
 		else
 			try {
-				return org.eclipse.egit.core.Activator
-						.getDefault()
-						.getRepositoryCache()
-						.lookupRepository(
-								new File(cloneDestination.getDestinationFile(),
-										Constants.DOT_GIT));
+				return RepositoryCache.getInstance().lookupRepository(
+						new File(cloneDestination.getDestinationFile(),
+								Constants.DOT_GIT));
 			} catch (IOException e) {
-				Activator
-						.error("Error looking up repository at " + cloneDestination.getDestinationFile(), e); //$NON-NLS-1$
+				Activator.error("Error looking up repository at " //$NON-NLS-1$
+						+ cloneDestination.getDestinationFile(), e);
 				return null;
 			}
 	}
