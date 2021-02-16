@@ -99,48 +99,45 @@ public class DeleteBranchOperation implements IEGitOperation {
 
 	@Override
 	public void execute(IProgressMonitor monitor) throws CoreException {
-		IWorkspaceRunnable action = new IWorkspaceRunnable() {
-			@Override
-			public void run(IProgressMonitor actMonitor) throws CoreException {
+		IWorkspaceRunnable action = actMonitor -> {
 
-				String taskName;
-				if (branches.size() == 1)
-					taskName = NLS.bind(
-							CoreText.DeleteBranchOperation_TaskName, branches
-									.iterator().next().getName());
-				else {
-					StringBuilder names = new StringBuilder();
-					for (Iterator<Ref> it = branches.iterator(); it.hasNext(); ) {
-						Ref ref = it.next();
-						names.append(ref.getName());
-						if (it.hasNext())
-							names.append(", "); //$NON-NLS-1$
-					}
-					taskName = NLS.bind(
-							CoreText.DeleteBranchOperation_TaskName, names);
+			String taskName;
+			if (branches.size() == 1)
+				taskName = NLS.bind(
+						CoreText.DeleteBranchOperation_TaskName, branches
+								.iterator().next().getName());
+			else {
+				StringBuilder names = new StringBuilder();
+				for (Iterator<Ref> it = branches.iterator(); it.hasNext(); ) {
+					Ref ref = it.next();
+					names.append(ref.getName());
+					if (it.hasNext())
+						names.append(", "); //$NON-NLS-1$
 				}
-				SubMonitor progress = SubMonitor.convert(actMonitor, taskName,
-						branches.size());
-				for (Ref branch : branches) {
-					if (progress.isCanceled()) {
-						throw new OperationCanceledException(
-								CoreText.DeleteBranchOperation_Canceled);
-					}
-					try (Git git = new Git(repository)) {
-						git.branchDelete().setBranchNames(
-								branch.getName()).setForce(force).call();
-						status = OK;
-					} catch (NotMergedException e) {
-						status = REJECTED_UNMERGED;
-						break;
-					} catch (CannotDeleteCurrentBranchException e) {
-						status = REJECTED_CURRENT;
-						break;
-					} catch (JGitInternalException | GitAPIException e) {
-						throw new CoreException(Activator.error(e.getMessage(), e));
-					}
-					progress.worked(1);
+				taskName = NLS.bind(
+						CoreText.DeleteBranchOperation_TaskName, names);
+			}
+			SubMonitor progress = SubMonitor.convert(actMonitor, taskName,
+					branches.size());
+			for (Ref branch : branches) {
+				if (progress.isCanceled()) {
+					throw new OperationCanceledException(
+							CoreText.DeleteBranchOperation_Canceled);
 				}
+				try (Git git = new Git(repository)) {
+					git.branchDelete().setBranchNames(
+							branch.getName()).setForce(force).call();
+					status = OK;
+				} catch (NotMergedException e) {
+					status = REJECTED_UNMERGED;
+					break;
+				} catch (CannotDeleteCurrentBranchException e) {
+					status = REJECTED_CURRENT;
+					break;
+				} catch (JGitInternalException | GitAPIException e) {
+					throw new CoreException(Activator.error(e.getMessage(), e));
+				}
+				progress.worked(1);
 			}
 		};
 		// lock workspace to protect working tree changes

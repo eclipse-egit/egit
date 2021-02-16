@@ -51,19 +51,15 @@ public class StashDropOperation implements IEGitOperation {
 
 	@Override
 	public void execute(IProgressMonitor monitor) throws CoreException {
-		IWorkspaceRunnable action = new IWorkspaceRunnable() {
-
-			@Override
-			public void run(IProgressMonitor pm) throws CoreException {
-				StashDropCommand command = Git.wrap(repo).stashDrop();
-				command.setStashRef(index);
-				try {
-					command.call();
-					repo.fireEvent(new RefsChangedEvent());
-				} catch (JGitInternalException | GitAPIException e) {
-					throw new TeamException(e.getLocalizedMessage(),
-							e.getCause());
-				}
+		IWorkspaceRunnable action = pm -> {
+			StashDropCommand command = Git.wrap(repo).stashDrop();
+			command.setStashRef(index);
+			try {
+				command.call();
+				repo.fireEvent(new RefsChangedEvent());
+			} catch (JGitInternalException | GitAPIException e) {
+				throw new TeamException(e.getLocalizedMessage(),
+						e.getCause());
 			}
 		};
 		ResourcesPlugin.getWorkspace().run(action, getSchedulingRule(),

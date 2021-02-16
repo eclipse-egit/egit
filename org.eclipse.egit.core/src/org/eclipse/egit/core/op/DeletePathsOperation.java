@@ -21,7 +21,6 @@ import java.util.Map;
 
 import org.eclipse.core.resources.IResource;
 import org.eclipse.core.resources.IWorkspace;
-import org.eclipse.core.resources.IWorkspaceRunnable;
 import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IPath;
@@ -59,14 +58,8 @@ public class DeletePathsOperation implements IEGitOperation {
 
 	@Override
 	public void execute(IProgressMonitor m) throws CoreException {
-		IWorkspaceRunnable action = new IWorkspaceRunnable() {
-			@Override
-			public void run(IProgressMonitor actMonitor) throws CoreException {
-				deletePaths(actMonitor);
-			}
-		};
-		ResourcesPlugin.getWorkspace().run(action, getSchedulingRule(),
-				IWorkspace.AVOID_UPDATE, m);
+		ResourcesPlugin.getWorkspace().run(this::deletePaths,
+				getSchedulingRule(), IWorkspace.AVOID_UPDATE, m);
 	}
 
 	@Override

@@ -74,79 +74,75 @@ public class SubmoduleUpdateOperation implements IEGitOperation {
 
 	@Override
 	public void execute(final IProgressMonitor monitor) throws CoreException {
-		IWorkspaceRunnable action = new IWorkspaceRunnable() {
+		IWorkspaceRunnable action = pm -> {
+			RepositoryUtil util = Activator.getDefault()
+					.getRepositoryUtil();
+			SubMonitor progress = SubMonitor.convert(pm, 4);
+			progress.setTaskName(MessageFormat.format(
+					CoreText.SubmoduleUpdateOperation_updating,
+					util.getRepositoryName(repository)));
 
-			@Override
-			public void run(IProgressMonitor pm) throws CoreException {
-				RepositoryUtil util = Activator.getDefault()
-						.getRepositoryUtil();
-				SubMonitor progress = SubMonitor.convert(pm, 4);
-				progress.setTaskName(MessageFormat.format(
-						CoreText.SubmoduleUpdateOperation_updating,
-						util.getRepositoryName(repository)));
+			Git git = Git.wrap(repository);
 
-				Git git = Git.wrap(repository);
+			Collection<String> updated = null;
+			try {
+				SubmoduleInitCommand init = git.submoduleInit();
+				for (String path : paths)
+					init.addPath(path);
+				init.call();
+				progress.worked(1);
 
-				Collection<String> updated = null;
-				try {
-					SubmoduleInitCommand init = git.submoduleInit();
-					for (String path : paths)
-						init.addPath(path);
-					init.call();
-					progress.worked(1);
+				SubmoduleUpdateCommand update = git.submoduleUpdate();
+				for (String path : paths)
+					update.addPath(path);
+				update.setProgressMonitor(new EclipseGitProgressTransformer(
+						progress.newChild(2)));
+				MergeStrategy strategy = Activator.getDefault()
+						.getPreferredMergeStrategy();
+				if (strategy != null) {
+					update.setStrategy(strategy);
+				}
+				update.setCallback(new CloneCommand.Callback() {
 
-					SubmoduleUpdateCommand update = git.submoduleUpdate();
-					for (String path : paths)
-						update.addPath(path);
-					update.setProgressMonitor(new EclipseGitProgressTransformer(
-							progress.newChild(2)));
-					MergeStrategy strategy = Activator.getDefault()
-							.getPreferredMergeStrategy();
-					if (strategy != null) {
-						update.setStrategy(strategy);
+					@Override
+					public void initializedSubmodules(
+							Collection<String> submodules) {
+						// Nothing to do
 					}
-					update.setCallback(new CloneCommand.Callback() {
 
-						@Override
-						public void initializedSubmodules(
-								Collection<String> submodules) {
-							// Nothing to do
-						}
-
-						@Override
-						public void cloningSubmodule(String path) {
-							progress.setTaskName(MessageFormat.format(
-									CoreText.SubmoduleUpdateOperation_cloning,
-									util.getRepositoryName(repository), path));
-						}
-
-						@Override
-						public void checkingOut(AnyObjectId commit,
-								String path) {
-							// Nothing to do
-						}
-					});
-					updated = update.call();
-					SubMonitor refreshMonitor = progress.newChild(1)
-							.setWorkRemaining(updated.size());
-					for (String path : updated) {
-						Repository subRepo = SubmoduleWalk
-								.getSubmoduleRepository(repository, path);
-						if (subRepo != null) {
-							ProjectUtil.refreshValidProjects(
-									ProjectUtil.getValidOpenProjects(subRepo),
-									refreshMonitor.newChild(1));
-						} else {
-							refreshMonitor.worked(1);
-						}
+					@Override
+					public void cloningSubmodule(String path) {
+						progress.setTaskName(MessageFormat.format(
+								CoreText.SubmoduleUpdateOperation_cloning,
+								util.getRepositoryName(repository), path));
 					}
-				} catch (GitAPIException | IOException e) {
-					throw new TeamException(e.getLocalizedMessage(),
-							e.getCause());
-				} finally {
-					if (updated != null && !updated.isEmpty()) {
-						repository.notifyIndexChanged(true);
+
+					@Override
+					public void checkingOut(AnyObjectId commit,
+							String path) {
+						// Nothing to do
 					}
+				});
+				updated = update.call();
+				SubMonitor refreshMonitor = progress.newChild(1)
+						.setWorkRemaining(updated.size());
+				for (String path : updated) {
+					Repository subRepo = SubmoduleWalk
+							.getSubmoduleRepository(repository, path);
+					if (subRepo != null) {
+						ProjectUtil.refreshValidProjects(
+								ProjectUtil.getValidOpenProjects(subRepo),
+								refreshMonitor.newChild(1));
+					} else {
+						refreshMonitor.worked(1);
+					}
+				}
+			} catch (GitAPIException | IOException e) {
+				throw new TeamException(e.getLocalizedMessage(),
+						e.getCause());
+			} finally {
+				if (updated != null && !updated.isEmpty()) {
+					repository.notifyIndexChanged(true);
 				}
 			}
 		};

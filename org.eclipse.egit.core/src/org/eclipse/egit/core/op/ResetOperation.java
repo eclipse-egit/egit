@@ -18,7 +18,6 @@ import java.util.Locale;
 
 import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.IWorkspace;
-import org.eclipse.core.resources.IWorkspaceRunnable;
 import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IProgressMonitor;
@@ -71,14 +70,8 @@ public class ResetOperation implements IEGitOperation {
 	@Override
 	public void execute(IProgressMonitor m) throws CoreException {
 		if (type == ResetType.HARD) {
-			IWorkspaceRunnable action = new IWorkspaceRunnable() {
-				@Override
-				public void run(IProgressMonitor actMonitor) throws CoreException {
-					reset(actMonitor);
-				}
-			};
 			// lock workspace to protect working tree changes
-			ResourcesPlugin.getWorkspace().run(action, getSchedulingRule(),
+			ResourcesPlugin.getWorkspace().run(this::reset, getSchedulingRule(),
 					IWorkspace.AVOID_UPDATE, m);
 		} else {
 			reset(m);

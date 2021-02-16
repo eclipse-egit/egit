@@ -63,48 +63,45 @@ public class EditCommitOperation implements IEGitOperation {
 	@Override
 	public void execute(IProgressMonitor m) throws CoreException {
 
-		IWorkspaceRunnable action = new IWorkspaceRunnable() {
-			@Override
-			public void run(IProgressMonitor pm) throws CoreException {
-				SubMonitor progress = SubMonitor.convert(pm, 2);
+		IWorkspaceRunnable action = pm -> {
+			SubMonitor progress = SubMonitor.convert(pm, 2);
 
-				progress.subTask(MessageFormat.format(
-						CoreText.EditCommitOperation_editing,
-						commit.name()));
+			progress.subTask(MessageFormat.format(
+					CoreText.EditCommitOperation_editing,
+					commit.name()));
 
-				InteractiveHandler handler = new InteractiveHandler() {
-					@Override
-					public void prepareSteps(List<RebaseTodoLine> steps) {
-						for (RebaseTodoLine step : steps) {
-							if (step.getCommit().prefixCompare(commit) == 0) {
-								try {
-									step.setAction(RebaseTodoLine.Action.EDIT);
-								} catch (IllegalTodoFileModification e) {
-									// shouldn't happen
-								}
+			InteractiveHandler handler = new InteractiveHandler() {
+				@Override
+				public void prepareSteps(List<RebaseTodoLine> steps) {
+					for (RebaseTodoLine step : steps) {
+						if (step.getCommit().prefixCompare(commit) == 0) {
+							try {
+								step.setAction(RebaseTodoLine.Action.EDIT);
+							} catch (IllegalTodoFileModification e) {
+								// shouldn't happen
 							}
 						}
 					}
-
-					@Override
-					public String modifyCommitMessage(String oldMessage) {
-						return oldMessage;
-					}
-				};
-				try (Git git = new Git(repository)) {
-					git.rebase().setUpstream(commit.getParent(0))
-							.runInteractively(handler)
-							.setOperation(RebaseCommand.Operation.BEGIN).call();
-				} catch (GitAPIException e) {
-					throw new TeamException(e.getLocalizedMessage(),
-							e.getCause());
 				}
-				progress.worked(1);
 
-				ProjectUtil.refreshValidProjects(
-						ProjectUtil.getValidOpenProjects(repository),
-						progress.newChild(1));
+				@Override
+				public String modifyCommitMessage(String oldMessage) {
+					return oldMessage;
+				}
+			};
+			try (Git git = new Git(repository)) {
+				git.rebase().setUpstream(commit.getParent(0))
+						.runInteractively(handler)
+						.setOperation(RebaseCommand.Operation.BEGIN).call();
+			} catch (GitAPIException e) {
+				throw new TeamException(e.getLocalizedMessage(),
+						e.getCause());
 			}
+			progress.worked(1);
+
+			ProjectUtil.refreshValidProjects(
+					ProjectUtil.getValidOpenProjects(repository),
+					progress.newChild(1));
 		};
 
 		ResourcesPlugin.getWorkspace().run(action, getSchedulingRule(),
