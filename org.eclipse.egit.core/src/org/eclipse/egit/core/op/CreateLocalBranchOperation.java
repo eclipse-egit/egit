@@ -84,43 +84,39 @@ public class CreateLocalBranchOperation implements IEGitOperation {
 
 	@Override
 	public void execute(IProgressMonitor monitor) throws CoreException {
-		IWorkspaceRunnable action = new IWorkspaceRunnable() {
-			@Override
-			public void run(IProgressMonitor actMonitor) throws CoreException {
-				String taskName = NLS.bind(
-						CoreText.CreateLocalBranchOperation_CreatingBranchMessage,
-						name);
-				SubMonitor progress = SubMonitor.convert(actMonitor);
-				progress.setTaskName(taskName);
-				try (Git git = new Git(repository)) {
-					if (ref != null) {
-						SetupUpstreamMode mode;
-						if (upstreamConfig == null)
-							mode = SetupUpstreamMode.NOTRACK;
-						else
-							mode = SetupUpstreamMode.SET_UPSTREAM;
-						git.branchCreate().setName(name).setStartPoint(
-								ref.getName()).setUpstreamMode(mode).call();
-					}
+		IWorkspaceRunnable action = actMonitor -> {
+			String taskName = NLS.bind(
+					CoreText.CreateLocalBranchOperation_CreatingBranchMessage,
+					name);
+			SubMonitor progress = SubMonitor.convert(actMonitor);
+			progress.setTaskName(taskName);
+			try (Git git = new Git(repository)) {
+				if (ref != null) {
+					SetupUpstreamMode mode;
+					if (upstreamConfig == null)
+						mode = SetupUpstreamMode.NOTRACK;
 					else
-						git.branchCreate().setName(name).setStartPoint(commit)
-								.setUpstreamMode(SetupUpstreamMode.NOTRACK)
-								.call();
-				} catch (Exception e) {
-					throw new CoreException(Activator.error(e.getMessage(), e));
+						mode = SetupUpstreamMode.SET_UPSTREAM;
+					git.branchCreate().setName(name).setStartPoint(
+							ref.getName()).setUpstreamMode(mode).call();
 				}
+				else
+					git.branchCreate().setName(name).setStartPoint(commit)
+							.setUpstreamMode(SetupUpstreamMode.NOTRACK)
+							.call();
+			} catch (Exception e) {
+				throw new CoreException(Activator.error(e.getMessage(), e));
+			}
 
-				if (upstreamConfig != null) {
-					// set "branch.<name>.rebase"
-					StoredConfig config = repository.getConfig();
-					config.setEnum(ConfigConstants.CONFIG_BRANCH_SECTION, name,
-							ConfigConstants.CONFIG_KEY_REBASE, upstreamConfig);
-					try {
-						config.save();
-					} catch (IOException e) {
-						throw new CoreException(Activator.error(e.getMessage(),
-								e));
-					}
+			if (upstreamConfig != null) {
+				// set "branch.<name>.rebase"
+				StoredConfig config = repository.getConfig();
+				config.setEnum(ConfigConstants.CONFIG_BRANCH_SECTION, name,
+						ConfigConstants.CONFIG_KEY_REBASE, upstreamConfig);
+				try {
+					config.save();
+				} catch (IOException e) {
+					throw new CoreException(Activator.error(e.getMessage(), e));
 				}
 			}
 		};
