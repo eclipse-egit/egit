@@ -22,7 +22,6 @@ import java.util.List;
 
 import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.IWorkspace;
-import org.eclipse.core.resources.IWorkspaceRunnable;
 import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IProgressMonitor;
@@ -115,13 +114,10 @@ public final class GitProjectSetCapability extends ProjectSetCapability {
 		final ArrayList<IProject> importedProjects = new ArrayList<>();
 
 		try{
-			ResourcesPlugin.getWorkspace().run(new IWorkspaceRunnable() {
-				@Override
-				public void run(IProgressMonitor wsOpMonitor) throws CoreException {
-					ProjectReferenceImporter importer = new ProjectReferenceImporter(referenceStrings);
-					List<IProject> p = importer.run(wsOpMonitor);
-					importedProjects.addAll(p);
-				}
+			ResourcesPlugin.getWorkspace().run(wsOpMonitor -> {
+				ProjectReferenceImporter importer = new ProjectReferenceImporter(referenceStrings);
+				List<IProject> p = importer.run(wsOpMonitor);
+				importedProjects.addAll(p);
 			}, ResourcesPlugin.getWorkspace().getRoot(), IWorkspace.AVOID_UPDATE, monitor);
 		} catch (CoreException e) {
 			throw TeamException.asTeamException(e);

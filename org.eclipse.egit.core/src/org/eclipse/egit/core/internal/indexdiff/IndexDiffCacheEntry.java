@@ -60,10 +60,8 @@ import org.eclipse.jgit.annotations.Nullable;
 import org.eclipse.jgit.dircache.DirCache;
 import org.eclipse.jgit.dircache.DirCacheIterator;
 import org.eclipse.jgit.errors.IndexReadException;
-import org.eclipse.jgit.events.IndexChangedEvent;
 import org.eclipse.jgit.events.IndexChangedListener;
 import org.eclipse.jgit.events.ListenerHandle;
-import org.eclipse.jgit.events.RefsChangedEvent;
 import org.eclipse.jgit.events.RefsChangedListener;
 import org.eclipse.jgit.lib.Constants;
 import org.eclipse.jgit.lib.IndexDiff;
@@ -104,19 +102,10 @@ public class IndexDiffCacheEntry {
 
 	private CopyOnWriteArrayList<IndexDiffChangedListener> listeners = new CopyOnWriteArrayList<>();
 
-	private final IndexChangedListener indexChangedListener = new IndexChangedListener() {
-		@Override
-		public void onIndexChanged(IndexChangedEvent event) {
-			refreshIndexDelta();
-		}
-	};
+	private final IndexChangedListener indexChangedListener = event -> refreshIndexDelta();
 
-	private final RefsChangedListener refsChangedListener = new RefsChangedListener() {
-		@Override
-		public void onRefsChanged(RefsChangedEvent event) {
-			scheduleReloadJob("RefsChanged"); //$NON-NLS-1$
-		}
-	};
+	private final RefsChangedListener refsChangedListener = event -> scheduleReloadJob(
+			"RefsChanged"); //$NON-NLS-1$
 
 	private final Set<ListenerHandle> listenerHandles = new HashSet<>();
 

@@ -38,7 +38,6 @@ import org.eclipse.core.resources.IResource;
 import org.eclipse.core.resources.IResourceChangeEvent;
 import org.eclipse.core.resources.IResourceChangeListener;
 import org.eclipse.core.resources.IResourceDelta;
-import org.eclipse.core.resources.IResourceDeltaVisitor;
 import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.Adapters;
 import org.eclipse.core.runtime.CoreException;
@@ -295,65 +294,61 @@ public class GitProjectData {
 		// the project has to be disconnected first.
 		final Set<GitProjectData> modified = new HashSet<>();
 		try {
-			event.getDelta().accept(new IResourceDeltaVisitor() {
-				@Override
-				public boolean visit(IResourceDelta delta)
-						throws CoreException {
-					IResource resource = delta.getResource();
-					int type = resource.getType();
-					if (type == IResource.ROOT) {
-						return true;
-					} else if (type == IResource.PROJECT) {
-						return (delta.getKind() & (IResourceDelta.ADDED
-								| IResourceDelta.CHANGED)) != 0
-								&& ResourceUtil.isSharedWithGit(resource);
-					}
-					// Files & folders
-					if ((delta.getKind() & (IResourceDelta.ADDED
-							| IResourceDelta.CHANGED)) == 0
-							|| resource.isLinked()) {
-						return false;
-					}
-					IPath location = resource.getLocation();
-					if (location == null) {
-						return false;
-					}
-					if (!Constants.DOT_GIT.equals(resource.getName())) {
-						return type == IResource.FOLDER;
-					}
-					// A file or folder named .git
-					File gitCandidate = location.toFile().getParentFile();
-					File git = new FileRepositoryBuilder()
-							.addCeilingDirectory(gitCandidate)
-							.findGitDir(gitCandidate).getGitDir();
-					if (git == null) {
-						return false;
-					}
-					// Yes, indeed a valid git directory.
-					GitProjectData data = get(resource.getProject());
-					if (data == null) {
-						return false;
-					}
-					RepositoryMapping m = RepositoryMapping
-							.create(resource.getParent(), git);
-					// Is its working directory really here? If not,
-					// a submodule folder may have been copied.
-					try {
-						Repository r = Activator.getDefault()
-								.getRepositoryCache().lookupRepository(git);
-						if (m != null && r != null && !r.isBare()
-								&& gitCandidate.equals(r.getWorkTree())) {
-							if (data.map(m)) {
-								data.mappings.put(m.getContainerPath(), m);
-								modified.add(data);
-							}
-						}
-					} catch (IOException e) {
-						Activator.logError(e.getMessage(), e);
-					}
-					return false;
+			event.getDelta().accept(delta -> {
+IResource resource = delta.getResource();
+int type = resource.getType();
+if (type == IResource.ROOT) {
+			return true;
+} else if (type == IResource.PROJECT) {
+			return (delta.getKind() & (IResourceDelta.ADDED
+					| IResourceDelta.CHANGED)) != 0
+					&& ResourceUtil.isSharedWithGit(resource);
+}
+// Files & folders
+if ((delta.getKind() & (IResourceDelta.ADDED
+				| IResourceDelta.CHANGED)) == 0
+				|| resource.isLinked()) {
+			return false;
+}
+IPath location = resource.getLocation();
+if (location == null) {
+			return false;
+}
+if (!Constants.DOT_GIT.equals(resource.getName())) {
+			return type == IResource.FOLDER;
+}
+// A file or folder named .git
+File gitCandidate = location.toFile().getParentFile();
+File git = new FileRepositoryBuilder()
+				.addCeilingDirectory(gitCandidate)
+				.findGitDir(gitCandidate).getGitDir();
+if (git == null) {
+			return false;
+}
+// Yes, indeed a valid git directory.
+GitProjectData data = get(resource.getProject());
+if (data == null) {
+			return false;
+}
+RepositoryMapping m = RepositoryMapping
+				.create(resource.getParent(), git);
+// Is its working directory really here? If not,
+// a submodule folder may have been copied.
+try {
+			Repository r = Activator.getDefault()
+					.getRepositoryCache().lookupRepository(git);
+			if (m != null && r != null && !r.isBare()
+					&& gitCandidate.equals(r.getWorkTree())) {
+				if (data.map(m)) {
+					data.mappings.put(m.getContainerPath(), m);
+					modified.add(data);
 				}
-			});
+			}
+} catch (IOException e) {
+			Activator.logError(e.getMessage(), e);
+}
+return false;
+});
 		} catch (CoreException e) {
 			Activator.logError(e.getMessage(), e);
 		} finally {
