@@ -196,26 +196,21 @@ public class CommitOperation implements IEGitOperation {
 
 	@Override
 	public void execute(IProgressMonitor monitor) throws CoreException {
-		IWorkspaceRunnable action = new IWorkspaceRunnable() {
-
-			@Override
-			public void run(IProgressMonitor actMonitor) throws CoreException {
-				if (commitAll)
-					commitAll();
-				else if (amending || commitFileList != null
-						&& commitFileList.size() > 0 || commitIndex) {
-					SubMonitor progress = SubMonitor.convert(actMonitor);
-					progress.setTaskName(
-							CoreText.CommitOperation_PerformingCommit);
-					addUntracked();
-					commit();
-				} else if (commitWorkingDirChanges) {
-					// TODO commit -a
-				} else {
-					// TODO commit
-				}
+		IWorkspaceRunnable action = actMonitor -> {
+			if (commitAll)
+				commitAll();
+			else if (amending || commitFileList != null
+					&& commitFileList.size() > 0 || commitIndex) {
+				SubMonitor progress = SubMonitor.convert(actMonitor);
+				progress.setTaskName(
+						CoreText.CommitOperation_PerformingCommit);
+				addUntracked();
+				commit();
+			} else if (commitWorkingDirChanges) {
+				// TODO commit -a
+			} else {
+				// TODO commit
 			}
-
 		};
 		ResourcesPlugin.getWorkspace().run(action, getSchedulingRule(),
 				IWorkspace.AVOID_UPDATE, monitor);
