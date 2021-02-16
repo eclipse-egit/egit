@@ -76,6 +76,30 @@
     },
     {
       "key": {
+        "uuid": "18736f5b_5273afdd",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/GitProjectSetCapability.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 118,
+      "author": {
+        "id": 1093
+      },
+      "writtenOn": "2021-02-16T12:29:06Z",
+      "side": 1,
+      "message": "No, I will remove it.",
+      "parentUuid": "acd7e1d2_5d186298",
+      "range": {
+        "startLine": 118,
+        "startChar": 38,
+        "endLine": 118,
+        "endChar": 58
+      },
+      "revId": "dfbfc76cf6bf6d40ea8d78493907e6842d6bdc09",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "209172e6_289e31f6",
         "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/op/ConnectProviderOperation.java",
         "patchSetId": 1
@@ -87,6 +111,24 @@
       "writtenOn": "2020-04-15T09:14:41Z",
       "side": 1,
       "message": "Here I\u0027d like to have an explicit indication that we\u0027re using an IResourceProxyVisitor, not an IResourceVisitor. It just so happens to work because by chance we use the one unambiguous accept(). Rather fragile.",
+      "revId": "dfbfc76cf6bf6d40ea8d78493907e6842d6bdc09",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a12f883f_695357b3",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/op/ConnectProviderOperation.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 207,
+      "author": {
+        "id": 1093
+      },
+      "writtenOn": "2021-02-16T12:29:06Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "209172e6_289e31f6",
       "revId": "dfbfc76cf6bf6d40ea8d78493907e6842d6bdc09",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
@@ -110,6 +152,24 @@
     },
     {
       "key": {
+        "uuid": "7c6e8363_45ebaa24",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/op/ConnectProviderOperation.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 208,
+      "author": {
+        "id": 1093
+      },
+      "writtenOn": "2021-02-16T12:29:06Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fb86c138_1beebaf4",
+      "revId": "dfbfc76cf6bf6d40ea8d78493907e6842d6bdc09",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f0df0d4b_67123600",
         "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/op/CreateLocalBranchOperation.java",
         "patchSetId": 1
@@ -127,6 +187,24 @@
     },
     {
       "key": {
+        "uuid": "03556e46_43e0bac4",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/op/CreateLocalBranchOperation.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 1093
+      },
+      "writtenOn": "2021-02-16T12:29:06Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f0df0d4b_67123600",
+      "revId": "dfbfc76cf6bf6d40ea8d78493907e6842d6bdc09",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "68e228fa_4646fef6",
         "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/op/DeleteBranchOperation.java",
         "patchSetId": 1
@@ -138,6 +216,24 @@
       "writtenOn": "2020-04-14T10:52:54Z",
       "side": 1,
       "message": "renaming again, also below",
+      "revId": "dfbfc76cf6bf6d40ea8d78493907e6842d6bdc09",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c7a1f1a4_e1bce9eb",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/op/DeleteBranchOperation.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 131,
+      "author": {
+        "id": 1093
+      },
+      "writtenOn": "2021-02-16T12:29:06Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "68e228fa_4646fef6",
       "revId": "dfbfc76cf6bf6d40ea8d78493907e6842d6bdc09",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
@@ -167,6 +263,30 @@
     },
     {
       "key": {
+        "uuid": "67001aad_439b7fc9",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/op/DeletePathsOperation.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1093
+      },
+      "writtenOn": "2021-02-16T12:29:06Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "13982ee0_b51a630d",
+      "range": {
+        "startLine": 62,
+        "startChar": 30,
+        "endLine": 62,
+        "endChar": 67
+      },
+      "revId": "dfbfc76cf6bf6d40ea8d78493907e6842d6bdc09",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3103dec4_fba51c9c",
         "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/op/DiscardChangesOperation.java",
         "patchSetId": 1
@@ -178,6 +298,24 @@
       "writtenOn": "2020-04-15T09:14:41Z",
       "side": 1,
       "message": "Same here:\n\n  ResourcesPlugin.getWorkspace().run(thsi::discardChanges, getSchedulingRule(), IWorkspace.AVOID_UPDATE, m);",
+      "revId": "dfbfc76cf6bf6d40ea8d78493907e6842d6bdc09",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a54bda0e_2c4baca5",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/op/DiscardChangesOperation.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 179,
+      "author": {
+        "id": 1093
+      },
+      "writtenOn": "2021-02-16T12:29:06Z",
+      "side": 1,
+      "message": "\u003e Same here:\n\u003e \n\u003e   ResourcesPlugin.getWorkspace().run(thsi::discardChanges, getSchedulingRule(), IWorkspace.AVOID_UPDATE, m);\n\nDone",
+      "parentUuid": "3103dec4_fba51c9c",
       "revId": "dfbfc76cf6bf6d40ea8d78493907e6842d6bdc09",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
@@ -201,6 +339,24 @@
     },
     {
       "key": {
+        "uuid": "69de70a9_dcbfea8c",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/op/MergeOperation.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 199,
+      "author": {
+        "id": 1093
+      },
+      "writtenOn": "2021-02-16T12:29:06Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fc22a180_f31b8a68",
+      "revId": "dfbfc76cf6bf6d40ea8d78493907e6842d6bdc09",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7eca2d47_4127c07c",
         "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/op/ResetOperation.java",
         "patchSetId": 1
@@ -218,6 +374,24 @@
     },
     {
       "key": {
+        "uuid": "8cf11ad0_eaa4e8dc",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/op/ResetOperation.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1093
+      },
+      "writtenOn": "2021-02-16T12:29:06Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7eca2d47_4127c07c",
+      "revId": "dfbfc76cf6bf6d40ea8d78493907e6842d6bdc09",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7c5ac91c_10ebd2ce",
         "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/op/SubmoduleUpdateOperation.java",
         "patchSetId": 1
@@ -229,6 +403,24 @@
       "writtenOn": "2020-04-14T10:52:54Z",
       "side": 1,
       "message": "renaming again, also below",
+      "revId": "dfbfc76cf6bf6d40ea8d78493907e6842d6bdc09",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7498ad38_256b0d5d",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/op/SubmoduleUpdateOperation.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 1093
+      },
+      "writtenOn": "2021-02-16T12:29:06Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7c5ac91c_10ebd2ce",
       "revId": "dfbfc76cf6bf6d40ea8d78493907e6842d6bdc09",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
