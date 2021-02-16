@@ -70,68 +70,65 @@ public class SquashCommitsOperation implements IEGitOperation {
 	@Override
 	public void execute(IProgressMonitor m) throws CoreException {
 
-		IWorkspaceRunnable action = new IWorkspaceRunnable() {
-			@Override
-			public void run(IProgressMonitor pm) throws CoreException {
-				SubMonitor progress = SubMonitor.convert(pm, 2);
+		IWorkspaceRunnable action = pm -> {
+			SubMonitor progress = SubMonitor.convert(pm, 2);
 
-				progress.subTask(MessageFormat.format(
-						CoreText.SquashCommitsOperation_squashing,
-						Integer.valueOf(commits.size())));
+			progress.subTask(MessageFormat.format(
+					CoreText.SquashCommitsOperation_squashing,
+					Integer.valueOf(commits.size())));
 
-				InteractiveHandler handler = new InteractiveHandler() {
-					@Override
-					public void prepareSteps(List<RebaseTodoLine> steps) {
-						RevCommit firstCommit = commits.get(0);
-						for (RebaseTodoLine step : steps) {
-							if (isRelevant(step.getCommit())) {
-								try {
-									if (step.getCommit().prefixCompare(
-											firstCommit) == 0)
-										step.setAction(RebaseTodoLine.Action.PICK);
-									else
-										step.setAction(RebaseTodoLine.Action.SQUASH);
-								} catch (IllegalTodoFileModification e) {
-									// shouldn't happen
-								}
+			InteractiveHandler handler = new InteractiveHandler() {
+				@Override
+				public void prepareSteps(List<RebaseTodoLine> steps) {
+					RevCommit firstCommit = commits.get(0);
+					for (RebaseTodoLine step : steps) {
+						if (isRelevant(step.getCommit())) {
+							try {
+								if (step.getCommit().prefixCompare(
+										firstCommit) == 0)
+									step.setAction(RebaseTodoLine.Action.PICK);
+								else
+									step.setAction(RebaseTodoLine.Action.SQUASH);
+							} catch (IllegalTodoFileModification e) {
+								// shouldn't happen
 							}
 						}
 					}
-
-					private boolean isRelevant(AbbreviatedObjectId id) {
-						for (RevCommit commit : commits) {
-							if (id.prefixCompare(commit) == 0)
-								return true;
-						}
-						return false;
-					}
-
-					@Override
-					public String modifyCommitMessage(String oldMessage) {
-						return messageHandler.modifyCommitMessage(oldMessage);
-					}
-				};
-				try (Git git = new Git(repository)) {
-					RebaseCommand command = git.rebase()
-							.setUpstream(commits.get(0).getParent(0))
-							.runInteractively(handler)
-							.setOperation(RebaseCommand.Operation.BEGIN);
-					MergeStrategy strategy = Activator.getDefault()
-							.getPreferredMergeStrategy();
-					if (strategy != null) {
-						command.setStrategy(strategy);
-					}
-					command.call();
-				} catch (GitAPIException e) {
-					throw new TeamException(e.getLocalizedMessage(),
-							e.getCause());
 				}
-				progress.worked(1);
 
-				ProjectUtil.refreshValidProjects(
-						ProjectUtil.getValidOpenProjects(repository),
-						progress.newChild(1));
+				private boolean isRelevant(AbbreviatedObjectId id) {
+					for (RevCommit commit : commits) {
+						if (id.prefixCompare(commit) == 0)
+							return true;
+					}
+					return false;
+				}
+
+				@Override
+				public String modifyCommitMessage(String oldMessage) {
+					return messageHandler.modifyCommitMessage(oldMessage);
+				}
+			};
+			try (Git git = new Git(repository)) {
+				RebaseCommand command = git.rebase()
+						.setUpstream(commits.get(0).getParent(0))
+						.runInteractively(handler)
+						.setOperation(RebaseCommand.Operation.BEGIN);
+				MergeStrategy strategy = Activator.getDefault()
+						.getPreferredMergeStrategy();
+				if (strategy != null) {
+					command.setStrategy(strategy);
+				}
+				command.call();
+			} catch (GitAPIException e) {
+				throw new TeamException(e.getLocalizedMessage(),
+						e.getCause());
 			}
+			progress.worked(1);
+
+			ProjectUtil.refreshValidProjects(
+					ProjectUtil.getValidOpenProjects(repository),
+					progress.newChild(1));
 		};
 		ResourcesPlugin.getWorkspace().run(action, getSchedulingRule(),
 				IWorkspace.AVOID_UPDATE, m);
