@@ -4637,6 +4637,12 @@ public class UIText extends NLS {
 	public static String CreateTagDialog_tagMessage;
 
 	/** */
+	public static String CreateTagDialog_noSigningKey;
+
+	/** */
+	public static String CreateTagDialog_noSigningKeyToolTip;
+
+	/** */
 	public static String CreateTagDialog_questionNewTagTitle;
 
 	/** */

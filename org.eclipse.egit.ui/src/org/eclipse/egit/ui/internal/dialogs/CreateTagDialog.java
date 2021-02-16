@@ -14,6 +14,7 @@ package org.eclipse.egit.ui.internal.dialogs;
 
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
+import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Comparator;
@@ -68,8 +69,10 @@ import org.eclipse.jgit.revwalk.RevObject;
 import org.eclipse.jgit.revwalk.RevSort;
 import org.eclipse.jgit.revwalk.RevTag;
 import org.eclipse.jgit.revwalk.RevWalk;
+import org.eclipse.jgit.util.StringUtils;
 import org.eclipse.osgi.util.NLS;
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.custom.CLabel;
 import org.eclipse.swt.custom.SashForm;
 import org.eclipse.swt.events.KeyAdapter;
 import org.eclipse.swt.events.KeyEvent;
@@ -87,6 +90,7 @@ import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Table;
 import org.eclipse.swt.widgets.Text;
+import org.eclipse.ui.ISharedImages;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.forms.events.ExpansionAdapter;
 import org.eclipse.ui.forms.events.ExpansionEvent;
@@ -598,6 +602,17 @@ public class CreateTagDialog extends TitleAreaDialog {
 						signExplicit = true;
 					}
 				});
+			} else {
+				String signingKey = gpgConfig.getSigningKey();
+				if (!StringUtils.isEmptyOrNull(signingKey)) {
+					CLabel warning = new CLabel(left, SWT.WRAP);
+					warning.setText(MessageFormat.format(
+							UIText.CreateTagDialog_noSigningKey, signingKey));
+					warning.setToolTipText(
+							UIText.CreateTagDialog_noSigningKeyToolTip);
+					warning.setImage(PlatformUI.getWorkbench().getSharedImages()
+							.getImage(ISharedImages.IMG_OBJS_WARN_TSK));
+				}
 			}
 		}
 
