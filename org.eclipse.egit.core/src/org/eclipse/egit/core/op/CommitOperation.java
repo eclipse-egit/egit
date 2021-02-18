@@ -39,6 +39,7 @@ import org.eclipse.egit.core.Activator;
 import org.eclipse.egit.core.RepositoryUtil;
 import org.eclipse.egit.core.internal.CoreText;
 import org.eclipse.egit.core.internal.job.RuleUtil;
+import org.eclipse.egit.core.internal.signing.GpgConfigurationException;
 import org.eclipse.egit.core.project.RepositoryMapping;
 import org.eclipse.egit.core.settings.GitSettings;
 import org.eclipse.jgit.api.AddCommand;
@@ -256,6 +257,8 @@ public class CommitOperation implements IEGitOperation {
 				for(String path:commitFileList)
 					commitCommand.setOnly(path);
 			commit = commitCommand.call();
+		} catch (GpgConfigurationException e) {
+			throw new TeamException(e.getLocalizedMessage(), e);
 		} catch (Exception e) {
 			throw new TeamException(
 					CoreText.MergeOperation_InternalError, e);

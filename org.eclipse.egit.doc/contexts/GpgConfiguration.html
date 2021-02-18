@@ -1,0 +1,98 @@
+<?xml version='1.0' encoding='utf-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!--
+   Copyright (C) 2021 Thomas Wolf <thomas.wolf@paranor.ch> and others.
+
+   All rights reserved. This program and the accompanying materials
+   are made available under the terms of the Eclipse Public License 2.0
+   which accompanies this distribution, and is available at
+   https://www.eclipse.org/legal/epl-2.0/
+
+   SPDX-License-Identifier: EPL-2.0
+-->
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+	<title>Configuring GPG for use with Eclipse</title>
+	<link type="text/css" rel="stylesheet" href="../help/book.css"/>
+</head>
+<body>
+<h1>Configuring GPG for use with Eclipse</h1>
+<p>
+For using an external GPG program with Eclipse, GPG must be configured to use a GUI
+pop-up dialog for user interaction, for instance when asking for key passphrases or
+smartcard PINs.
+</p>
+<p>
+Standard installations of GPG such as the distributions available from
+<a href="https://gnupg.org/download/index.html#sec-1-2">GnuPG</a> are normally
+set up correctly out of the box. But in some cases, GPG on a system may be configured
+to ask the user for passphrases and such always via a terminal (a command window).
+In that case, GPG cannot be used by Eclipse.
+</p>
+<h2>Getting a Passphrase Dialog</h2>
+<p>
+In GPG, it is not the <code>gpg</code> program itself that asks for passphrases.
+Instead, GPG uses a "hidden" system program <code>gpg-agent</code> to manage keys,
+and that <code>gpg-agent</code> program in turn uses yet another program called
+<em>pinentry</em> for actually asking the user for input. When <code>gpg</code>
+is invoked to sign something, it starts <code>gpg-agent</code> if that isn't
+running already. Once started, <code>gpg-agent</code> will continue running in
+the background, and will be re-used by future <code>gpg</code> operations.
+</p>
+<p>
+How GPG asks the user for passphrases is thus determined by how the <code>gpg-agent</code>
+is configured. There are several possible reasons why <code>gpg-agent</code> might
+use a terminal input instead of a GUI dialog:
+</p>
+<dl>
+<dt>Environment variable <b><tt>GPG_TTY</tt></b></dt>
+<dd>
+<p>
+The <code>gpg-agent</code> might have been started with environment variable
+<tt><b>GPG_TTY</b></tt> being set. In that case, it may be sufficient to terminate
+("kill") the currently running <code>gpg-agent</code> process. When called from
+Eclipse, <tt><b>GPG_TTY</b></tt> is <em>not</em> set, so if the Eclipse invokes
+GPG the next time, the <code>gpg-agent</code> should start normally and use a GUI
+dialog.
+</p>
+<p>If that works, figure out where in your system <tt>GPG_TTY</tt> is set and do
+<em>not</em> set it to prevent the problem from re-occurring.
+</p>
+</dd>
+<dt>Fixed <em>pinentry</em> configuration</dt>
+<dd>
+<p>
+The <code>gpg-agent</code> may be configured to use a particular <em>pinentry</em>
+program. This configuration is in a file <tt><b>gpg-agent.conf</b></tt> in the user's
+GPG directory, on Unix at <tt><b>~/.gnupg/gpg-agent.conf</b></tt>, on Windows at
+<tt><b>%APP_DATA%/gnupg/gpg-agent.conf</b></tt>. This file may contain a configuration
+for <code>pinentry-program</code>, which may be set to <code>pinentry-tty</code> or
+<code>pinentry-curses</code>. In this case, remove the line or configure a GUI
+pinentry explicitly, and  terminate the currently running <code>gpg-agent</code> process
+and optionally restart it. (Otherwise it will be restarted on the next GPG operation
+automatically.)
+</p>
+</dd>
+<dt>Missing GUI <em>pinentry</em> program</dt>
+<dd>
+<p>
+Your system may not have a <em>pinentry</em> for a GUI dialog installed. This should
+rarely happen, and if so, only with third-party packages of GPG. Install the missing
+pinentry programs on your system using the system's package installation tool.
+</p>
+</dd>
+<dt>Custom <em>pinentry</em> script</dt>
+<dd>
+<p>
+For advanced users: some people reconfigure the GPG pinentry via <tt>gpg-agent.conf</tt>
+by setting <code>pinentry-program</code> to a custom script that decides based on the
+value of environment variable <tt><b>PINENTRY_USER_DATA</b></tt> whether to prompt via
+a GUI dialog or via a terminal. If you have such a setup, make sure the script uses a
+GUI dialog pinentry when the variable is not set. When called via Eclipse,
+<tt><b>PINENTRY_USER_DATA</b></tt> is <em>not</em> set.
+</p>
+</dd>
+</dl>
+</body>
+</html>

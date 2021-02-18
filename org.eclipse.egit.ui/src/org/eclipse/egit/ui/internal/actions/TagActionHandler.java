@@ -16,18 +16,24 @@ import java.text.MessageFormat;
 import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.commands.ExecutionException;
 import org.eclipse.core.runtime.Adapters;
+import org.eclipse.core.runtime.CoreException;
+import org.eclipse.core.runtime.IProgressMonitor;
+import org.eclipse.core.runtime.IStatus;
+import org.eclipse.core.runtime.Status;
 import org.eclipse.core.runtime.jobs.IJobChangeEvent;
-import org.eclipse.core.runtime.jobs.IJobChangeListener;
+import org.eclipse.core.runtime.jobs.Job;
 import org.eclipse.core.runtime.jobs.JobChangeAdapter;
 import org.eclipse.egit.core.internal.IRepositoryCommit;
-import org.eclipse.egit.core.internal.job.JobUtil;
+import org.eclipse.egit.core.internal.signing.GpgConfigurationException;
 import org.eclipse.egit.core.op.TagOperation;
 import org.eclipse.egit.ui.Activator;
 import org.eclipse.egit.ui.JobFamilies;
 import org.eclipse.egit.ui.internal.UIText;
 import org.eclipse.egit.ui.internal.credentials.EGitCredentialsProvider;
 import org.eclipse.egit.ui.internal.dialogs.CreateTagDialog;
+import org.eclipse.egit.ui.internal.jobs.GpgConfigProblemReportAction;
 import org.eclipse.egit.ui.internal.push.PushTagsWizard;
+import org.eclipse.jface.action.IAction;
 import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.window.Window;
@@ -36,6 +42,7 @@ import org.eclipse.jgit.lib.ObjectId;
 import org.eclipse.jgit.lib.Repository;
 import org.eclipse.jgit.revwalk.RevCommit;
 import org.eclipse.jgit.revwalk.RevWalk;
+import org.eclipse.ui.PlatformUI;
 
 /**
  * An action for creating a tag.
@@ -109,9 +116,34 @@ public class TagActionHandler extends RepositoryActionHandler {
 				.setMessage(dialog.getTagMessage())
 				.setCredentialsProvider(new EGitCredentialsProvider());
 
-		IJobChangeListener jobCompleted = null;
+		String tagJobName = MessageFormat.format(UIText.TagAction_creating,
+				tagName);
+		Job job = new Job(tagJobName) {
+
+			@Override
+			protected IStatus run(IProgressMonitor monitor) {
+				try {
+					operation.execute(monitor);
+				} catch (CoreException e) {
+					if (e.getCause() instanceof GpgConfigurationException) {
+						showGpgProblem(e.getStatus());
+						return Status.CANCEL_STATUS;
+					}
+					return e.getStatus();
+				}
+				return Status.OK_STATUS;
+			}
+
+			@Override
+			public boolean belongsTo(Object family) {
+				return JobFamilies.TAG.equals(family)
+						|| super.belongsTo(family);
+			}
+		};
+		job.setRule(operation.getSchedulingRule());
+		job.setUser(true);
 		if (dialog.shouldStartPushWizard()) {
-			jobCompleted = new JobChangeAdapter() {
+			job.addJobChangeListener(new JobChangeAdapter() {
 
 				@Override
 				public void done(IJobChangeEvent jobEvent) {
@@ -119,13 +151,16 @@ public class TagActionHandler extends RepositoryActionHandler {
 						PushTagsWizard.openWizardDialog(repo, tagName);
 					}
 				}
-			};
+			});
 		}
-		String tagJobName = MessageFormat.format(UIText.TagAction_creating,
-				tagName);
-		JobUtil.scheduleUserJob(operation, tagJobName, JobFamilies.TAG,
-				jobCompleted);
+		job.schedule();
 		return null;
+	}
+
+	private void showGpgProblem(IStatus status) {
+		IAction action = new GpgConfigProblemReportAction(status,
+				UIText.TagAction_gpgConfigProblem);
+		PlatformUI.getWorkbench().getDisplay().asyncExec(action::run);
 	}
 
 	private RevCommit getTagTarget(Repository repo, ObjectId objectId)

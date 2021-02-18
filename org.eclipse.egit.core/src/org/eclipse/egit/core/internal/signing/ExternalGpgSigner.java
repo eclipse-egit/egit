@@ -55,6 +55,10 @@ public class ExternalGpgSigner extends GpgSigner implements GpgObjectSigner {
 	// calling gpg.
 	private static final String PINENTRY_USER_DATA = "PINENTRY_USER_DATA"; //$NON-NLS-1$
 
+	// Another GPG environment variable name. We remove this environment
+	// variable when calling gpg.
+	private static final String GPG_TTY = "GPG_TTY"; //$NON-NLS-1$
+
 	// For sanity checking the returned signature.
 	private static final byte[] SIGNATURE_START = "-----BEGIN PGP SIGNATURE-----" //$NON-NLS-1$
 			.getBytes(StandardCharsets.US_ASCII);
@@ -344,6 +348,7 @@ public class ExternalGpgSigner extends GpgSigner implements GpgObjectSigner {
 						if (!pinentry && line
 								.startsWith("[GNUPG:] PINENTRY_LAUNCHED")) { //$NON-NLS-1$
 							pinentry = true;
+							checkTerminalPrompt(line);
 						} else if (pinentry) {
 							if (line.startsWith("[GNUPG:] FAILURE sign")) { //$NON-NLS-1$
 								throw new CanceledException(
@@ -384,15 +389,44 @@ public class ExternalGpgSigner extends GpgSigner implements GpgObjectSigner {
 			// this PINENTRY_USER_DATA method is still needed or used with
 			// modern gpg; at least pinentry-gtk and pinentry-gnome should fall
 			// back to prompting on the terminal if $DISPLAY of the calling
-			// process is not set.
+			// process is not set. $DISPLAY for Eclipse on Linux/OS X will
+			// always be set, and be inherited by the child process.
 			String value = childEnv.get(PINENTRY_USER_DATA);
 			if (!StringUtils.isEmptyOrNull(value)) {
 				childEnv.remove(PINENTRY_USER_DATA);
+			}
+			// If gpg-agent is not running already, gpg will start it. If
+			// GPG_TTY is set, to newly started gpg-agent may decide to use a
+			// terminal prompt (pinentry-tty or pinentry-curses) for
+			// passphrases, which doesn't work for us. So clear GPG_TTY, too.
+			//
+			// If gpg-agent is already running and is using a terminal prompt,
+			// the signing may fail. We detect this in checkTerminalPrompt()
+			// and throw an exception.
+			value = childEnv.get(GPG_TTY);
+			if (!StringUtils.isEmptyOrNull(value)) {
+				childEnv.remove(GPG_TTY);
 			}
 		} catch (SecurityException | UnsupportedOperationException
 				| IllegalArgumentException e) {
 			Activator.logWarning(CoreText.ExternalGpgSigner_environmentError,
 					e);
+		}
+	}
+
+	private void checkTerminalPrompt(String gpgTraceLine) {
+		// @formatter:off
+		// Expected format: [GNUPG:] PINENTRY_LAUNCHED <pid> <pinentry-type> <version> <tty> <tty-type> <display>
+		// Example: [GNUPG:] PINENTRY_LAUNCHED 22245 curses 1.1.1 - xterm-256color <$DISPLAY>
+		// @formatter:on
+		String[] parts = gpgTraceLine.split(" "); //$NON-NLS-1$
+		if (parts.length > 3 && "[GNUPG:]".equals(parts[0]) //$NON-NLS-1$
+				&& "PINENTRY_LAUNCHED".equals(parts[1])) { //$NON-NLS-1$
+			String pinentryType = parts[3];
+			if ("tty".equals(pinentryType) || "curses".equals(pinentryType)) { //$NON-NLS-1$ //$NON-NLS-2$
+				throw new GpgConfigurationException(MessageFormat.format(
+						CoreText.ExternalGpgSigner_ttyInput, gpgTraceLine));
+			}
 		}
 	}
 
