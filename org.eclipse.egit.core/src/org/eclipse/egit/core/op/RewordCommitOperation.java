@@ -32,6 +32,7 @@ import org.eclipse.egit.core.Activator;
 import org.eclipse.egit.core.internal.CoreText;
 import org.eclipse.egit.core.internal.Utils;
 import org.eclipse.egit.core.internal.job.RuleUtil;
+import org.eclipse.egit.core.internal.signing.GpgConfigurationException;
 import org.eclipse.egit.core.settings.GitSettings;
 import org.eclipse.jgit.api.errors.CanceledException;
 import org.eclipse.jgit.api.errors.JGitInternalException;
@@ -95,7 +96,7 @@ public class RewordCommitOperation implements IEGitOperation {
 			} finally {
 				index.unlock();
 			}
-		} catch (IOException e) {
+		} catch (GpgConfigurationException | IOException e) {
 			throw new TeamException(e.getMessage(), e);
 		}
 	}
