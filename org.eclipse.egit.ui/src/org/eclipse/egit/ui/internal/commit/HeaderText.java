@@ -130,6 +130,7 @@ public class HeaderText {
 		Point size = titleLabel.computeSize(SWT.DEFAULT, SWT.DEFAULT, true);
 		int y = (titleLabel.getParent().getSize().y - size.y) / 2;
 		titleLabel.setBounds(busyLabel.getLocation().x, y, size.x, size.y);
+		busyLabel.setBounds(titleLabel.getBounds());
 	}
 
 	private static void createContextMenu(final StyledText styledText, final String sha1String) {
