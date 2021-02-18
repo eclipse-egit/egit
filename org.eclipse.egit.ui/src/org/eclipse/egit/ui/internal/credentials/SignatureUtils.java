@@ -14,6 +14,7 @@
  *******************************************************************************/
 package org.eclipse.egit.ui.internal.credentials;
 
+import org.eclipse.egit.core.internal.signing.GpgSetup;
 import org.eclipse.jgit.annotations.NonNull;
 import org.eclipse.jgit.api.errors.CanceledException;
 import org.eclipse.jgit.api.errors.UnsupportedSigningFormatException;
@@ -49,7 +50,7 @@ public final class SignatureUtils {
 	 */
 	public static boolean checkSigningKey(@NonNull GpgConfig config,
 			@NonNull PersonIdent personIdent) {
-		return checkSigningKey(GpgSigner.getDefault(), config, personIdent);
+		return checkSigningKey(GpgSetup.getDefault(), config, personIdent);
 	}
 
 	/**

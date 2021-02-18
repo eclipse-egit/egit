@@ -26,6 +26,7 @@ import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.core.runtime.jobs.Job;
+import org.eclipse.egit.core.internal.signing.GpgSetup;
 import org.eclipse.egit.core.settings.GitSettings;
 import org.eclipse.egit.ui.Activator;
 import org.eclipse.egit.ui.JobFamilies;
@@ -583,7 +584,7 @@ public class CreateTagDialog extends TitleAreaDialog {
 			}
 		});
 
-		GpgSigner signer = GpgSigner.getDefault();
+		GpgSigner signer = GpgSetup.getDefault();
 		if (signer instanceof GpgObjectSigner) {
 			PersonIdent tagger = new PersonIdent(repo);
 			// Ensure the Eclipse preference, if set, overrides the git config

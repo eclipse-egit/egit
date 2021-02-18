@@ -199,6 +199,9 @@ public class CoreText extends NLS {
 	public static String GitSettings_gpgNotExecutable;
 
 	/** */
+	public static String GpgSetup_signerUnknown;
+
+	/** */
 	public static String BlobStorage_blobNotFound;
 
 	/** */

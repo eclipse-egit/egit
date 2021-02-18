@@ -71,6 +71,7 @@ import org.eclipse.egit.core.internal.indexdiff.IndexDiffChangedListener;
 import org.eclipse.egit.core.internal.indexdiff.IndexDiffData;
 import org.eclipse.egit.core.internal.job.JobUtil;
 import org.eclipse.egit.core.internal.job.RuleUtil;
+import org.eclipse.egit.core.internal.signing.GpgSetup;
 import org.eclipse.egit.core.op.AssumeUnchangedOperation;
 import org.eclipse.egit.core.op.CommitOperation;
 import org.eclipse.egit.core.op.DiscardChangesOperation;
@@ -177,7 +178,6 @@ import org.eclipse.jgit.api.errors.JGitInternalException;
 import org.eclipse.jgit.api.errors.NoFilepatternException;
 import org.eclipse.jgit.events.ListenerHandle;
 import org.eclipse.jgit.lib.Constants;
-import org.eclipse.jgit.lib.GpgSigner;
 import org.eclipse.jgit.lib.ObjectId;
 import org.eclipse.jgit.lib.Ref;
 import org.eclipse.jgit.lib.Repository;
@@ -998,7 +998,7 @@ public class StagingView extends ViewPart
 		};
 		signCommitAction.setImageDescriptor(UIIcons.SIGN_COMMIT);
 		commitMessageToolBarManager.add(signCommitAction);
-		boolean canSign = GpgSigner.getDefault() != null;
+		boolean canSign = GpgSetup.getDefault() != null;
 		signCommitAction.setEnabled(canSign);
 		if (!canSign) {
 			signCommitAction
@@ -1804,7 +1804,7 @@ public class StagingView extends ViewPart
 		enableAuthorText(enabled);
 		amendPreviousCommitAction.setEnabled(enabled);
 		signedOffByAction.setEnabled(enabled);
-		signCommitAction.setEnabled(enabled && GpgSigner.getDefault() != null);
+		signCommitAction.setEnabled(enabled && GpgSetup.getDefault() != null);
 		addChangeIdAction.setEnabled(enabled);
 		if (enabled) {
 			updateCommitButtons();

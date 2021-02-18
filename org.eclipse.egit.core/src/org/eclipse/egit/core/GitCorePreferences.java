@@ -106,4 +106,9 @@ public final class GitCorePreferences {
 	 */
 	public static final String core_gpgExecutable = "core_gpg_executable"; //$NON-NLS-1$
 
+	/**
+	 * The type of signer to use. Valid values are "bc" or "gpg".
+	 */
+	public static final String core_gpgSigner = "core_gpg_signer"; //$NON-NLS-1$
+
 }
