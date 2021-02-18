@@ -33,6 +33,7 @@ import org.eclipse.egit.core.internal.CoreText;
 import org.eclipse.egit.core.internal.Utils;
 import org.eclipse.egit.core.internal.job.RuleUtil;
 import org.eclipse.egit.core.internal.signing.GpgConfigurationException;
+import org.eclipse.egit.core.internal.signing.GpgSetup;
 import org.eclipse.egit.core.settings.GitSettings;
 import org.eclipse.jgit.api.errors.CanceledException;
 import org.eclipse.jgit.api.errors.JGitInternalException;
@@ -163,7 +164,7 @@ public class RewordCommitOperation implements IEGitOperation {
 			}
 		};
 		boolean signAllCommits = gpgConfig.isSignCommits();
-		GpgSigner gpgSigner = GpgSigner.getDefault();
+		GpgSigner gpgSigner = GpgSetup.getDefault();
 		if (gpgSigner != null
 				&& (signAllCommits || commit.getRawGpgSignature() != null)) {
 			gpgSigner = sign(builder, gpgSigner, gpgConfig, committer, commit);

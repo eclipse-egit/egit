@@ -49,6 +49,15 @@ import org.eclipse.ui.preferences.ScopedPreferenceStore;
 public class CommittingPreferencePage extends DoublePreferencesPreferencePage
 		implements IWorkbenchPreferencePage {
 
+	private final static String[][] GPG_SIGNER_NAMES_AND_VALUES = new String[2][2];
+
+	static {
+		GPG_SIGNER_NAMES_AND_VALUES[0][0] = UIText.CommittingPreferencePage_gpgSignerBouncyCastleLabel;
+		GPG_SIGNER_NAMES_AND_VALUES[0][1] = "bc"; //$NON-NLS-1$
+		GPG_SIGNER_NAMES_AND_VALUES[1][0] = UIText.CommittingPreferencePage_gpgSignerGpgLabel;
+		GPG_SIGNER_NAMES_AND_VALUES[1][1] = "gpg"; //$NON-NLS-1$
+	}
+
 	private BooleanFieldEditor useStagingView;
 
 	private BooleanFieldEditor autoStage;
@@ -64,6 +73,10 @@ public class CommittingPreferencePage extends DoublePreferencesPreferencePage
 	private ComboFieldEditor blockCombo;
 
 	private Group generalGroup;
+
+	private ComboFieldEditor gpgSigner;
+
+	private FileFieldEditor gpgExecutable;
 
 	/** */
 	public CommittingPreferencePage() {
@@ -151,7 +164,18 @@ public class CommittingPreferencePage extends DoublePreferencesPreferencePage
 				generalGroup);
 		addField(historySize);
 
-		FileFieldEditor gpgExecutable = new FullWidthFileFieldEditor(
+		gpgSigner = new ComboFieldEditor(GitCorePreferences.core_gpgSigner,
+				UIText.CommittingPreferencePage_gpgSignerLabel,
+				GPG_SIGNER_NAMES_AND_VALUES, generalGroup) {
+
+			@Override
+			public void setPreferenceStore(IPreferenceStore store) {
+				super.setPreferenceStore(
+						store == null ? null : getSecondaryPreferenceStore());
+			}
+		};
+		addField(gpgSigner);
+		gpgExecutable = new FullWidthFileFieldEditor(
 				GitCorePreferences.core_gpgExecutable,
 				UIText.CommittingPreferencePage_gpgExecutableLabel, true,
 				generalGroup) {
@@ -280,6 +304,8 @@ public class CommittingPreferencePage extends DoublePreferencesPreferencePage
 		handleWarnCheckboxSelection(warnCheckbox.getSelection());
 		handleBlockCheckboxSelection(blockCheckbox.getSelection());
 		updateMargins(buildProblemsGroup);
+		gpgExecutable.setEnabled("gpg".equals(getSecondaryPreferenceStore() //$NON-NLS-1$
+				.getString(GitCorePreferences.core_gpgSigner)), generalGroup);
 	}
 
 	@Override
@@ -295,6 +321,12 @@ public class CommittingPreferencePage extends DoublePreferencesPreferencePage
 				}
 			}
 		});
+		gpgSigner.setPropertyChangeListener(event -> {
+			if (FieldEditor.VALUE.equals(event.getProperty())) {
+				gpgExecutable.setEnabled("gpg".equals(event.getNewValue()), //$NON-NLS-1$
+						generalGroup);
+			}
+		});
 	}
 
 	@Override
@@ -305,6 +337,10 @@ public class CommittingPreferencePage extends DoublePreferencesPreferencePage
 		autoStage.setEnabled(
 				getPreferenceStore().getDefaultBoolean(
 						UIPreferences.ALWAYS_USE_STAGING_VIEW),
+				generalGroup);
+		gpgExecutable.setEnabled(
+				"gpg".equals(getSecondaryPreferenceStore() //$NON-NLS-1$
+						.getDefaultString(GitCorePreferences.core_gpgSigner)),
 				generalGroup);
 	}
 
