@@ -190,6 +190,9 @@ public class CoreText extends NLS {
 	public static String ExternalGpgSigner_skipNotAccessiblePath;
 
 	/** */
+	public static String ExternalGpgSigner_ttyInput;
+
+	/** */
 	public static String GitSettings_gpgInvalidExecutable;
 
 	/** */

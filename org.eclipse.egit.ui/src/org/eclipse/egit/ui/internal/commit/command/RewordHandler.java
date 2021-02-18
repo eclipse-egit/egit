@@ -17,17 +17,20 @@ import java.text.MessageFormat;
 
 import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.commands.ExecutionException;
-import org.eclipse.core.resources.WorkspaceJob;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.core.runtime.jobs.Job;
+import org.eclipse.egit.core.internal.signing.GpgConfigurationException;
 import org.eclipse.egit.core.op.RewordCommitOperation;
 import org.eclipse.egit.ui.JobFamilies;
 import org.eclipse.egit.ui.internal.UIText;
 import org.eclipse.egit.ui.internal.handler.SelectionHandler;
+import org.eclipse.egit.ui.internal.jobs.GpgConfigProblemReportAction;
+import org.eclipse.egit.ui.internal.jobs.RepositoryJob;
 import org.eclipse.egit.ui.internal.rebase.CommitMessageEditorDialog;
+import org.eclipse.jface.action.IAction;
 import org.eclipse.jface.window.Window;
 import org.eclipse.jgit.lib.Repository;
 import org.eclipse.jgit.revwalk.RevCommit;
@@ -58,16 +61,26 @@ public class RewordHandler extends SelectionHandler {
 		final RewordCommitOperation op = new RewordCommitOperation(repo,
 				commit, newMessage);
 
-		Job job = new WorkspaceJob(MessageFormat.format(
-				UIText.RewordHandler_JobName,
-				commit.name())) {
+		Job job = new RepositoryJob(MessageFormat.format(
+				UIText.RewordHandler_JobName, commit.name()), null) {
+
+			private IStatus gpgConfigProblem;
 
 			@Override
-			public IStatus runInWorkspace(IProgressMonitor monitor) {
+			protected IStatus performJob(IProgressMonitor monitor) {
 				try {
 					op.execute(monitor);
 				} catch (CoreException e) {
-					return e.getStatus();
+					IStatus status = e.getStatus();
+					if (status
+							.getException() instanceof GpgConfigurationException) {
+						gpgConfigProblem = e.getStatus();
+						// We're going to show our own dialog
+						return Status.OK_STATUS;
+					}
+					return status;
+				} finally {
+					monitor.done();
 				}
 				return Status.OK_STATUS;
 			}
@@ -78,6 +91,15 @@ public class RewordHandler extends SelectionHandler {
 					return true;
 				return super.belongsTo(family);
 			}
+
+			@Override
+			protected IAction getAction() {
+				if (gpgConfigProblem == null || gpgConfigProblem.isOK()) {
+					return null;
+				}
+				return new GpgConfigProblemReportAction(gpgConfigProblem,
+						UIText.RewordHandler_GpgConfigProblem);
+			}
 		};
 		job.setUser(true);
 		job.setRule(op.getSchedulingRule());
@@ -86,18 +108,8 @@ public class RewordHandler extends SelectionHandler {
 	}
 
 	private String promptCommitMessage(final Shell shell, RevCommit commit) {
-		final String[] message = { commit.getFullMessage() };
-		shell.getDisplay().syncExec(new Runnable() {
-			@Override
-			public void run() {
-				CommitMessageEditorDialog dialog = new CommitMessageEditorDialog(
-						shell, message[0]);
-				if (dialog.open() == Window.OK)
-					message[0] = dialog.getCommitMessage();
-				else
-					message[0] = null;
-			}
-		});
-		return message[0];
+		CommitMessageEditorDialog dialog = new CommitMessageEditorDialog(shell,
+				commit.getFullMessage());
+		return dialog.open() == Window.OK ? dialog.getCommitMessage() : null;
 	}
 }

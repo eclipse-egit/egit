@@ -4592,6 +4592,9 @@ public class UIText extends NLS {
 	public static String TagAction_creating;
 
 	/** */
+	public static String TagAction_gpgConfigProblem;
+
+	/** */
 	public static String TagAction_taggingFailed;
 
 	/** */
@@ -5509,6 +5512,9 @@ public class UIText extends NLS {
 	public static String CommitJob_AbortedByHook;
 
 	/** */
+	public static String CommitJob_GpgConfigProblem;
+
+	/** */
 	public static String CommitResultLabelProvider_SectionAuthor;
 
 	/** */
@@ -6022,6 +6028,9 @@ public class UIText extends NLS {
 	public static String GitModelSynchronize_fetchGitDataJobName;
 
 	/** */
+	public static String GpgConfigProblemReportAction_Title;
+
+	/** */
 	public static String RebasePulldownAction_Continue;
 
 	/** */
@@ -6038,6 +6047,9 @@ public class UIText extends NLS {
 
 	/** */
 	public static String RewordHandler_ErrorCheckingIfCommitIsOnCurrentBranch;
+
+	/** */
+	public static String RewordHandler_GpgConfigProblem;
 
 	/** */
 	public static String RewordHandler_InternalError;
