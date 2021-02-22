@@ -44,7 +44,7 @@ import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.ISelectionChangedListener;
 import org.eclipse.jface.viewers.ISelectionProvider;
 import org.eclipse.jface.viewers.StructuredSelection;
-import org.eclipse.jgit.api.Git;
+import org.eclipse.jgit.api.StashListCommand;
 import org.eclipse.jgit.events.ListenerHandle;
 import org.eclipse.jgit.events.RefsChangedEvent;
 import org.eclipse.jgit.events.RefsChangedListener;
@@ -448,11 +448,12 @@ public class CommitEditor extends SharedHeaderFormEditor implements
 	private int getStashIndex(Repository repo, ObjectId id) {
 		int index = 0;
 		try {
-			for (RevCommit commit : Git.wrap(repo).stashList().call())
-				if (commit.getId().equals(id))
+			for (RevCommit commit : new StashListCommand(repo).call()) {
+				if (commit.getId().equals(id)) {
 					return index;
-				else
-					index++;
+				}
+				index++;
+			}
 			throw new IllegalStateException(
 					UIText.CommitEditor_couldNotFindStashCommit);
 		} catch (Exception e) {
