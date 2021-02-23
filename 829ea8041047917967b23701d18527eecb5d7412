@@ -1,0 +1,182 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f0dd761e_c97c829d",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/RepositoryUtil.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 174,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2021-02-23T22:58:43Z",
+      "side": 1,
+      "message": "Could you move that after migrateRepoRootPreference(), please? From line 120 to after migrateRepoRootPreference() code kind of belongs together, and having this in the middle looks strange and interrupts sequential reading of the code.",
+      "revId": "829ea8041047917967b23701d18527eecb5d7412",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1b84b3ef_fec8a0bb",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/UIText.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 2847,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2021-02-23T22:58:43Z",
+      "side": 1,
+      "message": "I know this is inconsistent as hell in EGit. Some names use _\u003clowerCaseLetter\u003e, others _\u003cUpperCaseLetter\u003e. It\u0027s not a big deal to me, but in general I try to be consistent with already existing names with the same prefix.",
+      "range": {
+        "startLine": 2847,
+        "startChar": 43,
+        "endLine": 2847,
+        "endChar": 44
+      },
+      "revId": "829ea8041047917967b23701d18527eecb5d7412",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8aabf8df_04d20d31",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/repository/CreateRepositoryPage.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 131,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2021-02-23T22:58:43Z",
+      "side": 1,
+      "message": "Strange formatting.",
+      "range": {
+        "startLine": 130,
+        "startChar": 5,
+        "endLine": 131,
+        "endChar": 9
+      },
+      "revId": "829ea8041047917967b23701d18527eecb5d7412",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "119325dc_5b2ab321",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/repository/CreateRepositoryPage.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 142,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2021-02-23T22:58:43Z",
+      "side": 1,
+      "message": "Could be a lambda event -\u003e checkPage(). Otherwise missing empty line before @Override.",
+      "range": {
+        "startLine": 137,
+        "startChar": 38,
+        "endLine": 142,
+        "endChar": 3
+      },
+      "revId": "829ea8041047917967b23701d18527eecb5d7412",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b1a0b95c_05572205",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/repository/CreateRepositoryPage.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 234,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2021-02-23T22:58:43Z",
+      "side": 1,
+      "message": "getDefaultBranch()",
+      "range": {
+        "startLine": 234,
+        "startChar": 26,
+        "endLine": 234,
+        "endChar": 60
+      },
+      "revId": "829ea8041047917967b23701d18527eecb5d7412",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5e07362e_34b9baa8",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/uitext.properties",
+        "patchSetId": 1
+      },
+      "lineNbr": 957,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2021-02-23T22:58:43Z",
+      "side": 1,
+      "message": "Please also fix this: \u0026C is already taken by the \"Create\" button (CreateRepositoryCommand_CreateButtonLabel just above). \u0026r appears to be a possibility.",
+      "range": {
+        "startLine": 957,
+        "startChar": 34,
+        "endLine": 957,
+        "endChar": 36
+      },
+      "revId": "829ea8041047917967b23701d18527eecb5d7412",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4d88dec4_c7383d8c",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/uitext.properties",
+        "patchSetId": 1
+      },
+      "lineNbr": 959,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2021-02-23T22:58:43Z",
+      "side": 1,
+      "message": "Should be\n\n  Default branch name:\n\n(First character capitalized, colon at end.)\n\nAlso: missing accelerator; \u0026n appears to be available.",
+      "range": {
+        "startLine": 959,
+        "startChar": 40,
+        "endLine": 959,
+        "endChar": 59
+      },
+      "revId": "829ea8041047917967b23701d18527eecb5d7412",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6d7971af_bf200cd1",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/uitext.properties",
+        "patchSetId": 1
+      },
+      "lineNbr": 967,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2021-02-23T22:58:43Z",
+      "side": 1,
+      "message": "Are we generally using the term \"option\" or \"git config\" (or something else)?",
+      "range": {
+        "startLine": 967,
+        "startChar": 53,
+        "endLine": 967,
+        "endChar": 59
+      },
+      "revId": "829ea8041047917967b23701d18527eecb5d7412",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": true
+    }
+  ]
+}
