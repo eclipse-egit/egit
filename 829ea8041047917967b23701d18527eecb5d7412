@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "c7100251_6896ecc7",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/RepositoryUtil.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 174,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2021-02-23T23:26:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f0dd761e_c97c829d",
+      "revId": "829ea8041047917967b23701d18527eecb5d7412",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1b84b3ef_fec8a0bb",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/UIText.java",
         "patchSetId": 1
@@ -39,6 +57,30 @@
       "revId": "829ea8041047917967b23701d18527eecb5d7412",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2586d2a3_6d2308d7",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/UIText.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 2847,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2021-02-23T23:26:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1b84b3ef_fec8a0bb",
+      "range": {
+        "startLine": 2847,
+        "startChar": 43,
+        "endLine": 2847,
+        "endChar": 44
+      },
+      "revId": "829ea8041047917967b23701d18527eecb5d7412",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
     },
     {
       "key": {
@@ -65,6 +107,30 @@
     },
     {
       "key": {
+        "uuid": "c6048913_b889df16",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/repository/CreateRepositoryPage.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 131,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2021-02-23T23:26:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8aabf8df_04d20d31",
+      "range": {
+        "startLine": 130,
+        "startChar": 5,
+        "endLine": 131,
+        "endChar": 9
+      },
+      "revId": "829ea8041047917967b23701d18527eecb5d7412",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "119325dc_5b2ab321",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/repository/CreateRepositoryPage.java",
         "patchSetId": 1
@@ -85,6 +151,30 @@
       "revId": "829ea8041047917967b23701d18527eecb5d7412",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "418d2fb4_c1d22ed5",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/repository/CreateRepositoryPage.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 142,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2021-02-23T23:26:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "119325dc_5b2ab321",
+      "range": {
+        "startLine": 137,
+        "startChar": 38,
+        "endLine": 142,
+        "endChar": 3
+      },
+      "revId": "829ea8041047917967b23701d18527eecb5d7412",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
     },
     {
       "key": {
@@ -111,6 +201,30 @@
     },
     {
       "key": {
+        "uuid": "4209eacd_296c9ab6",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/repository/CreateRepositoryPage.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 234,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2021-02-23T23:26:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b1a0b95c_05572205",
+      "range": {
+        "startLine": 234,
+        "startChar": 26,
+        "endLine": 234,
+        "endChar": 60
+      },
+      "revId": "829ea8041047917967b23701d18527eecb5d7412",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5e07362e_34b9baa8",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/uitext.properties",
         "patchSetId": 1
@@ -131,6 +245,30 @@
       "revId": "829ea8041047917967b23701d18527eecb5d7412",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "076b7c2a_a1b504ac",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/uitext.properties",
+        "patchSetId": 1
+      },
+      "lineNbr": 957,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2021-02-23T23:26:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5e07362e_34b9baa8",
+      "range": {
+        "startLine": 957,
+        "startChar": 34,
+        "endLine": 957,
+        "endChar": 36
+      },
+      "revId": "829ea8041047917967b23701d18527eecb5d7412",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
     },
     {
       "key": {
@@ -157,6 +295,30 @@
     },
     {
       "key": {
+        "uuid": "d088adac_647fc1f9",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/uitext.properties",
+        "patchSetId": 1
+      },
+      "lineNbr": 959,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2021-02-23T23:26:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4d88dec4_c7383d8c",
+      "range": {
+        "startLine": 959,
+        "startChar": 40,
+        "endLine": 959,
+        "endChar": 59
+      },
+      "revId": "829ea8041047917967b23701d18527eecb5d7412",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6d7971af_bf200cd1",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/uitext.properties",
         "patchSetId": 1
@@ -177,6 +339,30 @@
       "revId": "829ea8041047917967b23701d18527eecb5d7412",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e1f3b430_1469c892",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/uitext.properties",
+        "patchSetId": 1
+      },
+      "lineNbr": 967,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2021-02-23T23:26:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6d7971af_bf200cd1",
+      "range": {
+        "startLine": 967,
+        "startChar": 53,
+        "endLine": 967,
+        "endChar": 59
+      },
+      "revId": "829ea8041047917967b23701d18527eecb5d7412",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
     }
   ]
 }
