@@ -2844,10 +2844,16 @@ public class UIText extends NLS {
 	public static String CreateRepositoryPage_BrowseButton;
 
 	/** */
+	public static String CreateRepositoryPage_defaultBranchLabel;
+
+	/** */
 	public static String CreateRepositoryPage_DefaultRepositoryName;
 
 	/** */
 	public static String CreateRepositoryPage_DirectoryLabel;
+
+	/** */
+	public static String CreateRepositoryPage_invalidBranchName;
 
 	/** */
 	public static String CreateRepositoryPage_NotEmptyMessage;
@@ -2860,6 +2866,9 @@ public class UIText extends NLS {
 
 	/** */
 	public static String CreateRepositoryPage_PleaseSelectDirectoryMessage;
+
+	/** */
+	public static String CreateRepositoryPage_readDefaultBranchFailed;
 
 	/** */
 	public static String PushResultDialog_ConfigureButton;

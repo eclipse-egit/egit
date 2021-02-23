@@ -45,8 +45,10 @@ import org.eclipse.jgit.annotations.NonNull;
 import org.eclipse.jgit.annotations.Nullable;
 import org.eclipse.jgit.api.GarbageCollectCommand;
 import org.eclipse.jgit.api.Git;
+import org.eclipse.jgit.errors.ConfigInvalidException;
 import org.eclipse.jgit.errors.IncorrectObjectTypeException;
 import org.eclipse.jgit.lib.CheckoutEntry;
+import org.eclipse.jgit.lib.ConfigConstants;
 import org.eclipse.jgit.lib.Constants;
 import org.eclipse.jgit.lib.FileMode;
 import org.eclipse.jgit.lib.ObjectId;
@@ -64,6 +66,7 @@ import org.eclipse.jgit.treewalk.WorkingTreeIterator;
 import org.eclipse.jgit.treewalk.filter.PathFilterGroup;
 import org.eclipse.jgit.util.FS;
 import org.eclipse.jgit.util.FileUtils;
+import org.eclipse.jgit.util.SystemReader;
 import org.osgi.service.prefs.BackingStoreException;
 
 /**
@@ -150,6 +153,24 @@ public class RepositoryUtil {
 	@NonNull
 	static String getDefaultDefaultRepositoryDir() {
 		return new File(FS.DETECTED.userHome(), "git").getPath(); //$NON-NLS-1$
+	}
+
+	/**
+	 * Get the configured default branch name configured with git option
+	 * init.defaultBranch. Default is {@code master}.
+	 *
+	 * @return the configured default branch name configured with git option
+	 *         init.defaultBranch
+	 * @throws ConfigInvalidException
+	 *             if global or system wide configuration is invalid
+	 * @throws IOException
+	 *             if an IO error occurred when reading git configurations
+	 */
+	public static String getDefaultBranchName()
+			throws ConfigInvalidException, IOException {
+		return SystemReader.getInstance().getUserConfig().getString(
+				ConfigConstants.CONFIG_INIT_SECTION, null,
+				ConfigConstants.CONFIG_KEY_DEFAULT_BRANCH);
 	}
 
 	/**
