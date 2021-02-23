@@ -83,6 +83,7 @@ public class NewRepositoryWizard extends Wizard implements INewWizard {
 			File gitDir = Git.init()
 					.setDirectory(FileUtils.canonicalize(
 							new File(myCreatePage.getDirectory())))
+					.setInitialBranch(myCreatePage.getDefaultBranch())
 					.setBare(isBare)
 					.call().getRepository().getDirectory();
 			this.repository = Activator.getDefault().getRepositoryCache()

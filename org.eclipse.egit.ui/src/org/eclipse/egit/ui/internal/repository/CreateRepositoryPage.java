@@ -13,20 +13,25 @@
 package org.eclipse.egit.ui.internal.repository;
 
 import java.io.File;
+import java.io.IOException;
 import java.nio.file.Paths;
+import java.text.MessageFormat;
 
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.Path;
 import org.eclipse.egit.core.RepositoryUtil;
 import org.eclipse.egit.core.internal.util.RepositoryPathChecker;
+import org.eclipse.egit.ui.Activator;
 import org.eclipse.egit.ui.internal.UIText;
 import org.eclipse.jface.dialogs.IMessageProvider;
 import org.eclipse.jface.layout.GridDataFactory;
 import org.eclipse.jface.wizard.WizardPage;
+import org.eclipse.jgit.errors.ConfigInvalidException;
+import org.eclipse.jgit.lib.Constants;
+import org.eclipse.jgit.lib.Repository;
+import org.eclipse.jgit.util.StringUtils;
 import org.eclipse.osgi.util.NLS;
 import org.eclipse.swt.SWT;
-import org.eclipse.swt.events.ModifyEvent;
-import org.eclipse.swt.events.ModifyListener;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.events.SelectionListener;
@@ -44,6 +49,8 @@ public class CreateRepositoryPage extends WizardPage {
 	private final boolean hideBare;
 
 	private Text directoryText;
+
+	private Text defaultBranchText;
 
 	private Button bareButton;
 
@@ -104,6 +111,28 @@ public class CreateRepositoryPage extends WizardPage {
 			}
 		});
 
+		Label defaultBranchLabel = new Label(main, SWT.NONE);
+		defaultBranchLabel
+				.setText(UIText.CreateRepositoryPage_DefaultBranchLabel);
+		defaultBranchText = new Text(main, SWT.BORDER);
+		String defaultBranch;
+		try {
+			defaultBranch = RepositoryUtil.getDefaultBranchName();
+			if (StringUtils.isEmptyOrNull(defaultBranch)) {
+				defaultBranch = Constants.MASTER;
+			}
+		} catch (ConfigInvalidException | IOException e) {
+			defaultBranch = Constants.MASTER;
+			Activator.handleError(
+					UIText.CreateRepositoryPage_ReadDefaultBranchFailed, e,
+					true);
+		}
+		defaultBranchText.setText(defaultBranch);
+		GridDataFactory.fillDefaults().align(SWT.FILL, SWT.CENTER)
+				.grab(true, false).applyTo(defaultBranchText);
+
+		defaultBranchText.addModifyListener(event -> checkPage());
+
 		if (!hideBare) {
 			bareButton = new Button(main, SWT.CHECK);
 			bareButton.setText(UIText.CreateRepositoryPage_BareCheckbox);
@@ -121,12 +150,7 @@ public class CreateRepositoryPage extends WizardPage {
 			});
 		}
 
-		directoryText.addModifyListener(new ModifyListener() {
-			@Override
-			public void modifyText(ModifyEvent e) {
-				checkPage();
-			}
-		});
+		directoryText.addModifyListener(event -> checkPage());
 
 		setControl(main);
 		directoryText.setFocus();
@@ -147,6 +171,15 @@ public class CreateRepositoryPage extends WizardPage {
 	public String getDirectory() {
 		IPath path = new Path(directoryText.getText().trim());
 		return path.toOSString();
+	}
+
+	/**
+	 * Get the default branch of the new repository.
+	 *
+	 * @return the default branch of the new repository
+	 */
+	public String getDefaultBranch() {
+		return defaultBranchText.getText().trim();
 	}
 
 	/**
@@ -183,6 +216,13 @@ public class CreateRepositoryPage extends WizardPage {
 				}
 			} else {
 				setMessage(UIText.CreateRepositoryPage_PageMessage);
+			}
+
+			String defaultBranch = getDefaultBranch();
+			if (!Repository.isValidRefName(Constants.R_HEADS + defaultBranch)) {
+				setErrorMessage(MessageFormat.format(
+						UIText.CreateRepositoryPage_InvalidBranchName,
+						defaultBranch));
 			}
 		} finally {
 			setPageComplete(getErrorMessage() == null);
