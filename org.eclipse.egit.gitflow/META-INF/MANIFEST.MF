@@ -3,7 +3,7 @@ Bundle-ManifestVersion: 2
 Bundle-Name: %Bundle-Name
 Automatic-Module-Name: org.eclipse.egit.gitflow
 Bundle-SymbolicName: org.eclipse.egit.gitflow;singleton:=true
-Bundle-Version: 5.11.0.202102240950-m3
+Bundle-Version: 5.11.0.qualifier
 Bundle-Vendor: %Bundle-Vendor
 Bundle-Activator: org.eclipse.egit.gitflow.Activator
 Bundle-RequiredExecutionEnvironment: JavaSE-1.8
