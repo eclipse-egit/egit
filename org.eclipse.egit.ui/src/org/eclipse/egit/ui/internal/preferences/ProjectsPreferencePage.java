@@ -38,7 +38,7 @@ public class ProjectsPreferencePage extends DoublePreferencesPreferencePage
 	@Override
 	protected IPreferenceStore doGetPreferenceStore() {
 		return new ScopedPreferenceStore(InstanceScope.INSTANCE,
-				Activator.getPluginId());
+				Activator.PLUGIN_ID);
 	}
 
 	@Override

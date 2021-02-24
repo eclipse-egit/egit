@@ -45,8 +45,10 @@ import org.eclipse.jgit.annotations.NonNull;
 import org.eclipse.jgit.annotations.Nullable;
 import org.eclipse.jgit.api.GarbageCollectCommand;
 import org.eclipse.jgit.api.Git;
+import org.eclipse.jgit.errors.ConfigInvalidException;
 import org.eclipse.jgit.errors.IncorrectObjectTypeException;
 import org.eclipse.jgit.lib.CheckoutEntry;
+import org.eclipse.jgit.lib.ConfigConstants;
 import org.eclipse.jgit.lib.Constants;
 import org.eclipse.jgit.lib.FileMode;
 import org.eclipse.jgit.lib.ObjectId;
@@ -64,6 +66,7 @@ import org.eclipse.jgit.treewalk.WorkingTreeIterator;
 import org.eclipse.jgit.treewalk.filter.PathFilterGroup;
 import org.eclipse.jgit.util.FS;
 import org.eclipse.jgit.util.FileUtils;
+import org.eclipse.jgit.util.SystemReader;
 import org.osgi.service.prefs.BackingStoreException;
 
 /**
@@ -94,7 +97,7 @@ public class RepositoryUtil {
 	private final Map<String, String> repositoryNameCache = new HashMap<>();
 
 	private final IEclipsePreferences prefs = InstanceScope.INSTANCE
-			.getNode(Activator.getPluginId());
+			.getNode(Activator.PLUGIN_ID);
 
 	private final java.nio.file.Path workspacePath;
 
@@ -124,11 +127,11 @@ public class RepositoryUtil {
 		String key = GitCorePreferences.core_defaultRepositoryDir;
 		String dir = migrateRepoRootPreference();
 		IEclipsePreferences p = InstanceScope.INSTANCE
-				.getNode(Activator.getPluginId());
+				.getNode(Activator.PLUGIN_ID);
 		if (dir == null) {
 			dir = Platform.getPreferencesService().getString(
-					Activator.getPluginId(), key,
-					getDefaultDefaultRepositoryDir(), null);
+					Activator.PLUGIN_ID, key, getDefaultDefaultRepositoryDir(),
+					null);
 		} else {
 			p.put(key, dir);
 		}
@@ -171,6 +174,24 @@ public class RepositoryUtil {
 			p.remove(deprecatedUiKey);
 		}
 		return value;
+	}
+
+	/**
+	 * Get the configured default branch name configured with git option
+	 * init.defaultBranch. Default is {@code master}.
+	 *
+	 * @return the configured default branch name configured with git option
+	 *         init.defaultBranch
+	 * @throws ConfigInvalidException
+	 *             if global or system wide configuration is invalid
+	 * @throws IOException
+	 *             if an IO error occurred when reading git configurations
+	 */
+	public static String getDefaultBranchName()
+			throws ConfigInvalidException, IOException {
+		return SystemReader.getInstance().getUserConfig().getString(
+				ConfigConstants.CONFIG_INIT_SECTION, null,
+				ConfigConstants.CONFIG_KEY_DEFAULT_BRANCH);
 	}
 
 	/**
@@ -589,7 +610,7 @@ public class RepositoryUtil {
 		try {
 			prefs.flush();
 		} catch (BackingStoreException e) {
-			IStatus error = new Status(IStatus.ERROR, Activator.getPluginId(),
+			IStatus error = new Status(IStatus.ERROR, Activator.PLUGIN_ID,
 					e.getMessage(), e);
 			Activator.getDefault().getLog().log(error);
 		}

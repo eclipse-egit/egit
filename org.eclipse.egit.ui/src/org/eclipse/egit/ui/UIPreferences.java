@@ -186,8 +186,6 @@ public final class UIPreferences {
 	/** interval in seconds to check for repositories index changes */
 	public static final String REFRESH_INDEX_INTERVAL = "refesh_index_interval"; //$NON-NLS-1$
 	/** */
-	public static final String REFRESH_ON_INDEX_CHANGE = "refesh_on_index_change"; //$NON-NLS-1$
-	/** */
 	public static final String REFRESH_ONLY_WHEN_ACTIVE = "refesh_only_when_active"; //$NON-NLS-1$
 
 	/** Holds true if the logical model should be used. */
@@ -236,6 +234,8 @@ public final class UIPreferences {
 	public static final String HISTORY_SHOW_TAG_SEQUENCE = "HistoryView_ShowTagSequence"; //$NON-NLS-1$
 	/** */
 	public static final String HISTORY_SHOW_BRANCH_SEQUENCE = "HistoryView_ShowBranchSequence"; //$NON-NLS-1$
+	/** */
+	public final static String HISTORY_VERIFY_SIGNATURES = "HistoryView_VerifySignatures"; //$NON-NLS-1$
 
 	/** */
 	public static final String HISTORY_COLUMN_ID = "HistoryView_ColumnIdShow"; //$NON-NLS-1$
@@ -301,6 +301,9 @@ public final class UIPreferences {
 
 	/** */
 	public static final String STASH_INCLUDE_UNTRACKED = "stashIncludeUntracked"; //$NON-NLS-1$
+
+	/** */
+	public static final String DIFF_OUTLINE_PRESENTATION = "DiffEditorOutline.compactTree"; //$NON-NLS-1$
 
 	/**
 	 * Converts a persisted String separated with commas to an integer array

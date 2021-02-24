@@ -14,9 +14,13 @@
  *******************************************************************************/
 package org.eclipse.egit.ui.internal.credentials;
 
+import org.eclipse.egit.core.internal.signing.GpgSetup;
 import org.eclipse.jgit.annotations.NonNull;
 import org.eclipse.jgit.api.errors.CanceledException;
+import org.eclipse.jgit.api.errors.UnsupportedSigningFormatException;
 import org.eclipse.jgit.errors.UnsupportedCredentialItem;
+import org.eclipse.jgit.lib.GpgConfig;
+import org.eclipse.jgit.lib.GpgObjectSigner;
 import org.eclipse.jgit.lib.GpgSigner;
 import org.eclipse.jgit.lib.PersonIdent;
 import org.eclipse.jgit.transport.CredentialItem;
@@ -36,16 +40,17 @@ public final class SignatureUtils {
 	 * Checks whether a signing key for the given identification can be found by
 	 * the default {@link GpgSigner#getDefault() GpgSigner}.
 	 *
-	 * @param signingKey
-	 *            from the GPG git config, may be {@code null}
+	 * @param config
+	 *            to use
 	 * @param personIdent
-	 *            to use as a fallback if no {@code signingKey} ID is provided
+	 *            to use as a fallback if no {@link GpgConfig#getSigningKey()
+	 *            signing key ID} is provided by {@code config}
 	 * @return {@code true} if signing appears to be possible, {@code false}
 	 *         otherwise
 	 */
-	public static boolean checkSigningKey(String signingKey,
+	public static boolean checkSigningKey(@NonNull GpgConfig config,
 			@NonNull PersonIdent personIdent) {
-		return checkSigningKey(GpgSigner.getDefault(), signingKey, personIdent);
+		return checkSigningKey(GpgSetup.getDefault(), config, personIdent);
 	}
 
 	/**
@@ -54,41 +59,49 @@ public final class SignatureUtils {
 	 *
 	 * @param signer
 	 *            to use for the check
-	 * @param signingKey
-	 *            from the GPG git config, may be {@code null}
+	 * @param config
+	 *            to use
 	 * @param personIdent
-	 *            to use as a fallback if no {@code signingKey} ID is provided
+	 *            to use as a fallback if no {@link GpgConfig#getSigningKey()
+	 *            signing key ID} is provided by {@code config}
 	 * @return {@code true} if signing appears to be possible, {@code false}
 	 *         otherwise
 	 */
-	public static boolean checkSigningKey(GpgSigner signer, String signingKey,
-			@NonNull PersonIdent personIdent) {
+	public static boolean checkSigningKey(GpgSigner signer,
+			@NonNull GpgConfig config, @NonNull PersonIdent personIdent) {
 		if (signer != null) {
 			try {
-				return signer.canLocateSigningKey(signingKey, personIdent,
-						new CredentialsProvider() {
+				CredentialsProvider credentials = new CredentialsProvider() {
 
-							@Override
-							public boolean supports(CredentialItem... items) {
-								return true;
-							}
+					@Override
+					public boolean supports(CredentialItem... items) {
+						return true;
+					}
 
-							@Override
-							public boolean isInteractive() {
-								return false;
-							}
+					@Override
+					public boolean isInteractive() {
+						return false;
+					}
 
-							@Override
-							public boolean get(URIish uri,
-									CredentialItem... items)
-									throws UnsupportedCredentialItem {
-								return false;
-							}
-						});
+					@Override
+					public boolean get(URIish uri, CredentialItem... items)
+							throws UnsupportedCredentialItem {
+						return false;
+					}
+				};
+				if (signer instanceof GpgObjectSigner) {
+					return ((GpgObjectSigner) signer).canLocateSigningKey(
+							config.getSigningKey(), personIdent, credentials,
+							config);
+				}
+				return signer.canLocateSigningKey(config.getSigningKey(),
+						personIdent, credentials);
 			} catch (CanceledException e) {
 				// interpret this as "ok" - a passphrase was asked and canceled
 				// by our no-op CredentialsProvider
 				return true;
+			} catch (UnsupportedSigningFormatException e) {
+				return false;
 			}
 		}
 		return false;

@@ -91,7 +91,7 @@ public class GitProjectSetCapabilityTest {
 		}
 		// make sure the default directory for Repos is not the user home
 		IEclipsePreferences p = InstanceScope.INSTANCE
-				.getNode(Activator.getPluginId());
+				.getNode(Activator.PLUGIN_ID);
 		p.put(GitCorePreferences.core_defaultRepositoryDir, repoRoot.getPath());
 	}
 

@@ -83,6 +83,7 @@ public class NewRepositoryWizard extends Wizard implements INewWizard {
 			File gitDir = Git.init()
 					.setDirectory(FileUtils.canonicalize(
 							new File(myCreatePage.getDirectory())))
+					.setInitialBranch(myCreatePage.getDefaultBranch())
 					.setBare(isBare)
 					.call().getRepository().getDirectory();
 			this.repository = Activator.getDefault().getRepositoryCache()
@@ -112,10 +113,10 @@ public class NewRepositoryWizard extends Wizard implements INewWizard {
 	}
 
 	private boolean doAutoShare() {
-		IEclipsePreferences d = DefaultScope.INSTANCE.getNode(Activator
-				.getPluginId());
-		IEclipsePreferences p = InstanceScope.INSTANCE.getNode(Activator
-				.getPluginId());
+		IEclipsePreferences d = DefaultScope.INSTANCE
+				.getNode(Activator.PLUGIN_ID);
+		IEclipsePreferences p = InstanceScope.INSTANCE
+				.getNode(Activator.PLUGIN_ID);
 		return p.getBoolean(GitCorePreferences.core_autoShareProjects,
 				d.getBoolean(GitCorePreferences.core_autoShareProjects, true));
 	}

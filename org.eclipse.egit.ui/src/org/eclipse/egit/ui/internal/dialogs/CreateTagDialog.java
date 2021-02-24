@@ -12,8 +12,10 @@
  *******************************************************************************/
 package org.eclipse.egit.ui.internal.dialogs;
 
+import java.io.File;
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
+import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Comparator;
@@ -24,6 +26,8 @@ import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.core.runtime.jobs.Job;
+import org.eclipse.egit.core.internal.signing.GpgSetup;
+import org.eclipse.egit.core.settings.GitSettings;
 import org.eclipse.egit.ui.Activator;
 import org.eclipse.egit.ui.JobFamilies;
 import org.eclipse.egit.ui.UIUtils;
@@ -68,8 +72,10 @@ import org.eclipse.jgit.revwalk.RevObject;
 import org.eclipse.jgit.revwalk.RevSort;
 import org.eclipse.jgit.revwalk.RevTag;
 import org.eclipse.jgit.revwalk.RevWalk;
+import org.eclipse.jgit.util.StringUtils;
 import org.eclipse.osgi.util.NLS;
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.custom.CLabel;
 import org.eclipse.swt.custom.SashForm;
 import org.eclipse.swt.events.KeyAdapter;
 import org.eclipse.swt.events.KeyEvent;
@@ -87,6 +93,7 @@ import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Table;
 import org.eclipse.swt.widgets.Text;
+import org.eclipse.ui.ISharedImages;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.forms.events.ExpansionAdapter;
 import org.eclipse.ui.forms.events.ExpansionEvent;
@@ -577,12 +584,20 @@ public class CreateTagDialog extends TitleAreaDialog {
 			}
 		});
 
-		GpgSigner signer = GpgSigner.getDefault();
+		GpgSigner signer = GpgSetup.getDefault();
 		if (signer instanceof GpgObjectSigner) {
-			GpgConfig gpgConfig = new GpgConfig(repo.getConfig());
 			PersonIdent tagger = new PersonIdent(repo);
-			if (SignatureUtils.checkSigningKey(signer,
-					gpgConfig.getSigningKey(), tagger)) {
+			// Ensure the Eclipse preference, if set, overrides the git config
+			File gpg = GitSettings.getGpgExecutable();
+			GpgConfig gpgConfig = new GpgConfig(repo.getConfig()) {
+
+				@Override
+				public String getProgram() {
+					return gpg != null ? gpg.getAbsolutePath()
+							: super.getProgram();
+				}
+			};
+			if (SignatureUtils.checkSigningKey(signer, gpgConfig, tagger)) {
 				// We can sign at all.
 				signAll = gpgConfig.isSignAllTags();
 				signAnnotated = gpgConfig.isSignAnnotated();
@@ -599,6 +614,17 @@ public class CreateTagDialog extends TitleAreaDialog {
 						signExplicit = true;
 					}
 				});
+			} else {
+				String signingKey = gpgConfig.getSigningKey();
+				if (!StringUtils.isEmptyOrNull(signingKey)) {
+					CLabel warning = new CLabel(left, SWT.WRAP);
+					warning.setText(MessageFormat.format(
+							UIText.CreateTagDialog_noSigningKey, signingKey));
+					warning.setToolTipText(
+							UIText.CreateTagDialog_noSigningKeyToolTip);
+					warning.setImage(PlatformUI.getWorkbench().getSharedImages()
+							.getImage(ISharedImages.IMG_OBJS_WARN_TSK));
+				}
 			}
 		}
 

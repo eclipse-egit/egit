@@ -1,7 +1,7 @@
 /*******************************************************************************
  * Copyright (C) 2010, 2013 Robin Stocker <robin@nibor.org> and others.
  * Copyright (C) 2015 SAP SE (Christian Georgi <christian.georgi@sap.com>)
- * Copyright (C) 2016, 2017 Thomas Wolf <thomas.wolf@paranor.ch>
+ * Copyright (C) 2016, 2021 Thomas Wolf <thomas.wolf@paranor.ch>
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License 2.0
@@ -11,6 +11,10 @@
  * SPDX-License-Identifier: EPL-2.0
  *******************************************************************************/
 package org.eclipse.egit.ui.internal.preferences;
+
+import java.nio.file.Files;
+import java.nio.file.InvalidPathException;
+import java.nio.file.Paths;
 
 import org.eclipse.core.runtime.preferences.InstanceScope;
 import org.eclipse.egit.core.GitCorePreferences;
@@ -23,6 +27,7 @@ import org.eclipse.jface.layout.GridDataFactory;
 import org.eclipse.jface.preference.BooleanFieldEditor;
 import org.eclipse.jface.preference.ComboFieldEditor;
 import org.eclipse.jface.preference.FieldEditor;
+import org.eclipse.jface.preference.FileFieldEditor;
 import org.eclipse.jface.preference.IPreferenceStore;
 import org.eclipse.jface.preference.IntegerFieldEditor;
 import org.eclipse.jface.util.IPropertyChangeListener;
@@ -35,6 +40,7 @@ import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Group;
+import org.eclipse.swt.widgets.Text;
 import org.eclipse.ui.IWorkbench;
 import org.eclipse.ui.IWorkbenchPreferencePage;
 import org.eclipse.ui.preferences.ScopedPreferenceStore;
@@ -42,6 +48,15 @@ import org.eclipse.ui.preferences.ScopedPreferenceStore;
 /** Preferences for committing with commit dialog/staging view. */
 public class CommittingPreferencePage extends DoublePreferencesPreferencePage
 		implements IWorkbenchPreferencePage {
+
+	private final static String[][] GPG_SIGNER_NAMES_AND_VALUES = new String[2][2];
+
+	static {
+		GPG_SIGNER_NAMES_AND_VALUES[0][0] = UIText.CommittingPreferencePage_gpgSignerBouncyCastleLabel;
+		GPG_SIGNER_NAMES_AND_VALUES[0][1] = "bc"; //$NON-NLS-1$
+		GPG_SIGNER_NAMES_AND_VALUES[1][0] = UIText.CommittingPreferencePage_gpgSignerGpgLabel;
+		GPG_SIGNER_NAMES_AND_VALUES[1][1] = "gpg"; //$NON-NLS-1$
+	}
 
 	private BooleanFieldEditor useStagingView;
 
@@ -58,6 +73,10 @@ public class CommittingPreferencePage extends DoublePreferencesPreferencePage
 	private ComboFieldEditor blockCombo;
 
 	private Group generalGroup;
+
+	private ComboFieldEditor gpgSigner;
+
+	private FileFieldEditor gpgExecutable;
 
 	/** */
 	public CommittingPreferencePage() {
@@ -78,7 +97,7 @@ public class CommittingPreferencePage extends DoublePreferencesPreferencePage
 	@Override
 	protected IPreferenceStore doGetSecondaryPreferenceStore() {
 		return new ScopedPreferenceStore(InstanceScope.INSTANCE,
-				org.eclipse.egit.core.Activator.getPluginId());
+				org.eclipse.egit.core.Activator.PLUGIN_ID);
 	}
 
 	@Override
@@ -144,6 +163,55 @@ public class CommittingPreferencePage extends DoublePreferencesPreferencePage
 				UIText.CommittingPreferencePage_commitMessageHistory,
 				generalGroup);
 		addField(historySize);
+
+		gpgSigner = new ComboFieldEditor(GitCorePreferences.core_gpgSigner,
+				UIText.CommittingPreferencePage_gpgSignerLabel,
+				GPG_SIGNER_NAMES_AND_VALUES, generalGroup) {
+
+			@Override
+			public void setPreferenceStore(IPreferenceStore store) {
+				super.setPreferenceStore(
+						store == null ? null : getSecondaryPreferenceStore());
+			}
+		};
+		addField(gpgSigner);
+		gpgExecutable = new FullWidthFileFieldEditor(
+				GitCorePreferences.core_gpgExecutable,
+				UIText.CommittingPreferencePage_gpgExecutableLabel, true,
+				generalGroup) {
+
+			@Override
+			public void setPreferenceStore(IPreferenceStore store) {
+				super.setPreferenceStore(
+						store == null ? null : getSecondaryPreferenceStore());
+			}
+
+			@Override
+			protected boolean doCheckState() {
+				Text text = getTextControl();
+				if (text != null) {
+					String value = text.getText().trim();
+					if (!value.isEmpty()) {
+						try {
+							// Super class resolves symlinks.
+							if (!Files.isExecutable(Paths.get(value))) {
+								setErrorMessage(
+										UIText.CommittingPreferencePage_gpgExecutableNotExecutable);
+								return false;
+							}
+						} catch (InvalidPathException e) {
+							setErrorMessage(
+									UIText.CommittingPreferencePage_gpgExecutableInvalid);
+							return false;
+						}
+					}
+				}
+				return super.doCheckState();
+			}
+		};
+		addField(gpgExecutable);
+		gpgExecutable.getLabelControl(generalGroup).setToolTipText(
+				UIText.CommittingPreferencePage_gpgExecutableTooltip);
 
 		updateMargins(generalGroup);
 
@@ -236,6 +304,8 @@ public class CommittingPreferencePage extends DoublePreferencesPreferencePage
 		handleWarnCheckboxSelection(warnCheckbox.getSelection());
 		handleBlockCheckboxSelection(blockCheckbox.getSelection());
 		updateMargins(buildProblemsGroup);
+		gpgExecutable.setEnabled("gpg".equals(getSecondaryPreferenceStore() //$NON-NLS-1$
+				.getString(GitCorePreferences.core_gpgSigner)), generalGroup);
 	}
 
 	@Override
@@ -251,6 +321,12 @@ public class CommittingPreferencePage extends DoublePreferencesPreferencePage
 				}
 			}
 		});
+		gpgSigner.setPropertyChangeListener(event -> {
+			if (FieldEditor.VALUE.equals(event.getProperty())) {
+				gpgExecutable.setEnabled("gpg".equals(event.getNewValue()), //$NON-NLS-1$
+						generalGroup);
+			}
+		});
 	}
 
 	@Override
@@ -261,6 +337,10 @@ public class CommittingPreferencePage extends DoublePreferencesPreferencePage
 		autoStage.setEnabled(
 				getPreferenceStore().getDefaultBoolean(
 						UIPreferences.ALWAYS_USE_STAGING_VIEW),
+				generalGroup);
+		gpgExecutable.setEnabled(
+				"gpg".equals(getSecondaryPreferenceStore() //$NON-NLS-1$
+						.getDefaultString(GitCorePreferences.core_gpgSigner)),
 				generalGroup);
 	}
 

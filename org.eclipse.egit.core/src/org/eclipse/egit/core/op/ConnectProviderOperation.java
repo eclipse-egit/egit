@@ -105,7 +105,7 @@ public class ConnectProviderOperation implements IEGitOperation {
 	public void execute(IProgressMonitor m) throws CoreException {
 		SubMonitor progress = SubMonitor.convert(m,
 				CoreText.ConnectProviderOperation_connecting, projects.size());
-		MultiStatus ms = new MultiStatus(Activator.getPluginId(), 0,
+		MultiStatus ms = new MultiStatus(Activator.PLUGIN_ID, 0,
 				CoreText.ConnectProviderOperation_ConnectErrors, null);
 		for (Entry<IProject, File> entry : projects.entrySet()) {
 			connectProject(entry, ms, progress.newChild(1));

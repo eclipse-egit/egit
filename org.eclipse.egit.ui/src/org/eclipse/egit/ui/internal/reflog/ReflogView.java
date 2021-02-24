@@ -390,7 +390,7 @@ public class ReflogView extends ViewPart implements RefsChangedListener, IShowIn
 		Activator.getDefault().getPreferenceStore()
 				.addPropertyChangeListener(uiPrefsListener);
 		InstanceScope.INSTANCE
-				.getNode(org.eclipse.egit.core.Activator.getPluginId())
+				.getNode(org.eclipse.egit.core.Activator.PLUGIN_ID)
 				.addPreferenceChangeListener(prefListener);
 
 		selectionChangedListener = new ISelectionListener() {
@@ -465,7 +465,7 @@ public class ReflogView extends ViewPart implements RefsChangedListener, IShowIn
 	@Override
 	public void dispose() {
 		InstanceScope.INSTANCE
-				.getNode(org.eclipse.egit.core.Activator.getPluginId())
+				.getNode(org.eclipse.egit.core.Activator.PLUGIN_ID)
 				.removePreferenceChangeListener(prefListener);
 		getSite().getService(IPartService.class)
 				.removePartListener(partListener);

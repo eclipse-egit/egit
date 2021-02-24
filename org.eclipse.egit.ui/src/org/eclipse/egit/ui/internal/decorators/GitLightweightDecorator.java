@@ -94,7 +94,7 @@ public class GitLightweightDecorator extends GitDecorator
 	 * Collector for keeping the error view from filling up with exceptions
 	 */
 	private static final ExceptionCollector EXCEPTION_COLLECTOR = new ExceptionCollector(
-			UIText.Decorator_exceptionMessageCommon, Activator.getPluginId(),
+			UIText.Decorator_exceptionMessageCommon, Activator.PLUGIN_ID,
 			IStatus.ERROR, Activator.getDefault().getLog());
 
 	/** ID of the new symbolic font for trees and tables since Eclipse 4.17. */

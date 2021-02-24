@@ -249,7 +249,7 @@ public abstract class AbstractGitCloneWizard extends Wizard {
 					UIText.GitCloneWizard_errorCannotCreate, workdir.getPath());
 			ErrorDialog.openError(getShell(), getWindowTitle(),
 					UIText.GitCloneWizard_failed, new Status(IStatus.ERROR,
-							Activator.getPluginId(), 0, errorMessage, null));
+							Activator.PLUGIN_ID, errorMessage, null));
 			// let's give user a chance to fix this minor problem
 			return false;
 		}
@@ -462,8 +462,8 @@ public abstract class AbstractGitCloneWizard extends Wizard {
 					return Status.CANCEL_STATUS;
 				} catch (InvocationTargetException e) {
 					Throwable thr = e.getCause();
-					return new Status(IStatus.ERROR, Activator.getPluginId(),
-							0, thr.getMessage(), thr);
+					return new Status(IStatus.ERROR, Activator.PLUGIN_ID,
+							thr.getMessage(), thr);
 				}
 			}
 

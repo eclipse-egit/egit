@@ -34,10 +34,16 @@ import org.eclipse.egit.ui.internal.PreferenceBasedDateFormatter;
 import org.eclipse.egit.ui.internal.UIText;
 import org.eclipse.egit.ui.internal.history.FormatJob.FormatResult;
 import org.eclipse.egit.ui.internal.trace.GitTraceLocation;
+import org.eclipse.jface.preference.IPreferenceStore;
 import org.eclipse.jface.text.Region;
+import org.eclipse.jgit.api.errors.JGitInternalException;
 import org.eclipse.jgit.errors.IncorrectObjectTypeException;
 import org.eclipse.jgit.errors.MissingObjectException;
 import org.eclipse.jgit.lib.Constants;
+import org.eclipse.jgit.lib.GpgConfig;
+import org.eclipse.jgit.lib.GpgSignatureVerifier;
+import org.eclipse.jgit.lib.GpgSignatureVerifier.SignatureVerification;
+import org.eclipse.jgit.lib.GpgSignatureVerifierFactory;
 import org.eclipse.jgit.lib.ObjectId;
 import org.eclipse.jgit.lib.PersonIdent;
 import org.eclipse.jgit.lib.Ref;
@@ -47,6 +53,7 @@ import org.eclipse.jgit.revwalk.RevCommit;
 import org.eclipse.jgit.revwalk.RevObject;
 import org.eclipse.jgit.revwalk.RevWalk;
 import org.eclipse.jgit.revwalk.RevWalkUtils;
+import org.eclipse.jgit.util.SignatureUtils;
 import org.eclipse.osgi.util.NLS;
 
 /**
@@ -93,10 +100,13 @@ public class CommitInfoBuilder {
 	 */
 	public FormatResult format(IProgressMonitor monitor) throws IOException {
 		boolean trace = GitTraceLocation.HISTORYVIEW.isActive();
-		if (trace)
+		if (trace) {
 			GitTraceLocation.getTrace().traceEntry(
 					GitTraceLocation.HISTORYVIEW.getLocation());
+		}
 		monitor.setTaskName(UIText.CommitMessageViewer_FormattingMessageTaskName);
+		IPreferenceStore preferences = Activator.getDefault()
+				.getPreferenceStore();
 		final StringBuilder d = new StringBuilder();
 		final PersonIdent author = commit.getAuthorIdent();
 		final PersonIdent committer = commit.getCommitterIdent();
@@ -106,6 +116,34 @@ public class CommitInfoBuilder {
 		d.append(commit.getId().name());
 		d.append(LF);
 
+		RevCommit c = commit;
+		if (preferences.getBoolean(UIPreferences.HISTORY_VERIFY_SIGNATURES)
+				&& c.getRawGpgSignature() != null) {
+			GpgSignatureVerifierFactory factory = GpgSignatureVerifierFactory
+					.getDefault();
+			if (factory != null) {
+				GpgSignatureVerifier verifier = factory.getVerifier();
+				GpgConfig config = new GpgConfig(db.getConfig());
+				try {
+					SignatureVerification verification = verifier
+							.verifySignature(c, config);
+					if (verification != null) {
+						String[] text = SignatureUtils
+								.toString(verification, committer,
+										dateFormatter)
+								.split(LF);
+						String prefix = verifier.getName();
+						for (String line : text) {
+							d.append(prefix).append(": ").append(line) //$NON-NLS-1$
+									.append(LF);
+						}
+					}
+				} catch (IOException | JGitInternalException e) {
+					Activator.logError("Cannot verify signature on commit " //$NON-NLS-1$
+							+ commit.name(), e);
+				}
+			}
+		}
 		addPersonIdent(d, author, UIText.CommitMessageViewer_author);
 		addPersonIdent(d, committer, UIText.CommitMessageViewer_committer);
 
@@ -119,8 +157,8 @@ public class CommitInfoBuilder {
 					UIText.CommitMessageViewer_child, hyperlinks);
 		}
 
-		if(Activator.getDefault().getPreferenceStore().getBoolean(
-				UIPreferences.HISTORY_SHOW_BRANCH_SEQUENCE)) {
+		if (preferences
+				.getBoolean(UIPreferences.HISTORY_SHOW_BRANCH_SEQUENCE)) {
 			try (RevWalk rw = new RevWalk(db)) {
 				List<Ref> branches = getBranches(commit, allRefs, db, monitor);
 				Collections.sort(branches,
@@ -158,8 +196,7 @@ public class CommitInfoBuilder {
 			d.append(LF);
 		}
 
-		if (Activator.getDefault().getPreferenceStore().getBoolean(
-				UIPreferences.HISTORY_SHOW_TAG_SEQUENCE)) {
+		if (preferences.getBoolean(UIPreferences.HISTORY_SHOW_TAG_SEQUENCE)) {
 			try (RevWalk rw = new RevWalk(db)) {
 				monitor.setTaskName(UIText.CommitMessageViewer_GettingPreviousTagTaskName);
 				addTag(d, UIText.CommitMessageViewer_follows, rw,

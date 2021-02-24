@@ -122,7 +122,7 @@ class GenerateHistoryJob extends Job {
 							Integer.valueOf(oldsz)));
 				}
 			} catch (IOException e) {
-				status = new Status(IStatus.ERROR, Activator.getPluginId(),
+				status = new Status(IStatus.ERROR, Activator.PLUGIN_ID,
 						UIText.GenerateHistoryJob_errorComputingHistory, e);
 			}
 			if (trace)

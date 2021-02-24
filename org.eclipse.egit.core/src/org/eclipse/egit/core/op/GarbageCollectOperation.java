@@ -49,7 +49,7 @@ public class GarbageCollectOperation implements IEGitOperation {
 					new EclipseGitProgressTransformer(monitor)).call();
 		} catch (IllegalStateException | GitAPIException e) {
 			throw new CoreException(new Status(IStatus.ERROR,
-					Activator.getPluginId(), e.getMessage(), e));
+					Activator.PLUGIN_ID, e.getMessage(), e));
 		}
 	}
 

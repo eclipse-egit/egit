@@ -22,6 +22,7 @@ import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.core.runtime.jobs.Job;
+import org.eclipse.egit.core.internal.signing.GpgConfigurationException;
 import org.eclipse.egit.core.op.CommitOperation;
 import org.eclipse.egit.ui.Activator;
 import org.eclipse.egit.ui.JobFamilies;
@@ -29,10 +30,12 @@ import org.eclipse.egit.ui.UIPreferences;
 import org.eclipse.egit.ui.internal.UIText;
 import org.eclipse.egit.ui.internal.decorators.GitLightweightDecorator;
 import org.eclipse.egit.ui.internal.dialogs.CommitMessageComponentStateManager;
+import org.eclipse.egit.ui.internal.jobs.GpgConfigProblemReportAction;
 import org.eclipse.egit.ui.internal.push.PushMode;
 import org.eclipse.egit.ui.internal.push.PushOperationUI;
 import org.eclipse.egit.ui.internal.push.PushWizardDialog;
 import org.eclipse.egit.ui.internal.push.SimpleConfigurePushDialog;
+import org.eclipse.jface.action.IAction;
 import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.wizard.Wizard;
 import org.eclipse.jgit.api.errors.AbortedByHookException;
@@ -103,7 +106,15 @@ public class CommitJob extends Job {
 			commit = commitOperation.getCommit();
 			CommitMessageComponentStateManager.deleteState(repository);
 		} catch (CoreException e) {
-			if (e.getCause() instanceof JGitInternalException) {
+			if (e.getCause() instanceof GpgConfigurationException) {
+				showGpgProblem(e.getStatus());
+				return Status.CANCEL_STATUS;
+			} else if (e.getCause() instanceof JGitInternalException) {
+				if (e.getCause()
+						.getCause() instanceof GpgConfigurationException) {
+					showGpgProblem(e.getStatus());
+					return Status.CANCEL_STATUS;
+				}
 				return Activator.createErrorStatus(e.getLocalizedMessage(),
 						e.getCause());
 			} else if (e.getCause() instanceof AbortedByHookException) {
@@ -130,6 +141,12 @@ public class CommitJob extends Job {
 		return Status.OK_STATUS;
 	}
 
+	private void showGpgProblem(IStatus status) {
+		IAction action = new GpgConfigProblemReportAction(status,
+				UIText.CommitJob_GpgConfigProblem);
+		PlatformUI.getWorkbench().getDisplay().asyncExec(action::run);
+	}
+
 	private void showAbortedByHook(final AbortedByHookException cause) {
 		PlatformUI.getWorkbench().getDisplay().asyncExec(new Runnable() {
 
@@ -141,8 +158,8 @@ public class CommitJob extends Job {
 			@Override
 			public void run() {
 				MessageDialog.openWarning(PlatformUI.getWorkbench()
-						.getDisplay().getActiveShell(), createTitle(),
-						cause.getHookStdErr());
+						.getModalDialogShellProvider().getShell(),
+						createTitle(), cause.getHookStdErr());
 			}
 		});
 	}

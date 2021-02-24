@@ -31,8 +31,8 @@ public class PreferredMergeStrategyTest {
 	@Before
 	public void setUp() {
 		a = Activator.getDefault();
-		InstanceScope.INSTANCE.getNode(Activator.getPluginId()).remove(
-				GitCorePreferences.core_preferredMergeStrategy);
+		InstanceScope.INSTANCE.getNode(Activator.PLUGIN_ID)
+				.remove(GitCorePreferences.core_preferredMergeStrategy);
 	}
 
 	/**
@@ -40,8 +40,8 @@ public class PreferredMergeStrategyTest {
 	 */
 	@After
 	public void tearDown() {
-		InstanceScope.INSTANCE.getNode(Activator.getPluginId()).remove(
-				GitCorePreferences.core_preferredMergeStrategy);
+		InstanceScope.INSTANCE.getNode(Activator.PLUGIN_ID)
+				.remove(GitCorePreferences.core_preferredMergeStrategy);
 	}
 
 	@Test
@@ -51,8 +51,8 @@ public class PreferredMergeStrategyTest {
 
 	@Test
 	public void testGetPreferredMergeStrategyWhenNoPref() {
-		InstanceScope.INSTANCE.getNode(Activator.getPluginId()).remove(
-				GitCorePreferences.core_preferredMergeStrategy);
+		InstanceScope.INSTANCE.getNode(Activator.PLUGIN_ID)
+				.remove(GitCorePreferences.core_preferredMergeStrategy);
 
 		assertNull(a.getPreferredMergeStrategy());
 	}
@@ -61,9 +61,9 @@ public class PreferredMergeStrategyTest {
 	public void testGetPreferredMergeStrategyWhenInvalidPreference() {
 		// Using "invalid value" simulates a property set to a merge strategy
 		// that's no longer registered
-		InstanceScope.INSTANCE.getNode(Activator.getPluginId())
-				.put(GitCorePreferences.core_preferredMergeStrategy,
-						"invalid value");
+		InstanceScope.INSTANCE.getNode(Activator.PLUGIN_ID).put(
+				GitCorePreferences.core_preferredMergeStrategy,
+				"invalid value");
 
 		assertNull(a.getPreferredMergeStrategy());
 	}
@@ -72,8 +72,8 @@ public class PreferredMergeStrategyTest {
 	public void testGetPreferredMergeStrategyWhenValidPreference() {
 		// Using "resolve" here because there's no need for more configuration
 		// in this test, it is a registered MergeStrategy
-		InstanceScope.INSTANCE.getNode(Activator.getPluginId()).put(
-				GitCorePreferences.core_preferredMergeStrategy, "resolve");
+		InstanceScope.INSTANCE.getNode(Activator.PLUGIN_ID)
+				.put(GitCorePreferences.core_preferredMergeStrategy, "resolve");
 
 		assertSame(MergeStrategy.RESOLVE, a.getPreferredMergeStrategy());
 	}

@@ -72,7 +72,7 @@ public class GitProvider extends RepositoryProvider {
 			GitProjectData.deconfigure(getProject());
 		} catch (IOException e) {
 			throw new CoreException(new Status(IStatus.ERROR,
-					Activator.getPluginId(), e.getMessage(), e));
+					Activator.PLUGIN_ID, e.getMessage(), e));
 		}
 	}
 

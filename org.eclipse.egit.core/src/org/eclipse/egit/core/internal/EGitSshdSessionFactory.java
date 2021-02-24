@@ -165,7 +165,7 @@ public class EGitSshdSessionFactory extends SshdSessionFactory {
 				@NonNull State state) throws IOException {
 			if (attempt == 0) {
 				useSecureStore = Platform.getPreferencesService().getBoolean(
-						Activator.getPluginId(),
+						Activator.PLUGIN_ID,
 						GitCorePreferences.core_saveCredentialsInSecureStore,
 						true, null);
 				// Obtain a password from secure store and return it if
@@ -288,7 +288,7 @@ public class EGitSshdSessionFactory extends SshdSessionFactory {
 
 		private void savePrefs() {
 			IEclipsePreferences prefs = InstanceScope.INSTANCE
-					.getNode(Activator.getPluginId());
+					.getNode(Activator.PLUGIN_ID);
 			prefs.putBoolean(
 					GitCorePreferences.core_saveCredentialsInSecureStore,
 					useSecureStore);

@@ -22,7 +22,8 @@ public class GitCorePreferenceInitializer extends AbstractPreferenceInitializer 
 
 	@Override
 	public void initializeDefaultPreferences() {
-		final IEclipsePreferences p  = DefaultScope.INSTANCE.getNode(Activator.getPluginId());
+		final IEclipsePreferences p = DefaultScope.INSTANCE
+				.getNode(Activator.PLUGIN_ID);
 
 		p.putInt(GitCorePreferences.core_packedGitWindowSize, 8 * 1024);
 		p.putInt(GitCorePreferences.core_packedGitLimit, 10 * MB);
@@ -41,6 +42,7 @@ public class GitCorePreferenceInitializer extends AbstractPreferenceInitializer 
 		p.putInt(GitCorePreferences.core_maxPullThreadsCount, 3);
 		p.put(GitCorePreferences.core_httpClient, "apache"); //$NON-NLS-1$
 		p.putInt(GitCorePreferences.core_remoteConnectionTimeout, 30);
+		p.put(GitCorePreferences.core_gpgSigner, "bc"); //$NON-NLS-1$
 	}
 
 }

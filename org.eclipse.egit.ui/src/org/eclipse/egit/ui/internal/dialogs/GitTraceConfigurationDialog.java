@@ -10,6 +10,7 @@
  *******************************************************************************/
 package org.eclipse.egit.ui.internal.dialogs;
 
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
@@ -28,6 +29,7 @@ import org.eclipse.core.runtime.Path;
 import org.eclipse.core.runtime.Platform;
 import org.eclipse.egit.ui.Activator;
 import org.eclipse.egit.ui.internal.UIText;
+import org.eclipse.egit.ui.internal.trace.GitTraceLocation;
 import org.eclipse.jface.dialogs.Dialog;
 import org.eclipse.jface.dialogs.IDialogConstants;
 import org.eclipse.jface.dialogs.IMessageProvider;
@@ -225,8 +227,8 @@ public class GitTraceConfigurationDialog extends TitleAreaDialog {
 	private static final String MAINSWITCH = "/debug"; //$NON-NLS-1$
 
 	private static final PluginNode[] PLUGIN_LIST = new PluginNode[] {
-			new PluginNode(Activator.getPluginId()),
-			new PluginNode(org.eclipse.egit.core.Activator.getPluginId()) };
+			new PluginNode(Activator.PLUGIN_ID),
+			new PluginNode(org.eclipse.egit.core.Activator.PLUGIN_ID) };
 
 	private static final int APPLY_ID = 77;
 
@@ -239,6 +241,8 @@ public class GitTraceConfigurationDialog extends TitleAreaDialog {
 	private Button platformSwitch;
 
 	private Text traceFileLocation;
+
+	private Button openButton;
 
 	private CheckboxTreeViewer tv;
 
@@ -253,6 +257,7 @@ public class GitTraceConfigurationDialog extends TitleAreaDialog {
 	@Override
 	protected Control createDialogArea(Composite parent) {
 		Composite main = new Composite(parent, SWT.NONE);
+		GridDataFactory.fillDefaults().grab(true, false).applyTo(main);
 		main.setLayout(new GridLayout(3, false));
 
 		platformSwitch = new Button(main, SWT.CHECK);
@@ -289,7 +294,7 @@ public class GitTraceConfigurationDialog extends TitleAreaDialog {
 		GridDataFactory.defaultsFor(traceFileLocation).grab(true, false)
 				.applyTo(traceFileLocation);
 
-		Button openButton = new Button(main, SWT.PUSH);
+		openButton = new Button(main, SWT.PUSH);
 		openButton
 				.setText(UIText.GitTraceConfigurationDialog_OpenInEditorButton);
 		openButton.addSelectionListener(new SelectionAdapter() {
@@ -389,7 +394,13 @@ public class GitTraceConfigurationDialog extends TitleAreaDialog {
 			platformSwitch.setSelection(options.isDebugEnabled());
 		}
 
-		traceFileLocation.setText(getOptions().getFile().getPath());
+		File traceFile = getOptions().getFile();
+		if (traceFile == null) {
+			traceFileLocation.setEnabled(false);
+			openButton.setEnabled(false);
+		} else {
+			traceFileLocation.setText(traceFile.getPath());
+		}
 		updateEnablement();
 	}
 
@@ -552,6 +563,6 @@ public class GitTraceConfigurationDialog extends TitleAreaDialog {
 	}
 
 	private DebugOptions getOptions() {
-		return Activator.getDefault().getDebugOptions();
+		return GitTraceLocation.getOptions();
 	}
 }

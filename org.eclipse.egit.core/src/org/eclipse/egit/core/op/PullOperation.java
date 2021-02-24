@@ -163,7 +163,7 @@ public class PullOperation implements IEGitOperation {
 	public void execute(IProgressMonitor m) throws CoreException {
 		if (!results.isEmpty()) {
 			throw new CoreException(
-					new Status(IStatus.ERROR, Activator.getPluginId(),
+					new Status(IStatus.ERROR, Activator.PLUGIN_ID,
 							CoreText.OperationAlreadyExecuted));
 		}
 		int workers = repositories.length;
@@ -194,9 +194,8 @@ public class PullOperation implements IEGitOperation {
 	private int getMaxPullThreadsCount() {
 		String key = GitCorePreferences.core_maxPullThreadsCount;
 		int defaultValue = 1;
-		int value = Platform.getPreferencesService().getInt(
-				Activator.getPluginId(), key,
-				defaultValue, null);
+		int value = Platform.getPreferencesService().getInt(Activator.PLUGIN_ID,
+				key, defaultValue, null);
 		return Math.max(defaultValue, value);
 	}
 

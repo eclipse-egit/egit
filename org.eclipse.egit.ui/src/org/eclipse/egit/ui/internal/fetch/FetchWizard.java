@@ -157,9 +157,9 @@ public class FetchWizard extends Wizard {
 			config.save();
 		} catch (final IOException e) {
 			ErrorDialog.openError(getShell(), UIText.FetchWizard_cantSaveTitle,
-					UIText.FetchWizard_cantSaveMessage, new Status(
-							IStatus.WARNING, Activator.getPluginId(), e
-									.getMessage(), e));
+					UIText.FetchWizard_cantSaveMessage,
+					new Status(IStatus.WARNING, Activator.PLUGIN_ID,
+							e.getMessage(), e));
 			// Continue, it's not critical.
 		}
 	}

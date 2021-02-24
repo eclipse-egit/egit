@@ -87,7 +87,7 @@ public class GitPreferenceRoot extends DoublePreferencesPreferencePage
 	@Override
 	protected IPreferenceStore doGetSecondaryPreferenceStore() {
 		return new ScopedPreferenceStore(InstanceScope.INSTANCE,
-				org.eclipse.egit.core.Activator.getPluginId());
+				org.eclipse.egit.core.Activator.PLUGIN_ID);
 	}
 
 	@Override
@@ -249,14 +249,6 @@ public class GitPreferenceRoot extends DoublePreferencesPreferencePage
 		intervalField.getLabelControl(repoChangeScannerGroup).setToolTipText(
 				UIText.RefreshPreferencesPage_RefreshIndexIntervalTooltip);
 		addField(intervalField);
-		addField(new BooleanFieldEditor(UIPreferences.REFRESH_ON_INDEX_CHANGE,
-				UIText.RefreshPreferencesPage_RefreshWhenIndexChange,
-				repoChangeScannerGroup) {
-			@Override
-			public int getNumberOfControls() {
-				return 2;
-			}
-		});
 		addField(new BooleanFieldEditor(UIPreferences.REFRESH_ONLY_WHEN_ACTIVE,
 				UIText.RefreshPreferencesPage_RefreshOnlyWhenActive,
 				repoChangeScannerGroup) {

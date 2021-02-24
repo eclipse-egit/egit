@@ -153,7 +153,7 @@ public class GitMoveDeleteHookTest {
 	@Theory
 	public void testDeleteFile(boolean autoStageDelete) throws Exception {
 		IEclipsePreferences p = InstanceScope.INSTANCE
-				.getNode(Activator.getPluginId());
+				.getNode(Activator.PLUGIN_ID);
 		p.putBoolean(GitCorePreferences.core_autoStageDeletion,
 				autoStageDelete);
 
@@ -262,7 +262,7 @@ public class GitMoveDeleteHookTest {
 
 	private void configureAutoStageMoves(boolean autoStageMoves) {
 		IEclipsePreferences p = InstanceScope.INSTANCE
-				.getNode(Activator.getPluginId());
+				.getNode(Activator.PLUGIN_ID);
 		p.putBoolean(GitCorePreferences.core_autoStageMoves, autoStageMoves);
 	}
 

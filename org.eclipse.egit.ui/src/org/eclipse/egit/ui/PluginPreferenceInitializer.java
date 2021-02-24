@@ -112,7 +112,6 @@ public class PluginPreferenceInitializer extends AbstractPreferenceInitializer {
 		store.setDefault(UIPreferences.COMMIT_DIALOG_SIGNED_OFF_BY, false);
 
 		store.setDefault(UIPreferences.REFRESH_INDEX_INTERVAL, 5 * 60);
-		store.setDefault(UIPreferences.REFRESH_ON_INDEX_CHANGE, true);
 		store.setDefault(UIPreferences.REFRESH_ONLY_WHEN_ACTIVE, true);
 
 		store.setDefault(UIPreferences.SHOW_REBASE_CONFIRM, false);
@@ -165,6 +164,8 @@ public class PluginPreferenceInitializer extends AbstractPreferenceInitializer {
 		store.setDefault(UIPreferences.HISTORY_COLUMN_AUTHOR_DATE, true);
 		store.setDefault(UIPreferences.HISTORY_COLUMN_COMMITTER, true);
 		store.setDefault(UIPreferences.HISTORY_COLUMN_COMMITTER_DATE, true);
+
+		store.setDefault(UIPreferences.HISTORY_VERIFY_SIGNATURES, false);
 	}
 
 }

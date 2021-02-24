@@ -120,7 +120,7 @@ public class ConnectProviderOperationTest extends GitTestCase {
 	public void testAutoIgnoresDerivedFolder() throws Exception {
 		// enable auto-ignore
 		IEclipsePreferences p = InstanceScope.INSTANCE.getNode(Activator
-				.getPluginId());
+				.PLUGIN_ID);
 		boolean autoignore = p.getBoolean(
 				GitCorePreferences.core_autoIgnoreDerivedResources, false);
 		if (!autoignore) {
@@ -177,7 +177,7 @@ public class ConnectProviderOperationTest extends GitTestCase {
 	public void testNoAutoIgnoresDerivedFolder() throws Exception {
 		// disable auto-ignore
 		IEclipsePreferences p = InstanceScope.INSTANCE
-				.getNode(Activator.getPluginId());
+				.getNode(Activator.PLUGIN_ID);
 		boolean autoignore = p.getBoolean(
 				GitCorePreferences.core_autoIgnoreDerivedResources, false);
 		if (autoignore) {

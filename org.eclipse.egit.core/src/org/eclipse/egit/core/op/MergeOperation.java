@@ -153,7 +153,7 @@ public class MergeOperation implements IEGitOperation {
 	public void execute(IProgressMonitor m) throws CoreException {
 		if (mergeResult != null)
 			throw new CoreException(new Status(IStatus.ERROR, Activator
-					.getPluginId(), CoreText.OperationAlreadyExecuted));
+					.PLUGIN_ID, CoreText.OperationAlreadyExecuted));
 		IWorkspaceRunnable action = new IWorkspaceRunnable() {
 
 			@Override
@@ -196,8 +196,7 @@ public class MergeOperation implements IEGitOperation {
 					if (MergeResult.MergeStatus.NOT_SUPPORTED
 							.equals(mergeResult.getMergeStatus())) {
 						throw new TeamException(new Status(IStatus.INFO,
-								Activator.getPluginId(),
-								mergeResult.toString()));
+								Activator.PLUGIN_ID, mergeResult.toString()));
 					}
 				} catch (IOException e) {
 					throw new TeamException(

@@ -57,7 +57,7 @@ import org.eclipse.ui.PlatformUI;
  */
 public class PullOperationUI extends JobChangeAdapter {
 	private static final IStatus NOT_TRIED_STATUS = new Status(IStatus.ERROR,
-			Activator.getPluginId(), UIText.PullOperationUI_NotTriedMessage);
+			Activator.PLUGIN_ID, UIText.PullOperationUI_NotTriedMessage);
 
 	private final Repository[] repositories;
 

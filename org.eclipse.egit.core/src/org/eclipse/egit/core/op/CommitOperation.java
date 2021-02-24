@@ -18,6 +18,7 @@ package org.eclipse.egit.core.op;
 import static java.lang.Boolean.FALSE;
 import static java.lang.Boolean.TRUE;
 
+import java.io.File;
 import java.io.IOException;
 import java.util.Arrays;
 import java.util.Collection;
@@ -38,12 +39,15 @@ import org.eclipse.egit.core.Activator;
 import org.eclipse.egit.core.RepositoryUtil;
 import org.eclipse.egit.core.internal.CoreText;
 import org.eclipse.egit.core.internal.job.RuleUtil;
+import org.eclipse.egit.core.internal.signing.GpgConfigurationException;
 import org.eclipse.egit.core.project.RepositoryMapping;
+import org.eclipse.egit.core.settings.GitSettings;
 import org.eclipse.jgit.api.AddCommand;
 import org.eclipse.jgit.api.CommitCommand;
 import org.eclipse.jgit.api.Git;
 import org.eclipse.jgit.api.errors.GitAPIException;
 import org.eclipse.jgit.api.errors.JGitInternalException;
+import org.eclipse.jgit.lib.GpgConfig;
 import org.eclipse.jgit.lib.ObjectId;
 import org.eclipse.jgit.lib.PersonIdent;
 import org.eclipse.jgit.lib.Repository;
@@ -253,6 +257,8 @@ public class CommitOperation implements IEGitOperation {
 				for(String path:commitFileList)
 					commitCommand.setOnly(path);
 			commit = commitCommand.call();
+		} catch (GpgConfigurationException e) {
+			throw new TeamException(e.getLocalizedMessage(), e);
 		} catch (Exception e) {
 			throw new TeamException(
 					CoreText.MergeOperation_InternalError, e);
@@ -358,5 +364,19 @@ public class CommitOperation implements IEGitOperation {
 		commitCommand.setAuthor(authorIdent);
 		commitCommand.setCommitter(committerIdent);
 		commitCommand.setSign(sign ? TRUE : FALSE);
+		if (sign) {
+			// Ensure the Eclipse preference, if set, overrides the git config
+			File gpg = GitSettings.getGpgExecutable();
+			if (gpg != null) {
+				GpgConfig cfg = new GpgConfig(repo.getConfig()) {
+
+					@Override
+					public String getProgram() {
+						return gpg.getAbsolutePath();
+					}
+				};
+				commitCommand.setGpgConfig(cfg);
+			}
+		}
 	}
 }

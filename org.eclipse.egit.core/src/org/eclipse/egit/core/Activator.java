@@ -61,6 +61,7 @@ import org.eclipse.egit.core.internal.ResourceRefreshHandler;
 import org.eclipse.egit.core.internal.SshPreferencesMirror;
 import org.eclipse.egit.core.internal.indexdiff.IndexDiffCache;
 import org.eclipse.egit.core.internal.job.JobUtil;
+import org.eclipse.egit.core.internal.signing.ExternalGpgSigner;
 import org.eclipse.egit.core.internal.trace.GitTraceLocation;
 import org.eclipse.egit.core.internal.util.ResourceUtil;
 import org.eclipse.egit.core.op.ConnectProviderOperation;
@@ -75,6 +76,7 @@ import org.eclipse.jgit.errors.ConfigInvalidException;
 import org.eclipse.jgit.events.ListenerHandle;
 import org.eclipse.jgit.lib.Config;
 import org.eclipse.jgit.lib.Constants;
+import org.eclipse.jgit.lib.GpgSigner;
 import org.eclipse.jgit.lib.StoredConfig;
 import org.eclipse.jgit.merge.MergeStrategy;
 import org.eclipse.jgit.storage.file.FileBasedConfig;
@@ -99,12 +101,14 @@ import org.osgi.util.tracker.ServiceTracker;
  */
 public class Activator extends Plugin implements DebugOptionsListener {
 
+	/** The plug-in ID for Egit core. */
+	public static final String PLUGIN_ID = "org.eclipse.egit.core"; //$NON-NLS-1$
+
 	private enum HttpClientType {
 		JDK, APACHE
 	}
 
 	private static Activator plugin;
-	private static String pluginId;
 	private RepositoryCache repositoryCache;
 	private IndexDiffCache indexDiffCache;
 	private RepositoryUtil repositoryUtil;
@@ -125,13 +129,6 @@ public class Activator extends Plugin implements DebugOptionsListener {
 	}
 
 	/**
-	 * @return the name of this plugin
-	 */
-	public static String getPluginId() {
-		return pluginId;
-	}
-
-	/**
 	 * Utility to create an error status for this plug-in.
 	 *
 	 * @param message User comprehensible message
@@ -139,7 +136,7 @@ public class Activator extends Plugin implements DebugOptionsListener {
 	 * @return an initialized error status
 	 */
 	public static IStatus error(final String message, final Throwable thr) {
-		return new Status(IStatus.ERROR, getPluginId(), 0,	message, thr);
+		return new Status(IStatus.ERROR, PLUGIN_ID, 0, message, thr);
 	}
 
 	/**
@@ -152,7 +149,7 @@ public class Activator extends Plugin implements DebugOptionsListener {
 	 * @return an initialized cancel status
 	 */
 	public static IStatus cancel(final String message, final Throwable thr) {
-		return new Status(IStatus.CANCEL, getPluginId(), 0, message, thr);
+		return new Status(IStatus.CANCEL, PLUGIN_ID, 0, message, thr);
 	}
 
 	/**
@@ -174,7 +171,7 @@ public class Activator extends Plugin implements DebugOptionsListener {
 	 */
 	public static void logInfo(final String message) {
 		getDefault().getLog().log(
-				new Status(IStatus.INFO, getPluginId(), 0, message, null));
+				new Status(IStatus.INFO, PLUGIN_ID, 0, message, null));
 	}
 
 	/**
@@ -187,7 +184,7 @@ public class Activator extends Plugin implements DebugOptionsListener {
 	 * @return an initialized warning status
 	 */
 	public static IStatus warning(final String message, final Throwable thr) {
-		return new Status(IStatus.WARNING, getPluginId(), 0, message, thr);
+		return new Status(IStatus.WARNING, PLUGIN_ID, 0, message, thr);
 	}
 
 	/**
@@ -217,7 +214,6 @@ public class Activator extends Plugin implements DebugOptionsListener {
 	public void start(final BundleContext context) throws Exception {
 
 		super.start(context);
-		pluginId = context.getBundle().getSymbolicName();
 		migratePreferences();
 
 		FS.FileStoreAttributes.setBackground(true);
@@ -228,9 +224,11 @@ public class Activator extends Plugin implements DebugOptionsListener {
 		Config.setTypedConfigGetter(new ReportingTypedConfigGetter());
 		// we want to be notified about debug options changes
 		Dictionary<String, String> props = new Hashtable<>(4);
-		props.put(DebugOptions.LISTENER_SYMBOLICNAME, pluginId);
+		props.put(DebugOptions.LISTENER_SYMBOLICNAME, PLUGIN_ID);
 		context.registerService(DebugOptionsListener.class.getName(), this,
 				props);
+
+		GpgSigner.setDefault(new ExternalGpgSigner());
 
 		setupHttp();
 		SshPreferencesMirror.INSTANCE.start();
@@ -243,7 +241,7 @@ public class Activator extends Plugin implements DebugOptionsListener {
 				setupHttp();
 			}
 		};
-		InstanceScope.INSTANCE.getNode(pluginId)
+		InstanceScope.INSTANCE.getNode(PLUGIN_ID)
 				.addPreferenceChangeListener(preferenceChangeListener);
 		setupProxy();
 
@@ -270,7 +268,7 @@ public class Activator extends Plugin implements DebugOptionsListener {
 
 	private void migratePreferences() {
 		IEclipsePreferences corePrefs = InstanceScope.INSTANCE
-				.getNode(getPluginId());
+				.getNode(PLUGIN_ID);
 		boolean changed = false;
 		IEclipsePreferences uiPrefs = InstanceScope.INSTANCE
 				.getNode("org.eclipse.egit.ui"); //$NON-NLS-1$
@@ -298,7 +296,7 @@ public class Activator extends Plugin implements DebugOptionsListener {
 	}
 
 	private void setupHttp() {
-		String sshClient = Platform.getPreferencesService().getString(pluginId,
+		String sshClient = Platform.getPreferencesService().getString(PLUGIN_ID,
 				GitCorePreferences.core_httpClient, "jdk", null); //$NON-NLS-1$
 		if (HttpClientType.APACHE.name().equalsIgnoreCase(sshClient)) {
 			HttpTransport.setConnectionFactory(new HttpClientConnectionFactory());
@@ -398,7 +396,7 @@ public class Activator extends Plugin implements DebugOptionsListener {
 	public MergeStrategy getPreferredMergeStrategy() {
 		// Get preferences set by user in the UI
 		final IEclipsePreferences prefs = InstanceScope.INSTANCE
-				.getNode(Activator.getPluginId());
+				.getNode(PLUGIN_ID);
 		String preferredMergeStrategyKey = prefs.get(
 				GitCorePreferences.core_preferredMergeStrategy, null);
 
@@ -406,7 +404,7 @@ public class Activator extends Plugin implements DebugOptionsListener {
 		if (preferredMergeStrategyKey == null
 				|| preferredMergeStrategyKey.isEmpty()) {
 			final IEclipsePreferences defaultPrefs = DefaultScope.INSTANCE
-					.getNode(Activator.getPluginId());
+					.getNode(PLUGIN_ID);
 			preferredMergeStrategyKey = defaultPrefs.get(
 					GitCorePreferences.core_preferredMergeStrategy, null);
 		}
@@ -485,7 +483,7 @@ public class Activator extends Plugin implements DebugOptionsListener {
 	public void stop(final BundleContext context) throws Exception {
 		SshPreferencesMirror.INSTANCE.stop();
 		if (preferenceChangeListener != null) {
-			InstanceScope.INSTANCE.getNode(pluginId)
+			InstanceScope.INSTANCE.getNode(PLUGIN_ID)
 					.removePreferenceChangeListener(preferenceChangeListener);
 			preferenceChangeListener = null;
 		}
@@ -554,9 +552,9 @@ public class Activator extends Plugin implements DebugOptionsListener {
 
 		private boolean doAutoShare() {
 			IEclipsePreferences d = DefaultScope.INSTANCE.getNode(Activator
-					.getPluginId());
+					.PLUGIN_ID);
 			IEclipsePreferences p = InstanceScope.INSTANCE.getNode(Activator
-					.getPluginId());
+					.PLUGIN_ID);
 			return p.getBoolean(GitCorePreferences.core_autoShareProjects, d
 					.getBoolean(GitCorePreferences.core_autoShareProjects,
 							true));
@@ -788,9 +786,9 @@ public class Activator extends Plugin implements DebugOptionsListener {
 	 */
 	public static boolean autoIgnoreDerived() {
 		IEclipsePreferences d = DefaultScope.INSTANCE
-				.getNode(Activator.getPluginId());
+				.getNode(Activator.PLUGIN_ID);
 		IEclipsePreferences p = InstanceScope.INSTANCE
-				.getNode(Activator.getPluginId());
+				.getNode(Activator.PLUGIN_ID);
 		return p.getBoolean(GitCorePreferences.core_autoIgnoreDerivedResources,
 				d.getBoolean(GitCorePreferences.core_autoIgnoreDerivedResources,
 						true));
@@ -803,9 +801,9 @@ public class Activator extends Plugin implements DebugOptionsListener {
 	 */
 	public static boolean autoStageDeletion() {
 		IEclipsePreferences d = DefaultScope.INSTANCE
-				.getNode(Activator.getPluginId());
+				.getNode(Activator.PLUGIN_ID);
 		IEclipsePreferences p = InstanceScope.INSTANCE
-				.getNode(Activator.getPluginId());
+				.getNode(Activator.PLUGIN_ID);
 		boolean autoStageDeletion = p.getBoolean(
 				GitCorePreferences.core_autoStageDeletion,
 				d.getBoolean(GitCorePreferences.core_autoStageDeletion, false));
@@ -819,9 +817,9 @@ public class Activator extends Plugin implements DebugOptionsListener {
 	 */
 	public static boolean autoStageMoves() {
 		IEclipsePreferences d = DefaultScope.INSTANCE
-				.getNode(Activator.getPluginId());
+				.getNode(Activator.PLUGIN_ID);
 		IEclipsePreferences p = InstanceScope.INSTANCE
-				.getNode(Activator.getPluginId());
+				.getNode(Activator.PLUGIN_ID);
 		boolean autoStageMoves = p.getBoolean(
 				GitCorePreferences.core_autoStageMoves,
 				d.getBoolean(GitCorePreferences.core_autoStageMoves, false));

@@ -268,7 +268,7 @@ public abstract class AbstractRebaseCommandHandler extends AbstractSharedCommand
 			} catch (CoreException e1) {
 				IStatus childStatus = Activator.createErrorStatus(
 						e1.getMessage(), e1);
-				IStatus mStatus = new MultiStatus(Activator.getPluginId(),
+				IStatus mStatus = new MultiStatus(Activator.PLUGIN_ID,
 						IStatus.ERROR, new IStatus[] { childStatus },
 						t.getMessage(), t);
 				CoreException mStatusException = new CoreException(mStatus);

@@ -41,9 +41,9 @@ public class FetchActionHandler extends RepositoryActionHandler {
 		} catch (URISyntaxException x) {
 			ErrorDialog.openError(getShell(event),
 					UIText.FetchAction_wrongURITitle,
-					UIText.FetchAction_wrongURIMessage, new Status(
-							IStatus.ERROR, Activator.getPluginId(), x
-									.getMessage(), x));
+					UIText.FetchAction_wrongURIMessage,
+					new Status(IStatus.ERROR, Activator.PLUGIN_ID,
+							x.getMessage(), x));
 			return null;
 		}
 		WizardDialog dlg = new WizardDialog(getShell(event), fetchWizard);

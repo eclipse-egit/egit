@@ -98,4 +98,17 @@ public final class GitCorePreferences {
 	 */
 	public static final String core_remoteConnectionTimeout = "core_remote_connection_timeout"; //$NON-NLS-1$
 
+	/**
+	 * The (absolute) path to an external GPG executable to use for signing
+	 * commits or tags. If invalid or there is no executable file at the given
+	 * location, it is ignored, and EGit tries to find a GPG executable itself
+	 * on $PATH.
+	 */
+	public static final String core_gpgExecutable = "core_gpg_executable"; //$NON-NLS-1$
+
+	/**
+	 * The type of signer to use. Valid values are "bc" or "gpg".
+	 */
+	public static final String core_gpgSigner = "core_gpg_signer"; //$NON-NLS-1$
+
 }

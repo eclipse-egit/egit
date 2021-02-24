@@ -19,8 +19,6 @@ import org.eclipse.egit.ui.UIUtils;
 import org.eclipse.egit.ui.internal.ClipboardUtils;
 import org.eclipse.egit.ui.internal.UIIcons;
 import org.eclipse.egit.ui.internal.UIText;
-import org.eclipse.jface.text.Document;
-import org.eclipse.jface.text.TextViewer;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.StyledText;
 import org.eclipse.swt.events.ControlAdapter;
@@ -72,18 +70,17 @@ public class HeaderText {
 			field.setAccessible(true);
 			TitleRegion titleRegion = (TitleRegion) field.get(heading);
 
-			for (Control child : titleRegion.getChildren())
+			for (Control child : titleRegion.getChildren()) {
 				if (child instanceof BusyIndicator) {
 					busyLabel = (BusyIndicator) child;
 					break;
 				}
-			if (busyLabel == null)
+			}
+			if (busyLabel == null) {
 				throw new IllegalArgumentException();
-
-			final TextViewer titleViewer = new TextViewer(titleRegion, SWT.READ_ONLY);
-			titleViewer.setDocument(new Document(text));
-
-			titleLabel = titleViewer.getTextWidget();
+			}
+			titleLabel = new StyledText(titleRegion, SWT.READ_ONLY);
+			titleLabel.setText(text);
 			titleLabel.setForeground(heading.getForeground());
 			titleLabel.setFont(heading.getFont());
 			titleLabel.addFocusListener(new FocusAdapter() {
@@ -130,6 +127,7 @@ public class HeaderText {
 		Point size = titleLabel.computeSize(SWT.DEFAULT, SWT.DEFAULT, true);
 		int y = (titleLabel.getParent().getSize().y - size.y) / 2;
 		titleLabel.setBounds(busyLabel.getLocation().x, y, size.x, size.y);
+		busyLabel.setBounds(titleLabel.getBounds());
 	}
 
 	private static void createContextMenu(final StyledText styledText, final String sha1String) {

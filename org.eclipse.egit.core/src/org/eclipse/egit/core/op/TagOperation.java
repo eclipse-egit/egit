@@ -10,6 +10,7 @@
  *******************************************************************************/
 package org.eclipse.egit.core.op;
 
+import java.io.File;
 import java.text.MessageFormat;
 
 import org.eclipse.core.runtime.CoreException;
@@ -17,6 +18,8 @@ import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.SubMonitor;
 import org.eclipse.core.runtime.jobs.ISchedulingRule;
 import org.eclipse.egit.core.internal.CoreText;
+import org.eclipse.egit.core.internal.signing.GpgConfigurationException;
+import org.eclipse.egit.core.settings.GitSettings;
 import org.eclipse.jgit.annotations.NonNull;
 import org.eclipse.jgit.annotations.Nullable;
 import org.eclipse.jgit.api.Git;
@@ -324,8 +327,22 @@ public class TagOperation implements IEGitOperation {
 				// CredentialsProvider.getDefault()
 				command.setCredentialsProvider(provider);
 			}
+			// Ensure the Eclipse preference, if set, overrides the git config
+			File gpg = GitSettings.getGpgExecutable();
+			if (gpg != null) {
+				GpgConfig cfg = new GpgConfig(repository.getConfig()) {
+
+					@Override
+					public String getProgram() {
+						return gpg.getAbsolutePath();
+					}
+				};
+				command.setGpgConfig(cfg);
+			}
 			command.call();
 			progress.worked(1);
+		} catch (GpgConfigurationException e) {
+			throw new TeamException(e.getLocalizedMessage(), e);
 		} catch (RefAlreadyExistsException e) {
 			// NO_CHANGE: update of existing lightweight tag to the same commit.
 			if (!RefUpdate.Result.NO_CHANGE.equals(e.getUpdateResult())) {

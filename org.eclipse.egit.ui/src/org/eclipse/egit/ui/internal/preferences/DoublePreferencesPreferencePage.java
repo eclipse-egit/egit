@@ -107,6 +107,15 @@ public abstract class DoublePreferencesPreferencePage
 	}
 
 	@Override
+	public void setValid(boolean b) {
+		super.setValid(b);
+		// Super class forgets to clear the error message.
+		if (b) {
+			setErrorMessage(null);
+		}
+	}
+
+	@Override
 	public boolean performOk() {
 		boolean isOk = super.performOk();
 		if (isOk) {
@@ -132,8 +141,8 @@ public abstract class DoublePreferencesPreferencePage
 						"PreferenceDialog.saveErrorMessage", //$NON-NLS-1$
 						new Object[] { getTitle(), e.getMessage() });
 				Policy.getStatusHandler().show(
-						new Status(IStatus.ERROR, Activator.getPluginId(),
-								message, e),
+						new Status(IStatus.ERROR, Activator.PLUGIN_ID, message,
+								e),
 						JFaceResources
 								.getString("PreferenceDialog.saveErrorTitle")); //$NON-NLS-1$
 			}

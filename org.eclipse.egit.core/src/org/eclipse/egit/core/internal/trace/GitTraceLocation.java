@@ -23,6 +23,8 @@ import org.eclipse.osgi.service.debug.DebugTrace;
 public enum GitTraceLocation implements ITraceLocation {
 	/** Core */
 	CORE("/debug/core"), //$NON-NLS-1$
+	/** GPG signing */
+	GPG("/debug/core/gpg"), //$NON-NLS-1$
 	/** IndexDiffCache */
 	INDEXDIFFCACHE("/debug/core/indexdiffcache"), //$NON-NLS-1$
 	/** refreshing resources */
@@ -39,7 +41,7 @@ public enum GitTraceLocation implements ITraceLocation {
 
 		// we evaluate the plug-in switch
 		if (pluginIsDebugging) {
-			myTrace = options.newDebugTrace(Activator.getPluginId());
+			myTrace = options.newDebugTrace(Activator.PLUGIN_ID);
 			for (GitTraceLocation loc : values()) {
 				boolean active = options.getBooleanOption(loc.getFullPath(),
 						false);
@@ -63,7 +65,7 @@ public enum GitTraceLocation implements ITraceLocation {
 	private static DebugTrace myTrace;
 
 	private GitTraceLocation(String path) {
-		this.fullPath = Activator.getPluginId() + path;
+		this.fullPath = Activator.PLUGIN_ID + path;
 		this.location = path;
 	}
 

@@ -120,7 +120,7 @@ public abstract class RepositoryJob extends Job {
 	 */
 	@NonNull
 	protected IStatus getDeferredStatus() {
-		return new Status(IStatus.OK, Activator.getPluginId(), IStatus.OK, "", //$NON-NLS-1$
+		return new Status(IStatus.OK, Activator.PLUGIN_ID, IStatus.OK, "", //$NON-NLS-1$
 				null);
 	}
 

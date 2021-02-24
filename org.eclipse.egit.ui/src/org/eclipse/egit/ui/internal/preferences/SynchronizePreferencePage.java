@@ -121,7 +121,7 @@ public class SynchronizePreferencePage extends FieldEditorPreferencePage
 		if (corePreferenceStore == null) {
 			corePreferenceStore = new ScopedPreferenceStore(
 					InstanceScope.INSTANCE,
-					org.eclipse.egit.core.Activator.getPluginId());
+					org.eclipse.egit.core.Activator.PLUGIN_ID);
 		}
 		return corePreferenceStore;
 	}

@@ -16,7 +16,9 @@ import java.io.File;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Status;
+import org.eclipse.core.runtime.SubMonitor;
 import org.eclipse.core.runtime.jobs.Job;
+import org.eclipse.e4.ui.workbench.UIEvents;
 import org.eclipse.egit.ui.Activator;
 import org.eclipse.egit.ui.UIPreferences;
 import org.eclipse.jface.preference.IPreferenceStore;
@@ -27,69 +29,87 @@ import org.eclipse.jgit.util.LfsFactory;
 import org.eclipse.jgit.util.LfsFactory.LfsInstallCommand;
 import org.eclipse.jgit.util.SystemReader;
 import org.eclipse.osgi.util.NLS;
-import org.eclipse.ui.PlatformUI;
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Deactivate;
+import org.osgi.service.event.Event;
+import org.osgi.service.event.EventConstants;
+import org.osgi.service.event.EventHandler;
 
 /**
- * Checks the system configuration
- *
+ * Checks the system configuration.
  */
-public class ConfigurationChecker {
+public final class ConfigurationChecker {
+
+	private ConfigurationChecker() {
+		// No instantiation
+	}
 
 	/**
-	 * Checks the system configuration.
+	 * OSGi DS component to run the configuration check
 	 */
-	public static void checkConfiguration() {
-		// Schedule a job
-		// This avoids that the check is executed too early
-		// because in startup phase the JobManager is suspended
-		// and scheduled Jobs are executed later
-		Job job = new Job(UIText.ConfigurationChecker_checkConfiguration) {
-			@Override
-			protected IStatus run(IProgressMonitor monitor) {
-				if (PlatformUI.isWorkbenchRunning()) {
-					PlatformUI.getWorkbench().getDisplay()
-							.asyncExec(new Runnable() {
-								@Override
-								public void run() {
-									check();
-								}
-							});
-				} else {
-					schedule(1000L);
-				}
-				return Status.OK_STATUS;
+	@Component(property = EventConstants.EVENT_TOPIC + '='
+			+ UIEvents.UILifeCycle.APP_STARTUP_COMPLETE)
+	public static class Checker extends Job implements EventHandler {
+
+		/** Instantiated by DS. */
+		public Checker() {
+			super(UIText.ConfigurationChecker_checkConfiguration);
+			setSystem(true);
+			setUser(false);
+		}
+
+		@Override
+		protected IStatus run(IProgressMonitor monitor) {
+			SubMonitor progress = SubMonitor.convert(monitor, 2);
+			checkHome(progress.newChild(1));
+			checkLfs(progress.newChild(1));
+			return Status.OK_STATUS;
+		}
+
+		@Override
+		public void handleEvent(Event event) {
+			if (UIEvents.UILifeCycle.APP_STARTUP_COMPLETE
+					.equals(event.getTopic())) {
+				schedule();
 			}
-		};
-		job.schedule();
+		}
+
+		@Deactivate
+		void stop() {
+			cancel();
+			try {
+				join();
+			} catch (InterruptedException e) {
+				Thread.currentThread().interrupt();
+			}
+		}
 	}
 
-	private static void check() {
-		checkHome();
-		checkLfs();
-	}
-
-	private static void checkLfs() {
+	private static void checkLfs(IProgressMonitor monitor) {
 		IPreferenceStore store = Activator.getDefault().getPreferenceStore();
 		boolean auto = store.getBoolean(UIPreferences.LFS_AUTO_CONFIGURATION);
-		if (auto && !isLfsConfigured()) {
+		if (auto && !isLfsConfigured(monitor)) {
 			try {
 				LfsInstallCommand cmd = LfsFactory.getInstance()
 						.getInstallCommand();
-				if (cmd != null) {
+				if (cmd != null && !monitor.isCanceled()) {
 					cmd.call();
 				}
 			} catch (Exception e) {
 				Activator.handleIssue(IStatus.WARNING,
 						UIText.ConfigurationChecker_installLfsCannotInstall, e,
-						true);
+						!monitor.isCanceled());
 			}
 		}
 	}
 
-	private static boolean isLfsConfigured() {
+	private static boolean isLfsConfigured(IProgressMonitor monitor) {
 		try {
 			StoredConfig cfg = SystemReader.getInstance().openUserConfig(null,
 					FS.DETECTED);
+			if (monitor.isCanceled()) {
+				return true; // Don't do anything more if canceled
+			}
 			cfg.load();
 			return cfg.getSubsections(ConfigConstants.CONFIG_FILTER_SECTION)
 					.contains("lfs"); //$NON-NLS-1$
@@ -100,7 +120,7 @@ public class ConfigurationChecker {
 		return false;
 	}
 
-	private static void checkHome() {
+	private static void checkHome(IProgressMonitor monitor) {
 		String home = System.getenv("HOME"); //$NON-NLS-1$
 		if (home != null)
 			return; // home is set => ok
@@ -108,8 +128,9 @@ public class ConfigurationChecker {
 		String message = NLS.bind(UIText.ConfigurationChecker_homeNotSet, home);
 		IPreferenceStore store = Activator.getDefault().getPreferenceStore();
 		boolean hidden = !store.getBoolean(UIPreferences.SHOW_HOME_DIR_WARNING);
-		if (!hidden)
+		if (!hidden && !monitor.isCanceled()) {
 			Activator.handleIssue(IStatus.WARNING, message, null, false);
+		}
 	}
 
 	private static String calcHomeDir() {
@@ -135,5 +156,4 @@ public class ConfigurationChecker {
 		}
 		return os.contains("Windows"); //$NON-NLS-1$
 	}
-
 }

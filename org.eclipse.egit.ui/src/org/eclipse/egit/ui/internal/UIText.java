@@ -2112,6 +2112,9 @@ public class UIText extends NLS {
 	public static String ResourceHistory_toggleRevComment;
 
 	/** */
+	public static String ResourceHistory_verifySignatures;
+
+	/** */
 	public static String HardResetToRevisionAction_hardReset;
 
 	/** */
@@ -2841,10 +2844,16 @@ public class UIText extends NLS {
 	public static String CreateRepositoryPage_BrowseButton;
 
 	/** */
+	public static String CreateRepositoryPage_DefaultBranchLabel;
+
+	/** */
 	public static String CreateRepositoryPage_DefaultRepositoryName;
 
 	/** */
 	public static String CreateRepositoryPage_DirectoryLabel;
+
+	/** */
+	public static String CreateRepositoryPage_InvalidBranchName;
 
 	/** */
 	public static String CreateRepositoryPage_NotEmptyMessage;
@@ -2857,6 +2866,9 @@ public class UIText extends NLS {
 
 	/** */
 	public static String CreateRepositoryPage_PleaseSelectDirectoryMessage;
+
+	/** */
+	public static String CreateRepositoryPage_ReadDefaultBranchFailed;
 
 	/** */
 	public static String PushResultDialog_ConfigureButton;
@@ -3450,6 +3462,27 @@ public class UIText extends NLS {
 	public static String CommittingPreferencePage_formatting;
 
 	/** */
+	public static String CommittingPreferencePage_gpgExecutableInvalid;
+
+	/** */
+	public static String CommittingPreferencePage_gpgExecutableLabel;
+
+	/** */
+	public static String CommittingPreferencePage_gpgExecutableNotExecutable;
+
+	/** */
+	public static String CommittingPreferencePage_gpgExecutableTooltip;
+
+	/** */
+	public static String CommittingPreferencePage_gpgSignerBouncyCastleLabel;
+
+	/** */
+	public static String CommittingPreferencePage_gpgSignerGpgLabel;
+
+	/** */
+	public static String CommittingPreferencePage_gpgSignerLabel;
+
+	/** */
 	public static String CommittingPreferencePage_includeUntrackedFiles;
 
 	/** */
@@ -3779,6 +3812,9 @@ public class UIText extends NLS {
 	public static String DeleteTagCommand_titleConfirm;
 
 	/** */
+	public static String FullWidthFileFieldEditor_buttonTooltipMac;
+
+	/** */
 	public static String IgnoreActionHandler_addToGitignore;
 
 	/** */
@@ -4023,9 +4059,6 @@ public class UIText extends NLS {
 
 	/** */
 	public static String DiffEditor_OutlineShowCompactTreeTooltip;
-
-	/** */
-	public static String DiffEditor_OutlineShowFlatListTooltip;
 
 	/** */
 	public static String DiffEditor_OutlineTreeToggle;
@@ -4577,6 +4610,9 @@ public class UIText extends NLS {
 	public static String TagAction_creating;
 
 	/** */
+	public static String TagAction_gpgConfigProblem;
+
+	/** */
 	public static String TagAction_taggingFailed;
 
 	/** */
@@ -4635,6 +4671,12 @@ public class UIText extends NLS {
 
 	/** */
 	public static String CreateTagDialog_tagMessage;
+
+	/** */
+	public static String CreateTagDialog_noSigningKey;
+
+	/** */
+	public static String CreateTagDialog_noSigningKeyToolTip;
 
 	/** */
 	public static String CreateTagDialog_questionNewTagTitle;
@@ -5176,9 +5218,6 @@ public class UIText extends NLS {
 	public static String RefreshPreferencesPage_RefreshOnlyWhenActive;
 
 	/** */
-	public static String RefreshPreferencesPage_RefreshWhenIndexChange;
-
-	/** */
 	public static String RefUpdateElement_CommitCountDecoration;
 
 	/** */
@@ -5489,6 +5528,9 @@ public class UIText extends NLS {
 
 	/** */
 	public static String CommitJob_AbortedByHook;
+
+	/** */
+	public static String CommitJob_GpgConfigProblem;
 
 	/** */
 	public static String CommitResultLabelProvider_SectionAuthor;
@@ -6004,6 +6046,9 @@ public class UIText extends NLS {
 	public static String GitModelSynchronize_fetchGitDataJobName;
 
 	/** */
+	public static String GpgConfigProblemReportAction_Title;
+
+	/** */
 	public static String RebasePulldownAction_Continue;
 
 	/** */
@@ -6020,6 +6065,9 @@ public class UIText extends NLS {
 
 	/** */
 	public static String RewordHandler_ErrorCheckingIfCommitIsOnCurrentBranch;
+
+	/** */
+	public static String RewordHandler_GpgConfigProblem;
 
 	/** */
 	public static String RewordHandler_InternalError;
