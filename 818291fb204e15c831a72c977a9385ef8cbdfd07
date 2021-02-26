@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d179009e_4d21b8ae",
+        "filename": "org.eclipse.egit.core/META-INF/MANIFEST.MF",
+        "patchSetId": 6
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 3
+      },
+      "writtenOn": "2021-02-26T19:27:41Z",
+      "side": 1,
+      "message": "Didn\u0027t you find an issue with using an internal class in a service in one of the older/original versions of Eclipse?",
+      "revId": "818291fb204e15c831a72c977a9385ef8cbdfd07",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": true
+    }
+  ]
+}
