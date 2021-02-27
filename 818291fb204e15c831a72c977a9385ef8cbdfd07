@@ -16,6 +16,24 @@
       "revId": "818291fb204e15c831a72c977a9385ef8cbdfd07",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a48c76cf_2bfff330",
+        "filename": "org.eclipse.egit.core/META-INF/MANIFEST.MF",
+        "patchSetId": 6
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2021-02-27T08:45:23Z",
+      "side": 1,
+      "message": "It didn\u0027t work in Icfcee3eeb27fe98a92566656c4b7b0c19cf088af for the EGit UI DebugOptionsListener, it got never called. Don\u0027t know why. Either I had made a mistake somewhere, or it was caused by the outer class having been the GitTraceLocation enum. Here it works, the Loader is activated and run.",
+      "parentUuid": "d179009e_4d21b8ae",
+      "revId": "818291fb204e15c831a72c977a9385ef8cbdfd07",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": true
     }
   ]
 }
