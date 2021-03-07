@@ -57,7 +57,7 @@ p2/orbit/p2.eclipse-plugin/net.bytebuddy.byte-buddy/1.9.0.v20181107-1410, Apache
 p2/orbit/p2.eclipse-plugin/net.i2p.crypto.eddsa.source/0.3.0.v20181102-1323, , approved, CQ17804
 p2/orbit/p2.eclipse-plugin/net.i2p.crypto.eddsa/0.3.0.v20181102-1323, , approved, CQ17940
 p2/orbit/p2.eclipse-plugin/org.apache.ant.source/1.10.9.v20201106-1946, Apache-2.0 AND W3C AND LicenseRef-Public-Domain, approved, CQ20836
-p2/orbit/p2.eclipse-plugin/org.apache.ant/1.10.9.v20201106-1946, , approved, CQ22759
+p2/orbit/p2.eclipse-plugin/org.apache.ant/1.10.9.v20201106-1946, Apache-2.0 AND W3C AND LicenseRef-Public-Domain, approved, CQ22759
 p2/orbit/p2.eclipse-plugin/org.apache.batik.constants/1.13.0.v20200622-2037, Apache-2.0, approved, CQ22304
 p2/orbit/p2.eclipse-plugin/org.apache.batik.css/1.13.0.v20200622-2037, Apache-2.0, approved, CQ22303
 p2/orbit/p2.eclipse-plugin/org.apache.batik.css/1.7.0.v201011041433, Apache-2.0, approved, CQ2493
@@ -65,9 +65,9 @@ p2/orbit/p2.eclipse-plugin/org.apache.batik.i18n/1.13.0.v20200622-2037, Apache-2
 p2/orbit/p2.eclipse-plugin/org.apache.batik.util.gui/1.7.0.v200903091627, Apache-2.0, approved, CQ2485
 p2/orbit/p2.eclipse-plugin/org.apache.batik.util/1.13.0.v20200622-2037, Apache-2.0, approved, CQ22302
 p2/orbit/p2.eclipse-plugin/org.apache.batik.util/1.7.0.v201011041433, Apache-2.0, approved, CQ2483
-p2/orbit/p2.eclipse-plugin/org.apache.commons.codec.source/1.14.0.v20200818-1422, unknown, restricted, none
+p2/orbit/p2.eclipse-plugin/org.apache.commons.codec.source/1.14.0.v20200818-1422, Apache-2.0, approved, emo_ip_team
 p2/orbit/p2.eclipse-plugin/org.apache.commons.codec/1.14.0.v20200818-1422, Apache-2.0, approved, emo_ip_team
-p2/orbit/p2.eclipse-plugin/org.apache.commons.compress.source/1.19.0.v20200106-2343, unknown, restricted, none
+p2/orbit/p2.eclipse-plugin/org.apache.commons.compress.source/1.19.0.v20200106-2343, Apache-2.0 AND BSD-3-Clause AND LicenseRef-Public-Domain, approved, CQ21349
 p2/orbit/p2.eclipse-plugin/org.apache.commons.compress/1.19.0.v20200106-2343, Apache-2.0 AND BSD-3-Clause AND LicenseRef-Public-Domain, approved, CQ21349
 p2/orbit/p2.eclipse-plugin/org.apache.commons.httpclient/3.1.0.v201012070820, Apache-2.0, approved, CQ1857
 p2/orbit/p2.eclipse-plugin/org.apache.commons.io/2.6.0.v20190123-2029, Apache-2.0, approved, CQ18796
@@ -85,19 +85,19 @@ p2/orbit/p2.eclipse-plugin/org.apache.httpcomponents.httpcore/4.4.14.v20210128-2
 p2/orbit/p2.eclipse-plugin/org.apache.log4j.source/1.2.15.v201012070815, Apache-2.0, approved, CQ2555
 p2/orbit/p2.eclipse-plugin/org.apache.log4j/1.2.15.v201012070815, Apache-2.0, approved, CQ2555
 p2/orbit/p2.eclipse-plugin/org.apache.lucene.core/3.5.0.v20120725-1805, Apache-2.0, approved, CQ5907
-p2/orbit/p2.eclipse-plugin/org.apache.sshd.osgi.source/2.6.0.v20210201-2003, unknown, restricted, none
+p2/orbit/p2.eclipse-plugin/org.apache.sshd.osgi.source/2.6.0.v20210201-2003, Apache-2.0 AND ISC, approved, CQ22992
 p2/orbit/p2.eclipse-plugin/org.apache.sshd.osgi/2.6.0.v20210201-2003, Apache-2.0 AND ISC, approved, CQ22992
-p2/orbit/p2.eclipse-plugin/org.apache.sshd.sftp.source/2.6.0.v20210201-2003, unknown, restricted, none
+p2/orbit/p2.eclipse-plugin/org.apache.sshd.sftp.source/2.6.0.v20210201-2003, Apache-2.0, approved, CQ22993
 p2/orbit/p2.eclipse-plugin/org.apache.sshd.sftp/2.6.0.v20210201-2003, Apache-2.0, approved, CQ22993
 p2/orbit/p2.eclipse-plugin/org.apache.xerces/2.9.0.v201101211617, Apache-2.0, approved, CQ1148
 p2/orbit/p2.eclipse-plugin/org.apache.xml.resolver/1.2.0.v201005080400, Apache-2.0, approved, CQ1441
 p2/orbit/p2.eclipse-plugin/org.apache.xml.serializer/2.7.1.v201005080400, Apache-2.0, approved, CQ1443
 p2/orbit/p2.eclipse-plugin/org.apache.xmlgraphics/2.4.0.v20200622-2037, Apache-2.0, approved, CQ22305
-p2/orbit/p2.eclipse-plugin/org.bouncycastle.bcpg.source/1.65.0.v20200527-1955, unknown, restricted, none
+p2/orbit/p2.eclipse-plugin/org.bouncycastle.bcpg.source/1.65.0.v20200527-1955, Apache-2.0, approved, CQ21975
 p2/orbit/p2.eclipse-plugin/org.bouncycastle.bcpg/1.65.0.v20200527-1955, Apache-2.0, approved, CQ21975
-p2/orbit/p2.eclipse-plugin/org.bouncycastle.bcpkix.source/1.65.0.v20200527-1955, unknown, restricted, none
+p2/orbit/p2.eclipse-plugin/org.bouncycastle.bcpkix.source/1.65.0.v20200527-1955, MIT AND LicenseRef-Public-Domain, approved, CQ21976
 p2/orbit/p2.eclipse-plugin/org.bouncycastle.bcpkix/1.65.0.v20200527-1955, MIT AND LicenseRef-Public-Domain, approved, CQ21976
-p2/orbit/p2.eclipse-plugin/org.bouncycastle.bcprov.source/1.65.1.v20200529-1514, unknown, restricted, none
+p2/orbit/p2.eclipse-plugin/org.bouncycastle.bcprov.source/1.65.1.v20200529-1514, MIT AND LicenseRef-Public-Domain, approved, CQ21977
 p2/orbit/p2.eclipse-plugin/org.bouncycastle.bcprov/1.65.1.v20200529-1514, MIT AND LicenseRef-Public-Domain, approved, CQ21977
 p2/orbit/p2.eclipse-plugin/org.eclipse.ant.core/3.4.100.v20160505-0642, , approved, eclipse
 p2/orbit/p2.eclipse-plugin/org.eclipse.ant.launching/1.1.201.v20161115-1135, , approved, eclipse
@@ -347,8 +347,8 @@ p2/orbit/p2.eclipse-plugin/org.sat4j.core/2.3.5.v201308161310, , approved, CQ731
 p2/orbit/p2.eclipse-plugin/org.sat4j.pb/2.3.5.v201404071733, , approved, CQ7311
 p2/orbit/p2.eclipse-plugin/org.slf4j.api.source/1.7.30.v20200204-2150, MIT, approved, CQ9127
 p2/orbit/p2.eclipse-plugin/org.slf4j.api/1.7.30.v20200204-2150, MIT, approved, CQ21574
-p2/orbit/p2.eclipse-plugin/org.slf4j.binding.log4j12.source/1.7.30.v20201108-2042, unknown, restricted, none
-p2/orbit/p2.eclipse-plugin/org.slf4j.binding.log4j12/1.7.30.v20201108-2042, unknown, restricted, none
+p2/orbit/p2.eclipse-plugin/org.slf4j.binding.log4j12.source/1.7.30.v20201108-2042, MIT, approved, CQ7665
+p2/orbit/p2.eclipse-plugin/org.slf4j.binding.log4j12/1.7.30.v20201108-2042, MIT, approved, CQ7665
 p2/orbit/p2.eclipse-plugin/org.tukaani.xz.source/1.8.0.v20180207-1613, LicenseRef-Public-Domain, approved, CQ15386
 p2/orbit/p2.eclipse-plugin/org.tukaani.xz/1.8.0.v20180207-1613, LicenseRef-Public-Domain, approved, CQ15538
 p2/orbit/p2.eclipse-plugin/org.w3c.css.sac/1.3.1.v200903091627, Apache-2.0 OR LicenseRef-Public-Domain OR W3C, approved, CQ1448
