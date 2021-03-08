@@ -447,22 +447,32 @@
 		</topic>
 		<topic href="help/JGit/User_Guide/Updating-This-Document.html" label="Updating This Document"></topic>
 	</topic>
-	<topic href="help/EGit/New_and_Noteworthy/5.10/5.10.html" label="EGit 5.10 New and Noteworthy">
-		<topic href="help/EGit/New_and_Noteworthy/5.10/5.10.html" label="EGit">
-			<topic href="help/EGit/New_and_Noteworthy/5.10/5.10.html#SSH" label="SSH"></topic>
-			<topic href="help/EGit/New_and_Noteworthy/5.10/5.10.html#Other_Changes" label="Other Changes"></topic>
+	<topic href="help/EGit/New_and_Noteworthy/5.11/5.11.html" label="EGit 5.11 New and Noteworthy">
+		<topic href="help/EGit/New_and_Noteworthy/5.11/5.11.html" label="EGit">
+			<topic href="help/EGit/New_and_Noteworthy/5.11/5.11.html#Git_Protocol" label="Git Protocol"></topic>
+			<topic href="help/EGit/New_and_Noteworthy/5.11/5.11.html#SSH" label="SSH"></topic>
+			<topic href="help/EGit/New_and_Noteworthy/5.11/5.11.html#Properties_View" label="Properties View"></topic>
+			<topic href="help/EGit/New_and_Noteworthy/5.11/5.11.html#Signatures" label="Signatures">
+				<topic href="help/EGit/New_and_Noteworthy/5.11/5.11.html#Creating_Signed_Tags" label="Creating Signed Tags"></topic>
+				<topic href="help/EGit/New_and_Noteworthy/5.11/5.11.html#Verifying_Commit_Signatures" label="Verifying Commit Signatures"></topic>
+				<topic href="help/EGit/New_and_Noteworthy/5.11/5.11.html#Using_GPG_to_Sign_Commits_and_Tags" label="Using GPG to Sign Commits and Tags"></topic>
+			</topic>
+			<topic href="help/EGit/New_and_Noteworthy/5.11/5.11.html#Other_Changes" label="Other Changes"></topic>
 		</topic>
-		<topic href="help/EGit/New_and_Noteworthy/5.10/Contributors.html" label="Contributors"></topic>
-		<topic href="help/EGit/New_and_Noteworthy/5.10/See-Also.html" label="See Also"></topic>
-		<topic href="help/EGit/New_and_Noteworthy/5.10/Updating-This-Document.html" label="Updating This Document"></topic>
+		<topic href="help/EGit/New_and_Noteworthy/5.11/Contributors.html" label="Contributors"></topic>
+		<topic href="help/EGit/New_and_Noteworthy/5.11/See-Also.html" label="See Also"></topic>
+		<topic href="help/EGit/New_and_Noteworthy/5.11/Updating-This-Document.html" label="Updating This Document"></topic>
 	</topic>
-	<topic href="help/JGit/New_and_Noteworthy/5.10/5.10.html" label="JGit 5.10 New and Noteworthy">
-		<topic href="help/JGit/New_and_Noteworthy/5.10/5.10.html" label="JGit">
-			<topic href="help/JGit/New_and_Noteworthy/5.10/5.10.html#New_Features" label="New Features"></topic>
-			<topic href="help/JGit/New_and_Noteworthy/5.10/5.10.html#Other_Changes" label="Other Changes"></topic>
+	<topic href="help/JGit/New_and_Noteworthy/5.11/5.11.html" label="JGit 5.11 New and Noteworthy">
+		<topic href="help/JGit/New_and_Noteworthy/5.11/5.11.html" label="JGit">
+			<topic href="help/JGit/New_and_Noteworthy/5.11/5.11.html#Git_Protocol" label="Git Protocol"></topic>
+			<topic href="help/JGit/New_and_Noteworthy/5.11/5.11.html#HTTP.28S.29_Transport_Protocol" label="HTTP(S) Transport Protocol"></topic>
+			<topic href="help/JGit/New_and_Noteworthy/5.11/5.11.html#Commands" label="Commands"></topic>
+			<topic href="help/JGit/New_and_Noteworthy/5.11/5.11.html#Dependencies" label="Dependencies"></topic>
+			<topic href="help/JGit/New_and_Noteworthy/5.11/5.11.html#Other_Changes" label="Other Changes"></topic>
 		</topic>
-		<topic href="help/JGit/New_and_Noteworthy/5.10/Contributors.html" label="Contributors"></topic>
-		<topic href="help/JGit/New_and_Noteworthy/5.10/Updating-This-Document.html" label="Updating This Document"></topic>
+		<topic href="help/JGit/New_and_Noteworthy/5.11/Contributors.html" label="Contributors"></topic>
+		<topic href="help/JGit/New_and_Noteworthy/5.11/Updating-This-Document.html" label="Updating This Document"></topic>
 	</topic>
 	<topic href="help/EGit/Git_For_Eclipse_Users/Git-For-Eclipse-Users.html" label="Git for Eclipse Users">
 		<topic href="help/EGit/Git_For_Eclipse_Users/Git-For-Eclipse-Users.html" label="Centralised version control systems"></topic>
