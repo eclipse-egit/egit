@@ -238,6 +238,25 @@
 			<br/>
 		</p>
 		<h2 id="GitHub_Tutorial">GitHub Tutorial</h2>
+		<p>
+			<b>Note</b>: pushing to a GitHub repository via HTTPS or fetching from a private GitHub repository via HTTPS may ask you for your log-in credentials (username and password). Use a 
+			<b>
+				<a href="https://docs.github.com/en/free-pro-team@latest/github/authenticating-to-github/creating-a-personal-access-token" target="egit_external">personal access token</a>
+			</b> (PAT) as the password. Do 
+			<i>not</i> use your normal log-in password for your user account at GitHub! 
+		</p>
+		<p>You have to create the PAT first via the GitHub web UI. GitHub personal access tokens give you fine-grained control over what the token holder may do. This is done by assigning "scopes" to tokens. See the 
+			<a href="https://docs.github.com/en/free-pro-team@latest/developers/apps/scopes-for-oauth-apps" target="egit_external">GitHub documentation</a> for the details.
+		</p>
+		<p>Some hints:</p>
+		<ul>
+			<li>A token without scopes gives only 
+				<i>read-only access to public information</i>.
+			</li>
+			<li>To get write access and access to private repositories your GitHub account has access to, set the 
+				<b>repo</b> scope for the token when you create it.
+			</li>
+		</ul>
 		<h3 id="Create_Local_Repository">Create Local Repository</h3>
 		<ul>
 			<li>follow 
