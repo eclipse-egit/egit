@@ -281,6 +281,14 @@
       <id>repo.eclipse.org.cbi-snapshots</id>
       <url>https://repo.eclipse.org/content/repositories/cbi-snapshots/</url>
     </pluginRepository>
+    <pluginRepository>
+      <id>repo.eclipse.org.dash-releases</id>
+      <url>https://repo.eclipse.org/content/repositories/dash-licenses-releases/</url>
+    </pluginRepository>
+    <pluginRepository>
+      <id>repo.eclipse.org.dash-snapshots</id>
+      <url>https://repo.eclipse.org/content/repositories/dash-licenses-snapshots/</url>
+    </pluginRepository>
   </pluginRepositories>
 
   <repositories>
