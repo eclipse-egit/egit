@@ -36,6 +36,7 @@ import org.eclipse.egit.ui.internal.repository.RepositoryTreeNodeLabelProvider;
 import org.eclipse.egit.ui.internal.repository.tree.RepositoryNode;
 import org.eclipse.egit.ui.internal.repository.tree.RepositoryTreeNode;
 import org.eclipse.jface.dialogs.Dialog;
+import org.eclipse.jface.dialogs.IDialogConstants;
 import org.eclipse.jface.dialogs.IDialogSettings;
 import org.eclipse.jface.layout.GridDataFactory;
 import org.eclipse.jface.layout.GridLayoutFactory;
@@ -224,7 +225,20 @@ public class GitSelectRepositoryPage extends WizardPage {
 							.getConfiguredRepositories();
 					RepositorySearchWizard wizard = new RepositorySearchWizard(
 							configuredDirs, allowBare);
-					WizardDialog dlg = new WizardDialog(getShell(), wizard);
+					WizardDialog dlg = new WizardDialog(getShell(), wizard) {
+
+						@Override
+						protected Button createButton(Composite container,
+								int id, String label, boolean defaultButton) {
+							if (id == IDialogConstants.FINISH_ID) {
+								return super.createButton(container, id,
+										UIText.AddCommand_AddButtonLabel,
+										defaultButton);
+							}
+							return super.createButton(container, id, label,
+									defaultButton);
+						}
+					};
 					if (dlg.open() == Window.OK
 							&& !wizard.getDirectories().isEmpty()) {
 						Set<String> dirs = wizard.getDirectories();
