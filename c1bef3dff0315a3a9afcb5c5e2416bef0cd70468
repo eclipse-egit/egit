@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "5fd5d4ca_dd6d3aba",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/op/ConnectProviderOperation.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 174,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2021-03-16T21:29:15Z",
+      "side": 1,
+      "message": "_You_ introduced that \"refreshResources\" flag a long time ago :-). It\u0027s normally true; false only for auto-sharing. But when auto-sharing and the resource proxy visitor (it\u0027s using resource proxies exactly for speed) did find such nested .git items, then we _must_ refresh. 200k+ files or no. (But the delta should be small and be only the just touched .git resources in this case, as importing does a full refresh anyway.)\n\nOr maybe we could not touch and trigger GitProjectData.update() through new API directly with the .git items found by the visitor.\n\nLet Simeon verify first that this solves the problem; then we can try to refactor to avoid touch-and-refresh.",
+      "parentUuid": "48dc668f_02e2213f",
+      "revId": "c1bef3dff0315a3a9afcb5c5e2416bef0cd70468",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ea8557d0_2ed0315d",
         "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/op/ConnectProviderOperation.java",
         "patchSetId": 1
@@ -30,6 +48,24 @@
       "writtenOn": "2021-03-16T21:19:12Z",
       "side": 1,
       "message": "Just a matter of style: AtomicBoolean is better suitable for such flags, it is easier to read/understand.",
+      "revId": "c1bef3dff0315a3a9afcb5c5e2416bef0cd70468",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9f0d1fda_453b4580",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/op/ConnectProviderOperation.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 214,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2021-03-16T21:29:15Z",
+      "side": 1,
+      "message": "I disagree. AtomicBoolean should be reserved for cases where actual concurrency is involved.",
+      "parentUuid": "ea8557d0_2ed0315d",
       "revId": "c1bef3dff0315a3a9afcb5c5e2416bef0cd70468",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": true
