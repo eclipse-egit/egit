@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "48dc668f_02e2213f",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/op/ConnectProviderOperation.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 174,
+      "author": {
+        "id": 1179
+      },
+      "writtenOn": "2021-03-16T21:19:12Z",
+      "side": 1,
+      "message": "I have no IDE right now, don\u0027t see when refreshResources is set to true, but I wonder if the following refreshLocal() code is needed only if that is true, not if we touched the .git only.\nAn *additional* refresh just because we discovered .git is not OK. In our case the real project consists of ~200.000 and up files, so an extra refresh can cost a lot, especially on NFS.",
+      "revId": "c1bef3dff0315a3a9afcb5c5e2416bef0cd70468",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ea8557d0_2ed0315d",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/op/ConnectProviderOperation.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 214,
+      "author": {
+        "id": 1179
+      },
+      "writtenOn": "2021-03-16T21:19:12Z",
+      "side": 1,
+      "message": "Just a matter of style: AtomicBoolean is better suitable for such flags, it is easier to read/understand.",
+      "revId": "c1bef3dff0315a3a9afcb5c5e2416bef0cd70468",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": true
+    }
+  ]
+}
