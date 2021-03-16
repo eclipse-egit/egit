@@ -47,6 +47,7 @@ import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.QualifiedName;
 import org.eclipse.core.runtime.Status;
+import org.eclipse.core.runtime.SubMonitor;
 import org.eclipse.core.runtime.jobs.Job;
 import org.eclipse.egit.core.Activator;
 import org.eclipse.egit.core.JobFamilies;
@@ -309,43 +310,10 @@ public class GitProjectData {
 							|| resource.isLinked()) {
 						return false;
 					}
-					IPath location = resource.getLocation();
-					if (location == null) {
-						return false;
-					}
 					if (!Constants.DOT_GIT.equals(resource.getName())) {
 						return type == IResource.FOLDER;
 					}
-					// A file or folder named .git
-					File gitCandidate = location.toFile().getParentFile();
-					File git = new FileRepositoryBuilder()
-							.addCeilingDirectory(gitCandidate)
-							.findGitDir(gitCandidate).getGitDir();
-					if (git == null) {
-						return false;
-					}
-					// Yes, indeed a valid git directory.
-					GitProjectData data = get(resource.getProject());
-					if (data == null) {
-						return false;
-					}
-					RepositoryMapping m = RepositoryMapping
-							.create(resource.getParent(), git);
-					// Is its working directory really here? If not,
-					// a submodule folder may have been copied.
-					try {
-						Repository r = RepositoryCache.getInstance()
-								.lookupRepository(git);
-						if (m != null && r != null && !r.isBare()
-								&& gitCandidate.equals(r.getWorkTree())) {
-							if (data.map(m)) {
-								data.mappings.put(m.getContainerPath(), m);
-								modified.add(data);
-							}
-						}
-					} catch (IOException e) {
-						Activator.logError(e.getMessage(), e);
-					}
+					createMappingIfNeeded(resource, modified);
 					return false;
 				}
 			});
@@ -359,6 +327,91 @@ public class GitProjectData {
 					Activator.logError(e.getMessage(), e);
 				}
 			}
+		}
+	}
+
+	/**
+	 * Update mappings of EGit-managed projects for the given DOT_GIT
+	 * directories.
+	 *
+	 * @param gitDirectories
+	 *            to check
+	 * @param monitor
+	 *            for progress reporting and cancellation
+	 */
+	public static void update(Collection<IResource> gitDirectories,
+			IProgressMonitor monitor) {
+		SubMonitor progress = SubMonitor.convert(monitor,
+				gitDirectories.size());
+		Set<GitProjectData> modified = new HashSet<>();
+		try {
+			for (IResource resource : gitDirectories) {
+				if (progress.isCanceled()) {
+					break;
+				}
+				if (resource.isAccessible()
+						&& Constants.DOT_GIT.equals(resource.getName())) {
+					createMappingIfNeeded(resource, modified);
+				}
+				progress.worked(1);
+			}
+		} finally {
+			for (GitProjectData data : modified) {
+				try {
+					data.store();
+				} catch (CoreException e) {
+					Activator.logError(e.getMessage(), e);
+				}
+			}
+		}
+	}
+
+	private static void createMappingIfNeeded(IResource resource,
+			Set<GitProjectData> modified) {
+		IPath location = resource.getLocation();
+		if (location == null) {
+			return;
+		}
+		// A file or folder named .git
+		File gitCandidate = location.toFile().getParentFile();
+		File git = new FileRepositoryBuilder().addCeilingDirectory(gitCandidate)
+				.findGitDir(gitCandidate).getGitDir();
+		if (git == null) {
+			return; // Not a .git directory after all
+		}
+		GitProjectData data = get(resource.getProject());
+		if (data == null) {
+			return; // Project not shared with git
+		}
+		IContainer parent = resource.getParent();
+		if (parent.getType() == IResource.PROJECT) {
+			return; // Nothing new here; project is already shared.
+		}
+		RepositoryMapping m;
+		try {
+			m = (RepositoryMapping) parent.getSessionProperty(MAPPING_KEY);
+		} catch (CoreException err) {
+			Activator.logError(CoreText.GitProjectData_failedFindingRepoMapping,
+					err);
+			return;
+		}
+		if (m != null) {
+			return; // Already mapped
+		}
+		m = RepositoryMapping.create(parent, git);
+		// Is its working directory really here? If not,
+		// a submodule folder may have been copied.
+		try {
+			Repository r = RepositoryCache.getInstance().lookupRepository(git);
+			if (m != null && r != null && !r.isBare()
+					&& gitCandidate.equals(r.getWorkTree())) {
+				if (data.map(m)) {
+					data.mappings.put(m.getContainerPath(), m);
+					modified.add(data);
+				}
+			}
+		} catch (IOException e) {
+			Activator.logError(e.getMessage(), e);
 		}
 	}
 

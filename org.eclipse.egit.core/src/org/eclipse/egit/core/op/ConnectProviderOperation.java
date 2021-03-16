@@ -169,8 +169,8 @@ public class ConnectProviderOperation implements IEGitOperation {
 		RepositoryProvider.map(project, GitProvider.ID);
 
 		IPath gitPath = actualMapping.getGitDirAbsolutePath();
+		checkForSubmodules(project, subMon.newChild(10));
 		if (refreshResources) {
-			touchGitResources(project, subMon.newChild(10));
 			project.refreshLocal(IResource.DEPTH_INFINITE, subMon.newChild(30));
 			if (gitPath != null) {
 				try {
@@ -187,7 +187,7 @@ public class ConnectProviderOperation implements IEGitOperation {
 				}
 			}
 		} else {
-			subMon.worked(40);
+			subMon.worked(30);
 		}
 
 		autoIgnoreDerivedResources(project, subMon.newChild(10));
@@ -197,8 +197,8 @@ public class ConnectProviderOperation implements IEGitOperation {
 	}
 
 	/**
-	 * Touches all descendants named ".git" so that they'll be included in a
-	 * subsequent resource delta.
+	 * Scan all descendants for files or folders named ".git" and pass them to
+	 * GitProjectData to pick up possible submodules or nested repositories.
 	 *
 	 * @param project
 	 *            to process
@@ -206,8 +206,11 @@ public class ConnectProviderOperation implements IEGitOperation {
 	 *            for progress reporting and cancellation, may be {@code null}
 	 *            if neither is desired
 	 */
-	private void touchGitResources(IProject project, IProgressMonitor monitor) {
-		final SubMonitor progress = SubMonitor.convert(monitor, 1);
+	private void checkForSubmodules(IProject project,
+			IProgressMonitor monitor) {
+		SubMonitor progress = SubMonitor.convert(monitor, 2);
+		SubMonitor seekProgress = progress.newChild(1);
+		List<IResource> gitDirs = new ArrayList<>();
 		try {
 			project.accept(new IResourceProxyVisitor() {
 				@Override
@@ -216,8 +219,9 @@ public class ConnectProviderOperation implements IEGitOperation {
 					int type = resource.getType();
 					if ((type == IResource.FILE || type == IResource.FOLDER)
 							&& Constants.DOT_GIT.equals(resource.getName())) {
-						progress.setWorkRemaining(2);
-						resource.requestResource().touch(progress.newChild(1));
+						seekProgress.setWorkRemaining(2);
+						gitDirs.add(resource.requestResource());
+						seekProgress.worked(1);
 						return false;
 					}
 					return true;
@@ -226,6 +230,7 @@ public class ConnectProviderOperation implements IEGitOperation {
 		} catch (CoreException e) {
 			Activator.logError(e.getMessage(), e);
 		}
+		GitProjectData.update(gitDirs, progress.newChild(1));
 	}
 
 	private void deleteGitProvider(MultiStatus ms, IProject project) {
