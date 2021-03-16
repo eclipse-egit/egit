@@ -169,8 +169,8 @@ public class ConnectProviderOperation implements IEGitOperation {
 		RepositoryProvider.map(project, GitProvider.ID);
 
 		IPath gitPath = actualMapping.getGitDirAbsolutePath();
-		if (refreshResources) {
-			touchGitResources(project, subMon.newChild(10));
+		if (touchGitResources(project, subMon.newChild(10))
+				|| refreshResources) {
 			project.refreshLocal(IResource.DEPTH_INFINITE, subMon.newChild(30));
 			if (gitPath != null) {
 				try {
@@ -187,7 +187,7 @@ public class ConnectProviderOperation implements IEGitOperation {
 				}
 			}
 		} else {
-			subMon.worked(40);
+			subMon.worked(30);
 		}
 
 		autoIgnoreDerivedResources(project, subMon.newChild(10));
@@ -198,16 +198,20 @@ public class ConnectProviderOperation implements IEGitOperation {
 
 	/**
 	 * Touches all descendants named ".git" so that they'll be included in a
-	 * subsequent resource delta.
+	 * subsequent resource delta to make GitProjectData pick up possible
+	 * submodules or nested repositories.
 	 *
 	 * @param project
 	 *            to process
 	 * @param monitor
 	 *            for progress reporting and cancellation, may be {@code null}
 	 *            if neither is desired
+	 * @return whether any ".git" child was touched
 	 */
-	private void touchGitResources(IProject project, IProgressMonitor monitor) {
-		final SubMonitor progress = SubMonitor.convert(monitor, 1);
+	private boolean touchGitResources(IProject project,
+			IProgressMonitor monitor) {
+		SubMonitor progress = SubMonitor.convert(monitor, 1);
+		boolean[] touched = { false };
 		try {
 			project.accept(new IResourceProxyVisitor() {
 				@Override
@@ -217,8 +221,25 @@ public class ConnectProviderOperation implements IEGitOperation {
 					if ((type == IResource.FILE || type == IResource.FOLDER)
 							&& Constants.DOT_GIT.equals(resource.getName())) {
 						progress.setWorkRemaining(2);
-						resource.requestResource().touch(progress.newChild(1));
-						return false;
+						if (type == IResource.FILE) {
+							resource.requestResource()
+									.touch(progress.newChild(1));
+							touched[0] = true;
+							return false;
+						} else {
+							// Touching a folder has no real effect. Touch HEAD
+							// if it exists. Otherwise it's not a git repository
+							// anyway.
+							IContainer container = (IContainer) resource
+									.requestResource();
+							IResource rsc = container
+									.getFile(new Path(Constants.HEAD));
+							if (rsc.exists()) {
+								rsc.touch(progress.newChild(1));
+								touched[0] = true;
+								return false;
+							}
+						}
 					}
 					return true;
 				}
@@ -226,6 +247,7 @@ public class ConnectProviderOperation implements IEGitOperation {
 		} catch (CoreException e) {
 			Activator.logError(e.getMessage(), e);
 		}
+		return touched[0];
 	}
 
 	private void deleteGitProvider(MultiStatus ms, IProject project) {
