@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (C) 2011, 2014 Jens Baumgart <jens.baumgart@sap.com> and others.
+ * Copyright (C) 2011, 2021 Jens Baumgart <jens.baumgart@sap.com> and others.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License 2.0
@@ -12,13 +12,16 @@ package org.eclipse.egit.core.internal.indexdiff;
 
 import java.util.Collection;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Map;
 import java.util.Set;
 
 import org.eclipse.core.resources.IResource;
 import org.eclipse.jgit.annotations.NonNull;
 import org.eclipse.jgit.lib.FileMode;
 import org.eclipse.jgit.lib.IndexDiff;
+import org.eclipse.jgit.lib.IndexDiff.StageState;
 
 /**
  * This immutable class is used to store the data of an {@link IndexDiff}
@@ -55,6 +58,8 @@ public class IndexDiffData {
 
 	private final Collection<IResource> changedResources;
 
+	private final Map<String, StageState> conflictStates;
+
 	/**
 	 * Empty, immutable data
 	 */
@@ -72,6 +77,7 @@ public class IndexDiffData {
 		symlinks = Collections.emptySet();
 		submodules = Collections.emptySet();
 		changedResources = Collections.emptySet();
+		conflictStates = Collections.emptyMap();
 	}
 
 	/**
@@ -102,6 +108,8 @@ public class IndexDiffData {
 		submodules = Collections.unmodifiableSet(new HashSet<>(indexDiff
 				.getPathsWithIndexMode(FileMode.GITLINK)));
 		changedResources = Collections.emptySet();
+		conflictStates = Collections.unmodifiableMap(
+				new HashMap<>(indexDiff.getConflictingStageStates()));
 	}
 
 	private Set<String> getUntrackedFolders(IndexDiff indexDiff) {
@@ -139,6 +147,8 @@ public class IndexDiffData {
 		Set<String> conflicts2 = new HashSet<>(baseDiff.getConflicting());
 		Set<String> symlinks2 = new HashSet<>(baseDiff.getSymlinks());
 		Set<String> submodules2 = new HashSet<>(baseDiff.getSubmodules());
+		Map<String, StageState> conflictStates2 = new HashMap<>(
+				baseDiff.getConflictStates());
 
 		mergeList(added2, changedFiles, diffForChangedFiles.getAdded());
 		mergeList(assumeUnchanged2, changedFiles,
@@ -156,7 +166,8 @@ public class IndexDiffData {
 				baseDiff.getUntrackedFolders(), changedFiles,
 				getUntrackedFolders(diffForChangedFiles));
 		mergeList(conflicts2, changedFiles,
-				diffForChangedFiles.getConflicting());
+				diffForChangedFiles.getConflicting(), conflictStates2,
+				diffForChangedFiles.getConflictingStageStates());
 		Set<String> ignored2 = mergeIgnored(baseDiff.getIgnoredNotInIndex(), changedFiles,
 				diffForChangedFiles.getIgnoredNotInIndex());
 
@@ -172,6 +183,7 @@ public class IndexDiffData {
 		ignored = Collections.unmodifiableSet(ignored2);
 		symlinks = Collections.unmodifiableSet(symlinks2);
 		submodules = Collections.unmodifiableSet(submodules2);
+		conflictStates = Collections.unmodifiableMap(conflictStates2);
 	}
 
 	private void mergeList(Set<String> baseList,
@@ -183,6 +195,33 @@ public class IndexDiffData {
 			} else {
 				if (listForChangedFiles.contains(file))
 					baseList.add(file);
+			}
+		}
+	}
+
+	private void mergeList(Set<String> baseList,
+			Collection<String> changedFiles, Set<String> listForChangedFiles,
+			Map<String, StageState> baseStates,
+			Map<String, StageState> newConflictStates) {
+		for (String file : changedFiles) {
+			if (baseList.contains(file)) {
+				if (!listForChangedFiles.contains(file)) {
+					baseList.remove(file);
+					baseStates.remove(file);
+				} else {
+					StageState state = newConflictStates.get(file);
+					if (state != null) {
+						baseStates.put(file, state);
+					}
+				}
+			} else {
+				if (listForChangedFiles.contains(file)) {
+					baseList.add(file);
+					StageState state = newConflictStates.get(file);
+					if (state != null) {
+						baseStates.put(file, state);
+					}
+				}
 			}
 		}
 	}
@@ -348,6 +387,14 @@ public class IndexDiffData {
 	@NonNull
 	public Set<String> getSubmodules() {
 		return submodules;
+	}
+
+	/**
+	 * @return the map of conflict {@link StageState}s
+	 */
+	@NonNull
+	public Map<String, StageState> getConflictStates() {
+		return conflictStates;
 	}
 
 	/**

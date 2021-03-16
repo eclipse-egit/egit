@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (C) 2017, Thomas Wolf <thomas.wolf@paranor.ch>
+ * Copyright (C) 2017, 2021 Thomas Wolf <thomas.wolf@paranor.ch>
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License 2.0
@@ -78,7 +78,8 @@ public class StagingViewTooltips extends FixedJFaceToolTip {
 
 	private boolean isSelected(Event event) {
 		ViewerCell currentCell = getToolTipArea(event);
-		if (currentCell == null) {
+		if (currentCell == null || currentCell.getColumnIndex() > 0
+				&& !currentCell.getText().isEmpty()) {
 			return false;
 		}
 		Object item = currentCell.getElement();

@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (C) 2011, 2020 Bernard Leach <leachbj@bouncycastle.org> and others.
+ * Copyright (C) 2011, 2021 Bernard Leach <leachbj@bouncycastle.org> and others.
  * Copyright (C) 2015 Denis Zygann <d.zygann@web.de>
  *
  * All rights reserved. This program and the accompanying materials
@@ -25,9 +25,9 @@ import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.jface.resource.JFaceResources;
 import org.eclipse.jface.resource.LocalResourceManager;
 import org.eclipse.jface.resource.ResourceManager;
+import org.eclipse.jface.viewers.ColumnLabelProvider;
 import org.eclipse.jface.viewers.DecorationOverlayIcon;
 import org.eclipse.jface.viewers.IDecoration;
-import org.eclipse.jface.viewers.LabelProvider;
 import org.eclipse.jface.viewers.LabelProviderChangedEvent;
 import org.eclipse.jgit.annotations.Nullable;
 import org.eclipse.swt.graphics.Image;
@@ -40,7 +40,7 @@ import org.eclipse.ui.model.WorkbenchLabelProvider;
 /**
  * Label provider for {@link StagingEntry} objects
  */
-public class StagingViewLabelProvider extends LabelProvider {
+public class StagingViewLabelProvider extends ColumnLabelProvider {
 
 	private StagingView stagingView;
 

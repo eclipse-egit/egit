@@ -3,7 +3,7 @@
  * Copyright (C) 2011, Dariusz Luksza <dariusz@luksza.org>
  * Copyright (C) 2012, 2013 Robin Stocker <robin@nibor.org>
  * Copyright (C) 2014, Axel Richard <axel.richard@obeo.fr>
- * Copyright (C) 2016, 2020 Thomas Wolf <thomas.wolf@paranor.ch>
+ * Copyright (C) 2016, 2021 Thomas Wolf <thomas.wolf@paranor.ch>
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License 2.0
@@ -31,6 +31,7 @@ import org.eclipse.core.runtime.PlatformObject;
 import org.eclipse.egit.ui.internal.decorators.IDecoratableResource;
 import org.eclipse.egit.ui.internal.decorators.IProblemDecoratable;
 import org.eclipse.jgit.annotations.NonNull;
+import org.eclipse.jgit.lib.IndexDiff.StageState;
 import org.eclipse.jgit.lib.Repository;
 
 
@@ -112,6 +113,8 @@ public class StagingEntry extends PlatformObject
 	private final State state;
 	private final String path;
 
+	private StageState conflictType;
+
 	private final Function<StagingEntry, IFile> fileProvider;
 
 	private boolean fileLoaded;
@@ -143,6 +146,22 @@ public class StagingEntry extends PlatformObject
 		this.fileProvider = fileProvider;
 	}
 
+	/**
+	 * @param conflictType
+	 *            to set
+	 */
+	public void setConflictType(StageState conflictType) {
+		this.conflictType = conflictType;
+	}
+
+	/**
+	 * @return the conflict's {@link StageState}
+	 */
+	@Override
+	public StageState getConflictType() {
+		return conflictType;
+
+	}
 	/**
 	 * @param submodule
 	 */

@@ -64,6 +64,7 @@ class DecoratableResourceAdapter extends DecoratableResource {
 			setConflicts(baseState.hasConflicts());
 			setAssumeUnchanged(baseState.isAssumeUnchanged());
 			setStagingState(baseState.getStagingState());
+			setConflictType(baseState.getConflictType());
 			if (isRepositoryContainer() && !isIgnored()) {
 				// We only need this very expensive info for for decorating
 				// projects and folders that are submodule or nested repository

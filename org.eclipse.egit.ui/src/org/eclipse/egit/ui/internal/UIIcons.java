@@ -53,6 +53,12 @@ public class UIIcons {
 	/** Decoration for tracked resource with a merge conflict.  */
 	public final static ImageDescriptor OVR_CONFLICT;
 
+	/** Decoration for tracked resource with a delete-modify conflict. */
+	public final static ImageDescriptor OVR_DELETE_MODIFY;
+
+	/** Decoration for tracked resource with a modify-delete conflict. */
+	public final static ImageDescriptor OVR_MODIFY_DELETE;
+
 	/** Decoration for tracked resources that we want to ignore changes in. */
 	public final static ImageDescriptor OVR_ASSUMEUNCHANGED;
 
@@ -379,6 +385,8 @@ public class UIIcons {
 		OVR_STAGED_RENAME = map("ovr/staged_renamed.png"); //$NON-NLS-1$
 		OVR_UNTRACKED = map("ovr/untracked.png"); //$NON-NLS-1$
 		OVR_CONFLICT = map("ovr/conflict.png"); //$NON-NLS-1$
+		OVR_DELETE_MODIFY = map("ovr/delete_modify.png"); //$NON-NLS-1$
+		OVR_MODIFY_DELETE = map("ovr/modify_delete.png"); //$NON-NLS-1$
 		OVR_ASSUMEUNCHANGED = map("ovr/assume_unchanged.png"); //$NON-NLS-1$
 		OVR_DIRTY = map("ovr/dirty.png"); //$NON-NLS-1$
 		OVR_SYMLINK = map("ovr/symlink_ovr.png"); //$NON-NLS-1$
