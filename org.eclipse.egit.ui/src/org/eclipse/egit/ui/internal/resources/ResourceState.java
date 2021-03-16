@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (C) 2015, Thomas Wolf <thomas.wolf@paranor.ch>
+ * Copyright (C) 2015, 2021 Thomas Wolf <thomas.wolf@paranor.ch>
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License 2.0
@@ -11,6 +11,7 @@
 package org.eclipse.egit.ui.internal.resources;
 
 import org.eclipse.jgit.annotations.NonNull;
+import org.eclipse.jgit.lib.IndexDiff.StageState;
 
 /**
  * Base implementation of an {@link IResourceState}.
@@ -49,6 +50,11 @@ public class ResourceState implements IResourceState {
 	 * Flag indicating whether or not the resource has merge conflicts
 	 */
 	private boolean conflicts;
+
+	/**
+	 * For conflicting resources, the kind of conflict.
+	 */
+	private StageState conflictType;
 
 	/**
 	 * Flag indicating whether or not the resource is assumed unchanged
@@ -91,6 +97,11 @@ public class ResourceState implements IResourceState {
 	}
 
 	@Override
+	public StageState getConflictType() {
+		return conflictType;
+	}
+
+	@Override
 	public boolean isAssumeUnchanged() {
 		return assumeUnchanged;
 	}
@@ -119,6 +130,16 @@ public class ResourceState implements IResourceState {
 	 */
 	protected void setConflicts(boolean conflicts) {
 		this.conflicts = conflicts;
+	}
+
+	/**
+	 * Sets the conflict type.
+	 *
+	 * @param conflictType
+	 *            to set
+	 */
+	protected void setConflictType(StageState conflictType) {
+		this.conflictType = conflictType;
 	}
 
 	/**

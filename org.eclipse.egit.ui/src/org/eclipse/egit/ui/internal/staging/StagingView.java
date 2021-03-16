@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (C) 2011, 2020 Bernard Leach <leachbj@bouncycastle.org> and others.
+ * Copyright (C) 2011, 2021 Bernard Leach <leachbj@bouncycastle.org> and others.
  * Copyright (C) 2015 SAP SE (Christian Georgi <christian.georgi@sap.com>)
  * Copyright (C) 2015 Denis Zygann <d.zygann@web.de>
  * Copyright (C) 2016 IBM (Daniel Megert <daniel_megert@ch.ibm.com>)
@@ -147,12 +147,11 @@ import org.eclipse.jface.util.LocalSelectionTransfer;
 import org.eclipse.jface.util.PropertyChangeEvent;
 import org.eclipse.jface.util.Util;
 import org.eclipse.jface.viewers.AbstractTreeViewer;
-import org.eclipse.jface.viewers.BaseLabelProvider;
+import org.eclipse.jface.viewers.ColumnLabelProvider;
 import org.eclipse.jface.viewers.ContentViewer;
 import org.eclipse.jface.viewers.DecoratingLabelProvider;
 import org.eclipse.jface.viewers.IBaseLabelProvider;
 import org.eclipse.jface.viewers.ILabelDecorator;
-import org.eclipse.jface.viewers.ILabelProvider;
 import org.eclipse.jface.viewers.ILabelProviderListener;
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.ISelectionProvider;
@@ -163,6 +162,7 @@ import org.eclipse.jface.viewers.OpenEvent;
 import org.eclipse.jface.viewers.StructuredSelection;
 import org.eclipse.jface.viewers.TreeExpansionEvent;
 import org.eclipse.jface.viewers.TreeViewer;
+import org.eclipse.jface.viewers.TreeViewerColumn;
 import org.eclipse.jface.viewers.Viewer;
 import org.eclipse.jface.viewers.ViewerComparator;
 import org.eclipse.jface.viewers.ViewerFilter;
@@ -179,6 +179,7 @@ import org.eclipse.jgit.api.errors.JGitInternalException;
 import org.eclipse.jgit.api.errors.NoFilepatternException;
 import org.eclipse.jgit.events.ListenerHandle;
 import org.eclipse.jgit.lib.Constants;
+import org.eclipse.jgit.lib.IndexDiff.StageState;
 import org.eclipse.jgit.lib.ObjectId;
 import org.eclipse.jgit.lib.Ref;
 import org.eclipse.jgit.lib.Repository;
@@ -208,8 +209,10 @@ import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.events.VerifyEvent;
 import org.eclipse.swt.graphics.Cursor;
+import org.eclipse.swt.graphics.GC;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.graphics.Point;
+import org.eclipse.swt.graphics.Rectangle;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.layout.RowLayout;
@@ -576,8 +579,8 @@ public class StagingView extends ViewPart
 	 * operation on GTK, and avoiding to compute it speeds up label updates
 	 * significantly.
 	 */
-	private static class TreeDecoratingLabelProvider extends BaseLabelProvider
-			implements ILabelProvider, IViewerLabelProvider {
+	private static class TreeDecoratingLabelProvider extends ColumnLabelProvider
+			implements IViewerLabelProvider {
 
 		private final DecoratingLabelProvider provider;
 
@@ -2139,7 +2142,7 @@ public class StagingView extends ViewPart
 		return treeViewer;
 	}
 
-	private IBaseLabelProvider createLabelProvider(TreeViewer treeViewer) {
+	private ColumnLabelProvider createLabelProvider(TreeViewer treeViewer) {
 		StagingViewLabelProvider baseProvider = new StagingViewLabelProvider(
 				this);
 		baseProvider.setFileNameMode(getPreferenceStore().getBoolean(
@@ -2180,7 +2183,6 @@ public class StagingView extends ViewPart
 				.applyTo(viewer.getControl());
 		viewer.getTree().setData(FormToolkit.KEY_DRAW_BORDER,
 				FormToolkit.TREE_BORDER);
-		viewer.setLabelProvider(createLabelProvider(viewer));
 		StagingViewContentProvider contentProvider = createStagingContentProvider(
 				unstaged);
 		viewer.setContentProvider(contentProvider);
@@ -2188,6 +2190,56 @@ public class StagingView extends ViewPart
 			StagingViewTooltips tooltips = new StagingViewTooltips(viewer,
 					tooltipActions);
 			tooltips.setShift(new Point(1, 1));
+		}
+		if (unstaged) {
+			// Set up two columns
+			TreeViewerColumn column = new TreeViewerColumn(viewer, SWT.NONE);
+			column.setLabelProvider(createLabelProvider(viewer));
+			column = new TreeViewerColumn(viewer, SWT.RIGHT);
+			// Compute the width of this column
+			int columnWidth = getColumnWidth(viewer.getTree(),
+					UIText.StagingView_Conflict_A_short,
+					UIText.StagingView_Conflict_M_short,
+					UIText.StagingView_Conflict_DM_short,
+					UIText.StagingView_Conflict_MD_short);
+			column.getColumn().setWidth(columnWidth);
+			column.setLabelProvider(new ColumnLabelProvider() {
+
+				@Override
+				public String getText(Object element) {
+					if (element instanceof StagingEntry) {
+						StagingEntry entry = (StagingEntry) element;
+						if (entry.hasConflicts()) {
+							StageState conflictType = entry.getConflictType();
+							switch (conflictType) {
+							case DELETED_BY_THEM:
+								return UIText.StagingView_Conflict_MD_short;
+							case DELETED_BY_US:
+								return UIText.StagingView_Conflict_DM_short;
+							case BOTH_MODIFIED:
+								return UIText.StagingView_Conflict_M_short;
+							case BOTH_ADDED:
+								return UIText.StagingView_Conflict_A_short;
+							default:
+								break;
+							}
+						}
+					}
+					return ""; //$NON-NLS-1$
+				}
+			});
+			viewer.getTree().addListener(SWT.Resize, event -> {
+				Rectangle bounds = viewer.getTree().getClientArea();
+				// 'columnWidth' accounts for possible column gaps
+				viewer.getTree().getColumn(0)
+						.setWidth(Math.max(0, bounds.width - columnWidth));
+				viewer.getTree().requestLayout();
+			});
+			ConflictStateHoverManager hovers = new ConflictStateHoverManager(
+					viewer);
+			hovers.install(viewer.getControl());
+		} else {
+			viewer.setLabelProvider(createLabelProvider(viewer));
 		}
 		viewer.addDragSupport(DND.DROP_MOVE | DND.DROP_COPY | DND.DROP_LINK,
 				new Transfer[] { LocalSelectionTransfer.getTransfer(),
@@ -2237,6 +2289,26 @@ public class StagingView extends ViewPart
 		enableAutoExpand(viewer);
 		addListenerToDisableAutoExpandOnCollapse(viewer);
 		return viewer;
+	}
+
+	private int getColumnWidth(Tree tree, String... labels) {
+		GC gc = new GC(tree.getDisplay());
+		try {
+			gc.setFont(tree.getFont());
+			int width = -1;
+			for (String label : labels) {
+				int w = gc.textExtent(label).x;
+				if (w > width) {
+					width = w;
+				}
+			}
+			// Add some margin to account for internal padding of the tree cell
+			// and possible gaps between columns. OS X needs 4, GTK 6, and
+			// Windows 8 pixels to fully show the text.
+			return width + 8;
+		} finally {
+			gc.dispose();
+		}
 	}
 
 	private void addCopyAction(final TreeViewer viewer) {
@@ -2745,8 +2817,11 @@ public class StagingView extends ViewPart
 		return Activator.getDefault().getPreferenceStore();
 	}
 
-	private StagingViewLabelProvider getLabelProvider(ContentViewer viewer) {
-		IBaseLabelProvider base = viewer.getLabelProvider();
+	private StagingViewLabelProvider getLabelProvider(TreeViewer viewer) {
+		IBaseLabelProvider base = viewer.getLabelProvider(0);
+		if (base == null) {
+			base = viewer.getLabelProvider();
+		}
 		return ((TreeDecoratingLabelProvider) base).getBaseLabelProvider();
 	}
 

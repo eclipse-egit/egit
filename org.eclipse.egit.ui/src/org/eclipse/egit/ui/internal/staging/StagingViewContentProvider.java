@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (C) 2011, 2020 Bernard Leach <leachbj@bouncycastle.org> and others.
+ * Copyright (C) 2011, 2021 Bernard Leach <leachbj@bouncycastle.org> and others.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License 2.0
@@ -394,9 +394,13 @@ public class StagingViewContentProvider extends WorkbenchContentProvider {
 			for (String file : indexDiff.getUntracked())
 				nodes.add(new StagingEntry(repository, UNTRACKED, file,
 						this::getFile));
-			for (String file : indexDiff.getConflicting())
-				nodes.add(new StagingEntry(repository, CONFLICTING, file,
-						this::getFile));
+			for (String file : indexDiff.getConflicting()) {
+				StagingEntry newEntry = new StagingEntry(repository,
+						CONFLICTING, file, this::getFile);
+				newEntry.setConflictType(
+						indexDiff.getConflictStates().get(file));
+				nodes.add(newEntry);
+			}
 		} else {
 			for (String file : indexDiff.getAdded())
 				nodes.add(new StagingEntry(repository, ADDED, file,

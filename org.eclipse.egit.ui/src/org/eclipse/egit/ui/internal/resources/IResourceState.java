@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (C) 2015, Thomas Wolf <thomas.wolf@paranor.ch>
+ * Copyright (C) 2015, 2021 Thomas Wolf <thomas.wolf@paranor.ch>
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License 2.0
@@ -11,6 +11,7 @@
 package org.eclipse.egit.ui.internal.resources;
 
 import org.eclipse.jgit.annotations.NonNull;
+import org.eclipse.jgit.lib.IndexDiff.StageState;
 
 /**
  * Provides information about the repository state of an item in the repository.
@@ -94,6 +95,14 @@ public interface IResourceState {
 	 * @return whether or not the resource has merge conflicts
 	 */
 	boolean hasConflicts();
+
+	/**
+	 * The conflict type for conflicting resources.
+	 *
+	 * @return the conflict type as a {@link StageState} for conflicting
+	 *         resources, {@code null} otherwise
+	 */
+	StageState getConflictType();
 
 	/**
 	 * Returns whether or not the resource is assumed unchanged.

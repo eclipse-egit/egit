@@ -56,6 +56,7 @@ import org.eclipse.jface.util.IPropertyChangeListener;
 import org.eclipse.jface.util.PropertyChangeEvent;
 import org.eclipse.jface.viewers.IDecoration;
 import org.eclipse.jgit.annotations.NonNull;
+import org.eclipse.jgit.lib.IndexDiff.StageState;
 import org.eclipse.osgi.util.NLS;
 import org.eclipse.osgi.util.TextProcessor;
 import org.eclipse.swt.SWT;
@@ -508,6 +509,12 @@ public class GitLightweightDecorator extends GitDecorator
 		/** Image for a tracked resource with a merge conflict. */
 		protected static final ImageDescriptor CONFLICT_IMAGE;
 
+		/** Image for a tracked resource with a delete-modify conflict. */
+		protected static final ImageDescriptor DELETE_MODIFY_IMAGE;
+
+		/** Image for a tracked resource with a modify-delete conflict. */
+		protected static final ImageDescriptor MODIFY_DELETE_IMAGE;
+
 		/** Image for a tracked resource in which we want to ignore changes. */
 		protected static final ImageDescriptor ASSUME_UNCHANGED_IMAGE;
 
@@ -523,6 +530,10 @@ public class GitLightweightDecorator extends GitDecorator
 			STAGED_REMOVED_IMAGE = new CachedImageDescriptor(
 					UIIcons.OVR_STAGED_REMOVE);
 			CONFLICT_IMAGE = new CachedImageDescriptor(UIIcons.OVR_CONFLICT);
+			DELETE_MODIFY_IMAGE = new CachedImageDescriptor(
+					UIIcons.OVR_DELETE_MODIFY);
+			MODIFY_DELETE_IMAGE = new CachedImageDescriptor(
+					UIIcons.OVR_MODIFY_DELETE);
 			ASSUME_UNCHANGED_IMAGE = new CachedImageDescriptor(UIIcons.OVR_ASSUMEUNCHANGED);
 			DIRTY_IMAGE = new CachedImageDescriptor(UIIcons.OVR_DIRTY);
 		}
@@ -752,8 +763,16 @@ public class GitLightweightDecorator extends GitDecorator
 				// Conflicts override everything
 				if (store
 						.getBoolean(UIPreferences.DECORATOR_SHOW_CONFLICTS_ICON)
-						&& resource.hasConflicts())
-					overlay = CONFLICT_IMAGE;
+						&& resource.hasConflicts()) {
+					StageState conflictType = resource.getConflictType();
+					if (conflictType == StageState.DELETED_BY_THEM) {
+						overlay = MODIFY_DELETE_IMAGE;
+					} else if (conflictType == StageState.DELETED_BY_US) {
+						overlay = DELETE_MODIFY_IMAGE;
+					} else {
+						overlay = CONFLICT_IMAGE;
+					}
+				}
 
 			} else if (store
 					.getBoolean(UIPreferences.DECORATOR_SHOW_UNTRACKED_ICON)) {
