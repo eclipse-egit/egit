@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "b84cd1e4_e550bdc6",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/op/ConnectProviderOperation.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 174,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2021-03-17T08:09:19Z",
+      "side": 1,
+      "message": "\u003e Or maybe we could not touch and trigger GitProjectData.update() through new API directly with the .git items found by the visitor.\n\nDone anyway as it leads to clearer code.",
+      "parentUuid": "5fd5d4ca_dd6d3aba",
+      "revId": "c1bef3dff0315a3a9afcb5c5e2416bef0cd70468",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ea8557d0_2ed0315d",
         "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/op/ConnectProviderOperation.java",
         "patchSetId": 1
@@ -69,6 +87,24 @@
       "revId": "c1bef3dff0315a3a9afcb5c5e2416bef0cd70468",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d6bc2768_01caee1a",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/op/ConnectProviderOperation.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 214,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2021-03-17T08:09:19Z",
+      "side": 1,
+      "message": "Is different in PS 2 anyway.",
+      "parentUuid": "9f0d1fda_453b4580",
+      "revId": "c1bef3dff0315a3a9afcb5c5e2416bef0cd70468",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
     }
   ]
 }
