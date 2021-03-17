@@ -13,11 +13,13 @@ package org.eclipse.egit.core.internal;
 
 import java.io.File;
 import java.net.URI;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.stream.Stream;
@@ -39,6 +41,8 @@ import org.eclipse.core.runtime.OperationCanceledException;
 import org.eclipse.core.runtime.Path;
 import org.eclipse.core.runtime.SubMonitor;
 import org.eclipse.egit.core.Activator;
+import org.eclipse.egit.core.internal.indexdiff.IndexDiffCache;
+import org.eclipse.egit.core.internal.indexdiff.IndexDiffCacheEntry;
 import org.eclipse.egit.core.internal.job.RuleUtil;
 import org.eclipse.egit.core.internal.trace.GitTraceLocation;
 import org.eclipse.jgit.annotations.NonNull;
@@ -105,14 +109,24 @@ public class ResourceRefreshHandler implements WorkingTreeModifiedListener {
 		Map<IPath, IProject> roots = getProjectLocations(workTree);
 		if (roots.isEmpty()) {
 			// No open projects from this repository in the workspace
+			if (!event.getModified().isEmpty()
+					|| !event.getDeleted().isEmpty()) {
+				Set<String> toRefresh = new HashSet<>(event.getModified());
+				toRefresh.addAll(event.getDeleted());
+				refreshIndex(event.getRepository(), toRefresh);
+			}
 			progress.done();
 			return;
 		}
 		IPath wt = new Path(workTree.getPath());
+		List<String> needRefresh = new ArrayList<>();
 		Map<IResource, Boolean> toRefresh = computeResources(
-				event.getModified(), event.getDeleted(), wt, roots,
+				event.getModified(), event.getDeleted(), wt, roots, needRefresh,
 				progress.newChild(1));
 		if (toRefresh.isEmpty()) {
+			if (!needRefresh.isEmpty()) {
+				refreshIndex(event.getRepository(), needRefresh);
+			}
 			return;
 		}
 		IWorkspace workspace = ResourcesPlugin.getWorkspace();
@@ -147,6 +161,18 @@ public class ResourceRefreshHandler implements WorkingTreeModifiedListener {
 		// update notifications.
 		workspace.run(operation, null, IWorkspace.AVOID_UPDATE,
 				progress.newChild(1));
+		if (!needRefresh.isEmpty()) {
+			refreshIndex(event.getRepository(), needRefresh);
+		}
+	}
+
+	private void refreshIndex(Repository repository,
+			Collection<String> toRefresh) {
+		IndexDiffCacheEntry cache = IndexDiffCache.getInstance()
+				.getIndexDiffCacheEntry(repository);
+		if (cache != null) {
+			cache.refreshFiles(toRefresh);
+		}
 	}
 
 	private Map<IPath, IProject> getProjectLocations(File workTree) {
@@ -173,7 +199,7 @@ public class ResourceRefreshHandler implements WorkingTreeModifiedListener {
 	private Map<IResource, Boolean> computeResources(
 			Collection<String> modified, Collection<String> deleted,
 			IPath workTree, Map<IPath, IProject> roots,
-			IProgressMonitor monitor) {
+			Collection<String> needRefresh, IProgressMonitor monitor) {
 		// Attempt to minimize the refreshes by returning IContainers if
 		// more than one file in a container has changed.
 		if (GitTraceLocation.REFRESH.isActive()) {
@@ -204,10 +230,15 @@ public class ResourceRefreshHandler implements WorkingTreeModifiedListener {
 				return;
 			}
 			if (fullRefreshes.stream()
-					.anyMatch(full -> full.isPrefixOf(filePath))
-					|| !roots.keySet().stream()
-							.anyMatch(root -> root.isPrefixOf(filePath))) {
-				// Not in workspace or covered by a full container refresh
+					.anyMatch(full -> full.isPrefixOf(filePath))) {
+				// Covered by a full container refresh
+				progress.worked(1);
+				return;
+			}
+			if (!roots.keySet().stream()
+					.anyMatch(root -> root.isPrefixOf(filePath))) {
+				// Not in workspace.
+				needRefresh.add(path);
 				progress.worked(1);
 				return;
 			}
