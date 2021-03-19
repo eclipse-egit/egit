@@ -360,21 +360,20 @@ public class ExternalRepositoryScanner implements EventHandler {
 		 */
 		private static class WorkingTreeChanges {
 
-			private final File workTree;
+			private final File gitDir;
 
 			private final Set<String> modified;
 
 			private final Set<String> deleted;
 
 			public WorkingTreeChanges(WorkingTreeModifiedEvent event) {
-				workTree = event.getRepository().getWorkTree()
-						.getAbsoluteFile();
+				gitDir = event.getRepository().getDirectory();
 				modified = new HashSet<>(event.getModified());
 				deleted = new HashSet<>(event.getDeleted());
 			}
 
-			public File getWorkTree() {
-				return workTree;
+			public File getGitDirectory() {
+				return gitDir;
 			}
 
 			public Set<String> getModified() {
@@ -420,9 +419,20 @@ public class ExternalRepositoryScanner implements EventHandler {
 							return Status.CANCEL_STATUS;
 						}
 						ResourceRefreshHandler handler = new ResourceRefreshHandler();
-						handler.refreshRepository(new WorkingTreeModifiedEvent(
-								change.getModified(), change.getDeleted()),
-								change.getWorkTree(), progress.newChild(1));
+						Repository repo = RepositoryCache.getInstance()
+								.getRepository(change.getGitDirectory());
+						if (repo == null || repo.isBare()) {
+							// Repo has vanished or suddenly become a bare repo?
+							// No point updating anything.
+							progress.worked(1);
+							continue;
+						}
+						WorkingTreeModifiedEvent event = new WorkingTreeModifiedEvent(
+								change.getModified(), change.getDeleted());
+						event.setRepository(repo);
+						handler.refreshRepository(event,
+								repo.getWorkTree().getAbsoluteFile(),
+								progress.newChild(1));
 					}
 				} catch (OperationCanceledException oe) {
 					return Status.CANCEL_STATUS;
