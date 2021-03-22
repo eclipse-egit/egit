@@ -190,8 +190,8 @@ public class StagingViewContentProvider extends WorkbenchContentProvider {
 			}
 			folderPaths.add(folderPath);
 			addChild(childrenForPath, folderPath, file);
-			for (IPath p = folderPath; p.segmentCount() != 1; p = p
-					.removeLastSegments(1)) {
+			IPath p = folderPath;
+			while (p.segmentCount() > 1) {
 				IPath parent = p.removeLastSegments(1);
 				if (!compact) {
 					folderPaths.add(parent);
@@ -206,6 +206,7 @@ public class StagingViewContentProvider extends WorkbenchContentProvider {
 						folderPaths.add(parent);
 					}
 				}
+				p = parent;
 			}
 		}
 
