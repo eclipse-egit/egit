@@ -470,7 +470,7 @@ public class DiffEditorOutlinePage extends ContentOutlinePage {
 
 		private static final Object[] NOTHING = new Object[0];
 
-		private static String SLASH = "/"; //$NON-NLS-1$
+		private static final String SLASH = "/"; //$NON-NLS-1$
 
 		private boolean compactTree = false;
 
