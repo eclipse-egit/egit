@@ -26,7 +26,8 @@ import org.eclipse.jgit.annotations.NonNull;
 public class StagingFolderEntry implements IAdaptable, IProblemDecoratable {
 	private final IPath repoLocation;
 	private final IPath repoRelativePath;
-	private final IPath nodePath;
+
+	private final String label;
 	private final IContainer container;
 
 	private StagingFolderEntry parent;
@@ -36,13 +37,13 @@ public class StagingFolderEntry implements IAdaptable, IProblemDecoratable {
 	/**
 	 * @param repoLocation
 	 * @param repoRelativePath
-	 * @param nodePath
+	 * @param label
 	 */
 	public StagingFolderEntry(IPath repoLocation, IPath repoRelativePath,
-			IPath nodePath) {
+			String label) {
 		this.repoLocation = repoLocation;
 		this.repoRelativePath = repoRelativePath;
-		this.nodePath = nodePath;
+		this.label = label;
 		this.container = ResourceUtil.getContainerForLocation(getLocation(),
 				false);
 	}
@@ -94,10 +95,10 @@ public class StagingFolderEntry implements IAdaptable, IProblemDecoratable {
 	}
 
 	/**
-	 * @return the path of the node, relative to its parent
+	 * @return the label of the node
 	 */
-	public IPath getNodePath() {
-		return nodePath;
+	public String getLabel() {
+		return label;
 	}
 
 	/**

@@ -153,7 +153,7 @@ public class StagingViewLabelProvider extends LabelProvider {
 
 		if (element instanceof StagingFolderEntry) {
 			StagingFolderEntry stagingFolderEntry = (StagingFolderEntry) element;
-			return stagingFolderEntry.getNodePath().toString();
+			return stagingFolderEntry.getLabel();
 		}
 
 		StagingEntry stagingEntry = getStagingEntry(element);

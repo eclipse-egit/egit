@@ -4643,7 +4643,7 @@ public class StagingView extends ViewPart
 					text = stagingEntry.getName() + '\001' + text;
 				}
 			} else if (element instanceof StagingFolderEntry) {
-				text = ((StagingFolderEntry) element).getNodePath().toString()
+				text = ((StagingFolderEntry) element).getLabel()
 						.replace('/', '\001');
 			}
 			return text;

@@ -224,14 +224,14 @@ public class StagingViewContentProvider extends WorkbenchContentProvider {
 			if (parent.segmentCount() == 0) {
 				// Parent is root
 				StagingFolderEntry folderEntry = new StagingFolderEntry(
-						workingDirectory, folderPath, folderPath);
+						workingDirectory, folderPath, folderPath.toString());
 				folderEntries.add(folderEntry);
 				roots.add(folderEntry);
 			} else {
 				// Parent is existing node
-				IPath nodePath = folderPath.makeRelativeTo(parent);
+				String label = folderPath.makeRelativeTo(parent).toString();
 				StagingFolderEntry folderEntry = new StagingFolderEntry(
-						workingDirectory, folderPath, nodePath);
+						workingDirectory, folderPath, label);
 				folderEntries.add(folderEntry);
 				addChild(childrenForPath, parent, folderEntry);
 			}
