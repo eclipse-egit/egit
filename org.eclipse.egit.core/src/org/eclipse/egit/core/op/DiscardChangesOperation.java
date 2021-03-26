@@ -118,13 +118,10 @@ public class DiscardChangesOperation implements IEGitOperation {
 	 *            to work on
 	 * @param paths
 	 *            collection of repository-relative paths to reset
-	 * @param revision
-	 *            to reset to, if {@code null}, reset to the index
 	 */
 	public DiscardChangesOperation(Repository repository,
-			Collection<String> paths, String revision) {
+			Collection<String> paths) {
 		this(Collections.singletonMap(repository, paths));
-		this.revision = revision;
 	}
 
 	private DiscardChangesOperation(
@@ -151,15 +148,34 @@ public class DiscardChangesOperation implements IEGitOperation {
 
 	/**
 	 * Set the index stage to check out for conflicting files. Not compatible
-	 * with revision.
+	 * with checking out a revision.
 	 *
 	 * @param stage
+	 *            to check out for conflicts
+	 * @throws IllegalStateException
+	 *             if a non-{@code null} revision has been set
 	 */
 	public void setStage(Stage stage) {
-		if (revision != null)
+		if (revision != null && stage != null)
 			throw new IllegalStateException(
 					"Either stage or revision can be set, but not both"); //$NON-NLS-1$
 		this.stage = stage;
+	}
+
+	/**
+	 * Set the revision to check out.
+	 *
+	 * @param revision
+	 *            to check out
+	 * @throws IllegalStateException
+	 *             if a {@link #setStage(Stage) stage} is set
+	 */
+	public void setRevision(String revision) {
+		if (stage != null && revision != null) {
+			throw new IllegalStateException(
+					"Either stage or revision can be set, but not both"); //$NON-NLS-1$
+		}
+		this.revision = revision;
 	}
 
 	/*

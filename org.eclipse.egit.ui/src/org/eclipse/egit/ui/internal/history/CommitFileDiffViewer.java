@@ -914,7 +914,10 @@ public class CommitFileDiffViewer extends TableViewer {
 			String revision = first.getCommit().getName();
 			List<String> paths = diffs.stream().map(FileDiff::getNewPath)
 					.collect(Collectors.toList());
-			return new DiscardChangesOperation(repository, paths, revision);
+			DiscardChangesOperation operation = new DiscardChangesOperation(
+					repository, paths);
+			operation.setRevision(revision);
+			return operation;
 		}
 
 		private Collection<FileDiff> getFileDiffs(

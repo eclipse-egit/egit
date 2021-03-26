@@ -122,7 +122,8 @@ public class CleanupUncomittedChangesDialog extends MessageDialog {
 			break;
 		case IDialogConstants.ABORT_ID:
 			DiscardChangesOperation operation = new DiscardChangesOperation(
-					repository, fileList, Constants.HEAD);
+					repository, fileList);
+			operation.setRevision(Constants.HEAD);
 			JobUtil.scheduleUserWorkspaceJob(operation,
 					UIText.DiscardChangesAction_discardChanges,
 					JobFamilies.DISCARD_CHANGES);

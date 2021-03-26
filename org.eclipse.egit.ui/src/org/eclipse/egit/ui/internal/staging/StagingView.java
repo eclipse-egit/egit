@@ -88,7 +88,6 @@ import org.eclipse.egit.ui.internal.UIIcons;
 import org.eclipse.egit.ui.internal.UIText;
 import org.eclipse.egit.ui.internal.actions.ActionCommands;
 import org.eclipse.egit.ui.internal.actions.BooleanPrefAction;
-import org.eclipse.egit.ui.internal.actions.ReplaceWithOursTheirsMenu;
 import org.eclipse.egit.ui.internal.commands.shared.AbortRebaseCommand;
 import org.eclipse.egit.ui.internal.commands.shared.AbstractRebaseCommandHandler;
 import org.eclipse.egit.ui.internal.commands.shared.ContinueRebaseCommand;
@@ -3084,8 +3083,8 @@ public class StagingView extends ViewPart
 				if (addReplaceWithOursTheirsMenu) {
 					MenuManager replaceWithMenu = new MenuManager(
 							UIText.StagingView_ReplaceWith);
-					ReplaceWithOursTheirsMenu oursTheirsMenu = new ReplaceWithOursTheirsMenu();
-					oursTheirsMenu.initialize(getSite());
+					ReplaceConflictMenu oursTheirsMenu = new ReplaceConflictMenu(
+							currentRepository, stagingEntryList);
 					replaceWithMenu.add(oursTheirsMenu);
 					menuMgr.add(replaceWithMenu);
 				}
@@ -3274,7 +3273,10 @@ public class StagingView extends ViewPart
 				return;
 			}
 			DiscardChangesOperation operation = new DiscardChangesOperation(
-					repo, files, headRevision ? Constants.HEAD : null);
+					repo, files);
+			if (headRevision) {
+				operation.setRevision(Constants.HEAD);
+			}
 			JobChangeAdapter refresher = null;
 			if (!inaccessibleFiles.isEmpty()) {
 				refresher = new JobChangeAdapter() {
