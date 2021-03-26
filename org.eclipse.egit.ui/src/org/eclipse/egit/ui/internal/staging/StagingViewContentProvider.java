@@ -194,7 +194,9 @@ public class StagingViewContentProvider extends WorkbenchContentProvider {
 			while (p.segmentCount() > 1) {
 				IPath parent = p.removeLastSegments(1);
 				if (!compact) {
-					folderPaths.add(parent);
+					if (!folderPaths.add(parent)) {
+						break; // Already added, and so are further ancestors
+					}
 				} else {
 					String childSegment = p.lastSegment();
 					String knownChildSegment = childSegments.get(parent);

@@ -3730,9 +3730,12 @@ public class StagingView extends ViewPart
 	}
 
 	private static void addPathAndParentPaths(IPath initialPath, Set<IPath> addToSet) {
-		for (IPath p = initialPath; p.segmentCount() >= 1; p = p
-				.removeLastSegments(1))
-			addToSet.add(p);
+		IPath p = initialPath;
+		// If already added, then all further ancestors also already have been
+		// added.
+		while (p.segmentCount() > 0 && addToSet.add(p)) {
+			p = p.removeLastSegments(1);
+		}
 	}
 
 	private boolean isValidRepo(final Repository repository) {
