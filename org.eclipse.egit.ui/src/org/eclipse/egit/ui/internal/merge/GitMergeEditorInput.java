@@ -10,7 +10,6 @@
  *******************************************************************************/
 package org.eclipse.egit.ui.internal.merge;
 
-import java.io.File;
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
@@ -36,6 +35,7 @@ import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.Path;
 import org.eclipse.egit.core.RepositoryUtil;
+import org.eclipse.egit.core.RevUtils;
 import org.eclipse.egit.core.internal.CompareCoreUtils;
 import org.eclipse.egit.core.internal.CoreText;
 import org.eclipse.egit.core.internal.storage.GitFileRevision;
@@ -50,7 +50,6 @@ import org.eclipse.egit.ui.internal.revision.LocationEditableRevision;
 import org.eclipse.egit.ui.internal.revision.ResourceEditableRevision;
 import org.eclipse.egit.ui.internal.synchronize.compare.LocalNonWorkspaceTypedElement;
 import org.eclipse.jface.operation.IRunnableContext;
-import org.eclipse.jgit.api.RebaseCommand;
 import org.eclipse.jgit.dircache.DirCacheEntry;
 import org.eclipse.jgit.dircache.DirCacheIterator;
 import org.eclipse.jgit.lib.Constants;
@@ -65,8 +64,6 @@ import org.eclipse.jgit.treewalk.TreeWalk;
 import org.eclipse.jgit.treewalk.filter.AndTreeFilter;
 import org.eclipse.jgit.treewalk.filter.NotIgnoredFilter;
 import org.eclipse.jgit.treewalk.filter.PathFilterGroup;
-import org.eclipse.jgit.util.IO;
-import org.eclipse.jgit.util.RawParseUtils;
 import org.eclipse.osgi.util.NLS;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.widgets.Display;
@@ -162,35 +159,10 @@ public class GitMergeEditorInput extends CompareEditorInput {
 
 			rw = new RevWalk(repo);
 
-			// get the "right" side (MERGE_HEAD for merge, ORIG_HEAD for rebase)
+			// get the "right" side
 			final RevCommit rightCommit;
 			try {
-				String target;
-				switch (repo.getRepositoryState()) {
-				case MERGING:
-					target = Constants.MERGE_HEAD;
-					break;
-				case CHERRY_PICKING:
-					target = Constants.CHERRY_PICK_HEAD;
-					break;
-				case REBASING_INTERACTIVE:
-					target = readFile(repo.getDirectory(),
-							RebaseCommand.REBASE_MERGE + File.separatorChar
-									+ RebaseCommand.STOPPED_SHA);
-					break;
-				case REVERTING:
-					target = Constants.REVERT_HEAD;
-					break;
-				default:
-					target = Constants.ORIG_HEAD;
-					break;
-				}
-				ObjectId mergeHead = repo.resolve(target);
-				if (mergeHead == null)
-					throw new IOException(NLS.bind(
-							CoreText.ValidationUtils_CanNotResolveRefMessage,
-							target));
-				rightCommit = rw.parseCommit(mergeHead);
+				rightCommit = RevUtils.getTheirs(repo, rw);
 			} catch (IOException e) {
 				throw new InvocationTargetException(e);
 			}
@@ -490,15 +462,6 @@ public class GitMergeEditorInput extends CompareEditorInput {
 			}
 		};
 		return child;
-	}
-
-	private String readFile(File directory, String fileName) throws IOException {
-		byte[] content = IO.readFully(new File(directory, fileName));
-		// strip off the last LF
-		int end = content.length;
-		while (0 < end && content[end - 1] == '\n')
-			end--;
-		return RawParseUtils.decode(content, 0, end);
 	}
 
 	@Override
