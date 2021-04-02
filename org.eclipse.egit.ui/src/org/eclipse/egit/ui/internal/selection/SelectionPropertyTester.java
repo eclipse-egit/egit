@@ -29,7 +29,12 @@ import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.IResource;
 import org.eclipse.core.runtime.Adapters;
 import org.eclipse.core.runtime.IAdaptable;
+import org.eclipse.core.runtime.IPath;
 import org.eclipse.egit.core.AdapterUtils;
+import org.eclipse.egit.core.internal.indexdiff.IndexDiffCache;
+import org.eclipse.egit.core.internal.indexdiff.IndexDiffCacheEntry;
+import org.eclipse.egit.core.internal.indexdiff.IndexDiffData;
+import org.eclipse.egit.core.internal.util.ResourceUtil;
 import org.eclipse.egit.core.project.RepositoryMapping;
 import org.eclipse.egit.ui.internal.ResourcePropertyTester;
 import org.eclipse.egit.ui.internal.expressions.AbstractPropertyTester;
@@ -89,6 +94,48 @@ public class SelectionPropertyTester extends AbstractPropertyTester {
 					.getSelectedResources(selection);
 			Repository repository = getRepositoryOfResources(resources);
 			return testRepositoryProperties(repository, args);
+
+		} else if ("conflictsInSingleRepository".equals(property)) { //$NON-NLS-1$
+			IStructuredSelection selection = getStructuredSelection(collection);
+			IResource[] resources = SelectionUtils
+					.getSelectedResources(selection);
+			Repository repository = getRepositoryOfResources(resources);
+			if (repository == null
+					|| !testRepositoryProperties(repository, args)) {
+				return false;
+			}
+			IndexDiffCacheEntry indexDiff = IndexDiffCache.getInstance()
+					.getIndexDiffCacheEntry(repository);
+			if (indexDiff == null) {
+				return false;
+			}
+			IndexDiffData data = indexDiff.getIndexDiff();
+			if (data == null) {
+				return false;
+			}
+			Set<String> conflicts = data.getConflicting();
+			if (conflicts.isEmpty()) {
+				return false;
+			}
+			for (IResource rsc : resources) {
+				IFile file = Adapters.adapt(rsc, IFile.class);
+				if (file == null) {
+					return false;
+				}
+				IPath location = file.getLocation();
+				if (location == null) {
+					return false;
+				}
+				IPath relativePath = ResourceUtil
+						.getRepositoryRelativePath(location, repository);
+				if (relativePath == null || relativePath.isEmpty()) {
+					return false;
+				}
+				if (!conflicts.contains(relativePath.toString())) {
+					return false;
+				}
+			}
+			return true;
 
 		} else if ("fileOrFolderInRepository".equals(property)) { //$NON-NLS-1$
 			if (collection.size() != 1)

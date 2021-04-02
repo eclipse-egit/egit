@@ -75,6 +75,39 @@ public class RevUtils {
 	}
 
 	/**
+	 * Get the 'theirs' commit in a conflict state.
+	 *
+	 * @param repository
+	 *            to get the commits from
+	 * @return the commit
+	 * @throws IOException
+	 *             if the commit cannot be determined
+	 */
+	public static RevCommit getTheirs(Repository repository)
+			throws IOException {
+		try (RevWalk walk = new RevWalk(repository)) {
+			RepositoryState state = repository.getRepositoryState();
+			if (state == RepositoryState.REBASING
+					|| state == RepositoryState.CHERRY_PICKING) {
+				ObjectId cherryPickHead = repository.readCherryPickHead();
+				if (cherryPickHead != null) {
+					RevCommit cherryPickCommit = walk
+							.parseCommit(cherryPickHead);
+					return cherryPickCommit;
+				}
+			} else if (state == RepositoryState.MERGING) {
+				List<ObjectId> mergeHeads = repository.readMergeHeads();
+				Assert.isNotNull(mergeHeads);
+				if (mergeHeads.size() == 1) {
+					ObjectId mergeHead = mergeHeads.get(0);
+					return walk.parseCommit(mergeHead);
+				}
+			}
+			return null;
+		}
+	}
+
+	/**
 	 * @param repository
 	 * @param path
 	 *            repository-relative path of file with conflicts
