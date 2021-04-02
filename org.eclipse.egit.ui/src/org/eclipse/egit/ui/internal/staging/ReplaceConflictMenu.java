@@ -15,32 +15,16 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
-import org.eclipse.core.resources.IWorkspace;
-import org.eclipse.core.resources.IWorkspaceRunnable;
-import org.eclipse.core.resources.ResourcesPlugin;
-import org.eclipse.core.runtime.CoreException;
-import org.eclipse.core.runtime.IProgressMonitor;
-import org.eclipse.core.runtime.jobs.ISchedulingRule;
-import org.eclipse.egit.core.EclipseGitProgressTransformer;
 import org.eclipse.egit.core.RevUtils;
 import org.eclipse.egit.core.RevUtils.ConflictCommits;
 import org.eclipse.egit.core.internal.Utils;
-import org.eclipse.egit.core.internal.job.JobUtil;
-import org.eclipse.egit.core.internal.job.RuleUtil;
-import org.eclipse.egit.core.internal.util.ResourceUtil;
-import org.eclipse.egit.core.op.DiscardChangesOperation;
 import org.eclipse.egit.core.op.DiscardChangesOperation.Stage;
-import org.eclipse.egit.core.op.IEGitOperation;
 import org.eclipse.egit.ui.Activator;
-import org.eclipse.egit.ui.JobFamilies;
 import org.eclipse.egit.ui.internal.UIText;
+import org.eclipse.egit.ui.internal.actions.ReplaceConflictActionHandler;
 import org.eclipse.jface.action.Action;
 import org.eclipse.jface.action.ActionContributionItem;
 import org.eclipse.jface.action.IContributionItem;
-import org.eclipse.jgit.api.CheckoutCommand;
-import org.eclipse.jgit.api.Git;
-import org.eclipse.jgit.api.RmCommand;
-import org.eclipse.jgit.api.errors.GitAPIException;
 import org.eclipse.jgit.lib.IndexDiff.StageState;
 import org.eclipse.jgit.lib.Repository;
 import org.eclipse.jgit.revwalk.RevCommit;
@@ -187,71 +171,8 @@ public class ReplaceConflictMenu extends CompoundContributionItem {
 					toCheckout.add(entry.getPath());
 				}
 			}
-			if (toRemove.isEmpty()) {
-				DiscardChangesOperation operation = new DiscardChangesOperation(
-						repository, toCheckout);
-				operation.setStage(stage);
-				JobUtil.scheduleUserWorkspaceJob(operation,
-						UIText.DiscardChangesAction_discardChanges,
-						JobFamilies.DISCARD_CHANGES);
-			} else {
-				IEGitOperation operation = new IEGitOperation() {
-
-					@Override
-					public ISchedulingRule getSchedulingRule() {
-						return RuleUtil.getRule(repository);
-					}
-
-					@Override
-					public void execute(IProgressMonitor monitor)
-							throws CoreException {
-						IWorkspaceRunnable action = new IWorkspaceRunnable() {
-
-							@Override
-							public void run(IProgressMonitor progress)
-									throws CoreException {
-								ResourceUtil.saveLocalHistory(repository);
-								try (Git git = new Git(repository)) {
-									if (!toCheckout.isEmpty()) {
-										CheckoutCommand checkout = git
-												.checkout().setProgressMonitor(
-														new EclipseGitProgressTransformer(
-																progress));
-
-										checkout
-												.setStage(stage == Stage.OURS
-														? CheckoutCommand.Stage.OURS
-														: CheckoutCommand.Stage.THEIRS);
-										for (String path : toCheckout) {
-											checkout.addPath(path);
-										}
-										checkout.call();
-									}
-									if (!toRemove.isEmpty()) {
-										RmCommand rm = git.rm();
-										for (String path : toRemove) {
-											rm.addFilepattern(path);
-										}
-										rm.call();
-									}
-								} catch (GitAPIException e) {
-									throw new CoreException(
-											Activator.createErrorStatus(
-													e.getLocalizedMessage(),
-													e));
-								}
-							}
-						};
-						ResourcesPlugin.getWorkspace().run(action,
-								getSchedulingRule(), IWorkspace.AVOID_UPDATE,
-								monitor);
-					}
-				};
-				JobUtil.scheduleUserWorkspaceJob(operation,
-						UIText.DiscardChangesAction_discardChanges,
-						JobFamilies.DISCARD_CHANGES);
-
-			}
+			ReplaceConflictActionHandler.replaceWithStage(repository, stage,
+					toCheckout, toRemove);
 		}
 	}
 }

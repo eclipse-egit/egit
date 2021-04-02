@@ -2377,6 +2377,24 @@
          </activeWhen>
       </handler>
       <handler
+            commandId="org.eclipse.egit.ui.team.ReplaceWithOurs">
+         <class
+               class="org.eclipse.egit.ui.internal.actions.ReplaceWithOursActionHandler">
+         </class>
+         <activeWhen>
+            <test property="GitSelection.conflictsInSingleRepository" />
+         </activeWhen>
+      </handler>
+      <handler
+            commandId="org.eclipse.egit.ui.team.ReplaceWithTheirs">
+         <class
+               class="org.eclipse.egit.ui.internal.actions.ReplaceWithTheirsActionHandler">
+         </class>
+         <activeWhen>
+            <test property="GitSelection.conflictsInSingleRepository" />
+         </activeWhen>
+      </handler>
+      <handler
             commandId="org.eclipse.egit.ui.RepositoriesViewImportProjects">
          <class
                class="org.eclipse.egit.ui.internal.repository.tree.command.ImportProjectsCommand">
@@ -6129,6 +6147,18 @@
                </and>
             </visibleWhen>
          </command>
+         <command
+               commandId="org.eclipse.egit.ui.team.ReplaceWithOurs"
+               label="%ReplaceWithOursAction_label"
+               style="push">
+            <visibleWhen checkEnabled="true" />
+         </command>
+         <command
+               commandId="org.eclipse.egit.ui.team.ReplaceWithTheirs"
+               label="%ReplaceWithTheirsAction_label"
+               style="push">
+            <visibleWhen checkEnabled="true" />
+         </command>
       </menuContribution>
       <menuContribution
             allPopups="false"
@@ -6796,7 +6826,7 @@
             class="org.eclipse.egit.ui.internal.selection.SelectionPropertyTester"
             id="org.eclipse.egit.ui.SelectionTester"
             namespace="GitSelection"
-            properties="projectsSingleRepository,projectsWithRepositories,resourcesSingleRepository,resourcesMultipleRepositories,fileOrFolderInRepository,resourcesAllInRepository,selectionSingleRepository,selectionMultipleRepositories"
+            properties="conflictsInSingleRepository,projectsSingleRepository,projectsWithRepositories,resourcesSingleRepository,resourcesMultipleRepositories,fileOrFolderInRepository,resourcesAllInRepository,selectionSingleRepository,selectionMultipleRepositories"
             type="java.util.Collection">
       </propertyTester>
       <propertyTester
@@ -7007,6 +7037,16 @@
             categoryId="org.eclipse.egit.ui.commandCategory"
             id="org.eclipse.egit.ui.team.ReplaceWithPrevious"
             name="%ReplaceWithPreviousCommand.name">
+      </command>
+      <command
+            categoryId="org.eclipse.egit.ui.commandCategory"
+            id="org.eclipse.egit.ui.team.ReplaceWithOurs"
+            name="%ReplaceWithOursCommand.name">
+      </command>
+      <command
+            categoryId="org.eclipse.egit.ui.commandCategory"
+            id="org.eclipse.egit.ui.team.ReplaceWithTheirs"
+            name="%ReplaceWithTheirsCommand.name">
       </command>
       <command
             categoryId="org.eclipse.egit.ui.commandCategory"
