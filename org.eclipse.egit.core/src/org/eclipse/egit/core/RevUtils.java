@@ -11,19 +11,24 @@
  *******************************************************************************/
 package org.eclipse.egit.core;
 
+import java.io.File;
 import java.io.IOException;
+import java.text.MessageFormat;
 import java.util.Collection;
-import java.util.List;
 
 import org.eclipse.core.runtime.Assert;
+import org.eclipse.egit.core.internal.CoreText;
+import org.eclipse.jgit.api.RebaseCommand;
 import org.eclipse.jgit.lib.AnyObjectId;
+import org.eclipse.jgit.lib.Constants;
 import org.eclipse.jgit.lib.ObjectId;
 import org.eclipse.jgit.lib.Ref;
 import org.eclipse.jgit.lib.Repository;
-import org.eclipse.jgit.lib.RepositoryState;
 import org.eclipse.jgit.revwalk.RevCommit;
 import org.eclipse.jgit.revwalk.RevWalk;
 import org.eclipse.jgit.revwalk.filter.RevFilter;
+import org.eclipse.jgit.util.IO;
+import org.eclipse.jgit.util.RawParseUtils;
 
 /**
  * Utility class for obtaining Rev object instances.
@@ -82,25 +87,60 @@ public class RevUtils {
 	public static RevCommit getTheirs(Repository repository)
 			throws IOException {
 		try (RevWalk walk = new RevWalk(repository)) {
-			RepositoryState state = repository.getRepositoryState();
-			if (state == RepositoryState.REBASING
-					|| state == RepositoryState.CHERRY_PICKING) {
-				ObjectId cherryPickHead = repository.readCherryPickHead();
-				if (cherryPickHead != null) {
-					RevCommit cherryPickCommit = walk
-							.parseCommit(cherryPickHead);
-					return cherryPickCommit;
-				}
-			} else if (state == RepositoryState.MERGING) {
-				List<ObjectId> mergeHeads = repository.readMergeHeads();
-				Assert.isNotNull(mergeHeads);
-				if (mergeHeads.size() == 1) {
-					ObjectId mergeHead = mergeHeads.get(0);
-					return walk.parseCommit(mergeHead);
-				}
-			}
-			return null;
+			return getTheirs(repository, walk);
 		}
+	}
+
+	/**
+	 * Get the 'theirs' commit in a conflict state.
+	 *
+	 * @param repository
+	 *            to get the commits from
+	 * @param walk
+	 *            to use for parsing commits
+	 * @return the commit
+	 * @throws IOException
+	 *             if the commit cannot be determined
+	 */
+	public static RevCommit getTheirs(Repository repository, RevWalk walk)
+			throws IOException {
+		String target;
+		switch (repository.getRepositoryState()) {
+		case MERGING:
+			target = Constants.MERGE_HEAD;
+			break;
+		case CHERRY_PICKING:
+			target = Constants.CHERRY_PICK_HEAD;
+			break;
+		case REBASING_INTERACTIVE:
+			target = readFile(repository.getDirectory(),
+					RebaseCommand.REBASE_MERGE + File.separatorChar
+							+ RebaseCommand.STOPPED_SHA);
+			break;
+		case REVERTING:
+			target = Constants.REVERT_HEAD;
+			break;
+		default:
+			target = Constants.ORIG_HEAD;
+			break;
+		}
+		ObjectId theirs = repository.resolve(target);
+		if (theirs == null) {
+			throw new IOException(MessageFormat.format(
+					CoreText.ValidationUtils_CanNotResolveRefMessage, target));
+		}
+		return walk.parseCommit(theirs);
+	}
+
+	private static String readFile(File directory, String fileName)
+			throws IOException {
+		byte[] content = IO.readFully(new File(directory, fileName));
+		// strip off the last LF
+		int end = content.length;
+		while (0 < end && content[end - 1] == '\n') {
+			end--;
+		}
+		return RawParseUtils.decode(content, 0, end);
 	}
 
 	/**
