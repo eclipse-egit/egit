@@ -22,9 +22,9 @@ import java.util.concurrent.TimeUnit;
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.egit.core.JobFamilies;
-import org.eclipse.egit.core.internal.Utils;
 import org.eclipse.egit.ui.common.StagingViewTester;
 import org.eclipse.egit.ui.internal.UIText;
+import org.eclipse.egit.ui.internal.actions.ReplaceConflictActionHandler;
 import org.eclipse.egit.ui.internal.staging.StagingEntry;
 import org.eclipse.egit.ui.test.CommitMessageUtil;
 import org.eclipse.egit.ui.test.ContextMenuHelper;
@@ -38,7 +38,6 @@ import org.eclipse.jgit.lib.RepositoryState;
 import org.eclipse.jgit.lib.StoredConfig;
 import org.eclipse.jgit.revwalk.RevCommit;
 import org.eclipse.jgit.util.RawParseUtils;
-import org.eclipse.osgi.util.NLS;
 import org.eclipse.swtbot.eclipse.finder.widgets.SWTBotView;
 import org.eclipse.swtbot.swt.finder.SWTBot;
 import org.eclipse.swtbot.swt.finder.finders.UIThreadRunnable;
@@ -290,7 +289,7 @@ public class StagingViewTest extends AbstractStagingViewTestCase {
 
 		ContextMenuHelper.clickContextMenu(unstagedTree,
 				UIText.StagingView_ReplaceWith,
-				formatCommit(
+				ReplaceConflictActionHandler.formatCommitLabel(
 						UIText.ReplaceWithOursTheirsMenu_TheirsWithCommitLabel,
 						side));
 
@@ -368,7 +367,7 @@ public class StagingViewTest extends AbstractStagingViewTestCase {
 
 		ContextMenuHelper.clickContextMenu(explorer,
 				UIText.StagingView_ReplaceWith,
-				formatCommit(
+				ReplaceConflictActionHandler.formatCommitLabel(
 						UIText.ReplaceWithOursTheirsMenu_TheirsWithCommitLabel,
 						side));
 
@@ -396,11 +395,6 @@ public class StagingViewTest extends AbstractStagingViewTestCase {
 
 		assertEquals(expectedMessage,
 				TestUtil.getHeadCommit(repository).getShortMessage());
-	}
-
-	private static String formatCommit(String format, RevCommit commit) {
-		String message = Utils.shortenText(commit.getShortMessage(), 60);
-		return NLS.bind(format, Utils.getShortObjectId(commit), message);
 	}
 
 	private StagingViewTester commitOneFileChange(String fileContent)

@@ -205,7 +205,7 @@ public abstract class ReplaceConflictActionHandler
 			RevCommit commit = SelectionRepositoryStateCache.INSTANCE
 					.getHeadCommit(repository);
 			if (commit != null) {
-				element.setText(formatCommit(
+				element.setText(formatCommitLabel(
 						UIText.ReplaceWithOursTheirsMenu_OursWithCommitLabel,
 						commit));
 			}
@@ -213,7 +213,7 @@ public abstract class ReplaceConflictActionHandler
 			try {
 				RevCommit commit = RevUtils.getTheirs(repository);
 				if (commit != null) {
-					element.setText(formatCommit(
+					element.setText(formatCommitLabel(
 							UIText.ReplaceWithOursTheirsMenu_TheirsWithCommitLabel,
 							commit));
 				}
@@ -223,7 +223,17 @@ public abstract class ReplaceConflictActionHandler
 		}
 	}
 
-	private static String formatCommit(String format, RevCommit commit) {
+	/**
+	 * Format a label with commit data. It is assumed that the {@code format}
+	 * string has two placeholders for the commit message and the commit ID.
+	 *
+	 * @param format
+	 *            to use
+	 * @param commit
+	 *            to fill in
+	 * @return the formatted label
+	 */
+	public static String formatCommitLabel(String format, RevCommit commit) {
 		String message = Utils.shortenText(commit.getShortMessage(), 60);
 		return MessageFormat.format(format, Utils.getShortObjectId(commit),
 				message);
