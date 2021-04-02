@@ -16,19 +16,17 @@ import java.util.Collection;
 import java.util.List;
 
 import org.eclipse.egit.core.RevUtils;
-import org.eclipse.egit.core.RevUtils.ConflictCommits;
-import org.eclipse.egit.core.internal.Utils;
 import org.eclipse.egit.core.op.DiscardChangesOperation.Stage;
 import org.eclipse.egit.ui.Activator;
 import org.eclipse.egit.ui.internal.UIText;
 import org.eclipse.egit.ui.internal.actions.ReplaceConflictActionHandler;
+import org.eclipse.egit.ui.internal.selection.SelectionRepositoryStateCache;
 import org.eclipse.jface.action.Action;
 import org.eclipse.jface.action.ActionContributionItem;
 import org.eclipse.jface.action.IContributionItem;
 import org.eclipse.jgit.lib.IndexDiff.StageState;
 import org.eclipse.jgit.lib.Repository;
 import org.eclipse.jgit.revwalk.RevCommit;
-import org.eclipse.osgi.util.NLS;
 import org.eclipse.ui.actions.CompoundContributionItem;
 
 /**
@@ -62,66 +60,35 @@ public class ReplaceConflictMenu extends CompoundContributionItem {
 			return new IContributionItem[0];
 		}
 		List<IContributionItem> items = new ArrayList<>();
-		if (entries.size() == 1) {
-			items.addAll(createSpecificOursTheirsItems(repo, entries));
+		// Ours is HEAD
+		RevCommit ours = SelectionRepositoryStateCache.INSTANCE
+				.getHeadCommit(repo);
+		if (ours != null) {
+			items.add(createOursItem(ReplaceConflictActionHandler.formatCommitLabel(
+					UIText.ReplaceWithOursTheirsMenu_OursWithCommitLabel, ours),
+					repo, entries));
 		} else {
-			items.addAll(createUnspecificOursTheirsItems(repo, entries));
+			items.add(createOursItem(
+					UIText.ReplaceWithOursTheirsMenu_OursWithoutCommitLabel,
+					repo, entries));
+		}
+		RevCommit theirs = null;
+		try {
+			theirs = RevUtils.getTheirs(repo);
+		} catch (IOException e) {
+			Activator.logError(e.getLocalizedMessage(), e);
+		}
+		if (theirs != null) {
+			items.add(
+					createTheirsItem(ReplaceConflictActionHandler.formatCommitLabel(
+							UIText.ReplaceWithOursTheirsMenu_TheirsWithCommitLabel,
+							theirs), repo, entries));
+		} else {
+			items.add(createTheirsItem(
+					UIText.ReplaceWithOursTheirsMenu_TheirsWithoutCommitLabel,
+					repo, entries));
 		}
 		return items.toArray(new IContributionItem[0]);
-	}
-
-	private static Collection<IContributionItem> createSpecificOursTheirsItems(
-			Repository repository, Collection<StagingEntry> entries) {
-
-		StagingEntry single = entries.iterator().next();
-		List<IContributionItem> result = new ArrayList<>();
-
-		try {
-			ConflictCommits conflictCommits = RevUtils.getConflictCommits(
-					repository, single.getPath());
-			RevCommit ourCommit = conflictCommits.getOurCommit();
-			RevCommit theirCommit = conflictCommits.getTheirCommit();
-
-			if (ourCommit != null)
-				result.add(createOursItem(
-						formatCommit(
-								UIText.ReplaceWithOursTheirsMenu_OursWithCommitLabel,
-								ourCommit),
-						repository, entries));
-			else
-				result.add(createOursItem(
-						UIText.ReplaceWithOursTheirsMenu_OursWithoutCommitLabel,
-						repository, entries));
-
-			if (theirCommit != null)
-				result.add(createTheirsItem(
-						formatCommit(
-								UIText.ReplaceWithOursTheirsMenu_TheirsWithCommitLabel,
-								theirCommit),
-						repository, entries));
-			else
-				result.add(createTheirsItem(
-						UIText.ReplaceWithOursTheirsMenu_TheirsWithoutCommitLabel,
-						repository, entries));
-
-			return result;
-		} catch (IOException e) {
-			Activator.logError(
-					UIText.ReplaceWithOursTheirsMenu_CalculatingOursTheirsCommitsError, e);
-			return createUnspecificOursTheirsItems(repository, entries);
-		}
-	}
-
-	private static Collection<IContributionItem> createUnspecificOursTheirsItems(
-			Repository repository, Collection<StagingEntry> entries) {
-		List<IContributionItem> result = new ArrayList<>();
-		result.add(createOursItem(
-				UIText.ReplaceWithOursTheirsMenu_OursWithoutCommitLabel,
-				repository, entries));
-		result.add(createTheirsItem(
-				UIText.ReplaceWithOursTheirsMenu_TheirsWithoutCommitLabel,
-				repository, entries));
-		return result;
 	}
 
 	private static IContributionItem createOursItem(String label,
@@ -134,11 +101,6 @@ public class ReplaceConflictMenu extends CompoundContributionItem {
 			Repository repository, Collection<StagingEntry> entries) {
 		return new ActionContributionItem(
 				new ReplaceAction(label, Stage.THEIRS, repository, entries));
-	}
-
-	private static String formatCommit(String format, RevCommit commit) {
-		String message = Utils.shortenText(commit.getShortMessage(), 60);
-		return NLS.bind(format, Utils.getShortObjectId(commit), message);
 	}
 
 	private static class ReplaceAction extends Action {
