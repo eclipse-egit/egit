@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "85190f93_87e0ceb4",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/preferences/GitDecoratorPreferencePage.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 334,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2021-04-09T08:56:50Z",
+      "side": 1,
+      "message": "If you do that, then also make all the subclasses static. You\u0027ll have to pass the IWorkbenchPreferenceContainer to the GeneralTab constructor.\n\nJust making this abstract class static makes no sense. (And anyway, this is only for tabs in a preference page. It doesn\u0027t make any performance difference at all, and won\u0027t save anything except four references to the outer instance...)",
+      "revId": "c167f7b76189d2ba2b55321b8b9c67e7be93d5b5",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": true
+    }
+  ]
+}
