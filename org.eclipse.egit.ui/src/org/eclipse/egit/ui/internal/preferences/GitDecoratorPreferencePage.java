@@ -331,7 +331,7 @@ public class GitDecoratorPreferencePage extends PreferencePage implements
 	 * When controls in the tab change it will emit update() to any registered
 	 * observers. This is currently used for updating the decoration preview.
 	 */
-	private abstract class Tab extends Observable {
+	private abstract static class Tab extends Observable {
 		public abstract void initializeValues(IPreferenceStore store);
 
 		public abstract void performDefaults(IPreferenceStore store);
