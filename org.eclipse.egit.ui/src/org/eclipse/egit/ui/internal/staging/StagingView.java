@@ -273,6 +273,8 @@ public class StagingView extends ViewPart
 	private static final String STORE_SORT_STATE = SORT_ITEM_TOOLBAR_ID
 			+ "State"; //$NON-NLS-1$
 
+	private static final String MAIN_SASH_FORM_ORIENTATION_VERTICAL = "MAIN_SASH_FORM_ORIENTATION_VERTICAL"; //$NON-NLS-1$
+
 	private static final String HORIZONTAL_SASH_FORM_WEIGHT = "HORIZONTAL_SASH_FORM_WEIGHT"; //$NON-NLS-1$
 
 	private static final String STAGING_SASH_FORM_WEIGHT = "STAGING_SASH_FORM_WEIGHT"; //$NON-NLS-1$
@@ -811,7 +813,8 @@ public class StagingView extends ViewPart
 		toolkit.decorateFormHeading(form);
 		GridLayoutFactory.swtDefaults().applyTo(form.getBody());
 
-		mainSashForm = new SashForm(form.getBody(), SWT.HORIZONTAL);
+		mainSashForm = new SashForm(form.getBody(), getMainSashFormOrientation());
+		saveSashFormOrientationOnDisposal(mainSashForm, MAIN_SASH_FORM_ORIENTATION_VERTICAL);
 		saveSashFormWeightsOnDisposal(mainSashForm,
 				HORIZONTAL_SASH_FORM_WEIGHT);
 		toolkit.adapt(mainSashForm, true, true);
@@ -1460,6 +1463,17 @@ public class StagingView extends ViewPart
 		});
 	}
 
+	private void saveSashFormOrientationOnDisposal(final SashForm sashForm,
+			final String verticalOrientationSettingsKey) {
+		sashForm.addDisposeListener(new DisposeListener() {
+			@Override
+			public void widgetDisposed(DisposeEvent e) {
+				getDialogSettings().put(verticalOrientationSettingsKey,
+						sashForm.getOrientation() == SWT.VERTICAL);
+			}
+		});
+	}
+
 	private IDialogSettings getDialogSettings() {
 		return DialogSettings.getOrCreateSection(
 				Activator.getDefault().getDialogSettings(),
@@ -1781,6 +1795,14 @@ public class StagingView extends ViewPart
 			return SWT.HORIZONTAL;
 		else
 			return SWT.VERTICAL;
+	}
+
+
+	private int getMainSashFormOrientation() {
+		IDialogSettings settings = getDialogSettings();
+		return settings.getBoolean(MAIN_SASH_FORM_ORIENTATION_VERTICAL)
+				? SWT.VERTICAL
+				: SWT.HORIZONTAL;
 	}
 
 	private void enableAllWidgets(boolean enabled) {
