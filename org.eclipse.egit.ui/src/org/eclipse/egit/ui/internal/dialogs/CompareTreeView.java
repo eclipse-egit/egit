@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2011, 2019 SAP AG and others.
+ * Copyright (c) 2011, 2021 SAP AG and others.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License 2.0
@@ -636,12 +636,11 @@ public class CompareTreeView extends ViewPart implements IMenuListener, IShowInS
 				if (baseVersionIterator != null) {
 					if (baseCommit == null) {
 						if (file != null)
-							left = new WorkspaceFileRevision(file);
+							left = new WorkspaceFileRevision(getRepository(),
+									repoRelativePath, file);
 						else {
-							IPath path = getRepositoryPath().append(
+							left = new WorkingTreeFileRevision(getRepository(),
 									repoRelativePath);
-							left = new WorkingTreeFileRevision(
-									path.toFile());
 						}
 					} else {
 						metadata = new CheckoutMetadata(

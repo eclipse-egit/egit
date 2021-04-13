@@ -1,7 +1,7 @@
 /*******************************************************************************
  * Copyright (C) 2008, Robin Rosenberg <robin.rosenberg@dewire.com>
  * Copyright (C) 2008, Shawn O. Pearce <spearce@spearce.org>
- * Copyright (C) 2017, Thomas Wolf <thomas.wolf@paranor.ch>
+ * Copyright (C) 2017, 2021 Thomas Wolf <thomas.wolf@paranor.ch> and others
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License 2.0
@@ -16,6 +16,7 @@ import java.io.IOException;
 import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Objects;
 
 import org.eclipse.core.resources.IStorage;
 import org.eclipse.core.runtime.CoreException;
@@ -44,13 +45,10 @@ import org.eclipse.team.core.history.ITag;
  */
 public class CommitFileRevision extends GitFileRevision implements
 		OpenWorkspaceVersionEnabled {
-	private final Repository db;
 
 	private final RevCommit commit;
 
 	private final PersonIdent author;
-
-	private final String path;
 
 	private ObjectId blobId;
 
@@ -63,23 +61,11 @@ public class CommitFileRevision extends GitFileRevision implements
 
 	CommitFileRevision(final Repository repo, final RevCommit rc,
 			final String path, final ObjectId blob, CheckoutMetadata metadata) {
-		super(path);
-		db = repo;
+		super(repo, path);
 		commit = rc;
 		author = rc.getAuthorIdent();
-		this.path = path;
 		blobId = blob;
 		this.metadata = metadata;
-	}
-
-	@Override
-	public Repository getRepository() {
-		return db;
-	}
-
-	@Override
-	public String getGitPath() {
-		return path;
 	}
 
 	@Override
@@ -88,7 +74,9 @@ public class CommitFileRevision extends GitFileRevision implements
 		if (blobId == null) {
 			locateBlobObjectId();
 		}
-		return new CommitBlobStorage(db, path, blobId, commit, metadata);
+		return new CommitBlobStorage(getRepository(), getGitPath(), blobId,
+				commit,
+				metadata);
 	}
 
 	@Override
@@ -98,7 +86,7 @@ public class CommitFileRevision extends GitFileRevision implements
 
 	@Override
 	public String getContentIdentifier() {
-		return commit.getId().name();
+		return commit.name();
 	}
 
 	@Override
@@ -113,11 +101,12 @@ public class CommitFileRevision extends GitFileRevision implements
 
 	@Override
 	public String toString() {
-		return commit.getId() + ":" + path;  //$NON-NLS-1$
+		return commit.name() + ':' + getGitPath();
 	}
 
 	@Override
 	public ITag[] getTags() {
+		Repository db = getRepository();
 		final Collection<GitTag> ret = new ArrayList<>();
 		RefDatabase refs = db.getRefDatabase();
 		try {
@@ -150,11 +139,12 @@ public class CommitFileRevision extends GitFileRevision implements
 	}
 
 	private void locateBlobObjectId() throws CoreException {
-		try (TreeWalk w = TreeWalk.forPath(db, path, commit.getTree())) {
+		try (TreeWalk w = TreeWalk.forPath(getRepository(), getGitPath(),
+				commit.getTree())) {
 			if (w == null)
 				throw new CoreException(Activator.error(NLS.bind(
-						CoreText.CommitFileRevision_pathNotIn, commit.getId().name(),
-						path), null));
+						CoreText.CommitFileRevision_pathNotIn, commit.name(),
+						getGitPath()), null));
 			blobId = w.getObjectId(0);
 			final EolStreamType eolStreamType = w
 					.getEolStreamType(TreeWalk.OperationType.CHECKOUT_OP);
@@ -163,57 +153,27 @@ public class CommitFileRevision extends GitFileRevision implements
 			metadata = new CheckoutMetadata(eolStreamType, filterCommand);
 		} catch (IOException e) {
 			throw new CoreException(Activator.error(NLS.bind(
-					CoreText.CommitFileRevision_errorLookingUpPath, commit
-							.getId().name(), path), e));
+					CoreText.CommitFileRevision_errorLookingUpPath,
+					commit.name(), getGitPath()), e));
 		}
 	}
 
 	@Override
 	public int hashCode() {
-		final int prime = 31;
-		int result = 1;
-		result = prime * result + ((author == null) ? 0 : author.hashCode());
-		result = prime * result + ((blobId == null) ? 0 : blobId.hashCode());
-		result = prime * result + ((commit == null) ? 0 : commit.hashCode());
-		result = prime * result + ((db == null) ? 0 : db.hashCode());
-		result = prime * result + ((path == null) ? 0 : path.hashCode());
-		return result;
+		return Objects.hash(commit, getRepository(), getGitPath());
 	}
 
 	@Override
 	public boolean equals(Object obj) {
-		if (this == obj)
+		if (this == obj) {
 			return true;
-		if (obj == null)
+		}
+		if (obj == null || getClass() != obj.getClass()) {
 			return false;
-		if (getClass() != obj.getClass())
-			return false;
+		}
 		CommitFileRevision other = (CommitFileRevision) obj;
-		if (author == null) {
-			if (other.author != null)
-				return false;
-		} else if (!author.equals(other.author))
-			return false;
-		if (blobId == null) {
-			if (other.blobId != null)
-				return false;
-		} else if (!blobId.equals(other.blobId))
-			return false;
-		if (commit == null) {
-			if (other.commit != null)
-				return false;
-		} else if (!commit.equals(other.commit))
-			return false;
-		if (db == null) {
-			if (other.db != null)
-				return false;
-		} else if (!db.equals(other.db))
-			return false;
-		if (path == null) {
-			if (other.path != null)
-				return false;
-		} else if (!path.equals(other.path))
-			return false;
-		return true;
+		return Objects.equals(commit, other.commit)
+				&& Objects.equals(getRepository(), other.getRepository())
+				&& Objects.equals(getGitPath(), other.getGitPath());
 	}
 }
