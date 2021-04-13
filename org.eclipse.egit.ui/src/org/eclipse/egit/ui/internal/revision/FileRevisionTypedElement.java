@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2006, 2015 IBM Corporation and others.
+ * Copyright (c) 2006, 2021 IBM Corporation and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License 2.0
  * which accompanies this distribution, and is available at
@@ -23,7 +23,6 @@ import org.eclipse.core.runtime.Assert;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.egit.ui.internal.PreferenceBasedDateFormatter;
-import org.eclipse.jgit.lib.Repository;
 import org.eclipse.team.core.history.IFileRevision;
 import org.eclipse.ui.IEditorInput;
 
@@ -62,8 +61,9 @@ public class FileRevisionTypedElement extends StorageTypedElement {
 		if (result != null && adapter.isInstance(result)) {
 			return adapter.cast(result);
 		}
-		if (adapter == Repository.class) {
-			return Adapters.adapt(fileRevision, adapter);
+		result = Adapters.adapt(fileRevision, adapter);
+		if (result != null && adapter.isInstance(result)) {
+			return adapter.cast(result);
 		}
 		return null;
 	}
