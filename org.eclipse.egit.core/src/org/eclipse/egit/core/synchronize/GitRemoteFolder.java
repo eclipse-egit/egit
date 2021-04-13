@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (C) 2011, 2017 Dariusz Luksza <dariusz@luksza.org> and others.
+ * Copyright (C) 2011, 2021 Dariusz Luksza <dariusz@luksza.org> and others.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License 2.0
@@ -26,7 +26,6 @@ import org.eclipse.team.core.variants.IResourceVariant;
 class GitRemoteFolder extends GitRemoteResource {
 
 	private final GitSyncObjectCache cachedData;
-	private final Repository repo;
 
 	/**
 	 *
@@ -40,8 +39,7 @@ class GitRemoteFolder extends GitRemoteResource {
 	 */
 	GitRemoteFolder(Repository repo, GitSyncObjectCache cachedData,
 			RevCommit commitId, ObjectId objectId, String path) {
-		super(commitId, objectId, path);
-		this.repo = repo;
+		super(repo, commitId, objectId, path);
 		this.cachedData = cachedData;
 	}
 
@@ -93,11 +91,11 @@ class GitRemoteFolder extends GitRemoteResource {
 				GitRemoteResource obj;
 				ObjectId id = diffEntry.getRemoteId().toObjectId();
 				if (diffEntry.isTree()) {
-					obj = new GitRemoteFolder(repo, member, getCommitId(), id,
-							memberPath);
+					obj = new GitRemoteFolder(getRepository(), member,
+							getCommitId(), id, memberPath);
 				} else {
-					obj = new GitRemoteFile(repo, getCommitId(), id, memberPath,
-							diffEntry.getMetadata());
+					obj = new GitRemoteFile(getRepository(), getCommitId(), id,
+							memberPath, diffEntry.getMetadata());
 				}
 				result.add(obj);
 				monitor.worked(1);

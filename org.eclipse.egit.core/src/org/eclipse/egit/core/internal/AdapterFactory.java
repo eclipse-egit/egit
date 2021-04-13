@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2018 Thomas Wolf <thomas.wolf@paranor.ch>
+ * Copyright (c) 2018, 2021 Thomas Wolf <thomas.wolf@paranor.ch> and others
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License 2.0
@@ -10,8 +10,12 @@
  *******************************************************************************/
 package org.eclipse.egit.core.internal;
 
+import org.eclipse.core.resources.IResource;
 import org.eclipse.core.runtime.IAdapterFactory;
+import org.eclipse.egit.core.info.GitInfo;
 import org.eclipse.egit.core.internal.storage.GitFileRevision;
+import org.eclipse.egit.core.project.RepositoryMapping;
+import org.eclipse.jgit.annotations.NonNull;
 import org.eclipse.jgit.lib.Repository;
 
 /**
@@ -26,12 +30,41 @@ public class AdapterFactory implements IAdapterFactory {
 				return adapterType.cast(
 						((GitFileRevision) adaptableObject).getRepository());
 			}
+		} else if (adapterType == GitInfo.class) {
+			if (adaptableObject instanceof IResource) {
+				return adapterType
+						.cast(new GitAccessor((IResource) adaptableObject));
+			}
 		}
 		return null;
 	}
 
 	@Override
 	public Class<?>[] getAdapterList() {
-		return new Class<?>[] { Repository.class };
+		return new Class<?>[] { Repository.class, GitInfo.class };
+	}
+
+	private static class GitAccessor implements GitInfo {
+
+		@NonNull
+		private final IResource resource;
+
+		GitAccessor(@NonNull IResource resource) {
+			this.resource = resource;
+		}
+
+		@Override
+		public Repository getRepository() {
+			RepositoryMapping mapping = RepositoryMapping.getMapping(resource);
+			return mapping != null ? mapping.getRepository() : null;
+		}
+
+		@Override
+		public String getGitPath() {
+			RepositoryMapping mapping = RepositoryMapping.getMapping(resource);
+			return mapping != null ? mapping.getRepoRelativePath(resource)
+					: null;
+		}
+
 	}
 }

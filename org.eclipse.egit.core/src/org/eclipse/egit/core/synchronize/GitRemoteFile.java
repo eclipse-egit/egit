@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (C) 2011, 2017 Dariusz Luksza <dariusz@luksza.org> and others.
+ * Copyright (C) 2011, 2021 Dariusz Luksza <dariusz@luksza.org> and others.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License 2.0
@@ -24,14 +24,11 @@ import org.eclipse.team.core.TeamException;
 
 class GitRemoteFile extends GitRemoteResource {
 
-	private final Repository repo;
-
 	private final CheckoutMetadata metadata;
 
 	GitRemoteFile(Repository repo, RevCommit commitId, ObjectId objectId,
 			String path, CheckoutMetadata metadata) {
-		super(commitId, objectId, path);
-		this.repo = repo;
+		super(repo, commitId, objectId, path);
 		this.metadata = metadata;
 	}
 
@@ -68,8 +65,8 @@ class GitRemoteFile extends GitRemoteResource {
 
 	@Override
 	public IStorage getStorage(IProgressMonitor monitor) throws TeamException {
-		return new CommitBlobStorage(repo, getCachePath(), getObjectId(),
-				getCommitId(), metadata);
+		return new CommitBlobStorage(getRepository(), getCachePath(),
+				getObjectId(), getCommitId(), metadata);
 	}
 
 	@Override

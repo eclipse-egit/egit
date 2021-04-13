@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2010, 2017 SAP AG and others.
+ * Copyright (c) 2010, 2021 SAP AG and others.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License 2.0
@@ -20,7 +20,6 @@
 package org.eclipse.egit.ui.internal;
 
 import java.io.ByteArrayInputStream;
-import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.nio.ByteBuffer;
@@ -416,7 +415,8 @@ public class CompareUtils {
 		if (base == null)
 			return;
 
-		IFileRevision nextFile = new WorkspaceFileRevision(file);
+		IFileRevision nextFile = new WorkspaceFileRevision(repository, path,
+				file);
 		String encoding = null;
 		try {
 			encoding = file.getCharset();
@@ -905,8 +905,7 @@ public class CompareUtils {
 		if (base == null)
 			return;
 		IFileRevision nextFile;
-		nextFile = new WorkingTreeFileRevision(new File(
-				repository.getWorkTree(), path));
+		nextFile = new WorkingTreeFileRevision(repository, path);
 		String encoding = ResourcesPlugin.getEncoding();
 		ITypedElement next = new FileRevisionTypedElement(nextFile, encoding);
 		GitCompareFileRevisionEditorInput input = new GitCompareFileRevisionEditorInput(
