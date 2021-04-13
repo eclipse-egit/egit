@@ -3,6 +3,7 @@
  * Copyright (C) 2008, Shawn O. Pearce <spearce@spearce.org>
  * Copyright (C) 2013, Laurent Goubet <laurent.goubet@obeo.fr>
  * Copyright (C) 2015, IBM Corporation (Dani Megert <daniel_megert@ch.ibm.com>)
+ * Copyright (C) 2021, Thomas Wolf <thomas.wolf@paranor.ch> and others
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License 2.0
@@ -249,15 +250,17 @@ class GitFileHistory extends FileHistory implements IAdaptable {
 	@Override
 	public IFileRevision getFileRevision(final String id) {
 		if (id == null || id.isEmpty()
-				|| GitFileRevision.WORKSPACE.equals(id))
-			return new WorkspaceFileRevision(resource);
-		if (GitFileRevision.INDEX.equals(id))
+				|| GitFileRevision.WORKSPACE.equals(id)) {
+			return WorkspaceFileRevision.forFile(db, resource);
+		}
+		if (GitFileRevision.INDEX.equals(id)) {
 			return new IndexFileRevision(db, gitPath);
-
+		}
 		// Only return a revision if it was matched by this filtered history
 		for (IFileRevision r : revisions) {
-			if (r.getContentIdentifier().equals(id))
+			if (r.getContentIdentifier().equals(id)) {
 				return r;
+			}
 		}
 		return null;
 	}
