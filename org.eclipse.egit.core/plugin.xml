@@ -39,6 +39,11 @@
           class="org.eclipse.egit.core.internal.AdapterFactory">
        <adapter type="org.eclipse.jgit.lib.Repository"/>
     </factory>
+    <factory
+          adaptableType="org.eclipse.core.resources.IResource"
+          class="org.eclipse.egit.core.internal.AdapterFactory">
+       <adapter type="org.eclipse.egit.core.info.GitInfo"/>
+    </factory>
   </extension>
 
 </plugin>

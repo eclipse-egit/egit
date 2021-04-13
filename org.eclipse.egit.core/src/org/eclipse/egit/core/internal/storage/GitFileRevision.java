@@ -2,7 +2,7 @@
  * Copyright (C) 2006, Robin Rosenberg <robin.rosenberg@dewire.com>
  * Copyright (C) 2008, Shawn O. Pearce <spearce@spearce.org>
  * Copyright (C) 2013, Robin Stocker <robin@nibor.org>
- * Copyright (C) 2017, Thomas Wolf <thomas.wolf@paranor.ch>
+ * Copyright (C) 2017, 2021 Thomas Wolf <thomas.wolf@paranor.ch> and others
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License 2.0
@@ -18,6 +18,7 @@ import java.net.URISyntaxException;
 
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IProgressMonitor;
+import org.eclipse.egit.core.info.GitInfo;
 import org.eclipse.jgit.dircache.DirCacheCheckout.CheckoutMetadata;
 import org.eclipse.jgit.dircache.DirCacheEntry;
 import org.eclipse.jgit.lib.ObjectId;
@@ -30,7 +31,8 @@ import org.eclipse.team.core.history.provider.FileRevision;
  * A Git related {@link IFileRevision}. It references a version and a resource,
  * i.e. the version we think corresponds to the resource in specific version.
  */
-public abstract class GitFileRevision extends FileRevision {
+public abstract class GitFileRevision extends FileRevision implements GitInfo {
+
 	/** Content identifier for the working copy. */
 	public static final String WORKSPACE = "Workspace";  //$NON-NLS-1$
 
@@ -91,10 +93,28 @@ public abstract class GitFileRevision extends FileRevision {
 		return new IndexFileRevision(db, path, stage);
 	}
 
+	private final Repository repository;
+
 	private final String path;
 
-	GitFileRevision(final String path) {
+	GitFileRevision(Repository repository, String path) {
+		this.repository = repository;
 		this.path = path;
+	}
+
+	@Override
+	public final String getGitPath() {
+		return path;
+	}
+
+	/**
+	 * Retrieves the {@link Repository} this file revision comes from.
+	 *
+	 * @return the {@link Repository}
+	 */
+	@Override
+	public final Repository getRepository() {
+		return repository;
 	}
 
 	@Override
@@ -113,13 +133,6 @@ public abstract class GitFileRevision extends FileRevision {
 			throws CoreException {
 		return this;
 	}
-
-	/**
-	 * Retrieves the {@link Repository} this file revision comes from.
-	 *
-	 * @return the {@link Repository}
-	 */
-	public abstract Repository getRepository();
 
 	@Override
 	public URI getURI() {
