@@ -10,7 +10,6 @@
  *******************************************************************************/
 package org.eclipse.egit.core.info;
 
-import org.eclipse.jgit.annotations.NonNull;
 import org.eclipse.jgit.lib.IndexDiff.StageState;
 
 /**
@@ -73,9 +72,8 @@ public interface GitItemState {
 	/**
 	 * Returns the {@link StagingState} of the resource.
 	 *
-	 * @return the state of the resource
+	 * @return the state of the resource; never {@code null}
 	 */
-	@NonNull
 	StagingState getStagingState();
 
 	/**

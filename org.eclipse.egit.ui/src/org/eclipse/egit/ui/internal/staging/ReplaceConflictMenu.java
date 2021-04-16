@@ -15,8 +15,8 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
-import org.eclipse.egit.core.RevUtils;
 import org.eclipse.egit.core.op.DiscardChangesOperation.Stage;
+import org.eclipse.egit.core.util.RevCommitUtils;
 import org.eclipse.egit.ui.Activator;
 import org.eclipse.egit.ui.internal.UIText;
 import org.eclipse.egit.ui.internal.actions.ReplaceConflictActionHandler;
@@ -74,7 +74,7 @@ public class ReplaceConflictMenu extends CompoundContributionItem {
 		}
 		RevCommit theirs = null;
 		try {
-			theirs = RevUtils.getTheirs(repo);
+			theirs = RevCommitUtils.getTheirs(repo);
 		} catch (IOException e) {
 			Activator.logError(e.getLocalizedMessage(), e);
 		}
