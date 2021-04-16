@@ -35,11 +35,11 @@ import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.Path;
 import org.eclipse.egit.core.RepositoryUtil;
-import org.eclipse.egit.core.RevUtils;
 import org.eclipse.egit.core.internal.CompareCoreUtils;
 import org.eclipse.egit.core.internal.CoreText;
 import org.eclipse.egit.core.internal.storage.GitFileRevision;
 import org.eclipse.egit.core.internal.util.ResourceUtil;
+import org.eclipse.egit.core.util.RevCommitUtils;
 import org.eclipse.egit.ui.Activator;
 import org.eclipse.egit.ui.internal.CompareUtils;
 import org.eclipse.egit.ui.internal.UIText;
@@ -162,7 +162,7 @@ public class GitMergeEditorInput extends CompareEditorInput {
 			// get the "right" side
 			final RevCommit rightCommit;
 			try {
-				rightCommit = RevUtils.getTheirs(repo, rw);
+				rightCommit = RevCommitUtils.getTheirs(repo, rw);
 			} catch (IOException e) {
 				throw new InvocationTargetException(e);
 			}
