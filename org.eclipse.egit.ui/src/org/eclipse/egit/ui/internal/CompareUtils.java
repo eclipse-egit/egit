@@ -47,13 +47,13 @@ import org.eclipse.core.runtime.preferences.IEclipsePreferences;
 import org.eclipse.core.runtime.preferences.IEclipsePreferences.IPreferenceChangeListener;
 import org.eclipse.core.runtime.preferences.IEclipsePreferences.PreferenceChangeEvent;
 import org.eclipse.core.runtime.preferences.InstanceScope;
-import org.eclipse.egit.core.RevUtils;
 import org.eclipse.egit.core.attributes.Filtering;
 import org.eclipse.egit.core.internal.CompareCoreUtils;
 import org.eclipse.egit.core.internal.storage.GitFileRevision;
 import org.eclipse.egit.core.internal.storage.WorkingTreeFileRevision;
 import org.eclipse.egit.core.internal.storage.WorkspaceFileRevision;
 import org.eclipse.egit.core.project.RepositoryMapping;
+import org.eclipse.egit.core.util.RevCommitUtils;
 import org.eclipse.egit.ui.Activator;
 import org.eclipse.egit.ui.UIPreferences;
 import org.eclipse.egit.ui.internal.merge.GitCompareEditorInput;
@@ -229,7 +229,7 @@ public class CompareUtils {
 		ITypedElement ancestor = null;
 		RevCommit commonAncestor = null;
 		try {
-			commonAncestor = RevUtils.getCommonAncestor(db, commit1, commit2);
+			commonAncestor = RevCommitUtils.getCommonAncestor(db, commit1, commit2);
 		} catch (IOException e) {
 			Activator.logError(NLS.bind(UIText.CompareUtils_errorCommonAncestor,
 					commit1.getName(), commit2.getName()), e);

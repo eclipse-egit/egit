@@ -29,7 +29,6 @@ import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.jobs.ISchedulingRule;
 import org.eclipse.egit.core.EclipseGitProgressTransformer;
-import org.eclipse.egit.core.RevUtils;
 import org.eclipse.egit.core.internal.Utils;
 import org.eclipse.egit.core.internal.indexdiff.IndexDiffCache;
 import org.eclipse.egit.core.internal.indexdiff.IndexDiffCacheEntry;
@@ -39,6 +38,7 @@ import org.eclipse.egit.core.internal.job.RuleUtil;
 import org.eclipse.egit.core.internal.util.ResourceUtil;
 import org.eclipse.egit.core.op.DiscardChangesOperation;
 import org.eclipse.egit.core.op.DiscardChangesOperation.Stage;
+import org.eclipse.egit.core.util.RevCommitUtils;
 import org.eclipse.egit.core.op.IEGitOperation;
 import org.eclipse.egit.ui.Activator;
 import org.eclipse.egit.ui.JobFamilies;
@@ -211,7 +211,7 @@ public abstract class ReplaceConflictActionHandler
 			}
 		} else {
 			try {
-				RevCommit commit = RevUtils.getTheirs(repository);
+				RevCommit commit = RevCommitUtils.getTheirs(repository);
 				if (commit != null) {
 					element.setText(formatCommitLabel(
 							UIText.ReplaceWithOursTheirsMenu_TheirsWithCommitLabel,

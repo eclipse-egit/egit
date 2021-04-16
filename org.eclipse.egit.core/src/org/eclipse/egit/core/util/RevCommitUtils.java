@@ -9,7 +9,7 @@
  *
  * SPDX-License-Identifier: EPL-2.0
  *******************************************************************************/
-package org.eclipse.egit.core;
+package org.eclipse.egit.core.util;
 
 import java.io.File;
 import java.io.IOException;
@@ -32,20 +32,26 @@ import org.eclipse.jgit.util.RawParseUtils;
 
 /**
  * Utility class for obtaining Rev object instances.
+ *
+ * @since 5.12
  */
-public class RevUtils {
+public final class RevCommitUtils {
 
-	private RevUtils() {
-		// non instantiable utility class
+	private RevCommitUtils() {
+		// non-instantiable utility class
 	}
 
 	/**
 	 * Finds and returns instance of common ancestor commit for given two
-	 * commit's
+	 * commits.
 	 *
-	 * @param repo repository in which common ancestor should be searched, cannot be null
-	 * @param commit1 left commit id, cannot be null
-	 * @param commit2 right commit id, cannot be null
+	 * @param repo
+	 *            repository in which common ancestor should be searched, cannot
+	 *            be null
+	 * @param commit1
+	 *            left commit id, cannot be null
+	 * @param commit2
+	 *            right commit id, cannot be null
 	 * @return common ancestor for commit1 and commit2 parameters
 	 * @throws IOException
 	 */
@@ -68,10 +74,8 @@ public class RevUtils {
 			RevCommit result = rw.next();
 			if (result != null) {
 				rw.parseBody(result);
-				return result;
-			} else {
-				return null;
 			}
+			return result;
 		}
 	}
 
@@ -159,10 +163,11 @@ public class RevUtils {
 			ObjectId commitId, Collection<Ref> refs) throws IOException {
 		// It's likely that we don't have to walk commits at all, so
 		// check refs directly first.
-		for (Ref ref : refs)
-			if (commitId.equals(ref.getObjectId()))
+		for (Ref ref : refs) {
+			if (commitId.equals(ref.getObjectId())) {
 				return true;
-
+			}
+		}
 		final int skew = 24 * 60 * 60; // one day clock skew
 
 		try (RevWalk walk = new RevWalk(repo)) {
@@ -173,12 +178,12 @@ public class RevUtils {
 				// if commit is in the ref branch, then the tip of ref should be
 				// newer than the commit we are looking for. Allow for a large
 				// clock skew.
-				if (refCommit.getCommitTime() + skew < commit.getCommitTime())
+				if (refCommit.getCommitTime() + skew < commit.getCommitTime()) {
 					continue;
-
-				boolean contained = walk.isMergedInto(commit, refCommit);
-				if (contained)
+				}
+				if (walk.isMergedInto(commit, refCommit)) {
 					return true;
+				}
 			}
 			walk.dispose();
 		}
