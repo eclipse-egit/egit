@@ -75,8 +75,7 @@ public class CommitFileRevision extends GitFileRevision implements
 			locateBlobObjectId();
 		}
 		return new CommitBlobStorage(getRepository(), getGitPath(), blobId,
-				commit,
-				metadata);
+				commit, metadata);
 	}
 
 	@Override
