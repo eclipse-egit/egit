@@ -13,9 +13,12 @@ package org.eclipse.egit.core.internal;
 import org.eclipse.core.resources.IResource;
 import org.eclipse.core.runtime.IAdapterFactory;
 import org.eclipse.egit.core.info.GitInfo;
+import org.eclipse.egit.core.info.GitItemState;
+import org.eclipse.egit.core.internal.info.GitItemStateFactory;
 import org.eclipse.egit.core.internal.storage.GitFileRevision;
 import org.eclipse.egit.core.project.RepositoryMapping;
 import org.eclipse.jgit.annotations.NonNull;
+import org.eclipse.jgit.lib.AnyObjectId;
 import org.eclipse.jgit.lib.Repository;
 
 /**
@@ -68,5 +71,14 @@ public class AdapterFactory implements IAdapterFactory {
 					: null;
 		}
 
+		@Override
+		public AnyObjectId getCommitId() {
+			return null;
+		}
+
+		@Override
+		public GitItemState getGitState() {
+			return GitItemStateFactory.getInstance().get(resource);
+		}
 	}
 }
