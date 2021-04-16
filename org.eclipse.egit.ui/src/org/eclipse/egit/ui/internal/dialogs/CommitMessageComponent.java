@@ -27,9 +27,9 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.regex.Pattern;
 
-import org.eclipse.egit.core.RevUtils;
 import org.eclipse.egit.core.internal.gerrit.GerritUtil;
 import org.eclipse.egit.core.settings.GitSettings;
+import org.eclipse.egit.core.util.RevCommitUtils;
 import org.eclipse.egit.ui.Activator;
 import org.eclipse.egit.ui.CommitMessageWithCaretPosition;
 import org.eclipse.egit.ui.UIPreferences;
@@ -775,7 +775,7 @@ public class CommitMessageComponent {
 		try {
 			Collection<Ref> refs = repository.getRefDatabase()
 					.getRefsByPrefix(Constants.R_REMOTES);
-			return RevUtils.isContainedInAnyRef(repository, commit, refs);
+			return RevCommitUtils.isContainedInAnyRef(repository, commit, refs);
 		} catch (IOException e) {
 			// The result only affects a warning, so pretend there was no
 			// problem.
