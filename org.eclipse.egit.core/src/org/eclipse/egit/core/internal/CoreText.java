@@ -208,6 +208,9 @@ public class CoreText extends NLS {
 	public static String BlobStorage_errorReadingBlob;
 
 	/** */
+	public static String BlobStorage_noCommit;
+
+	/** */
 	public static String UntrackOperation_adding;
 
 	/** */

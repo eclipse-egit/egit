@@ -87,4 +87,8 @@ public class WorkspaceFileRevision extends GitFileRevision {
 		return WORKSPACE;
 	}
 
+	@Override
+	public Source getSource() {
+		return Source.WORKING_TREE;
+	}
 }

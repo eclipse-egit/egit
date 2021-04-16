@@ -130,6 +130,11 @@ public class IndexFileRevision extends GitFileRevision implements
 		return INDEX;
 	}
 
+	@Override
+	public Source getSource() {
+		return Source.INDEX;
+	}
+
 	private CheckoutMetadata getMetadata(DirCache cache) throws IOException {
 		Repository db = getRepository();
 		try (TreeWalk walk = new TreeWalk(db)) {

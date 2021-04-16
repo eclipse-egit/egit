@@ -107,8 +107,14 @@ public abstract class GitRemoteResource extends CachedResourceVariant
 	/**
 	 * @return the commit Id for this resource variant.
 	 */
+	@Override
 	public RevCommit getCommitId() {
 		return commitId;
+	}
+
+	@Override
+	public Source getSource() {
+		return Source.COMMIT;
 	}
 
 	/**

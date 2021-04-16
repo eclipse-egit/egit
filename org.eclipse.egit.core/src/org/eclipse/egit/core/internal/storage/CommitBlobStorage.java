@@ -22,6 +22,7 @@ import org.eclipse.egit.core.RepositoryUtil;
 import org.eclipse.egit.core.internal.Utils;
 import org.eclipse.egit.core.storage.GitBlobStorage;
 import org.eclipse.jgit.dircache.DirCacheCheckout.CheckoutMetadata;
+import org.eclipse.jgit.lib.AnyObjectId;
 import org.eclipse.jgit.lib.ObjectId;
 import org.eclipse.jgit.lib.Repository;
 import org.eclipse.jgit.revwalk.RevCommit;
@@ -64,6 +65,16 @@ public class CommitBlobStorage extends GitBlobStorage {
 		String pathString = super.getFullPath().toPortableString() + " " //$NON-NLS-1$
 				+ Utils.getShortObjectId(commit.getId());
 		return repoPath.append(Path.fromPortableString(pathString));
+	}
+
+	@Override
+	public Source getSource() {
+		return Source.COMMIT;
+	}
+
+	@Override
+	public AnyObjectId getCommitId() {
+		return commit;
 	}
 
 	@Override

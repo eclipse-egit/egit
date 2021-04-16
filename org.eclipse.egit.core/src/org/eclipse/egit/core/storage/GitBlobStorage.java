@@ -33,6 +33,7 @@ import org.eclipse.egit.core.internal.CoreText;
 import org.eclipse.jgit.dircache.DirCacheCheckout.CheckoutMetadata;
 import org.eclipse.jgit.errors.IncorrectObjectTypeException;
 import org.eclipse.jgit.errors.MissingObjectException;
+import org.eclipse.jgit.lib.AnyObjectId;
 import org.eclipse.jgit.lib.Constants;
 import org.eclipse.jgit.lib.CoreConfig.AutoCRLF;
 import org.eclipse.jgit.lib.CoreConfig.EolStreamType;
@@ -150,6 +151,16 @@ public class GitBlobStorage implements IEncodedStorage, GitInfo {
 	@Override
 	public String getGitPath() {
 		return path;
+	}
+
+	@Override
+	public AnyObjectId getCommitId() {
+		return null;
+	}
+
+	@Override
+	public Source getSource() {
+		return null;
 	}
 
 	@Override

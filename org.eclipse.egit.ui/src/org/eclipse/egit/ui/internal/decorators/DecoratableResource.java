@@ -15,14 +15,14 @@
 package org.eclipse.egit.ui.internal.decorators;
 
 import org.eclipse.core.resources.IResource;
-import org.eclipse.egit.ui.internal.resources.ResourceState;
+import org.eclipse.egit.core.internal.info.GitItemStateImpl;
 
 /**
  * Basic implementation of <code>IDecoratableResource</code>
  *
  * @see IDecoratableResource
  */
-public class DecoratableResource extends ResourceState
+public class DecoratableResource extends GitItemStateImpl
 		implements IDecoratableResource {
 
 	/**

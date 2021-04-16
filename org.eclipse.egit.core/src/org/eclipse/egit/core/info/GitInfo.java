@@ -10,6 +10,8 @@
  *******************************************************************************/
 package org.eclipse.egit.core.info;
 
+import org.eclipse.egit.core.internal.info.GitItemStateFactory;
+import org.eclipse.jgit.lib.AnyObjectId;
 import org.eclipse.jgit.lib.Repository;
 
 /**
@@ -29,7 +31,7 @@ public interface GitInfo {
 	 * to prevent the repository from being closed.
 	 *
 	 * @return the {@link Repository} the object is in, if any, or {@code null}
-	 *         if the item is not git managed
+	 *         if the item is not managed by EGit
 	 */
 	Repository getRepository();
 
@@ -41,4 +43,56 @@ public interface GitInfo {
 	 */
 	String getGitPath();
 
+	/**
+	 * Describes the origin of the item this {@link GitInfo} object had been
+	 * obtained from.
+	 */
+	enum Source {
+		WORKING_TREE, INDEX, COMMIT
+	}
+
+	/**
+	 * Returns the {@link Source} of the item this {@link GitInfo} object was
+	 * obtained from.
+	 * <p>
+	 * {@link GitInfo} objects can be obtained via adaptation from a variety of
+	 * objects. If the adapted object was an
+	 * {@link org.eclipse.core.resources.IResource IResource}, then it's in the
+	 * git {@link Source#WORKING_TREE}, but the {@link GitInfo} might also have
+	 * been obtained from a file version in the {@link Source#INDEX}, or even
+	 * from a file revision in a {@link Source#COMMIT}.
+	 * </p>
+	 *
+	 * @return the {@link Source} of this {@link GitInfo} object, or
+	 *         {@code null} if the item is not managed by EGit or the source
+	 *         cannot be determined (for raw
+	 *         {@link org.eclipse.egit.core.storage.GitBlobStorage
+	 *         GitBlobStorage} objects).
+	 */
+	Source getSource();
+
+	/**
+	 * Retrieves the commit ID of the commit containing the item, if the
+	 * {@link #getSource() source} of this {@link GitInfo} object is
+	 * {@link Source#COMMIT}.
+	 *
+	 * @return the commit ID, or {@code null} if the {@link #getSource() source}
+	 *         of this {@link GitInfo} is not from a git commit or is a raw
+	 *         {@link org.eclipse.egit.core.storage.GitBlobStorage
+	 *         GitBlobStorage} object. These describe raw blobs in the git
+	 *         repository and have no information about any commit.
+	 */
+	AnyObjectId getCommitId();
+
+	/**
+	 * Retrieves a {@link GitItemState} providing information about the git
+	 * state of the item this {@link GitInfo} is about.
+	 *
+	 * @return a {@link GitItemState}, or {@code null} if the item isn't in any
+	 *         repository
+	 */
+	default GitItemState getGitState() {
+		return GitItemStateFactory.getInstance().get(getRepository(),
+				getGitPath());
+	}
 }

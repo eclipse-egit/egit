@@ -35,9 +35,9 @@ import static org.eclipse.ui.menus.CommandContributionItem.STYLE_PUSH;
 import org.eclipse.core.expressions.IEvaluationContext;
 import org.eclipse.core.resources.IResource;
 import org.eclipse.core.runtime.IPath;
+import org.eclipse.egit.core.info.GitItemState;
+import org.eclipse.egit.core.internal.info.GitItemStateFactory;
 import org.eclipse.egit.ui.internal.UIText;
-import org.eclipse.egit.ui.internal.resources.IResourceState;
-import org.eclipse.egit.ui.internal.resources.ResourceStateFactory;
 import org.eclipse.egit.ui.internal.synchronize.action.ExpandAllModelAction;
 import org.eclipse.egit.ui.internal.synchronize.action.GitOpenInCompareAction;
 import org.eclipse.egit.ui.internal.synchronize.action.OpenWorkingFileAction;
@@ -81,7 +81,7 @@ class GitActionContributor extends SynchronizePageActionGroup {
 		if (resource != null) {
 			// add standard git action for 'workspace' models
 			menu.appendToGroup(GIT_ACTIONS, createItem(COMMIT_ACTION));
-			IResourceState state = ResourceStateFactory.getInstance()
+			GitItemState state = GitItemStateFactory.getInstance()
 					.get(resource);
 			if (state.hasUnstagedChanges()) {
 				menu.appendToGroup(GIT_ACTIONS, createItem(ADD_TO_INDEX));
@@ -119,7 +119,7 @@ class GitActionContributor extends SynchronizePageActionGroup {
 			// We know we have a model object for a working tree file here.
 			IPath path = object.getLocation();
 			if (path != null) {
-				IResourceState state = ResourceStateFactory.getInstance()
+				GitItemState state = GitItemStateFactory.getInstance()
 						.get(path.toFile());
 				if (state.hasUnstagedChanges()) {
 					menu.appendToGroup(GIT_ACTIONS, createItem(ADD_TO_INDEX));

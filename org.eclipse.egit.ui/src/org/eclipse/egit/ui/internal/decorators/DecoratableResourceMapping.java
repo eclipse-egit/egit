@@ -19,8 +19,8 @@ import java.util.Set;
 import org.eclipse.core.resources.IResource;
 import org.eclipse.core.resources.mapping.ResourceMapping;
 import org.eclipse.egit.core.internal.indexdiff.IndexDiffData;
+import org.eclipse.egit.core.internal.info.GitItemStateFactory;
 import org.eclipse.egit.core.internal.util.ResourceUtil;
-import org.eclipse.egit.ui.internal.resources.ResourceStateFactory;
 import org.eclipse.jgit.lib.Repository;
 
 /**
@@ -62,7 +62,7 @@ public class DecoratableResourceMapping extends DecoratableResourceGroup {
 				continue;
 			}
 
-			IndexDiffData indexDiffData = ResourceStateFactory.getInstance()
+			IndexDiffData indexDiffData = GitItemStateFactory.getInstance()
 					.getIndexDiffDataOrNull(mappingResource);
 
 			if (indexDiffData == null) {

@@ -24,10 +24,12 @@ import org.eclipse.core.commands.State;
 import org.eclipse.egit.core.RepositoryCache;
 import org.eclipse.egit.core.RepositoryUtil;
 import org.eclipse.egit.core.UnitOfWork;
+import org.eclipse.egit.core.info.GitItemState;
 import org.eclipse.egit.core.internal.Utils;
 import org.eclipse.egit.core.internal.indexdiff.IndexDiffCache;
 import org.eclipse.egit.core.internal.indexdiff.IndexDiffCacheEntry;
 import org.eclipse.egit.core.internal.indexdiff.IndexDiffData;
+import org.eclipse.egit.core.internal.info.GitItemStateFactory;
 import org.eclipse.egit.ui.Activator;
 import org.eclipse.egit.ui.internal.UIIcons;
 import org.eclipse.egit.ui.internal.UIText;
@@ -42,8 +44,6 @@ import org.eclipse.egit.ui.internal.repository.tree.RepositoryTreeNode;
 import org.eclipse.egit.ui.internal.repository.tree.RepositoryTreeNodeType;
 import org.eclipse.egit.ui.internal.repository.tree.StashedCommitNode;
 import org.eclipse.egit.ui.internal.repository.tree.TagNode;
-import org.eclipse.egit.ui.internal.resources.IResourceState;
-import org.eclipse.egit.ui.internal.resources.ResourceStateFactory;
 import org.eclipse.jface.viewers.IDecoration;
 import org.eclipse.jgit.annotations.NonNull;
 import org.eclipse.jgit.lib.Constants;
@@ -242,7 +242,7 @@ public class RepositoryTreeNodeDecorator extends GitDecorator
 	}
 
 	private void decorateConflict(File file, IDecoration decoration) {
-		IResourceState state = ResourceStateFactory.getInstance().get(file);
+		GitItemState state = GitItemStateFactory.getInstance().get(file);
 		if (state.hasConflicts()) {
 			decoration.addOverlay(UIIcons.OVR_CONFLICT);
 		}
