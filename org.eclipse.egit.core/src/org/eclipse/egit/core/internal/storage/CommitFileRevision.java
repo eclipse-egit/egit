@@ -138,6 +138,16 @@ public class CommitFileRevision extends GitFileRevision implements
 		return commit;
 	}
 
+	@Override
+	public Source getSource() {
+		return Source.COMMIT;
+	}
+
+	@Override
+	public AnyObjectId getCommitId() {
+		return getRevCommit();
+	}
+
 	private void locateBlobObjectId() throws CoreException {
 		try (TreeWalk w = TreeWalk.forPath(getRepository(), getGitPath(),
 				commit.getTree())) {

@@ -38,8 +38,10 @@ import org.eclipse.core.runtime.Adapters;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IAdaptable;
 import org.eclipse.core.runtime.IStatus;
+import org.eclipse.egit.core.info.GitItemState.StagingState;
 import org.eclipse.egit.core.internal.SafeRunnable;
 import org.eclipse.egit.core.internal.indexdiff.IndexDiffData;
+import org.eclipse.egit.core.internal.info.GitItemStateFactory;
 import org.eclipse.egit.core.internal.util.ExceptionCollector;
 import org.eclipse.egit.core.project.GitProjectData;
 import org.eclipse.egit.core.project.RepositoryMappingChangeListener;
@@ -47,8 +49,6 @@ import org.eclipse.egit.ui.Activator;
 import org.eclipse.egit.ui.UIPreferences;
 import org.eclipse.egit.ui.internal.UIIcons;
 import org.eclipse.egit.ui.internal.UIText;
-import org.eclipse.egit.ui.internal.resources.IResourceState.StagingState;
-import org.eclipse.egit.ui.internal.resources.ResourceStateFactory;
 import org.eclipse.jface.preference.IPreferenceStore;
 import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.jface.resource.JFaceResources;
@@ -189,7 +189,7 @@ public class GitLightweightDecorator extends GitDecorator
 		if (resource.getType() == IResource.ROOT || !resource.isAccessible()) {
 			return;
 		}
-		IndexDiffData indexDiffData = ResourceStateFactory.getInstance()
+		IndexDiffData indexDiffData = GitItemStateFactory.getInstance()
 				.getIndexDiffDataOrNull(resource);
 
 		if (indexDiffData == null) {

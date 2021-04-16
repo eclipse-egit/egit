@@ -98,4 +98,9 @@ public class WorkingTreeFileRevision extends GitFileRevision {
 	public String getContentIdentifier() {
 		return WORKING_TREE;
 	}
+
+	@Override
+	public Source getSource() {
+		return Source.WORKING_TREE;
+	}
 }

@@ -27,6 +27,7 @@ import org.eclipse.jgit.dircache.DirCache;
 import org.eclipse.jgit.dircache.DirCacheCheckout.CheckoutMetadata;
 import org.eclipse.jgit.dircache.DirCacheEntry;
 import org.eclipse.jgit.dircache.DirCacheIterator;
+import org.eclipse.jgit.lib.AnyObjectId;
 import org.eclipse.jgit.lib.Constants;
 import org.eclipse.jgit.lib.FileMode;
 import org.eclipse.jgit.lib.ObjectId;
@@ -128,6 +129,16 @@ public class IndexFileRevision extends GitFileRevision implements
 	@Override
 	public String getContentIdentifier() {
 		return INDEX;
+	}
+
+	@Override
+	public Source getSource() {
+		return Source.INDEX;
+	}
+
+	@Override
+	public AnyObjectId getCommitId() {
+		return ObjectId.zeroId();
 	}
 
 	private CheckoutMetadata getMetadata(DirCache cache) throws IOException {

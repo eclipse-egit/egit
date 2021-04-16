@@ -17,6 +17,7 @@ import org.eclipse.core.runtime.Path;
 import org.eclipse.egit.core.RepositoryUtil;
 import org.eclipse.egit.core.storage.GitBlobStorage;
 import org.eclipse.jgit.dircache.DirCacheCheckout.CheckoutMetadata;
+import org.eclipse.jgit.lib.AnyObjectId;
 import org.eclipse.jgit.lib.ObjectId;
 import org.eclipse.jgit.lib.Repository;
 
@@ -32,6 +33,11 @@ public class IndexBlobStorage extends GitBlobStorage {
 	IndexBlobStorage(Repository repository, String fileName, boolean isGitlink,
 			ObjectId blob, CheckoutMetadata metadata) {
 		super(repository, fileName, blob, metadata, isGitlink);
+	}
+
+	@Override
+	public AnyObjectId getCommitId() {
+		return ObjectId.zeroId();
 	}
 
 	@Override
