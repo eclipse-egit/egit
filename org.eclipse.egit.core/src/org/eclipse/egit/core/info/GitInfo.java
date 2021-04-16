@@ -10,6 +10,9 @@
  *******************************************************************************/
 package org.eclipse.egit.core.info;
 
+import org.eclipse.egit.core.internal.info.GitItemStateFactory;
+import org.eclipse.egit.core.storage.GitBlobStorage;
+import org.eclipse.jgit.lib.AnyObjectId;
 import org.eclipse.jgit.lib.Repository;
 
 /**
@@ -41,4 +44,28 @@ public interface GitInfo {
 	 */
 	String getGitPath();
 
+	/**
+	 * Retrieves the commit ID of the commit containing the item, if any.
+	 *
+	 * @return the commit ID, {@code null} for working tree files,
+	 *         {@link org.eclipse.jgit.lib.ObjectId#zeroId()} for index items
+	 * @throws UnsupportedOperationException
+	 *             if the item this {@link GitInfo} was obtained for was a raw
+	 *             {@link GitBlobStorage}. A {@link GitBlobStorage} described a
+	 *             raw blob in the git repository and has no information about
+	 *             any commit.
+	 */
+	AnyObjectId getCommitId();
+
+	/**
+	 * Retrieves a {@link GitItemState} providing information about the git
+	 * state of the item this {@link GitInfo} is about.
+	 *
+	 * @return a {@link GitItemState}, or {@code null} if the item isn't in any
+	 *         repository
+	 */
+	default GitItemState getGitState() {
+		return GitItemStateFactory.getInstance().get(getRepository(),
+				getGitPath());
+	}
 }

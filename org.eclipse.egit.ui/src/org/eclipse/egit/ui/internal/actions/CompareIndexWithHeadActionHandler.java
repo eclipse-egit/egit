@@ -20,11 +20,11 @@ import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IResource;
 import org.eclipse.core.runtime.Adapters;
 import org.eclipse.core.runtime.IPath;
+import org.eclipse.egit.core.internal.info.GitItemStateFactory;
 import org.eclipse.egit.core.internal.storage.GitFileRevision;
 import org.eclipse.egit.ui.Activator;
 import org.eclipse.egit.ui.internal.CompareUtils;
 import org.eclipse.egit.ui.internal.UIText;
-import org.eclipse.egit.ui.internal.resources.ResourceStateFactory;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jgit.annotations.NonNull;
 import org.eclipse.jgit.lib.Constants;
@@ -115,11 +115,11 @@ public class CompareIndexWithHeadActionHandler extends RepositoryActionHandler {
 		if (resource instanceof IFile) {
 			// action is only working on files. Avoid calculation
 			// of unnecessary expensive IndexDiff on a folder
-			return ResourceStateFactory.getInstance().get(resource).isStaged();
+			return GitItemStateFactory.getInstance().get(resource).isStaged();
 		} else if (resource == null) {
 			IPath location = Adapters.adapt(selected, IPath.class);
 			if (location != null) {
-				return ResourceStateFactory.getInstance().get(location.toFile())
+				return GitItemStateFactory.getInstance().get(location.toFile())
 						.isStaged();
 			}
 		}

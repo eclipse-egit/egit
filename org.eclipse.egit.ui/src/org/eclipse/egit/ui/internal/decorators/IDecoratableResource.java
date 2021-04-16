@@ -16,12 +16,12 @@
 package org.eclipse.egit.ui.internal.decorators;
 
 import org.eclipse.core.resources.IResource;
-import org.eclipse.egit.ui.internal.resources.IResourceState;
+import org.eclipse.egit.core.info.GitItemState;
 
 /**
  * Represents the state of a resource that can be used as a basis for decoration
  */
-public interface IDecoratableResource extends IResourceState {
+public interface IDecoratableResource extends GitItemState {
 
 	/**
 	 * Gets the type of the resource as defined by {@link IResource}

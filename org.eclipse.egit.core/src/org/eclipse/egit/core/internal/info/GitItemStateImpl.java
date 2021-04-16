@@ -8,15 +8,16 @@
  *
  * SPDX-License-Identifier: EPL-2.0
  *******************************************************************************/
-package org.eclipse.egit.ui.internal.resources;
+package org.eclipse.egit.core.internal.info;
 
+import org.eclipse.egit.core.info.GitItemState;
 import org.eclipse.jgit.annotations.NonNull;
 import org.eclipse.jgit.lib.IndexDiff.StageState;
 
 /**
- * Base implementation of an {@link IResourceState}.
+ * Base implementation of an {@link GitItemState}.
  */
-public class ResourceState implements IResourceState {
+public class GitItemStateImpl implements GitItemState {
 
 	/**
 	 * Flag indicating whether or not the resource is tracked
