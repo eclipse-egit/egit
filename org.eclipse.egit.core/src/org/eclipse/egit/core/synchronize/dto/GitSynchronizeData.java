@@ -11,7 +11,7 @@
 package org.eclipse.egit.core.synchronize.dto;
 
 import static org.eclipse.core.runtime.Assert.isNotNull;
-import static org.eclipse.egit.core.RevUtils.getCommonAncestor;
+import static org.eclipse.egit.core.util.RevCommitUtils.getCommonAncestor;
 import static org.eclipse.jgit.lib.Constants.R_HEADS;
 
 import java.io.File;

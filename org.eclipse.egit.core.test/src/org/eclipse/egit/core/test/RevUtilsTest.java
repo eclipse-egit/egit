@@ -16,7 +16,7 @@ import static org.junit.Assert.assertTrue;
 import java.io.IOException;
 import java.util.Collection;
 
-import org.eclipse.egit.core.RevUtils;
+import org.eclipse.egit.core.util.RevCommitUtils;
 import org.eclipse.jgit.lib.Constants;
 import org.eclipse.jgit.lib.Ref;
 import org.eclipse.jgit.lib.Repository;
@@ -70,7 +70,7 @@ public class RevUtilsTest extends GitTestCase {
 	private boolean isContainedInAnyRemoteRef(RevCommit commit) throws IOException {
 		Collection<Ref> remoteRefs = repository.getRefDatabase()
 				.getRefsByPrefix(Constants.R_REMOTES);
-		return RevUtils.isContainedInAnyRef(repository, commit, remoteRefs);
+		return RevCommitUtils.isContainedInAnyRef(repository, commit, remoteRefs);
 	}
 
 }
