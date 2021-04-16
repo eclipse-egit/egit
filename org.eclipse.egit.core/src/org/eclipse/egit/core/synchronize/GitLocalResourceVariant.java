@@ -18,7 +18,10 @@ import java.util.Date;
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IResource;
 import org.eclipse.core.resources.IStorage;
+import org.eclipse.core.runtime.Adapters;
+import org.eclipse.core.runtime.IAdaptable;
 import org.eclipse.core.runtime.IProgressMonitor;
+import org.eclipse.egit.core.info.GitInfo;
 import org.eclipse.team.core.TeamException;
 import org.eclipse.team.core.variants.IResourceVariant;
 
@@ -28,7 +31,7 @@ import org.eclipse.team.core.variants.IResourceVariant;
  * Mimics Team's LocalResourceVariant.
  * </p>
  */
-class GitLocalResourceVariant implements IResourceVariant {
+class GitLocalResourceVariant implements IResourceVariant, IAdaptable {
 	private final IResource resource;
 
 	GitLocalResourceVariant(IResource resource) {
@@ -68,5 +71,13 @@ class GitLocalResourceVariant implements IResourceVariant {
 
 	IResource getResource() {
 		return resource;
+	}
+
+	@Override
+	public <T> T getAdapter(Class<T> adapter) {
+		if (adapter == GitInfo.class) {
+			return Adapters.adapt(resource, adapter);
+		}
+		return null;
 	}
 }

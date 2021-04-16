@@ -17,8 +17,8 @@ import static org.junit.Assert.assertTrue;
 import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.IResource;
 import org.eclipse.core.resources.ResourcesPlugin;
-import org.eclipse.egit.ui.internal.resources.IResourceState;
-import org.eclipse.egit.ui.internal.resources.ResourceStateFactory;
+import org.eclipse.egit.core.info.GitItemState;
+import org.eclipse.egit.core.internal.info.GitItemStateFactory;
 
 public final class StagingUtil {
 
@@ -32,7 +32,7 @@ public final class StagingUtil {
 				.getProject(projectName);
 		IResource resource = project.findMember(filePath);
 		assertNotNull(filePath + " should exist", resource);
-		IResourceState state = ResourceStateFactory.getInstance().get(resource);
+		GitItemState state = GitItemStateFactory.getInstance().get(resource);
 		if (expected) {
 			assertTrue(projectName + '/' + filePath + " should be staged",
 					state.isStaged());

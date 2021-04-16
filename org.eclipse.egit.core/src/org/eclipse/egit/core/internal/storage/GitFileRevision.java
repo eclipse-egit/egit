@@ -21,6 +21,7 @@ import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.egit.core.info.GitInfo;
 import org.eclipse.jgit.dircache.DirCacheCheckout.CheckoutMetadata;
 import org.eclipse.jgit.dircache.DirCacheEntry;
+import org.eclipse.jgit.lib.AnyObjectId;
 import org.eclipse.jgit.lib.ObjectId;
 import org.eclipse.jgit.lib.Repository;
 import org.eclipse.jgit.revwalk.RevCommit;
@@ -107,14 +108,14 @@ public abstract class GitFileRevision extends FileRevision implements GitInfo {
 		return path;
 	}
 
-	/**
-	 * Retrieves the {@link Repository} this file revision comes from.
-	 *
-	 * @return the {@link Repository}
-	 */
 	@Override
 	public final Repository getRepository() {
 		return repository;
+	}
+
+	@Override
+	public AnyObjectId getCommitId() {
+		return null;
 	}
 
 	@Override

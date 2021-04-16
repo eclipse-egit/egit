@@ -20,7 +20,7 @@
  *    Thomas Wolf <thomas.wolf@paranor.ch> - Factored out from DecoratableResourceAdapter
  *                                           and GitLightweightDecorator
  *******************************************************************************/
-package org.eclipse.egit.ui.internal.resources;
+package org.eclipse.egit.core.internal.info;
 
 import java.io.File;
 import java.io.IOException;
@@ -37,35 +37,38 @@ import org.eclipse.core.resources.IContainer;
 import org.eclipse.core.resources.IResource;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IPath;
+import org.eclipse.egit.core.info.GitItemState;
+import org.eclipse.egit.core.info.GitItemState.StagingState;
 import org.eclipse.egit.core.internal.indexdiff.IndexDiffCache;
 import org.eclipse.egit.core.internal.indexdiff.IndexDiffCacheEntry;
 import org.eclipse.egit.core.internal.indexdiff.IndexDiffData;
 import org.eclipse.egit.core.internal.util.ResourceUtil;
-import org.eclipse.egit.ui.internal.resources.IResourceState.StagingState;
 import org.eclipse.jgit.annotations.NonNull;
 import org.eclipse.jgit.annotations.Nullable;
 import org.eclipse.jgit.lib.Constants;
 import org.eclipse.jgit.lib.Repository;
 
 /**
- * Factory for creating {@link IResourceState}s.
+ * Factory for creating {@link GitItemState}s.
  */
-public class ResourceStateFactory {
+public class GitItemStateFactory {
 
 	/**
-	 * {@link IResourceState} returned when no information can be retrieved. All
+	 * {@link GitItemState} returned when no information can be retrieved. All
 	 * boolean getters return {@code false}, and the
-	 * {@link IResourceState.StagingState StagingState} is
-	 * {@link IResourceState.StagingState#NOT_STAGED NOT_STAGED}.
+	 * {@link org.eclipse.egit.core.info.GitItemState.StagingState
+	 * StagingState} is
+	 * {@link org.eclipse.egit.core.info.GitItemState.StagingState#NOT_STAGED
+	 * NOT_STAGED}.
 	 */
 	@NonNull
-	public static final IResourceState UNKNOWN_STATE = new ResourceState();
+	public static final GitItemState UNKNOWN_STATE = new GitItemStateImpl();
 
 	/**
-	 * Singleton {@link IResourceState} returned for ignored files.
+	 * Singleton {@link GitItemState} returned for ignored files.
 	 */
 	@NonNull
-	private static final IResourceState IGNORED = new ResourceState() {
+	private static final GitItemState IGNORED = new GitItemStateImpl() {
 
 		@Override
 		public boolean isIgnored() {
@@ -74,15 +77,15 @@ public class ResourceStateFactory {
 	};
 
 	@NonNull
-	private static final ResourceStateFactory INSTANCE = new ResourceStateFactory();
+	private static final GitItemStateFactory INSTANCE = new GitItemStateFactory();
 
 	/**
-	 * Retrieves the singleton instance of the {@link ResourceStateFactory}.
+	 * Retrieves the singleton instance of the {@link GitItemStateFactory}.
 	 *
 	 * @return the factory singleton
 	 */
 	@NonNull
-	public static ResourceStateFactory getInstance() {
+	public static GitItemStateFactory getInstance() {
 		return INSTANCE;
 	}
 
@@ -152,10 +155,10 @@ public class ResourceStateFactory {
 	 *
 	 * @param resource
 	 *            to get the state for
-	 * @return the state, {@link #UNKNOWN_STATE} if none can be determined.
+	 * @return the state, {@link #UNKNOWN_STATE} if none can be determined
 	 */
 	@NonNull
-	public IResourceState get(@Nullable IResource resource) {
+	public GitItemState get(@Nullable IResource resource) {
 		IndexDiffData indexDiffData = getIndexDiffDataOrNull(resource);
 		if (indexDiffData == null || resource == null) {
 			return UNKNOWN_STATE;
@@ -168,10 +171,10 @@ public class ResourceStateFactory {
 	 *
 	 * @param file
 	 *            to get the state for
-	 * @return the state, {@link #UNKNOWN_STATE} if none can be determined.
+	 * @return the state, {@link #UNKNOWN_STATE} if none can be determined
 	 */
 	@NonNull
-	public IResourceState get(@Nullable File file) {
+	public GitItemState get(@Nullable File file) {
 		IndexDiffData indexDiffData = getIndexDiffDataOrNull(file);
 		if (indexDiffData == null || file == null) {
 			return UNKNOWN_STATE;
@@ -180,7 +183,35 @@ public class ResourceStateFactory {
 	}
 
 	/**
-	 * Computes an {@link IResourceState} for the given {@link IResource} from
+	 * Determines the repository state of an item identified by the git path,
+	 * which is assumed to refer to a file, not to a tree (directory).
+	 *
+	 * @param repository
+	 *            the item is in
+	 * @param gitPath
+	 *            of the item
+	 * @return the state, {@link #UNKNOWN_STATE} if none can be determined
+	 */
+	@Nullable
+	public GitItemState get(@Nullable Repository repository,
+			@Nullable String gitPath) {
+		if (repository == null || gitPath == null) {
+			return null;
+		}
+		IndexDiffCacheEntry cache = IndexDiffCache.getInstance()
+				.getIndexDiffCacheEntry(repository);
+		if (cache == null) {
+			return UNKNOWN_STATE;
+		}
+		IndexDiffData indexDiffData = cache.getIndexDiff();
+		if (indexDiffData == null) {
+			return UNKNOWN_STATE;
+		}
+		return extractFileProperties(indexDiffData, gitPath);
+	}
+
+	/**
+	 * Computes an {@link GitItemState} for the given {@link IResource} from
 	 * the given {@link IndexDiffData}.
 	 *
 	 * @param indexDiffData
@@ -190,7 +221,7 @@ public class ResourceStateFactory {
 	 * @return the state
 	 */
 	@NonNull
-	public IResourceState get(@NonNull IndexDiffData indexDiffData,
+	public GitItemState get(@NonNull IndexDiffData indexDiffData,
 			@NonNull IResource resource) {
 		IPath path = resource.getLocation();
 		if (path != null) {
@@ -200,7 +231,7 @@ public class ResourceStateFactory {
 	}
 
 	/**
-	 * Computes an {@link IResourceState} for the given {@link File} from the
+	 * Computes an {@link GitItemState} for the given {@link File} from the
 	 * given {@link IndexDiffData}.
 	 *
 	 * @param indexDiffData
@@ -210,13 +241,13 @@ public class ResourceStateFactory {
 	 * @return the state
 	 */
 	@NonNull
-	public IResourceState get(@NonNull IndexDiffData indexDiffData,
+	public GitItemState get(@NonNull IndexDiffData indexDiffData,
 			@NonNull File file) {
 		return get(indexDiffData, new FileItem(file));
 	}
 
 	/**
-	 * Computes an {@link IResourceState} for the given {@link FileSystemItem}
+	 * Computes an {@link GitItemState} for the given {@link FileSystemItem}
 	 * from the given {@link IndexDiffData}.
 	 *
 	 * @param indexDiffData
@@ -226,7 +257,7 @@ public class ResourceStateFactory {
 	 * @return the state
 	 */
 	@NonNull
-	private IResourceState get(@NonNull IndexDiffData indexDiffData,
+	private GitItemState get(@NonNull IndexDiffData indexDiffData,
 			@NonNull FileSystemItem file) {
 		IPath path = file.getAbsolutePath();
 		if (path == null) {
@@ -262,7 +293,7 @@ public class ResourceStateFactory {
 		}
 	}
 
-	private @NonNull IResourceState extractFileProperties(
+	private @NonNull GitItemState extractFileProperties(
 			@NonNull IndexDiffData indexDiffData,
 			@NonNull String repoRelativePath) {
 		Set<String> ignoredFiles = indexDiffData.getIgnoredNotInIndex();
@@ -272,7 +303,7 @@ public class ResourceStateFactory {
 			// Leave the rest at the default (false, NOT_STAGED)
 			return IGNORED;
 		}
-		ResourceState state = new ResourceState();
+		GitItemStateImpl state = new GitItemStateImpl();
 		Set<String> untracked = indexDiffData.getUntracked();
 		state.setTracked(!untracked.contains(repoRelativePath));
 
@@ -310,7 +341,7 @@ public class ResourceStateFactory {
 		return state;
 	}
 
-	private @NonNull IResourceState extractContainerProperties(
+	private @NonNull GitItemState extractContainerProperties(
 			@NonNull IndexDiffData indexDiffData,
 			@NonNull String repoRelativePath,
 			@NonNull FileSystemItem directory) {
@@ -320,7 +351,7 @@ public class ResourceStateFactory {
 		if (ignored) {
 			return IGNORED;
 		}
-		ResourceState state = new ResourceState();
+		GitItemStateImpl state = new GitItemStateImpl();
 		Set<String> untrackedFolders = indexDiffData.getUntrackedFolders();
 		state.setTracked(
 				!containsPrefixPath(untrackedFolders, repoRelativePath));

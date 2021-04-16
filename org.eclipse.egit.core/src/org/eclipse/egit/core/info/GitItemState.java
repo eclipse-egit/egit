@@ -8,15 +8,17 @@
  *
  * SPDX-License-Identifier: EPL-2.0
  *******************************************************************************/
-package org.eclipse.egit.ui.internal.resources;
+package org.eclipse.egit.core.info;
 
 import org.eclipse.jgit.annotations.NonNull;
 import org.eclipse.jgit.lib.IndexDiff.StageState;
 
 /**
  * Provides information about the repository state of an item in the repository.
+ *
+ * @since 5.12
  */
-public interface IResourceState {
+public interface GitItemState {
 
 	/**
 	 * Set of possible staging states for a resource.
@@ -112,7 +114,9 @@ public interface IResourceState {
 	boolean isAssumeUnchanged();
 
 	/**
-	 * Returns whether or not the resource has any changes that are unstaged.
+	 * Returns whether or not the resource has any changes that are unstaged:
+	 * true for items that are not ignored and either not tracked, dirty,
+	 * missing, or conflicting.
 	 *
 	 * @return whether or not the resource has any changes that are unstaged
 	 */
