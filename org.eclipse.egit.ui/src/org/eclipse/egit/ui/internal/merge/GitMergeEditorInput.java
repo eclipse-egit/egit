@@ -12,6 +12,8 @@ package org.eclipse.egit.ui.internal.merge;
 
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
+import java.text.MessageFormat;
+import java.time.Instant;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
@@ -50,6 +52,9 @@ import org.eclipse.egit.ui.internal.revision.LocationEditableRevision;
 import org.eclipse.egit.ui.internal.revision.ResourceEditableRevision;
 import org.eclipse.egit.ui.internal.synchronize.compare.LocalNonWorkspaceTypedElement;
 import org.eclipse.jface.operation.IRunnableContext;
+import org.eclipse.jgit.dircache.DirCache;
+import org.eclipse.jgit.dircache.DirCacheEditor;
+import org.eclipse.jgit.dircache.DirCacheEditor.PathEdit;
 import org.eclipse.jgit.dircache.DirCacheEntry;
 import org.eclipse.jgit.dircache.DirCacheIterator;
 import org.eclipse.jgit.lib.Constants;
@@ -305,8 +310,8 @@ public class GitMergeEditorInput extends CompareEditorInput {
 				DirCacheIterator dit = tw.getTree(dirCacheIndex,
 						DirCacheIterator.class);
 
-				final DirCacheEntry dirCacheEntry = dit == null ? null : dit
-						.getDirCacheEntry();
+				final DirCacheEntry dirCacheEntry = dit == null ? null
+						: dit.getDirCacheEntry();
 
 				boolean conflicting = dirCacheEntry != null
 						&& dirCacheEntry.getStage() > 0;
@@ -345,11 +350,18 @@ public class GitMergeEditorInput extends CompareEditorInput {
 
 				Path repositoryPath = new Path(repository.getWorkTree()
 						.getAbsolutePath());
-				IPath location = repositoryPath
-						.append(fit.getEntryPathString());
+				IPath location = repositoryPath.append(gitPath);
 				assert location != null;
 				IFile file = ResourceUtil.getFileForLocation(location, false);
-				if (!conflicting || useWorkspace) {
+				boolean useWorkingTree = !conflicting || useWorkspace;
+				if (!useWorkingTree && conflicting && dirCacheEntry != null) {
+					// Normal conflict stages have a zero timestamp. If it's not
+					// zero, we marked it below when the content was saved to
+					// the working tree file in an earlier merge editor.
+					useWorkingTree = !Instant.EPOCH
+							.equals(dirCacheEntry.getLastModifiedInstant());
+				}
+				if (useWorkingTree) {
 					if (file != null) {
 						left = SaveableCompareEditorInput
 								.createFileElement(file);
@@ -379,11 +391,46 @@ public class GitMergeEditorInput extends CompareEditorInput {
 						left = new LocationEditableRevision(rev, location,
 								runnableContext);
 					}
+					// 'left' saves to the working tree. Update the index entry
+					// with the current time. Normal conflict stages have a
+					// timestamp of zero, so this is a non-invasive fully
+					// compatible way to mark this conflict stage so that the
+					// next time we do take the file contents.
+					((EditableRevision) left)
+							.addContentChangeListener(source -> {
+								DirCache cache = null;
+								try {
+									cache = repository.lockDirCache();
+									DirCacheEditor editor = cache.editor();
+									editor.add(new PathEdit(gitPath) {
+
+										private boolean done;
+
+										@Override
+										public void apply(DirCacheEntry ent) {
+											if (!done && ent.getStage() > 0) {
+												ent.setLastModified(
+														Instant.now());
+												done = true;
+											}
+										}
+									});
+									editor.commit();
+								} catch (RuntimeException | IOException e) {
+									Activator.logError(MessageFormat.format(
+											UIText.GitMergeEditorInput_ErrorUpdatingIndex,
+											gitPath), e);
+								} finally {
+									if (cache != null) {
+										cache.unlock();
+									}
+								}
+							});
 					// make sure we don't need a round trip later
 					try {
 						((EditableRevision) left).cacheContents(monitor);
 					} catch (CoreException e) {
-						throw new IOException(e.getMessage());
+						throw new IOException(e.getMessage(), e);
 					}
 				}
 

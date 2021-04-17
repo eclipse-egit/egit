@@ -80,6 +80,7 @@ public class LocationEditableRevision extends EditableRevision {
 					throw new InvocationTargetException(e);
 				}
 			});
+			fireContentChanged();
 		} catch (InvocationTargetException e) {
 			Activator.handleError(e.getTargetException().getMessage(),
 					e.getTargetException(), true);
