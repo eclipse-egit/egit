@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (C) 2011, 2019 Robin Stocker <robin@nibor.org> and others.
+ * Copyright (C) 2011, 2021 Robin Stocker <robin@nibor.org> and others.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License 2.0
@@ -78,6 +78,7 @@ public class ResourceEditableRevision extends EditableRevision
 					throw new InvocationTargetException(e);
 				}
 			});
+			fireContentChanged();
 		} catch (InvocationTargetException e) {
 			if (e.getCause() instanceof CoreException) {
 				Activator.showErrorStatus(e.getCause().getLocalizedMessage(),
