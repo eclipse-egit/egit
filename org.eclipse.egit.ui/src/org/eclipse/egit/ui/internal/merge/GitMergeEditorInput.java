@@ -60,6 +60,7 @@ import org.eclipse.jgit.dircache.DirCacheIterator;
 import org.eclipse.jgit.lib.Constants;
 import org.eclipse.jgit.lib.ObjectId;
 import org.eclipse.jgit.lib.Repository;
+import org.eclipse.jgit.lib.RepositoryState;
 import org.eclipse.jgit.revwalk.RevCommit;
 import org.eclipse.jgit.revwalk.RevWalk;
 import org.eclipse.jgit.revwalk.filter.RevFilter;
@@ -194,36 +195,58 @@ public class GitMergeEditorInput extends CompareEditorInput {
 			}
 
 			// try to obtain the common ancestor
-			List<RevCommit> startPoints = new ArrayList<>();
-			rw.setRevFilter(RevFilter.MERGE_BASE);
-			startPoints.add(rightCommit);
-			startPoints.add(headCommit);
-			RevCommit ancestorCommit;
-			try {
-				rw.markStart(startPoints);
-				ancestorCommit = rw.next();
-			} catch (Exception e) {
-				ancestorCommit = null;
+			RevCommit ancestorCommit = null;
+			boolean unknownCherryPickParent = false;
+			if (RepositoryState.CHERRY_PICKING
+					.equals(repo.getRepositoryState())) {
+				if (rightCommit.getParentCount() == 1) {
+					try {
+						ancestorCommit = rw
+								.parseCommit(rightCommit.getParent(0));
+					} catch (IOException e) {
+						unknownCherryPickParent = true;
+					}
+				} else {
+					// Cherry-pick of a merge commit -- git doesn't record the
+					// mainline index anywhere, so we don't know which parent
+					// was taken.
+					unknownCherryPickParent = true;
+				}
+			} else {
+				List<RevCommit> startPoints = new ArrayList<>();
+				rw.setRevFilter(RevFilter.MERGE_BASE);
+				startPoints.add(rightCommit);
+				startPoints.add(headCommit);
+				try {
+					rw.markStart(startPoints);
+					ancestorCommit = rw.next();
+				} catch (Exception e) {
+					// Ignore; ancestor remains null
+				}
 			}
 
-			if (monitor.isCanceled())
+			if (monitor.isCanceled()) {
 				throw new InterruptedException();
-
+			}
 			// set the labels
 			CompareConfiguration config = getCompareConfiguration();
 			config.setRightLabel(NLS.bind(LABELPATTERN, rightCommit
 					.getShortMessage(), CompareUtils.truncatedRevision(rightCommit.name())));
 
-			if (!useWorkspace)
+			if (!useWorkspace) {
 				config.setLeftLabel(NLS.bind(LABELPATTERN, headCommit
 						.getShortMessage(), CompareUtils.truncatedRevision(headCommit.name())));
-			else
+			} else {
 				config.setLeftLabel(UIText.GitMergeEditorInput_WorkspaceHeader);
-
-			if (ancestorCommit != null)
+			}
+			if (ancestorCommit != null) {
 				config.setAncestorLabel(NLS.bind(LABELPATTERN, ancestorCommit
 						.getShortMessage(), CompareUtils.truncatedRevision(ancestorCommit.name())));
-
+			} else if (unknownCherryPickParent) {
+				config.setAncestorLabel(NLS.bind(
+						UIText.GitMergeEditorInput_CherrypickParentHeader,
+						CompareUtils.truncatedRevision(rightCommit.name())));
+			}
 			// set title and icon
 			setTitle(NLS.bind(UIText.GitMergeEditorInput_MergeEditorTitle,
 					new Object[] {
@@ -329,20 +352,21 @@ public class GitMergeEditorInput extends CompareEditorInput {
 					continue;
 
 				ITypedElement right;
+				String encoding = null;
 				if (conflicting) {
 					GitFileRevision revision = GitFileRevision.inIndex(
 							repository, gitPath, DirCacheEntry.STAGE_3);
-					String encoding = CompareCoreUtils.getResourceEncoding(
-							repository, gitPath);
+					encoding = CompareCoreUtils.getResourceEncoding(repository,
+							gitPath);
 					right = new FileRevisionTypedElement(revision, encoding);
-				} else
+				} else {
 					right = CompareUtils.getFileRevisionTypedElement(gitPath,
 							headCommit, repository);
-
+				}
 				// can this really happen?
-				if (right instanceof EmptyTypedElement)
+				if (right instanceof EmptyTypedElement) {
 					continue;
-
+				}
 				ITypedElement left;
 				IFileRevision rev;
 				// if the file is not conflicting (as it was auto-merged)
@@ -435,11 +459,11 @@ public class GitMergeEditorInput extends CompareEditorInput {
 				}
 
 				int kind = Differencer.NO_CHANGE;
-				if (conflicting)
+				if (conflicting) {
 					kind = Differencer.CONFLICTING;
-				else if (modified)
+				} else if (modified) {
 					kind = Differencer.PSEUDO_CONFLICT;
-
+				}
 				IDiffContainer fileParent = getFileParent(result,
 						repositoryPath, file, location);
 
@@ -452,6 +476,14 @@ public class GitMergeEditorInput extends CompareEditorInput {
 					if (ancestor instanceof EmptyTypedElement) {
 						ancestor = null;
 					}
+				} else if (conflicting) {
+					GitFileRevision revision = GitFileRevision.inIndex(
+							repository, gitPath, DirCacheEntry.STAGE_1);
+					if (encoding == null) {
+						encoding = CompareCoreUtils
+								.getResourceEncoding(repository, gitPath);
+					}
+					ancestor = new FileRevisionTypedElement(revision, encoding);
 				}
 				// create the node as child
 				new DiffNode(fileParent, kind, ancestor, left, right);
