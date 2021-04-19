@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (C) 2013 Robin Stocker <robin@nibor.org> and others.
+ * Copyright (C) 2013, 2021 Robin Stocker <robin@nibor.org> and others.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License 2.0
@@ -11,14 +11,17 @@
 package org.eclipse.egit.ui.common;
 
 import static org.eclipse.swtbot.swt.finder.matchers.WidgetMatcherFactory.widgetOfType;
+import static org.eclipse.swtbot.swt.finder.matchers.WidgetMatcherFactory.withTooltip;
 
 import java.util.List;
 
 import org.eclipse.swt.custom.StyledText;
+import org.eclipse.swt.widgets.ToolItem;
 import org.eclipse.swtbot.eclipse.finder.SWTWorkbenchBot;
 import org.eclipse.swtbot.eclipse.finder.widgets.SWTBotEditor;
 import org.eclipse.swtbot.swt.finder.waits.Conditions;
 import org.eclipse.swtbot.swt.finder.widgets.SWTBotStyledText;
+import org.eclipse.swtbot.swt.finder.widgets.SWTBotToolbarToggleButton;
 import org.eclipse.ui.IEditorReference;
 import org.hamcrest.BaseMatcher;
 import org.hamcrest.Description;
@@ -46,6 +49,25 @@ public class CompareEditorTester {
 
 	public SWTBotStyledText getRightEditor() {
 		return getNonAncestorEditor(1);
+	}
+
+	public SWTBotStyledText getAncestorEditor() {
+		List<StyledText> texts = editor.bot().getFinder()
+				.findControls(widgetOfType(StyledText.class));
+		if (texts.size() < 3) {
+			// Click "Show Ancestor Pane"
+			List<ToolItem> toolitems = editor.bot().getFinder()
+					.findControls(withTooltip("Show Ancestor Pane"));
+			if (toolitems != null && !toolitems.isEmpty()) {
+				new SWTBotToolbarToggleButton(toolitems.get(0)).click();
+			}
+			texts = editor.bot().getFinder()
+					.findControls(widgetOfType(StyledText.class));
+			if (texts.size() < 3) {
+				return null;
+			}
+		}
+		return new SWTBotStyledText(texts.get(0));
 	}
 
 	public boolean isDirty() {
