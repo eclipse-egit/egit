@@ -5503,6 +5503,9 @@ public class UIText extends NLS {
 	public static String SwitchToMenu_CommitMenuLabel;
 
 	/** */
+	public static String GitMergeEditorInput_AncestorUnknownHeader;
+
+	/** */
 	public static String GitMergeEditorInput_CalculatingDiffTaskName;
 
 	/** */
