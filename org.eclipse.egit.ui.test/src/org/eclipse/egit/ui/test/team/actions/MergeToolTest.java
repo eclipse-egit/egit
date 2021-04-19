@@ -21,16 +21,21 @@ import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.Path;
 import org.eclipse.egit.core.JobFamilies;
 import org.eclipse.egit.core.internal.indexdiff.IndexDiffCache;
+import org.eclipse.egit.core.op.CherryPickOperation;
 import org.eclipse.egit.core.op.MergeOperation;
+import org.eclipse.egit.ui.Activator;
 import org.eclipse.egit.ui.UIPreferences;
 import org.eclipse.egit.ui.common.CompareEditorTester;
 import org.eclipse.egit.ui.common.LocalRepositoryTestCase;
 import org.eclipse.egit.ui.test.ContextMenuHelper;
 import org.eclipse.egit.ui.test.TestUtil;
+import org.eclipse.jgit.api.CherryPickResult;
+import org.eclipse.jgit.api.CherryPickResult.CherryPickStatus;
 import org.eclipse.jgit.api.MergeResult;
 import org.eclipse.jgit.api.MergeResult.MergeStatus;
 import org.eclipse.jgit.junit.TestRepository;
 import org.eclipse.jgit.lib.Repository;
+import org.eclipse.jgit.revwalk.RevCommit;
 import org.eclipse.swtbot.swt.finder.widgets.SWTBotTree;
 import org.eclipse.swtbot.swt.finder.widgets.SWTBotTreeItem;
 import org.junit.After;
@@ -51,20 +56,20 @@ public class MergeToolTest extends LocalRepositoryTestCase {
 		File repositoryFile = createProjectAndCommitToRepository();
 		Repository repository = lookupRepository(repositoryFile);
 		testRepository = new TestRepository<>(repository);
-		mergeMode = org.eclipse.egit.ui.Activator.getDefault()
+		mergeMode = Activator.getDefault()
 				.getPreferenceStore().getInt(UIPreferences.MERGE_MODE);
 	}
 
 	@After
 	public void resetMergeMode() throws Exception {
-		org.eclipse.egit.ui.Activator.getDefault().getPreferenceStore()
+		Activator.getDefault().getPreferenceStore()
 				.setValue(UIPreferences.MERGE_MODE, mergeMode);
 	}
 
 	@Test
 	public void useHeadOptionShouldCauseFileToNotHaveConflictMarkers()
 			throws Exception {
-		org.eclipse.egit.ui.Activator.getDefault().getPreferenceStore()
+		Activator.getDefault().getPreferenceStore()
 				.setValue(UIPreferences.MERGE_MODE, 2);
 		IPath path = new Path(PROJ1).append("folder/test.txt");
 		testRepository.branch("stable").commit().add(path.toString(), "stable")
@@ -104,7 +109,7 @@ public class MergeToolTest extends LocalRepositoryTestCase {
 
 	@Test
 	public void useHeadOptionOpenedAgainShouldHaveEdits() throws Exception {
-		org.eclipse.egit.ui.Activator.getDefault().getPreferenceStore()
+		Activator.getDefault().getPreferenceStore()
 				.setValue(UIPreferences.MERGE_MODE, 2);
 		IPath path = new Path(PROJ1).append("folder/test.txt");
 		testRepository.branch("stable").commit().add(path.toString(), "stable")
@@ -153,5 +158,43 @@ public class MergeToolTest extends LocalRepositoryTestCase {
 
 		text = compareEditor.getLeftEditor().getText();
 		assertThat(text, is("master edited"));
+	}
+
+	@Test
+	public void verifyCherrypickBase() throws Exception {
+		Activator.getDefault().getPreferenceStore()
+				.setValue(UIPreferences.MERGE_MODE, 2);
+		testRepository.branch("stable").commit()
+				.add(FILE1_PATH, "stable").create();
+		touchAndSubmit("master", "master");
+		RevCommit stableTip = testRepository.branch("stable").commit()
+				.add(FILE1_PATH, "stable 2").create();
+		CherryPickOperation op = new CherryPickOperation(
+				testRepository.getRepository(), stableTip);
+		op.execute(null);
+		CherryPickResult result = op.getResult();
+
+		assertThat(result.getStatus(), is(CherryPickStatus.CONFLICTING));
+
+		IndexDiffCache cache = IndexDiffCache.getInstance();
+		cache.getIndexDiffCacheEntry(testRepository.getRepository());
+		TestUtil.joinJobs(JobFamilies.INDEX_DIFF_CACHE_UPDATE);
+
+		SWTBotTree packageExplorer = TestUtil.getExplorerTree();
+		TestUtil.navigateTo(packageExplorer, PROJ1, FOLDER, FILE1).select();
+		ContextMenuHelper.clickContextMenu(packageExplorer,
+				util.getPluginLocalizedValue("TeamMenu.label"),
+				util.getPluginLocalizedValue("MergeToolAction.label"));
+
+		CompareEditorTester compareEditor = CompareEditorTester
+				.forTitleContaining("Merging");
+
+		String text = compareEditor.getLeftEditor().getText();
+		assertThat(text, is("master"));
+		text = compareEditor.getRightEditor().getText();
+		assertThat(text, is("stable 2"));
+		text = compareEditor.getAncestorEditor().getText();
+		// If the common ancestor was used the content would be "Hello, world"
+		assertThat(text, is("stable"));
 	}
 }
