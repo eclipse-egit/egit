@@ -30,9 +30,6 @@ import org.eclipse.ui.IEditorInput;
 /**
  * Editable revision backed by an {@link IFile}. Used for conflict resolutions
  * with stage 2 (previous HEAD) as input; updating the working tree file.
- * <p>
- * Use {@link LocationEditableRevision} if you just have a path (for
- * non-workspace files).
  */
 public class ResourceEditableRevision extends EditableRevision
 		implements IResourceProvider {

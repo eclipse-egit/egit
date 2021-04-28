@@ -12,6 +12,8 @@ package org.eclipse.egit.ui.internal.merge;
 
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
+import java.net.URI;
+import java.nio.charset.Charset;
 import java.text.MessageFormat;
 import java.time.Instant;
 import java.util.ArrayList;
@@ -32,13 +34,21 @@ import org.eclipse.compare.structuremergeviewer.IDiffElement;
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.IResource;
+import org.eclipse.core.resources.IWorkspace;
+import org.eclipse.core.resources.IWorkspaceRunnable;
+import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.IProgressMonitor;
+import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Path;
+import org.eclipse.core.runtime.Status;
+import org.eclipse.core.runtime.SubMonitor;
+import org.eclipse.core.runtime.jobs.Job;
 import org.eclipse.egit.core.RepositoryUtil;
 import org.eclipse.egit.core.internal.CompareCoreUtils;
 import org.eclipse.egit.core.internal.CoreText;
+import org.eclipse.egit.core.internal.efs.HiddenResources;
 import org.eclipse.egit.core.internal.storage.GitFileRevision;
 import org.eclipse.egit.core.internal.util.ResourceUtil;
 import org.eclipse.egit.core.util.RevCommitUtils;
@@ -48,7 +58,6 @@ import org.eclipse.egit.ui.internal.UIText;
 import org.eclipse.egit.ui.internal.revision.EditableRevision;
 import org.eclipse.egit.ui.internal.revision.FileRevisionTypedElement;
 import org.eclipse.egit.ui.internal.revision.GitCompareFileRevisionEditorInput.EmptyTypedElement;
-import org.eclipse.egit.ui.internal.revision.LocationEditableRevision;
 import org.eclipse.egit.ui.internal.revision.ResourceEditableRevision;
 import org.eclipse.egit.ui.internal.synchronize.compare.LocalNonWorkspaceTypedElement;
 import org.eclipse.jface.operation.IRunnableContext;
@@ -73,13 +82,12 @@ import org.eclipse.swt.widgets.Display;
 import org.eclipse.team.core.history.IFileRevision;
 import org.eclipse.team.internal.ui.synchronize.EditableSharedDocumentAdapter.ISharedDocumentAdapterListener;
 import org.eclipse.team.internal.ui.synchronize.LocalResourceTypedElement;
-import org.eclipse.team.ui.synchronize.SaveableCompareEditorInput;
 import org.eclipse.ui.ISharedImages;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.ide.IDE.SharedImages;
 
 /**
- * A Git-specific {@link CompareEditorInput}
+ * A Git-specific {@link CompareEditorInput} for merging conflicting files.
  */
 @SuppressWarnings("restriction")
 public class GitMergeEditorInput extends CompareEditorInput {
@@ -94,6 +102,8 @@ public class GitMergeEditorInput extends CompareEditorInput {
 	private final boolean useWorkspace;
 
 	private final IPath[] locations;
+
+	private List<IFile> toDelete;
 
 	/**
 	 * @param useWorkspace
@@ -129,6 +139,90 @@ public class GitMergeEditorInput extends CompareEditorInput {
 			}
 		}
 		return super.getAdapter(adapter);
+	}
+
+	@Override
+	protected void contentsCreated() {
+		super.contentsCreated();
+		// select the first conflict
+		getNavigator().selectChange(true);
+	}
+
+	@Override
+	protected void handleDispose() {
+		super.handleDispose();
+		// We do NOT dispose the images, as these are shared.
+		//
+		// We need to remove the temporary resources. A CompareEditorInput is
+		// supposed to be the very last thing that is disposed in a compare
+		// viewer, but this is not always true. If content merge viewers add
+		// additional widgets, for instance for the Java structure comparison,
+		// we're suddenly no longer the last item to be disposed. The various
+		// viewers (left, right, structure, and so on) are all disposed when
+		// their widgets are disposed. Widget disposal happens recursively
+		// top-down on the UI thread, so an asyncExec should be safe here to
+		// ensure that we remove the files only once everything else has been
+		// disposed of. If we delete temporary resources before all viewers had
+		// disconnected the Document, some might not disconnect because
+		// SharedDocumentAdapter.getDocumentKey() returns null if the file has
+		// been deleted. If this happens the framework will find that still
+		// connected document the next time this resource is opened and show
+		// that instead of the true resource contents. This is wrong and is very
+		// annoying if this cached document is dirty: one can open only this
+		// dirty version from then on, until the next restart of Eclipse.
+		PlatformUI.getWorkbench().getDisplay().asyncExec(this::cleanUp);
+	}
+
+	private void cleanUp() {
+		if (toDelete == null || toDelete.isEmpty()) {
+			return;
+		}
+		List<IFile> toClean = toDelete;
+		toDelete = null;
+		// Don't clean up if the workbench is shutting down; we would exit with
+		// unsaved workspace changes. Instead, EGit core cleans the project on
+		// start.
+		Job job = new Job(UIText.GitMergeEditorInput_ResourceCleanupJobName) {
+
+			@Override
+			public boolean shouldSchedule() {
+				return super.shouldSchedule()
+						&& !PlatformUI.getWorkbench().isClosing();
+			}
+
+			@Override
+			public boolean shouldRun() {
+				return super.shouldRun()
+						&& !PlatformUI.getWorkbench().isClosing();
+			}
+
+			@Override
+			protected IStatus run(IProgressMonitor monitor) {
+				IWorkspaceRunnable remove = m -> {
+					SubMonitor progress = SubMonitor.convert(m, toClean.size());
+					for (IFile tmp : toClean) {
+						if (PlatformUI.getWorkbench().isClosing()) {
+							return;
+						}
+						try {
+							tmp.delete(true, progress.newChild(1));
+						} catch (CoreException e) {
+							// Ignore
+						}
+					}
+				};
+				try {
+					ResourcesPlugin.getWorkspace().run(remove, null,
+							IWorkspace.AVOID_UPDATE, monitor);
+				} catch (CoreException e) {
+					return e.getStatus();
+				}
+				return Status.OK_STATUS;
+			}
+		};
+		job.setSystem(true);
+		job.setUser(false);
+		job.schedule();
 	}
 
 	private static boolean isUIThread() {
@@ -269,19 +363,6 @@ public class GitMergeEditorInput extends CompareEditorInput {
 		}
 	}
 
-	@Override
-	protected void contentsCreated() {
-		super.contentsCreated();
-		// select the first conflict
-		getNavigator().selectChange(true);
-	}
-
-	@Override
-	protected void handleDispose() {
-		super.handleDispose();
-		// we do NOT dispose the images, as these are shared
-	}
-
 	@SuppressWarnings("unused")
 	private IDiffContainer buildDiffContainer(Repository repository,
 			RevCommit headCommit, RevCommit ancestorCommit,
@@ -381,20 +462,22 @@ public class GitMergeEditorInput extends CompareEditorInput {
 							.equals(dirCacheEntry.getLastModifiedInstant());
 				}
 				if (useWorkingTree) {
+					LocalResourceTypedElement item;
 					if (file != null) {
-						left = SaveableCompareEditorInput
-								.createFileElement(file);
+						item = new LocalResourceTypedElement(file);
 					} else {
-						left = new LocalNonWorkspaceTypedElement(repository,
+						item = new LocalNonWorkspaceTypedElement(repository,
 								location);
 					}
-					if (left instanceof LocalResourceTypedElement) {
-						((LocalResourceTypedElement) left)
-								.setSharedDocumentListener(
-										new LocalResourceSaver(
-												(LocalResourceTypedElement) left));
-					}
+					item.setSharedDocumentListener(
+							new LocalResourceSaver(item));
+					left = item;
 				} else {
+					IFile rsc = file != null ? file
+							: createHiddenResource(location.toFile().toURI(),
+									tw.getNameString(), null);
+					assert rsc != null;
+					// Stage 2 from index with backing IResource
 					rev = GitFileRevision.inIndex(repository, gitPath,
 							DirCacheEntry.STAGE_2);
 					IRunnableContext runnableContext = getContainer();
@@ -403,48 +486,16 @@ public class GitMergeEditorInput extends CompareEditorInput {
 								.getProgressService();
 						assert runnableContext != null;
 					}
-					if (file != null) {
-						left = new ResourceEditableRevision(rev, file,
-								runnableContext);
-					} else {
-						left = new LocationEditableRevision(rev, location,
-								runnableContext);
-					}
+					left = new ResourceEditableRevision(rev, rsc,
+							runnableContext);
 					// 'left' saves to the working tree. Update the index entry
 					// with the current time. Normal conflict stages have a
 					// timestamp of zero, so this is a non-invasive fully
 					// compatible way to mark this conflict stage so that the
 					// next time we do take the file contents.
-					((EditableRevision) left)
-							.addContentChangeListener(source -> {
-								DirCache cache = null;
-								try {
-									cache = repository.lockDirCache();
-									DirCacheEditor editor = cache.editor();
-									editor.add(new PathEdit(gitPath) {
-
-										private boolean done;
-
-										@Override
-										public void apply(DirCacheEntry ent) {
-											if (!done && ent.getStage() > 0) {
-												ent.setLastModified(
-														Instant.now());
-												done = true;
-											}
-										}
-									});
-									editor.commit();
-								} catch (RuntimeException | IOException e) {
-									Activator.logError(MessageFormat.format(
-											UIText.GitMergeEditorInput_ErrorUpdatingIndex,
-											gitPath), e);
-								} finally {
-									if (cache != null) {
-										cache.unlock();
-									}
-								}
-							});
+					((EditableRevision) left).addContentChangeListener(
+							source -> updateIndexTimestamp(repository,
+									gitPath));
 					// make sure we don't need a round trip later
 					try {
 						((EditableRevision) left).cacheContents(monitor);
@@ -484,6 +535,49 @@ public class GitMergeEditorInput extends CompareEditorInput {
 				new DiffNode(fileParent, kind, ancestor, left, right);
 			}
 			return result;
+		}
+	}
+
+	private IFile createHiddenResource(URI uri, String name, Charset encoding)
+			throws IOException {
+		try {
+			IFile tmp = HiddenResources.INSTANCE.createFile(uri, name, encoding,
+					null);
+			if (toDelete == null) {
+				toDelete = new ArrayList<>();
+			}
+			toDelete.add(tmp);
+			return tmp;
+		} catch (CoreException e) {
+			throw new IOException(e.getMessage(), e);
+		}
+	}
+
+	private void updateIndexTimestamp(Repository repository, String gitPath) {
+		DirCache cache = null;
+		try {
+			cache = repository.lockDirCache();
+			DirCacheEditor editor = cache.editor();
+			editor.add(new PathEdit(gitPath) {
+
+				private boolean done;
+
+				@Override
+				public void apply(DirCacheEntry ent) {
+					if (!done && ent.getStage() > 0) {
+						ent.setLastModified(Instant.now());
+						done = true;
+					}
+				}
+			});
+			editor.commit();
+		} catch (IOException e) {
+			Activator.logError(MessageFormat.format(
+					UIText.GitMergeEditorInput_ErrorUpdatingIndex, gitPath), e);
+		} finally {
+			if (cache != null) {
+				cache.unlock();
+			}
 		}
 	}
 
@@ -580,6 +674,5 @@ public class GitMergeEditorInput extends CompareEditorInput {
 		public void handleDocumentSaved() {
 			// Nothing
 		}
-
 	}
 }
