@@ -12,6 +12,7 @@ package org.eclipse.egit.core.internal.efs;
 
 import java.io.IOException;
 import java.net.URI;
+import java.net.URISyntaxException;
 import java.nio.charset.Charset;
 import java.nio.file.Files;
 import java.text.MessageFormat;
@@ -30,6 +31,8 @@ import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.SubMonitor;
 import org.eclipse.egit.core.Activator;
+import org.eclipse.egit.core.internal.efs.EgitFileSystem.UriComponents;
+import org.eclipse.jgit.lib.Repository;
 
 /**
  * Manages a hidden project containing {@link IFile}s linked to EFS URIs.
@@ -124,8 +127,7 @@ public enum HiddenResources {
 			return;
 		}
 		initialized = true;
-		// Clean out all existing linked resources. There are internal methods
-		// that might simplify this, but they're not accessible.
+		// Clean out all existing linked resources. There are internal methods that would make this very simple, but they're not accessible.
 		IWorkspaceRunnable clean = m -> {
 			IResource[] resources = project.members();
 			SubMonitor progress = SubMonitor.convert(m, resources.length);
@@ -188,6 +190,67 @@ public enum HiddenResources {
 			return false;
 		}
 		return PROJECT_NAME.equals(resource.getName());
+	}
+
+	/**
+	 * Obtains the {@link Repository} from an EGit-internal URI.
+	 *
+	 * @param uri
+	 *            to get the repository from
+	 * @return the {@link Repository}, or {@code null} if none could be
+	 *         determined
+	 */
+	public Repository getRepository(URI uri) {
+		if (!EgitFileSystem.SCHEME.equals(uri.getScheme())) {
+			return null;
+		}
+		try {
+			return UriComponents.parse(uri).getRepository();
+		} catch (URISyntaxException e) {
+			return null;
+		}
+	}
+
+	/**
+	 * Obtains the git path from an EGit-internal URI.
+	 *
+	 * @param uri
+	 *            to get the git path from
+	 * @return the git path, or {@code null} if none could be determined
+	 */
+	public String getGitPath(URI uri) {
+		if (!EgitFileSystem.SCHEME.equals(uri.getScheme())) {
+			return null;
+		}
+		try {
+			return UriComponents.parse(uri).getGitPath();
+		} catch (URISyntaxException e) {
+			return null;
+		}
+	}
+
+	/**
+	 * Obtains the git path from an EGit-internal URI, if that URI is for the given repository.
+	 *
+	 * @param uri
+	 *            to get the git path from
+	 * @param repository the URI should be for
+	 * @return the git path, or {@code null} if none could be
+	 *         determined or the URI is not for the given repository
+	 */
+	public String getGitPath(URI uri, Repository repository) {
+		if (!EgitFileSystem.SCHEME.equals(uri.getScheme())) {
+			return null;
+		}
+		try {
+			UriComponents parsed = UriComponents.parse(uri);
+			if (parsed.getRepoDir().equals(repository.getDirectory())) {
+				return parsed.getGitPath();
+			}
+		} catch (URISyntaxException e) {
+			// Ignore
+		}
+		return null;
 	}
 
 	private IProject getHiddenProject(IProgressMonitor monitor) throws CoreException {
