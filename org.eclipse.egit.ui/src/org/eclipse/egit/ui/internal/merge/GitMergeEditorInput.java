@@ -21,16 +21,21 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 
 import org.eclipse.compare.CompareConfiguration;
 import org.eclipse.compare.CompareEditorInput;
+import org.eclipse.compare.CompareViewerPane;
 import org.eclipse.compare.IResourceProvider;
 import org.eclipse.compare.ITypedElement;
+import org.eclipse.compare.contentmergeviewer.ContentMergeViewer;
+import org.eclipse.compare.rangedifferencer.RangeDifference;
 import org.eclipse.compare.structuremergeviewer.DiffNode;
 import org.eclipse.compare.structuremergeviewer.Differencer;
+import org.eclipse.compare.structuremergeviewer.ICompareInput;
 import org.eclipse.compare.structuremergeviewer.IDiffContainer;
 import org.eclipse.compare.structuremergeviewer.IDiffElement;
 import org.eclipse.core.filesystem.EFS;
@@ -66,7 +71,13 @@ import org.eclipse.egit.ui.internal.revision.FileRevisionTypedElement;
 import org.eclipse.egit.ui.internal.revision.GitCompareFileRevisionEditorInput.EmptyTypedElement;
 import org.eclipse.egit.ui.internal.revision.ResourceEditableRevision;
 import org.eclipse.egit.ui.internal.synchronize.compare.LocalNonWorkspaceTypedElement;
+import org.eclipse.jface.action.ActionContributionItem;
+import org.eclipse.jface.action.IAction;
+import org.eclipse.jface.action.IContributionItem;
+import org.eclipse.jface.action.ToolBarManager;
+import org.eclipse.jface.commands.ActionHandler;
 import org.eclipse.jface.operation.IRunnableContext;
+import org.eclipse.jface.viewers.Viewer;
 import org.eclipse.jgit.api.MergeCommand.ConflictStyle;
 import org.eclipse.jgit.attributes.Attribute;
 import org.eclipse.jgit.attributes.Attributes;
@@ -88,13 +99,17 @@ import org.eclipse.jgit.treewalk.TreeWalk;
 import org.eclipse.jgit.treewalk.filter.PathFilterGroup;
 import org.eclipse.osgi.util.NLS;
 import org.eclipse.swt.graphics.Image;
+import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.team.core.history.IFileRevision;
 import org.eclipse.team.internal.ui.synchronize.EditableSharedDocumentAdapter.ISharedDocumentAdapterListener;
 import org.eclipse.team.internal.ui.synchronize.LocalResourceTypedElement;
 import org.eclipse.ui.ISharedImages;
 import org.eclipse.ui.PlatformUI;
+import org.eclipse.ui.handlers.IHandlerActivation;
+import org.eclipse.ui.handlers.IHandlerService;
 import org.eclipse.ui.ide.IDE.SharedImages;
+import org.eclipse.ui.services.IServiceLocator;
 
 /**
  * A Git-specific {@link CompareEditorInput} for merging conflicting files.
@@ -116,6 +131,10 @@ public class GitMergeEditorInput extends CompareEditorInput {
 	private final IPath[] locations;
 
 	private List<IFile> toDelete;
+
+	private Map<String, IHandlerActivation> activations = new HashMap<>();
+
+	private CompareEditorInputViewerAction toggleCurrentChanges;
 
 	/**
 	 * Creates a new {@link GitMergeEditorInput}.
@@ -166,10 +185,99 @@ public class GitMergeEditorInput extends CompareEditorInput {
 	}
 
 	@Override
+	public Viewer findContentViewer(Viewer oldViewer, ICompareInput input,
+			Composite parent) {
+		Viewer newViewer = super.findContentViewer(oldViewer, input, parent);
+		ToolBarManager manager = CompareViewerPane.getToolBarManager(parent);
+		if (manager != null) {
+			setToggleCurrentChangesAction(manager, newViewer, input);
+		}
+		return newViewer;
+	}
+
+	@FunctionalInterface
+	private interface ActionSupplier {
+		public CompareEditorInputViewerAction get(boolean create);
+	}
+
+	private void setToggleCurrentChangesAction(ToolBarManager manager,
+			Viewer newViewer, ICompareInput input) {
+		boolean isApplicable = newViewer instanceof ContentMergeViewer
+				&& input instanceof MergeDiffNode
+				&& input.getAncestor() != null;
+		setAction(manager, newViewer, isApplicable,
+				ToggleCurrentChangesAction.COMMAND_ID,
+				create -> {
+					if (toggleCurrentChanges == null && create) {
+						toggleCurrentChanges = new ToggleCurrentChangesAction(
+								UIText.GitMergeEditorInput_ToggleCurrentChangesLabel,
+								this);
+						toggleCurrentChanges
+								.setId(ToggleCurrentChangesAction.COMMAND_ID);
+					}
+					return toggleCurrentChanges;
+				});
+	}
+
+	private void setAction(ToolBarManager manager, Viewer viewer,
+			boolean isApplicable, String id, ActionSupplier supplier) {
+		IContributionItem item = manager.find(id);
+		if (item != null) {
+			if (item instanceof ActionContributionItem) {
+				IAction action = ((ActionContributionItem) item).getAction();
+				if (action instanceof CompareEditorInputViewerAction) {
+					((CompareEditorInputViewerAction) action).setViewer(
+							isApplicable ? (ContentMergeViewer) viewer : null);
+					action.setEnabled(isApplicable);
+					if (item.isVisible() != isApplicable) {
+						item.setVisible(isApplicable);
+						manager.update(true);
+					}
+				}
+			}
+		} else if (isApplicable) {
+			CompareEditorInputViewerAction action = supplier.get(true);
+			action.setViewer((ContentMergeViewer) viewer);
+			action.setEnabled(true);
+			manager.insert(0, new ActionContributionItem(action));
+			manager.update(true);
+			registerAction(action, id);
+		} else {
+			// Neither present nor applicable: disable it if it exists
+			CompareEditorInputViewerAction action = supplier.get(false);
+			if (action != null) {
+				action.setEnabled(false);
+			}
+		}
+	}
+
+	private void registerAction(IAction action, String commandId) {
+		if (activations.containsKey(commandId)) {
+			return;
+		}
+		action.setActionDefinitionId(commandId);
+		IServiceLocator locator = getContainer().getServiceLocator();
+		if (locator != null) {
+			IHandlerService handlers = locator
+					.getService(IHandlerService.class);
+			if (handlers != null) {
+				activations.put(commandId, handlers.activateHandler(commandId,
+						new ActionHandler(action)));
+			}
+		}
+	}
+
+	@Override
 	protected void handleDispose() {
 		super.handleDispose();
 		// We do NOT dispose the images, as these are shared.
-		//
+		activations.values()
+				.forEach(a -> a.getHandlerService().deactivateHandler(a));
+		activations.clear();
+		if (toggleCurrentChanges != null) {
+			toggleCurrentChanges.dispose();
+			toggleCurrentChanges = null;
+		}
 		// We need to remove the temporary resources. A CompareEditorInput is
 		// supposed to be the very last thing that is disposed in a compare
 		// viewer, but this is not always true. If content merge viewers add
@@ -302,6 +410,7 @@ public class GitMergeEditorInput extends CompareEditorInput {
 				throw new InvocationTargetException(e);
 			}
 
+			CompareConfiguration config = getCompareConfiguration();
 			// try to obtain the common ancestor
 			RevCommit ancestorCommit = null;
 			boolean unknownAncestor = false;
@@ -322,6 +431,11 @@ public class GitMergeEditorInput extends CompareEditorInput {
 					// was taken.
 					unknownAncestor = true;
 				}
+				config.setChangeIgnored(
+						config.isMirrored() ? RangeDifference.RIGHT
+								: RangeDifference.LEFT,
+						true);
+				config.setChangeIgnored(RangeDifference.ANCESTOR, true);
 				break;
 			default:
 				List<RevCommit> startPoints = new ArrayList<>();
@@ -341,7 +455,6 @@ public class GitMergeEditorInput extends CompareEditorInput {
 				throw new InterruptedException();
 			}
 			// set the labels
-			CompareConfiguration config = getCompareConfiguration();
 			config.setRightLabel(NLS.bind(LABELPATTERN, rightCommit
 					.getShortMessage(), CompareUtils.truncatedRevision(rightCommit.name())));
 
@@ -616,7 +729,7 @@ public class GitMergeEditorInput extends CompareEditorInput {
 					ancestor = new FileRevisionTypedElement(revision, encoding);
 				}
 				// create the node as child
-				new DiffNode(fileParent, kind, ancestor, left, right);
+				new MergeDiffNode(fileParent, kind, ancestor, left, right);
 			}
 			return result;
 		} catch (URISyntaxException e) {
