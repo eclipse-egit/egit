@@ -5527,6 +5527,9 @@ public class UIText extends NLS {
 	public static String GitMergeEditorInput_ResourceCleanupJobName;
 
 	/** */
+	public static String GitMergeEditorInput_ToggleCurrentChangesLabel;
+
+	/** */
 	public static String GitMergeEditorInput_WorkspaceHeader;
 
 	/** */
