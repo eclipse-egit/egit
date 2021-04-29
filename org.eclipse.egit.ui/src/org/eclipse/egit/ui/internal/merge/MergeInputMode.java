@@ -24,11 +24,17 @@ public enum MergeInputMode {
 	WORKTREE,
 
 	/** Use stage_2, i.e., the 'ours' version. */
-	STAGE_2;
+	STAGE_2,
+
+	/**
+	 * Use the working tree file with all conflicts resolved to the 'ours' hunks
+	 * (git merge -X ours).
+	 */
+	MERGED_OURS;
 
 	/**
 	 * Leniently converts an integer to a {@link MergeInputMode}. Unknown
-	 * integers are converted to {@link #STAGE_2}.
+	 * integers are converted to {@link #MERGED_OURS}.
 	 *
 	 * @param i
 	 *            integer to convert
@@ -39,7 +45,10 @@ public enum MergeInputMode {
 		if (i == 1) {
 			return WORKTREE;
 		}
-		return STAGE_2;
+		if (i == 2) {
+			return STAGE_2;
+		}
+		return MERGED_OURS;
 	}
 
 	/**
