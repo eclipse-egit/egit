@@ -66,8 +66,6 @@ import org.eclipse.jgit.revwalk.filter.RevFilter;
 import org.eclipse.jgit.treewalk.AbstractTreeIterator;
 import org.eclipse.jgit.treewalk.FileTreeIterator;
 import org.eclipse.jgit.treewalk.TreeWalk;
-import org.eclipse.jgit.treewalk.filter.AndTreeFilter;
-import org.eclipse.jgit.treewalk.filter.NotIgnoredFilter;
 import org.eclipse.jgit.treewalk.filter.PathFilterGroup;
 import org.eclipse.osgi.util.NLS;
 import org.eclipse.swt.graphics.Image;
@@ -296,29 +294,23 @@ public class GitMergeEditorInput extends CompareEditorInput {
 		try (TreeWalk tw = new TreeWalk(repository)) {
 			int dirCacheIndex = tw.addTree(new DirCacheIterator(repository
 					.readDirCache()));
-			int fileTreeIndex = tw.addTree(new FileTreeIterator(repository));
+			FileTreeIterator fIter = new FileTreeIterator(repository);
+			int fileTreeIndex = tw.addTree(fIter);
+			fIter.setDirCacheIterator(tw, dirCacheIndex);
 			int repositoryTreeIndex = tw.addTree(rw.parseTree(repository
 					.resolve(Constants.HEAD)));
 
-			// skip ignored resources
-			NotIgnoredFilter notIgnoredFilter = new NotIgnoredFilter(
-					fileTreeIndex);
 			// filter by selected resources
-			if (filterPaths.size() > 1) {
-				tw.setFilter(AndTreeFilter.create(
-						PathFilterGroup.createFromStrings(filterPaths),
-						notIgnoredFilter));
-			} else if (filterPaths.size() > 0) {
-				String path = filterPaths.get(0);
-				if (path.isEmpty()) {
-					tw.setFilter(notIgnoredFilter);
+			if (!filterPaths.isEmpty()) {
+				if (filterPaths.size() > 1) {
+					tw.setFilter(
+							PathFilterGroup.createFromStrings(filterPaths));
 				} else {
-					tw.setFilter(AndTreeFilter.create(
-							PathFilterGroup.createFromStrings(path),
-							notIgnoredFilter));
+					String path = filterPaths.get(0);
+					if (!path.isEmpty()) {
+						tw.setFilter(PathFilterGroup.createFromStrings(path));
+					}
 				}
-			} else {
-				tw.setFilter(notIgnoredFilter);
 			}
 			tw.setRecursive(true);
 
