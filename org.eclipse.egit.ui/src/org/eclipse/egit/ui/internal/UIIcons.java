@@ -373,6 +373,18 @@ public class UIIcons {
 	 */
 	public final static ImageDescriptor REMOVE_FROM_REPO_GROUP;
 
+	/**
+	 * Icon for the "ignore changes from current" action in the merge editor in
+	 * normal mode.
+	 */
+	public final static ImageDescriptor IGNORE_LEFT_CHANGES;
+
+	/**
+	 * Icon for the "ignore changes from current" action in the merge editor in
+	 * mirrored mode.
+	 */
+	public final static ImageDescriptor IGNORE_RIGHT_CHANGES;
+
 	/** base URL */
 	public final static URL base;
 
@@ -508,6 +520,8 @@ public class UIIcons {
 		MERGE_TOOL = map("obj16/mergetool.png"); //$NON-NLS-1$
 		OPEN_COMMIT = map("obj16/open-commit.png"); //$NON-NLS-1$
 		REMOVE_FROM_REPO_GROUP = map("obj16/clear.png"); //$NON-NLS-1$
+		IGNORE_LEFT_CHANGES = map("etool16/merge_ignore_left.png"); //$NON-NLS-1$
+		IGNORE_RIGHT_CHANGES = map("etool16/merge_ignore_right.png"); //$NON-NLS-1$
 	}
 
 	private static ImageDescriptor map(final String icon) {
