@@ -29,7 +29,7 @@ import org.eclipse.swt.widgets.Shell;
  */
 public class MergeModeDialog extends Dialog {
 
-	private MergeInputMode mode = MergeInputMode.STAGE_2;
+	private MergeInputMode mode = MergeInputMode.MERGED_OURS;
 
 	private Button dontAskAgain;
 
@@ -51,6 +51,15 @@ public class MergeModeDialog extends Dialog {
 	protected Control createDialogArea(Composite parent) {
 		Composite main = new Composite(parent, SWT.NONE);
 		main.setLayout(new GridLayout(1, false));
+		final Button useMerged = new Button(main, SWT.RADIO);
+		useMerged.setText(UIText.MergeModeDialog_MergeMode_3_Label);
+		useMerged.addSelectionListener(new SelectionAdapter() {
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				mode = MergeInputMode.MERGED_OURS;
+			}
+		});
+		useMerged.setSelection(true);
 		final Button useWorkspace = new Button(main, SWT.RADIO);
 		useWorkspace.setText(UIText.MergeModeDialog_MergeMode_1_Label);
 		useWorkspace.addSelectionListener(new SelectionAdapter() {
@@ -68,7 +77,7 @@ public class MergeModeDialog extends Dialog {
 				mode = MergeInputMode.STAGE_2;
 			}
 		});
-		useHead.setSelection(true);
+		useHead.setSelection(false);
 
 		dontAskAgain = new Button(main, SWT.CHECK);
 		dontAskAgain.setText(UIText.MergeModeDialog_DontAskAgainLabel);

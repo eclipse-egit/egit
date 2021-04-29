@@ -13,12 +13,14 @@ package org.eclipse.egit.ui.internal.merge;
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 import java.net.URI;
+import java.net.URISyntaxException;
 import java.nio.charset.Charset;
 import java.text.MessageFormat;
 import java.time.Instant;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
@@ -31,6 +33,7 @@ import org.eclipse.compare.structuremergeviewer.DiffNode;
 import org.eclipse.compare.structuremergeviewer.Differencer;
 import org.eclipse.compare.structuremergeviewer.IDiffContainer;
 import org.eclipse.compare.structuremergeviewer.IDiffElement;
+import org.eclipse.core.filesystem.EFS;
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.IResource;
@@ -49,7 +52,10 @@ import org.eclipse.egit.core.RepositoryUtil;
 import org.eclipse.egit.core.RevUtils;
 import org.eclipse.egit.core.internal.CompareCoreUtils;
 import org.eclipse.egit.core.internal.CoreText;
+import org.eclipse.egit.core.internal.efs.EgitFileSystem;
 import org.eclipse.egit.core.internal.efs.HiddenResources;
+import org.eclipse.egit.core.internal.indexdiff.IndexDiffCache;
+import org.eclipse.egit.core.internal.indexdiff.IndexDiffCacheEntry;
 import org.eclipse.egit.core.internal.storage.GitFileRevision;
 import org.eclipse.egit.core.internal.util.ResourceUtil;
 import org.eclipse.egit.ui.Activator;
@@ -60,11 +66,15 @@ import org.eclipse.egit.ui.internal.revision.FileRevisionTypedElement;
 import org.eclipse.egit.ui.internal.revision.GitCompareFileRevisionEditorInput.EmptyTypedElement;
 import org.eclipse.egit.ui.internal.revision.ResourceEditableRevision;
 import org.eclipse.jface.operation.IRunnableContext;
+import org.eclipse.jgit.api.MergeCommand.ConflictStyle;
+import org.eclipse.jgit.attributes.Attribute;
+import org.eclipse.jgit.attributes.Attributes;
 import org.eclipse.jgit.dircache.DirCache;
 import org.eclipse.jgit.dircache.DirCacheEditor;
 import org.eclipse.jgit.dircache.DirCacheEditor.PathEdit;
 import org.eclipse.jgit.dircache.DirCacheEntry;
 import org.eclipse.jgit.dircache.DirCacheIterator;
+import org.eclipse.jgit.lib.ConfigConstants;
 import org.eclipse.jgit.lib.Constants;
 import org.eclipse.jgit.lib.ObjectId;
 import org.eclipse.jgit.lib.Repository;
@@ -100,6 +110,8 @@ public class GitMergeEditorInput extends CompareEditorInput {
 
 	private final boolean useWorkspace;
 
+	private final boolean useOurs;
+
 	private final IPath[] locations;
 
 	private List<IFile> toDelete;
@@ -114,7 +126,8 @@ public class GitMergeEditorInput extends CompareEditorInput {
 	 */
 	public GitMergeEditorInput(MergeInputMode mode, IPath... locations) {
 		super(new CompareConfiguration());
-		this.useWorkspace = MergeInputMode.WORKTREE.equals(mode);
+		this.useWorkspace = !MergeInputMode.STAGE_2.equals(mode);
+		this.useOurs = MergeInputMode.MERGED_OURS.equals(mode);
 		this.locations = locations;
 		CompareConfiguration config = getCompareConfiguration();
 		config.setLeftEditable(true);
@@ -128,12 +141,16 @@ public class GitMergeEditorInput extends CompareEditorInput {
 			if (selectedEdition instanceof DiffNode) {
 				DiffNode diffNode = (DiffNode) selectedEdition;
 				ITypedElement element = diffNode.getLeft();
-				if (element instanceof IResourceProvider) {
-					IResource resource = ((IResourceProvider) element)
-							.getResource();
-					if (adapter.isInstance(resource)) {
-						return resource;
-					}
+				IResource resource = null;
+				if (element instanceof HiddenResourceTypedElement) {
+					resource = ((HiddenResourceTypedElement) element)
+							.getRealFile();
+				}
+				if (resource == null && element instanceof IResourceProvider) {
+					resource = ((IResourceProvider) element).getResource();
+				}
+				if (resource != null && adapter.isInstance(resource)) {
+					return resource;
 				}
 			}
 		}
@@ -330,6 +347,9 @@ public class GitMergeEditorInput extends CompareEditorInput {
 			if (!useWorkspace) {
 				config.setLeftLabel(NLS.bind(LABELPATTERN, headCommit
 						.getShortMessage(), CompareUtils.truncatedRevision(headCommit.name())));
+			} else if (useOurs) {
+				config.setLeftLabel(
+						UIText.GitMergeEditorInput_WorkspaceOursHeader);
 			} else {
 				config.setLeftLabel(UIText.GitMergeEditorInput_WorkspaceHeader);
 			}
@@ -371,6 +391,7 @@ public class GitMergeEditorInput extends CompareEditorInput {
 		monitor.setTaskName(UIText.GitMergeEditorInput_CalculatingDiffTaskName);
 		IDiffContainer result = new DiffNode(Differencer.CONFLICTING);
 
+		ConflictStyle style = null;
 		try (TreeWalk tw = new TreeWalk(repository)) {
 			int dirCacheIndex = tw.addTree(new DirCacheIterator(repository
 					.readDirCache()));
@@ -461,16 +482,79 @@ public class GitMergeEditorInput extends CompareEditorInput {
 							.equals(dirCacheEntry.getLastModifiedInstant());
 				}
 				if (useWorkingTree) {
-					LocalResourceTypedElement item;
-					if (file != null) {
-						item = new LocalResourceTypedElement(file);
-					} else {
-						item = createWithHiddenResource(
-								location.toFile().toURI(),
-								tw.getNameString(), null);
+					boolean useOursFilter = conflicting && useOurs;
+					int conflictMarkerSize = 7; // Git default
+					if (useOursFilter) {
+						Attributes attributes = tw.getAttributes();
+						useOursFilter = attributes.canBeContentMerged();
+						if (useOursFilter) {
+							Attribute markerSize = attributes
+									.get("conflict-marker-size"); //$NON-NLS-1$
+							if (markerSize != null && Attribute.State.CUSTOM
+									.equals(markerSize.getState())) {
+								try {
+									conflictMarkerSize = Integer
+											.parseUnsignedInt(
+													markerSize.getValue());
+								} catch (NumberFormatException e) {
+									// Ignore
+								}
+							}
+						}
 					}
-					item.setSharedDocumentListener(
-							new LocalResourceSaver(item));
+					LocalResourceTypedElement item;
+					if (useOursFilter) {
+						if (style == null) {
+							style = repository.getConfig().getEnum(
+									ConfigConstants.CONFIG_MERGE_SECTION, null,
+									ConfigConstants.CONFIG_KEY_CONFLICTSTYLE,
+									ConflictStyle.MERGE);
+						}
+						boolean useDiff3Style = ConflictStyle.DIFF3
+								.equals(style);
+						String mode = (useDiff3Style ? 'O' : 'o')
+								+ Integer.toString(conflictMarkerSize);
+						URI uri = EgitFileSystem.createURI(repository, gitPath,
+								"WORKTREE:" + mode); //$NON-NLS-1$
+						Charset rscEncoding = null;
+						if (file != null) {
+							String encodingName = CompareCoreUtils
+									.getResourceEncoding(file);
+							try {
+								rscEncoding = Charset.forName(encodingName);
+							} catch (IllegalArgumentException e) {
+								// Ignore here; use default.
+							}
+						}
+						item = createWithHiddenResource(
+								uri, tw.getNameString(), file, rscEncoding);
+						if (file != null) {
+							item.setSharedDocumentListener(
+									new LocalResourceSaver(item) {
+
+										@Override
+										protected void save()
+												throws CoreException {
+											super.save();
+											file.refreshLocal(
+													IResource.DEPTH_ZERO, null);
+										}
+									});
+						} else {
+							item.setSharedDocumentListener(
+									new LocalResourceSaver(item));
+						}
+					} else {
+						if (file != null) {
+							item = new LocalResourceTypedElement(file);
+						} else {
+							item = createWithHiddenResource(
+									location.toFile().toURI(),
+									tw.getNameString(), null, null);
+						}
+						item.setSharedDocumentListener(
+								new LocalResourceSaver(item));
+					}
 					left = item;
 				} else {
 					IFile rsc = file != null ? file
@@ -535,13 +619,15 @@ public class GitMergeEditorInput extends CompareEditorInput {
 				new DiffNode(fileParent, kind, ancestor, left, right);
 			}
 			return result;
+		} catch (URISyntaxException e) {
+			throw new IOException(e.getMessage(), e);
 		}
 	}
 
 	private LocalResourceTypedElement createWithHiddenResource(URI uri,
-			String name, Charset encoding) throws IOException {
+			String name, IFile file, Charset encoding) throws IOException {
 		IFile tmp = createHiddenResource(uri, name, encoding);
-		return new LocalResourceTypedElement(tmp);
+		return new HiddenResourceTypedElement(tmp, file);
 	}
 
 	private IFile createHiddenResource(URI uri, String name, Charset encoding)
@@ -652,6 +738,45 @@ public class GitMergeEditorInput extends CompareEditorInput {
 			this.element = element;
 		}
 
+		protected void save() throws CoreException {
+			element.saveDocument(true, null);
+			refreshIndexDiff();
+		}
+
+		private void refreshIndexDiff() {
+			IResource resource = element.getResource();
+			if (resource != null && HiddenResources.INSTANCE
+					.isHiddenProject(resource.getProject())) {
+				String gitPath = null;
+				Repository repository = null;
+				URI uri = resource.getLocationURI();
+				if (EFS.SCHEME_FILE.equals(uri.getScheme())) {
+					IPath location = new Path(uri.getSchemeSpecificPart());
+					repository = ResourceUtil.getRepository(location);
+					if (repository != null) {
+						location = ResourceUtil.getRepositoryRelativePath(
+								location, repository);
+						if (location != null) {
+							gitPath = location.toPortableString();
+						}
+					}
+				} else {
+					repository = HiddenResources.INSTANCE.getRepository(uri);
+					if (repository != null) {
+						gitPath = HiddenResources.INSTANCE.getGitPath(uri);
+					}
+				}
+				if (gitPath != null && repository != null) {
+					IndexDiffCacheEntry indexDiffCacheForRepository = IndexDiffCache
+							.getInstance().getIndexDiffCacheEntry(repository);
+					if (indexDiffCacheForRepository != null) {
+						indexDiffCacheForRepository.refreshFiles(
+								Collections.singletonList(gitPath));
+					}
+				}
+			}
+		}
+
 		@Override
 		public void handleDocumentConnected() {
 			// Nothing
@@ -665,7 +790,7 @@ public class GitMergeEditorInput extends CompareEditorInput {
 		@Override
 		public void handleDocumentFlushed() {
 			try {
-				element.saveDocument(true, null);
+				save();
 			} catch (CoreException e) {
 				Activator.handleStatus(e.getStatus(), true);
 			}
@@ -679,6 +804,21 @@ public class GitMergeEditorInput extends CompareEditorInput {
 		@Override
 		public void handleDocumentSaved() {
 			// Nothing
+		}
+	}
+
+	private static class HiddenResourceTypedElement
+			extends LocalResourceTypedElement {
+
+		private final IFile realFile;
+
+		public HiddenResourceTypedElement(IFile file, IFile realFile) {
+			super(file);
+			this.realFile = realFile;
+		}
+
+		public IFile getRealFile() {
+			return realFile;
 		}
 	}
 }

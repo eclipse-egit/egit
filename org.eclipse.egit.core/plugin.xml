@@ -40,5 +40,20 @@
        <adapter type="org.eclipse.jgit.lib.Repository"/>
     </factory>
   </extension>
-
+  <extension
+       point="org.eclipse.core.filesystem.filesystems"
+       id="internalFS"
+       name="EGit-Internal File System" >
+    <filesystem scheme="egit-internal">
+       <run class="org.eclipse.egit.core.internal.efs.EgitFileSystem"/>
+       <!--
+       	  This EFS is a highly specialized *internal* file system that EGit uses
+       	  to provide access to conflicting files in merge editors. It is *not* a
+       	  general-purpose EFS for traversing git repositories. Third parties
+       	  should not use this EFS; if they do they are at their own peril. The
+       	  URI format and semantics may change at any time without notice. This
+       	  EFS is *not* API.
+       -->
+    </filesystem>
+  </extension>
 </plugin>
