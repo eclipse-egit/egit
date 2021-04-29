@@ -43,6 +43,7 @@ import org.eclipse.egit.ui.internal.commands.shared.AbstractRebaseCommandHandler
 import org.eclipse.egit.ui.internal.commands.shared.SkipRebaseCommand;
 import org.eclipse.egit.ui.internal.dialogs.CleanupUncomittedChangesDialog;
 import org.eclipse.egit.ui.internal.merge.GitMergeEditorInput;
+import org.eclipse.egit.ui.internal.merge.MergeInputMode;
 import org.eclipse.egit.ui.internal.merge.MergeModeDialog;
 import org.eclipse.jface.dialogs.IDialogConstants;
 import org.eclipse.jface.dialogs.MessageDialog;
@@ -577,12 +578,11 @@ public class RebaseResultDialog extends MessageDialog {
 					MergeModeDialog dlg = new MergeModeDialog(getParentShell());
 					if (dlg.open() != Window.OK)
 						return;
-					input = new GitMergeEditorInput(dlg.useWorkspace(),
+					input = new GitMergeEditorInput(dlg.getMergeMode(),
 							locations);
 				} else {
-					boolean useWorkspace = mergeMode == 1;
-					input = new GitMergeEditorInput(useWorkspace,
-							locations);
+					MergeInputMode mode = MergeInputMode.fromInteger(mergeMode);
+					input = new GitMergeEditorInput(mode, locations);
 				}
 				CompareUI.openCompareEditor(input);
 				return;
