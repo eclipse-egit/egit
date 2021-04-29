@@ -52,7 +52,7 @@ public class GitPreferenceRoot extends DoublePreferencesPreferencePage
 		implements IWorkbenchPreferencePage {
 	private final static int GROUP_SPAN = 3;
 
-	private final static String[][] MERGE_MODE_NAMES_AND_VALUES = new String[3][2];
+	private final static String[][] MERGE_MODE_NAMES_AND_VALUES = new String[4][2];
 
 	private final static String[][] HTTP_CLIENT_NAMES_AND_VALUES = new String[2][2];
 
@@ -61,10 +61,12 @@ public class GitPreferenceRoot extends DoublePreferencesPreferencePage
 	static {
 		MERGE_MODE_NAMES_AND_VALUES[0][0] = UIText.GitPreferenceRoot_MergeMode_0_Label;
 		MERGE_MODE_NAMES_AND_VALUES[0][1] = "0";//$NON-NLS-1$
-		MERGE_MODE_NAMES_AND_VALUES[1][0] = UIText.GitPreferenceRoot_MergeMode_1_Label;
-		MERGE_MODE_NAMES_AND_VALUES[1][1] = "1";//$NON-NLS-1$
-		MERGE_MODE_NAMES_AND_VALUES[2][0] = UIText.GitPreferenceRoot_MergeMode_2_Label;
-		MERGE_MODE_NAMES_AND_VALUES[2][1] = "2"; //$NON-NLS-1$
+		MERGE_MODE_NAMES_AND_VALUES[1][0] = UIText.GitPreferenceRoot_MergeMode_3_Label;
+		MERGE_MODE_NAMES_AND_VALUES[1][1] = "3"; //$NON-NLS-1$
+		MERGE_MODE_NAMES_AND_VALUES[2][0] = UIText.GitPreferenceRoot_MergeMode_1_Label;
+		MERGE_MODE_NAMES_AND_VALUES[2][1] = "1";//$NON-NLS-1$
+		MERGE_MODE_NAMES_AND_VALUES[3][0] = UIText.GitPreferenceRoot_MergeMode_2_Label;
+		MERGE_MODE_NAMES_AND_VALUES[3][1] = "2"; //$NON-NLS-1$
 
 		HTTP_CLIENT_NAMES_AND_VALUES[0][0] = UIText.GitPreferenceRoot_HttpClient_Jdk_Label;
 		HTTP_CLIENT_NAMES_AND_VALUES[0][1] = "jdk"; //$NON-NLS-1$
