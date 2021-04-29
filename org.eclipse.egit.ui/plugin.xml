@@ -1166,6 +1166,12 @@
             name="%UnifiedDiffQuickOutlineCommand.name"
             description="%UnifiedDiffQuickOutlineCommand.description">
       </command>
+      <command
+            categoryId="org.eclipse.egit.ui.commandCategory"
+            id="org.eclipse.egit.ui.internal.merge.ToggleCurrentChangesCommand"
+            name="%ToggleCurrentChangesCommand.name"
+            description="%ToggleCurrentChangesCommand.description">
+      </command>
    </extension>
    <extension
          point="org.eclipse.ui.handlers">
