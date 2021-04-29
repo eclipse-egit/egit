@@ -106,16 +106,16 @@ public class GitMergeEditorInput extends CompareEditorInput {
 	private List<IFile> toDelete;
 
 	/**
-	 * @param useWorkspace
-	 *            if <code>true</code>, use the workspace content (i.e. the
-	 *            Git-merged version) as "left" content, otherwise use HEAD
-	 *            (i.e. the previous, non-merged version)
+	 * Creates a new {@link GitMergeEditorInput}.
+	 *
+	 * @param mode
+	 *            defining what to use as input for the logical left side
 	 * @param locations
 	 *            as selected by the user
 	 */
-	public GitMergeEditorInput(boolean useWorkspace, IPath... locations) {
+	public GitMergeEditorInput(MergeInputMode mode, IPath... locations) {
 		super(new CompareConfiguration());
-		this.useWorkspace = useWorkspace;
+		this.useWorkspace = MergeInputMode.WORKTREE.equals(mode);
 		this.locations = locations;
 		CompareConfiguration config = getCompareConfiguration();
 		config.setLeftEditable(true);
