@@ -32,6 +32,7 @@ import org.eclipse.egit.core.internal.util.ResourceUtil;
 import org.eclipse.egit.ui.Activator;
 import org.eclipse.egit.ui.UIPreferences;
 import org.eclipse.egit.ui.internal.merge.GitMergeEditorInput;
+import org.eclipse.egit.ui.internal.merge.MergeInputMode;
 import org.eclipse.egit.ui.internal.merge.MergeModeDialog;
 import org.eclipse.jface.window.Window;
 import org.eclipse.jgit.lib.Repository;
@@ -51,10 +52,10 @@ public class MergeToolActionHandler extends RepositoryActionHandler {
 			MergeModeDialog dlg = new MergeModeDialog(getShell(event));
 			if (dlg.open() != Window.OK)
 				return null;
-			input = new GitMergeEditorInput(dlg.useWorkspace(), locations);
+			input = new GitMergeEditorInput(dlg.getMergeMode(), locations);
 		} else {
-			boolean useWorkspace = mergeMode == 1;
-			input = new GitMergeEditorInput(useWorkspace, locations);
+			MergeInputMode mode = MergeInputMode.fromInteger(mergeMode);
+			input = new GitMergeEditorInput(mode, locations);
 		}
 		CompareUI.openCompareEditor(input);
 		return null;
