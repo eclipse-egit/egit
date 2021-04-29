@@ -31,6 +31,7 @@ import org.eclipse.egit.ui.test.ContextMenuHelper;
 import org.eclipse.egit.ui.test.TestUtil;
 import org.eclipse.jgit.api.CherryPickResult;
 import org.eclipse.jgit.api.CherryPickResult.CherryPickStatus;
+import org.eclipse.jgit.api.Git;
 import org.eclipse.jgit.api.MergeResult;
 import org.eclipse.jgit.api.MergeResult.MergeStatus;
 import org.eclipse.jgit.junit.TestRepository;
@@ -196,5 +197,44 @@ public class MergeToolTest extends LocalRepositoryTestCase {
 		text = compareEditor.getAncestorEditor().getText();
 		// If the common ancestor was used the content would be "Hello, world"
 		assertThat(text, is("stable"));
+	}
+
+	@Test
+	public void conflictUnderneathIgnoredFolder() throws Exception {
+		try (Git git = new Git(testRepository.getRepository())) {
+			// The "canonical" file is already inside a folder
+			touch(PROJ1, ".gitignore", '/' + FOLDER);
+			git.add().addFilepattern(".gitignore").call();
+			git.commit().setMessage("Ignoring folder");
+		}
+		testRepository.branch("stable").commit().add(FILE1_PATH, "stable")
+				.create();
+		touchAndSubmit("master", "master");
+		RevCommit stableTip = testRepository.branch("stable").commit()
+				.add(FILE1_PATH, "stable 2").create();
+		CherryPickOperation op = new CherryPickOperation(
+				testRepository.getRepository(), stableTip);
+		op.execute(null);
+		CherryPickResult result = op.getResult();
+
+		assertThat(result.getStatus(), is(CherryPickStatus.CONFLICTING));
+
+		IndexDiffCache cache = IndexDiffCache.getInstance();
+		cache.getIndexDiffCacheEntry(testRepository.getRepository());
+		TestUtil.joinJobs(JobFamilies.INDEX_DIFF_CACHE_UPDATE);
+
+		SWTBotTree packageExplorer = TestUtil.getExplorerTree();
+		TestUtil.navigateTo(packageExplorer, PROJ1, FOLDER, FILE1).select();
+		ContextMenuHelper.clickContextMenu(packageExplorer,
+				util.getPluginLocalizedValue("TeamMenu.label"),
+				util.getPluginLocalizedValue("MergeToolAction.label"));
+
+		CompareEditorTester compareEditor = CompareEditorTester
+				.forTitleContaining("Merging");
+
+		String text = compareEditor.getLeftEditor().getText();
+		assertThat(text, is("master"));
+		text = compareEditor.getRightEditor().getText();
+		assertThat(text, is("stable 2"));
 	}
 }
