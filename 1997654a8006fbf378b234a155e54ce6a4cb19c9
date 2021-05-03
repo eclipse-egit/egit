@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "efb6d523_528b8b9b",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/merge/GitMergeEditorInput.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 489,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2021-05-03T15:29:03Z",
+      "side": 1,
+      "message": "Actually, we could _always_ take stage 1 for conflicting files, irrespective of ancestor? Then at worst the ancestor _label_ might be wrong, but at least the comparison would always make sense.",
+      "revId": "1997654a8006fbf378b234a155e54ce6a4cb19c9",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": true
+    }
+  ]
+}
