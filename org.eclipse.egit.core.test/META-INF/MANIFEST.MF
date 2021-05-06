@@ -5,7 +5,7 @@ Bundle-Vendor: Eclipse.org
 Automatic-Module-Name: org.eclipse.egit.core.test
 Bundle-SymbolicName: org.eclipse.egit.core.test;singleton:=true
 Fragment-Host: org.eclipse.egit.core
-Bundle-Version: 5.12.0.202105051250-m2
+Bundle-Version: 5.12.qualifier
 Require-Bundle: org.eclipse.core.runtime;bundle-version="[3.12.0,4.0.0)",
  org.eclipse.core.filesystem;bundle-version="[1.6.0,2.0.0)",
  org.eclipse.core.resources;bundle-version="[3.11.0,4.0.0)",
@@ -13,19 +13,19 @@ Require-Bundle: org.eclipse.core.runtime;bundle-version="[3.12.0,4.0.0)",
  org.eclipse.jdt.core;bundle-version="[3.12.0,4.0.0)",
  org.hamcrest;bundle-version="[1.1.0,2.0.0)",
  org.junit;bundle-version="[4.13.0,5.0.0)",
- org.eclipse.egit.core.junit;bundle-version="[5.12.0,5.13.0)"
+ org.eclipse.egit.core.junit;bundle-version="[5.12,5.13.0)"
 Import-Package: net.bytebuddy;version="[1.7.9,2.0.0)",
  net.bytebuddy.agent;version="[1.7.9,2.0.0)",
- org.eclipse.egit.core;version="[5.12.0,5.13.0)",
- org.eclipse.egit.core.op;version="[5.12.0,5.13.0)",
- org.eclipse.egit.core.project;version="[5.12.0,5.13.0)",
- org.eclipse.jgit.api.errors;version="[5.12.0,5.13.0)",
- org.eclipse.jgit.attributes;version="[5.12.0,5.13.0)",
- org.eclipse.jgit.junit;version="[5.12.0,5.13.0)",
- org.eclipse.jgit.lib;version="[5.12.0,5.13.0)",
- org.eclipse.jgit.treewalk;version="[5.12.0,5.13.0)",
- org.eclipse.jgit.treewalk.filter;version="[5.12.0,5.13.0)",
- org.eclipse.jgit.util;version="[5.12.0,5.13.0)",
+ org.eclipse.egit.core;version="[5.12,5.13.0)",
+ org.eclipse.egit.core.op;version="[5.12,5.13.0)",
+ org.eclipse.egit.core.project;version="[5.12,5.13.0)",
+ org.eclipse.jgit.api.errors;version="[5.12,5.13.0)",
+ org.eclipse.jgit.attributes;version="[5.12,5.13.0)",
+ org.eclipse.jgit.junit;version="[5.12,5.13.0)",
+ org.eclipse.jgit.lib;version="[5.12,5.13.0)",
+ org.eclipse.jgit.treewalk;version="[5.12,5.13.0)",
+ org.eclipse.jgit.treewalk.filter;version="[5.12,5.13.0)",
+ org.eclipse.jgit.util;version="[5.12,5.13.0)",
  org.mockito;version="[2.13.0,3.0.0)",
  org.mockito.junit;version="[2.13.0,3.0.0)",
  org.mockito.stubbing;version="[2.13.0,3.0.0)"
