@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7ee5cc3c_f51ea048",
+        "filename": "org.eclipse.egit-feature/feature.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2021-05-06T07:21:58Z",
+      "side": 1,
+      "message": "Why drop the \".0\"?",
+      "revId": "2171051e640d9764201ba36490b61dee0faca08a",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": true
+    }
+  ]
+}
