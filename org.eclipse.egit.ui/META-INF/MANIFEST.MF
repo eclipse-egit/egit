@@ -3,7 +3,7 @@ Bundle-ManifestVersion: 2
 Bundle-Name: %Bundle-Name
 Automatic-Module-Name: org.eclipse.egit.ui
 Bundle-SymbolicName: org.eclipse.egit.ui;singleton:=true
-Bundle-Version: 5.11.1.qualifier
+Bundle-Version: 5.11.1.202105131744-r
 Bundle-Activator: org.eclipse.egit.ui.Activator
 Bundle-Vendor: %Bundle-Vendor
 Bundle-Localization: plugin
