@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5326c650_fb13285d",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2021-05-18T18:05:00Z",
+      "side": 1,
+      "message": "@Matthias: before you dive too deeply into the JGit apply series (thanks a lot for taking a look there!), could you maybe give some feedback on this particular point? Returning the zero ID for items in the index makes for a simple to use API and was the first idea I had, but I\u0027m not completely comfortable with it. Yet I don\u0027t see a cleaner alternative that would be equally easy to use... Would such an API be OK with you? API interface is at [1].\n\nI\u0027d like to get this API merged in EGit before M3 so that the diffmerge people have at least some time before the release to update \u0026 re-test their code.\n\n(See bug 572802 for where this whole API idea is coming from.)\n\n[1] https://git.eclipse.org/r/c/egit/egit/+/179426/3/org.eclipse.egit.core/src/org/eclipse/egit/core/info/GitInfo.java#58",
+      "revId": "a1f6cab38d03871c83240946175a0dbee8741851",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": true
+    }
+  ]
+}
