@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "acede761_d299617b",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/info/GitInfo.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2021-05-19T14:44:20Z",
+      "side": 1,
+      "message": "wrap the repository handed out here overriding the close() method to be a no-op ?",
+      "revId": "ed8c1c83e8f0a8aa6d325686046e67087a93fc50",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": true
+    }
+  ]
+}
