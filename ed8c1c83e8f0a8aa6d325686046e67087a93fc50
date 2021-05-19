@@ -16,6 +16,24 @@
       "revId": "ed8c1c83e8f0a8aa6d325686046e67087a93fc50",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "96b5c219_9c6dad9f",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/info/GitInfo.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2021-05-19T15:01:02Z",
+      "side": 1,
+      "message": "I thought about it. But wrapping a repository is not that simple. To write a delegating repository that truly hides the underlying repo you\u0027d basically have to redo the whole RepositoryHandle song and dance again, including the things I did to the event listening mechanism to avoid the original repo is leaked via JGit events. And even RepositoryHandle is not a 100% foolproof wrapper; GcCommand needs a FileRepository, and through a listener on JGit\u0027s global listener list Repository.getGlobalListenerList() anyone can access the wrapped repositories via event.getRepository() anyway.\n\nIt\u0027d be a lot of work, and would be a lot more complicated. In the end I decided against it and was content with just this mention in the comment here. Existing code that currently uses EGit internals to get repositories can break EGit already by closing repositories. So can existing code that registers a listener via API Repository.getGlobalListenerList() and then calls event.getRepository().close().\n\nI see no way to make this truly safe.",
+      "parentUuid": "acede761_d299617b",
+      "revId": "ed8c1c83e8f0a8aa6d325686046e67087a93fc50",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": true
     }
   ]
 }
