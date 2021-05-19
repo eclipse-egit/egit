@@ -16,6 +16,24 @@
       "revId": "a1f6cab38d03871c83240946175a0dbee8741851",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fccc3258_5f690b02",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2021-05-19T14:54:21Z",
+      "side": 1,
+      "message": "The differentiation between returning null for an item in the working tree and zeroId for an item in the index seems a bit weird. Returning null in both these cases would look more natural, since there is no commit (yet) in both cases.\nCouldn\u0027t this difference be deduced from GitItemState ?",
+      "parentUuid": "5326c650_fb13285d",
+      "revId": "a1f6cab38d03871c83240946175a0dbee8741851",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": true
     }
   ]
 }
