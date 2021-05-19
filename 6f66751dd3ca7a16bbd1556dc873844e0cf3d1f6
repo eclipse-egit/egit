@@ -52,6 +52,24 @@
       "revId": "6f66751dd3ca7a16bbd1556dc873844e0cf3d1f6",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1c8ae4aa_5382da79",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/info/GitItemState.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2021-05-19T21:41:58Z",
+      "side": 1,
+      "message": "thanks, unfortunately https://jcp.org/en/jsr/detail?id\u003d305 is dormant since a long time",
+      "parentUuid": "bacc283b_48f430ef",
+      "revId": "6f66751dd3ca7a16bbd1556dc873844e0cf3d1f6",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
     }
   ]
 }
