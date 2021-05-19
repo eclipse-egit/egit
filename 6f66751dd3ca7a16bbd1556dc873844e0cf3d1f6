@@ -16,6 +16,24 @@
       "revId": "6f66751dd3ca7a16bbd1556dc873844e0cf3d1f6",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b6236e63_5678ceba",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/info/GitItemState.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2021-05-19T15:39:53Z",
+      "side": 1,
+      "message": "Don\u0027t remember clearly. I think I did it because I felt uneasy about exporting a JGit annotation in an EGit API and different @NonNull annotations showing up in third-party bundles (which might use some other @NonNull annotation). Not sure if that\u0027s a valid concern, though.",
+      "parentUuid": "5a494396_0aa047d0",
+      "revId": "6f66751dd3ca7a16bbd1556dc873844e0cf3d1f6",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": true
     }
   ]
 }
