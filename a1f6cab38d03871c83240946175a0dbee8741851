@@ -34,6 +34,24 @@
       "revId": "a1f6cab38d03871c83240946175a0dbee8741851",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5983dfc1_5e6061b0",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2021-05-19T15:34:23Z",
+      "side": 1,
+      "message": "Not sure. At any time one can for the same git path have all three. I\u0027m not sure the user would always know what had been adapted (if it was an IResource, he should know the underlying item is from the working tree, and if he adapted something else, getCommitId() returning null would be sufficient to distinguish an index item from a commit item).\n\nSo here\u0027s an alternative proposal: let\u0027s add\n\n  enum Source {\n    WORKING_TREE, INDEX, COMMIT\n  }\n\n  /**\n   * Returns the {@link Source} of the item this {@link GitInfo}\n   * object was obtained from.\n   * \u003cp\u003e\n   * {@link GitInfo} objects can be obtained via adaptation from a\n   * variety of objects. If the adapted object was an IResource,\n   * then it\u0027s a file in the git {@link Source#WORKING_TREE}, but\n   * the {@link GitInfo} might also have been obtained from a file\n   * version in the {@link Source#INDEX}, or even from a file\n   * revision in a {@link Source#COMMIT}.\n   * \u003c/p\u003e\n   *\n   * @return the {@link Source} of this {@link GitInfo} object\n   */\n  public Source getSource();\n\nand then state on getCommitId() that it returns null if the source is not Source.COMMIT.\n\nKnowing where an item \"lives\" may be important especially for such uses as in diffmerge. Without this knowledge made explicit somehow, third-party bundles will have to figure it themselves and again are likely to access internals like IndexFileRevision or some such.",
+      "parentUuid": "fccc3258_5f690b02",
+      "revId": "a1f6cab38d03871c83240946175a0dbee8741851",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": true
     }
   ]
 }
