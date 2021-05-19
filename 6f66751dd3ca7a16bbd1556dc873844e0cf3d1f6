@@ -34,6 +34,24 @@
       "revId": "6f66751dd3ca7a16bbd1556dc873844e0cf3d1f6",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bacc283b_48f430ef",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/info/GitItemState.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2021-05-19T20:04:06Z",
+      "side": 1,
+      "message": "Re-added it. Don\u0027t know why it was in this commit anyway; would have belonged into the parent.",
+      "parentUuid": "b6236e63_5678ceba",
+      "revId": "6f66751dd3ca7a16bbd1556dc873844e0cf3d1f6",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
     }
   ]
 }
