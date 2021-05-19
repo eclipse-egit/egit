@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5a494396_0aa047d0",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/info/GitItemState.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2021-05-19T14:57:28Z",
+      "side": 1,
+      "message": "why did you remove the @NonNull annotation ?",
+      "revId": "6f66751dd3ca7a16bbd1556dc873844e0cf3d1f6",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": true
+    }
+  ]
+}
