@@ -715,9 +715,9 @@ public class GitMergeEditorInput extends CompareEditorInput {
 
 				int kind = Differencer.NO_CHANGE;
 				if (conflicting) {
-					kind = Differencer.CONFLICTING;
+					kind = Differencer.CONFLICTING + Differencer.CHANGE;
 				} else if (modified) {
-					kind = Differencer.PSEUDO_CONFLICT;
+					kind = Differencer.LEFT + Differencer.ADDITION;
 				}
 				IDiffContainer fileParent = getFileParent(result,
 						repositoryPath, file, location);
