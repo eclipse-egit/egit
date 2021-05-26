@@ -22,6 +22,7 @@ import java.util.concurrent.TimeUnit;
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.egit.core.JobFamilies;
+import org.eclipse.egit.core.internal.indexdiff.IndexDiffCache;
 import org.eclipse.egit.ui.common.StagingViewTester;
 import org.eclipse.egit.ui.internal.UIText;
 import org.eclipse.egit.ui.internal.actions.ReplaceConflictActionHandler;
@@ -106,6 +107,9 @@ public class StagingViewTest extends AbstractStagingViewTestCase {
 		}
 		assertEquals(RepositoryState.MERGING, repository.getRepositoryState());
 
+		IndexDiffCache.getInstance().getIndexDiffCacheEntry(repository)
+				.refresh();
+
 		StagingViewTester stagingView = StagingViewTester
 				.openStagingView();
 		assertEquals("", stagingView.getCommitMessage());
@@ -137,6 +141,9 @@ public class StagingViewTest extends AbstractStagingViewTestCase {
 			git.merge().include(repository.findRef("side")).call();
 		}
 		assertEquals(RepositoryState.MERGING, repository.getRepositoryState());
+
+		IndexDiffCache.getInstance().getIndexDiffCacheEntry(repository)
+				.refresh();
 
 		StagingViewTester stagingView = StagingViewTester.openStagingView();
 		assertEquals("", stagingView.getCommitMessage());
