@@ -23,10 +23,10 @@
 package org.eclipse.egit.ui.internal.decorators;
 
 import org.eclipse.core.resources.IResource;
+import org.eclipse.egit.core.info.GitItemState;
 import org.eclipse.egit.core.internal.indexdiff.IndexDiffData;
+import org.eclipse.egit.core.internal.info.GitItemStateFactory;
 import org.eclipse.egit.core.project.RepositoryMapping;
-import org.eclipse.egit.ui.internal.resources.IResourceState;
-import org.eclipse.egit.ui.internal.resources.ResourceStateFactory;
 import org.eclipse.egit.ui.internal.trace.GitTraceLocation;
 import org.eclipse.jgit.annotations.NonNull;
 import org.eclipse.jgit.lib.Repository;
@@ -56,7 +56,7 @@ class DecoratableResourceAdapter extends DecoratableResource {
 				return;
 			}
 			setIsRepositoryContainer(resourceToWrap.equals(mapping.getContainer()));
-			IResourceState baseState = ResourceStateFactory.getInstance()
+			GitItemState baseState = GitItemStateFactory.getInstance()
 					.get(indexDiffData, resourceToWrap);
 			setTracked(baseState.isTracked());
 			setIgnored(baseState.isIgnored());

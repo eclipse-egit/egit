@@ -3,7 +3,7 @@
  * Copyright (C) 2008, Shawn O. Pearce <spearce@spearce.org>
  * Copyright (C) 2011, Dariusz Luksza <dariusz@luksza.org>
  * Copyright (C) 2014, Obeo
- * Copyright (C) 2017, 2020 Thomas Wolf <thomas.wolf@paranor.ch>
+ * Copyright (C) 2017, 2021 Thomas Wolf <thomas.wolf@paranor.ch>
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License 2.0
@@ -27,11 +27,13 @@ import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.Path;
 import org.eclipse.egit.core.Activator;
 import org.eclipse.egit.core.attributes.Filtering;
+import org.eclipse.egit.core.info.GitInfo;
 import org.eclipse.egit.core.internal.CompareCoreUtils;
 import org.eclipse.egit.core.internal.CoreText;
 import org.eclipse.jgit.dircache.DirCacheCheckout.CheckoutMetadata;
 import org.eclipse.jgit.errors.IncorrectObjectTypeException;
 import org.eclipse.jgit.errors.MissingObjectException;
+import org.eclipse.jgit.lib.AnyObjectId;
 import org.eclipse.jgit.lib.Constants;
 import org.eclipse.jgit.lib.CoreConfig.AutoCRLF;
 import org.eclipse.jgit.lib.CoreConfig.EolStreamType;
@@ -46,7 +48,7 @@ import org.eclipse.osgi.util.NLS;
  *
  * @since 4.0
  */
-public class GitBlobStorage implements IEncodedStorage {
+public class GitBlobStorage implements IEncodedStorage, GitInfo {
 
 	/** Repository containing the object this storage provides access to. */
 	protected final Repository db;
@@ -129,6 +131,36 @@ public class GitBlobStorage implements IEncodedStorage {
 		this.blobId = blob;
 		this.metadata = metadata;
 		this.isGitlink = isGitlink;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 *
+	 * @since 5.12
+	 */
+	@Override
+	public Repository getRepository() {
+		return db;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 *
+	 * @since 5.12
+	 */
+	@Override
+	public String getGitPath() {
+		return path;
+	}
+
+	@Override
+	public AnyObjectId getCommitId() {
+		return null;
+	}
+
+	@Override
+	public Source getSource() {
+		return null;
 	}
 
 	@Override

@@ -14,6 +14,8 @@ import java.util.ArrayList;
 import java.util.Collection;
 
 import org.eclipse.core.runtime.IPath;
+import org.eclipse.egit.core.info.GitItemState;
+import org.eclipse.egit.core.internal.info.GitItemStateFactory;
 import org.eclipse.egit.core.internal.util.ResourceUtil;
 import org.eclipse.egit.ui.internal.expressions.AbstractPropertyTester;
 import org.eclipse.egit.ui.internal.selection.SelectionUtils;
@@ -84,7 +86,7 @@ public class ResourceStatePropertyTester extends AbstractPropertyTester {
 			if (path == null || ResourceUtil.getRepository(path) == null) {
 				continue;
 			}
-			IResourceState state = ResourceStateFactory.getInstance()
+			GitItemState state = GitItemStateFactory.getInstance()
 					.get(path.toFile());
 			switch (property) {
 			case HAS_STAGED_CHANGES:

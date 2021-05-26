@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2010, 2017 SAP AG and others.
+ * Copyright (c) 2010, 2021 SAP AG and others.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License 2.0
@@ -20,7 +20,6 @@
 package org.eclipse.egit.ui.internal;
 
 import java.io.ByteArrayInputStream;
-import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.nio.ByteBuffer;
@@ -48,13 +47,13 @@ import org.eclipse.core.runtime.preferences.IEclipsePreferences;
 import org.eclipse.core.runtime.preferences.IEclipsePreferences.IPreferenceChangeListener;
 import org.eclipse.core.runtime.preferences.IEclipsePreferences.PreferenceChangeEvent;
 import org.eclipse.core.runtime.preferences.InstanceScope;
-import org.eclipse.egit.core.RevUtils;
 import org.eclipse.egit.core.attributes.Filtering;
 import org.eclipse.egit.core.internal.CompareCoreUtils;
 import org.eclipse.egit.core.internal.storage.GitFileRevision;
 import org.eclipse.egit.core.internal.storage.WorkingTreeFileRevision;
 import org.eclipse.egit.core.internal.storage.WorkspaceFileRevision;
 import org.eclipse.egit.core.project.RepositoryMapping;
+import org.eclipse.egit.core.util.RevCommitUtils;
 import org.eclipse.egit.ui.Activator;
 import org.eclipse.egit.ui.UIPreferences;
 import org.eclipse.egit.ui.internal.merge.GitCompareEditorInput;
@@ -230,7 +229,7 @@ public class CompareUtils {
 		ITypedElement ancestor = null;
 		RevCommit commonAncestor = null;
 		try {
-			commonAncestor = RevUtils.getCommonAncestor(db, commit1, commit2);
+			commonAncestor = RevCommitUtils.getCommonAncestor(db, commit1, commit2);
 		} catch (IOException e) {
 			Activator.logError(NLS.bind(UIText.CompareUtils_errorCommonAncestor,
 					commit1.getName(), commit2.getName()), e);
@@ -416,7 +415,8 @@ public class CompareUtils {
 		if (base == null)
 			return;
 
-		IFileRevision nextFile = new WorkspaceFileRevision(file);
+		IFileRevision nextFile = new WorkspaceFileRevision(repository, path,
+				file);
 		String encoding = null;
 		try {
 			encoding = file.getCharset();
@@ -905,8 +905,7 @@ public class CompareUtils {
 		if (base == null)
 			return;
 		IFileRevision nextFile;
-		nextFile = new WorkingTreeFileRevision(new File(
-				repository.getWorkTree(), path));
+		nextFile = new WorkingTreeFileRevision(repository, path);
 		String encoding = ResourcesPlugin.getEncoding();
 		ITypedElement next = new FileRevisionTypedElement(nextFile, encoding);
 		GitCompareFileRevisionEditorInput input = new GitCompareFileRevisionEditorInput(

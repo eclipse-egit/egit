@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (C) 2011, Jens Baumgart <jens.baumgart@sap.com>
+ * Copyright (C) 2011, 2021 Jens Baumgart <jens.baumgart@sap.com> and others
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License 2.0
@@ -10,7 +10,6 @@
  *******************************************************************************/
 package org.eclipse.egit.core.internal.storage;
 
-import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.nio.file.Files;
@@ -21,21 +20,23 @@ import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.Path;
 import org.eclipse.egit.core.Activator;
-import org.eclipse.egit.core.internal.util.ResourceUtil;
 import org.eclipse.jgit.lib.Repository;
 import org.eclipse.team.core.history.IFileRevision;
 
 /** An {@link IFileRevision} for the current version in the working tree */
 public class WorkingTreeFileRevision extends GitFileRevision {
 
-	private final File file;
+	private final IPath filePath;
 
 	/**
-	 * @param file
+	 * @param repository
+	 * @param path
 	 */
-	public WorkingTreeFileRevision(final File file) {
-		super(file.getPath());
-		this.file = file;
+	public WorkingTreeFileRevision(Repository repository, String path) {
+		super(repository, path);
+		this.filePath = Path
+				.fromOSString(repository.getWorkTree().getAbsolutePath())
+				.append(path);
 	}
 
 	@Override
@@ -54,18 +55,18 @@ public class WorkingTreeFileRevision extends GitFileRevision {
 
 			@Override
 			public String getName() {
-				return file.getName();
+				return filePath.lastSegment();
 			}
 
 			@Override
 			public IPath getFullPath() {
-				return new Path(file.getAbsolutePath());
+				return filePath;
 			}
 
 			@Override
 			public InputStream getContents() throws CoreException {
 				try {
-					return Files.newInputStream(file.toPath());
+					return Files.newInputStream(filePath.toFile().toPath());
 				} catch (IOException e) {
 					throw new CoreException(Activator.error(e.getMessage(), e));
 				}
@@ -99,8 +100,7 @@ public class WorkingTreeFileRevision extends GitFileRevision {
 	}
 
 	@Override
-	public Repository getRepository() {
-		return ResourceUtil
-				.getRepository(Path.fromOSString(file.getAbsolutePath()));
+	public Source getSource() {
+		return Source.WORKING_TREE;
 	}
 }

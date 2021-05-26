@@ -1,5 +1,6 @@
 /*******************************************************************************
- * Copyright (c) 2010, 2013 IBM Corporation and others.
+ * Copyright (c) 2010, 2021 IBM Corporation and others.
+ *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License 2.0
  * which accompanies this distribution, and is available at
@@ -398,9 +399,10 @@ public class GitResourceVariantTreeSubscriber extends
 		 */
 		protected IFileRevision getLocalFileRevision(IFile local) {
 			final GitSynchronizeData data = gsds.getData(local.getProject());
-			if (data.shouldIncludeLocal())
-				return new WorkspaceFileRevision(local);
-
+			if (data.shouldIncludeLocal()) {
+				return WorkspaceFileRevision.forFile(data.getRepository(),
+						local);
+			}
 			try {
 				return asFileState(getSourceTree().getResourceVariant(local));
 			} catch (TeamException e) {
@@ -409,7 +411,8 @@ public class GitResourceVariantTreeSubscriber extends
 								local.getName());
 				Activator.logError(error, e);
 				// fall back to the working tree version
-				return new WorkspaceFileRevision(local);
+				return WorkspaceFileRevision.forFile(data.getRepository(),
+						local);
 			}
 		}
 

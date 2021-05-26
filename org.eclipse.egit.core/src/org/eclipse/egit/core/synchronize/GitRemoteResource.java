@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (C) 2011, 2013 Dariusz Luksza <dariusz@luksza.org> and others.
+ * Copyright (C) 2011, 2021 Dariusz Luksza <dariusz@luksza.org> and others.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License 2.0
@@ -14,9 +14,11 @@ import static org.eclipse.jgit.lib.ObjectId.zeroId;
 
 import java.io.UnsupportedEncodingException;
 
+import org.eclipse.egit.core.info.GitInfo;
 import org.eclipse.egit.core.internal.Utils;
 import org.eclipse.jgit.lib.ObjectId;
 import org.eclipse.jgit.lib.PersonIdent;
+import org.eclipse.jgit.lib.Repository;
 import org.eclipse.jgit.revwalk.RevCommit;
 import org.eclipse.team.core.variants.CachedResourceVariant;
 
@@ -25,7 +27,10 @@ import org.eclipse.team.core.variants.CachedResourceVariant;
  *
  * @since 3.0
  */
-public abstract class GitRemoteResource extends CachedResourceVariant {
+public abstract class GitRemoteResource extends CachedResourceVariant
+		implements GitInfo {
+
+	private final Repository repo;
 
 	private final String path;
 
@@ -34,7 +39,9 @@ public abstract class GitRemoteResource extends CachedResourceVariant {
 	private final ObjectId objectId;
 
 
-	GitRemoteResource(RevCommit commitId, ObjectId objectId, String path) {
+	GitRemoteResource(Repository repo, RevCommit commitId, ObjectId objectId,
+			String path) {
+		this.repo = repo;
 		this.path = path;
 		this.objectId = objectId;
 		this.commitId = commitId;
@@ -74,6 +81,16 @@ public abstract class GitRemoteResource extends CachedResourceVariant {
 	}
 
 	@Override
+	public final Repository getRepository() {
+		return repo;
+	}
+
+	@Override
+	public final String getGitPath() {
+		return path;
+	}
+
+	@Override
 	protected String getCachePath() {
 		return path;
 	}
@@ -90,8 +107,14 @@ public abstract class GitRemoteResource extends CachedResourceVariant {
 	/**
 	 * @return the commit Id for this resource variant.
 	 */
+	@Override
 	public RevCommit getCommitId() {
 		return commitId;
+	}
+
+	@Override
+	public Source getSource() {
+		return Source.COMMIT;
 	}
 
 	/**

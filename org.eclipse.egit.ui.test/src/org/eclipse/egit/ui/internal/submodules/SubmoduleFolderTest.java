@@ -36,9 +36,11 @@ import org.eclipse.core.runtime.jobs.Job;
 import org.eclipse.egit.core.JobFamilies;
 import org.eclipse.egit.core.RepositoryCache;
 import org.eclipse.egit.core.RepositoryUtil;
+import org.eclipse.egit.core.info.GitItemState;
 import org.eclipse.egit.core.internal.Utils;
 import org.eclipse.egit.core.internal.indexdiff.IndexDiffCache;
 import org.eclipse.egit.core.internal.indexdiff.IndexDiffCacheEntry;
+import org.eclipse.egit.core.internal.info.GitItemStateFactory;
 import org.eclipse.egit.core.project.GitProjectData;
 import org.eclipse.egit.core.project.RepositoryMapping;
 import org.eclipse.egit.core.test.TestRepository;
@@ -47,8 +49,6 @@ import org.eclipse.egit.ui.internal.UIText;
 import org.eclipse.egit.ui.internal.clone.ProjectRecord;
 import org.eclipse.egit.ui.internal.clone.ProjectUtils;
 import org.eclipse.egit.ui.internal.repository.RepositoriesView;
-import org.eclipse.egit.ui.internal.resources.IResourceState;
-import org.eclipse.egit.ui.internal.resources.ResourceStateFactory;
 import org.eclipse.egit.ui.test.ContextMenuHelper;
 import org.eclipse.egit.ui.test.TestUtil;
 import org.eclipse.jgit.api.Git;
@@ -222,7 +222,7 @@ public class SubmoduleFolderTest extends LocalRepositoryTestCase {
 		TestUtil.joinJobs(JobFamilies.INDEX_DIFF_CACHE_UPDATE);
 		IndexDiffCacheEntry cache = IndexDiffCache.getInstance()
 				.getIndexDiffCacheEntry(subRepository);
-		IResourceState state = ResourceStateFactory.getInstance()
+		GitItemState state = GitItemStateFactory.getInstance()
 				.get(cache.getIndexDiff(), file);
 		assertTrue("File should be staged", state.isStaged());
 		TestUtil.waitForDecorations();
@@ -231,7 +231,7 @@ public class SubmoduleFolderTest extends LocalRepositoryTestCase {
 				util.getPluginLocalizedValue("RemoveFromIndexAction_label"));
 		TestUtil.joinJobs(REMOVE_FROM_INDEX);
 		TestUtil.joinJobs(JobFamilies.INDEX_DIFF_CACHE_UPDATE);
-		state = ResourceStateFactory.getInstance().get(cache.getIndexDiff(),
+		state = GitItemStateFactory.getInstance().get(cache.getIndexDiff(),
 				file);
 		assertFalse("File should not be staged", state.isStaged());
 		assertTrue("File should be dirty", state.isDirty());

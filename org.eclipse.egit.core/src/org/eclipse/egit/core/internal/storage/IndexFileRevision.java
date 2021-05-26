@@ -4,7 +4,7 @@
  * Copyright (C) 2008, Shawn O. Pearce <spearce@spearce.org>
  * Copyright (C) 2011, Dariusz Luksza <dariusz@luksza.org>
  * Copyright (C) 2013, Robin Stocker <robin@nibor.org>
- * Copyright (C) 2017, Thomas Wolf <thomas.wolf@paranor.ch>
+ * Copyright (C) 2017, 2021 Thomas Wolf <thomas.wolf@paranor.ch> and others
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License 2.0
@@ -46,10 +46,6 @@ public class IndexFileRevision extends GitFileRevision implements
 	// This is to maintain compatibility with the old behavior
 	private static final int FIRST_AVAILABLE = -1;
 
-	private final Repository db;
-
-	private final String path;
-
 	private final int stage;
 
 	private ObjectId blobId;
@@ -63,14 +59,13 @@ public class IndexFileRevision extends GitFileRevision implements
 	}
 
 	IndexFileRevision(final Repository repo, final String path, int stage) {
-		super(path);
-		this.db = repo;
-		this.path = path;
+		super(repo, path);
 		this.stage = stage;
 	}
 
 	@Override
 	public IStorage getStorage(IProgressMonitor monitor) throws CoreException {
+		Repository db = getRepository();
 		if (blobId == null) {
 			try {
 				DirCache cache = db.readDirCache();
@@ -89,17 +84,18 @@ public class IndexFileRevision extends GitFileRevision implements
 					// a directory, and assume it's a gitlink if so. This is a
 					// safe fallback and results in a read-only editor in the
 					// compare editor.
-					File onDisk = new File(db.getWorkTree(), path);
+					File onDisk = new File(db.getWorkTree(), getGitPath());
 					isGitlink = onDisk.isDirectory();
 				}
 			} catch (IOException e) {
 				throw new CoreException(Activator.error(
 						NLS.bind(CoreText.IndexFileRevision_errorLookingUpPath,
-								path),
+								getGitPath()),
 						e));
 			}
 		}
-		return new IndexBlobStorage(db, path, isGitlink, blobId, metadata);
+		return new IndexBlobStorage(db, getGitPath(), isGitlink, blobId,
+				metadata);
 	}
 
 	/**
@@ -134,14 +130,20 @@ public class IndexFileRevision extends GitFileRevision implements
 		return INDEX;
 	}
 
+	@Override
+	public Source getSource() {
+		return Source.INDEX;
+	}
+
 	private CheckoutMetadata getMetadata(DirCache cache) throws IOException {
+		Repository db = getRepository();
 		try (TreeWalk walk = new TreeWalk(db)) {
 			walk.addTree(new DirCacheIterator(cache));
 			FileTreeIterator files = new FileTreeIterator(db);
 			files.setDirCacheIterator(walk, 0);
 			walk.addTree(files);
 			walk.setFilter(AndTreeFilter.create(
-					PathFilterGroup.createFromStrings(path),
+					PathFilterGroup.createFromStrings(getGitPath()),
 					new NotIgnoredFilter(1)));
 			walk.setRecursive(true);
 			if (walk.next()) {
@@ -156,7 +158,7 @@ public class IndexFileRevision extends GitFileRevision implements
 	}
 
 	private DirCacheEntry locateEntry(DirCache cache) {
-		int firstIndex = cache.findEntry(path);
+		int firstIndex = cache.findEntry(getGitPath());
 		if (firstIndex < 0)
 			return null;
 
@@ -173,15 +175,5 @@ public class IndexFileRevision extends GitFileRevision implements
 				return entry;
 		}
 		return null;
-	}
-
-	@Override
-	public Repository getRepository() {
-		return db;
-	}
-
-	@Override
-	public String getGitPath() {
-		return path;
 	}
 }

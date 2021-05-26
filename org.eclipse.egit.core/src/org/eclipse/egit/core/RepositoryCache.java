@@ -221,9 +221,7 @@ public class RepositoryCache {
 		public CachingRepository createRepository() throws IOException {
 			CachingRepository repo = new CachingRepository(this);
 			if (isMustExist()) {
-				@SuppressWarnings("restriction")
-				boolean exists = repo.getObjectDatabase().exists();
-				if (!exists) {
+				if (!((Repository) repo).getObjectDatabase().exists()) {
 					throw new RepositoryNotFoundException(getGitDir());
 				}
 			}
