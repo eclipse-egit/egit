@@ -762,6 +762,9 @@ public class UIText extends NLS {
 	public static String GitPreferenceRoot_MergeMode_2_Label;
 
 	/** */
+	public static String GitPreferenceRoot_MergeMode_3_Label;
+
+	/** */
 	public static String GitPreferenceRoot_MergeModeLabel;
 
 	/** */
@@ -4367,6 +4370,9 @@ public class UIText extends NLS {
 	public static String MergeModeDialog_MergeMode_2_Label;
 
 	/** */
+	public static String MergeModeDialog_MergeMode_3_Label;
+
+	/** */
 	public static String MergeResultDialog_couldNotFindCommit;
 
 	/** */
@@ -5503,16 +5509,31 @@ public class UIText extends NLS {
 	public static String SwitchToMenu_CommitMenuLabel;
 
 	/** */
+	public static String GitMergeEditorInput_AncestorUnknownHeader;
+
+	/** */
 	public static String GitMergeEditorInput_CalculatingDiffTaskName;
 
 	/** */
 	public static String GitMergeEditorInput_CheckingResourcesTaskName;
 
 	/** */
+	public static String GitMergeEditorInput_ErrorUpdatingIndex;
+
+	/** */
 	public static String GitMergeEditorInput_MergeEditorTitle;
 
 	/** */
+	public static String GitMergeEditorInput_ResourceCleanupJobName;
+
+	/** */
+	public static String GitMergeEditorInput_ToggleCurrentChangesLabel;
+
+	/** */
 	public static String GitMergeEditorInput_WorkspaceHeader;
+
+	/** */
+	public static String GitMergeEditorInput_WorkspaceOursHeader;
 
 	/** */
 	public static String GitModelIndex_index;

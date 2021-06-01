@@ -117,6 +117,7 @@ public final class RevCommitUtils {
 			target = Constants.CHERRY_PICK_HEAD;
 			break;
 		case REBASING_INTERACTIVE:
+		case REBASING_MERGE:
 			target = readFile(repository.getDirectory(),
 					RebaseCommand.REBASE_MERGE + File.separatorChar
 							+ RebaseCommand.STOPPED_SHA);
