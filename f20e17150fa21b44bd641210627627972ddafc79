@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "dfbdf007_ca1696c5",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/merge/GitMergeEditorInput.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 398,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2021-06-01T09:57:24Z",
+      "side": 1,
+      "message": "interesting approach, I tried to break it running native git commands but it seems to work :-)",
+      "revId": "f20e17150fa21b44bd641210627627972ddafc79",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": true
+    }
+  ]
+}
