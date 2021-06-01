@@ -28,9 +28,10 @@ import org.eclipse.swt.widgets.Shell;
  * Asks the user whether to use the workspace or HEAD
  */
 public class MergeModeDialog extends Dialog {
-	private boolean useWs = false;
 
-	Button dontAskAgain;
+	private MergeInputMode mode = MergeInputMode.MERGED_OURS;
+
+	private Button dontAskAgain;
 
 	/**
 	 * @param parentShell
@@ -42,35 +43,44 @@ public class MergeModeDialog extends Dialog {
 	/**
 	 * @return whether the workspace should be used
 	 */
-	public boolean useWorkspace() {
-		return useWs;
+	public MergeInputMode getMergeMode() {
+		return mode;
 	}
 
 	@Override
 	protected Control createDialogArea(Composite parent) {
 		Composite main = new Composite(parent, SWT.NONE);
 		main.setLayout(new GridLayout(1, false));
+		final Button useMerged = new Button(main, SWT.RADIO);
+		useMerged.setText(UIText.MergeModeDialog_MergeMode_3_Label);
+		useMerged.addSelectionListener(new SelectionAdapter() {
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				mode = MergeInputMode.MERGED_OURS;
+			}
+		});
+		useMerged.setSelection(true);
 		final Button useWorkspace = new Button(main, SWT.RADIO);
 		useWorkspace.setText(UIText.MergeModeDialog_MergeMode_1_Label);
 		useWorkspace.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
-				useWs = useWorkspace.getSelection();
+				mode = MergeInputMode.WORKTREE;
 			}
 		});
+		useWorkspace.setSelection(false);
 		final Button useHead = new Button(main, SWT.RADIO);
 		useHead.setText(UIText.MergeModeDialog_MergeMode_2_Label);
 		useHead.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
-				useWs = !useHead.getSelection();
+				mode = MergeInputMode.STAGE_2;
 			}
 		});
+		useHead.setSelection(false);
 
 		dontAskAgain = new Button(main, SWT.CHECK);
 		dontAskAgain.setText(UIText.MergeModeDialog_DontAskAgainLabel);
-		useWorkspace.setSelection(useWs);
-		useHead.setSelection(!useWs);
 		return main;
 	}
 
@@ -79,9 +89,7 @@ public class MergeModeDialog extends Dialog {
 		boolean save = dontAskAgain.getSelection();
 		super.okPressed();
 		if (save) {
-			int value = 1;
-			if (!useWs)
-				value = 2;
+			int value = mode.toInteger();
 			IPreferenceStore store = Activator.getDefault()
 					.getPreferenceStore();
 			store.setValue(UIPreferences.MERGE_MODE, value);

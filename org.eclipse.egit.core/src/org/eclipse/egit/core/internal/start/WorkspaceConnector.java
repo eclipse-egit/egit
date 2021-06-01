@@ -50,6 +50,7 @@ import org.eclipse.egit.core.RepositoryInitializer;
 import org.eclipse.egit.core.RepositoryUtil;
 import org.eclipse.egit.core.internal.CoreText;
 import org.eclipse.egit.core.internal.ResourceRefreshHandler;
+import org.eclipse.egit.core.internal.efs.HiddenResources;
 import org.eclipse.egit.core.internal.job.JobUtil;
 import org.eclipse.egit.core.internal.util.ResourceUtil;
 import org.eclipse.egit.core.op.ConnectProviderOperation;
@@ -83,6 +84,8 @@ public class WorkspaceConnector {
 
 	private LinkedList<GitResourcChangeListener> listeners = new LinkedList<>();
 
+	private Job hiddenResourcesInitializer;
+
 	@Reference
 	void setWorkspace(IWorkspace workspace) {
 		this.workspace = workspace;
@@ -111,6 +114,10 @@ public class WorkspaceConnector {
 		registerPreDeleteResourceChangeListener();
 
 		registerBuiltinLFS();
+		hiddenResourcesInitializer = Job
+				.createSystem(HiddenResources.INSTANCE::initialize);
+		hiddenResourcesInitializer.setUser(false);
+		hiddenResourcesInitializer.schedule();
 	}
 
 	@Deactivate
@@ -125,6 +132,15 @@ public class WorkspaceConnector {
 		if (refreshHandle != null) {
 			refreshHandle.remove();
 			refreshHandle = null;
+		}
+		if (hiddenResourcesInitializer != null) {
+			hiddenResourcesInitializer.cancel();
+			try {
+				hiddenResourcesInitializer.join();
+			} catch (InterruptedException e) {
+				Activator.logError(e.getLocalizedMessage(), e);
+			}
+			hiddenResourcesInitializer = null;
 		}
 		GitProjectData.detachFromWorkspace();
 	}
