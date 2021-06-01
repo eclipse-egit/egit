@@ -16,6 +16,24 @@
       "revId": "f20e17150fa21b44bd641210627627972ddafc79",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2da70940_4c772556",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/merge/GitMergeEditorInput.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 398,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2021-06-01T11:24:44Z",
+      "side": 1,
+      "message": "I verified as best as I could that C git does write a zero timestamp, and doesn\u0027t make use of the field for conflict stages.\n\nIf C git ever starts using this timestamp, it will be !\u003d EPOCH, and EGit will simply fall back to not using stage 2 at all but the working tree file. Since it won\u0027t use stage 2, it\u0027ll also not modify the timestamp in the index.\n\nSo it should be safe; in the worst case, the user would not get shown stage 2, would file a bug, and we\u0027d have to figure out a different fix.\n\nNot that I know a different fix. I thought long and hard about this, and this was the only way I saw. Best would be if we had a stage 4 in the index, corresponding to the pre-merged working tree content, with proper timestamp. Then we could in the treewalk compare the OIDs from the FileTreeIterator and from index stage 4 to know whether the on-disk file has changed, and then use the on-disk file. But that would have to be done first in C git, and I suspect adding such a stage 4 would break older git implementations that expect at most 3 stages.",
+      "parentUuid": "dfbdf007_ca1696c5",
+      "revId": "f20e17150fa21b44bd641210627627972ddafc79",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": true
     }
   ]
 }
