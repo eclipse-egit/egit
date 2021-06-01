@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e59ecf69_72a2764b",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/internal/efs/EgitFileSystem.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2021-06-01T10:28:25Z",
+      "side": 1,
+      "message": "IndexChangedEvents",
+      "range": {
+        "startLine": 91,
+        "startChar": 47,
+        "endLine": 91,
+        "endChar": 64
+      },
+      "revId": "1e1bd457524bc427f3056b486c6fe70fb15bb2a8",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": true
+    }
+  ]
+}
