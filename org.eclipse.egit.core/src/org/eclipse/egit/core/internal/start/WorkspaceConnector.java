@@ -115,7 +115,8 @@ public class WorkspaceConnector {
 
 		registerBuiltinLFS();
 		hiddenResourcesInitializer = Job
-				.createSystem(HiddenResources.INSTANCE::initialize);
+				.createSystem("Initializing hidden EGit project", //$NON-NLS-1$
+						HiddenResources.INSTANCE::initialize);
 		hiddenResourcesInitializer.setUser(false);
 		hiddenResourcesInitializer.schedule();
 	}
