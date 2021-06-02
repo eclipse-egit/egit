@@ -75,7 +75,7 @@ public class ResourceEditableRevision extends EditableRevision
 					throw new InvocationTargetException(e);
 				}
 			});
-			fireContentChanged();
+			super.setContent(newContent);
 		} catch (InvocationTargetException e) {
 			if (e.getCause() instanceof CoreException) {
 				Activator.showErrorStatus(e.getCause().getLocalizedMessage(),
