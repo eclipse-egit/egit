@@ -202,6 +202,9 @@ public class CoreText extends NLS {
 	public static String GpgSetup_signerUnknown;
 
 	/** */
+	public static String HiddenResources_InitJobName;
+
+	/** */
 	public static String BlobStorage_blobNotFound;
 
 	/** */

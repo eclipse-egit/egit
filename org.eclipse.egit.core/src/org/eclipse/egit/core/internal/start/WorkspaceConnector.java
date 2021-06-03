@@ -115,7 +115,8 @@ public class WorkspaceConnector {
 
 		registerBuiltinLFS();
 		hiddenResourcesInitializer = Job
-				.createSystem(HiddenResources.INSTANCE::initialize);
+				.createSystem(CoreText.HiddenResources_InitJobName,
+						HiddenResources.INSTANCE::initialize);
 		hiddenResourcesInitializer.setUser(false);
 		hiddenResourcesInitializer.schedule();
 	}
