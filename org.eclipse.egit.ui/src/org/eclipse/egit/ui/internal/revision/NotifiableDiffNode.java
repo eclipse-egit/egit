@@ -45,6 +45,28 @@ public class NotifiableDiffNode extends DiffNode {
 		super(parent, kind, ancestor, left, right);
 	}
 
+	/**
+	 * Creates a new {@link NotifiableDiffNode} and initializes with the given
+	 * values.
+	 *
+	 * @param kind
+	 *            of difference as defined in
+	 *            {@link org.eclipse.compare.structuremergeviewer.Differencer
+	 *            Differencer}
+	 * @param ancestor
+	 *            the common ancestor input to a compare
+	 * @param left
+	 *            the left input to a compare
+	 * @param right
+	 *            the right input to a compare
+	 * @see DiffNode#DiffNode(IDiffContainer, int, ITypedElement, ITypedElement,
+	 *      ITypedElement)
+	 */
+	public NotifiableDiffNode(int kind, ITypedElement ancestor,
+			ITypedElement left, ITypedElement right) {
+		super(kind, ancestor, left, right);
+	}
+
 	@Override
 	public void fireChange() {
 		super.fireChange();
