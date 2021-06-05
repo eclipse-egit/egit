@@ -84,7 +84,7 @@ import org.eclipse.ui.PlatformUI;
  * A Git-specific {@link CompareEditorInput} for merging conflicting files.
  */
 @SuppressWarnings("restriction")
-public class GitMergeEditorInput extends AbstractGitMergeEditorInput {
+public class GitMergeEditorInput extends AbstractGitCompareEditorInput {
 
 	private static final String LABELPATTERN = "{0} - {1}"; //$NON-NLS-1$
 
