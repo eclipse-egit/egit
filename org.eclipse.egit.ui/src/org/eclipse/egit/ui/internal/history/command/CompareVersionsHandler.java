@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (C) 2010, 2013 Mathias Kinzler <mathias.kinzler@sap.com> and others.
+ * Copyright (C) 2010, 2021 Mathias Kinzler <mathias.kinzler@sap.com> and others.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License 2.0
@@ -65,7 +65,7 @@ public class CompareVersionsHandler extends AbstractHistoryCommandHandler {
 			} else if (input instanceof IResource) {
 				GitCompareEditorInput compareInput = new GitCompareEditorInput(
 						commit1.name(), commit2.name(), repo,
-						(IResource) input);
+						((IResource) input).getLocation());
 				CompareUtils.openInCompare(workbenchPage, compareInput);
 			} else if (input == null) {
 				GitCompareEditorInput compareInput = new GitCompareEditorInput(
