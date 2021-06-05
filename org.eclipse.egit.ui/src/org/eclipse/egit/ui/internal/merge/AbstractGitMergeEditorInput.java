@@ -18,6 +18,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -29,6 +30,7 @@ import org.eclipse.compare.CompareViewerPane;
 import org.eclipse.compare.IResourceProvider;
 import org.eclipse.compare.ITypedElement;
 import org.eclipse.compare.contentmergeviewer.ContentMergeViewer;
+import org.eclipse.compare.structuremergeviewer.DiffContainer;
 import org.eclipse.compare.structuremergeviewer.DiffNode;
 import org.eclipse.compare.structuremergeviewer.Differencer;
 import org.eclipse.compare.structuremergeviewer.ICompareInput;
@@ -60,7 +62,9 @@ import org.eclipse.jface.action.IAction;
 import org.eclipse.jface.action.IContributionItem;
 import org.eclipse.jface.action.ToolBarManager;
 import org.eclipse.jface.commands.ActionHandler;
+import org.eclipse.jface.viewers.StructuredViewer;
 import org.eclipse.jface.viewers.Viewer;
+import org.eclipse.jface.viewers.ViewerComparator;
 import org.eclipse.jgit.lib.Repository;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.widgets.Composite;
@@ -79,6 +83,13 @@ import org.eclipse.ui.services.IServiceLocator;
  */
 @SuppressWarnings("restriction")
 public abstract class AbstractGitMergeEditorInput extends CompareEditorInput {
+
+	private static final Comparator<String> CMP = (left, right) -> {
+		String l = left.startsWith("/") ? left.substring(1) : left; //$NON-NLS-1$
+		String r = right.startsWith("/") ? right.substring(1) : right; //$NON-NLS-1$
+		return l.replace('/', '\001')
+				.compareToIgnoreCase(r.replace('/', '\001'));
+	};
 
 	private static final Image FOLDER_IMAGE = PlatformUI.getWorkbench()
 			.getSharedImages().getImage(ISharedImages.IMG_OBJ_FOLDER);
@@ -146,6 +157,26 @@ public abstract class AbstractGitMergeEditorInput extends CompareEditorInput {
 		super.contentsCreated();
 		// select the first conflict
 		getNavigator().selectChange(true);
+	}
+
+	@Override
+	public Viewer createDiffViewer(Composite parent) {
+		Viewer viewer = super.createDiffViewer(parent);
+		if (viewer instanceof StructuredViewer) {
+			((StructuredViewer) viewer)
+					.setComparator(new ViewerComparator(CMP) {
+
+						@Override
+						public int category(Object element) {
+							if (element instanceof FolderNode) {
+								return 0;
+							} else {
+								return 1;
+							}
+						}
+					});
+		}
+		return viewer;
 	}
 
 	@Override
@@ -446,22 +477,37 @@ public abstract class AbstractGitMergeEditorInput extends CompareEditorInput {
 				return ((DiffNode) child);
 			}
 		}
-		DiffNode child = new DiffNode(parent, Differencer.NO_CHANGE) {
+		return new FolderNode(parent, name,
+				projectMode ? PROJECT_IMAGE : FOLDER_IMAGE);
+	}
 
-			@Override
-			public String getName() {
-				return name;
+	private void collapse(DiffContainer top) {
+		IDiffElement[] children = top.getChildren();
+		boolean isRoot = top.getParent() == null;
+		if (!isRoot) {
+			while (children != null && children.length == 1) {
+				IDiffElement singleChild = children[0];
+				if (singleChild instanceof FolderNode) {
+					FolderNode node = (FolderNode) singleChild;
+					top.remove(singleChild);
+					top.getParent().add(singleChild);
+					node.setName(top.getName() + '/' + singleChild.getName());
+					((DiffContainer) top.getParent()).remove(top);
+					children = node.getChildren();
+					top = node;
+				} else {
+					// Hit a leaf.
+					return;
+				}
 			}
-
-			@Override
-			public Image getImage() {
-				if (projectMode)
-					return PROJECT_IMAGE;
-				else
-					return FOLDER_IMAGE;
+		}
+		if (children != null && (isRoot || children.length > 1)) {
+			for (IDiffElement node : children) {
+				if (node instanceof FolderNode) {
+					collapse((DiffContainer) node);
+				}
 			}
-		};
-		return child;
+		}
 	}
 
 	@Override
@@ -479,7 +525,9 @@ public abstract class AbstractGitMergeEditorInput extends CompareEditorInput {
 			if (monitor.isCanceled()) {
 				throw new InterruptedException();
 			}
-			return buildInput(monitor);
+			DiffContainer result = buildInput(monitor);
+			collapse(result);
+			return result;
 		} finally {
 			monitor.done();
 		}
@@ -497,7 +545,7 @@ public abstract class AbstractGitMergeEditorInput extends CompareEditorInput {
 	 *             on cancellation
 	 * @see CompareEditorInput#prepareInput(IProgressMonitor monitor)
 	 */
-	protected abstract Object buildInput(IProgressMonitor monitor)
+	protected abstract DiffContainer buildInput(IProgressMonitor monitor)
 			throws InvocationTargetException, InterruptedException;
 
 	private void initPaths() throws InvocationTargetException {
@@ -698,6 +746,33 @@ public abstract class AbstractGitMergeEditorInput extends CompareEditorInput {
 		public int hashCode() {
 			// realFile not considered
 			return super.hashCode();
+		}
+	}
+
+	private static class FolderNode extends DiffNode {
+
+		private final Image image;
+
+		private String name;
+
+		FolderNode(IDiffContainer parent, String name, Image image) {
+			super(parent, Differencer.NO_CHANGE);
+			this.name = name;
+			this.image = image;
+		}
+
+		@Override
+		public String getName() {
+			return name;
+		}
+
+		void setName(String name) {
+			this.name = name;
+		}
+
+		@Override
+		public Image getImage() {
+			return image;
 		}
 	}
 }
