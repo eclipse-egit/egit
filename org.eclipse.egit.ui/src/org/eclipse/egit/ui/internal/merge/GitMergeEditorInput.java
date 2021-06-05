@@ -27,6 +27,7 @@ import org.eclipse.compare.CompareEditorInput;
 import org.eclipse.compare.ITypedElement;
 import org.eclipse.compare.contentmergeviewer.ContentMergeViewer;
 import org.eclipse.compare.rangedifferencer.RangeDifference;
+import org.eclipse.compare.structuremergeviewer.DiffContainer;
 import org.eclipse.compare.structuremergeviewer.DiffNode;
 import org.eclipse.compare.structuremergeviewer.Differencer;
 import org.eclipse.compare.structuremergeviewer.ICompareInput;
@@ -162,7 +163,7 @@ public class GitMergeEditorInput extends AbstractGitMergeEditorInput {
 	}
 
 	@Override
-	protected Object buildInput(IProgressMonitor monitor)
+	protected DiffContainer buildInput(IProgressMonitor monitor)
 			throws InvocationTargetException, InterruptedException {
 		RevWalk rw = null;
 		try {
@@ -292,13 +293,13 @@ public class GitMergeEditorInput extends AbstractGitMergeEditorInput {
 	}
 
 	@SuppressWarnings("unused")
-	private IDiffContainer buildDiffContainer(Repository repository,
+	private DiffContainer buildDiffContainer(Repository repository,
 			RevCommit headCommit, RevCommit ancestorCommit, RevWalk rw,
 			IProgressMonitor monitor)
 			throws IOException, InterruptedException {
 
 		monitor.setTaskName(UIText.GitMergeEditorInput_CalculatingDiffTaskName);
-		IDiffContainer result = new DiffNode(Differencer.CONFLICTING);
+		DiffContainer result = new DiffNode(Differencer.CONFLICTING);
 
 		ConflictStyle style = null;
 		try (TreeWalk tw = new TreeWalk(repository)) {
