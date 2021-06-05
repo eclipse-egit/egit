@@ -82,7 +82,7 @@ import org.eclipse.ui.services.IServiceLocator;
  * A Git-specific {@link CompareEditorInput}.
  */
 @SuppressWarnings("restriction")
-public abstract class AbstractGitMergeEditorInput extends CompareEditorInput {
+public abstract class AbstractGitCompareEditorInput extends CompareEditorInput {
 
 	private static final Comparator<String> CMP = (left, right) -> {
 		String l = left.startsWith("/") ? left.substring(1) : left; //$NON-NLS-1$
@@ -110,7 +110,7 @@ public abstract class AbstractGitMergeEditorInput extends CompareEditorInput {
 	private boolean initialized;
 
 	/**
-	 * Creates a new {@link AbstractGitMergeEditorInput}. Note that if the
+	 * Creates a new {@link AbstractGitCompareEditorInput}. Note that if the
 	 * repository is null and no locations are given, initPaths will throw an
 	 * exception.
 	 *
@@ -121,7 +121,7 @@ public abstract class AbstractGitMergeEditorInput extends CompareEditorInput {
 	 *            absolute file system locations of the files/folders to
 	 *            restrict the operation to
 	 */
-	protected AbstractGitMergeEditorInput(Repository repository,
+	protected AbstractGitCompareEditorInput(Repository repository,
 			IPath... locations) {
 		super(new CompareConfiguration());
 		this.repository = repository;
@@ -403,7 +403,7 @@ public abstract class AbstractGitMergeEditorInput extends CompareEditorInput {
 
 	/**
 	 * Creates a hidden resource that will be removed when this
-	 * {@link AbstractGitMergeEditorInput} is disposed.
+	 * {@link AbstractGitCompareEditorInput} is disposed.
 	 *
 	 * @param uri
 	 *            to link to
@@ -466,6 +466,26 @@ public abstract class AbstractGitMergeEditorInput extends CompareEditorInput {
 				child = getOrCreateChild(child, projectName, true);
 			else
 				child = getOrCreateChild(child, path.segment(i), false);
+		}
+		return child;
+	}
+
+	/**
+	 * Constructs diff nodes for folders connecting the file to the root.
+	 *
+	 * @param root
+	 *            to connect to
+	 * @param gitPath
+	 *            git path (relative to the repository root)
+	 * @return the folder node to attach a new {@link DiffNode} for the file to,
+	 *         already attached to root
+	 */
+	protected IDiffContainer getFileParent(IDiffContainer root,
+			String gitPath) {
+		IDiffContainer child = root;
+		IPath path = Path.fromPortableString(gitPath);
+		for (int i = 0; i < path.segmentCount() - 1; i++) {
+			child = getOrCreateChild(child, path.segment(i), false);
 		}
 		return child;
 	}
@@ -611,12 +631,12 @@ public abstract class AbstractGitMergeEditorInput extends CompareEditorInput {
 		if (obj == null || getClass() != obj.getClass()) {
 			return false;
 		}
-		AbstractGitMergeEditorInput other = (AbstractGitMergeEditorInput) obj;
+		AbstractGitCompareEditorInput other = (AbstractGitCompareEditorInput) obj;
 		return Arrays.equals(locations, other.locations);
 	}
 
 	/**
-	 * {@link AbstractGitMergeEditorInput} is not a
+	 * {@link AbstractGitCompareEditorInput} is not a
 	 * {@code SaveableCompareEditorInput}. Editable {@link ITypedElement}s must
 	 * handle saving on being flushed. Attaching a {@code LocalResourceSaver} to
 	 * a {@link LocalResourceTypedElement} achieves that, and also refreshes as
