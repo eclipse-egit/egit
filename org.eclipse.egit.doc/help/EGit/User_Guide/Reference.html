@@ -774,8 +774,22 @@
 				<a href="Tasks.html#Pushing_to_other_Repositories">pushing</a> changes to another repository
 			</li>
 		</ul>
-		<p>
-			<br/>
+		<h3 id="HTTP.28S.29_connections">HTTP(S) connections</h3>
+		<p>EGit provides two ways to connect to http or https URLs:</p>
+		<ul>
+			<li>via the Java built-in http(s) implementation, or</li>
+			<li>via the Apache httpclient Java library.</li>
+		</ul>
+		<p>The user can choose between these two in the main Git preferences. The default is to use the Apache httpclient library.</p>
+		<p>Using the Apache httpclient library, it is possible to connect to a https git URL via an http proxy. The Java built-in http support does not allow this.</p>
+		<p>EGit supports the BASIC, DIGEST, and NEGOTIATION (Kerberos) authentication schemes. (Kerberos needs non-trivial setup for the JDK/JRE outside of EGit, though; if you work in an environment where this is used, your system administrator should have done all the necessary things already.)</p>
+		<p>Some git servers, most notably Microsoft TFS and its successors, are sometimes configured to require NTLM authentication. EGit does not support this proprietary authentication scheme. If you need NTLM authentication, try choosing the Java built-in http support, and set the Java system property <tt>-Djdk.http.ntlm.transparentAuth=allHosts</tt>. One way to set this system property for Eclipse is to include it in the <tt>eclipse.ini</tt> file.</p>
+		<h3 id="SSH_connections">SSH connections</h3>
+		<p>By default EGit uses the Apache MINA sshd Java library for SSH connections. If environment variable <tt>GIT_SSH</tt> is set, it should be the path of an SSH executable on your system, and EGit will use that instead of its built-in Java SSH client.</p>
+		<p>The Java SSH client tries to be as compliant to OpenSSH as possible. A few differences exist in the handling of the SSH configuration file <code>~/.ssh/config</code>, though; in particular, the <code>Match</code> and <code>Include</code> directives are not supported. <code>ProxyCommand</code> is not supported, but <code>ProxyJump</code> is. <code>GlobalKnownHostsFile</code> is ignored.</p>
+		<p>Eclipse lets the user define the SSH_HOME directory in the preferences under 
+			<i>Preferences&rarr;General&rarr;Network Connections&rarr;SSH2</i>, field "SSH2 home". Setting this to anything else but <tt>.ssh</tt> in your user home directory is going to be confusing, since it'll mean that EGit may use other settings than your command-line utilities. It is 
+			<i>strongly recommended</i> to set this path to <tt>.ssh</tt> in your user home directory.
 		</p>
 		<h2 id="Git_References">Git References</h2>
 		<p>Git References are also known shortly as 

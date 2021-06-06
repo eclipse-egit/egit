@@ -384,7 +384,10 @@
 				</topic>
 				<topic href="help/EGit/User_Guide/Reference.html#Git_Reflog_View" label="Git Reflog View"></topic>
 			</topic>
-			<topic href="help/EGit/User_Guide/Reference.html#Git_URLs" label="Git URLs"></topic>
+			<topic href="help/EGit/User_Guide/Reference.html#Git_URLs" label="Git URLs">
+				<topic href="help/EGit/User_Guide/Reference.html#HTTP.28S.29_connections" label="HTTP(S) connections"></topic>
+				<topic href="help/EGit/User_Guide/Reference.html#SSH_connections" label="SSH connections"></topic>
+			</topic>
 			<topic href="help/EGit/User_Guide/Reference.html#Git_References" label="Git References"></topic>
 			<topic href="help/EGit/User_Guide/Reference.html#Refspecs" label="Refspecs">
 				<topic href="help/EGit/User_Guide/Reference.html#Push_Refspecs" label="Push Refspecs"></topic>
@@ -447,32 +450,29 @@
 		</topic>
 		<topic href="help/JGit/User_Guide/Updating-This-Document.html" label="Updating This Document"></topic>
 	</topic>
-	<topic href="help/EGit/New_and_Noteworthy/5.11/5.11.html" label="EGit 5.11 New and Noteworthy">
-		<topic href="help/EGit/New_and_Noteworthy/5.11/5.11.html" label="EGit">
-			<topic href="help/EGit/New_and_Noteworthy/5.11/5.11.html#Git_Protocol" label="Git Protocol"></topic>
-			<topic href="help/EGit/New_and_Noteworthy/5.11/5.11.html#SSH" label="SSH"></topic>
-			<topic href="help/EGit/New_and_Noteworthy/5.11/5.11.html#Properties_View" label="Properties View"></topic>
-			<topic href="help/EGit/New_and_Noteworthy/5.11/5.11.html#Signatures" label="Signatures">
-				<topic href="help/EGit/New_and_Noteworthy/5.11/5.11.html#Creating_Signed_Tags" label="Creating Signed Tags"></topic>
-				<topic href="help/EGit/New_and_Noteworthy/5.11/5.11.html#Verifying_Commit_Signatures" label="Verifying Commit Signatures"></topic>
-				<topic href="help/EGit/New_and_Noteworthy/5.11/5.11.html#Using_GPG_to_Sign_Commits_and_Tags" label="Using GPG to Sign Commits and Tags"></topic>
+	<topic href="help/EGit/New_and_Noteworthy/5.12/5.12.html" label="EGit 5.12 New and Noteworthy">
+		<topic href="help/EGit/New_and_Noteworthy/5.12/5.12.html" label="EGit">
+			<topic href="help/EGit/New_and_Noteworthy/5.12/5.12.html#Staging_View" label="Staging View">
+				<topic href="help/EGit/New_and_Noteworthy/5.12/5.12.html#Replace_With.26rarr.3BOurs.2FTheirs" label="Replace With&amp;rarr;Ours/Theirs"></topic>
 			</topic>
-			<topic href="help/EGit/New_and_Noteworthy/5.11/5.11.html#Other_Changes" label="Other Changes"></topic>
+			<topic href="help/EGit/New_and_Noteworthy/5.12/5.12.html#Merge_Editor" label="Merge Editor">
+				<topic href="help/EGit/New_and_Noteworthy/5.12/5.12.html#Hiding_changes_between_.22ours.22_and_the_ancestor" label="Hiding changes between &quot;ours&quot; and the ancestor"></topic>
+				<topic href="help/EGit/New_and_Noteworthy/5.12/5.12.html#What_to_show_as_.22ours.22.3F" label="What to show as &quot;ours&quot;?"></topic>
+			</topic>
+			<topic href="help/EGit/New_and_Noteworthy/5.12/5.12.html#API" label="API"></topic>
+			<topic href="help/EGit/New_and_Noteworthy/5.12/5.12.html#Other_Changes" label="Other Changes"></topic>
 		</topic>
-		<topic href="help/EGit/New_and_Noteworthy/5.11/Contributors.html" label="Contributors"></topic>
-		<topic href="help/EGit/New_and_Noteworthy/5.11/See-Also.html" label="See Also"></topic>
-		<topic href="help/EGit/New_and_Noteworthy/5.11/Updating-This-Document.html" label="Updating This Document"></topic>
+		<topic href="help/EGit/New_and_Noteworthy/5.12/Contributors.html" label="Contributors"></topic>
+		<topic href="help/EGit/New_and_Noteworthy/5.12/See-Also.html" label="See Also"></topic>
+		<topic href="help/EGit/New_and_Noteworthy/5.12/Updating-This-Document.html" label="Updating This Document"></topic>
 	</topic>
-	<topic href="help/JGit/New_and_Noteworthy/5.11/5.11.html" label="JGit 5.11 New and Noteworthy">
-		<topic href="help/JGit/New_and_Noteworthy/5.11/5.11.html" label="JGit">
-			<topic href="help/JGit/New_and_Noteworthy/5.11/5.11.html#Git_Protocol" label="Git Protocol"></topic>
-			<topic href="help/JGit/New_and_Noteworthy/5.11/5.11.html#HTTP.28S.29_Transport_Protocol" label="HTTP(S) Transport Protocol"></topic>
-			<topic href="help/JGit/New_and_Noteworthy/5.11/5.11.html#Commands" label="Commands"></topic>
-			<topic href="help/JGit/New_and_Noteworthy/5.11/5.11.html#Dependencies" label="Dependencies"></topic>
-			<topic href="help/JGit/New_and_Noteworthy/5.11/5.11.html#Other_Changes" label="Other Changes"></topic>
+	<topic href="help/JGit/New_and_Noteworthy/5.12/5.12.html" label="JGit 5.12 New and Noteworthy">
+		<topic href="help/JGit/New_and_Noteworthy/5.12/5.12.html" label="JGit">
+			<topic href="help/JGit/New_and_Noteworthy/5.12/5.12.html#Commands" label="Commands"></topic>
+			<topic href="help/JGit/New_and_Noteworthy/5.12/5.12.html#Other_Changes" label="Other Changes"></topic>
 		</topic>
-		<topic href="help/JGit/New_and_Noteworthy/5.11/Contributors.html" label="Contributors"></topic>
-		<topic href="help/JGit/New_and_Noteworthy/5.11/Updating-This-Document.html" label="Updating This Document"></topic>
+		<topic href="help/JGit/New_and_Noteworthy/5.12/Contributors.html" label="Contributors"></topic>
+		<topic href="help/JGit/New_and_Noteworthy/5.12/Updating-This-Document.html" label="Updating This Document"></topic>
 	</topic>
 	<topic href="help/EGit/Git_For_Eclipse_Users/Git-For-Eclipse-Users.html" label="Git for Eclipse Users">
 		<topic href="help/EGit/Git_For_Eclipse_Users/Git-For-Eclipse-Users.html" label="Centralised version control systems"></topic>
@@ -562,7 +562,6 @@
 					<topic href="help/EGit/Contributor_Guide/Contributing-Patches.html#Adding_a_dedicated_remote" label="Adding a dedicated remote"></topic>
 				</topic>
 				<topic href="help/EGit/Contributor_Guide/Contributing-Patches.html#Using_Gerrit_with_EGit:" label="Using Gerrit with EGit:"></topic>
-				<topic href="help/EGit/Contributor_Guide/Contributing-Patches.html#Using_the_Mylyn_Gerrit_Connector" label="Using the Mylyn Gerrit Connector"></topic>
 			</topic>
 			<topic href="help/EGit/Contributor_Guide/Contributing-Patches.html#Granularity_of_Changes" label="Granularity of Changes">
 				<topic href="help/EGit/Contributor_Guide/Contributing-Patches.html#Branches" label="Branches"></topic>
@@ -583,11 +582,10 @@
 			<topic href="help/EGit/Contributor_Guide/Gerrit-Code-Review-Cheatsheet.html#To_create_a_new_change" label="To create a new change"></topic>
 			<topic href="help/EGit/Contributor_Guide/Gerrit-Code-Review-Cheatsheet.html#To_update_an_existing_change_with_a_new_commit" label="To update an existing change with a new commit"></topic>
 			<topic href="help/EGit/Contributor_Guide/Gerrit-Code-Review-Cheatsheet.html#To_compare_bulk_diffs_using_Git" label="To compare bulk diffs using Git"></topic>
-			<topic href="help/EGit/Contributor_Guide/Gerrit-Code-Review-Cheatsheet.html#To_trigger_Hudson_build_for_a_change" label="To trigger Hudson build for a change"></topic>
+			<topic href="help/EGit/Contributor_Guide/Gerrit-Code-Review-Cheatsheet.html#Trigger_Jenkins_build_for_a_change" label="Trigger Jenkins build for a change"></topic>
 			<topic href="help/EGit/Contributor_Guide/Gerrit-Code-Review-Cheatsheet.html#To_approve_a_change" label="To approve a change"></topic>
 			<topic href="help/EGit/Contributor_Guide/Gerrit-Code-Review-Cheatsheet.html#To_add_a_reviewer" label="To add a reviewer"></topic>
 			<topic href="help/EGit/Contributor_Guide/Gerrit-Code-Review-Cheatsheet.html#Code_Review" label="Code Review"></topic>
-			<topic href="help/EGit/Contributor_Guide/Gerrit-Code-Review-Cheatsheet.html#IP_Review" label="IP Review"></topic>
 			<topic href="help/EGit/Contributor_Guide/Gerrit-Code-Review-Cheatsheet.html#Submission_Guidelines" label="Submission Guidelines"></topic>
 			<topic href="help/EGit/Contributor_Guide/Gerrit-Code-Review-Cheatsheet.html#Tips_.26_Tricks" label="Tips &amp; Tricks">
 				<topic href="help/EGit/Contributor_Guide/Gerrit-Code-Review-Cheatsheet.html#Class_Loading_Issues" label="Class Loading Issues"></topic>
