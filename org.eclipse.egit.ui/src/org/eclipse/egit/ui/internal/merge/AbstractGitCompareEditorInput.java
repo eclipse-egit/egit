@@ -547,7 +547,9 @@ public abstract class AbstractGitCompareEditorInput extends CompareEditorInput {
 				throw new InterruptedException();
 			}
 			DiffContainer result = buildInput(monitor);
-			collapse(result);
+			if (result != null) {
+				collapse(result);
+			}
 			return result;
 		} finally {
 			monitor.done();
