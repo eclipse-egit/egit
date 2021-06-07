@@ -1846,36 +1846,25 @@
          <activeWhen>
             <or>
                <and>
-                  <count
-                        value="1">
-                  </count>
+                  <count value="1" />
                   <iterate>
-                     <instanceof
-                           value="org.eclipse.egit.ui.internal.repository.tree.RepositoryTreeNode">
-                     </instanceof>
+                     <instanceof value="org.eclipse.egit.ui.internal.repository.tree.RepositoryTreeNode" />
                      <not>
-                        <instanceof
-                              value="org.eclipse.egit.ui.internal.selection.RepositoryVirtualNode">
-                        </instanceof>
+                        <instanceof value="org.eclipse.egit.ui.internal.selection.RepositoryVirtualNode" />
                      </not>
                   </iterate>
                </and>
                <and>
-                 <count
-                       value="2">
-                 </count>
-                 <iterate>
-                    <or>
-                       <instanceof
-                             value="org.eclipse.egit.ui.internal.repository.tree.TagNode">
-                       </instanceof>
-                       <instanceof
-                             value="org.eclipse.egit.ui.internal.repository.tree.RefNode">
-                       </instanceof>
-                    </or>
-                 </iterate>
-              </and>
-           </or>
+                  <count value="2" />
+                  <iterate>
+                     <or>
+                        <instanceof value="org.eclipse.egit.ui.internal.repository.tree.TagNode" />
+                        <instanceof value="org.eclipse.egit.ui.internal.repository.tree.RefNode" />
+                     </or>
+                  </iterate>
+                  <test property="GitSelection.selectionSingleRepository" />
+               </and>
+            </or>
          </activeWhen>
       </handler>
       <handler
@@ -3136,16 +3125,30 @@
                class="org.eclipse.egit.ui.internal.repository.tree.command.CompareCommand">
          </class>
          <activeWhen>
-            <and>
-               <count value="2" />
-               <iterate>
-                  <or>
-                     <instanceof value="org.eclipse.egit.ui.internal.repository.tree.TagNode" />
-                     <instanceof value="org.eclipse.egit.ui.internal.repository.tree.RefNode" />
-                     <instanceof value="org.eclipse.egit.ui.internal.repository.tree.AdditionalRefNode" />
-                  </or>
-               </iterate>
-            </and>
+            <or>
+               <and>
+                  <count value="2" />
+                  <iterate>
+                     <or>
+                        <instanceof value="org.eclipse.egit.ui.internal.repository.tree.TagNode" />
+                        <instanceof value="org.eclipse.egit.ui.internal.repository.tree.RefNode" />
+                        <instanceof value="org.eclipse.egit.ui.internal.repository.tree.AdditionalRefNode" />
+                     </or>
+                  </iterate>
+                  <test property="GitSelection.selectionSingleRepository" />
+               </and>
+               <and>
+                  <count value="1" />
+                  <iterate>
+                     <or>
+                        <instanceof value="org.eclipse.egit.ui.internal.repository.tree.TagNode" />
+                        <instanceof value="org.eclipse.egit.ui.internal.repository.tree.RefNode" />
+                        <instanceof value="org.eclipse.egit.ui.internal.repository.tree.AdditionalRefNode" />
+                     </or>
+                     <test property="GitRepository.isBare" value="false" />
+                  </iterate>
+               </and>
+            </or>
          </activeWhen>
       </handler>
       <handler
@@ -3163,6 +3166,7 @@
                      <instanceof value="org.eclipse.egit.ui.internal.repository.tree.AdditionalRefNode" />
                   </or>
                </iterate>
+               <test property="GitSelection.selectionSingleRepository" />
             </and>
          </activeWhen>
       </handler>
@@ -3181,6 +3185,7 @@
                      <instanceof value="org.eclipse.egit.ui.internal.repository.tree.AdditionalRefNode" />
                   </or>
                </iterate>
+               <test property="GitSelection.selectionSingleRepository" />
             </and>
          </activeWhen>
       </handler>
