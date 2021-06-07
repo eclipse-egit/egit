@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "aa06e7c0_72364d3c",
+        "filename": "DEPENDENCIES",
+        "patchSetId": 1
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2021-06-07T05:58:46Z",
+      "side": 1,
+      "message": "Where do these dependencies come from? EGit is not published at Maven Central.",
+      "revId": "81f4cd6b5da99ca0ed94b76c30972ab5c8b8ccbf",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": true
+    }
+  ]
+}
