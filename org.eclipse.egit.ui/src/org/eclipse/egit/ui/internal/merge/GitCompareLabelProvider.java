@@ -14,8 +14,10 @@ import java.text.MessageFormat;
 
 import org.eclipse.compare.ICompareInputLabelProvider;
 import org.eclipse.compare.IEditableContent;
+import org.eclipse.compare.IResourceProvider;
 import org.eclipse.compare.ITypedElement;
 import org.eclipse.compare.structuremergeviewer.DiffNode;
+import org.eclipse.core.resources.IResource;
 import org.eclipse.egit.core.internal.storage.IndexFileRevision;
 import org.eclipse.egit.ui.internal.CompareUtils;
 import org.eclipse.egit.ui.internal.UIText;
@@ -24,7 +26,7 @@ import org.eclipse.jface.viewers.BaseLabelProvider;
 import org.eclipse.swt.graphics.Image;
 
 /**
- * A label provider for {@link DiffNode}s with {@link FileRevisionTypedElement}s
+ * A label provider for {@link DiffNode}s as created by EGit.
  */
 public class GitCompareLabelProvider extends BaseLabelProvider
 		implements ICompareInputLabelProvider {
@@ -61,6 +63,14 @@ public class GitCompareLabelProvider extends BaseLabelProvider
 		}
 	}
 
+	private IResource getResource(ITypedElement element) {
+		if (element instanceof IResourceProvider) {
+			IResourceProvider resourceProvider = (IResourceProvider) element;
+			return resourceProvider.getResource();
+		}
+		return null;
+	}
+
 	@Override
 	public Image getImage(Object element) {
 		return null;
@@ -93,6 +103,10 @@ public class GitCompareLabelProvider extends BaseLabelProvider
 			ITypedElement item = ((DiffNode) input).getLeft();
 			if (item instanceof FileRevisionTypedElement) {
 				return getLabel((FileRevisionTypedElement) item);
+			} else if (getResource(item) != null) {
+				return MessageFormat.format(
+						UIText.GitCompareFileRevisionEditorInput_LocalLabel,
+						item.getName());
 			}
 		}
 		return null;

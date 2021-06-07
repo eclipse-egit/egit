@@ -144,7 +144,8 @@ public abstract class AbstractGitCompareEditorInput extends CompareEditorInput {
 				if (resource == null && element instanceof IResourceProvider) {
 					resource = ((IResourceProvider) element).getResource();
 				}
-				if (resource != null && adapter.isInstance(resource)) {
+				if (resource != null && adapter.isInstance(resource)
+						&& resource.exists()) {
 					return resource;
 				}
 			}
@@ -547,7 +548,9 @@ public abstract class AbstractGitCompareEditorInput extends CompareEditorInput {
 				throw new InterruptedException();
 			}
 			DiffContainer result = buildInput(monitor);
-			collapse(result);
+			if (result != null) {
+				collapse(result);
+			}
 			return result;
 		} finally {
 			monitor.done();
