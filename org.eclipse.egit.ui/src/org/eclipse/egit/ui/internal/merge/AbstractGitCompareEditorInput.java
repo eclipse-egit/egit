@@ -551,6 +551,7 @@ public abstract class AbstractGitCompareEditorInput extends CompareEditorInput {
 			if (result != null) {
 				collapse(result);
 			}
+			inputBuilt(result);
 			return result;
 		} finally {
 			monitor.done();
@@ -571,6 +572,19 @@ public abstract class AbstractGitCompareEditorInput extends CompareEditorInput {
 	 */
 	protected abstract DiffContainer buildInput(IProgressMonitor monitor)
 			throws InvocationTargetException, InterruptedException;
+
+	/**
+	 * Hook for subclasses called once the full compare result has been built.
+	 * <p>
+	 * This default implementation does nothing.
+	 * </p>
+	 *
+	 * @param root
+	 *            that will be returned as compare result
+	 */
+	protected void inputBuilt(DiffContainer root) {
+		// Nothing
+	}
 
 	private void initPaths() throws InvocationTargetException {
 		if (initialized) {

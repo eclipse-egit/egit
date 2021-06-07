@@ -23,6 +23,7 @@ import org.eclipse.egit.ui.internal.CompareUtils;
 import org.eclipse.egit.ui.internal.UIText;
 import org.eclipse.egit.ui.internal.revision.FileRevisionTypedElement;
 import org.eclipse.jface.viewers.BaseLabelProvider;
+import org.eclipse.jface.viewers.LabelProviderChangedEvent;
 import org.eclipse.swt.graphics.Image;
 
 /**
@@ -131,5 +132,18 @@ public class GitCompareLabelProvider extends BaseLabelProvider
 	@Override
 	public Image getRightImage(Object input) {
 		return null;
+	}
+
+	/**
+	 * Fires a {@link LabelProviderChangedEvent} to tell users that the labels
+	 * for the given object changed.
+	 *
+	 * @param object
+	 *            for which labels need updating
+	 */
+	public void fireNodeLabelChanged(Object object) {
+		LabelProviderChangedEvent event = new LabelProviderChangedEvent(this,
+				object);
+		fireLabelProviderChanged(event);
 	}
 }
