@@ -2269,6 +2269,24 @@
          </activeWhen>
       </handler>
       <handler
+            commandId="org.eclipse.egit.ui.team.CompareWithHead">
+         <class
+               class="org.eclipse.egit.ui.internal.repository.tree.command.CompareWithHeadCommand">
+         </class>
+         <activeWhen>
+            <and>
+               <test property="GitSelection.selectionSingleRepository" />
+               <iterate>
+                  <or>
+                    <instanceof value="org.eclipse.egit.ui.internal.repository.tree.FileNode" />
+                    <instanceof value="org.eclipse.egit.ui.internal.repository.tree.FolderNode" />
+                    <instanceof value="org.eclipse.egit.ui.internal.repository.tree.WorkingDirNode" />
+                  </or>
+               </iterate>
+            </and>
+         </activeWhen>
+      </handler>
+      <handler
             commandId="org.eclipse.egit.ui.team.CompareWithIndex">
          <class
                class="org.eclipse.egit.ui.internal.actions.CompareWithIndexActionHandler">
@@ -2314,12 +2332,48 @@
          </activeWhen>
       </handler>
       <handler
+            commandId="org.eclipse.egit.ui.team.CompareWithCommit">
+         <class
+               class="org.eclipse.egit.ui.internal.repository.tree.command.CompareWithCommitCommand">
+         </class>
+         <activeWhen>
+            <and>
+               <test property="GitSelection.selectionSingleRepository" />
+               <iterate>
+                  <or>
+                    <instanceof value="org.eclipse.egit.ui.internal.repository.tree.FileNode" />
+                    <instanceof value="org.eclipse.egit.ui.internal.repository.tree.FolderNode" />
+                    <instanceof value="org.eclipse.egit.ui.internal.repository.tree.WorkingDirNode" />
+                  </or>
+               </iterate>
+            </and>
+         </activeWhen>
+      </handler>
+      <handler
             commandId="org.eclipse.egit.ui.team.CompareWithRef">
          <class
                class="org.eclipse.egit.ui.internal.actions.CompareWithRefActionHandler">
          </class>
          <activeWhen>
             <reference definitionId="org.eclipse.egit.ui.resourcesSingleRepository" />
+         </activeWhen>
+      </handler>
+      <handler
+            commandId="org.eclipse.egit.ui.team.CompareWithRef">
+         <class
+               class="org.eclipse.egit.ui.internal.repository.tree.command.CompareWithRefCommand">
+         </class>
+         <activeWhen>
+            <and>
+               <test property="GitSelection.selectionSingleRepository" />
+               <iterate>
+                  <or>
+                    <instanceof value="org.eclipse.egit.ui.internal.repository.tree.FileNode" />
+                    <instanceof value="org.eclipse.egit.ui.internal.repository.tree.FolderNode" />
+                    <instanceof value="org.eclipse.egit.ui.internal.repository.tree.WorkingDirNode" />
+                  </or>
+               </iterate>
+            </and>
          </activeWhen>
       </handler>
       <handler
@@ -6067,12 +6121,7 @@
                commandId="org.eclipse.egit.ui.team.CompareWithHead"
                label="%CompareWithHeadAction_label"
                style="push">
-            <visibleWhen checkEnabled="false">
-               <and>
-                  <test property="GitSelection.selectionSingleRepository" />
-                  <test property="org.eclipse.egit.ui.resources.ResourceState.hasNotIgnoredResources" />
-               </and>
-            </visibleWhen>
+            <visibleWhen checkEnabled="true" />
          </command>
          <command
                commandId="org.eclipse.egit.ui.team.CompareWithIndex"
@@ -6105,17 +6154,13 @@
                commandId="org.eclipse.egit.ui.team.CompareWithRef"
                label="%CompareWithBranchOrTagAction.label"
                style="push">
-            <visibleWhen checkEnabled="false">
-               <reference definitionId="org.eclipse.egit.ui.resourcesSingleRepository" />
-            </visibleWhen>
+            <visibleWhen checkEnabled="true" />
          </command>
          <command
                commandId="org.eclipse.egit.ui.team.CompareWithCommit"
                label="%CompareWithCommitAction.label"
                style="push">
-            <visibleWhen checkEnabled="false">
-               <reference definitionId="org.eclipse.egit.ui.resourcesSingleRepository" />
-            </visibleWhen>
+            <visibleWhen checkEnabled="true" />
          </command>
       </menuContribution>
       <menuContribution
