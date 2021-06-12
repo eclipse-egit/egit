@@ -15,6 +15,7 @@ import java.io.IOException;
 
 import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.commands.ExecutionException;
+import org.eclipse.core.runtime.Adapters;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.core.runtime.jobs.Job;
 import org.eclipse.egit.ui.internal.UIText;
@@ -42,7 +43,10 @@ public class ShowInSystemExplorerActionHandler extends RepositoryActionHandler {
 		if (!(element instanceof RepositoryTreeNode)) {
 			return null;
 		}
-		File canonicalPath = ((RepositoryTreeNode) element).getPath().toFile();
+		File canonicalPath = Adapters.adapt(element, File.class);
+		if (canonicalPath == null) {
+			return null;
+		}
 
 		Job job = Job.create(
 				UIText.ShowInSystemExplorerActionHandler_JobTitle,
