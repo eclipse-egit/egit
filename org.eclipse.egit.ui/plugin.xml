@@ -3207,19 +3207,17 @@
                class="org.eclipse.egit.ui.internal.actions.ShowInSystemExplorerActionHandler">
          </class>
          <activeWhen>
-            <or>
-               <and>
-                  <count value="1" />
-                  <iterate>
-                     <or>
-                        <instanceof value="org.eclipse.egit.ui.internal.repository.tree.FileNode" />
-                        <instanceof value="org.eclipse.egit.ui.internal.repository.tree.FolderNode" />
-                        <instanceof value="org.eclipse.egit.ui.internal.repository.tree.WorkingDirNode" />
-                     </or>
-                  </iterate>
-               </and>
-               <test property="GitSelection.projectsSingleRepository" />
-            </or>
+            <and>
+               <count value="1" />
+               <iterate>
+                  <or>
+                     <instanceof value="org.eclipse.egit.ui.internal.repository.tree.RepositoryNode" />
+                     <instanceof value="org.eclipse.egit.ui.internal.repository.tree.FileNode" />
+                     <instanceof value="org.eclipse.egit.ui.internal.repository.tree.FolderNode" />
+                     <instanceof value="org.eclipse.egit.ui.internal.repository.tree.WorkingDirNode" />
+                  </or>
+               </iterate>
+            </and>
          </activeWhen>
       </handler>
       <handler
@@ -5100,18 +5098,7 @@
                commandId="org.eclipse.egit.ui.RepositoriesViewShowInSystemExplorer"
                label="%ShowInSystemExplorer.label"
                style="push">
-            <visibleWhen checkEnabled="false">
-               <and>
-                  <count value="1" />
-                  <iterate>
-                     <or>
-                        <instanceof value="org.eclipse.egit.ui.internal.repository.tree.FileNode" />
-                        <instanceof value="org.eclipse.egit.ui.internal.repository.tree.FolderNode" />
-                        <instanceof value="org.eclipse.egit.ui.internal.repository.tree.WorkingDirNode" />
-                     </or>
-                  </iterate>
-               </and>
-            </visibleWhen>
+            <visibleWhen checkEnabled="true" />
          </command>
       </menuContribution>
       <menuContribution

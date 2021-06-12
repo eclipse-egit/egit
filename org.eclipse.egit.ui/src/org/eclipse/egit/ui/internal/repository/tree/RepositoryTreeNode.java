@@ -416,6 +416,14 @@ public abstract class RepositoryTreeNode<T> extends PlatformObject
 	private File adaptFile() {
 		switch (getType()) {
 		case REPO:
+			Repository repository = getRepository();
+			if (repository == null) {
+				return null;
+			}
+			if (repository.isBare()) {
+				return repository.getDirectory();
+			}
+			return repository.getWorkTree();
 		case WORKINGDIR:
 		case FILE:
 		case FOLDER:
