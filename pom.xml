@@ -385,6 +385,7 @@
             <encoding>UTF-8</encoding>
             <source>1.8</source>
             <target>1.8</target>
+            <release>8</release>
             <!-- Do not use useProjectSettings; it'll always override -nowarn -->
             <useProjectSettings>false</useProjectSettings>
             <compilerArgs>
@@ -430,6 +431,7 @@
           <version>${tycho-version}</version>
           <configuration>
             <trimStackTrace>false</trimStackTrace>
+            <useJDK>BREE</useJDK>
           </configuration>
         </plugin>
         <plugin>
