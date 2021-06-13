@@ -18,7 +18,7 @@
   <parent>
     <groupId>org.eclipse.egit</groupId>
     <artifactId>egit-parent</artifactId>
-    <version>5.12.0.202106070339-r</version>
+    <version>5.12.1-SNAPSHOT</version>
   </parent>
 
   <artifactId>org.eclipse.egit.mylyn.ui.test</artifactId>
