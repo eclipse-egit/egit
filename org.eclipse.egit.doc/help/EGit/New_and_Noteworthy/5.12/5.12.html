@@ -1,0 +1,226 @@
+<?xml version='1.0' encoding='utf-8' ?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+		<title>EGit 5.12 New and Noteworthy</title>
+		<link type="text/css" rel="stylesheet" href="../../../book.css"/>
+	</head>
+	<body>
+		<table class="navigation" style="width: 100%;" border="0" summary="navigation">
+			<tr>
+				<th style="width: 100%" align="center" colspan="3">EGit 5.12 New and Noteworthy</th>
+			</tr>
+			<tr>
+				<td style="width: 20%" align="left"></td>
+				<td style="width: 60%" align="center"></td>
+				<td style="width: 20%" align="right">
+					<a href="Contributors.html" title="Contributors">
+						<img alt="Next" border="0" src="../../../images/next.gif"/>
+					</a>
+				</td>
+			</tr>
+			<tr>
+				<td style="width: 20%" align="left" valign="top"></td>
+				<td style="width: 60%" align="center"></td>
+				<td style="width: 20%" align="right" valign="top">Contributors</td>
+			</tr>
+		</table><hr class="navigation-separator"/>
+		<h1 id="EGit">EGit</h1>
+		<h2 id="Staging_View">Staging View</h2>
+		<p>The Staging View newly shows more information about conflicts during merging, rebasing, or cherry-picking commits:</p>
+		<p>
+			<img alt="&quot;Screenshot of the Staging View with the new conflict type indicators highlighted.&quot;" border="0" src="images/EGit_5.12_Staging_Conflicts.png"/>
+		</p>
+		<p>Here, branch "side" was merged into branch "master", which resulted in conflicts. The staging view now indicates the 
+			<i>type</i> of conflict:
+		</p>
+		<ul>
+			<li>
+				<b>M</b> means "modified": both sides made conflicting modifications.
+			</li>
+			<li>
+				<b>M/D</b> means "modify/delete conflict": the file was modified on the 'ours' side of the merge, but deleted in the 'theirs' side.
+			</li>
+			<li>
+				<b>D/M</b> means "delete/modify conflict": the file was deleted on our side, but modified on their side.
+			</li>
+			<li>
+				<b>A</b> means "conflicting additions": the file was added on both sides (with respect to the merge base), but the two file versions conflict.
+			</li>
+		</ul>
+		<p>The 'ours' side is HEAD before the merge, in the example branch "master", while 'theirs' is the commit being merged into 'ours', in the example branch "side". There are tags named 'ours' and 'theirs' in the history view for this example to show this clearly. (These tags were created manually; EGit does not create such tags when a merge is done.)</p>
+		<h3 id="Replace_With.26rarr.3BOurs.2FTheirs">Replace With&rarr;Ours/Theirs</h3>
+		<p>The 
+			<i>Replace With&rarr;Ours/Theirs</i> command in the context menu of such a conflicting file has been improved. For delete/modify or modify/delete conflicts it will now remove the file and stage the deletion if the file was deleted in the chosen side. (In the example, since the file was deleted in the 'theirs' side, 
+			<i>Replace With&rarr;Theirs</i> would delete the file.)
+		</p>
+		<p>Additionally, 
+			<i>Replace With&rarr;Ours/Theirs</i> is now also available in the context menu for conflicting files in the Package or Project Explorer.
+		</p>
+		<h2 id="Merge_Editor">Merge Editor</h2>
+		<p>The Merge Editor has seen some improvements in EGit 5.12. </p>
+		<h3 id="Hiding_changes_between_.22ours.22_and_the_ancestor">Hiding changes between "ours" and the ancestor</h3>
+		<p>
+			<b>Merging</b> two commits in git is a three-way merge between the two commits to merge and their common ancestor:
+		</p>
+		<p>
+			<img alt="&quot;A diagram showing a git merge&quot;" border="0" src="images/Diagram_Merge.png"/>
+		</p>
+		<p>
+			<i>Merging Z into HEAD</i>
+		</p>
+		<p>When there are conflicts, the EGit merge editor shows a three-way diff between the ancestor and the two commits being merged (named "ours" and "theirs" in git). This three-way comparison identifies changes between 
+			<b>A</b>&mdash;
+			<b>D</b>, 
+			<b>A</b>&mdash;
+			<b>Z</b>, and 
+			<b>D</b>&mdash;
+			<b>Z</b> and displays them in the editor.
+		</p>
+		<p>
+			<b>Cherry-picking</b> a commit also results in a three-way merge, but the ancestor is the parent commit of "theirs", i.e., of the commit being cherry-picked:
+		</p>
+		<p>
+			<img alt="&quot;A diagram showing a git cherry-pick&quot;" border="0" src="images/Diagram_Cherrypick.png"/>
+		</p>
+		<p>
+			<i>Cherry-picking Z onto HEAD</i>
+		</p>
+		<p>The final cherry-picked commit 
+			<b>Ch</b> will have only one parent 
+			<b>D</b>, whereas the merge commit 
+			<b>M</b> has two parents 
+			<b>D</b> and 
+			<b>Z</b>.
+		</p>
+		<p>As one can see, there is no direct relation between "ours" (commit 
+			<b>D</b>) and the ancestor (commit 
+			<b>X</b>) used for this kind of merge. For a cherry-pick, the differences 
+			<b>X&mdash;Z</b> and 
+			<b>D&mdash;Z</b> are important; the differences 
+			<b>X&mdash;D</b> may actually be distracting and irrelevant.
+		</p>
+		<p>EGit 5.12 adds an action to the merge editor to suppress showing these differences between "ours" and "ancestor", and by default it suppresses these differences when showing the comparison for a cherry-pick. The user can toggle this setting via a new button in the toolbar of the text comparison viewer:</p>
+		<p>
+			<img alt="&quot;Toolbar of the text merge viewer in EGit 5.12&quot;" border="0" src="images/EGit_5.12_Merge_Editor_Toolbar.png"/>
+		</p>
+		<p>When the button is selected, differences that occur only between "ours" and the ancestor are hidden from the comparison view. Otherwise, these changes are shown. For cherry-picks, EGit automatically selects it and thus hides these changes. When the left and right sides are swapped in the viewer, the little red cross in the icon will also switch sides so that it is always on the "ours" side.</p>
+		<p>Consider the following git history:</p>
+		<p>
+			<img alt="&quot;Example git history&quot;" border="0" src="images/EGit_5.12_Cherrypick_Example_History.png"/>
+		</p>
+		<p>We cherry-pick commit eb7a1ca (branch "side"; Change 2) onto HEAD (branch "master"; Change 0), which results in conflicts.</p>
+		<table cellpadding="4" width="856">
+			<tr>
+				<td>
+					<img width="420" border="0" src="images/EGit_5.12_Cherrypick_All_Changes.png"/>
+				</td>
+				<td>
+					<img width="420" border="0" src="images/EGit_5.12_Cherrypick_Suppress_Changes.png"/>
+				</td>
+			</tr>
+			<tr>
+				<td>"ours" is left, "theirs" is right, at the top the ancestor version. All changes are shown, including changes that come from change 1 that we did 
+					<i>not</i> cherry-pick.
+				</td>
+				<td>Changes that occur only between "ours" and the ancestor are hidden. The view is focused on only the changes contributed by change 2.</td>
+			</tr>
+		</table>
+		<p>Git is able to automatically merge some parts, but also encounters two conflicts, where different modifications in change 0 and change 2 occurred. The "theirs" file version from change 2 also includes the modifications that were made in change 1, but in a cherry-pick those are not relevant.</p>
+		<h3 id="What_to_show_as_.22ours.22.3F">What to show as "ours"?</h3>
+		<p>When git does a merge and encounters a conflict, it shows those conflicts in the file by inserting 
+			<i>conflict markers</i>, by default "&lt;&lt;&lt;&lt;&lt;&lt;&lt;", "=======", and "&gt;&gt;&gt;&gt;&gt;&gt;&gt;", with the two conflicting text parts from the "ours" and the "theirs" versions of the file in between. Other parts of the file may already have been merged, for instance, if another change in the same file occured only on one side.
+		</p>
+		<p>EGit traditionally offered the user the choice of either</p>
+		<ul>
+			<li>
+				<b>Working Tree (pre-merged by Git)</b>: show this pre-merged file, including the conflict markers, as the "ours" side in the merge editor, or
+			</li>
+			<li>
+				<b>Last HEAD (unmerged)</b>: show the "ours" version as it was before the merge or cherry-pick.
+			</li>
+		</ul>
+		<p>The latter is the version as it was in commit 
+			<b>D</b> in the example, without conflict markers, but also without any pre-merged bits that git might have been able to merge automatically.
+		</p>
+		<p>EGit 5.12 introduced a third option:</p>
+		<ul>
+			<li>
+				<b>Working Tree Pre-Merged to 'Ours</b>': use the pre-merged file, but with all conflicts automatically resolved to the "ours" version.
+			</li>
+		</ul>
+		<p>This is a file that has no conflict markers, includes all the bits that git was able to merge automatically, and that uses the text from "ours" (i.e., from commit 
+			<b>D</b>) wherever git had detected a conflict. That's the same as <tt>git merge -X ours</tt> would have produced. Since the 
+			<i>other</i> side shown in the merge editor is the "theirs" version (from commit 
+			<b>Z</b>), this often gives the best comparison in the editor.
+		</p>
+		<p>There is a new preference setting for this in the EGit main preferences:</p>
+		<p>
+			<img alt="&quot;The main EGit preference page with the merge tool input preference highlighted&quot;" border="0" src="images/EGit_5.12_Merge_Tool_Preferences.png"/>
+		</p>
+		<p>Choosing "Working Tree Pre-Merged to 'Ours'" (which is also the new default) uses this new input for comparing conflicting files in the merge editor. If "Prompt when starting tool" is selected, the choice can be made each time a merge editor is opened.</p>
+		<p>Best results are usually obtained with this new setting, or sometimes with "Last HEAD (unmerged)".</p>
+		<table cellpadding="4" width="856">
+			<tr>
+				<td>
+					<img width="420" border="0" src="images/EGit_5.12_Merged_Ours.png"/>
+				</td>
+				<td>
+					<img width="420" border="0" src="images/EGit_5.12_Merge_Last_Head.png"/>
+				</td>
+			</tr>
+			<tr>
+				<td>With "Working Tree Pre-Merged to 'Ours'" as input</td>
+				<td>With "Last HEAD (unmerged)" as input</td>
+			</tr>
+		</table>
+		<p>As the "Last HEAD (unmerged)" version is just the version from commit 
+			<b>D</b>, all differences show up as changes. The user has to manually merge any differences; no automatic merging by git is applied. This may be helpful if the automatic merging by git produces unexpected results, which can happen sometimes.
+		</p>
+		<h2 id="API">API</h2>
+		<p>EGit 5.12 offers new API giving third-party bundles access to git information.</p>
+		<p>The <code>org.eclipse.egit.core</code> bundle offers the following new interfaces and classes:</p>
+		<ul>
+			<li><code>org.eclipse.egit.core.info.GitInfo</code>: this accessor interface can be obtained via adaptation using <tt>
+				<b>Adapters.adapt(
+					<i>someObject</i>, GitInfo.class);
+				</b></tt>. Via the interface, clients can determine the JGit <tt>Repository</tt> the item is in, its path within the repository, whether it is from the working tree, the git index, or a commit (and if so, which commit), and what its git state is.
+				<ul>
+					<li><tt>
+						<i>someObject</i></tt> can be anything; in particular it could be an <tt>org.eclipse.core.resources.IFile</tt> or an <tt>org.eclipse.team.core.history.IFileRevision</tt> or an <tt>org.eclipse.compare.ITypedElement</tt>.
+					</li>
+					<li>If <tt>GitInfo.getRepository() == null</tt>, <tt>
+						<i>someObject</i></tt> is not in an EGit-managed git repository.
+					</li>
+					<li>If the adaptation itself returns <tt>null</tt>, the item is either not in an EGit-managed git repository, or EGit doesn't know how to provide a <tt>GitInfo</tt> for <tt>
+						<i>someObject</i></tt>. 
+					</li>
+				</ul>
+			</li>
+			<li><code>org.eclipse.egit.core.info.GitItemState</code>: this can be obtained via <tt>GitInfo.getGitState()</tt> and tells the git state for the item in the git repository at that path. This can be used to determine whether the item has staged changes in the index, whether it was modified in the working tree only, whether it is in a conflict state, and so on. (Client code can also obtain such information given the repository and the git path by using JGit directly and looking up the information directly in the git index. <tt>GitItemState</tt> may be more efficient since it uses an optimized cache inside EGit that EGit uses internally, too.)</li>
+			<li><code>org.eclipse.egit.core.revisions.FileRevisionFactory</code> exposes factory methods to create <tt>org.eclipse.team.core.history.IFileRevision</tt> objects for items in the git index or in a git commit. This is useful if client code wants to compare items from a git repository.</li>
+			<li><code>org.eclipse.egit.core.util.RevCommitUtils</code> offers some utility methods; in particular a method to determine the "theirs" commit in a conflict.</li>
+		</ul>
+		<p>Existing client code is strongly encouraged to use this new API instead of accessing EGit internal non-API classes directly.</p>
+		<h2 id="Other_Changes">Other Changes</h2>
+		<p>EGit 5.12 includes some less noticeable improvements in the UI, plus a number of bug fixes. The complete list of new features and bug fixes is available in the 
+			<a href="https://projects.eclipse.org/projects/technology.egit/releases/5.12.0/" target="egit_external">release notes</a>.
+		</p><hr class="navigation-separator"/>
+		<table class="navigation" style="width: 100%;" border="0" summary="navigation">
+			<tr>
+				<td style="width: 20%" align="left"></td>
+				<td style="width: 60%" align="center"></td>
+				<td style="width: 20%" align="right">
+					<a href="Contributors.html" title="Contributors">
+						<img alt="Next" border="0" src="../../../images/next.gif"/>
+					</a>
+				</td>
+			</tr>
+			<tr>
+				<td style="width: 20%" align="left" valign="top"></td>
+				<td style="width: 60%" align="center"></td>
+				<td style="width: 20%" align="right" valign="top">Contributors</td>
+			</tr>
+		</table>
+	</body>
+</html>
