@@ -142,6 +142,12 @@
     <choice
         value="egit-4.17"
         label="EGit 2020-09 (4.17) target"/>
+    <choice
+        value="egit-4.18"
+        label="EGit 2020-12 (4.18) target"/>
+    <choice
+        value="egit-4.19"
+        label="EGit 2021-03 (4.19) target"/>
     <description>Default target platform for EGit development.</description>
   </setupTask>
   <setupTask
