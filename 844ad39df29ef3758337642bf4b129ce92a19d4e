@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "78af252e_613528a8",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/merge/AbstractGitMergeEditorInput.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 434,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2021-06-15T21:05:14Z",
+      "side": 1,
+      "message": "add missing braces",
+      "revId": "844ad39df29ef3758337642bf4b129ce92a19d4e",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e1af132b_f536583c",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/merge/AbstractGitMergeEditorInput.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 458,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2021-06-15T21:05:14Z",
+      "side": 1,
+      "message": "add missing braces",
+      "revId": "844ad39df29ef3758337642bf4b129ce92a19d4e",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": true
+    }
+  ]
+}
