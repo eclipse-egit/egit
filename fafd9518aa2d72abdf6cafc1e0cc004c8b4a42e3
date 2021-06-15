@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "09c735d1_b4ada4eb",
+        "filename": "org.eclipse.egit.core.test/src/org/eclipse/egit/core/internal/BreeSmokeTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2021-06-15T07:19:11Z",
+      "side": 1,
+      "message": "missing license header",
+      "revId": "fafd9518aa2d72abdf6cafc1e0cc004c8b4a42e3",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5fd0067f_4081adc3",
+        "filename": "org.eclipse.egit.gitflow.test/src/org/eclipse/egit/gitflow/BreeSmokeTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2021-06-15T07:19:11Z",
+      "side": 1,
+      "message": "missing license header",
+      "revId": "fafd9518aa2d72abdf6cafc1e0cc004c8b4a42e3",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b6cc0e54_3480c317",
+        "filename": "org.eclipse.egit.mylyn.ui.test/src/org/eclipse/egit/internal/mylyn/BreeSmokeTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2021-06-15T07:19:11Z",
+      "side": 1,
+      "message": "missing license header",
+      "revId": "fafd9518aa2d72abdf6cafc1e0cc004c8b4a42e3",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "14bb09ce_a3247151",
+        "filename": "org.eclipse.egit.ui.test/src/org/eclipse/egit/ui/internal/BreeSmokeTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2021-06-15T07:19:11Z",
+      "side": 1,
+      "message": "missing license header",
+      "revId": "fafd9518aa2d72abdf6cafc1e0cc004c8b4a42e3",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": true
+    }
+  ]
+}
