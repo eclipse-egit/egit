@@ -19,12 +19,14 @@ import org.eclipse.jface.action.IAction;
 import org.eclipse.jface.viewers.ColumnViewer;
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.IStructuredSelection;
+import org.eclipse.jface.viewers.TreeViewer;
 import org.eclipse.jface.viewers.ViewerCell;
 import org.eclipse.jface.window.ToolTip;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.graphics.Point;
+import org.eclipse.swt.graphics.Rectangle;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Event;
 import org.eclipse.swt.widgets.ToolBar;
@@ -78,14 +80,23 @@ public class StagingViewTooltips extends FixedJFaceToolTip {
 
 	private boolean isSelected(Event event) {
 		ViewerCell currentCell = getToolTipArea(event);
-		if (currentCell == null || currentCell.getColumnIndex() > 0
-				&& !currentCell.getText().isEmpty()) {
+		if (currentCell == null) {
 			return false;
 		}
 		Object item = currentCell.getElement();
 		if (!(item instanceof StagingEntry)
 				&& !(item instanceof StagingFolderEntry)) {
 			return false;
+		}
+		if (item instanceof StagingEntry) {
+			int w = ((StagingEntry) item).getExtraWidth();
+			if (w > 0) {
+				Rectangle bounds = ((TreeViewer) viewer).getTree()
+						.getClientArea();
+				if (event.x >= bounds.x + bounds.width - w) {
+					return false;
+				}
+			}
 		}
 		ISelection selection = viewer.getSelection();
 		if (selection.isEmpty()
