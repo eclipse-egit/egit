@@ -17,6 +17,7 @@ import org.eclipse.jface.text.DefaultInformationControl;
 import org.eclipse.jface.viewers.TreeViewer;
 import org.eclipse.jface.viewers.ViewerCell;
 import org.eclipse.jgit.lib.IndexDiff.StageState;
+import org.eclipse.swt.graphics.Rectangle;
 
 /**
  * Shows longer conflict state information in a hover over the last column of
@@ -36,7 +37,7 @@ class ConflictStateHoverManager extends AbstractHoverInformationControlManager {
 	protected void computeInformation() {
 		String information = null;
 		ViewerCell cell = viewer.getCell(getHoverEventLocation());
-		if (cell != null && cell.getColumnIndex() == 1) {
+		if (cell != null) {
 			Object item = cell.getElement();
 			if (item instanceof StagingEntry) {
 				StagingEntry entry = (StagingEntry) item;
@@ -58,13 +59,22 @@ class ConflictStateHoverManager extends AbstractHoverInformationControlManager {
 					default:
 						break;
 					}
+					if (information != null) {
+						Rectangle cellBounds = cell.getBounds();
+						Rectangle bounds = viewer.getTree().getClientArea();
+						bounds.y = cellBounds.y;
+						bounds.height = cellBounds.height;
+						int extra = entry.getExtraWidth();
+						bounds.x = bounds.x + bounds.width - extra;
+						bounds.width = extra;
+						if (bounds.contains(getHoverEventLocation())) {
+							setInformation(information, bounds);
+							return;
+						}
+					}
 				}
 			}
 		}
-		if (information != null && cell != null) {
-			setInformation(information, cell.getBounds());
-		} else {
-			setInformation(null, null);
-		}
+		setInformation(null, null);
 	}
 }

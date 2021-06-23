@@ -129,6 +129,8 @@ public class StagingEntry extends PlatformObject
 
 	private boolean symlink;
 
+	private int extraWidth;
+
 	/**
 	 * @param repository
 	 *            repository for this entry
@@ -220,6 +222,14 @@ public class StagingEntry extends PlatformObject
 
 	Set<Action> getAvailableActions() {
 		return state.getAvailableActions();
+	}
+
+	int getExtraWidth() {
+		return extraWidth;
+	}
+
+	void setExtraWidth(int width) {
+		extraWidth = Math.max(0, width);
 	}
 
 	/**
