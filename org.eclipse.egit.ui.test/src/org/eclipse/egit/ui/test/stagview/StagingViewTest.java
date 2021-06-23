@@ -287,7 +287,6 @@ public class StagingViewTest extends AbstractStagingViewTestCase {
 
 		SWTBotTreeItem item = TestUtil.getNode(unstagedTree.getAllItems(),
 				FILE1_PATH);
-		assertEquals(UIText.StagingView_Conflict_MD_short, item.cell(1));
 		item.select();
 
 		JobJoiner jobJoiner = JobJoiner.startListening(

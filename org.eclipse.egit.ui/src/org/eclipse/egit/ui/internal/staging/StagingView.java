@@ -161,7 +161,6 @@ import org.eclipse.jface.viewers.OpenEvent;
 import org.eclipse.jface.viewers.StructuredSelection;
 import org.eclipse.jface.viewers.TreeExpansionEvent;
 import org.eclipse.jface.viewers.TreeViewer;
-import org.eclipse.jface.viewers.TreeViewerColumn;
 import org.eclipse.jface.viewers.Viewer;
 import org.eclipse.jface.viewers.ViewerComparator;
 import org.eclipse.jface.viewers.ViewerFilter;
@@ -208,7 +207,6 @@ import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.events.VerifyEvent;
 import org.eclipse.swt.graphics.Cursor;
-import org.eclipse.swt.graphics.GC;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.graphics.Rectangle;
@@ -219,6 +217,7 @@ import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Label;
+import org.eclipse.swt.widgets.ScrollBar;
 import org.eclipse.swt.widgets.Text;
 import org.eclipse.swt.widgets.Tree;
 import org.eclipse.swt.widgets.TreeItem;
@@ -2196,6 +2195,25 @@ public class StagingView extends ViewPart
 		return provider;
 	}
 
+	private static String getConflictText(StagingEntry entry) {
+		if (entry.hasConflicts()) {
+			StageState conflictType = entry.getConflictType();
+			switch (conflictType) {
+			case DELETED_BY_THEM:
+				return UIText.StagingView_Conflict_MD_short;
+			case DELETED_BY_US:
+				return UIText.StagingView_Conflict_DM_short;
+			case BOTH_MODIFIED:
+				return UIText.StagingView_Conflict_M_short;
+			case BOTH_ADDED:
+				return UIText.StagingView_Conflict_A_short;
+			default:
+				break;
+			}
+		}
+		return ""; //$NON-NLS-1$
+	}
+
 	private TreeViewer createViewer(Composite parent, boolean unstaged,
 			final Consumer<IStructuredSelection> dropAction,
 			IAction... tooltipActions) {
@@ -2212,55 +2230,92 @@ public class StagingView extends ViewPart
 					tooltipActions);
 			tooltips.setShift(new Point(1, 1));
 		}
+		viewer.setLabelProvider(createLabelProvider(viewer));
 		if (unstaged) {
-			// Set up two columns
-			TreeViewerColumn column = new TreeViewerColumn(viewer, SWT.NONE);
-			column.setLabelProvider(createLabelProvider(viewer));
-			column = new TreeViewerColumn(viewer, SWT.RIGHT);
-			// Compute the width of this column
-			int columnWidth = getColumnWidth(viewer.getTree(),
-					UIText.StagingView_Conflict_A_short,
-					UIText.StagingView_Conflict_M_short,
-					UIText.StagingView_Conflict_DM_short,
-					UIText.StagingView_Conflict_MD_short);
-			column.getColumn().setWidth(columnWidth);
-			column.setLabelProvider(new ColumnLabelProvider() {
-
-				@Override
-				public String getText(Object element) {
-					if (element instanceof StagingEntry) {
-						StagingEntry entry = (StagingEntry) element;
-						if (entry.hasConflicts()) {
-							StageState conflictType = entry.getConflictType();
-							switch (conflictType) {
-							case DELETED_BY_THEM:
-								return UIText.StagingView_Conflict_MD_short;
-							case DELETED_BY_US:
-								return UIText.StagingView_Conflict_DM_short;
-							case BOTH_MODIFIED:
-								return UIText.StagingView_Conflict_M_short;
-							case BOTH_ADDED:
-								return UIText.StagingView_Conflict_A_short;
-							default:
-								break;
-							}
-						}
+			Tree tree = viewer.getTree();
+			// Paint an indicator at the end of the column.
+			tree.addListener(SWT.MeasureItem, event -> {
+				Object obj = ((TreeItem) event.item).getData();
+				if (obj instanceof StagingEntry) {
+					StagingEntry entry = (StagingEntry) obj;
+					String text = getConflictText(entry);
+					if (text.isEmpty()) {
+						entry.setExtraWidth(0);
+						return;
 					}
-					return ""; //$NON-NLS-1$
+					int width = event.gc.textExtent(text).x
+							+ 2 * IDialogConstants.HORIZONTAL_SPACING;
+					event.width += width;
+					entry.setExtraWidth(width);
 				}
 			});
-			viewer.getTree().addListener(SWT.Resize, event -> {
-				Rectangle bounds = viewer.getTree().getClientArea();
-				// 'columnWidth' accounts for possible column gaps
-				viewer.getTree().getColumn(0)
-						.setWidth(Math.max(0, bounds.width - columnWidth));
-				viewer.getTree().requestLayout();
+			tree.addListener(SWT.PaintItem, event -> {
+				if (!event.gc.isClipped()) {
+					// The GC is clipped when we're drawing really inside the
+					// tree. When we're drawing in a native(?) hover shown when
+					// the label is longer than the available width in the cell,
+					// the GC is not clipped. In the latter case we don't want
+					// our indicator to appear -- it would be drawn right in the
+					// middle of the label text in the hover.
+					return;
+				}
+				Object obj = ((TreeItem) event.item).getData();
+				if (obj instanceof StagingEntry) {
+					StagingEntry entry = (StagingEntry) obj;
+					String text = getConflictText(entry);
+					if (text.isEmpty()) {
+						entry.setExtraWidth(0);
+						return;
+					}
+
+					Rectangle bounds = tree.getClientArea();
+					Rectangle clip = event.gc.getClipping();
+					if (clip.width < bounds.width) {
+						clip.width = bounds.width;
+						event.gc.setClipping(clip);
+					}
+					Rectangle cellBounds = ((TreeItem) event.item).getBounds();
+					Point extent = event.gc.textExtent(text);
+					int width = extent.x
+							+ 2 * IDialogConstants.HORIZONTAL_SPACING;
+					entry.setExtraWidth(width);
+					// Draw a background-colored rectangle to erase the
+					// foreground if the default painting has written the
+					// label and it extends into the area we want to draw
+					// our indicator in.
+					int rightEdge = bounds.x + bounds.width;
+					event.gc.fillRectangle(rightEdge - width, cellBounds.y,
+							width, cellBounds.height);
+					event.gc.drawString(text,
+							rightEdge - extent.x
+									- IDialogConstants.HORIZONTAL_SPACING,
+							cellBounds.y + (cellBounds.height - extent.y) / 2);
+				}
 			});
+			// The following scrollbar handling is a work-around for Eclipse
+			// 2021-06 not repainting items on OS X when the view is scrolled
+			// horizontally. Instead it somehow manages to scroll the item
+			// without repainting, including our custom-drawn indicator, which
+			// then appears somewhere in the middle of the label instead of at
+			// the right edge of the tree's client area.
+			ScrollBar bar = tree.getHorizontalBar();
+			if (bar != null) {
+				bar.addSelectionListener(new SelectionAdapter() {
+
+					@Override
+					public void widgetSelected(SelectionEvent e) {
+						super.widgetSelected(e);
+						tree.getDisplay().asyncExec(() -> {
+							if (!tree.isDisposed()) {
+								tree.redraw();
+							}
+						});
+					}
+				});
+			}
 			ConflictStateHoverManager hovers = new ConflictStateHoverManager(
 					viewer);
 			hovers.install(viewer.getControl());
-		} else {
-			viewer.setLabelProvider(createLabelProvider(viewer));
 		}
 		viewer.addDragSupport(DND.DROP_MOVE | DND.DROP_COPY | DND.DROP_LINK,
 				new Transfer[] { LocalSelectionTransfer.getTransfer(),
@@ -2310,26 +2365,6 @@ public class StagingView extends ViewPart
 		enableAutoExpand(viewer);
 		addListenerToDisableAutoExpandOnCollapse(viewer);
 		return viewer;
-	}
-
-	private int getColumnWidth(Tree tree, String... labels) {
-		GC gc = new GC(tree.getDisplay());
-		try {
-			gc.setFont(tree.getFont());
-			int width = -1;
-			for (String label : labels) {
-				int w = gc.textExtent(label).x;
-				if (w > width) {
-					width = w;
-				}
-			}
-			// Add some margin to account for internal padding of the tree cell
-			// and possible gaps between columns. OS X needs 4, GTK 6, and
-			// Windows 8 pixels to fully show the text.
-			return width + 8;
-		} finally {
-			gc.dispose();
-		}
 	}
 
 	private void addCopyAction(final TreeViewer viewer) {
