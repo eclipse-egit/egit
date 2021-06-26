@@ -90,9 +90,7 @@ public class IndexDiffCacheEntry {
 
 	private volatile IndexDiffData indexDiffData;
 
-	private Job reloadJob;
-
-	private volatile boolean reloadJobIsInitializing;
+	private IndexDiffReloadJob reloadJob;
 
 	private IndexDiffUpdateJob updateJob;
 
@@ -371,7 +369,7 @@ public class IndexDiffCacheEntry {
 	 */
 	protected void scheduleReloadJob(final String trigger) {
 		if (reloadJob != null) {
-			if (reloadJobIsInitializing) {
+			if (reloadJob.isPending()) {
 				return;
 			}
 			reloadJob.cancel();
@@ -383,15 +381,10 @@ public class IndexDiffCacheEntry {
 		if (getRepository() == null) {
 			return;
 		}
-		reloadJob = new Job(getReloadJobName()) {
+		reloadJob = new IndexDiffReloadJob(getReloadJobName()) {
+
 			@Override
-			protected IStatus run(IProgressMonitor monitor) {
-				try {
-					reloadJobIsInitializing = true;
-					waitForWorkspaceLock(monitor);
-				} finally {
-					reloadJobIsInitializing = false;
-				}
+			protected IStatus reload(IProgressMonitor monitor) {
 				lock.lock();
 				try {
 					if (monitor.isCanceled()) {
@@ -457,34 +450,6 @@ public class IndexDiffCacheEntry {
 	}
 
 	/**
-	 * Jobs accessing this code should be configured as "system" jobs, to not
-	 * interrupt autobuild jobs, see bug 474003
-	 *
-	 * @param monitor
-	 */
-	private void waitForWorkspaceLock(IProgressMonitor monitor) {
-		// Wait for the workspace lock to avoid starting the calculation
-		// of an IndexDiff while the workspace changes (e.g. due to a
-		// branch switch).
-		// The index diff calculation jobs do not lock the workspace
-		// during execution to avoid blocking the workspace.
-		Repository repository = getRepository();
-		ISchedulingRule rule;
-		if (repository == null) {
-			rule = ResourcesPlugin.getWorkspace().getRoot();
-		} else {
-			rule = RuleUtil.getRule(repository);
-		}
-		try {
-			Job.getJobManager().beginRule(rule, monitor);
-		} catch (OperationCanceledException e) {
-			return;
-		} finally {
-			Job.getJobManager().endRule(rule);
-		}
-	}
-
-	/**
 	 * THIS METHOD IS PROTECTED FOR TESTS ONLY!
 	 *
 	 * @param filesToUpdate
@@ -495,9 +460,9 @@ public class IndexDiffCacheEntry {
 		if (getRepository() == null) {
 			return;
 		}
-		if (reloadJob != null && reloadJobIsInitializing)
+		if (reloadJob != null && reloadJob.isPending()) {
 			return;
-
+		}
 		if (shouldReload(filesToUpdate)) {
 			// Calculate new IndexDiff if too many resources changed
 			// This happens e.g. when a project is opened
@@ -525,8 +490,6 @@ public class IndexDiffCacheEntry {
 					scheduleReloadJob("Too many resources changed: " + files.size()); //$NON-NLS-1$
 					return Status.CANCEL_STATUS;
 				}
-
-				waitForWorkspaceLock(monitor);
 
 				if (monitor.isCanceled()) {
 					return Status.CANCEL_STATUS;
@@ -799,4 +762,24 @@ public class IndexDiffCacheEntry {
 		lastIndex = null;
 	}
 
+	private static abstract class IndexDiffReloadJob extends Job {
+
+		private volatile boolean started;
+
+		protected IndexDiffReloadJob(String name) {
+			super(name);
+		}
+
+		@Override
+		protected IStatus run(IProgressMonitor monitor) {
+			started = true;
+			return reload(monitor);
+		}
+
+		protected abstract IStatus reload(IProgressMonitor monitor);
+
+		protected boolean isPending() {
+			return !started;
+		}
+	}
 }
