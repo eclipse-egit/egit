@@ -1,0 +1,123 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5f2f88b0_33eaff85",
+        "filename": "DEPENDENCIES",
+        "patchSetId": 3
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2021-07-05T07:52:44Z",
+      "side": 1,
+      "message": "EPL-2.0 license missing",
+      "revId": "8cf3587e09d06b5e360a8368bdc59b72f79c66a2",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5355d2b7_de23b346",
+        "filename": "DEPENDENCIES",
+        "patchSetId": 3
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2021-07-05T07:52:44Z",
+      "side": 1,
+      "message": "BSD-3-Clause license missing",
+      "revId": "8cf3587e09d06b5e360a8368bdc59b72f79c66a2",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ea20d24b_ac257edd",
+        "filename": "DEPENDENCIES",
+        "patchSetId": 3
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2021-07-05T07:52:44Z",
+      "side": 1,
+      "message": "Apache-2.0 license missing",
+      "revId": "8cf3587e09d06b5e360a8368bdc59b72f79c66a2",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "47a6ddff_86f0059a",
+        "filename": "DEPENDENCIES",
+        "patchSetId": 3
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2021-07-05T07:52:44Z",
+      "side": 1,
+      "message": "Apache-2.0 license missing",
+      "revId": "8cf3587e09d06b5e360a8368bdc59b72f79c66a2",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4a175d63_ca8205c5",
+        "filename": "DEPENDENCIES",
+        "patchSetId": 3
+      },
+      "lineNbr": 203,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2021-07-05T07:52:44Z",
+      "side": 1,
+      "message": "EPL-2.0 license missing",
+      "revId": "8cf3587e09d06b5e360a8368bdc59b72f79c66a2",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b86cbe7d_c20ae20d",
+        "filename": "DEPENDENCIES",
+        "patchSetId": 3
+      },
+      "lineNbr": 213,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2021-07-05T07:52:44Z",
+      "side": 1,
+      "message": "BSD-3-Clause license missing",
+      "revId": "8cf3587e09d06b5e360a8368bdc59b72f79c66a2",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cd7f47fc_d77fb2ef",
+        "filename": "DEPENDENCIES",
+        "patchSetId": 3
+      },
+      "lineNbr": 297,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2021-07-05T07:52:44Z",
+      "side": 1,
+      "message": "EPL-2.0 license missing",
+      "revId": "8cf3587e09d06b5e360a8368bdc59b72f79c66a2",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": true
+    }
+  ]
+}
