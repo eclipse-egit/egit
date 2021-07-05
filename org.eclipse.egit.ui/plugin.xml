@@ -2922,11 +2922,10 @@
             <and>
                <count value="1" />
                <iterate>
-                  <adapt type="org.eclipse.egit.core.internal.IRepositoryCommit" />
+                  <adapt type="org.eclipse.egit.core.internal.IRepositoryCommit">
+                     <test property="Git.isBare" value="false" />
+                  </adapt>
                </iterate>
-               <with variable="activePart">
-                  <test property="GitHistory.isSingleFileHistory" />
-               </with>
             </and>
          </activeWhen>
       </handler>
