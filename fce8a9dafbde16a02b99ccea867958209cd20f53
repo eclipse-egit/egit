@@ -16,6 +16,24 @@
       "revId": "fce8a9dafbde16a02b99ccea867958209cd20f53",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1afb9ee5_340fb613",
+        "filename": "DEPENDENCIES",
+        "patchSetId": 5
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2021-07-06T20:56:53Z",
+      "side": 1,
+      "message": "AFAIK Maven by default adds transitive dependencies and Tycho doesn\u0027t. I think that\u0027s why here we only see the direct dependencies.\n\nDone",
+      "parentUuid": "682db323_785d4d25",
+      "revId": "fce8a9dafbde16a02b99ccea867958209cd20f53",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
     }
   ]
 }
