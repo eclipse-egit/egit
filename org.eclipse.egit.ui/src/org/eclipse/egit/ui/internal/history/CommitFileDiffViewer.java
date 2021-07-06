@@ -56,6 +56,7 @@ import org.eclipse.egit.ui.internal.UIText;
 import org.eclipse.egit.ui.internal.blame.BlameOperation;
 import org.eclipse.egit.ui.internal.commit.DiffViewer;
 import org.eclipse.egit.ui.internal.dialogs.CommandConfirmation;
+import org.eclipse.egit.ui.internal.merge.GitCompareEditorInput;
 import org.eclipse.jface.action.Action;
 import org.eclipse.jface.action.IAction;
 import org.eclipse.jface.action.MenuManager;
@@ -308,8 +309,32 @@ public class CommitFileDiffViewer extends TableViewer {
 				UIText.CommitFileDiffViewer_CompareWorkingDirectoryMenuLabel) {
 			@Override
 			public void run() {
-				withFirstSelected(
-						CommitFileDiffViewer.this::showWorkingDirectoryFileDiff);
+				IStructuredSelection selection = getStructuredSelection();
+				if (selection == null || selection.isEmpty()) {
+					return;
+				}
+				List<FileDiff> diffs = new ArrayList<>();
+				Iterator<?> items = selection.iterator();
+				while (items.hasNext()) {
+					diffs.add((FileDiff) items.next());
+				}
+				if (diffs.size() == 1) {
+					showWorkingDirectoryFileDiff(diffs.get(0));
+				} else if (!diffs.isEmpty()) {
+					FileDiff first = diffs.get(0);
+					Repository repository = first.getRepository();
+					IPath workingTree = Path.fromOSString(
+							repository.getWorkTree().getAbsolutePath());
+					List<IPath> paths = diffs.stream().map(FileDiff::getPath)
+							.map(workingTree::append)
+							.collect(Collectors.toList());
+					GitCompareEditorInput comparison = new GitCompareEditorInput(
+							null, first.getCommit().name(), repository,
+							paths.toArray(new IPath[0]));
+					CompareUtils.openInCompare(
+							CommitFileDiffViewer.this.site.getPage(),
+							comparison);
+				}
 			}
 		};
 
@@ -441,6 +466,7 @@ public class CommitFileDiffViewer extends TableViewer {
 			}
 		}
 
+		boolean isBare = repository == null || repository.isBare();
 		if (selectAll != null) {
 			selectAll.setEnabled(!allSelected);
 		}
@@ -459,18 +485,19 @@ public class CommitFileDiffViewer extends TableViewer {
 			blame.setEnabled(oneOrMoreSelected);
 			if (sel.size() == 1) {
 				FileDiff diff = (FileDiff) sel.getFirstElement();
-				Repository repo = diff.getRepository();
 				boolean workTreeFileExists = false;
-				if (!repo.isBare()) {
-					String path = new Path(repo.getWorkTree().getAbsolutePath())
+				if (!isBare && repository != null) {
+					String path = new Path(
+							repository.getWorkTree().getAbsolutePath())
 							.append(diff.getPath()).toOSString();
 					workTreeFileExists = new File(path).exists();
 				}
 				compareWorkingTreeVersion.setEnabled(workTreeFileExists);
 				openWorkingTreeVersion.setEnabled(workTreeFileExists);
 			} else {
-				compareWorkingTreeVersion.setEnabled(false);
-				openWorkingTreeVersion.setEnabled(oneOrMoreSelected);
+				compareWorkingTreeVersion
+						.setEnabled(oneOrMoreSelected && !isBare);
+				openWorkingTreeVersion.setEnabled(oneOrMoreSelected && !isBare);
 			}
 		} else {
 			checkOutThisVersion.setEnabled(false);
