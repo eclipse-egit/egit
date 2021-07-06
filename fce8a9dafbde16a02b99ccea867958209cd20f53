@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "682db323_785d4d25",
+        "filename": "DEPENDENCIES",
+        "patchSetId": 5
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2021-07-06T07:02:29Z",
+      "side": 1,
+      "message": "That\u0027s funny. When I looked at the jgit DEPENDENCIES I had the impression the tool used transitive dependencies. But apparently not, for here sshd-common and sshd-core (shaded into sshd-osgi) don\u0027t appear.\n\nAlso should be \"Apache 2.0 and ISC\".",
+      "revId": "fce8a9dafbde16a02b99ccea867958209cd20f53",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": true
+    }
+  ]
+}
