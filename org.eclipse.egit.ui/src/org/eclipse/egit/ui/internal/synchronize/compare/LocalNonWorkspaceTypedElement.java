@@ -43,6 +43,7 @@ import org.eclipse.core.runtime.Status;
 import org.eclipse.egit.core.RepositoryCache;
 import org.eclipse.egit.core.RepositoryUtil;
 import org.eclipse.egit.core.UnitOfWork;
+import org.eclipse.egit.core.info.GitInfo;
 import org.eclipse.egit.core.internal.indexdiff.IndexDiffCache;
 import org.eclipse.egit.core.internal.indexdiff.IndexDiffCacheEntry;
 import org.eclipse.egit.core.internal.util.ResourceUtil;
@@ -51,6 +52,7 @@ import org.eclipse.egit.ui.Activator;
 import org.eclipse.egit.ui.internal.UIText;
 import org.eclipse.jgit.annotations.NonNull;
 import org.eclipse.jgit.events.IndexChangedEvent;
+import org.eclipse.jgit.lib.AnyObjectId;
 import org.eclipse.jgit.lib.Constants;
 import org.eclipse.jgit.lib.Repository;
 import org.eclipse.jgit.revwalk.RevCommit;
@@ -68,7 +70,8 @@ import org.eclipse.ui.texteditor.IDocumentProvider;
  * Specialized resource node for non-workspace files
  */
 @SuppressWarnings("restriction")
-public class LocalNonWorkspaceTypedElement extends LocalResourceTypedElement {
+public class LocalNonWorkspaceTypedElement extends LocalResourceTypedElement
+		implements GitInfo {
 
 	@NonNull
 	private final IPath path;
@@ -556,5 +559,27 @@ public class LocalNonWorkspaceTypedElement extends LocalResourceTypedElement {
 		public boolean equals(Object o) {
 			return super.equals(o);
 		}
+	}
+
+	@Override
+	public Repository getRepository() {
+		return repository;
+	}
+
+	@Override
+	public String getGitPath() {
+		IPath relativePath = ResourceUtil.getRepositoryRelativePath(path,
+				repository);
+		return relativePath == null ? null : relativePath.toPortableString();
+	}
+
+	@Override
+	public Source getSource() {
+		return Source.WORKING_TREE;
+	}
+
+	@Override
+	public AnyObjectId getCommitId() {
+		return null;
 	}
 }
