@@ -452,8 +452,8 @@ public class GitMergeEditorInput extends AbstractGitCompareEditorInput {
 								// Ignore here; use default.
 							}
 						}
-						item = createWithHiddenResource(
-								uri, tw.getNameString(), file, rscEncoding);
+						item = createWithHiddenResource(uri, repository,
+								gitPath, tw.getNameString(), file, rscEncoding);
 						if (file != null) {
 							item.setSharedDocumentListener(
 									new LocalResourceSaver(item) {
