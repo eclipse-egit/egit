@@ -141,6 +141,11 @@
          <adapter type="org.eclipse.team.ui.history.IHistoryPageSource" />
       </factory>
       <factory
+            adaptableType="org.eclipse.egit.core.info.GitInfo"
+            class="org.eclipse.egit.ui.history.GitHistoryAdapterFactory">
+         <adapter type="org.eclipse.team.ui.history.IHistoryPageSource" />
+      </factory>
+      <factory
             adaptableType="org.eclipse.ui.IWorkingSet"
             class="org.eclipse.egit.ui.internal.factories.GitAdapterFactory">
          <adapter type="org.eclipse.jgit.lib.Repository" />
