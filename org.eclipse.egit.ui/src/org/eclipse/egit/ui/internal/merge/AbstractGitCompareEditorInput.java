@@ -67,7 +67,6 @@ import org.eclipse.jface.action.IContributionItem;
 import org.eclipse.jface.action.ToolBarManager;
 import org.eclipse.jface.commands.ActionHandler;
 import org.eclipse.jface.viewers.StructuredSelection;
-import org.eclipse.jface.viewers.StructuredViewer;
 import org.eclipse.jface.viewers.Viewer;
 import org.eclipse.jface.viewers.ViewerComparator;
 import org.eclipse.jgit.lib.AnyObjectId;
@@ -286,21 +285,19 @@ public abstract class AbstractGitCompareEditorInput extends CompareEditorInput {
 
 	@Override
 	public Viewer createDiffViewer(Composite parent) {
-		Viewer viewer = super.createDiffViewer(parent);
-		if (viewer instanceof StructuredViewer) {
-			((StructuredViewer) viewer)
-					.setComparator(new ViewerComparator(CMP) {
+		GitDiffTreeViewer viewer = new GitDiffTreeViewer(parent, getContainer(),
+				getCompareConfiguration());
+		viewer.setComparator(new ViewerComparator(CMP) {
 
-						@Override
-						public int category(Object element) {
-							if (element instanceof FolderNode) {
-								return 0;
-							} else {
-								return 1;
-							}
-						}
-					});
-		}
+			@Override
+			public int category(Object element) {
+				if (element instanceof FolderNode) {
+					return 0;
+				} else {
+					return 1;
+				}
+			}
+		});
 		return viewer;
 	}
 
