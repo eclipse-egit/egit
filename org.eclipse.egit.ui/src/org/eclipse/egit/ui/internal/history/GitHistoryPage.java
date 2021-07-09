@@ -56,6 +56,7 @@ import org.eclipse.egit.core.AdapterUtils;
 import org.eclipse.egit.core.RepositoryCache;
 import org.eclipse.egit.core.RepositoryUtil;
 import org.eclipse.egit.core.UnitOfWork;
+import org.eclipse.egit.core.info.GitInfo;
 import org.eclipse.egit.core.internal.util.ResourceUtil;
 import org.eclipse.egit.core.project.RepositoryMapping;
 import org.eclipse.egit.ui.Activator;
@@ -1379,6 +1380,10 @@ public class GitHistoryPage extends HistoryPage implements RefsChangedListener,
 			return true;
 		}
 
+		if (Adapters.adapt(object, GitInfo.class) != null) {
+			return true;
+		}
+
 		return Adapters.adapt(object, Repository.class) != null;
 	}
 
@@ -2069,13 +2074,22 @@ public class GitHistoryPage extends HistoryPage implements RefsChangedListener,
 				}
 			}
 			if (repo == null) {
-				repo = Adapters.adapt(o, Repository.class);
-				if (repo != null) {
-					File file = Adapters.adapt(o, File.class);
-					if (file == null) {
-						input = new HistoryPageInput(repo);
-					} else {
-						input = new HistoryPageInput(repo, new File[] { file });
+				GitInfo info = Adapters.adapt(o, GitInfo.class);
+				if (info != null && info.getRepository() != null) {
+					repo = info.getRepository();
+					IPath gitPath = Path.fromPortableString(info.getGitPath());
+					input = new HistoryPageInput(repo,
+							new File[] { new File(gitPath.toOSString()) });
+				} else {
+					repo = Adapters.adapt(o, Repository.class);
+					if (repo != null) {
+						File file = Adapters.adapt(o, File.class);
+						if (file == null) {
+							input = new HistoryPageInput(repo);
+						} else {
+							input = new HistoryPageInput(repo,
+									new File[] { file });
+						}
 					}
 				}
 			}
@@ -2248,8 +2262,13 @@ public class GitHistoryPage extends HistoryPage implements RefsChangedListener,
 			}
 			if (in.getFileList() != null) {
 				count = in.getFileList().length;
+				boolean isBare = in.getRepository().isBare();
 				for (File file : in.getFileList()) {
-					b.append(getRepoRelativePath(in.getRepository(), file));
+					if (isBare) {
+						b.append(Path.fromOSString(file.toString()));
+					} else {
+						b.append(getRepoRelativePath(in.getRepository(), file));
+					}
 					if (file.isDirectory())
 						b.append('/');
 					// limit the total length
@@ -2650,8 +2669,8 @@ public class GitHistoryPage extends HistoryPage implements RefsChangedListener,
 		}
 	}
 
-	private ArrayList<FilterPath> buildFilterPaths(final IResource[] inResources,
-			final File[] inFiles, final Repository db)
+	private ArrayList<FilterPath> buildFilterPaths(IResource[] inResources,
+			File[] inFiles, Repository db)
 			throws IllegalStateException {
 		final ArrayList<FilterPath> paths;
 		if (inResources != null) {
@@ -2688,21 +2707,33 @@ public class GitHistoryPage extends HistoryPage implements RefsChangedListener,
 				}
 			}
 		} else if (inFiles != null) {
+			if (showAllFilter == ShowFilter.SHOWALLPROJECT
+					|| showAllFilter == ShowFilter.SHOWALLREPO) {
+				// we don't know of projects here -> treat as SHOWALLREPO
+				return new ArrayList<>(0);
+			}
+			paths = new ArrayList<>(inFiles.length);
+			if (db.isBare()) {
+				for (File file : inFiles) {
+					if (!file.isAbsolute()) {
+						// Assume it's a git path
+						IPath filePath = Path
+								.fromPortableString(file.getPath());
+						paths.add(new FilterPath(filePath.toString(), false));
+					}
+				}
+				return paths;
+			}
 			IPath workdirPath = new Path(db.getWorkTree().getPath());
 			IPath gitDirPath = new Path(db.getDirectory().getPath());
 			int segmentCount = workdirPath.segmentCount();
-			paths = new ArrayList<>(inFiles.length);
 			for (File file : inFiles) {
 				IPath filePath;
 				boolean isRegularFile;
 				if (showAllFilter == ShowFilter.SHOWALLFOLDER) {
 					filePath = new Path(file.getParentFile().getPath());
 					isRegularFile = false;
-				} else if (showAllFilter == ShowFilter.SHOWALLPROJECT
-						|| showAllFilter == ShowFilter.SHOWALLREPO)
-					// we don't know of projects here -> treat as SHOWALLREPO
-					continue;
-				else /* if (showAllFilter == ShowFilter.SHOWALLRESOURCE) */{
+				} else /* if (showAllFilter == ShowFilter.SHOWALLRESOURCE) */ {
 					filePath = new Path(file.getPath());
 					isRegularFile = file.isFile();
 				}

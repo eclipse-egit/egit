@@ -25,6 +25,7 @@ import org.eclipse.core.resources.IResource;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.SubMonitor;
 import org.eclipse.egit.core.EclipseGitProgressTransformer;
+import org.eclipse.egit.core.info.GitInfo;
 import org.eclipse.egit.core.internal.util.ResourceUtil;
 import org.eclipse.egit.ui.UIUtils;
 import org.eclipse.egit.ui.internal.UIIcons;
@@ -42,6 +43,7 @@ import org.eclipse.jgit.errors.CancelledException;
 import org.eclipse.jgit.errors.CorruptObjectException;
 import org.eclipse.jgit.errors.IncorrectObjectTypeException;
 import org.eclipse.jgit.errors.MissingObjectException;
+import org.eclipse.jgit.lib.AnyObjectId;
 import org.eclipse.jgit.lib.Constants;
 import org.eclipse.jgit.lib.FileMode;
 import org.eclipse.jgit.lib.ObjectId;
@@ -59,7 +61,7 @@ import org.eclipse.jgit.util.LfsFactory;
  * A class with information about the changes to a file introduced in a
  * commit.
  */
-public class FileDiff {
+public class FileDiff implements GitInfo {
 
 	/**
 	 * Comparator for sorting FileDiffs based on getPath(). Compares first the
@@ -380,6 +382,7 @@ public class FileDiff {
 	 *
 	 * @return the {@link Repository}
 	 */
+	@Override
 	public Repository getRepository() {
 		return repository;
 	}
@@ -585,5 +588,24 @@ public class FileDiff {
 		public boolean isMarked(int index) {
 			return (treeFilterMarks & (1L << index)) != 0;
 		}
+	}
+
+	@Override
+	public String getGitPath() {
+		return getPath();
+	}
+
+	@Override
+	public Source getSource() {
+		return Source.COMMIT;
+	}
+
+	@Override
+	public AnyObjectId getCommitId() {
+		if (ChangeType.DELETE.equals(diffEntry.getChangeType())
+				&& base != null) {
+			return base.getId();
+		}
+		return commit.getId();
 	}
 }
