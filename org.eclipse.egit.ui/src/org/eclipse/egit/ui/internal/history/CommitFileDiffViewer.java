@@ -579,22 +579,36 @@ public class CommitFileDiffViewer extends TableViewer {
 		List<File> files = new ArrayList<>();
 		Repository repo = null;
 		IPath workTreePath = null;
+		boolean isBare = false;
 		for (Object selectedElement : selection.toList()) {
 			FileDiff fileDiff = (FileDiff) selectedElement;
-			if (repo == null || workTreePath == null) {
+			if (repo == null) {
 				repo = fileDiff.getRepository();
-				if (repo == null || repo.isBare()) {
+				if (repo == null) {
 					return null;
 				}
-				workTreePath = new Path(repo.getWorkTree().getAbsolutePath());
+				isBare = repo.isBare();
+				if (!isBare) {
+					workTreePath = new Path(
+							repo.getWorkTree().getAbsolutePath());
+				}
 			}
-			IPath path = workTreePath.append(fileDiff.getPath());
-			IFile file = ResourceUtil.getFileForLocation(path, false);
-			if (file != null)
-				elements.add(file);
-			else
-				elements.add(path);
-			files.add(path.toFile());
+			IFile file = null;
+			IPath path;
+			if (!isBare && workTreePath != null) {
+				path = workTreePath.append(fileDiff.getPath());
+				file = ResourceUtil.getFileForLocation(path, false);
+				if (file != null) {
+					elements.add(file);
+				} else {
+					elements.add(path);
+				}
+				files.add(path.toFile());
+			} else {
+				path = Path.fromPortableString(fileDiff.getGitPath());
+				files.add(path.toFile());
+				elements.add(fileDiff);
+			}
 		}
 		HistoryPageInput historyPageInput = null;
 		if (!files.isEmpty()) {

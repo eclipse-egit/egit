@@ -41,6 +41,7 @@ import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.Path;
 import org.eclipse.egit.core.RepositoryUtil;
+import org.eclipse.egit.core.info.GitInfo;
 import org.eclipse.egit.core.internal.CompareCoreUtils;
 import org.eclipse.egit.core.internal.CoreText;
 import org.eclipse.egit.core.internal.efs.EgitFileSystem;
@@ -66,6 +67,7 @@ import org.eclipse.jgit.dircache.DirCacheEditor;
 import org.eclipse.jgit.dircache.DirCacheEditor.PathEdit;
 import org.eclipse.jgit.dircache.DirCacheEntry;
 import org.eclipse.jgit.dircache.DirCacheIterator;
+import org.eclipse.jgit.lib.AnyObjectId;
 import org.eclipse.jgit.lib.ConfigConstants;
 import org.eclipse.jgit.lib.Constants;
 import org.eclipse.jgit.lib.ObjectId;
@@ -166,6 +168,32 @@ public class GitMergeEditorInput extends AbstractGitCompareEditorInput {
 			toggleCurrentChanges = null;
 		}
 		super.disposeActions();
+	}
+
+	@Override
+	protected GitInfo getGitInfo(IPath path) {
+		return new GitInfo() {
+
+			@Override
+			public Repository getRepository() {
+				return GitMergeEditorInput.this.getRepository();
+			}
+
+			@Override
+			public String getGitPath() {
+				return path.toString();
+			}
+
+			@Override
+			public Source getSource() {
+				return Source.WORKING_TREE;
+			}
+
+			@Override
+			public AnyObjectId getCommitId() {
+				return null;
+			}
+		};
 	}
 
 	@Override
