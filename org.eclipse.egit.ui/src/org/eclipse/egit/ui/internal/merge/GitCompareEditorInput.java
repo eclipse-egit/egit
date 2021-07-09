@@ -30,6 +30,7 @@ import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.Path;
 import org.eclipse.egit.core.RepositoryUtil;
+import org.eclipse.egit.core.info.GitInfo;
 import org.eclipse.egit.core.internal.CompareCoreUtils;
 import org.eclipse.egit.core.internal.storage.GitFileRevision;
 import org.eclipse.egit.core.internal.util.ResourceUtil;
@@ -39,6 +40,7 @@ import org.eclipse.egit.ui.internal.revision.FileRevisionTypedElement;
 import org.eclipse.egit.ui.internal.synchronize.compare.LocalNonWorkspaceTypedElement;
 import org.eclipse.jgit.dircache.DirCacheCheckout.CheckoutMetadata;
 import org.eclipse.jgit.dircache.DirCacheIterator;
+import org.eclipse.jgit.lib.AnyObjectId;
 import org.eclipse.jgit.lib.Constants;
 import org.eclipse.jgit.lib.Repository;
 import org.eclipse.jgit.revwalk.RevCommit;
@@ -82,6 +84,37 @@ public class GitCompareEditorInput extends AbstractGitCompareEditorInput {
 		super(repository, paths);
 		this.leftVersion = leftVersion;
 		this.rightVersion = rightVersion;
+	}
+
+	@Override
+	protected GitInfo getGitInfo(IPath path) {
+		return new GitInfo() {
+
+			@Override
+			public Repository getRepository() {
+				return GitCompareEditorInput.this.getRepository();
+			}
+
+			@Override
+			public String getGitPath() {
+				return path.toString();
+			}
+
+			@Override
+			public Source getSource() {
+				// Approximative. Even if comparing against the working tree, we
+				// might have paths that exist only in the right commit.
+				return leftVersion == null ? Source.WORKING_TREE
+						: Source.COMMIT;
+			}
+
+			@Override
+			public AnyObjectId getCommitId() {
+				// How to determine? Could be from either commit. Not used
+				// currently.
+				return null;
+			}
+		};
 	}
 
 	@Override

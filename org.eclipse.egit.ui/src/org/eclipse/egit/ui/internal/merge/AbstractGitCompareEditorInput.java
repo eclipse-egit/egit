@@ -157,8 +157,16 @@ public abstract class AbstractGitCompareEditorInput extends CompareEditorInput {
 				}
 				IPath path = folder.getPath();
 				if (path != null) {
-					return getShowInSource(new ShowInContext(this,
-							new StructuredSelection(path)));
+					if (path.isAbsolute()) {
+						return getShowInSource(new ShowInContext(this,
+								new StructuredSelection(path)));
+					} else {
+						GitInfo info = getGitInfo(path);
+						if (info != null) {
+							return getShowInSource(new ShowInContext(this,
+									new StructuredSelection(info)));
+						}
+					}
 				}
 			} else if (node != null) {
 				ITypedElement element = node.getLeft();
@@ -179,6 +187,11 @@ public abstract class AbstractGitCompareEditorInput extends CompareEditorInput {
 											f.getAbsolutePath()))));
 						}
 					}
+					// The repository is bare, or the path does not exist in the
+					// working tree. The history page can deal with these paths,
+					// so at least "Show in->History" should work.
+					return getShowInSource(new ShowInContext(this,
+							new StructuredSelection(info)));
 				}
 			}
 			return getShowInSource(null);
@@ -243,6 +256,20 @@ public abstract class AbstractGitCompareEditorInput extends CompareEditorInput {
 			}
 			return resource;
 		}
+		return null;
+	}
+
+	/**
+	 * Hook method for subclasses to provide a {@link GitInfo} accessor for an
+	 * item at the given path. The default implementation always returns
+	 * {@code null}.
+	 *
+	 * @param path
+	 *            to get a {@link GitInfo} for
+	 * @return the {@link GitInfo} accessor, or {@code null} if none can be
+	 *         determined
+	 */
+	protected GitInfo getGitInfo(IPath path) {
 		return null;
 	}
 
@@ -571,7 +598,7 @@ public abstract class AbstractGitCompareEditorInput extends CompareEditorInput {
 				child = getOrCreateChild(child, path.segment(i), false);
 			}
 		}
-		if (child != root && !repository.isBare()) {
+		if (child != root) {
 			IContainer container = file != null ? file.getParent() : null;
 			path = location.removeLastSegments(1);
 			IDiffContainer folder = child;
@@ -621,9 +648,14 @@ public abstract class AbstractGitCompareEditorInput extends CompareEditorInput {
 		for (int i = 0; i < pathLength; i++) {
 			child = getOrCreateChild(child, path.segment(i), false);
 		}
-		if (child != root && !repository.isBare()) {
-			path = Path.fromOSString(repository.getWorkTree().getAbsolutePath())
-					.append(path).removeLastSegments(1);
+		if (child != root) {
+			if (!repository.isBare()) {
+				path = Path
+						.fromOSString(
+								repository.getWorkTree().getAbsolutePath())
+						.append(path);
+			}
+			path = path.removeLastSegments(1);
 			IDiffContainer folder = child;
 			while (folder != root) {
 				if (folder instanceof FolderNode) {
