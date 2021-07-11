@@ -13,9 +13,9 @@ Require-Bundle: org.apache.log4j;bundle-version="[1.0.0,2.0.0)",
  org.eclipse.core.resources;bundle-version="[3.11.0,4.0.0)",
  org.eclipse.search;bundle-version="[3.11.0,4.0.0)";resolution:=optional,
  org.eclipse.ui;bundle-version="[3.108.0,4.0.0)",
- org.hamcrest;bundle-version="[1.1.0,2.0.0)",
  org.eclipse.jdt.launching;bundle-version="[3.8.100,4.0.0)",
- org.eclipse.egit.core.junit;bundle-version="[5.13.0,5.14.0)"
+ org.eclipse.egit.core.junit;bundle-version="[5.13.0,5.14.0)",
+ org.hamcrest;bundle-version="[1.1.0,3.0.0)"
 Import-Package: net.bytebuddy;version="[1.7.9,2.0.0)",
  org.eclipse.core.net.proxy;bundle-version="[1.1.0,2.0.0)",
  org.eclipse.egit.gitflow;version="[5.13.0,5.14.0)",
