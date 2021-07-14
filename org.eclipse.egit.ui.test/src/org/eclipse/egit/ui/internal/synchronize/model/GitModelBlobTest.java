@@ -256,7 +256,7 @@ public class GitModelBlobTest extends GitModelTestCase {
 	public void setupEnvironment() throws Exception {
 		leftRepoFile = createProjectAndCommitToRepository();
 
-		RepositoryUtil.getInstance().addConfiguredRepository(leftRepoFile);
+		RepositoryUtil.INSTANCE.addConfiguredRepository(leftRepoFile);
 	}
 
 	private GitModelBlob createGitModelBlob() throws Exception {

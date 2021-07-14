@@ -62,7 +62,7 @@ public abstract class GitTestCase {
 	public void setUp() throws Exception {
 		// ensure there are no shared Repository instances left
 		// when starting a new test
-		RepositoryCache.getInstance().clear();
+		RepositoryCache.INSTANCE.clear();
 		File configFile = File.createTempFile("gitconfigtest", "config");
 		MockSystemReader mockSystemReader = new MockSystemReader() {
 			@Override
@@ -94,7 +94,7 @@ public abstract class GitTestCase {
 	@After
 	public void tearDown() throws Exception {
 		project.dispose();
-		RepositoryCache.getInstance().clear();
+		RepositoryCache.INSTANCE.clear();
 		if (gitDir.exists()) {
 			try {
 				FileUtils.delete(gitDir, FileUtils.RECURSIVE | FileUtils.RETRY);

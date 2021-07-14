@@ -100,7 +100,7 @@ public final class GitSettings {
 	 *         directories of repositories configured in EGit.
 	 */
 	public static Collection<Path> getConfiguredRepositoryDirectories() {
-		return RepositoryUtil.getInstance().getRepositories()
+		return RepositoryUtil.INSTANCE.getRepositories()
 				.stream().map(Paths::get).collect(Collectors.toSet());
 	}
 
@@ -115,7 +115,7 @@ public final class GitSettings {
 	 */
 	public static void addConfiguredRepository(Path gitDir)
 			throws IllegalArgumentException {
-		RepositoryUtil.getInstance().addConfiguredRepository(
+		RepositoryUtil.INSTANCE.addConfiguredRepository(
 				Objects.requireNonNull(gitDir).toFile());
 	}
 }

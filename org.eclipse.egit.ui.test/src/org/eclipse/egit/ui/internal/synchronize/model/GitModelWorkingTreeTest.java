@@ -50,7 +50,7 @@ public class GitModelWorkingTreeTest extends GitModelTestCase {
 	public void setupEnvironment() throws Exception {
 		leftRepoFile = createProjectAndCommitToRepository();
 
-		RepositoryUtil.getInstance().addConfiguredRepository(leftRepoFile);
+		RepositoryUtil.INSTANCE.addConfiguredRepository(leftRepoFile);
 	}
 
 }

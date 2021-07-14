@@ -97,7 +97,7 @@ public class PushOperationTest extends DualRepositoryTestCase {
 				"refs/heads/master", "origin", 0);
 		clop.run(null);
 
-		Repository repo2 = RepositoryCache.getInstance()
+		Repository repo2 = RepositoryCache.INSTANCE
 				.lookupRepository(new File(workdir2, Constants.DOT_GIT));
 		repository2 = new TestRepository(repo2);
 		// we push to branch "test" of repository2

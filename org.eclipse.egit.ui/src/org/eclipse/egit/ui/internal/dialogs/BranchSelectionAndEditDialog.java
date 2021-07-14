@@ -94,7 +94,7 @@ public class BranchSelectionAndEditDialog extends
 	@Override
 	protected String getTitle() {
 		return MessageFormat.format(UIText.BranchSelectionAndEditDialog_Title,
-				RepositoryUtil.getInstance().getRepositoryName(repo));
+				RepositoryUtil.INSTANCE.getRepositoryName(repo));
 	}
 
 	@Override

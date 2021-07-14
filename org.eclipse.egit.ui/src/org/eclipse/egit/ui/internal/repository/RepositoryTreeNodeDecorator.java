@@ -376,7 +376,6 @@ public class RepositoryTreeNodeDecorator extends GitDecorator
 
 	private void decorateRepositoryGroup(RepositoryTreeNode<?> node,
 			IDecoration decoration) {
-		RepositoryCache cache = RepositoryCache.getInstance();
 		RepositoryGroup group = ((RepositoryGroupNode) node).getObject();
 		boolean markGroupDirty = false;
 		int numberOfBranches = 0;
@@ -384,7 +383,7 @@ public class RepositoryTreeNodeDecorator extends GitDecorator
 		String singleRepoName = null;
 		int numberOfDirectories = group.getRepositoryDirectories().size();
 		for (File repoDir : group.getRepositoryDirectories()) {
-			Repository repo = cache.getRepository(repoDir);
+			Repository repo = RepositoryCache.INSTANCE.getRepository(repoDir);
 			if (repo != null) {
 				if (numberOfDirectories == 1) {
 					singleRepoName = DecoratorRepositoryStateCache.INSTANCE
@@ -472,11 +471,8 @@ public class RepositoryTreeNodeDecorator extends GitDecorator
 	}
 
 	private boolean haveSubmoduleChanges(@NonNull Repository repository) {
-		IndexDiffCache cache = IndexDiffCache.getInstance();
-		if (cache == null) {
-			return false;
-		}
-		IndexDiffCacheEntry entry = cache.getIndexDiffCacheEntry(repository);
+		IndexDiffCacheEntry entry = IndexDiffCache.INSTANCE
+				.getIndexDiffCacheEntry(repository);
 		IndexDiffData data = entry != null ? entry.getIndexDiff() : null;
 		if (data == null) {
 			return false;

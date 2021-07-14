@@ -62,13 +62,12 @@ public class DropAdapterAssistant extends CommonDropAdapterAssistant {
 		for (String folder : data) {
 			File repoFile = new File(folder);
 			if (FileKey.isGitRepository(repoFile, FS.DETECTED))
-				RepositoryUtil.getInstance().addConfiguredRepository(repoFile);
+				RepositoryUtil.INSTANCE.addConfiguredRepository(repoFile);
 			// also a direct parent of a .git dir is allowed
 			else if (!repoFile.getName().equals(Constants.DOT_GIT)) {
 				File dotgitfile = new File(repoFile, Constants.DOT_GIT);
 				if (FileKey.isGitRepository(dotgitfile, FS.DETECTED))
-					RepositoryUtil.getInstance()
-							.addConfiguredRepository(dotgitfile);
+					RepositoryUtil.INSTANCE.addConfiguredRepository(dotgitfile);
 			}
 		}
 		// the returned Status is not consumed anyway
@@ -124,7 +123,7 @@ public class DropAdapterAssistant extends CommonDropAdapterAssistant {
 					RepositoryNode repo = (RepositoryNode) treeNode;
 					reposToAdd.add(repo.getRepository().getDirectory());
 				}
-				RepositoryGroups.getInstance().addRepositoriesToGroup(
+				RepositoryGroups.INSTANCE.addRepositoriesToGroup(
 						group.getObject(), reposToAdd);
 				refreshRepositoriesView(group);
 				return Status.OK_STATUS;
@@ -142,7 +141,7 @@ public class DropAdapterAssistant extends CommonDropAdapterAssistant {
 					RepositoryNode repo = (RepositoryNode) treeNode;
 					reposToRemove.add(repo.getRepository().getDirectory());
 				}
-				RepositoryGroups.getInstance().removeFromGroups(reposToRemove);
+				RepositoryGroups.INSTANCE.removeFromGroups(reposToRemove);
 				refreshRepositoriesView(null);
 				return Status.OK_STATUS;
 			}

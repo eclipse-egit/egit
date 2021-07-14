@@ -122,8 +122,7 @@ public class HistoryViewTest extends GitRepositoriesViewTestBase {
 
 		setupAdditionalCommits();
 
-		RepositoryUtil repositoryUtil = RepositoryUtil.getInstance();
-		repositoryUtil.addConfiguredRepository(repoFile);
+		RepositoryUtil.INSTANCE.addConfiguredRepository(repoFile);
 
 		Repository repo = myRepoViewUtil.lookupRepository(repoFile);
 

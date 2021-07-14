@@ -36,8 +36,7 @@ public class CleanWizard extends Wizard {
 	public CleanWizard(Repository repository) {
 		this.repository = repository;
 		setNeedsProgressMonitor(true);
-		final String repoName = RepositoryUtil.getInstance()
-				.getRepositoryName(repository);
+		String repoName = RepositoryUtil.INSTANCE.getRepositoryName(repository);
 		setWindowTitle(NLS.bind(UIText.CleanWizard_title, repoName));
 	}
 

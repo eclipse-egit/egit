@@ -42,15 +42,14 @@ public class ProjectReferenceImporterTest extends GitTestCase {
 		super.setUp();
 		testRepository = new TestRepository(gitDir);
 		repository = testRepository.getRepository();
-		RepositoryUtil util = RepositoryUtil.getInstance();
-		util.addConfiguredRepository(repository.getDirectory());
+		RepositoryUtil.INSTANCE
+				.addConfiguredRepository(repository.getDirectory());
 	}
 
 	@Override
 	@After
 	public void tearDown() throws Exception {
-		RepositoryUtil util = RepositoryUtil.getInstance();
-		util.removeDir(repository.getDirectory());
+		RepositoryUtil.INSTANCE.removeDir(repository.getDirectory());
 		testRepository.dispose();
 		repository = null;
 		super.tearDown();

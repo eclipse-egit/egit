@@ -228,11 +228,8 @@ public class GitResourceDeltaVisitor implements IResourceDeltaVisitor {
 		if (gitIgnoreChanged) {
 			return false;
 		}
-		IndexDiffCacheEntry entry = null;
-		IndexDiffCache cache = IndexDiffCache.getInstance();
-		if (cache != null) {
-			entry = cache.getIndexDiffCacheEntry(repository);
-		}
+		IndexDiffCacheEntry entry = IndexDiffCache.INSTANCE
+				.getIndexDiffCacheEntry(repository);
 		// fall back to processing all changes as long as there is no old index.
 		if (entry == null) {
 			return false;

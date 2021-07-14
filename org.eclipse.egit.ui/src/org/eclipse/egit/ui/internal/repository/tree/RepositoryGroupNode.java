@@ -49,12 +49,11 @@ public class RepositoryGroupNode extends RepositoryTreeNode<RepositoryGroup> {
 	 */
 	public Collection<? extends Repository> getRepositories() {
 		LinkedHashSet<Repository> result = new LinkedHashSet<>();
-		RepositoryCache repositoryCache = RepositoryCache.getInstance();
 		List<File> repoDirs = getObject().getRepositoryDirectories();
 		for (File repoDir : repoDirs) {
 			Repository repo = null;
 			try {
-				repo = repositoryCache.lookupRepository(repoDir);
+				repo = RepositoryCache.INSTANCE.lookupRepository(repoDir);
 			} catch (IOException e) {
 				// ignore
 			}

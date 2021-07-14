@@ -41,18 +41,12 @@ import org.eclipse.jgit.lib.Repository;
 /**
  * Central cache for Repository instances.
  */
-public class RepositoryCache {
-
-	private static final RepositoryCache INSTANCE = new RepositoryCache();
+public enum RepositoryCache {
 
 	/**
-	 * Retrieves the singleton {@link RepositoryCache}.
-	 *
-	 * @return the {@link RepositoryCache}
+	 * The singleton {@link RepositoryCache}.
 	 */
-	public static RepositoryCache getInstance() {
-		return INSTANCE;
-	}
+	INSTANCE;
 
 	// EGit uses a weak-reference cache. In Eclipse, EGit can never be sure that
 	// a repo instance isn't still used somewhere, and thus it never explicitly
@@ -169,10 +163,7 @@ public class RepositoryCache {
 		// a possibly still existing IndexDiffCache outside the synchronized
 		// block, otherwise we may run into a deadlock due to lock inversion
 		// between our repositoryCache and IndexDiffCache.entries.
-		IndexDiffCache cache = IndexDiffCache.getInstance();
-		if (cache != null) {
-			cache.remove(normalizedGitDir);
-		}
+		IndexDiffCache.INSTANCE.remove(normalizedGitDir);
 		return lookupRepository(gitDir);
 	}
 
@@ -254,10 +245,7 @@ public class RepositoryCache {
 				}
 			} finally {
 				if (removeCache) {
-					IndexDiffCache indexCache = IndexDiffCache.getInstance();
-					if (indexCache != null) {
-						indexCache.remove(gitDir);
-					}
+					IndexDiffCache.INSTANCE.remove(gitDir);
 				}
 			}
 			return result;
@@ -325,10 +313,7 @@ public class RepositoryCache {
 			}
 			Closer.closeReference(repositoryCache.remove(normalizedGitDir));
 		}
-		IndexDiffCache cache = IndexDiffCache.getInstance();
-		if (cache != null) {
-			cache.remove(normalizedGitDir);
-		}
+		IndexDiffCache.INSTANCE.remove(normalizedGitDir);
 		return null;
 	}
 
@@ -441,11 +426,8 @@ public class RepositoryCache {
 
 	private void removeIndexDiffCaches(List<File> gitDirs) {
 		if (!gitDirs.isEmpty()) {
-			IndexDiffCache cache = IndexDiffCache.getInstance();
-			if (cache != null) {
-				for (File f : gitDirs) {
-					cache.remove(f);
-				}
+			for (File f : gitDirs) {
+				IndexDiffCache.INSTANCE.remove(f);
 			}
 		}
 	}

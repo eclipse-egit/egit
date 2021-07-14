@@ -107,8 +107,7 @@ public class SubmoduleFolderTest extends LocalRepositoryTestCase {
 		parentRepositoryGitDir = createProjectAndCommitToRepository();
 		childRepositoryGitDir = createProjectAndCommitToRepository(CHILDREPO,
 				CHILDPROJECT);
-		RepositoryUtil.getInstance()
-				.addConfiguredRepository(parentRepositoryGitDir);
+		RepositoryUtil.INSTANCE.addConfiguredRepository(parentRepositoryGitDir);
 		parentRepository = lookupRepository(parentRepositoryGitDir);
 		childRepository = lookupRepository(childRepositoryGitDir);
 		parentProject = ResourcesPlugin.getWorkspace().getRoot()
@@ -163,10 +162,10 @@ public class SubmoduleFolderTest extends LocalRepositoryTestCase {
 	@After
 	public void removeConfiguredRepositories() {
 		if (parentRepositoryGitDir != null) {
-			RepositoryUtil.getInstance().removeDir(parentRepositoryGitDir);
+			RepositoryUtil.INSTANCE.removeDir(parentRepositoryGitDir);
 		}
 		if (childRepositoryGitDir != null) {
-			RepositoryUtil.getInstance().removeDir(childRepositoryGitDir);
+			RepositoryUtil.INSTANCE.removeDir(childRepositoryGitDir);
 		}
 		childRepository = null;
 		parentRepository = null;
@@ -220,7 +219,7 @@ public class SubmoduleFolderTest extends LocalRepositoryTestCase {
 				util.getPluginLocalizedValue("AddToIndexAction_label"));
 		TestUtil.joinJobs(ADD_TO_INDEX);
 		TestUtil.joinJobs(JobFamilies.INDEX_DIFF_CACHE_UPDATE);
-		IndexDiffCacheEntry cache = IndexDiffCache.getInstance()
+		IndexDiffCacheEntry cache = IndexDiffCache.INSTANCE
 				.getIndexDiffCacheEntry(subRepository);
 		GitItemState state = GitItemStateFactory.getInstance()
 				.get(cache.getIndexDiff(), file);
@@ -395,16 +394,15 @@ public class SubmoduleFolderTest extends LocalRepositoryTestCase {
 	 */
 	@Test
 	public void testRepoRemoval() {
-		RepositoryUtil.getInstance()
-				.addConfiguredRepository(childRepositoryGitDir);
+		RepositoryUtil.INSTANCE.addConfiguredRepository(childRepositoryGitDir);
 		assertTrue("Should still have the subrepo in the cache",
-				containsRepo(RepositoryCache.getInstance()
-						.getAllRepositories(), subRepository));
+				containsRepo(RepositoryCache.INSTANCE.getAllRepositories(),
+						subRepository));
 		assertTrue("Should have changed the preference",
-				RepositoryUtil.getInstance().removeDir(childRepositoryGitDir));
+				RepositoryUtil.INSTANCE.removeDir(childRepositoryGitDir));
 		assertTrue("Should still have the subrepo in the cache",
-				containsRepo(RepositoryCache.getInstance()
-						.getAllRepositories(), subRepository));
+				containsRepo(RepositoryCache.INSTANCE.getAllRepositories(),
+						subRepository));
 	}
 
 	@SuppressWarnings("restriction")

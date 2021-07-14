@@ -135,7 +135,7 @@ public class IndexDiffCacheEntry {
 	public IndexDiffCacheEntry(Repository repository,
 			@Nullable IndexDiffChangedListener listener) {
 		this.repositoryGitDir = repository.getDirectory();
-		this.repositoryName = RepositoryUtil.getInstance()
+		this.repositoryName = RepositoryUtil.INSTANCE
 				.getRepositoryName(repository);
 		if (listener != null) {
 			addIndexDiffChangedListener(listener);
@@ -147,7 +147,7 @@ public class IndexDiffCacheEntry {
 				.addRefsChangedListener(refsChangedListener));
 		// Add a listener also to all submodules in order to be notified when
 		// a branch switch or so occurs in a submodule.
-		RepositoryCache cache = RepositoryCache.getInstance();
+		RepositoryCache cache = RepositoryCache.INSTANCE;
 		try {
 			UnitOfWork.run(repository, () -> {
 				try (SubmoduleWalk walk = SubmoduleWalk.forIndex(repository)) {
@@ -156,8 +156,7 @@ public class IndexDiffCacheEntry {
 						Repository submodule = walk.getRepository();
 						if (submodule != null && !submodule.isBare()) {
 							submodules.put(submodule, walk.getPath());
-							IndexDiffCacheEntry submoduleCache = IndexDiffCache
-									.getInstance()
+							IndexDiffCacheEntry submoduleCache = IndexDiffCache.INSTANCE
 									.getIndexDiffCacheEntry(submodule);
 							if (submoduleCache != null) {
 								submoduleCache.addIndexDiffChangedListener(
@@ -187,7 +186,7 @@ public class IndexDiffCacheEntry {
 	}
 
 	private @Nullable Repository getRepository() {
-		Repository repository = RepositoryCache.getInstance()
+		Repository repository = RepositoryCache.INSTANCE
 				.getRepository(repositoryGitDir);
 		if (repository == null) {
 			return null;
@@ -579,7 +578,7 @@ public class IndexDiffCacheEntry {
 			diffForChangedResources.setFilter(
 					PathFilterGroup.createFromStrings(treeFilterPaths));
 			diffForChangedResources.diff(jgitMonitor, 0, 0, jobName,
-					() -> RepositoryCache.getInstance().getBuilder(true, true));
+					() -> RepositoryCache.INSTANCE.getBuilder(true, true));
 			IndexDiffData previous = indexDiffData;
 			if (previous == null) {
 				// Can happen when the index diff cache entry is already
@@ -633,7 +632,7 @@ public class IndexDiffCacheEntry {
 			IndexDiff newDiff = new IndexDiff(repository, Constants.HEAD,
 					iterator);
 			newDiff.diff(jgitMonitor, 0, 0, jobName,
-					() -> RepositoryCache.getInstance().getBuilder(true, true));
+					() -> RepositoryCache.INSTANCE.getBuilder(true, true));
 			return new IndexDiffData(newDiff);
 		});
 	}

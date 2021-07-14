@@ -77,8 +77,6 @@ public class MultiPullResultDialog extends Dialog {
 
 	private TableViewer tv;
 
-	private final RepositoryUtil utils = RepositoryUtil.getInstance();
-
 	/**
 	 * @param parentShell
 	 * @param results
@@ -142,7 +140,7 @@ public class MultiPullResultDialog extends Dialog {
 			public String getText(Object element) {
 				@SuppressWarnings("unchecked")
 				Entry<Repository, Object> item = (Entry<Repository, Object>) element;
-				return utils.getRepositoryName(item.getKey());
+				return RepositoryUtil.INSTANCE.getRepositoryName(item.getKey());
 			}
 		});
 		col.setText(UIText.MultiPullResultDialog_RepositoryColumnHeader);

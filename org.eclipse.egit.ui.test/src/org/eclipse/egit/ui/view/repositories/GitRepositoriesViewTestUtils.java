@@ -174,6 +174,6 @@ public class GitRepositoriesViewTestUtils {
 	}
 
 	public Repository lookupRepository(File directory) throws Exception {
-		return RepositoryCache.getInstance().lookupRepository(directory);
+		return RepositoryCache.INSTANCE.lookupRepository(directory);
 	}
 }

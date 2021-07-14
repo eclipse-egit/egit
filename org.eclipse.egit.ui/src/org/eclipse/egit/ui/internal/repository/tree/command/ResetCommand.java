@@ -59,7 +59,7 @@ public class ResetCommand extends
 		// that ref will be possible.
 		final Ref targetBranch = (Ref) node.getObject();
 
-		final String repoName = RepositoryUtil.getInstance()
+		final String repoName = RepositoryUtil.INSTANCE
 				.getRepositoryName(node.getRepository());
 
 		Wizard wiz = new Wizard() {

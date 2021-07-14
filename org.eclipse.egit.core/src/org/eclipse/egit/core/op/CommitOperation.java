@@ -352,8 +352,8 @@ public class CommitOperation implements IEGitOperation {
 		final PersonIdent committerIdent = new PersonIdent(enteredCommitter, commitDate, timeZone);
 
 		if (amending) {
-			RepositoryUtil repoUtil = RepositoryUtil.getInstance();
-			RevCommit headCommit = repoUtil.parseHeadCommit(repo);
+			RevCommit headCommit = RepositoryUtil.INSTANCE
+					.parseHeadCommit(repo);
 			if (headCommit != null) {
 				final PersonIdent headAuthor = headCommit.getAuthorIdent();
 				authorIdent = new PersonIdent(enteredAuthor,

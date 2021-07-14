@@ -59,7 +59,7 @@ public class GitRepositoriesViewTagHandlingTest extends
 	public void beforeClass() throws Exception {
 		setVerboseBranchMode(false);
 		repositoryFile = createProjectAndCommitToRepository();
-		RepositoryUtil.getInstance().addConfiguredRepository(repositoryFile);
+		RepositoryUtil.INSTANCE.addConfiguredRepository(repositoryFile);
 		repository = lookupRepository(repositoryFile);
 		revWalk = new RevWalk(repository);
 	}

@@ -110,7 +110,7 @@ public class DecoratableWorkingSetTest extends GitLightweightDecoratorTest {
 
 		Repository repo = lookupRepository(gitDir);
 		git = new Git(repo);
-		indexDiffCacheEntry = IndexDiffCache.getInstance()
+		indexDiffCacheEntry = IndexDiffCache.INSTANCE
 				.getIndexDiffCacheEntry(repo);
 		waitForIndexDiff(false);
 	}

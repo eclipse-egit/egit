@@ -46,17 +46,15 @@ public class CreateRepositoryGroupCommand
 
 	@Override
 	public Object execute(ExecutionEvent event) throws ExecutionException {
-		RepositoryGroups groupsUtil = RepositoryGroups.getInstance();
-
 		RepositoryGroup group;
 		try {
-			group = groupsUtil.createGroup(newGroupName(groupsUtil));
+			group = RepositoryGroups.INSTANCE.createGroup(newGroupName());
 		} catch (IllegalStateException e) {
 			throw new ExecutionException(e.getLocalizedMessage(), e);
 		}
 		List<File> repoDirs = getSelectedRepositories(event);
 		if (!repoDirs.isEmpty()) {
-			groupsUtil.addRepositoriesToGroup(group, repoDirs);
+			RepositoryGroups.INSTANCE.addRepositoriesToGroup(group, repoDirs);
 		}
 		RepositoriesView view = getView(event);
 		CommonViewer viewer = view.getCommonViewer();
@@ -88,11 +86,11 @@ public class CreateRepositoryGroupCommand
 				.collect(Collectors.toList());
 	}
 
-	private static @NonNull String newGroupName(RepositoryGroups groups) {
+	private static @NonNull String newGroupName() {
 		for (int i = 1; i < 100; i++) {
 			String name = MessageFormat.format(
 					UIText.RepositoriesView_NewGroupFormat, Integer.valueOf(i));
-			if (name != null && !groups.groupExists(name)) {
+			if (name != null && !RepositoryGroups.INSTANCE.groupExists(name)) {
 				return name;
 			}
 		}

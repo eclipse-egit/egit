@@ -79,7 +79,7 @@ class GitMoveDeleteHook implements IMoveDeleteHook {
 			return false;
 
 		String repoRelativePath = map.getRepoRelativePath(file);
-		IndexDiffCache indexDiffCache = IndexDiffCache.getInstance();
+		IndexDiffCache indexDiffCache = IndexDiffCache.INSTANCE;
 		IndexDiffCacheEntry indexDiffCacheEntry = indexDiffCache
 				.getIndexDiffCacheEntry(map.getRepository());
 		if (indexDiffCacheEntry == null) {

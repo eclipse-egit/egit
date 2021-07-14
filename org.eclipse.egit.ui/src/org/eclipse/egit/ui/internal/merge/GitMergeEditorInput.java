@@ -273,8 +273,7 @@ public class GitMergeEditorInput extends AbstractGitMergeEditorInput {
 			// set title and icon
 			setTitle(NLS.bind(UIText.GitMergeEditorInput_MergeEditorTitle,
 					new Object[] {
-							RepositoryUtil.getInstance()
-									.getRepositoryName(repo),
+							RepositoryUtil.INSTANCE.getRepositoryName(repo),
 							rightCommit.getShortMessage(), fullBranch }));
 
 			// build the nodes

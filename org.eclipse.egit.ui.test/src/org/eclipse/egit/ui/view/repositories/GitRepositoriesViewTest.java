@@ -101,7 +101,7 @@ public class GitRepositoriesViewTest extends GitRepositoriesViewTestBase {
 		setVerboseBranchMode(false);
 		initialLinkingState = setLinkWithSelection(false);
 		repositoryFile = createProjectAndCommitToRepository();
-		RepositoryUtil.getInstance().addConfiguredRepository(repositoryFile);
+		RepositoryUtil.INSTANCE.addConfiguredRepository(repositoryFile);
 	}
 
 	@After

@@ -50,8 +50,6 @@ public class MultiBranchOperationResultDialog extends TitleAreaDialog {
 
 	private TableViewer tv;
 
-	private final RepositoryUtil utils = RepositoryUtil.getInstance();
-
 	private EnumMap<CheckoutResult.Status, String> resultMessages;
 
 	/**
@@ -85,7 +83,7 @@ public class MultiBranchOperationResultDialog extends TitleAreaDialog {
 			public String getText(Object element) {
 				@SuppressWarnings("unchecked")
 				Entry<Repository, CheckoutResult> item = (Entry<Repository, CheckoutResult>) element;
-				return utils.getRepositoryName(item.getKey());
+				return RepositoryUtil.INSTANCE.getRepositoryName(item.getKey());
 			}
 		});
 		col.setText(

@@ -110,9 +110,9 @@ public class IgnoreOperationUI {
 	private void refresh() {
 		Map<Repository, Collection<String>> pathsByRepository =
 				ResourceUtil.splitPathsByRepository(paths);
-		IndexDiffCache cache = IndexDiffCache.getInstance();
 		for (Repository repository : pathsByRepository.keySet()) {
-			IndexDiffCacheEntry entry = cache.getIndexDiffCacheEntry(repository);
+			IndexDiffCacheEntry entry = IndexDiffCache.INSTANCE
+					.getIndexDiffCacheEntry(repository);
 			if (entry != null)
 				entry.refresh();
 		}

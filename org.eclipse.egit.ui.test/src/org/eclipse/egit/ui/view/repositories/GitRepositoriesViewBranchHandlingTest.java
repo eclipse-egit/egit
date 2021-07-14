@@ -99,10 +99,9 @@ public class GitRepositoriesViewBranchHandlingTest extends
 
 		clonedRepositoryFile = new File(workdir, Constants.DOT_GIT);
 
-		RepositoryUtil repositoryUtil = RepositoryUtil.getInstance();
-		repositoryUtil.addConfiguredRepository(repositoryFile);
-		repositoryUtil.addConfiguredRepository(remoteRepositoryFile);
-		repositoryUtil.addConfiguredRepository(clonedRepositoryFile);
+		RepositoryUtil.INSTANCE.addConfiguredRepository(repositoryFile);
+		RepositoryUtil.INSTANCE.addConfiguredRepository(remoteRepositoryFile);
+		RepositoryUtil.INSTANCE.addConfiguredRepository(clonedRepositoryFile);
 	}
 
 	@Test

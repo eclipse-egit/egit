@@ -52,7 +52,7 @@ public class GitRepositoriesViewRemoteHandlingTest extends
 	public void before() throws Exception {
 		repositoryFile = createProjectAndCommitToRepository();
 		remoteRepositoryFile = createRemoteRepository(repositoryFile);
-		RepositoryUtil.getInstance().addConfiguredRepository(repositoryFile);
+		RepositoryUtil.INSTANCE.addConfiguredRepository(repositoryFile);
 		TestUtil.processUIEvents();
 	}
 

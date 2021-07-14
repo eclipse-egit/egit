@@ -89,7 +89,7 @@ class GitHistoryWalk extends SWTWalk {
 		} catch (IOException e) {
 			throw new IOException(MessageFormat.format(
 					UIText.GitHistoryPage_errorSettingStartPoints,
-					RepositoryUtil.getInstance()
+					RepositoryUtil.INSTANCE
 							.getRepositoryName(getRepository())),
 					e);
 		}

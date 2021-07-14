@@ -184,12 +184,13 @@ public class LocalNonWorkspaceTypedElement extends LocalResourceTypedElement {
 							walk.setFilter(PathFilterGroup
 									.createFromStrings(subPath.toString()));
 							walk.setRootTree(iterator);
-							walk.setBuilderFactory(() -> RepositoryCache
-									.getInstance().getBuilder(true, true));
+							walk.setBuilderFactory(
+									() -> RepositoryCache.INSTANCE
+											.getBuilder(true, true));
 							if (walk.next()) {
 								try (Repository sub = walk.getRepository()) {
-									RevCommit headCommit = RepositoryUtil
-											.getInstance().parseHeadCommit(sub);
+									RevCommit headCommit = RepositoryUtil.INSTANCE
+											.parseHeadCommit(sub);
 									if (headCommit == null) {
 										return null;
 									}
@@ -348,8 +349,8 @@ public class LocalNonWorkspaceTypedElement extends LocalResourceTypedElement {
 	private boolean refreshRepositoryState(@NonNull Repository repo) {
 		IPath repositoryRoot = new Path(repo.getWorkTree().getPath());
 		IPath relativePath = path.makeRelativeTo(repositoryRoot);
-		IndexDiffCacheEntry indexDiffCacheForRepository = IndexDiffCache
-				.getInstance().getIndexDiffCacheEntry(repo);
+		IndexDiffCacheEntry indexDiffCacheForRepository = IndexDiffCache.INSTANCE
+				.getIndexDiffCacheEntry(repo);
 		if (indexDiffCacheForRepository != null) {
 			indexDiffCacheForRepository.refreshFiles(
 					Collections.singleton(relativePath.toString()));

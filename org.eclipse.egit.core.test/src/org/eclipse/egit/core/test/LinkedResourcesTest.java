@@ -130,7 +130,7 @@ public class LinkedResourcesTest {
 		repository2 = null;
 		testUtils.deleteTempDirs();
 		testUtils = null;
-		RepositoryCache.getInstance().clear();
+		RepositoryCache.INSTANCE.clear();
 	}
 
 	@Test

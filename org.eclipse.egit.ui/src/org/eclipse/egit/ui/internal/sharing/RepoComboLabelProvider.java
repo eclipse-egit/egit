@@ -27,7 +27,6 @@ import org.eclipse.swt.graphics.Image;
  */
 public class RepoComboLabelProvider extends BaseLabelProvider implements
 		ILabelProvider {
-	private RepositoryUtil util = RepositoryUtil.getInstance();
 
 	@Override
 	public Image getImage(Object element) {
@@ -37,7 +36,7 @@ public class RepoComboLabelProvider extends BaseLabelProvider implements
 	@Override
 	public String getText(Object element) {
 		Repository repo = (Repository) element;
-		String repoName = util.getRepositoryName(repo);
+		String repoName = RepositoryUtil.INSTANCE.getRepositoryName(repo);
 		return NLS.bind("{0} - {1}", repoName, repo.getDirectory().getPath()); //$NON-NLS-1$
 	}
 }

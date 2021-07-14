@@ -402,7 +402,7 @@ public class GitProjectData {
 		// Is its working directory really here? If not,
 		// a submodule folder may have been copied.
 		try {
-			Repository r = RepositoryCache.getInstance().lookupRepository(git);
+			Repository r = RepositoryCache.INSTANCE.lookupRepository(git);
 			if (m != null && r != null && !r.isBare()
 					&& gitCandidate.equals(r.getWorkTree())) {
 				if (data.map(m)) {
@@ -717,7 +717,7 @@ public class GitProjectData {
 
 		try {
 			m.setRepository(
-					RepositoryCache.getInstance().lookupRepository(git));
+					RepositoryCache.INSTANCE.lookupRepository(git));
 		} catch (IOException ioe) {
 			logAndUnmapGoneMappedResource(m, c);
 			return false;

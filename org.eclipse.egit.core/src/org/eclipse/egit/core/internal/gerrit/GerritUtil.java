@@ -262,7 +262,7 @@ public class GerritUtil {
 			@Nullable File repositoryDir) {
 		if (repositoryDir != null) {
 			try {
-				Repository repository = RepositoryCache.getInstance()
+				Repository repository = RepositoryCache.INSTANCE
 						.lookupRepository(repositoryDir);
 				if (repository != null) {
 					tryToAutoConfigureForGerrit(repository);

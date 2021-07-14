@@ -71,8 +71,7 @@ public class RefFilterHelperTest extends LocalRepositoryTestCase {
 		File repoFile = createProjectAndCommitToRepository();
 		createSimpleRemoteRepository(repoFile);
 
-		RepositoryUtil repositoryUtil = RepositoryUtil.getInstance();
-		repositoryUtil.addConfiguredRepository(repoFile);
+		RepositoryUtil.INSTANCE.addConfiguredRepository(repoFile);
 
 		repo = myRepoViewUtil.lookupRepository(repoFile);
 
@@ -101,7 +100,7 @@ public class RefFilterHelperTest extends LocalRepositoryTestCase {
 	}
 
 	private String getRepoSpecificPrefKeyForConfiguredFilters() {
-		return RepositoryUtil.getInstance().getRepositorySpecificPreferenceKey(
+		return RepositoryUtil.INSTANCE.getRepositorySpecificPreferenceKey(
 				this.repo, UIPreferences.RESOURCEHISTORY_REF_FILTERS);
 	}
 
@@ -156,7 +155,7 @@ public class RefFilterHelperTest extends LocalRepositoryTestCase {
 	}
 
 	private String getRepoSpecificPrefKeyForSelectedFilters() {
-		return RepositoryUtil.getInstance().getRepositorySpecificPreferenceKey(
+		return RepositoryUtil.INSTANCE.getRepositorySpecificPreferenceKey(
 				this.repo, UIPreferences.RESOURCEHISTORY_SELECTED_REF_FILTERS);
 	}
 
@@ -195,7 +194,7 @@ public class RefFilterHelperTest extends LocalRepositoryTestCase {
 	}
 
 	private String getRepoSpecificPrefKeyForLastSelectedFilters() {
-		return RepositoryUtil.getInstance().getRepositorySpecificPreferenceKey(
+		return RepositoryUtil.INSTANCE.getRepositorySpecificPreferenceKey(
 				this.repo,
 				UIPreferences.RESOURCEHISTORY_LAST_SELECTED_REF_FILTERS);
 	}

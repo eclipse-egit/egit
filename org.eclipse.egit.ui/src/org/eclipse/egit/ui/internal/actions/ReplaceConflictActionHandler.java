@@ -38,8 +38,8 @@ import org.eclipse.egit.core.internal.job.RuleUtil;
 import org.eclipse.egit.core.internal.util.ResourceUtil;
 import org.eclipse.egit.core.op.DiscardChangesOperation;
 import org.eclipse.egit.core.op.DiscardChangesOperation.Stage;
-import org.eclipse.egit.core.util.RevCommitUtils;
 import org.eclipse.egit.core.op.IEGitOperation;
+import org.eclipse.egit.core.util.RevCommitUtils;
 import org.eclipse.egit.ui.Activator;
 import org.eclipse.egit.ui.JobFamilies;
 import org.eclipse.egit.ui.internal.UIText;
@@ -91,7 +91,7 @@ public abstract class ReplaceConflictActionHandler
 		Entry<Repository, Collection<String>> entry = pathsByRepository
 				.entrySet().iterator().next();
 		Repository repository = entry.getKey();
-		IndexDiffCacheEntry indexDiff = IndexDiffCache.getInstance()
+		IndexDiffCacheEntry indexDiff = IndexDiffCache.INSTANCE
 				.getIndexDiffCacheEntry(repository);
 		if (indexDiff == null) {
 			return null;

@@ -55,13 +55,13 @@ public abstract class RepositoryJobResultAction extends Action {
 	public final void run() {
 		Repository repo = null;
 		if (!repositoryGone) {
-			RepositoryCache repoCache = RepositoryCache.getInstance();
-			repo = repoCache.getRepository(repositoryDir);
+			repo = RepositoryCache.INSTANCE.getRepository(repositoryDir);
 			if (repo == null
 					&& FileKey.isGitRepository(repositoryDir, FS.DETECTED)) {
 				// No longer in the Egit cache but still on disk
 				try {
-					repo = repoCache.lookupRepository(repositoryDir);
+					repo = RepositoryCache.INSTANCE
+							.lookupRepository(repositoryDir);
 				} catch (IOException e) {
 					// Ignore, repo remains null
 				}

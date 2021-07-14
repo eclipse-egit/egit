@@ -33,18 +33,12 @@ import org.eclipse.jgit.lib.Repository;
  */
 public class GerritSelectRepositoryPage extends GitSelectRepositoryPage {
 
-	private RepositoryUtil util;
-
-	private RepositoryCache cache;
-
 	/**
 	 * Creates a new {@link GerritSelectRepositoryPage} that allows to select a
 	 * configured gerrit repository
 	 */
 	public GerritSelectRepositoryPage() {
 		super(false, false);
-		util = RepositoryUtil.getInstance();
-		cache = RepositoryCache.getInstance();
 		setTitle(UIText.GerritSelectRepositoryPage_PageTitle);
 		setDescription(null);
 		setImageDescriptor(UIIcons.WIZBAN_FETCH_GERRIT);
@@ -52,12 +46,14 @@ public class GerritSelectRepositoryPage extends GitSelectRepositoryPage {
 
 	@Override
 	protected List<String> getInitialRepositories() {
-		List<String> configuredRepos = util.getConfiguredRepositories();
+		List<String> configuredRepos = RepositoryUtil.INSTANCE
+				.getConfiguredRepositories();
 		return configuredRepos.stream().map(name -> {
 			File gitDir = new File(name);
 			if (gitDir.exists()) {
 				try {
-					Repository repo = cache.lookupRepository(gitDir);
+					Repository repo = RepositoryCache.INSTANCE
+							.lookupRepository(gitDir);
 					if (repo != null && ResourcePropertyTester.hasGerritConfiguration(repo)) {
 						return name;
 					}

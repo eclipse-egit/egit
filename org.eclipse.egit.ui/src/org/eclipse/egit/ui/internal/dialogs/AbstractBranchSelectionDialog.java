@@ -446,8 +446,8 @@ public abstract class AbstractBranchSelectionDialog extends TitleAreaDialog {
 					return false;
 				node = new AdditionalRefNode(references, repo, ref);
 			} else {
-				String mappedRef = RepositoryUtil.getInstance()
-						.mapCommitToRef(repo, refName, false);
+				String mappedRef = RepositoryUtil.INSTANCE.mapCommitToRef(repo,
+						refName, false);
 				if (mappedRef != null
 						&& mappedRef.startsWith(Constants.R_REMOTES)) {
 					Ref ref = repo.exactRef(mappedRef);

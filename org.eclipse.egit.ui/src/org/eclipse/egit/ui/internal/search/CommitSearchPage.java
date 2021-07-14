@@ -481,8 +481,7 @@ public class CommitSearchPage extends DialogPage implements ISearchPage {
 			if (file.exists())
 				try {
 					RepositoryNode node = new RepositoryNode(null,
-							RepositoryCache.getInstance()
-									.lookupRepository(file));
+							RepositoryCache.INSTANCE.lookupRepository(file));
 					repositories.add(node);
 				} catch (IOException ignore) {
 					// Ignore and don't check

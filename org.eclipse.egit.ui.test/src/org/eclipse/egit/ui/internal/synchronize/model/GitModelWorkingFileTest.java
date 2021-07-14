@@ -87,7 +87,7 @@ public class GitModelWorkingFileTest extends GitModelTestCase {
 	public void setupEnvironment() throws Exception {
 		leftRepoFile = createProjectAndCommitToRepository();
 
-		RepositoryUtil.getInstance().addConfiguredRepository(leftRepoFile);
+		RepositoryUtil.INSTANCE.addConfiguredRepository(leftRepoFile);
 	}
 
 	private GitModelWorkingFile createWorkingFile(IPath location)

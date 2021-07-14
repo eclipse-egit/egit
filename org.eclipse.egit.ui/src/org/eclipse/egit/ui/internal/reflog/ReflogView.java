@@ -141,7 +141,7 @@ public class ReflogView extends ViewPart implements RefsChangedListener, IShowIn
 		}
 		Repository repo = getRepository();
 		if (repo == null
-				|| !RepositoryUtil.getInstance().contains(repo)) {
+				|| !RepositoryUtil.INSTANCE.contains(repo)) {
 			Control control = refLogTreeViewer.getControl();
 			if (!control.isDisposed()) {
 				control.getDisplay().asyncExec(() -> {
@@ -428,7 +428,7 @@ public class ReflogView extends ViewPart implements RefsChangedListener, IShowIn
 		site.setSelectionProvider(new RepositorySelectionProvider(
 				refLogTreeViewer, this::getRepository));
 
-		addRefsChangedListener = RepositoryCache.getInstance()
+		addRefsChangedListener = RepositoryCache.INSTANCE
 				.getGlobalListenerList().addRefsChangedListener(this);
 
 		// Toolbar
@@ -671,8 +671,7 @@ public class ReflogView extends ViewPart implements RefsChangedListener, IShowIn
 	}
 
 	private static String getRepositoryName(Repository repository) {
-		String repoName = RepositoryUtil.getInstance()
-				.getRepositoryName(repository);
+		String repoName = RepositoryUtil.INSTANCE.getRepositoryName(repository);
 		RepositoryState state = repository.getRepositoryState();
 		if (state != RepositoryState.SAFE)
 			return repoName + '|' + state.getDescription();

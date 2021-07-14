@@ -94,10 +94,9 @@ public class SelectionForViewsTest extends GitRepositoriesViewTestBase {
 				"refs/heads/master", "origin", 0);
 		op.run(null);
 		clonedRepositoryDir = new File(workdir, Constants.DOT_GIT);
-		RepositoryUtil repoUtil = RepositoryUtil.getInstance();
-		repoUtil.addConfiguredRepository(localRepositoryDir);
-		repoUtil.addConfiguredRepository(clonedRepositoryDir);
-		repoUtil.addConfiguredRepository(remoteRepositoryDir); // it's bare
+		RepositoryUtil.INSTANCE.addConfiguredRepository(localRepositoryDir);
+		RepositoryUtil.INSTANCE.addConfiguredRepository(clonedRepositoryDir);
+		RepositoryUtil.INSTANCE.addConfiguredRepository(remoteRepositoryDir); // bare
 		ICommandService srv = PlatformUI.getWorkbench()
 				.getService(ICommandService.class);
 		linkWithSelectionState = srv
@@ -187,7 +186,7 @@ public class SelectionForViewsTest extends GitRepositoriesViewTestBase {
 	}
 
 	private String repositoryName(File repoDir) throws Exception {
-		return RepositoryUtil.getInstance()
+		return RepositoryUtil.INSTANCE
 				.getRepositoryName(lookupRepository(repoDir));
 	}
 

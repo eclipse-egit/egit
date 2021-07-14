@@ -80,7 +80,7 @@ public class CommitEditorInputFactory implements IElementFactory {
 			return null;
 
 		try {
-			return RepositoryCache.getInstance().lookupRepository(gitDir);
+			return RepositoryCache.INSTANCE.lookupRepository(gitDir);
 		} catch (IOException e) {
 			return null;
 		}

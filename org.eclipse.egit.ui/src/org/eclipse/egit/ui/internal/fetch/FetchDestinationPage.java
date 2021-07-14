@@ -74,7 +74,7 @@ public class FetchDestinationPage extends WizardPage {
 		repositoryLabel.setText(UIText.FetchDestinationPage_RepositoryLabel);
 		Text repositoryText = new Text(main, SWT.READ_ONLY | SWT.BORDER);
 		repositoryText.setText(
-				RepositoryUtil.getInstance().getRepositoryName(repository));
+				RepositoryUtil.INSTANCE.getRepositoryName(repository));
 		GridDataFactory.fillDefaults().grab(true, false)
 				.applyTo(repositoryText);
 

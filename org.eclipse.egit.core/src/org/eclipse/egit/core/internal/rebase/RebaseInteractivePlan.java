@@ -157,7 +157,7 @@ public class RebaseInteractivePlan implements IndexDiffChangedListener,
 	}
 
 	private void registerIndexDiffChangeListener(Repository repository) {
-		IndexDiffCacheEntry entry = IndexDiffCache.getInstance()
+		IndexDiffCacheEntry entry = IndexDiffCache.INSTANCE
 				.getIndexDiffCacheEntry(repository);
 		if (entry != null) {
 			entry.addIndexDiffChangedListener(this);
@@ -167,7 +167,7 @@ public class RebaseInteractivePlan implements IndexDiffChangedListener,
 	private void unregisterIndexDiffChangeListener() {
 		Repository repository = getRepository();
 		if (repository != null) {
-			IndexDiffCacheEntry entry = IndexDiffCache.getInstance()
+			IndexDiffCacheEntry entry = IndexDiffCache.INSTANCE
 					.getIndexDiffCacheEntry(repository);
 			if (entry != null) {
 				entry.removeIndexDiffChangedListener(this);
@@ -176,8 +176,8 @@ public class RebaseInteractivePlan implements IndexDiffChangedListener,
 	}
 
 	private void registerRefChangedListener() {
-		refsChangedListener = RepositoryCache.getInstance()
-				.getGlobalListenerList().addRefsChangedListener(this);
+		refsChangedListener = RepositoryCache.INSTANCE.getGlobalListenerList()
+				.addRefsChangedListener(this);
 	}
 
 	/**

@@ -42,7 +42,7 @@ public class CheckoutDialog extends BranchSelectionAndEditDialog {
 	@Override
 	protected String getTitle() {
 		return MessageFormat.format(UIText.CheckoutDialog_Title,
-				RepositoryUtil.getInstance().getRepositoryName(repo));
+				RepositoryUtil.INSTANCE.getRepositoryName(repo));
 	}
 
 	@Override

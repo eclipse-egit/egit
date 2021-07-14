@@ -58,15 +58,15 @@ public class RepositoryInitializer {
 		}
 		registration = FrameworkUtil.getBundle(getClass()).getBundleContext()
 				.registerService(RepositoryCache.class,
-						RepositoryCache.getInstance(), null);
+						RepositoryCache.INSTANCE, null);
 	}
 
 	@Deactivate
 	void shutDown() {
 		registration.unregister();
-		RepositoryUtil.getInstance().clear();
-		IndexDiffCache.getInstance().dispose();
-		RepositoryCache.getInstance().clear();
+		RepositoryUtil.INSTANCE.clear();
+		IndexDiffCache.INSTANCE.dispose();
+		RepositoryCache.INSTANCE.clear();
 	}
 
 	/**

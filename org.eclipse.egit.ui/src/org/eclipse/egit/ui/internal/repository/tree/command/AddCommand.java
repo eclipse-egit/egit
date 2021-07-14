@@ -35,6 +35,7 @@ import org.eclipse.egit.core.Activator;
 import org.eclipse.egit.core.GitCorePreferences;
 import org.eclipse.egit.core.JobFamilies;
 import org.eclipse.egit.core.RepositoryCache;
+import org.eclipse.egit.core.RepositoryUtil;
 import org.eclipse.egit.core.internal.CoreText;
 import org.eclipse.egit.core.internal.gerrit.GerritUtil;
 import org.eclipse.egit.core.internal.job.JobUtil;
@@ -64,7 +65,7 @@ public class AddCommand extends
 	public Object execute(ExecutionEvent event) throws ExecutionException {
 		RepositoryGroup group = getSelectedRepositoryGroup(event);
 		RepositorySearchWizard wizard = new RepositorySearchWizard(
-				util.getConfiguredRepositories(), true);
+				RepositoryUtil.INSTANCE.getConfiguredRepositories(), true);
 		WizardDialog dialog = new WizardDialog(getShell(event), wizard) {
 			@Override
 			protected Button createButton(Composite parent, int id,
@@ -89,10 +90,10 @@ public class AddCommand extends
 	private void addRepository(File repositoryDir, RepositoryGroup group) {
 		GerritUtil.tryToAutoConfigureForGerrit(repositoryDir);
 		if (group != null) {
-			RepositoryGroups.getInstance().addRepositoriesToGroup(group,
+			RepositoryGroups.INSTANCE.addRepositoriesToGroup(group,
 				Collections.singletonList(repositoryDir));
 		}
-		util.addConfiguredRepository(repositoryDir);
+		RepositoryUtil.INSTANCE.addConfiguredRepository(repositoryDir);
 		if (doAutoShare()) {
 			autoShareProjects(repositoryDir);
 		}
@@ -102,7 +103,7 @@ public class AddCommand extends
 		// Don't even try to auto-share for bare repositories.
 		IPath workingDirPath;
 		try {
-			Repository repo = RepositoryCache.getInstance()
+			Repository repo = RepositoryCache.INSTANCE
 					.lookupRepository(repositoryDir);
 			if (repo.isBare()) {
 				return;

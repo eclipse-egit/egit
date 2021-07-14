@@ -339,8 +339,7 @@ public class WorkspaceConnector {
 			File repositoryDir = gitDirPath.toFile();
 			projects.put(project, repositoryDir);
 
-			Set<String> configured = RepositoryUtil.getInstance()
-					.getRepositories();
+			Set<String> configured = RepositoryUtil.INSTANCE.getRepositories();
 			if (configured.contains(gitDirPath.toString())) {
 				return;
 			}
@@ -367,8 +366,7 @@ public class WorkspaceConnector {
 				repositoryDir = lastPath.toFile();
 			}
 			try {
-				RepositoryUtil.getInstance()
-						.addConfiguredRepository(repositoryDir);
+				RepositoryUtil.INSTANCE.addConfiguredRepository(repositoryDir);
 			} catch (IllegalArgumentException e) {
 				Activator.logError(CoreText.Activator_AutoSharingFailed, e);
 			}

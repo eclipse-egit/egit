@@ -109,7 +109,7 @@ public class ProjectReferenceImporter {
 					}
 				}
 
-				getRepositoryUtil().addConfiguredRepository(repositoryPath);
+				RepositoryUtil.INSTANCE.addConfiguredRepository(repositoryPath);
 
 				IPath newWorkDir = new Path(repositoryPath.getAbsolutePath())
 						.removeLastSegments(1);
@@ -202,7 +202,8 @@ public class ProjectReferenceImporter {
 	}
 
 	static File findConfiguredRepository(URIish gitUrl) {
-		for (String repoDir : getRepositoryUtil().getConfiguredRepositories()) {
+		for (String repoDir : RepositoryUtil.INSTANCE
+				.getConfiguredRepositories()) {
 			File repoDirFile = new File(repoDir);
 			if (repositoryAlreadyExistsForUrl(repoDirFile, gitUrl))
 				return repoDirFile;
@@ -314,9 +315,5 @@ public class ProjectReferenceImporter {
 		while (current.getCause() != null)
 			current = current.getCause();
 		return new TeamException(current.getMessage(), current);
-	}
-
-	private static RepositoryUtil getRepositoryUtil() {
-		return RepositoryUtil.getInstance();
 	}
 }

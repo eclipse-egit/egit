@@ -110,12 +110,10 @@ public class CommitHyperlinkDetector extends AbstractHyperlinkDetector {
 		}
 
 		private RepositoryCommit searchCommit() throws IOException {
-			RepositoryUtil repositoryUtil = RepositoryUtil.getInstance();
-			List<String> configuredRepositories = repositoryUtil
+			List<String> configuredRepositories = RepositoryUtil.INSTANCE
 					.getConfiguredRepositories();
-			RepositoryCache repositoryCache = RepositoryCache.getInstance();
 			for (String repoDir : configuredRepositories) {
-				Repository repository = repositoryCache
+				Repository repository = RepositoryCache.INSTANCE
 						.lookupRepository(new File(repoDir));
 				RevCommit commit = getCommit(repository);
 				if (commit != null)

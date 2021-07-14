@@ -26,9 +26,6 @@ import org.eclipse.jgit.lib.Repository;
  * Repositories View
  */
 public class RepoComboContentProvider implements IStructuredContentProvider {
-	private final RepositoryUtil util = RepositoryUtil.getInstance();
-
-	private final RepositoryCache cache = RepositoryCache.getInstance();
 
 	@Override
 	public void dispose() {
@@ -43,10 +40,10 @@ public class RepoComboContentProvider implements IStructuredContentProvider {
 	@Override
 	public Object[] getElements(Object inputElement) {
 		List<Repository> nonBareRepos = new ArrayList<>();
-		for (String dir : util.getConfiguredRepositories()) {
+		for (String dir : RepositoryUtil.INSTANCE.getConfiguredRepositories()) {
 			Repository repo;
 			try {
-				repo = cache.lookupRepository(new File(dir));
+				repo = RepositoryCache.INSTANCE.lookupRepository(new File(dir));
 			} catch (IOException e1) {
 				continue;
 			}

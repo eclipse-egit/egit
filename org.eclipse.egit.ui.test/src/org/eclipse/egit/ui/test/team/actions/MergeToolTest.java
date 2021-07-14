@@ -84,8 +84,8 @@ public class MergeToolTest extends LocalRepositoryTestCase {
 		assertThat(mergeResult.getConflicts().keySet(),
 				hasItem(path.toString()));
 
-		IndexDiffCache cache = IndexDiffCache.getInstance();
-		cache.getIndexDiffCacheEntry(testRepository.getRepository());
+		IndexDiffCache.INSTANCE
+				.getIndexDiffCacheEntry(testRepository.getRepository());
 		TestUtil.joinJobs(JobFamilies.INDEX_DIFF_CACHE_UPDATE);
 
 		SWTBotTree packageExplorer = TestUtil.getExplorerTree();
@@ -124,8 +124,8 @@ public class MergeToolTest extends LocalRepositoryTestCase {
 		assertThat(mergeResult.getConflicts().keySet(),
 				hasItem(path.toString()));
 
-		IndexDiffCache cache = IndexDiffCache.getInstance();
-		cache.getIndexDiffCacheEntry(testRepository.getRepository());
+		IndexDiffCache.INSTANCE
+				.getIndexDiffCacheEntry(testRepository.getRepository());
 		TestUtil.joinJobs(JobFamilies.INDEX_DIFF_CACHE_UPDATE);
 
 		SWTBotTree packageExplorer = TestUtil.getExplorerTree();
@@ -177,8 +177,8 @@ public class MergeToolTest extends LocalRepositoryTestCase {
 
 		assertThat(result.getStatus(), is(CherryPickStatus.CONFLICTING));
 
-		IndexDiffCache cache = IndexDiffCache.getInstance();
-		cache.getIndexDiffCacheEntry(testRepository.getRepository());
+		IndexDiffCache.INSTANCE
+				.getIndexDiffCacheEntry(testRepository.getRepository());
 		TestUtil.joinJobs(JobFamilies.INDEX_DIFF_CACHE_UPDATE);
 
 		SWTBotTree packageExplorer = TestUtil.getExplorerTree();
@@ -221,8 +221,8 @@ public class MergeToolTest extends LocalRepositoryTestCase {
 
 		assertThat(result.getStatus(), is(CherryPickStatus.CONFLICTING));
 
-		IndexDiffCache cache = IndexDiffCache.getInstance();
-		cache.getIndexDiffCacheEntry(testRepository.getRepository());
+		IndexDiffCache.INSTANCE
+				.getIndexDiffCacheEntry(testRepository.getRepository());
 		TestUtil.joinJobs(JobFamilies.INDEX_DIFF_CACHE_UPDATE);
 
 		SWTBotTree packageExplorer = TestUtil.getExplorerTree();
@@ -256,8 +256,8 @@ public class MergeToolTest extends LocalRepositoryTestCase {
 
 		assertThat(result.getStatus(), is(CherryPickStatus.CONFLICTING));
 
-		IndexDiffCache cache = IndexDiffCache.getInstance();
-		cache.getIndexDiffCacheEntry(testRepository.getRepository());
+		IndexDiffCache.INSTANCE
+				.getIndexDiffCacheEntry(testRepository.getRepository());
 		TestUtil.joinJobs(JobFamilies.INDEX_DIFF_CACHE_UPDATE);
 
 		// Verify file content.
@@ -300,8 +300,8 @@ public class MergeToolTest extends LocalRepositoryTestCase {
 
 		assertThat(result.getStatus(), is(CherryPickStatus.CONFLICTING));
 
-		IndexDiffCache cache = IndexDiffCache.getInstance();
-		cache.getIndexDiffCacheEntry(testRepository.getRepository());
+		IndexDiffCache.INSTANCE
+				.getIndexDiffCacheEntry(testRepository.getRepository());
 		TestUtil.joinJobs(JobFamilies.INDEX_DIFF_CACHE_UPDATE);
 
 		// Verify file content.

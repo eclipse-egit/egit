@@ -86,7 +86,7 @@ public class DecoratableResourceMappingTest
 
 		Repository repo = lookupRepository(gitDir);
 		git = new Git(repo);
-		indexDiffCacheEntry = IndexDiffCache.getInstance()
+		indexDiffCacheEntry = IndexDiffCache.INSTANCE
 				.getIndexDiffCacheEntry(repo);
 		waitForIndexDiff(false);
 	}

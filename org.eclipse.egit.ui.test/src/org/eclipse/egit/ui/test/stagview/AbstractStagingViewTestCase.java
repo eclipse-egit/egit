@@ -34,7 +34,7 @@ public abstract class AbstractStagingViewTestCase
 		repositoryFile = createProjectAndCommitToRepository();
 		repository = lookupRepository(repositoryFile);
 		TestUtil.configureTestCommitterAsUser(repository);
-		RepositoryUtil.getInstance().addConfiguredRepository(repositoryFile);
+		RepositoryUtil.INSTANCE.addConfiguredRepository(repositoryFile);
 
 		selectRepositoryNode();
 	}
@@ -42,7 +42,7 @@ public abstract class AbstractStagingViewTestCase
 	@After
 	public void after() {
 		repository = null;
-		RepositoryUtil.getInstance().removeDir(repositoryFile);
+		RepositoryUtil.INSTANCE.removeDir(repositoryFile);
 	}
 
 	protected void setContent(String content) throws Exception {

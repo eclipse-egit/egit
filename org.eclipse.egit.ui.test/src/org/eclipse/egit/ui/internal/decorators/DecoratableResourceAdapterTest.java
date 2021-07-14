@@ -68,7 +68,7 @@ public class DecoratableResourceAdapterTest extends LocalRepositoryTestCase {
 
 		Repository repo = lookupRepository(gitDir);
 		git = new Git(repo);
-		indexDiffCacheEntry = IndexDiffCache.getInstance()
+		indexDiffCacheEntry = IndexDiffCache.INSTANCE
 				.getIndexDiffCacheEntry(repo);
 		waitForIndexDiffUpdate(false);
 	}

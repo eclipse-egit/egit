@@ -208,7 +208,7 @@ public class FetchGerritChangePage extends WizardPage {
 		this.repository = repository;
 		this.refName = refName;
 		setTitle(NLS.bind(UIText.FetchGerritChangePage_PageTitle,
-				RepositoryUtil.getInstance().getRepositoryName(repository)));
+				RepositoryUtil.INSTANCE.getRepositoryName(repository)));
 		setMessage(UIText.FetchGerritChangePage_PageMessage);
 		settings = getDialogSettings();
 		lastUriKey = repository + GerritDialogSettings.LAST_URI_SUFFIX;

@@ -248,15 +248,15 @@ public class GlobalConfigurationPreferencePage extends PreferencePage implements
 			userConfig = SystemReader.getInstance().openUserConfig(null, FS.DETECTED); // no inherit here!
 		if (repositories == null) {
 			repositories = new ArrayList<>();
-			List<String> repoPaths = RepositoryUtil.getInstance()
+			List<String> repoPaths = RepositoryUtil.INSTANCE
 					.getConfiguredRepositories();
-			RepositoryCache repositoryCache = RepositoryCache.getInstance();
 			for (String repoPath : repoPaths) {
 				File gitDir = new File(repoPath);
 				if (!gitDir.exists())
 					continue;
 				try {
-					repositories.add(repositoryCache.lookupRepository(gitDir));
+					repositories.add(
+							RepositoryCache.INSTANCE.lookupRepository(gitDir));
 				} catch (IOException e) {
 					continue;
 				}
@@ -266,7 +266,7 @@ public class GlobalConfigurationPreferencePage extends PreferencePage implements
 	}
 
 	private String getName(final Repository repo) {
-		return RepositoryUtil.getInstance().getRepositoryName(repo);
+		return RepositoryUtil.INSTANCE.getRepositoryName(repo);
 	}
 
 	private void sortRepositoriesByName() {

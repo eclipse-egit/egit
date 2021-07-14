@@ -431,7 +431,7 @@ public class CompareTreeView extends ViewPart implements IMenuListener, IShowInS
 				else
 					name = UIText.CompareTreeView_MultipleResourcesHeaderText;
 			} else if (input instanceof Repository)
-				name = RepositoryUtil.getInstance()
+				name = RepositoryUtil.INSTANCE
 						.getRepositoryName(((Repository) input));
 			else
 				throw new IllegalStateException();

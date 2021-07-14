@@ -76,7 +76,7 @@ public class GitRepositoriesViewRepoDeletionTest extends
 		deleteAllProjects();
 		assertProjectExistence(PROJ1, false);
 		clearView();
-		RepositoryUtil.getInstance().addConfiguredRepository(repositoryFile);
+		RepositoryUtil.INSTANCE.addConfiguredRepository(repositoryFile);
 		shareProjects(repositoryFile);
 		assertProjectExistence(PROJ1, true);
 		refreshAndWait();
@@ -113,7 +113,7 @@ public class GitRepositoriesViewRepoDeletionTest extends
 		deleteAllProjects();
 		assertProjectExistence(PROJ1, false);
 		clearView();
-		RepositoryUtil.getInstance().addConfiguredRepository(repositoryFile);
+		RepositoryUtil.INSTANCE.addConfiguredRepository(repositoryFile);
 		shareProjects(repositoryFile);
 		assertProjectExistence(PROJ1, true);
 		refreshAndWait();
@@ -160,7 +160,7 @@ public class GitRepositoriesViewRepoDeletionTest extends
 		clearView();
 		refreshAndWait();
 
-		RepositoryUtil.getInstance().addConfiguredRepository(repositoryFile);
+		RepositoryUtil.INSTANCE.addConfiguredRepository(repositoryFile);
 		refreshAndWait();
 		assertHasRepo(repositoryFile);
 		SWTBotTree tree = getOrOpenView().bot().tree();
@@ -257,11 +257,11 @@ public class GitRepositoriesViewRepoDeletionTest extends
 				// guaranteed! Whether or not it does may also depend on the
 				// configuration of the JVM (such as through command-line
 				// arguments).
-				Repository[] repositories = RepositoryCache.getInstance()
+				Repository[] repositories = RepositoryCache.INSTANCE
 						.getAllRepositories();
 				results[0] = Arrays.asList(repositories).toString();
-				IndexDiffCache indexDiffCache = IndexDiffCache.getInstance();
-				results[1] = indexDiffCache.currentCacheEntries().toString();
+				results[1] = IndexDiffCache.INSTANCE.currentCacheEntries()
+						.toString();
 				return Status.OK_STATUS;
 			}
 
@@ -270,7 +270,7 @@ public class GitRepositoriesViewRepoDeletionTest extends
 		verifier.setSystem(true);
 		verifier.schedule();
 		verifier.join();
-		List<String> configuredRepos = RepositoryUtil.getInstance()
+		List<String> configuredRepos = RepositoryUtil.INSTANCE
 				.getConfiguredRepositories();
 		assertTrue("Expected no configured repositories",
 				configuredRepos.isEmpty());
@@ -286,7 +286,7 @@ public class GitRepositoriesViewRepoDeletionTest extends
 		deleteAllProjects();
 		assertProjectExistence(PROJ1, false);
 		clearView();
-		RepositoryUtil.getInstance().addConfiguredRepository(repositoryFile);
+		RepositoryUtil.INSTANCE.addConfiguredRepository(repositoryFile);
 		shareProjects(repositoryFile);
 		assertProjectExistence(PROJ1, true);
 		refreshAndWait();

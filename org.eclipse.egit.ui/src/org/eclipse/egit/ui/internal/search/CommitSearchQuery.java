@@ -160,7 +160,7 @@ public class CommitSearchQuery implements ISearchQuery {
 		Repository repository = null;
 		File path = new File(name);
 		if (path.exists())
-			repository = RepositoryCache.getInstance().lookupRepository(path);
+			repository = RepositoryCache.INSTANCE.lookupRepository(path);
 		return repository;
 	}
 

@@ -116,13 +116,9 @@ public class RebaseAction extends RepositoryAction implements
 	}
 
 	private boolean canContinue(Repository repo) {
-		IndexDiffCache diffCache = IndexDiffCache.getInstance();
-		if (diffCache != null) {
-			IndexDiffCacheEntry entry = diffCache.getIndexDiffCacheEntry(repo);
-			return entry != null
-					&& entry.getIndexDiff().getConflicting().isEmpty();
-		}
-		return false;
+		IndexDiffCacheEntry entry = IndexDiffCache.INSTANCE
+				.getIndexDiffCacheEntry(repo);
+		return entry != null && entry.getIndexDiff().getConflicting().isEmpty();
 	}
 
 	private static class ItemSelectionListener implements SelectionListener {

@@ -132,7 +132,7 @@ public class GitScopeUtilTest extends LocalRepositoryTestCase {
 		final IFile modelFile = createModelFiles();
 
 		Repository repository = lookupRepository(repositoryFile);
-		IndexDiffCache.getInstance().getIndexDiffCacheEntry(repository);
+		IndexDiffCache.INSTANCE.getIndexDiffCacheEntry(repository);
 		TestUtil.joinJobs(JobFamilies.INDEX_DIFF_CACHE_UPDATE);
 
 		final IResource[] selectedResources = new IResource[] { modelFile };

@@ -59,7 +59,7 @@ class GenerateHistoryJob extends Job {
 	GenerateHistoryJob(final GitHistoryPage ghp, @NonNull RevWalk walk,
 			ResourceManager resources) {
 		super(NLS.bind(UIText.HistoryPage_refreshJob,
-				RepositoryUtil.getInstance().getRepositoryName(
+				RepositoryUtil.INSTANCE.getRepositoryName(
 						ghp.getInputInternal().getRepository())));
 		page = ghp;
 		this.walk = walk;

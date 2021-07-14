@@ -220,7 +220,7 @@ public abstract class AbstractRebaseCommandHandler extends AbstractSharedCommand
 			public void run() {
 				Shell shell = PlatformUI.getWorkbench()
 						.getActiveWorkbenchWindow().getShell();
-				String repoName = RepositoryUtil.getInstance()
+				String repoName = RepositoryUtil.INSTANCE
 						.getRepositoryName(repository);
 				String title = MessageFormat.format(
 						UIText.AbstractRebaseCommandHandler_cleanupDialog_title,

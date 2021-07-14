@@ -330,7 +330,7 @@ public class EgitFileSystem extends FileSystem {
 
 		IFileStore getBaseFile() throws IOException {
 			File gitDir = getRepoDir();
-			Repository repository = RepositoryCache.getInstance()
+			Repository repository = RepositoryCache.INSTANCE
 					.lookupRepository(gitDir);
 			if (repository == null) {
 				throw new IOException(MessageFormat
@@ -345,8 +345,7 @@ public class EgitFileSystem extends FileSystem {
 
 		final Repository getRepository() {
 			try {
-				return RepositoryCache.getInstance()
-						.lookupRepository(getRepoDir());
+				return RepositoryCache.INSTANCE.lookupRepository(getRepoDir());
 			} catch (IOException e) {
 				return null;
 			}

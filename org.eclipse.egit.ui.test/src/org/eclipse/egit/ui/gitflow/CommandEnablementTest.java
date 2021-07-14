@@ -89,9 +89,8 @@ public class CommandEnablementTest extends AbstractGitflowHandlerTest {
 	}
 
 	private void initRepositoriesView() throws IOException {
-		RepositoryUtil.getInstance().addConfiguredRepository(repositoryFile);
-		repository = RepositoryCache.getInstance()
-				.lookupRepository(repositoryFile);
+		RepositoryUtil.INSTANCE.addConfiguredRepository(repositoryFile);
+		repository = RepositoryCache.INSTANCE.lookupRepository(repositoryFile);
 	}
 
 	public static SWTBotTree getRepositoryTree() {

@@ -48,7 +48,7 @@ public class StashCreateHandler extends RepositoryActionHandler {
 		if (!repository.getRepositoryState().canCommit())
 			return false;
 
-		IndexDiffCacheEntry entry = IndexDiffCache.getInstance()
+		IndexDiffCacheEntry entry = IndexDiffCache.INSTANCE
 				.getIndexDiffCacheEntry(repository);
 		if (entry == null)
 			return false;

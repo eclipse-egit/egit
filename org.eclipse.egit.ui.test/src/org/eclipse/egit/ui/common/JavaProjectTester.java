@@ -108,9 +108,8 @@ public class JavaProjectTester {
 		op.execute(null);
 
 		// Make sure cache entry is already listening for changes
-		IndexDiffCache cache = IndexDiffCache.getInstance();
-		cache.getIndexDiffCacheEntry(
-				RepositoryCache.getInstance().lookupRepository(gitDir));
+		IndexDiffCache.INSTANCE.getIndexDiffCacheEntry(
+				RepositoryCache.INSTANCE.lookupRepository(gitDir));
 		return jProject;
 	}
 

@@ -97,19 +97,18 @@ public final class RepositoryMenuUtil {
 	public static Collection<IAction> getRepositoryActions(boolean includeBare,
 			@Nullable File currentRepoDir,
 			@NonNull Consumer<Repository> action) {
-		RepositoryUtil util = RepositoryUtil.getInstance();
-		RepositoryCache cache = RepositoryCache.getInstance();
-		Set<String> repositories = util.getRepositories();
+		Set<String> repositories = RepositoryUtil.INSTANCE.getRepositories();
 		Map<String, Set<File>> repos = new HashMap<>();
 		for (String repo : repositories) {
 			File gitDir = new File(repo);
 			String name = null;
 			try {
-				Repository r = cache.lookupRepository(gitDir);
+				Repository r = RepositoryCache.INSTANCE
+						.lookupRepository(gitDir);
 				if (!includeBare && r.isBare()) {
 					continue;
 				}
-				name = util.getRepositoryName(r);
+				name = RepositoryUtil.INSTANCE.getRepositoryName(r);
 			} catch (IOException e) {
 				continue;
 			}
@@ -128,7 +127,8 @@ public final class RepositoryMenuUtil {
 					@Override
 					public void run() {
 						try {
-							Repository r = cache.lookupRepository(f);
+							Repository r = RepositoryCache.INSTANCE
+									.lookupRepository(f);
 							action.accept(r);
 						} catch (IOException e) {
 							Activator.showError(e.getLocalizedMessage(), e);
@@ -152,9 +152,8 @@ public final class RepositoryMenuUtil {
 	 */
 	public static class RepositoryToolbarAction extends DropDownMenuAction {
 
-		private final RepositoryUtil util = RepositoryUtil.getInstance();
-
-		private final IEclipsePreferences preferences = util.getPreferences();
+		private final IEclipsePreferences preferences = RepositoryUtil.INSTANCE
+				.getPreferences();
 
 		private final IPreferenceChangeListener listener;
 
@@ -219,10 +218,11 @@ public final class RepositoryMenuUtil {
 			this.listener = event -> {
 				if (RepositoryUtil.PREFS_DIRECTORIES_REL
 						.equals(event.getKey())) {
-					setEnabled(!util.getRepositories().isEmpty());
+					setEnabled(!RepositoryUtil.INSTANCE.getRepositories()
+							.isEmpty());
 				}
 			};
-			setEnabled(!util.getRepositories().isEmpty());
+			setEnabled(!RepositoryUtil.INSTANCE.getRepositories().isEmpty());
 			preferences.addPreferenceChangeListener(listener);
 		}
 

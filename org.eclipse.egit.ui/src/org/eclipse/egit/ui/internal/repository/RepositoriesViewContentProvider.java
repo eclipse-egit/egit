@@ -105,9 +105,6 @@ public class RepositoriesViewContentProvider implements ITreeContentProvider {
 
 	private static final Object[] NO_CHILDREN = new Object[0];
 
-	private final RepositoryCache repositoryCache = RepositoryCache
-			.getInstance();
-
 	private final State branchHierarchy;
 
 	private boolean showUnbornHead = false;
@@ -161,8 +158,6 @@ public class RepositoriesViewContentProvider implements ITreeContentProvider {
 
 		List<RepositoryTreeNode> nodes = new ArrayList<>();
 		List<File> directories = new ArrayList<>();
-		RepositoryUtil repositoryUtil = RepositoryUtil.getInstance();
-		RepositoryGroups groupsUtil = RepositoryGroups.getInstance();
 
 		if (inputElement instanceof Collection) {
 			for (Object next : ((Collection) inputElement)) {
@@ -173,15 +168,17 @@ public class RepositoriesViewContentProvider implements ITreeContentProvider {
 				}
 			}
 		} else if (inputElement instanceof IWorkspaceRoot) {
-			directories.addAll(repositoryUtil.getConfiguredRepositories()
+			directories.addAll(RepositoryUtil.INSTANCE
+					.getConfiguredRepositories()
 					.stream().map(File::new).collect(Collectors.toList()));
 		}
 
 		nodes.addAll(
-				getRepositoryNodes(repositoryUtil, groupsUtil, null,
+				getRepositoryNodes(RepositoryGroups.INSTANCE, null,
 						directories));
 		if (showRepositoryGroups) {
-			for (RepositoryGroup group : groupsUtil.getGroups()) {
+			for (RepositoryGroup group : RepositoryGroups.INSTANCE
+					.getGroups()) {
 				nodes.add(new RepositoryGroupNode(group));
 			}
 		}
@@ -293,8 +290,7 @@ public class RepositoriesViewContentProvider implements ITreeContentProvider {
 		case REPOGROUP: {
 			List<File> repoDirs = ((RepositoryGroupNode) node).getObject()
 					.getRepositoryDirectories();
-			return getRepositoryNodes(RepositoryUtil.getInstance(), null, node,
-					repoDirs).toArray();
+			return getRepositoryNodes(null, node, repoDirs).toArray();
 		}
 
 		case WORKINGDIR:
@@ -351,7 +347,8 @@ public class RepositoriesViewContentProvider implements ITreeContentProvider {
 			Repository repository = node.getRepository();
 			try (SubmoduleWalk walk = SubmoduleWalk.forIndex(repository)) {
 				walk.setBuilderFactory(
-						() -> repositoryCache.getBuilder(false, false));
+						() -> RepositoryCache.INSTANCE.getBuilder(false,
+								false));
 				while (walk.next()) {
 					Repository submodule = walk.getRepository();
 					if (submodule != null) {
@@ -398,8 +395,8 @@ public class RepositoriesViewContentProvider implements ITreeContentProvider {
 
 	}
 
-	private List<RepositoryNode> getRepositoryNodes(RepositoryUtil util,
-			RepositoryGroups groupsUtil, RepositoryTreeNode<?> parent,
+	private List<RepositoryNode> getRepositoryNodes(RepositoryGroups groupsUtil,
+			RepositoryTreeNode<?> parent,
 			List<File> directories) {
 		List<RepositoryNode> result = new ArrayList<>();
 		List<File> filtersToKeep = new ArrayList<>();
@@ -413,11 +410,12 @@ public class RepositoriesViewContentProvider implements ITreeContentProvider {
 							|| !groupsUtil.belongsToGroup(gitDir));
 					if (addRepo) {
 						RepositoryNode rNode = new RepositoryNode(parent,
-								repositoryCache.lookupRepository(gitDir));
+								RepositoryCache.INSTANCE
+										.lookupRepository(gitDir));
 						result.add(rNode);
 					}
 				} else {
-					util.removeDir(gitDir);
+					RepositoryUtil.INSTANCE.removeDir(gitDir);
 				}
 			} catch (IOException e) {
 				// ignore for now

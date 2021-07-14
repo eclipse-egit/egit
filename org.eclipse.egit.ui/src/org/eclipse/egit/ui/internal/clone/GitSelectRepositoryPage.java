@@ -73,8 +73,6 @@ import org.eclipse.ui.dialogs.PatternFilter;
 public class GitSelectRepositoryPage extends WizardPage {
 	private final static String LAST_SELECTED_REPO_PREF = "GitSelectRepositoryPage.lastRepository"; //$NON-NLS-1$
 
-	private final RepositoryUtil util;
-
 	private final boolean allowBare;
 
 	private final boolean allowAdd;
@@ -117,7 +115,6 @@ public class GitSelectRepositoryPage extends WizardPage {
 		super(GitSelectRepositoryPage.class.getName());
 		setTitle(UIText.GitSelectRepositoryPage_PageTitle);
 		setDescription(UIText.GitSelectRepositoryPage_PageMessage);
-		util = RepositoryUtil.getInstance();
 		this.allowBare = allowBare;
 		this.allowAdd = allowAdd;
 	}
@@ -221,7 +218,7 @@ public class GitSelectRepositoryPage extends WizardPage {
 
 				@Override
 				public void widgetSelected(SelectionEvent e) {
-					List<String> configuredDirs = util
+					List<String> configuredDirs = RepositoryUtil.INSTANCE
 							.getConfiguredRepositories();
 					RepositorySearchWizard wizard = new RepositorySearchWizard(
 							configuredDirs, allowBare);
@@ -245,7 +242,8 @@ public class GitSelectRepositoryPage extends WizardPage {
 						for (String dir : dirs) {
 							File gitDir = FileUtils.canonicalize(new File(dir));
 							GerritUtil.tryToAutoConfigureForGerrit(gitDir);
-							util.addConfiguredRepository(gitDir);
+							RepositoryUtil.INSTANCE
+									.addConfiguredRepository(gitDir);
 						}
 						checkPage();
 					}
@@ -285,7 +283,8 @@ public class GitSelectRepositoryPage extends WizardPage {
 				}
 			}
 		};
-		util.getPreferences().addPreferenceChangeListener(configChangeListener);
+		RepositoryUtil.INSTANCE.getPreferences()
+				.addPreferenceChangeListener(configChangeListener);
 
 		// we need to select at least a repository to become complete
 		setPageComplete(false);
@@ -335,7 +334,7 @@ public class GitSelectRepositoryPage extends WizardPage {
 			for (String dir : dirsAfter) {
 				if (!dirsBefore.contains(dir)) {
 					try {
-						Repository newRepository = RepositoryCache.getInstance()
+						Repository newRepository = RepositoryCache.INSTANCE
 								.lookupRepository(new File(dir));
 						if (!allowBare && newRepository.isBare()) {
 							// Re-set to previous selection, if any
@@ -384,7 +383,7 @@ public class GitSelectRepositoryPage extends WizardPage {
 	@Override
 	public void dispose() {
 		super.dispose();
-		util.getPreferences().removePreferenceChangeListener(
+		RepositoryUtil.INSTANCE.getPreferences().removePreferenceChangeListener(
 				configChangeListener);
 	}
 
@@ -392,6 +391,6 @@ public class GitSelectRepositoryPage extends WizardPage {
 	 * @return List of all repositories that should be considered in the page
 	 */
 	protected List<String> getInitialRepositories() {
-		return util.getConfiguredRepositories();
+		return RepositoryUtil.INSTANCE.getConfiguredRepositories();
 	}
 }

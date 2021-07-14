@@ -127,7 +127,7 @@ public class PushToGerritPage extends WizardPage {
 		super(PushToGerritPage.class.getName());
 		this.repository = repository;
 		setTitle(NLS.bind(UIText.PushToGerritPage_Title,
-				RepositoryUtil.getInstance().getRepositoryName(repository)));
+				RepositoryUtil.INSTANCE.getRepositoryName(repository)));
 		setMessage(UIText.PushToGerritPage_Message);
 		settings = getDialogSettings();
 		lastUriKey = repository + GerritDialogSettings.LAST_URI_SUFFIX;

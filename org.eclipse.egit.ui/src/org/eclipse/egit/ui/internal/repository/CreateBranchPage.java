@@ -165,7 +165,7 @@ class CreateBranchPage extends WizardPage {
 			this.upstreamConfig = null;
 		}
 		setTitle(MessageFormat.format(UIText.CreateBranchPage_Title,
-				RepositoryUtil.getInstance().getRepositoryName(repo)));
+				RepositoryUtil.INSTANCE.getRepositoryName(repo)));
 		setMessage(UIText.CreateBranchPage_ChooseBranchAndNameMessage);
 	}
 
@@ -188,7 +188,7 @@ class CreateBranchPage extends WizardPage {
 				myRepository, Constants.R_HEADS, false);
 		this.upstreamConfig = null;
 		setTitle(MessageFormat.format(UIText.CreateBranchPage_Title,
-				RepositoryUtil.getInstance().getRepositoryName(repo)));
+				RepositoryUtil.INSTANCE.getRepositoryName(repo)));
 		setMessage(UIText.CreateBranchPage_ChooseNameMessage);
 	}
 

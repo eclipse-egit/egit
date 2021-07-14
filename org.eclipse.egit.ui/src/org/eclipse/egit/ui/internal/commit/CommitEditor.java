@@ -261,8 +261,7 @@ public class CommitEditor extends SharedHeaderFormEditor implements
 		} catch (PartInitException e) {
 			Activator.error("Error adding page", e); //$NON-NLS-1$
 		}
-		refListenerHandle = RepositoryCache.getInstance()
-				.getGlobalListenerList()
+		refListenerHandle = RepositoryCache.INSTANCE.getGlobalListenerList()
 				.addRefsChangedListener(this);
 		pageListener = event -> {
 			IEvaluationService service = PlatformUI.getWorkbench()

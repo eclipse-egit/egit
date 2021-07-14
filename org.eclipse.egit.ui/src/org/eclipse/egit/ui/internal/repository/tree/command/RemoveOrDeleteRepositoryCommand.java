@@ -35,7 +35,7 @@ public class RemoveOrDeleteRepositoryCommand extends RemoveCommand {
 		if (repository == null) {
 			return null;
 		}
-		String repositoryName = RepositoryUtil.getInstance()
+		String repositoryName = RepositoryUtil.INSTANCE
 				.getRepositoryName(repository);
 
 		String message = MessageFormat.format(

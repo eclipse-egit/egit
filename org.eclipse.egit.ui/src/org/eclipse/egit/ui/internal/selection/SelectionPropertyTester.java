@@ -104,7 +104,7 @@ public class SelectionPropertyTester extends AbstractPropertyTester {
 					|| !testRepositoryProperties(repository, args)) {
 				return false;
 			}
-			IndexDiffCacheEntry indexDiff = IndexDiffCache.getInstance()
+			IndexDiffCacheEntry indexDiff = IndexDiffCache.INSTANCE
 					.getIndexDiffCacheEntry(repository);
 			if (indexDiff == null) {
 				return false;

@@ -155,7 +155,7 @@ public class DeleteRepositoryConfirmDialog extends TitleAreaDialog {
 		super.create();
 		setTitle(NLS.bind(
 				UIText.DeleteRepositoryConfirmDialog_DeleteRepositoryTitle,
-				RepositoryUtil.getInstance().getRepositoryName(repository)));
+				RepositoryUtil.INSTANCE.getRepositoryName(repository)));
 	}
 
 	@Override

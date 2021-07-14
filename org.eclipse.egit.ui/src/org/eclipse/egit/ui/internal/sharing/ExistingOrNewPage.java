@@ -132,7 +132,6 @@ class ExistingOrNewPage extends WizardPage {
 	@SuppressWarnings("unused")
 	@Override
 	public void createControl(Composite parent) {
-		final RepositoryUtil util = RepositoryUtil.getInstance();
 		Composite main = new Composite(parent, SWT.NONE);
 		// use zero spacing to save some real estate here
 		GridLayoutFactory.fillDefaults().spacing(0, 0).applyTo(main);
@@ -416,7 +415,7 @@ class ExistingOrNewPage extends WizardPage {
 							project.refreshLocal(IResource.DEPTH_ONE,
 									new NullProgressMonitor());
 					}
-					util.addConfiguredRepository(gitDir);
+					RepositoryUtil.INSTANCE.addConfiguredRepository(gitDir);
 				} catch (IOException e1) {
 					String msg = NLS
 							.bind(UIText.ExistingOrNewPage_ErrorFailedToCreateRepository,

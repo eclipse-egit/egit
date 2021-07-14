@@ -76,11 +76,9 @@ public class GitScopeOperation extends ModelOperation {
 				.entrySet()) {
 			Repository repository = entry.getKey();
 			Collection<String> paths = entry.getValue();
-			IndexDiffCache cache = IndexDiffCache.getInstance();
-			if (cache == null)
-				continue;
 
-			IndexDiffCacheEntry cacheEntry = cache.getIndexDiffCacheEntry(repository);
+			IndexDiffCacheEntry cacheEntry = IndexDiffCache.INSTANCE
+					.getIndexDiffCacheEntry(repository);
 			if (cacheEntry == null)
 				continue;
 

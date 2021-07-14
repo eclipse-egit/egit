@@ -161,7 +161,7 @@ public class PullResultDialog extends Dialog {
 		super.configureShell(newShell);
 		newShell.setText(NLS.bind(
 				UIText.PullResultDialog_DialogTitle,
-				RepositoryUtil.getInstance().getRepositoryName(repo)));
+				RepositoryUtil.INSTANCE.getRepositoryName(repo)));
 	}
 
 	@Override

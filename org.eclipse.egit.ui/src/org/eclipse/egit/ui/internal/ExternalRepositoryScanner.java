@@ -141,8 +141,6 @@ public class ExternalRepositoryScanner implements EventHandler {
 
 		private final AtomicBoolean workbenchActive;
 
-		private final RepositoryCache repositoryCache;
-
 		private Collection<WorkingTreeModifiedEvent> events;
 
 		private final IndexChangedListener listener = event -> {
@@ -223,7 +221,6 @@ public class ExternalRepositoryScanner implements EventHandler {
 			setRule(new RepositoryCacheRule());
 			setSystem(true);
 			setUser(false);
-			repositoryCache = RepositoryCache.getInstance();
 			updateRefreshInterval();
 		}
 
@@ -253,7 +250,7 @@ public class ExternalRepositoryScanner implements EventHandler {
 				return Status.OK_STATUS;
 			}
 
-			Repository[] repos = repositoryCache.getAllRepositories();
+			Repository[] repos = RepositoryCache.INSTANCE.getAllRepositories();
 			if (repos.length == 0) {
 				schedule(interval);
 				return Status.OK_STATUS;
@@ -419,7 +416,7 @@ public class ExternalRepositoryScanner implements EventHandler {
 							return Status.CANCEL_STATUS;
 						}
 						ResourceRefreshHandler handler = new ResourceRefreshHandler();
-						Repository repo = RepositoryCache.getInstance()
+						Repository repo = RepositoryCache.INSTANCE
 								.getRepository(change.getGitDirectory());
 						if (repo == null || repo.isBare()) {
 							// Repo has vanished or suddenly become a bare repo?

@@ -57,9 +57,8 @@ public class CommitNonWSChangesTest extends LocalRepositoryTestCase {
 		Activator.getDefault().getPreferenceStore()
 				.setValue(UIPreferences.ALWAYS_USE_STAGING_VIEW, false);
 		repositoryFile = createProjectAndCommitToRepository();
-		RepositoryUtil.getInstance().addConfiguredRepository(repositoryFile);
-		repository = RepositoryCache.getInstance()
-				.lookupRepository(repositoryFile);
+		RepositoryUtil.INSTANCE.addConfiguredRepository(repositoryFile);
+		repository = RepositoryCache.INSTANCE.lookupRepository(repositoryFile);
 	}
 
 	@After

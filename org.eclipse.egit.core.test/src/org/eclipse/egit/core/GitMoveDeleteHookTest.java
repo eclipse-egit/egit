@@ -82,7 +82,7 @@ public class GitMoveDeleteHookTest {
 
 	@Before
 	public void setUp() throws Exception {
-		RepositoryCache.getInstance().clear();
+		RepositoryCache.INSTANCE.clear();
 		MockSystemReader mockSystemReader = new MockSystemReader();
 		SystemReader.setInstance(mockSystemReader);
 		mockSystemReader.setProperty(Constants.GIT_CEILING_DIRECTORIES_KEY,

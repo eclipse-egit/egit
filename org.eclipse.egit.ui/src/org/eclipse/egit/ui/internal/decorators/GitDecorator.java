@@ -51,14 +51,14 @@ public abstract class GitDecorator extends LabelProvider
 	 * about index changes.
 	 */
 	public GitDecorator() {
-		IndexDiffCache.getInstance().addIndexDiffChangedListener(this);
-		configListener = RepositoryCache.getInstance().getGlobalListenerList()
+		IndexDiffCache.INSTANCE.addIndexDiffChangedListener(this);
+		configListener = RepositoryCache.INSTANCE.getGlobalListenerList()
 				.addConfigChangedListener(this);
 	}
 
 	@Override
 	public void dispose() {
-		IndexDiffCache.getInstance().removeIndexDiffChangedListener(this);
+		IndexDiffCache.INSTANCE.removeIndexDiffChangedListener(this);
 		configListener.remove();
 		configListener = null;
 		Job job;

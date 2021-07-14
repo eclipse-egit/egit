@@ -249,7 +249,7 @@ public class ResetTargetSelectionDialog extends AbstractBranchSelectionDialog {
 
 	@Override
 	protected String getTitle() {
-		String repoName = RepositoryUtil.getInstance().getRepositoryName(repo);
+		String repoName = RepositoryUtil.INSTANCE.getRepositoryName(repo);
 		return NLS.bind(UIText.ResetTargetSelectionDialog_ResetTitle, repoName);
 	}
 

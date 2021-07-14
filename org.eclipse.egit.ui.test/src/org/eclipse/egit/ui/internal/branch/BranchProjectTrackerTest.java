@@ -48,7 +48,7 @@ public class BranchProjectTrackerTest extends LocalRepositoryTestCase {
 		closeWelcomePage();
 		File repoFile = createProjectAndCommitToRepository();
 		assertNotNull(repoFile);
-		repository = RepositoryCache.getInstance().lookupRepository(repoFile);
+		repository = RepositoryCache.INSTANCE.lookupRepository(repoFile);
 		assertNotNull(repository);
 		org.eclipse.egit.ui.Activator.getDefault().getPreferenceStore()
 				.setValue(getPreferenceKey(Constants.MASTER), "");

@@ -74,7 +74,7 @@ public class ListRemoteOperationTest extends DualRepositoryTestCase {
 				"refs/heads/master", "origin", 0);
 		clop.run(null);
 
-		Repository existingRepo = RepositoryCache.getInstance()
+		Repository existingRepo = RepositoryCache.INSTANCE
 				.lookupRepository(new File(workdir2, Constants.DOT_GIT));
 		repository2 = new TestRepository(existingRepo);
 		// we push to branch "test" of repository2

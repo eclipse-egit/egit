@@ -89,7 +89,7 @@ public class SubmoduleAndContainerTreeIteratorTest {
 		parentRepository.dispose();
 		childProject.delete(true, true, null);
 		parentProject.delete(true, true, null);
-		RepositoryCache.getInstance().clear();
+		RepositoryCache.INSTANCE.clear();
 		testUtils.deleteTempDirs();
 	}
 

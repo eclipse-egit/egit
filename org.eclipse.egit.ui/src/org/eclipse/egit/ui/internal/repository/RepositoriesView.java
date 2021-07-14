@@ -215,10 +215,6 @@ public class RepositoriesView extends CommonNavigator implements IShowInSource, 
 
 	private RefreshUiJob refreshUiJob;
 
-	private final RepositoryUtil repositoryUtil;
-
-	private final RepositoryCache repositoryCache;
-
 	private RefCache.Cache refCache = RefCache.get();
 
 	private Composite emptyArea;
@@ -303,8 +299,6 @@ public class RepositoriesView extends CommonNavigator implements IShowInSource, 
 	 */
 	public RepositoriesView() {
 		refreshUiJob = new RefreshUiJob();
-		repositoryUtil = RepositoryUtil.getInstance();
-		repositoryCache = RepositoryCache.getInstance();
 	}
 
 	/**
@@ -448,7 +442,7 @@ public class RepositoriesView extends CommonNavigator implements IShowInSource, 
 
 	private void setTopControl(CommonViewer viewer) {
 		if (!repositories.isEmpty()
-				|| RepositoryGroups.getInstance().hasGroups()) {
+				|| RepositoryGroups.INSTANCE.hasGroups()) {
 			layout.topControl = viewer.getControl();
 		} else {
 			layout.topControl = emptyArea;
@@ -541,7 +535,7 @@ public class RepositoriesView extends CommonNavigator implements IShowInSource, 
 		ISelectionService srv = getSite().getService(ISelectionService.class);
 		srv.addPostSelectionListener(selectionChangedListener);
 		// react on changes in the configured repositories
-		repositoryUtil.getPreferences().addPreferenceChangeListener(
+		RepositoryUtil.INSTANCE.getPreferences().addPreferenceChangeListener(
 				configurationListener);
 		initRepositoriesAndListeners();
 		ctxSrv.activateContext(VIEW_ID);
@@ -625,8 +619,8 @@ public class RepositoriesView extends CommonNavigator implements IShowInSource, 
 			if (currentText.isEmpty()) {
 				return UIText.RepositoriesView_RepoGroup_EmptyNameError;
 			}
-			if (!currentText.equals(initialValue[0]) && RepositoryGroups
-					.getInstance().groupExists(currentText)) {
+			if (!currentText.equals(initialValue[0])
+					&& RepositoryGroups.INSTANCE.groupExists(currentText)) {
 				return MessageFormat.format(
 						UIText.RepositoryGroups_DuplicateGroupNameError,
 						currentText);
@@ -671,8 +665,7 @@ public class RepositoriesView extends CommonNavigator implements IShowInSource, 
 							.getObject();
 					String newName = value.toString().trim();
 					if (!newName.equals(group.getName())) {
-						RepositoryGroups.getInstance().renameGroup(group,
-								newName);
+						RepositoryGroups.INSTANCE.renameGroup(group, newName);
 						// Refresh all to get re-sorting
 						viewer.refresh();
 						// Re-set the selection to get a status bar update
@@ -912,10 +905,12 @@ public class RepositoriesView extends CommonNavigator implements IShowInSource, 
 			unregisterRepositoryListeners();
 			Set<File> dirs = new HashSet<>();
 			// listen for repository changes
-			for (String dir : repositoryUtil.getConfiguredRepositories()) {
+			for (String dir : RepositoryUtil.INSTANCE
+					.getConfiguredRepositories()) {
 				File repoDir = new File(dir);
 				try {
-					Repository repo = repositoryCache.lookupRepository(repoDir);
+					Repository repo = RepositoryCache.INSTANCE
+							.lookupRepository(repoDir);
 					listenToRepository(repo);
 					dirs.add(repo.getDirectory());
 					repositories.add(repo);
@@ -924,11 +919,11 @@ public class RepositoriesView extends CommonNavigator implements IShowInSource, 
 							.bind(UIText.RepositoriesView_ExceptionLookingUpRepoMessage,
 									repoDir.getPath());
 					Activator.handleError(message, e, false);
-					repositoryUtil.removeDir(repoDir);
+					RepositoryUtil.INSTANCE.removeDir(repoDir);
 				}
 			}
 			// Also listen to submodules and nested git repositories.
-			for (Repository repo : RepositoryCache.getInstance()
+			for (Repository repo : RepositoryCache.INSTANCE
 					.getAllRepositories()) {
 				if (!dirs.contains(repo.getDirectory())) {
 					listenToRepository(repo);
@@ -967,7 +962,7 @@ public class RepositoriesView extends CommonNavigator implements IShowInSource, 
 		}
 		refreshUiJob.cancel();
 
-		repositoryUtil.getPreferences().removePreferenceChangeListener(
+		RepositoryUtil.INSTANCE.getPreferences().removePreferenceChangeListener(
 				configurationListener);
 
 		ISelectionService srv = getSite().getService(ISelectionService.class);
@@ -1021,7 +1016,7 @@ public class RepositoriesView extends CommonNavigator implements IShowInSource, 
 				RepositoryTreeNode node = getRepositoryChildNode(repository,
 						RepositoryTreeNodeType.WORKINGDIR);
 				if (node == null) {
-					added |= repositoryUtil
+					added |= RepositoryUtil.INSTANCE
 							.addConfiguredRepository(repository.getDirectory());
 				}
 			} catch (IllegalArgumentException iae) {

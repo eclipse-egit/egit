@@ -86,8 +86,7 @@ public class GitBlobStorageTest extends GitTestCase {
 		singleProjectRepo.create();
 
 		// Repository must be mapped in order to test the GitFileHistory
-		RepositoryUtil.getInstance()
-				.addConfiguredRepository(singleProjectGitDir);
+		RepositoryUtil.INSTANCE.addConfiguredRepository(singleProjectGitDir);
 		ConnectProviderOperation connectOp = new ConnectProviderOperation(proj, singleProjectGitDir);
 		connectOp.execute(progress);
 
@@ -106,7 +105,7 @@ public class GitBlobStorageTest extends GitTestCase {
 		} finally {
 			DisconnectProviderOperation disconnectOp = new DisconnectProviderOperation(Collections.singletonList(proj));
 			disconnectOp.execute(progress);
-			RepositoryUtil.getInstance().removeDir(singleProjectGitDir);
+			RepositoryUtil.INSTANCE.removeDir(singleProjectGitDir);
 			singleProjectRepo.close();
 			singleRepoProject.dispose();
 		}

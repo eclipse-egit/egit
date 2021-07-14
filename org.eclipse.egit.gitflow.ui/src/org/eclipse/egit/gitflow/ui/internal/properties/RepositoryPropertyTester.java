@@ -48,7 +48,7 @@ public class RepositoryPropertyTester extends AbstractPropertyTester {
 		Repository repository = null;
 		if (receiver instanceof String) {
 			String gitDir = (String) receiver;
-			repository = RepositoryCache.getInstance()
+			repository = RepositoryCache.INSTANCE
 					.getRepository(new File(gitDir));
 		} else if (receiver instanceof Repository) {
 			repository = (Repository) receiver;

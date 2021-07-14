@@ -169,7 +169,7 @@ public class SharingWizard extends Wizard implements IConfigurationWizard,
 											// add the files to the repository
 											// view
 											for (File file : filesToAdd)
-												RepositoryUtil.getInstance()
+												RepositoryUtil.INSTANCE
 														.addConfiguredRepository(
 																file);
 										}

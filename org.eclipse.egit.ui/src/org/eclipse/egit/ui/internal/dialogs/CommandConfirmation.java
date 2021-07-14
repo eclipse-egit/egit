@@ -131,12 +131,12 @@ public class CommandConfirmation {
 	private static boolean haveChanges(
 			Map<Repository, Collection<String>> paths,
 			boolean filesOnly) {
-		IndexDiffCache cache = IndexDiffCache.getInstance();
 		for (Map.Entry<Repository, Collection<String>> entry : paths
 				.entrySet()) {
 			Repository repo = entry.getKey();
 			Assert.isNotNull(repo);
-			IndexDiffCacheEntry indexDiff = cache.getIndexDiffCacheEntry(repo);
+			IndexDiffCacheEntry indexDiff = IndexDiffCache.INSTANCE
+					.getIndexDiffCacheEntry(repo);
 			if (indexDiff == null) {
 				return true; // No info, assume worst case
 			}

@@ -168,7 +168,7 @@ public class ResourceRefreshHandler implements WorkingTreeModifiedListener {
 
 	private void refreshIndex(Repository repository,
 			Collection<String> toRefresh) {
-		IndexDiffCacheEntry cache = IndexDiffCache.getInstance()
+		IndexDiffCacheEntry cache = IndexDiffCache.INSTANCE
 				.getIndexDiffCacheEntry(repository);
 		if (cache != null) {
 			cache.refreshFiles(toRefresh);

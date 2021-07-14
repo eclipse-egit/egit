@@ -60,8 +60,8 @@ public class CommitBlobStorage extends GitBlobStorage {
 
 	@Override
 	public IPath getFullPath() {
-		final RepositoryUtil repositoryUtil = RepositoryUtil.getInstance();
-		IPath repoPath = new Path(repositoryUtil.getRepositoryName(db));
+		IPath repoPath = new Path(
+				RepositoryUtil.INSTANCE.getRepositoryName(db));
 		String pathString = super.getFullPath().toPortableString() + " " //$NON-NLS-1$
 				+ Utils.getShortObjectId(commit.getId());
 		return repoPath.append(Path.fromPortableString(pathString));

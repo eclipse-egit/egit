@@ -134,7 +134,7 @@ public class DynamicVariablesTest extends EGitTestCase {
 		repository.close();
 		repository2.close();
 
-		RepositoryCache.getInstance().clear();
+		RepositoryCache.INSTANCE.clear();
 
 		FileUtils.delete(gitDir, FileUtils.RECURSIVE);
 		// gitDir2 is inside project, already gone

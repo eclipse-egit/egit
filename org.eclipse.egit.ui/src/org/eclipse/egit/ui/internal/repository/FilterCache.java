@@ -114,14 +114,14 @@ class FilterCache {
 			Activator.logError(UIText.RepositoriesView_FilterErrorRead, e);
 			return;
 		}
-		RepositoryUtil util = RepositoryUtil.getInstance();
 		for (IMemento repo : memento.getChildren(TAG_REPO)) {
 			String repoId = repo.getString(ATTR_DIR);
 			if (repoId == null || repoId.isEmpty()) {
 				continue;
 			}
 			try {
-				repoId = util.getAbsoluteRepositoryPath(repoId);
+				repoId = RepositoryUtil.INSTANCE
+						.getAbsoluteRepositoryPath(repoId);
 			} catch (InvalidPathException e) {
 				continue; // Skip invalid paths
 			}
@@ -155,7 +155,6 @@ class FilterCache {
 	public void save() {
 		XMLMemento memento = XMLMemento
 				.createWriteRoot(getClass().getSimpleName());
-		RepositoryUtil util = RepositoryUtil.getInstance();
 		cache.entrySet().stream().forEach(entry -> {
 			Map<RepositoryTreeNodeType, String> values = entry.getValue();
 			if (values.isEmpty()) {
@@ -164,7 +163,8 @@ class FilterCache {
 			IMemento repo = memento.createChild(TAG_REPO);
 			String path = entry.getKey().getAbsolutePath();
 			assert path != null;
-			repo.putString(ATTR_DIR, util.relativizeToWorkspace(path));
+			repo.putString(ATTR_DIR,
+					RepositoryUtil.INSTANCE.relativizeToWorkspace(path));
 			values.entrySet().stream().forEach(e -> {
 				String filter = e.getValue();
 				if (StringUtils.isEmptyOrNull(filter)) {

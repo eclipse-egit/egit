@@ -97,8 +97,7 @@ public class GitRepositoriesViewFetchAndPushTest extends
 	}
 
 	private void testPushToOrigin(boolean useRemote) throws Exception {
-		RepositoryUtil.getInstance()
-				.addConfiguredRepository(clonedRepositoryFile);
+		RepositoryUtil.INSTANCE.addConfiguredRepository(clonedRepositoryFile);
 		shareProjects(clonedRepositoryFile);
 
 
@@ -191,7 +190,7 @@ public class GitRepositoriesViewFetchAndPushTest extends
 	public void testNoHeadSimplePushDisabled() throws Exception {
 		Repository emptyRepo = createLocalTestRepository("empty");
 		File gitDir = emptyRepo.getDirectory();
-		RepositoryUtil.getInstance().addConfiguredRepository(gitDir);
+		RepositoryUtil.INSTANCE.addConfiguredRepository(gitDir);
 		GitRepositoriesViewTestUtils viewUtil = new GitRepositoriesViewTestUtils();
 		SWTBotTree tree = getOrOpenView().bot().tree();
 		SWTBotTreeItem repoItem = viewUtil.getRootItem(tree, gitDir);
@@ -218,10 +217,8 @@ public class GitRepositoriesViewFetchAndPushTest extends
 
 	private void testFetchFromOrigin(boolean useRemote) throws Exception {
 
-		RepositoryUtil.getInstance()
-				.addConfiguredRepository(clonedRepositoryFile);
-		RepositoryUtil.getInstance()
-				.addConfiguredRepository(clonedRepositoryFile2);
+		RepositoryUtil.INSTANCE.addConfiguredRepository(clonedRepositoryFile);
+		RepositoryUtil.INSTANCE.addConfiguredRepository(clonedRepositoryFile2);
 
 		Repository repository = lookupRepository(clonedRepositoryFile2);
 		// add the configuration for push from cloned2

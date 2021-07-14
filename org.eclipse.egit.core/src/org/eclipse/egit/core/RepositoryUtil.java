@@ -71,7 +71,12 @@ import org.osgi.service.prefs.BackingStoreException;
 /**
  * Utility class for handling Repositories in the UI.
  */
-public class RepositoryUtil {
+public enum RepositoryUtil {
+
+	/**
+	 * The singleton {@link RepositoryUtil} instance.
+	 */
+	INSTANCE;
 
 	/**
 	 * The preferences to store the absolute paths of all repositories shown in
@@ -90,17 +95,6 @@ public class RepositoryUtil {
 	 * store their absolute path.
 	 */
 	public static final String PREFS_DIRECTORIES_REL = "GitRepositoriesView.GitDirectories.relative"; //$NON-NLS-1$
-
-	private static final RepositoryUtil INSTANCE = new RepositoryUtil();
-
-	/**
-	 * Retrieves the singleton {@link RepositoryUtil}.
-	 *
-	 * @return the {@link RepositoryUtil}
-	 */
-	public static RepositoryUtil getInstance() {
-		return INSTANCE;
-	}
 
 	private final Map<String, Map<String, String>> commitMappingCache = new HashMap<>();
 
@@ -823,8 +817,7 @@ public class RepositoryUtil {
 	 * @since 4.1.0
 	 */
 	public static boolean canBeAutoIgnored(IPath path) throws IOException {
-		Repository repository = RepositoryCache.getInstance()
-				.getRepository(path);
+		Repository repository = RepositoryCache.INSTANCE.getRepository(path);
 		if (repository == null || repository.isBare()) {
 			return false;
 		}
@@ -888,7 +881,7 @@ public class RepositoryUtil {
 	 *         otherwise
 	 */
 	public static boolean hasChanges(@NonNull Repository repository) {
-		IndexDiffCacheEntry entry = IndexDiffCache.getInstance()
+		IndexDiffCacheEntry entry = IndexDiffCache.INSTANCE
 				.getIndexDiffCacheEntry(repository);
 		IndexDiffData data = entry != null ? entry.getIndexDiff() : null;
 		return data != null && data.hasChanges();

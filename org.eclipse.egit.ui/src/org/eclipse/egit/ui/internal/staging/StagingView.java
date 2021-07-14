@@ -663,7 +663,7 @@ public class StagingView extends ViewPart
 				return;
 			}
 			final Repository repo = currentRepository;
-			if (repo == null || RepositoryUtil.getInstance().contains(repo)) {
+			if (repo == null || RepositoryUtil.INSTANCE.contains(repo)) {
 				return;
 			}
 			reload(null);
@@ -3305,8 +3305,8 @@ public class StagingView extends ViewPart
 
 					@Override
 					public void done(IJobChangeEvent event) {
-						IndexDiffCacheEntry indexDiffCacheForRepository = IndexDiffCache
-								.getInstance().getIndexDiffCacheEntry(repo);
+						IndexDiffCacheEntry indexDiffCacheForRepository = IndexDiffCache.INSTANCE
+								.getIndexDiffCacheEntry(repo);
 						if (indexDiffCacheForRepository != null) {
 							indexDiffCacheForRepository
 									.refreshFiles(inaccessibleFiles);
@@ -4143,7 +4143,7 @@ public class StagingView extends ViewPart
 	}
 
 	private IndexDiffData doReload(@NonNull	final Repository repository) {
-		IndexDiffCacheEntry entry = IndexDiffCache.getInstance()
+		IndexDiffCacheEntry entry = IndexDiffCache.INSTANCE
 				.getIndexDiffCacheEntry(repository);
 
 		if(cacheEntry != null && cacheEntry != entry)

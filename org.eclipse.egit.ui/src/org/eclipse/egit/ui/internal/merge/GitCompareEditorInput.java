@@ -186,7 +186,7 @@ public class GitCompareEditorInput extends CompareEditorInput {
 				// set title and icon
 				if (resources.length == 0) {
 					Object[] titleParameters = new Object[] {
-							RepositoryUtil.getInstance()
+							RepositoryUtil.INSTANCE
 									.getRepositoryName(repository),
 							CompareUtils.truncatedRevision(compareVersion),
 							CompareUtils.truncatedRevision(baseVersion) };

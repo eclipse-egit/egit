@@ -69,16 +69,15 @@ public class RepositoryGroupsMenu extends CompoundContributionItem
 				.collect(Collectors.toList());
 
 		if (!selectedRepoDirectories.isEmpty()) {
-			final RepositoryGroups groupsUtil = RepositoryGroups.getInstance();
-			addStaticItems(groupsUtil, selectedRepoDirectories, result);
+			addStaticItems(selectedRepoDirectories, result);
 
-			List<RepositoryGroup> groups = getMoveTargetGroups(groupsUtil,
+			List<RepositoryGroup> groups = getMoveTargetGroups(
 					selectedRepoNodes);
 			if (!groups.isEmpty()) {
 				result.add(new Separator());
 				for (RepositoryGroup group : groups) {
-					result.add(getAssignGroupItem(groupsUtil, group,
-							selectedRepoDirectories));
+					result.add(
+							getAssignGroupItem(group, selectedRepoDirectories));
 				}
 			}
 		}
@@ -86,8 +85,8 @@ public class RepositoryGroupsMenu extends CompoundContributionItem
 	}
 
 	private List<RepositoryGroup> getMoveTargetGroups(
-			RepositoryGroups groupsUtil, List<RepositoryNode> selection) {
-		List<RepositoryGroup> groups = groupsUtil.getGroups();
+			List<RepositoryNode> selection) {
+		List<RepositoryGroup> groups = RepositoryGroups.INSTANCE.getGroups();
 		Set<RepositoryTreeNode> repoNodeParents = selection.stream()
 				.map(RepositoryNode::getParent).collect(Collectors.toSet());
 		if (repoNodeParents.size() == 1) {
@@ -105,21 +104,22 @@ public class RepositoryGroupsMenu extends CompoundContributionItem
 		return groups;
 	}
 
-	private void addStaticItems(RepositoryGroups groupsUtil,
-			List<File> selectedRepoDirectories, List<IContributionItem> menu) {
+	private void addStaticItems(List<File> selectedRepoDirectories,
+			List<IContributionItem> menu) {
 		CommandContributionItemParameter createCommandParameters = new CommandContributionItemParameter(
 				serviceLocator, null, CreateRepositoryGroupCommand.COMMAND_ID,
 				CommandContributionItem.STYLE_PUSH);
 		createCommandParameters.label = UIText.RepositoriesView_RepoGroup_Create_MenuItemLabel;
 		menu.add(new CommandContributionItem(createCommandParameters));
 		for (File repoDir : selectedRepoDirectories) {
-			if (groupsUtil.belongsToGroup(repoDir)) {
+			if (RepositoryGroups.INSTANCE.belongsToGroup(repoDir)) {
 				menu.add(new ActionContributionItem(new Action(
 						UIText.RepositoriesView_RepoGroup_Remove_Title,
 						UIIcons.REMOVE_FROM_REPO_GROUP) {
 					@Override
 					public void runWithEvent(Event event) {
-						groupsUtil.removeFromGroups(selectedRepoDirectories);
+						RepositoryGroups.INSTANCE
+								.removeFromGroups(selectedRepoDirectories);
 						refreshRepositoriesView(null);
 					}
 				}));
@@ -128,14 +128,14 @@ public class RepositoryGroupsMenu extends CompoundContributionItem
 		}
 	}
 
-	private IContributionItem getAssignGroupItem(RepositoryGroups groupsUtil,
-			RepositoryGroup group, List<File> selectedRepoDirectories) {
+	private IContributionItem getAssignGroupItem(RepositoryGroup group,
+			List<File> selectedRepoDirectories) {
 		String actionTitle = NLS.bind(UIText.RepositoriesView_RepoGroup_Assign,
 				group.getName());
 		return new ActionContributionItem(new Action(actionTitle) {
 			@Override
 			public void runWithEvent(Event event) {
-				groupsUtil.addRepositoriesToGroup(group,
+				RepositoryGroups.INSTANCE.addRepositoriesToGroup(group,
 						selectedRepoDirectories);
 				refreshRepositoriesView(group);
 			}

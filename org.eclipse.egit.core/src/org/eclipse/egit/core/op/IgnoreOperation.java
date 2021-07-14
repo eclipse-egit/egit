@@ -154,8 +154,7 @@ public class IgnoreOperation implements IEGitOperation {
 		if (files.isEmpty()) {
 			return;
 		}
-		Repository repository = RepositoryCache.getInstance()
-				.getRepository(folder);
+		Repository repository = RepositoryCache.INSTANCE.getRepository(folder);
 		if (repository == null || repository.isBare()) {
 			files.clear();
 			return;
@@ -263,7 +262,7 @@ public class IgnoreOperation implements IEGitOperation {
 		SubMonitor progress = SubMonitor.convert(monitor, 1);
 		if (container == null) {
 			// .gitignore outside of workspace
-			Repository repository = RepositoryCache.getInstance()
+			Repository repository = RepositoryCache.INSTANCE
 					.getRepository(parent);
 			if (repository == null || repository.isBare()) {
 				String message = NLS.bind(

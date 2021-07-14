@@ -61,7 +61,7 @@ public class DeleteRepositoryGroupCommand
 				}
 			}
 			if (delete) {
-				RepositoryGroups.getInstance().delete(groupsToDelete);
+				RepositoryGroups.INSTANCE.delete(groupsToDelete);
 				getView(event).refresh();
 			}
 		}

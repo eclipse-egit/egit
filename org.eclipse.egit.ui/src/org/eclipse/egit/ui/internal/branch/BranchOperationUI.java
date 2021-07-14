@@ -175,7 +175,7 @@ public class BranchOperationUI {
 	}
 
 	private void showRepositoryInInvalidStateForCheckout(Repository repo) {
-		String repoName = RepositoryUtil.getInstance().getRepositoryName(repo);
+		String repoName = RepositoryUtil.INSTANCE.getRepositoryName(repo);
 		String description = repo.getRepositoryState().getDescription();
 		String message = NLS.bind(UIText.BranchAction_repositoryState, repoName,
 				description);
@@ -238,8 +238,7 @@ public class BranchOperationUI {
 		if (repos.length > 1) {
 			return NLS.bind(UIText.BranchAction_checkingOutMultiple, target);
 		}
-		String repoName = RepositoryUtil.getInstance()
-				.getRepositoryName(repos[0]);
+		String repoName = RepositoryUtil.INSTANCE.getRepositoryName(repos[0]);
 		return NLS.bind(UIText.BranchAction_checkingOut, repoName, target);
 	}
 
@@ -465,7 +464,7 @@ public class BranchOperationUI {
 			return;
 		case NOT_TRIED:
 		case ERROR:
-			String repoName = RepositoryUtil.getInstance()
+			String repoName = RepositoryUtil.INSTANCE
 					.getRepositoryName(repository);
 			String message = NLS.bind(
 					UIText.BranchOperationUI_CheckoutError_DialogMessage,

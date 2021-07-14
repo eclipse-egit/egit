@@ -44,7 +44,7 @@ public class WorkingCopyPage {
 				+ File.separatorChar + Constants.DOT_GIT;
 		assertFalse(
 				"Clone target should not be in the configured repositories list",
-				RepositoryUtil.getInstance().getConfiguredRepositories()
+				RepositoryUtil.INSTANCE.getConfiguredRepositories()
 						.contains(targetDir));
 
 		bot.button("Next >").click();
@@ -58,7 +58,7 @@ public class WorkingCopyPage {
 		// but the repository is not yet added to our list, of
 		// repositories. Wait until that happend.
 		for (int i = 0; i < 3; i++) {
-			if (RepositoryUtil.getInstance().getConfiguredRepositories()
+			if (RepositoryUtil.INSTANCE.getConfiguredRepositories()
 					.contains(targetDir))
 				return;
 			try {

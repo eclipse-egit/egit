@@ -627,8 +627,8 @@ public abstract class AbstractGitMergeEditorInput extends CompareEditorInput {
 					}
 				}
 				if (gitPath != null && repository != null) {
-					IndexDiffCacheEntry indexDiffCacheForRepository = IndexDiffCache
-							.getInstance().getIndexDiffCacheEntry(repository);
+					IndexDiffCacheEntry indexDiffCacheForRepository = IndexDiffCache.INSTANCE
+							.getIndexDiffCacheEntry(repository);
 					if (indexDiffCacheForRepository != null) {
 						indexDiffCacheForRepository.refreshFiles(
 								Collections.singletonList(gitPath));

@@ -40,6 +40,7 @@ import org.eclipse.core.runtime.Path;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.core.runtime.jobs.Job;
 import org.eclipse.egit.core.RepositoryCache;
+import org.eclipse.egit.core.RepositoryUtil;
 import org.eclipse.egit.ui.Activator;
 import org.eclipse.egit.ui.JobFamilies;
 import org.eclipse.egit.ui.internal.UIText;
@@ -167,8 +168,8 @@ public class RemoveCommand extends
 				List<File> repoDirs = selectedNodes.stream()
 						.map(node -> node.getRepository().getDirectory())
 						.collect(Collectors.toList());
-				repoDirs.stream().forEach(util::removeDir);
-				RepositoryGroups.getInstance().removeFromGroups(repoDirs);
+				repoDirs.stream().forEach(RepositoryUtil.INSTANCE::removeDir);
+				RepositoryGroups.INSTANCE.removeFromGroups(repoDirs);
 
 				if (delete) {
 					try {
@@ -273,15 +274,9 @@ public class RemoveCommand extends
 			while (walk.next()) {
 				Repository subRepo = walk.getRepository();
 				if (subRepo != null) {
-					RepositoryCache cache = null;
-					try {
-						cache = RepositoryCache.getInstance();
-					} finally {
-						if (cache != null)
-							cache.lookupRepository(subRepo.getDirectory())
-									.close();
-						subRepo.close();
-					}
+					RepositoryCache.INSTANCE
+							.lookupRepository(subRepo.getDirectory()).close();
+					subRepo.close();
 				}
 			}
 		}

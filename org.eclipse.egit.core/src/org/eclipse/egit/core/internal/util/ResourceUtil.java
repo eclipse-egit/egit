@@ -546,10 +546,10 @@ public class ResourceUtil {
 	 */
 	public static Map<Repository, Collection<String>> splitPathsByRepository(
 			Collection<IPath> paths) {
-		RepositoryCache repositoryCache = RepositoryCache.getInstance();
 		Map<Repository, Collection<String>> result = new HashMap<>();
 		for (IPath path : paths) {
-			Repository repository = repositoryCache.getRepository(path);
+			Repository repository = RepositoryCache.INSTANCE
+					.getRepository(path);
 			if (repository != null) {
 				IPath repoPath = new Path(repository.getWorkTree()
 						.getAbsolutePath());
@@ -660,7 +660,7 @@ public class ResourceUtil {
 	 * @param repository
 	 */
 	public static void saveLocalHistory(@NonNull Repository repository) {
-		IndexDiffCacheEntry indexDiffCacheEntry = IndexDiffCache.getInstance()
+		IndexDiffCacheEntry indexDiffCacheEntry = IndexDiffCache.INSTANCE
 				.getIndexDiffCacheEntry(repository);
 		if (indexDiffCacheEntry == null) {
 			return;
@@ -709,7 +709,7 @@ public class ResourceUtil {
 		if (mapping != null) {
 			return mapping.getRepository();
 		}
-		return RepositoryCache.getInstance().getRepository(resource);
+		return RepositoryCache.INSTANCE.getRepository(resource);
 	}
 
 	/**
@@ -721,7 +721,7 @@ public class ResourceUtil {
 	 */
 	@Nullable
 	public static Repository getRepository(@NonNull IPath path) {
-		return RepositoryCache.getInstance().getRepository(path);
+		return RepositoryCache.INSTANCE.getRepository(path);
 	}
 
 	/**

@@ -47,19 +47,12 @@ import org.eclipse.jgit.lib.Repository;
  * This class provides access to a cached {@link IndexDiff} for a given
  * repository.
  */
-public class IndexDiffCache {
-
-	private static IndexDiffCache INSTANCE = new IndexDiffCache(
-			RepositoryCache.getInstance());
+public enum IndexDiffCache {
 
 	/**
-	 * Retrieves the singleton instance of the {@link IndexDiffCache}.
-	 *
-	 * @return the instance, or {@code null} if not set yet
+	 * The singleton instance of the {@link IndexDiffCache}.
 	 */
-	public static IndexDiffCache getInstance() {
-		return INSTANCE;
-	}
+	INSTANCE;
 
 	private Map<File, IndexDiffCacheEntry> entries = new HashMap<>();
 
@@ -221,9 +214,9 @@ public class IndexDiffCache {
 		}
 	}
 
-	private IndexDiffCache(RepositoryCache cache) {
+	private IndexDiffCache() {
 		globalListener = this::notifyListeners;
-		registerBufferListener(cache);
+		registerBufferListener(RepositoryCache.INSTANCE);
 	}
 
 	private void registerBufferListener(RepositoryCache cache) {

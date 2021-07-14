@@ -48,7 +48,7 @@ public final class UIRepositoryUtils {
 	 */
 	public static boolean handleUncommittedFiles(Repository repo, Shell shell)
 			throws GitAPIException {
-		String repoName = RepositoryUtil.getInstance().getRepositoryName(repo);
+		String repoName = RepositoryUtil.INSTANCE.getRepositoryName(repo);
 		return handleUncommittedFiles(repo, shell,
 				MessageFormat.format(
 						UIText.AbstractRebaseCommandHandler_cleanupDialog_title,

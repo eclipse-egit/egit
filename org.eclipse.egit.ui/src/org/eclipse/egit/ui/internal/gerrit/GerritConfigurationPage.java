@@ -89,7 +89,7 @@ class GerritConfigurationPage extends WizardPage {
 		this.repository = repository;
 		this.remoteName = remoteName;
 		setTitle(UIText.GerritConfigurationPage_title);
-		String repositoryName = RepositoryUtil.getInstance()
+		String repositoryName = RepositoryUtil.INSTANCE
 				.getRepositoryName(repository);
 		setDescription(MessageFormat.format(
 				UIText.GerritConfigurationPage_PageDescription, remoteName,

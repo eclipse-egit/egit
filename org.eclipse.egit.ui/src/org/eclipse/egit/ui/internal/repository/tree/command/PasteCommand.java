@@ -21,6 +21,7 @@ import java.util.Collections;
 
 import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.commands.ExecutionException;
+import org.eclipse.egit.core.RepositoryUtil;
 import org.eclipse.egit.ui.internal.UIText;
 import org.eclipse.egit.ui.internal.components.RepositorySelectionPage.Protocol;
 import org.eclipse.egit.ui.internal.groups.RepositoryGroup;
@@ -101,10 +102,10 @@ public class PasteCommand extends
 			}
 
 			file = FileUtils.canonicalize(file);
-			if (util.addConfiguredRepository(file)) {
+			if (RepositoryUtil.INSTANCE.addConfiguredRepository(file)) {
 				RepositoryGroup group = getSelectedRepositoryGroup(event);
 				if (group != null) {
-					RepositoryGroups.getInstance().addRepositoriesToGroup(group,
+					RepositoryGroups.INSTANCE.addRepositoriesToGroup(group,
 							Collections.singletonList(file));
 					view.expandNodeForGroup(group);
 				}

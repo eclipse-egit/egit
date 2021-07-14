@@ -151,8 +151,7 @@ public class GitAdapterFactory implements IAdapterFactory {
 
 	@Nullable
 	private IResource getWorkspaceResourceFromGitPath(IPath gitPath) {
-		Repository repository = RepositoryCache.getInstance()
-				.getRepository(gitPath);
+		Repository repository = RepositoryCache.INSTANCE.getRepository(gitPath);
 		if (repository == null || repository.isBare()) {
 			return null;
 		}
@@ -183,8 +182,7 @@ public class GitAdapterFactory implements IAdapterFactory {
 		if (mapping != null) {
 			return mapping.getRepository();
 		}
-		Repository repository = RepositoryCache.getInstance()
-				.getRepository(path);
+		Repository repository = RepositoryCache.INSTANCE.getRepository(path);
 		return repository;
 	}
 

@@ -799,7 +799,7 @@ public class GitHistoryPage extends HistoryPage implements RefsChangedListener,
 				final String prefKey = UIPreferences.RESOURCEHISTORY_SHOW_FIRST_PARENT_ONLY_DEFAULT;
 				Repository repo = historyPage.getCurrentRepo();
 				if (repo != null) {
-					String repoSpecificKey = RepositoryUtil.getInstance()
+					String repoSpecificKey = RepositoryUtil.INSTANCE
 							.getRepositorySpecificPreferenceKey(repo, prefKey);
 					boolean newBoolean = isChecked();
 					if (newBoolean == historyPage.store.getBoolean(prefKey)) {
@@ -854,7 +854,7 @@ public class GitHistoryPage extends HistoryPage implements RefsChangedListener,
 					return;
 				}
 
-				String repoSpecificKey = RepositoryUtil.getInstance()
+				String repoSpecificKey = RepositoryUtil.INSTANCE
 						.getRepositorySpecificPreferenceKey(repo, prefKey);
 
 				if (prefKey.equals(event.getProperty())) {
@@ -1275,7 +1275,7 @@ public class GitHistoryPage extends HistoryPage implements RefsChangedListener,
 			return;
 		}
 		if (getCurrentRepo() == null
-				|| !RepositoryUtil.getInstance().contains(getCurrentRepo())) {
+				|| !RepositoryUtil.INSTANCE.contains(getCurrentRepo())) {
 			Control control = historyControl;
 			if (!control.isDisposed()) {
 				control.getDisplay().asyncExec(() -> {
@@ -1477,8 +1477,8 @@ public class GitHistoryPage extends HistoryPage implements RefsChangedListener,
 		trackFocus(fileViewer.getControl());
 		layout();
 
-		myRefsChangedHandle = RepositoryCache.getInstance()
-				.getGlobalListenerList().addRefsChangedListener(this);
+		myRefsChangedHandle = RepositoryCache.INSTANCE.getGlobalListenerList()
+				.addRefsChangedListener(this);
 
 		InstanceScope.INSTANCE
 				.getNode(org.eclipse.egit.core.Activator.PLUGIN_ID)
@@ -2163,7 +2163,7 @@ public class GitHistoryPage extends HistoryPage implements RefsChangedListener,
 		// menus they can expect with the current input
 		// we show the filter hint only upon getDescription()
 		// as it wrongly pollutes the navigation history
-		final String repositoryName = RepositoryUtil.getInstance()
+		final String repositoryName = RepositoryUtil.INSTANCE
 				.getRepositoryName(in.getRepository());
 		if (in.getItems() == null && in.getFileList() == null)
 			// plain repository, no files specified
@@ -2563,7 +2563,7 @@ public class GitHistoryPage extends HistoryPage implements RefsChangedListener,
 		String newRefFilters = ""; //$NON-NLS-1$
 		Repository repo = getCurrentRepo();
 		if (repo != null) {
-			newRefFilters = store.getString(RepositoryUtil.getInstance()
+			newRefFilters = store.getString(RepositoryUtil.INSTANCE
 					.getRepositorySpecificPreferenceKey(repo,
 							UIPreferences.RESOURCEHISTORY_SELECTED_REF_FILTERS));
 		}
@@ -2606,13 +2606,13 @@ public class GitHistoryPage extends HistoryPage implements RefsChangedListener,
 		} catch (IOException e) {
 			throw new IllegalStateException(
 					NLS.bind(UIText.GitHistoryPage_errorParsingHead,
-							RepositoryUtil.getInstance().getRepositoryName(db)),
+							RepositoryUtil.INSTANCE.getRepositoryName(db)),
 					e);
 		}
 		if (headId == null && !acceptNull)
 			throw new IllegalStateException(NLS.bind(
 					UIText.GitHistoryPage_errorParsingHead,
-					RepositoryUtil.getInstance().getRepositoryName(db)));
+					RepositoryUtil.INSTANCE.getRepositoryName(db)));
 		return headId;
 	}
 
@@ -2718,7 +2718,7 @@ public class GitHistoryPage extends HistoryPage implements RefsChangedListener,
 	 */
 	private void unsetRepoSpecificPreference(String repositoryPath,
 			String key) {
-		String prefString = RepositoryUtil.getInstance()
+		String prefString = RepositoryUtil.INSTANCE
 				.getRepositorySpecificPreferenceKey(repositoryPath, key);
 		store.setToDefault(prefString);
 	}
@@ -2739,7 +2739,7 @@ public class GitHistoryPage extends HistoryPage implements RefsChangedListener,
 		Repository repo = getCurrentRepo();
 
 		if (repo != null) {
-			String repoSpecificKey = RepositoryUtil.getInstance()
+			String repoSpecificKey = RepositoryUtil.INSTANCE
 					.getRepositorySpecificPreferenceKey(repo, prefKey);
 			if (store.contains(repoSpecificKey)) {
 				firstParent = store.getBoolean(repoSpecificKey);
@@ -2769,7 +2769,7 @@ public class GitHistoryPage extends HistoryPage implements RefsChangedListener,
 		} catch (IOException e) {
 			throw new IllegalStateException(
 					NLS.bind(UIText.GitHistoryPage_errorReadingAdditionalRefs,
-							RepositoryUtil.getInstance().getRepositoryName(db)),
+							RepositoryUtil.INSTANCE.getRepositoryName(db)),
 					e);
 		}
 		walk.sort(RevSort.COMMIT_TIME_DESC, true);

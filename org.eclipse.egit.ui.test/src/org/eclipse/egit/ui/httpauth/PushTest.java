@@ -67,7 +67,7 @@ public class PushTest extends EGitTestCase {
 		cloneOperation.run(new NullProgressMonitor());
 		file = new File(localRepoPath, SampleTestRepository.A_txt_name);
 		assertTrue(file.exists());
-		localRepository = RepositoryCache.getInstance()
+		localRepository = RepositoryCache.INSTANCE
 				.lookupRepository(new File(localRepoPath, ".git"));
 		assertNotNull(localRepository);
 	}
@@ -112,7 +112,7 @@ public class PushTest extends EGitTestCase {
 	public void tearDown() throws Exception {
 		if (remoteRepository != null)
 			remoteRepository.shutDown();
-		RepositoryCache.getInstance().clear();
+		RepositoryCache.INSTANCE.clear();
 		if (localRepository != null)
 			localRepository.close();
 		if (localRepoPath != null)

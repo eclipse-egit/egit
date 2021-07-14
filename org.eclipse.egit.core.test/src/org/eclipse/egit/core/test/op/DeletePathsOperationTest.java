@@ -97,8 +97,8 @@ public class DeletePathsOperationTest extends DualRepositoryTestCase {
 
 	private static void initIndexDiffCache(Repository repository)
 			throws Exception {
-		IndexDiffCache cache = IndexDiffCache.getInstance();
-		IndexDiffCacheEntry cacheEntry = cache.getIndexDiffCacheEntry(repository);
+		IndexDiffCacheEntry cacheEntry = IndexDiffCache.INSTANCE
+				.getIndexDiffCacheEntry(repository);
 		assertNotNull(cacheEntry);
 		Job.getJobManager().join(JobFamilies.INDEX_DIFF_CACHE_UPDATE, null);
 	}

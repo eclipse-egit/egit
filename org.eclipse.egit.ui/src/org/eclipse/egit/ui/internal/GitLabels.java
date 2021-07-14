@@ -114,13 +114,11 @@ public class GitLabels {
 	public static @NonNull StyledString getStyledLabel(
 			@NonNull Repository repository)
 			throws IOException {
-		RepositoryUtil repositoryUtil = RepositoryUtil.getInstance();
-
 		StyledString string = getChangedPrefix(repository);
 
-		string.append(repositoryUtil.getRepositoryName(repository));
+		string.append(RepositoryUtil.INSTANCE.getRepositoryName(repository));
 
-		String branch = repositoryUtil.getShortBranch(repository);
+		String branch = RepositoryUtil.INSTANCE.getShortBranch(repository);
 		if (branch != null) {
 			string.append(' ');
 			string.append('[', StyledString.DECORATIONS_STYLER);
@@ -258,7 +256,7 @@ public class GitLabels {
 	}
 
 	private static String getRepositorySimpleLabel(Repository repository) {
-		return RepositoryUtil.getInstance().getRepositoryName(repository);
+		return RepositoryUtil.INSTANCE.getRepositoryName(repository);
 	}
 
 	private static String getRepositoryAbsolutePath(Repository repository) {

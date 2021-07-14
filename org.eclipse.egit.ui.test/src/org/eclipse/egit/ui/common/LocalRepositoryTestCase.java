@@ -290,7 +290,7 @@ public abstract class LocalRepositoryTestCase extends EGitTestCase {
 
 	@SuppressWarnings("deprecation")
 	protected void clearAllConfiguredRepositories() throws Exception {
-		IEclipsePreferences prefs = RepositoryUtil.getInstance()
+		IEclipsePreferences prefs = RepositoryUtil.INSTANCE
 				.getPreferences();
 		synchronized (prefs) {
 			prefs.put(RepositoryUtil.PREFS_DIRECTORIES, "");
@@ -300,11 +300,11 @@ public abstract class LocalRepositoryTestCase extends EGitTestCase {
 	}
 
 	protected static void shutDownRepositories() throws Exception {
-		RepositoryCache cache = RepositoryCache.getInstance();
-		for (Repository repository : cache.getAllRepositories()) {
+		for (Repository repository : RepositoryCache.INSTANCE
+				.getAllRepositories()) {
 			repository.close();
 		}
-		cache.clear();
+		RepositoryCache.INSTANCE.clear();
 	}
 
 	protected static void deleteAllProjects() throws Exception {
@@ -407,8 +407,8 @@ public abstract class LocalRepositoryTestCase extends EGitTestCase {
 		addAndCommit(file, newContent);
 
 		// Make sure cache entry is already listening for changes
-		IndexDiffCache cache = IndexDiffCache.getInstance();
-		cache.getIndexDiffCacheEntry(lookupRepository(gitDir));
+		IndexDiffCache.INSTANCE
+				.getIndexDiffCacheEntry(lookupRepository(gitDir));
 
 		return gitDir;
 	}
@@ -659,7 +659,7 @@ public abstract class LocalRepositoryTestCase extends EGitTestCase {
 
 	protected static Repository lookupRepository(File directory)
 			throws Exception {
-		return RepositoryCache.getInstance().lookupRepository(directory);
+		return RepositoryCache.INSTANCE.lookupRepository(directory);
 	}
 
 	/**

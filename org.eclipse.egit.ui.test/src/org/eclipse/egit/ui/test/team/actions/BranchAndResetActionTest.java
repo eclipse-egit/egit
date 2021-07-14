@@ -503,7 +503,7 @@ public class BranchAndResetActionTest extends LocalRepositoryTestCase {
 		dialog.bot().button(UIText.CheckoutDialog_OkCheckout).click();
 		TestUtil.joinJobs(JobFamilies.CHECKOUT);
 		if (ObjectId.isId(repo.getBranch())) {
-			String mapped = RepositoryUtil.getInstance().mapCommitToRef(repo,
+			String mapped = RepositoryUtil.INSTANCE.mapCommitToRef(repo,
 					repo.getBranch(), false);
 			assertEquals("Wrong branch", nodeTexts[1],
 					mapped.substring(mapped

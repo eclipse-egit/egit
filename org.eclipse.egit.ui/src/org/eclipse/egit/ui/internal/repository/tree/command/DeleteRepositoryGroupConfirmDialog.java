@@ -144,14 +144,14 @@ public class DeleteRepositoryGroupConfirmDialog extends TitleAreaDialog {
 		@Override
 		public Object[] getChildren(Object parentElement) {
 			if (parentElement instanceof RepositoryGroupNode) {
-				RepositoryCache cache = RepositoryCache.getInstance();
 				RepositoryGroupNode groupNode = ((RepositoryGroupNode) parentElement);
 				final List<RepositoryNode> result = new ArrayList<>();
 				groupNode.getObject().getRepositoryDirectories().stream()
 						.forEach(repoDir -> {
 							try {
 								result.add(new RepositoryNode(groupNode,
-										cache.lookupRepository(repoDir)));
+										RepositoryCache.INSTANCE
+												.lookupRepository(repoDir)));
 							} catch (IOException e) {
 								// ignore
 							}

@@ -90,8 +90,7 @@ public class GitHistoryRefFilterConfigurationDialogTest
 		myRepoViewUtil = new GitRepositoriesViewTestUtils();
 		File repoFile = createProjectAndCommitToRepository();
 
-		RepositoryUtil repositoryUtil = RepositoryUtil.getInstance();
-		repositoryUtil.addConfiguredRepository(repoFile);
+		RepositoryUtil.INSTANCE.addConfiguredRepository(repoFile);
 
 		repo = myRepoViewUtil.lookupRepository(repoFile);
 

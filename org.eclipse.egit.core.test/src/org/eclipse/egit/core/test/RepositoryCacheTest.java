@@ -34,7 +34,6 @@ public class RepositoryCacheTest extends GitTestCase {
 
 	private TestRepository testRepository;
 	private Repository repository;
-	private RepositoryCache cache;
 
 	@Override
 	@Before
@@ -42,7 +41,6 @@ public class RepositoryCacheTest extends GitTestCase {
 		super.setUp();
 		this.testRepository = new TestRepository(gitDir);
 		this.repository = testRepository.getRepository();
-		this.cache = RepositoryCache.getInstance();
 	}
 
 	@Override
@@ -55,17 +53,19 @@ public class RepositoryCacheTest extends GitTestCase {
 
 	@Test
 	public void shouldNotContainDeletedRepository() throws IOException {
-		cache.lookupRepository(repository.getDirectory());
-		assertThat(repository, isIn(cache.getAllRepositories()));
+		RepositoryCache.INSTANCE.lookupRepository(repository.getDirectory());
+		assertThat(repository,
+				isIn(RepositoryCache.INSTANCE.getAllRepositories()));
 		FileUtils.delete(repository.getDirectory(), FileUtils.RECURSIVE);
-		assertThat(repository, not(isIn(cache.getAllRepositories())));
+		assertThat(repository,
+				not(isIn(RepositoryCache.INSTANCE.getAllRepositories())));
 	}
 
 	@Test
 	public void findsRepositoryForOpenProject() throws Exception {
 		IFile a = testUtils.addFileToProject(project.getProject(),
 				"folder1/a.txt", "a");
-		assertEquals(repository, cache.getRepository(a));
+		assertEquals(repository, RepositoryCache.INSTANCE.getRepository(a));
 	}
 
 	@Test
@@ -73,7 +73,7 @@ public class RepositoryCacheTest extends GitTestCase {
 		IFile a = testUtils.addFileToProject(project.getProject(),
 				"folder1/a.txt", "a");
 		project.getProject().close(null);
-		assertEquals(repository, cache.getRepository(a));
+		assertEquals(repository, RepositoryCache.INSTANCE.getRepository(a));
 	}
 
 	@Test
@@ -98,7 +98,8 @@ public class RepositoryCacheTest extends GitTestCase {
 		project2.getProject().close(null);
 
 		// assert that we don't get confused by nesting repositories
-		assertEquals(repository, cache.getRepository(a));
-		assertEquals(repository2.getRepository(), cache.getRepository(b));
+		assertEquals(repository, RepositoryCache.INSTANCE.getRepository(a));
+		assertEquals(repository2.getRepository(),
+				RepositoryCache.INSTANCE.getRepository(b));
 	}
 }

@@ -35,12 +35,12 @@ public abstract class DualRepositoryTestCase {
 	public void beforeTestCase() throws Exception {
 		// ensure there are no shared Repository instances left
 		// when starting a new test
-		RepositoryCache.getInstance().clear();
+		RepositoryCache.INSTANCE.clear();
 	}
 
 	@After
 	public void afterTestCase() throws Exception {
-		RepositoryCache.getInstance().clear();
+		RepositoryCache.INSTANCE.clear();
 		if (repository1 != null)
 			repository1.dispose();
 		if (repository2 != null)

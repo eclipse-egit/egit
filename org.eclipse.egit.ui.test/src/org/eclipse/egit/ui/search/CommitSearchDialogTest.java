@@ -53,9 +53,9 @@ public class CommitSearchDialogTest extends LocalRepositoryTestCase {
 	public void setup() throws Exception {
 		File repoFile = createProjectAndCommitToRepository();
 		assertNotNull(repoFile);
-		repository = RepositoryCache.getInstance().lookupRepository(repoFile);
+		repository = RepositoryCache.INSTANCE.lookupRepository(repoFile);
 		assertNotNull(repository);
-		RepositoryUtil.getInstance()
+		RepositoryUtil.INSTANCE
 				.addConfiguredRepository(repository.getDirectory());
 
 		try (RevWalk walk = new RevWalk(repository)) {

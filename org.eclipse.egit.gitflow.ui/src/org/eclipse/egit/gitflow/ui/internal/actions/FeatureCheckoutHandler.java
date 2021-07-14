@@ -83,7 +83,7 @@ public class FeatureCheckoutHandler extends AbstractHandler {
 			CheckoutResult result = checkoutOperation.getResult();
 			if (!CheckoutResult.Status.OK.equals(result.getStatus())) {
 				Shell shell = HandlerUtil.getActiveShell(event);
-				String repoName = RepositoryUtil.getInstance()
+				String repoName = RepositoryUtil.INSTANCE
 						.getRepositoryName(gfRepo.getRepository());
 				if (!UIRepositoryUtils.handleUncommittedFiles(
 						gfRepo.getRepository(), shell,

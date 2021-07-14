@@ -55,7 +55,6 @@ public class SubmoduleUpdateCommand extends
 			// Check for uncommitted changes in submodules.
 			try {
 				boolean submodulesNodeSelected = false;
-				RepositoryCache cache = RepositoryCache.getInstance();
 				List<Repository> subRepos = new ArrayList<>();
 				// If Submodules node is selected, check all submodules.
 				for (RepositoryTreeNode<?> node : getSelectedNodes(event)) {
@@ -64,7 +63,7 @@ public class SubmoduleUpdateCommand extends
 						try (SubmoduleWalk walk = SubmoduleWalk
 								.forIndex(node.getRepository())) {
 							while (walk.next()) {
-								Repository subRepo = getCached(cache,
+								Repository subRepo = getCached(
 										walk.getRepository());
 								if (subRepo != null) {
 									subRepos.add(subRepo);
@@ -81,7 +80,7 @@ public class SubmoduleUpdateCommand extends
 							.entrySet()) {
 						if (entry.getValue() != null) {
 							for (String path : entry.getValue()) {
-								Repository subRepo = getCached(cache,
+								Repository subRepo = getCached(
 										SubmoduleWalk.getSubmoduleRepository(
 												entry.getKey(), path));
 								if (subRepo != null) {
@@ -93,7 +92,7 @@ public class SubmoduleUpdateCommand extends
 				}
 				Shell parent = getActiveShell(event);
 				for (Repository subRepo : subRepos) {
-					String repoName = RepositoryUtil.getInstance()
+					String repoName = RepositoryUtil.INSTANCE
 							.getRepositoryName(subRepo);
 					if (!UIRepositoryUtils.handleUncommittedFiles(subRepo,
 							parent,
@@ -151,13 +150,14 @@ public class SubmoduleUpdateCommand extends
 		return null;
 	}
 
-	private Repository getCached(RepositoryCache cache, Repository repository)
+	private Repository getCached(Repository repository)
 			throws IOException {
 		if (repository == null) {
 			return null;
 		}
 		try {
-			return cache.lookupRepository(repository.getDirectory());
+			return RepositoryCache.INSTANCE
+					.lookupRepository(repository.getDirectory());
 		} finally {
 			repository.close();
 		}

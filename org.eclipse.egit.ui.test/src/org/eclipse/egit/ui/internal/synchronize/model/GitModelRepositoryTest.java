@@ -65,7 +65,7 @@ public class GitModelRepositoryTest extends GitModelTestCase {
 		leftRepoFile = createProjectAndCommitToRepository();
 		rightRepoFile = createChildRepository(leftRepoFile);
 
-		RepositoryUtil.getInstance().addConfiguredRepository(leftRepoFile);
+		RepositoryUtil.INSTANCE.addConfiguredRepository(leftRepoFile);
 	}
 
 }

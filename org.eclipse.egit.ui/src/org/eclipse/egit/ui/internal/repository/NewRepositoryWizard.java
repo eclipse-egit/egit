@@ -88,13 +88,12 @@ public class NewRepositoryWizard extends Wizard implements INewWizard {
 					.setInitialBranch(myCreatePage.getDefaultBranch())
 					.setBare(isBare)
 					.call().getRepository().getDirectory();
-			this.repository = RepositoryCache.getInstance()
-					.lookupRepository(gitDir);
+			this.repository = RepositoryCache.INSTANCE.lookupRepository(gitDir);
 			if (group != null) {
-				RepositoryGroups.getInstance().addRepositoriesToGroup(group,
+				RepositoryGroups.INSTANCE.addRepositoriesToGroup(group,
 						Collections.singletonList(gitDir));
 			}
-			RepositoryUtil.getInstance().addConfiguredRepository(gitDir);
+			RepositoryUtil.INSTANCE.addConfiguredRepository(gitDir);
 
 			if (!isBare && doAutoShare()) {
 				IPath workTree = new Path(repository.getWorkTree()

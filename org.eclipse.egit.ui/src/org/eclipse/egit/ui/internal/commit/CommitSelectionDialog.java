@@ -183,7 +183,7 @@ public class CommitSelectionDialog extends FilteredItemsSelectionDialog {
 	}
 
 	private Repository[] getRepositories() {
-		return RepositoryCache.getInstance().getAllRepositories();
+		return RepositoryCache.INSTANCE.getAllRepositories();
 	}
 
 	@Override

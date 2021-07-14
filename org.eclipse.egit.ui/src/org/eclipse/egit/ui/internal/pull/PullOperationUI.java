@@ -119,7 +119,7 @@ public class PullOperationUI extends JobChangeAdapter {
 		// figure out a job name
 		String jobName;
 		if (this.repositories.length == 1) {
-			String repoName = RepositoryUtil.getInstance()
+			String repoName = RepositoryUtil.INSTANCE
 					.getRepositoryName(repositories[0]);
 			String shortBranchName;
 			try {
@@ -231,8 +231,7 @@ public class PullOperationUI extends JobChangeAdapter {
 	 */
 	private void handleUncommittedChanges(final Repository repository,
 			final List<String> files, Shell shell) {
-		String repoName = RepositoryUtil.getInstance()
-				.getRepositoryName(repository);
+		String repoName = RepositoryUtil.INSTANCE.getRepositoryName(repository);
 		String title = MessageFormat.format(
 				UIText.AbstractRebaseCommandHandler_cleanupDialog_title,
 				repoName);

@@ -77,11 +77,8 @@ public class MergeToolActionHandler extends RepositoryActionHandler {
 		if (selectedRepoPaths.isEmpty())
 			return false;
 
-		IndexDiffCache cache = IndexDiffCache.getInstance();
-		if (cache == null)
-			return false;
-
-		IndexDiffCacheEntry entry = cache.getIndexDiffCacheEntry(repo);
+		IndexDiffCacheEntry entry = IndexDiffCache.INSTANCE
+				.getIndexDiffCacheEntry(repo);
 		if (entry == null || entry.getIndexDiff() == null)
 			return false;
 

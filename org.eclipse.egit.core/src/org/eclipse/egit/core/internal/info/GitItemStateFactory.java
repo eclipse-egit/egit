@@ -142,7 +142,7 @@ public class GitItemStateFactory {
 			// For bare repository just return empty data
 			return new IndexDiffData();
 		}
-		IndexDiffCacheEntry diffCacheEntry = IndexDiffCache.getInstance()
+		IndexDiffCacheEntry diffCacheEntry = IndexDiffCache.INSTANCE
 				.getIndexDiffCacheEntry(repository);
 		if (diffCacheEntry == null) {
 			return null;
@@ -198,7 +198,7 @@ public class GitItemStateFactory {
 		if (repository == null || gitPath == null) {
 			return null;
 		}
-		IndexDiffCacheEntry cache = IndexDiffCache.getInstance()
+		IndexDiffCacheEntry cache = IndexDiffCache.INSTANCE
 				.getIndexDiffCacheEntry(repository);
 		if (cache == null) {
 			return UNKNOWN_STATE;

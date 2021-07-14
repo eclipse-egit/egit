@@ -343,7 +343,7 @@ public class RebaseInteractiveView extends ViewPart implements
 				if (repo == null)
 					return;
 
-				if (RepositoryUtil.getInstance().contains(repo))
+				if (RepositoryUtil.INSTANCE.contains(repo))
 					return;
 
 				// Unselect repository as it has been removed
@@ -881,8 +881,7 @@ public class RebaseInteractiveView extends ViewPart implements
 	}
 
 	private static String getRepositoryName(Repository repository) {
-		String repoName = RepositoryUtil.getInstance()
-				.getRepositoryName(repository);
+		String repoName = RepositoryUtil.INSTANCE.getRepositoryName(repository);
 		RepositoryState state = repository.getRepositoryState();
 		if (state != RepositoryState.SAFE)
 			return repoName + '|' + state.getDescription();
@@ -981,7 +980,7 @@ public class RebaseInteractiveView extends ViewPart implements
 				form.setText(getRepositoryName(repo));
 			return;
 		}
-		IndexDiffCacheEntry entry = IndexDiffCache.getInstance()
+		IndexDiffCacheEntry entry = IndexDiffCache.INSTANCE
 				.getIndexDiffCacheEntry(repo);
 		IndexDiffData data = entry == null ? null : entry.getIndexDiff();
 		boolean hasConflicts = data != null && !data.getConflicting().isEmpty();

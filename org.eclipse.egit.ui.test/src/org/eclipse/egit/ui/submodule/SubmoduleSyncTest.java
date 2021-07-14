@@ -56,7 +56,7 @@ public class SubmoduleSyncTest extends GitRepositoriesViewTestBase {
 		deleteAllProjects();
 		assertProjectExistence(PROJ1, false);
 		clearView();
-		RepositoryUtil.getInstance().addConfiguredRepository(repositoryFile);
+		RepositoryUtil.INSTANCE.addConfiguredRepository(repositoryFile);
 		shareProjects(repositoryFile);
 		assertProjectExistence(PROJ1, true);
 		refreshAndWait();

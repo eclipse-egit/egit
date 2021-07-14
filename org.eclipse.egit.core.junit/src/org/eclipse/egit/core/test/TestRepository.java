@@ -85,7 +85,7 @@ public class TestRepository {
 		tmpRepository.create();
 		tmpRepository.close();
 		// use repository instance from RepositoryCache!
-		repository = RepositoryCache.getInstance().lookupRepository(gitDir);
+		repository = RepositoryCache.INSTANCE.lookupRepository(gitDir);
 		workdirPrefix = repository.getWorkTree().getAbsolutePath();
 		workdirPrefix = workdirPrefix.replace('\\', '/');
 		if (!workdirPrefix.endsWith("/")) //$NON-NLS-1$

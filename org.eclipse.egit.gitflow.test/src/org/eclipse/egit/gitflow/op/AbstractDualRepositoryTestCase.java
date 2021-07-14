@@ -85,7 +85,7 @@ public class AbstractDualRepositoryTestCase extends DualRepositoryTestCase {
 				R_HEADS + MY_MASTER, DEFAULT_REMOTE_NAME, 0);
 		clop.run(null);
 
-		Repository repo2 = RepositoryCache.getInstance()
+		Repository repo2 = RepositoryCache.INSTANCE
 				.lookupRepository(new File(workdir2, DOT_GIT));
 		repository2 = new TestRepository(repo2);
 	}

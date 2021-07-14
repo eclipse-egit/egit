@@ -74,7 +74,7 @@ public class GitRepositoriesViewRepoHandlingTest extends
 	@Test
 	public void testCopyPathToClipboard() throws Exception {
 		clearView();
-		RepositoryUtil.getInstance().addConfiguredRepository(repositoryFile);
+		RepositoryUtil.INSTANCE.addConfiguredRepository(repositoryFile);
 		refreshAndWait();
 		final SWTBotTree tree = getOrOpenView().bot().tree();
 		tree.getAllItems()[0].select();
@@ -147,7 +147,7 @@ public class GitRepositoriesViewRepoHandlingTest extends
 	public void testRemoveRepositoryWithoutProjects() throws Exception {
 		deleteAllProjects();
 		clearView();
-		RepositoryUtil.getInstance().addConfiguredRepository(repositoryFile);
+		RepositoryUtil.INSTANCE.addConfiguredRepository(repositoryFile);
 		refreshAndWait();
 		assertHasRepo(repositoryFile);
 		SWTBotTree tree = getOrOpenView().bot().tree();
@@ -163,7 +163,7 @@ public class GitRepositoriesViewRepoHandlingTest extends
 		deleteAllProjects();
 		assertProjectExistence(PROJ1, false);
 		clearView();
-		RepositoryUtil.getInstance().addConfiguredRepository(repositoryFile);
+		RepositoryUtil.INSTANCE.addConfiguredRepository(repositoryFile);
 		shareProjects(repositoryFile);
 		assertProjectExistence(PROJ1, true);
 		refreshAndWait();
@@ -185,7 +185,7 @@ public class GitRepositoriesViewRepoHandlingTest extends
 		deleteAllProjects();
 		assertProjectExistence(PROJ1, false);
 		clearView();
-		RepositoryUtil.getInstance().addConfiguredRepository(repositoryFile);
+		RepositoryUtil.INSTANCE.addConfiguredRepository(repositoryFile);
 		shareProjects(repositoryFile);
 		assertProjectExistence(PROJ1, true);
 		refreshAndWait();
@@ -207,7 +207,7 @@ public class GitRepositoriesViewRepoHandlingTest extends
 		deleteAllProjects();
 		assertProjectExistence(PROJ1, false);
 		clearView();
-		RepositoryUtil.getInstance().addConfiguredRepository(repositoryFile);
+		RepositoryUtil.INSTANCE.addConfiguredRepository(repositoryFile);
 		shareProjects(repositoryFile);
 		assertProjectExistence(PROJ1, true);
 		refreshAndWait();

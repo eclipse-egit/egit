@@ -174,10 +174,9 @@ public class ConnectProviderOperation implements IEGitOperation {
 			project.refreshLocal(IResource.DEPTH_INFINITE, subMon.newChild(30));
 			if (gitPath != null) {
 				try {
-					Repository repository = RepositoryCache.getInstance()
+					Repository repository = RepositoryCache.INSTANCE
 							.lookupRepository(gitPath.toFile());
-					IndexDiffCacheEntry cacheEntry = IndexDiffCache
-							.getInstance()
+					IndexDiffCacheEntry cacheEntry = IndexDiffCache.INSTANCE
 							.getIndexDiffCacheEntry(repository);
 					if (cacheEntry != null) {
 						cacheEntry.refresh();

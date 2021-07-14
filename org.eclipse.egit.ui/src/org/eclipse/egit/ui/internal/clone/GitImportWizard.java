@@ -186,7 +186,7 @@ public class GitImportWizard extends AbstractGitCloneWizard implements IImportWi
 			return existingRepo;
 		else
 			try {
-				return RepositoryCache.getInstance().lookupRepository(
+				return RepositoryCache.INSTANCE.lookupRepository(
 						new File(cloneDestination.getDestinationFile(),
 								Constants.DOT_GIT));
 			} catch (IOException e) {

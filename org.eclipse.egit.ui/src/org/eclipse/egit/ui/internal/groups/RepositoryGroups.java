@@ -32,9 +32,12 @@ import org.osgi.service.prefs.BackingStoreException;
  * This singleton manages the repository groups. The data is stored in the
  * preferences.
  */
-public final class RepositoryGroups {
+public enum RepositoryGroups {
 
-	private static final RepositoryGroups INSTANCE = new RepositoryGroups();
+	/**
+	 * The singleton {@link RepositoryGroups} instance.
+	 */
+	INSTANCE;
 
 	private static final String PREFS_GROUP_NAME_PREFIX = "RepositoryGroups."; //$NON-NLS-1$
 
@@ -50,16 +53,9 @@ public final class RepositoryGroups {
 
 	private final Map<UUID, RepositoryGroup> groupMap = new HashMap<>();
 
-	private final RepositoryUtil util = RepositoryUtil.getInstance();
+	private final IEclipsePreferences preferences = RepositoryUtil.INSTANCE
+			.getPreferences();
 
-	private final IEclipsePreferences preferences = util.getPreferences();
-
-	/**
-	 * @return singleton of the repository group manager
-	 */
-	public static RepositoryGroups getInstance() {
-		return INSTANCE;
-	}
 	/**
 	 * new repository groups initialized from preferences
 	 */
@@ -81,7 +77,8 @@ public final class RepositoryGroups {
 			}
 			List<File> repos = split(preferences
 					.get(PREFS_GROUP_PREFIX + groupIdString, EMPTY_STRING))
-							.stream().map(util::getAbsoluteRepositoryPath)
+							.stream()
+							.map(RepositoryUtil.INSTANCE::getAbsoluteRepositoryPath)
 							.map(File::new).filter(File::isDirectory)
 							.collect(Collectors.toList());
 			RepositoryGroup group = new RepositoryGroup(groupId, name, repos);
@@ -232,7 +229,7 @@ public final class RepositoryGroups {
 				preferences.put(PREFS_GROUP_NAME_PREFIX + groupId, name);
 				String repos = group.getRepositoryDirectories().stream()
 						.map(File::toString)
-						.map(util::relativizeToWorkspace)
+						.map(RepositoryUtil.INSTANCE::relativizeToWorkspace)
 						.collect(Collectors.joining(SEPARATOR));
 				preferences.put(PREFS_GROUP_PREFIX + groupId, repos);
 			}

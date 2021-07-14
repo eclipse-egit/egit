@@ -78,11 +78,10 @@ public class SubmoduleUpdateOperation implements IEGitOperation {
 
 			@Override
 			public void run(IProgressMonitor pm) throws CoreException {
-				RepositoryUtil util = RepositoryUtil.getInstance();
 				SubMonitor progress = SubMonitor.convert(pm, 4);
 				progress.setTaskName(MessageFormat.format(
 						CoreText.SubmoduleUpdateOperation_updating,
-						util.getRepositoryName(repository)));
+						RepositoryUtil.INSTANCE.getRepositoryName(repository)));
 
 				Git git = Git.wrap(repository);
 
@@ -116,7 +115,9 @@ public class SubmoduleUpdateOperation implements IEGitOperation {
 						public void cloningSubmodule(String path) {
 							progress.setTaskName(MessageFormat.format(
 									CoreText.SubmoduleUpdateOperation_cloning,
-									util.getRepositoryName(repository), path));
+									RepositoryUtil.INSTANCE.getRepositoryName(
+											repository),
+									path));
 						}
 
 						@Override

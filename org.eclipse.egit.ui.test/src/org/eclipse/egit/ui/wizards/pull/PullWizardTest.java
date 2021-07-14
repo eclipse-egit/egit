@@ -81,7 +81,7 @@ public class PullWizardTest extends GitRepositoriesViewTestBase {
 		clearView();
 		repositoryFile = createProjectAndCommitToRepository();
 		createRemoteRepository(repositoryFile);
-		RepositoryUtil.getInstance().addConfiguredRepository(repositoryFile);
+		RepositoryUtil.INSTANCE.addConfiguredRepository(repositoryFile);
 		refreshAndWait();
 		assertHasRepo(repositoryFile);
 	}

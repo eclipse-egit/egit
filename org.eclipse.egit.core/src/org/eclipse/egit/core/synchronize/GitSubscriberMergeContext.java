@@ -70,9 +70,8 @@ public class GitSubscriberMergeContext extends SubscriberMergeContext {
 				handleResourceChange(delta);
 			}
 		};
-		IndexDiffCache indexDiffCache = IndexDiffCache.getInstance();
-		if (indexDiffCache != null)
-			indexDiffCache.addIndexDiffChangedListener(indexChangeListener);
+		IndexDiffCache.INSTANCE
+				.addIndexDiffChangedListener(indexChangeListener);
 
 		ResourcesPlugin.getWorkspace().addResourceChangeListener(resourceChangeListener);
 
@@ -111,10 +110,8 @@ public class GitSubscriberMergeContext extends SubscriberMergeContext {
 
 	@Override
 	public void dispose() {
-		IndexDiffCache indexDiffCache = IndexDiffCache.getInstance();
-		if (indexDiffCache != null)
-			indexDiffCache.removeIndexDiffChangedListener(indexChangeListener);
-
+		IndexDiffCache.INSTANCE
+				.removeIndexDiffChangedListener(indexChangeListener);
 		ResourcesPlugin.getWorkspace().removeResourceChangeListener(resourceChangeListener);
 		subscriber.dispose();
 		super.dispose();

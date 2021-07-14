@@ -90,8 +90,7 @@ public class DecoratorRepositoryStateCache extends RepositoryStateCache {
 	 * @return the name
 	 */
 	public String getRepositoryNameAndState(Repository repository) {
-		String repoName = RepositoryUtil.getInstance()
-				.getRepositoryName(repository);
+		String repoName = RepositoryUtil.INSTANCE.getRepositoryName(repository);
 		RepositoryState state = getRepositoryState(repository);
 		if (state != RepositoryState.SAFE) {
 			return repoName + '|' + state.getDescription();
@@ -122,8 +121,8 @@ public class DecoratorRepositoryStateCache extends RepositoryStateCache {
 				if (objectId == null) {
 					return CoreText.RepositoryUtil_noHead;
 				}
-				String ref = RepositoryUtil.getInstance()
-						.mapCommitToRef(repository, objectId.name(), false);
+				String ref = RepositoryUtil.INSTANCE.mapCommitToRef(repository,
+						objectId.name(), false);
 				if (ref != null) {
 					return Repository.shortenRefName(ref) + ' '
 							+ objectId.abbreviate(7).name();

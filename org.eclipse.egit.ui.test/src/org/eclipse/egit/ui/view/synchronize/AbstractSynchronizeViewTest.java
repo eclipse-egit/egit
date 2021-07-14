@@ -117,7 +117,7 @@ public abstract class AbstractSynchronizeViewTest extends
 
 		createTag(INITIAL_TAG);
 
-		RepositoryUtil.getInstance().addConfiguredRepository(repositoryFile);
+		RepositoryUtil.INSTANCE.addConfiguredRepository(repositoryFile);
 	}
 
 	@BeforeClass

@@ -183,7 +183,7 @@ public class RefFilterHelper {
 	}
 
 	private void initDefaultForRepo(String preferenceName) {
-		String repoSpecificPrefName = RepositoryUtil.getInstance()
+		String repoSpecificPrefName = RepositoryUtil.INSTANCE
 				.getRepositorySpecificPreferenceKey(this.repository,
 						preferenceName);
 
@@ -213,7 +213,7 @@ public class RefFilterHelper {
 	 * @return the string-valued preference
 	 */
 	protected String getPreferenceString(String preferenceName) {
-		String repoSpecificPrefName = RepositoryUtil.getInstance()
+		String repoSpecificPrefName = RepositoryUtil.INSTANCE
 				.getRepositorySpecificPreferenceKey(this.repository,
 						preferenceName);
 
@@ -240,7 +240,7 @@ public class RefFilterHelper {
 
 	private void setFiltersInPref(String preferenceName, List<String> filters,
 			boolean save) {
-		String repoSpecificPrefName = RepositoryUtil.getInstance()
+		String repoSpecificPrefName = RepositoryUtil.INSTANCE
 				.getRepositorySpecificPreferenceKey(this.repository,
 						preferenceName);
 		String refFiltersString = String.join(REF_SEPARATOR, filters);
@@ -411,7 +411,7 @@ public class RefFilterHelper {
 	 * Reset the last selection state to the default.
 	 */
 	public void resetLastSelectionStateToDefault() {
-		String repoSpecificPrefName = RepositoryUtil.getInstance()
+		String repoSpecificPrefName = RepositoryUtil.INSTANCE
 				.getRepositorySpecificPreferenceKey(this.repository,
 						UIPreferences.RESOURCEHISTORY_LAST_SELECTED_REF_FILTERS);
 		store.setToDefault(repoSpecificPrefName);

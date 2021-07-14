@@ -40,7 +40,7 @@ public class GitRepositoryProviderType extends RepositoryProviderType {
 	public GitRepositoryProviderType() {
 		GitSynchronizeDataSet set = new GitSynchronizeDataSet();
 		try {
-			Repository[] repositories = RepositoryCache.getInstance()
+			Repository[] repositories = RepositoryCache.INSTANCE
 					.getAllRepositories();
 			for (Repository repository : repositories) {
 				if (!repository.isBare()) {

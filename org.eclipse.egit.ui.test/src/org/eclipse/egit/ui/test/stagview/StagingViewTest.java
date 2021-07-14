@@ -107,7 +107,7 @@ public class StagingViewTest extends AbstractStagingViewTestCase {
 		}
 		assertEquals(RepositoryState.MERGING, repository.getRepositoryState());
 
-		IndexDiffCache.getInstance().getIndexDiffCacheEntry(repository)
+		IndexDiffCache.INSTANCE.getIndexDiffCacheEntry(repository)
 				.refresh();
 
 		StagingViewTester stagingView = StagingViewTester
@@ -142,7 +142,7 @@ public class StagingViewTest extends AbstractStagingViewTestCase {
 		}
 		assertEquals(RepositoryState.MERGING, repository.getRepositoryState());
 
-		IndexDiffCache.getInstance().getIndexDiffCacheEntry(repository)
+		IndexDiffCache.INSTANCE.getIndexDiffCacheEntry(repository)
 				.refresh();
 
 		StagingViewTester stagingView = StagingViewTester.openStagingView();

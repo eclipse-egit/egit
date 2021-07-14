@@ -129,7 +129,7 @@ public class CommitActionHandler extends RepositoryActionHandler {
 
 	private IndexDiffData getIndexDiffData(final @NonNull Repository repository,
 			final @NonNull Collection<IProject> projects) {
-		IndexDiffCacheEntry diffCacheEntry = IndexDiffCache.getInstance()
+		IndexDiffCacheEntry diffCacheEntry = IndexDiffCache.INSTANCE
 				.getIndexDiffCacheEntry(repository);
 		IndexDiffData diff = null;
 		if (diffCacheEntry != null) {
