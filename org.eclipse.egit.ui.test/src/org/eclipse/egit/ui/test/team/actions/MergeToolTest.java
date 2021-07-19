@@ -13,12 +13,18 @@ package org.eclipse.egit.ui.test.team.actions;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.hasItem;
 import static org.hamcrest.Matchers.is;
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
 import java.io.File;
+import java.util.Arrays;
+import java.util.List;
 
+import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.Path;
+import org.eclipse.core.runtime.preferences.IEclipsePreferences;
+import org.eclipse.core.runtime.preferences.InstanceScope;
 import org.eclipse.egit.core.JobFamilies;
 import org.eclipse.egit.core.internal.indexdiff.IndexDiffCache;
 import org.eclipse.egit.core.op.CherryPickOperation;
@@ -42,15 +48,32 @@ import org.eclipse.swtbot.swt.finder.widgets.SWTBotTreeItem;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.junit.runners.Parameterized;
+import org.junit.runners.Parameterized.Parameter;
+import org.junit.runners.Parameterized.Parameters;
 
 /**
  * Test for the "Merge Tool" action on conflicting files.
  */
+@RunWith(Parameterized.class)
 public class MergeToolTest extends LocalRepositoryTestCase {
 
 	private TestRepository testRepository;
 
 	private int mergeMode;
+
+	private IEclipsePreferences prefs;
+
+	private boolean prefEnabled;
+
+	@Parameter
+	public Boolean linkingDisabled;
+
+	@Parameters(name = "linkingDisabled={0}")
+	public static List<Boolean> getParameters() {
+		return Arrays.asList(Boolean.FALSE, Boolean.TRUE);
+	}
 
 	@Before
 	public void setUp() throws Exception {
@@ -59,12 +82,22 @@ public class MergeToolTest extends LocalRepositoryTestCase {
 		testRepository = new TestRepository<>(repository);
 		mergeMode = Activator.getDefault()
 				.getPreferenceStore().getInt(UIPreferences.MERGE_MODE);
+		prefs = InstanceScope.INSTANCE.getNode(ResourcesPlugin.PI_RESOURCES);
+		prefEnabled = prefs.getBoolean(ResourcesPlugin.PREF_DISABLE_LINKING,
+				false);
+		prefs.putBoolean(ResourcesPlugin.PREF_DISABLE_LINKING,
+				linkingDisabled.booleanValue());
 	}
 
 	@After
 	public void resetMergeMode() throws Exception {
 		Activator.getDefault().getPreferenceStore()
 				.setValue(UIPreferences.MERGE_MODE, mergeMode);
+		boolean currentValue = prefs.getBoolean(
+				ResourcesPlugin.PREF_DISABLE_LINKING,
+				linkingDisabled.booleanValue());
+		prefs.putBoolean(ResourcesPlugin.PREF_DISABLE_LINKING, prefEnabled);
+		assertEquals(linkingDisabled, Boolean.valueOf(currentValue));
 	}
 
 	@Test

@@ -19,6 +19,7 @@ import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.text.MessageFormat;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IFolder;
@@ -32,7 +33,11 @@ import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.IProgressMonitor;
+import org.eclipse.core.runtime.Platform;
 import org.eclipse.core.runtime.SubMonitor;
+import org.eclipse.core.runtime.preferences.IEclipsePreferences;
+import org.eclipse.core.runtime.preferences.IEclipsePreferences.IPreferenceChangeListener;
+import org.eclipse.core.runtime.preferences.InstanceScope;
 import org.eclipse.egit.core.Activator;
 import org.eclipse.egit.core.internal.efs.EgitFileSystem.UriComponents;
 import org.eclipse.jgit.lib.Repository;
@@ -67,6 +72,8 @@ public enum HiddenResources {
 			+ "</projectDescription>"; //$NON-NLS-1$
 
 	private boolean initialized;
+
+	private final Object lock = new Object();
 
 	/**
 	 * Create new linked {@link IFile} in a hidden project with the given uri
@@ -326,10 +333,53 @@ public enum HiddenResources {
 			Charset encoding, IProgressMonitor monitor) throws CoreException {
 		SubMonitor progress = SubMonitor.convert(monitor, 2);
 		IFile file = folder.getFile(name);
-		file.createLink(uri, IResource.NONE, progress.newChild(1));
+		linkFile(file, uri, progress.newChild(1));
 		if (encoding != null) {
 			file.setCharset(encoding.name(), progress.newChild(1));
 		}
 		return file;
+	}
+
+	private void linkFile(IFile file, URI uri, IProgressMonitor monitor)
+			throws CoreException {
+		synchronized (lock) {
+			boolean linkingDisabled = Platform.getPreferencesService()
+					.getBoolean(ResourcesPlugin.PI_RESOURCES,
+							ResourcesPlugin.PREF_DISABLE_LINKING, false, null);
+			IEclipsePreferences prefs = null;
+			IPreferenceChangeListener listener = null;
+			AtomicBoolean prefChanged = new AtomicBoolean();
+			if (linkingDisabled) {
+				// The user has disabled creating linked resources. Force-
+				// enable the preference, then reset it afterwards.
+				//
+				// Note that the preference only guards *creating* linked
+				// resources. Existing linked resources are handled perfectly
+				// well by Eclipse even when the preference is true.
+				prefs = InstanceScope.INSTANCE
+						.getNode(ResourcesPlugin.PI_RESOURCES);
+				prefs.putBoolean(ResourcesPlugin.PREF_DISABLE_LINKING, false);
+				listener = event -> {
+					if (ResourcesPlugin.PREF_DISABLE_LINKING
+							.equals(event.getKey())) {
+						prefChanged.set(true);
+					}
+				};
+				prefs.addPreferenceChangeListener(listener);
+			}
+			try {
+				file.createLink(uri, IResource.NONE, monitor);
+			} finally {
+				if (prefs != null) {
+					prefs.removePreferenceChangeListener(listener);
+					// Don't reset if somebody else changed the preference in
+					// the meantime.
+					if (!prefChanged.get()) {
+						prefs.putBoolean(ResourcesPlugin.PREF_DISABLE_LINKING,
+								linkingDisabled);
+					}
+				}
+			}
+		}
 	}
 }
