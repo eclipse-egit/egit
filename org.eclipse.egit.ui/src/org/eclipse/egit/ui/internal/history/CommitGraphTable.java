@@ -481,11 +481,18 @@ class CommitGraphTable {
 		allCommitsLength = newAllCommitsLength;
 		table.setInput(asArray);
 		if (newAllCommitsLength > 0) {
-			if (commitToShow != null) {
-				selectCommit(commitToShow);
-			}
+			boolean positionSet = false;
 			if (keepPosition && topIndex >= 0) {
 				t.setTopIndex(topIndex);
+				positionSet = true;
+			}
+			if (commitToShow != null
+					&& commitsMap.containsKey(commitToShow.getId().name())) {
+				selectCommit(commitToShow);
+				positionSet = true;
+			}
+			if (!positionSet && newAllCommitsLength > 0) {
+				t.setTopIndex(0);
 			}
 		} else {
 			t.deselectAll();
