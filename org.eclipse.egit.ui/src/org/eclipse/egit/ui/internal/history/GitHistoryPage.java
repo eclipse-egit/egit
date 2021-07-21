@@ -1831,12 +1831,18 @@ public class GitHistoryPage extends HistoryPage implements RefsChangedListener,
 		refresh(null);
 	}
 
-	private void refresh(RevCommit prevSelection) {
+	/**
+	 * Refreshes the page and selects the given {@link RevCommit}.
+	 *
+	 * @param toSelect
+	 *            {@link RevCommit} to select if it exists in the history
+	 */
+	public void refresh(RevCommit toSelect) {
 		if (repoHasBeenRemoved(getCurrentRepo())) {
 			clearHistoryPage();
 		}
 		this.input = null;
-		inputSet(prevSelection);
+		inputSet(toSelect);
 	}
 
 	/**

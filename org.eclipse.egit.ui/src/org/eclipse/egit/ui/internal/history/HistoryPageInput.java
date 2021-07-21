@@ -186,10 +186,39 @@ public class HistoryPageInput {
 		if (obj == this) {
 			return true;
 		}
+		if (obj == null || obj.getClass() != getClass()) {
+			return false;
+		}
+		return fieldsEqual((HistoryPageInput) obj);
+	}
+
+	/**
+	 * Similar to {@link #equals(Object)} but considers subclasses equal if the
+	 * common fields match.
+	 *
+	 * @param obj
+	 *            to compare against
+	 * @return {@code true} if {@code obj} is equal to this object,
+	 *         {@code false} otherwise
+	 */
+	public boolean baseEquals(Object obj) {
+		if (obj == this) {
+			return true;
+		}
 		if (!(obj instanceof HistoryPageInput)) {
 			return false;
 		}
-		HistoryPageInput other = (HistoryPageInput) obj;
+		return fieldsEqual((HistoryPageInput) obj);
+	}
+
+	/**
+	 * Compares the fields.
+	 *
+	 * @param other
+	 *            {@link HistoryPageInput} to compare the fields against
+	 * @return {@code true} if all fields match, {@code false} otherwise
+	 */
+	protected boolean fieldsEqual(HistoryPageInput other) {
 		return repo == other.repo
 				&& Objects.equals(singleFile, other.singleFile)
 				&& Objects.equals(singleItem, other.singleItem)

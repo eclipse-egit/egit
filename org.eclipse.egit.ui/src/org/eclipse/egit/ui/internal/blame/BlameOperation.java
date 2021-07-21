@@ -17,6 +17,7 @@ import java.io.File;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IResource;
@@ -53,6 +54,7 @@ import org.eclipse.jgit.lib.Constants;
 import org.eclipse.jgit.lib.Repository;
 import org.eclipse.jgit.revwalk.RevCommit;
 import org.eclipse.swt.widgets.Shell;
+import org.eclipse.team.ui.history.IHistoryPage;
 import org.eclipse.team.ui.history.IHistoryView;
 import org.eclipse.team.ui.history.RevisionAnnotationController;
 import org.eclipse.ui.IEditorPart;
@@ -101,18 +103,16 @@ public class BlameOperation implements IEGitOperation {
 			if (obj == this) {
 				return true;
 			}
-			if (!(obj instanceof BlameHistoryPageInput)) {
+			if (obj == null || obj.getClass() != getClass()) {
 				return false;
 			}
 			BlameHistoryPageInput other = (BlameHistoryPageInput) obj;
-			return super.equals(obj)
-					&& (commit == other.commit
-							|| commit != null && commit.equals(other.commit));
+			return fieldsEqual(other) && Objects.equals(commit, other.commit);
 		}
 
 		@Override
 		public int hashCode() {
-			return super.hashCode() ^ (commit == null ? 0 : commit.hashCode());
+			return super.hashCode() * 31 + Objects.hashCode(commit);
 		}
 	}
 
@@ -171,7 +171,16 @@ public class BlameOperation implements IEGitOperation {
 			else
 				input = new BlameHistoryPageInput(revision.getRepository(),
 						revision.getCommit());
-			part.showHistoryFor(input);
+			IHistoryPage currentPage = part.getHistoryPage();
+			if (currentPage instanceof GitHistoryPage
+					&& input.baseEquals(currentPage.getInput())) {
+				// Already showing a git history for this -- just refresh and
+				// select the commit to avoid adding a new history navigation
+				// entry.
+				((GitHistoryPage) currentPage).refresh(revision.getCommit());
+			} else {
+				part.showHistoryFor(input);
+			}
 		}
 
 	}
