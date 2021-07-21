@@ -45,6 +45,7 @@ import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Path;
+import org.eclipse.core.runtime.Platform;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.core.runtime.SubMonitor;
 import org.eclipse.core.runtime.jobs.ISchedulingRule;
@@ -181,6 +182,21 @@ import org.eclipse.ui.texteditor.IUpdate;
 /** Graphical commit history viewer. */
 public class GitHistoryPage extends HistoryPage implements RefsChangedListener,
 		TableLoader, IShowInSource, IShowInTargetList {
+
+	private static final String TEAM_UI_PLUGIN_ID = "org.eclipse.team.ui"; //$NON-NLS-1$
+
+	private static final String TEAM_UI_LINKING_PREFERENCE = "pref_generichistory_view_linking"; //$NON-NLS-1$
+
+	/**
+	 * Tells whether "Link with Editor and Selection" is currently enabled in
+	 * the history view.
+	 *
+	 * @return {@code true} if linking is enabled, {@code false} otherwise.
+	 */
+	public static boolean isLinkingEnabled() {
+		return Platform.getPreferencesService().getBoolean(TEAM_UI_PLUGIN_ID,
+				TEAM_UI_LINKING_PREFERENCE, false, null);
+	}
 
 	private static final int INITIAL_ITEM = -1;
 

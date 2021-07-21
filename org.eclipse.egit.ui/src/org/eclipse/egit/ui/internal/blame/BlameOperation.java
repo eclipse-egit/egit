@@ -33,6 +33,7 @@ import org.eclipse.egit.core.op.IEGitOperation;
 import org.eclipse.egit.ui.Activator;
 import org.eclipse.egit.ui.UIPreferences;
 import org.eclipse.egit.ui.internal.EgitUiEditorUtils;
+import org.eclipse.egit.ui.internal.history.GitHistoryPage;
 import org.eclipse.egit.ui.internal.history.HistoryPageInput;
 import org.eclipse.egit.ui.internal.revision.FileRevisionEditorInput;
 import org.eclipse.jface.text.BadLocationException;
@@ -148,6 +149,10 @@ public class BlameOperation implements IEGitOperation {
 			Object first = ((IStructuredSelection) selection).getFirstElement();
 			if (!(first instanceof BlameRevision))
 				return;
+
+			if (!GitHistoryPage.isLinkingEnabled()) {
+				return;
+			}
 
 			IHistoryView part = (IHistoryView) PlatformUI.getWorkbench()
 					.getActiveWorkbenchWindow().getActivePage()
