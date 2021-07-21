@@ -64,6 +64,8 @@ import org.eclipse.jgit.lib.Ref;
 import org.eclipse.jgit.lib.Repository;
 import org.eclipse.osgi.util.NLS;
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.accessibility.AccessibleAdapter;
+import org.eclipse.swt.accessibility.AccessibleEvent;
 import org.eclipse.swt.events.DisposeEvent;
 import org.eclipse.swt.events.DisposeListener;
 import org.eclipse.swt.events.KeyEvent;
@@ -81,6 +83,7 @@ import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Event;
+import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Text;
 import org.eclipse.swt.widgets.ToolBar;
 import org.eclipse.swt.widgets.ToolItem;
@@ -803,6 +806,25 @@ public class UIUtils {
 	 */
 	public static boolean isUsable(final Control control) {
 		return control != null && !control.isDisposed();
+	}
+
+	/**
+	 * Associate a label with a control to make it known to screen readers and
+	 * similar accessibility tools.
+	 *
+	 * @param control
+	 *            to associate the label with
+	 * @param label
+	 *            to associate with the control
+	 */
+	public static void associateLabel(Control control, Label label) {
+		control.getAccessible().addAccessibleListener(new AccessibleAdapter() {
+
+			@Override
+			public void getName(AccessibleEvent e) {
+				e.result = label.getText();
+			}
+		});
 	}
 
 	/**

@@ -17,6 +17,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import org.eclipse.egit.ui.UIUtils;
 import org.eclipse.egit.ui.internal.CommonUtils;
 import org.eclipse.egit.ui.internal.UIText;
 import org.eclipse.egit.ui.internal.components.CachedCheckboxTreeViewer;
@@ -111,6 +112,7 @@ public class PushTagsPage extends WizardPage {
 				SWT.BORDER);
 		tree.setLayoutData(GridDataFactory.fillDefaults().grab(true, true)
 				.span(2, 1).hint(400, 300).create());
+		UIUtils.associateLabel(tree.getFilterControl(), tagsLabel);
 
 		final Button forceUpdateButton = new Button(main, SWT.CHECK);
 		forceUpdateButton

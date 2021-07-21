@@ -29,6 +29,7 @@ import org.eclipse.egit.core.securestorage.UserPasswordCredentials;
 import org.eclipse.egit.core.settings.GitSettings;
 import org.eclipse.egit.ui.Activator;
 import org.eclipse.egit.ui.UIPreferences;
+import org.eclipse.egit.ui.UIUtils;
 import org.eclipse.egit.ui.internal.CommonUtils;
 import org.eclipse.egit.ui.internal.UIIcons;
 import org.eclipse.egit.ui.internal.UIText;
@@ -161,6 +162,7 @@ class SourceBranchPage extends WizardPage {
 				return refreshJob;
 			}
 		};
+		UIUtils.associateLabel(fTree.getFilterControl(), label);
 		refsViewer = fTree.getCheckboxTreeViewer();
 
 		ITreeContentProvider provider = new ITreeContentProvider() {

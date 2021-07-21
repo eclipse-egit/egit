@@ -31,6 +31,7 @@ import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.SubMonitor;
 import org.eclipse.egit.core.internal.util.ProjectUtil;
 import org.eclipse.egit.ui.Activator;
+import org.eclipse.egit.ui.UIUtils;
 import org.eclipse.egit.ui.internal.GitLabelProvider;
 import org.eclipse.egit.ui.internal.UIText;
 import org.eclipse.egit.ui.internal.components.CachedCheckboxTreeViewer;
@@ -209,6 +210,7 @@ public class GitProjectsImportPage extends WizardPage {
 				listComposite, null, SWT.NONE, filter);
 
 		filteredTree.setInitialText(UIText.WizardProjectsImportPage_filterText);
+		UIUtils.associateLabel(filteredTree.getFilterControl(), title);
 		projectsList = filteredTree.getCheckboxTreeViewer();
 		GridData listData = new GridData(GridData.GRAB_HORIZONTAL
 				| GridData.GRAB_VERTICAL | GridData.FILL_BOTH);
