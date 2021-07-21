@@ -17,6 +17,7 @@ import java.io.File;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IResource;
@@ -101,18 +102,16 @@ public class BlameOperation implements IEGitOperation {
 			if (obj == this) {
 				return true;
 			}
-			if (!(obj instanceof BlameHistoryPageInput)) {
+			if (obj == null || obj.getClass() != getClass()) {
 				return false;
 			}
 			BlameHistoryPageInput other = (BlameHistoryPageInput) obj;
-			return super.equals(obj)
-					&& (commit == other.commit
-							|| commit != null && commit.equals(other.commit));
+			return super.equals(obj) && Objects.equals(commit, other.commit);
 		}
 
 		@Override
 		public int hashCode() {
-			return super.hashCode() ^ (commit == null ? 0 : commit.hashCode());
+			return super.hashCode() * 31 + Objects.hashCode(commit);
 		}
 	}
 

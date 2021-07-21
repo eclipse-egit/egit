@@ -186,7 +186,7 @@ public class HistoryPageInput {
 		if (obj == this) {
 			return true;
 		}
-		if (!(obj instanceof HistoryPageInput)) {
+		if (obj == null || obj.getClass() != getClass()) {
 			return false;
 		}
 		HistoryPageInput other = (HistoryPageInput) obj;
