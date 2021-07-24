@@ -28,6 +28,7 @@ import org.eclipse.egit.ui.internal.UIText;
 import org.eclipse.egit.ui.internal.trace.GitTraceLocation;
 import org.eclipse.jface.resource.ResourceManager;
 import org.eclipse.jgit.annotations.NonNull;
+import org.eclipse.jgit.revplot.PlotCommit;
 import org.eclipse.jgit.revwalk.RevCommit;
 import org.eclipse.jgit.revwalk.RevFlag;
 import org.eclipse.jgit.revwalk.RevWalk;
@@ -45,6 +46,8 @@ class GenerateHistoryJob extends Job {
 	private RevCommit commitToLoad;
 
 	private RevCommit commitToShow;
+
+	private int wantedIndex = -1;
 
 	private int lastUpdateCnt;
 
@@ -64,7 +67,17 @@ class GenerateHistoryJob extends Job {
 		page = ghp;
 		this.walk = walk;
 		highlightFlag = walk.newFlag("highlight"); //$NON-NLS-1$
-		loadedCommits = new SWTCommitList(resources);
+		loadedCommits = new SWTCommitList(resources) {
+
+			@Override
+			protected void enter(int index, PlotCommit<SWTLane> currCommit) {
+				super.enter(index, currCommit);
+				if (wantedIndex < 0 && commitToLoad != null
+						&& currCommit.getId().equals(commitToLoad.getId())) {
+					wantedIndex = index;
+				}
+			}
+		};
 		loadedCommits.source(walk);
 		trace = GitTraceLocation.HISTORYVIEW.isActive();
 	}
@@ -74,6 +87,7 @@ class GenerateHistoryJob extends Job {
 		IStatus status = Status.OK_STATUS;
 		int maxCommits = Activator.getDefault().getPreferenceStore()
 					.getInt(UIPreferences.HISTORY_MAX_NUM_COMMITS);
+		int chunk = maxCommits;
 		boolean incomplete = false;
 		boolean commitNotFound = false;
 		try {
@@ -91,15 +105,17 @@ class GenerateHistoryJob extends Job {
 								GitTraceLocation.HISTORYVIEW.getLocation(),
 								"Filling commit list"); //$NON-NLS-1$
 					if (commitToLoad != null) {
+						if (maxCommits > 0
+								&& loadedCommits.size() >= maxCommits) {
+							// We're still looking for a commit
+							maxCommits = loadedCommits.size() + Math
+									.min(Math.max(chunk, 1000), 10000);
+						}
 						loadedCommits.fillTo(commitToLoad, maxCommits);
 						commitToShow = commitToLoad;
-						commitToLoad = null;
-						boolean commitFound = false;
-						for (RevCommit commit : loadedCommits) {
-							if (commit.getId().equals(commitToShow.getId())) {
-								commitFound = true;
-								break;
-							}
+						boolean commitFound = wantedIndex >= 0;
+						if (commitFound) {
+							commitToLoad = null;
 						}
 						commitNotFound = !commitFound;
 					} else {
@@ -109,12 +125,22 @@ class GenerateHistoryJob extends Job {
 							break;
 						}
 					}
-					if (monitor.isCanceled())
+					if (monitor.isCanceled()) {
 						return Status.CANCEL_STATUS;
-					if (loadedCommits.size() > itemToLoad + (BATCH_SIZE / 2) + 1 && loadIncrementally)
+					}
+					if (loadedCommits.size() > itemToLoad + (BATCH_SIZE / 2) + 1
+							&& loadIncrementally && !commitNotFound) {
 						break;
+					}
 					if (maxCommits > 0 && loadedCommits.size() > maxCommits) {
-						incomplete = true;
+						if (!loadIncrementally) {
+							incomplete = true;
+						}
+						if (commitToLoad == null) {
+							break;
+						}
+					}
+					if (oldsz == loadedCommits.size()) {
 						break;
 					}
 					oldsz = loadedCommits.size();
