@@ -1415,10 +1415,13 @@ public class GitHistoryPage extends HistoryPage implements RefsChangedListener,
 
 		historyControl = createMainPanel(parent);
 
+		// Initially hidden
 		warningComposite = new Composite(historyControl, SWT.NONE);
 		warningComposite.setLayout(new GridLayout(2, false));
-		warningComposite.setLayoutData(new GridData(SWT.FILL, SWT.BEGINNING,
-				true, false));
+		GridDataFactory.fillDefaults().align(SWT.FILL, SWT.BEGINNING)
+				.grab(true, false).exclude(true).applyTo(warningComposite);
+		warningComposite.setVisible(false);
+
 		warningLabel = new CLabel(warningComposite, SWT.NONE);
 		warningLabel.setImage(PlatformUI.getWorkbench().getSharedImages()
 				.getImage(ISharedImages.IMG_OBJS_WARN_TSK));
@@ -1956,8 +1959,6 @@ public class GitHistoryPage extends HistoryPage implements RefsChangedListener,
 			if (selectionTracker != null) {
 				selectionTracker.clearSelection();
 			}
-			// hide the warning text initially
-			setWarningText(null);
 			trace = GitTraceLocation.HISTORYVIEW.isActive();
 			if (trace)
 				GitTraceLocation.getTrace().traceEntry(
@@ -2399,9 +2400,13 @@ public class GitHistoryPage extends HistoryPage implements RefsChangedListener,
 			@Override
 			public void run() {
 				if (!graph.getControl().isDisposed() && job == j) {
+					setWarningText(incomplete
+							? UIText.GitHistoryPage_ListIncompleteWarningMessage
+							: null);
+					setErrorMessage(null);
 					graph.setInput(highlightFlag, list, asArray, input, true);
 					if (toSelect != null)
-						graph.selectCommit(toSelect);
+						graph.selectCommitStored(toSelect);
 					if (getFollowRenames())
 						updateInterestingPathsOfFileViewer();
 					if (trace)
@@ -2431,11 +2436,6 @@ public class GitHistoryPage extends HistoryPage implements RefsChangedListener,
 							UIPreferences.RESOURCEHISTORY_SHOW_FINDTOOLBAR)) {
 						searchBar.setVisible(true);
 					}
-					if (incomplete)
-						setWarningText(UIText.GitHistoryPage_ListIncompleteWarningMessage);
-					else
-						setWarningText(null);
-					setErrorMessage(null);
 				}
 			}
 		});
@@ -2545,7 +2545,11 @@ public class GitHistoryPage extends HistoryPage implements RefsChangedListener,
 							toShow = toRevCommit(walk, fetchHeadId);
 						}
 					}
-					loadInitialHistory(walk, toShow);
+					RevCommit toLoad = null;
+					if (newSelectedObj != null) {
+						toLoad = toRevCommit(walk, newSelectedObj);
+					}
+					loadInitialHistory(walk, toShow, toLoad);
 				} else {
 					// needed for context menu and double click
 					graph.setHistoryPageInput(input);
@@ -2992,12 +2996,17 @@ public class GitHistoryPage extends HistoryPage implements RefsChangedListener,
 	 *            the revwalk, non null
 	 * @param toShow
 	 *            commit to show, if any
+	 * @param toLoad
+	 *            commit to load, if any
 	 */
-	private void loadInitialHistory(@NonNull RevWalk walk, RevCommit toShow) {
+	private void loadInitialHistory(@NonNull RevWalk walk, RevCommit toShow,
+			RevCommit toLoad) {
 		job = new GenerateHistoryJob(this, walk, resources);
 		job.setRule(pageSchedulingRule);
 		job.setLoadHint(INITIAL_ITEM);
-		if (toShow != null) {
+		if (toLoad != null) {
+			job.setLoadHint(toLoad);
+		} else  if (toShow != null) {
 			job.setShowHint(toShow);
 		}
 		if (trace)
