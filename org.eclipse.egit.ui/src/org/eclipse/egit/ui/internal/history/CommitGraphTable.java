@@ -7,7 +7,7 @@
  * Copyright (C) 2011-2012, Matthias Sohn <matthias.sohn@sap.com>
  * Copyright (C) 2012-2013, Robin Stocker <robin@nibor.org>
  * Copyright (C) 2012, Daniel Megert <daniel_megert@ch.ibm.com>
- * Copyright (C) 2016-2019, Thomas Wolf <thomas.wolf@paranor.ch>
+ * Copyright (C) 2016-2021, Thomas Wolf <thomas.wolf@paranor.ch>
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License 2.0
@@ -108,6 +108,29 @@ import org.eclipse.ui.handlers.IHandlerService;
 import org.eclipse.ui.part.IPageSite;
 
 class CommitGraphTable {
+
+	/**
+	 * Style flag constant to specify no flags set, resulting in a table with
+	 * multi-select enabled, constant columns, and not showing e-mail addresses.
+	 */
+	static final int FLAG_NONE = 0;
+
+	/**
+	 * Style flag to restrict the table to allow only single selections.
+	 */
+	static final int FLAG_SINGLE_SELECT = 1 << 0;
+
+	/**
+	 * Style flag to enable showing e-mail addresses of authors and committers.
+	 */
+	static final int FLAG_EMAIL_ADDRESSES = 1 << 1;
+
+	/**
+	 * Style flag to enable using the history column preferences to switch on or
+	 * off individual columns.
+	 */
+	static final int FLAG_VARIABLE_COLUMNS = 1 << 2;
+
 	static Font highlightFont() {
 		final Font n, h;
 
@@ -167,22 +190,37 @@ class CommitGraphTable {
 
 	private boolean enableAntialias = true;
 
+	/**
+	 * Creates a new {@link CommitGraphTable} using the given
+	 * {@link TableLoader} and {@link ResourceManager} with the given style.
+	 *
+	 * @param parent
+	 *            {@link Composite} to contain the table
+	 * @param loader
+	 *            {@link TableLoader} to use for loading commits not yet in the
+	 *            table
+	 * @param resources
+	 *            {@link ResourceManager} to use for SWT resources
+	 * @param style
+	 *            style bits; a combination of {@link #FLAG_EMAIL_ADDRESSES},
+	 *            {@link #FLAG_SINGLE_SELECT}, and
+	 *            {@link #FLAG_VARIABLE_COLUMNS}, or {@link #FLAG_NONE}
+	 */
 	CommitGraphTable(Composite parent, TableLoader loader,
-			ResourceManager resources, boolean canShowEmailAddresses) {
-		this(parent, loader, resources, canShowEmailAddresses, false);
-	}
-
-	CommitGraphTable(Composite parent, final TableLoader loader,
-			final ResourceManager resources, boolean canShowEmailAddresses,
-			boolean useColumnPreferences) {
+			ResourceManager resources, int style) {
 		nFont = UIUtils.getFont(UIPreferences.THEME_CommitGraphNormalFont);
 		hFont = highlightFont();
 		tableLoader = loader;
 
 		tableContainer = new Composite(parent, SWT.NONE);
-		final Table rawTable = new Table(tableContainer,
-				SWT.MULTI | SWT.H_SCROLL | SWT.V_SCROLL | SWT.BORDER
-						| SWT.FULL_SELECTION | SWT.VIRTUAL);
+		int swtStyle = SWT.H_SCROLL | SWT.V_SCROLL | SWT.BORDER
+				| SWT.FULL_SELECTION | SWT.VIRTUAL;
+		if ((style & FLAG_SINGLE_SELECT) != 0) {
+			swtStyle |= SWT.SINGLE;
+		} else {
+			swtStyle |= SWT.MULTI;
+		}
+		final Table rawTable = new Table(tableContainer, swtStyle);
 		rawTable.setHeaderVisible(true);
 		rawTable.setLinesVisible(false);
 		rawTable.setFont(nFont);
@@ -240,7 +278,7 @@ class CommitGraphTable {
 				columnLayouts.length);
 		System.arraycopy(columnLayouts, 0, baseLayouts, 0,
 				columnLayouts.length);
-		if (useColumnPreferences) {
+		if ((style & FLAG_VARIABLE_COLUMNS) != 0) {
 			IPreferenceStore store = Activator.getDefault()
 					.getPreferenceStore();
 			applyColumnPreferences(store, rawTable);
@@ -284,7 +322,7 @@ class CommitGraphTable {
 		};
 
 		GraphLabelProvider graphLabelProvider = new GraphLabelProvider(
-				canShowEmailAddresses);
+				(style & FLAG_EMAIL_ADDRESSES) != 0);
 		graphLabelProvider.addListener(new ILabelProviderListener() {
 			@Override
 			public void labelProviderChanged(LabelProviderChangedEvent event) {
@@ -336,10 +374,31 @@ class CommitGraphTable {
 				new CommitDragSourceListener());
 	}
 
-	CommitGraphTable(final Composite parent, final IPageSite site,
-			final MenuManager menuMgr, final TableLoader loader,
-			final ResourceManager resources) {
-		this(parent, loader, resources, true, true);
+	/**
+	 * Creates a new {@link CommitGraphTable} using the given
+	 * {@link TableLoader} and {@link ResourceManager}, using the given
+	 * {@link IPageSite} and {@link MenuManager}.
+	 * <p>
+	 * The table is created with the style bits {{@link #FLAG_EMAIL_ADDRESSES}
+	 * and {@link #FLAG_VARIABLE_COLUMNS}.
+	 * </p>
+	 *
+	 * @param parent
+	 *            {@link Composite} to contain the table
+	 * @param site
+	 *            {@link IPageSite} to use for getting services
+	 * @param menuMgr
+	 *            {@link MenuManager} for the context menu
+	 * @param loader
+	 *            {@link TableLoader} to use for loading commits not yet in the
+	 *            table
+	 * @param resources
+	 *            {@link ResourceManager} to use for SWT resources
+	 */
+	CommitGraphTable(Composite parent, IPageSite site, MenuManager menuMgr,
+			TableLoader loader, ResourceManager resources) {
+		this(parent, loader, resources,
+				FLAG_EMAIL_ADDRESSES | FLAG_VARIABLE_COLUMNS);
 
 		final IAction selectAll = ActionUtils.createGlobalAction(
 				ActionFactory.SELECT_ALL,

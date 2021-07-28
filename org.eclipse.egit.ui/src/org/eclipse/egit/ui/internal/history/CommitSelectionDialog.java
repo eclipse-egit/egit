@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (C) 2011, 2019 Mathias Kinzler <mathias.kinzler@sap.com> and others.
+ * Copyright (C) 2011, 2021 Mathias Kinzler <mathias.kinzler@sap.com> and others.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License 2.0
@@ -66,7 +66,7 @@ import org.eclipse.swt.widgets.Shell;
 import org.eclipse.ui.PlatformUI;
 
 /**
- * Allows to select a single commit
+ * Allows to select a single commit.
  */
 public class CommitSelectionDialog extends TitleAreaDialog {
 	private static final int BATCH_SIZE = 256;
@@ -134,7 +134,8 @@ public class CommitSelectionDialog extends TitleAreaDialog {
 		UIUtils.hookDisposal(main, resources);
 
 		// Table never shows e-mail addresses because it might get rather wide.
-		table = new CommitGraphTable(main, null, resources, false);
+		table = new CommitGraphTable(main, null, resources,
+				CommitGraphTable.FLAG_SINGLE_SELECT);
 		table.getTableView().addSelectionChangedListener(
 				new ISelectionChangedListener() {
 					@Override
