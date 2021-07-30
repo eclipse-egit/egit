@@ -45,10 +45,20 @@ public abstract class PartVisibilityListener implements IPartListener2 {
 		return viewVisible;
 	}
 
+	/**
+	 * Sets the visibility state of the part.
+	 *
+	 * @param visible
+	 *            whether the part is visible
+	 */
+	protected void setVisible(boolean visible) {
+		viewVisible = visible;
+	}
+
 	private void updateHiddenState(IWorkbenchPartReference partRef,
 			boolean visible) {
 		if (isMe(partRef)) {
-			viewVisible = visible;
+			setVisible(visible);
 		}
 	}
 
