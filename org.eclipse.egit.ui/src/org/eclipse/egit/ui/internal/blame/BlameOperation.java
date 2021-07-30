@@ -26,19 +26,29 @@ import org.eclipse.core.runtime.Adapters;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IAdaptable;
 import org.eclipse.core.runtime.IProgressMonitor;
+import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Platform;
+import org.eclipse.core.runtime.Status;
 import org.eclipse.core.runtime.SubMonitor;
 import org.eclipse.core.runtime.jobs.ISchedulingRule;
+import org.eclipse.core.runtime.jobs.Job;
 import org.eclipse.egit.core.internal.storage.CommitFileRevision;
 import org.eclipse.egit.core.op.IEGitOperation;
 import org.eclipse.egit.ui.Activator;
+import org.eclipse.egit.ui.JobFamilies;
 import org.eclipse.egit.ui.UIPreferences;
 import org.eclipse.egit.ui.internal.EgitUiEditorUtils;
+import org.eclipse.egit.ui.internal.UIText;
+import org.eclipse.egit.ui.internal.components.PartVisibilityListener;
+import org.eclipse.egit.ui.internal.decorators.GitQuickDiffProvider;
 import org.eclipse.egit.ui.internal.history.GitHistoryPage;
 import org.eclipse.egit.ui.internal.history.HistoryPageInput;
 import org.eclipse.egit.ui.internal.revision.FileRevisionEditorInput;
+import org.eclipse.jface.action.Action;
+import org.eclipse.jface.action.IAction;
 import org.eclipse.jface.text.BadLocationException;
 import org.eclipse.jface.text.IDocument;
+import org.eclipse.jface.text.IInformationControlCreator;
 import org.eclipse.jface.text.revisions.IRevisionRulerColumn;
 import org.eclipse.jface.text.revisions.IRevisionRulerColumnExtension;
 import org.eclipse.jface.text.revisions.RevisionInformation;
@@ -50,23 +60,37 @@ import org.eclipse.jface.viewers.SelectionChangedEvent;
 import org.eclipse.jgit.api.BlameCommand;
 import org.eclipse.jgit.blame.BlameResult;
 import org.eclipse.jgit.diff.RawTextComparator;
+import org.eclipse.jgit.events.ListenerHandle;
+import org.eclipse.jgit.events.RefsChangedEvent;
+import org.eclipse.jgit.events.RefsChangedListener;
 import org.eclipse.jgit.lib.Constants;
+import org.eclipse.jgit.lib.ObjectId;
 import org.eclipse.jgit.lib.Repository;
 import org.eclipse.jgit.revwalk.RevCommit;
+import org.eclipse.swt.SWTException;
+import org.eclipse.swt.widgets.Control;
+import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.team.ui.history.IHistoryPage;
 import org.eclipse.team.ui.history.IHistoryView;
 import org.eclipse.team.ui.history.RevisionAnnotationController;
 import org.eclipse.ui.IEditorPart;
+import org.eclipse.ui.IPartService;
 import org.eclipse.ui.IWorkbenchPage;
+import org.eclipse.ui.IWorkbenchPart;
+import org.eclipse.ui.IWorkbenchPartReference;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.part.MultiPageEditorPart;
 import org.eclipse.ui.texteditor.AbstractDecoratedTextEditor;
+import org.eclipse.ui.texteditor.ITextEditorActionConstants;
 
 /**
  * Blame operation
  */
 public class BlameOperation implements IEGitOperation {
+
+	private static final String QUICKDIFF_PROVIDER_ID = GitQuickDiffProvider.class
+			.getName();
 
 	static class BlameHistoryPageInput extends HistoryPageInput
 			implements IAdaptable {
@@ -252,21 +276,43 @@ public class BlameOperation implements IEGitOperation {
 	@Override
 	public void execute(IProgressMonitor monitor) throws CoreException {
 		SubMonitor progress = SubMonitor.convert(monitor, 3);
-		final RevisionInformation info = new RevisionInformation();
-
-		final BlameCommand command = new BlameCommand(repository)
-				.setFollowFileRenames(true).setFilePath(path);
-		if (startCommit != null)
-			command.setStartCommit(startCommit);
-		else {
+		RevisionInformation info;
+		ObjectId currentHead = null;
+		if (startCommit != null) {
+			info = computeRevisions(repository, startCommit, path,
+					progress.newChild(2));
+		} else {
 			try {
-				command.setStartCommit(repository.resolve(Constants.HEAD));
+				currentHead = repository.resolve(Constants.HEAD);
 			} catch (IOException e) {
 				Activator
 						.error("Error resolving HEAD for showing annotations in repository: " + repository, e); //$NON-NLS-1$
 				return;
 			}
+			info = computeRevisions(repository, currentHead, path,
+					progress.newChild(2));
 		}
+		if (info == null) {
+			return;
+		}
+		if (shell.isDisposed()) {
+			return;
+		}
+		if (fileRevision != null) {
+			storage = fileRevision.getStorage(progress.newChild(1));
+		} else {
+			progress.worked(1);
+		}
+		ObjectId headId = currentHead;
+		shell.getDisplay().asyncExec(() -> openEditor(info, headId));
+	}
+
+	private static RevisionInformation computeRevisions(Repository repo,
+			ObjectId start, String path, IProgressMonitor monitor) {
+		SubMonitor progress = SubMonitor.convert(monitor, 2);
+		RevisionInformation info = new RevisionInformation();
+		BlameCommand command = new BlameCommand(repo).setFollowFileRenames(true)
+				.setFilePath(path).setStartCommit(start);
 		if (Activator.getDefault().getPreferenceStore()
 				.getBoolean(UIPreferences.BLAME_IGNORE_WHITESPACE))
 			command.setTextComparator(RawTextComparator.WS_IGNORE_ALL);
@@ -276,12 +322,12 @@ public class BlameOperation implements IEGitOperation {
 			result = command.call();
 		} catch (Exception e1) {
 			Activator.error(e1.getMessage(), e1);
-			return;
+			return null;
 		}
 		progress.worked(1);
-		if (result == null)
-			return;
-
+		if (result == null) {
+			return null;
+		}
 		Map<RevCommit, BlameRevision> revisions = new HashMap<>();
 		int lineCount = result.getResultContents().size();
 		BlameRevision previous = null;
@@ -299,7 +345,7 @@ public class BlameOperation implements IEGitOperation {
 			BlameRevision revision = revisions.get(commit);
 			if (revision == null) {
 				revision = new BlameRevision();
-				revision.setRepository(repository);
+				revision.setRepository(repo);
 				revision.setCommit(commit);
 				revision.setSourcePath(sourcePath);
 				revisions.put(commit, revision);
@@ -307,37 +353,23 @@ public class BlameOperation implements IEGitOperation {
 			}
 			revision.addSourceLine(i, result.getSourceLine(i));
 			if (previous != null)
-				if (previous == revision)
+				if (previous == revision) {
 					previous.addLine();
-				else {
+				} else {
 					previous.register();
 					previous = revision.reset(i);
 				}
-			else
+			else {
 				previous = revision.reset(i);
-		}
-		if (previous != null)
-			previous.register();
-
-		progress.worked(1);
-		if (shell.isDisposed()) {
-			return;
-		}
-
-		if (fileRevision != null) {
-			storage = fileRevision.getStorage(progress.newChild(1));
-		} else {
-			progress.worked(1);
-		}
-		shell.getDisplay().asyncExec(new Runnable() {
-			@Override
-			public void run() {
-				openEditor(info);
 			}
-		});
+		}
+		if (previous != null) {
+			previous.register();
+		}
+		return info;
 	}
 
-	private void openEditor(final RevisionInformation info) {
+	private void openEditor(RevisionInformation info, ObjectId currentHead) {
 		IEditorPart editorPart;
 		try {
 			if (storage instanceof IFile) {
@@ -378,8 +410,7 @@ public class BlameOperation implements IEGitOperation {
 		info.setHoverControlCreator(creator);
 		info.setInformationPresenterControlCreator(creator);
 
-		editor.showRevisionInformation(info,
-				"org.eclipse.egit.ui.internal.decorators.GitQuickDiffProvider"); //$NON-NLS-1$
+		editor.showRevisionInformation(info, QUICKDIFF_PROVIDER_ID);
 
 		if (lineNumberToReveal >= 0) {
 			IDocument document = editor.getDocumentProvider().getDocument(
@@ -396,16 +427,191 @@ public class BlameOperation implements IEGitOperation {
 
 		IRevisionRulerColumn revisionRuler = Adapters.adapt(editor,
 				IRevisionRulerColumn.class);
-		if (revisionRuler instanceof IRevisionRulerColumnExtension)
-			((IRevisionRulerColumnExtension) revisionRuler)
-					.getRevisionSelectionProvider()
-					.addSelectionChangedListener(
-							new RevisionSelectionHandler(repository, path,
-									storage));
+		if (revisionRuler != null) {
+			if (revisionRuler instanceof IRevisionRulerColumnExtension) {
+				String flagName = getClass().getName() + ".selectionHandler"; //$NON-NLS-1$
+				Control control = revisionRuler.getControl();
+				Object flag = control.getData(flagName);
+				if (flag == null) {
+					((IRevisionRulerColumnExtension) revisionRuler)
+							.getRevisionSelectionProvider()
+							.addSelectionChangedListener(
+									new RevisionSelectionHandler(repository,
+											path, storage));
+					control.setData(flagName, Boolean.TRUE);
+				}
+			}
+			if (currentHead != null && storage instanceof IFile
+					&& editor.isChangeInformationShowing()) {
+				refreshOnHeadChange(editor, revisionRuler, creator,
+						currentHead);
+			}
+		}
+	}
+
+	private void refreshOnHeadChange(AbstractDecoratedTextEditor editor,
+			IRevisionRulerColumn ruler,
+			IInformationControlCreator hoverPopupCreator,
+			ObjectId currentHead) {
+		String flagName = getClass().getName() + ".editorHooks"; //$NON-NLS-1$
+		Control control = ruler.getControl();
+		Object flag = control.getData(flagName);
+		if (flag != null) {
+			// Editor already hooked
+			return;
+		}
+		EditorVisibilityTracker visibilityTracker = new EditorVisibilityTracker(
+				editor);
+		IPartService partService = editor.getEditorSite()
+				.getService(IPartService.class);
+		partService.addPartListener(visibilityTracker);
+		RefsChangedListener refsTracker = new RefsChangedListener() {
+
+			private ObjectId lastHead = currentHead;
+
+			@Override
+			public void onRefsChanged(RefsChangedEvent event) {
+				try {
+					ObjectId head = event.getRepository()
+							.resolve(Constants.HEAD);
+					if (!lastHead.equals(head)) {
+						lastHead = head;
+						Display display = PlatformUI.getWorkbench()
+								.getDisplay();
+						if (display != null && !display.isDisposed()) {
+							display.asyncExec(() -> {
+								if (editor.isChangeInformationShowing()) {
+									visibilityTracker.runWhenVisible(
+											() -> updateBlame(head, ruler,
+													hoverPopupCreator, editor));
+								}
+							});
+						}
+					}
+				} catch (IOException e) {
+					Activator.logError(e.getLocalizedMessage(), e);
+				}
+			}
+		};
+		ListenerHandle handle = repository.getListenerList()
+				.addRefsChangedListener(refsTracker);
+		control.setData(flagName, Boolean.TRUE);
+		// We don't get any event when revision information is hidden. So we
+		// have to hack a bit and replace the action to be able to remove our
+		// listeners when revisions are hidden.
+		IAction existingAction = editor
+				.getAction(ITextEditorActionConstants.REVISION_HIDE_INFO);
+		Action newAction = new Action(existingAction.getText()) {
+
+			@Override
+			public void run() {
+				control.setData(flagName, null);
+				handle.remove();
+				partService.removePartListener(visibilityTracker);
+				editor.setAction(ITextEditorActionConstants.REVISION_HIDE_INFO,
+						existingAction);
+				existingAction.run();
+			}
+		};
+		newAction.setToolTipText(existingAction.getToolTipText());
+		newAction.setDescription(existingAction.getDescription());
+		newAction.setImageDescriptor(existingAction.getImageDescriptor());
+		editor.setAction(ITextEditorActionConstants.REVISION_HIDE_INFO,
+				newAction);
+		// Remove the listeners when the editor is disposed.
+		ruler.getControl().addDisposeListener(event -> {
+			handle.remove();
+			partService.removePartListener(visibilityTracker);
+		});
+	}
+
+	private void updateBlame(ObjectId head, IRevisionRulerColumn ruler,
+			IInformationControlCreator hoverPopupCreator,
+			AbstractDecoratedTextEditor editor) {
+		Job blamer = new Job(UIText.ShowBlameHandler_JobName) {
+
+			@Override
+			protected IStatus run(IProgressMonitor monitor) {
+				try {
+					RevisionInformation info = computeRevisions(repository,
+							head, path, monitor);
+					Control control = ruler.getControl();
+					Display display = control.getDisplay();
+					display.asyncExec(() -> {
+						if (!control.isDisposed()) {
+							info.setHoverControlCreator(hoverPopupCreator);
+							info.setInformationPresenterControlCreator(
+									hoverPopupCreator);
+							if (editor.isChangeInformationShowing()) {
+								editor.showRevisionInformation(info,
+										QUICKDIFF_PROVIDER_ID);
+							}
+						}
+					});
+					return Status.OK_STATUS;
+				} catch (SWTException e) {
+					// Already disposed?
+					return Status.CANCEL_STATUS;
+				} catch (RuntimeException e) {
+					return Activator.createErrorStatus(e.getLocalizedMessage(),
+							e);
+				} finally {
+					monitor.done();
+				}
+			}
+
+			@Override
+			public boolean belongsTo(Object family) {
+				return JobFamilies.BLAME == family || super.belongsTo(family);
+			}
+		};
+		blamer.setUser(false);
+		blamer.setSystem(true);
+		blamer.schedule();
 	}
 
 	@Override
 	public ISchedulingRule getSchedulingRule() {
 		return null;
+	}
+
+	/**
+	 * Tracks the visibility of an (editor) part and can run code only if the
+	 * part is currently visible. If it is not, the code will be run when that
+	 * part becomes visible.
+	 */
+	private static class EditorVisibilityTracker
+			extends PartVisibilityListener {
+
+		private Runnable blameComputer;
+
+		public EditorVisibilityTracker(IWorkbenchPart part) {
+			super(part);
+		}
+
+		public void runWhenVisible(Runnable computer) {
+			if (isVisible()) {
+				computer.run();
+			} else {
+				blameComputer = computer;
+			}
+		}
+
+		@Override
+		protected void setVisible(boolean visible) {
+			super.setVisible(visible);
+			if (visible && blameComputer != null) {
+				try {
+					blameComputer.run();
+				} finally {
+					blameComputer = null;
+				}
+			}
+		}
+
+		@Override
+		public void partActivated(IWorkbenchPartReference partRef) {
+			// Nothing to do
+		}
 	}
 }
