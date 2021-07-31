@@ -58,6 +58,8 @@ public class BlameRevision extends Revision {
 
 	private Map<RevCommit, Diff> diffToParentCommit = new HashMap<>();
 
+	private int activeLineNumber = -1;
+
 	@Override
 	public Object getHoverInfo() {
 		return this;
@@ -79,6 +81,25 @@ public class BlameRevision extends Revision {
 		if( person == null)
 			person = commit.getCommitterIdent();
 		return person != null ? person.getWhen() : new Date(0);
+	}
+
+	/**
+	 * Retrieves the last {@link #setActiveLineNumber(int)}.
+	 *
+	 * @return the line number, -1 if not set
+	 */
+	int getActiveLineNumber() {
+		return activeLineNumber;
+	}
+
+	/**
+	 * Sets the active line number.
+	 *
+	 * @param lineNumber
+	 *            to set
+	 */
+	public void setActiveLineNumber(int lineNumber) {
+		activeLineNumber = lineNumber;
 	}
 
 	/**

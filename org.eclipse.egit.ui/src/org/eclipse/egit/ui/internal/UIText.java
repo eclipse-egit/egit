@@ -177,10 +177,19 @@ public class UIText extends NLS {
 	public static String BlameInformationControl_DiffHeaderLabel;
 
 	/** */
+	public static String BlameInformationControl_OpenCommitLabel;
+
+	/** */
 	public static String BlameInformationControl_OpenCommitLink;
 
 	/** */
+	public static String BlameInformationControl_OpenCommitTooltip;
+
+	/** */
 	public static String BlameInformationControl_ShowAnnotationsLink;
+
+	/** */
+	public static String BlameInformationControl_ShowInHistoryLabel;
 
 	/** */
 	public static String BlameInformationControl_ShowInHistoryLink;

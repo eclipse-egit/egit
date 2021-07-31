@@ -1,5 +1,5 @@
 /******************************************************************************
- *  Copyright (c) 2011, 2016 GitHub Inc and others.
+ *  Copyright (c) 2011, 2021 GitHub Inc and others.
  *  All rights reserved. This program and the accompanying materials
  *  are made available under the terms of the Eclipse Public License 2.0
  *  which accompanies this distribution, and is available at
@@ -28,6 +28,7 @@ import org.eclipse.egit.ui.UIPreferences;
 import org.eclipse.egit.ui.UIUtils;
 import org.eclipse.egit.ui.internal.CompareUtils;
 import org.eclipse.egit.ui.internal.PreferenceBasedDateFormatter;
+import org.eclipse.egit.ui.internal.UIIcons;
 import org.eclipse.egit.ui.internal.UIText;
 import org.eclipse.egit.ui.internal.blame.BlameOperation.BlameHistoryPageInput;
 import org.eclipse.egit.ui.internal.blame.BlameRevision.Diff;
@@ -38,11 +39,14 @@ import org.eclipse.egit.ui.internal.commit.DiffViewer;
 import org.eclipse.egit.ui.internal.commit.RepositoryCommit;
 import org.eclipse.egit.ui.internal.history.FileDiff;
 import org.eclipse.egit.ui.internal.history.HistoryPageInput;
+import org.eclipse.jface.action.Action;
+import org.eclipse.jface.action.IAction;
 import org.eclipse.jface.action.ToolBarManager;
 import org.eclipse.jface.layout.GridDataFactory;
 import org.eclipse.jface.layout.GridLayoutFactory;
 import org.eclipse.jface.resource.JFaceResources;
 import org.eclipse.jface.text.AbstractInformationControl;
+import org.eclipse.jface.text.BadLocationException;
 import org.eclipse.jface.text.IInformationControlCreator;
 import org.eclipse.jface.text.IInformationControlExtension2;
 import org.eclipse.jface.text.source.IVerticalRulerInfo;
@@ -79,11 +83,7 @@ import org.eclipse.ui.editors.text.EditorsUI;
 public class BlameInformationControl extends AbstractInformationControl
 		implements IInformationControlExtension2 {
 
-	private IInformationControlCreator creator;
-
 	private IVerticalRulerInfo rulerInfo;
-
-	private BlameInformationControl hoverInformationControl;
 
 	private BlameRevision revision;
 
@@ -102,7 +102,7 @@ public class BlameInformationControl extends AbstractInformationControl
 	/**
 	 * 0-based line number
 	 */
-	private int revisionRulerLineNumber;
+	private int revisionRulerLineNumber = -1;
 
 	private Composite diffComposite;
 
@@ -110,41 +110,55 @@ public class BlameInformationControl extends AbstractInformationControl
 
 	private SelectionAdapter showAnnotationsLinkSelectionAdapter;
 
+	private IAction openCommit;
+
+	private IAction showInHistory;
+
+	private boolean expectLineNumberInRevision;
+
+	private IInformationControlCreator createEnriched;
+
 	/**
 	 * Create the information control for showing details on hover.
 	 *
 	 * @param parentShell
-	 * @param creator
+	 *            for the control
 	 * @param rulerInfo
+	 *            to get the last hovered-over line number from
 	 */
 	public BlameInformationControl(Shell parentShell,
-			IInformationControlCreator creator, IVerticalRulerInfo rulerInfo) {
-		super(parentShell, false);
-		this.creator = creator;
+			IVerticalRulerInfo rulerInfo) {
+		super(parentShell, EditorsUI.getTooltipAffordanceString());
 		this.rulerInfo = rulerInfo;
 		create();
 	}
 
 	/**
-	 * Create the enriched information control that is shown when moving the
-	 * mouse over the control that was shown on hover (making it sticky).
+	 * Create the enriched sticky information control that is shown when moving
+	 * the mouse over the control that was shown on hover, or when F2 is hit.
 	 *
 	 * @param parentShell
-	 * @param hoverInformationControl
-	 *            the control that was used on hover (used for getting the
-	 *            correct line that was hovered)
+	 *            for the control
+	 * @param rulerInfo
+	 *            to get the last hovered-over line number from if not found in
+	 *            the revision
+	 * @param expectLineNumberInRevision
+	 *            whether to try to get the line number from the revision
 	 */
-	public BlameInformationControl(Shell parentShell,
-			BlameInformationControl hoverInformationControl) {
-		// Make resizable and have a bottom bar for moving around
-		super(parentShell, new ToolBarManager());
-		this.hoverInformationControl = hoverInformationControl;
+	BlameInformationControl(Shell parentShell, IVerticalRulerInfo rulerInfo,
+			boolean expectLineNumberInRevision) {
+		super(parentShell, new ToolBarManager(SWT.FLAT));
+		this.expectLineNumberInRevision = expectLineNumberInRevision;
 		create();
 	}
 
 	@Override
 	public IInformationControlCreator getInformationPresenterControlCreator() {
-		return this.creator;
+		if (createEnriched == null) {
+			createEnriched = parentShell -> new BlameInformationControl(
+					parentShell, rulerInfo, true);
+		}
+		return createEnriched;
 	}
 
 	@Override
@@ -165,8 +179,7 @@ public class BlameInformationControl extends AbstractInformationControl
 		GridLayoutFactory.swtDefaults().equalWidth(true).applyTo(displayArea);
 
 		Composite commitHeader = new Composite(displayArea, SWT.NONE);
-		commitHeader.setLayout(GridLayoutFactory.fillDefaults().numColumns(3)
-				.create());
+		GridLayoutFactory.fillDefaults().numColumns(3).applyTo(commitHeader);
 		GridDataFactory.fillDefaults().grab(true, false).applyTo(commitHeader);
 
 		commitLabel = new Label(commitHeader, SWT.READ_ONLY);
@@ -213,7 +226,35 @@ public class BlameInformationControl extends AbstractInformationControl
 		messageText.setEditable(false);
 		messageText.setFont(UIUtils
 				.getFont(UIPreferences.THEME_CommitMessageFont));
-		GridDataFactory.fillDefaults().grab(true, true).applyTo(messageText);
+		GridDataFactory.fillDefaults().grab(true, false).applyTo(messageText);
+
+		separator = new Label(displayArea, SWT.HORIZONTAL | SWT.SEPARATOR);
+		GridDataFactory.fillDefaults().grab(true, false).applyTo(separator);
+
+		ToolBarManager toolbar = getToolBarManager();
+		if (toolbar != null) {
+			openCommit = new Action(
+					UIText.BlameInformationControl_OpenCommitLabel,
+					UIIcons.OPEN_COMMIT) {
+
+				@Override
+				public void run() {
+					openCommit();
+				}
+			};
+			toolbar.add(openCommit);
+			showInHistory = new Action(
+					UIText.BlameInformationControl_ShowInHistoryLabel,
+					UIIcons.HISTORY) {
+
+				@Override
+				public void run() {
+					showCommitInHistory();
+				}
+			};
+			toolbar.add(showInHistory);
+			toolbar.update(true);
+		}
 	}
 
 	@Override
@@ -259,10 +300,14 @@ public class BlameInformationControl extends AbstractInformationControl
 
 		// Remember line number that was hovered over when the input was set.
 		// Used for showing the diff hunk of this line instead of the full diff.
-		if (rulerInfo != null)
+		if (expectLineNumberInRevision) {
+			revisionRulerLineNumber = revision.getActiveLineNumber();
+		}
+		if (rulerInfo != null && revisionRulerLineNumber < 0) {
 			revisionRulerLineNumber = rulerInfo
 					.getLineOfLastMouseButtonActivity();
-
+			revision.setActiveLineNumber(revisionRulerLineNumber);
+		}
 		RevCommit commit = this.revision.getCommit();
 
 		String linkText = MessageFormat.format(
@@ -297,6 +342,11 @@ public class BlameInformationControl extends AbstractInformationControl
 
 		createDiffs();
 
+		if (openCommit != null) {
+			openCommit.setToolTipText(MessageFormat.format(
+					UIText.BlameInformationControl_OpenCommitTooltip,
+					Utils.getShortObjectId(commit)));
+		}
 		displayArea.layout();
 		scrolls.setMinSize(displayArea.computeSize(SWT.DEFAULT, SWT.DEFAULT));
 	}
@@ -319,9 +369,8 @@ public class BlameInformationControl extends AbstractInformationControl
 
 	private void createDiffComposite() {
 		diffComposite = new Composite(displayArea, SWT.NONE);
-		diffComposite.setLayoutData(GridDataFactory.fillDefaults()
-				.grab(true, true).create());
-		diffComposite.setLayout(GridLayoutFactory.fillDefaults().create());
+		GridDataFactory.fillDefaults().grab(true, true).applyTo(diffComposite);
+		GridLayoutFactory.fillDefaults().applyTo(diffComposite);
 	}
 
 	private void createDiff(RevCommit parent) {
@@ -351,8 +400,7 @@ public class BlameInformationControl extends AbstractInformationControl
 			parentLine = null;
 
 		Composite header = new Composite(diffComposite, SWT.NONE);
-		header.setLayout(GridLayoutFactory.fillDefaults().numColumns(2)
-				.create());
+		GridLayoutFactory.fillDefaults().numColumns(2).applyTo(header);
 
 		Label diffHeaderLabel = new Label(header, SWT.NONE);
 		diffHeaderLabel.setText(NLS.bind(
@@ -374,8 +422,8 @@ public class BlameInformationControl extends AbstractInformationControl
 		DiffViewer diffText = new DiffViewer(diffComposite, null, SWT.NONE);
 		diffText.configure(
 				new DiffViewer.Configuration(EditorsUI.getPreferenceStore()));
-		diffText.getControl().setLayoutData(
-				GridDataFactory.fillDefaults().grab(true, true).create());
+		GridDataFactory.fillDefaults().grab(true, true)
+				.applyTo(diffText.getControl());
 
 		DiffDocument document = new DiffDocument();
 		try (DiffRegionFormatter diffFormatter = new DiffRegionFormatter(
@@ -384,7 +432,19 @@ public class BlameInformationControl extends AbstractInformationControl
 			diffFormatter.setRepository(revision.getRepository());
 			diffFormatter.format(interestingDiff, diff.getOldText(),
 					diff.getNewText());
-
+			// Remove the last empty line
+			try {
+				int nLines = document.getNumberOfLines();
+				if (nLines > 0) {
+					int lastLineLength = document.getLineLength(nLines - 1);
+					if (lastLineLength == 0) {
+						int lineStart = document.getLineOffset(nLines - 1);
+						document.set(document.get(0, lineStart - 1));
+					}
+				}
+			} catch (BadLocationException e) {
+				// Ignore
+			}
 			try (ObjectReader reader = revision.getRepository()
 					.newObjectReader()) {
 				DiffEntry diffEntry = CompareCoreUtils.getChangeDiffEntry(
@@ -421,14 +481,8 @@ public class BlameInformationControl extends AbstractInformationControl
 	/**
 	 * @return 0-based line number of hover
 	 */
-	private int getHoverLineNumber() {
-		// If this is the enriched control, we have to use the line number of
-		// the original hover control, otherwise the line number may have
-		// changed if the mouse moved over another area.
-		if (hoverInformationControl != null)
-			return hoverInformationControl.getHoverLineNumber();
-		else
-			return revisionRulerLineNumber;
+	int getHoverLineNumber() {
+		return revisionRulerLineNumber;
 	}
 
 	private void openCommit() {

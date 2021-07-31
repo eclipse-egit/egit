@@ -53,6 +53,7 @@ import org.eclipse.jface.text.revisions.IRevisionRulerColumn;
 import org.eclipse.jface.text.revisions.IRevisionRulerColumnExtension;
 import org.eclipse.jface.text.revisions.RevisionInformation;
 import org.eclipse.jface.text.source.IVerticalRulerInfo;
+import org.eclipse.jface.util.Geometry;
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.ISelectionChangedListener;
 import org.eclipse.jface.viewers.IStructuredSelection;
@@ -68,6 +69,7 @@ import org.eclipse.jgit.lib.ObjectId;
 import org.eclipse.jgit.lib.Repository;
 import org.eclipse.jgit.revwalk.RevCommit;
 import org.eclipse.swt.SWTException;
+import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Shell;
@@ -405,10 +407,11 @@ public class BlameOperation implements IEGitOperation {
 		IVerticalRulerInfo rulerInfo = Adapters.adapt(editor,
 				IVerticalRulerInfo.class);
 
-		BlameInformationControlCreator creator = new BlameInformationControlCreator(
-				rulerInfo);
+		HoverCreators provider = new HoverCreators(rulerInfo);
+		IInformationControlCreator creator = provider.hoverCreator();
+		IInformationControlCreator presenter = provider.stickyHoverCreator();
 		info.setHoverControlCreator(creator);
-		info.setInformationPresenterControlCreator(creator);
+		info.setInformationPresenterControlCreator(presenter);
 
 		editor.showRevisionInformation(info, QUICKDIFF_PROVIDER_ID);
 
@@ -443,7 +446,7 @@ public class BlameOperation implements IEGitOperation {
 			}
 			if (currentHead != null && storage instanceof IFile
 					&& editor.isChangeInformationShowing()) {
-				refreshOnHeadChange(editor, revisionRuler, creator,
+				refreshOnHeadChange(editor, revisionRuler, creator, presenter,
 						currentHead);
 			}
 		}
@@ -452,6 +455,7 @@ public class BlameOperation implements IEGitOperation {
 	private void refreshOnHeadChange(AbstractDecoratedTextEditor editor,
 			IRevisionRulerColumn ruler,
 			IInformationControlCreator hoverPopupCreator,
+			IInformationControlCreator hoverPresenter,
 			ObjectId currentHead) {
 		String flagName = getClass().getName() + ".editorHooks"; //$NON-NLS-1$
 		Control control = ruler.getControl();
@@ -483,7 +487,8 @@ public class BlameOperation implements IEGitOperation {
 								if (editor.isChangeInformationShowing()) {
 									visibilityTracker.runWhenVisible(
 											() -> updateBlame(head, ruler,
-													hoverPopupCreator, editor));
+													hoverPopupCreator,
+													hoverPresenter, editor));
 								}
 							});
 						}
@@ -527,6 +532,7 @@ public class BlameOperation implements IEGitOperation {
 
 	private void updateBlame(ObjectId head, IRevisionRulerColumn ruler,
 			IInformationControlCreator hoverPopupCreator,
+			IInformationControlCreator hoverPresenter,
 			AbstractDecoratedTextEditor editor) {
 		Job blamer = new Job(UIText.ShowBlameHandler_JobName) {
 
@@ -541,7 +547,7 @@ public class BlameOperation implements IEGitOperation {
 						if (!control.isDisposed()) {
 							info.setHoverControlCreator(hoverPopupCreator);
 							info.setInformationPresenterControlCreator(
-									hoverPopupCreator);
+									hoverPresenter);
 							if (editor.isChangeInformationShowing()) {
 								editor.showRevisionInformation(info,
 										QUICKDIFF_PROVIDER_ID);
@@ -612,6 +618,64 @@ public class BlameOperation implements IEGitOperation {
 		@Override
 		public void partActivated(IWorkbenchPartReference partRef) {
 			// Nothing to do
+		}
+	}
+
+	/**
+	 * Making a hover sticky via F2 resets its size. So we tell the sticky hover
+	 * creator the size of the previously visible non-sticky hover, and use that
+	 * to compute the sticky hover's size <em>constraints</em>. This ensures
+	 * that the framework doesn't use its small fixed size constraints set in
+	 * org.eclipse.ui.internal.texteditor.FocusedInformationPresenter (100 x 12
+	 * characters) but the size of the non-sticky hover, and thus the hover size
+	 * remains the same between non-sticky and sticky hovers. The framework does
+	 * compute a slightly different location for the sticky hover, though, and
+	 * moves it a few pixels to the right.
+	 *
+	 * @see <a href="https://bugs.eclipse.org/bugs/show_bug.cgi?id=575197">bug
+	 *      575197</a>
+	 */
+	private static class HoverCreators {
+
+		private final IInformationControlCreator nonStickyCreator;
+
+		private final IInformationControlCreator stickyCreator;
+
+		private Point hoverSize;
+
+		HoverCreators(IVerticalRulerInfo rulerInfo) {
+			this.nonStickyCreator = parentShell -> new BlameInformationControl(
+					parentShell, rulerInfo) {
+
+				@Override
+				public Point computeSizeHint() {
+					Point size = super.computeSizeHint();
+					hoverSize = Geometry.copy(size);
+					return size;
+				}
+			};
+			this.stickyCreator = parentShell -> new BlameInformationControl(
+					parentShell, rulerInfo, true) {
+
+				@Override
+				public Point computeSizeConstraints(int widthInChars,
+						int heightInChars) {
+					Point size = super.computeSizeConstraints(widthInChars,
+							heightInChars);
+					if (hoverSize != null) {
+						size = Geometry.max(size, hoverSize);
+					}
+					return size;
+				}
+			};
+		}
+
+		public IInformationControlCreator hoverCreator() {
+			return nonStickyCreator;
+		}
+
+		public IInformationControlCreator stickyHoverCreator() {
+			return stickyCreator;
 		}
 	}
 }
