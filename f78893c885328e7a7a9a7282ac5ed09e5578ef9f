@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c125c1ee_4c343a49",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2021-07-31T20:49:12Z",
+      "side": 1,
+      "message": "In particular, Dani mentioned in bug 358232 \"Compare with Previous\". I see two comparisons that might make sense here:\n\n* Compare the blamed commit with its (first) parent.\n* Compare the file currently shown with blamed commit.\n\nThe latter is currently not properly doable if the file shown is an IFile (i.e., from the working tree). Blame follows renames, which is good, but comparisons working tree vs. commit don\u0027t work if renames are involved. (Right side comes up empty.) We have an open bug about it somewhere. Fixing that looks like a lot of work; first, the comparison setup would need to do rename tracking from the start commit to the blamed commit, and then rename tracking would also have to be active until the ancestor (merge base) to find the right git path in that version.",
+      "range": {
+        "startLine": 12,
+        "startChar": 40,
+        "endLine": 12,
+        "endChar": 52
+      },
+      "revId": "f78893c885328e7a7a9a7282ac5ed09e5578ef9f",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": true
+    }
+  ]
+}
