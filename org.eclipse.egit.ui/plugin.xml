@@ -7343,6 +7343,16 @@
       </command>
    </extension>
    <extension
+         name="%CompareViewerCommands.extension.name"
+         point="org.eclipse.ui.commands">
+      <command
+            id="org.eclipse.egit.ui.CompareWithEachOther"
+            name="%CompareWithEachOtherCommand.name"
+            categoryId="org.eclipse.compare.ui.category.compare"
+            description="%CompareWithEachOtherCommand.description">
+      </command>
+   </extension>
+   <extension
          point="org.eclipse.ui.newWizards">
       <wizard
             category="org.eclipse.egit.ui.wizardCategory"

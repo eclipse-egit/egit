@@ -5536,6 +5536,9 @@ public class UIText extends NLS {
 	public static String GitMergeEditorInput_CheckingResourcesTaskName;
 
 	/** */
+	public static String GitMergeEditorInput_CompareWithEachOtherMenuLabel;
+
+	/** */
 	public static String GitMergeEditorInput_ErrorUpdatingIndex;
 
 	/** */
