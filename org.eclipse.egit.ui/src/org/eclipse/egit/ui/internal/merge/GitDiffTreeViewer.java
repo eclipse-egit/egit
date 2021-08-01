@@ -10,6 +10,8 @@
  *******************************************************************************/
 package org.eclipse.egit.ui.internal.merge;
 
+import java.util.Collection;
+
 import org.eclipse.compare.CompareConfiguration;
 import org.eclipse.compare.ICompareContainer;
 import org.eclipse.compare.structuremergeviewer.DiffTreeViewer;
@@ -23,6 +25,7 @@ import org.eclipse.jface.action.IAction;
 import org.eclipse.jface.action.IMenuManager;
 import org.eclipse.jface.action.Separator;
 import org.eclipse.jface.action.ToolBarManager;
+import org.eclipse.jface.viewers.OpenEvent;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.ui.ISharedImages;
 import org.eclipse.ui.IWorkbenchPart;
@@ -43,6 +46,8 @@ public class GitDiffTreeViewer extends DiffTreeViewer {
 
 	private IAction expandAction;
 
+	private Collection<IAction> extraActions;
+
 	/**
 	 * Creates a new {@link GitDiffTreeViewer}.
 	 *
@@ -60,6 +65,22 @@ public class GitDiffTreeViewer extends DiffTreeViewer {
 	}
 
 	@Override
+	public void fireOpen(OpenEvent event) {
+		// Make this accessible
+		super.fireOpen(event);
+	}
+
+	/**
+	 * Add more actions that shall be added to the context menu.
+	 *
+	 * @param actions
+	 *            to add
+	 */
+	public void setActions(Collection<IAction> actions) {
+		extraActions = actions;
+	}
+
+	@Override
 	protected void fillContextMenu(IMenuManager manager) {
 		super.fillContextMenu(manager);
 		if (!manager.isEmpty()) {
@@ -69,6 +90,10 @@ public class GitDiffTreeViewer extends DiffTreeViewer {
 				manager.add(UIUtils
 						.createShowInMenu(part.getSite().getWorkbenchWindow()));
 			}
+		}
+		if (extraActions != null && !extraActions.isEmpty()) {
+			manager.add(new Separator());
+			extraActions.forEach(manager::add);
 		}
 	}
 

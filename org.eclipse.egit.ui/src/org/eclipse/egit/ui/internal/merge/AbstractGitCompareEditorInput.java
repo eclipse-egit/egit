@@ -60,6 +60,7 @@ import org.eclipse.egit.core.internal.indexdiff.IndexDiffCache;
 import org.eclipse.egit.core.internal.indexdiff.IndexDiffCacheEntry;
 import org.eclipse.egit.core.internal.util.ResourceUtil;
 import org.eclipse.egit.ui.Activator;
+import org.eclipse.egit.ui.internal.UIIcons;
 import org.eclipse.egit.ui.internal.UIText;
 import org.eclipse.jface.action.ActionContributionItem;
 import org.eclipse.jface.action.IAction;
@@ -298,6 +299,11 @@ public abstract class AbstractGitCompareEditorInput extends CompareEditorInput {
 				}
 			}
 		});
+		IAction compareAction = new CompareWithEachOtherAction(viewer,
+				UIText.GitMergeEditorInput_CompareWithEachOtherMenuLabel,
+				UIIcons.ELCL16_COMPARE_VIEW);
+		viewer.setActions(Collections.singleton(compareAction));
+		registerAction(compareAction, CompareWithEachOtherAction.COMMAND_ID);
 		return viewer;
 	}
 
@@ -1006,6 +1012,11 @@ public abstract class AbstractGitCompareEditorInput extends CompareEditorInput {
 			super(parent, Differencer.NO_CHANGE);
 			this.name = name;
 			this.image = image;
+		}
+
+		@Override
+		public String getType() {
+			return ITypedElement.FOLDER_TYPE;
 		}
 
 		@Override

@@ -124,6 +124,10 @@ public class GitCompareLabelProvider extends BaseLabelProvider
 			ITypedElement item = ((DiffNode) input).getRight();
 			if (item instanceof FileRevisionTypedElement) {
 				return getLabel((FileRevisionTypedElement) item);
+			} else if (getResource(item) != null) {
+				return MessageFormat.format(
+						UIText.GitCompareFileRevisionEditorInput_LocalLabel,
+						item.getName());
 			}
 		}
 		return null;
