@@ -20,6 +20,7 @@
  * Copyright (C) 2017, Wim Jongman <wim.jongman@remainsoftware.com> bug 358152
  * Copyright (C) 2019, Alexander Nittka <alex@nittka.de> bug 545123
  * Copyright (C) 2019, Simon Muschel <smuschel@gmx.de> - Bug 451087, 451817
+ * Copyright (C) 2021, Trevor Kerby <trevorkerby@gmail.com> - Bug 433451
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License 2.0
@@ -3783,6 +3784,9 @@ public class UIText extends NLS {
 
 	/** */
 	public static String DeleteRepositoryConfirmDialog_DeleteRepositoryWindowTitle;
+
+	/** */
+	public static String DeleteRepositoryConfirmDialog_DeleteSymLinkCheckbox;
 
 	/** */
 	public static String DeleteRepositoryConfirmDialog_DeleteWorkingDirectoryCheckbox;
