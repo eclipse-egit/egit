@@ -376,6 +376,9 @@ public class UIText extends NLS {
 	public static String ExistingOrNewPage_RepoCreationInWorkspaceCreationWarning;
 
 	/** */
+	public static String ExistingOrNewPage_SeparateModeCheckbox;
+
+	/** */
 	public static String ExistingOrNewPage_SymbolicValueEmptyMapping;
 
 	/** */

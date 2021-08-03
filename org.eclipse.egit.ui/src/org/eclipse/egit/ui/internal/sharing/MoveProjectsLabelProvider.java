@@ -1,5 +1,6 @@
 /*******************************************************************************
  * Copyright (C) 2011, Mathias Kinzler <mathias.kinzler@sap.com>
+ * Copyright (C) 2021. Trevor Kerby <trevorkerby@gmail.com>
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License 2.0
@@ -27,6 +28,8 @@ public class MoveProjectsLabelProvider extends BaseLabelProvider implements
 		ITableLabelProvider {
 	IPath targetFolder;
 
+	boolean shouldAppendProjectName = true;
+
 	@Override
 	public Image getColumnImage(Object element, int columnIndex) {
 		if (columnIndex == 0)
@@ -53,8 +56,13 @@ public class MoveProjectsLabelProvider extends BaseLabelProvider implements
 			}
 			return null;
 		case 2:
-			if (targetFolder != null)
+			if (targetFolder != null) {
+				if (shouldAppendProjectName) {
 				return targetFolder.append(prj.getName()).toString();
+				} else {
+					return targetFolder.toString();
+				}
+			}
 			return null;
 		default:
 			return null;
