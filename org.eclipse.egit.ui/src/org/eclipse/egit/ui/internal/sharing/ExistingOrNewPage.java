@@ -2,6 +2,7 @@
  * Copyright (C) 2009, 2013 Robin Rosenberg and others.
  * Copyright (C) 2009, Mykola Nikishov <mn@mn.com.ua>
  * Copyright (C) 2011, Mathias Kinzler <mathias.kinzler@sap.com>
+ * Copyright (C) 2021, Trevor Kerby <trevorkerby@gmail.com>
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License 2.0
@@ -21,6 +22,7 @@ import java.util.Map;
 
 import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.IResource;
+import org.eclipse.core.resources.IWorkspaceRoot;
 import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IPath;
@@ -110,6 +112,8 @@ class ExistingOrNewPage extends WizardPage {
 
 	private Text workDir;
 
+	private Button browseWorkDir;
+
 	private Text relPath;
 
 	private Button browseRepository;
@@ -120,7 +124,9 @@ class ExistingOrNewPage extends WizardPage {
 
 	private final MoveProjectsLabelProvider moveProjectsLabelProvider = new MoveProjectsLabelProvider();
 
-	private boolean internalMode = false;
+	private Button separateModeButton;
+
+	private Button internalModeButton;
 
 	ExistingOrNewPage(SharingWizard w) {
 		super(ExistingOrNewPage.class.getName());
@@ -136,7 +142,7 @@ class ExistingOrNewPage extends WizardPage {
 		// use zero spacing to save some real estate here
 		GridLayoutFactory.fillDefaults().spacing(0, 0).applyTo(main);
 
-		final Button internalModeButton = new Button(main, SWT.CHECK);
+		internalModeButton = new Button(main, SWT.CHECK);
 		internalModeButton
 				.setText(UIText.ExistingOrNewPage_InternalModeCheckbox);
 		internalModeButton
@@ -144,10 +150,28 @@ class ExistingOrNewPage extends WizardPage {
 		internalModeButton.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
-				internalMode = internalModeButton.getSelection();
+				if (getInternalMode() && getSeparateMode()) {
+					separateModeButton.setSelection(false);
+				}
 				updateControls();
 			}
 		});
+
+		separateModeButton = new Button(main, SWT.CHECK);
+		separateModeButton
+				.setText(UIText.ExistingOrNewPage_SeparateModeCheckbox);
+		separateModeButton.addSelectionListener(new SelectionAdapter() {
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				if (getInternalMode() && getSeparateMode()) {
+					internalModeButton.setSelection(false);
+				}
+				updateControls();
+			}
+		});
+		if (myWizard.projects.length > 1) {
+			separateModeButton.setEnabled(false);
+		}
 
 		externalComposite = new Composite(main, SWT.NONE);
 		GridDataFactory.fillDefaults().grab(true, true)
@@ -184,11 +208,19 @@ class ExistingOrNewPage extends WizardPage {
 		createRepoWizard.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
-				NewRepositoryWizard wiz = new NewRepositoryWizard(true);
+				NewRepositoryWizard wiz = null;
+				if (myWizard.projects.length == 1) {
+					wiz = new NewRepositoryWizard(true, myWizard.projects[0]);
+				} else {
+					wiz = new NewRepositoryWizard(true);
+				}
 				if (new WizardDialog(getShell(), wiz).open() == Window.OK) {
 					v.refresh();
 					selectedRepository = wiz.getCreatedRepository();
 					v.setSelection(new StructuredSelection(selectedRepository));
+					if (wiz.hasSeparateGitDir()) {
+						separateModeButton.setSelection(true);
+					}
 					updateControls();
 				}
 			}
@@ -196,12 +228,30 @@ class ExistingOrNewPage extends WizardPage {
 
 		new Label(externalComposite, SWT.NONE)
 				.setText(UIText.ExistingOrNewPage_WorkingDirectoryLabel);
-		workDir = new Text(externalComposite, SWT.BORDER | SWT.READ_ONLY);
+		workDir = new Text(externalComposite, SWT.BORDER);
 		GridDataFactory.fillDefaults().grab(true, false).applyTo(workDir);
 		GridDataFactory.fillDefaults().applyTo(workDir);
-		// leave the space between the "Create" and "Browse" buttons empty (i.e.
-		// do not fill to the right border
-		new Label(externalComposite, SWT.NONE);
+		workDir.setEnabled(false);
+
+		browseWorkDir = new Button(externalComposite, SWT.PUSH);
+		browseWorkDir
+				.setText(UIText.ExistingOrNewPage_BrowseRepositoryButton);
+		browseWorkDir.addSelectionListener(new SelectionAdapter() {
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				File workspace = ResourcesPlugin.getWorkspace().getRoot()
+						.getLocation().toFile();
+				String result;
+				DirectoryDialog dialog = new DirectoryDialog(getShell());
+				dialog.setMessage(UIText.CreateRepositoryPage_PageMessage);
+				if (workspace.exists() && workspace.isDirectory()) {
+					dialog.setFilterPath(workspace.getPath());
+				}
+				result = dialog.open();
+				if (result != null)
+					workDir.setText(result);
+			}
+		});
 
 		new Label(externalComposite, SWT.NONE)
 				.setText(UIText.ExistingOrNewPage_RelativePathLabel);
@@ -477,7 +527,6 @@ class ExistingOrNewPage extends WizardPage {
 		setControl(main);
 
 		if (allProjectsInExistingRepos) {
-			internalMode = true;
 			internalModeButton.setSelection(true);
 			updateControls();
 		}
@@ -574,10 +623,43 @@ class ExistingOrNewPage extends WizardPage {
 	protected void updateControls() {
 		setMessage(null);
 		setErrorMessage(null);
-		if (!internalMode) {
+		if (!getInternalMode()) {
 			setDescription(UIText.ExistingOrNewPage_DescriptionExternalMode);
 			if (this.selectedRepository != null) {
-				workDir.setText(this.selectedRepository.getWorkTree().getPath());
+				if (getSeparateMode()) {
+					if (relPath.isEnabled()) {
+						relPath.setEnabled(false);
+						relPath.setText(""); //$NON-NLS-1$
+					}
+					browseRepository.setEnabled(false);
+					if (projectMoveViewer.getSelection().isEmpty()) {
+						projectMoveViewer.getTable().setSelection(0);
+					}
+					IStructuredSelection sel = (IStructuredSelection) projectMoveViewer
+							.getSelection();
+					IProject prj = (IProject) sel.getFirstElement();
+					IWorkspaceRoot workspaceRoot = ResourcesPlugin
+							.getWorkspace().getRoot();
+					if (workspaceRoot.getLocation()
+							.isPrefixOf(prj.getLocation())) {
+						workDir.setText(prj.getLocation().toOSString());
+					} else {
+						IPath proposedPath = workspaceRoot.getLocation()
+								.append(new Path(prj.getName()));
+						File proposedFile = proposedPath.toFile();
+						if (!proposedFile.exists()) {
+							workDir.setText(proposedPath.toOSString());
+						}
+					}
+					workDir.setEnabled(true);
+				} else {
+					relPath.setEnabled(true);
+					browseRepository.setEnabled(true);
+					workDir.setEnabled(false);
+					workDir.setText(
+							this.selectedRepository.getWorkTree().getPath());
+				}
+
 				String relativePath = relPath.getText();
 				File testFile = new File(this.selectedRepository.getWorkTree(),
 						relativePath);
@@ -586,15 +668,22 @@ class ExistingOrNewPage extends WizardPage {
 							NLS.bind(
 									UIText.ExistingOrNewPage_FolderWillBeCreatedMessage,
 									relativePath), IMessageProvider.WARNING);
-				IPath targetPath = new Path(selectedRepository.getWorkTree()
-						.getPath());
-				targetPath = targetPath.append(relPath.getText());
+				IPath targetPath = (getSeparateMode())
+						? new Path(workDir.getText())
+						: new Path(selectedRepository.getWorkTree().getPath())
+								.append(relPath.getText());
+				moveProjectsLabelProvider.shouldAppendProjectName = !getSeparateMode();
 				moveProjectsLabelProvider.targetFolder = targetPath;
 				projectMoveViewer.refresh(true);
 				browseRepository.setEnabled(true);
 				for (Object checked : projectMoveViewer.getCheckedElements()) {
 					IProject prj = (IProject) checked;
-					IPath projectMoveTarget = targetPath.append(prj.getName());
+					IPath projectMoveTarget = null;
+					if (getSeparateMode()) {
+						projectMoveTarget = targetPath;
+					} else {
+						projectMoveTarget = targetPath.append(prj.getName());
+					}
 					boolean mustMove = !prj.getLocation().equals(
 							projectMoveTarget);
 					File targetTest = new File(projectMoveTarget.toOSString());
@@ -661,14 +750,14 @@ class ExistingOrNewPage extends WizardPage {
 			}
 		}
 
-		externalComposite.setVisible(!internalMode);
-		parentRepoComposite.setVisible(internalMode);
+		externalComposite.setVisible(!getInternalMode());
+		parentRepoComposite.setVisible(getInternalMode());
 		GridData gd;
 		gd = (GridData) parentRepoComposite.getLayoutData();
-		gd.exclude = !internalMode;
+		gd.exclude = !getInternalMode();
 
 		gd = (GridData) externalComposite.getLayoutData();
-		gd.exclude = internalMode;
+		gd.exclude = getInternalMode();
 
 		((Composite) getControl()).layout(true);
 	}
@@ -711,7 +800,7 @@ class ExistingOrNewPage extends WizardPage {
 	 */
 	public Map<IProject, File> getProjects(boolean checked) {
 		final Object[] elements;
-		if (!internalMode)
+		if (!getInternalMode())
 			if (checked)
 				elements = projectMoveViewer.getCheckedElements();
 			else {
@@ -730,12 +819,13 @@ class ExistingOrNewPage extends WizardPage {
 
 		Map<IProject, File> ret = new HashMap<>(elements.length);
 		for (Object ti : elements) {
-			if (!internalMode) {
+			if (!getInternalMode()) {
 				File workdir = selectedRepository.getWorkTree();
 				IProject project = (IProject) ti;
-				IPath targetLocation = new Path(relPath.getText())
-						.append(project.getName());
-				File targetFile = new File(workdir, targetLocation.toOSString());
+				File targetFile = (getSeparateMode())
+						? new File(workDir.getText())
+						: new File(workdir, new Path(relPath.getText())
+								.append(project.getName()).toOSString());
 				ret.put(project, targetFile);
 
 			} else {
@@ -754,7 +844,11 @@ class ExistingOrNewPage extends WizardPage {
 	}
 
 	public boolean getInternalMode() {
-		return internalMode;
+		return internalModeButton != null && internalModeButton.getSelection();
+	}
+
+	public boolean getSeparateMode() {
+		return separateModeButton != null && separateModeButton.getSelection();
 	}
 
 	private static class ProjectAndRepo {

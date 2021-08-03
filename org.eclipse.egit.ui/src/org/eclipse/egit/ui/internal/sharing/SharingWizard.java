@@ -3,6 +3,7 @@
  * Copyright (C) 2007, Shawn O. Pearce <spearce@spearce.org>
  * Copyright (C) 2011, Mathias Kinzler <mathias.kinzler@sap.com>
  * Copyright (C) 2016, Lars Vogel <Lars.Vogel@vogella.com>
+ * Copyright (C) 2021, Trevor Kerby <trevorkerby@gmail.com>
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License 2.0
@@ -13,7 +14,10 @@
  *******************************************************************************/
 package org.eclipse.egit.ui.internal.sharing;
 
+import java.io.ByteArrayInputStream;
 import java.io.File;
+import java.io.IOException;
+import java.io.InputStream;
 import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -25,18 +29,24 @@ import java.util.Set;
 import org.eclipse.core.commands.ExecutionException;
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IProject;
+import org.eclipse.core.resources.IResource;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Path;
 import org.eclipse.core.runtime.SubMonitor;
+import org.eclipse.egit.core.RepositoryCache;
 import org.eclipse.egit.core.RepositoryUtil;
 import org.eclipse.egit.core.op.ConnectProviderOperation;
 import org.eclipse.egit.ui.Activator;
 import org.eclipse.egit.ui.internal.UIText;
 import org.eclipse.jface.operation.IRunnableWithProgress;
 import org.eclipse.jface.wizard.Wizard;
+import org.eclipse.jgit.api.Git;
+import org.eclipse.jgit.api.errors.GitAPIException;
+import org.eclipse.jgit.lib.ConfigConstants;
+import org.eclipse.jgit.lib.Constants;
 import org.eclipse.jgit.lib.Repository;
 import org.eclipse.team.ui.IConfigurationWizard;
 import org.eclipse.team.ui.IConfigurationWizardExtension;
@@ -89,6 +99,7 @@ public class SharingWizard extends Wizard implements IConfigurationWizard,
 		final IWorkbenchPage activePage = PlatformUI.getWorkbench()
 				.getActiveWorkbenchWindow().getActivePage();
 		if (!existingPage.getInternalMode()) {
+			boolean connectAfterMove = !existingPage.getSeparateMode();
 			try {
 				final Map<IProject, File> projectsToMove = existingPage
 						.getProjects(true);
@@ -128,12 +139,15 @@ public class SharingWizard extends Wizard implements IConfigurationWizard,
 							} else {
 								progress.worked(1);
 							}
-							try {
-								new ConnectProviderOperation(entry.getKey(),
-										selectedRepository.getDirectory())
-												.execute(progress.newChild(1));
-							} catch (CoreException e) {
-								throw new InvocationTargetException(e);
+							if (connectAfterMove) {
+								try {
+									new ConnectProviderOperation(entry.getKey(),
+											selectedRepository.getDirectory())
+													.execute(progress
+															.newChild(1));
+								} catch (CoreException e) {
+									throw new InvocationTargetException(e);
+								}
 							}
 						}
 					}
@@ -145,8 +159,59 @@ public class SharingWizard extends Wizard implements IConfigurationWizard,
 			} catch (InterruptedException e) {
 				// ignore for the moment
 			}
+			if (existingPage.getSeparateMode()) {
+				try {
+					Entry<IProject, File> entry = existingPage.getProjects(true)
+							.entrySet().iterator().next();
+					IProject project = entry.getKey();
+					File workingDir = project.getLocation()
+							.toFile();
+					final Repository selectedRepository = existingPage
+							.getSelectedRepository();
+					File gitDir = selectedRepository.getDirectory();
+					final Repository reinitializedRepo = Git.init()
+							.setDirectory(workingDir).setGitDir(gitDir).call()
+							.getRepository();
+					reinitializedRepo.getConfig().setString(
+							ConfigConstants.CONFIG_CORE_SECTION, null,
+							ConfigConstants.CONFIG_KEY_WORKTREE,
+							workingDir.getAbsolutePath());
+					reinitializedRepo.getConfig().save();
+					IFile agnosticSymLink = project.getFile(Constants.DOT_GIT);
+					if (!agnosticSymLink.exists()) {
+						String link = Constants.GITDIR
+								+ gitDir.getAbsolutePath();
+						InputStream source = new ByteArrayInputStream(
+								link.getBytes());
+						agnosticSymLink.create(source, IResource.NONE, null);
+					}
+					RepositoryCache.INSTANCE.removeRepository(gitDir);
+					RepositoryCache.INSTANCE
+							.lookupRepository(reinitializedRepo.getDirectory());
+					getContainer().run(true, false,
+							new IRunnableWithProgress() {
+								@Override
+								public void run(IProgressMonitor monitor)
+										throws InvocationTargetException {
+									try {
+										new ConnectProviderOperation(project,
+												gitDir).execute(monitor);
+									} catch (CoreException e) {
+										throw new InvocationTargetException(e);
+									}
+								}
+							});
+				} catch (IllegalStateException | GitAPIException
+						| IOException | InvocationTargetException
+						| InterruptedException | CoreException e) {
+					Activator.handleError(UIText.SharingWizard_failed,
+							e.getCause(), true);
+					return false;
+				}
+				return true;
+			}
 			return true;
-		} else {
+		} else if (existingPage.getInternalMode()) {
 			final ConnectProviderOperation op = new ConnectProviderOperation(
 					existingPage.getProjects(true));
 			try {
@@ -192,6 +257,7 @@ public class SharingWizard extends Wizard implements IConfigurationWizard,
 				return false;
 			}
 		}
+		return false;
 	}
 
 	private void closeOpenEditorsForProject(final IWorkbenchPage activePage,
