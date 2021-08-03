@@ -4,6 +4,7 @@
  * Copyright (C) 2008, Shawn O. Pearce <spearce@spearce.org>
  * Copyright (C) 2008, Google Inc.
  * Copyright (C) 2016, 2021 Thomas Wolf <thomas.wolf@paranor.ch>
+ * Copyright (C) 2021 Trevor Kerby <trevorkerby@gmail.com>
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License 2.0
@@ -165,6 +166,24 @@ public enum RepositoryCache {
 		// between our repositoryCache and IndexDiffCache.entries.
 		IndexDiffCache.INSTANCE.remove(normalizedGitDir);
 		return lookupRepository(gitDir);
+	}
+
+	/**
+	 * Looks in the cache for a {@link Repository} matching the given git
+	 * directory. If there is such a Repository instance in the cache, it is
+	 * removed
+	 *
+	 * @param gitDir
+	 */
+	public void removeRepository(final File gitDir) {
+		File normalizedGitDir = new Path(gitDir.getAbsolutePath()).toFile();
+		synchronized (repositoryCache) {
+			RepositoryReference r = repositoryCache.get(normalizedGitDir);
+			if (r != null) {
+				Closer.closeReference(repositoryCache.remove(normalizedGitDir));
+				IndexDiffCache.INSTANCE.remove(normalizedGitDir);
+			}
+		}
 	}
 
 	/**
