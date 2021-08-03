@@ -10,6 +10,7 @@
  * Contributors:
  *    Mathias Kinzler (SAP AG) - initial implementation
  *    Thomas Wolf <thomas.wolf@paranor.ch> - Bugs 477281, 478877
+ *    Trevor Kerby <trevorkerby@gmail.com> - Bug 433451
  *******************************************************************************/
 package org.eclipse.egit.ui.internal.repository;
 
@@ -40,6 +41,7 @@ import org.eclipse.egit.ui.internal.groups.RepositoryGroups;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.wizard.Wizard;
 import org.eclipse.jgit.api.Git;
+import org.eclipse.jgit.api.InitCommand;
 import org.eclipse.jgit.api.errors.GitAPIException;
 import org.eclipse.jgit.lib.Repository;
 import org.eclipse.jgit.util.FileUtils;
@@ -56,6 +58,8 @@ public class NewRepositoryWizard extends Wizard implements INewWizard {
 
 	private RepositoryGroup group;
 
+	private boolean separateGitDir = false;
+
 	/**
 	 * Default constructor. Needed for File->New->Other->Git->Git Repository
 	 */
@@ -68,7 +72,19 @@ public class NewRepositoryWizard extends Wizard implements INewWizard {
 	 *            if <code>true</code>, no "bare" repository can be created
 	 */
 	public NewRepositoryWizard(boolean hideBareOption) {
-		myCreatePage = new CreateRepositoryPage(hideBareOption);
+		this(hideBareOption, null);
+	}
+
+	/**
+	 * @param hideBareOption
+	 *            if <code>true</code>, no "bare" repository can be created
+	 * @param project
+	 *            single project to associate with repository in the case that
+	 *            the working tree is to be separate from the git directory,
+	 *            otherwise <code>null</code>
+	 */
+	public NewRepositoryWizard(boolean hideBareOption, IProject project) {
+		myCreatePage = new CreateRepositoryPage(hideBareOption, project);
 	}
 
 	@Override
@@ -82,13 +98,22 @@ public class NewRepositoryWizard extends Wizard implements INewWizard {
 	public boolean performFinish() {
 		try {
 			boolean isBare = myCreatePage.getBare();
-			File gitDir = Git.init()
-					.setDirectory(FileUtils.canonicalize(
-							new File(myCreatePage.getDirectory())))
+			InitCommand init = Git.init()
 					.setInitialBranch(myCreatePage.getDefaultBranch())
-					.setBare(isBare)
-					.call().getRepository().getDirectory();
-			this.repository = RepositoryCache.INSTANCE.lookupRepository(gitDir);
+					.setBare(isBare);
+			if (myCreatePage.getSeparateGitDir()) {
+				separateGitDir = true;
+				init.setGitDir(FileUtils
+						.canonicalize(new File(myCreatePage.getDirectory())))
+						.setDirectory(FileUtils.canonicalize(
+								new File(myCreatePage.getWorkingTree())));
+			} else {
+				init.setDirectory(FileUtils
+						.canonicalize(new File(myCreatePage.getDirectory())));
+			}
+			File gitDir = init.call().getRepository().getDirectory();
+			this.repository = RepositoryCache.INSTANCE
+					.lookupRepository(gitDir);
 			if (group != null) {
 				RepositoryGroups.INSTANCE.addRepositoriesToGroup(group,
 						Collections.singletonList(gitDir));
@@ -139,6 +164,14 @@ public class NewRepositoryWizard extends Wizard implements INewWizard {
 	@Override
 	public void init(IWorkbench workbench, IStructuredSelection selection) {
 		// nothing to initialize
+	}
+
+	/**
+	 * @return whether the newly created repository has a git directory separate
+	 *         from its working directory
+	 */
+	public boolean hasSeparateGitDir() {
+		return separateGitDir;
 	}
 
 	/**

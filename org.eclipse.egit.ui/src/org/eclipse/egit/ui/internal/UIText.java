@@ -2859,6 +2859,9 @@ public class UIText extends NLS {
 	public static String CreateRepositoryPage_InvalidBranchName;
 
 	/** */
+	public static String CreateRepositoryPage_InvalidWorkingTree;
+
+	/** */
 	public static String CreateRepositoryPage_NotEmptyMessage;
 
 	/** */
@@ -2872,6 +2875,18 @@ public class UIText extends NLS {
 
 	/** */
 	public static String CreateRepositoryPage_ReadDefaultBranchFailed;
+
+	/** */
+	public static String CreateRepositoryPage_SeparateGitDirCheckbox;
+
+	/** */
+	public static String CreateRepositoryPage_SeparateWorkingTreeEqualToDirectory;
+
+	/** */
+	public static String CreateRepositoryPage_WorkingTreeDialogMessage;
+
+	/** */
+	public static String CreateRepositoryPage_WorkingTreeLabel;
 
 	/** */
 	public static String PushResultDialog_ConfigureButton;
