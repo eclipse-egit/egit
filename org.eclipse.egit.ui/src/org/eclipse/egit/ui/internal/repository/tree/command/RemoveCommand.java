@@ -13,6 +13,7 @@
  *    Laurent Goubet <laurent.goubet@obeo.fr> - Bug 404121
  *    Thomas Wolf <thomas.wolf@paranor.ch> - Bug 479964
  *    Alexander Nittka <alex@nittka.de> -  Bug 545123
+ *    Trevor Kerby <trevorkerby@gmail.com> - Bug 433451
  *******************************************************************************/
 package org.eclipse.egit.ui.internal.repository.tree.command;
 
@@ -26,6 +27,7 @@ import java.util.stream.Collectors;
 
 import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.commands.ExecutionException;
+import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.IWorkspace;
 import org.eclipse.core.resources.IWorkspaceRunnable;
@@ -104,6 +106,7 @@ public class RemoveCommand extends
 		}
 		boolean deleteWorkingDir = false;
 		boolean removeProjects = false;
+		boolean deleteAgnosticSymLink = false;
 		final List<IProject> projectsToDelete = findProjectsToDelete(selectedNodes);
 		if (delete) {
 			if (selectedNodes.size() > 1) {
@@ -121,14 +124,23 @@ public class RemoveCommand extends
 							message))
 						return;
 				} else {
+					IFile agnosticSymLink = null;
+					if (projectsToDelete.get(0)
+							.getFile(Constants.DOT_GIT)
+							.exists()) {
+						agnosticSymLink = projectsToDelete.get(0)
+								.getFile(Constants.DOT_GIT);
+					}
 					// confirm dialog with check box
 					// "delete also working directory"
 					DeleteRepositoryConfirmDialog dlg = new DeleteRepositoryConfirmDialog(
-							getShell(event), repository, projectsToDelete);
+							getShell(event), repository, agnosticSymLink,
+							projectsToDelete);
 					if (dlg.open() != Window.OK)
 						return;
 					deleteWorkingDir = dlg.shouldDeleteWorkingDir();
 					removeProjects = dlg.shouldRemoveProjects();
+					deleteAgnosticSymLink = dlg.shouldDeleteAgnosticSymLink();
 				}
 			}
 		}
@@ -152,17 +164,20 @@ public class RemoveCommand extends
 
 		final boolean deleteWorkDir = deleteWorkingDir;
 		final boolean removeProj = removeProjects;
-
+		final boolean deleteSymLink = deleteAgnosticSymLink;
 		Job job = new WorkspaceJob(UIText.RemoveCommand_RemoveRepositoriesJob) {
 
 			@Override
 			public IStatus runInWorkspace(IProgressMonitor monitor) {
 
 				monitor.setTaskName(UIText.RepositoriesView_DeleteRepoDeterminProjectsMessage);
-
 				if (removeProj) {
 					// confirmed deletion
 					deleteProjects(deleteWorkDir, projectsToDelete,
+							monitor);
+				}
+				else if (deleteSymLink) {
+					deleteSymbolicLinkFromProject(projectsToDelete.get(0),
 							monitor);
 				}
 				List<File> repoDirs = selectedNodes.stream()
@@ -266,6 +281,20 @@ public class RemoveCommand extends
 					FileUtils.delete(workTree, FileUtils.RETRY | FileUtils.SKIP_MISSING);
 			}
 		}
+	}
+
+	private void deleteSymbolicLinkFromProject(IProject project,
+			IProgressMonitor monitor) {
+		IFile symbolicLink = project.getFile(Constants.DOT_GIT);
+		IWorkspaceRunnable wsr = actMonitor -> {
+			symbolicLink.delete(false, actMonitor);
+		};
+		try {
+			ResourcesPlugin.getWorkspace().run(wsr, monitor);
+		} catch (CoreException e1) {
+			Activator.logError(e1.getMessage(), e1);
+		}
+
 	}
 
 	private static void closeSubmoduleRepositories(Repository repo)

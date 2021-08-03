@@ -9,12 +9,14 @@
  *
  * Contributors:
  *    Mathias Kinzler (SAP AG) - initial implementation
+ *    Trevor Kerby             - bug 433451
  *******************************************************************************/
 package org.eclipse.egit.ui.internal.repository.tree.command;
 
 import java.text.MessageFormat;
 import java.util.Collection;
 
+import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IProject;
 import org.eclipse.egit.core.RepositoryUtil;
 import org.eclipse.egit.ui.UIUtils;
@@ -51,29 +53,44 @@ public class DeleteRepositoryConfirmDialog extends TitleAreaDialog {
 	private boolean shouldDeleteWorkingDir = false;
 	private boolean shouldRemoveProjects = false;
 
+	private boolean shouldDeleteAgnosticSymLink = false;
+
+	private boolean promptedSymLinkDeletion = false;
+
+	private IFile agnosticSymLink;
+
 	private final Collection<IProject> projectsToDelete;
 
 	private Button deleteGitDir;
+
+	private Button deleteAgnosticSymLink;
 	private Button deleteWorkDir;
 	private Button removeProjects;
 
 	private Text deleteWorkDirLabel;
 
+	private Text deleteAgnosticSymLinkLabel;
+
 	/**
 	 * @param parentShell
 	 * @param repository
-	 *                             non-bare repository
+	 *            non-bare repository
+	 * @param agnosticSymLink
+	 *            an agnostic symbolic link is present due to git directory
+	 *            being separate from working directory
 	 * @param projectsToDelete
-	 *                             list of projects to delete
+	 *            list of projects to delete
 	 */
 	public DeleteRepositoryConfirmDialog(Shell parentShell,
-			Repository repository, Collection<IProject> projectsToDelete) {
+			Repository repository, IFile agnosticSymLink,
+			Collection<IProject> projectsToDelete) {
 		super(parentShell);
 		setHelpAvailable(false);
 		if (repository.isBare())
 			throw new IllegalArgumentException(
 					"DeleteRepositoryConfirmDialog can only be used for non-bare repository."); //$NON-NLS-1$
 		this.repository = repository;
+		this.agnosticSymLink = agnosticSymLink;
 		this.projectsToDelete = projectsToDelete;
 	}
 
@@ -89,12 +106,31 @@ public class DeleteRepositoryConfirmDialog extends TitleAreaDialog {
 				.setText(UIText.DeleteRepositoryConfirmDialog_DeleteGitDirCheckbox);
 		createIndentedLabel(main, repository.getDirectory().getPath());
 
+		if (agnosticSymLink != null) {
+		deleteAgnosticSymLink = new Button(main, SWT.CHECK);
+		GridDataFactory.fillDefaults().grab(true, false)
+				.applyTo(deleteAgnosticSymLink);
+		deleteAgnosticSymLink.setText(
+				UIText.DeleteRepositoryConfirmDialog_DeleteSymLinkCheckbox);
+		deleteAgnosticSymLinkLabel = createIndentedLabel(main,
+				agnosticSymLink.getLocation().toOSString());
+
+		deleteAgnosticSymLink.addSelectionListener(new SelectionAdapter() {
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				shouldDeleteAgnosticSymLink = deleteAgnosticSymLink
+						.getSelection();
+				updateUI();
+			}
+		});
+
+		}
 		deleteWorkDir = new Button(main, SWT.CHECK);
 		GridDataFactory.fillDefaults().grab(true, false).applyTo(deleteWorkDir);
-		deleteWorkDir
-				.setText(UIText.DeleteRepositoryConfirmDialog_DeleteWorkingDirectoryCheckbox);
-		deleteWorkDirLabel = createIndentedLabel(main, repository.getWorkTree()
-				.getPath());
+		deleteWorkDir.setText(
+				UIText.DeleteRepositoryConfirmDialog_DeleteWorkingDirectoryCheckbox);
+		deleteWorkDirLabel = createIndentedLabel(main,
+				repository.getWorkTree().getPath());
 
 		removeProjects = new Button(main, SWT.CHECK);
 
@@ -186,6 +222,13 @@ public class DeleteRepositoryConfirmDialog extends TitleAreaDialog {
 		return shouldRemoveProjects;
 	}
 
+	/**
+	 * @return if the agnostic symbolic link should be deleted
+	 */
+	public boolean shouldDeleteAgnosticSymLink() {
+		return shouldDeleteAgnosticSymLink;
+	}
+
 	private static Text createIndentedLabel(Composite main, String text) {
 		Text widget = UIUtils.createSelectableLabel(main, 0);
 		widget.setText(text);
@@ -199,6 +242,22 @@ public class DeleteRepositoryConfirmDialog extends TitleAreaDialog {
 	private void updateUI() {
 		// The user has to select the delete checkbox before OK can be clicked
 		getButton(IDialogConstants.OK_ID).setEnabled(shouldDeleteGitDir);
+		if (agnosticSymLink != null) {
+			if (!promptedSymLinkDeletion && shouldDeleteGitDir) {
+				promptedSymLinkDeletion = true;
+				deleteAgnosticSymLink.setSelection(true);
+				shouldDeleteAgnosticSymLink = true;
+			}
+			if (shouldDeleteWorkingDir) {
+				deleteAgnosticSymLink.setSelection(true);
+				shouldDeleteAgnosticSymLink = true;
+				deleteAgnosticSymLink.setEnabled(false);
+				deleteAgnosticSymLinkLabel.setEnabled(false);
+			} else {
+				deleteAgnosticSymLink.setEnabled(shouldDeleteGitDir);
+				deleteAgnosticSymLinkLabel.setEnabled(shouldDeleteGitDir);
+			}
+		}
 		deleteWorkDir.setEnabled(shouldDeleteGitDir);
 		deleteWorkDirLabel.setEnabled(shouldDeleteGitDir);
 		removeProjects
