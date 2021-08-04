@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d8904db5_6ce9dd1b",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2021-08-04T06:39:45Z",
+      "side": 1,
+      "message": "This sounds like a hacky work-around for some other problem. Please file a bug on bugzilla with an exact problem statement and instructions on how to reproduce.",
+      "revId": "e585aa47f5cb64c2ef555692145c8ae87bab40f5",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "92441885_7690ec47",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/RepositoryCache.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 184,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2021-08-04T06:39:45Z",
+      "side": 1,
+      "message": "Danger of deadlock (lock inversion) here.",
+      "revId": "e585aa47f5cb64c2ef555692145c8ae87bab40f5",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": true
+    }
+  ]
+}
