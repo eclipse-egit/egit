@@ -18,6 +18,7 @@ import java.net.ProxySelector;
 import java.text.MessageFormat;
 
 import org.eclipse.core.net.proxy.IProxyService;
+import org.eclipse.core.resources.IWorkspace;
 import org.eclipse.core.runtime.preferences.IEclipsePreferences.IPreferenceChangeListener;
 import org.eclipse.core.runtime.preferences.IPreferencesService;
 import org.eclipse.core.runtime.preferences.InstanceScope;
@@ -34,7 +35,7 @@ import org.osgi.service.component.annotations.Deactivate;
 import org.osgi.service.component.annotations.Reference;
 
 /**
- * An OSGI service for configuring HTTP and SSH transports.
+ * An OSGi service for configuring HTTP and SSH transports.
  */
 @Component
 public class TransportConfigurator {
@@ -57,6 +58,11 @@ public class TransportConfigurator {
 	@Reference
 	void setProxyService(IProxyService service) {
 		this.proxyService = service;
+	}
+
+	@Reference
+	void setWorkspace(@SuppressWarnings("unused") IWorkspace workspace) {
+		// Needed indirectly by the preferences service
 	}
 
 	@Activate
