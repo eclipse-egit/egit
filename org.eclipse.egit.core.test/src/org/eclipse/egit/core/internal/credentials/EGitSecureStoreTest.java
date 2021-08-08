@@ -9,7 +9,7 @@
  *
  * SPDX-License-Identifier: EPL-2.0
  *******************************************************************************/
-package org.eclipse.egit.core.securestorage;
+package org.eclipse.egit.core.internal.credentials;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNull;
@@ -24,6 +24,7 @@ import java.util.HashMap;
 import javax.crypto.spec.PBEKeySpec;
 
 import org.eclipse.core.resources.ResourcesPlugin;
+import org.eclipse.egit.core.credentials.UserPasswordCredentials;
 import org.eclipse.equinox.security.storage.ISecurePreferences;
 import org.eclipse.equinox.security.storage.SecurePreferencesFactory;
 import org.eclipse.equinox.security.storage.provider.IProviderHints;

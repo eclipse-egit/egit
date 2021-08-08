@@ -633,6 +633,18 @@ public class CoreText extends NLS {
 	/** */
 	public static String RebaseInteractiveStep_Squash;
 
+	/** */
+	public static String EGitCredentialsProvider_errorClearingCredentials;
+
+	/** */
+	public static String EGitCredentialsProvider_errorReadingCredentials;
+
+	/** */
+	public static String EGitCredentialsProvider_noCredentialsProviderUI;
+
+	/** */
+	public static String EGitCredentialsProvider_credentialsProviderUIfailed;
+
 	static {
 		initializeMessages(BUNDLE_NAME,	CoreText.class);
 	}

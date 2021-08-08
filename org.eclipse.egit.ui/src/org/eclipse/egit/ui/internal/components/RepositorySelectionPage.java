@@ -23,7 +23,7 @@ import java.util.TreeMap;
 import java.util.regex.Pattern;
 
 import org.eclipse.egit.core.RepositoryUtil;
-import org.eclipse.egit.core.securestorage.UserPasswordCredentials;
+import org.eclipse.egit.core.credentials.UserPasswordCredentials;
 import org.eclipse.egit.ui.Activator;
 import org.eclipse.egit.ui.UIPreferences;
 import org.eclipse.egit.ui.UIUtils;

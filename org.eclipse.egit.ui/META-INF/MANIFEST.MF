@@ -38,8 +38,10 @@ Bundle-ActivationPolicy: lazy
 Bundle-RequiredExecutionEnvironment: JavaSE-1.8
 Import-Package: org.eclipse.egit.core;version="[5.13.0,5.14.0)",
  org.eclipse.egit.core.attributes;version="[5.13.0,5.14.0)",
+ org.eclipse.egit.core.credentials;version="[5.13.0,5.14.0)",
  org.eclipse.egit.core.info;version="[5.13.0,5.14.0)",
  org.eclipse.egit.core.internal;version="[5.13.0,5.14.0)",
+ org.eclipse.egit.core.internal.credentials;version="[5.13.0,5.14.0)",
  org.eclipse.egit.core.internal.efs;version="[5.13.0,5.14.0)",
  org.eclipse.egit.core.internal.gerrit;version="[5.13.0,5.14.0)",
  org.eclipse.egit.core.internal.indexdiff;version="[5.13.0,5.14.0)",
@@ -51,7 +53,6 @@ Import-Package: org.eclipse.egit.core;version="[5.13.0,5.14.0)",
  org.eclipse.egit.core.internal.util;version="[5.13.0,5.14.0)",
  org.eclipse.egit.core.op;version="[5.13.0,5.14.0)",
  org.eclipse.egit.core.project;version="[5.13.0,5.14.0)",
- org.eclipse.egit.core.securestorage;version="[5.13.0,5.14.0)",
  org.eclipse.egit.core.settings;version="[5.13.0,5.14.0)",
  org.eclipse.egit.core.synchronize;version="[5.13.0,5.14.0)",
  org.eclipse.egit.core.synchronize.dto;version="[5.13.0,5.14.0)",
@@ -140,4 +141,5 @@ Service-Component: OSGI-INF/org.eclipse.egit.ui.internal.clone.GitCloneDropAdapt
  OSGI-INF/org.eclipse.egit.ui.internal.ApplicationActiveListener.xml,
  OSGI-INF/org.eclipse.egit.ui.internal.ExternalRepositoryScanner.xml,
  OSGI-INF/org.eclipse.egit.ui.internal.trace.DebugOptionsHandler.xml,
- OSGI-INF/org.eclipse.egit.ui.internal.ConfigurationChecker$Checker.xml
+ OSGI-INF/org.eclipse.egit.ui.internal.ConfigurationChecker$Checker.xml,
+ OSGI-INF/org.eclipse.egit.ui.internal.credentials.EGitCredentialsUI.xml
