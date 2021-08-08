@@ -268,7 +268,7 @@ public class Activator extends AbstractUIPlugin {
 	 * Construct the {@link Activator} egit ui plugin singleton instance
 	 */
 	public Activator() {
-		Activator.setActivator(this);
+		setActivator(this);
 	}
 
 	private static void setActivator(Activator a) {
@@ -310,12 +310,14 @@ public class Activator extends AbstractUIPlugin {
 
 	@Override
 	public void stop(final BundleContext context) throws Exception {
-		if (resourceManager != null) {
-			resourceManager.dispose();
-			resourceManager = null;
+		synchronized (this) {
+			if (resourceManager != null) {
+				resourceManager.dispose();
+				resourceManager = null;
+			}
 		}
 		super.stop(context);
-		plugin = null;
+		setActivator(null);
 	}
 
 	@Override
