@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (C) 2010, Jens Baumgart <jens.baumgart@sap.com>
+ * Copyright (C) 2010, 2021 Jens Baumgart <jens.baumgart@sap.com> and others.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License 2.0
@@ -10,7 +10,7 @@
  *******************************************************************************/
 package org.eclipse.egit.ui.internal.credentials;
 
-import org.eclipse.egit.core.securestorage.UserPasswordCredentials;
+import org.eclipse.egit.core.credentials.UserPasswordCredentials;
 import org.eclipse.egit.ui.internal.SecureStoreUtils;
 import org.eclipse.jface.window.Window;
 import org.eclipse.jgit.transport.URIish;

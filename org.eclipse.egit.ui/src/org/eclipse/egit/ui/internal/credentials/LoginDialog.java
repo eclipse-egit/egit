@@ -11,7 +11,7 @@
  *******************************************************************************/
 package org.eclipse.egit.ui.internal.credentials;
 
-import org.eclipse.egit.core.securestorage.UserPasswordCredentials;
+import org.eclipse.egit.core.credentials.UserPasswordCredentials;
 import org.eclipse.egit.ui.Activator;
 import org.eclipse.egit.ui.UIPreferences;
 import org.eclipse.egit.ui.internal.UIText;
