@@ -29,8 +29,7 @@ import org.eclipse.core.runtime.preferences.IEclipsePreferences;
 import org.eclipse.core.runtime.preferences.InstanceScope;
 import org.eclipse.egit.core.Activator;
 import org.eclipse.egit.core.GitCorePreferences;
-import org.eclipse.egit.core.securestorage.EGitSecureStore;
-import org.eclipse.egit.core.securestorage.UserPasswordCredentials;
+import org.eclipse.egit.core.credentials.UserPasswordCredentials;
 import org.eclipse.equinox.security.storage.StorageException;
 import org.eclipse.jgit.annotations.NonNull;
 import org.eclipse.jgit.transport.CredentialItem;
@@ -99,8 +98,7 @@ public class EGitSshdSessionFactory extends SshdSessionFactory {
 	@Override
 	protected KeyPasswordProvider createKeyPasswordProvider(
 			CredentialsProvider provider) {
-		return new EGitFilePasswordProvider(provider,
-				EGitSecureStore.getInstance());
+		return new EGitFilePasswordProvider(provider);
 	}
 
 	private static class EGitProxyDataFactory implements ProxyDataFactory {
@@ -163,14 +161,10 @@ public class EGitSshdSessionFactory extends SshdSessionFactory {
 	private static class EGitFilePasswordProvider
 			extends IdentityPasswordProvider {
 
-		private final EGitSecureStore store;
-
 		private boolean useSecureStore;
 
-		public EGitFilePasswordProvider(CredentialsProvider provider,
-				EGitSecureStore store) {
+		public EGitFilePasswordProvider(CredentialsProvider provider) {
 			super(provider);
-			this.store = store;
 		}
 
 		@Override
@@ -185,7 +179,8 @@ public class EGitSshdSessionFactory extends SshdSessionFactory {
 				// successful
 				if (useSecureStore) {
 					try {
-						UserPasswordCredentials credentials = store
+						UserPasswordCredentials credentials = Activator
+								.getDefault().getCredentialsStore()
 								.getCredentials(uri);
 						if (credentials != null) {
 							String password = credentials.getPassword();
@@ -218,9 +213,6 @@ public class EGitSshdSessionFactory extends SshdSessionFactory {
 
 		@Override
 		protected char[] getPassword(URIish uri, String message) {
-			if (store == null) {
-				return super.getPassword(uri, message);
-			}
 			CredentialsProvider provider = getCredentialsProvider();
 			if (provider == null) {
 				return null;
@@ -266,7 +258,8 @@ public class EGitSshdSessionFactory extends SshdSessionFactory {
 						// password in the secure store, increment the count,
 						// and go through the CredentialsProvider.
 						try {
-							store.clearCredentials(uri);
+							Activator.getDefault().getCredentialsStore()
+									.clearCredentials(uri);
 						} catch (IOException | RuntimeException e) {
 							Activator.logError(e.getMessage(), e);
 						}
@@ -280,7 +273,8 @@ public class EGitSshdSessionFactory extends SshdSessionFactory {
 						UserPasswordCredentials credentials = new UserPasswordCredentials(
 								"egit:ssh:resource", new String(password)); //$NON-NLS-1$
 						try {
-							store.putCredentials(uri, credentials);
+							Activator.getDefault().getCredentialsStore()
+									.putCredentials(uri, credentials);
 						} catch (StorageException e) {
 							if (e.getErrorCode() == StorageException.NO_PASSWORD) {
 								// User canceled dialog: don't try to use the

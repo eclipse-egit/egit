@@ -14,7 +14,7 @@ package org.eclipse.egit.ui.internal.provisional.wizards;
 
 import java.net.URI;
 
-import org.eclipse.egit.core.securestorage.UserPasswordCredentials;
+import org.eclipse.egit.core.credentials.UserPasswordCredentials;
 
 /**
  * <p>

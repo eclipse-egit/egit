@@ -1,6 +1,7 @@
 /*******************************************************************************
  * Copyright (C) 2010, Jens Baumgart <jens.baumgart@sap.com>
  * Copyright (C) 2010, Edwin Kempin <edwin.kempin@sap.com>
+ * Copyright (C) 2021, Thomas Wolf <thomas.wolf@paranor.ch> and others.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License 2.0
@@ -9,23 +10,32 @@
  *
  * SPDX-License-Identifier: EPL-2.0
  *******************************************************************************/
-package org.eclipse.egit.core.securestorage;
+package org.eclipse.egit.core.internal.credentials;
 
 import java.io.IOException;
 
+import org.eclipse.egit.core.Activator;
+import org.eclipse.egit.core.credentials.CredentialsStore;
+import org.eclipse.egit.core.credentials.UserPasswordCredentials;
 import org.eclipse.equinox.security.storage.EncodingUtils;
 import org.eclipse.equinox.security.storage.ISecurePreferences;
 import org.eclipse.equinox.security.storage.SecurePreferencesFactory;
 import org.eclipse.equinox.security.storage.StorageException;
 import org.eclipse.jgit.transport.URIish;
 import org.eclipse.jgit.util.StringUtils;
+import org.osgi.service.component.annotations.Component;
 
 /**
  * This class wraps the Eclipse secure store. It provides methods to put
  * credentials for a given URI to the secure store and to retrieve credentials
  * for a given URI.
+ * <p>
+ * This is an OSGi service; use {@link Activator#getCredentialsStore()} to
+ * obtain a singleton instance.
+ * </p>
  */
-public class EGitSecureStore {
+@Component(immediate = false)
+public class EGitSecureStore implements CredentialsStore {
 
 	private static final String USER = "user"; //$NON-NLS-1$
 
@@ -33,19 +43,14 @@ public class EGitSecureStore {
 
 	private static final String GIT_PATH_PREFIX = "/GIT/"; //$NON-NLS-1$
 
-	private static final EGitSecureStore INSTANCE = new EGitSecureStore(
-			SecurePreferencesFactory.getDefault());
+	private final ISecurePreferences preferences;
 
 	/**
-	 * Retrieves the singleton {@link EGitSecureStore}.
-	 *
-	 * @return the {@link EGitSecureStore}
+	 * Creates an {@link EGitSecureStore} based on the Eclipse secure store.
 	 */
-	public static EGitSecureStore getInstance() {
-		return INSTANCE;
+	public EGitSecureStore() {
+		this(SecurePreferencesFactory.getDefault());
 	}
-
-	private final ISecurePreferences preferences;
 
 	/**
 	 * Constructor
@@ -58,14 +63,7 @@ public class EGitSecureStore {
 		this.preferences = preferences;
 	}
 
-	/**
-	 * Puts credentials for the given URI into the secure store
-	 *
-	 * @param uri
-	 * @param credentials
-	 * @throws StorageException
-	 * @throws IOException
-	 */
+	@Override
 	public void putCredentials(URIish uri, UserPasswordCredentials credentials)
 			throws StorageException, IOException {
 		String u = credentials.getUser();
@@ -80,13 +78,7 @@ public class EGitSecureStore {
 		node.flush();
 	}
 
-	/**
-	 * Retrieves credentials stored for the given URI from the secure store
-	 *
-	 * @param uri
-	 * @return credentials
-	 * @throws StorageException
-	 */
+	@Override
 	public UserPasswordCredentials getCredentials(URIish uri)
 			throws StorageException {
 		String pathName = calcNodePath(uri);
@@ -121,12 +113,7 @@ public class EGitSecureStore {
 		return pathName;
 	}
 
-	/**
-	 * Clear credentials for the given uri.
-	 *
-	 * @param uri
-	 * @throws IOException
-	 */
+	@Override
 	public void clearCredentials(URIish uri) throws IOException {
 		String pathName = calcNodePath(uri);
 		if (!preferences.nodeExists(pathName))
@@ -135,5 +122,4 @@ public class EGitSecureStore {
 		node.removeNode();
 		preferences.flush();
 	}
-
 }

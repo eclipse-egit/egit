@@ -9,7 +9,7 @@
  *
  * SPDX-License-Identifier: EPL-2.0
  *******************************************************************************/
-package org.eclipse.egit.core.securestorage;
+package org.eclipse.egit.core.credentials;
 
 /**
  * Implements a credentials object containing user and password.

@@ -18,13 +18,13 @@ import java.util.Collections;
 import java.util.List;
 
 import org.eclipse.core.runtime.IProgressMonitor;
+import org.eclipse.egit.core.credentials.UserPasswordCredentials;
+import org.eclipse.egit.core.internal.credentials.EGitCredentialsProvider;
 import org.eclipse.egit.core.op.ListRemoteOperation;
-import org.eclipse.egit.core.securestorage.UserPasswordCredentials;
 import org.eclipse.egit.core.settings.GitSettings;
 import org.eclipse.egit.ui.Activator;
 import org.eclipse.egit.ui.internal.UIIcons;
 import org.eclipse.egit.ui.internal.UIText;
-import org.eclipse.egit.ui.internal.credentials.EGitCredentialsProvider;
 import org.eclipse.jface.dialogs.Dialog;
 import org.eclipse.jface.operation.IRunnableWithProgress;
 import org.eclipse.jface.wizard.WizardPage;

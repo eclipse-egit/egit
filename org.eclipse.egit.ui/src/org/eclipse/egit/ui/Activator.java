@@ -24,13 +24,11 @@ import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Platform;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.egit.ui.internal.KnownHosts;
-import org.eclipse.egit.ui.internal.credentials.EGitCredentialsProvider;
 import org.eclipse.jface.resource.JFaceResources;
 import org.eclipse.jface.resource.LocalResourceManager;
 import org.eclipse.jface.resource.ResourceManager;
 import org.eclipse.jface.util.IPropertyChangeListener;
 import org.eclipse.jface.util.PropertyChangeEvent;
-import org.eclipse.jgit.transport.CredentialsProvider;
 import org.eclipse.swt.graphics.Font;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.ui.PlatformUI;
@@ -275,13 +273,6 @@ public class Activator extends AbstractUIPlugin {
 
 	private static void setActivator(Activator a) {
 		plugin = a;
-	}
-
-
-	@Override
-	public void start(final BundleContext context) throws Exception {
-		super.start(context);
-		CredentialsProvider.setDefault(new EGitCredentialsProvider());
 	}
 
 	/**
