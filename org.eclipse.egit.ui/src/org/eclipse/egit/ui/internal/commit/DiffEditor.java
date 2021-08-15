@@ -560,8 +560,11 @@ public class DiffEditor extends TextEditor
 
 					@Override
 					public IStatus runInUIThread(IProgressMonitor uiMonitor) {
-						if (UIUtils
-								.isUsable(getSourceViewer().getTextWidget())) {
+						ISourceViewer sourceViewer = getSourceViewer();
+						if (sourceViewer == null) {
+							return Status.OK_STATUS;
+						}
+						if (UIUtils.isUsable(sourceViewer.getTextWidget())) {
 							input.setDocument(job.getDocument());
 							setInput(input);
 						}
