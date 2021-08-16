@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "d39bdb99_19a75346",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/credentials/CredentialsStore.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2021-08-16T08:41:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5bd89529_b0d3f5c0",
+      "range": {
+        "startLine": 26,
+        "startChar": 44,
+        "endLine": 26,
+        "endChar": 58
+      },
+      "revId": "a0061ce5a4331c2b78f51561c501a9005f9e2995",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a7a0c7c1_83087812",
         "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/internal/credentials/EGitCredentialsProvider.java",
         "patchSetId": 1
@@ -45,6 +69,30 @@
       "revId": "a0061ce5a4331c2b78f51561c501a9005f9e2995",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "483207d6_26a33d61",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/internal/credentials/EGitCredentialsProvider.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2021-08-16T08:41:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a7a0c7c1_83087812",
+      "range": {
+        "startLine": 37,
+        "startChar": 25,
+        "endLine": 37,
+        "endChar": 28
+      },
+      "revId": "a0061ce5a4331c2b78f51561c501a9005f9e2995",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
     }
   ]
 }
