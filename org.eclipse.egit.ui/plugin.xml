@@ -7478,6 +7478,22 @@
             description="%GitSearchActionSet.description"
             visible="false"
             id="org.eclipse.egit.ui.SearchActionSet">
+         <!--
+           Menu re-declaration needed because of bug 567910. Needs to be consistent
+           with the base declaration in org.eclipse.search. Note that other bundles,
+           for instance org.eclipse.jdt.ui, employ the same work-around.
+         -->
+         <menu
+                id="org.eclipse.search.menu"
+                label="%searchMenu.label"
+                path="navigate">
+            <groupMarker name="internalDialogGroup"/>   <!-- not to be used by clients  -->
+            <groupMarker name="dialogGroup"/>           <!-- to be used by clients      -->
+            <separator name="fileSearchContextMenuActionsGroup"/> <!-- to be used by clients      -->
+            <separator name="contextMenuActionsGroup"/> <!-- to be used by clients -->
+            <separator name="occurencesActionsGroup"/> <!-- to be used by clients -->
+            <separator name="extraSearchGroup"/> <!-- to be used by clients -->
+         </menu>
          <action
                label="%OpenCommitSearchPageAction.label"
                icon="icons/obj16/search-commit.png"
