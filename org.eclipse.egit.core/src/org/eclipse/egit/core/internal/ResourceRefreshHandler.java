@@ -41,6 +41,7 @@ import org.eclipse.core.runtime.OperationCanceledException;
 import org.eclipse.core.runtime.Path;
 import org.eclipse.core.runtime.SubMonitor;
 import org.eclipse.egit.core.Activator;
+import org.eclipse.egit.core.RepositoryCache;
 import org.eclipse.egit.core.internal.indexdiff.IndexDiffCache;
 import org.eclipse.egit.core.internal.indexdiff.IndexDiffCacheEntry;
 import org.eclipse.egit.core.internal.job.RuleUtil;
@@ -65,6 +66,13 @@ public class ResourceRefreshHandler implements WorkingTreeModifiedListener {
 		Repository repo = event.getRepository();
 		if (repo == null || repo.isBare()) {
 			return; // Should never occur
+		}
+		Repository cached = RepositoryCache.INSTANCE
+				.getRepository(repo.getDirectory().getAbsoluteFile());
+		if (cached == null) {
+			// Someone is using JGit on some repository not (yet) managed by
+			// EGit
+			return;
 		}
 		if (GitTraceLocation.REFRESH.isActive()) {
 			GitTraceLocation.getTrace().trace(
