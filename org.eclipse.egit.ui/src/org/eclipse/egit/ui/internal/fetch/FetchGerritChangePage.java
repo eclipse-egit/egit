@@ -963,8 +963,7 @@ public class FetchGerritChangePage extends WizardPage {
 						return Status.CANCEL_STATUS;
 					}
 					final RefSpec spec = new RefSpec()
-							.setSource(finalChange.getRefName())
-							.setDestination(Constants.FETCH_HEAD);
+							.setSource(finalChange.getRefName());
 					if (progress.isCanceled()) {
 						return Status.CANCEL_STATUS;
 					}
