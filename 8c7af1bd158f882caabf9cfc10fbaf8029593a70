@@ -16,6 +16,24 @@
       "revId": "8c7af1bd158f882caabf9cfc10fbaf8029593a70",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d8bca1d7_23fdb53a",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/fetch/FetchGerritChangePage.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 967,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2021-08-22T22:00:57Z",
+      "side": 1,
+      "message": "not sure, here is how cgit 2.32.0 handles this:\n- when pulling a custom ref using a refspec with an empty destination (e.g. \"refs/changes/89/184289/1:\") it fetches the ref and updates FETCH_HEAD\n- when pulling a custom ref explicitly to FETCH_HEAD (e.g. \"refs/changes/89/184289/1:FETCH_HEAD\") cgit creates a loose ref refs/heads/FETCH_HEAD and in addition updates FETCH_HEAD, not sure if this is what we want here",
+      "parentUuid": "bc6579f5_289510e0",
+      "revId": "8c7af1bd158f882caabf9cfc10fbaf8029593a70",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": true
     }
   ]
 }
