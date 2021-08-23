@@ -34,6 +34,24 @@
       "revId": "8c7af1bd158f882caabf9cfc10fbaf8029593a70",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e41da55b_2e5d1904",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/fetch/FetchGerritChangePage.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 967,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2021-08-23T06:56:47Z",
+      "side": 1,
+      "message": "OK then.",
+      "parentUuid": "d8bca1d7_23fdb53a",
+      "revId": "8c7af1bd158f882caabf9cfc10fbaf8029593a70",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
     }
   ]
 }
