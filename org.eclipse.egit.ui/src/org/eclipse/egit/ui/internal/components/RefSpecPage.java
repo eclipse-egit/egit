@@ -50,7 +50,10 @@ import org.eclipse.ui.PlatformUI;
  */
 public class RefSpecPage extends WizardPage {
 
-	private final Repository local;
+	/**
+	 * The repo
+	 */
+	protected final Repository local;
 
 	private final boolean pushPage;
 
