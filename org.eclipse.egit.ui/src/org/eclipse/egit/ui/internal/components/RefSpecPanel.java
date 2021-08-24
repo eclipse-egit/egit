@@ -78,7 +78,6 @@ import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
-import org.eclipse.swt.layout.RowLayout;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Combo;
 import org.eclipse.swt.widgets.Composite;
@@ -231,8 +230,6 @@ public class RefSpecPanel {
 
 	private final List<RefSpec> specs = new ArrayList<>();
 
-	private final Composite panel;
-
 	private TableViewer tableViewer;
 
 	private CellEditor modeCellEditor;
@@ -311,6 +308,8 @@ public class RefSpecPanel {
 
 	private Color errorTextColor;
 
+	private Group specsGroup;
+
 	/**
 	 * Create a new panel and install it on a provided composite. Panel is
 	 * created either for editing push or fetch specifications - this setting
@@ -333,16 +332,19 @@ public class RefSpecPanel {
 		this.remoteProposalProvider = new RefContentProposalProvider(false);
 		this.imageRegistry = new ImageRegistry(parent.getDisplay());
 
-		panel = new Composite(parent, SWT.NONE);
-		panel.setLayout(new GridLayout());
+		specsGroup = new Group(parent, SWT.NONE);
+		specsGroup.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
+		specsGroup.setLayout(new GridLayout(2, false));
+		specsGroup.setText(
+				NLS.bind(UIText.RefSpecPanel_specifications, typeString()));
 
 		safeCreateResources();
 
-		createCreationPanel();
+		createCreationPanel(specsGroup);
 		if (pushSpecs)
-			createDeleteCreationPanel();
-		createPredefinedCreationPanel();
-		createTableGroup();
+			createDeleteCreationPanel(specsGroup);
+		createTableGroup(specsGroup);
+		createPredefinedCreationPanel(specsGroup);
 
 		addRefSpecTableListener(this::validateSpecs);
 		setEnable(false);
@@ -448,7 +450,7 @@ public class RefSpecPanel {
 	 * @return underlying control for this panel.
 	 */
 	public Control getControl() {
-		return panel;
+		return specsGroup;
 	}
 
 	/**
@@ -639,10 +641,11 @@ public class RefSpecPanel {
 		imageRegistry.put(IMAGE_DELETE, UIIcons.ELCL16_DELETE);
 		imageRegistry.put(IMAGE_TRASH, UIIcons.ELCL16_TRASH);
 		imageRegistry.put(IMAGE_CLEAR, UIIcons.ELCL16_CLEAR);
-		errorBackgroundColor = new Color(panel.getDisplay(), 255, 150, 150);
-		errorTextColor = new Color(panel.getDisplay(), 255, 0, 0);
+		errorBackgroundColor = new Color(specsGroup.getDisplay(), 255, 150,
+				150);
+		errorTextColor = new Color(specsGroup.getDisplay(), 255, 0, 0);
 
-		panel.addDisposeListener(new DisposeListener() {
+		specsGroup.addDisposeListener(new DisposeListener() {
 			@Override
 			public void widgetDisposed(DisposeEvent e) {
 				imageRegistry.dispose();
@@ -657,24 +660,26 @@ public class RefSpecPanel {
 		return (local ? localProposalProvider : remoteProposalProvider);
 	}
 
-	private void createCreationPanel() {
-		final Group creationPanel = new Group(panel, SWT.NONE);
-		creationPanel.setText(UIText.RefSpecPanel_creationGroup);
+	private void createCreationPanel(Composite parent) {
+		assert ((GridLayout) parent.getLayout()).numColumns == 2;
+		final Composite creationPanel = new Composite(parent, SWT.NONE);
 		creationPanel.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true,
 				false));
 		final GridLayout layout = new GridLayout();
-		layout.numColumns = 3;
+		layout.numColumns = 2;
 		layout.horizontalSpacing = 10;
-		layout.verticalSpacing = 2;
+		layout.verticalSpacing = 0;
+		layout.marginHeight = 0;
 		creationPanel.setLayout(layout);
 
 		new Label(creationPanel, SWT.NONE)
 				.setText(UIText.RefSpecPanel_creationSrc);
 		new Label(creationPanel, SWT.NONE)
 				.setText(UIText.RefSpecPanel_creationDst);
-		creationButton = new Button(creationPanel, SWT.PUSH);
-		creationButton.setLayoutData(new GridData(SWT.RIGHT, SWT.BOTTOM, false,
-				false, 1, 2));
+		creationButton = new Button(parent, SWT.PUSH);
+		creationButton
+				.setLayoutData(
+						new GridData(SWT.FILL, SWT.BOTTOM, false, false));
 		creationButton.setImage(imageRegistry.get(IMAGE_ADD));
 		creationButton.setText(UIText.RefSpecPanel_creationButton);
 		creationButton.addSelectionListener(new SelectionAdapter() {
@@ -768,20 +773,18 @@ public class RefSpecPanel {
 		};
 		creationSrcCombo.addModifyListener(validator);
 		creationDstCombo.addModifyListener(validator);
-		Control[] tabList = new Control[] { creationSrcCombo, creationDstCombo,
-				creationButton };
-		creationPanel.setTabList(tabList);
 	}
 
-	private void createDeleteCreationPanel() {
-		final Group deletePanel = new Group(panel, SWT.NONE);
-		deletePanel.setText(UIText.RefSpecPanel_deletionGroup);
-		deletePanel
-				.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false));
+	private void createDeleteCreationPanel(Composite parent) {
+		assert ((GridLayout) parent.getLayout()).numColumns == 2;
+		final Composite deletePanel = new Composite(parent, SWT.NONE);
 		final GridLayout layout = new GridLayout();
-		layout.numColumns = 3;
+		layout.numColumns = 2;
 		layout.horizontalSpacing = 10;
+		layout.marginHeight = 0;
 		deletePanel.setLayout(layout);
+		deletePanel.setLayoutData(
+				new GridData(SWT.FILL, SWT.DEFAULT, true, false));
 
 		final Label label = new Label(deletePanel, SWT.NONE);
 		label.setText(UIText.RefSpecPanel_deletionRef);
@@ -796,8 +799,9 @@ public class RefSpecPanel {
 				.setToolTipText(UIText.RefSpecPanel_dstDeletionDescription);
 		deleteRefComboSupport = new ComboLabelingSupport(deleteRefCombo, null);
 
-		deleteButton = new Button(deletePanel, SWT.PUSH);
-		deleteButton.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false,
+		deleteButton = new Button(parent, SWT.PUSH);
+		deleteButton.setLayoutData(
+				new GridData(SWT.FILL, SWT.DEFAULT, false,
 				false));
 		deleteButton.setImage(imageRegistry.get(IMAGE_DELETE));
 		deleteButton.setText(UIText.RefSpecPanel_deletionButton);
@@ -821,16 +825,17 @@ public class RefSpecPanel {
 		});
 	}
 
-	private void createPredefinedCreationPanel() {
-		final Group predefinedPanel = new Group(panel, SWT.NONE);
-		predefinedPanel.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true,
+	private void createPredefinedCreationPanel(Composite parent) {
+		Composite predefinedComposite = new Composite(parent, SWT.NONE);
+		predefinedComposite.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true,
 				false));
-		predefinedPanel.setText(UIText.RefSpecPanel_predefinedGroup);
 		final GridLayout layout = new GridLayout();
-		layout.numColumns = 3;
-		predefinedPanel.setLayout(layout);
+		layout.numColumns = 4;
+		predefinedComposite.setLayout(layout);
 
-		addConfiguredButton = new Button(predefinedPanel, SWT.PUSH);
+		Label predefinedLabel = new Label(predefinedComposite, SWT.NONE);
+		predefinedLabel.setText(UIText.RefSpecPanel_predefinedGroup);
+		addConfiguredButton = new Button(predefinedComposite, SWT.PUSH);
 		addConfiguredButton.setLayoutData(new GridData(SWT.FILL, SWT.CENTER,
 				true, false));
 		addConfiguredButton.setText(NLS.bind(
@@ -845,7 +850,7 @@ public class RefSpecPanel {
 				.setToolTipText(UIText.RefSpecPanel_predefinedConfiguredDescription);
 		updateAddPredefinedButton(addConfiguredButton, predefinedConfigured);
 
-		addBranchesButton = new Button(predefinedPanel, SWT.PUSH);
+		addBranchesButton = new Button(predefinedComposite, SWT.PUSH);
 		addBranchesButton.setLayoutData(new GridData(SWT.FILL, SWT.CENTER,
 				true, false));
 		addBranchesButton.setText(UIText.RefSpecPanel_predefinedAll);
@@ -859,7 +864,7 @@ public class RefSpecPanel {
 				.setToolTipText(UIText.RefSpecPanel_predefinedAllDescription);
 		updateAddPredefinedButton(addBranchesButton, predefinedBranches);
 
-		addTagsButton = new Button(predefinedPanel, SWT.PUSH);
+		addTagsButton = new Button(predefinedComposite, SWT.PUSH);
 		addTagsButton.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true,
 				false));
 		addTagsButton.setText(UIText.RefSpecPanel_predefinedTags);
@@ -902,18 +907,13 @@ public class RefSpecPanel {
 		return decoration;
 	}
 
-	private void createTableGroup() {
-		final Group tableGroup = new Group(panel, SWT.NONE);
-		tableGroup.setText(NLS.bind(UIText.RefSpecPanel_specifications,
-				typeString()));
-		tableGroup.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
-		tableGroup.setLayout(new GridLayout());
-
-		createTable(tableGroup);
-		createSpecsButtonsPanel(tableGroup);
+	private void createTableGroup(Composite parent) {
+		assert ((GridLayout) parent.getLayout()).numColumns == 2;
+		createTable(parent);
+		createSpecsButtonsPanel(parent);
 	}
 
-	private void createTable(final Group tableGroup) {
+	private void createTable(final Composite tableGroup) {
 		final Composite tablePanel = new Composite(tableGroup, SWT.NONE);
 		final GridData layoutData = new GridData(SWT.FILL, SWT.FILL, true, true);
 		layoutData.heightHint = TABLE_PREFERRED_HEIGHT;
@@ -1330,13 +1330,16 @@ public class RefSpecPanel {
 
 	private void createSpecsButtonsPanel(final Composite parent) {
 		final Composite specsPanel = new Composite(parent, SWT.NONE);
-		specsPanel.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, true,
+		specsPanel.setLayoutData(
+				new GridData(SWT.FILL, SWT.TOP, false,
 				false));
-		final RowLayout layout = new RowLayout();
-		layout.spacing = 10;
+		GridLayout layout = new GridLayout(1, false);
+		layout.marginWidth = 0;
 		specsPanel.setLayout(layout);
 
 		forceUpdateAllButton = new Button(specsPanel, SWT.PUSH);
+		forceUpdateAllButton.setLayoutData(
+				new GridData(SWT.FILL, SWT.DEFAULT, false, false));
 		forceUpdateAllButton.setText(UIText.RefSpecPanel_forceAll);
 		forceUpdateAllButton.addSelectionListener(new SelectionAdapter() {
 			@Override
@@ -1353,6 +1356,8 @@ public class RefSpecPanel {
 		updateForceUpdateAllButton();
 
 		removeAllSpecButton = new Button(specsPanel, SWT.PUSH);
+		removeAllSpecButton.setLayoutData(
+				new GridData(SWT.FILL, SWT.DEFAULT, false, false));
 		removeAllSpecButton.setImage(imageRegistry.get(IMAGE_CLEAR));
 		removeAllSpecButton.setText(UIText.RefSpecPanel_removeAll);
 		removeAllSpecButton.addSelectionListener(new SelectionAdapter() {
