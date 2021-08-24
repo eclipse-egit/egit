@@ -41,7 +41,6 @@ import org.eclipse.jface.dialogs.IMessageProvider;
 import org.eclipse.jface.layout.GridDataFactory;
 import org.eclipse.jface.layout.GridLayoutFactory;
 import org.eclipse.jface.layout.RowLayoutFactory;
-import org.eclipse.jface.window.Window;
 import org.eclipse.jface.wizard.WizardDialog;
 import org.eclipse.jface.wizard.WizardPage;
 import org.eclipse.jgit.api.PullCommand;
@@ -258,11 +257,9 @@ public class PushBranchPage extends WizardPage {
 		remoteLabel.setText(UIText.PushBranchPage_RemoteLabel);
 
 		// Use full width in case "New Remote..." button is not shown
-		int remoteSelectionSpan = showNewRemoteButton ? 1 : 2;
-
 		remoteSelectionCombo = new RemoteSelectionCombo(remoteGroup, SWT.NONE,
 				SelectionType.PUSH);
-		GridDataFactory.fillDefaults().grab(true, false).span(remoteSelectionSpan, 1)
+		GridDataFactory.fillDefaults().grab(true, false).span(2, 1)
 				.applyTo(remoteSelectionCombo);
 		setRemoteConfigs();
 		remoteSelectionCombo.addRemoteSelectionListener(rc -> {
@@ -270,18 +267,6 @@ public class PushBranchPage extends WizardPage {
 			setRefAssist(rc);
 			checkPage();
 		});
-
-		if (showNewRemoteButton) {
-			Button newRemoteButton = new Button(remoteGroup, SWT.PUSH);
-			newRemoteButton.setText(UIText.PushBranchPage_NewRemoteButton);
-			GridDataFactory.fillDefaults().applyTo(newRemoteButton);
-			newRemoteButton.addSelectionListener(new SelectionAdapter() {
-				@Override
-				public void widgetSelected(SelectionEvent e) {
-					showNewRemoteDialog();
-				}
-			});
-		}
 
 		Label branchNameLabel = new Label(remoteGroup, SWT.NONE);
 		branchNameLabel.setText(UIText.PushBranchPage_RemoteBranchNameLabel);
@@ -375,7 +360,8 @@ public class PushBranchPage extends WizardPage {
 	}
 
 	private void setRemoteConfigs() {
-		remoteSelectionCombo.setItems(remoteConfigs);
+		remoteSelectionCombo.setItems(remoteConfigs,
+				showNewRemoteButton ? repository : null);
 		if (this.ref != null) {
 			String branchName = Repository.shortenRefName(this.ref.getName());
 			BranchConfig branchConfig = new BranchConfig(
@@ -410,18 +396,6 @@ public class PushBranchPage extends WizardPage {
 			}
 			this.upstreamConfig = config;
 			this.upstreamConfigComponent.setUpstreamConfig(this.upstreamConfig);
-		}
-	}
-
-	private void showNewRemoteDialog() {
-		AddRemoteWizard wizard = new AddRemoteWizard(repository);
-		WizardDialog dialog = new WizardDialog(getShell(), wizard);
-		int result = dialog.open();
-		if (result == Window.OK) {
-			URIish uri = wizard.getUri();
-			String remoteName = wizard.getRemoteName();
-			addRemotePage = wizard.getAddRemotePage();
-			setSelectedRemote(remoteName, uri);
 		}
 	}
 
