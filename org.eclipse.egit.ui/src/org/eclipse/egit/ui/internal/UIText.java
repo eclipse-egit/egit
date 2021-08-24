@@ -6225,6 +6225,15 @@ public class UIText extends NLS {
 	/** */
 	public static String EditableRevision_CannotSave;
 
+	/** */
+	public static String RemoteSelectionCombole_addNewRemote;
+
+	/** */
+	public static String RemoteSelectionCombo_couldNotCreateNewRemote_title;
+
+	/** */
+	public static String RemoteSelectionCombo_couldNotCreateNewRemote_message;
+
 	static {
 		initializeMessages(BUNDLE_NAME, UIText.class);
 	}

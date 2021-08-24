@@ -141,8 +141,7 @@ public class PushBranchWizardTest extends LocalRepositoryTestCase {
 
 		PushBranchWizardTester wizard = PushBranchWizardTester.startWizard(
 				selectProject(), "foo");
-		wizard.enterRemoteOnInitialPage("origin", uri.toString());
-		wizard.next();
+		wizard.selectNewRemoteOnBranchPage("origin", uri.toString());
 		wizard.selectMerge();
 		wizard.next();
 		wizard.finish();

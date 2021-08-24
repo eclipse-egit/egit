@@ -71,15 +71,13 @@ public class PushBranchWizardTester {
 	}
 
 	public void selectNewRemoteOnBranchPage(String remoteName, String uri) {
-		wizard.button(UIText.PushBranchPage_NewRemoteButton).click();
+		SWTBotCombo remoteCombo = wizard
+				.comboBoxWithLabel(UIText.PushBranchPage_RemoteLabel);
+		remoteCombo.setSelection(UIText.RemoteSelectionCombole_addNewRemote);
 		SWTBot addRemoteWizard = wizard.shell(UIText.AddRemoteWizard_Title)
 				.bot();
 		setRemoteNameAndUri(remoteName, uri, addRemoteWizard);
 		addRemoteWizard.button(IDialogConstants.FINISH_LABEL).click();
-	}
-
-	public void enterRemoteOnInitialPage(String remoteName, String uri) {
-		setRemoteNameAndUri(remoteName, uri, wizard);
 	}
 
 	private void setRemoteNameAndUri(String remoteName, String uri,
