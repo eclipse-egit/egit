@@ -48,9 +48,7 @@ import org.eclipse.jgit.revwalk.RevCommit;
 import org.eclipse.jgit.storage.file.FileRepositoryBuilder;
 import org.junit.After;
 import org.junit.Before;
-import org.junit.Rule;
 import org.junit.Test;
-import org.junit.rules.TemporaryFolder;
 
 /**
  * Test for bug 574806/bug 575240.
@@ -65,8 +63,7 @@ public class AutoShareTest extends GitTestCase {
 			+ "\t<buildSpec>\n" + "\t</buildSpec>\n" + "\t<natures>\n"
 			+ "\t</natures>\n" + "</projectDescription>";
 
-	@Rule
-	public TemporaryFolder folder = new TemporaryFolder();
+	private File testDirectory;
 
 	private File repoPath;
 
@@ -78,8 +75,10 @@ public class AutoShareTest extends GitTestCase {
 	@Before
 	public void setUp() throws Exception {
 		super.setUp();
+		testDirectory = testUtils.createTempDir("AutoShareTest");
+		File gitDirectory = new File(testDirectory, ".git");
 		try (Repository repository = FileRepositoryBuilder
-				.create(folder.newFolder(".git").getCanonicalFile())) {
+				.create(gitDirectory.getCanonicalFile())) {
 			repository.create();
 			prepareProject(repository);
 			repoPath = repository.getDirectory();
@@ -96,6 +95,7 @@ public class AutoShareTest extends GitTestCase {
 		}
 		RepositoryUtil.INSTANCE.removeDir(repoPath);
 		RepositoryCache.INSTANCE.clear();
+		testUtils.deleteTempDirs();
 		super.tearDown();
 	}
 
