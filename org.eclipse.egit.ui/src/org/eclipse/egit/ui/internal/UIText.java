@@ -3204,6 +3204,12 @@ public class UIText extends NLS {
 	public static String FetchWizard_windowTitleWithSource;
 
 	/** */
+	public static String FetchRefspecPage_couldParseRemote_title;
+
+	/** */
+	public static String FetchRefspecPage_couldParseRemote_message;
+
+	/** */
 	public static String CommitFileDiffViewer_computingFileDiffs;
 
 	/** */
@@ -6233,6 +6239,7 @@ public class UIText extends NLS {
 
 	/** */
 	public static String RemoteSelectionCombo_couldNotCreateNewRemote_message;
+
 
 	static {
 		initializeMessages(BUNDLE_NAME, UIText.class);
