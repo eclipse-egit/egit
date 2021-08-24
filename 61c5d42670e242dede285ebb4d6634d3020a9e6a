@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "be2f8437_d8315d6d",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2021-08-24T21:22:48Z",
+      "side": 1,
+      "message": "nit: move the bug reference to the commit message footer:\n\n Bug: 575566\n\nsee https://wiki.eclipse.org/EGit/Contributor_Guide#Commit_message_guidelines",
+      "range": {
+        "startLine": 7,
+        "startChar": 0,
+        "endLine": 7,
+        "endChar": 10
+      },
+      "revId": "61c5d42670e242dede285ebb4d6634d3020a9e6a",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5410632b_cb9e392f",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/fetch/FetchWizard.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2021-08-24T21:22:48Z",
+      "side": 1,
+      "message": "Is this no longer needed ?\nIf yes, delete this commented out code",
+      "revId": "61c5d42670e242dede285ebb4d6634d3020a9e6a",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": true
+    }
+  ]
+}
