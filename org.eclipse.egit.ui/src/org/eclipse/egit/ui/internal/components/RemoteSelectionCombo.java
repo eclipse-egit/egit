@@ -16,10 +16,21 @@
  *******************************************************************************/
 package org.eclipse.egit.ui.internal.components;
 
+import java.io.IOException;
+import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.eclipse.egit.ui.Activator;
+import org.eclipse.egit.ui.internal.UIText;
+import org.eclipse.egit.ui.internal.push.AddRemoteWizard;
+import org.eclipse.jface.dialogs.MessageDialog;
+import org.eclipse.jface.window.Window;
+import org.eclipse.jface.wizard.WizardDialog;
 import org.eclipse.jgit.lib.Constants;
+import org.eclipse.jgit.lib.Repository;
+import org.eclipse.jgit.lib.StoredConfig;
+import org.eclipse.jgit.transport.RefSpec;
 import org.eclipse.jgit.transport.RemoteConfig;
 import org.eclipse.jgit.transport.URIish;
 import org.eclipse.swt.SWT;
@@ -70,6 +81,12 @@ public class RemoteSelectionCombo extends Composite {
 
 	private List<RemoteConfig> remoteConfigs;
 
+	private Repository enableAddNewRemote;
+
+	private RemoteConfig lastSelection;
+
+	private RemoteConfig newlyCreatedConfig;
+
 	/**
 	 * Create the widget.
 	 *
@@ -91,10 +108,45 @@ public class RemoteSelectionCombo extends Composite {
 		remoteCombo.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
-				RemoteConfig remoteConfig = getSelectedRemote();
-				remoteSelected(remoteConfig);
+				if (remoteCombo.getSelectionIndex() < remoteConfigs.size()) {
+					RemoteConfig remoteConfig = getSelectedRemote();
+					remoteSelected(remoteConfig);
+				} else {
+					showNewRemoteDialog();
+				}
 			}
 		});
+	}
+
+	/**
+	 * Set the available items.
+	 *
+	 * @param remoteConfigs
+	 * @param enableAddNewRemote
+	 * @return the initially selected remote config, defaults to the origin
+	 *         remote if there is one
+	 */
+	public RemoteConfig setItems(List<RemoteConfig> remoteConfigs,
+			Repository enableAddNewRemote) {
+		this.remoteConfigs = remoteConfigs;
+		this.enableAddNewRemote = enableAddNewRemote;
+
+		final String items[] = new String[remoteConfigs.size()
+				+ (enableAddNewRemote != null ? 1 : 0)];
+		int i = 0;
+		for (final RemoteConfig rc : remoteConfigs) {
+			items[i++] = getTextForRemoteConfig(rc);
+		}
+		if (enableAddNewRemote != null) {
+			items[items.length - 1] = //
+					UIText.RemoteSelectionCombole_addNewRemote;
+		}
+
+		remoteCombo.setItems(items);
+		RemoteConfig defaultRemoteConfig = getDefaultRemoteConfig();
+		setSelectedRemote(defaultRemoteConfig);
+
+		return defaultRemoteConfig;
 	}
 
 	/**
@@ -105,18 +157,50 @@ public class RemoteSelectionCombo extends Composite {
 	 *         remote if there is one
 	 */
 	public RemoteConfig setItems(List<RemoteConfig> remoteConfigs) {
-		this.remoteConfigs = remoteConfigs;
+		return setItems(remoteConfigs, null);
+	}
 
-		final String items[] = new String[remoteConfigs.size()];
-		int i = 0;
-		for (final RemoteConfig rc : remoteConfigs)
-			items[i++] = getTextForRemoteConfig(rc);
+	private void showNewRemoteDialog() {
+		AddRemoteWizard wizard = new AddRemoteWizard(enableAddNewRemote);
+		WizardDialog dialog = new WizardDialog(getShell(), wizard);
+		int result = dialog.open();
+		if (result == Window.OK) {
+			try {
+				RemoteConfig newConfig = configureNewRemote(
+						wizard.getRemoteName(), wizard.getUri());
+				addAndSelectNewConfig(newConfig);
+			} catch (IOException | URISyntaxException ex) {
+				MessageDialog.openError(wizard.getShell(),
+						UIText.RemoteSelectionCombo_couldNotCreateNewRemote_title,
+						UIText.RemoteSelectionCombo_couldNotCreateNewRemote_message);
+				Activator.logError(
+						UIText.RemoteSelectionCombo_couldNotCreateNewRemote_title,
+						ex);
+			}
+		} else {
+			setSelectedRemote(lastSelection);
+		}
+	}
 
-		remoteCombo.setItems(items);
-		RemoteConfig defaultRemoteConfig = getDefaultRemoteConfig();
-		setSelectedRemote(defaultRemoteConfig);
+	private void addAndSelectNewConfig(RemoteConfig newConfig) {
+		remoteConfigs = new ArrayList<>(remoteConfigs);
+		remoteConfigs.add(newConfig);
+		newlyCreatedConfig = newConfig;
+		setItems(remoteConfigs, enableAddNewRemote);
+	}
 
-		return defaultRemoteConfig;
+	private RemoteConfig configureNewRemote(String remoteName, URIish uri)
+			throws URISyntaxException, IOException {
+		StoredConfig config = enableAddNewRemote.getConfig();
+		RemoteConfig remoteConfig = new RemoteConfig(config, remoteName);
+		remoteConfig.addURI(uri);
+		RefSpec defaultFetchSpec = new RefSpec().setForceUpdate(true)
+				.setSourceDestination(Constants.R_HEADS + "*", //$NON-NLS-1$
+						Constants.R_REMOTES + remoteName + "/*"); //$NON-NLS-1$
+		remoteConfig.addFetchRefSpec(defaultFetchSpec);
+		remoteConfig.update(config);
+		config.save();
+		return remoteConfig;
 	}
 
 	/**
@@ -149,8 +233,10 @@ public class RemoteSelectionCombo extends Composite {
 	 */
 	public void setSelectedRemote(RemoteConfig remoteConfig) {
 		int index = remoteConfigs.indexOf(remoteConfig);
-		if (index != -1)
+		if (index != -1) {
 			remoteCombo.select(index);
+			lastSelection = remoteConfig;
+		}
 	}
 
 	@Override
@@ -162,6 +248,9 @@ public class RemoteSelectionCombo extends Composite {
 	private RemoteConfig getDefaultRemoteConfig() {
 		if (remoteConfigs == null || remoteConfigs.isEmpty())
 			return null;
+		if (newlyCreatedConfig != null) {
+			return newlyCreatedConfig;
+		}
 		for (final RemoteConfig rc : remoteConfigs)
 			if (Constants.DEFAULT_REMOTE_NAME.equals(rc.getName()))
 				return rc;
@@ -199,7 +288,10 @@ public class RemoteSelectionCombo extends Composite {
 	}
 
 	private void remoteSelected(RemoteConfig remoteConfig) {
-		for (IRemoteSelectionListener listener : selectionListeners)
+		this.lastSelection = remoteConfig;
+		for (IRemoteSelectionListener listener : selectionListeners) {
 			listener.remoteSelected(remoteConfig);
+		}
 	}
+
 }
