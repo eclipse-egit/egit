@@ -10,30 +10,24 @@
 package org.eclipse.egit.ui.internal.push;
 
 import java.io.IOException;
-import java.net.URISyntaxException;
 import java.text.MessageFormat;
 import java.util.Arrays;
 import java.util.List;
-import java.util.Set;
 
 import org.eclipse.egit.core.internal.credentials.EGitCredentialsProvider;
 import org.eclipse.egit.core.op.PushOperationResult;
 import org.eclipse.egit.core.op.PushOperationSpecification;
-import org.eclipse.egit.ui.internal.SecureStoreUtils;
 import org.eclipse.egit.ui.internal.UIIcons;
 import org.eclipse.egit.ui.internal.UIText;
 import org.eclipse.egit.ui.internal.components.RepositorySelection;
 import org.eclipse.jface.wizard.Wizard;
 import org.eclipse.jgit.lib.BranchConfig.BranchRebaseMode;
 import org.eclipse.jgit.lib.ConfigConstants;
-import org.eclipse.jgit.lib.Constants;
 import org.eclipse.jgit.lib.ObjectId;
 import org.eclipse.jgit.lib.Ref;
 import org.eclipse.jgit.lib.Repository;
 import org.eclipse.jgit.lib.StoredConfig;
 import org.eclipse.jgit.transport.RefSpec;
-import org.eclipse.jgit.transport.RemoteConfig;
-import org.eclipse.jgit.transport.URIish;
 
 /**
  * A wizard dedicated to pushing a commit.
@@ -49,7 +43,6 @@ public class PushBranchWizard extends Wizard {
 	 */
 	private final Ref ref;
 
-	private AddRemotePage addRemotePage;
 	private PushBranchPage pushBranchPage;
 	private ConfirmationPage confirmationPage;
 
@@ -79,30 +72,12 @@ public class PushBranchWizard extends Wizard {
 		assert (this.repository != null);
 		assert (this.commitToPush != null);
 
-		Set<String> remoteNames = repository.getConfig().getSubsections(ConfigConstants.CONFIG_REMOTE_SECTION);
-		if (remoteNames.isEmpty())
-			addRemotePage = new AddRemotePage(repository);
-
-		pushBranchPage = new PushBranchPage(repository, commitToPush, ref) {
-			@Override
-			public void setVisible(boolean visible) {
-				if (visible && addRemotePage != null) {
-					setSelectedRemote(addRemotePage.getRemoteName(),
-							addRemotePage.getSelection().getURI());
-				}
-				super.setVisible(visible);
-			}
-		};
-		// Don't show button if we're configuring a remote in the first step
-		pushBranchPage.setShowNewRemoteButton(addRemotePage == null);
+		pushBranchPage = new PushBranchPage(repository, commitToPush, ref);
 
 		confirmationPage = new ConfirmationPage(repository) {
 			@Override
 			public void setVisible(boolean visible) {
 				setSelection(getRepositorySelection(), getRefSpecs());
-				AddRemotePage remotePage = getAddRemotePage();
-				if (remotePage != null)
-					setCredentials(remotePage.getCredentials());
 				super.setVisible(visible);
 			}
 		};
@@ -113,8 +88,6 @@ public class PushBranchWizard extends Wizard {
 
 	@Override
 	public void addPages() {
-		if (addRemotePage != null)
-			addPage(addRemotePage);
 		addPage(pushBranchPage);
 		addPage(confirmationPage);
 	}
@@ -137,12 +110,6 @@ public class PushBranchWizard extends Wizard {
 	@Override
 	public boolean performFinish() {
 		try {
-			AddRemotePage remotePage = getAddRemotePage();
-			if (remotePage != null) {
-				storeCredentials(remotePage);
-				URIish uri = remotePage.getSelection().getURI();
-				configureNewRemote(uri);
-			}
 			if (pushBranchPage.getUpstreamConfig() != null) {
 				configureUpstream();
 			}
@@ -150,27 +117,13 @@ public class PushBranchWizard extends Wizard {
 		} catch (IOException e) {
 			confirmationPage.setErrorMessage(e.getMessage());
 			return false;
-		} catch (URISyntaxException e) {
-			confirmationPage.setErrorMessage(e.getMessage());
-			return false;
 		}
 
 		return true;
 	}
 
-	private AddRemotePage getAddRemotePage() {
-		if (addRemotePage != null)
-			return addRemotePage;
-		else
-			return pushBranchPage.getAddRemotePage();
-	}
-
 	private RepositorySelection getRepositorySelection() {
-		AddRemotePage remotePage = getAddRemotePage();
-		if (remotePage != null)
-			return remotePage.getSelection();
-		else
-			return new RepositorySelection(null,
+		return new RepositorySelection(null,
 					pushBranchPage.getRemoteConfig());
 	}
 
@@ -180,29 +133,6 @@ public class PushBranchWizard extends Wizard {
 		RefSpec refSpec = new RefSpec().setSourceDestination(src, dst)
 				.setForceUpdate(pushBranchPage.isForceUpdateSelected());
 		return Arrays.asList(refSpec);
-	}
-
-	private void storeCredentials(AddRemotePage remotePage) {
-		if (remotePage.getStoreInSecureStore()) {
-			URIish uri = remotePage.getSelection().getURI();
-			if (uri != null)
-				SecureStoreUtils.storeCredentials(
-						remotePage.getCredentials(), uri);
-		}
-	}
-
-	private void configureNewRemote(URIish uri) throws URISyntaxException,
-			IOException {
-		StoredConfig config = repository.getConfig();
-		String remoteName = getRemoteName();
-		RemoteConfig remoteConfig = new RemoteConfig(config, remoteName);
-		remoteConfig.addURI(uri);
-		RefSpec defaultFetchSpec = new RefSpec().setForceUpdate(true)
-				.setSourceDestination(Constants.R_HEADS + "*", //$NON-NLS-1$
-						Constants.R_REMOTES + remoteName + "/*"); //$NON-NLS-1$
-		remoteConfig.addFetchRefSpec(defaultFetchSpec);
-		remoteConfig.update(config);
-		config.save();
 	}
 
 	private void configureUpstream() throws IOException {
