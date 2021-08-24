@@ -47,6 +47,16 @@ public class FetchRefspecPage extends RefSpecPage {
 		res.setLayout(new GridLayout(1, true));
 		createRepoSelection(res);
 		super.createControl(res);
+		getControl()
+				.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true)); // getControl()
+																				// is
+																				// the
+																				// result
+																				// of
+																				// super.setControl
+																				// at
+																				// this
+																				// time
 		setSelection(new RepositorySelection(null, getRemoteConfig()));
 		setControl(res);
 	}
