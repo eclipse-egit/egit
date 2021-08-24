@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "dfea3834_2962b552",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2021-08-24T21:39:35Z",
+      "side": 1,
+      "message": "move the bug reference to the commit message footer",
+      "range": {
+        "startLine": 7,
+        "startChar": 0,
+        "endLine": 7,
+        "endChar": 10
+      },
+      "revId": "233f8051e2f7a5c4d273b02d747bf9ee7e877b27",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b5b2b68f_26fb5b4b",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/uitext.properties",
+        "patchSetId": 1
+      },
+      "lineNbr": 672,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2021-08-24T21:39:35Z",
+      "side": 1,
+      "message": "the first segment is a fanout repeating the last 2 digits (0-padded) of the second segment:\n\n refs/changes/12/34512/6\nor\n refs/changes/45/345/6",
+      "range": {
+        "startLine": 672,
+        "startChar": 15,
+        "endLine": 672,
+        "endChar": 23
+      },
+      "revId": "233f8051e2f7a5c4d273b02d747bf9ee7e877b27",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": true
+    }
+  ]
+}
