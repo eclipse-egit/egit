@@ -1,0 +1,67 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "41485f6d_cd7d020f",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2021-08-24T21:30:49Z",
+      "side": 1,
+      "message": "style nit: move Bug reference to the commit message footer",
+      "range": {
+        "startLine": 7,
+        "startChar": 0,
+        "endLine": 7,
+        "endChar": 10
+      },
+      "revId": "6bd4142729c1e9ef87c67309d347ad9e1516f66a",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5eeb9691_841f1253",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/components/RefSpecPanel.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 828,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2021-08-24T21:30:49Z",
+      "side": 1,
+      "message": "style nit: we don\u0027t use final for local variables, hence remove this\n\nsee https://wiki.eclipse.org/EGit/Contributor_Guide#Use_of_the_.22final.22_modifier",
+      "range": {
+        "startLine": 828,
+        "startChar": 2,
+        "endLine": 828,
+        "endChar": 8
+      },
+      "revId": "6bd4142729c1e9ef87c67309d347ad9e1516f66a",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6958792e_45b428fa",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/fetch/FetchRefspecPage.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2021-08-24T21:30:49Z",
+      "side": 1,
+      "message": "move the comment to a separate line to avoid this ugly formatting",
+      "revId": "6bd4142729c1e9ef87c67309d347ad9e1516f66a",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": true
+    }
+  ]
+}
