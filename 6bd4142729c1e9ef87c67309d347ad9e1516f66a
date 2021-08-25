@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "5dd0a570_5a5dee8c",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2021-08-25T08:42:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "41485f6d_cd7d020f",
+      "range": {
+        "startLine": 7,
+        "startChar": 0,
+        "endLine": 7,
+        "endChar": 10
+      },
+      "revId": "6bd4142729c1e9ef87c67309d347ad9e1516f66a",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5eeb9691_841f1253",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/components/RefSpecPanel.java",
         "patchSetId": 2
@@ -45,6 +69,30 @@
       "revId": "6bd4142729c1e9ef87c67309d347ad9e1516f66a",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f10c660b_cfacd950",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/components/RefSpecPanel.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 828,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2021-08-25T08:42:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5eeb9691_841f1253",
+      "range": {
+        "startLine": 828,
+        "startChar": 2,
+        "endLine": 828,
+        "endChar": 8
+      },
+      "revId": "6bd4142729c1e9ef87c67309d347ad9e1516f66a",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
     },
     {
       "key": {
