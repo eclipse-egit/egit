@@ -22,6 +22,9 @@ import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.StandardOpenOption;
+import java.util.concurrent.CountDownLatch;
+import java.util.concurrent.TimeUnit;
+import java.util.concurrent.atomic.AtomicReference;
 
 import org.eclipse.core.filesystem.URIUtil;
 import org.eclipse.core.resources.IFile;
@@ -30,7 +33,6 @@ import org.eclipse.core.resources.IProjectDescription;
 import org.eclipse.core.resources.IWorkspace;
 import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.SubMonitor;
-import org.eclipse.egit.core.JobFamilies;
 import org.eclipse.egit.core.RepositoryCache;
 import org.eclipse.egit.core.RepositoryUtil;
 import org.eclipse.egit.core.internal.indexdiff.IndexDiffCache;
@@ -40,7 +42,6 @@ import org.eclipse.egit.core.internal.indexdiff.IndexDiffData;
 import org.eclipse.egit.core.op.ConnectProviderOperation;
 import org.eclipse.egit.core.project.RepositoryMapping;
 import org.eclipse.egit.core.test.GitTestCase;
-import org.eclipse.egit.core.test.TestUtils;
 import org.eclipse.jgit.api.Git;
 import org.eclipse.jgit.api.ResetCommand.ResetType;
 import org.eclipse.jgit.lib.Repository;
@@ -157,10 +158,11 @@ public class AutoShareTest extends GitTestCase {
 		assertNotNull(cache);
 		// Verify that doing something that triggers a resource change event
 		// updates the index diff.
-		IndexDiffData[] diff = { null };
+		AtomicReference<IndexDiffData> result = new AtomicReference<>();
+		CountDownLatch barrier = new CountDownLatch(1);
 		IndexDiffChangedListener listener = (r, d) -> {
-			if (diff[0] == null) {
-				diff[0] = d;
+			if (result.compareAndSet(null, d)) {
+				barrier.countDown();
 			}
 		};
 		try {
@@ -174,12 +176,14 @@ public class AutoShareTest extends GitTestCase {
 					throw new UncheckedIOException(e);
 				}
 			}, null, IWorkspace.AVOID_UPDATE, null);
-			TestUtils.waitForJobs(5000, JobFamilies.INDEX_DIFF_CACHE_UPDATE);
+			assertTrue("No index diff cache update after 20 seconds",
+					barrier.await(20, TimeUnit.SECONDS));
 		} finally {
 			cache.removeIndexDiffChangedListener(listener);
 		}
-		assertNotNull(diff[0]);
-		assertTrue(
-				diff[0].getUntracked().contains(PROJECT_NAME + "/newfile.txt"));
+		IndexDiffData diff = result.get();
+		assertNotNull(diff);
+		assertTrue(diff.getUntracked()
+						.contains(PROJECT_NAME + "/newfile.txt"));
 	}
 }
