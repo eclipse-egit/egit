@@ -1,5 +1,5 @@
 /*******************************************************************************
- *  Copyright (c) 2011, 2020 GitHub Inc. and others.
+ *  Copyright (c) 2011, 2021 GitHub Inc. and others.
  *  All rights reserved. This program and the accompanying materials
  *  are made available under the terms of the Eclipse Public License 2.0
  *  which accompanies this distribution, and is available at
@@ -15,6 +15,7 @@
 package org.eclipse.egit.ui.internal.commit;
 
 import java.text.MessageFormat;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 import org.eclipse.core.runtime.Adapters;
 import org.eclipse.core.runtime.IProgressMonitor;
@@ -27,6 +28,7 @@ import org.eclipse.egit.ui.internal.CommonUtils;
 import org.eclipse.egit.ui.internal.UIIcons;
 import org.eclipse.egit.ui.internal.UIText;
 import org.eclipse.egit.ui.internal.actions.ActionCommands;
+import org.eclipse.egit.ui.internal.components.EditorVisibilityTracker;
 import org.eclipse.egit.ui.internal.properties.CommitPropertySource;
 import org.eclipse.egit.ui.internal.properties.GitPropertySheetPage;
 import org.eclipse.egit.ui.internal.repository.RepositoriesView;
@@ -59,11 +61,10 @@ import org.eclipse.ui.IEditorActionBarContributor;
 import org.eclipse.ui.IEditorInput;
 import org.eclipse.ui.IEditorPart;
 import org.eclipse.ui.IEditorSite;
-import org.eclipse.ui.IPartListener;
 import org.eclipse.ui.IPartService;
 import org.eclipse.ui.ISharedImages;
 import org.eclipse.ui.ISources;
-import org.eclipse.ui.IWorkbenchPart;
+import org.eclipse.ui.IWorkbenchPartReference;
 import org.eclipse.ui.PartInitException;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.forms.IFormColors;
@@ -156,6 +157,8 @@ public class CommitEditor extends SharedHeaderFormEditor implements
 		return openQuiet(commit, true);
 	}
 
+	private final AtomicBoolean runRefresh = new AtomicBoolean();
+
 	private IContentOutlinePage outlinePage;
 
 	private CommitEditorPage commitPage;
@@ -172,45 +175,14 @@ public class CommitEditor extends SharedHeaderFormEditor implements
 
 	private IPageChangedListener pageListener;
 
-	/** Ensures that the toolbar buttons in the header are properly updated. */
-	private final IPartListener activationListener = new IPartListener() {
-
-		private boolean isActive;
-
-		@Override
-		public void partActivated(IWorkbenchPart part) {
-			if (part == CommitEditor.this) {
-				if (!isActive) {
-					isActive = true;
-					updateToolbar();
-				}
-			} else if (isActive) {
-				isActive = false;
-				updateToolbar();
-			}
-		}
-
-		@Override
-		public void partBroughtToTop(IWorkbenchPart part) {
-			// Nothing to do
-		}
-
-		@Override
-		public void partClosed(IWorkbenchPart part) {
-			// Nothing to do
-		}
-
-		@Override
-		public void partDeactivated(IWorkbenchPart part) {
-			// Nothing to do
-		}
-
-		@Override
-		public void partOpened(IWorkbenchPart part) {
-			// Nothing to do
-		}
-
-	};
+	/**
+	 * Ensures that the toolbar buttons in the header are properly updated, and
+	 * that the editor refreshes on {@link RefsChangedEvent}s only when visible.
+	 * Created and installed in {@link #createHeaderContents(IManagedForm)},
+	 * which occurs before {@link #addPages()} where we start listening for
+	 * {@link RefsChangedEvent}s.
+	 */
+	private EditorVisibilityTracker visibilityListener;
 
 	private static class CommitEditorNestedSite extends MultiPageEditorSite {
 
@@ -263,12 +235,16 @@ public class CommitEditor extends SharedHeaderFormEditor implements
 		}
 		refListenerHandle = RepositoryCache.INSTANCE.getGlobalListenerList()
 				.addRefsChangedListener(this);
+
 		pageListener = event -> {
 			IEvaluationService service = PlatformUI.getWorkbench()
 					.getService(IEvaluationService.class);
 			if (service != null) {
 				// Update enablement of "Save As..."
 				service.requestEvaluation(ISources.ACTIVE_PART_NAME);
+			}
+			if (event.getSelectedPage() == commitPage) {
+				refreshCommitPage();
 			}
 		};
 		addPageChangedListener(pageListener);
@@ -356,8 +332,26 @@ public class CommitEditor extends SharedHeaderFormEditor implements
 			}
 		};
 		toolbar.add(repositoryLabelControl);
+		visibilityListener = new EditorVisibilityTracker(this) {
+
+			private boolean isActive;
+
+			@Override
+			public void partActivated(IWorkbenchPartReference partRef) {
+				if (isMe(partRef)) {
+					if (!isActive) {
+						isActive = true;
+						updateToolbar();
+					}
+				} else if (isActive) {
+					isActive = false;
+					updateToolbar();
+				}
+			}
+		};
+
 		getSite().getService(IPartService.class)
-				.addPartListener(activationListener);
+				.addPartListener(visibilityListener);
 		if (commit.isStash()) {
 			toolbar.add(createActionContributionItem(ActionCommands.STASH_APPLY,
 					UIText.CommitEditor_toolbarApplyStash,
@@ -523,13 +517,16 @@ public class CommitEditor extends SharedHeaderFormEditor implements
 
 	@Override
 	public void dispose() {
+		refListenerHandle.remove();
 		if (pageListener != null) {
 			removePageChangedListener(pageListener);
 			pageListener = null;
 		}
-		getSite().getService(IPartService.class)
-				.removePartListener(activationListener);
-		refListenerHandle.remove();
+		if (visibilityListener != null) {
+			getSite().getService(IPartService.class)
+					.removePartListener(visibilityListener);
+			visibilityListener = null;
+		}
 		headerFocusTracker.dispose();
 		super.dispose();
 	}
@@ -566,17 +563,38 @@ public class CommitEditor extends SharedHeaderFormEditor implements
 	public void onRefsChanged(RefsChangedEvent event) {
 		if (getCommit().getRepository().getDirectory()
 				.equals(event.getRepository().getDirectory())) {
-			UIJob job = new UIJob("Refreshing editor") { //$NON-NLS-1$
-
-				@Override
-				public IStatus runInUIThread(IProgressMonitor monitor) {
-					if (!getContainer().isDisposed())
-						commitPage.refresh();
-					return Status.OK_STATUS;
+			visibilityListener.runWhenVisible(() -> {
+				runRefresh.set(true);
+				if (getActivePageInstance() == commitPage) {
+					refreshCommitPage();
 				}
-			};
-			job.schedule();
+				// Otherwise the pageListener will run the refresh when the
+				// commitPage becomes active
+			});
 		}
+	}
+
+	private void refreshCommitPage() {
+		if (!runRefresh.getAndSet(false) || getContainer().isDisposed()) {
+			return;
+		}
+		UIJob job = new UIJob("Refreshing editor") { //$NON-NLS-1$
+
+			@Override
+			public IStatus runInUIThread(IProgressMonitor monitor) {
+				try {
+					if (!getContainer().isDisposed()) {
+						commitPage.refresh();
+					}
+				} finally {
+					if (monitor != null) {
+						monitor.done();
+					}
+				}
+				return Status.OK_STATUS;
+			}
+		};
+		job.schedule();
 	}
 
 	private IContentOutlinePage getOutlinePage() {
