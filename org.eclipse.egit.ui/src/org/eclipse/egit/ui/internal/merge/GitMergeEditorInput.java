@@ -19,7 +19,9 @@ import java.text.MessageFormat;
 import java.time.Instant;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.IdentityHashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
 
 import org.eclipse.compare.CompareConfiguration;
@@ -27,6 +29,7 @@ import org.eclipse.compare.CompareEditorInput;
 import org.eclipse.compare.ITypedElement;
 import org.eclipse.compare.contentmergeviewer.ContentMergeViewer;
 import org.eclipse.compare.rangedifferencer.RangeDifference;
+import org.eclipse.compare.structuremergeviewer.DiffContainer;
 import org.eclipse.compare.structuremergeviewer.DiffNode;
 import org.eclipse.compare.structuremergeviewer.Differencer;
 import org.eclipse.compare.structuremergeviewer.ICompareInput;
@@ -38,6 +41,7 @@ import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.Path;
 import org.eclipse.egit.core.RepositoryUtil;
+import org.eclipse.egit.core.info.GitInfo;
 import org.eclipse.egit.core.internal.CompareCoreUtils;
 import org.eclipse.egit.core.internal.CoreText;
 import org.eclipse.egit.core.internal.efs.EgitFileSystem;
@@ -63,6 +67,7 @@ import org.eclipse.jgit.dircache.DirCacheEditor;
 import org.eclipse.jgit.dircache.DirCacheEditor.PathEdit;
 import org.eclipse.jgit.dircache.DirCacheEntry;
 import org.eclipse.jgit.dircache.DirCacheIterator;
+import org.eclipse.jgit.lib.AnyObjectId;
 import org.eclipse.jgit.lib.ConfigConstants;
 import org.eclipse.jgit.lib.Constants;
 import org.eclipse.jgit.lib.ObjectId;
@@ -83,7 +88,7 @@ import org.eclipse.ui.PlatformUI;
  * A Git-specific {@link CompareEditorInput} for merging conflicting files.
  */
 @SuppressWarnings("restriction")
-public class GitMergeEditorInput extends AbstractGitMergeEditorInput {
+public class GitMergeEditorInput extends AbstractGitCompareEditorInput {
 
 	private static final String LABELPATTERN = "{0} - {1}"; //$NON-NLS-1$
 
@@ -94,6 +99,10 @@ public class GitMergeEditorInput extends AbstractGitMergeEditorInput {
 	private final boolean useOurs;
 
 	private CompareEditorInputViewerAction toggleCurrentChanges;
+
+	// This must be an identity map. If the built tree is post-processed and its
+	// structure is changed, hash codes of nodes may change!
+	private Map<DiffNode, String> customLabels = new IdentityHashMap<>();
 
 	/**
 	 * Creates a new {@link GitMergeEditorInput}.
@@ -162,7 +171,33 @@ public class GitMergeEditorInput extends AbstractGitMergeEditorInput {
 	}
 
 	@Override
-	protected Object buildInput(IProgressMonitor monitor)
+	protected GitInfo getGitInfo(IPath path) {
+		return new GitInfo() {
+
+			@Override
+			public Repository getRepository() {
+				return GitMergeEditorInput.this.getRepository();
+			}
+
+			@Override
+			public String getGitPath() {
+				return path.toString();
+			}
+
+			@Override
+			public Source getSource() {
+				return Source.WORKING_TREE;
+			}
+
+			@Override
+			public AnyObjectId getCommitId() {
+				return null;
+			}
+		};
+	}
+
+	@Override
+	protected DiffContainer buildInput(IProgressMonitor monitor)
 			throws InvocationTargetException, InterruptedException {
 		RevWalk rw = null;
 		try {
@@ -290,14 +325,20 @@ public class GitMergeEditorInput extends AbstractGitMergeEditorInput {
 		}
 	}
 
-	@SuppressWarnings("unused")
-	private IDiffContainer buildDiffContainer(Repository repository,
+	@Override
+	protected void inputBuilt(DiffContainer root) {
+		super.inputBuilt(root);
+		customLabels.forEach((node, name) -> setLeftLabel(node, name, false));
+		customLabels.clear();
+	}
+
+	private DiffContainer buildDiffContainer(Repository repository,
 			RevCommit headCommit, RevCommit ancestorCommit, RevWalk rw,
 			IProgressMonitor monitor)
 			throws IOException, InterruptedException {
 
 		monitor.setTaskName(UIText.GitMergeEditorInput_CalculatingDiffTaskName);
-		IDiffContainer result = new DiffNode(Differencer.CONFLICTING);
+		DiffContainer result = new DiffNode(Differencer.CONFLICTING);
 
 		ConflictStyle style = null;
 		try (TreeWalk tw = new TreeWalk(repository)) {
@@ -383,12 +424,14 @@ public class GitMergeEditorInput extends AbstractGitMergeEditorInput {
 				assert location != null;
 				IFile file = ResourceUtil.getFileForLocation(location, false);
 				boolean useWorkingTree = !conflicting || useWorkspace;
+				boolean stage2FromWorkingTree = false;
 				if (!useWorkingTree && conflicting && dirCacheEntry != null) {
 					// Normal conflict stages have a zero timestamp. If it's not
 					// zero, we marked it below when the content was saved to
 					// the working tree file in an earlier merge editor.
 					useWorkingTree = !Instant.EPOCH
 							.equals(dirCacheEntry.getLastModifiedInstant());
+					stage2FromWorkingTree = useWorkingTree;
 				}
 				if (useWorkingTree) {
 					boolean useOursFilter = conflicting && useOurs;
@@ -437,8 +480,8 @@ public class GitMergeEditorInput extends AbstractGitMergeEditorInput {
 								// Ignore here; use default.
 							}
 						}
-						item = createWithHiddenResource(
-								uri, tw.getNameString(), file, rscEncoding);
+						item = createWithHiddenResource(uri, repository,
+								gitPath, tw.getNameString(), file, rscEncoding);
 						if (file != null) {
 							item.setSharedDocumentListener(
 									new LocalResourceSaver(item) {
@@ -526,7 +569,15 @@ public class GitMergeEditorInput extends AbstractGitMergeEditorInput {
 					ancestor = new FileRevisionTypedElement(revision, encoding);
 				}
 				// create the node as child
-				new MergeDiffNode(fileParent, kind, ancestor, left, right);
+				DiffNode node = new MergeDiffNode(fileParent, kind, ancestor,
+						left, right);
+				if (stage2FromWorkingTree) {
+					customLabels.put(node, tw.getNameString());
+				} else if (left instanceof EditableRevision) {
+					String name = tw.getNameString();
+					((EditableRevision) left).addContentChangeListener(
+							source -> setLeftLabel(node, name, true));
+				}
 			}
 			return result;
 		} catch (URISyntaxException e) {
@@ -559,6 +610,32 @@ public class GitMergeEditorInput extends AbstractGitMergeEditorInput {
 			if (cache != null) {
 				cache.unlock();
 			}
+		}
+	}
+
+	private void setLeftLabel(DiffNode node, String name, boolean fireChange) {
+		GitCompareLabelProvider labels = new GitCompareLabelProvider() {
+
+			@Override
+			public String getLeftLabel(Object input) {
+				return MessageFormat.format(
+						UIText.GitCompareFileRevisionEditorInput_LocalLabel,
+						name);
+			}
+
+			@Override
+			public String getRightLabel(Object input) {
+				return null; // Use default
+			}
+
+			@Override
+			public String getAncestorLabel(Object input) {
+				return null; // Use default
+			}
+		};
+		getCompareConfiguration().setLabelProvider(node, labels);
+		if (fireChange) {
+			labels.fireNodeLabelChanged(node);
 		}
 	}
 }

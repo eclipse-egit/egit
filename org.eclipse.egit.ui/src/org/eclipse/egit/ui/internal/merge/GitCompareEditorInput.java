@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (C) 2010, 2017 Mathias Kinzler <mathias.kinzler@sap.com> and others.
+ * Copyright (C) 2010, 2021 Mathias Kinzler <mathias.kinzler@sap.com> and others.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License 2.0
@@ -10,35 +10,37 @@
  *******************************************************************************/
 package org.eclipse.egit.ui.internal.merge;
 
+import java.io.File;
 import java.io.IOException;
+import java.io.UncheckedIOException;
 import java.lang.reflect.InvocationTargetException;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Map.Entry;
+import java.text.MessageFormat;
+import java.util.Collection;
+import java.util.Objects;
+import java.util.function.Supplier;
 
 import org.eclipse.compare.CompareConfiguration;
 import org.eclipse.compare.CompareEditorInput;
+import org.eclipse.compare.ITypedElement;
+import org.eclipse.compare.structuremergeviewer.DiffContainer;
 import org.eclipse.compare.structuremergeviewer.DiffNode;
 import org.eclipse.compare.structuremergeviewer.Differencer;
-import org.eclipse.compare.structuremergeviewer.IDiffContainer;
-import org.eclipse.compare.structuremergeviewer.IDiffElement;
-import org.eclipse.core.resources.IResource;
+import org.eclipse.core.resources.IFile;
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.Path;
 import org.eclipse.egit.core.RepositoryUtil;
+import org.eclipse.egit.core.info.GitInfo;
 import org.eclipse.egit.core.internal.CompareCoreUtils;
 import org.eclipse.egit.core.internal.storage.GitFileRevision;
-import org.eclipse.egit.core.project.RepositoryMapping;
+import org.eclipse.egit.core.internal.util.ResourceUtil;
 import org.eclipse.egit.ui.internal.CompareUtils;
 import org.eclipse.egit.ui.internal.UIText;
-import org.eclipse.egit.ui.internal.dialogs.CompareTreeView;
 import org.eclipse.egit.ui.internal.revision.FileRevisionTypedElement;
+import org.eclipse.egit.ui.internal.synchronize.compare.LocalNonWorkspaceTypedElement;
 import org.eclipse.jgit.dircache.DirCacheCheckout.CheckoutMetadata;
 import org.eclipse.jgit.dircache.DirCacheIterator;
+import org.eclipse.jgit.lib.AnyObjectId;
 import org.eclipse.jgit.lib.Constants;
 import org.eclipse.jgit.lib.Repository;
 import org.eclipse.jgit.revwalk.RevCommit;
@@ -49,444 +51,320 @@ import org.eclipse.jgit.treewalk.FileTreeIterator;
 import org.eclipse.jgit.treewalk.TreeWalk;
 import org.eclipse.jgit.treewalk.WorkingTreeIterator;
 import org.eclipse.jgit.treewalk.filter.PathFilterGroup;
-import org.eclipse.osgi.util.NLS;
-import org.eclipse.swt.graphics.Image;
-import org.eclipse.ui.ISharedImages;
-import org.eclipse.ui.PlatformUI;
+import org.eclipse.team.internal.ui.synchronize.LocalResourceTypedElement;
 
 /**
- * A Git-specific {@link CompareEditorInput}
+ * A Git-specific {@link CompareEditorInput} for comparing the workspace against
+ * a commit, or a commit against a commit, performing a two-way diff.
  */
-public class GitCompareEditorInput extends CompareEditorInput {
-	private static final Image FOLDER_IMAGE = PlatformUI.getWorkbench()
-			.getSharedImages().getImage(ISharedImages.IMG_OBJ_FOLDER);
+@SuppressWarnings("restriction")
+public class GitCompareEditorInput extends AbstractGitCompareEditorInput {
 
-	private final String baseVersion;
+	private final String leftVersion;
 
-	private final String compareVersion;
-
-	private final IResource[] resources;
-
-	private final List<String> filterPathStrings = new ArrayList<>();
-
-	private final Map<IPath, IDiffContainer> diffRoots = new HashMap<>();
-
-	private Repository repository;
+	private final String rightVersion;
 
 	/**
-	 * @param compareVersion
-	 *            (shown on the left side in compare); currently only commit IDs
-	 *            are supported
-	 * @param baseVersion
-	 *            (shown on the right side in compare); currently only commit
-	 *            IDs are supported
+	 * Creates a new {@link GitCompareEditorInput} with the comparison filtered
+	 * to the given paths.
+	 *
+	 * @param leftVersion
+	 *            git object name (ref name, commit id) to show on the left
+	 *            side; if {@code null}, the working tree is taken as input
+	 * @param rightVersion
+	 *            git object name (ref name, commit id) to compare against;
+	 *            shown on the right side
 	 * @param repository
 	 *            repository where resources are coming from
-	 * @param resources
-	 *            as selected by the user
+	 * @param paths
+	 *            as selected by the user; empty to compare all paths
 	 */
-	public GitCompareEditorInput(String compareVersion, String baseVersion,
-			Repository repository, IResource... resources) {
-		super(new CompareConfiguration());
-		this.repository = repository;
-		this.resources = convertResourceInput(resources);
-		this.baseVersion = baseVersion;
-		this.compareVersion = compareVersion;
-	}
-
-	/**
-	 * @param compareVersion
-	 *            (shown on the left side in compare); currently only commit IDs
-	 *            are supported
-	 * @param baseVersion
-	 *            (shown on the right side in compare); currently only commit
-	 *            IDs are supported
-	 * @param repository
-	 *            as selected by the user
-	 */
-	public GitCompareEditorInput(String compareVersion, String baseVersion,
-			Repository repository) {
-		super(new CompareConfiguration());
-		this.resources = new IResource[0];
-		this.baseVersion = baseVersion;
-		this.compareVersion = compareVersion;
-		this.repository = repository;
+	public GitCompareEditorInput(String leftVersion, String rightVersion,
+			Repository repository, IPath... paths) {
+		super(repository, paths);
+		this.leftVersion = leftVersion;
+		this.rightVersion = rightVersion;
 	}
 
 	@Override
-	protected Object prepareInput(IProgressMonitor monitor)
+	protected GitInfo getGitInfo(IPath path) {
+		return new GitInfo() {
+
+			@Override
+			public Repository getRepository() {
+				return GitCompareEditorInput.this.getRepository();
+			}
+
+			@Override
+			public String getGitPath() {
+				return path.toString();
+			}
+
+			@Override
+			public Source getSource() {
+				// Approximative. Even if comparing against the working tree, we
+				// might have paths that exist only in the right commit.
+				return leftVersion == null ? Source.WORKING_TREE
+						: Source.COMMIT;
+			}
+
+			@Override
+			public AnyObjectId getCommitId() {
+				// How to determine? Could be from either commit. Not used
+				// currently.
+				return null;
+			}
+		};
+	}
+
+	@Override
+	protected DiffContainer buildInput(IProgressMonitor monitor)
 			throws InvocationTargetException, InterruptedException {
-		// make sure all resources belong to the same repository
-		try (RevWalk rw = new RevWalk(repository)) {
-			monitor.beginTask(
-					UIText.GitCompareEditorInput_CompareResourcesTaskName,
-					IProgressMonitor.UNKNOWN);
+		Repository repo = getRepository();
+		try (RevWalk rw = new RevWalk(repo)) {
+			RevCommit leftCommit = leftVersion == null ? null
+					: rw.parseCommit(repo.resolve(leftVersion));
+			RevCommit rightCommit = rw.parseCommit(repo.resolve(rightVersion));
 
-			for (IResource resource : resources) {
-				if (resource == null) {
-					continue;
-				}
-				RepositoryMapping map = RepositoryMapping.getMapping(resource);
-				if (map == null) {
-					throw new InvocationTargetException(
-							new IllegalStateException(
-									UIText.GitCompareEditorInput_ResourcesInDifferentReposMessagge));
-				}
-				if (repository != null && repository != map.getRepository())
-					throw new InvocationTargetException(
-							new IllegalStateException(
-									UIText.GitCompareEditorInput_ResourcesInDifferentReposMessagge));
-				String repoRelativePath = map.getRepoRelativePath(resource);
-				filterPathStrings.add(repoRelativePath);
-				DiffNode node = new DiffNode(Differencer.NO_CHANGE) {
-					@Override
-					public Image getImage() {
-						return FOLDER_IMAGE;
-					}
-				};
-				diffRoots.put(new Path(map.getRepoRelativePath(resource)),
-						node);
-				repository = map.getRepository();
+			CompareConfiguration config = getCompareConfiguration();
+			// Labels based on the FileRevisionTypedElements
+			config.setDefaultLabelProvider(new GitCompareLabelProvider());
+			// Fallback labels
+			if (leftVersion == null) {
+				config.setLeftLabel(
+						UIText.GitCompareEditorInput_WorkingTreeFallbackLabel);
+			} else {
+				config.setLeftLabel(leftVersion);
 			}
+			config.setRightLabel(rightVersion);
 
-			if (repository == null)
-				throw new InvocationTargetException(new IllegalStateException(
-						UIText.GitCompareEditorInput_ResourcesInDifferentReposMessagge));
+			setTitle(MessageFormat.format(
+					UIText.GitCompareEditorInput_EditorTitle,
+					RepositoryUtil.INSTANCE.getRepositoryName(repo),
+					leftVersion == null
+							? UIText.GitCompareEditorInput_WorkingTreeSourceName
+							: CompareUtils.truncatedRevision(leftVersion),
+					CompareUtils.truncatedRevision(rightVersion)));
 
-			if (monitor.isCanceled())
-				throw new InterruptedException();
-
-			final RevCommit baseCommit;
-			try {
-				try {
-					baseCommit = rw
-							.parseCommit(repository.resolve(baseVersion));
-				} catch (IOException e) {
-					throw new InvocationTargetException(e);
-				}
-
-				final RevCommit compareCommit;
-				if (compareVersion == null) {
-					compareCommit = null;
-				} else {
-					try {
-						compareCommit = rw.parseCommit(
-								repository.resolve(compareVersion));
-					} catch (IOException e) {
-						throw new InvocationTargetException(e);
-					}
-				}
-				if (monitor.isCanceled())
-					throw new InterruptedException();
-
-				// set the labels
-				CompareConfiguration config = getCompareConfiguration();
-				config.setLeftLabel(compareVersion);
-				config.setRightLabel(baseVersion);
-				// set title and icon
-				if (resources.length == 0) {
-					Object[] titleParameters = new Object[] {
-							RepositoryUtil.INSTANCE
-									.getRepositoryName(repository),
-							CompareUtils.truncatedRevision(compareVersion),
-							CompareUtils.truncatedRevision(baseVersion) };
-					setTitle(NLS.bind(UIText.GitCompareEditorInput_EditorTitle,
-							titleParameters));
-				} else if (resources.length == 1) {
-					Object[] titleParameters = new Object[] {
-							resources[0].getFullPath().makeRelative()
-									.toString(),
-							CompareUtils.truncatedRevision(compareVersion),
-							CompareUtils.truncatedRevision(baseVersion) };
-					setTitle(NLS.bind(
-							UIText.GitCompareEditorInput_EditorTitleSingleResource,
-							titleParameters));
-				} else {
-					setTitle(NLS
-							.bind(UIText.GitCompareEditorInput_EditorTitleMultipleResources,
-									CompareUtils.truncatedRevision(
-											compareVersion),
-							CompareUtils.truncatedRevision(baseVersion)));
-				}
-
-				// build the nodes
-				try {
-					return buildDiffContainer(baseCommit, compareCommit,
-							monitor);
-				} catch (IOException e) {
-					throw new InvocationTargetException(e);
-				}
-			} finally {
-				monitor.done();
-			}
+			return buildDiffContainer(leftCommit, rightCommit, monitor);
+		} catch (IOException e) {
+			throw new InvocationTargetException(e);
 		}
 	}
 
-	@Override
-	protected void contentsCreated() {
-		super.contentsCreated();
-		// select the first conflict
-		getNavigator().selectChange(true);
-	}
-
-	@Override
-	protected void handleDispose() {
-		super.handleDispose();
-		// we do NOT dispose the images, as these are shared
-	}
-
-	private IDiffContainer buildDiffContainer(RevCommit baseCommit,
-			RevCommit compareCommit, IProgressMonitor monitor)
+	private DiffContainer buildDiffContainer(RevCommit leftCommit,
+			RevCommit rightCommit, IProgressMonitor monitor)
 			throws IOException, InterruptedException {
-		boolean useIndex = compareVersion.equals(CompareTreeView.INDEX_VERSION);
-		boolean checkIgnored = false;
+		DiffContainer result = new DiffNode(Differencer.CONFLICTING);
 
-		IDiffContainer result = new DiffNode(Differencer.CONFLICTING);
+		Repository repo = getRepository();
+		try (TreeWalk tw = new TreeWalk(repo)) {
+			int leftIndex;
+			int dirCacheIndex = -1;
 
-		try (TreeWalk tw = new TreeWalk(repository)) {
+			if (leftCommit == null) {
+				FileTreeIterator fit = new FileTreeIterator(repo);
+				leftIndex = tw.addTree(fit);
+				// We also need the index; otherwise the traversal is very slow
+				// because each OID has to be recomputed from the file content.
+				// With a parallel iteration over the index, OIDs can be taken
+				// from the index unless a file was modified (or appears racily
+				// clean). A DirCacheIterator is also needed to handle ignored
+				// files correctly.
+				dirCacheIndex = tw
+						.addTree(new DirCacheIterator(repo.readDirCache()));
+				fit.setDirCacheIterator(tw, dirCacheIndex);
+			} else {
+				leftIndex = tw.addTree(new CanonicalTreeParser(null,
+						repo.newObjectReader(), leftCommit.getTree()));
+			}
+			int rightIndex = tw.addTree(new CanonicalTreeParser(null,
+					repo.newObjectReader(), rightCommit.getTree()));
 
 			// filter by selected resources
-			if (filterPathStrings.size() > 1) {
-				tw.setFilter(
-						PathFilterGroup.createFromStrings(filterPathStrings));
-			} else if (filterPathStrings.size() > 0) {
-				String path = filterPathStrings.get(0);
-				if (!path.isEmpty()) {
-					tw.setFilter(PathFilterGroup.createFromStrings(path));
+			Collection<String> filterPaths = getFilterPaths();
+			if (!filterPaths.isEmpty()) {
+				if (filterPaths.size() > 1) {
+					tw.setFilter(
+							PathFilterGroup.createFromStrings(filterPaths));
+				} else {
+					String path = filterPaths.iterator().next();
+					if (!path.isEmpty()) {
+						tw.setFilter(PathFilterGroup.createFromStrings(path));
+					}
 				}
 			}
 
 			tw.setRecursive(true);
 
-			int baseTreeIndex;
-			if (baseCommit == null) {
-				// compare workspace with something
-				checkIgnored = true;
-				baseTreeIndex = tw.addTree(new FileTreeIterator(repository));
-			} else
-				baseTreeIndex = tw.addTree(new CanonicalTreeParser(null,
-						repository.newObjectReader(), baseCommit.getTree()));
-			int compareTreeIndex;
-			if (!useIndex)
-				compareTreeIndex = tw.addTree(new CanonicalTreeParser(null,
-						repository.newObjectReader(), compareCommit.getTree()));
-			else
-				// compare something with the index
-				compareTreeIndex = tw.addTree(new DirCacheIterator(repository
-						.readDirCache()));
-
+			CheckoutData data = new CheckoutData();
 			while (tw.next()) {
-				if (monitor.isCanceled())
+				if (monitor.isCanceled()) {
 					throw new InterruptedException();
-				AbstractTreeIterator compareVersionIterator = tw.getTree(
-						compareTreeIndex, AbstractTreeIterator.class);
-				AbstractTreeIterator baseVersionIterator = tw.getTree(
-						baseTreeIndex, AbstractTreeIterator.class);
-				if (checkIgnored
-						&& baseVersionIterator != null
-						&& ((WorkingTreeIterator) baseVersionIterator)
-								.isEntryIgnored())
+				}
+				AbstractTreeIterator leftIter = tw.getTree(leftIndex,
+						AbstractTreeIterator.class);
+				AbstractTreeIterator rightIter = tw.getTree(rightIndex,
+						AbstractTreeIterator.class);
+				if (leftIter instanceof WorkingTreeIterator
+						&& rightIter == null
+						&& tw.getTree(dirCacheIndex,
+								DirCacheIterator.class) == null
+						&& ((WorkingTreeIterator) leftIter).isEntryIgnored()) {
+					// File is ignored
 					continue;
-
-
-				if (compareVersionIterator != null
-						&& baseVersionIterator != null) {
-					boolean equalContent = compareVersionIterator
-							.getEntryObjectId().equals(
-									baseVersionIterator.getEntryObjectId());
-					if (equalContent)
-						continue;
 				}
 
-				String encoding = null;
-				CheckoutMetadata metadata = null;
+				data.clear();
 
-				GitFileRevision compareRev = null;
-				if (compareVersionIterator != null) {
-					String entryPath = compareVersionIterator.getEntryPathString();
-					encoding = CompareCoreUtils.getResourceEncoding(repository, entryPath);
-					if (!useIndex) {
-						metadata = new CheckoutMetadata(tw.getEolStreamType(
-								TreeWalk.OperationType.CHECKOUT_OP),
-								tw.getFilterCommand(
-										Constants.ATTR_FILTER_TYPE_SMUDGE));
-						compareRev = GitFileRevision.inCommit(repository,
-								compareCommit, entryPath,
-								tw.getObjectId(compareTreeIndex), metadata);
-					} else {
-						compareRev = GitFileRevision.inIndex(repository,
-								entryPath);
-					}
+				String gitPath = tw.getPathString();
+
+				Supplier<ITypedElement> leftItem;
+				if (leftIter instanceof WorkingTreeIterator) {
+					leftItem = () -> {
+						Path repositoryPath = new Path(
+								repo.getWorkTree().getAbsolutePath());
+						IPath location = repositoryPath.append(gitPath);
+						assert location != null;
+						IFile file = ResourceUtil.getFileForLocation(location,
+								false);
+						LocalResourceTypedElement item;
+						if (file != null) {
+							item = new LocalResourceTypedElement(file);
+						} else {
+							item = new LocalNonWorkspaceTypedElement(repo,
+									location);
+						}
+						item.setSharedDocumentListener(
+								new LocalResourceSaver(item));
+						return item;
+					};
+				} else {
+					leftItem = () -> {
+						data.fill(repo, tw, gitPath);
+						GitFileRevision revision = GitFileRevision.inCommit(
+								repo, leftCommit, gitPath,
+								leftIter.getEntryObjectId(),
+								data.getMetadata());
+						return new FileRevisionTypedElement(revision,
+								data.getEncoding());
+					};
 				}
+				Supplier<ITypedElement> rightItem = () -> {
+					assert rightIter != null;
+					data.fill(repo, tw, gitPath);
+					GitFileRevision revision = GitFileRevision.inCommit(repo,
+							rightCommit, gitPath,
+							rightIter.getEntryObjectId(), data.getMetadata());
+					return new FileRevisionTypedElement(revision,
+							data.getEncoding());
+				};
 
-				GitFileRevision baseRev = null;
-				if (baseVersionIterator != null) {
-					String entryPath = baseVersionIterator.getEntryPathString();
-					if (encoding == null) {
-						encoding = CompareCoreUtils.getResourceEncoding(repository, entryPath);
-					}
-					if (metadata == null) {
-						metadata = new CheckoutMetadata(
-								tw.getEolStreamType(
-										TreeWalk.OperationType.CHECKOUT_OP),
-								tw.getFilterCommand(
-										Constants.ATTR_FILTER_TYPE_SMUDGE));
-					}
-					baseRev = GitFileRevision.inCommit(repository, baseCommit,
-							entryPath, tw.getObjectId(baseTreeIndex), metadata);
+				MergeDiffNode node = twoWayDiff(leftIter, rightIter,
+						leftItem, rightItem);
+				if (node != null) {
+					getFileParent(result, gitPath).add(node);
 				}
-
-				if (compareVersionIterator != null
-						&& baseVersionIterator != null) {
-					monitor.setTaskName(baseVersionIterator
-							.getEntryPathString());
-					// content exists on both sides
-					add(result, baseVersionIterator.getEntryPathString(),
-							new DiffNode(new FileRevisionTypedElement(compareRev, encoding),
-									new FileRevisionTypedElement(baseRev, encoding)));
-				} else if (baseVersionIterator != null
-						&& compareVersionIterator == null) {
-					monitor.setTaskName(baseVersionIterator
-							.getEntryPathString());
-					// only on base side
-					add(result, baseVersionIterator.getEntryPathString(),
-							new DiffNode(Differencer.DELETION | Differencer.RIGHT, null, null,
-									new FileRevisionTypedElement(baseRev, encoding)));
-				} else if (compareVersionIterator != null
-						&& baseVersionIterator == null) {
-					monitor.setTaskName(compareVersionIterator
-							.getEntryPathString());
-					// only on compare side
-					add(result, compareVersionIterator.getEntryPathString(),
-							new DiffNode(Differencer.ADDITION | Differencer.RIGHT, null,
-									new FileRevisionTypedElement(compareRev, encoding), null));
-				}
-
-				if (monitor.isCanceled())
-					throw new InterruptedException();
 			}
-			return result;
+			return result.hasChildren() ? result : null;
 		}
+	}
+
+	private MergeDiffNode twoWayDiff(AbstractTreeIterator leftIter,
+			AbstractTreeIterator rightIter,
+			Supplier<ITypedElement> leftItem,
+			Supplier<ITypedElement> rightItem) {
+		int kind;
+		ITypedElement left = null;
+		ITypedElement right = null;
+		if (leftIter == null) {
+			if (rightIter == null) {
+				return null;
+			}
+			kind = Differencer.LEFT + Differencer.DELETION;
+			right = rightItem.get();
+		} else if (rightIter == null) {
+			kind = Differencer.LEFT + Differencer.ADDITION;
+			left = leftItem.get();
+		} else if (leftIter.getEntryObjectId()
+				.equals(rightIter.getEntryObjectId())) {
+			return null;
+		} else {
+			kind = Differencer.CHANGE;
+			left = leftItem.get();
+			right = rightItem.get();
+		}
+		return new MergeDiffNode(kind, null, left, right);
 	}
 
 	@Override
 	public int hashCode() {
-		final int prime = 31;
-		int result = 1;
-		result = prime * result
-				+ ((baseVersion == null) ? 0 : baseVersion.hashCode());
-		result = prime * result
-				+ ((compareVersion == null) ? 0 : compareVersion.hashCode());
-		result = prime
-				* result
-				+ ((repository == null) ? 0 : repository.getDirectory()
-						.hashCode());
-		result = prime * result + Arrays.hashCode(resources);
+		int result = super.hashCode();
+		result = result * 31 + Objects.hash(leftVersion, rightVersion);
+		Repository repo = getRepository();
+		if (repo != null) {
+			result = result * 31 + repo.getDirectory().hashCode();
+		}
 		return result;
 	}
 
 	@Override
 	public boolean equals(Object obj) {
-		if (this == obj)
+		if (this == obj) {
 			return true;
-		if (obj == null)
+		}
+		if (!super.equals(obj)) {
 			return false;
-		if (getClass() != obj.getClass())
-			return false;
+		}
 		GitCompareEditorInput other = (GitCompareEditorInput) obj;
-		if (baseVersion == null) {
-			if (other.baseVersion != null)
-				return false;
-		} else if (!baseVersion.equals(other.baseVersion))
+		if (!Objects.equals(rightVersion, other.rightVersion)
+				|| !Objects.equals(leftVersion, other.leftVersion)) {
 			return false;
-		if (compareVersion == null) {
-			if (other.compareVersion != null)
-				return false;
-		} else if (!compareVersion.equals(other.compareVersion))
-			return false;
-		if (repository == null) {
-			if (other.repository != null)
-				return false;
-		} else if (other.repository == null || !repository.getDirectory().equals(
-				other.repository.getDirectory()))
-			return false;
-		if (!Arrays.equals(resources, other.resources))
-			return false;
-		return true;
+		}
+		Repository repo = getRepository();
+		File myDir = repo == null ? null : repo.getDirectory();
+		repo = other.getRepository();
+		File otherDir = repo == null ? null : repo.getDirectory();
+		return Objects.equals(myDir, otherDir);
 	}
 
-	private void add(IDiffContainer result, String filePath, DiffNode diffNode) {
-		IDiffContainer container = getFileParent(result, filePath);
-		container.add(diffNode);
-		diffNode.setParent(container);
+	private static class CheckoutData {
 
-	}
+		private boolean filled;
 
-	private IDiffContainer getFileParent(IDiffContainer root, String filePath) {
-		IPath path = new Path(filePath);
-		IDiffContainer child = root;
-		if (diffRoots.isEmpty()) {
-			for (int i = 0; i < path.segmentCount() - 1; i++)
-				child = getOrCreateChild(child, path.segment(i));
-			return child;
-		} else {
-			for (Entry<IPath, IDiffContainer> entry : diffRoots.entrySet()) {
-				if (entry.getKey().isPrefixOf(path)) {
-					for (int i = entry.getKey().segmentCount(); i < path
-							.segmentCount() - 1; i++)
-						child = getOrCreateChild(child, path.segment(i));
-					return child;
+		private String encoding;
+
+		private CheckoutMetadata metadata;
+
+		void fill(Repository repository, TreeWalk walk, String gitPath) {
+			if (!filled) {
+				filled = true;
+				encoding = CompareCoreUtils.getResourceEncoding(repository,
+						gitPath);
+				try {
+					metadata = new CheckoutMetadata(
+							walk.getEolStreamType(
+									TreeWalk.OperationType.CHECKOUT_OP),
+							walk.getFilterCommand(
+									Constants.ATTR_FILTER_TYPE_SMUDGE));
+				} catch (IOException e) {
+					throw new UncheckedIOException(e);
 				}
 			}
-			return null;
 		}
-	}
 
-	private DiffNode getOrCreateChild(IDiffContainer parent, final String name) {
-		for (IDiffElement child : parent.getChildren()) {
-			if (child.getName().equals(name)) {
-				return ((DiffNode) child);
-			}
+		String getEncoding() {
+			return encoding;
 		}
-		DiffNode child = new DiffNode(parent, Differencer.NO_CHANGE) {
 
-			@Override
-			public String getName() {
-				return name;
-			}
+		CheckoutMetadata getMetadata() {
+			return metadata;
+		}
 
-			@Override
-			public Image getImage() {
-				return FOLDER_IMAGE;
-			}
-		};
-		return child;
-	}
-
-	private IResource[] convertResourceInput(final IResource[] input) {
-		if (input.length > 0) {
-			// we must make sure to only show the topmost resources as roots
-			List<IResource> resourceList = new ArrayList<>(
-					input.length);
-			List<IPath> allPaths = new ArrayList<>(input.length);
-			for (IResource originalInput : input) {
-				allPaths.add(originalInput.getFullPath());
-			}
-			for (IResource originalInput : input) {
-				boolean skip = false;
-				for (IPath path : allPaths) {
-					if (path.isPrefixOf(originalInput.getFullPath())
-							&& path.segmentCount() < originalInput
-									.getFullPath().segmentCount()) {
-						skip = true;
-						break;
-					}
-				}
-				if (!skip)
-					resourceList.add(originalInput);
-			}
-			return resourceList.toArray(new IResource[0]);
-		} else
-			return input;
+		void clear() {
+			filled = false;
+			encoding = null;
+			metadata = null;
+		}
 	}
 }

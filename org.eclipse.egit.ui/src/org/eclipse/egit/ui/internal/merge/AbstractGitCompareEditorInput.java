@@ -10,6 +10,7 @@
  *******************************************************************************/
 package org.eclipse.egit.ui.internal.merge;
 
+import java.io.File;
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 import java.net.URI;
@@ -18,6 +19,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -29,18 +31,21 @@ import org.eclipse.compare.CompareViewerPane;
 import org.eclipse.compare.IResourceProvider;
 import org.eclipse.compare.ITypedElement;
 import org.eclipse.compare.contentmergeviewer.ContentMergeViewer;
+import org.eclipse.compare.structuremergeviewer.DiffContainer;
 import org.eclipse.compare.structuremergeviewer.DiffNode;
 import org.eclipse.compare.structuremergeviewer.Differencer;
 import org.eclipse.compare.structuremergeviewer.ICompareInput;
 import org.eclipse.compare.structuremergeviewer.IDiffContainer;
 import org.eclipse.compare.structuremergeviewer.IDiffElement;
 import org.eclipse.core.filesystem.EFS;
+import org.eclipse.core.resources.IContainer;
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.IResource;
 import org.eclipse.core.resources.IWorkspace;
 import org.eclipse.core.resources.IWorkspaceRunnable;
 import org.eclipse.core.resources.ResourcesPlugin;
+import org.eclipse.core.runtime.Adapters;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.IProgressMonitor;
@@ -49,18 +54,23 @@ import org.eclipse.core.runtime.Path;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.core.runtime.SubMonitor;
 import org.eclipse.core.runtime.jobs.Job;
+import org.eclipse.egit.core.info.GitInfo;
 import org.eclipse.egit.core.internal.efs.HiddenResources;
 import org.eclipse.egit.core.internal.indexdiff.IndexDiffCache;
 import org.eclipse.egit.core.internal.indexdiff.IndexDiffCacheEntry;
 import org.eclipse.egit.core.internal.util.ResourceUtil;
 import org.eclipse.egit.ui.Activator;
+import org.eclipse.egit.ui.internal.UIIcons;
 import org.eclipse.egit.ui.internal.UIText;
 import org.eclipse.jface.action.ActionContributionItem;
 import org.eclipse.jface.action.IAction;
 import org.eclipse.jface.action.IContributionItem;
 import org.eclipse.jface.action.ToolBarManager;
 import org.eclipse.jface.commands.ActionHandler;
+import org.eclipse.jface.viewers.StructuredSelection;
 import org.eclipse.jface.viewers.Viewer;
+import org.eclipse.jface.viewers.ViewerComparator;
+import org.eclipse.jgit.lib.AnyObjectId;
 import org.eclipse.jgit.lib.Repository;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.widgets.Composite;
@@ -72,13 +82,22 @@ import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.handlers.IHandlerActivation;
 import org.eclipse.ui.handlers.IHandlerService;
 import org.eclipse.ui.ide.IDE.SharedImages;
+import org.eclipse.ui.part.IShowInSource;
+import org.eclipse.ui.part.ShowInContext;
 import org.eclipse.ui.services.IServiceLocator;
 
 /**
  * A Git-specific {@link CompareEditorInput}.
  */
 @SuppressWarnings("restriction")
-public abstract class AbstractGitMergeEditorInput extends CompareEditorInput {
+public abstract class AbstractGitCompareEditorInput extends CompareEditorInput {
+
+	private static final Comparator<String> CMP = (left, right) -> {
+		String l = left.startsWith("/") ? left.substring(1) : left; //$NON-NLS-1$
+		String r = right.startsWith("/") ? right.substring(1) : right; //$NON-NLS-1$
+		return l.replace('/', '\001')
+				.compareToIgnoreCase(r.replace('/', '\001'));
+	};
 
 	private static final Image FOLDER_IMAGE = PlatformUI.getWorkbench()
 			.getSharedImages().getImage(ISharedImages.IMG_OBJ_FOLDER);
@@ -99,7 +118,7 @@ public abstract class AbstractGitMergeEditorInput extends CompareEditorInput {
 	private boolean initialized;
 
 	/**
-	 * Creates a new {@link AbstractGitMergeEditorInput}. Note that if the
+	 * Creates a new {@link AbstractGitCompareEditorInput}. Note that if the
 	 * repository is null and no locations are given, initPaths will throw an
 	 * exception.
 	 *
@@ -110,7 +129,7 @@ public abstract class AbstractGitMergeEditorInput extends CompareEditorInput {
 	 *            absolute file system locations of the files/folders to
 	 *            restrict the operation to
 	 */
-	protected AbstractGitMergeEditorInput(Repository repository,
+	protected AbstractGitCompareEditorInput(Repository repository,
 			IPath... locations) {
 		super(new CompareConfiguration());
 		this.repository = repository;
@@ -120,25 +139,142 @@ public abstract class AbstractGitMergeEditorInput extends CompareEditorInput {
 	@Override
 	public Object getAdapter(Class adapter) {
 		if ((adapter == IFile.class || adapter == IResource.class)
-				&& isUIThread()) {
-			Object selectedEdition = getSelectedEdition();
-			if (selectedEdition instanceof DiffNode) {
-				DiffNode diffNode = (DiffNode) selectedEdition;
-				ITypedElement element = diffNode.getLeft();
-				IResource resource = null;
-				if (element instanceof HiddenResourceTypedElement) {
-					resource = ((HiddenResourceTypedElement) element)
-							.getRealFile();
+				&& !isMultiFile()) {
+			ITypedElement element = getElement();
+			IResource resource = getResource(element);
+			if (resource != null && adapter.isInstance(resource)
+					&& resource.exists()) {
+				return resource;
+			}
+		} else if (adapter == IShowInSource.class && isMultiFile()) {
+			DiffNode node = getNode();
+			if (node instanceof FolderNode) {
+				FolderNode folder = (FolderNode) node;
+				IContainer container = folder.getContainer();
+				if (container != null) {
+					return getShowInSource(new ShowInContext(this,
+							new StructuredSelection(container)));
 				}
-				if (resource == null && element instanceof IResourceProvider) {
-					resource = ((IResourceProvider) element).getResource();
+				IPath path = folder.getPath();
+				if (path != null) {
+					if (path.isAbsolute()) {
+						return getShowInSource(new ShowInContext(this,
+								new StructuredSelection(path)));
+					} else {
+						GitInfo info = getGitInfo(path);
+						if (info != null) {
+							return getShowInSource(new ShowInContext(this,
+									new StructuredSelection(info)));
+						}
+					}
 				}
-				if (resource != null && adapter.isInstance(resource)) {
-					return resource;
+			} else if (node != null) {
+				ITypedElement element = node.getLeft();
+				IResource resource = getResource(element);
+				if (resource instanceof IFile && resource.exists()) {
+					return getShowInSource(new ShowInContext(this,
+							new StructuredSelection(resource)));
+				}
+				GitInfo info = Adapters.adapt(element, GitInfo.class);
+				if (info != null && info.getRepository() != null) {
+					IPath path = Path.fromPortableString(info.getGitPath());
+					if (!repository.isBare()) {
+						File f = new File(repository.getWorkTree(),
+								path.toOSString());
+						if (f.exists()) {
+							return getShowInSource(new ShowInContext(this,
+									new StructuredSelection(Path.fromOSString(
+											f.getAbsolutePath()))));
+						}
+					}
+					// The repository is bare, or the path does not exist in the
+					// working tree. The history page can deal with these paths,
+					// so at least "Show in->History" should work.
+					return getShowInSource(new ShowInContext(this,
+							new StructuredSelection(info)));
 				}
 			}
+			return getShowInSource(null);
+		} else if (adapter == Repository.class) {
+			return repository;
 		}
 		return super.getAdapter(adapter);
+	}
+
+	@Override
+	public Object getSelectedEdition() {
+		if (isUIThread()) {
+			return super.getSelectedEdition();
+		} else {
+			Object[] item = { null };
+			PlatformUI.getWorkbench().getDisplay().syncExec(() -> {
+				item[0] = super.getSelectedEdition();
+			});
+			return item[0];
+		}
+	}
+
+	private boolean isMultiFile() {
+		Object input = getCompareResult();
+		if (input instanceof IDiffContainer) {
+			IDiffElement[] children = ((IDiffContainer) input).getChildren();
+			if (children.length != 1) {
+				return true;
+			}
+			if (children[0] instanceof IDiffContainer
+					&& ((IDiffContainer) children[0]).hasChildren()) {
+				return true;
+			}
+		}
+		return false;
+	}
+
+	private ITypedElement getElement() {
+		Object selectedEdition = getSelectedEdition();
+		if (selectedEdition instanceof DiffNode) {
+			DiffNode diffNode = (DiffNode) selectedEdition;
+			return diffNode.getLeft();
+		}
+		return null;
+	}
+
+	private DiffNode getNode() {
+		Object selectedEdition = getSelectedEdition();
+		if (selectedEdition instanceof DiffNode) {
+			return (DiffNode) selectedEdition;
+		}
+		return null;
+	}
+
+	private IResource getResource(ITypedElement element) {
+		if (element != null) {
+			IResource resource = null;
+			if (element instanceof HiddenResourceTypedElement) {
+				resource = ((HiddenResourceTypedElement) element).getRealFile();
+			} else if (element instanceof IResourceProvider) {
+				resource = ((IResourceProvider) element).getResource();
+			}
+			return resource;
+		}
+		return null;
+	}
+
+	/**
+	 * Hook method for subclasses to provide a {@link GitInfo} accessor for an
+	 * item at the given path. The default implementation always returns
+	 * {@code null}.
+	 *
+	 * @param path
+	 *            to get a {@link GitInfo} for
+	 * @return the {@link GitInfo} accessor, or {@code null} if none can be
+	 *         determined
+	 */
+	protected GitInfo getGitInfo(IPath path) {
+		return null;
+	}
+
+	private IShowInSource getShowInSource(ShowInContext context) {
+		return () -> context;
 	}
 
 	@Override
@@ -146,6 +282,29 @@ public abstract class AbstractGitMergeEditorInput extends CompareEditorInput {
 		super.contentsCreated();
 		// select the first conflict
 		getNavigator().selectChange(true);
+	}
+
+	@Override
+	public Viewer createDiffViewer(Composite parent) {
+		GitDiffTreeViewer viewer = new GitDiffTreeViewer(parent, getContainer(),
+				getCompareConfiguration());
+		viewer.setComparator(new ViewerComparator(CMP) {
+
+			@Override
+			public int category(Object element) {
+				if (element instanceof FolderNode) {
+					return 0;
+				} else {
+					return 1;
+				}
+			}
+		});
+		IAction compareAction = new CompareWithEachOtherAction(viewer,
+				UIText.GitMergeEditorInput_CompareWithEachOtherMenuLabel,
+				UIIcons.ELCL16_COMPARE_VIEW);
+		viewer.setActions(Collections.singleton(compareAction));
+		registerAction(compareAction, CompareWithEachOtherAction.COMMAND_ID);
+		return viewer;
 	}
 
 	@Override
@@ -348,12 +507,15 @@ public abstract class AbstractGitMergeEditorInput extends CompareEditorInput {
 		return Display.getCurrent() != null;
 	}
 
-
 	/**
 	 * Creates a {@link HiddenResourceTypedElement}.
 	 *
 	 * @param uri
 	 *            to link to
+	 * @param repo
+	 *            {@link Repository} the item is in
+	 * @param gitPath
+	 *            within the repository
 	 * @param name
 	 *            for the hidden resource
 	 * @param file
@@ -365,14 +527,15 @@ public abstract class AbstractGitMergeEditorInput extends CompareEditorInput {
 	 *             on errors
 	 */
 	protected LocalResourceTypedElement createWithHiddenResource(URI uri,
-			String name, IFile file, Charset encoding) throws IOException {
+			Repository repo, String gitPath, String name, IFile file,
+			Charset encoding) throws IOException {
 		IFile tmp = createHiddenResource(uri, name, encoding);
-		return new HiddenResourceTypedElement(tmp, file);
+		return new HiddenResourceTypedElement(repo, gitPath, tmp, file);
 	}
 
 	/**
 	 * Creates a hidden resource that will be removed when this
-	 * {@link AbstractGitMergeEditorInput} is disposed.
+	 * {@link AbstractGitCompareEditorInput} is disposed.
 	 *
 	 * @param uri
 	 *            to link to
@@ -429,12 +592,85 @@ public abstract class AbstractGitMergeEditorInput extends CompareEditorInput {
 		}
 
 		IPath path = location.makeRelativeTo(repositoryPath);
+		int pathLength = path.segmentCount() - 1;
 		IDiffContainer child = root;
-		for (int i = 0; i < path.segmentCount() - 1; i++) {
+		for (int i = 0; i < pathLength; i++) {
 			if (i == projectSegment) {
 				child = getOrCreateChild(child, projectName, true);
 			} else {
 				child = getOrCreateChild(child, path.segment(i), false);
+			}
+		}
+		if (child != root) {
+			IContainer container = file != null ? file.getParent() : null;
+			path = location.removeLastSegments(1);
+			IDiffContainer folder = child;
+			while (folder != root) {
+				if (folder instanceof FolderNode) {
+					if (container != null) {
+						((FolderNode) folder).setContainer(container);
+						if (container.isLinked()) {
+							container = null;
+						} else {
+							container = container.getParent();
+							if (container.getType() == IResource.ROOT) {
+								container = null;
+							}
+						}
+					} else if (path != null) {
+						((FolderNode) folder).setPath(path);
+					}
+					if (path != null && pathLength > 0) {
+						path = path.removeLastSegments(1);
+						pathLength--;
+					} else {
+						break;
+					}
+				}
+				folder = folder.getParent();
+			}
+		}
+		return child;
+	}
+
+	/**
+	 * Constructs diff nodes for folders connecting the file to the root.
+	 *
+	 * @param root
+	 *            to connect to
+	 * @param gitPath
+	 *            git path (relative to the repository root)
+	 * @return the folder node to attach a new {@link DiffNode} for the file to,
+	 *         already attached to root
+	 */
+	protected IDiffContainer getFileParent(IDiffContainer root,
+			String gitPath) {
+		IDiffContainer child = root;
+		IPath path = Path.fromPortableString(gitPath);
+		int pathLength = path.segmentCount() - 1;
+		for (int i = 0; i < pathLength; i++) {
+			child = getOrCreateChild(child, path.segment(i), false);
+		}
+		if (child != root) {
+			if (!repository.isBare()) {
+				path = Path
+						.fromOSString(
+								repository.getWorkTree().getAbsolutePath())
+						.append(path);
+			}
+			path = path.removeLastSegments(1);
+			IDiffContainer folder = child;
+			while (folder != root) {
+				if (folder instanceof FolderNode) {
+					if (pathLength > 0) {
+						((FolderNode) folder).setPath(path);
+						path = path.removeLastSegments(1);
+						pathLength--;
+					} else {
+						break;
+					}
+				}
+				folder = folder.getParent();
 			}
 		}
 		return child;
@@ -447,23 +683,37 @@ public abstract class AbstractGitMergeEditorInput extends CompareEditorInput {
 				return ((DiffNode) child);
 			}
 		}
-		DiffNode child = new DiffNode(parent, Differencer.NO_CHANGE) {
+		return new FolderNode(parent, name,
+				projectMode ? PROJECT_IMAGE : FOLDER_IMAGE);
+	}
 
-			@Override
-			public String getName() {
-				return name;
-			}
-
-			@Override
-			public Image getImage() {
-				if (projectMode) {
-					return PROJECT_IMAGE;
+	private void collapse(DiffContainer top) {
+		IDiffElement[] children = top.getChildren();
+		boolean isRoot = top.getParent() == null;
+		if (!isRoot) {
+			while (children != null && children.length == 1) {
+				IDiffElement singleChild = children[0];
+				if (singleChild instanceof FolderNode) {
+					FolderNode node = (FolderNode) singleChild;
+					top.remove(singleChild);
+					top.getParent().add(singleChild);
+					node.setName(top.getName() + '/' + singleChild.getName());
+					((DiffContainer) top.getParent()).remove(top);
+					children = node.getChildren();
+					top = node;
 				} else {
-					return FOLDER_IMAGE;
+					// Hit a leaf.
+					return;
 				}
 			}
-		};
-		return child;
+		}
+		if (children != null && (isRoot || children.length > 1)) {
+			for (IDiffElement node : children) {
+				if (node instanceof FolderNode) {
+					collapse((DiffContainer) node);
+				}
+			}
+		}
 	}
 
 	@Override
@@ -481,7 +731,12 @@ public abstract class AbstractGitMergeEditorInput extends CompareEditorInput {
 			if (monitor.isCanceled()) {
 				throw new InterruptedException();
 			}
-			return buildInput(monitor);
+			DiffContainer result = buildInput(monitor);
+			if (result != null) {
+				collapse(result);
+			}
+			inputBuilt(result);
+			return result;
 		} finally {
 			monitor.done();
 		}
@@ -499,8 +754,21 @@ public abstract class AbstractGitMergeEditorInput extends CompareEditorInput {
 	 *             on cancellation
 	 * @see CompareEditorInput#prepareInput(IProgressMonitor monitor)
 	 */
-	protected abstract Object buildInput(IProgressMonitor monitor)
+	protected abstract DiffContainer buildInput(IProgressMonitor monitor)
 			throws InvocationTargetException, InterruptedException;
+
+	/**
+	 * Hook for subclasses called once the full compare result has been built.
+	 * <p>
+	 * This default implementation does nothing.
+	 * </p>
+	 *
+	 * @param root
+	 *            that will be returned as compare result
+	 */
+	protected void inputBuilt(DiffContainer root) {
+		// Nothing
+	}
 
 	private void initPaths() throws InvocationTargetException {
 		if (initialized) {
@@ -565,12 +833,12 @@ public abstract class AbstractGitMergeEditorInput extends CompareEditorInput {
 		if (obj == null || getClass() != obj.getClass()) {
 			return false;
 		}
-		AbstractGitMergeEditorInput other = (AbstractGitMergeEditorInput) obj;
+		AbstractGitCompareEditorInput other = (AbstractGitCompareEditorInput) obj;
 		return Arrays.equals(locations, other.locations);
 	}
 
 	/**
-	 * {@link AbstractGitMergeEditorInput} is not a
+	 * {@link AbstractGitCompareEditorInput} is not a
 	 * {@code SaveableCompareEditorInput}. Editable {@link ITypedElement}s must
 	 * handle saving on being flushed. Attaching a {@code LocalResourceSaver} to
 	 * a {@link LocalResourceTypedElement} achieves that, and also refreshes as
@@ -627,8 +895,8 @@ public abstract class AbstractGitMergeEditorInput extends CompareEditorInput {
 					}
 				}
 				if (gitPath != null && repository != null) {
-					IndexDiffCacheEntry indexDiffCacheForRepository = IndexDiffCache.INSTANCE
-							.getIndexDiffCacheEntry(repository);
+					IndexDiffCacheEntry indexDiffCacheForRepository = IndexDiffCache
+							.INSTANCE.getIndexDiffCacheEntry(repository);
 					if (indexDiffCacheForRepository != null) {
 						indexDiffCacheForRepository.refreshFiles(
 								Collections.singletonList(gitPath));
@@ -672,13 +940,20 @@ public abstract class AbstractGitMergeEditorInput extends CompareEditorInput {
 	 * correspond to a real {@link IFile}.
 	 */
 	protected static class HiddenResourceTypedElement
-			extends LocalResourceTypedElement {
+			extends LocalResourceTypedElement implements GitInfo {
 
 		private final IFile realFile;
 
-		private HiddenResourceTypedElement(IFile file, IFile realFile) {
+		private final Repository repository;
+
+		private final String gitPath;
+
+		private HiddenResourceTypedElement(Repository repository,
+				String gitPath, IFile file, IFile realFile) {
 			super(file);
 			this.realFile = realFile;
+			this.repository = repository;
+			this.gitPath = gitPath;
 		}
 
 		/**
@@ -692,13 +967,100 @@ public abstract class AbstractGitMergeEditorInput extends CompareEditorInput {
 
 		@Override
 		public boolean equals(Object obj) {
-			// realFile not considered
+			// local fields not considered
 			return super.equals(obj);
 		}
 
 		@Override
 		public int hashCode() {
-			// realFile not considered
+			// local fields not considered
+			return super.hashCode();
+		}
+
+		@Override
+		public Repository getRepository() {
+			return repository;
+		}
+
+		@Override
+		public String getGitPath() {
+			return gitPath;
+		}
+
+		@Override
+		public Source getSource() {
+			return Source.WORKING_TREE;
+		}
+
+		@Override
+		public AnyObjectId getCommitId() {
+			return null;
+		}
+	}
+
+	private static class FolderNode extends DiffNode {
+
+		private final Image image;
+
+		private String name;
+
+		private IContainer container;
+
+		private IPath path;
+
+		FolderNode(IDiffContainer parent, String name, Image image) {
+			super(parent, Differencer.NO_CHANGE);
+			this.name = name;
+			this.image = image;
+		}
+
+		@Override
+		public String getType() {
+			return ITypedElement.FOLDER_TYPE;
+		}
+
+		@Override
+		public String getName() {
+			return name;
+		}
+
+		void setName(String name) {
+			// Be careful when calling this. Changing the name of a node changes
+			// the hash code of this node and of all its children! Call only
+			// before the node's hashCode is needed.
+			this.name = name;
+		}
+
+		@Override
+		public Image getImage() {
+			return image;
+		}
+
+		void setContainer(IContainer container) {
+			this.container = container;
+		}
+
+		IContainer getContainer() {
+			return container;
+		}
+
+		void setPath(IPath path) {
+			this.path = path;
+		}
+
+		IPath getPath() {
+			return path;
+		}
+
+		@Override
+		public boolean equals(Object other) {
+			// Ignore my own fields. Super implementation includes getName().
+			return super.equals(other);
+		}
+
+		@Override
+		public int hashCode() {
+			// Ignore my own fields. Super implementation includes getName().
 			return super.hashCode();
 		}
 	}

@@ -56,4 +56,9 @@ class StartDialog extends InputDialog {
 	protected Button getOkButton() {
 		return startButton;
 	}
+
+	@Override
+	protected boolean isResizable() {
+		return true;
+	}
 }

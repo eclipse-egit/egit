@@ -221,6 +221,8 @@ public class ResourceRefreshHandler implements WorkingTreeModifiedListener {
 		Set<IPath> fullRefreshes = new HashSet<>();
 		Map<IPath, IFile> handled = new HashMap<>();
 		Map<IResource, Boolean> result = new HashMap<>();
+		IWorkspaceRoot eclipseWorkspace = ResourcesPlugin.getWorkspace()
+				.getRoot();
 		Stream.concat(modified.stream(), deleted.stream()).forEach(path -> {
 			if (progress.isCanceled()) {
 				throw new OperationCanceledException();
@@ -243,7 +245,22 @@ public class ResourceRefreshHandler implements WorkingTreeModifiedListener {
 				progress.worked(1);
 				return;
 			}
-			if (!roots.keySet().stream()
+			IFile eclipseFile = eclipseWorkspace.getFileForLocation(filePath);
+			// The file may not be in the Eclipse resource tree. But it may be
+			// in a closed project.
+			if (eclipseFile != null
+					&& !eclipseFile.getProject().isAccessible()) {
+				eclipseFile = null;
+				// Try harder to find a file
+				URI uri = URIUtil.toURI(filePath);
+				IFile[] files = eclipseWorkspace.findFilesForLocationURI(uri);
+				if (files.length > 1) {
+					eclipseFile = Arrays.stream(files)
+							.filter(f -> f.getProject().isAccessible())
+							.findFirst().orElse(null);
+				}
+			}
+			if (eclipseFile == null || !roots.keySet().stream()
 					.anyMatch(root -> root.isPrefixOf(filePath))) {
 				// Not in workspace.
 				needRefresh.add(path);
@@ -263,7 +280,7 @@ public class ResourceRefreshHandler implements WorkingTreeModifiedListener {
 			if (!handled.containsKey(containerPath)) {
 				if (!isFile && containerPath != null) {
 					IContainer container = getContainerForLocation(
-							containerPath);
+							eclipseWorkspace, containerPath);
 					if (container != null) {
 						IFile file = handled.get(containerPath);
 						handled.put(containerPath, null);
@@ -279,7 +296,7 @@ public class ResourceRefreshHandler implements WorkingTreeModifiedListener {
 					while (containerPath != null
 							&& workTree.isPrefixOf(containerPath)) {
 						IContainer container = getContainerForLocation(
-								containerPath);
+								eclipseWorkspace, containerPath);
 						if (container == null) {
 							lastPart = containerPath.lastSegment();
 							containerPath = containerPath
@@ -334,8 +351,8 @@ public class ResourceRefreshHandler implements WorkingTreeModifiedListener {
 		return result;
 	}
 
-	private static IContainer getContainerForLocation(@NonNull IPath location) {
-		IWorkspaceRoot root = ResourcesPlugin.getWorkspace().getRoot();
+	private static IContainer getContainerForLocation(IWorkspaceRoot root,
+			@NonNull IPath location) {
 		IContainer dir = root.getContainerForLocation(location);
 		if (dir == null) {
 			return null;
@@ -350,7 +367,7 @@ public class ResourceRefreshHandler implements WorkingTreeModifiedListener {
 	}
 
 	private static boolean isValid(@NonNull IResource resource) {
-		return resource.isAccessible()
+		return resource.isAccessible() && resource.getProject().isAccessible()
 				&& !resource.isLinked(IResource.CHECK_ANCESTORS);
 	}
 

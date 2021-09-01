@@ -1377,6 +1377,9 @@ public class UIText extends NLS {
 	public static String CherryPickOperation_InternalError;
 
 	/** */
+	public static String CompareCommand_WithWorkingTreeLabel;
+
+	/** */
 	public static String CompareTargetSelectionDialog_CompareButton;
 
 	/** */
@@ -4127,6 +4130,12 @@ public class UIText extends NLS {
 	public static String GitCompareEditorInput_ResourcesInDifferentReposMessagge;
 
 	/** */
+	public static String GitCompareEditorInput_WorkingTreeFallbackLabel;
+
+	/** */
+	public static String GitCompareEditorInput_WorkingTreeSourceName;
+
+	/** */
 	public static String GitCompareFileRevisionEditorInput_CompareInputTitle;
 
 	/** */
@@ -5525,6 +5534,9 @@ public class UIText extends NLS {
 
 	/** */
 	public static String GitMergeEditorInput_CheckingResourcesTaskName;
+
+	/** */
+	public static String GitMergeEditorInput_CompareWithEachOtherMenuLabel;
 
 	/** */
 	public static String GitMergeEditorInput_ErrorUpdatingIndex;

@@ -39,7 +39,7 @@ import org.eclipse.egit.ui.JobFamilies;
 import org.eclipse.egit.ui.UIPreferences;
 import org.eclipse.egit.ui.internal.EgitUiEditorUtils;
 import org.eclipse.egit.ui.internal.UIText;
-import org.eclipse.egit.ui.internal.components.PartVisibilityListener;
+import org.eclipse.egit.ui.internal.components.EditorVisibilityTracker;
 import org.eclipse.egit.ui.internal.decorators.GitQuickDiffProvider;
 import org.eclipse.egit.ui.internal.history.GitHistoryPage;
 import org.eclipse.egit.ui.internal.history.HistoryPageInput;
@@ -79,8 +79,6 @@ import org.eclipse.team.ui.history.RevisionAnnotationController;
 import org.eclipse.ui.IEditorPart;
 import org.eclipse.ui.IPartService;
 import org.eclipse.ui.IWorkbenchPage;
-import org.eclipse.ui.IWorkbenchPart;
-import org.eclipse.ui.IWorkbenchPartReference;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.part.MultiPageEditorPart;
 import org.eclipse.ui.texteditor.AbstractDecoratedTextEditor;
@@ -579,46 +577,6 @@ public class BlameOperation implements IEGitOperation {
 	@Override
 	public ISchedulingRule getSchedulingRule() {
 		return null;
-	}
-
-	/**
-	 * Tracks the visibility of an (editor) part and can run code only if the
-	 * part is currently visible. If it is not, the code will be run when that
-	 * part becomes visible.
-	 */
-	private static class EditorVisibilityTracker
-			extends PartVisibilityListener {
-
-		private Runnable blameComputer;
-
-		public EditorVisibilityTracker(IWorkbenchPart part) {
-			super(part);
-		}
-
-		public void runWhenVisible(Runnable computer) {
-			if (isVisible()) {
-				computer.run();
-			} else {
-				blameComputer = computer;
-			}
-		}
-
-		@Override
-		protected void setVisible(boolean visible) {
-			super.setVisible(visible);
-			if (visible && blameComputer != null) {
-				try {
-					blameComputer.run();
-				} finally {
-					blameComputer = null;
-				}
-			}
-		}
-
-		@Override
-		public void partActivated(IWorkbenchPartReference partRef) {
-			// Nothing to do
-		}
 	}
 
 	/**

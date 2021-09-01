@@ -42,4 +42,26 @@ public class MergeDiffNode extends NotifiableDiffNode {
 			ITypedElement ancestor, ITypedElement left, ITypedElement right) {
 		super(parent, kind, ancestor, left, right);
 	}
+
+	/**
+	 * Creates a new {@link MergeDiffNode} and initializes with the given
+	 * values.
+	 *
+	 * @param kind
+	 *            of difference as defined in
+	 *            {@link org.eclipse.compare.structuremergeviewer.Differencer
+	 *            Differencer}
+	 * @param ancestor
+	 *            the common ancestor input to a compare
+	 * @param left
+	 *            the left input to a compare
+	 * @param right
+	 *            the right input to a compare
+	 * @see org.eclipse.compare.structuremergeviewer.DiffNode#DiffNode(IDiffContainer,
+	 *      int, ITypedElement, ITypedElement, ITypedElement)
+	 */
+	public MergeDiffNode(int kind, ITypedElement ancestor, ITypedElement left,
+			ITypedElement right) {
+		super(kind, ancestor, left, right);
+	}
 }
