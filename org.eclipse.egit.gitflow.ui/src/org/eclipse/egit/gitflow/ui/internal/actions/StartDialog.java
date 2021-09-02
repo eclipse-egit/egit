@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (C) 2019, Max Hohenegger <eclipse@hohenegger.eu>
+ * Copyright (C) 2019, Max Hohenegger <eclipse@hohenegger.eu> and others.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License 2.0
@@ -12,17 +12,15 @@ package org.eclipse.egit.gitflow.ui.internal.actions;
 
 import org.eclipse.egit.gitflow.ui.internal.UIText;
 import org.eclipse.egit.ui.internal.components.BranchNameNormalizer;
+import org.eclipse.egit.ui.internal.dialogs.ResizingInputDialog;
 import org.eclipse.jface.dialogs.IDialogConstants;
 import org.eclipse.jface.dialogs.IInputValidator;
-import org.eclipse.jface.dialogs.InputDialog;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Shell;
 
-class StartDialog extends InputDialog {
-
-	private Button startButton;
+class StartDialog extends ResizingInputDialog {
 
 	StartDialog(Shell parentShell, String dialogTitle,
 			String dialogMessage, String initialValue,
@@ -31,17 +29,13 @@ class StartDialog extends InputDialog {
 	}
 
 	@Override
-	protected void createButtonsForButtonBar(Composite parent) {
-		startButton = createButton(parent, IDialogConstants.OK_ID,
-				UIText.StartDialog_ButtonOK, true);
-		createButton(parent, IDialogConstants.CANCEL_ID,
-				IDialogConstants.CANCEL_LABEL, false);
-
-		getText().setFocus();
-		if (getValue() != null) {
-			getText().setText(getValue());
-			getText().selectAll();
+	protected Button createButton(Composite parent, int id, String label,
+			boolean defaultButton) {
+		if (id == IDialogConstants.OK_ID) {
+			return super.createButton(parent, id, UIText.StartDialog_ButtonOK,
+					defaultButton);
 		}
+		return super.createButton(parent, id, label, defaultButton);
 	}
 
 	@Override
@@ -50,15 +44,5 @@ class StartDialog extends InputDialog {
 		BranchNameNormalizer normalizer = new BranchNameNormalizer(getText());
 		normalizer.setVisible(false);
 		return result;
-	}
-
-	@Override
-	protected Button getOkButton() {
-		return startButton;
-	}
-
-	@Override
-	protected boolean isResizable() {
-		return true;
 	}
 }

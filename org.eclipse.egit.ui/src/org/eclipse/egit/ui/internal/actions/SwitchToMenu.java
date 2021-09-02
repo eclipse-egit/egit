@@ -37,6 +37,7 @@ import org.eclipse.egit.ui.internal.UIText;
 import org.eclipse.egit.ui.internal.branch.BranchOperationUI;
 import org.eclipse.egit.ui.internal.components.BranchNameNormalizer;
 import org.eclipse.egit.ui.internal.dialogs.CheckoutDialog;
+import org.eclipse.egit.ui.internal.dialogs.ResizingInputDialog;
 import org.eclipse.egit.ui.internal.history.CommitSelectionDialog;
 import org.eclipse.egit.ui.internal.repository.CreateBranchWizard;
 import org.eclipse.egit.ui.internal.selection.SelectionUtils;
@@ -177,7 +178,8 @@ public class SwitchToMenu extends ContributionItem implements
 		newBranch.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
-				InputDialog dialog = new InputDialog(e.display.getActiveShell(),
+				InputDialog dialog = new ResizingInputDialog(
+						e.display.getActiveShell(),
 						UIText.CreateBranchBulkDialog_Title,
 						UIText.CreateBranchBulkDialog_Description, "", //$NON-NLS-1$
 						new IInputValidator() {
