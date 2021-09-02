@@ -32,6 +32,7 @@ import org.eclipse.egit.ui.Activator;
 import org.eclipse.egit.ui.internal.UIText;
 import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.jface.text.IDocument;
+import org.eclipse.jgit.util.SystemReader;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.team.core.history.IFileRevision;
 import org.eclipse.ui.IEditorInput;
@@ -221,10 +222,10 @@ public class EditableRevision extends FileRevisionTypedElement implements
 				try {
 					String charset = editable.getCharset();
 					if (charset == null) {
-						editable.setContent(document.get().getBytes());
-					} else {
-						editable.setContent(document.get().getBytes(charset));
+						charset = SystemReader.getInstance().getDefaultCharset()
+								.name();
 					}
+					editable.setContent(document.get().getBytes(charset));
 					// We _know_ that the document provider _cannot_ really save
 					// the IStorage. Nevertheless calling its save operation is
 					// necessary because otherwise an internal "modified" flag

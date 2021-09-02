@@ -59,6 +59,7 @@ import org.eclipse.jgit.lib.Repository;
 import org.eclipse.jgit.revwalk.RevCommit;
 import org.eclipse.jgit.treewalk.FileTreeIterator;
 import org.eclipse.jgit.treewalk.filter.TreeFilter;
+import org.eclipse.jgit.util.SystemReader;
 import org.eclipse.osgi.util.NLS;
 
 /**
@@ -254,12 +255,28 @@ public class CreatePatchOperation implements IEGitOperation {
 
 	private void appendOutputStream(final StringBuilder sb,
 			final ByteArrayOutputStream outputStream) {
+		String encoding = currentEncoding != null ? currentEncoding
+				: UTF_8.name();
 		try {
-			String encoding = currentEncoding != null ? currentEncoding
-					: UTF_8.name();
 			sb.append(outputStream.toString(encoding));
 		} catch (UnsupportedEncodingException e) {
-			sb.append(outputStream.toString());
+			// Can only happen if encoding != UTF-8
+			String defaultCharset = SystemReader.getInstance()
+					.getDefaultCharset().name();
+			try {
+				if (!encoding.equals(defaultCharset)) {
+					sb.append(outputStream.toString(defaultCharset));
+					return;
+				}
+			} catch (UnsupportedEncodingException ignored) {
+				// What? The locale charset is also not known? Fall back to
+				// UTF-8.
+			}
+			try {
+				sb.append(outputStream.toString(UTF_8.name()));
+			} catch (UnsupportedEncodingException cannotOccur) {
+				// Known not to happen.
+			}
 		}
 	}
 
