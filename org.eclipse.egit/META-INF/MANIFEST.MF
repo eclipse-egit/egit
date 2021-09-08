@@ -2,7 +2,7 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: %Bundle-Name
 Bundle-SymbolicName: org.eclipse.egit;singleton:=true
-Bundle-Version: 5.13.0.202109080827-r
+Bundle-Version: 5.13.1.qualifier
 Bundle-Vendor: %Bundle-Vendor
 Bundle-Localization: plugin
 Bundle-ActivationPolicy: lazy
