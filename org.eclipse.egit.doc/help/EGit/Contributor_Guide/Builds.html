@@ -75,6 +75,39 @@
 			</li>
 		</ul>
 		<h2 id="Maven_Build">Maven Build</h2>
+		<p>To build JGit or EGit versions &lt;= 5.12.0 maven must be run using Java 1.8. Ensure that environment variable <tt>JAVA_HOME</tt> points to a Java 1.8 installation.</p>
+		<p>EGit versions &gt;= 5.12.1 can be built with any Java &gt;= 1.8, but the build uses 
+			<a href="https://maven.apache.org/guides/mini/guide-using-toolchains.html" target="egit_external">maven toolchain</a> definitions. To run a local EGit build for these versions (including the 'master' branch, i.e. EGit nightly), you need to have a local file <tt>
+			<b>~/.m2/toolchains.xml</b></tt> providing at least a JDK toolchain definition for "JavaSE-1.8":
+		</p>
+		<pre style="width: 55em;">
+&lt;?xml version="1.0" encoding="UTF8"?&gt;
+&lt;toolchains&gt;
+   &lt;toolchain&gt;
+      &lt;type&gt;jdk&lt;/type&gt;
+      &lt;provides&gt;
+         &lt;id&gt;JavaSE-1.8&lt;/id&gt;
+         &lt;version&gt;1.8&lt;/version&gt;
+      &lt;/provides&gt;
+      &lt;configuration&gt;
+         &lt;jdkHome&gt;/absolute/path/to/jdk1.8&lt;/jdkHome&gt;
+      &lt;/configuration&gt;
+   &lt;/toolchain&gt;
+   &lt;toolchain&gt;
+      &lt;type&gt;jdk&lt;/type&gt;
+      &lt;provides&gt;
+         &lt;id&gt;JavaSE-11&lt;/id&gt;
+         &lt;version&gt;11&lt;/version&gt;
+      &lt;/provides&gt;
+      &lt;configuration&gt;
+         &lt;jdkHome&gt;/absolute/path/to/jdk11&lt;/jdkHome&gt;
+      &lt;/configuration&gt;
+   &lt;/toolchain&gt;
+&lt;/toolchains&gt;
+</pre>
+		<p>The <tt>jdkHome</tt> directory is the one that contains the <tt>bin</tt> directory in which there is the <tt>java</tt> executable.</p>
+		<p>If you can, include already a definition for a Java 11 toolchain as shown above. EGit and JGit may require a minimum of Java 11 in the not-too-distant future.</p>
+		<p>Building JGit with maven currently requires running maven with Java 1.8 in all cases.</p>
 		<ul>
 			<li>Due to a 
 				<a href="https://wiki.eclipse.org/Tycho/How_Tos/Dependency_on_pom-first_artifacts" target="egit_external">limitation of Tycho</a> it is not possible to mix pom-first and manifest-first builds in the same reactor build hence the pom-first JGit build has to run separately before the build for the manifest-first JGit packaging project.
@@ -85,7 +118,8 @@
 			</li>
 		</ul>
 		<p>Complete build sequence for a clean build (assuming $M2_HOME/bin is on the path and local Maven repository at ~/.m2/repository):</p>
-		<pre style="width: 55em;">[~/src/jgit] $ mvn clean install
+		<pre style="width: 55em;">
+[~/src/jgit] $ mvn clean install
 [INFO] Scanning for projects...
 ...
 
@@ -117,13 +151,26 @@
 		<pre>[~/src/egit] $ mvn clean install -Djgit-site=<a href="https://repo.eclipse.org/content/unzip/snapshots.unzip/" target="egit_external">https://repo.eclipse.org/content/unzip/snapshots.unzip/</a>
                      org/eclipse/jgit/org.eclipse.jgit.repository/${JGIT_VERSION}/org.eclipse.jgit.repository-${JGIT_VERSION}.zip-unzip/
 </pre>
-		<p>If you wan to build EGit for the specific Photon (4.8) platform, consider using the <code>egit-4.8</code> target platform:</p>
-		<pre>[~/src/egit] $ mvn -Dtarget-platform=egit-4.8 clean install
+		<p>If you wan to build EGit for a specific Eclipse platform use the corresponding EGit target platform. For instance, to build for Eclipse 4.19 (2021-03), use the <code>egit-4.19</code> target platform:</p>
+		<pre>[~/src/egit] $ mvn -Dtarget-platform=egit-4.19 clean install
 </pre>
-		<p>For EGit version 4.10, <code>egit-4.5</code> (Mars, Eclipse 4.5), <code>egit-4.6</code> (Neon, Eclipse 4.6), <code>egit-4.7</code> (Oxygen, Eclipse 4.7), and <code>egit-4.8</code> (Photon, Eclipse 4.8) are available. In addition <code>egit-4.8-staging</code> refers to the Photon staging repository.</p>
+		<p>See the contents of bundle <code>org.eclipse.egit.target</code> for the available target platforms.</p>
 		<p>Upon a successful build, a p2 update site should be generated inside 
-			<i>egit/org.eclipse.egit.repository/target/repository</i>. If not, make sure the target platform has been downloaded from within Eclipse (Windows&gt;Preferences&gt;Plug-in Development&gt;Target Platform). The default target platform defined in the maven build is currently Eclipse 4.7. If you skip setting the system property <code>target-platform</code> the target platform for Eclipse 4.7 will be used.
+			<i>egit/org.eclipse.egit.repository/target/repository</i>. If not, make sure the target platform has been downloaded from within Eclipse (Windows&gt;Preferences&gt;Plug-in Development&gt;Target Platform). The default target platform defined in the maven build is currently Eclipse 4.6 (Neon). If you skip setting the system property <code>target-platform</code> the target platform for Eclipse 4.6 will be used. EGit built with that target platform can run on any Eclipse &gt;= 4.6. If you choose a higher target platform, the EGit produced may not run on Eclipses older than the target platform version.
 		</p>
+		<h2 id="Dependencies_and_License_Check">Dependencies and License Check</h2>
+		<p>In order to update the list of dependencies run the dash-licenses Maven plugin</p>
+		<pre style="width: 55em;">
+mvn org.eclipse.dash:license-tool-plugin:license-check -Ddash.summary=DEPENDENCIES
+</pre>
+		<p>then sort the entries in the file <code>DEPENDENCIES</code> and check for changes against the previous version.
+			If necessary file CQs for new dependencies which are flagged 
+			<i>restricted</i> by the tool.
+			See the 
+			<a href="https://www.eclipse.org/projects/handbook/#ip-license-tool" target="egit_external">Eclipse projects handbook</a>.
+		</p>
+		<p>Currently this tool requires Java 11, hence first build JGit/EGit using the Java version they require
+			and then use Java 11 to run the license check.</p>
 		<h2 id="JGit_Bazel_Build">JGit Bazel Build</h2>
 		<p>Since Gerrit is built using 
 			<a href="https://www.bazel.io/" target="egit_external">Bazel</a> a Bazel build was also implemented for JGit.

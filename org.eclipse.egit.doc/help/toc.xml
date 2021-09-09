@@ -450,29 +450,28 @@
 		</topic>
 		<topic href="help/JGit/User_Guide/Updating-This-Document.html" label="Updating This Document"></topic>
 	</topic>
-	<topic href="help/EGit/New_and_Noteworthy/5.12/5.12.html" label="EGit 5.12 New and Noteworthy">
-		<topic href="help/EGit/New_and_Noteworthy/5.12/5.12.html" label="EGit">
-			<topic href="help/EGit/New_and_Noteworthy/5.12/5.12.html#Staging_View" label="Staging View">
-				<topic href="help/EGit/New_and_Noteworthy/5.12/5.12.html#Replace_With.26rarr.3BOurs.2FTheirs" label="Replace With&amp;rarr;Ours/Theirs"></topic>
+	<topic href="help/EGit/New_and_Noteworthy/5.13/5.13.html" label="EGit 5.13 New and Noteworthy">
+		<topic href="help/EGit/New_and_Noteworthy/5.13/5.13.html" label="EGit">
+			<topic href="help/EGit/New_and_Noteworthy/5.13/5.13.html#Blame" label="Blame"></topic>
+			<topic href="help/EGit/New_and_Noteworthy/5.13/5.13.html#Comparisons" label="Comparisons">
+				<topic href="help/EGit/New_and_Noteworthy/5.13/5.13.html#Compare_Editor" label="Compare Editor"></topic>
+				<topic href="help/EGit/New_and_Noteworthy/5.13/5.13.html#New_Comparison_Commands" label="New Comparison Commands"></topic>
 			</topic>
-			<topic href="help/EGit/New_and_Noteworthy/5.12/5.12.html#Merge_Editor" label="Merge Editor">
-				<topic href="help/EGit/New_and_Noteworthy/5.12/5.12.html#Hiding_changes_between_.22ours.22_and_the_ancestor" label="Hiding changes between &quot;ours&quot; and the ancestor"></topic>
-				<topic href="help/EGit/New_and_Noteworthy/5.12/5.12.html#What_to_show_as_.22ours.22.3F" label="What to show as &quot;ours&quot;?"></topic>
-			</topic>
-			<topic href="help/EGit/New_and_Noteworthy/5.12/5.12.html#API" label="API"></topic>
-			<topic href="help/EGit/New_and_Noteworthy/5.12/5.12.html#Other_Changes" label="Other Changes"></topic>
+			<topic href="help/EGit/New_and_Noteworthy/5.13/5.13.html#API" label="API"></topic>
+			<topic href="help/EGit/New_and_Noteworthy/5.13/5.13.html#Other_Changes" label="Other Changes"></topic>
 		</topic>
-		<topic href="help/EGit/New_and_Noteworthy/5.12/Contributors.html" label="Contributors"></topic>
-		<topic href="help/EGit/New_and_Noteworthy/5.12/See-Also.html" label="See Also"></topic>
-		<topic href="help/EGit/New_and_Noteworthy/5.12/Updating-This-Document.html" label="Updating This Document"></topic>
+		<topic href="help/EGit/New_and_Noteworthy/5.13/Contributors.html" label="Contributors"></topic>
+		<topic href="help/EGit/New_and_Noteworthy/5.13/See-Also.html" label="See Also"></topic>
+		<topic href="help/EGit/New_and_Noteworthy/5.13/Updating-This-Document.html" label="Updating This Document"></topic>
 	</topic>
-	<topic href="help/JGit/New_and_Noteworthy/5.12/5.12.html" label="JGit 5.12 New and Noteworthy">
-		<topic href="help/JGit/New_and_Noteworthy/5.12/5.12.html" label="JGit">
-			<topic href="help/JGit/New_and_Noteworthy/5.12/5.12.html#Commands" label="Commands"></topic>
-			<topic href="help/JGit/New_and_Noteworthy/5.12/5.12.html#Other_Changes" label="Other Changes"></topic>
+	<topic href="help/JGit/New_and_Noteworthy/5.13/5.13.html" label="JGit 5.13 New and Noteworthy">
+		<topic href="help/JGit/New_and_Noteworthy/5.13/5.13.html" label="JGit">
+			<topic href="help/JGit/New_and_Noteworthy/5.13/5.13.html#GPG" label="GPG"></topic>
+			<topic href="help/JGit/New_and_Noteworthy/5.13/5.13.html#Dependencies" label="Dependencies"></topic>
+			<topic href="help/JGit/New_and_Noteworthy/5.13/5.13.html#Other_Changes" label="Other Changes"></topic>
 		</topic>
-		<topic href="help/JGit/New_and_Noteworthy/5.12/Contributors.html" label="Contributors"></topic>
-		<topic href="help/JGit/New_and_Noteworthy/5.12/Updating-This-Document.html" label="Updating This Document"></topic>
+		<topic href="help/JGit/New_and_Noteworthy/5.13/Contributors.html" label="Contributors"></topic>
+		<topic href="help/JGit/New_and_Noteworthy/5.13/Updating-This-Document.html" label="Updating This Document"></topic>
 	</topic>
 	<topic href="help/EGit/Git_For_Eclipse_Users/Git-For-Eclipse-Users.html" label="Git for Eclipse Users">
 		<topic href="help/EGit/Git_For_Eclipse_Users/Git-For-Eclipse-Users.html" label="Centralised version control systems"></topic>
@@ -515,6 +514,7 @@
 			<topic href="help/EGit/Contributor_Guide/Builds.html#EGit_2" label="EGit"></topic>
 			<topic href="help/EGit/Contributor_Guide/Builds.html#Mailing_Lists" label="Mailing Lists"></topic>
 			<topic href="help/EGit/Contributor_Guide/Builds.html#Maven_Build" label="Maven Build"></topic>
+			<topic href="help/EGit/Contributor_Guide/Builds.html#Dependencies_and_License_Check" label="Dependencies and License Check"></topic>
 			<topic href="help/EGit/Contributor_Guide/Builds.html#JGit_Bazel_Build" label="JGit Bazel Build"></topic>
 			<topic href="help/EGit/Contributor_Guide/Builds.html#FindBugs_and_PMD" label="FindBugs and PMD"></topic>
 			<topic href="help/EGit/Contributor_Guide/Builds.html#Checking_for_JGit_API_Changes_using_API_Baseline" label="Checking for JGit API Changes using API Baseline"></topic>

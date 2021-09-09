@@ -1,0 +1,107 @@
+<?xml version='1.0' encoding='utf-8' ?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+		<title>EGit 5.13 New and Noteworthy</title>
+		<link type="text/css" rel="stylesheet" href="../../../book.css"/>
+	</head>
+	<body>
+		<table class="navigation" style="width: 100%;" border="0" summary="navigation">
+			<tr>
+				<th style="width: 100%" align="center" colspan="3">EGit 5.13 New and Noteworthy</th>
+			</tr>
+			<tr>
+				<td style="width: 20%" align="left"></td>
+				<td style="width: 60%" align="center"></td>
+				<td style="width: 20%" align="right">
+					<a href="Contributors.html" title="Contributors">
+						<img alt="Next" border="0" src="../../../images/next.gif"/>
+					</a>
+				</td>
+			</tr>
+			<tr>
+				<td style="width: 20%" align="left" valign="top"></td>
+				<td style="width: 60%" align="center"></td>
+				<td style="width: 20%" align="right" valign="top">Contributors</td>
+			</tr>
+		</table><hr class="navigation-separator"/>
+		<h1 id="EGit">EGit</h1>
+		<h2 id="Blame">Blame</h2>
+		<p>Git blame information shown in an editor open on a file from the git working tree of a git repository is updated now whenever the HEAD of that repository changes, for instance, when a new branch is checked out, or when the currently shown file is edited, saved, and then committed. The git blame information can be switched on via the 
+			<i>Show Revision Information</i> command available in the context menu of the editor.
+		</p>
+		<h2 id="Comparisons">Comparisons</h2>
+		<p>EGit 5.13 brings some improvements in the compare editor of Eclipse, and some new commands to compare commits against the working tree.</p>
+		<h3 id="Compare_Editor">Compare Editor</h3>
+		<p>When a comparison is opened on several files, the Compare Editor of Eclipse shows a directory view at the top. EGit 5.13 customizes this view to show a compact tree in which a single folder node is shown for a whole folder hierarchy when there is nothing interesting to show for intermediary folders:</p>
+		<p>
+			<img alt="&quot;The Compare Editor&apos;s directory viewer showing a compact tree&quot;" border="0" src="images/EGit_5.13_Compare_Compact_Tree.png"/>
+		</p>
+		<p>This directory viewer in the Eclipse Compare Editor is typically fairly small (the user can enlarge it, though), and a compact tree is in many cases easier to navigate.</p>
+		<p>In addition, the view gets a toolbar with operations to expand or collapse all directories shown in the view. The context menu has an 
+			<i>Expand All</i> command that fully expands only the selected folders.
+		</p>
+		<p>EGit 5.13 also customizes the view's context menu.</p>
+		<p>
+			<img alt="&quot;The customized context menu in the Compare Editor&apos;s directory viewer showing the &apos;Show In&apos; command&quot;" border="0" src="images/EGit_5.13_Compare_Show_In_Menu.png"/>
+		</p>
+		<p>Newly, the 
+			<i>Show In</i> sub-menu is also available in this context menu in the Commit Editor. It can be used to show the selected items in other views.
+		</p>
+		<p>Additionally, there is a new 
+			<i>Compare with Each Other</i> command that is active when exactly two files are selected in the directory viewer. It opens a comparison between the two selected files.
+		</p>
+		<p>
+			<img alt="&quot;The &apos;Compare With Each Other&apos; command in the context menu of the Compare Editor&apos;s directory viewer&quot;" border="0" src="images/EGit_5.13_Compare_With_Each_Other.png"/>
+		</p>
+		<p>This is especially useful when files have been renamed, but the Compare Editor shows them as one file having been added and the other having been deleted. To get a comparison of the renamed file, select the added and the deleted file and choose 
+			<i>Compare with Each Other</i>.
+		</p>
+		<h3 id="New_Comparison_Commands">New Comparison Commands</h3>
+		<p>In the Git Repositories View, there's a new command to compare a branch, tag, or other reference directly with the working tree.</p>
+		<p>
+			<img alt="&quot;The &apos;Compare With Working Tree&apos; command in the context menu of the Git Repositories View&quot;" border="0" src="images/EGit_5.13_Compare_Branch_with_Working_Tree.png"/>
+		</p>
+		<p>Conversely, when files or directories are selected in the Git Repositories View, there's a new sub-menu 
+			<i>Compare With</i> to compare the working tree against an arbitrary branch, tag, or commit.
+		</p>
+		<p>
+			<img alt="&quot;The &apos;Compare With&apos; sub-menu in the Git Repositories View&quot;" border="0" src="images/EGit_5.13_Compare_With.png"/>
+		</p>
+		<p>Finally, 
+			<i>Compare With Working Tree</i> is now also enabled in the Git History View when several files are selected. Previously this command was enabled only when a single file was selected.
+		</p>
+		<p>
+			<img alt="&quot;&apos;Compare With Working Tree&apos; in the Git History View enabled for multi-file selections&quot;" border="0" src="images/EGit_5.13_History_Compare_with_Working_Tree.png"/>
+		</p>
+		<h2 id="API">API</h2>
+		<p>EGit 5.13 adds new API in the <code>org.eclipse.egit.core</code> bundle to give access to its credentials store. EGit by default uses the Eclipse Secure Storage to store log-in credentials such as user names and passwords (or in the case of Github, personal access tokens (PATs)) or passphrases for encrypted SSH keys. Newly, this credentials store is accessible and even customizeable via the 
+			<a href="https://docs.osgi.org/specification/osgi.cmpn/7.0.0/service.component.html" target="egit_external">OSGi service</a> mechanism. The implementation has been split into a storage back-end service and a UI service, and EGit provides default service implementations for both with the default service ranking. Third-party code can install its own implementations by providing services with a higher ranking.
+		</p>
+		<p>There are two new OSGi service interfaces in bundle <code>org.eclipse.egit.core</code>:</p>
+		<ul>
+			<li><code>org.eclipse.egit.core.credentials.CredentialsStore</code> is the service interface for the storage back-end. EGit Core provides a default service implementation based on the Eclipse Secure Storage.</li>
+			<li><code>org.eclipse.egit.core.credentials.CredentialsUI</code> is the UI service interface. EGit UI (bundle <code>org.eclipse.egit.ui</code>) provides a default service implementation, prompting the user for passwords or passphrases via dialogs.</li>
+		</ul>
+		<h2 id="Other_Changes">Other Changes</h2>
+		<p>EGit 5.13 includes some less noticeable improvements in the UI, plus a number of bug fixes. The complete list of new features and bug fixes is available in the 
+			<a href="https://projects.eclipse.org/projects/technology.egit/releases/5.13.0/" target="egit_external">release notes</a>.
+		</p><hr class="navigation-separator"/>
+		<table class="navigation" style="width: 100%;" border="0" summary="navigation">
+			<tr>
+				<td style="width: 20%" align="left"></td>
+				<td style="width: 60%" align="center"></td>
+				<td style="width: 20%" align="right">
+					<a href="Contributors.html" title="Contributors">
+						<img alt="Next" border="0" src="../../../images/next.gif"/>
+					</a>
+				</td>
+			</tr>
+			<tr>
+				<td style="width: 20%" align="left" valign="top"></td>
+				<td style="width: 60%" align="center"></td>
+				<td style="width: 20%" align="right" valign="top">Contributors</td>
+			</tr>
+		</table>
+	</body>
+</html>
