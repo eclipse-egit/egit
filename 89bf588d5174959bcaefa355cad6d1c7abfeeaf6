@@ -22,6 +22,30 @@
       "revId": "89bf588d5174959bcaefa355cad6d1c7abfeeaf6",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f5f74954_e9886356",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/blame/BlameOperation.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 487,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2021-09-19T10:09:41Z",
+      "side": 1,
+      "message": "I think if line 479 threw a NPE lastHead was null, and it is set to head in the next line",
+      "parentUuid": "6d84920e_531141be",
+      "range": {
+        "startLine": 487,
+        "startChar": 29,
+        "endLine": 487,
+        "endChar": 33
+      },
+      "revId": "89bf588d5174959bcaefa355cad6d1c7abfeeaf6",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": true
     }
   ]
 }
