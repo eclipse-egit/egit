@@ -63,7 +63,7 @@
     <egit-version>5.13.1-SNAPSHOT</egit-version>
     <tycho-version>1.7.0</tycho-version>
     <tycho-extras-version>${tycho-version}</tycho-extras-version>
-    <jboss-tycho-plugins-version>1.5.1</jboss-tycho-plugins-version>
+    <jboss-tycho-plugins-version>1.7.0</jboss-tycho-plugins-version>
     <spotbugs-maven-plugin-version>3.1.12</spotbugs-maven-plugin-version>
     <jgit-site>file:/${basedir}/../../jgit/org.eclipse.jgit.packaging/org.eclipse.jgit.repository/target/repository</jgit-site>
     <license-site>https://download.eclipse.org/cbi/updates/license</license-site>
