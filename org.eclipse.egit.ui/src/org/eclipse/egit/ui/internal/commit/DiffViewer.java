@@ -768,10 +768,11 @@ public class DiffViewer extends HyperlinkSourceViewer {
 				RevCommit commit = fileDiff.getCommit();
 				RevCommit base = fileDiff.getBase();
 				String msg;
-				if (base == null || base.equals(commit.getParent(0))) {
-					if (base == null) {
-						base = commit.getParent(0);
-					}
+				if (base == null) {
+					base = commit.getParent(0);
+					msg = UIText.DiffViewer_OpenPreviousLinkLabel;
+				} else if (commit.getParentCount() > 0
+						&& base.equals(commit.getParent(0))) {
 					msg = UIText.DiffViewer_OpenPreviousLinkLabel;
 				} else {
 					msg = UIText.DiffViewer_OpenBaseLinkLabel;
