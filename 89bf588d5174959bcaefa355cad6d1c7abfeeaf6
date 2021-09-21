@@ -46,6 +46,30 @@
       "revId": "89bf588d5174959bcaefa355cad6d1c7abfeeaf6",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "372fc5ca_0d3dc3ee",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/blame/BlameOperation.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 487,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2021-09-21T12:43:23Z",
+      "side": 1,
+      "message": "Yes, but how did lastHead get to be null in the first place? I think that can happen only if head \u003d\u003d null earlier, and in that case, it\u0027s probably not a good idea to update anything. So I agree with Michael that\n\n  if (head !\u003d null \u0026\u0026 !Objects.equals(lastHead, head))\n\nwould be safer.\n\nHowever, I\u0027m rather surprised that JGit\u0027s RenameBranchCommand leaves us with a temporary state that is inconsistent (HEAD already set to the new branch, which doesn\u0027t exist yet at that point), and advertises this intermediary state even with a RefsChangedEvent. I wonder if we could improve that in JGit such that either HEAD is always valid (preferred) or that at least we only get a single event after the whole rename is through.",
+      "parentUuid": "f5f74954_e9886356",
+      "range": {
+        "startLine": 487,
+        "startChar": 29,
+        "endLine": 487,
+        "endChar": 33
+      },
+      "revId": "89bf588d5174959bcaefa355cad6d1c7abfeeaf6",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": true
     }
   ]
 }
