@@ -109,7 +109,7 @@ public class PushToGerritPage extends WizardPage {
 			CommonUtils.STRING_ASCENDING_COMPARATOR);
 
 	@SuppressWarnings("serial")
-	private Map<String, String> topicProposals = new LinkedHashMap<String, String>(
+	private Map<String, String> topicProposals = new LinkedHashMap<>(
 			30, 0.75f, true) {
 
 		private static final int TOPIC_PROPOSALS_MAXIMUM = 20;

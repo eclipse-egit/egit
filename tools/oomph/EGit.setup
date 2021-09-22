@@ -98,12 +98,12 @@
       name="eclipse.target.platform"
       value="None"
       storageURI="scope://Workspace">
-    <description>Default target platform for EGit development. Must be >= egit-4.6, otherwise the smartimport fragment will not compile.</description>
+    <description>Default target platform for EGit development.</description>
   </setupTask>
   <setupTask
       xsi:type="setup:VariableTask"
       name="egit.target.platform"
-      defaultValue="egit-4.6"
+      defaultValue="egit-4.18"
       storageURI="scope://Workspace"
       label="EGit Target Platform">
     <choice
