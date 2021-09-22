@@ -25,6 +25,7 @@ import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.core.runtime.OperationCanceledException;
+import org.eclipse.core.runtime.Platform;
 import org.eclipse.core.runtime.jobs.Job;
 import org.eclipse.core.runtime.preferences.InstanceScope;
 import org.eclipse.egit.core.Activator;
@@ -40,6 +41,7 @@ import org.eclipse.jgit.lib.Ref;
 import org.eclipse.jgit.lib.RefUpdate;
 import org.eclipse.jgit.lib.Repository;
 import org.eclipse.swtbot.eclipse.finder.widgets.SWTBotView;
+import org.eclipse.swtbot.swt.finder.SWTBot;
 import org.eclipse.swtbot.swt.finder.widgets.SWTBotTree;
 import org.eclipse.swtbot.swt.finder.widgets.SWTBotTreeItem;
 import org.eclipse.ui.PlatformUI;
@@ -47,6 +49,7 @@ import org.eclipse.ui.commands.ICommandService;
 import org.eclipse.ui.handlers.RegistryToggleState;
 import org.junit.After;
 import org.junit.Before;
+import org.osgi.framework.Version;
 
 /**
  * Collection of utility methods for Git Repositories View tests
@@ -175,6 +178,20 @@ public abstract class GitRepositoriesViewTestBase extends
 				projectName);
 		assertEquals("Project existence " + projectName, prj.exists(),
 				existence);
+	}
+
+	protected void assertWizardDialogMessage(SWTBot dialogBot,
+			String expectedText) {
+		// The TitleAreaDialog's title message was changed to Label in Eclipse
+		// 4.18; changed back to Text in 4.21.
+		Version jFaceVersion = Platform.getBundle("org.eclipse.jface")
+				.getVersion();
+		if (jFaceVersion.compareTo(Version.valueOf("3.22.0")) < 0
+				|| jFaceVersion.compareTo(Version.valueOf("3.23.0")) >= 0) {
+			dialogBot.text(expectedText);
+		} else {
+			dialogBot.label(expectedText);
+		}
 	}
 
 	private static class TimeoutProgressMonitor extends NullProgressMonitor {

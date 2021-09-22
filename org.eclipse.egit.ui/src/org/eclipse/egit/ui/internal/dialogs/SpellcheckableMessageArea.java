@@ -165,7 +165,7 @@ public class SpellcheckableMessageArea extends Composite {
 				.getFont(UIPreferences.THEME_CommitMessageEditorFont));
 		sourceViewer.setDocument(new Document());
 		int endSpacing = 2;
-		int textWidth = getCharWidth() * MAX_LINE_WIDTH + endSpacing;
+		int textWidth = (int) (getCharWidth() * MAX_LINE_WIDTH + endSpacing);
 		int textHeight = getLineHeight() * 7;
 		Point size = getTextWidget().computeSize(textWidth, textHeight);
 		getTextWidget().setSize(size);
@@ -524,9 +524,9 @@ public class SpellcheckableMessageArea extends Composite {
 		sourceViewer.addPainter(marginPainter);
 	}
 
-	private int getCharWidth() {
+	private double getCharWidth() {
 		GC gc = new GC(getTextWidget());
-		int charWidth = gc.getFontMetrics().getAverageCharWidth();
+		double charWidth = gc.getFontMetrics().getAverageCharacterWidth();
 		gc.dispose();
 		return charWidth;
 	}
@@ -717,7 +717,11 @@ public class SpellcheckableMessageArea extends Composite {
 	 */
 	@Override
 	public boolean forceFocus() {
-		return getTextWidget().setFocus();
+		StyledText text = getTextWidget();
+		if (text == null || text.isDisposed()) {
+			return false;
+		}
+		return text.setFocus();
 	}
 
 	/**

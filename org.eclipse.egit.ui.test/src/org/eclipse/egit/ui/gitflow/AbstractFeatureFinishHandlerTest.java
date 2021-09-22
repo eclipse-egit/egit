@@ -10,6 +10,7 @@
  *******************************************************************************/
 package org.eclipse.egit.ui.gitflow;
 
+import static org.eclipse.swtbot.swt.finder.waits.Conditions.shellCloses;
 import static org.eclipse.swtbot.swt.finder.waits.Conditions.shellIsActive;
 import static org.junit.Assert.assertFalse;
 
@@ -20,6 +21,7 @@ import org.eclipse.egit.ui.test.ContextMenuHelper;
 import org.eclipse.egit.ui.test.TestUtil;
 import org.eclipse.swtbot.eclipse.finder.waits.Conditions;
 import org.eclipse.swtbot.swt.finder.junit.SWTBotJunit4ClassRunner;
+import org.eclipse.swtbot.swt.finder.widgets.SWTBotShell;
 import org.eclipse.swtbot.swt.finder.widgets.SWTBotTree;
 import org.junit.runner.RunWith;
 
@@ -38,10 +40,12 @@ public abstract class AbstractFeatureFinishHandlerTest extends AbstractGitflowHa
 				util.getPluginLocalizedValue("TeamGitFlowFeatureFinish.name", false, Activator.getDefault().getBundle()) };
 
 		ContextMenuHelper.clickContextMenu(projectExplorerTree, menuPath);
+		SWTBotShell dlg = bot.shell(UIText.FinishFeatureDialog_title);
 		bot.waitUntil(shellIsActive(UIText.FinishFeatureDialog_title));
 		selectOptions();
 		bot.checkBox(UIText.FinishFeatureDialog_saveAsDefault).click();
 		bot.button(UIText.FinishFeatureDialog_ButtonOK).click();
+		bot.waitUntil(shellCloses(dlg));
 		preFinish();
 		bot.waitUntil(Conditions.waitForJobs(JobFamilies.GITFLOW_FAMILY, "Git flow jobs"));
 	}
@@ -63,6 +67,8 @@ public abstract class AbstractFeatureFinishHandlerTest extends AbstractGitflowHa
 
 		ContextMenuHelper.clickContextMenu(projectExplorerTree, menuPath);
 
+		SWTBotShell dlg = bot
+				.shell(UIText.FeatureCheckoutHandler_selectFeature);
 		bot.waitUntil(shellIsActive(UIText.FeatureCheckoutHandler_selectFeature));
 		bot.text().setText("these are not the features you're looking for");
 		// Wait for filter to hit. Minimum delay must be greater than
@@ -73,6 +79,7 @@ public abstract class AbstractFeatureFinishHandlerTest extends AbstractGitflowHa
 		TestUtil.waitForJobs(500, 5000);
 		bot.tree().select(featureName);
 		bot.button(UIText.FeatureCheckoutHandler_ButtonOK).click();
+		bot.waitUntil(shellCloses(dlg));
 		bot.waitUntil(Conditions.waitForJobs(JobFamilies.GITFLOW_FAMILY, "Git flow jobs"));
 	}
 }
