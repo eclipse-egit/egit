@@ -56,6 +56,7 @@ import org.eclipse.swtbot.eclipse.finder.widgets.SWTBotView;
 import org.eclipse.swtbot.swt.finder.junit.SWTBotJunit4ClassRunner;
 import org.eclipse.swtbot.swt.finder.utils.TableCollection;
 import org.eclipse.swtbot.swt.finder.waits.Conditions;
+import org.eclipse.swtbot.swt.finder.waits.DefaultCondition;
 import org.eclipse.swtbot.swt.finder.widgets.SWTBotButton;
 import org.eclipse.swtbot.swt.finder.widgets.SWTBotShell;
 import org.eclipse.swtbot.swt.finder.widgets.SWTBotText;
@@ -422,7 +423,8 @@ public class GitRepositoriesViewTest extends GitRepositoriesViewTestBase {
 		// wizard directory should be PROJ2
 		assertEquals(PROJ2, wizardNode);
 		shell.bot().button(IDialogConstants.NEXT_LABEL).click();
-		shell.bot().text(" " + UIText.GitProjectsImportPage_NoProjectsMessage);
+		assertWizardDialogMessage(shell.bot(),
+				" " + UIText.GitProjectsImportPage_NoProjectsMessage);
 		assertEquals(0, shell.bot().tree().getAllItems().length);
 		shell.bot().button(IDialogConstants.BACK_LABEL).click();
 		// import as general
@@ -493,7 +495,7 @@ public class GitRepositoriesViewTest extends GitRepositoriesViewTestBase {
 		// See also SWTBot Bug 337465
 		button.setFocus();
 		button.click();
-		shell.bot().text(
+		assertWizardDialogMessage(shell.bot(),
 				UIText.WizardProjectsImportPage_ImportProjectsDescription);
 		shell.bot().tree().getAllItems()[0].check();
 		// add to working set
@@ -686,6 +688,7 @@ public class GitRepositoriesViewTest extends GitRepositoriesViewTestBase {
 		createBranchShell.bot().checkBox(UIText.CreateBranchPage_CheckoutButton)
 				.deselect();
 		createBranchShell.bot().button(IDialogConstants.FINISH_LABEL).click();
+		bot.waitUntil(shellCloses(createBranchShell), 10000);
 		refreshAndWait();
 		// delete branch
 		// lookup node again. Widget might have changed due to refresh
@@ -721,6 +724,8 @@ public class GitRepositoriesViewTest extends GitRepositoriesViewTestBase {
 		createBranchShell.bot().checkBox(UIText.CreateBranchPage_CheckoutButton)
 				.deselect();
 		createBranchShell.bot().button(IDialogConstants.FINISH_LABEL).click();
+		bot.waitUntil(shellCloses(createBranchShell), 10000);
+		refreshAndWait();
 		// create second branch (123)
 		ContextMenuHelper.clickContextMenu(tree, "Create Branch...");
 		createBranchShell = bot.shell(UIText.CreateBranchWizard_NewBranchTitle);
@@ -730,6 +735,7 @@ public class GitRepositoriesViewTest extends GitRepositoriesViewTestBase {
 		createBranchShell.bot().checkBox(UIText.CreateBranchPage_CheckoutButton)
 				.deselect();
 		createBranchShell.bot().button(IDialogConstants.FINISH_LABEL).click();
+		bot.waitUntil(shellCloses(createBranchShell), 10000);
 		refreshAndWait();
 		localBranchesItem = TestUtil.expandAndWait(
 				myRepoViewUtil.getLocalBranchesItem(tree, repositoryFile));
@@ -782,6 +788,7 @@ public class GitRepositoriesViewTest extends GitRepositoriesViewTestBase {
 		refreshAndWait();
 
 		SWTBotTreeItem folder = findWorkdirNode(tree, PROJ2, FOLDER);
+		int n = folder.getNodes().size();
 		folder.getNode(FILE1).select();
 
 		ContextMenuHelper.clickContextMenu(tree,
@@ -791,8 +798,19 @@ public class GitRepositoriesViewTest extends GitRepositoriesViewTestBase {
 				.shell(UIText.DeletePathsOperationUI_confirmActionTitle);
 		confirm.bot().button(UIText.DeletePathsOperationUI_ButtonOK).click();
 		bot.waitUntil(shellCloses(confirm));
-		TestUtil.joinJobs(JobFamilies.REPO_VIEW_REFRESH);
+		bot.waitUntil(new DefaultCondition() {
 
+			@Override
+			public boolean test() throws Exception {
+				SWTBotTreeItem item = findWorkdirNode(tree, PROJ2, FOLDER);
+				return item.getNodes().size() == n - 1;
+			}
+
+			@Override
+			public String getFailureMessage() {
+				return "File deletion not reflected in repo view tree within timout";
+			}
+		}, 20000);
 		folder = findWorkdirNode(tree, PROJ2, FOLDER);
 		assertThat(folder.getNodes(), not(hasItem(FILE1)));
 		assertThat(folder.getNodes(), hasItem(FILE2));

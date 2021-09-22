@@ -17,10 +17,13 @@ import static org.eclipse.swtbot.swt.finder.SWTBotAssert.assertText;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.fail;
 
+import org.eclipse.core.runtime.Platform;
 import org.eclipse.swtbot.eclipse.finder.SWTWorkbenchBot;
+import org.eclipse.swtbot.swt.finder.SWTBot;
 import org.eclipse.swtbot.swt.finder.widgets.SWTBotCheckBox;
 import org.eclipse.swtbot.swt.finder.widgets.SWTBotCombo;
 import org.eclipse.swtbot.swt.finder.widgets.SWTBotText;
+import org.osgi.framework.Version;
 
 public class RepoPropertiesPage {
 
@@ -68,11 +71,11 @@ public class RepoPropertiesPage {
 			boolean enabledUser, boolean enabledPass) {
 		if (message != null) {
 			// TODO: magic number, looks dangerous!
-			assertText(message, bot.text(6));
+			assertWizardDialogMessage(bot, message);
 			assertNotEnabled(bot.button("Next >"));
 		} else {
-			assertEquals("Enter the location of the source repository.", bot
-					.text(6).getText());
+			assertWizardDialogMessage(bot,
+					"Enter the location of the source repository.");
 			assertEnabled(bot.button("Next >"));
 		}
 		assertText(expectHost, bot.textWithLabel("Host:"));
@@ -86,6 +89,20 @@ public class RepoPropertiesPage {
 		assertEquals(enabledUser, bot.textWithLabel("User:").isEnabled());
 		assertEquals(enabledPass, bot.label("Password:").isEnabled());
 		assertEquals(enabledPass, bot.textWithLabel("Password:").isEnabled());
+	}
+
+	private void assertWizardDialogMessage(SWTBot dialogBot,
+			String expectedText) {
+		// The TitleAreaDialog's title message was changed to Label in Eclipse
+		// 4.18; changed back to Text in 4.21.
+		Version jFaceVersion = Platform.getBundle("org.eclipse.jface")
+				.getVersion();
+		if (jFaceVersion.compareTo(Version.valueOf("3.22.0")) < 0
+				|| jFaceVersion.compareTo(Version.valueOf("3.23.0")) >= 0) {
+			dialogBot.text(expectedText);
+		} else {
+			dialogBot.label(expectedText);
+		}
 	}
 
 	public void assertURI(String expected) {
