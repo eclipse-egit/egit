@@ -74,7 +74,7 @@ public class CommitDialogTester {
 
 	private static void clickCommitAction(String projectName) {
 		SWTBotTree projectExplorerTree = TestUtil.getExplorerTree();
-		util.getProjectItems(projectExplorerTree, projectName)[0].select();
+		TestUtil.navigateTo(projectExplorerTree, projectName).select();
 		String menuString = util.getPluginLocalizedValue("CommitAction_label");
 		ContextMenuHelper.clickContextMenu(projectExplorerTree, "Team",
 				menuString);

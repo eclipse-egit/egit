@@ -19,12 +19,15 @@ import static org.eclipse.swtbot.swt.finder.matchers.WidgetMatcherFactory.withTe
 import static org.eclipse.swtbot.swt.finder.waits.Conditions.waitForWidget;
 import static org.eclipse.swtbot.swt.finder.waits.Conditions.widgetIsEnabled;
 
+import org.eclipse.core.runtime.Platform;
 import org.eclipse.jgit.transport.TagOpt;
+import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Text;
 import org.eclipse.swtbot.eclipse.finder.SWTWorkbenchBot;
 import org.eclipse.swtbot.swt.finder.widgets.SWTBotTree;
 import org.eclipse.swtbot.swt.finder.widgets.SWTBotTreeItem;
 import org.junit.Assert;
+import org.osgi.framework.Version;
 
 public class RepoRemoteBranchesPage {
 	private static final SWTWorkbenchBot bot = new SWTWorkbenchBot();
@@ -63,9 +66,18 @@ public class RepoRemoteBranchesPage {
 
 	@SuppressWarnings({ "unchecked" })
 	public void assertErrorMessage(String errorMessage) {
-		bot.waitUntil(
-				waitForWidget(allOf(widgetOfType(Text.class), withText(" "
-						+ errorMessage))), 20000);
+		// The TitleAreaDialog's title message was changed to Label in Eclipse
+		// 4.18; changed back to Text in 4.21.
+		Version jFaceVersion = Platform.getBundle("org.eclipse.jface")
+				.getVersion();
+		if (jFaceVersion.compareTo(Version.valueOf("3.22.0")) < 0
+				|| jFaceVersion.compareTo(Version.valueOf("3.23.0")) >= 0) {
+			bot.waitUntil(waitForWidget(allOf(widgetOfType(Text.class),
+					withText(" " + errorMessage))), 20000);
+		} else {
+			bot.waitUntil(waitForWidget(allOf(widgetOfType(Label.class),
+					withText(" " + errorMessage))), 20000);
+		}
 	}
 
 	public void selectTagOption(TagOpt option) {

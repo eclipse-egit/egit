@@ -182,6 +182,7 @@ class GenerateHistoryJob extends Job {
 					GitTraceLocation.HISTORYVIEW.getLocation());
 		try {
 			if (forcedRedrawsAfterListIsCompleted != 1 && !incomplete
+					&& lastUpdateCnt != 0
 					&& loadedCommits.size() == lastUpdateCnt) {
 				return;
 			}
@@ -226,6 +227,9 @@ class GenerateHistoryJob extends Job {
 
 	void setLoadHint(final int index) {
 		itemToLoad = index;
+		if (index < 0) {
+			commitToLoad = null;
+		}
 	}
 
 	void setLoadHint(final RevCommit c) {

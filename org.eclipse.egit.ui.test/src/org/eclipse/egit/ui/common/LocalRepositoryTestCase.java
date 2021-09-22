@@ -24,6 +24,8 @@ import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.HashMap;
+import java.util.Map;
 
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IFolder;
@@ -342,34 +344,31 @@ public abstract class LocalRepositoryTestCase extends EGitTestCase {
 		Repository myRepository = createLocalTestRepository(repoName);
 		File gitDir = myRepository.getDirectory();
 
+		Map<IProject, File> toConnect = new HashMap<>();
 		// we need to commit into master first
 		IProject firstProject = createStandardTestProjectInRepository(
 				myRepository, project1Name);
-
-		try {
-			new ConnectProviderOperation(firstProject, gitDir).execute(null);
-		} catch (Exception e) {
-			Activator.logError("Failed to connect project to repository", e);
-		}
-		assertConnected(firstProject);
+		toConnect.put(firstProject, gitDir);
 
 		IProject secondProject = null;
 		if (project2Name != null) {
 			secondProject = createStandardTestProjectInRepository(myRepository,
 					project2Name);
-
 			// TODO we should be able to hide the .project
 			// IFile gitignore = secondPoject.getFile(".gitignore");
 			// gitignore.create(new ByteArrayInputStream("/.project\n"
 			// .getBytes(firstProject.getDefaultCharset())), false, null);
+			toConnect.put(secondProject, gitDir);
+		}
 
-			try {
-				new ConnectProviderOperation(secondProject, gitDir)
-						.execute(null);
-			} catch (Exception e) {
-				Activator.logError("Failed to connect project to repository",
-						e);
-			}
+		try {
+			new ConnectProviderOperation(toConnect).execute(null);
+		} catch (Exception e) {
+			Activator.logError("Failed to connect project(s) to repository", e);
+		}
+		assertConnected(firstProject);
+
+		if (secondProject != null) {
 			assertConnected(secondProject);
 		}
 
