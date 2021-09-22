@@ -73,7 +73,7 @@ public class CommitSearchDialogTest extends LocalRepositoryTestCase {
 			shell.activate();
 		}
 		TestUtil.processUIEvents();
-		shell.bot().tabItem("Git Search").activate();
+		shell.bot().cTabItem("Git Search").activate();
 		shell.bot().comboBox().setText(commit.name());
 		SWTBotButton search = shell.bot().button("Search");
 		assertTrue(search.isEnabled());
