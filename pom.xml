@@ -61,15 +61,15 @@
 
   <properties>
     <egit-version>6.0.0-SNAPSHOT</egit-version>
-    <tycho-version>1.7.0</tycho-version>
+    <tycho-version>2.4.0</tycho-version>
     <tycho-extras-version>${tycho-version}</tycho-extras-version>
-    <jboss-tycho-plugins-version>1.5.1</jboss-tycho-plugins-version>
+    <jboss-tycho-plugins-version>2.2.0</jboss-tycho-plugins-version>
     <spotbugs-maven-plugin-version>3.1.12</spotbugs-maven-plugin-version>
     <jgit-site>file:/${basedir}/../../jgit/org.eclipse.jgit.packaging/org.eclipse.jgit.repository/target/repository</jgit-site>
     <license-site>https://download.eclipse.org/cbi/updates/license</license-site>
     <signer-input-directory>/home/data/httpd/download-staging.priv/egit</signer-input-directory>
     <download-publish-path>/home/data/httpd/download.eclipse.org/egit/updates-nightly</download-publish-path>
-    <target-platform>egit-4.6</target-platform>
+    <target-platform>egit-4.17</target-platform>
     <tycho.scmUrl>scm:git:https://git.eclipse.org/r/egit/egit.git</tycho.scmUrl>
     <egit.test.tmpdir></egit.test.tmpdir>
     <test.vmparams></test.vmparams>
@@ -80,24 +80,6 @@
   </properties>
 
   <profiles>
-    <profile>
-      <id>compile-jdk-newer-than-8</id>
-      <!-- The release argument is allowed only if the Java version used to run maven is > 1.8 -->
-      <activation>
-        <jdk>[9,]</jdk>
-      </activation>
-      <build>
-        <plugins>
-          <plugin>
-            <groupId>org.eclipse.tycho</groupId>
-            <artifactId>tycho-compiler-plugin</artifactId>
-            <configuration>
-              <release>8</release>
-            </configuration>
-          </plugin>
-        </plugins>
-      </build>
-    </profile>
     <profile>
       <id>static-checks</id>
       <build>
@@ -336,7 +318,7 @@
             <configuration>
               <rules>
                 <requireMavenVersion>
-                  <version>3.5.2</version>
+                  <version>3.8.2</version>
                 </requireMavenVersion>
               </rules>
             </configuration>
@@ -362,7 +344,7 @@
           </target>
           <resolver>p2</resolver>
           <pomDependencies>consider</pomDependencies>
-          <environments>
+<!--          <environments>
             <environment>
               <os>linux</os>
               <ws>gtk</ws>
@@ -388,7 +370,7 @@
               <ws>cocoa</ws>
               <arch>x86_64</arch>
             </environment>
-          </environments>
+          </environments>  -->
         </configuration>
       </plugin>
     </plugins>
@@ -401,8 +383,9 @@
           <version>${tycho-version}</version>
           <configuration>
             <encoding>UTF-8</encoding>
-            <source>1.8</source>
-            <target>1.8</target>
+            <source>11</source>
+            <target>11</target>
+            <release>11</release>
             <!-- Do not use useProjectSettings; it'll always override -nowarn -->
             <useProjectSettings>false</useProjectSettings>
             <compilerArgs>
@@ -411,6 +394,13 @@
               <arg>-nowarn</arg>
             </compilerArgs>
           </configuration>
+          <dependencies>
+              <dependency>
+                <groupId>org.eclipse.jdt</groupId>
+                <artifactId>ecj</artifactId>
+                <version>3.27.0</version>
+              </dependency>
+          </dependencies>
         </plugin>
         <plugin>
           <groupId>org.eclipse.tycho</groupId>
@@ -525,7 +515,7 @@
           <configuration>
             <sourceEncoding>utf-8</sourceEncoding>
             <minimumTokens>100</minimumTokens>
-            <targetJdk>1.8</targetJdk>
+            <targetJdk>11</targetJdk>
             <format>xml</format>
             <failOnViolation>false</failOnViolation>
             <linkXRef>false</linkXRef>
