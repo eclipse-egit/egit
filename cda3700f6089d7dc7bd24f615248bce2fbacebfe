@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8f83b00c_eafcd4fd",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/commit/DiffViewer.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 772,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2021-09-22T08:37:06Z",
+      "side": 1,
+      "message": "This should be fine. First, I think base shouldn\u0027t actually be null here, and second, other parts of the code also assume that if base \u003d\u003d null, commit does have at least one parent.",
+      "revId": "cda3700f6089d7dc7bd24f615248bce2fbacebfe",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": true
+    }
+  ]
+}
