@@ -60,7 +60,7 @@
                 <update.site.name>EGit Update Site</update.site.name>
                 <update.site.description>Use this URL in Eclipse to install EGit and JGit</update.site.description>
                 <update.site.version>${project.version}</update.site.version>
-                <target.eclipse.version>4.6.0 (Neon) or newer</target.eclipse.version>
+                <target.eclipse.version>4.17.0 (Eclipse 2020-09) or newer</target.eclipse.version>
               </symbols>
               <associateSites>
                 <site>https://download.eclipse.org/egit/github/updates</site>
@@ -85,7 +85,7 @@
           </goals>
           <phase>package</phase>
           <configuration>
-           <executionEnvironment>JavaSE-1.8</executionEnvironment>
+           <executionEnvironment>JavaSE-11</executionEnvironment>
            <appArgLine>-application org.eclipse.wtp.releng.tools.addRepoProperties</appArgLine>
            <!-- See <http://wiki.eclipse.org/Equinox/p2/p2.mirrorsURL>. -->
            <!-- See <http://wiki.eclipse.org/Equinox_p2_download_stats>. -->
@@ -98,11 +98,11 @@
            </dependencies>
            <repositories>
             <repository>
-             <url>https://download.eclipse.org/webtools/downloads/drops/R3.19.0/R-3.19.0-20200828030223/repositoryunittests/</url>
+             <url>https://download.eclipse.org/webtools/downloads/drops/R3.23.0/R-3.23.0-20210822084517/repositoryunittests/</url>
              <layout>p2</layout>
             </repository>
             <repository>
-             <url>https://download.eclipse.org/releases/neon/201705151400/</url>
+             <url>https://download.eclipse.org/releases/2021-09/202109151000/</url>
              <layout>p2</layout>
             </repository>
            </repositories>

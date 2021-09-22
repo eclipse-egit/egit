@@ -24,6 +24,7 @@ import java.util.List;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 import org.eclipse.core.commands.State;
+import org.eclipse.core.runtime.Platform;
 import org.eclipse.egit.core.RepositoryUtil;
 import org.eclipse.egit.core.internal.CoreText;
 import org.eclipse.egit.core.op.BranchOperation;
@@ -64,6 +65,7 @@ import org.eclipse.ui.handlers.RegistryToggleState;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.osgi.framework.Version;
 
 /**
  * SWTBot Tests for the Git Repositories View (mainly branch operations)
@@ -326,9 +328,12 @@ public class GitRepositoriesViewBranchHandlingTest extends
 		SWTBotText newBranchNameText = renameDialog.bot().textWithLabel(UIText.BranchRenameDialog_NewNameLabel);
 		newBranchNameText.setText("invalid~name");
 
-		renameDialog.bot().text(" " + // the text is now in the error message, and the MessageAreaDialog seems to add a space
-				NLS.bind(CoreText.ValidationUtils_InvalidRefNameMessage,
-						"refs/heads/invalid~name"));
+		// The text is the error message now; but apparently the
+		// MessageAreaDialog adds a blank
+		String textToMatch = " "
+				+ NLS.bind(CoreText.ValidationUtils_InvalidRefNameMessage,
+						"refs/heads/invalid~name");
+		assertDialogMessage(renameDialog.bot(), textToMatch);
 		assertFalse(renameDialog.bot()
 				.button(UIText.RenameBranchDialog_RenameButtonLabel)
 				.isEnabled());
@@ -430,22 +435,25 @@ public class GitRepositoriesViewBranchHandlingTest extends
 				ConfigConstants.CONFIG_KEY_REBASE, BranchRebaseMode.NONE);
 		assertEquals(BranchRebaseMode.NONE, rebase);
 
+		// Ensure the properties view already exists. In the test it is in the
+		// same view stack as the repo view, which means the selection may get
+		// lost when it is initially opened from the repo view, and then it
+		// comes up empty.
+		TestUtil.showView(IPageLayout.ID_PROP_SHEET);
 		SWTBotView view = getOrOpenView();
 
 		SWTBotTreeItem localItem = myRepoViewUtil.getLocalBranchesItem(view
 				.bot().tree(), clonedRepositoryFile);
 		TestUtil.expandAndWait(localItem).getNode("configTest").select();
 
-		ContextMenuHelper.clickContextMenuSync(view.bot().tree(),
+		ContextMenuHelper.clickContextMenu(view.bot().tree(),
 				myUtil.getPluginLocalizedValue("ShowIn"),
 				"Properties");
 
 		SWTBotView propsView = bot.viewById(IPageLayout.ID_PROP_SHEET);
-		SWTBotTreeItem rootItem = propsView
-				.bot()
-				.tree()
-				.getTreeItem(
-						UIText.BranchPropertySource_UpstreamConfigurationCategory);
+
+		SWTBotTreeItem rootItem = TestUtil.navigateTo(propsView.bot().tree(),
+				UIText.BranchPropertySource_UpstreamConfigurationCategory);
 		SWTBotTreeItem rebaseItem = TestUtil.expandAndWait(rootItem)
 				.getNode(UIText.BranchPropertySource_RebaseDescriptor);
 		assertEquals(UIText.BranchPropertySource_ValueNotSet,
@@ -470,9 +478,9 @@ public class GitRepositoriesViewBranchHandlingTest extends
 
 		SWTBotShell configureBranchDialog = bot
 				.shell(UIText.BranchConfigurationDialog_BranchConfigurationTitle);
-		assertEquals(MessageFormat.format(
+		assertDialogMessage(configureBranchDialog.bot(), MessageFormat.format(
 				UIText.BranchConfigurationDialog_EditBranchConfigMessage,
-				"configTest"), configureBranchDialog.bot().text().getText());
+				"configTest"));
 		assertEquals(
 				"refs/heads/master",
 				configureBranchDialog
@@ -587,5 +595,18 @@ public class GitRepositoriesViewBranchHandlingTest extends
 		label = repoItem.getText();
 		assertTrue("Expected branch decoration to be updated: " + label,
 				label.contains("[master \u21911]"));
+	}
+
+	private void assertDialogMessage(SWTBot dialogBot, String expectedText) {
+		// The TitleAreaDialog's title message was changed to Label in Eclipse
+		// 4.18; changed back to Text in 4.21.
+		Version jFaceVersion = Platform.getBundle("org.eclipse.jface")
+				.getVersion();
+		if (jFaceVersion.compareTo(Version.valueOf("3.22.0")) < 0
+				|| jFaceVersion.compareTo(Version.valueOf("3.23.0")) >= 0) {
+			dialogBot.text(expectedText);
+		} else {
+			dialogBot.label(expectedText);
+		}
 	}
 }

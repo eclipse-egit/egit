@@ -239,7 +239,7 @@ public class CachedCheckboxTreeViewer extends ContainerCheckedTreeViewer {
 	}
 
 	@Override
-	public void remove(Object[] elementsOrTreePaths) {
+	public void remove(Object... elementsOrTreePaths) {
 		for (Object elementsOrTreePath : elementsOrTreePaths) {
 			updateCheckState(elementsOrTreePath, false);
 		}
