@@ -27,6 +27,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.nio.file.Files;
 import java.util.ArrayList;
+import java.util.concurrent.TimeUnit;
 
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IResource;
@@ -42,6 +43,7 @@ import org.eclipse.egit.ui.JobFamilies;
 import org.eclipse.egit.ui.common.LocalRepositoryTestCase;
 import org.eclipse.egit.ui.internal.UIText;
 import org.eclipse.egit.ui.test.ContextMenuHelper;
+import org.eclipse.egit.ui.test.JobJoiner;
 import org.eclipse.egit.ui.test.TestUtil;
 import org.eclipse.jface.bindings.keys.KeyStroke;
 import org.eclipse.jface.dialogs.IDialogConstants;
@@ -500,8 +502,10 @@ public class BranchAndResetActionTest extends LocalRepositoryTestCase {
 
 		Repository repo = lookupRepository(repositoryFile);
 
+		JobJoiner joiner = JobJoiner.startListening(JobFamilies.CHECKOUT, 10,
+				TimeUnit.SECONDS);
 		dialog.bot().button(UIText.CheckoutDialog_OkCheckout).click();
-		TestUtil.joinJobs(JobFamilies.CHECKOUT);
+		joiner.join();
 		if (ObjectId.isId(repo.getBranch())) {
 			String mapped = RepositoryUtil.INSTANCE.mapCommitToRef(repo,
 					repo.getBranch(), false);
@@ -519,8 +523,10 @@ public class BranchAndResetActionTest extends LocalRepositoryTestCase {
 		assertEquals("Wrong selection count", 1, tc.rowCount());
 		assertTrue("Wrong item selected", tc.get(0, 0).startsWith(nodeTexts[1]));
 
+		JobJoiner joiner = JobJoiner.startListening(JobFamilies.CHECKOUT, 10,
+				TimeUnit.SECONDS);
 		dialog.bot().button(UIText.CheckoutDialog_OkCheckout).click();
-		TestUtil.joinJobs(JobFamilies.CHECKOUT);
+		joiner.join();
 	}
 
 }

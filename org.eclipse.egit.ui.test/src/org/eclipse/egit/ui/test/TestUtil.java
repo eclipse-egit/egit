@@ -53,7 +53,6 @@ import org.eclipse.jgit.revwalk.RevWalk;
 import org.eclipse.jgit.treewalk.TreeWalk;
 import org.eclipse.jgit.util.StringUtils;
 import org.eclipse.osgi.service.localization.BundleLocalization;
-import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swtbot.eclipse.finder.SWTWorkbenchBot;
 import org.eclipse.swtbot.eclipse.finder.widgets.SWTBotEditor;
@@ -251,33 +250,7 @@ public class TestUtil {
 	 *            the current thread is blocked
 	 */
 	public static void processUIEvents(final long timeInMillis) {
-		if (Display.getCurrent() != null) {
-			if (timeInMillis <= 0) {
-				while (Display.getCurrent().readAndDispatch()) {
-					// process queued ui events at least once
-				}
-			} else {
-				long start = System.currentTimeMillis();
-				while (System.currentTimeMillis() - start <= timeInMillis) {
-					while (Display.getCurrent().readAndDispatch()) {
-						// process queued ui events
-						try {
-							Thread.sleep(10);
-						} catch (InterruptedException e) {
-							break;
-						}
-					}
-				}
-			}
-		} else {
-			// synchronously refresh UI
-			PlatformUI.getWorkbench().getDisplay().syncExec(new Runnable() {
-				@Override
-				public void run() {
-					processUIEvents();
-				}
-			});
-		}
+		// Empty
 	}
 
 	/**
@@ -778,7 +751,7 @@ public class TestUtil {
 	public static SWTBotShell botForShellStartingWith(final String titlePrefix) {
 		SWTWorkbenchBot bot = new SWTWorkbenchBot();
 
-		Matcher<Shell> matcher = new TypeSafeMatcher<Shell>() {
+		Matcher<Shell> matcher = new TypeSafeMatcher<>() {
 			@Override
 			protected boolean matchesSafely(Shell item) {
 				String title = item.getText();

@@ -9,13 +9,16 @@
  *******************************************************************************/
 package org.eclipse.egit.ui.internal.push;
 
+import static org.eclipse.swtbot.swt.finder.matchers.WidgetMatcherFactory.widgetOfType;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
 import java.text.MessageFormat;
 import java.util.Arrays;
+import java.util.List;
 import java.util.concurrent.TimeUnit;
 
+import org.eclipse.core.runtime.Platform;
 import org.eclipse.egit.ui.JobFamilies;
 import org.eclipse.egit.ui.internal.UIText;
 import org.eclipse.egit.ui.test.ContextMenuHelper;
@@ -23,11 +26,14 @@ import org.eclipse.egit.ui.test.JobJoiner;
 import org.eclipse.jface.dialogs.IDialogConstants;
 import org.eclipse.jgit.lib.Constants;
 import org.eclipse.osgi.util.NLS;
+import org.eclipse.swt.widgets.Label;
 import org.eclipse.swtbot.eclipse.finder.SWTWorkbenchBot;
 import org.eclipse.swtbot.swt.finder.SWTBot;
+import org.eclipse.swtbot.swt.finder.finders.UIThreadRunnable;
 import org.eclipse.swtbot.swt.finder.widgets.SWTBotCombo;
 import org.eclipse.swtbot.swt.finder.widgets.SWTBotText;
 import org.eclipse.swtbot.swt.finder.widgets.SWTBotTree;
+import org.osgi.framework.Version;
 
 public class PushBranchWizardTester {
 
@@ -146,8 +152,26 @@ public class PushBranchWizardTester {
 	}
 
 	public boolean isUpstreamConfigOverwriteWarningShown() {
-		return wizard.text(1).getText()
-				.contains(UIText.PushBranchPage_UpstreamConfigOverwriteWarning);
+		// The TitleAreaDialog's title message was changed to Label in Eclipse
+		// 4.18; changed back to Text in 4.21.
+		Version jFaceVersion = Platform.getBundle("org.eclipse.jface")
+				.getVersion();
+		if (jFaceVersion.compareTo(Version.valueOf("3.22.0")) < 0
+				|| jFaceVersion.compareTo(Version.valueOf("3.23.0")) >= 0) {
+			return wizard.text(1).getText().contains(
+					UIText.PushBranchPage_UpstreamConfigOverwriteWarning);
+		} else {
+			// Unfortunately, there are many labels in the wizard, their number
+			// is even dynamic, and the ones from the title area are at the end.
+			return UIThreadRunnable.<Boolean> syncExec(() -> Boolean.valueOf(
+					getLabels().stream().anyMatch(l -> l.getText().contains(
+							UIText.PushBranchPage_UpstreamConfigOverwriteWarning))))
+					.booleanValue();
+		}
+	}
+
+	private List<? extends Label> getLabels() {
+		return wizard.widgets(widgetOfType(Label.class));
 	}
 
 	public void next() {

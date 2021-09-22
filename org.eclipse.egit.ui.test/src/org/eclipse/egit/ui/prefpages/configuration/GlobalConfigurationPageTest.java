@@ -126,8 +126,7 @@ public class GlobalConfigurationPageTest {
 		// reset saved preferences state
 		SWTBotShell preferencePage = new Eclipse().openPreferencePage(null);
 		preferencePage.bot().tree(0).getTreeItem("General").select();
-		preferencePage.bot().button(IDialogConstants.OK_LABEL)
-				.click();
+		preferencePage.bot().button("Apply").click();
 		TestUtil.processUIEvents();
 	}
 
@@ -171,7 +170,7 @@ public class GlobalConfigurationPageTest {
 		// close the dialog
 		addDialog.bot().button(UIText.AddConfigEntryDialog_ButtonOK).click();
 		// close the editor
-		preferencePage.bot().button(IDialogConstants.OK_LABEL).click();
+		preferencePage.bot().button("Apply").click();
 		config.load();
 
 		assertTrue("Missing section", config.getSections()
@@ -197,7 +196,7 @@ public class GlobalConfigurationPageTest {
 		// close the dialog
 		addDialog.bot().button(UIText.AddConfigEntryDialog_ButtonOK).click();
 		// close the editor
-		preferencePage.bot().button(IDialogConstants.OK_LABEL).click();
+		preferencePage.bot().button("Apply").click();
 		config.load();
 
 		assertTrue("Missing section", config.getSections()
@@ -364,7 +363,7 @@ public class GlobalConfigurationPageTest {
 		// close the dialog
 		addDialog.bot().button(UIText.AddConfigEntryDialog_ButtonOK).click();
 		// close the editor
-		preferencePage.bot().button(IDialogConstants.OK_LABEL).click();
+		preferencePage.bot().button("Apply").click();
 
 		config.load();
 		assertTrue("Missing section", config.getSections()
@@ -391,7 +390,7 @@ public class GlobalConfigurationPageTest {
 				.button(UIText.ConfigurationEditorComponent_RemoveButton)
 				.click();
 		// close the editor
-		preferencePage.bot().button(IDialogConstants.OK_LABEL).click();
+		preferencePage.bot().button("Apply").click();
 		config.load();
 		values = Arrays.asList(config
 				.getStringList(TESTSECTION, null, TESTNAME));
@@ -419,7 +418,7 @@ public class GlobalConfigurationPageTest {
 		confirm.activate();
 		confirm.bot().button(IDialogConstants.OK_LABEL).click();
 		// close the editor
-		preferencePage.bot().button(IDialogConstants.OK_LABEL).click();
+		preferencePage.bot().button("Apply").click();
 		config.load();
 		assertTrue("Subsection should be deleted", !config.getSubsections(
 				TESTSECTION).contains(TESTSUBSECTION));
@@ -444,7 +443,7 @@ public class GlobalConfigurationPageTest {
 		confirm.activate();
 		confirm.bot().button(IDialogConstants.OK_LABEL).click();
 		// close the editor
-		preferencePage.bot().button(IDialogConstants.OK_LABEL).click();
+		preferencePage.bot().button("Apply").click();
 		config.load();
 		assertTrue("Values in section should be deleted", config.getStringList(
 				TESTSECTION, null, TESTNAME).length == 0);
