@@ -5,7 +5,7 @@ Automatic-Module-Name: org.eclipse.egit.gitflow.test
 Bundle-SymbolicName: org.eclipse.egit.gitflow.test;singleton:=true
 Bundle-Version: 6.0.0.qualifier
 Fragment-Host: org.eclipse.egit.gitflow
-Bundle-RequiredExecutionEnvironment: JavaSE-1.8
+Bundle-RequiredExecutionEnvironment: JavaSE-11
 Import-Package: org.eclipse.egit.core;version="[6.0.0,6.1.0)",
  org.eclipse.jgit.junit;version="[6.0.0,6.1.0)",
  org.junit.rules;version="[4.13.0,5.0.0)",

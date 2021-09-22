@@ -75,7 +75,7 @@ public class CommonUtils {
 	 * The comparator is guaranteed to return a non-zero value if
 	 * {@code string1.equals(string2)} returns {@code false}.
 	 */
-	public static final Comparator<String> STRING_ASCENDING_COMPARATOR = new Comparator<String>() {
+	public static final Comparator<String> STRING_ASCENDING_COMPARATOR = new Comparator<>() {
 		@Override
 		public int compare(String o1, String o2) {
 			if (o1.length() == 0 || o2.length() == 0)

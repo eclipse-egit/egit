@@ -40,9 +40,11 @@ import org.eclipse.swt.dnd.TextTransfer;
 import org.eclipse.swt.dnd.Transfer;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swtbot.eclipse.finder.widgets.SWTBotView;
+import org.eclipse.swtbot.swt.finder.SWTBot;
 import org.eclipse.swtbot.swt.finder.finders.UIThreadRunnable;
 import org.eclipse.swtbot.swt.finder.junit.SWTBotJunit4ClassRunner;
 import org.eclipse.swtbot.swt.finder.utils.TableCollection;
+import org.eclipse.swtbot.swt.finder.waits.DefaultCondition;
 import org.eclipse.swtbot.swt.finder.widgets.SWTBotLabel;
 import org.eclipse.swtbot.swt.finder.widgets.SWTBotShell;
 import org.eclipse.swtbot.swt.finder.widgets.SWTBotText;
@@ -281,24 +283,29 @@ public class GitRepositoriesViewRepoHandlingTest extends
 		TestUtil.processUIEvents();
 		SWTBotShell shell = bot
 				.shell(UIText.RepositorySearchDialog_AddGitRepositories);
-		shell.bot().textWithLabel(UIText.RepositorySearchDialog_directory)
+		SWTBot dlg = shell.bot();
+		dlg.textWithLabel(UIText.RepositorySearchDialog_directory)
 				.setText(getTestDirectory().getPath());
 
-		assertEquals(0, ModalContext.getModalLevel());
+		SWTBotTree tree = dlg.tree();
+		dlg.button(UIText.RepositorySearchDialog_Search).click();
+		dlg.waitUntil(new DefaultCondition() {
 
-		shell.bot().button(UIText.RepositorySearchDialog_Search).click();
-		TestUtil.processUIEvents(500);
-		int max = 5000;
-		int slept = 0;
-		while (ModalContext.getModalLevel() > 0 && slept < max) {
-			TestUtil.processUIEvents(100);
-			slept += 100;
-		}
+			@Override
+			public boolean test() throws Exception {
+				return tree.hasItems();
+			}
+
+			@Override
+			public String getFailureMessage() {
+				return "No items appeared in 'Add Existing Local Git Repository' dialog";
+			}
+		});
 
 		shell.activate();
-		SWTBotTreeItem item = shell.bot().tree().getAllItems()[0];
+		SWTBotTreeItem item = tree.getAllItems()[0];
 		item.check();
-		shell.bot().button(UIText.AddCommand_AddButtonLabel).click();
+		dlg.button(UIText.AddCommand_AddButtonLabel).click();
 		TestUtil.joinJobs(org.eclipse.egit.core.JobFamilies.AUTO_SHARE);
 		refreshAndWait();
 		assertHasRepo(repositoryFile);
