@@ -447,7 +447,7 @@ public class RepositorySearchDialog extends WizardPage {
 		final int[] dirCount = new int[1];
 		final SubMonitor m = SubMonitor.convert(monitor);
 		try {
-			SimpleFileVisitor<Path> visitor = new SimpleFileVisitor<Path>() {
+			SimpleFileVisitor<Path> visitor = new SimpleFileVisitor<>() {
 				private long lastMonitorUpdate;
 
 				@Override

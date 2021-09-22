@@ -422,7 +422,8 @@ public class GitRepositoriesViewTest extends GitRepositoriesViewTestBase {
 		// wizard directory should be PROJ2
 		assertEquals(PROJ2, wizardNode);
 		shell.bot().button(IDialogConstants.NEXT_LABEL).click();
-		shell.bot().text(" " + UIText.GitProjectsImportPage_NoProjectsMessage);
+		assertWizardDialogMessage(shell.bot(),
+				" " + UIText.GitProjectsImportPage_NoProjectsMessage);
 		assertEquals(0, shell.bot().tree().getAllItems().length);
 		shell.bot().button(IDialogConstants.BACK_LABEL).click();
 		// import as general
@@ -493,7 +494,7 @@ public class GitRepositoriesViewTest extends GitRepositoriesViewTestBase {
 		// See also SWTBot Bug 337465
 		button.setFocus();
 		button.click();
-		shell.bot().text(
+		assertWizardDialogMessage(shell.bot(),
 				UIText.WizardProjectsImportPage_ImportProjectsDescription);
 		shell.bot().tree().getAllItems()[0].check();
 		// add to working set
