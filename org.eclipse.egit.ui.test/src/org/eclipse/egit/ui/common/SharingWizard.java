@@ -28,9 +28,6 @@ public class SharingWizard {
 		tree.select(projectNames);
 		ContextMenuHelper.clickContextMenu(tree, "Team", "Share Project...");
 
-		bot.table().getTableItem("Git").select();
-		bot.button("Next >").click();
-
 		return new ExistingOrNewPage();
 	}
 }

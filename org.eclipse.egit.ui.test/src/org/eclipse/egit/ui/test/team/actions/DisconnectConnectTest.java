@@ -125,8 +125,6 @@ public class DisconnectConnectTest extends LocalRepositoryTestCase {
 		String menuString = "Share Project...";
 		ContextMenuHelper.clickContextMenu(projectExplorerTree, "Team",
 				menuString);
-		bot.shell("Share Project").bot().table().getTableItem("Git").select();
-		bot.button(IDialogConstants.NEXT_LABEL).click();
 		return bot.shell(UIText.SharingWizard_windowTitle);
 	}
 }

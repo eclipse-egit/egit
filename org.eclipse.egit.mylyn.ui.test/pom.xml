@@ -78,11 +78,6 @@
                 <id>org.eclipse.pde</id>
                 <versionRange>0.0.0</versionRange>
               </requirement>
-              <requirement>
-                <type>eclipse-feature</type>
-                <id>org.eclipse.cvs</id>
-                <versionRange>0.0.0</versionRange>
-              </requirement>
             </extraRequirements>
           </dependency-resolution>
         </configuration>
