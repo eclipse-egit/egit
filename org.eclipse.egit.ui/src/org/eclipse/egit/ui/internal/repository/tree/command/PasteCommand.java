@@ -124,9 +124,17 @@ public class PasteCommand extends
 		}
 	}
 
-	private URIish getCloneURI(String content) {
+	/**
+	 * @param content
+	 *            clipboard content
+	 * @return clone URL found in clipboard content, or <code>null</code>
+	 */
+	protected static URIish getCloneURI(String content) {
 		if (content.startsWith("git clone")) { //$NON-NLS-1$
-			content = content.substring("git clone".length()); //$NON-NLS-1$
+			content = content.substring("git clone".length()).trim(); //$NON-NLS-1$
+		}
+		if (content.startsWith("\"") && content.endsWith("\"")) { //$NON-NLS-1$//$NON-NLS-2$
+			content = content.substring(1, content.length() - 2).trim();
 		}
 		URIish finalURI;
 		try {
