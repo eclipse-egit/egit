@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "280608c7_d2279ed1",
+        "filename": "org.eclipse.egit.ui.test/src/org/eclipse/egit/ui/internal/repository/tree/command/PasteCommandTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2021-09-23T10:12:49Z",
+      "side": 1,
+      "message": "How about testing that the URIish returned has the expected value?",
+      "revId": "4968f1c59fc0dae1b5c432f19356a3b5e5b858ef",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": true
+    }
+  ]
+}
