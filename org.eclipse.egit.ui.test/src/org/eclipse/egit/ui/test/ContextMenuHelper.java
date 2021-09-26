@@ -112,9 +112,8 @@ public class ContextMenuHelper {
 
 	private static void clickContextMenuInternal(final AbstractSWTBot<?> bot,
 			final boolean sync, final String... texts) {
-		// set focus on current widget and let the UI process events
+		// set focus on current widget
 		bot.setFocus();
-		TestUtil.processUIEvents();
 
 		// show
 		final MenuItem menuItem = UIThreadRunnable

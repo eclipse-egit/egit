@@ -402,7 +402,6 @@ public class GitRepositoriesViewTest extends GitRepositoriesViewTestBase {
 		removeSmartImportWizardToForceGitImportWizardUsage();
 		deleteAllProjects();
 		assertProjectExistence(PROJ2, false);
-		TestUtil.processUIEvents();
 		SWTBotTree tree = getOrOpenView().bot().tree();
 		String wizardTitle = NLS.bind(
 				UIText.GitCreateProjectViaWizardWizard_WizardTitle,
@@ -413,7 +412,6 @@ public class GitRepositoriesViewTest extends GitRepositoriesViewTestBase {
 				.getNode(PROJ2).select();
 		ContextMenuHelper.clickContextMenu(tree,
 				myUtil.getPluginLocalizedValue("ImportProjectsCommand"));
-		TestUtil.processUIEvents();
 		SWTBotShell shell = bot.shell(wizardTitle);
 		shell = bot.shell(wizardTitle);
 		// try import existing project first
@@ -640,11 +638,6 @@ public class GitRepositoriesViewTest extends GitRepositoriesViewTestBase {
 		// activate again
 		toggleLinkWithSelection();
 
-		// make sure focus is here
-		// tried to remove this waitInUI but failed.
-		// tried setting focus, waiting for focus, joining RepositoriesView
-		// refresh job
-		waitInUI();
 		item = TestUtil.expandAndWait(
 				myRepoViewUtil.getWorkdirItem(tree, repositoryFile));
 		item = TestUtil.expandAndWait(item.getNode(PROJ1));
@@ -730,7 +723,6 @@ public class GitRepositoriesViewTest extends GitRepositoriesViewTestBase {
 		ContextMenuHelper.clickContextMenu(tree, "Create Branch...");
 		createBranchShell = bot.shell(UIText.CreateBranchWizard_NewBranchTitle);
 		SWTBotText bn = createBranchShell.bot().textWithId("BranchName");
-		TestUtil.processUIEvents();
 		bn.setText("123");
 		createBranchShell.bot().checkBox(UIText.CreateBranchPage_CheckoutButton)
 				.deselect();

@@ -32,7 +32,6 @@ import org.eclipse.swtbot.swt.finder.junit.SWTBotJunit4ClassRunner;
 import org.eclipse.swtbot.swt.finder.widgets.SWTBotShell;
 import org.eclipse.swtbot.swt.finder.widgets.SWTBotTree;
 import org.eclipse.swtbot.swt.finder.widgets.SWTBotTreeItem;
-import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -53,12 +52,6 @@ public class GitRepositoriesViewRemoteHandlingTest extends
 		repositoryFile = createProjectAndCommitToRepository();
 		remoteRepositoryFile = createRemoteRepository(repositoryFile);
 		RepositoryUtil.INSTANCE.addConfiguredRepository(repositoryFile);
-		TestUtil.processUIEvents();
-	}
-
-	@After
-	public void after() throws Exception {
-		TestUtil.processUIEvents();
 	}
 
 	/**
@@ -110,7 +103,6 @@ public class GitRepositoriesViewRemoteHandlingTest extends
 		ContextMenuHelper.clickContextMenuSync(tree,
 				myUtil.getPluginLocalizedValue("ShowIn"),
 				"Properties");
-		waitInUI();
 		assertEquals("org.eclipse.ui.views.PropertySheet", bot.activeView()
 				.getReference().getId());
 
@@ -374,6 +366,5 @@ public class GitRepositoriesViewRemoteHandlingTest extends
 		for (String remote : config.getSubsections("remote"))
 			config.unsetSection("remote", remote);
 		config.save();
-		waitInUI();
 	}
 }
