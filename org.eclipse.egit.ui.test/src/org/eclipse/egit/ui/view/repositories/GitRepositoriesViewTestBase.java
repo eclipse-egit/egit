@@ -161,7 +161,6 @@ public abstract class GitRepositoriesViewTestBase extends
 		} catch (OperationCanceledException e) {
 			fail("Refresh took longer 60 seconds");
 		}
-		TestUtil.processUIEvents();
 		TestUtil.waitForDecorations();
 	}
 

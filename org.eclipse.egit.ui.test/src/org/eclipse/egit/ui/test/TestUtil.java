@@ -198,7 +198,6 @@ public class TestUtil {
 		// To avoid unstable tests, let us first wait some time
 		TestUtil.waitForJobs(100, 1000);
 		Job.getJobManager().join(family, null);
-		TestUtil.processUIEvents();
 	}
 
 	@SuppressWarnings("restriction")
@@ -217,40 +216,23 @@ public class TestUtil {
 	 *            minimum wait time in milliseconds
 	 * @param maxTimeMs
 	 *            maximum wait time in milliseconds
+	 * @throws InterruptedException
+	 *             if waiting is interrupted
 	 */
-	public static void waitForJobs(long minTimeMs, long maxTimeMs) {
+	public static void waitForJobs(long minTimeMs, long maxTimeMs)
+			throws InterruptedException {
 		if (maxTimeMs < minTimeMs) {
 			throw new IllegalArgumentException(
 					"Max time is smaller as min time!");
 		}
 		final long start = System.currentTimeMillis();
-		while (System.currentTimeMillis() - start < minTimeMs) {
-			processUIEvents();
+		if (minTimeMs > 0) {
+			Thread.sleep(minTimeMs);
 		}
 		while (!Job.getJobManager().isIdle()
 				&& System.currentTimeMillis() - start < maxTimeMs) {
-			processUIEvents();
+			Thread.sleep(10);
 		}
-	}
-
-	/**
-	 * Process all queued UI events. If called from background thread, blocks
-	 * until all pending events are processed in UI thread.
-	 */
-	public static void processUIEvents() {
-		processUIEvents(0);
-	}
-
-	/**
-	 * Process all queued UI events. If called from background thread, blocks
-	 * until all pending events are processed in UI thread.
-	 *
-	 * @param timeInMillis
-	 *            time to wait. During this time all UI events are processed but
-	 *            the current thread is blocked
-	 */
-	public static void processUIEvents(final long timeInMillis) {
-		// Empty
 	}
 
 	/**
@@ -778,7 +760,6 @@ public class TestUtil {
 				IWorkbenchPage workbenchPage = workbenchWindow.getActivePage();
 				try {
 					workbenchPage.showView(viewId);
-					processUIEvents();
 				} catch (PartInitException e) {
 					throw new RuntimeException("Showing view with ID " + viewId
 							+ " failed.", e);
@@ -807,7 +788,6 @@ public class TestUtil {
 							workbenchPage.hideView(view);
 						}
 					}
-					processUIEvents();
 				}
 			}
 		});

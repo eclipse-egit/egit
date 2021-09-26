@@ -22,7 +22,6 @@ import static org.junit.Assert.assertTrue;
 
 import java.io.ByteArrayInputStream;
 import java.io.File;
-import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -169,12 +168,12 @@ public abstract class AbstractSynchronizeViewTest extends
 	}
 
 	protected void launchSynchronization(String srcRef, String dstRef,
-			boolean includeLocal) throws IOException {
+			boolean includeLocal) throws Exception {
 		launchSynchronization(PROJ1, srcRef, dstRef, includeLocal);
 	}
 
 	protected void launchSynchronization(String projectName, String srcRef,
-			String dstRef, boolean includeLocal) throws IOException {
+			String dstRef, boolean includeLocal) throws Exception {
 		IProject project = ResourcesPlugin.getWorkspace().getRoot()
 				.getProject(projectName);
 		RepositoryMapping mapping = assertConnected(project);
