@@ -26,7 +26,6 @@ import org.eclipse.egit.ui.common.EGitTestCase;
 import org.eclipse.egit.ui.internal.UIText;
 import org.eclipse.egit.ui.internal.preferences.GlobalConfigurationPreferencePage;
 import org.eclipse.egit.ui.test.Eclipse;
-import org.eclipse.egit.ui.test.TestUtil;
 import org.eclipse.jface.dialogs.IDialogConstants;
 import org.eclipse.jgit.junit.MockSystemReader;
 import org.eclipse.jgit.lib.Config;
@@ -115,7 +114,6 @@ public class GlobalConfigurationPageTest {
 			bot.waitUntil(Conditions.shellCloses(preferencePage));
 			preferencePage = null;
 		}
-		TestUtil.processUIEvents();
 		clean();
 	}
 
@@ -127,7 +125,6 @@ public class GlobalConfigurationPageTest {
 		SWTBotShell preferencePage = new Eclipse().openPreferencePage(null);
 		preferencePage.bot().tree(0).getTreeItem("General").select();
 		preferencePage.bot().button("Apply").click();
-		TestUtil.processUIEvents();
 	}
 
 	@Test

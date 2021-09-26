@@ -75,7 +75,6 @@ public class SubmoduleAddTest extends GitRepositoriesViewTestBase {
 				.setText(repo.getDirectory().toURI().toString());
 
 		shell.bot().button(IDialogConstants.FINISH_LABEL).click();
-		waitInUI();
 		TestUtil.joinJobs(JobFamilies.SUBMODULE_ADD);
 		refreshAndWait();
 

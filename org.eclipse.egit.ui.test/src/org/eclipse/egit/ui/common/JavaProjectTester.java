@@ -27,6 +27,7 @@ import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.IProgressMonitor;
+import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Path;
 import org.eclipse.egit.core.Activator;
 import org.eclipse.egit.core.RepositoryCache;
@@ -121,18 +122,25 @@ public class JavaProjectTester {
 			public void run(IProgressMonitor monitor) throws CoreException {
 				IWorkspaceRoot root = ResourcesPlugin.getWorkspace().getRoot();
 				IProject project = root.getProject(projectName);
-				if (project.exists()) {
-					project.delete(true, null);
-					TestUtil.waitForJobs(100, 5000);
+				try {
+					if (project.exists()) {
+						project.delete(true, null);
+						TestUtil.waitForJobs(100, 5000);
+					}
+					IProjectDescription desc = ResourcesPlugin.getWorkspace()
+							.newProjectDescription(projectName);
+					desc.setLocation(new Path(
+							new File(repository.getWorkTree(), projectName)
+									.getPath()));
+					project.create(desc, null);
+					project.open(null);
+					TestUtil.waitForJobs(50, 5000);
+				} catch (InterruptedException e) {
+					IStatus status = Activator
+							.error("Creating Java project was interrupted", e);
+					Thread.currentThread().interrupt();
+					throw new CoreException(status);
 				}
-				IProjectDescription desc = ResourcesPlugin.getWorkspace()
-						.newProjectDescription(projectName);
-				desc.setLocation(
-						new Path(new File(repository.getWorkTree(), projectName)
-								.getPath()));
-				project.create(desc, null);
-				project.open(null);
-				TestUtil.waitForJobs(50, 5000);
 				// Create a "bin" folder
 				IFolder bin = project.getFolder(BIN_FOLDER_NAME);
 				if (!bin.exists()) {

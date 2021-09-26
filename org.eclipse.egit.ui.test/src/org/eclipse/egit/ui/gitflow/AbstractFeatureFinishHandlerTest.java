@@ -57,7 +57,7 @@ public abstract class AbstractFeatureFinishHandlerTest extends AbstractGitflowHa
 	abstract protected void selectOptions();
 
 	@Override
-	public void checkoutFeature(String featureName) {
+	public void checkoutFeature(String featureName) throws Exception {
 		final SWTBotTree projectExplorerTree = TestUtil.getExplorerTree();
 		getProjectItem(projectExplorerTree, PROJ1).select();
 		final String[] menuPath = new String[] {
