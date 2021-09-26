@@ -241,12 +241,10 @@ public abstract class LocalRepositoryTestCase extends EGitTestCase {
 
 	@After
 	public void resetWorkspace() throws Exception {
-		TestUtil.processUIEvents();
 		// close all editors/dialogs
 		new Eclipse().reset();
 		clearAllConfiguredRepositories();
 		closeGitViews();
-		TestUtil.processUIEvents();
 		// cleanup
 		for (IProject project : ResourcesPlugin.getWorkspace().getRoot()
 				.getProjects()) {
@@ -456,7 +454,8 @@ public abstract class LocalRepositoryTestCase extends EGitTestCase {
 		return project;
 	}
 
-	protected RepositoryMapping assertConnected(IProject project) {
+	protected RepositoryMapping assertConnected(IProject project)
+			throws Exception {
 		RepositoryProvider provider = RepositoryProvider.getProvider(project,
 				GitProvider.ID);
 		if (provider == null) {
@@ -583,7 +582,7 @@ public abstract class LocalRepositoryTestCase extends EGitTestCase {
 	}
 
 	protected static void createStableBranch(Repository myRepository)
-			throws IOException {
+			throws Exception {
 		// let's create a stable branch temporarily so
 		// that we push two branches to remote
 		String newRefName = "refs/heads/stable";
@@ -591,7 +590,7 @@ public abstract class LocalRepositoryTestCase extends EGitTestCase {
 	}
 
 	protected static void createBranch(Repository myRepository,
-			String newRefName) throws IOException {
+			String newRefName) throws Exception {
 		RefUpdate updateRef = myRepository.updateRef(newRefName);
 		Ref sourceBranch = myRepository.exactRef("refs/heads/master");
 		ObjectId startAt = sourceBranch.getObjectId();
@@ -609,16 +608,6 @@ public abstract class LocalRepositoryTestCase extends EGitTestCase {
 		shell.activate();
 		shell.bot().button(IDialogConstants.CANCEL_LABEL).click();
 		shell.close();
-	}
-
-	/**
-	 *  This method should only be used in exceptional cases.
-	 *  Try to avoid using it e.g. by joining execution jobs
-	 *  instead of waiting a given amount of time {@link TestUtil#joinJobs(Object)}
-	 * @throws InterruptedException
-	 */
-	protected static void waitInUI() throws InterruptedException {
-		TestUtil.processUIEvents(1000);
 	}
 
 	protected void shareProjects(File repositoryDir) throws Exception {

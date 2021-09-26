@@ -102,7 +102,6 @@ public class ReplaceActionsTest extends LocalRepositoryTestCase {
 		SWTBotShell confirm = bot
 				.shell(UIText.DiscardChangesAction_confirmActionTitle);
 		confirm.close();
-		TestUtil.processUIEvents();
 		// Confirmation closed, nothing should have changed
 		assertEquals(changedContent, getTestFileContent());
 	}
@@ -148,7 +147,6 @@ public class ReplaceActionsTest extends LocalRepositoryTestCase {
 				.shell(UIText.CommitSelectDialog_WindowTitle);
 		assertEquals(2, selectDialog.bot().table().rowCount());
 		selectDialog.close();
-		TestUtil.processUIEvents();
 
 		// we have closed, so nothing should have changed
 		String contentAfterClose = getTestFileContent();

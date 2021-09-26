@@ -106,7 +106,7 @@ public abstract class AbstractGitflowHandlerTest extends LocalRepositoryTestCase
 				featureName).execute(null);
 	}
 
-	protected void checkoutFeature(String featureName) throws CoreException {
+	protected void checkoutFeature(String featureName) throws Exception {
 		new FeatureCheckoutOperation(new GitFlowRepository(repository),
 				featureName).execute(null);
 	}

@@ -44,7 +44,6 @@ public class StagingViewTester {
 
 		SWTBotView view = TestUtil.showView(StagingView.VIEW_ID);
 		TestUtil.joinJobs(org.eclipse.egit.core.JobFamilies.INDEX_DIFF_CACHE_UPDATE);
-		TestUtil.processUIEvents();
 
 		return new StagingViewTester(view);
 	}

@@ -95,7 +95,6 @@ public class Eclipse {
 
 			}
 		});
-		TestUtil.processUIEvents();
 		return bot.shell("Preferences").activate();
 	}
 

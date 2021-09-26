@@ -185,7 +185,6 @@ public class StagingViewTest extends AbstractStagingViewTestCase {
 				TimeUnit.SECONDS);
 		stagingView.commit();
 		jobJoiner.join();
-		TestUtil.processUIEvents();
 
 		assertEquals(RepositoryState.SAFE, repository.getRepositoryState());
 
@@ -479,7 +478,6 @@ public class StagingViewTest extends AbstractStagingViewTestCase {
 		cfg.setString(ConfigConstants.CONFIG_USER_SECTION, null,
 				ConfigConstants.CONFIG_KEY_NAME, "Some One");
 		cfg.save();
-		TestUtil.processUIEvents();
 		String expectedCommitter = "Some One <" + TestUtil.TESTCOMMITTER_EMAIL
 				+ '>';
 		assertEquals("Author should be unchanged", TestUtil.TESTAUTHOR,
@@ -515,7 +513,6 @@ public class StagingViewTest extends AbstractStagingViewTestCase {
 		cfg.setString(ConfigConstants.CONFIG_USER_SECTION, null,
 				ConfigConstants.CONFIG_KEY_NAME, "Some One");
 		cfg.save();
-		TestUtil.processUIEvents();
 		String expectedCommitter = "Some One <" + TestUtil.TESTCOMMITTER_EMAIL
 				+ '>';
 		assertEquals("Author should be unchanged", TestUtil.TESTAUTHOR,
@@ -546,7 +543,6 @@ public class StagingViewTest extends AbstractStagingViewTestCase {
 		cfg.setString(ConfigConstants.CONFIG_USER_SECTION, null,
 				ConfigConstants.CONFIG_KEY_NAME, "Some One");
 		cfg.save();
-		TestUtil.processUIEvents();
 		String expectedCommitter = "Some One <" + TestUtil.TESTCOMMITTER_EMAIL
 				+ '>';
 		assertEquals("Author should be changed", expectedCommitter,
@@ -580,7 +576,6 @@ public class StagingViewTest extends AbstractStagingViewTestCase {
 		}
 		TestUtil.joinJobs(
 				org.eclipse.egit.core.JobFamilies.INDEX_DIFF_CACHE_UPDATE);
-		TestUtil.processUIEvents();
 		assertEquals("Author should be unchanged", TestUtil.TESTCOMMITTER,
 				stagingViewTester.getAuthor());
 		assertEquals("Committer should be unchanged", TestUtil.TESTCOMMITTER,
@@ -619,7 +614,6 @@ public class StagingViewTest extends AbstractStagingViewTestCase {
 		cfg.setString(ConfigConstants.CONFIG_USER_SECTION, null,
 				ConfigConstants.CONFIG_KEY_NAME, "Some One");
 		cfg.save();
-		TestUtil.processUIEvents();
 		assertEquals("Author should be unchanged", TestUtil.TESTAUTHOR,
 				stagingViewTester.getAuthor());
 		String expectedCommitter = "Some One <" + TestUtil.TESTCOMMITTER_EMAIL

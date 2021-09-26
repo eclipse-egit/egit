@@ -30,7 +30,6 @@ import org.eclipse.egit.ui.internal.UIText;
 import org.eclipse.egit.ui.test.ContextMenuHelper;
 import org.eclipse.egit.ui.test.TestUtil;
 import org.eclipse.jface.dialogs.IDialogConstants;
-import org.eclipse.jface.operation.ModalContext;
 import org.eclipse.jgit.api.Git;
 import org.eclipse.jgit.lib.Constants;
 import org.eclipse.jgit.lib.RepositoryCache.FileKey;
@@ -80,7 +79,6 @@ public class GitRepositoriesViewRepoHandlingTest extends
 		refreshAndWait();
 		final SWTBotTree tree = getOrOpenView().bot().tree();
 		tree.getAllItems()[0].select();
-		waitInUI();
 		PlatformUI.getWorkbench().getDisplay().syncExec(new Runnable() {
 
 			@Override
@@ -280,7 +278,6 @@ public class GitRepositoriesViewRepoHandlingTest extends
 						myUtil
 								.getPluginLocalizedValue("RepoViewAddRepository.tooltip"))
 				.click();
-		TestUtil.processUIEvents();
 		SWTBotShell shell = bot
 				.shell(UIText.RepositorySearchDialog_AddGitRepositories);
 		SWTBot dlg = shell.bot();
@@ -331,7 +328,6 @@ public class GitRepositoriesViewRepoHandlingTest extends
 		shell.bot().button(IDialogConstants.NEXT_LABEL).click();
 		bot.waitUntil(widgetIsEnabled(shell.bot().tree()), 60000);
 		shell.bot().button(IDialogConstants.NEXT_LABEL).click();
-		waitInUI();
 		// for some reason textWithLabel doesn't work; 0 is path text
 		SWTBotText pathText = shell.bot().text(0);
 		pathText.setText(pathText.getText() + "Cloned");
@@ -361,7 +357,6 @@ public class GitRepositoriesViewRepoHandlingTest extends
 		shell.bot().button(IDialogConstants.NEXT_LABEL).click();
 		bot.waitUntil(widgetIsEnabled(shell.bot().tree()), 60000);
 		shell.bot().button(IDialogConstants.NEXT_LABEL).click();
-		waitInUI();
 		// for some reason textWithLabel doesn't work; 0 is path text
 		SWTBotText pathText = shell.bot().text(0);
 		pathText.setText(pathText.getText() + "Cloned");
@@ -435,28 +430,34 @@ public class GitRepositoriesViewRepoHandlingTest extends
 
 		SWTBotShell shell = bot
 				.shell(UIText.RepositorySearchDialog_AddGitRepositories);
+		SWTBot dlg = shell.bot();
 
-		shell.bot().checkBox(UIText.RepositorySearchDialog_DeepSearch_button)
+		dlg.checkBox(UIText.RepositorySearchDialog_DeepSearch_button)
 				.deselect();
 
-		shell.bot().textWithLabel(UIText.RepositorySearchDialog_directory)
+		dlg.textWithLabel(UIText.RepositorySearchDialog_directory)
 				.setText(getTestDirectory().getPath());
 
-		assertEquals(0, ModalContext.getModalLevel());
-
+		SWTBotTree tree = dlg.tree();
 		shell.bot().button(UIText.RepositorySearchDialog_Search).click();
-		TestUtil.processUIEvents(500);
-		int max = 5000;
-		int slept = 0;
-		while (ModalContext.getModalLevel() > 0 && slept < max) {
-			TestUtil.processUIEvents(100);
-			slept += 100;
-		}
+		dlg.waitUntil(new DefaultCondition() {
+
+			@Override
+			public boolean test() throws Exception {
+				return tree.hasItems();
+			}
+
+			@Override
+			public String getFailureMessage() {
+				return "No items appeared in 'Add Existing Local Git Repository' dialog";
+			}
+		});
+
 		shell.activate();
-		TestUtil.waitUntilTreeHasNodeContainsText(shell.bot(), shell.bot()
-				.tree(), "BareRepository1", 10000);
-		TestUtil.waitUntilTreeHasNodeContainsText(shell.bot(), shell.bot()
-				.tree(), "BareRepository2", 10000);
+		TestUtil.waitUntilTreeHasNodeContainsText(dlg, tree, "BareRepository1",
+				10000);
+		TestUtil.waitUntilTreeHasNodeContainsText(dlg, tree, "BareRepository2",
+				10000);
 	}
 
 	private void assertHasClonedRepo() throws Exception {
