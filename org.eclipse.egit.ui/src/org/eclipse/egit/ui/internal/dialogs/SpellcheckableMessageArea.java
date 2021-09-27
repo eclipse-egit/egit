@@ -225,7 +225,8 @@ public class SpellcheckableMessageArea extends Composite {
 			}
 
 			@Override
-			protected Map getHyperlinkDetectorTargets(ISourceViewer targetViewer) {
+			protected Map<String, IAdaptable> getHyperlinkDetectorTargets(
+					ISourceViewer targetViewer) {
 				return getHyperlinkTargets();
 			}
 
