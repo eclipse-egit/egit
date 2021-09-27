@@ -10,8 +10,8 @@
  *******************************************************************************/
 package org.eclipse.egit.ui.internal.history;
 
-import org.eclipse.egit.ui.internal.DecorationOverlayDescriptor;
 import org.eclipse.jface.resource.ImageDescriptor;
+import org.eclipse.jface.viewers.DecorationOverlayIcon;
 import org.eclipse.jface.viewers.IDecoration;
 import org.eclipse.ui.model.WorkbenchAdapter;
 
@@ -37,7 +37,7 @@ public class FileDiffWorkbenchAdapter extends WorkbenchAdapter {
 			// TODO: move the decoration to an asynchronous decorator?
 			ImageDescriptor decoration = diff.getImageDcoration();
 			if (decoration != null) {
-				return new DecorationOverlayDescriptor(base, decoration,
+				return new DecorationOverlayIcon(base, decoration,
 						IDecoration.BOTTOM_RIGHT);
 			}
 			return base;

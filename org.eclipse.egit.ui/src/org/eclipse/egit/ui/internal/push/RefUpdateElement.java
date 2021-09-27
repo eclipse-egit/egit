@@ -18,11 +18,11 @@ import java.util.List;
 import org.eclipse.egit.core.internal.Utils;
 import org.eclipse.egit.core.op.PushOperationResult;
 import org.eclipse.egit.ui.Activator;
-import org.eclipse.egit.ui.internal.DecorationOverlayDescriptor;
 import org.eclipse.egit.ui.internal.UIIcons;
 import org.eclipse.egit.ui.internal.UIText;
 import org.eclipse.egit.ui.internal.commit.RepositoryCommit;
 import org.eclipse.jface.resource.ImageDescriptor;
+import org.eclipse.jface.viewers.DecorationOverlayIcon;
 import org.eclipse.jface.viewers.IDecoration;
 import org.eclipse.jface.viewers.StyledString;
 import org.eclipse.jgit.lib.Constants;
@@ -140,9 +140,9 @@ class RefUpdateElement extends WorkbenchAdapter {
 		switch (getStatus()) {
 		case OK:
 			if (isDelete())
-				return tag ? new DecorationOverlayDescriptor(UIIcons.TAG,
+				return tag ? new DecorationOverlayIcon(UIIcons.TAG,
 						UIIcons.OVR_STAGED_REMOVE, IDecoration.TOP_RIGHT)
-						: new DecorationOverlayDescriptor(UIIcons.BRANCH,
+						: new DecorationOverlayIcon(UIIcons.BRANCH,
 								UIIcons.OVR_STAGED_REMOVE,
 								IDecoration.TOP_RIGHT);
 
@@ -156,9 +156,9 @@ class RefUpdateElement extends WorkbenchAdapter {
 		case REJECTED_NONFASTFORWARD:
 		case REJECTED_OTHER_REASON:
 		case REJECTED_REMOTE_CHANGED:
-			return tag ? new DecorationOverlayDescriptor(UIIcons.TAG,
+			return tag ? new DecorationOverlayIcon(UIIcons.TAG,
 					UIIcons.OVR_ERROR, IDecoration.TOP_RIGHT)
-					: new DecorationOverlayDescriptor(UIIcons.BRANCH,
+					: new DecorationOverlayIcon(UIIcons.BRANCH,
 							UIIcons.OVR_ERROR, IDecoration.TOP_RIGHT);
 		default:
 			return super.getImageDescriptor(object);
