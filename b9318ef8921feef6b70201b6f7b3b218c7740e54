@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "4029152c_6cf824d2",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 8
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2021-09-27T06:47:50Z",
+      "side": 1,
+      "message": "I\u0027d have to try again with tycho 1.7.0/jboss 1.5.1 and Java 11. IIRC I had a problem initially with that combination, but it might have been something fixed by the other changes. I tried a lot until I had a first working build; this turned out way more complicated than expected.",
+      "parentUuid": "f3f79b12_71839322",
+      "revId": "b9318ef8921feef6b70201b6f7b3b218c7740e54",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "63bd92f5_bb4c9ca3",
         "filename": "/COMMIT_MSG",
         "patchSetId": 8
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "f832b234_36cea474",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 8
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2021-09-27T06:47:50Z",
+      "side": 1,
+      "message": "Done.",
+      "parentUuid": "63bd92f5_bb4c9ca3",
+      "revId": "b9318ef8921feef6b70201b6f7b3b218c7740e54",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3353666c_94bcf05d",
         "filename": "/COMMIT_MSG",
         "patchSetId": 8
@@ -47,6 +83,24 @@
       "writtenOn": "2021-09-26T22:25:04Z",
       "side": 1,
       "message": "is this directly related to the switch to BREE Java 11 ?",
+      "revId": "b9318ef8921feef6b70201b6f7b3b218c7740e54",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dd9567cc_16df0976",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 8
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2021-09-27T06:47:50Z",
+      "side": 1,
+      "message": "The Java 8 builds work as is. The problem became apparent only after the switch to Java 11. I\u0027d prefer not to spend another couple of days fighting to get a Java 8 build working with processUIEvents a no-op. Our tests are super fragile.",
+      "parentUuid": "3353666c_94bcf05d",
       "revId": "b9318ef8921feef6b70201b6f7b3b218c7740e54",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": true
@@ -70,6 +124,24 @@
     },
     {
       "key": {
+        "uuid": "b34d288a_cf453dbc",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 8
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2021-09-27T06:47:50Z",
+      "side": 1,
+      "message": "Could try, however, the problem was never hit in the Java 8 build, but always occurs in the Java 11 maven build. So I think fixing it in this change is right.",
+      "parentUuid": "9d16c47f_9563a98a",
+      "revId": "b9318ef8921feef6b70201b6f7b3b218c7740e54",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "8680cf29_a9d7fcdd",
         "filename": "pom.xml",
         "patchSetId": 8
@@ -81,6 +153,24 @@
       "writtenOn": "2021-09-26T22:25:04Z",
       "side": 1,
       "message": "Why is this commented out ?",
+      "revId": "b9318ef8921feef6b70201b6f7b3b218c7740e54",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "138b4b13_dc5e6b99",
+        "filename": "pom.xml",
+        "patchSetId": 8
+      },
+      "lineNbr": 267,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2021-09-27T06:47:50Z",
+      "side": 1,
+      "message": "It\u0027s commented out because I wasn\u0027t sure yet if this might be needed still in some refactored form, or not.\n\nSee the bug. With all environments defined here, Tycho (1.7.0 or 2.4.0) somehow includes all SWT versions. With Java 11, this leads to split packages, and one cannot compile UI code anymore: \"The type org.eclipse.swt.widgets.Shell cannot be resolved. It is indirectly referenced from required .class files.\"\n\nThe downside is that we now get warnings about the build being platform-dependent.\n\nI don\u0027t know what the correct way would be to define environments.\n\nI could remove it altogether; leaving it in comments could serve as a reminder that there is something still not quite right in the Java 11 build.",
+      "parentUuid": "8680cf29_a9d7fcdd",
       "revId": "b9318ef8921feef6b70201b6f7b3b218c7740e54",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": true
