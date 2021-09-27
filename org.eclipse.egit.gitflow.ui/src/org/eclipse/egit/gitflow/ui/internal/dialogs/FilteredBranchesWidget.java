@@ -69,8 +69,7 @@ public class FilteredBranchesWidget {
 
 		final FilteredTree tree = new FilteredTree(area, SWT.MULTI | SWT.H_SCROLL
 						| SWT.V_SCROLL | SWT.BORDER | SWT.FULL_SELECTION,
-				new TreeColumnPatternFilter(),
-				true);
+				new TreeColumnPatternFilter(), true, true);
 		tree.setQuickSelectionMode(true);
 		branchesViewer = tree.getViewer();
 		branchesViewer.getTree().setLinesVisible(false);
