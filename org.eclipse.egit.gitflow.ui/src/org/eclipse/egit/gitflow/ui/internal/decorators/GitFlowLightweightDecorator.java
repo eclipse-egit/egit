@@ -24,7 +24,6 @@ import org.eclipse.jface.viewers.IDecoration;
 import org.eclipse.jface.viewers.ILightweightLabelDecorator;
 import org.eclipse.jface.viewers.LabelProvider;
 import org.eclipse.jgit.lib.Repository;
-import org.eclipse.swt.graphics.ImageData;
 import org.eclipse.ui.PlatformUI;
 
 /**
@@ -89,75 +88,18 @@ public class GitFlowLightweightDecorator extends LabelProvider implements
 	 */
 	private void decorateRepository(GitFlowConfig config,
 			IDecoration decoration) throws IOException {
-		final DecorationHelper helper = new DecorationHelper();
-		helper.decorate(decoration, config);
-	}
+		ImageDescriptor overlay = null;
 
-
-	/**
-	 * Helper class for doing repository decoration
-	 *
-	 * Used for real-time decoration, as well as in the decorator preview
-	 * preferences page
-	 */
-	private static class DecorationHelper {
-
-		/**
-		 * Define a cached image descriptor which only creates the image data
-		 * once
-		 */
-		private static class CachedImageDescriptor extends ImageDescriptor {
-			private ImageDescriptor descriptor;
-
-			private ImageData data;
-
-			public CachedImageDescriptor(ImageDescriptor descriptor) {
-				this.descriptor = descriptor;
-			}
-
-			@Override
-			public ImageData getImageData() {
-				if (data == null) {
-					data = descriptor.getImageData();
-				}
-				return data;
-			}
+		if (config.isInitialized()) {
+			overlay = UIIcons.OVR_GITFLOW;
 		}
 
-		private final static ImageDescriptor INITIALIZED_IMAGE = new CachedImageDescriptor(
-				UIIcons.OVR_GITFLOW);
+		// TODO: change decoration depending on branch type, e.g. "F"-icon
+		// for feature branch
 
-		/**
-		 * Decorates the given <code>decoration</code> based on the state of the
-		 * given <code>repository</code>.
-		 *
-		 * @param decoration
-		 *            the decoration to decorate
-		 * @param config
-		 *            the config to retrieve state from
-		 * @throws IOException
-		 */
-		public void decorate(IDecoration decoration, GitFlowConfig config)
-				throws IOException {
-			decorateIcons(decoration, config);
+		// Overlays can only be added once, so do it at the end
+		if (overlay != null) {
+			decoration.addOverlay(overlay);
 		}
-
-		private void decorateIcons(IDecoration decoration,
-				GitFlowConfig config) {
-			ImageDescriptor overlay = null;
-
-			if (config.isInitialized()) {
-				overlay = INITIALIZED_IMAGE;
-			}
-
-			// TODO: change decoration depending on branch type, e.g. "F"-icon
-			// for feature branch
-
-			// Overlays can only be added once, so do it at the end
-			if (overlay != null) {
-				decoration.addOverlay(overlay);
-			}
-		}
-
 	}
 }

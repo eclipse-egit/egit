@@ -25,6 +25,7 @@ import java.net.URL;
 import org.eclipse.egit.ui.Activator;
 import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.jface.resource.ResourceManager;
+import org.eclipse.jface.viewers.DecorationOverlayIcon;
 import org.eclipse.jface.viewers.IDecoration;
 import org.eclipse.swt.graphics.Image;
 
@@ -499,7 +500,7 @@ public class UIIcons {
 		UNTRACK = map("obj16/untrack.png"); //$NON-NLS-1$
 		IGNORE = map("obj16/ignore.png"); //$NON-NLS-1$
 		GOTO_INPUT = map("elcl16/goto_input.png"); //$NON-NLS-1$
-		CHECKED_OUT_BRANCH = new DecorationOverlayDescriptor(BRANCH,
+		CHECKED_OUT_BRANCH = new DecorationOverlayIcon(BRANCH,
 				OVR_CHECKEDOUT, IDecoration.TOP_LEFT);
 		SIGN_COMMIT = map("obj16/sign-commit.png"); //$NON-NLS-1$
 		MERGE_TOOL = map("obj16/mergetool.png"); //$NON-NLS-1$

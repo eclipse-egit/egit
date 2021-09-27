@@ -19,7 +19,6 @@ import java.util.Map;
 import org.eclipse.egit.ui.Activator;
 import org.eclipse.egit.ui.UIUtils;
 import org.eclipse.egit.ui.internal.CommonUtils;
-import org.eclipse.egit.ui.internal.DecorationOverlayDescriptor;
 import org.eclipse.egit.ui.internal.UIIcons;
 import org.eclipse.egit.ui.internal.UIText;
 import org.eclipse.egit.ui.internal.WorkbenchStyledLabelProvider;
@@ -31,6 +30,7 @@ import org.eclipse.jface.layout.GridLayoutFactory;
 import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.jface.util.OpenStrategy;
 import org.eclipse.jface.viewers.ColumnViewerToolTipSupport;
+import org.eclipse.jface.viewers.DecorationOverlayIcon;
 import org.eclipse.jface.viewers.DelegatingStyledCellLabelProvider;
 import org.eclipse.jface.viewers.DelegatingStyledCellLabelProvider.IStyledLabelProvider;
 import org.eclipse.jface.viewers.IDecoration;
@@ -99,7 +99,7 @@ class FetchResultTable {
 						icon = UIIcons.TAG;
 					if (update.getLocalName().startsWith(Constants.R_NOTES))
 						icon = UIIcons.NOTE;
-					return new DecorationOverlayDescriptor(icon,
+					return new DecorationOverlayIcon(icon,
 							UIIcons.OVR_STAGED_REMOVE, IDecoration.TOP_RIGHT);
 				}
 				// else

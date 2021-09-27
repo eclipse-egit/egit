@@ -29,6 +29,7 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.concurrent.CopyOnWriteArrayList;
 
 import org.eclipse.core.resources.IResource;
@@ -471,23 +472,46 @@ public class GitLightweightDecorator extends GitDecorator
 
 		/**
 		 * Define a cached image descriptor which only creates the image data
-		 * once
+		 * once. Copied from
+		 * {@link org.eclipse.jface.resource.CompositeImageDescriptor}.
 		 */
 		private static class CachedImageDescriptor extends ImageDescriptor {
 			private final ImageDescriptor descriptor;
 
-			private ImageData data;
+			private ImageData cached;
 
-			public CachedImageDescriptor(ImageDescriptor descriptor) {
-				this.descriptor = descriptor;
+			private int cachedZoom;
+
+			private CachedImageDescriptor(ImageDescriptor descriptor) {
+				this.descriptor = Objects.requireNonNull(descriptor);
 			}
 
 			@Override
-			public ImageData getImageData() {
-				if (data == null) {
-					data = descriptor.getImageData();
+			public ImageData getImageData(int zoom) {
+				if (zoom == cachedZoom) {
+					return cached;
 				}
-				return data;
+				ImageData zoomed = descriptor.getImageData(zoom);
+				if (zoomed != null) {
+					cached = zoomed;
+					cachedZoom = zoom;
+					return zoomed;
+				}
+				if (zoom == 100) {
+					return ImageDescriptor.getMissingImageDescriptor()
+							.getImageData(100);
+				}
+
+				ImageData data100 = descriptor.getImageData(100);
+				if (data100 != null) {
+					// 100% is available => caller will have to scale this one
+					cached = data100;
+					cachedZoom = 100;
+					return null;
+				}
+				// 100% is not available, but requested zoom != 100
+				// => caller will have to scale missing image descriptor
+				return null;
 			}
 		}
 
