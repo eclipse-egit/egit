@@ -388,15 +388,14 @@ public class LocalNonWorkspaceTypedElement extends LocalResourceTypedElement
 	}
 
 	@Override
-	public Object getAdapter(Class adapter) {
+	public <T> T getAdapter(Class<T> adapter) {
 		if (adapter == ISharedDocumentAdapter.class) {
 			if (isSharedDocumentsEnable()) {
-				return getSharedDocumentAdapter();
+				return adapter.cast(getSharedDocumentAdapter());
 			}
 			return null;
 		}
-		return Platform.getAdapterManager().getAdapter(this,
-				(Class<?>) adapter);
+		return Platform.getAdapterManager().getAdapter(this, adapter);
 	}
 
 	@Override
