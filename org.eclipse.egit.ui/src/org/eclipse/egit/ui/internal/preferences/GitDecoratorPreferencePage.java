@@ -2,7 +2,7 @@
  * Copyright (c) 2000, 2012 IBM Corporation and others.
  * Copyright (C) 2009, Tor Arne Vestbø <torarnv@gmail.com>
  * Copyright (C) 2010, Mathias Kinzler <mathias.kinzler@sap.com>
- * Copyright (C) 2015, 2016 Thomas Wolf <thomas.wolf@paranor.ch>
+ * Copyright (C) 2015, 2021 Thomas Wolf <thomas.wolf@paranor.ch>
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License 2.0
@@ -20,8 +20,6 @@ import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Observable;
-import java.util.Observer;
 import java.util.TreeMap;
 
 import org.eclipse.core.resources.IResource;
@@ -275,10 +273,11 @@ public class GitDecoratorPreferencePage extends PreferencePage implements
 		changeSetPreview = new ChangeSetPreview(composite);
 		navigatorPreview = new NavigatorPreview(composite);
 
-		generalTab = new GeneralTab(tabFolder);
-		textDecorationTab = new TextDecorationTab(tabFolder);
-		iconDecorationTab = new IconDecorationTab(tabFolder);
-		otherDecorationTab = new OtherDecorationTab(tabFolder);
+		generalTab = new GeneralTab(tabFolder, navigatorPreview);
+		textDecorationTab = new TextDecorationTab(tabFolder, navigatorPreview);
+		iconDecorationTab = new IconDecorationTab(tabFolder, navigatorPreview);
+		otherDecorationTab = new OtherDecorationTab(tabFolder,
+				changeSetPreview);
 
 		initializeValues();
 
@@ -286,12 +285,6 @@ public class GitDecoratorPreferencePage extends PreferencePage implements
 
 		changeSetPreview.refresh();
 		navigatorPreview.refresh();
-
-		generalTab.addObserver(navigatorPreview);
-		textDecorationTab.addObserver(navigatorPreview);
-		iconDecorationTab.addObserver(navigatorPreview);
-
-		otherDecorationTab.addObserver(changeSetPreview);
 
 		// TODO: Add help text for this preference page
 
@@ -331,12 +324,25 @@ public class GitDecoratorPreferencePage extends PreferencePage implements
 	 * When controls in the tab change it will emit update() to any registered
 	 * observers. This is currently used for updating the decoration preview.
 	 */
-	private abstract class Tab extends Observable {
+	private abstract class Tab {
+
+		private Preview toUpdate;
+
+		public Tab(Preview toUpdate) {
+			this.toUpdate = toUpdate;
+		}
+
 		public abstract void initializeValues(IPreferenceStore store);
 
 		public abstract void performDefaults(IPreferenceStore store);
 
 		public abstract void performOk(IPreferenceStore store);
+
+		public final void update() {
+			if (toUpdate != null) {
+				toUpdate.refresh();
+			}
+		}
 	}
 
 	/**
@@ -346,7 +352,8 @@ public class GitDecoratorPreferencePage extends PreferencePage implements
 
 		private Button recomputeAncestorDecorations;
 
-		public GeneralTab(TabFolder parent) {
+		public GeneralTab(TabFolder parent, Preview toUpdate) {
+			super(toUpdate);
 			Composite composite = SWTUtils.createHVFillComposite(parent,
 					SWTUtils.MARGINS_DEFAULT, 1);
 
@@ -395,8 +402,7 @@ public class GitDecoratorPreferencePage extends PreferencePage implements
 
 		@Override
 		public void widgetSelected(SelectionEvent e) {
-			setChanged();
-			notifyObservers();
+			update();
 		}
 
 		@Override
@@ -419,7 +425,8 @@ public class GitDecoratorPreferencePage extends PreferencePage implements
 
 		private final FormatEditor submoduleTextFormat;
 
-		public TextDecorationTab(TabFolder parent) {
+		public TextDecorationTab(TabFolder parent, Preview toUpdate) {
+			super(toUpdate);
 			Composite composite = SWTUtils.createHVFillComposite(parent,
 					SWTUtils.MARGINS_DEFAULT, 3);
 
@@ -480,8 +487,7 @@ public class GitDecoratorPreferencePage extends PreferencePage implements
 
 		@Override
 		public void modifyText(ModifyEvent e) {
-			setChanged();
-			notifyObservers();
+			update();
 		}
 
 	}
@@ -490,7 +496,8 @@ public class GitDecoratorPreferencePage extends PreferencePage implements
 
 		private final FormatEditor changeSetLabelFormat;
 
-		public OtherDecorationTab(TabFolder parent) {
+		public OtherDecorationTab(TabFolder parent, Preview toUpdate) {
+			super(toUpdate);
 			Composite composite = SWTUtils.createHVFillComposite(parent,
 					SWTUtils.MARGINS_DEFAULT, 3);
 
@@ -526,8 +533,7 @@ public class GitDecoratorPreferencePage extends PreferencePage implements
 
 		@Override
 		public void modifyText(ModifyEvent e) {
-			setChanged();
-			notifyObservers();
+			update();
 		}
 	}
 
@@ -621,7 +627,8 @@ public class GitDecoratorPreferencePage extends PreferencePage implements
 
 		private Button showDirty;
 
-		public IconDecorationTab(TabFolder parent) {
+		public IconDecorationTab(TabFolder parent, Preview toUpdate) {
+			super(toUpdate);
 			Composite composite = SWTUtils.createHVFillComposite(parent,
 					SWTUtils.MARGINS_DEFAULT, 2);
 
@@ -707,8 +714,7 @@ public class GitDecoratorPreferencePage extends PreferencePage implements
 
 		@Override
 		public void widgetSelected(SelectionEvent e) {
-			setChanged();
-			notifyObservers();
+			update();
 		}
 
 		@Override
@@ -821,8 +827,7 @@ public class GitDecoratorPreferencePage extends PreferencePage implements
 		super.dispose();
 	}
 
-	private abstract class Preview
-			implements Observer {
+	private abstract class Preview {
 
 		protected PreferenceStore store = new PreferenceStore();
 		protected final TreeViewer fViewer;
@@ -840,11 +845,6 @@ public class GitDecoratorPreferencePage extends PreferencePage implements
 
 			fViewer = new TreeViewer(composite);
 			fViewer.getControl().setLayoutData(SWTUtils.createHVFillGridData());
-		}
-
-		@Override
-		public void update(Observable o, Object arg) {
-			refresh();
 		}
 
 		public abstract void refresh();
