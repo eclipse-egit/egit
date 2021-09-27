@@ -16,6 +16,7 @@ import java.util.Map;
 import java.util.Set;
 import java.util.StringTokenizer;
 
+import org.eclipse.core.runtime.IAdaptable;
 import org.eclipse.jface.action.Action;
 import org.eclipse.jface.preference.IPreferenceStore;
 import org.eclipse.jface.preference.JFacePreferences;
@@ -309,7 +310,7 @@ public class HyperlinkSourceViewer extends ProjectionViewer {
 		preferenceKeysForActivation
 				.add(AbstractTextEditor.PREFERENCE_HYPERLINK_KEY_MODIFIER);
 		// All applicable individual hyperlink detectors settings.
-		Set<?> targets = configuration.getHyperlinkDetectorTargets(this)
+		Set<String> targets = configuration.getHyperlinkDetectorTargets(this)
 				.keySet();
 		for (HyperlinkDetectorDescriptor desc : EditorsUI
 				.getHyperlinkDetectorRegistry()
@@ -507,11 +508,9 @@ public class HyperlinkSourceViewer extends ProjectionViewer {
 			return super.getHyperlinkDetectors(sourceViewer);
 		}
 
-		@SuppressWarnings("unchecked")
 		@Override
-		protected Map getHyperlinkDetectorTargets(ISourceViewer sourceViewer) {
-			// TODO: use generified signature once EGit's base dependency is
-			// Eclipse 4.5.
+		protected Map<String, IAdaptable> getHyperlinkDetectorTargets(
+				ISourceViewer sourceViewer) {
 			// Just so that we have visibility on this in the enclosing class.
 			return super.getHyperlinkDetectorTargets(sourceViewer);
 		}
