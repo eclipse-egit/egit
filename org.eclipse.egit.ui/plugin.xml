@@ -5172,7 +5172,6 @@
               style="push">
             <visibleWhen checkEnabled="true" />
          </command>
-         <!-- Use newer flat trash icon when running on Eclipse Photon or newer -->
          <command
                commandId="org.eclipse.egit.ui.team.GarbageCollect"
                label="%GarbageCollectCommand.label"
@@ -5181,28 +5180,6 @@
             <visibleWhen
                   checkEnabled="false">
                <and>
-                  <test property="org.eclipse.egit.ui.BundleProperty.isBundleInstalled" args="org.eclipse.ui,3.109.100" />
-                  <count
-                        value="+">
-                  </count>
-                  <iterate>
-                     <instanceof
-                           value="org.eclipse.egit.ui.internal.repository.tree.RepositoryNode">
-                     </instanceof>
-                  </iterate>
-               </and>
-            </visibleWhen>
-         </command>
-         <!-- Use older trash icon when running on Eclipse Oxygen or older -->
-         <command
-               commandId="org.eclipse.egit.ui.team.GarbageCollect"
-               label="%GarbageCollectCommand.label"
-               icon="icons/elcl16/trash.png"
-               style="push">
-            <visibleWhen
-                  checkEnabled="false">
-               <and>
-                  <test property="org.eclipse.egit.ui.BundleProperty.isBundleInstalled" args="org.eclipse.ui,3.109.100" value="false" />
                   <count
                         value="+">
                   </count>
@@ -6802,7 +6779,7 @@
       </image>
       <image
             commandId="org.eclipse.egit.ui.team.GarbageCollect"
-            icon="icons/elcl16/trash.png">
+            icon="icons/elcl16/trash_flat.png">
       </image>
       <image
             commandId="org.eclipse.egit.ui.team.Disconnect"
