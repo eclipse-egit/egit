@@ -137,14 +137,14 @@ public abstract class AbstractGitCompareEditorInput extends CompareEditorInput {
 	}
 
 	@Override
-	public Object getAdapter(Class adapter) {
+	public <T> T getAdapter(Class<T> adapter) {
 		if ((adapter == IFile.class || adapter == IResource.class)
 				&& !isMultiFile()) {
 			ITypedElement element = getElement();
 			IResource resource = getResource(element);
 			if (resource != null && adapter.isInstance(resource)
 					&& resource.exists()) {
-				return resource;
+				return adapter.cast(resource);
 			}
 		} else if (adapter == IShowInSource.class && isMultiFile()) {
 			DiffNode node = getNode();
@@ -152,19 +152,21 @@ public abstract class AbstractGitCompareEditorInput extends CompareEditorInput {
 				FolderNode folder = (FolderNode) node;
 				IContainer container = folder.getContainer();
 				if (container != null) {
-					return getShowInSource(new ShowInContext(this,
+					return adapter.cast(new ShowInContext(this,
 							new StructuredSelection(container)));
 				}
 				IPath path = folder.getPath();
 				if (path != null) {
 					if (path.isAbsolute()) {
-						return getShowInSource(new ShowInContext(this,
-								new StructuredSelection(path)));
+						return adapter
+								.cast(getShowInSource(new ShowInContext(this,
+										new StructuredSelection(path))));
 					} else {
 						GitInfo info = getGitInfo(path);
 						if (info != null) {
-							return getShowInSource(new ShowInContext(this,
-									new StructuredSelection(info)));
+							return adapter.cast(
+									getShowInSource(new ShowInContext(this,
+											new StructuredSelection(info))));
 						}
 					}
 				}
@@ -172,8 +174,8 @@ public abstract class AbstractGitCompareEditorInput extends CompareEditorInput {
 				ITypedElement element = node.getLeft();
 				IResource resource = getResource(element);
 				if (resource instanceof IFile && resource.exists()) {
-					return getShowInSource(new ShowInContext(this,
-							new StructuredSelection(resource)));
+					return adapter.cast(getShowInSource(new ShowInContext(this,
+							new StructuredSelection(resource))));
 				}
 				GitInfo info = Adapters.adapt(element, GitInfo.class);
 				if (info != null && info.getRepository() != null) {
@@ -182,21 +184,22 @@ public abstract class AbstractGitCompareEditorInput extends CompareEditorInput {
 						File f = new File(repository.getWorkTree(),
 								path.toOSString());
 						if (f.exists()) {
-							return getShowInSource(new ShowInContext(this,
+							return adapter.cast(
+									getShowInSource(new ShowInContext(this,
 									new StructuredSelection(Path.fromOSString(
-											f.getAbsolutePath()))));
+													f.getAbsolutePath())))));
 						}
 					}
 					// The repository is bare, or the path does not exist in the
 					// working tree. The history page can deal with these paths,
 					// so at least "Show in->History" should work.
-					return getShowInSource(new ShowInContext(this,
-							new StructuredSelection(info)));
+					return adapter.cast(getShowInSource(new ShowInContext(this,
+							new StructuredSelection(info))));
 				}
 			}
-			return getShowInSource(null);
+			return adapter.cast(getShowInSource(null));
 		} else if (adapter == Repository.class) {
-			return repository;
+			return adapter.cast(adapter);
 		}
 		return super.getAdapter(adapter);
 	}

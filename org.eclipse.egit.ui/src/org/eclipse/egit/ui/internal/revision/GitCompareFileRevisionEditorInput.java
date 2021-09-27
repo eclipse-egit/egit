@@ -361,14 +361,14 @@ public class GitCompareFileRevisionEditorInput extends SaveableCompareEditorInpu
 	 * @see org.eclipse.compare.CompareEditorInput#getAdapter(java.lang.Class)
 	 */
 	@Override
-	public Object getAdapter(Class adapter) {
+	public <T> T getAdapter(Class<T> adapter) {
 		if (adapter == IFile.class || adapter == IResource.class) {
 			if (left instanceof LocalNonWorkspaceTypedElement) {
 				return null;
 			}
-			return getResource();
+			return adapter.cast(getResource());
 		} else if (adapter == Repository.class && left != null) {
-			return Adapters.adapt(left, Repository.class);
+			return Adapters.adapt(left, adapter);
 		}
 		return super.getAdapter(adapter);
 	}
