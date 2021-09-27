@@ -32,7 +32,7 @@ import org.eclipse.egit.ui.internal.handler.SelectionHandler;
 import org.eclipse.jface.dialogs.IDialogConstants;
 import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.window.Window;
-import org.eclipse.jgit.api.Git;
+import org.eclipse.jgit.api.StashListCommand;
 import org.eclipse.jgit.lib.ObjectId;
 import org.eclipse.jgit.lib.Repository;
 import org.eclipse.jgit.revwalk.RevCommit;
@@ -104,11 +104,14 @@ public class StashDropHandler extends SelectionHandler {
 			throws ExecutionException {
 		int index = 0;
 		try {
-			for (RevCommit commit : Git.wrap(repo).stashList().call())
-				if (commit.getId().equals(id))
+			StashListCommand stashes = new StashListCommand(repo);
+			for (RevCommit commit : stashes.call()) {
+				if (commit.getId().equals(id)) {
 					return index;
-				else
+				} else {
 					index++;
+				}
+			}
 			throw new IllegalStateException(MessageFormat.format(
 					UIText.StashDropCommand_stashCommitNotFound, id.name()));
 		} catch (Exception e) {
