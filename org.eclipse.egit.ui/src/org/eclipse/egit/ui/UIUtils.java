@@ -75,7 +75,6 @@ import org.eclipse.swt.graphics.Font;
 import org.eclipse.swt.graphics.FontMetrics;
 import org.eclipse.swt.graphics.GC;
 import org.eclipse.swt.graphics.Image;
-import org.eclipse.swt.graphics.ImageData;
 import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.graphics.Resource;
 import org.eclipse.swt.layout.GridData;
@@ -708,19 +707,6 @@ public class UIUtils {
 		ImageDescriptor descriptor = registry.getImageDescriptor(fileName);
 		extensionToDescriptor.put(key, new SoftReference<>(descriptor));
 		return descriptor;
-	}
-
-	/**
-	 * Get size of image descriptor as point.
-	 *
-	 * @param descriptor
-	 * @return size
-	 */
-	public static Point getSize(ImageDescriptor descriptor) {
-		ImageData data = descriptor.getImageData();
-		if (data == null)
-			return new Point(0, 0);
-		return new Point(data.width, data.height);
 	}
 
 	/**
