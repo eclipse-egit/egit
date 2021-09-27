@@ -28,7 +28,6 @@ import org.eclipse.compare.internal.Utilities;
 import org.eclipse.core.filesystem.EFS;
 import org.eclipse.core.filesystem.IFileStore;
 import org.eclipse.core.resources.IContainer;
-import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IResource;
 import org.eclipse.core.resources.IWorkspaceRoot;
 import org.eclipse.core.resources.ResourcesPlugin;
@@ -64,7 +63,6 @@ import org.eclipse.team.internal.ui.synchronize.EditableSharedDocumentAdapter;
 import org.eclipse.team.internal.ui.synchronize.LocalResourceTypedElement;
 import org.eclipse.ui.IEditorInput;
 import org.eclipse.ui.ide.FileStoreEditorInput;
-import org.eclipse.ui.texteditor.IDocumentProvider;
 
 /**
  * Specialized resource node for non-workspace files
@@ -483,81 +481,14 @@ public class LocalNonWorkspaceTypedElement extends LocalResourceTypedElement
 						IFileStore store = EFS.getLocalFileSystem().getStore(
 								LocalNonWorkspaceTypedElement.this.path);
 						if (store != null) {
-							return new FakeResourceFileStoreEditorInput(store,
-									LocalNonWorkspaceTypedElement.this
-											.getResource());
+							return new FileStoreEditorInput(store);
 						}
 					}
 					return super.getDocumentKey(element);
 				}
-
-				@Override
-				public void connect(IDocumentProvider provider,
-						IEditorInput documentKey) throws CoreException {
-					if (documentKey instanceof FakeResourceFileStoreEditorInput) {
-						// When we connect, our editor input shouldn't adapt to
-						// that (non-existing) resource, otherwise we'll confuse
-						// other parts of Eclipse.
-						FakeResourceFileStoreEditorInput input = (FakeResourceFileStoreEditorInput) documentKey;
-						try {
-							input.setResource(null);
-							super.connect(provider, input);
-						} finally {
-							// Once we _are_ connected, there are other places
-							// where SharedDocumentAdapter.getDocumentProvider()
-							// is called again during the life of the document,
-							// so the documentKey must again adapt to IFile.
-							input.setResource(LocalNonWorkspaceTypedElement.this
-									.getResource());
-						}
-					} else {
-						super.connect(provider, documentKey);
-					}
-				}
 			};
 		}
 		return sharedDocumentAdapter;
-	}
-
-	private static class FakeResourceFileStoreEditorInput
-			extends FileStoreEditorInput {
-
-		// This class and the connect() override above are a work-around for bug
-		// 544315: the file extension is used to find the document provider only
-		// if the editor input adapts to IFile.
-
-		// TODO: Remove when EGit's base platform is Eclipse 4.11 (2019-03)
-
-		private IResource resource;
-
-		public FakeResourceFileStoreEditorInput(IFileStore store, IResource resource) {
-			super(store);
-			this.resource = resource;
-		}
-
-		@Override
-		public <T> T getAdapter(Class<T> adapter) {
-			if (adapter == IFile.class || adapter == IResource.class) {
-				if (resource != null && adapter.isInstance(resource)) {
-					return adapter.cast(resource);
-				}
-			}
-			return super.getAdapter(adapter);
-		}
-
-		public void setResource(IResource resource) {
-			this.resource = resource;
-		}
-
-		@Override
-		public int hashCode() {
-			return super.hashCode();
-		}
-
-		@Override
-		public boolean equals(Object o) {
-			return super.equals(o);
-		}
 	}
 
 	@Override
