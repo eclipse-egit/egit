@@ -107,39 +107,6 @@
       storageURI="scope://Workspace"
       label="EGit Target Platform">
     <choice
-        value="egit-4.6"
-        label="EGit Neon (4.6) target"/>
-    <choice
-        value="egit-4.7"
-        label="EGit Oxygen (4.7) target"/>
-    <choice
-        value="egit-4.8"
-        label="EGit Photon (4.8) target"/>
-    <choice
-        value="egit-4.9"
-        label="EGit 2018-09 (4.9) target"/>
-    <choice
-        value="egit-4.10"
-        label="EGit 2018-12 (4.10) target"/>
-    <choice
-        value="egit-4.11"
-        label="EGit 2019-03 (4.11) target"/>
-    <choice
-        value="egit-4.12"
-        label="EGit 2019-06 (4.12) target"/>
-    <choice
-        value="egit-4.13"
-        label="EGit 2019-09 (4.13) target"/>
-    <choice
-        value="egit-4.14"
-        label="EGit 2019-12 (4.14) target"/>
-    <choice
-        value="egit-4.15"
-        label="EGit 2020-03 (4.15) target"/>
-    <choice
-        value="egit-4.16"
-        label="EGit 2020-06 (4.16) target"/>
-    <choice
         value="egit-4.17"
         label="EGit 2020-09 (4.17) target"/>
     <choice
