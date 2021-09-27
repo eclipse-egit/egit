@@ -17,7 +17,6 @@ import java.util.Queue;
 
 import org.eclipse.core.runtime.Assert;
 import org.eclipse.core.runtime.IProgressMonitor;
-import org.eclipse.core.runtime.IProgressMonitorWithBlocking;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.ProgressMonitorWrapper;
 import org.eclipse.core.runtime.Status;
@@ -385,32 +384,24 @@ public class NonBlockingWizardDialog extends MinimumSizeWizardDialog {
 
 		@Override
 		public void clearBlocked() {
-			// If this is a monitor that can report blocking do so.
 			// Don't bother with a collector as this should only ever
 			// happen once.
 			IProgressMonitor wrapped = getWrappedProgressMonitor();
-			if (!(wrapped instanceof IProgressMonitorWithBlocking)) {
-				return;
-			}
 
 			display.asyncExec(() -> {
-				((IProgressMonitorWithBlocking) wrapped).clearBlocked();
+				wrapped.clearBlocked();
 				Dialog.getBlockedHandler().clearBlocked();
 			});
 		}
 
 		@Override
 		public void setBlocked(final IStatus reason) {
-			// If this is a monitor that can report blocking do so.
 			// Don't bother with a collector as this should only ever
 			// happen once and prevent any more progress.
 			IProgressMonitor wrapped = getWrappedProgressMonitor();
-			if (!(wrapped instanceof IProgressMonitorWithBlocking)) {
-				return;
-			}
 
 			display.asyncExec(() -> {
-				((IProgressMonitorWithBlocking) wrapped).setBlocked(reason);
+				wrapped.setBlocked(reason);
 				// Do not give a shell as we want it to block until it opens.
 				Dialog.getBlockedHandler().showBlocked(wrapped, reason,
 						currentTask);
