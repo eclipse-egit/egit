@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "89e2080d_dae7f1c9",
+        "filename": "pom.xml",
+        "patchSetId": 11
+      },
+      "lineNbr": 300,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2021-09-29T13:18:06Z",
+      "side": 1,
+      "message": "according to https://docs.oracle.com/en/java/javase/14/docs/specs/man/javac.html#option-release options --source and --target are set by --release and shouldn\u0027t be set if --release is set",
+      "range": {
+        "startLine": 299,
+        "startChar": 0,
+        "endLine": 300,
+        "endChar": 44
+      },
+      "revId": "30cf035916dcfb8e455a0c4b0041ad5569614ce2",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": true
+    }
+  ]
+}

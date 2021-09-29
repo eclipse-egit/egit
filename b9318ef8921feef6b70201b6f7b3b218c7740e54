@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "69b7d291_3f934091",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 8
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2021-09-29T13:18:06Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "4029152c_6cf824d2",
+      "revId": "b9318ef8921feef6b70201b6f7b3b218c7740e54",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "63bd92f5_bb4c9ca3",
         "filename": "/COMMIT_MSG",
         "patchSetId": 8
@@ -107,6 +125,24 @@
     },
     {
       "key": {
+        "uuid": "d45bf02f_c54d4cc0",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 8
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2021-09-29T13:18:06Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "dd9567cc_16df0976",
+      "revId": "b9318ef8921feef6b70201b6f7b3b218c7740e54",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9d16c47f_9563a98a",
         "filename": "/COMMIT_MSG",
         "patchSetId": 8
@@ -139,6 +175,24 @@
       "revId": "b9318ef8921feef6b70201b6f7b3b218c7740e54",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b509a1b7_3801619b",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 8
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2021-09-29T13:18:06Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "b34d288a_cf453dbc",
+      "revId": "b9318ef8921feef6b70201b6f7b3b218c7740e54",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
     },
     {
       "key": {
@@ -189,6 +243,24 @@
       "side": 1,
       "message": "Fixed in PS 10. Don\u0027t know why it didn\u0027t work initially, perhaps because of the 32bit architectures? Anyway, removed those and uncommented, and now it works.",
       "parentUuid": "138b4b13_dc5e6b99",
+      "revId": "b9318ef8921feef6b70201b6f7b3b218c7740e54",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "12f4fcae_1b4dcf36",
+        "filename": "pom.xml",
+        "patchSetId": 8
+      },
+      "lineNbr": 267,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2021-09-29T13:18:06Z",
+      "side": 1,
+      "message": "I think 32 bit isn\u0027t supported anymore",
+      "parentUuid": "65ca81d4_4b626e81",
       "revId": "b9318ef8921feef6b70201b6f7b3b218c7740e54",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
