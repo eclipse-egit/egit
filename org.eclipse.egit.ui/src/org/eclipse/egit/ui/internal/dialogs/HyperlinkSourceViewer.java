@@ -169,15 +169,9 @@ public class HyperlinkSourceViewer extends ProjectionViewer {
 					.removePropertyChangeListener(jFacePropertyChangeListener);
 			jFacePropertyChangeListener = null;
 		}
-		// Dispose of the colors last.
 		try {
 			super.handleDispose();
 		} finally {
-			for (Color color : customColors.values()) {
-				if (color != null) {
-					color.dispose();
-				}
-			}
 			customColors.clear();
 		}
 	}
@@ -353,8 +347,7 @@ public class HyperlinkSourceViewer extends ProjectionViewer {
 
 	private void setColor(StyledText styledText, IPreferenceStore store,
 			String key, boolean useDefault) {
-		Color newColor = useDefault ? null
-				: createColor(styledText.getDisplay(), store, key);
+		Color newColor = useDefault ? null : createColor(store, key);
 		switch (key) {
 		case AbstractTextEditor.PREFERENCE_COLOR_FOREGROUND:
 			styledText.setForeground(newColor);
@@ -371,14 +364,10 @@ public class HyperlinkSourceViewer extends ProjectionViewer {
 		default:
 			return;
 		}
-		Color oldColor = customColors.put(key, newColor);
-		if (oldColor != null) {
-			oldColor.dispose();
-		}
+		customColors.put(key, newColor);
 	}
 
-	private Color createColor(Display display, IPreferenceStore store,
-			String key) {
+	private Color createColor(IPreferenceStore store, String key) {
 		RGB rgb = null;
 		if (store.contains(key)) {
 			if (store.isDefault(key)) {
@@ -387,7 +376,7 @@ public class HyperlinkSourceViewer extends ProjectionViewer {
 				rgb = PreferenceConverter.getColor(store, key);
 			}
 			if (rgb != null) {
-				return new Color(display, rgb);
+				return new Color(rgb);
 			}
 		}
 		return null;

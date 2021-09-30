@@ -66,8 +66,6 @@ import org.eclipse.jgit.transport.RemoteConfig;
 import org.eclipse.jgit.transport.Transport;
 import org.eclipse.osgi.util.NLS;
 import org.eclipse.swt.SWT;
-import org.eclipse.swt.events.DisposeEvent;
-import org.eclipse.swt.events.DisposeListener;
 import org.eclipse.swt.events.ModifyEvent;
 import org.eclipse.swt.events.ModifyListener;
 import org.eclipse.swt.events.SelectionAdapter;
@@ -642,18 +640,10 @@ public class RefSpecPanel {
 		imageRegistry.put(IMAGE_DELETE, UIIcons.ELCL16_DELETE);
 		imageRegistry.put(IMAGE_TRASH, UIIcons.ELCL16_TRASH);
 		imageRegistry.put(IMAGE_CLEAR, UIIcons.ELCL16_CLEAR);
-		errorBackgroundColor = new Color(specsGroup.getDisplay(), 255, 150,
-				150);
-		errorTextColor = new Color(specsGroup.getDisplay(), 255, 0, 0);
+		errorBackgroundColor = new Color(255, 150, 150);
+		errorTextColor = new Color(255, 0, 0);
 
-		specsGroup.addDisposeListener(new DisposeListener() {
-			@Override
-			public void widgetDisposed(DisposeEvent e) {
-				imageRegistry.dispose();
-				errorBackgroundColor.dispose();
-				errorTextColor.dispose();
-			}
-		});
+		specsGroup.addDisposeListener(e -> imageRegistry.dispose());
 	}
 
 	private RefContentProposalProvider getRefsProposalProvider(
