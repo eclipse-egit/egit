@@ -13,7 +13,6 @@ package org.eclipse.egit.ui.internal.dialogs;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
-import java.util.Comparator;
 import java.util.Iterator;
 import java.util.LinkedHashSet;
 import java.util.List;
@@ -194,22 +193,15 @@ public class HyperlinkTokenScanner implements ITokenScanner {
 						}
 					}
 					// Sort them by offset, and with increasing length
-					Collections.sort(hyperlinksOnLine,
-							new Comparator<IHyperlink>() {
-								@Override
-								public int compare(IHyperlink a, IHyperlink b) {
-									int diff = a.getHyperlinkRegion()
-											.getOffset()
-											- b.getHyperlinkRegion()
-													.getOffset();
-									if (diff != 0) {
-										return diff;
-									}
-									return a.getHyperlinkRegion().getLength()
-											- b.getHyperlinkRegion()
-													.getLength();
-								}
-							});
+					Collections.sort(hyperlinksOnLine, (a, b) -> {
+						int diff = a.getHyperlinkRegion().getOffset()
+								- b.getHyperlinkRegion().getOffset();
+						if (diff != 0) {
+							return diff;
+						}
+						return a.getHyperlinkRegion().getLength()
+								- b.getHyperlinkRegion().getLength();
+					});
 					lastLineStart = currentLine.getOffset();
 				}
 				if (!hyperlinksOnLine.isEmpty()) {
