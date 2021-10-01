@@ -117,19 +117,6 @@ public class CommitFileDiffViewer extends TableViewer {
 
 	static final int INTERESTING_MARK_TREE_FILTER_INDEX = 0;
 
-	private static int preventBug499850(int style) {
-		if (((style & (SWT.VIRTUAL | SWT.MULTI)) == (SWT.VIRTUAL | SWT.MULTI))
-				&& "gtk".equals(SWT.getPlatform()) && SWT.getVersion() < 4919) { //$NON-NLS-1$
-			// Work-around for bug 499850: calling Table.removeAll() on a
-			// virtual table with multi-selections enabled may cause the UI to
-			// freeze for very long on GTK. (GTK runs into an exponential
-			// algorithm). As of SWT version 4919 (Eclipse 4.10), SWT has a
-			// low-level work-around for this problem.
-			return style & ~SWT.MULTI;
-		}
-		return style;
-	}
-
 	private static final String LINESEP = System.lineSeparator();
 
 	private Clipboard clipboard;
@@ -189,7 +176,7 @@ public class CommitFileDiffViewer extends TableViewer {
 	 */
 	public CommitFileDiffViewer(final Composite parent,
 			final IWorkbenchSite site, final int style) {
-		super(parent, preventBug499850(style));
+		super(parent, style);
 		setUseHashlookup(true);
 		this.site = site;
 		final Table rawTable = getTable();
