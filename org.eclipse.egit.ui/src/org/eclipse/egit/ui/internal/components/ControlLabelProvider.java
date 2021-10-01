@@ -13,14 +13,12 @@ package org.eclipse.egit.ui.internal.components;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.eclipse.jface.util.Util;
 import org.eclipse.jface.viewers.ColumnLabelProvider;
 import org.eclipse.jface.viewers.ViewerCell;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.TableEditor;
 import org.eclipse.swt.events.DisposeListener;
 import org.eclipse.swt.graphics.Point;
-import org.eclipse.swt.graphics.Rectangle;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Table;
@@ -110,35 +108,8 @@ public abstract class ControlLabelProvider extends ColumnLabelProvider {
 
 		private DisposeListener disposer;
 
-		private final Table table;
-
 		public Editor(Table table) {
 			super(table);
-			this.table = table;
-		}
-
-		@Override
-		public void layout() {
-			if (Util.isGtk() && SWT.getVersion() <= 4924) {
-				// Layout is relative to the table's clientArea, which includes
-				// the header if one is shown. Results in editors being shown
-				// over the column headers.
-				//
-				// This is a work-around for bug 535978; would be needed only on
-				// SWT versions < 4924r7.
-				TableItem item = getItem();
-				if (item != null) {
-					Rectangle rect = item.getBounds();
-					if (table.getHeaderVisible()) {
-						Control editor = getEditor();
-						if (editor != null && !editor.isDisposed()) {
-							editor.setVisible(
-									rect.y >= table.getHeaderHeight());
-						}
-					}
-				}
-			}
-			super.layout();
 		}
 
 		public void connect() {
