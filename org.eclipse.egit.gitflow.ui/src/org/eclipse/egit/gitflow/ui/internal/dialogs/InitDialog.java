@@ -11,7 +11,7 @@
 package org.eclipse.egit.gitflow.ui.internal.dialogs;
 
 import static org.eclipse.core.databinding.UpdateValueStrategy.POLICY_ON_REQUEST;
-import static org.eclipse.core.databinding.beans.PojoProperties.value;
+import static org.eclipse.core.databinding.beans.typed.PojoProperties.value;
 import static org.eclipse.egit.gitflow.InitParameters.DEVELOP_BRANCH_PROPERTY;
 import static org.eclipse.egit.gitflow.InitParameters.FEATURE_BRANCH_PREFIX_PROPERTY;
 import static org.eclipse.egit.gitflow.InitParameters.HOTFIX_BRANCH_PREFIX_PROPERTY;
@@ -33,7 +33,7 @@ import static org.eclipse.egit.gitflow.ui.internal.UIText.InitDialog_masterBranc
 import static org.eclipse.egit.gitflow.ui.internal.UIText.InitDialog_releaseBranchPrefix;
 import static org.eclipse.egit.gitflow.ui.internal.UIText.InitDialog_selectedMasterBranchDoesNotExistCreateNow;
 import static org.eclipse.egit.gitflow.ui.internal.UIText.InitDialog_versionTagPrefix;
-import static org.eclipse.jface.databinding.swt.WidgetProperties.text;
+import static org.eclipse.jface.databinding.swt.typed.WidgetProperties.text;
 import static org.eclipse.jface.dialogs.IDialogConstants.OK_ID;
 import static org.eclipse.jface.dialogs.IMessageProvider.ERROR;
 import static org.eclipse.jface.dialogs.MessageDialog.openQuestion;
@@ -83,9 +83,9 @@ import org.eclipse.swt.widgets.Text;
  * Dialog to gather inputs for the git flow init operation.
  */
 public class InitDialog extends TitleAreaDialog {
-	private static final class BranchValidator implements IValidator {
+	private static final class BranchValidator implements IValidator<String> {
 		@Override
-		public IStatus validate(Object value) {
+		public IStatus validate(String value) {
 			if (value == null || !isValidRefName(R_HEADS + value)) {
 				return error(NLS.bind(InitDialog_invalidBranchName, value));
 			}
@@ -93,7 +93,8 @@ public class InitDialog extends TitleAreaDialog {
 		}
 	}
 
-	private static final class BranchExistsValidator implements IValidator {
+	private static final class BranchExistsValidator
+			implements IValidator<String> {
 		private List<String> list;
 
 		public BranchExistsValidator(List<Ref> branchList) {
@@ -104,7 +105,7 @@ public class InitDialog extends TitleAreaDialog {
 		}
 
 		@Override
-		public IStatus validate(Object value) {
+		public IStatus validate(String value) {
 			if (value == null || !list.contains(R_HEADS + value)) {
 				return warning(NLS.bind(InitDialog_branchDoesNotExistYetAndWillBeCreated, value));
 			}
@@ -208,27 +209,25 @@ public class InitDialog extends TitleAreaDialog {
 	private DataBindingContext initDataBinding() {
 		DataBindingContext context = new DataBindingContext();
 
-		UpdateValueStrategy noModelToTarget = new UpdateValueStrategy(false, POLICY_ON_REQUEST);
+		UpdateValueStrategy<String, String> noModelToTarget = new UpdateValueStrategy<>(
+				false, POLICY_ON_REQUEST);
 
-		UpdateValueStrategy developUpdateStrategy = new UpdateValueStrategy();
+		UpdateValueStrategy<String, String> developUpdateStrategy = new UpdateValueStrategy<>();
 		developUpdateStrategy.setBeforeSetValidator(new BranchValidator());
 		bind(context, noModelToTarget, developUpdateStrategy, DEVELOP_BRANCH_PROPERTY, developText);
 
-		UpdateValueStrategy masterUpdateStrategy = new UpdateValueStrategy();
+		UpdateValueStrategy<String, String> masterUpdateStrategy = new UpdateValueStrategy<>();
 		masterUpdateStrategy.setBeforeSetValidator(new BranchValidator());
 		masterUpdateStrategy.setAfterConvertValidator(new BranchExistsValidator(branchList));
 		bind(context, noModelToTarget, masterUpdateStrategy, MASTER_BRANCH_PROPERTY, masterText);
 
-		UpdateValueStrategy prefixTargetToModel = new UpdateValueStrategy();
-		prefixTargetToModel.setBeforeSetValidator(new IValidator() {
-			@Override
-			public IStatus validate(Object value) {
-				if (value == null
-						|| !isValidRefName(R_HEADS + value + DUMMY_POSTFIX)) {
-					return error(NLS.bind(InitDialog_invalidPrefix, value));
-				}
-				return Status.OK_STATUS;
+		UpdateValueStrategy<String, String> prefixTargetToModel = new UpdateValueStrategy<>();
+		prefixTargetToModel.setBeforeSetValidator(value -> {
+			if (value == null
+					|| !isValidRefName(R_HEADS + value + DUMMY_POSTFIX)) {
+				return error(NLS.bind(InitDialog_invalidPrefix, value));
 			}
+			return Status.OK_STATUS;
 		});
 		bind(context, noModelToTarget, prefixTargetToModel, FEATURE_BRANCH_PREFIX_PROPERTY, featureText);
 		bind(context, noModelToTarget, prefixTargetToModel, RELEASE_BRANCH_PREFIX_PROPERTY, releaseText);
@@ -241,11 +240,13 @@ public class InitDialog extends TitleAreaDialog {
 	}
 
 	private void bind(DataBindingContext dataBindingContext,
-			UpdateValueStrategy noModelToTargetUpdate,
-			UpdateValueStrategy targetToModel, String modelProperty, Text widget) {
+			UpdateValueStrategy<String, String> noModelToTargetUpdate,
+			UpdateValueStrategy<String, String> targetToModel,
+			String modelProperty, Text widget) {
 		Binding binding = dataBindingContext.bindValue(
 				text(Modify).observe(widget),
-				value(modelProperty).observe(gitflowInitConfig), targetToModel,
+				value(modelProperty, String.class).observe(gitflowInitConfig),
+				targetToModel,
 				noModelToTargetUpdate);
 		ControlDecorationSupport.create(binding, SWT.TOP | SWT.LEFT);
 	}
