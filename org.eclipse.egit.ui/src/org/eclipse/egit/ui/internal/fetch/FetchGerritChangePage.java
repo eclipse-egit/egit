@@ -124,7 +124,7 @@ public class FetchGerritChangePage extends WizardPage {
 	private static final String GERRIT_CHANGE_REF_PREFIX = "refs/changes/"; //$NON-NLS-1$
 
 	private static final Pattern GERRIT_FETCH_PATTERN = Pattern.compile(
-			"git fetch (\\w+:\\S+) (refs/changes/\\d+/\\d+/\\d+) && git (\\w+) FETCH_HEAD"); //$NON-NLS-1$
+			"git fetch \"?(\\w+:[^\"\\s]+)\"? (refs/changes/\\d+/\\d+/\\d+) && git (\\w+(?:-\\w+)?(?: -b)?).* FETCH_HEAD"); //$NON-NLS-1$
 
 	private static final Pattern GERRIT_URL_PATTERN = Pattern.compile(
 			"(?:https?://\\S+?/|/)?([1-9][0-9]*)(?:/([1-9][0-9]*)(?:/([1-9][0-9]*)(?:\\.\\.\\d+)?)?)?(?:/\\S*)?"); //$NON-NLS-1$
@@ -165,6 +165,8 @@ public class FetchGerritChangePage extends WizardPage {
 	private Button cherryPickFetchHead;
 
 	private Button updateFetchHead;
+
+	private Label placeholder;
 
 	private Label tagTextlabel;
 
@@ -250,8 +252,13 @@ public class FetchGerritChangePage extends WizardPage {
 			}
 		}
 		SelectionAdapter validatePage = new SelectionAdapter() {
+
 			@Override
 			public void widgetSelected(SelectionEvent e) {
+				if (placeholder != null) {
+					placeholder.setVisible(false);
+					((GridData) placeholder.getLayoutData()).exclude = true;
+				}
 				checkPage();
 			}
 		};
@@ -417,8 +424,16 @@ public class FetchGerritChangePage extends WizardPage {
 		updateFetchHead.setText(UIText.FetchGerritChangePage_UpdateRadio);
 		updateFetchHead.addSelectionListener(validatePage);
 
+		// If not createBranch or createTag, add a placeHolder so that the
+		// initial dialog is large enough
 		if ("checkout".equals(defaultCommand)) { //$NON-NLS-1$
 			checkoutFetchHead.setSelection(true);
+			placeholder = new Label(main, SWT.NONE);
+			GridDataFactory.fillDefaults().span(2, 1).applyTo(placeholder);
+		} else if ("cherry-pick".equals(defaultCommand)) { //$NON-NLS-1$
+			cherryPickFetchHead.setSelection(true);
+			placeholder = new Label(main, SWT.NONE);
+			GridDataFactory.fillDefaults().span(2, 1).applyTo(placeholder);
 		} else {
 			createBranch.setSelection(true);
 		}
