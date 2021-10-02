@@ -3033,91 +3033,97 @@ public class UIText extends NLS {
 	public static String FetchDestinationPage_TrackingBranchNotFoundMessage;
 
 	/** */
-	public static String FetchGerritChangePage_ActivateAdditionalRefsButton;
+	public static String AbstractFetchFromHostPage_ActivateAdditionalRefsButton;
 
 	/** */
-	public static String FetchGerritChangePage_ActivateAdditionalRefsTooltip;
+	public static String AbstractFetchFromHostPage_ActivateAdditionalRefsTooltip;
 
 	/** */
-	public static String FetchGerritChangePage_AfterFetchGroup;
+	public static String AbstractFetchFromHostPage_AfterFetchGroup;
 
 	/** */
-	public static String FetchGerritChangePage_BranchEditButton;
+	public static String AbstractFetchFromHostPage_BranchEditButton;
 
 	/** */
-	public static String FetchGerritChangePage_BranchNameText;
+	public static String AbstractFetchFromHostPage_BranchNameText;
+
+	/** */
+	public static String AbstractFetchFromHostPage_CheckingOutTaskName;
+
+	/** */
+	public static String AbstractFetchFromHostPage_CheckoutRadio;
+
+	/** */
+	public static String AbstractFetchFromHostPage_CherryPickRadio;
+
+	/** */
+	public static String AbstractFetchFromHostPage_CherryPickTaskName;
+
+	/** */
+	public static String AbstractFetchFromHostPage_ContentAssistTooltip;
+
+	/** */
+	public static String AbstractFetchFromHostPage_CreatingBranchTaskName;
+
+	/** */
+	public static String AbstractFetchFromHostPage_CreatingTagTaskName;
+
+	/** */
+	public static String AbstractFetchFromHostPage_FetchingTaskName;
+
+	/** */
+	public static String AbstractFetchFromHostPage_GeneratedTagMessage;
+
+	/** */
+	public static String AbstractFetchFromHostPage_GetChangeTaskName;
+
+	/** */
+	public static String AbstractFetchFromHostPage_LocalBranchRadio;
+
+	/** */
+	public static String AbstractFetchFromHostPage_LocalBranchCheckout;
+
+	/** */
+	public static String AbstractFetchFromHostPage_MissingChangeMessage;
+
+	/** */
+	public static String AbstractFetchFromHostPage_NoSuchChangeMessage;
+
+	/** */
+	public static String AbstractFetchFromHostPage_PageMessage;
+
+	/** */
+	public static String AbstractFetchFromHostPage_PageTitle;
+
+	/** */
+	public static String AbstractFetchFromHostPage_TagNameText;
+
+	/** */
+	public static String AbstractFetchFromHostPage_TagRadio;
+
+	/** */
+	public static String AbstractFetchFromHostPage_UnknownChangeRefMessage;
+
+	/** */
+	public static String AbstractFetchFromHostPage_UpdateRadio;
+
+	/** */
+	public static String AbstractFetchFromHostPage_UriLabel;
 
 	/** */
 	public static String FetchGerritChangePage_ChangeLabel;
 
 	/** */
-	public static String FetchGerritChangePage_CheckingOutTaskName;
+	public static String FetchGerritChangePage_ChangeNameSingular;
 
 	/** */
-	public static String FetchGerritChangePage_CheckoutRadio;
-
-	/** */
-	public static String FetchGerritChangePage_CherryPickRadio;
-
-	/** */
-	public static String FetchGerritChangePage_CherryPickTaskName;
+	public static String FetchGerritChangePage_ChangeNamePlural;
 
 	/** */
 	public static String FetchGerritChangePage_ContentAssistDescription;
 
 	/** */
-	public static String FetchGerritChangePage_ContentAssistTooltip;
-
-	/** */
-	public static String FetchGerritChangePage_CreatingBranchTaskName;
-
-	/** */
-	public static String FetchGerritChangePage_CreatingTagTaskName;
-
-	/** */
-	public static String FetchGerritChangePage_FetchingTaskName;
-
-	/** */
-	public static String FetchGerritChangePage_GeneratedTagMessage;
-
-	/** */
-	public static String FetchGerritChangePage_GetChangeTaskName;
-
-	/** */
-	public static String FetchGerritChangePage_LocalBranchRadio;
-
-	/** */
-	public static String FetchGerritChangePage_LocalBranchCheckout;
-
-	/** */
-	public static String FetchGerritChangePage_MissingChangeMessage;
-
-	/** */
-	public static String FetchGerritChangePage_NoSuchChangeMessage;
-
-	/** */
-	public static String FetchGerritChangePage_PageMessage;
-
-	/** */
-	public static String FetchGerritChangePage_PageTitle;
-
-	/** */
 	public static String FetchGerritChangePage_SuggestedRefNamePattern;
-
-	/** */
-	public static String FetchGerritChangePage_TagNameText;
-
-	/** */
-	public static String FetchGerritChangePage_TagRadio;
-
-	/** */
-	public static String FetchGerritChangePage_UnknownChangeRefMessage;
-
-	/** */
-	public static String FetchGerritChangePage_UpdateRadio;
-
-	/** */
-	public static String FetchGerritChangePage_UriLabel;
 
 	/** */
 	public static String FetchGerritChangeWizard_WizardTitle;
