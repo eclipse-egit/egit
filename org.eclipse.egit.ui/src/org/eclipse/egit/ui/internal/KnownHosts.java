@@ -18,10 +18,7 @@ import org.eclipse.jgit.annotations.NonNull;
 
 /**
  * Internal cache of known host names read from the plugin's
- * {@link IDialogSettings}. To be accessed only in the UI thread. The plugin
- * should store back the values in its
- * {@link Activator#stop(org.osgi.framework.BundleContext)} method by calling
- * {@link #store()}.
+ * {@link IDialogSettings}. To be accessed only in the UI thread.
  */
 public final class KnownHosts {
 
@@ -31,8 +28,6 @@ public final class KnownHosts {
 			"github.com", "bitbucket.org" }; //$NON-NLS-1$ //$NON-NLS-2$
 
 	private static HostStore knownHosts;
-
-	private static boolean modified;
 
 	private KnownHosts() {
 		// Utility class shall not be instatiated.
@@ -57,20 +52,10 @@ public final class KnownHosts {
 	 */
 	public static void addKnownHost(@NonNull String hostName) {
 		getKnownHosts().put(hostName, null);
-		modified = true; // At least the access order has changed
-	}
-
-	/**
-	 * Stores back the known host names into the plugin's
-	 * {@link IDialogSettings} if they were changed.
-	 */
-	public static void store() {
-		if (modified) {
-			String[] values = new String[knownHosts.size()];
-			Activator.getDefault().getDialogSettings().put(KNOWN_HOSTS_KEY,
-					knownHosts.keySet().toArray(values));
-			modified = false;
-		}
+		// Store the change back to the plugin's IDialogSettings; which will be
+		// persisted by the framework when the bundle stops.
+		Activator.getDefault().getDialogSettings().put(KNOWN_HOSTS_KEY,
+				knownHosts.keySet().toArray(new String[0]));
 	}
 
 	private static HostStore getKnownHosts() {

@@ -23,7 +23,6 @@ import java.util.List;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Platform;
 import org.eclipse.core.runtime.Status;
-import org.eclipse.egit.ui.internal.KnownHosts;
 import org.eclipse.jface.resource.JFaceResources;
 import org.eclipse.jface.resource.LocalResourceManager;
 import org.eclipse.jface.resource.ResourceManager;
@@ -318,12 +317,6 @@ public class Activator extends AbstractUIPlugin {
 		}
 		super.stop(context);
 		setActivator(null);
-	}
-
-	@Override
-	protected void saveDialogSettings() {
-		KnownHosts.store();
-		super.saveDialogSettings();
 	}
 
 	/**
