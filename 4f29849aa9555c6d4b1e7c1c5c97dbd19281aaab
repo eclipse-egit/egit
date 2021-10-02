@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "55dfa8a3_c6fb8b65",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/Activator.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 328,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2021-10-02T10:24:07Z",
+      "side": 0,
+      "message": "It\u0027s not just deprecated; I don\u0027t even see any caller of this anymore...",
+      "revId": "4f29849aa9555c6d4b1e7c1c5c97dbd19281aaab",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": true
+    }
+  ]
+}
