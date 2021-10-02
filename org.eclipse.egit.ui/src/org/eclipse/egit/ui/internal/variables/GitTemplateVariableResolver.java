@@ -10,20 +10,14 @@
  *******************************************************************************/
 package org.eclipse.egit.ui.internal.variables;
 
-import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.Method;
 import java.util.List;
 
 import org.eclipse.core.resources.IProject;
 import org.eclipse.core.runtime.Adapters;
-import org.eclipse.core.runtime.IAdaptable;
 import org.eclipse.egit.core.project.RepositoryMapping;
-import org.eclipse.egit.ui.Activator;
-import org.eclipse.jdt.core.IJavaProject;
 import org.eclipse.jface.text.templates.TemplateContext;
 import org.eclipse.jface.text.templates.TemplateVariable;
 import org.eclipse.jface.text.templates.TemplateVariableResolver;
-import org.eclipse.jgit.annotations.Nullable;
 import org.eclipse.jgit.lib.Repository;
 import org.eclipse.jgit.lib.StoredConfig;
 
@@ -129,54 +123,9 @@ public class GitTemplateVariableResolver extends TemplateVariableResolver {
 	 */
 	protected static void resolveVariable(TemplateVariable variable,
 			TemplateContext context) {
-		IProject project = getProject(context);
+		IProject project = Adapters.adapt(context, IProject.class);
 		if (project != null) {
 			resolveVariable(variable, project);
 		}
-	}
-
-	/**
-	 * Retrieves the current project from a template context.
-	 *
-	 * @param context
-	 *            the current template context.
-	 * @return the current project
-	 */
-	@Nullable
-	protected static IProject getProject(TemplateContext context) {
-		// We can't use instanceof here because of the compiler error on 4.10
-		// platform saying that TemplateContext is always IAdaptable
-		if (IAdaptable.class.isInstance(context)) {
-			return Adapters.adapt(context, IProject.class);
-		}
-		// Note: block below can be removed after EGit minimum target platform
-		// will be 4.10, see bug 539095 for details
-		if (Activator.hasJavaPlugin()) {
-			boolean hasPublicMethod = context.getClass().getSimpleName()
-					.equals("CodeTemplateContext"); //$NON-NLS-1$
-			try {
-				Method method;
-				if (hasPublicMethod) {
-					// CodeTemplateContext has public getJavaProject() method
-					method = context.getClass().getMethod("getJavaProject"); //$NON-NLS-1$
-				} else {
-					// JavaContext inherits from CompilationUnitContext which
-					// has protected getJavaProject() method
-					method = context.getClass().getSuperclass()
-							.getDeclaredMethod("getJavaProject"); //$NON-NLS-1$
-					method.setAccessible(true);
-				}
-				Object result = method.invoke(context);
-				if (result instanceof IJavaProject) {
-					IJavaProject javaProject = (IJavaProject) result;
-					return javaProject.getProject();
-				}
-			} catch (NoSuchMethodException | SecurityException
-					| IllegalAccessException | IllegalArgumentException
-					| InvocationTargetException e) {
-				return null;
-			}
-		}
-		return null;
 	}
 }
