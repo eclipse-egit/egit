@@ -35,7 +35,7 @@ import org.eclipse.swt.widgets.ToolItem;
  * Tooltips for the staging viewer. On hover over selected staging entries, pop
  * up a toolbar giving quick access to the most common actions.
  */
-public class StagingViewTooltips extends FixedJFaceToolTip {
+public class StagingViewTooltips extends ToolTip {
 
 	private final TreeViewer viewer;
 
