@@ -18,9 +18,9 @@ import org.eclipse.egit.core.JobFamilies;
 import org.eclipse.egit.ui.Activator;
 import org.eclipse.egit.ui.internal.selection.SelectionRepositoryStateCache;
 import org.eclipse.egit.ui.internal.variables.GitTemplateVariableResolver;
-import org.eclipse.jface.text.templates.ContextTypeRegistry;
 import org.eclipse.jface.text.templates.TemplateContextType;
 import org.eclipse.swt.widgets.Display;
+import org.eclipse.text.templates.ContextTypeRegistry;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.progress.IProgressService;
 import org.osgi.service.component.annotations.Component;
@@ -100,10 +100,11 @@ public class StartEventListener implements EventHandler {
 			try {
 				ContextTypeRegistry codeTemplateContextRegistry = org.eclipse.jdt.internal.ui.JavaPlugin
 						.getDefault().getCodeTemplateContextRegistry();
-				Iterator<?> ctIter = codeTemplateContextRegistry.contextTypes();
+				Iterator<TemplateContextType> ctIter = codeTemplateContextRegistry
+						.contextTypes();
 
 				while (ctIter.hasNext()) {
-					TemplateContextType contextType = (TemplateContextType) ctIter
+					TemplateContextType contextType = ctIter
 							.next();
 					contextType.addResolver(new GitTemplateVariableResolver(
 							"git_config", //$NON-NLS-1$
