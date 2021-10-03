@@ -439,6 +439,31 @@
             </with>
          </or>
       </definition>
+      <definition id="org.eclipse.egit.ui.fileOrFolderFetchFromGithub">
+         <or>
+            <test
+                  property="GitSelection.fileOrFolderInRepository"
+                  args="hasGithubConfiguration">
+            </test>
+            <with variable="activePart">
+               <instanceof
+                     value="org.eclipse.ui.IEditorPart">
+               </instanceof>
+               <with
+                     variable="activeEditorInput">
+                  <adapt
+                        type="org.eclipse.core.resources.IResource">
+                     <test
+                           property="GitResource.isShared">
+                     </test>
+                     <test
+                           property="GitResource.hasGithubConfiguration">
+                     </test>
+                  </adapt>
+               </with>
+            </with>
+         </or>
+      </definition>
       <definition
             id="org.eclipse.egit.ui.resourcesAllInRepository">
             <test
@@ -1053,6 +1078,12 @@
             defaultHandler="org.eclipse.egit.ui.internal.commands.shared.FetchChangeFromGerritCommand"
             id="org.eclipse.egit.ui.FetchGerritChange"
             name="%FetchFromGerritCommand.name">
+      </command>
+      <command
+            categoryId="org.eclipse.egit.ui.commandCategory"
+            defaultHandler="org.eclipse.egit.ui.internal.commands.shared.FetchPullRequestFromGithubCommand"
+            id="org.eclipse.egit.ui.FetchGithubPR"
+            name="%FetchFromGithubCommand.name">
       </command>
       <command
             categoryId="org.eclipse.egit.ui.commandCategory"
@@ -4668,6 +4699,29 @@
                </and>
             </visibleWhen>
          </command>
+         <command
+               commandId="org.eclipse.egit.ui.FetchGithubPR"
+               label="%FetchFromGithubCommand.label"
+               style="push">
+            <visibleWhen
+                  checkEnabled="false">
+               <and>
+                  <count
+                        value="1">
+                  </count>
+                  <iterate>
+                     <and>
+                        <instanceof
+                              value="org.eclipse.egit.ui.internal.repository.tree.RepositoryNode">
+                        </instanceof>
+                        <test
+                              property="GitRepository.hasGithubConfiguration">
+                        </test>
+                     </and>
+                  </iterate>
+               </and>
+            </visibleWhen>
+         </command>
          <dynamic
                   class="org.eclipse.egit.ui.internal.actions.PushMenu"
                   id="org.eclipse.egit.ui.repository.tree.popup.Push">
@@ -5571,6 +5625,18 @@
                      </test>
                   </visibleWhen>
                </command>
+               <command
+                     commandId="org.eclipse.egit.ui.FetchGithubPR"
+                     label="%FetchFromGithubCommand.label"
+                     style="push">
+                  <visibleWhen
+                        checkEnabled="false">
+                     <test
+                           property="GitSelection.projectsSingleRepository"
+                           args="hasGithubConfiguration">
+                     </test>
+                  </visibleWhen>
+               </command>
                <separator
                      name="org.eclipse.egit.ui.remote.group1"
                      visible="true">
@@ -5679,6 +5745,17 @@
                         checkEnabled="false">
                      <reference
                            definitionId="org.eclipse.egit.ui.fileOrFolderFetchFromGerrit">
+                     </reference>
+                  </visibleWhen>
+               </command>
+               <command
+                     commandId="org.eclipse.egit.ui.FetchGithubPR"
+                     label="%FetchFromGithubCommand.label"
+                     style="push">
+                  <visibleWhen
+                        checkEnabled="false">
+                     <reference
+                           definitionId="org.eclipse.egit.ui.fileOrFolderFetchFromGithub">
                      </reference>
                   </visibleWhen>
                </command>
@@ -6634,6 +6711,10 @@
             icon="icons/obj16/gerrit_fetch.png">
       </image>
       <image
+            commandId="org.eclipse.egit.ui.FetchGithubPR"
+            icon="icons/obj16/fetch.png">
+      </image>
+      <image
             commandId="org.eclipse.egit.ui.team.AddToIndex"
             icon="icons/obj16/add.png">
       </image>
@@ -6836,14 +6917,14 @@
             class="org.eclipse.egit.ui.internal.repository.tree.RepositoriesViewPropertyTester"
             id="org.eclipse.egit.ui.RepositoryTester"
             namespace="GitRepository"
-            properties="isBare,isSafe,canCheckout,canCommit,canAmend,canResetHead,canStash,isRefCheckedOut,isLocalBranch,fetchExists,pushExists,canMerge,canAbortRebase,canContinueRebase,isSubmodule,containsHead,hasGerritConfiguration,canFetchFromGerrit,canPushToGerrit,canEnableLfs"
+            properties="isBare,isSafe,canCheckout,canCommit,canAmend,canResetHead,canStash,isRefCheckedOut,isLocalBranch,fetchExists,pushExists,canMerge,canAbortRebase,canContinueRebase,isSubmodule,containsHead,hasGithubConfiguration,hasGerritConfiguration,canFetchFromGerrit,canPushToGerrit,canEnableLfs"
             type="org.eclipse.egit.ui.internal.repository.tree.RepositoryTreeNode">
       </propertyTester>
       <propertyTester
             class="org.eclipse.egit.ui.internal.ResourcePropertyTester"
             id="org.eclipse.egit.ui.ResourceTester"
             namespace="GitResource"
-            properties="isShared,isContainer,isSafe,canCheckout,canCommit,canAmend,canResetHead,canAbortRebase,canContinueRebase,hasGerritConfiguration,canFetchFromGerrit,canPushToGerrit"
+            properties="isShared,isContainer,isSafe,canCheckout,canCommit,canAmend,canResetHead,canAbortRebase,canContinueRebase,hasGithubConfiguration,hasGerritConfiguration,canFetchFromGerrit,canPushToGerrit"
             type="org.eclipse.core.resources.IResource">
       </propertyTester>
       <propertyTester

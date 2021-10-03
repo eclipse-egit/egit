@@ -3129,6 +3129,24 @@ public class UIText extends NLS {
 	public static String FetchGerritChangeWizard_WizardTitle;
 
 	/** */
+	public static String FetchGithubPullRequestPage_ChangeLabel;
+
+	/** */
+	public static String FetchGithubPullRequestPage_ChangeNameSingular;
+
+	/** */
+	public static String FetchGithubPullRequestPage_ChangeNamePlural;
+
+	/** */
+	public static String FetchGithubPullRequestPage_ContentAssistLabel;
+
+	/** */
+	public static String FetchGithubPullRequestPage_SuggestedRefNamePattern;
+
+	/** */
+	public static String FetchGithubPullRequestWizard_WizardTitle;
+
+	/** */
 	public static String FetchResultDialog_ConfigureButton;
 
 	/** */
@@ -4359,6 +4377,9 @@ public class UIText extends NLS {
 
 	/** */
 	public static String GerritSelectRepositoryPage_FinishButtonLabel;
+
+	/** */
+	public static String GithubSelectRepositoryPage_PageTitle;
 
 	/** */
 	public static String MergeAction_CannotMerge;
