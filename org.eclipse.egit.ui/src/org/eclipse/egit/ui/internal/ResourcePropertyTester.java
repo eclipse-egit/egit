@@ -21,6 +21,7 @@ import java.util.Locale;
 
 import org.eclipse.core.resources.IResource;
 import org.eclipse.egit.core.internal.gerrit.GerritUtil;
+import org.eclipse.egit.core.internal.hosts.GitHosts;
 import org.eclipse.egit.core.project.RepositoryMapping;
 import org.eclipse.egit.ui.internal.expressions.AbstractPropertyTester;
 import org.eclipse.egit.ui.internal.selection.SelectionRepositoryStateCache;
@@ -117,6 +118,16 @@ public class ResourcePropertyTester extends AbstractPropertyTester {
 			if ("hasHead".equals(property)) { //$NON-NLS-1$
 				return SelectionRepositoryStateCache.INSTANCE
 						.getHead(repository) != null;
+			}
+			if ("hasGithubConfiguration".equals(property)) { //$NON-NLS-1$
+				try {
+					return GitHosts.hasGithubConfig(
+							SelectionRepositoryStateCache.INSTANCE
+									.getConfig(repository));
+				} catch (URISyntaxException e) {
+					// No logging in a property tester. Assume no Github config.
+					return false;
+				}
 			}
 			if ("hasGerritConfiguration".equals(property)) { //$NON-NLS-1$
 				return hasGerritConfiguration(repository);
