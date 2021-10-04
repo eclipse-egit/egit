@@ -187,4 +187,8 @@
       </description>
    </category-def>
    <category-def name="EGit.dependencies" label="Git integration for Eclipse - dependencies"/>
+   <repository-reference location="https://download.eclipse.org/egit/github/updates" enabled="true" />
+   <repository-reference location="https://download.eclipse.org/egit/github/updates-nightly" enabled="true" />
+   <repository-reference location="https://download.eclipse.org/e4/snapshots/org.eclipse.e4.ui" enabled="true" />
+   <repository-reference location="https://download.eclipse.org/tools/orbit/downloads/drops/R20210825222808/repository" enabled="true" />
 </site>

@@ -34,45 +34,8 @@
     <statsTrackedArtifacts>org.eclipse.jgit.feature,org.eclipse.jgit.source.feature,org.eclipse.jgit.pgm.feature,org.eclipse.jgit.pgm.source.feature,org.eclipse.jgit.http.apache.feature,org.eclipse.jgit.ssh.apache.feature,org.eclipse.egit.feature,org.eclipse.egit.gitflow.feature,org.eclipse.egit.mylyn.feature,org.eclipse.egit.source.feature</statsTrackedArtifacts>
   </properties>
 
-  <pluginRepositories>
-    <pluginRepository>
-      <id>jboss-public-repository-group</id>
-      <name>JBoss Public Repository Group</name>
-      <url>https://repository.jboss.org/nexus/content/groups/public/</url>
-    </pluginRepository>
-  </pluginRepositories>
   <build>
     <plugins>
-      <plugin>
-        <groupId>org.jboss.tools.tycho-plugins</groupId>
-        <artifactId>repository-utils</artifactId>
-        <executions>
-          <execution>
-            <id>generate-facade</id>
-            <phase>package</phase>
-            <goals>
-              <goal>generate-repository-facade</goal>
-            </goals>
-            <configuration>
-              <siteTemplateFolder>siteTemplate/</siteTemplateFolder>
-              <!-- Symbols are used while expanding index.html template -->
-              <symbols>
-                <update.site.name>EGit Update Site</update.site.name>
-                <update.site.description>Use this URL in Eclipse to install EGit and JGit</update.site.description>
-                <update.site.version>${project.version}</update.site.version>
-                <target.eclipse.version>4.17.0 (Eclipse 2020-09) or newer</target.eclipse.version>
-              </symbols>
-              <associateSites>
-                <site>https://download.eclipse.org/egit/github/updates</site>
-                <site>https://download.eclipse.org/egit/github/updates-nightly</site>
-                <site>https://download.eclipse.org/e4/snapshots/org.eclipse.e4.ui</site>
-                <site>https://download.eclipse.org/tools/orbit/downloads/drops/R20210825222808/repository</site>
-              </associateSites>
-            </configuration>
-          </execution>
-        </executions>
-      </plugin>
-
       <plugin>
         <groupId>org.eclipse.tycho.extras</groupId>
         <artifactId>tycho-eclipserun-plugin</artifactId>
