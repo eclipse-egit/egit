@@ -3129,22 +3129,22 @@ public class UIText extends NLS {
 	public static String FetchGerritChangeWizard_WizardTitle;
 
 	/** */
-	public static String FetchGithubPullRequestPage_ChangeLabel;
-
-	/** */
-	public static String FetchGithubPullRequestPage_ChangeNameSingular;
-
-	/** */
-	public static String FetchGithubPullRequestPage_ChangeNamePlural;
-
-	/** */
-	public static String FetchGithubPullRequestPage_ContentAssistLabel;
-
-	/** */
-	public static String FetchGithubPullRequestPage_SuggestedRefNamePattern;
-
-	/** */
 	public static String FetchGithubPullRequestWizard_WizardTitle;
+
+	/** */
+	public static String GitServer_PullRequestContentAssistLabel;
+
+	/** */
+	public static String GitServer_PullRequestLabel;
+
+	/** */
+	public static String GitServer_PullRequestPlural;
+
+	/** */
+	public static String GitServer_PullRequestRefNameSuggestion;
+
+	/** */
+	public static String GitServer_PullRequestSingular;
 
 	/** */
 	public static String FetchResultDialog_ConfigureButton;
