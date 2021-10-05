@@ -42,6 +42,7 @@ public class FetchGithubPullRequestWizard extends AbstractFetchFromHostWizard {
 	@Override
 	protected AbstractFetchFromHostPage createPage(Repository repo,
 			String initialText) {
-		return new FetchGithubPullRequestPage(repo, initialText);
+		return new FetchChangeFromServerPage(GitServer.GITHUB, repo,
+				initialText);
 	}
 }

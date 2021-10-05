@@ -20,6 +20,7 @@ import org.eclipse.jgit.lib.Repository;
  * Abstract base for wizards for fetching a change from a remote host.
  */
 public abstract class AbstractFetchFromHostWizard extends Wizard {
+
 	private final Repository repository;
 
 	AbstractFetchFromHostPage page;
