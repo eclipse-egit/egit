@@ -121,9 +121,10 @@ public class ResourcePropertyTester extends AbstractPropertyTester {
 			}
 			if ("hasGithubConfiguration".equals(property)) { //$NON-NLS-1$
 				try {
-					return GitHosts.hasGithubConfig(
+					return GitHosts.hasServerConfig(
 							SelectionRepositoryStateCache.INSTANCE
-									.getConfig(repository));
+									.getConfig(repository),
+							GitHosts.ServerType.GITHUB);
 				} catch (URISyntaxException e) {
 					// No logging in a property tester. Assume no Github config.
 					return false;

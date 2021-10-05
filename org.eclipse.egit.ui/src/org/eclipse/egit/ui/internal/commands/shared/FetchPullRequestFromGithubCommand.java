@@ -37,9 +37,10 @@ public class FetchPullRequestFromGithubCommand
 			@Override
 			protected boolean includeRepository(Repository repo) {
 				try {
-					return GitHosts.hasGithubConfig(
+					return GitHosts.hasServerConfig(
 							SelectionRepositoryStateCache.INSTANCE
-									.getConfig(repo));
+									.getConfig(repo),
+							GitHosts.ServerType.GITHUB);
 				} catch (URISyntaxException e) {
 					return false;
 				}
