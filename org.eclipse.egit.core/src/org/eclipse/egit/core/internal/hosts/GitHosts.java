@@ -32,18 +32,24 @@ public final class GitHosts {
 
 	private static final String GITHUB_ID = "github"; //$NON-NLS-1$
 
-	private static final Pattern GITHUB_REMOTE_URL_PATTERN = Pattern.compile(
-			"(?:(?:https?|ssh)://)?(?:[^@:/]+(?::[^@:/]*)?@)?github.com[:/][^/]+/.*\\.git"); //$NON-NLS-1$
-
-	private static final Pattern GITHUB_PR_URL_PATTERN = Pattern
-			.compile("https?://.*/pull/(\\d+)"); //$NON-NLS-1$
+	private static final String GITLAB_ID = "gitlab"; //$NON-NLS-1$
 
 	private static final Pattern DIGITS = Pattern.compile("\\d+"); //$NON-NLS-1$
 
 	private static final Map<String, Collection<Pattern>> URIS = new ConcurrentHashMap<>();
 
+	private static Pattern remote(String hosts) {
+		return Pattern
+				.compile("(?:(?:https?|ssh)://)?(?:[^@:/]+(?::[^@:/]*)?@)?(?:" //$NON-NLS-1$
+						+ hosts + ")[:/][^/]+/.*\\.git"); //$NON-NLS-1$
+	}
+
 	static {
-		addServerPattern(GITHUB_ID, GITHUB_REMOTE_URL_PATTERN);
+		addServerPattern(GITHUB_ID, remote("github\\.com")); //$NON-NLS-1$
+
+		// gitlab.com, but also gitlab.eclipse.org or gitlab.gnome.org etc.
+		addServerPattern(GITLAB_ID,
+				remote("gitlab(?:\\.[^.:/]+)?\\.(?:com|org)")); //$NON-NLS-1$
 	}
 
 	private GitHosts() {
@@ -58,7 +64,11 @@ public final class GitHosts {
 
 		/** A {@link ServerType} describing Github git servers. */
 		GITHUB(GITHUB_ID, "refs/pull/", "/head", //$NON-NLS-1$ //$NON-NLS-2$
-				GITHUB_PR_URL_PATTERN);
+				"https?://.*/pull/(\\d+)"), //$NON-NLS-1$
+
+		/** A {@link ServerType} describing Gitlab git servers. */
+		GITLAB(GITLAB_ID, "refs/merge-requests/", "/head", //$NON-NLS-1$ //$NON-NLS-2$
+				"https?://.*/merge_requests/(\\d+)"); //$NON-NLS-1$
 
 		/** Constant indicating "no change ID". */
 		public static final long NO_CHANGE_ID = -1;
@@ -76,16 +86,18 @@ public final class GitHosts {
 		private final Pattern inputPattern;
 
 		private ServerType(String id, String refPrefix, String refSuffix,
-				Pattern urlPattern) {
+				String webUrl) {
 			this.id = id;
-			this.urlPattern = urlPattern;
 			this.refPrefix = refPrefix;
 			this.refSuffix = refSuffix;
-			refPattern = Pattern.compile(refPrefix + "(\\d+)" + refSuffix); //$NON-NLS-1$
+			refPattern = refSuffix != null
+					? Pattern.compile(refPrefix + "(\\d+)" + refSuffix) //$NON-NLS-1$
+					: Pattern.compile(refPrefix + "(\\d+)"); //$NON-NLS-1$
 			inputPattern = refSuffix != null
 					? Pattern
 							.compile(refPrefix + "(\\d+)(?:" + refSuffix + ")?") //$NON-NLS-1$ //$NON-NLS-2$
 					: refPattern;
+			urlPattern = Pattern.compile(webUrl);
 		}
 
 		/**

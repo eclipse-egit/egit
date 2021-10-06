@@ -130,6 +130,17 @@ public class ResourcePropertyTester extends AbstractPropertyTester {
 					return false;
 				}
 			}
+			if ("hasGitlabConfiguration".equals(property)) { //$NON-NLS-1$
+				try {
+					return GitHosts.hasServerConfig(
+							SelectionRepositoryStateCache.INSTANCE
+									.getConfig(repository),
+							GitHosts.ServerType.GITLAB);
+				} catch (URISyntaxException e) {
+					// No logging in a property tester. Assume no Gitlab config.
+					return false;
+				}
+			}
 			if ("hasGerritConfiguration".equals(property)) { //$NON-NLS-1$
 				return hasGerritConfiguration(repository);
 			}
