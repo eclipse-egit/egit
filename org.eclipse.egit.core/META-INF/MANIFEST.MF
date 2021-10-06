@@ -3,7 +3,7 @@ Bundle-ManifestVersion: 2
 Bundle-Name: %Bundle-Name
 Automatic-Module-Name: org.eclipse.egit.core
 Bundle-SymbolicName: org.eclipse.egit.core;singleton:=true
-Bundle-Version: 6.0.0.qualifier
+Bundle-Version: 6.0.0.202110060947-m1
 Bundle-Activator: org.eclipse.egit.core.Activator
 Bundle-Vendor: %Bundle-Vendor
 Bundle-Localization: plugin
