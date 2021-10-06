@@ -52,6 +52,52 @@ public enum GitServer {
 		public String getChangeNamePlural() {
 			return UIText.GitServer_PullRequestPlural;
 		}
+
+		@Override
+		public String getWizardTitle() {
+			return UIText.GitServer_WizardTitleGithub;
+		}
+	},
+
+	/**
+	 * A {@link GitServer} describing Gitlab git servers.
+	 */
+	GITLAB(ServerType.GITLAB) {
+
+		@Override
+		public String getName() {
+			return "Gitlab"; //$NON-NLS-1$
+		}
+
+		@Override
+		public String getProposalLabel() {
+			return UIText.GitServer_MergeRequestContentAssistLabel;
+		}
+
+		@Override
+		public String getBranchName() {
+			return UIText.GitServer_MergeRequestRefNameSuggestion;
+		}
+
+		@Override
+		public String getChangeLabel() {
+			return UIText.GitServer_MergeRequestLabel;
+		}
+
+		@Override
+		public String getChangeNameSingular() {
+			return UIText.GitServer_MergeRequestSingular;
+		}
+
+		@Override
+		public String getChangeNamePlural() {
+			return UIText.GitServer_MergeRequestPlural;
+		}
+
+		@Override
+		public String getWizardTitle() {
+			return UIText.GitServer_WizardTitleGitlab;
+		}
 	};
 
 	private final ServerType serverType;
@@ -114,4 +160,12 @@ public enum GitServer {
 	 * @return the UI text
 	 */
 	public abstract String getChangeNamePlural();
+
+	/**
+	 * Retrieves the title for a wizard to fetch changes from a
+	 * {@link GitServer}.
+	 *
+	 * @return the title
+	 */
+	public abstract String getWizardTitle();
 }
