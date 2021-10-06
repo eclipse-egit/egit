@@ -38,12 +38,27 @@ public final class GitHosts {
 	private static final Pattern GITHUB_PR_URL_PATTERN = Pattern
 			.compile("https?://.*/pull/(\\d+)"); //$NON-NLS-1$
 
+	private static final String GITLAB_ID = "gitlab"; //$NON-NLS-1$
+
+	private static final Pattern GITLAB_REMOTE_URL_PATTERN = Pattern.compile(
+			"(?:(?:https?|ssh)://)?(?:[^@:/]+(?::[^@:/]*)?@)?gitlab.com[:/][^/]+/.*\\.git"); //$NON-NLS-1$
+
+	private static final Pattern ECLIPSE_GITLAB_REMOTE_URL_PATTERN = Pattern
+			.compile(
+					"(?:(?:https?|ssh)://)?(?:[^@:/]+(?::[^@:/]*)?@)?gitlab.eclipse.org[:/][^/]+/.*\\.git"); //$NON-NLS-1$
+
+	private static final Pattern GITLAB_PR_URL_PATTERN = Pattern
+			.compile("https?://.*/merge_requests/(\\d+)"); //$NON-NLS-1$
+
 	private static final Pattern DIGITS = Pattern.compile("\\d+"); //$NON-NLS-1$
 
 	private static final Map<String, Collection<Pattern>> URIS = new ConcurrentHashMap<>();
 
 	static {
 		addServerPattern(GITHUB_ID, GITHUB_REMOTE_URL_PATTERN);
+
+		addServerPattern(GITLAB_ID, GITLAB_REMOTE_URL_PATTERN);
+		addServerPattern(GITLAB_ID, ECLIPSE_GITLAB_REMOTE_URL_PATTERN);
 	}
 
 	private GitHosts() {
@@ -58,7 +73,11 @@ public final class GitHosts {
 
 		/** A {@link ServerType} describing Github git servers. */
 		GITHUB(GITHUB_ID, "refs/pull/", "/head", //$NON-NLS-1$ //$NON-NLS-2$
-				GITHUB_PR_URL_PATTERN);
+				GITHUB_PR_URL_PATTERN),
+
+		/** A {@link ServerType} describing Gitlab git servers. */
+		GITLAB(GITLAB_ID, "refs/merge-requests/", "/head", //$NON-NLS-1$ //$NON-NLS-2$
+				GITLAB_PR_URL_PATTERN);
 
 		/** Constant indicating "no change ID". */
 		public static final long NO_CHANGE_ID = -1;
