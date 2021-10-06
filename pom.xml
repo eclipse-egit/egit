@@ -19,7 +19,7 @@
 
   <groupId>org.eclipse.egit</groupId>
   <artifactId>egit-parent</artifactId>
-  <version>6.0.0.202110060947-m1</version>
+  <version>6.0.0-SNAPSHOT</version>
   <packaging>pom</packaging>
 
   <name>EGit Parent</name>
@@ -61,7 +61,7 @@
 
   <properties>
     <maven-version-minimum>3.6.3</maven-version-minimum>
-    <egit-version>6.0.0.202110060947-m1</egit-version>
+    <egit-version>6.0.0-SNAPSHOT</egit-version>
     <tycho-version>2.5.0</tycho-version>
     <tycho-extras-version>${tycho-version}</tycho-extras-version>
     <jboss-tycho-plugins-version>2.2.0</jboss-tycho-plugins-version>
