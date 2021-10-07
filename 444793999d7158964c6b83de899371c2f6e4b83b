@@ -16,6 +16,24 @@
       "revId": "444793999d7158964c6b83de899371c2f6e4b83b",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d4ba476e_76258d08",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/commands/shared/FetchChangeFromServerCommandFactory.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2021-10-07T17:12:08Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a74f1d37_17a0a97b",
+      "revId": "444793999d7158964c6b83de899371c2f6e4b83b",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
     }
   ]
 }
