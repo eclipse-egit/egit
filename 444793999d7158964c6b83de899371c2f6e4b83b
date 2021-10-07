@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a74f1d37_17a0a97b",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/commands/shared/FetchChangeFromServerCommandFactory.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2021-10-07T09:15:19Z",
+      "side": 1,
+      "message": "Missing copyright notice.",
+      "revId": "444793999d7158964c6b83de899371c2f6e4b83b",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": true
+    }
+  ]
+}
