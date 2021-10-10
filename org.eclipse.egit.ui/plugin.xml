@@ -613,6 +613,15 @@
       </page>
       <page
             category="org.eclipse.egit.ui.GitPreferences"
+            class="org.eclipse.egit.ui.internal.preferences.GitServersPreferencePage"
+            id="org.eclipse.egit.ui.internal.preferences.GitServersPreferencePage"
+            name="%GitServersPreferencePage.name">
+         <keywordReference
+               id="org.eclipse.egit.ui.internal.preferences.GitServersPreferencePage">
+         </keywordReference>
+      </page>
+      <page
+            category="org.eclipse.egit.ui.GitPreferences"
             class="org.eclipse.egit.ui.internal.preferences.HistoryPreferencePage"
             id="org.eclipse.egit.ui.internal.preferences.HistoryPreferencePage"
             name="%HistoryPreferencePage.name">
@@ -703,6 +712,10 @@
       <keyword
             id="org.eclipse.egit.ui.internal.preferences.SynchronizePreferencePage"
             label="%SynchronizePreferencePage_keywords">
+      </keyword>
+      <keyword
+            id="org.eclipse.egit.ui.internal.preferences.GitServersPreferencePage"
+            label="%GitServersPreferencePage_keywords">
       </keyword>
       <keyword
             id="org.eclipse.egit.ui.internal.preferences.HistoryPreferencePage"

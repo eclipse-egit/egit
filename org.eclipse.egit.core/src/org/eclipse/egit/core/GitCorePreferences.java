@@ -111,4 +111,8 @@ public final class GitCorePreferences {
 	 */
 	public static final String core_gpgSigner = "core_gpg_signer"; //$NON-NLS-1$
 
+	/**
+	 * Contains a memento containing the configured GitHost URIs.
+	 */
+	public static final String core_gitServers = "core_git_servers"; //$NON-NLS-1$
 }

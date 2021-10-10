@@ -11,18 +11,25 @@
 package org.eclipse.egit.core.internal.hosts;
 
 import java.net.URISyntaxException;
+import java.text.MessageFormat;
 import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.CopyOnWriteArrayList;
+import java.util.function.BiConsumer;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
+import org.eclipse.core.runtime.preferences.IEclipsePreferences;
+import org.eclipse.egit.core.Activator;
+import org.eclipse.egit.core.GitCorePreferences;
+import org.eclipse.egit.core.internal.CoreText;
 import org.eclipse.jgit.lib.Config;
 import org.eclipse.jgit.transport.RemoteConfig;
 import org.eclipse.jgit.transport.URIish;
+import org.eclipse.jgit.util.StringUtils;
 
 /**
  * Provides {@link ServerType}s and utilities for detecting git server types
@@ -36,7 +43,9 @@ public final class GitHosts {
 
 	private static final Pattern DIGITS = Pattern.compile("\\d+"); //$NON-NLS-1$
 
-	private static final Map<String, Collection<Pattern>> URIS = new ConcurrentHashMap<>();
+	private static final Map<String, Collection<Pattern>> DEFAULT_URIS = new ConcurrentHashMap<>();
+
+	private static volatile Map<String, Collection<Pattern>> CUSTOM_URIS = new ConcurrentHashMap<>();
 
 	private static Pattern remote(String hosts) {
 		return Pattern
@@ -45,10 +54,10 @@ public final class GitHosts {
 	}
 
 	static {
-		addServerPattern(GITHUB_ID, remote("github\\.com")); //$NON-NLS-1$
+		addServerPattern(DEFAULT_URIS, GITHUB_ID, remote("github\\.com")); //$NON-NLS-1$
 
 		// gitlab.com, but also gitlab.eclipse.org or gitlab.gnome.org etc.
-		addServerPattern(GITLAB_ID,
+		addServerPattern(DEFAULT_URIS, GITLAB_ID,
 				remote("gitlab(?:\\.[^.:/]+)?\\.(?:com|org)")); //$NON-NLS-1$
 	}
 
@@ -119,7 +128,11 @@ public final class GitHosts {
 		 *         this {@link ServerType}, {@code false} otherwise
 		 */
 		public boolean uriMatches(String uri) {
-			Collection<Pattern> patterns = URIS.get(this.getId());
+			return matches(DEFAULT_URIS.get(this.getId()), uri)
+					|| matches(CUSTOM_URIS.get(this.getId()), uri);
+		}
+
+		private boolean matches(Collection<Pattern> patterns, String uri) {
 			return patterns != null && patterns.stream()
 					.anyMatch(p -> p.matcher(uri).matches());
 		}
@@ -256,28 +269,76 @@ public final class GitHosts {
 	 *             if the {@link Config} is invalid
 	 */
 	public static Collection<RemoteConfig> getServerConfigs(Config config,
-			ServerType server)
-			throws URISyntaxException {
+			ServerType server) throws URISyntaxException {
 		return RemoteConfig.getAllRemoteConfigs(config).stream()
 				.filter(rc -> isServerConfig(rc, server))
 				.collect(Collectors.toList());
 	}
 
 	/**
-	 * Adds a {@link Pattern} matching URIs for a given {@link ServerType}.
+	 * Loads custom URI mappings from Eclipse preferences and installs them.
 	 *
-	 * @param server
-	 *            described by the pattern
-	 * @param uriPattern
-	 *            to add
+	 * @param preferences
+	 *            to load the data from
 	 */
-	public static void addServerPattern(ServerType server, Pattern uriPattern) {
-		addServerPattern(server.getId(), uriPattern);
+	public static void loadFromPreferences(IEclipsePreferences preferences) {
+		String data = preferences.get(GitCorePreferences.core_gitServers, null);
+		if (StringUtils.isEmptyOrNull(data)) {
+			CUSTOM_URIS.clear();
+			return;
+		}
+		Map<String, Collection<Pattern>> newData = new ConcurrentHashMap<>();
+		loadFromPreferences(data, (s, p) -> {
+			addServerPattern(newData, GitHosts.ServerType.valueOf(s).getId(),
+					remote(p));
+		});
+		CUSTOM_URIS = newData;
 	}
 
-	private static void addServerPattern(String id, Pattern uriPattern) {
+	/**
+	 * Loads custom URI mappings from Eclipse preferences and hands the value
+	 * pairs off to the given consumer.
+	 *
+	 * @param preferenceData
+	 *            to load the data from
+	 * @param consumer
+	 *            to process the value pairs
+	 */
+	public static void loadFromPreferences(String preferenceData,
+			BiConsumer<String, String> consumer) {
+		if (StringUtils.isEmptyOrNull(preferenceData)) {
+			return;
+		}
+		String[] lines = preferenceData.split("\n"); //$NON-NLS-1$
+		for (String line : lines) {
+			if (StringUtils.isEmptyOrNull(line)) {
+				continue;
+			}
+			String[] parts = line.split("\t", 2); //$NON-NLS-1$
+			if (parts.length != 2) {
+				continue;
+			}
+			try {
+				GitHosts.ServerType.valueOf(parts[0]);
+				String hostPattern = parts[1];
+				if (StringUtils.isEmptyOrNull(hostPattern)) {
+					continue;
+				}
+				Pattern.compile(hostPattern);
+				consumer.accept(parts[0], hostPattern);
+			} catch (IllegalArgumentException e) {
+				Activator.logError(MessageFormat.format(
+						CoreText.GitHosts_invalidPreference,
+						GitCorePreferences.core_gitServers, line), e);
+			}
+		}
+	}
+
+	private static void addServerPattern(
+			Map<String, Collection<Pattern>> collection, String id,
+			Pattern uriPattern) {
 		if (uriPattern != null) {
-			URIS.computeIfAbsent(id, key -> new CopyOnWriteArrayList<>())
+			collection.computeIfAbsent(id, key -> new CopyOnWriteArrayList<>())
 					.add(uriPattern);
 		}
 	}

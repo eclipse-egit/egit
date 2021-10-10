@@ -15,8 +15,12 @@ package org.eclipse.egit.core;
 
 import org.eclipse.core.resources.IWorkspace;
 import org.eclipse.core.runtime.Platform;
+import org.eclipse.core.runtime.preferences.IEclipsePreferences;
+import org.eclipse.core.runtime.preferences.IEclipsePreferences.IPreferenceChangeListener;
 import org.eclipse.core.runtime.preferences.IPreferencesService;
+import org.eclipse.core.runtime.preferences.InstanceScope;
 import org.eclipse.egit.core.internal.CoreText;
+import org.eclipse.egit.core.internal.hosts.GitHosts;
 import org.eclipse.egit.core.internal.indexdiff.IndexDiffCache;
 import org.eclipse.jgit.storage.file.WindowCacheConfig;
 import org.eclipse.jgit.util.SystemReader;
@@ -38,6 +42,10 @@ public class RepositoryInitializer {
 
 	private ServiceRegistration<RepositoryCache> registration;
 
+	private IEclipsePreferences gitCorePreferences;
+
+	private IPreferenceChangeListener prefsListener;
+
 	@Reference
 	void setPreferencesService(IPreferencesService service) {
 		this.preferencesService = service;
@@ -56,6 +64,15 @@ public class RepositoryInitializer {
 			Activator.logError(CoreText.Activator_ReconfigureWindowCacheError,
 					e);
 		}
+		gitCorePreferences = InstanceScope.INSTANCE
+				.getNode(Activator.PLUGIN_ID);
+		GitHosts.loadFromPreferences(gitCorePreferences);
+		prefsListener = event -> {
+			if (GitCorePreferences.core_gitServers.equals(event.getKey())) {
+				GitHosts.loadFromPreferences(gitCorePreferences);
+			}
+		};
+		gitCorePreferences.addPreferenceChangeListener(prefsListener);
 		registration = FrameworkUtil.getBundle(getClass()).getBundleContext()
 				.registerService(RepositoryCache.class,
 						RepositoryCache.INSTANCE, null);
@@ -64,6 +81,14 @@ public class RepositoryInitializer {
 	@Deactivate
 	void shutDown() {
 		registration.unregister();
+		if (gitCorePreferences != null) {
+			if (prefsListener != null) {
+				gitCorePreferences
+						.removePreferenceChangeListener(prefsListener);
+				prefsListener = null;
+			}
+			gitCorePreferences = null;
+		}
 		RepositoryUtil.INSTANCE.clear();
 		IndexDiffCache.INSTANCE.dispose();
 		RepositoryCache.INSTANCE.clear();
