@@ -193,6 +193,9 @@ public class CoreText extends NLS {
 	public static String ExternalGpgSigner_ttyInput;
 
 	/** */
+	public static String GitHosts_invalidPreference;
+
+	/** */
 	public static String GitSettings_gpgInvalidExecutable;
 
 	/** */
