@@ -16,6 +16,29 @@
       "revId": "4968f1c59fc0dae1b5c432f19356a3b5e5b858ef",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cb8b2699_948b3b89",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/repository/tree/command/PasteCommand.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 137,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2021-10-11T06:23:10Z",
+      "side": 1,
+      "message": "Should be -1. It\u0027s the end index (exclusive), not the length.",
+      "range": {
+        "startLine": 137,
+        "startChar": 51,
+        "endLine": 137,
+        "endChar": 54
+      },
+      "revId": "4968f1c59fc0dae1b5c432f19356a3b5e5b858ef",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": true
     }
   ]
 }
