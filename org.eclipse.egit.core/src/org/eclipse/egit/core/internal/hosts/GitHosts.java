@@ -73,11 +73,11 @@ public final class GitHosts {
 
 		/** A {@link ServerType} describing Github git servers. */
 		GITHUB(GITHUB_ID, "refs/pull/", "/head", //$NON-NLS-1$ //$NON-NLS-2$
-				"https?://.*/pull/(\\d+)"), //$NON-NLS-1$
+				"https?://.*/pull/(\\d+)(?:[/?#].*)?"), //$NON-NLS-1$
 
 		/** A {@link ServerType} describing Gitlab git servers. */
 		GITLAB(GITLAB_ID, "refs/merge-requests/", "/head", //$NON-NLS-1$ //$NON-NLS-2$
-				"https?://.*/merge_requests/(\\d+)"); //$NON-NLS-1$
+				"https?://.*/merge_requests/(\\d+)(?:[/?#].*)?"); //$NON-NLS-1$
 
 		/** Constant indicating "no change ID". */
 		public static final long NO_CHANGE_ID = -1;
