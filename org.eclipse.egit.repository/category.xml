@@ -136,10 +136,10 @@
       <category name="EGit.dependencies"/>
    </bundle>
    <bundle id="org.bouncycastle.bcutil">
-      <category name="JGit-dependency-bundles"/>
+      <category name="EGit.dependencies"/>
    </bundle>
    <bundle id="org.bouncycastle.bcutil.source">
-      <category name="JGit-dependency-bundles"/>
+      <category name="EGit.dependencies"/>
    </bundle>
    <bundle id="com.google.gson">
       <category name="EGit.dependencies"/>
