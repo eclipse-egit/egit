@@ -40,6 +40,7 @@ import org.eclipse.jgit.transport.sshd.KeyPasswordProvider;
 import org.eclipse.jgit.transport.sshd.ProxyData;
 import org.eclipse.jgit.transport.sshd.ProxyDataFactory;
 import org.eclipse.jgit.transport.sshd.SshdSessionFactory;
+import org.eclipse.jgit.transport.sshd.agent.ConnectorFactory;
 import org.eclipse.jgit.util.StringUtils;
 import org.osgi.service.prefs.BackingStoreException;
 
@@ -93,6 +94,15 @@ public class EGitSshdSessionFactory extends SshdSessionFactory {
 	@Override
 	protected String getDefaultPreferredAuthentications() {
 		return SshPreferencesMirror.INSTANCE.getPreferredAuthentications();
+	}
+
+	@Override
+	protected ConnectorFactory getConnectorFactory() {
+		if (Platform.getPreferencesService().getBoolean(Activator.PLUGIN_ID,
+				GitCorePreferences.core_sshAgent, true, null)) {
+			return super.getConnectorFactory();
+		}
+		return null;
 	}
 
 	@Override
