@@ -744,6 +744,9 @@ public class UIText extends NLS {
 	public static String GitPreferenceRoot_CloningRepoGroupHeader;
 
 	/** */
+	public static String GitPreferenceRoot_DefaultProductName;
+
+	/** */
 	public static String GitPreferenceRoot_DefaultRepoFolderLabel;
 
 	/** */
@@ -795,7 +798,13 @@ public class UIText extends NLS {
 	public static String GitPreferenceRoot_SecureStoreUseForSshKeys;
 
 	/** */
-	public static String GitPreferenceRoot_SshClient_Apache_Label;
+	public static String GitPreferenceRoot_SshAgent_Label;
+
+	/** */
+	public static String GitPreferenceRoot_SshAgent_Pageant_Label;
+
+	/** */
+	public static String GitPreferenceRoot_SshAgent_Tooltip;
 
 	/** */
 	public static String GitPreferenceRoot_useLogicalModel;

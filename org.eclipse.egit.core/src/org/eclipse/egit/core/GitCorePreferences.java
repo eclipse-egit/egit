@@ -99,6 +99,12 @@ public final class GitCorePreferences {
 	public static final String core_remoteConnectionTimeout = "core_remote_connection_timeout"; //$NON-NLS-1$
 
 	/**
+	 * If {@code true}, use an SSH agent, if available. If {@code false}, never
+	 * use an SSH agent.
+	 */
+	public static final String core_sshAgent = "core_ssh_agent"; //$NON-NLS-1$
+
+	/**
 	 * The (absolute) path to an external GPG executable to use for signing
 	 * commits or tags. If invalid or there is no executable file at the given
 	 * location, it is ignored, and EGit tries to find a GPG executable itself
