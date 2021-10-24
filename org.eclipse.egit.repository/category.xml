@@ -153,6 +153,18 @@
    <bundle id="com.jcraft.jsch.source">
       <category name="EGit.dependencies"/>
    </bundle>
+   <bundle id="com.sun.jna">
+      <category name="EGit.dependencies"/>
+   </bundle>
+   <bundle id="com.sun.jna.source">
+      <category name="EGit.dependencies"/>
+   </bundle>
+   <bundle id="com.sun.jna.platform">
+      <category name="EGit.dependencies"/>
+   </bundle>
+   <bundle id="com.sun.jna.platform.source">
+      <category name="EGit.dependencies"/>
+   </bundle>
    <bundle id="javax.servlet">
       <category name="EGit.dependencies"/>
    </bundle>
