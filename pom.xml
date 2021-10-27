@@ -64,7 +64,6 @@
     <egit-version>6.0.0-SNAPSHOT</egit-version>
     <tycho-version>2.5.0</tycho-version>
     <tycho-extras-version>${tycho-version}</tycho-extras-version>
-    <jboss-tycho-plugins-version>2.2.0</jboss-tycho-plugins-version>
     <java-version>11</java-version>
     <ecj-version>3.27.0</ecj-version>
     <spotbugs-maven-plugin-version>4.4.1</spotbugs-maven-plugin-version>
@@ -376,11 +375,6 @@
           <groupId>org.eclipse.tycho</groupId>
           <artifactId>tycho-p2-repository-plugin</artifactId>
           <version>${tycho-version}</version>
-        </plugin>
-        <plugin>
-          <groupId>org.jboss.tools.tycho-plugins</groupId>
-          <artifactId>repository-utils</artifactId>
-          <version>${jboss-tycho-plugins-version}</version>
         </plugin>
         <!-- other plugins -->
         <plugin>
