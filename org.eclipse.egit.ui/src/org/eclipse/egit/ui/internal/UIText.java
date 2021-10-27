@@ -795,9 +795,6 @@ public class UIText extends NLS {
 	public static String GitPreferenceRoot_SecureStoreUseForSshKeys;
 
 	/** */
-	public static String GitPreferenceRoot_SshClient_Jsch_Label;
-
-	/** */
 	public static String GitPreferenceRoot_SshClient_Apache_Label;
 
 	/** */
@@ -826,6 +823,27 @@ public class UIText extends NLS {
 
 	/** */
 	public static String GitPreferenceRoot_lfsSupportSuccessTitle;
+
+	/** */
+	public static String GitServersPreferencePage_AddLabel;
+
+	/** */
+	public static String GitServersPreferencePage_Description;
+
+	/** */
+	public static String GitServersPreferencePage_PatternTitle;
+
+	/** */
+	public static String GitServersPreferencePage_PatternTooltip;
+
+	/** */
+	public static String GitServersPreferencePage_RemoveLabel;
+
+	/** */
+	public static String GitServersPreferencePage_ServerTitle;
+
+	/** */
+	public static String GitServersPreferencePage_ServerUndefined;
 
 	/** */
 	public static String ProcessStepsRebaseCommand_CancelDialogMessage;
@@ -3033,94 +3051,136 @@ public class UIText extends NLS {
 	public static String FetchDestinationPage_TrackingBranchNotFoundMessage;
 
 	/** */
-	public static String FetchGerritChangePage_ActivateAdditionalRefsButton;
+	public static String AbstractFetchFromHostPage_ActivateAdditionalRefsButton;
 
 	/** */
-	public static String FetchGerritChangePage_ActivateAdditionalRefsTooltip;
+	public static String AbstractFetchFromHostPage_ActivateAdditionalRefsTooltip;
 
 	/** */
-	public static String FetchGerritChangePage_AfterFetchGroup;
+	public static String AbstractFetchFromHostPage_AfterFetchGroup;
 
 	/** */
-	public static String FetchGerritChangePage_BranchEditButton;
+	public static String AbstractFetchFromHostPage_BranchEditButton;
 
 	/** */
-	public static String FetchGerritChangePage_BranchNameText;
+	public static String AbstractFetchFromHostPage_BranchNameText;
+
+	/** */
+	public static String AbstractFetchFromHostPage_CheckingOutTaskName;
+
+	/** */
+	public static String AbstractFetchFromHostPage_CheckoutRadio;
+
+	/** */
+	public static String AbstractFetchFromHostPage_CherryPickRadio;
+
+	/** */
+	public static String AbstractFetchFromHostPage_CherryPickTaskName;
+
+	/** */
+	public static String AbstractFetchFromHostPage_ContentAssistTooltip;
+
+	/** */
+	public static String AbstractFetchFromHostPage_CreatingBranchTaskName;
+
+	/** */
+	public static String AbstractFetchFromHostPage_CreatingTagTaskName;
+
+	/** */
+	public static String AbstractFetchFromHostPage_FetchingTaskName;
+
+	/** */
+	public static String AbstractFetchFromHostPage_GeneratedTagMessage;
+
+	/** */
+	public static String AbstractFetchFromHostPage_GetChangeTaskName;
+
+	/** */
+	public static String AbstractFetchFromHostPage_LocalBranchRadio;
+
+	/** */
+	public static String AbstractFetchFromHostPage_LocalBranchCheckout;
+
+	/** */
+	public static String AbstractFetchFromHostPage_MissingChangeMessage;
+
+	/** */
+	public static String AbstractFetchFromHostPage_NoSuchChangeMessage;
+
+	/** */
+	public static String AbstractFetchFromHostPage_PageMessage;
+
+	/** */
+	public static String AbstractFetchFromHostPage_PageTitle;
+
+	/** */
+	public static String AbstractFetchFromHostPage_TagNameText;
+
+	/** */
+	public static String AbstractFetchFromHostPage_TagRadio;
+
+	/** */
+	public static String AbstractFetchFromHostPage_UnknownChangeRefMessage;
+
+	/** */
+	public static String AbstractFetchFromHostPage_UpdateRadio;
+
+	/** */
+	public static String AbstractFetchFromHostPage_UriLabel;
 
 	/** */
 	public static String FetchGerritChangePage_ChangeLabel;
 
 	/** */
-	public static String FetchGerritChangePage_CheckingOutTaskName;
+	public static String FetchGerritChangePage_ChangeNameSingular;
 
 	/** */
-	public static String FetchGerritChangePage_CheckoutRadio;
-
-	/** */
-	public static String FetchGerritChangePage_CherryPickRadio;
-
-	/** */
-	public static String FetchGerritChangePage_CherryPickTaskName;
+	public static String FetchGerritChangePage_ChangeNamePlural;
 
 	/** */
 	public static String FetchGerritChangePage_ContentAssistDescription;
 
 	/** */
-	public static String FetchGerritChangePage_ContentAssistTooltip;
-
-	/** */
-	public static String FetchGerritChangePage_CreatingBranchTaskName;
-
-	/** */
-	public static String FetchGerritChangePage_CreatingTagTaskName;
-
-	/** */
-	public static String FetchGerritChangePage_FetchingTaskName;
-
-	/** */
-	public static String FetchGerritChangePage_GeneratedTagMessage;
-
-	/** */
-	public static String FetchGerritChangePage_GetChangeTaskName;
-
-	/** */
-	public static String FetchGerritChangePage_LocalBranchRadio;
-
-	/** */
-	public static String FetchGerritChangePage_LocalBranchCheckout;
-
-	/** */
-	public static String FetchGerritChangePage_MissingChangeMessage;
-
-	/** */
-	public static String FetchGerritChangePage_NoSuchChangeMessage;
-
-	/** */
-	public static String FetchGerritChangePage_PageMessage;
-
-	/** */
-	public static String FetchGerritChangePage_PageTitle;
-
-	/** */
 	public static String FetchGerritChangePage_SuggestedRefNamePattern;
 
 	/** */
-	public static String FetchGerritChangePage_TagNameText;
-
-	/** */
-	public static String FetchGerritChangePage_TagRadio;
-
-	/** */
-	public static String FetchGerritChangePage_UnknownChangeRefMessage;
-
-	/** */
-	public static String FetchGerritChangePage_UpdateRadio;
-
-	/** */
-	public static String FetchGerritChangePage_UriLabel;
-
-	/** */
 	public static String FetchGerritChangeWizard_WizardTitle;
+
+	/** */
+	public static String GitServer_MergeRequestContentAssistLabel;
+
+	/** */
+	public static String GitServer_MergeRequestLabel;
+
+	/** */
+	public static String GitServer_MergeRequestPlural;
+
+	/** */
+	public static String GitServer_MergeRequestRefNameSuggestion;
+
+	/** */
+	public static String GitServer_MergeRequestSingular;
+
+	/** */
+	public static String GitServer_PullRequestContentAssistLabel;
+
+	/** */
+	public static String GitServer_PullRequestLabel;
+
+	/** */
+	public static String GitServer_PullRequestPlural;
+
+	/** */
+	public static String GitServer_PullRequestRefNameSuggestion;
+
+	/** */
+	public static String GitServer_PullRequestSingular;
+
+	/** */
+	public static String GitServer_WizardTitleGithub;
+
+	/** */
+	public static String GitServer_WizardTitleGitlab;
 
 	/** */
 	public static String FetchResultDialog_ConfigureButton;
@@ -4331,6 +4391,9 @@ public class UIText extends NLS {
 	public static String GitSelectRepositoryPage_PageTitle;
 
 	/** */
+	public static String GitSelectRepositoryPage_PageTitleServer;
+
+	/** */
 	public static String GitSelectRepositoryPage_PleaseSelectMessage;
 
 	/** */
@@ -4353,6 +4416,9 @@ public class UIText extends NLS {
 
 	/** */
 	public static String GerritSelectRepositoryPage_FinishButtonLabel;
+
+	/** */
+	public static String GithubSelectRepositoryPage_PageTitle;
 
 	/** */
 	public static String MergeAction_CannotMerge;

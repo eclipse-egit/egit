@@ -23,7 +23,7 @@ import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.commands.ExecutionException;
 import org.eclipse.egit.core.RepositoryUtil;
 import org.eclipse.egit.ui.internal.UIText;
-import org.eclipse.egit.ui.internal.components.RepositorySelectionPage.Protocol;
+import org.eclipse.egit.ui.internal.clone.GitUrlChecker;
 import org.eclipse.egit.ui.internal.groups.RepositoryGroup;
 import org.eclipse.egit.ui.internal.groups.RepositoryGroups;
 import org.eclipse.egit.ui.internal.repository.RepositoriesView;
@@ -125,21 +125,14 @@ public class PasteCommand extends
 	}
 
 	private URIish getCloneURI(String content) {
-		if (content.startsWith("git clone")) { //$NON-NLS-1$
-			content = content.substring("git clone".length()); //$NON-NLS-1$
-		}
-		URIish finalURI;
-		try {
-			finalURI = new URIish(content.trim());
-			if (Protocol.FILE.handles(finalURI)
-					|| Protocol.GIT.handles(finalURI)
-					|| Protocol.HTTP.handles(finalURI)
-					|| Protocol.HTTPS.handles(finalURI)
-					|| Protocol.SSH.handles(finalURI)) {
-				return finalURI;
+		String sanitized = GitUrlChecker.sanitizeAsGitUrl(content);
+		if (GitUrlChecker.isValidGitUrl(sanitized)) {
+			try {
+				return new URIish(sanitized);
+			} catch (URISyntaxException e) {
+				// Swallow, caller will show an error message when we return
+				// null
 			}
-		} catch (URISyntaxException e) {
-			// Swallow, caller will show an error message when we return null
 		}
 		return null;
 	}

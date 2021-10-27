@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (C) 2018 vogella GmbH and others.
+ * Copyright (C) 2018, 2021 vogella GmbH and others.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License 2.0
@@ -22,26 +22,31 @@ import java.util.stream.Collectors;
 import org.eclipse.egit.core.RepositoryCache;
 import org.eclipse.egit.core.RepositoryUtil;
 import org.eclipse.egit.ui.Activator;
-import org.eclipse.egit.ui.internal.ResourcePropertyTester;
-import org.eclipse.egit.ui.internal.UIIcons;
-import org.eclipse.egit.ui.internal.UIText;
 import org.eclipse.egit.ui.internal.clone.GitSelectRepositoryPage;
+import org.eclipse.jface.resource.ImageDescriptor;
+import org.eclipse.jgit.annotations.NonNull;
 import org.eclipse.jgit.lib.Repository;
 
 /**
- * Select a gerrit repository.
+ * A {@link GitSelectRepositoryPage} that can be filtered to some specific
+ * repositories.
  */
-public class GerritSelectRepositoryPage extends GitSelectRepositoryPage {
+public abstract class FilteredSelectRepositoryPage
+		extends GitSelectRepositoryPage {
 
 	/**
-	 * Creates a new {@link GerritSelectRepositoryPage} that allows to select a
-	 * configured gerrit repository
+	 * Creates a new {@link FilteredSelectRepositoryPage}.
+	 *
+	 * @param title
+	 *            to use
+	 * @param image
+	 *            to use
 	 */
-	public GerritSelectRepositoryPage() {
+	public FilteredSelectRepositoryPage(String title, ImageDescriptor image) {
 		super(false, false);
-		setTitle(UIText.GerritSelectRepositoryPage_PageTitle);
+		setTitle(title);
 		setDescription(null);
-		setImageDescriptor(UIIcons.WIZBAN_FETCH_GERRIT);
+		setImageDescriptor(image);
 	}
 
 	@Override
@@ -54,7 +59,7 @@ public class GerritSelectRepositoryPage extends GitSelectRepositoryPage {
 				try {
 					Repository repo = RepositoryCache.INSTANCE
 							.lookupRepository(gitDir);
-					if (repo != null && ResourcePropertyTester.hasGerritConfiguration(repo)) {
+					if (repo != null && includeRepository(repo)) {
 						return name;
 					}
 				} catch (IOException e) {
@@ -64,4 +69,13 @@ public class GerritSelectRepositoryPage extends GitSelectRepositoryPage {
 			return null;
 		}).filter(Objects::nonNull).collect(Collectors.toList());
 	}
+
+	/**
+	 * Determines whether the repository shall be included.
+	 *
+	 * @param repository
+	 *            to check
+	 * @return {@code true} to include the repository; {@code false} otherwise
+	 */
+	protected abstract boolean includeRepository(@NonNull Repository repository);
 }

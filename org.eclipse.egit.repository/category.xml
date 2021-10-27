@@ -135,6 +135,12 @@
    <bundle id="org.bouncycastle.bcprov.source">
       <category name="EGit.dependencies"/>
    </bundle>
+   <bundle id="org.bouncycastle.bcutil">
+      <category name="EGit.dependencies"/>
+   </bundle>
+   <bundle id="org.bouncycastle.bcutil.source">
+      <category name="EGit.dependencies"/>
+   </bundle>
    <bundle id="com.google.gson">
       <category name="EGit.dependencies"/>
    </bundle>

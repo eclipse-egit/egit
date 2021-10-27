@@ -49,6 +49,7 @@ import org.eclipse.egit.core.op.SetRepositoryConfigPropertyTask;
 import org.eclipse.egit.core.settings.GitSettings;
 import org.eclipse.egit.ui.Activator;
 import org.eclipse.egit.ui.JobFamilies;
+import org.eclipse.egit.ui.internal.KnownHosts;
 import org.eclipse.egit.ui.internal.SecureStoreUtils;
 import org.eclipse.egit.ui.internal.UIText;
 import org.eclipse.egit.ui.internal.clone.GitCloneSourceProviderExtension.CloneSourceProvider;
@@ -73,6 +74,7 @@ import org.eclipse.jgit.transport.CredentialsProvider;
 import org.eclipse.jgit.transport.URIish;
 import org.eclipse.osgi.util.NLS;
 import org.eclipse.ui.IWorkingSet;
+import org.eclipse.ui.PlatformUI;
 
 /**
  * Implements the basic functionality of a clone wizard
@@ -345,7 +347,10 @@ public abstract class AbstractGitCloneWizard extends Wizard {
 		if (scheme != null && scheme.toLowerCase().startsWith("http")) { //$NON-NLS-1$
 			String host = uri.getHost();
 			if (host != null) {
-				op.addPostCloneTask(new RememberHostTask(host));
+				op.addPostCloneTask((repo, monitor) -> {
+					PlatformUI.getWorkbench().getDisplay()
+							.asyncExec(() -> KnownHosts.addKnownHost(host));
+				});
 			}
 		}
 	}

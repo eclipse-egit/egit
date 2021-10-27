@@ -15,6 +15,7 @@ package org.eclipse.egit.ui.internal.clone;
 
 import java.net.URISyntaxException;
 
+import org.eclipse.egit.core.internal.Utils;
 import org.eclipse.egit.ui.internal.KnownHosts;
 import org.eclipse.egit.ui.internal.components.RepositorySelectionPage.Protocol;
 import org.eclipse.jgit.lib.Constants;
@@ -26,9 +27,15 @@ import org.eclipse.jgit.transport.URIish;
  * Utility class for checking strings for being valid git URLs, and for
  * sanitizing arbitrary string input.
  */
-public abstract class GitUrlChecker {
+public final class GitUrlChecker {
 
 	private static final String GIT_CLONE_COMMAND_PREFIX = "git clone "; //$NON-NLS-1$
+
+	private static final String QUOTE = "\""; //$NON-NLS-1$
+
+	private GitUrlChecker() {
+		// No instantiation
+	}
 
 	/**
 	 * Checks if the incoming string is a valid git URL. It is recommended to
@@ -73,23 +80,27 @@ public abstract class GitUrlChecker {
 	 *         before being used for real as a git URL
 	 */
 	public static String sanitizeAsGitUrl(String input) {
-		String sanitized = input.trim();
+		String sanitized = Utils.firstLine(input).strip();
 		if (sanitized.startsWith(GIT_CLONE_COMMAND_PREFIX)) {
 			sanitized = sanitized.substring(GIT_CLONE_COMMAND_PREFIX.length())
-					.trim();
+					.strip();
+			if (sanitized.startsWith(QUOTE) && sanitized.endsWith(QUOTE)) {
+				sanitized = sanitized.substring(1, sanitized.length() - 1)
+						.strip();
+			}
 		}
-		// For file URLs, take everything up to the first vertical space
 		try {
 			URIish uri = new URIish(sanitized);
 			if (Protocol.FILE.handles(uri)) {
-				return sanitized.split("\\v", 2)[0]; //$NON-NLS-1$
+				// Allow spaces
+				return sanitized;
 			}
 		} catch (URISyntaxException e) {
 			// Ignore here; error will be reported later where this method is
 			// used.
 		}
 		// Take only the part up to the first whitespace character
-		return sanitized.split("[\\h|\\v]", 2)[0]; //$NON-NLS-1$
+		return sanitized.split("\\h", 2)[0]; //$NON-NLS-1$
 	}
 
 	private static boolean canHandleProtocol(URIish u) {

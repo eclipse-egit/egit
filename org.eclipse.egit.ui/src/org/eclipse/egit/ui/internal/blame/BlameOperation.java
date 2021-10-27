@@ -476,7 +476,7 @@ public class BlameOperation implements IEGitOperation {
 				try {
 					ObjectId head = event.getRepository()
 							.resolve(Constants.HEAD);
-					if (!lastHead.equals(head)) {
+					if (!Objects.equals(lastHead, head)) {
 						lastHead = head;
 						Display display = PlatformUI.getWorkbench()
 								.getDisplay();

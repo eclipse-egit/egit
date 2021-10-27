@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2010 SAP AG.
+ * Copyright (c) 2010, 2021 SAP AG.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License 2.0
  * which accompanies this distribution, and is available at
@@ -12,31 +12,21 @@
  *******************************************************************************/
 package org.eclipse.egit.ui.internal.fetch;
 
-import org.eclipse.core.runtime.Assert;
 import org.eclipse.egit.ui.internal.UIIcons;
 import org.eclipse.egit.ui.internal.UIText;
-import org.eclipse.jface.wizard.Wizard;
 import org.eclipse.jgit.lib.Repository;
 
 /**
- * Wizard for fetching a Gerrit change
+ * Wizard for fetching a Gerrit change.
  */
-public class FetchGerritChangeWizard extends Wizard {
-	private final Repository repository;
-
-	FetchGerritChangePage page;
-
-	private String refName;
+public class FetchGerritChangeWizard extends AbstractFetchFromHostWizard {
 
 	/**
 	 * @param repository
 	 *            the repository
 	 */
 	public FetchGerritChangeWizard(Repository repository) {
-		Assert.isNotNull(repository);
-		this.repository = repository;
-		setNeedsProgressMonitor(true);
-		setHelpAvailable(false);
+		super(repository);
 		setWindowTitle(UIText.FetchGerritChangeWizard_WizardTitle);
 		setDefaultPageImageDescriptor(UIIcons.WIZBAN_FETCH_GERRIT);
 	}
@@ -46,18 +36,14 @@ public class FetchGerritChangeWizard extends Wizard {
 	 * @param refName initial value for the ref field
 	 */
 	public FetchGerritChangeWizard(Repository repository, String refName) {
-		this(repository);
-		this.refName = refName;
+		super(repository, refName);
+		setWindowTitle(UIText.FetchGerritChangeWizard_WizardTitle);
+		setDefaultPageImageDescriptor(UIIcons.WIZBAN_FETCH_GERRIT);
 	}
 
 	@Override
-	public void addPages() {
-		page = new FetchGerritChangePage(repository, refName);
-		addPage(page);
-	}
-
-	@Override
-	public boolean performFinish() {
-		return page.doFetch();
+	protected AbstractFetchFromHostPage createPage(Repository repo,
+			String initialText) {
+		return new FetchGerritChangePage(repo, initialText);
 	}
 }

@@ -199,7 +199,7 @@ public abstract class AbstractGitCompareEditorInput extends CompareEditorInput {
 			}
 			return adapter.cast(getShowInSource(null));
 		} else if (adapter == Repository.class) {
-			return adapter.cast(adapter);
+			return adapter.cast(repository);
 		}
 		return super.getAdapter(adapter);
 	}

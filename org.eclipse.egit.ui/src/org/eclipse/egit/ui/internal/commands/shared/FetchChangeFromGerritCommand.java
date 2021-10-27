@@ -12,73 +12,35 @@
  *******************************************************************************/
 package org.eclipse.egit.ui.internal.commands.shared;
 
-import org.eclipse.core.commands.ExecutionEvent;
-import org.eclipse.core.commands.ExecutionException;
+import org.eclipse.egit.ui.internal.ResourcePropertyTester;
+import org.eclipse.egit.ui.internal.UIIcons;
 import org.eclipse.egit.ui.internal.UIText;
-import org.eclipse.egit.ui.internal.dialogs.MinimumSizeWizardDialog;
-import org.eclipse.egit.ui.internal.dialogs.NonBlockingWizardDialog;
+import org.eclipse.egit.ui.internal.clone.GitSelectRepositoryPage;
 import org.eclipse.egit.ui.internal.fetch.FetchGerritChangeWizard;
-import org.eclipse.egit.ui.internal.gerrit.GerritSelectRepositoryPage;
-import org.eclipse.jface.dialogs.IDialogConstants;
-import org.eclipse.jface.window.Window;
+import org.eclipse.egit.ui.internal.gerrit.FilteredSelectRepositoryPage;
 import org.eclipse.jface.wizard.Wizard;
-import org.eclipse.jface.wizard.WizardDialog;
 import org.eclipse.jgit.lib.Repository;
-import org.eclipse.swt.widgets.Button;
-import org.eclipse.swt.widgets.Composite;
-import org.eclipse.swt.widgets.Shell;
-import org.eclipse.ui.handlers.HandlerUtil;
 
 /**
  * Fetch a change from Gerrit
  */
-public class FetchChangeFromGerritCommand extends AbstractSharedCommandHandler {
-
-	private Repository repository;
+public class FetchChangeFromGerritCommand extends AbstractFetchFromHostCommand {
 
 	@Override
-	public Object execute(ExecutionEvent event) throws ExecutionException {
-		repository = getRepository(event);
+	protected GitSelectRepositoryPage createSelectionPage() {
+		return new FilteredSelectRepositoryPage(
+				UIText.GerritSelectRepositoryPage_PageTitle,
+				UIIcons.WIZBAN_FETCH_GERRIT) {
 
-		if (repository == null) {
-			Shell shell = getShell(event);
-			GerritSelectRepositoryPage page = new GerritSelectRepositoryPage();
-
-			Wizard wizard = new Wizard() {
-
-				@Override
-				public boolean performFinish() {
-					FetchChangeFromGerritCommand.this.repository = page
-							.getRepository();
-					return true;
-				}
-			};
-			wizard.addPage(page);
-			wizard.setWindowTitle(UIText.GerritSelectRepositoryPage_PageTitle);
-			WizardDialog wizardDialog = new MinimumSizeWizardDialog(shell,
-					wizard) {
-				@Override
-				protected Button createButton(Composite parent, int id,
-						String label, boolean defaultButton) {
-					String text = label;
-					if (id == IDialogConstants.FINISH_ID) {
-						text = UIText.GerritSelectRepositoryPage_FinishButtonLabel;
-					}
-					return super.createButton(parent, id, text, defaultButton);
-				}
-			};
-			wizardDialog.setHelpAvailable(false);
-			int result = wizardDialog.open();
-			if (result != Window.OK) {
-				return null;
+			@Override
+			protected boolean includeRepository(Repository repo) {
+				return ResourcePropertyTester.hasGerritConfiguration(repo);
 			}
-		}
+		};
+	}
 
-		FetchGerritChangeWizard wiz = new FetchGerritChangeWizard(repository);
-		NonBlockingWizardDialog dlg = new NonBlockingWizardDialog(
-				HandlerUtil.getActiveShellChecked(event), wiz);
-		dlg.setHelpAvailable(false);
-		dlg.open();
-		return null;
+	@Override
+	protected Wizard createFetchWizard(Repository repository, String clipText) {
+		return new FetchGerritChangeWizard(repository, clipText);
 	}
 }

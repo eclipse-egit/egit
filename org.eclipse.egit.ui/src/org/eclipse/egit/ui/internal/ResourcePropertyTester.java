@@ -21,6 +21,7 @@ import java.util.Locale;
 
 import org.eclipse.core.resources.IResource;
 import org.eclipse.egit.core.internal.gerrit.GerritUtil;
+import org.eclipse.egit.core.internal.hosts.GitHosts;
 import org.eclipse.egit.core.project.RepositoryMapping;
 import org.eclipse.egit.ui.internal.expressions.AbstractPropertyTester;
 import org.eclipse.egit.ui.internal.selection.SelectionRepositoryStateCache;
@@ -118,6 +119,14 @@ public class ResourcePropertyTester extends AbstractPropertyTester {
 				return SelectionRepositoryStateCache.INSTANCE
 						.getHead(repository) != null;
 			}
+			if ("hasGithubConfiguration".equals(property)) { //$NON-NLS-1$
+				return hasServerConfiguration(repository,
+						GitHosts.ServerType.GITHUB);
+			}
+			if ("hasGitlabConfiguration".equals(property)) { //$NON-NLS-1$
+				return hasServerConfiguration(repository,
+						GitHosts.ServerType.GITLAB);
+			}
 			if ("hasGerritConfiguration".equals(property)) { //$NON-NLS-1$
 				return hasGerritConfiguration(repository);
 			}
@@ -158,6 +167,18 @@ public class ResourcePropertyTester extends AbstractPropertyTester {
 			}
 		}
 		return false;
+	}
+
+	private static boolean hasServerConfiguration(Repository repository,
+			GitHosts.ServerType server) {
+		try {
+			return GitHosts
+					.hasServerConfig(SelectionRepositoryStateCache.INSTANCE
+							.getConfig(repository), server);
+		} catch (URISyntaxException e) {
+			// Assume no matching config.
+			return false;
+		}
 	}
 
 	/**
