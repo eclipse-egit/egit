@@ -371,9 +371,27 @@ public abstract class RepositoryTreeNode<T> extends PlatformObject
 					((Repository) otherObject).getDirectory());
 		case REF:
 		case ADDITIONALREF:
+			// Ref nodes are compared by name only. If we include the ObjectId
+			// pointed to here, we get a perceptible annoying delay between the
+			// old decoration disappearing and the new one appearing.
+			//
+			// The CommonNavigator framework maintains its own selection cache,
+			// though, and not including the objectId in this comparison means
+			// this internal cache will not update properly when a branch moves.
+			//
+			// Code thus cannot rely on RefNode.getObject().getObjectId()! The
+			// CommonNavigator might have an older Ref instance with the same
+			// name but a previous ObjectId cached, and will return that in its
+			// selection, even when the decorator already shows a newer
+			// ObjectId.
+			//
+			// Any code needing to dereference a Ref needs to do so on its own,
+			// it can only rely on the Ref name.
 			return ((Ref) myObject).getName().equals(
 					((Ref) otherObject).getName());
 		case TAG: {
+			// For tags the ObjectId is included because they change far less
+			// often, and thus the delay is considered acceptable.
 			Ref myRef = (Ref) myObject;
 			Ref otherRef = (Ref) otherObject;
 			return Objects.equals(myRef.getName(), otherRef.getName())
