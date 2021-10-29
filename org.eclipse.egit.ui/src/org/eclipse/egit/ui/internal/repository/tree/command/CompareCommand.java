@@ -26,6 +26,7 @@ import org.eclipse.egit.ui.internal.repository.tree.RepositoryTreeNode;
 import org.eclipse.egit.ui.internal.repository.tree.TagNode;
 import org.eclipse.egit.ui.internal.selection.SelectionUtils;
 import org.eclipse.jface.viewers.IStructuredSelection;
+import org.eclipse.jgit.lib.ObjectId;
 import org.eclipse.jgit.lib.Ref;
 import org.eclipse.jgit.lib.Repository;
 import org.eclipse.jgit.revwalk.RevCommit;
@@ -47,33 +48,36 @@ public class CompareCommand extends
 	@Override
 	public Object execute(ExecutionEvent event) throws ExecutionException {
 		List<RepositoryTreeNode> nodes = getSelectedNodes();
-		List<Ref> refs = new ArrayList<>();
-		nodes.forEach(node -> {
-			Ref ref = getRef(node);
-			if (ref != null) {
-				refs.add(ref);
-			}
-		});
-		int numberOfRefs = refs.size();
+		if (nodes.isEmpty() || nodes.size() > 2) {
+			return null;
+		}
 		try {
+			List<RevCommit> commits = new ArrayList<>();
+			Repository repo = nodes.get(0).getRepository();
+			int numberOfRefs = 0;
+			for (RepositoryTreeNode<?> node : nodes) {
+				RevCommit commit = getCommit(repo, node);
+				if (commit == null) {
+					return null;
+				}
+				commits.add(commit);
+				numberOfRefs++;
+			}
 			if (numberOfRefs == 2) {
-				Repository repo = nodes.get(0).getRepository();
 				IWorkbenchPage workbenchPage = HandlerUtil
 						.getActiveWorkbenchWindowChecked(event).getActivePage();
 				// Use the older one as base
-				RevCommit a = repo.parseCommit(refs.get(0).getObjectId());
-				RevCommit b = repo.parseCommit(refs.get(1).getObjectId());
+				RevCommit a = commits.get(0);
+				RevCommit b = commits.get(1);
 				if (a.getCommitTime() <= b.getCommitTime()) {
 					compare(workbenchPage, repo, b.getName(), a.getName());
 				} else {
 					compare(workbenchPage, repo, a.getName(), b.getName());
 				}
 			} else if (numberOfRefs == 1) {
-				Repository repo = nodes.get(0).getRepository();
 				IWorkbenchPage workbenchPage = HandlerUtil
 						.getActiveWorkbenchWindowChecked(event).getActivePage();
-				RevCommit a = repo.parseCommit(refs.get(0).getObjectId());
-				compare(workbenchPage, repo, null, a.getName());
+				compare(workbenchPage, repo, null, commits.get(0).getName());
 			}
 		} catch (IOException e) {
 			throw new ExecutionException(e.getLocalizedMessage(), e);
@@ -100,6 +104,22 @@ public class CompareCommand extends
 		GitCompareEditorInput compareInput = new GitCompareEditorInput(
 				compareCommit, baseCommit, repo);
 		CompareUtils.openInCompare(workbenchPage, compareInput);
+	}
+
+	private RevCommit getCommit(Repository repository,
+			RepositoryTreeNode<?> node) throws IOException {
+		if (node instanceof TagNode) {
+			String oid = ((TagNode) node).getCommitId();
+			if (oid == null) {
+				return null;
+			}
+			return repository.parseCommit(ObjectId.fromString(oid));
+		} else if (node instanceof RefNode
+				|| node instanceof AdditionalRefNode) {
+			Ref ref = (Ref) node.getObject();
+			return repository.parseCommit(ref.getObjectId());
+		}
+		return null;
 	}
 
 	private Ref getRef(RepositoryTreeNode node) {
