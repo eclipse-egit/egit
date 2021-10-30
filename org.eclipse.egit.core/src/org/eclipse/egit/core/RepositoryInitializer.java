@@ -22,6 +22,7 @@ import org.eclipse.core.runtime.preferences.InstanceScope;
 import org.eclipse.egit.core.internal.CoreText;
 import org.eclipse.egit.core.internal.hosts.GitHosts;
 import org.eclipse.egit.core.internal.indexdiff.IndexDiffCache;
+import org.eclipse.jgit.diff.RawText;
 import org.eclipse.jgit.storage.file.WindowCacheConfig;
 import org.eclipse.jgit.util.SystemReader;
 import org.osgi.framework.FrameworkUtil;
@@ -67,9 +68,13 @@ public class RepositoryInitializer {
 		gitCorePreferences = InstanceScope.INSTANCE
 				.getNode(Activator.PLUGIN_ID);
 		GitHosts.loadFromPreferences(gitCorePreferences);
+		updateTextBufferSize();
 		prefsListener = event -> {
 			if (GitCorePreferences.core_gitServers.equals(event.getKey())) {
 				GitHosts.loadFromPreferences(gitCorePreferences);
+			}
+			if (GitCorePreferences.core_textBufferSize.equals(event.getKey())) {
+				updateTextBufferSize();
 			}
 		};
 		gitCorePreferences.addPreferenceChangeListener(prefsListener);
@@ -92,6 +97,14 @@ public class RepositoryInitializer {
 		RepositoryUtil.INSTANCE.clear();
 		IndexDiffCache.INSTANCE.dispose();
 		RepositoryCache.INSTANCE.clear();
+	}
+
+	private void updateTextBufferSize() {
+		int bufferSize = preferencesService.getInt(Activator.PLUGIN_ID,
+				GitCorePreferences.core_textBufferSize, -1, null);
+		if (bufferSize >= 0) {
+			RawText.setBufferSize(bufferSize);
+		}
 	}
 
 	/**

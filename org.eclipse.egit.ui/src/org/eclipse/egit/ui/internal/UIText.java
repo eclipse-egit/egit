@@ -3315,6 +3315,12 @@ public class UIText extends NLS {
 	public static String WindowCachePreferencePage_streamFileThreshold;
 
 	/** */
+	public static String WindowCachePreferencePage_textBufferSizeLabel;
+
+	/** */
+	public static String WindowCachePreferencePage_textBufferSizeTooltip;
+
+	/** */
 	public static String BasicConfigurationDialog_ConfigLocationInfo;
 
 	/** */
