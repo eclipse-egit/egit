@@ -13,15 +13,11 @@ package org.eclipse.egit.ui.internal.preferences;
 import org.eclipse.core.runtime.Assert;
 import org.eclipse.jface.preference.StringFieldEditor;
 import org.eclipse.jface.resource.JFaceResources;
+import org.eclipse.jgit.util.StringUtils;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Text;
 
 class StorageSizeFieldEditor extends StringFieldEditor {
-	private static final int KB = 1024;
-
-	private static final int MB = 1024 * KB;
-
-	private static final int GB = 1024 * MB;
 
 	private final int minValidValue;
 
@@ -74,7 +70,7 @@ class StorageSizeFieldEditor extends StringFieldEditor {
 		final Text text = getTextControl();
 		if (text != null) {
 			int value = getPreferenceStore().getInt(getPreferenceName());
-			text.setText(format(value));
+			text.setText(StringUtils.formatWithSuffix(value));
 		}
 	}
 
@@ -83,7 +79,7 @@ class StorageSizeFieldEditor extends StringFieldEditor {
 		final Text text = getTextControl();
 		if (text != null) {
 			int value = getPreferenceStore().getDefaultInt(getPreferenceName());
-			text.setText(format(value));
+			text.setText(StringUtils.formatWithSuffix(value));
 		}
 		valueChanged();
 	}
@@ -97,47 +93,10 @@ class StorageSizeFieldEditor extends StringFieldEditor {
 		}
 	}
 
-	private String format(int value) {
-		if (value > GB && (value / GB) * GB == value)
-			return String.valueOf(value / GB) + " g"; //$NON-NLS-1$
-		if (value > MB && (value / MB) * MB == value)
-			return String.valueOf(value / MB) + " m"; //$NON-NLS-1$
-		if (value > KB && (value / KB) * KB == value)
-			return String.valueOf(value / KB) + " k"; //$NON-NLS-1$
-		return String.valueOf(value);
-	}
-
 	private int parse(final String str) {
-		String n = str.trim();
-		if (n.length() == 0)
-			return 0;
-
-		int mul = 1;
-		char lastChar = n.charAt(n.length() - 1);
-		switch (Character.toLowerCase(lastChar)) {
-		case 'g':
-			mul = GB;
-			break;
-		case 'm':
-			mul = MB;
-			break;
-		case 'k':
-			mul = KB;
-			break;
-		default:
-			if (Character.isDigit(lastChar)) {
-				break;
-			}
-			return 0; // Invalid input
-		}
-		if (mul > 1)
-			n = n.substring(0, n.length() - 1).trim();
-		if (n.length() == 0)
-			return 0;
-
 		try {
-			return mul * Integer.parseInt(n);
-		} catch (NumberFormatException nfe) {
+			return StringUtils.parseIntWithSuffix(str, true);
+		} catch (NumberFormatException | StringIndexOutOfBoundsException e) {
 			return 0;
 		}
 	}
