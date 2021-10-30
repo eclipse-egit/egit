@@ -25,7 +25,10 @@ import org.eclipse.ui.preferences.ScopedPreferenceStore;
 /** Preferences for our window cache. */
 public class WindowCachePreferencePage extends FieldEditorPreferencePage
 		implements IWorkbenchPreferencePage {
-	private static final int MB = 1024 * 1024;
+
+	private static final int KB = 1024;
+
+	private static final int MB = 1024 * KB;
 
 	private static final int GB = 1024 * MB;
 
@@ -40,29 +43,41 @@ public class WindowCachePreferencePage extends FieldEditorPreferencePage
 
 	@Override
 	protected void createFieldEditors() {
-		addField(new StorageSizeFieldEditor(
+		StorageSizeFieldEditor editor = new StorageSizeFieldEditor(
 				GitCorePreferences.core_packedGitWindowSize,
 				UIText.WindowCachePreferencePage_packedGitWindowSize,
 				getFieldEditorParent(), 512, 128 * MB) {
+
 			@Override
 			protected boolean checkValue(final int number) {
 				return super.checkValue(number)
 						&& Integer.bitCount(number) == 1;
 			}
-		});
+		};
+		addField(editor);
 
-		addField(new StorageSizeFieldEditor(
+		editor = new StorageSizeFieldEditor(
 				GitCorePreferences.core_packedGitLimit,
 				UIText.WindowCachePreferencePage_packedGitLimit,
-				getFieldEditorParent(), 512, 1 * GB));
-		addField(new StorageSizeFieldEditor(
+				getFieldEditorParent(), 512, 1 * GB);
+		addField(editor);
+		editor = new StorageSizeFieldEditor(
 				GitCorePreferences.core_deltaBaseCacheLimit,
 				UIText.WindowCachePreferencePage_deltaBaseCacheLimit,
-				getFieldEditorParent(), 512, 1 * GB));
-		addField(new StorageSizeFieldEditor(
+				getFieldEditorParent(), 512, 1 * GB);
+		addField(editor);
+		editor = new StorageSizeFieldEditor(
 				GitCorePreferences.core_streamFileThreshold,
 				UIText.WindowCachePreferencePage_streamFileThreshold,
-				getFieldEditorParent(), 10 * MB, 1 * GB));
+				getFieldEditorParent(), 10 * MB, 1 * GB);
+		addField(editor);
+		editor = new StorageSizeFieldEditor(
+				GitCorePreferences.core_textBufferSize,
+				UIText.WindowCachePreferencePage_textBufferSizeLabel,
+				getFieldEditorParent(), 8 * KB, 128 * KB);
+		addField(editor);
+		editor.getLabelControl(getFieldEditorParent()).setToolTipText(
+				UIText.WindowCachePreferencePage_textBufferSizeTooltip);
 
 		if (!SystemReader.getInstance().isWindows()) {
 			BooleanFieldEditor mmapEditor = new BooleanFieldEditor(

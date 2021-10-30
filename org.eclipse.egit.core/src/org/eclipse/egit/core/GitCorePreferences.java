@@ -115,4 +115,12 @@ public final class GitCorePreferences {
 	 * Contains a memento containing the configured GitHost URIs.
 	 */
 	public static final String core_gitServers = "core_git_servers"; //$NON-NLS-1$
+
+	/**
+	 * The size of JGit's text buffer: the abount of bytes of a file or blob
+	 * that will be examined to determine whether it is text or binary, and if
+	 * text, whether it uses CR-LF line endings.
+	 */
+	public static final String core_textBufferSize = "core_textbuffersize"; //$NON-NLS-1$
+
 }
