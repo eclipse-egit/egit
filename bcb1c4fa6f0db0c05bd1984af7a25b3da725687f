@@ -22,6 +22,30 @@
       "revId": "bcb1c4fa6f0db0c05bd1984af7a25b3da725687f",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fb60fa33_ee5a6eab",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/GitCorePreferences.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 120,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2021-10-31T10:28:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ffd6d255_385e953a",
+      "range": {
+        "startLine": 120,
+        "startChar": 40,
+        "endLine": 120,
+        "endChar": 46
+      },
+      "revId": "bcb1c4fa6f0db0c05bd1984af7a25b3da725687f",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
     }
   ]
 }
