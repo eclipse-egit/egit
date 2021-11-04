@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "da8635bf_7cae675b",
+        "filename": "org.eclipse.egit.target/projects/jetty-9.4.x.tpd",
+        "patchSetId": 1
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2021-11-04T11:49:22Z",
+      "side": 1,
+      "message": "Did the archiving go wrong? Why \"jetty-bundles-9.x/jetty-bundles-9.x/\"?",
+      "revId": "2b539bcba01d49ffbcaab33e461c5e97591682fa",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": true
+    }
+  ]
+}
