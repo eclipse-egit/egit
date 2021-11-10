@@ -619,6 +619,9 @@ public class CoreText extends NLS {
 	public static String EGitSshdSessionFactory_sshKeyPassphraseStorePrompt;
 
 	/** */
+	public static String EGitSshdSessionFactory_sshUnknownAgentWarning;
+
+	/** */
 	public static String RebaseInteractiveStep_Edit;
 
 	/** */

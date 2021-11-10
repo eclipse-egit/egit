@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (C) 2018, Thomas Wolf <thomas.wolf@paranor.ch>
+ * Copyright (C) 2018, 2022 Thomas Wolf <thomas.wolf@paranor.ch>
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License 2.0
@@ -18,9 +18,12 @@ import java.net.URI;
 import java.net.URISyntaxException;
 import java.nio.file.Path;
 import java.security.GeneralSecurityException;
+import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collection;
 import java.util.List;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 import org.eclipse.core.net.proxy.IProxyData;
 import org.eclipse.core.net.proxy.IProxyService;
@@ -40,6 +43,7 @@ import org.eclipse.jgit.transport.sshd.KeyPasswordProvider;
 import org.eclipse.jgit.transport.sshd.ProxyData;
 import org.eclipse.jgit.transport.sshd.ProxyDataFactory;
 import org.eclipse.jgit.transport.sshd.SshdSessionFactory;
+import org.eclipse.jgit.transport.sshd.agent.Connector;
 import org.eclipse.jgit.transport.sshd.agent.ConnectorFactory;
 import org.eclipse.jgit.util.StringUtils;
 import org.osgi.service.prefs.BackingStoreException;
@@ -100,7 +104,10 @@ public class EGitSshdSessionFactory extends SshdSessionFactory {
 	protected ConnectorFactory getConnectorFactory() {
 		if (Platform.getPreferencesService().getBoolean(Activator.PLUGIN_ID,
 				GitCorePreferences.core_sshAgent, true, null)) {
-			return super.getConnectorFactory();
+			ConnectorFactory factory = super.getConnectorFactory();
+			if (factory != null) {
+				return new WrappedSshAgentConnectorFactory(factory);
+			}
 		}
 		return null;
 	}
@@ -318,4 +325,58 @@ public class EGitSshdSessionFactory extends SshdSessionFactory {
 			}
 		}
 	}
+
+	private static class WrappedSshAgentConnectorFactory
+			implements ConnectorFactory {
+
+		private static final AtomicBoolean WARNED = new AtomicBoolean();
+
+		private final ConnectorFactory delegate;
+
+		WrappedSshAgentConnectorFactory(@NonNull ConnectorFactory realFactory) {
+			delegate = realFactory;
+		}
+
+		@Override
+		public Connector create(String identityAgent, File homeDir)
+				throws IOException {
+			String agentConnection = identityAgent;
+			if (StringUtils.isEmptyOrNull(identityAgent)) {
+				String preference = Platform.getPreferencesService().getString(
+						Activator.PLUGIN_ID, GitCorePreferences.core_sshDefaultAgent,
+						null, null);
+				if (preference != null) {
+					if (getSupportedConnectors().stream().anyMatch(d -> preference.equals(d.getIdentityAgent()))) {
+						agentConnection = preference;
+					} else if (!WARNED.getAndSet(true)) {
+						Activator.logWarning(MessageFormat.format(
+								CoreText.EGitSshdSessionFactory_sshUnknownAgentWarning,
+								preference), null);
+					}
+				}
+			}
+			return delegate.create(agentConnection, homeDir);
+		}
+
+		@Override
+		public boolean isSupported() {
+			return delegate.isSupported();
+		}
+
+		@Override
+		public String getName() {
+			return delegate.getName();
+		}
+
+		@Override
+		public Collection<ConnectorDescriptor> getSupportedConnectors() {
+			return delegate.getSupportedConnectors();
+		}
+
+		@Override
+		public ConnectorDescriptor getDefaultConnector() {
+			return delegate.getDefaultConnector();
+		}
+	}
+
 }

@@ -77,6 +77,7 @@ Import-Package: org.eclipse.egit.core;version="[6.1.0,6.2.0)",
  org.eclipse.jgit.storage.file;version="[6.1.0,6.2.0)",
  org.eclipse.jgit.submodule;version="[6.1.0,6.2.0)",
  org.eclipse.jgit.transport;version="[6.1.0,6.2.0)",
+ org.eclipse.jgit.transport.sshd.agent;version="[6.1.0,6.2.0)",
  org.eclipse.jgit.treewalk;version="[6.1.0,6.2.0)",
  org.eclipse.jgit.treewalk.filter;version="[6.1.0,6.2.0)",
  org.eclipse.jgit.util;version="[6.1.0,6.2.0)",
@@ -137,10 +138,11 @@ Export-Package: org.eclipse.egit.ui;version="6.1.0";x-friends:="org.eclipse.egit
  org.eclipse.egit.ui.internal.synchronize.model;version="6.1.0";x-friends:="org.eclipse.egit.mylyn.ui",
  org.eclipse.egit.ui.internal.trace;version="6.1.0";x-internal:=true,
  org.eclipse.egit.ui.internal.variables;version="6.1.0";x-internal:=true
-Service-Component: OSGI-INF/org.eclipse.egit.ui.internal.clone.GitCloneDropAdapter.xml,
- OSGI-INF/org.eclipse.egit.ui.internal.StartEventListener.xml,
- OSGI-INF/org.eclipse.egit.ui.internal.ApplicationActiveListener.xml,
- OSGI-INF/org.eclipse.egit.ui.internal.ExternalRepositoryScanner.xml,
- OSGI-INF/org.eclipse.egit.ui.internal.trace.DebugOptionsHandler.xml,
+Service-Component: OSGI-INF/org.eclipse.egit.ui.internal.ApplicationActiveListener.xml,
  OSGI-INF/org.eclipse.egit.ui.internal.ConfigurationChecker$Checker.xml,
- OSGI-INF/org.eclipse.egit.ui.internal.credentials.EGitCredentialsUI.xml
+ OSGI-INF/org.eclipse.egit.ui.internal.ExternalRepositoryScanner.xml,
+ OSGI-INF/org.eclipse.egit.ui.internal.StartEventListener.xml,
+ OSGI-INF/org.eclipse.egit.ui.internal.clone.GitCloneDropAdapter.xml,
+ OSGI-INF/org.eclipse.egit.ui.internal.credentials.EGitCredentialsUI.xml,
+ OSGI-INF/org.eclipse.egit.ui.internal.trace.DebugOptionsHandler.xml
+Bundle-ActivationPolicy: lazy

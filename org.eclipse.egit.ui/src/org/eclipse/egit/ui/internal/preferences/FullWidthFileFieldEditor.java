@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (C) 2021 Thomas Wolf <thomas.wolf@paranor.ch>
+ * Copyright (C) 2021, 2022 Thomas Wolf <thomas.wolf@paranor.ch>
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License 2.0
@@ -58,6 +58,11 @@ class FullWidthFileFieldEditor extends FileFieldEditor {
 			getChangeControl(wrapper).setToolTipText(
 					UIText.FullWidthFileFieldEditor_buttonTooltipMac);
 		}
+	}
+
+	public void indent(int horizontalIndent, int verticalIndent) {
+		layoutData.horizontalIndent = horizontalIndent;
+		layoutData.verticalIndent = verticalIndent;
 	}
 
 	@Override

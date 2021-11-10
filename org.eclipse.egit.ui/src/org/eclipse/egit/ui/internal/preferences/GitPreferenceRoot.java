@@ -3,7 +3,7 @@
  * Copyright (C) 2010, Robin Rosenberg <robin.rosenberg@dewire.com>
  * Copyright (C) 2010, Mathias Kinzler <mathias.kinzler@sap.com>
  * Copyright (C) 2013, Dariusz Luksza <dariusz.luksza@gmail.com>
- * Copyright (C) 2016, 2017 Thomas Wolf <thomas.wolf@paranor.ch>
+ * Copyright (C) 2016, 2022 Thomas Wolf <thomas.wolf@paranor.ch>
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License 2.0
@@ -16,6 +16,7 @@ package org.eclipse.egit.ui.internal.preferences;
 
 import java.io.File;
 import java.text.MessageFormat;
+import java.util.Collection;
 
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IProduct;
@@ -26,6 +27,7 @@ import org.eclipse.core.variables.VariablesPlugin;
 import org.eclipse.egit.core.GitCorePreferences;
 import org.eclipse.egit.ui.Activator;
 import org.eclipse.egit.ui.UIPreferences;
+import org.eclipse.egit.ui.UIUtils;
 import org.eclipse.egit.ui.internal.UIText;
 import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.layout.GridDataFactory;
@@ -33,10 +35,13 @@ import org.eclipse.jface.layout.GridLayoutFactory;
 import org.eclipse.jface.preference.BooleanFieldEditor;
 import org.eclipse.jface.preference.ComboFieldEditor;
 import org.eclipse.jface.preference.DirectoryFieldEditor;
+import org.eclipse.jface.preference.FieldEditor;
 import org.eclipse.jface.preference.IPreferenceStore;
 import org.eclipse.jface.preference.IntegerFieldEditor;
 import org.eclipse.jface.preference.StringFieldEditor;
 import org.eclipse.jface.window.Window;
+import org.eclipse.jgit.transport.sshd.agent.ConnectorFactory;
+import org.eclipse.jgit.transport.sshd.agent.ConnectorFactory.ConnectorDescriptor;
 import org.eclipse.jgit.util.LfsFactory;
 import org.eclipse.jgit.util.LfsFactory.LfsInstallCommand;
 import org.eclipse.jgit.util.SystemReader;
@@ -77,6 +82,12 @@ public class GitPreferenceRoot extends DoublePreferencesPreferencePage
 		HTTP_CLIENT_NAMES_AND_VALUES[1][0] = UIText.GitPreferenceRoot_HttpClient_Apache_Label;
 		HTTP_CLIENT_NAMES_AND_VALUES[1][1] = "apache"; //$NON-NLS-1$
 	}
+
+	private Group remoteConnectionsGroup;
+
+	private BooleanFieldEditor useSshAgent;
+
+	private ComboFieldEditor defaultSshAgent;
 
 	/**
 	 * The default constructor
@@ -193,7 +204,7 @@ public class GitPreferenceRoot extends DoublePreferencesPreferencePage
 				UIText.GitPreferenceRoot_DefaultRepoFolderTooltip);
 		addField(editor);
 
-		Group remoteConnectionsGroup = new Group(main, SWT.SHADOW_ETCHED_IN);
+		remoteConnectionsGroup = new Group(main, SWT.SHADOW_ETCHED_IN);
 		GridDataFactory.fillDefaults().grab(true, false).span(GROUP_SPAN, 1)
 				.applyTo(remoteConnectionsGroup);
 		remoteConnectionsGroup
@@ -240,32 +251,65 @@ public class GitPreferenceRoot extends DoublePreferencesPreferencePage
 			}
 		};
 		addField(httpClient);
-		boolean isWindows = SystemReader.getInstance().isWindows();
-		BooleanFieldEditor useSshAgent = new BooleanFieldEditor(
-				GitCorePreferences.core_sshAgent,
-				isWindows ? UIText.GitPreferenceRoot_SshAgent_Pageant_Label
-						: UIText.GitPreferenceRoot_SshAgent_Label,
-				remoteConnectionsGroup) {
+		ConnectorFactory factory = ConnectorFactory.getDefault();
+		if (factory != null) {
+			boolean isWindows = SystemReader.getInstance().isWindows();
+			useSshAgent = new BooleanFieldEditor(
+					GitCorePreferences.core_sshAgent,
+					UIText.GitPreferenceRoot_SshAgent_Label,
+					remoteConnectionsGroup) {
 
-			@Override
-			public int getNumberOfControls() {
-				return 2;
-			}
+				@Override
+				public int getNumberOfControls() {
+					return 2;
+				}
 
-			@Override
-			public void setPreferenceStore(IPreferenceStore store) {
-				super.setPreferenceStore(
-						store == null ? null : getSecondaryPreferenceStore());
+				@Override
+				public void setPreferenceStore(IPreferenceStore store) {
+					super.setPreferenceStore(store == null ? null
+							: getSecondaryPreferenceStore());
+				}
+			};
+			if (!isWindows) {
+				String productName = getProductName();
+				useSshAgent.getDescriptionControl(remoteConnectionsGroup)
+						.setToolTipText(MessageFormat.format(
+								UIText.GitPreferenceRoot_SshAgent_Tooltip,
+								productName));
 			}
-		};
-		if (!isWindows) {
-			String productName = getProductName();
-			useSshAgent.getDescriptionControl(remoteConnectionsGroup)
-					.setToolTipText(MessageFormat.format(
-							UIText.GitPreferenceRoot_SshAgent_Tooltip,
-							productName));
+			addField(useSshAgent);
+			Collection<ConnectorDescriptor> available = factory
+					.getSupportedConnectors();
+			if (available.size() > 1) {
+				String[][] items = new String[available.size()][2];
+				int i = 0;
+				for (ConnectorDescriptor desc : available) {
+					items[i][0] = desc.getDisplayName();
+					items[i][1] = desc.getIdentityAgent();
+					i++;
+				}
+				defaultSshAgent = new ComboFieldEditor(
+						GitCorePreferences.core_sshDefaultAgent,
+						UIText.GitPreferenceRoot_SshDefaultAgent_Label, items,
+						remoteConnectionsGroup) {
+
+					@Override
+					public void setPreferenceStore(IPreferenceStore store) {
+						super.setPreferenceStore(store == null ? null
+								: getSecondaryPreferenceStore());
+					}
+				};
+				defaultSshAgent.getLabelControl(remoteConnectionsGroup)
+						.setToolTipText(
+								UIText.GitPreferenceRoot_SshDefaultAgent_Tooltip);
+				GridDataFactory.fillDefaults()
+						.indent(UIUtils.getControlIndent(), 0)
+						.applyTo(defaultSshAgent
+								.getLabelControl(remoteConnectionsGroup));
+
+				addField(defaultSshAgent);
+			}
 		}
-		addField(useSshAgent);
 		updateMargins(remoteConnectionsGroup);
 
 		Group repoChangeScannerGroup = new Group(main, SWT.SHADOW_ETCHED_IN);
@@ -364,6 +408,18 @@ public class GitPreferenceRoot extends DoublePreferencesPreferencePage
 			}
 		});
 		updateMargins(lfsGroup);
+	}
+
+	@Override
+	protected void initialize() {
+		super.initialize();
+		useSshAgent.setPropertyChangeListener(event -> {
+			if (FieldEditor.VALUE.equals(event.getProperty())) {
+				defaultSshAgent.setEnabled(
+						((Boolean) event.getNewValue()).booleanValue(),
+						remoteConnectionsGroup);
+			}
+		});
 	}
 
 	private String getProductName() {

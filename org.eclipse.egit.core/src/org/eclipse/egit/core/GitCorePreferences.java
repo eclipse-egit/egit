@@ -105,6 +105,13 @@ public final class GitCorePreferences {
 	public static final String core_sshAgent = "core_ssh_agent"; //$NON-NLS-1$
 
 	/**
+	 * If several SSH agents can be supported on a platform, the internal name
+	 * of the connector to use by default if nothing else is specified, for
+	 * instance via an {@code IdentityAgent} directive in {@code ~/.ssh/config}.
+	 */
+	public static final String core_sshDefaultAgent = "core_ssh_default_agent"; //$NON-NLS-1$
+
+	/**
 	 * The (absolute) path to an external GPG executable to use for signing
 	 * commits or tags. If invalid or there is no executable file at the given
 	 * location, it is ignored, and EGit tries to find a GPG executable itself

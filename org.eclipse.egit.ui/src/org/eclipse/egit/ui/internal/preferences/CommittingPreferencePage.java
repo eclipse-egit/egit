@@ -1,7 +1,7 @@
 /*******************************************************************************
  * Copyright (C) 2010, 2013 Robin Stocker <robin@nibor.org> and others.
  * Copyright (C) 2015 SAP SE (Christian Georgi <christian.georgi@sap.com>)
- * Copyright (C) 2016, 2021 Thomas Wolf <thomas.wolf@paranor.ch>
+ * Copyright (C) 2016, 2022 Thomas Wolf <thomas.wolf@paranor.ch>
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License 2.0
@@ -27,7 +27,6 @@ import org.eclipse.jface.layout.GridDataFactory;
 import org.eclipse.jface.preference.BooleanFieldEditor;
 import org.eclipse.jface.preference.ComboFieldEditor;
 import org.eclipse.jface.preference.FieldEditor;
-import org.eclipse.jface.preference.FileFieldEditor;
 import org.eclipse.jface.preference.IPreferenceStore;
 import org.eclipse.jface.preference.IntegerFieldEditor;
 import org.eclipse.jface.util.IPropertyChangeListener;
@@ -76,7 +75,7 @@ public class CommittingPreferencePage extends DoublePreferencesPreferencePage
 
 	private ComboFieldEditor gpgSigner;
 
-	private FileFieldEditor gpgExecutable;
+	private FullWidthFileFieldEditor gpgExecutable;
 
 	/** */
 	public CommittingPreferencePage() {
@@ -209,6 +208,7 @@ public class CommittingPreferencePage extends DoublePreferencesPreferencePage
 				return super.doCheckState();
 			}
 		};
+		gpgExecutable.indent(UIUtils.getControlIndent(), 0);
 		addField(gpgExecutable);
 		gpgExecutable.getLabelControl(generalGroup).setToolTipText(
 				UIText.CommittingPreferencePage_gpgExecutableTooltip);
