@@ -99,6 +99,12 @@ public final class GitCorePreferences {
 	public static final String core_remoteConnectionTimeout = "core_remote_connection_timeout"; //$NON-NLS-1$
 
 	/**
+	 * If {@code true}, use an SSH agent, if available. If {@code false}, never
+	 * use an SSH agent.
+	 */
+	public static final String core_sshAgent = "core_ssh_agent"; //$NON-NLS-1$
+
+	/**
 	 * The (absolute) path to an external GPG executable to use for signing
 	 * commits or tags. If invalid or there is no executable file at the given
 	 * location, it is ignored, and EGit tries to find a GPG executable itself
@@ -115,4 +121,12 @@ public final class GitCorePreferences {
 	 * Contains a memento containing the configured GitHost URIs.
 	 */
 	public static final String core_gitServers = "core_git_servers"; //$NON-NLS-1$
+
+	/**
+	 * The size of JGit's text buffer: the amount of bytes of a file or blob
+	 * that will be examined to determine whether it is text or binary, and if
+	 * text, whether it uses CR-LF line endings.
+	 */
+	public static final String core_textBufferSize = "core_textbuffersize"; //$NON-NLS-1$
+
 }

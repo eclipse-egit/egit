@@ -15,8 +15,11 @@
 package org.eclipse.egit.ui.internal.preferences;
 
 import java.io.File;
+import java.text.MessageFormat;
 
 import org.eclipse.core.runtime.CoreException;
+import org.eclipse.core.runtime.IProduct;
+import org.eclipse.core.runtime.Platform;
 import org.eclipse.core.runtime.preferences.InstanceScope;
 import org.eclipse.core.variables.IStringVariableManager;
 import org.eclipse.core.variables.VariablesPlugin;
@@ -36,6 +39,7 @@ import org.eclipse.jface.preference.StringFieldEditor;
 import org.eclipse.jface.window.Window;
 import org.eclipse.jgit.util.LfsFactory;
 import org.eclipse.jgit.util.LfsFactory.LfsInstallCommand;
+import org.eclipse.jgit.util.SystemReader;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
@@ -236,6 +240,32 @@ public class GitPreferenceRoot extends DoublePreferencesPreferencePage
 			}
 		};
 		addField(httpClient);
+		boolean isWindows = SystemReader.getInstance().isWindows();
+		BooleanFieldEditor useSshAgent = new BooleanFieldEditor(
+				GitCorePreferences.core_sshAgent,
+				isWindows ? UIText.GitPreferenceRoot_SshAgent_Pageant_Label
+						: UIText.GitPreferenceRoot_SshAgent_Label,
+				remoteConnectionsGroup) {
+
+			@Override
+			public int getNumberOfControls() {
+				return 2;
+			}
+
+			@Override
+			public void setPreferenceStore(IPreferenceStore store) {
+				super.setPreferenceStore(
+						store == null ? null : getSecondaryPreferenceStore());
+			}
+		};
+		if (!isWindows) {
+			String productName = getProductName();
+			useSshAgent.getDescriptionControl(remoteConnectionsGroup)
+					.setToolTipText(MessageFormat.format(
+							UIText.GitPreferenceRoot_SshAgent_Tooltip,
+							productName));
+		}
+		addField(useSshAgent);
 		updateMargins(remoteConnectionsGroup);
 
 		Group repoChangeScannerGroup = new Group(main, SWT.SHADOW_ETCHED_IN);
@@ -334,6 +364,13 @@ public class GitPreferenceRoot extends DoublePreferencesPreferencePage
 			}
 		});
 		updateMargins(lfsGroup);
+	}
+
+	private String getProductName() {
+		IProduct product = Platform.getProduct();
+		String name = product == null ? null : product.getName();
+		return name == null ? UIText.GitPreferenceRoot_DefaultProductName
+				: name;
 	}
 
 	private void updateMargins(Group group) {

@@ -18,18 +18,22 @@ import org.eclipse.core.runtime.preferences.IEclipsePreferences;
 
 /** Initializes plugin preferences with default values. */
 public class GitCorePreferenceInitializer extends AbstractPreferenceInitializer {
-	private static final int MB = 1024 * 1024;
+
+	private static final int KB = 1024;
+
+	private static final int MB = 1024 * KB;
 
 	@Override
 	public void initializeDefaultPreferences() {
 		final IEclipsePreferences p = DefaultScope.INSTANCE
 				.getNode(Activator.PLUGIN_ID);
 
-		p.putInt(GitCorePreferences.core_packedGitWindowSize, 8 * 1024);
+		p.putInt(GitCorePreferences.core_packedGitWindowSize, 8 * KB);
 		p.putInt(GitCorePreferences.core_packedGitLimit, 10 * MB);
 		p.putBoolean(GitCorePreferences.core_packedGitMMAP, false);
 		p.putInt(GitCorePreferences.core_deltaBaseCacheLimit, 10 * MB);
 		p.putInt(GitCorePreferences.core_streamFileThreshold, 50 * MB);
+		p.putInt(GitCorePreferences.core_textBufferSize, 32 * KB);
 		p.putBoolean(GitCorePreferences.core_autoShareProjects, true);
 		p.putBoolean(GitCorePreferences.core_autoIgnoreDerivedResources, true);
 		p.putBoolean(GitCorePreferences.core_autoStageDeletion, false);
@@ -43,6 +47,7 @@ public class GitCorePreferenceInitializer extends AbstractPreferenceInitializer 
 		p.put(GitCorePreferences.core_httpClient, "apache"); //$NON-NLS-1$
 		p.putInt(GitCorePreferences.core_remoteConnectionTimeout, 30);
 		p.put(GitCorePreferences.core_gpgSigner, "bc"); //$NON-NLS-1$
+		p.putBoolean(GitCorePreferences.core_sshAgent, true);
 	}
 
 }
