@@ -25,7 +25,6 @@ import java.lang.management.LockInfo;
 import java.lang.management.ManagementFactory;
 import java.lang.management.ThreadInfo;
 import java.lang.management.ThreadMXBean;
-import java.nio.file.DirectoryNotEmptyException;
 import java.nio.file.FileVisitResult;
 import java.nio.file.Files;
 import java.nio.file.SimpleFileVisitor;
@@ -131,14 +130,8 @@ public class TestUtils {
 	 */
 	public void deleteTempDirs() throws IOException {
 		if (rootDir.exists()) {
-			try {
-				FileUtils.delete(rootDir,
-						FileUtils.RECURSIVE | FileUtils.RETRY);
-			} catch (DirectoryNotEmptyException e) {
-				System.err.println(e.toString());
-				listDirectory(rootDir, true);
-				throw e;
-			}
+			FileUtils.delete(rootDir, FileUtils.RECURSIVE | FileUtils.RETRY
+					| FileUtils.IGNORE_ERRORS);
 		}
 	}
 
