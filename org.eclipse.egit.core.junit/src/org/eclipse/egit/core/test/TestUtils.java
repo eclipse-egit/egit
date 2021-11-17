@@ -137,7 +137,6 @@ public class TestUtils {
 			} catch (DirectoryNotEmptyException e) {
 				System.err.println(e.toString());
 				listDirectory(rootDir, true);
-				throw e;
 			}
 		}
 	}
