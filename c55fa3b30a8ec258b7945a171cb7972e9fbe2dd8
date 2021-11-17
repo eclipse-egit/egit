@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d83058cd_de479a44",
+        "filename": "org.eclipse.egit.core.junit/src/org/eclipse/egit/core/test/TestUtils.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 139,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2021-11-17T10:11:00Z",
+      "side": 1,
+      "message": "This doesn\u0027t help. We get an IOE, with the DirectoryNotEmptyException as cause. Which also explains why there is no directory listing anywhere.\n\nI wonder if it\u0027s again the marker file from the FS timestamp determination that causes this.",
+      "revId": "c55fa3b30a8ec258b7945a171cb7972e9fbe2dd8",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": true
+    }
+  ]
+}
