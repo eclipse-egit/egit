@@ -20,6 +20,8 @@ import java.io.IOException;
 
 import org.eclipse.egit.ui.Activator;
 import org.eclipse.egit.ui.internal.UIText;
+import org.eclipse.jgit.errors.ConfigInvalidException;
+import org.eclipse.jgit.lib.CommitConfig;
 import org.eclipse.jgit.lib.Constants;
 import org.eclipse.jgit.lib.ObjectId;
 import org.eclipse.jgit.lib.PersonIdent;
@@ -54,6 +56,8 @@ public class CommitHelper {
 	boolean isCherryPickResolved;
 
 	private String commitMessage;
+
+	private String commitTemplate;
 
 	/**
 	 * @param repository
@@ -98,6 +102,29 @@ public class CommitHelper {
 		if (isCherryPickResolved) {
 			author = getCherryPickOriginalAuthor(mergeRepository);
 		}
+
+		CommitConfig commitConfig = repository.getConfig()
+				.get(CommitConfig.KEY);
+		try {
+			commitTemplate = commitConfig.getCommitTemplateContent(repository);
+		} catch (IOException | ConfigInvalidException e) {
+			Activator.handleError(UIText.CommitAction_CommitTemplateFailed, e,
+					true);
+		}
+	}
+
+	/**
+	 * @return true if there is no commit message but a commit template
+	 */
+	public boolean shouldUseCommitTemplate() {
+		return getCommitMessage() == null && getCommitTemplate() != null;
+	}
+
+	/**
+	 * @return commit message template
+	 */
+	public String getCommitTemplate() {
+		return commitTemplate;
 	}
 
 	private static RevCommit getHeadCommit(Repository repository) {
