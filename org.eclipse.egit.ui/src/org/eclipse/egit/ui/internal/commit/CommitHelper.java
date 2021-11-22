@@ -20,6 +20,8 @@ import java.io.IOException;
 
 import org.eclipse.egit.ui.Activator;
 import org.eclipse.egit.ui.internal.UIText;
+import org.eclipse.jgit.errors.ConfigInvalidException;
+import org.eclipse.jgit.lib.CommitConfig;
 import org.eclipse.jgit.lib.Constants;
 import org.eclipse.jgit.lib.ObjectId;
 import org.eclipse.jgit.lib.PersonIdent;
@@ -28,6 +30,7 @@ import org.eclipse.jgit.lib.RepositoryState;
 import org.eclipse.jgit.lib.UserConfig;
 import org.eclipse.jgit.revwalk.RevCommit;
 import org.eclipse.jgit.revwalk.RevWalk;
+import org.eclipse.jgit.util.StringUtils;
 import org.eclipse.osgi.util.NLS;
 import org.eclipse.swt.widgets.Text;
 
@@ -37,7 +40,7 @@ import org.eclipse.swt.widgets.Text;
  */
 public class CommitHelper {
 
-	private Repository repository;
+	final private Repository repository;
 
 	boolean canCommit;
 
@@ -54,6 +57,8 @@ public class CommitHelper {
 	boolean isCherryPickResolved;
 
 	private String commitMessage;
+
+	private String commitTemplate;
 
 	/**
 	 * @param repository
@@ -98,6 +103,34 @@ public class CommitHelper {
 		if (isCherryPickResolved) {
 			author = getCherryPickOriginalAuthor(mergeRepository);
 		}
+
+	}
+
+	/**
+	 * @return true if there is no commit message but a commit template
+	 */
+	public boolean shouldUseCommitTemplate() {
+		return StringUtils.isEmptyOrNull(getCommitMessage())
+				&& getCommitTemplate() != null;
+	}
+
+	/**
+	 * @return commit message template
+	 */
+	public String getCommitTemplate() {
+		if (commitTemplate == null && repository != null) {
+			CommitConfig commitConfig = repository.getConfig()
+					.get(CommitConfig.KEY);
+			try {
+				commitTemplate = commitConfig
+						.getCommitTemplateContent(repository);
+			} catch (IOException | ConfigInvalidException e) {
+				Activator.handleError(UIText.CommitAction_CommitTemplateFailed,
+						e, true);
+			}
+		}
+
+		return commitTemplate;
 	}
 
 	private static RevCommit getHeadCommit(Repository repository) {

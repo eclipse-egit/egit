@@ -2445,6 +2445,9 @@ public class UIText extends NLS {
 	public static String CommitAction_CommittingFailed;
 
 	/** */
+	public static String CommitAction_CommitTemplateFailed;
+
+	/** */
 	public static String CommitAction_errorComputingDiffs;
 
 	/** */

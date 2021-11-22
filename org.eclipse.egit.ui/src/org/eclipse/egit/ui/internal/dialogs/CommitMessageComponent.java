@@ -800,7 +800,7 @@ public class CommitMessageComponent {
 	String calculateCommitMessage(
 			CommitMessageWithCaretPosition messageWithCaretPosition) {
 		if (commitMessage != null) {
-			// special case for merge / cherry-pick
+			// special case for merge / cherry-pick / existing message template
 			return commitMessage;
 		}
 
