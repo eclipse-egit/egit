@@ -4368,7 +4368,11 @@ public class StagingView extends ViewPart
 		commitMessageComponent.enableListeners(false);
 		commitMessageComponent.resetState();
 		commitMessageComponent.setAuthor(helper.getAuthor());
-		commitMessageComponent.setCommitMessage(helper.getCommitMessage());
+		if (helper.shouldUseCommitTemplate()) {
+			commitMessageComponent.setCommitMessage(helper.getCommitTemplate());
+		} else {
+			commitMessageComponent.setCommitMessage(helper.getCommitMessage());
+		}
 		commitMessageComponent.setCommitter(helper.getCommitter());
 		commitMessageComponent.setHeadCommit(getCommitId(helper
 				.getPreviousCommit()));
