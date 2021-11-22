@@ -31,6 +31,7 @@ import org.eclipse.egit.ui.UIUtils;
 import org.eclipse.egit.ui.internal.UIIcons;
 import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.jgit.annotations.Nullable;
+import org.eclipse.jgit.api.errors.CanceledException;
 import org.eclipse.jgit.diff.DiffEntry;
 import org.eclipse.jgit.diff.DiffEntry.ChangeType;
 import org.eclipse.jgit.diff.DiffFormatter;
@@ -39,7 +40,6 @@ import org.eclipse.jgit.diff.MyersDiff;
 import org.eclipse.jgit.diff.RawText;
 import org.eclipse.jgit.diff.RawTextComparator;
 import org.eclipse.jgit.diff.RenameDetector;
-import org.eclipse.jgit.errors.CancelledException;
 import org.eclipse.jgit.errors.CorruptObjectException;
 import org.eclipse.jgit.errors.IncorrectObjectTypeException;
 import org.eclipse.jgit.errors.MissingObjectException;
@@ -178,7 +178,7 @@ public class FileDiff implements GitInfo {
 				renames = detector.compute(walk.getObjectReader(),
 						new EclipseGitProgressTransformer(
 								progress.newChild(1)));
-			} catch (CancelledException e) {
+			} catch (CanceledException e) {
 				cancelled = true;
 			}
 			if (!cancelled) {
