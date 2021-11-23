@@ -165,10 +165,52 @@
    <bundle id="com.sun.jna.platform.source">
       <category name="EGit.dependencies"/>
    </bundle>
-   <bundle id="javax.servlet">
+   <bundle id="jakarta.servlet-api">
       <category name="EGit.dependencies"/>
    </bundle>
-   <bundle id="javax.servlet.source">
+   <bundle id="jakarta.servlet-api.source">
+      <category name="EGit.dependencies"/>
+   </bundle>
+   <bundle id="org.eclipse.jetty.http">
+      <category name="EGit.dependencies"/>
+   </bundle>
+   <bundle id="org.eclipse.jetty.http.source">
+      <category name="EGit.dependencies"/>
+   </bundle>
+   <bundle id="org.eclipse.jetty.io">
+      <category name="EGit.dependencies"/>
+   </bundle>
+   <bundle id="org.eclipse.jetty.io.source">
+      <category name="EGit.dependencies"/>
+   </bundle>
+   <bundle id="org.eclipse.jetty.security">
+      <category name="EGit.dependencies"/>
+   </bundle>
+   <bundle id="org.eclipse.jetty.security.source">
+      <category name="EGit.dependencies"/>
+   </bundle>
+   <bundle id="org.eclipse.jetty.server">
+      <category name="EGit.dependencies"/>
+   </bundle>
+   <bundle id="org.eclipse.jetty.server.source">
+      <category name="EGit.dependencies"/>
+   </bundle>
+   <bundle id="org.eclipse.jetty.servlet">
+      <category name="EGit.dependencies"/>
+   </bundle>
+   <bundle id="org.eclipse.jetty.servlet.source">
+      <category name="EGit.dependencies"/>
+   </bundle>
+   <bundle id="org.eclipse.jetty.util">
+      <category name="EGit.dependencies"/>
+   </bundle>
+   <bundle id="org.eclipse.jetty.util.source">
+      <category name="EGit.dependencies"/>
+   </bundle>
+   <bundle id="org.eclipse.jetty.util.ajax">
+      <category name="EGit.dependencies"/>
+   </bundle>
+   <bundle id="org.eclipse.jetty.util.ajax.source">
       <category name="EGit.dependencies"/>
    </bundle>
    <bundle id="org.apache.commons.compress">
