@@ -16,8 +16,6 @@ location "https://download.eclipse.org/tools/orbit/downloads/drops/S202111082221
 	javaewah.source [1.1.13.v20211029-0839,1.1.13.v20211029-0839]
 	javax.activation [1.1.0.v201211130549,1.1.0.v201211130549]
 	javax.activation.source [1.1.0.v201211130549,1.1.0.v201211130549]
-	javax.servlet [3.1.0.v201410161800,3.1.0.v201410161800]
-	javax.servlet.source [3.1.0.v201410161800,3.1.0.v201410161800]
 	javax.xml.bind [2.2.0.v201105210648,2.2.0.v201105210648]
 	javax.xml.bind.source [2.2.0.v201105210648,2.2.0.v201105210648]
 	javax.xml.stream [1.0.1.v201004272200,1.0.1.v201004272200]

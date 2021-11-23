@@ -27,10 +27,10 @@ import org.eclipse.core.runtime.CoreException;
 import org.eclipse.egit.core.internal.util.ResourceUtil;
 import org.eclipse.jgit.annotations.NonNull;
 import org.eclipse.jgit.annotations.Nullable;
+import org.eclipse.jgit.api.errors.CanceledException;
 import org.eclipse.jgit.diff.DiffEntry;
 import org.eclipse.jgit.diff.DiffEntry.ChangeType;
 import org.eclipse.jgit.diff.RenameDetector;
-import org.eclipse.jgit.errors.CancelledException;
 import org.eclipse.jgit.lib.NullProgressMonitor;
 import org.eclipse.jgit.lib.ObjectReader;
 import org.eclipse.jgit.lib.Repository;
@@ -146,7 +146,7 @@ public class CompareCoreUtils {
 			try {
 				renames = detector.compute(walk.getObjectReader(),
 						NullProgressMonitor.INSTANCE);
-			} catch (CancelledException e) {
+			} catch (CanceledException e) {
 				return null;
 			}
 			for (DiffEntry diff : renames) {
