@@ -31,6 +31,7 @@
 				<groupId>org.eclipse.tycho</groupId>
 				<artifactId>tycho-surefire-plugin</artifactId>
 				<configuration>
+				    <skip>true</skip>
 					<!--excludes> <exclude>**/Test*.class</exclude> </excludes -->
 					<argLine>${test.vmparams} ${coretest.vmparams}</argLine>
 					<useUIHarness>false</useUIHarness>

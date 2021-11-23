@@ -53,6 +53,7 @@
         <groupId>org.eclipse.tycho</groupId>
         <artifactId>tycho-surefire-plugin</artifactId>
         <configuration>
+          <skip>true</skip>
           <excludes>
             <!-- test mojo matches TestProject be default and treats it as PojoTest -->
             <exclude>**/Test*.class</exclude>

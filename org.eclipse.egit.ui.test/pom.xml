@@ -26,6 +26,11 @@
 
   <name>EGit UI Test Plug-in</name>
 
+  <properties>
+    <debug.extra>-Dlogback.configurationFile=file://${project.basedir}/logback-debug.xml</debug.extra>
+    <ui.test.vmargs>${test.vmparams} ${uitest.vmparams} ${debug.extra}</ui.test.vmargs>
+  </properties>
+
   <profiles>
     <profile>
       <id>skip-ui-tests</id>
@@ -79,6 +84,16 @@
                 <id>org.eclipse.pde</id>
                 <versionRange>0.0.0</versionRange>
               </requirement>
+              <requirement>
+                <type>eclipse-plugin</type>
+                <id>ch.qos.logback.slf4j</id>
+                <versionRange>0.0.0</versionRange>
+              </requirement>
+              <requirement>
+                <type>eclipse-plugin</type>
+                <id>ch.qos.logback.core</id>
+                <versionRange>0.0.0</versionRange>
+              </requirement>
             </extraRequirements>
           </dependency-resolution>
         </configuration>
@@ -88,7 +103,7 @@
         <artifactId>tycho-surefire-plugin</artifactId>
         <configuration>
           <includes>
-            <include>**/*Test.java</include>
+            <include>**/GitCloneWizardHttpsTest.java</include>
           </includes>
           <useUIHarness>true</useUIHarness>
           <useUIThread>false</useUIThread>
