@@ -41,9 +41,7 @@
 		</ul>
 		<p>Prerequisites for the Maven build are</p>
 		<ul>
-			<li>Java 8, updating JGit to Java 11 is 
-				<a href="https://bugs.eclipse.org/bugs/show_bug.cgi?id=569917" target="egit_external">planned for 6.0</a>
-			</li>
+			<li>since 6.0 Java 11, older versions need Java 8 </li>
 			<li>
 				<a href="https://maven.apache.org/download.html" target="egit_external">at least Maven 3.5.2</a>
 			</li>
@@ -57,7 +55,7 @@
 		<h2 id="JGit_2">JGit</h2>
 		<ul>
 			<li>JGit can be built using Maven or Bazel</li>
-			<li>use Java 8 to run the JGit build</li>
+			<li>use Java 11 to run the JGit build</li>
 			<li>JGit packaging projects (Eclipse features and p2 repository) are built using Maven and Tycho.</li>
 		</ul>
 		<h2 id="EGit_2">EGit</h2>
@@ -76,7 +74,7 @@
 		</ul>
 		<h2 id="Maven_Build">Maven Build</h2>
 		<p>To build JGit or EGit versions &lt;= 5.12.0 maven must be run using Java 1.8. Ensure that environment variable <tt>JAVA_HOME</tt> points to a Java 1.8 installation.</p>
-		<p>EGit versions &gt;= 5.12.1 can be built with any Java &gt;= 1.8, but the build uses 
+		<p>EGit versions &gt;= 5.12.1 and &lt; 6.0.0 can be built with any Java &gt;= 1.8, but the build uses 
 			<a href="https://maven.apache.org/guides/mini/guide-using-toolchains.html" target="egit_external">maven toolchain</a> definitions. To run a local EGit build for these versions (including the 'master' branch, i.e. EGit nightly), you need to have a local file <tt>
 			<b>~/.m2/toolchains.xml</b></tt> providing at least a JDK toolchain definition for "JavaSE-1.8":
 		</p>
@@ -106,8 +104,9 @@
 &lt;/toolchains&gt;
 </pre>
 		<p>The <tt>jdkHome</tt> directory is the one that contains the <tt>bin</tt> directory in which there is the <tt>java</tt> executable.</p>
-		<p>If you can, include already a definition for a Java 11 toolchain as shown above. EGit and JGit may require a minimum of Java 11 in the not-too-distant future.</p>
-		<p>Building JGit with maven currently requires running maven with Java 1.8 in all cases.</p>
+		<p>Also include a definition for a Java 11 toolchain as shown above: EGit versions &gt;= 6.0.0 require at least Java 11 to build, and require a Java 11 toolchain definition for running the tests.</p>
+		<p>Building JGit versions &lt; 6.0.0 with maven requires running maven with Java 1.8 in all cases.</p>
+		<p>Building JGit versions &gt;= 6.0.0 with maven requires running maven and compiling with at least Java 11.</p>
 		<ul>
 			<li>Due to a 
 				<a href="https://wiki.eclipse.org/Tycho/How_Tos/Dependency_on_pom-first_artifacts" target="egit_external">limitation of Tycho</a> it is not possible to mix pom-first and manifest-first builds in the same reactor build hence the pom-first JGit build has to run separately before the build for the manifest-first JGit packaging project.
@@ -115,6 +114,9 @@
 			<li>The local maven builds must share the same local Maven repository otherwise dependencies between these builds cannot be resolved.</li>
 			<li>To run the build behind a firewall follow 
 				<a href="https://maven.apache.org/guides/mini/guide-proxies.html" target="egit_external">https://maven.apache.org/guides/mini/guide-proxies.html</a> 
+			</li>
+			<li>To run the JGit maven build on a 
+				<i>case-insensitive</i> file system, you might need to suppress javadoc generation if you get an error "class IO clashes with package of same name". Use "<tt>mvn clean install -Dmaven.javadoc.skip=true</tt>" instead of plain "<tt>mvn clean install</tt>".
 			</li>
 		</ul>
 		<p>Complete build sequence for a clean build (assuming $M2_HOME/bin is on the path and local Maven repository at ~/.m2/repository):</p>

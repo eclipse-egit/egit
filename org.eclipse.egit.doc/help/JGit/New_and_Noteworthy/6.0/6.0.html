@@ -1,0 +1,81 @@
+<?xml version='1.0' encoding='utf-8' ?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+		<title>JGit 6.0 New and Noteworthy</title>
+		<link type="text/css" rel="stylesheet" href="../../../book.css"/>
+	</head>
+	<body>
+		<table class="navigation" style="width: 100%;" border="0" summary="navigation">
+			<tr>
+				<th style="width: 100%" align="center" colspan="3">JGit 6.0 New and Noteworthy</th>
+			</tr>
+			<tr>
+				<td style="width: 20%" align="left"></td>
+				<td style="width: 60%" align="center"></td>
+				<td style="width: 20%" align="right">
+					<a href="Contributors.html" title="Contributors">
+						<img alt="Next" border="0" src="../../../images/next.gif"/>
+					</a>
+				</td>
+			</tr>
+			<tr>
+				<td style="width: 20%" align="left" valign="top"></td>
+				<td style="width: 60%" align="center"></td>
+				<td style="width: 20%" align="right" valign="top">Contributors</td>
+			</tr>
+		</table><hr class="navigation-separator"/>
+		<h1 id="JGit">JGit</h1>
+		<h2 id="Prerequisites">Prerequisites</h2>
+		<p>JGit 6.0 
+			<b>requires Java 11</b> to run. Previous versions required a minimum of Java 1.8.
+		</p>
+		<p>Please note that memory management in Java is different between Java versions; there are new garbage collection strategies. One corporate user of JGit who has been using it for a long time running on Java 11 reported that switching from Java 1.8 to Java 11 and using the new G1GC default garbage collector improved stability but might require about 10% more memory.</p>
+		<h2 id="API_changes">API changes</h2>
+		<ul>
+			<li><code>CommitCommand.setCredentialsProvider()</code> is now fluent, returning the CommitCommand itself to allow chaining setters.</li>
+		</ul>
+		<p>For the full list of API changes, see the automated API comparison report linked on 
+			<a href="https://www.eclipse.org/jgit/download/" target="egit_external">the JGit download page</a>.
+		</p>
+		<h2 id="SSH_Agent_Support">SSH Agent Support</h2>
+		<p>JGit 6.0 comes with a new bundle <code>org.eclipse.jgit.ssh.apache.agent</code>, which provides support for communicating with an SSH agent:</p>
+		<ul>
+			<li>On Windows, it supports detecting Pageant, the SSH agent of PuTTY, and communicating with it through its shared memory mechanism.</li>
+			<li>On Unix (Linux, BSD, OS X), it supports communicating with an SSH agent via the usual Unix domain socket mechanism. The Unix domain socket file is given via environment variable 
+				<b><tt>SSH_AUTH_SOCK</tt></b>.
+			</li>
+		</ul>
+		<p>The bundle publishes a service for <tt>java.util.ServiceLoader</tt>; the main SSH support in <code>org.eclipse.jgit.ssh.apache</code> uses the <tt>ServiceLoader</tt> to find the service implementation. If none is found, SSH agent support is not available.</p>
+		<p>Using the new bundle <code>org.eclipse.jgit.ssh.apache.agent</code> is completely optional; and JGit users are free to provide their own implementation instead in a third-party bundle. The bundle just has to publish an <tt>org.eclipse.jgit.transport.sshd.agent.ConnectorFactory</tt> implementation as service. (Ensure that the classpath is set up such that the <tt>ServiceLoader</tt> can find the custom implementation from within bundle <code>org.eclipse.jgit.ssh.apache</code>. In an OSGi environment, this is most easily achieved by making the bundle an OSGi fragment with that bundle as host.)</p>
+		<p>The implementation uses JNA for low-level system operations.</p>
+		<h3 id="Limitations">Limitations</h3>
+		<p>Some directives in the <tt>~/.ssh/config</tt> file are not handled yet:</p>
+		<ul>
+			<li><tt>IdentityAgent</tt></li>
+			<li><tt>AddKeysToAgent</tt></li>
+			<li><tt>SecurityKeyProvider</tt></li>
+		</ul>
+		<p>Support for these is planned for a future version as it needs upstream changes in the Apache MINA sshd library used by JGit for SSH communication.</p>
+		<p>Integration with a native keychain (the <tt>UseKeychain</tt> directive on Mac) is not supported.</p>
+		<p>Agent forwarding is 
+			<i>not</i> supported. Use the <tt>ProxyJump</tt> directive in <tt>~/.ssh/config</tt> instead.
+		</p><hr class="navigation-separator"/>
+		<table class="navigation" style="width: 100%;" border="0" summary="navigation">
+			<tr>
+				<td style="width: 20%" align="left"></td>
+				<td style="width: 60%" align="center"></td>
+				<td style="width: 20%" align="right">
+					<a href="Contributors.html" title="Contributors">
+						<img alt="Next" border="0" src="../../../images/next.gif"/>
+					</a>
+				</td>
+			</tr>
+			<tr>
+				<td style="width: 20%" align="left" valign="top"></td>
+				<td style="width: 60%" align="center"></td>
+				<td style="width: 20%" align="right" valign="top">Contributors</td>
+			</tr>
+		</table>
+	</body>
+</html>
