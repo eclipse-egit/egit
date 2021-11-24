@@ -134,8 +134,10 @@ public abstract class GitCloneWizardTestBase extends LocalRepositoryTestCase {
 
 	@After
 	public void cleanup() throws Exception {
-		if (destRepo != null)
-			FileUtils.delete(destRepo, FileUtils.RECURSIVE | FileUtils.RETRY);
+		if (destRepo != null) {
+			FileUtils.delete(destRepo, FileUtils.RECURSIVE | FileUtils.RETRY
+					| FileUtils.IGNORE_ERRORS);
+		}
 	}
 
 }

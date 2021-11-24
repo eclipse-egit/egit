@@ -450,28 +450,31 @@
 		</topic>
 		<topic href="help/JGit/User_Guide/Updating-This-Document.html" label="Updating This Document"></topic>
 	</topic>
-	<topic href="help/EGit/New_and_Noteworthy/5.13/5.13.html" label="EGit 5.13 New and Noteworthy">
-		<topic href="help/EGit/New_and_Noteworthy/5.13/5.13.html" label="EGit">
-			<topic href="help/EGit/New_and_Noteworthy/5.13/5.13.html#Blame" label="Blame"></topic>
-			<topic href="help/EGit/New_and_Noteworthy/5.13/5.13.html#Comparisons" label="Comparisons">
-				<topic href="help/EGit/New_and_Noteworthy/5.13/5.13.html#Compare_Editor" label="Compare Editor"></topic>
-				<topic href="help/EGit/New_and_Noteworthy/5.13/5.13.html#New_Comparison_Commands" label="New Comparison Commands"></topic>
+	<topic href="help/EGit/New_and_Noteworthy/6.0/6.0.html" label="EGit 6.0 New and Noteworthy">
+		<topic href="help/EGit/New_and_Noteworthy/6.0/6.0.html" label="EGit">
+			<topic href="help/EGit/New_and_Noteworthy/6.0/6.0.html#Prerequisites" label="Prerequisites"></topic>
+			<topic href="help/EGit/New_and_Noteworthy/6.0/6.0.html#Fetching_Pull_Requests" label="Fetching Pull Requests">
+				<topic href="help/EGit/New_and_Noteworthy/6.0/6.0.html#Configuring_Hosts_for_Pull_Requests" label="Configuring Hosts for Pull Requests"></topic>
 			</topic>
-			<topic href="help/EGit/New_and_Noteworthy/5.13/5.13.html#API" label="API"></topic>
-			<topic href="help/EGit/New_and_Noteworthy/5.13/5.13.html#Other_Changes" label="Other Changes"></topic>
+			<topic href="help/EGit/New_and_Noteworthy/6.0/6.0.html#SSH_Agent" label="SSH Agent">
+				<topic href="help/EGit/New_and_Noteworthy/6.0/6.0.html#Limitations" label="Limitations"></topic>
+			</topic>
+			<topic href="help/EGit/New_and_Noteworthy/6.0/6.0.html#Other_Changes" label="Other Changes"></topic>
 		</topic>
-		<topic href="help/EGit/New_and_Noteworthy/5.13/Contributors.html" label="Contributors"></topic>
-		<topic href="help/EGit/New_and_Noteworthy/5.13/See-Also.html" label="See Also"></topic>
-		<topic href="help/EGit/New_and_Noteworthy/5.13/Updating-This-Document.html" label="Updating This Document"></topic>
+		<topic href="help/EGit/New_and_Noteworthy/6.0/Contributors.html" label="Contributors"></topic>
+		<topic href="help/EGit/New_and_Noteworthy/6.0/See-Also.html" label="See Also"></topic>
+		<topic href="help/EGit/New_and_Noteworthy/6.0/Updating-This-Document.html" label="Updating This Document"></topic>
 	</topic>
-	<topic href="help/JGit/New_and_Noteworthy/5.13/5.13.html" label="JGit 5.13 New and Noteworthy">
-		<topic href="help/JGit/New_and_Noteworthy/5.13/5.13.html" label="JGit">
-			<topic href="help/JGit/New_and_Noteworthy/5.13/5.13.html#GPG" label="GPG"></topic>
-			<topic href="help/JGit/New_and_Noteworthy/5.13/5.13.html#Dependencies" label="Dependencies"></topic>
-			<topic href="help/JGit/New_and_Noteworthy/5.13/5.13.html#Other_Changes" label="Other Changes"></topic>
+	<topic href="help/JGit/New_and_Noteworthy/6.0/6.0.html" label="JGit 6.0 New and Noteworthy">
+		<topic href="help/JGit/New_and_Noteworthy/6.0/6.0.html" label="JGit">
+			<topic href="help/JGit/New_and_Noteworthy/6.0/6.0.html#Prerequisites" label="Prerequisites"></topic>
+			<topic href="help/JGit/New_and_Noteworthy/6.0/6.0.html#API_changes" label="API changes"></topic>
+			<topic href="help/JGit/New_and_Noteworthy/6.0/6.0.html#SSH_Agent_Support" label="SSH Agent Support">
+				<topic href="help/JGit/New_and_Noteworthy/6.0/6.0.html#Limitations" label="Limitations"></topic>
+			</topic>
 		</topic>
-		<topic href="help/JGit/New_and_Noteworthy/5.13/Contributors.html" label="Contributors"></topic>
-		<topic href="help/JGit/New_and_Noteworthy/5.13/Updating-This-Document.html" label="Updating This Document"></topic>
+		<topic href="help/JGit/New_and_Noteworthy/6.0/Contributors.html" label="Contributors"></topic>
+		<topic href="help/JGit/New_and_Noteworthy/6.0/Updating-This-Document.html" label="Updating This Document"></topic>
 	</topic>
 	<topic href="help/EGit/Git_For_Eclipse_Users/Git-For-Eclipse-Users.html" label="Git for Eclipse Users">
 		<topic href="help/EGit/Git_For_Eclipse_Users/Git-For-Eclipse-Users.html" label="Centralised version control systems"></topic>
@@ -499,7 +502,6 @@
 					<topic href="help/EGit/Contributor_Guide/Manual-Developer-Setup.html#EGit" label="EGit"></topic>
 					<topic href="help/EGit/Contributor_Guide/Manual-Developer-Setup.html#JGit" label="JGit"></topic>
 					<topic href="help/EGit/Contributor_Guide/Manual-Developer-Setup.html#EGit_GitHub_Integration" label="EGit GitHub Integration"></topic>
-					<topic href="help/EGit/Contributor_Guide/Manual-Developer-Setup.html#EGit_PDE_Tools" label="EGit PDE Tools"></topic>
 				</topic>
 			</topic>
 			<topic href="help/EGit/Contributor_Guide/Manual-Developer-Setup.html#Development_IDE_Configuration" label="Development IDE Configuration">

@@ -24,6 +24,7 @@ import org.eclipse.swtbot.swt.finder.exceptions.WidgetNotFoundException;
 import org.eclipse.swtbot.swt.finder.waits.DefaultCondition;
 import org.eclipse.swtbot.swt.finder.widgets.SWTBotShell;
 import org.junit.BeforeClass;
+import org.junit.Ignore;
 import org.junit.Test;
 
 public class GitCloneWizardHttpsTest extends GitCloneWizardTestBase {
@@ -34,6 +35,7 @@ public class GitCloneWizardHttpsTest extends GitCloneWizardTestBase {
 		r = new SampleTestRepository(NUMBER_RANDOM_COMMITS, true, true);
 	}
 
+	@Ignore
 	@Test
 	public void canCloneARemoteRepo() throws Exception {
 		destRepo = new File(ResourcesPlugin.getWorkspace().getRoot()
