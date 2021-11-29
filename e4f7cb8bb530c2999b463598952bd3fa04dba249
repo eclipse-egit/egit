@@ -1,0 +1,140 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d24ef32a_d8195e7c",
+        "filename": "org.eclipse.egit.ui/plugin.properties",
+        "patchSetId": 2
+      },
+      "lineNbr": 143,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2021-11-29T21:48:44Z",
+      "side": 1,
+      "message": "I am against this change, this view is called staging view since a long time and it\u0027s consistent with nomenclature used in native git\n\nhttps://git-scm.com/book/en/v2/Git-Basics-Recording-Changes-to-the-Repository\nhttps://dev.to/sublimegeek/git-staging-area-explained-like-im-five-1anh\nhttps://coderefinery.github.io/git-intro/04-staging-area/\nhttps://gitolite.com/uses-of-index.html",
+      "revId": "e4f7cb8bb530c2999b463598952bd3fa04dba249",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9cf18656_460da665",
+        "filename": "org.eclipse.egit.ui/plugin.properties",
+        "patchSetId": 2
+      },
+      "lineNbr": 150,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2021-11-29T21:48:44Z",
+      "side": 1,
+      "message": "I am against this change, see above",
+      "revId": "e4f7cb8bb530c2999b463598952bd3fa04dba249",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "999245c2_e654e277",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/uitext.properties",
+        "patchSetId": 2
+      },
+      "lineNbr": 436,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2021-11-29T21:48:44Z",
+      "side": 1,
+      "message": "no, this is wrong",
+      "revId": "e4f7cb8bb530c2999b463598952bd3fa04dba249",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2d3b230b_066ef728",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/uitext.properties",
+        "patchSetId": 2
+      },
+      "lineNbr": 438,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2021-11-29T21:48:44Z",
+      "side": 1,
+      "message": "no",
+      "revId": "e4f7cb8bb530c2999b463598952bd3fa04dba249",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "153d95a7_73980575",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/uitext.properties",
+        "patchSetId": 2
+      },
+      "lineNbr": 893,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2021-11-29T21:48:44Z",
+      "side": 1,
+      "message": "that\u0027s wrong",
+      "revId": "e4f7cb8bb530c2999b463598952bd3fa04dba249",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6c20df1f_fcb37d06",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/uitext.properties",
+        "patchSetId": 2
+      },
+      "lineNbr": 895,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2021-11-29T21:48:44Z",
+      "side": 1,
+      "message": "that\u0027s wrong",
+      "revId": "e4f7cb8bb530c2999b463598952bd3fa04dba249",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "91cb5093_c172b500",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/uitext.properties",
+        "patchSetId": 2
+      },
+      "lineNbr": 907,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2021-11-29T21:48:44Z",
+      "side": 1,
+      "message": "no",
+      "revId": "e4f7cb8bb530c2999b463598952bd3fa04dba249",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f34a9a07_7f0f3eaf",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/uitext.properties",
+        "patchSetId": 2
+      },
+      "lineNbr": 939,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2021-11-29T21:48:44Z",
+      "side": 1,
+      "message": "that\u0027s wrong",
+      "revId": "e4f7cb8bb530c2999b463598952bd3fa04dba249",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": true
+    }
+  ]
+}
