@@ -16,6 +16,24 @@
       "revId": "c3354f0f7feaa37d7f702a07aa5774ed61cff50a",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "47ef9034_b026c380",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/commit/CommitHelper.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 109,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2021-11-29T22:59:17Z",
+      "side": 1,
+      "message": "at least the template content shouldn\u0027t be read if the current commit message is not null or empty",
+      "parentUuid": "fe729c00_0d7a5bbd",
+      "revId": "c3354f0f7feaa37d7f702a07aa5774ed61cff50a",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": true
     }
   ]
 }
