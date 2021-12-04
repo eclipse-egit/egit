@@ -34,6 +34,24 @@
       "revId": "c3354f0f7feaa37d7f702a07aa5774ed61cff50a",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "113f2419_5d63f043",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/commit/CommitHelper.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 109,
+      "author": {
+        "id": 252514
+      },
+      "writtenOn": "2021-12-04T17:35:34Z",
+      "side": 1,
+      "message": "\u003e Reading the template here has the effect that it is read pretty early and we read it over and over again even if it didn\u0027t change since last time we read it. E.g. staging/unstaging a file reads the template content again. \n\n\u003e Try to avoid unnecessary reads by reading the template content as late as possible and avoid re-reading the content if the file didn\u0027t change since it was read last time. This can be achieved using FileSnapshot which caches a file\u0027s file attributes. Use FileSnapshot#save to capture a file\u0027s attributes and use #isModified to check if it changed. This does a stat call instead of reading the content which is a lot faster if we read the content already.\n\nAgree, I refactored to load the template only on demand. However, the FileSnapshot would be rather fitting to jgit than here.\n\n\u003e at least the template content shouldn\u0027t be read if the current commit message is not null or empty\n\nThis is now controlled by the callers StagingView and CommitIU.",
+      "parentUuid": "47ef9034_b026c380",
+      "revId": "c3354f0f7feaa37d7f702a07aa5774ed61cff50a",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": true
     }
   ]
 }
