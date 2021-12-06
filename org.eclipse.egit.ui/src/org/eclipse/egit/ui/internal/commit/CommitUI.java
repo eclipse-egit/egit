@@ -183,7 +183,8 @@ public class CommitUI  {
 		commitDialog.setPreselectAll(preselectAll);
 		commitDialog.setAuthor(commitHelper.getAuthor());
 		commitDialog.setCommitter(commitHelper.getCommitter());
-		commitDialog.setAllowToChangeSelection(!commitHelper.isMergedResolved && !commitHelper.isCherryPickResolved);
+		commitDialog.setAllowToChangeSelection(!commitHelper.isMergedResolved()
+				&& !commitHelper.isCherryPickResolved());
 		if (commitHelper.shouldUseCommitTemplate()) {
 			commitDialog.setCommitMessage(commitHelper.getCommitTemplate());
 		} else {
@@ -215,8 +216,8 @@ public class CommitUI  {
 		}
 
 		commitOperation.setComputeChangeId(gerritMode);
-		commitOperation.setCommitAll(commitHelper.isMergedResolved);
-		if (commitHelper.isMergedResolved)
+		commitOperation.setCommitAll(commitHelper.isMergedResolved());
+		if (commitHelper.isMergedResolved())
 			commitOperation.setRepository(repo);
 		Job commitJob = new CommitJob(repo, commitOperation)
 				.setPushUpstream(pushMode);
