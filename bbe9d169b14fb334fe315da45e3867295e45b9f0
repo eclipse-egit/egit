@@ -22,6 +22,30 @@
       "revId": "bbe9d169b14fb334fe315da45e3867295e45b9f0",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f82ca22b_5a369710",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/commit/CommitHelper.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 123,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2021-12-06T15:11:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "deba8351_22deaa9e",
+      "range": {
+        "startLine": 123,
+        "startChar": 31,
+        "endLine": 123,
+        "endChar": 41
+      },
+      "revId": "bbe9d169b14fb334fe315da45e3867295e45b9f0",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
     }
   ]
 }
