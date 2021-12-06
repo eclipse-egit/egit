@@ -36,27 +36,28 @@ import org.eclipse.swt.widgets.Text;
 
 /**
  * Helper class for preparing a commit in EGit UI
- *
  */
 public class CommitHelper {
 
-	final private Repository repository;
+	private static final String EMPTY_STRING = ""; //$NON-NLS-1$
 
-	boolean canCommit;
+	private final Repository repository;
 
-	String cannotCommitMessage;
+	private final boolean canCommit;
 
-	private RevCommit previousCommit;
+	private final String cannotCommitMessage;
 
-	String author;
+	private final RevCommit previousCommit;
 
-	String committer;
+	private final String author;
 
-	boolean isMergedResolved;
+	private final String committer;
 
-	boolean isCherryPickResolved;
+	private final boolean isMergedResolved;
 
-	private String commitMessage;
+	private final boolean isCherryPickResolved;
+
+	private final String commitMessage;
 
 	private String commitTemplate;
 
@@ -65,45 +66,58 @@ public class CommitHelper {
 	 */
 	public CommitHelper(Repository repository) {
 		this.repository = repository;
-		calculateCommitInfo();
-	}
 
-	private void calculateCommitInfo() {
-		Repository mergeRepository = null;
-		isMergedResolved = false;
-		isCherryPickResolved = false;
 		RepositoryState state = repository.getRepositoryState();
 		canCommit = state.canCommit();
 		if (!canCommit) {
 			cannotCommitMessage = NLS.bind(UIText.CommitAction_repositoryState,
 					state.getDescription());
+			author = EMPTY_STRING;
+			committer = EMPTY_STRING;
+			previousCommit = null;
+			commitMessage = EMPTY_STRING;
+			isMergedResolved = false;
+			isCherryPickResolved = false;
 			return;
+		} else {
+			cannotCommitMessage = EMPTY_STRING;
 		}
-		if (state.equals(RepositoryState.MERGING_RESOLVED)) {
+
+		Repository mergeRepository = null;
+		switch (state) {
+		case MERGING_RESOLVED:
 			isMergedResolved = true;
-			mergeRepository = repository;
-		} else if (state.equals(RepositoryState.CHERRY_PICKING_RESOLVED)) {
-			isCherryPickResolved = true;
-			mergeRepository = repository;
-		}
-		previousCommit = getHeadCommit(repository);
-		final UserConfig config = repository.getConfig().get(UserConfig.KEY);
-		author = config.getAuthorName();
-		final String authorEmail = config.getAuthorEmail();
-		author = author + " <" + authorEmail + ">"; //$NON-NLS-1$ //$NON-NLS-2$
-
-		committer = config.getCommitterName();
-		final String committerEmail = config.getCommitterEmail();
-		committer = committer + " <" + committerEmail + ">"; //$NON-NLS-1$ //$NON-NLS-2$
-
-		if (isMergedResolved || isCherryPickResolved) {
+			isCherryPickResolved = false;
 			commitMessage = getMergeResolveMessage(mergeRepository);
+			mergeRepository = repository;
+			break;
+		case CHERRY_PICKING_RESOLVED:
+			isMergedResolved = false;
+			isCherryPickResolved = true;
+			commitMessage = getMergeResolveMessage(mergeRepository);
+			mergeRepository = repository;
+			break;
+		default:
+			isMergedResolved = false;
+			isCherryPickResolved = false;
+			commitMessage = EMPTY_STRING;
 		}
 
+		previousCommit = getHeadCommit(repository);
+
+		UserConfig config = repository.getConfig().get(UserConfig.KEY);
 		if (isCherryPickResolved) {
 			author = getCherryPickOriginalAuthor(mergeRepository);
+		} else {
+			author = formatUser(config.getAuthorName(),
+					config.getAuthorEmail());
 		}
+		committer = formatUser(config.getCommitterName(),
+				config.getCommitterEmail());
+	}
 
+	private static String formatUser(String name, String email) {
+		return name + " <" + email + ">"; //$NON-NLS-1$ //$NON-NLS-2$
 	}
 
 	/**
