@@ -49,7 +49,7 @@ class GenerateHistoryJob extends Job {
 
 	private int wantedIndex = -1;
 
-	private int lastUpdateCnt;
+	private int lastUpdateCnt = -1;
 
 	private boolean trace;
 
@@ -182,7 +182,6 @@ class GenerateHistoryJob extends Job {
 					GitTraceLocation.HISTORYVIEW.getLocation());
 		try {
 			if (forcedRedrawsAfterListIsCompleted != 1 && !incomplete
-					&& lastUpdateCnt != 0
 					&& loadedCommits.size() == lastUpdateCnt) {
 				return;
 			}
