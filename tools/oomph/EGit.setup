@@ -260,9 +260,9 @@
     </setupTask>
     <setupTask
         xsi:type="pde:TargetPlatformTask"
-        id="egit-4.6"
+        id="egit.targetplatform"
         name="${egit.target.platform}">
-      <description>EGit Neon target</description>
+      <description>EGit Target platform</description>
     </setupTask>
     <setupTask
         xsi:type="setup.workingsets:WorkingSetTask"
