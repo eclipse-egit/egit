@@ -3003,7 +3003,7 @@ public class GitHistoryPage extends HistoryPage implements RefsChangedListener,
 
 	@Override
 	public void loadItem(int item) {
-		if (job != null && job.loadMoreItemsThreshold() < item) {
+		if (job != null && job.loadNextBatch(item)) {
 			loadHistory(item);
 		}
 	}

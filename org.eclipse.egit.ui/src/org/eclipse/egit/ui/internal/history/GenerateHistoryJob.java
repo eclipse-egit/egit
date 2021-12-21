@@ -37,6 +37,8 @@ import org.eclipse.osgi.util.NLS;
 class GenerateHistoryJob extends Job {
 	private static final int BATCH_SIZE = 256;
 
+	private final Object lock = new Object();
+
 	private final GitHistoryPage page;
 
 	private final SWTCommitList loadedCommits;
@@ -58,6 +60,15 @@ class GenerateHistoryJob extends Job {
 	private RevFlag highlightFlag;
 
 	private int forcedRedrawsAfterListIsCompleted = 0;
+
+	// Guarded by 'lock'
+	private boolean hasMore = true;
+
+	// Guarded by 'lock'
+	private int size = -1;
+
+	// Guarded by 'lock'
+	private int nextLoadHint = -1;
 
 	GenerateHistoryJob(final GitHistoryPage ghp, @NonNull RevWalk walk,
 			ResourceManager resources) {
@@ -84,6 +95,9 @@ class GenerateHistoryJob extends Job {
 
 	@Override
 	protected IStatus run(final IProgressMonitor monitor) {
+		synchronized (lock) {
+			nextLoadHint = -1;
+		}
 		IStatus status = Status.OK_STATUS;
 		int maxCommits = Activator.getDefault().getPreferenceStore()
 					.getInt(UIPreferences.HISTORY_MAX_NUM_COMMITS);
@@ -152,13 +166,20 @@ class GenerateHistoryJob extends Job {
 				status = new Status(IStatus.ERROR, Activator.PLUGIN_ID,
 						UIText.GenerateHistoryJob_errorComputingHistory, e);
 			}
+			synchronized (lock) {
+				hasMore = loadedCommits.isPending();
+				size = loadedCommits.size();
+				if (!hasMore) {
+					incomplete = false;
+				}
+			}
 			if (trace)
 				GitTraceLocation.getTrace().trace(
 						GitTraceLocation.HISTORYVIEW.getLocation(),
 						"Loaded " + loadedCommits.size() + " commits"); //$NON-NLS-1$ //$NON-NLS-2$
 			if (commitNotFound && !loadedCommits.isEmpty()) {
 				if (forcedRedrawsAfterListIsCompleted < 1
-						&& !loadIncrementally) {
+						&& !loadIncrementally && hasMore) {
 					page.setWarningTextInUIThread(this);
 				}
 				if (initialSize != loadedCommits.size()) {
@@ -239,7 +260,14 @@ class GenerateHistoryJob extends Job {
 		commitToShow = c;
 	}
 
-	int loadMoreItemsThreshold() {
-		return loadedCommits.size() - (BATCH_SIZE / 2);
+	boolean loadNextBatch(int currentIndex) {
+		synchronized (lock) {
+			if (hasMore && currentIndex + (BATCH_SIZE / 2) > size
+					&& currentIndex > nextLoadHint) {
+				nextLoadHint = currentIndex;
+				return true;
+			}
+		}
+		return false;
 	}
 }
