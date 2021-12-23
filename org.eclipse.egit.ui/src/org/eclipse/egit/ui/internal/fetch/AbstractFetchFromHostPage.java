@@ -1256,7 +1256,7 @@ public abstract class AbstractFetchFromHostPage extends WizardPage {
 		}, this::getProposalPattern, null,
 				MessageFormat.format(
 						UIText.AbstractFetchFromHostPage_ContentAssistTooltip,
-						changeNamePlural));
+						"{0}", changeNamePlural)); //$NON-NLS-1$
 	}
 
 	/**
