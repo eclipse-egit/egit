@@ -250,5 +250,5 @@
    <repository-reference location="https://download.eclipse.org/egit/github/updates" enabled="true" />
    <repository-reference location="https://download.eclipse.org/egit/github/updates-nightly" enabled="true" />
    <repository-reference location="https://download.eclipse.org/e4/snapshots/org.eclipse.e4.ui" enabled="true" />
-   <repository-reference location="https://download.eclipse.org/tools/orbit/downloads/drops/R20211213173813/repository" enabled="true" />
+   <repository-reference location="https://download.eclipse.org/tools/orbit/downloads/drops/I20220105095044/repository" enabled="true" />
 </site>

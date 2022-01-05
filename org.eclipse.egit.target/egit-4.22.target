@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <?pde?>
 <!-- generated with https://github.com/eclipse-cbi/targetplatform-dsl -->
-<target name="egit-4.21" sequenceNumber="1641541266">
+<target name="egit-4.21" sequenceNumber="1641541454">
   <locations>
     <location includeMode="slicer" includeAllPlatforms="false" includeSource="true" includeConfigurePhase="true" type="InstallableUnit">
       <unit id="jakarta.servlet-api" version="4.0.0"/>
@@ -70,10 +70,10 @@
       <unit id="org.apache.httpcomponents.httpcore.source" version="4.4.14.v20210128-2225"/>
       <unit id="org.apache.log4j" version="1.2.15.v201012070815"/>
       <unit id="org.apache.log4j.source" version="1.2.15.v201012070815"/>
-      <unit id="org.apache.sshd.osgi" version="2.7.0.v20210623-0618"/>
-      <unit id="org.apache.sshd.osgi.source" version="2.7.0.v20210623-0618"/>
-      <unit id="org.apache.sshd.sftp" version="2.7.0.v20210623-0618"/>
-      <unit id="org.apache.sshd.sftp.source" version="2.7.0.v20210623-0618"/>
+      <unit id="org.apache.sshd.osgi" version="2.8.0.v20211227-1750"/>
+      <unit id="org.apache.sshd.osgi.source" version="2.8.0.v20211227-1750"/>
+      <unit id="org.apache.sshd.sftp" version="2.8.0.v20211227-1750"/>
+      <unit id="org.apache.sshd.sftp.source" version="2.8.0.v20211227-1750"/>
       <unit id="org.bouncycastle.bcpg" version="1.69.0.v20210713-1924"/>
       <unit id="org.bouncycastle.bcpg.source" version="1.69.0.v20210713-1924"/>
       <unit id="org.bouncycastle.bcpkix" version="1.69.0.v20210713-1924"/>
@@ -96,7 +96,7 @@
       <unit id="org.slf4j.binding.simple.source" version="1.7.30.v20200204-2150"/>
       <unit id="org.tukaani.xz" version="1.9.0.v20210624-1259"/>
       <unit id="org.tukaani.xz.source" version="1.9.0.v20210624-1259"/>
-      <repository location="https://download.eclipse.org/tools/orbit/downloads/drops/R20211213173813/repository"/>
+      <repository location="https://download.eclipse.org/tools/orbit/downloads/drops/I20220105095044/repository"/>
     </location>
     <location includeMode="slicer" includeAllPlatforms="false" includeSource="true" includeConfigurePhase="true" type="InstallableUnit">
       <unit id="org.assertj" version="3.14.0.v20200120-1926"/>
