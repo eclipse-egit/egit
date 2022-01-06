@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8c691660_b93dbb8d",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2022-01-06T20:42:45Z",
+      "side": 1,
+      "message": "Nit: in EGit and JGit, we place the issue number in a footer at the bottom. I\u0027ll do so in the rebase.",
+      "revId": "c244cd47a46abff1890b87f07cab9e1e1a3d243a",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": true
+    }
+  ]
+}
