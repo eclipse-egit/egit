@@ -3195,6 +3195,9 @@ public class UIText extends NLS {
 	public static String GitServer_WizardTitleGitlab;
 
 	/** */
+	public static String GitServer_WizardTitleGitea;
+
+	/** */
 	public static String FetchResultDialog_ConfigureButton;
 
 	/** */

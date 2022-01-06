@@ -127,6 +127,10 @@ public class ResourcePropertyTester extends AbstractPropertyTester {
 				return hasServerConfiguration(repository,
 						GitHosts.ServerType.GITLAB);
 			}
+			if ("hasGiteaConfiguration".equals(property)) { //$NON-NLS-1$
+				return hasServerConfiguration(repository,
+						GitHosts.ServerType.GITEA);
+			}
 			if ("hasGerritConfiguration".equals(property)) { //$NON-NLS-1$
 				return hasGerritConfiguration(repository);
 			}

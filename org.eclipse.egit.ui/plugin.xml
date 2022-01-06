@@ -489,6 +489,31 @@
             </with>
          </or>
       </definition>
+      <definition id="org.eclipse.egit.ui.fileOrFolderFetchFromGitea">
+         <or>
+            <test
+                  property="GitSelection.fileOrFolderInRepository"
+                  args="hasGiteaConfiguration">
+            </test>
+            <with variable="activePart">
+               <instanceof
+                     value="org.eclipse.ui.IEditorPart">
+               </instanceof>
+               <with
+                     variable="activeEditorInput">
+                  <adapt
+                        type="org.eclipse.core.resources.IResource">
+                     <test
+                           property="GitResource.isShared">
+                     </test>
+                     <test
+                           property="GitResource.hasGiteaConfiguration">
+                     </test>
+                  </adapt>
+               </with>
+            </with>
+         </or>
+      </definition>
       <definition
             id="org.eclipse.egit.ui.resourcesAllInRepository">
             <test
@@ -1128,6 +1153,12 @@
             defaultHandler="org.eclipse.egit.ui.internal.commands.shared.FetchChangeFromServerCommandFactory:GITLAB"
             id="org.eclipse.egit.ui.FetchGitlabMergeRequest"
             name="%FetchFromGitlabCommand.name">
+      </command>
+      <command
+            categoryId="org.eclipse.egit.ui.commandCategory"
+            defaultHandler="org.eclipse.egit.ui.internal.commands.shared.FetchChangeFromServerCommandFactory:GITEA"
+            id="org.eclipse.egit.ui.FetchGiteaPullRequest"
+            name="%FetchFromGiteaCommand.name">
       </command>
       <command
             categoryId="org.eclipse.egit.ui.commandCategory"
@@ -4789,6 +4820,29 @@
                </and>
             </visibleWhen>
          </command>
+         <command
+               commandId="org.eclipse.egit.ui.FetchGiteaPullRequest"
+               label="%FetchFromGiteaCommand.label"
+               style="push">
+            <visibleWhen
+                  checkEnabled="false">
+               <and>
+                  <count
+                        value="1">
+                  </count>
+                  <iterate>
+                     <and>
+                        <instanceof
+                              value="org.eclipse.egit.ui.internal.repository.tree.RepositoryNode">
+                        </instanceof>
+                        <test
+                              property="GitRepository.hasGiteaConfiguration">
+                        </test>
+                     </and>
+                  </iterate>
+               </and>
+            </visibleWhen>
+         </command>
          <dynamic
                   class="org.eclipse.egit.ui.internal.actions.PushMenu"
                   id="org.eclipse.egit.ui.repository.tree.popup.Push">
@@ -5716,6 +5770,18 @@
                      </test>
                   </visibleWhen>
                </command>
+               <command
+                     commandId="org.eclipse.egit.ui.FetchGiteaPullRequest"
+                     label="%FetchFromGiteaCommand.label"
+                     style="push">
+                  <visibleWhen
+                        checkEnabled="false">
+                     <test
+                           property="GitSelection.projectsSingleRepository"
+                           args="hasGiteaConfiguration">
+                     </test>
+                  </visibleWhen>
+               </command>
                <separator
                      name="org.eclipse.egit.ui.remote.group1"
                      visible="true">
@@ -5846,6 +5912,17 @@
                         checkEnabled="false">
                      <reference
                            definitionId="org.eclipse.egit.ui.fileOrFolderFetchFromGitlab">
+                     </reference>
+                  </visibleWhen>
+               </command>
+               <command
+                     commandId="org.eclipse.egit.ui.FetchGiteaPullRequest"
+                     label="%FetchFromGiteaCommand.label"
+                     style="push">
+                  <visibleWhen
+                        checkEnabled="false">
+                     <reference
+                           definitionId="org.eclipse.egit.ui.fileOrFolderFetchFromGitea">
                      </reference>
                   </visibleWhen>
                </command>
@@ -6809,6 +6886,10 @@
             icon="icons/obj16/fetch.png">
       </image>
       <image
+            commandId="org.eclipse.egit.ui.FetchGiteaPullRequest"
+            icon="icons/obj16/fetch.png">
+      </image>
+      <image
             commandId="org.eclipse.egit.ui.team.AddToIndex"
             icon="icons/obj16/add.png">
       </image>
@@ -7011,14 +7092,14 @@
             class="org.eclipse.egit.ui.internal.repository.tree.RepositoriesViewPropertyTester"
             id="org.eclipse.egit.ui.RepositoryTester"
             namespace="GitRepository"
-            properties="isBare,isSafe,canCheckout,canCommit,canAmend,canResetHead,canStash,isRefCheckedOut,isLocalBranch,fetchExists,pushExists,canMerge,canAbortRebase,canContinueRebase,isSubmodule,containsHead,hasGithubConfiguration,hasGitlabConfiguration,hasGerritConfiguration,canFetchFromGerrit,canPushToGerrit,canEnableLfs"
+            properties="isBare,isSafe,canCheckout,canCommit,canAmend,canResetHead,canStash,isRefCheckedOut,isLocalBranch,fetchExists,pushExists,canMerge,canAbortRebase,canContinueRebase,isSubmodule,containsHead,hasGithubConfiguration,hasGitlabConfiguration,hasGiteaConfiguration,hasGerritConfiguration,canFetchFromGerrit,canPushToGerrit,canEnableLfs"
             type="org.eclipse.egit.ui.internal.repository.tree.RepositoryTreeNode">
       </propertyTester>
       <propertyTester
             class="org.eclipse.egit.ui.internal.ResourcePropertyTester"
             id="org.eclipse.egit.ui.ResourceTester"
             namespace="GitResource"
-            properties="isShared,isContainer,isSafe,canCheckout,canCommit,canAmend,canResetHead,canAbortRebase,canContinueRebase,hasGithubConfiguration,hasGitlabConfiguration,hasGerritConfiguration,canFetchFromGerrit,canPushToGerrit"
+            properties="isShared,isContainer,isSafe,canCheckout,canCommit,canAmend,canResetHead,canAbortRebase,canContinueRebase,hasGithubConfiguration,hasGitlabConfiguration,hasGiteaConfiguration,hasGerritConfiguration,canFetchFromGerrit,canPushToGerrit"
             type="org.eclipse.core.resources.IResource">
       </propertyTester>
       <propertyTester
