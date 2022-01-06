@@ -41,6 +41,8 @@ public final class GitHosts {
 
 	private static final String GITLAB_ID = "gitlab"; //$NON-NLS-1$
 
+	private static final String GITEA_ID = "gitea"; //$NON-NLS-1$
+
 	private static final Pattern DIGITS = Pattern.compile("\\d+"); //$NON-NLS-1$
 
 	private static final Map<String, Collection<Pattern>> DEFAULT_URIS = new ConcurrentHashMap<>();
@@ -59,6 +61,8 @@ public final class GitHosts {
 		// gitlab.com, but also gitlab.eclipse.org or gitlab.gnome.org etc.
 		addServerPattern(DEFAULT_URIS, GITLAB_ID,
 				remote("gitlab(?:\\.[^.:/]+)?\\.(?:com|org)")); //$NON-NLS-1$
+
+		addServerPattern(DEFAULT_URIS, GITEA_ID, remote("gitea\\.com")); //$NON-NLS-1$
 	}
 
 	private GitHosts() {
@@ -77,7 +81,11 @@ public final class GitHosts {
 
 		/** A {@link ServerType} describing Gitlab git servers. */
 		GITLAB(GITLAB_ID, "refs/merge-requests/", "/head", //$NON-NLS-1$ //$NON-NLS-2$
-				"https?://.*/merge_requests/(\\d+)(?:[/?#].*)?"); //$NON-NLS-1$
+				"https?://.*/merge_requests/(\\d+)(?:[/?#].*)?"), //$NON-NLS-1$
+
+		/** A {@link ServerType} describing self-hosted Gitea git servers. */
+		GITEA(GITEA_ID, "refs/pull/", "/head", //$NON-NLS-1$ //$NON-NLS-2$
+				"https?://.*/pulls/(\\d+)(?:[/?#].*)?"); //$NON-NLS-1$
 
 		/** Constant indicating "no change ID". */
 		public static final long NO_CHANGE_ID = -1;
