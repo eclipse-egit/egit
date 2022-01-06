@@ -93,10 +93,10 @@
    <bundle id="org.slf4j.api.source">
       <category name="EGit.dependencies"/>
    </bundle>
-   <bundle id="org.slf4j.binding.log4j12">
+   <bundle id="org.slf4j.binding.simple">
       <category name="EGit.dependencies"/>
    </bundle>
-   <bundle id="org.slf4j.binding.log4j12.source">
+   <bundle id="org.slf4j.binding.simple.source">
       <category name="EGit.dependencies"/>
    </bundle>
    <bundle id="org.tukaani.xz">
