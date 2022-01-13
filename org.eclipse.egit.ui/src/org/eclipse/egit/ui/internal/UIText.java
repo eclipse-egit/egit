@@ -5884,6 +5884,9 @@ public class UIText extends NLS {
 	public static String StagingView_ShowFileNamesFirst;
 
 	/** */
+	public static String StagingView_ShowUntrackedFiles;
+
+	/** */
 	public static String StagingView_StagedChanges;
 
 	/** */

@@ -71,6 +71,8 @@ public class StagingViewContentProvider extends WorkbenchContentProvider {
 
 	private final EntryComparator comparator;
 
+	private boolean showUntracked = true;
+
 	StagingViewContentProvider(StagingView stagingView, boolean unstagedSection) {
 		this.stagingView = stagingView;
 		this.unstagedSection = unstagedSection;
@@ -264,7 +266,7 @@ public class StagingViewContentProvider extends WorkbenchContentProvider {
 
 	int getShownCount() {
 		Pattern filterPattern = getFilterPattern();
-		if (filterPattern == null) {
+		if (filterPattern == null && showUntracked) {
 			return getCount();
 		} else {
 			int shownCount = 0;
@@ -283,6 +285,16 @@ public class StagingViewContentProvider extends WorkbenchContentProvider {
 		return stagingEntries;
 	}
 
+	Collection<StagingFolderEntry> getUntrackedFileFolders() {
+		Set<StagingFolderEntry> folders = new HashSet<>();
+		for (StagingEntry entry : content) {
+			if (!entry.isTracked() && !entry.isStaged()) {
+				folders.add(entry.getParent());
+			}
+		}
+		return folders;
+	}
+
 	private void addFilteredDescendants(StagingFolderEntry folder,
 			Pattern pattern, List<StagingEntry> result) {
 		for (Object child : folder.getChildren()) {
@@ -296,7 +308,9 @@ public class StagingViewContentProvider extends WorkbenchContentProvider {
 	}
 
 	private boolean matches(StagingEntry entry, Pattern pattern) {
-		return pattern == null || pattern.matcher(entry.getPath()).find();
+		return ((unstagedSection && (showUntracked || entry.isTracked()))
+				|| !unstagedSection)
+				&& (pattern == null || pattern.matcher(entry.getPath()).find());
 	}
 
 	boolean isInFilter(StagingEntry stagingEntry) {
@@ -309,7 +323,7 @@ public class StagingViewContentProvider extends WorkbenchContentProvider {
 
 	boolean hasVisibleChildren(StagingFolderEntry folder) {
 		Pattern pattern = getFilterPattern();
-		if (pattern == null) {
+		if (pattern == null && showUntracked) {
 			return true;
 		}
 		return hasVisibleDescendants(folder, pattern);
@@ -450,6 +464,16 @@ public class StagingViewContentProvider extends WorkbenchContentProvider {
 		if (content != null) {
 			Arrays.sort(content, comparator);
 		}
+	}
+
+	/**
+	 * Sets whether to show untracked files.
+	 *
+	 * @param showUntracked
+	 *            <code>true</code> will show untracked files.
+	 */
+	void setShowUntracked(boolean showUntracked) {
+		this.showUntracked = showUntracked;
 	}
 
 	private static class EntryComparator implements Comparator<Object> {
