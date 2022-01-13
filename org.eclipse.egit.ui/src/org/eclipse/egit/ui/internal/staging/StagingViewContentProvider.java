@@ -71,6 +71,8 @@ public class StagingViewContentProvider extends WorkbenchContentProvider {
 
 	private final EntryComparator comparator;
 
+	private boolean showUntracked = true;
+
 	StagingViewContentProvider(StagingView stagingView, boolean unstagedSection) {
 		this.stagingView = stagingView;
 		this.unstagedSection = unstagedSection;
@@ -264,12 +266,14 @@ public class StagingViewContentProvider extends WorkbenchContentProvider {
 
 	int getShownCount() {
 		Pattern filterPattern = getFilterPattern();
-		if (filterPattern == null) {
+		if (filterPattern == null && showUntracked) {
 			return getCount();
 		} else {
 			int shownCount = 0;
 			for (StagingEntry entry : content) {
-				if (matches(entry, filterPattern)) {
+				if (matches(entry, filterPattern) && ((unstagedSection
+						&& (showUntracked || entry.isTracked()))
+						|| !unstagedSection)) {
 					shownCount++;
 				}
 			}
@@ -450,6 +454,16 @@ public class StagingViewContentProvider extends WorkbenchContentProvider {
 		if (content != null) {
 			Arrays.sort(content, comparator);
 		}
+	}
+
+	/**
+	 * Sets whether to show untracked files.
+	 *
+	 * @param showUntracked
+	 *            <code>true</code> will show untracked files.
+	 */
+	void setShowUntracked(boolean showUntracked) {
+		this.showUntracked = showUntracked;
 	}
 
 	private static class EntryComparator implements Comparator<Object> {
