@@ -265,6 +265,8 @@ public class StagingView extends ViewPart
 
 	private static final String SORT_ITEM_TOOLBAR_ID = "sortItem"; //$NON-NLS-1$
 
+	private static final String SHOW_UNTRACKED_TOOLBAR_ID = "showUntracked"; //$NON-NLS-1$
+
 	private static final String EXPAND_ALL_ITEM_TOOLBAR_ID = "expandAllItem"; //$NON-NLS-1$
 
 	private static final String COLLAPSE_ALL_ITEM_TOOLBAR_ID = "collapseAllItem"; //$NON-NLS-1$
@@ -702,6 +704,10 @@ public class StagingView extends ViewPart
 
 	private Action sortAction;
 
+	private Action showUntrackedAction;
+
+	private boolean showUntracked;
+
 	private SashForm stagingSashForm;
 
 	private IndexDiffChangedListener myIndexDiffListener = new IndexDiffChangedListener() {
@@ -899,6 +905,20 @@ public class StagingView extends ViewPart
 			}
 			workaroundMissingSwtRefresh(unstagedViewer);
 		});
+
+		unstagedViewer.addFilter(new ViewerFilter() {
+
+			@Override
+			public boolean select(Viewer viewer, Object parentElement,
+					Object element) {
+				StagingEntry entry = getStagingEntry(element);
+				if (entry != null && !entry.isTracked()) {
+					return showUntracked;
+				}
+				return true;
+			}
+		});
+
 		Composite rebaseAndCommitComposite = toolkit.createComposite(mainSashForm);
 		rebaseAndCommitComposite.setLayout(GridLayoutFactory.fillDefaults().create());
 
@@ -1626,6 +1646,21 @@ public class StagingView extends ViewPart
 		unstagedCollapseAllAction.setImageDescriptor(UIIcons.COLLAPSEALL);
 		unstagedCollapseAllAction.setId(COLLAPSE_ALL_ITEM_TOOLBAR_ID);
 
+		showUntracked = getPreferenceStore()
+				.getBoolean(UIPreferences.COMMIT_DIALOG_INCLUDE_UNTRACKED);
+		showUntrackedAction = new Action(UIText.StagingView_ShowUntrackedFiles,
+				IAction.AS_CHECK_BOX) {
+
+			@Override
+			public void run() {
+				showUntracked = isChecked();
+				unstagedViewer.refresh();
+			}
+		};
+		showUntrackedAction.setImageDescriptor(UIIcons.UNTRACKED_FILE);
+		showUntrackedAction.setId(SHOW_UNTRACKED_TOOLBAR_ID);
+		showUntrackedAction.setChecked(showUntracked);
+
 		sortAction = new Action(UIText.StagingView_UnstagedSort,
 				IAction.AS_CHECK_BOX) {
 
@@ -1649,6 +1684,7 @@ public class StagingView extends ViewPart
 
 		unstagedToolBarManager.add(stageAction);
 		unstagedToolBarManager.add(stageAllAction);
+		unstagedToolBarManager.add(showUntrackedAction);
 		unstagedToolBarManager.add(presentationAction);
 		unstagedToolBarManager.add(sortAction);
 		unstagedToolBarManager.add(unstagedExpandAllAction);
@@ -4787,21 +4823,6 @@ public class StagingView extends ViewPart
 			return text;
 		}
 
-		@Nullable
-		private StagingEntry getStagingEntry(Object element) {
-			StagingEntry entry = null;
-			if (element instanceof StagingEntry) {
-				entry = (StagingEntry) element;
-			}
-			if (element instanceof TreeItem) {
-				TreeItem item = (TreeItem) element;
-				if (item.getData() instanceof StagingEntry) {
-					entry = (StagingEntry) item.getData();
-				}
-			}
-			return entry;
-		}
-
 		private int getState(StagingEntry entry) {
 			switch (entry.getState()) {
 			case CONFLICTING:
@@ -4905,5 +4926,20 @@ public class StagingView extends ViewPart
 			return config != null && !alwaysShowPushWizard;
 		}
 		return false;
+	}
+
+	@Nullable
+	static StagingEntry getStagingEntry(Object element) {
+		StagingEntry entry = null;
+		if (element instanceof StagingEntry) {
+			entry = (StagingEntry) element;
+		}
+		if (element instanceof TreeItem) {
+			TreeItem item = (TreeItem) element;
+			if (item.getData() instanceof StagingEntry) {
+				entry = (StagingEntry) item.getData();
+			}
+		}
+		return entry;
 	}
 }
