@@ -53,6 +53,8 @@ import org.eclipse.egit.ui.internal.push.PushMode;
 import org.eclipse.jface.dialogs.IDialogConstants;
 import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.operation.IRunnableWithProgress;
+import org.eclipse.jgit.lib.CommitConfig;
+import org.eclipse.jgit.lib.CommitConfig.CleanupMode;
 import org.eclipse.jgit.lib.Constants;
 import org.eclipse.jgit.lib.IndexDiff;
 import org.eclipse.jgit.lib.Repository;
@@ -189,7 +191,9 @@ public class CommitUI  {
 		} else {
 			commitDialog.setCommitMessage(commitHelper.getCommitMessage());
 		}
-
+		CommitConfig config = repo.getConfig().get(CommitConfig.KEY);
+		CleanupMode mode = config.resolve(CleanupMode.DEFAULT, true);
+		commitDialog.setCleanupMode(mode, '#');
 		if (commitDialog.open() != IDialogConstants.OK_ID)
 			return false;
 

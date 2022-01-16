@@ -38,6 +38,7 @@ import org.eclipse.jface.window.Window;
 import org.eclipse.jgit.api.MergeResult;
 import org.eclipse.jgit.api.MergeResult.MergeStatus;
 import org.eclipse.jgit.api.errors.GitAPIException;
+import org.eclipse.jgit.lib.CommitConfig.CleanupMode;
 import org.eclipse.jgit.lib.Repository;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Shell;
@@ -143,26 +144,15 @@ public class FeatureFinishHandler extends AbstractGitFlowHandler {
 
 		CommitMessageEditorDialog messageEditorDialog = new CommitMessageEditorDialog(
 				activeShell, repository.readSquashCommitMsg(),
+				CleanupMode.STRIP, '#',
 				UIText.FeatureFinishHandler_rewordSquashedCommitMessage);
 
 		if (Window.OK == messageEditorDialog.open()) {
-			String commitMessage = stripCommentLines(messageEditorDialog
-					.getCommitMessage());
+			String commitMessage = messageEditorDialog.getCommitMessage();
 			CommitOperation commitOperation = new CommitOperation(repository,
 					commitHelper.getAuthor(), commitHelper.getCommitter(),
 					commitMessage);
 			commitOperation.execute(null);
 		}
-	}
-
-	private static String stripCommentLines(String commitMessage) {
-		StringBuilder result = new StringBuilder();
-		for (String line : commitMessage.split("\n")) { //$NON-NLS-1$
-			if (!line.trim().startsWith("#")) //$NON-NLS-1$
-				result.append(line).append("\n"); //$NON-NLS-1$
-		}
-		if (!commitMessage.endsWith("\n")) //$NON-NLS-1$
-			result.deleteCharAt(result.length() - 1);
-		return result.toString();
 	}
 }

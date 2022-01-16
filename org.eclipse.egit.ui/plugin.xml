@@ -816,7 +816,17 @@
             %Theme_CommitMessageFont_description
          </description>
       </fontDefinition>
-	<colorDefinition
+      <colorDefinition
+            categoryId="org.eclipse.egit.ui.GitTheme"
+            id="org.eclipse.egit.ui.CommitMessageCommentColor"
+            isEditable="true"
+            label="%Theme_CommitMessageCommentColor_label"
+            value="63,127,95">
+         <description>
+            %Theme_CommitMessageCommentColor_description
+         </description>
+      </colorDefinition>
+	  <colorDefinition
         id="org.eclipse.egit.ui.UncommittedChangeForegroundColor"
         categoryId="org.eclipse.egit.ui.GitTheme"
         label="%Theme_UncommittedChangeForegroundColor_label"

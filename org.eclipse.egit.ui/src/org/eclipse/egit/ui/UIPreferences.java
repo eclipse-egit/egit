@@ -107,6 +107,8 @@ public final class UIPreferences {
 	/** */
 	public final static String THEME_CommitGraphHighlightFont = "org.eclipse.egit.ui.CommitGraphHighlightFont"; //$NON-NLS-1$
 	/** */
+	public final static String THEME_CommitMessageCommentColor = "org.eclipse.egit.ui.CommitMessageCommentColor"; //$NON-NLS-1$
+	/** */
 	public final static String THEME_CommitMessageFont = "org.eclipse.egit.ui.CommitMessageFont"; //$NON-NLS-1$
 	/** */
 	public final static String THEME_CommitMessageEditorFont = "org.eclipse.egit.ui.CommitMessageEditorFont"; //$NON-NLS-1$

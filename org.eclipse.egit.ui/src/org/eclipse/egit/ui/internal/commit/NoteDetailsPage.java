@@ -109,8 +109,7 @@ public class NoteDetailsPage implements IDetailsPage, IDetailsPageProvider {
 		GridLayoutFactory.fillDefaults().extendedMargins(2, 2, 2, 2)
 				.applyTo(notesArea);
 
-		notesText = new SpellcheckableMessageArea(notesArea, "", true, //$NON-NLS-1$
-				SWT.NONE) {
+		notesText = new SpellcheckableMessageArea(notesArea, "", SWT.NONE) { //$NON-NLS-1$
 
 			@Override
 			protected void createMarginPainter() {
