@@ -59,6 +59,8 @@ import org.eclipse.jface.viewers.ViewerFilter;
 import org.eclipse.jgit.annotations.Nullable;
 import org.eclipse.jgit.errors.RevisionSyntaxException;
 import org.eclipse.jgit.lib.AnyObjectId;
+import org.eclipse.jgit.lib.CommitConfig;
+import org.eclipse.jgit.lib.CommitConfig.CleanupMode;
 import org.eclipse.jgit.lib.Constants;
 import org.eclipse.jgit.lib.GpgConfig;
 import org.eclipse.jgit.lib.GpgObjectSigner;
@@ -542,7 +544,11 @@ public class CreateTagDialog extends TitleAreaDialog {
 
 		new Label(left, SWT.WRAP).setText(UIText.CreateTagDialog_tagMessage);
 
-		tagMessageText = new SpellcheckableMessageArea(left, tagMessage);
+		tagMessageText = new SpellcheckableMessageArea(left, tagMessage,
+				SWT.BORDER);
+		CommitConfig config = repo.getConfig().get(CommitConfig.KEY);
+		tagMessageText
+				.setCleanupMode(config.resolve(CleanupMode.DEFAULT, true), '#');
 		Point size = tagMessageText.getTextWidget().getSize();
 		tagMessageText.setLayoutData(GridDataFactory.fillDefaults().hint(size)
 				.grab(true, true).create());

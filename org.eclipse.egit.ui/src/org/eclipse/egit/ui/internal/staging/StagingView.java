@@ -176,6 +176,8 @@ import org.eclipse.jgit.api.errors.GitAPIException;
 import org.eclipse.jgit.api.errors.JGitInternalException;
 import org.eclipse.jgit.api.errors.NoFilepatternException;
 import org.eclipse.jgit.events.ListenerHandle;
+import org.eclipse.jgit.lib.CommitConfig;
+import org.eclipse.jgit.lib.CommitConfig.CleanupMode;
 import org.eclipse.jgit.lib.Constants;
 import org.eclipse.jgit.lib.IndexDiff.StageState;
 import org.eclipse.jgit.lib.ObjectId;
@@ -1969,6 +1971,11 @@ public class StagingView extends ViewPart
 					schedule(
 							cacheEntry.createRefreshResourcesAndIndexDiffJob(),
 							false);
+				}
+				// Git config might have changed commit.cleanup?
+				Repository repo = currentRepository;
+				if (repo != null) {
+					setCleanup(repo, true);
 				}
 			}
 		};
@@ -3945,10 +3952,12 @@ public class StagingView extends ViewPart
 	}
 
 	/**
+	 * Sets the raw commit message text.
+	 *
 	 * @param message
-	 *            commit message to set for current repository
+	 *            raw commit message to set for current repository
 	 */
-	public void setCommitMessage(String message) {
+	public void setCommitText(String message) {
 		commitMessageText.setText(message);
 	}
 
@@ -4274,6 +4283,7 @@ public class StagingView extends ViewPart
 				|| commitMessageComponent.getRepository() != currentRepository) {
 			oldState = loadCommitMessageComponentState();
 			commitMessageComponent.setRepository(currentRepository);
+			setCleanup(currentRepository, false);
 			if (oldState == null)
 				loadInitialState(helper);
 			else
@@ -4286,14 +4296,29 @@ public class StagingView extends ViewPart
 						&& userEnteredCommitMessage())
 					addHeadChangedWarning(commitMessageComponent
 							.getCommitMessage());
-				else
+				else {
+					setCleanup(currentRepository, false);
 					loadInitialState(helper);
+				}
 			}
 		}
 		amendPreviousCommitAction.setChecked(commitMessageComponent
 				.isAmending());
 		amendPreviousCommitAction.setEnabled(helper.amendAllowed());
 		updateMessage();
+	}
+
+	private void setCleanup(Repository repo, boolean redraw) {
+		if (repo != null) {
+			CommitConfig config = repo.getConfig().get(CommitConfig.KEY);
+			CleanupMode mode = config.resolve(CleanupMode.DEFAULT, true);
+			commitMessageText.setCleanupMode(mode, '#');
+		} else {
+			commitMessageText.setCleanupMode(CleanupMode.STRIP, '#');
+		}
+		if (redraw) {
+			commitMessageText.invalidatePresentation();
+		}
 	}
 
 	private void updateCommitAuthorAndCommitter(Repository repository) {

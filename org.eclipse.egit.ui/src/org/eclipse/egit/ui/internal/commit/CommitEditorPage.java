@@ -455,7 +455,7 @@ public class CommitEditorPage extends FormPage
 		String message = commit.getFullMessage();
 
 		SpellcheckableMessageArea textContent = new SpellcheckableMessageArea(
-				messageArea, message, true, toolkit.getBorderStyle()) {
+				messageArea, message, toolkit.getBorderStyle()) {
 
 			@Override
 			protected IAdaptable getDefaultTarget() {

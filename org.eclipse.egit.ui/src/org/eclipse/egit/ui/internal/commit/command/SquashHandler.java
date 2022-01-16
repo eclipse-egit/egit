@@ -33,8 +33,9 @@ import org.eclipse.egit.ui.internal.UIText;
 import org.eclipse.egit.ui.internal.handler.SelectionHandler;
 import org.eclipse.egit.ui.internal.rebase.CommitMessageEditorDialog;
 import org.eclipse.jface.window.Window;
-import org.eclipse.jgit.api.RebaseCommand.InteractiveHandler;
+import org.eclipse.jgit.api.RebaseCommand.InteractiveHandler2;
 import org.eclipse.jgit.api.errors.GitAPIException;
+import org.eclipse.jgit.lib.CommitConfig.CleanupMode;
 import org.eclipse.jgit.lib.RebaseTodoLine;
 import org.eclipse.jgit.lib.Repository;
 import org.eclipse.jgit.revwalk.RevCommit;
@@ -68,15 +69,29 @@ public class SquashHandler extends SelectionHandler {
 			return null;
 		}
 
-		InteractiveHandler messageHandler = new InteractiveHandler() {
+		InteractiveHandler2 messageHandler = new InteractiveHandler2() {
+
 			@Override
 			public void prepareSteps(List<RebaseTodoLine> steps) {
 				// not used
 			}
 
 			@Override
-			public String modifyCommitMessage(String oldMessage) {
-				return promptCommitMessage(oldMessage);
+			public ModifyResult editCommitMessage(String message,
+					CleanupMode mode, char commentChar) {
+				String edited = promptCommitMessage(message, mode, commentChar);
+				return new ModifyResult() {
+
+					@Override
+					public String getMessage() {
+						return edited == null ? "" : edited; //$NON-NLS-1$
+					}
+
+					@Override
+					public CleanupMode getCleanupMode() {
+						return CleanupMode.VERBATIM;
+					}
+				};
 			}
 		};
 
@@ -107,13 +122,15 @@ public class SquashHandler extends SelectionHandler {
 		return null;
 	}
 
-	private String promptCommitMessage(String message) {
+	private String promptCommitMessage(String message, CleanupMode mode,
+			char commentChar) {
 		String[] msg = { message };
 		PlatformUI.getWorkbench().getDisplay().syncExec(() -> {
 			Shell shell = PlatformUI.getWorkbench()
 					.getModalDialogShellProvider().getShell();
 			CommitMessageEditorDialog dialog = new CommitMessageEditorDialog(
-					shell, msg[0], UIText.CommitMessageEditorDialog_OkButton,
+					shell, msg[0], mode, commentChar,
+					UIText.CommitMessageEditorDialog_OkButton,
 					UIText.SquashHandler_EditMessageDialogCancelButton);
 			if (dialog.open() == Window.OK) {
 				msg[0] = dialog.getCommitMessage();

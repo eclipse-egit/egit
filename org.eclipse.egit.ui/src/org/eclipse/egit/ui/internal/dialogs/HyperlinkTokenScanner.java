@@ -82,7 +82,8 @@ public class HyperlinkTokenScanner implements ITokenScanner {
 	protected IDocument document;
 
 	/** The {@link IToken} to use for default content. */
-	protected final IToken defaultToken;
+	protected IToken defaultToken;
+
 
 	/**
 	 * Creates a new instance that uses the given hyperlink detector and viewer.
@@ -106,13 +107,13 @@ public class HyperlinkTokenScanner implements ITokenScanner {
 	 *            {@link IHyperlinkDetector}s from
 	 * @param viewer
 	 *            the {@link ISourceViewer} to operate in
-	 * @param defaultAttribute
-	 *            the {@link TextAttribute} to use for the default token; may be
+	 * @param defaultToken
+	 *            the {@link Token} to use for the default token; may be
 	 *            {@code null} to use the default style of the viewer
 	 */
 	public HyperlinkTokenScanner(SourceViewerConfiguration configuration,
-			ISourceViewer viewer, @Nullable TextAttribute defaultAttribute) {
-		this(configuration, viewer, null, defaultAttribute);
+			ISourceViewer viewer, @Nullable Token defaultToken) {
+		this(configuration, viewer, null, defaultToken);
 	}
 
 	/**
@@ -125,18 +126,18 @@ public class HyperlinkTokenScanner implements ITokenScanner {
 	 *            the {@link ISourceViewer} to operate in
 	 * @param preferenceStore
 	 *            to use to look up preferences related to hyperlinking
-	 * @param defaultAttribute
-	 *            the {@link TextAttribute} to use for the default token; may be
+	 * @param defaultToken
+	 *            the {@link Token} to use for the default token; may be
 	 *            {@code null} to use the default style of the viewer
 	 */
 	protected HyperlinkTokenScanner(SourceViewerConfiguration configuration,
 			ISourceViewer viewer, @Nullable IPreferenceStore preferenceStore,
-			@Nullable TextAttribute defaultAttribute) {
+			@Nullable Token defaultToken) {
 		this.viewer = viewer;
-		this.defaultToken = new Token(defaultAttribute);
 		this.configuration = configuration;
 		this.preferenceStore = preferenceStore == null
 				? EditorsUI.getPreferenceStore() : preferenceStore;
+		setDefaultToken(defaultToken);
 	}
 
 	@Override
@@ -251,6 +252,21 @@ public class HyperlinkTokenScanner implements ITokenScanner {
 	@Override
 	public int getTokenLength() {
 		return currentOffset - tokenStart;
+	}
+
+	/**
+	 * Sets the default token.
+	 *
+	 * @param token
+	 *            for default text; may be {@code null} to use the viewer's
+	 *            default
+	 */
+	public void setDefaultToken(Token token) {
+		if (token == null) {
+			defaultToken = new Token(null);
+		} else {
+			defaultToken = token;
+		}
 	}
 
 	/**

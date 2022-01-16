@@ -21,6 +21,7 @@ import org.eclipse.jface.dialogs.IDialogConstants;
 import org.eclipse.jface.dialogs.IDialogSettings;
 import org.eclipse.jface.dialogs.TitleAreaDialog;
 import org.eclipse.jface.layout.GridDataFactory;
+import org.eclipse.jgit.lib.CommitConfig.CleanupMode;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.DisposeEvent;
 import org.eclipse.swt.events.DisposeListener;
@@ -51,15 +52,23 @@ public class CommitMessageEditorDialog extends TitleAreaDialog {
 
 	private String cancelButtonLabel;
 
+	private CleanupMode mode;
+
+	private char commentChar;
+
 	/**
 	 * @param parentShell
 	 *            the parent SWT shell
 	 * @param commitMessage
 	 *            the commit message to be edited
+	 * @param mode
+	 *            the {@link CleanupMode}
+	 * @param commentChar
+	 *            the comment character
 	 */
 	public CommitMessageEditorDialog(Shell parentShell,
-			String commitMessage) {
-		this(parentShell, commitMessage,
+			String commitMessage, CleanupMode mode, char commentChar) {
+		this(parentShell, commitMessage, mode, commentChar,
 				UIText.CommitMessageEditorDialog_EditCommitMessageTitle);
 	}
 
@@ -68,12 +77,16 @@ public class CommitMessageEditorDialog extends TitleAreaDialog {
 	 *            the parent SWT shell
 	 * @param commitMessage
 	 *            the commit message to be edited
+	 * @param mode
+	 *            the {@link CleanupMode}
+	 * @param commentChar
+	 *            the comment character
 	 * @param title
 	 *            the dialog title
 	 */
 	public CommitMessageEditorDialog(Shell parentShell, String commitMessage,
-			String title) {
-		this(parentShell, commitMessage,
+			CleanupMode mode, char commentChar, String title) {
+		this(parentShell, commitMessage, mode, commentChar,
 				UIText.CommitMessageEditorDialog_OkButton,
 				IDialogConstants.CANCEL_LABEL);
 		this.title = title;
@@ -84,18 +97,25 @@ public class CommitMessageEditorDialog extends TitleAreaDialog {
 	 *            the parent SWT shell
 	 * @param commitMessage
 	 *            the commit message to be edited
+	 * @param mode
+	 *            the {@link CleanupMode}
+	 * @param commentChar
+	 *            the comment character
 	 * @param okButtonLabel
 	 *            the label for the Ok button
 	 * @param cancelButtonLabel
 	 *            the label for the Cancel button
 	 */
 	public CommitMessageEditorDialog(Shell parentShell, String commitMessage,
-			String okButtonLabel, String cancelButtonLabel) {
+			CleanupMode mode, char commentChar, String okButtonLabel,
+			String cancelButtonLabel) {
 		super(parentShell);
 		this.commitMessage = commitMessage;
 		this.title = UIText.CommitMessageEditorDialog_EditCommitMessageTitle;
 		this.okButtonLabel = okButtonLabel;
 		this.cancelButtonLabel = cancelButtonLabel;
+		this.mode = mode;
+		this.commentChar = commentChar;
 	}
 
 	@Override
@@ -128,8 +148,15 @@ public class CommitMessageEditorDialog extends TitleAreaDialog {
 		setTitle(UIText.RebaseInteractiveHandler_EditMessageDialogTitle);
 		setMessage(UIText.RebaseInteractiveHandler_EditMessageDialogText);
 
-		messageArea = new SpellcheckableMessageArea(composite, commitMessage);
+		messageArea = new SpellcheckableMessageArea(composite, "", //$NON-NLS-1$
+				SWT.BORDER);
 		messageArea.setData(FormToolkit.KEY_DRAW_BORDER, FormToolkit.TEXT_BORDER);
+		CleanupMode cleanup = mode;
+		if (cleanup == null || CleanupMode.DEFAULT.equals(cleanup)) {
+			cleanup = CleanupMode.STRIP;
+		}
+		messageArea.setCleanupMode(cleanup, commentChar);
+		messageArea.setText(commitMessage);
 		Point size = messageArea.getTextWidget().getSize();
 		int minHeight = messageArea.getTextWidget().getLineHeight() * 3;
 		messageArea.setLayoutData(GridDataFactory.fillDefaults().grab(true, true)

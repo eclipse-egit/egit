@@ -10,6 +10,7 @@
  *******************************************************************************/
 package org.eclipse.egit.ui.internal.history;
 
+import java.util.Objects;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -185,9 +186,9 @@ public class CommitAndDiffComponent {
 						IDocument.DEFAULT_CONTENT_TYPE);
 				reconciler.setRepairer(hyperlinkDamagerRepairer,
 						IDocument.DEFAULT_CONTENT_TYPE);
-				TextAttribute headerDefault = new TextAttribute(
+				Token headerDefault = new Token(new TextAttribute(
 						PlatformUI.getWorkbench().getDisplay()
-								.getSystemColor(SWT.COLOR_DARK_GRAY));
+								.getSystemColor(SWT.COLOR_DARK_GRAY)));
 				DefaultDamagerRepairer headerDamagerRepairer = new DefaultDamagerRepairer(
 						new HyperlinkTokenScanner(this, viewer, headerDefault));
 				reconciler.setDamager(headerDamagerRepairer,
@@ -444,23 +445,14 @@ public class CommitAndDiffComponent {
 		private static final Pattern ITALIC_LINE = Pattern
 				.compile("^[A-Z](?:[A-Za-z]+-)+by: "); //$NON-NLS-1$
 
-		private final IToken italicToken;
+		private Object defaultSettings;
+
+		private IToken italicToken;
 
 		public FooterTokenScanner(SourceViewerConfiguration configuration,
 				ISourceViewer viewer) {
 			super(configuration, viewer);
-			Object defaults = defaultToken.getData();
-			TextAttribute italic;
-			if (defaults instanceof TextAttribute) {
-				TextAttribute defaultAttribute = (TextAttribute) defaults;
-				int style = defaultAttribute.getStyle() ^ SWT.ITALIC;
-				italic = new TextAttribute(defaultAttribute.getForeground(),
-						defaultAttribute.getBackground(), style,
-						defaultAttribute.getFont());
-			} else {
-				italic = new TextAttribute(null, null, SWT.ITALIC);
-			}
-			italicToken = new Token(italic);
+			italicToken = italic();
 		}
 
 		@Override
@@ -477,13 +469,33 @@ public class CommitAndDiffComponent {
 					if (m.find()) {
 						currentOffset = Math.min(endOfRange,
 								currentOffset + region.getLength());
-						return italicToken;
+						return italic();
 					}
 				}
 			} catch (BadLocationException e) {
 				// Ignore and return null below.
 			}
 			return null;
+		}
+
+		private IToken italic() {
+			Object defaults = defaultToken.getData();
+			if (!Objects.equals(defaults, defaultSettings)
+					|| italicToken == null) {
+				defaultSettings = defaults;
+				TextAttribute italic;
+				if (defaults instanceof TextAttribute) {
+					TextAttribute defaultAttribute = (TextAttribute) defaults;
+					int style = defaultAttribute.getStyle() ^ SWT.ITALIC;
+					italic = new TextAttribute(defaultAttribute.getForeground(),
+							defaultAttribute.getBackground(), style,
+							defaultAttribute.getFont());
+				} else {
+					italic = new TextAttribute(null, null, SWT.ITALIC);
+				}
+				italicToken = new Token(italic);
+			}
+			return italicToken;
 		}
 	}
 }
