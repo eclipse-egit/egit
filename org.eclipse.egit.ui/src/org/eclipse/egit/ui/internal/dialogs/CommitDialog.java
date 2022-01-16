@@ -88,8 +88,10 @@ import org.eclipse.jface.viewers.TreeViewerColumn;
 import org.eclipse.jface.viewers.Viewer;
 import org.eclipse.jface.viewers.ViewerComparator;
 import org.eclipse.jface.viewers.ViewerFilter;
+import org.eclipse.jgit.annotations.NonNull;
 import org.eclipse.jgit.api.AddCommand;
 import org.eclipse.jgit.api.Git;
+import org.eclipse.jgit.lib.CommitConfig.CleanupMode;
 import org.eclipse.jgit.lib.Constants;
 import org.eclipse.jgit.lib.FileMode;
 import org.eclipse.jgit.lib.IndexDiff;
@@ -411,6 +413,10 @@ public class CommitDialog extends TitleAreaDialog {
 
 	private boolean signCommit = false;
 
+	private @NonNull CleanupMode cleanup = CleanupMode.STRIP;
+
+	private char commentChar = '#';
+
 	/**
 	 * @param parentShell
 	 */
@@ -431,6 +437,20 @@ public class CommitDialog extends TitleAreaDialog {
 	 */
 	public void setCommitMessage(String s) {
 		this.commitMessage = s;
+	}
+
+	/**
+	 * Sets the {@link CleanupMode} and comment character.
+	 *
+	 * @param mode
+	 *            to set
+	 * @param commentChar
+	 *            to use
+	 */
+	public void setCleanupMode(@NonNull
+	CleanupMode mode, char commentChar) {
+		this.cleanup = mode;
+		this.commentChar = commentChar;
 	}
 
 	/**
@@ -633,9 +653,9 @@ public class CommitDialog extends TitleAreaDialog {
 			StagingView view = (StagingView) workbenchPage
 					.showView(StagingView.VIEW_ID);
 			view.reload(repository);
-			String message = commitMessageComponent.getCommitMessage();
+			String message = commitText.getText();
 			if (message != null && message.length() > 0)
-				view.setCommitMessage(message);
+				view.setCommitText(message);
 			setReturnCode(CANCEL);
 			close();
 		} catch (PartInitException e) {
@@ -1020,7 +1040,8 @@ public class CommitDialog extends TitleAreaDialog {
 				return CommitMessageHistory.getCommitHistory();
 			}
 		};
-		commitText = new CommitMessageArea(messageArea, commitMessage, SWT.NONE) {
+		commitText = new CommitMessageArea(messageArea, "", SWT.NONE) { //$NON-NLS-1$
+
 			@Override
 			protected CommitProposalProcessor getCommitProposalProcessor() {
 				return commitProposalProcessor;
@@ -1028,6 +1049,8 @@ public class CommitDialog extends TitleAreaDialog {
 		};
 		commitText
 				.setData(FormToolkit.KEY_DRAW_BORDER, FormToolkit.TEXT_BORDER);
+		commitText.setCleanupMode(cleanup, commentChar);
+		commitText.setText(commitMessage);
 		messageSection.setClient(messageArea);
 		Point size = commitText.getTextWidget().getSize();
 		int minHeight = commitText.getTextWidget().getLineHeight() * 3;

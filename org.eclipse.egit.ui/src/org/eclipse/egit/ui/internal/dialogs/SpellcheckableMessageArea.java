@@ -22,6 +22,7 @@ import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.function.Supplier;
 import java.util.regex.Pattern;
 
 import org.eclipse.core.runtime.IAdaptable;
@@ -39,13 +40,19 @@ import org.eclipse.jface.action.IMenuManager;
 import org.eclipse.jface.action.MenuManager;
 import org.eclipse.jface.action.Separator;
 import org.eclipse.jface.action.SubMenuManager;
+import org.eclipse.jface.resource.ColorRegistry;
 import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.jface.resource.JFaceResources;
+import org.eclipse.jface.text.BadLocationException;
 import org.eclipse.jface.text.Document;
 import org.eclipse.jface.text.IDocument;
+import org.eclipse.jface.text.IDocumentPartitioner;
+import org.eclipse.jface.text.IRegion;
 import org.eclipse.jface.text.ITextOperationTarget;
 import org.eclipse.jface.text.MarginPainter;
 import org.eclipse.jface.text.Position;
+import org.eclipse.jface.text.TextAttribute;
+import org.eclipse.jface.text.TextUtilities;
 import org.eclipse.jface.text.contentassist.ICompletionProposal;
 import org.eclipse.jface.text.contentassist.IContentAssistant;
 import org.eclipse.jface.text.presentation.IPresentationReconciler;
@@ -54,6 +61,10 @@ import org.eclipse.jface.text.quickassist.IQuickAssistInvocationContext;
 import org.eclipse.jface.text.quickassist.IQuickAssistProcessor;
 import org.eclipse.jface.text.reconciler.IReconciler;
 import org.eclipse.jface.text.rules.DefaultDamagerRepairer;
+import org.eclipse.jface.text.rules.FastPartitioner;
+import org.eclipse.jface.text.rules.IPartitionTokenScanner;
+import org.eclipse.jface.text.rules.IToken;
+import org.eclipse.jface.text.rules.Token;
 import org.eclipse.jface.text.source.Annotation;
 import org.eclipse.jface.text.source.AnnotationModel;
 import org.eclipse.jface.text.source.IAnnotationAccess;
@@ -63,6 +74,9 @@ import org.eclipse.jface.text.source.ISourceViewer;
 import org.eclipse.jface.text.source.SourceViewer;
 import org.eclipse.jface.util.IPropertyChangeListener;
 import org.eclipse.jface.util.PropertyChangeEvent;
+import org.eclipse.jgit.annotations.NonNull;
+import org.eclipse.jgit.lib.CommitConfig;
+import org.eclipse.jgit.lib.CommitConfig.CleanupMode;
 import org.eclipse.jgit.util.IntList;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.BidiSegmentEvent;
@@ -102,6 +116,8 @@ public class SpellcheckableMessageArea extends Composite {
 
 	private static final Pattern TRAILING_NEWLINES = Pattern.compile("\\v+$"); //$NON-NLS-1$
 
+	private static final String COMMENT_CONTENT_TYPE = "_egit_commit_message_comment"; //$NON-NLS-1$
+
 	private final HyperlinkSourceViewer sourceViewer;
 
 	private TextSourceViewerConfiguration configuration;
@@ -113,18 +129,21 @@ public class SpellcheckableMessageArea extends Composite {
 
 	private IAction contentAssistAction;
 
-	/**
-	 * @param parent
-	 * @param initialText
-	 */
-	public SpellcheckableMessageArea(Composite parent, String initialText) {
-		this(parent, initialText, SWT.BORDER);
-	}
+	private Token commentColoring;
+
+	private CleanupMode cleanupMode;
+
+	private char commentChar;
 
 	/**
+	 * Creates an editable {@link SpellcheckableMessageArea}.
+	 *
 	 * @param parent
+	 *            of the area
 	 * @param initialText
+	 *            of the area
 	 * @param styles
+	 *            of the area
 	 */
 	public SpellcheckableMessageArea(Composite parent, String initialText,
 			int styles) {
@@ -132,15 +151,24 @@ public class SpellcheckableMessageArea extends Composite {
 	}
 
 	/**
+	 * Creates a {@link SpellcheckableMessageArea}.
+	 *
 	 * @param parent
+	 *            of the area
 	 * @param initialText
+	 *            of the area
 	 * @param readOnly
+	 *            {@code true} if the area is to be read-only; {@code false}
+	 *            otherwise
 	 * @param styles
+	 *            of the area
 	 */
 	public SpellcheckableMessageArea(Composite parent, String initialText,
 			boolean readOnly, int styles) {
 		super(parent, styles);
 		setLayout(new FillLayout());
+
+		boolean useCommentHighlight = !readOnly;
 
 		AnnotationModel annotationModel = new AnnotationModel();
 		sourceViewer = new HyperlinkSourceViewer(this, null,
@@ -192,16 +220,34 @@ public class SpellcheckableMessageArea extends Composite {
 			}
 		};
 		Activator.getDefault().getPreferenceStore().addPropertyChangeListener(propertyChangeListener);
+
+		if (useCommentHighlight) {
+			ColorRegistry colors = PlatformUI.getWorkbench().getThemeManager()
+					.getCurrentTheme().getColorRegistry();
+			commentColoring = new Token(new TextAttribute(
+					colors.get(UIPreferences.THEME_CommitMessageCommentColor)));
+		}
+
 		final IPropertyChangeListener themeListener = event -> {
 			String property = event.getProperty();
 			if (IThemeManager.CHANGE_CURRENT_THEME.equals(property)
 					|| UIPreferences.THEME_CommitMessageEditorFont
-							.equals(property)) {
+							.equals(property)
+					|| (commentColoring != null
+							&& UIPreferences.THEME_CommitMessageCommentColor
+									.equals(property))) {
 				Font themeFont = UIUtils
 						.getFont(UIPreferences.THEME_CommitMessageEditorFont);
+				ColorRegistry colors = PlatformUI.getWorkbench()
+						.getThemeManager().getCurrentTheme().getColorRegistry();
 				getDisplay().asyncExec(() -> {
 					if (!isDisposed()) {
 						sourceViewer.setFont(themeFont);
+						if (commentColoring != null) {
+							commentColoring.setData(new TextAttribute(colors
+									.get(UIPreferences.THEME_CommitMessageCommentColor)));
+							sourceViewer.invalidateTextPresentation();
+						}
 					}
 				});
 			}
@@ -250,6 +296,15 @@ public class SpellcheckableMessageArea extends Composite {
 			}
 
 			@Override
+			public String[] getConfiguredContentTypes(ISourceViewer viewer) {
+				if (!useCommentHighlight) {
+					return super.getConfiguredContentTypes(viewer);
+				}
+				return new String[] { IDocument.DEFAULT_CONTENT_TYPE,
+						COMMENT_CONTENT_TYPE };
+			}
+
+			@Override
 			public IPresentationReconciler getPresentationReconciler(
 					ISourceViewer viewer) {
 				PresentationReconciler reconciler = new PresentationReconciler();
@@ -261,12 +316,29 @@ public class SpellcheckableMessageArea extends Composite {
 						IDocument.DEFAULT_CONTENT_TYPE);
 				reconciler.setRepairer(hyperlinkDamagerRepairer,
 						IDocument.DEFAULT_CONTENT_TYPE);
+				if (useCommentHighlight) {
+					DefaultDamagerRepairer commentRepairer = new DefaultDamagerRepairer(
+							new HyperlinkTokenScanner(this, viewer,
+									commentColoring));
+					reconciler.setDamager(commentRepairer,
+							COMMENT_CONTENT_TYPE);
+					reconciler.setRepairer(commentRepairer,
+							COMMENT_CONTENT_TYPE);
+				}
 				return reconciler;
 			}
 
 		};
 
 		sourceViewer.configure(configuration);
+		if (useCommentHighlight) {
+			IDocumentPartitioner partitioner = new FastPartitioner(
+					new CommitPartitionTokenScanner(() -> commentChar,
+							() -> cleanupMode),
+					configuration.getConfiguredContentTypes(sourceViewer));
+			partitioner.connect(document);
+			document.setDocumentPartitioner(partitioner);
+		}
 		sourceViewer.setDocument(document, annotationModel);
 
 		configureContextMenu();
@@ -302,7 +374,7 @@ public class SpellcheckableMessageArea extends Composite {
 	}
 
 	private boolean isEditable(ISourceViewer viewer) {
-		return viewer != null && viewer.getTextWidget().getEditable();
+		return viewer != null && viewer.isEditable();
 	}
 
 	private void configureHardWrap() {
@@ -595,6 +667,13 @@ public class SpellcheckableMessageArea extends Composite {
 	public String getCommitMessage() {
 		String text = getText();
 		text = Utils.normalizeLineEndings(text);
+		if (text == null) {
+			return ""; //$NON-NLS-1$
+		}
+		CleanupMode mode = cleanupMode;
+		if (mode != null) {
+			text = CommitConfig.cleanText(text, mode, '#');
+		}
 		if (shouldHardWrap()) {
 			text = wrapCommitMessage(text);
 		}
@@ -704,6 +783,43 @@ public class SpellcheckableMessageArea extends Composite {
 	}
 
 	/**
+	 * Sets the clean-up mode; has no effect on a read-only
+	 * {@link SpellcheckableMessageArea}.
+	 *
+	 * @param mode
+	 *            to set; must not be {@link CleanupMode#DEFAULT} (resolve the
+	 *            mode before)
+	 * @param commentChar
+	 *            to use if the mode is {@link CleanupMode#STRIP} or
+	 *            {@link CleanupMode#SCISSORS}
+	 * @throws IllegalArgumentException
+	 *             if {@code mode} is {@link CleanupMode#DEFAULT}
+	 */
+	public void setCleanupMode(@NonNull CleanupMode mode, char commentChar) {
+		if (CleanupMode.DEFAULT.equals(mode)) {
+			// Internal error; no translation
+			throw new IllegalArgumentException(
+					"Clean-up mode must not be " + mode); //$NON-NLS-1$
+		}
+		this.cleanupMode = mode;
+		this.commentChar = commentChar;
+	}
+
+	/**
+	 * Refreshes the text presentation. May be used after
+	 * {@link #setCleanupMode(CleanupMode, char)} if the text is not set
+	 * afterwards.
+	 */
+	public void invalidatePresentation() {
+		sourceViewer.invalidateTextPresentation();
+		// There seems to be no other way to force a re-partitioning of the
+		// whole document than to remove and re-add the partitioner(s)?
+		IDocument document = getDocument();
+		TextUtilities.addDocumentPartitioners(document,
+				TextUtilities.removeDocumentPartitioners(document));
+	}
+
+	/**
 	 * Set the same background color to the styledText widget as the Composite
 	 */
 	@Override
@@ -765,9 +881,11 @@ public class SpellcheckableMessageArea extends Composite {
 					// breaking if we have <blanks><very_long_word>, and also
 					// for things like "[1] <very_long_word>" or mark-up lists
 					// such as " * <very_long_word>".
-					if (nofPreviousWordChars > maxLineLength / 10
+					//
+					// Never break at a comment character
+					if (ch != '#' && (nofPreviousWordChars > maxLineLength / 10
 							|| nofPreviousWordChars > 0
-									&& (i - lineStart) > maxLineLength / 2) {
+									&& (i - lineStart) > maxLineLength / 2)) {
 						wordStart = i;
 					}
 				}
@@ -792,6 +910,165 @@ public class SpellcheckableMessageArea extends Composite {
 				result[i] = wrapOffsets.get(i);
 			}
 			return result;
+		}
+	}
+
+	@FunctionalInterface
+	private interface CharSupplier {
+
+		char get();
+	}
+
+	/**
+	 * An {@link IPartitionTokenScanner} that produces comment partitions for
+	 * all comment lines in a commit message depending on the
+	 * {@link CleanupMode} and comment character.
+	 */
+	private static class CommitPartitionTokenScanner
+			implements IPartitionTokenScanner {
+
+		private static final String CUT = " ------------------------ >8 ------------------------"; //$NON-NLS-1$
+
+		private static final IToken COMMENT = new Token(COMMENT_CONTENT_TYPE);
+
+		private static final IToken DEFAULT = new Token(null);
+
+		private final Supplier<CleanupMode> cleanupMode;
+
+		private final CharSupplier commentChar;
+
+		private IDocument currentDoc;
+
+		private int currentOffset;
+
+		private int end;
+
+		private int tokenStart;
+
+		public CommitPartitionTokenScanner(CharSupplier commentChar,
+				Supplier<CleanupMode> mode) {
+			super();
+			this.commentChar = commentChar;
+			this.cleanupMode = mode;
+		}
+
+		@Override
+		public void setRange(IDocument document, int offset, int length) {
+			currentDoc = document;
+			currentOffset = offset;
+			end = offset + length;
+			tokenStart = -1;
+		}
+
+		@Override
+		public IToken nextToken() {
+			tokenStart = currentOffset;
+			if (tokenStart >= end) {
+				return Token.EOF;
+			}
+			CleanupMode mode = cleanupMode.get();
+			char commentCharacter = commentChar.get();
+			if (CleanupMode.SCISSORS.equals(mode)) {
+				int scissors = -1;
+				int nOfLines = currentDoc.getNumberOfLines();
+				try {
+					String cut = commentCharacter + CUT;
+					for (int i = 0; i < nOfLines; i++) {
+						IRegion info = currentDoc.getLineInformation(i);
+						String line = currentDoc.get(info.getOffset(),
+								info.getLength());
+						if (line.equals(cut)) {
+							scissors = info.getOffset();
+							break;
+						}
+					}
+				} catch (BadLocationException e) {
+					// Ignore here
+				}
+				if (scissors < 0) {
+					currentOffset = end;
+					return DEFAULT;
+				} else if (currentOffset < scissors) {
+					currentOffset = scissors;
+					return DEFAULT;
+				}
+				currentOffset = end;
+				return COMMENT;
+			}
+			if (!CleanupMode.STRIP.equals(mode)) {
+				currentOffset = end;
+				return DEFAULT;
+			}
+			// FastPartitioner sets ranges with an offset always at a line
+			// beginning. So currentOffset is always a line start.
+			try {
+				int nOfLines = currentDoc.getNumberOfLines();
+				int lineNumber = currentDoc.getLineOfOffset(currentOffset);
+				int initialLine = lineNumber;
+				IToken result = DEFAULT;
+				while (lineNumber < nOfLines) {
+					IRegion info = currentDoc.getLineInformation(lineNumber);
+					String line = currentDoc.get(info.getOffset(),
+							info.getLength());
+					if (isComment(line, commentCharacter)) {
+						break;
+					}
+					lineNumber++;
+				}
+				if (lineNumber == initialLine) {
+					// We're at the beginning of comment lines; first one
+					// already got parsed. Include following comment lines in
+					// the same partition.
+					lineNumber++;
+					while (lineNumber < nOfLines) {
+						IRegion info = currentDoc
+								.getLineInformation(lineNumber);
+						String line = currentDoc.get(info.getOffset(),
+								info.getLength());
+						if (!isComment(line, commentCharacter)) {
+							break;
+						}
+						lineNumber++;
+					}
+					result = COMMENT;
+				}
+				if (lineNumber >= nOfLines) {
+					currentOffset = end;
+				} else {
+					currentOffset = currentDoc.getLineOffset(lineNumber);
+				}
+				return result;
+			} catch (BadLocationException e) {
+				currentOffset = end;
+				return DEFAULT;
+			}
+		}
+
+		@Override
+		public int getTokenOffset() {
+			return tokenStart;
+		}
+
+		@Override
+		public int getTokenLength() {
+			return currentOffset - tokenStart;
+		}
+
+		@Override
+		public void setPartialRange(IDocument document, int offset, int length,
+				String contentType, int partitionOffset) {
+			setRange(document, offset, length);
+		}
+
+		private static boolean isComment(String text, char commentChar) {
+			int len = text.length();
+			for (int i = 0; i < len; i++) {
+				char ch = text.charAt(i);
+				if (!Character.isWhitespace(ch)) {
+					return ch == commentChar;
+				}
+			}
+			return false;
 		}
 	}
 }

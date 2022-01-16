@@ -18,6 +18,7 @@
 /* See bug 466075 about the pseudo-selector ":org-eclipse-egit-ui" */
 IEclipsePreferences#org-eclipse-ui-workbench:org-eclipse-egit-ui {
 		preferences:
+			'org.eclipse.egit.ui.CommitMessageCommentColor=128,128,128'
 			'org.eclipse.egit.ui.DiffAddBackgroundColor=11,121,90'
 			'org.eclipse.egit.ui.DiffAddForegroundColor=216,254,245'
 			'org.eclipse.egit.ui.DiffHeadlineBackgroundColor=71,71,71'

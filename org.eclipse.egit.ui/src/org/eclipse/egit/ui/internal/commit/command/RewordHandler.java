@@ -32,8 +32,11 @@ import org.eclipse.egit.ui.internal.jobs.RepositoryJob;
 import org.eclipse.egit.ui.internal.rebase.CommitMessageEditorDialog;
 import org.eclipse.jface.action.IAction;
 import org.eclipse.jface.window.Window;
+import org.eclipse.jgit.lib.CommitConfig;
+import org.eclipse.jgit.lib.CommitConfig.CleanupMode;
 import org.eclipse.jgit.lib.Repository;
 import org.eclipse.jgit.revwalk.RevCommit;
+import org.eclipse.jgit.util.StringUtils;
 import org.eclipse.swt.widgets.Shell;
 
 /** Handler to reword a commit's message. */
@@ -53,8 +56,9 @@ public class RewordHandler extends SelectionHandler {
 
 		Shell shell = getPart(event).getSite().getShell();
 
-		String newMessage = promptCommitMessage(shell, commit);
-		if (newMessage == null || newMessage.equals(commit.getFullMessage())) {
+		String newMessage = promptCommitMessage(shell, repo, commit);
+		if (StringUtils.isEmptyOrNull(newMessage)
+				|| newMessage.equals(commit.getFullMessage())) {
 			return null;
 		}
 
@@ -107,9 +111,12 @@ public class RewordHandler extends SelectionHandler {
 		return null;
 	}
 
-	private String promptCommitMessage(final Shell shell, RevCommit commit) {
+	private String promptCommitMessage(final Shell shell, Repository repo,
+			RevCommit commit) {
+		CommitConfig config = repo.getConfig().get(CommitConfig.KEY);
+		CleanupMode mode = config.resolve(CleanupMode.DEFAULT, true);
 		CommitMessageEditorDialog dialog = new CommitMessageEditorDialog(shell,
-				commit.getFullMessage());
+				commit.getFullMessage(), mode, '#');
 		return dialog.open() == Window.OK ? dialog.getCommitMessage() : null;
 	}
 }

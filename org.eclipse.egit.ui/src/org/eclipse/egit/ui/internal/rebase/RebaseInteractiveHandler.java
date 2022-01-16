@@ -15,38 +15,52 @@ package org.eclipse.egit.ui.internal.rebase;
 import java.util.List;
 
 import org.eclipse.jface.window.Window;
-import org.eclipse.jgit.api.RebaseCommand.InteractiveHandler;
+import org.eclipse.jgit.api.RebaseCommand.InteractiveHandler2;
+import org.eclipse.jgit.lib.CommitConfig.CleanupMode;
 import org.eclipse.jgit.lib.RebaseTodoLine;
 import org.eclipse.ui.PlatformUI;
 
 /**
- * Singleton {@link InteractiveHandler}.
+ * Singleton {@link InteractiveHandler2}.
  */
-public enum RebaseInteractiveHandler implements InteractiveHandler {
+public enum RebaseInteractiveHandler implements InteractiveHandler2 {
 
 	/**
-	 * Commonly used {@link InteractiveHandler} for (interactive) rebase.
+	 * Commonly used {@link InteractiveHandler2} for (interactive) rebase.
 	 */
 	INSTANCE;
 
 	@Override
-	public String modifyCommitMessage(final String commitMessage) {
-		String[] result = { commitMessage };
+	public ModifyResult editCommitMessage(String message, CleanupMode mode,
+			char commentChar) {
+		String[] result = { message };
 		PlatformUI.getWorkbench().getDisplay().syncExec(() -> {
 			CommitMessageEditorDialog dialog = new CommitMessageEditorDialog(
 					PlatformUI.getWorkbench().getModalDialogShellProvider()
 							.getShell(),
-					commitMessage);
+					message, mode, commentChar);
 			if (dialog.open() == Window.OK) {
 				result[0] = dialog.getCommitMessage();
 			}
 		});
-		return result[0];
+		String msg = result[0];
+		return new ModifyResult() {
+
+			@Override
+			public String getMessage() {
+				return msg == null ? "" : msg; //$NON-NLS-1$
+			}
+
+			@Override
+			public CleanupMode getCleanupMode() {
+				return CleanupMode.VERBATIM;
+			}
+		};
 	}
 
 	@Override
 	public void prepareSteps(List<RebaseTodoLine> steps) {
-		// do not change list of steps here. Instead change the list via
+		// Do not change list of steps here. Instead change the list via
 		// writeRebaseTodoFile of class Repository
 	}
 }
