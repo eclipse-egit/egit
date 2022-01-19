@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (C) 2011, 2021 Bernard Leach <leachbj@bouncycastle.org> and others.
+ * Copyright (C) 2011, 2022 Bernard Leach <leachbj@bouncycastle.org> and others.
  * Copyright (C) 2015 SAP SE (Christian Georgi <christian.georgi@sap.com>)
  * Copyright (C) 2015 Denis Zygann <d.zygann@web.de>
  * Copyright (C) 2016 IBM (Daniel Megert <daniel_megert@ch.ibm.com>)
@@ -189,6 +189,7 @@ import org.eclipse.jgit.transport.RemoteConfig;
 import org.eclipse.jgit.util.StringUtils;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.SashForm;
+import org.eclipse.swt.custom.StackLayout;
 import org.eclipse.swt.custom.VerifyKeyListener;
 import org.eclipse.swt.dnd.Clipboard;
 import org.eclipse.swt.dnd.DND;
@@ -212,6 +213,7 @@ import org.eclipse.swt.graphics.Cursor;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.graphics.Rectangle;
+import org.eclipse.swt.layout.FillLayout;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.layout.RowLayout;
@@ -310,6 +312,12 @@ public class StagingView extends ViewPart
 	private Pattern filterPattern;
 
 	private SpellcheckableMessageArea commitMessageText;
+
+	private Composite commitMessagePreview;
+
+	private StackLayout previewLayout;
+
+	private CommitMessagePreviewer previewer;
 
 	private Text committerText;
 
@@ -692,6 +700,8 @@ public class StagingView extends ViewPart
 
 	private Action amendPreviousCommitAction;
 
+	private Action previewAction;
+
 	private Action signCommitAction;
 
 	private Action openNewCommitsAction;
@@ -969,6 +979,34 @@ public class StagingView extends ViewPart
 		ToolBarManager commitMessageToolBarManager = new ToolBarManager(
 				SWT.FLAT | SWT.HORIZONTAL);
 
+		previewAction = new Action(UIText.StagingView_Preview_Commit_Message,
+				IAction.AS_CHECK_BOX) {
+
+			@Override
+			public void run() {
+				if (isChecked()) {
+					previewLayout.topControl = commitMessagePreview;
+					commitMessageSection.setText(
+							UIText.StagingView_CommitMessagePreview);
+					previewer
+							.setText(commitMessageComponent.getRepository(),
+									commitMessageComponent.getCommitMessage());
+				} else {
+					previewLayout.topControl = commitMessageText;
+					commitMessageSection
+							.setText(UIText.StagingView_CommitMessage);
+				}
+				previewLayout.topControl.getParent().layout(true, true);
+				commitMessageSection.redraw();
+				if (!isChecked()) {
+					commitMessageText.setFocus();
+				}
+			}
+		};
+		previewAction.setImageDescriptor(UIIcons.ELCL16_PREVIEW);
+		commitMessageToolBarManager.add(previewAction);
+		commitMessageToolBarManager.add(new Separator());
+
 		amendPreviousCommitAction = new Action(
 				UIText.StagingView_Ammend_Previous_Commit, IAction.AS_CHECK_BOX) {
 
@@ -1041,9 +1079,10 @@ public class StagingView extends ViewPart
 		toolkit.paintBordersFor(commitMessageTextComposite);
 		GridDataFactory.fillDefaults().grab(true, true)
 				.applyTo(commitMessageTextComposite);
-		GridLayoutFactory.fillDefaults().numColumns(1)
-				.extendedMargins(2, 2, 2, 2)
-				.applyTo(commitMessageTextComposite);
+		previewLayout = new StackLayout();
+		previewLayout.marginHeight = 2;
+		previewLayout.marginWidth = 2;
+		commitMessageTextComposite.setLayout(previewLayout);
 
 		final CommitProposalProcessor commitProposalProcessor = new CommitProposalProcessor() {
 			@Override
@@ -1058,10 +1097,12 @@ public class StagingView extends ViewPart
 		};
 		commitMessageText = new CommitMessageArea(commitMessageTextComposite,
 				EMPTY_STRING, SWT.NONE) {
+
 			@Override
 			protected CommitProposalProcessor getCommitProposalProcessor() {
 				return commitProposalProcessor;
 			}
+
 			@Override
 			protected IHandlerService getHandlerService() {
 				return getSite().getService(IHandlerService.class);
@@ -1071,8 +1112,19 @@ public class StagingView extends ViewPart
 				FormToolkit.TEXT_BORDER);
 		GridDataFactory.fillDefaults().grab(true, true)
 				.applyTo(commitMessageText);
-		UIUtils.addBulbDecorator(commitMessageText.getTextWidget(),
+		UIUtils.addBulbDecorator(
+				commitMessageText.getTextWidget(),
 				UIText.CommitDialog_ContentAssist);
+
+		commitMessagePreview = new Composite(commitMessageTextComposite,
+				SWT.NONE);
+		commitMessagePreview.setLayout(new FillLayout());
+		commitMessagePreview.setData(FormToolkit.KEY_DRAW_BORDER,
+				FormToolkit.TEXT_BORDER);
+		previewer = new CommitMessagePreviewer();
+		previewer.createControl(commitMessagePreview);
+
+		previewLayout.topControl = commitMessageText;
 
 		Composite composite = toolkit.createComposite(commitMessageComposite);
 		toolkit.paintBordersFor(composite);
@@ -4279,15 +4331,18 @@ public class StagingView extends ViewPart
 
 		CommitHelper helper = new CommitHelper(currentRepository);
 		CommitMessageComponentState oldState = null;
+		boolean changed = false;
 		if (repositoryChanged
 				|| commitMessageComponent.getRepository() != currentRepository) {
 			oldState = loadCommitMessageComponentState();
 			commitMessageComponent.setRepository(currentRepository);
 			setCleanup(currentRepository, false);
-			if (oldState == null)
+			if (oldState == null) {
 				loadInitialState(helper);
-			else
+			} else {
 				loadExistingState(helper, oldState);
+			}
+			changed = true;
 		} else { // repository did not change
 			if (!commitMessageComponent.getHeadCommit().equals(
 					helper.getPreviousCommit())
@@ -4300,7 +4355,12 @@ public class StagingView extends ViewPart
 					setCleanup(currentRepository, false);
 					loadInitialState(helper);
 				}
+				changed = true;
 			}
+		}
+		if (changed && previewAction.isChecked()) {
+			previewAction.setChecked(false);
+			previewAction.run();
 		}
 		amendPreviousCommitAction.setChecked(commitMessageComponent
 				.isAmending());

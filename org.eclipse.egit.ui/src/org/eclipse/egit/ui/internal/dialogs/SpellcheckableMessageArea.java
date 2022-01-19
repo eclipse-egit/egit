@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (C) 2010, 2015 Benjamin Muskalla <bmuskalla@eclipsesource.com> and others.
+ * Copyright (C) 2010, 2022 Benjamin Muskalla <bmuskalla@eclipsesource.com> and others.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License 2.0
@@ -172,7 +172,7 @@ public class SpellcheckableMessageArea extends Composite {
 
 		AnnotationModel annotationModel = new AnnotationModel();
 		sourceViewer = new HyperlinkSourceViewer(this, null,
-				SWT.MULTI | SWT.V_SCROLL | SWT.WRAP) {
+				SWT.MULTI | getViewerStyles()) {
 			@Override
 			protected void handleJFacePreferencesChange(
 					PropertyChangeEvent event) {
@@ -354,6 +354,16 @@ public class SpellcheckableMessageArea extends Composite {
 		});
 	}
 
+	/**
+	 * Obtains the SWT styles for the text viewer, by default
+	 * {@link SWT#V_SCROLL} | {@link SWT#WRAP}.
+	 *
+	 * @return the styles
+	 */
+	protected int getViewerStyles() {
+		return SWT.V_SCROLL | SWT.WRAP;
+	}
+
 	private void computeBrokenBidiPlatformTextWidth(int textWidth) {
 		class BidiSegmentListenerTester implements BidiSegmentListener {
 			boolean called;
@@ -377,7 +387,10 @@ public class SpellcheckableMessageArea extends Composite {
 		return viewer != null && viewer.isEditable();
 	}
 
-	private void configureHardWrap() {
+	/**
+	 * Configure support for hard wrapping.
+	 */
+	protected void configureHardWrap() {
 		if (shouldHardWrap()) {
 			if (hardWrapSegmentListener == null) {
 				final StyledText textWidget = getTextWidget();

@@ -5893,6 +5893,9 @@ public class UIText extends NLS {
 	public static String StagingView_CommitMessage;
 
 	/** */
+	public static String StagingView_CommitMessagePreview;
+
+	/** */
 	public static String StagingView_CommitAndPush;
 
 	/** */
@@ -5912,6 +5915,9 @@ public class UIText extends NLS {
 
 	/** */
 	public static String StagingView_Add_Signed_Off_By;
+
+	/** */
+	public static String StagingView_Preview_Commit_Message;
 
 	/** */
 	public static String StagingView_Sign_Commit;
