@@ -26,8 +26,9 @@ import org.eclipse.egit.core.test.GitTestCase;
 import org.eclipse.egit.core.test.TestRepository;
 import org.eclipse.jgit.api.Git;
 import org.eclipse.jgit.api.LogCommand;
-import org.eclipse.jgit.api.RebaseCommand.InteractiveHandler;
+import org.eclipse.jgit.api.RebaseCommand.InteractiveHandler2;
 import org.eclipse.jgit.api.errors.GitAPIException;
+import org.eclipse.jgit.lib.CommitConfig.CleanupMode;
 import org.eclipse.jgit.lib.Constants;
 import org.eclipse.jgit.lib.RebaseTodoLine;
 import org.eclipse.jgit.revwalk.RevCommit;
@@ -71,15 +72,27 @@ public class SquashCommitsOperationTest extends GitTestCase {
 
 	@Test
 	public void squash() throws Exception {
-		InteractiveHandler messageHandler = new InteractiveHandler() {
+		InteractiveHandler2 messageHandler = new InteractiveHandler2() {
 			@Override
 			public void prepareSteps(List<RebaseTodoLine> steps) {
 				// not used
 			}
 
 			@Override
-			public String modifyCommitMessage(String commit) {
-				return "squashed";
+			public ModifyResult editCommitMessage(String message,
+					CleanupMode mode, char commentChar) {
+				return new ModifyResult() {
+
+					@Override
+					public String getMessage() {
+						return "squashed";
+					}
+
+					@Override
+					public CleanupMode getCleanupMode() {
+						return CleanupMode.VERBATIM;
+					}
+				};
 			}
 		};
 

@@ -32,10 +32,11 @@ import org.eclipse.egit.core.internal.job.RuleUtil;
 import org.eclipse.egit.core.internal.util.ProjectUtil;
 import org.eclipse.jgit.api.Git;
 import org.eclipse.jgit.api.RebaseCommand;
-import org.eclipse.jgit.api.RebaseCommand.InteractiveHandler;
+import org.eclipse.jgit.api.RebaseCommand.InteractiveHandler2;
 import org.eclipse.jgit.api.errors.GitAPIException;
 import org.eclipse.jgit.errors.IllegalTodoFileModification;
 import org.eclipse.jgit.lib.AbbreviatedObjectId;
+import org.eclipse.jgit.lib.CommitConfig.CleanupMode;
 import org.eclipse.jgit.lib.RebaseTodoLine;
 import org.eclipse.jgit.lib.Repository;
 import org.eclipse.jgit.merge.MergeStrategy;
@@ -48,7 +49,7 @@ public class SquashCommitsOperation implements IEGitOperation {
 
 	private List<RevCommit> commits;
 
-	private InteractiveHandler messageHandler;
+	private InteractiveHandler2 messageHandler;
 
 	/**
 	 * Constructs a new squash commits operation.
@@ -61,7 +62,7 @@ public class SquashCommitsOperation implements IEGitOperation {
 	 *            handler that will be used to prompt for a commit message
 	 */
 	public SquashCommitsOperation(Repository repository,
-			List<RevCommit> commits, InteractiveHandler messageHandler) {
+			List<RevCommit> commits, InteractiveHandler2 messageHandler) {
 		this.repository = repository;
 		this.commits = CommitUtil.sortCommits(commits);
 		this.messageHandler = messageHandler;
@@ -79,7 +80,7 @@ public class SquashCommitsOperation implements IEGitOperation {
 						CoreText.SquashCommitsOperation_squashing,
 						Integer.valueOf(commits.size())));
 
-				InteractiveHandler handler = new InteractiveHandler() {
+				InteractiveHandler2 handler = new InteractiveHandler2() {
 					@Override
 					public void prepareSteps(List<RebaseTodoLine> steps) {
 						RevCommit firstCommit = commits.get(0);
@@ -107,8 +108,10 @@ public class SquashCommitsOperation implements IEGitOperation {
 					}
 
 					@Override
-					public String modifyCommitMessage(String oldMessage) {
-						return messageHandler.modifyCommitMessage(oldMessage);
+					public ModifyResult editCommitMessage(String message,
+							CleanupMode mode, char commentChar) {
+						return messageHandler.editCommitMessage(message, mode,
+								commentChar);
 					}
 				};
 				try (Git git = new Git(repository)) {
