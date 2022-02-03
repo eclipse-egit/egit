@@ -56,14 +56,21 @@ public class RewordHandler extends SelectionHandler {
 
 		Shell shell = getPart(event).getSite().getShell();
 
-		String newMessage = promptCommitMessage(shell, repo, commit);
+		CommitConfig config = repo.getConfig().get(CommitConfig.KEY);
+		CleanupMode mode = config.resolve(CleanupMode.DEFAULT, true);
+		CommitMessageEditorDialog dialog = new CommitMessageEditorDialog(shell,
+				repo, commit.getFullMessage(), mode, '#');
+		if (dialog.open() != Window.OK) {
+			return null;
+		}
+		String newMessage = dialog.getCommitMessage();
 		if (StringUtils.isEmptyOrNull(newMessage)
 				|| newMessage.equals(commit.getFullMessage())) {
 			return null;
 		}
 
 		final RewordCommitOperation op = new RewordCommitOperation(repo,
-				commit, newMessage);
+				commit, newMessage, dialog.isWithChangeId());
 
 		Job job = new RepositoryJob(MessageFormat.format(
 				UIText.RewordHandler_JobName, commit.name()), null) {
@@ -109,14 +116,5 @@ public class RewordHandler extends SelectionHandler {
 		job.setRule(op.getSchedulingRule());
 		job.schedule();
 		return null;
-	}
-
-	private String promptCommitMessage(final Shell shell, Repository repo,
-			RevCommit commit) {
-		CommitConfig config = repo.getConfig().get(CommitConfig.KEY);
-		CleanupMode mode = config.resolve(CleanupMode.DEFAULT, true);
-		CommitMessageEditorDialog dialog = new CommitMessageEditorDialog(shell,
-				commit.getFullMessage(), mode, '#');
-		return dialog.open() == Window.OK ? dialog.getCommitMessage() : null;
 	}
 }

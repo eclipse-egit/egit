@@ -44,6 +44,6 @@ public class ProcessStepsRebaseCommand extends AbstractRebaseCommandHandler {
 			return null;
 		}
 		return new RebaseOperation(repository, Operation.PROCESS_STEPS,
-				RebaseInteractiveHandler.INSTANCE);
+				new RebaseInteractiveHandler(repository));
 	}
 }

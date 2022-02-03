@@ -54,14 +54,19 @@ import org.eclipse.jgit.revwalk.RevCommit;
 import org.eclipse.jgit.revwalk.RevSort;
 import org.eclipse.jgit.revwalk.RevWalk;
 import org.eclipse.jgit.transport.CredentialsProvider;
+import org.eclipse.jgit.util.ChangeIdUtil;
 import org.eclipse.team.core.TeamException;
 
 /** An operation that rewords a commit's message. */
 public class RewordCommitOperation implements IEGitOperation {
 
-	private Repository repository;
+	private final Repository repository;
+
+	private final String newMessage;
+
+	private final boolean computeChangeId;
+
 	private RevCommit commit;
-	private String newMessage;
 
 	private ObjectId headId;
 
@@ -74,12 +79,15 @@ public class RewordCommitOperation implements IEGitOperation {
 	 *            the commit
 	 * @param newMessage
 	 *            the new message to set for the commit
+	 * @param computeChangeId
+	 *            whether to compute a Gerrit Change-Id for the reworded commit
 	 */
 	public RewordCommitOperation(Repository repository, RevCommit commit,
-			String newMessage) {
+			String newMessage, boolean computeChangeId) {
 		this.repository = repository;
 		this.commit = commit;
 		this.newMessage = newMessage;
+		this.computeChangeId = computeChangeId;
 	}
 
 	@Override
@@ -151,8 +159,12 @@ public class RewordCommitOperation implements IEGitOperation {
 		progress.setWorkRemaining(commits.size() + 2);
 		PersonIdent committer = new PersonIdent(repository);
 		// Rewrite the message
+		String msg = newMessage;
+		if (computeChangeId) {
+			msg = insertChangeId(commit, msg, committer);
+		}
 		CommitBuilder builder = copy(commit, commit.getParents(), committer,
-				newMessage);
+				msg);
 		// Signature will be invalid for the new commit. Try to re-sign.
 		File gpgProgram = GitSettings.getGpgExecutable();
 		GpgConfig gpgConfig = new GpgConfig(repository.getConfig()) {
@@ -232,6 +244,23 @@ public class RewordCommitOperation implements IEGitOperation {
 			repository.writeOrigHead(origHead);
 		}
 		progress.worked(1);
+	}
+
+	private String insertChangeId(RevCommit thisCommit, String message,
+			PersonIdent committer) {
+		ObjectId firstParentId = null;
+		if (thisCommit.getParentCount() > 0) {
+			firstParentId = thisCommit.getParent(0);
+		}
+		ObjectId changeId = ChangeIdUtil.computeChangeId(thisCommit.getTree(),
+				firstParentId, thisCommit.getAuthorIdent(), committer, message);
+		String msg = ChangeIdUtil.insertId(message, changeId);
+		if (changeId != null) {
+			msg = msg.replaceAll("\nChange-Id: I" //$NON-NLS-1$
+					+ ObjectId.zeroId().getName() + '\n',
+					"\nChange-Id: I" + changeId.getName() + '\n'); //$NON-NLS-1$
+		}
+		return msg;
 	}
 
 	private CommitBuilder copy(RevCommit toCopy, ObjectId[] parents,

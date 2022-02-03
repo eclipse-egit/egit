@@ -92,6 +92,11 @@ public class SquashCommitsOperationTest extends GitTestCase {
 					public CleanupMode getCleanupMode() {
 						return CleanupMode.VERBATIM;
 					}
+
+					@Override
+					public boolean shouldAddChangeId() {
+						return false;
+					}
 				};
 			}
 		};

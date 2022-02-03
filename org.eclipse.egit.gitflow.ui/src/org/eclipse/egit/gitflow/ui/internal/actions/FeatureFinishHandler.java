@@ -143,7 +143,7 @@ public class FeatureFinishHandler extends AbstractGitFlowHandler {
 		CommitHelper commitHelper = new CommitHelper(repository);
 
 		CommitMessageEditorDialog messageEditorDialog = new CommitMessageEditorDialog(
-				activeShell, repository.readSquashCommitMsg(),
+				activeShell, repository, repository.readSquashCommitMsg(),
 				CleanupMode.STRIP, '#',
 				UIText.FeatureFinishHandler_rewordSquashedCommitMessage);
 

@@ -168,7 +168,8 @@ public class RebaseCurrentRefCommand extends AbstractRebaseCommandHandler {
 				null)) {
 			return null;
 		}
-		InteractiveHandler handler = interactive ? RebaseInteractiveHandler.INSTANCE
+		InteractiveHandler handler = interactive
+				? new RebaseInteractiveHandler(repository)
 				: null;
 		RebaseOperation operation = new RebaseOperation(repository, ref,
 				handler);

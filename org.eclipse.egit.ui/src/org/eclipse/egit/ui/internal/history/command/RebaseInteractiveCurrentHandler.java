@@ -41,6 +41,6 @@ public class RebaseInteractiveCurrentHandler extends AbstractRebaseHistoryComman
 	protected RebaseOperation createRebaseOperation(Repository repository,
 			Ref ref) {
 		return new RebaseOperation(repository, ref,
-				RebaseInteractiveHandler.INSTANCE);
+				new RebaseInteractiveHandler(repository));
 	}
 }
