@@ -79,7 +79,22 @@ public class SquashHandler extends SelectionHandler {
 			@Override
 			public ModifyResult editCommitMessage(String message,
 					CleanupMode mode, char commentChar) {
-				String edited = promptCommitMessage(message, mode, commentChar);
+				String[] msg = { message };
+				boolean[] doChangeId = { false };
+				PlatformUI.getWorkbench().getDisplay().syncExec(() -> {
+					Shell parentShell = PlatformUI.getWorkbench()
+							.getModalDialogShellProvider().getShell();
+					CommitMessageEditorDialog dialog = new CommitMessageEditorDialog(
+							parentShell, repo, msg[0], mode, commentChar,
+							UIText.CommitMessageEditorDialog_OkButton,
+							UIText.SquashHandler_EditMessageDialogCancelButton);
+					if (dialog.open() == Window.OK) {
+						msg[0] = dialog.getCommitMessage();
+						doChangeId[0] = dialog.isWithChangeId();
+					}
+				});
+
+				String edited = msg[0];
 				return new ModifyResult() {
 
 					@Override
@@ -90,6 +105,11 @@ public class SquashHandler extends SelectionHandler {
 					@Override
 					public CleanupMode getCleanupMode() {
 						return CleanupMode.VERBATIM;
+					}
+
+					@Override
+					public boolean shouldAddChangeId() {
+						return doChangeId[0];
 					}
 				};
 			}
@@ -120,22 +140,5 @@ public class SquashHandler extends SelectionHandler {
 		job.setRule(op.getSchedulingRule());
 		job.schedule();
 		return null;
-	}
-
-	private String promptCommitMessage(String message, CleanupMode mode,
-			char commentChar) {
-		String[] msg = { message };
-		PlatformUI.getWorkbench().getDisplay().syncExec(() -> {
-			Shell shell = PlatformUI.getWorkbench()
-					.getModalDialogShellProvider().getShell();
-			CommitMessageEditorDialog dialog = new CommitMessageEditorDialog(
-					shell, msg[0], mode, commentChar,
-					UIText.CommitMessageEditorDialog_OkButton,
-					UIText.SquashHandler_EditMessageDialogCancelButton);
-			if (dialog.open() == Window.OK) {
-				msg[0] = dialog.getCommitMessage();
-			}
-		});
-		return msg[0];
 	}
 }

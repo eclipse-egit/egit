@@ -33,6 +33,6 @@ public class SkipRebaseCommand extends AbstractRebaseCommandHandler {
 	@Override
 	public RebaseOperation createRebaseOperation(Repository repository) {
 		return new RebaseOperation(repository, Operation.SKIP,
-				RebaseInteractiveHandler.INSTANCE);
+				new RebaseInteractiveHandler(repository));
 	}
 }

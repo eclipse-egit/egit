@@ -1,5 +1,6 @@
 /*******************************************************************************
- * Copyright (c) 2013 SAP AG.
+ * Copyright (c) 2013, 2022 SAP AG and others.
+ *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License 2.0
  * which accompanies this distribution, and is available at
@@ -18,29 +19,39 @@ import org.eclipse.jface.window.Window;
 import org.eclipse.jgit.api.RebaseCommand.InteractiveHandler2;
 import org.eclipse.jgit.lib.CommitConfig.CleanupMode;
 import org.eclipse.jgit.lib.RebaseTodoLine;
+import org.eclipse.jgit.lib.Repository;
 import org.eclipse.ui.PlatformUI;
 
 /**
- * Singleton {@link InteractiveHandler2}.
+ * Default implementation of an {@link InteractiveHandler2}.
  */
-public enum RebaseInteractiveHandler implements InteractiveHandler2 {
+public class RebaseInteractiveHandler implements InteractiveHandler2 {
+
+	private final Repository repository;
 
 	/**
-	 * Commonly used {@link InteractiveHandler2} for (interactive) rebase.
+	 * Creates a new {@link RebaseInteractiveHandler}.
+	 *
+	 * @param repository
+	 *            to work in
 	 */
-	INSTANCE;
+	public RebaseInteractiveHandler(Repository repository) {
+		this.repository = repository;
+	}
 
 	@Override
 	public ModifyResult editCommitMessage(String message, CleanupMode mode,
 			char commentChar) {
 		String[] result = { message };
+		boolean[] doChangeId = { false };
 		PlatformUI.getWorkbench().getDisplay().syncExec(() -> {
 			CommitMessageEditorDialog dialog = new CommitMessageEditorDialog(
 					PlatformUI.getWorkbench().getModalDialogShellProvider()
 							.getShell(),
-					message, mode, commentChar);
+					repository, message, mode, commentChar);
 			if (dialog.open() == Window.OK) {
 				result[0] = dialog.getCommitMessage();
+				doChangeId[0] = dialog.isWithChangeId();
 			}
 		});
 		String msg = result[0];
@@ -54,6 +65,11 @@ public enum RebaseInteractiveHandler implements InteractiveHandler2 {
 			@Override
 			public CleanupMode getCleanupMode() {
 				return CleanupMode.VERBATIM;
+			}
+
+			@Override
+			public boolean shouldAddChangeId() {
+				return doChangeId[0];
 			}
 		};
 	}

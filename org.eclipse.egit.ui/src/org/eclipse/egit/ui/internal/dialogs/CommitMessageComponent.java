@@ -901,8 +901,10 @@ public class CommitMessageComponent {
 		if (!output.endsWith(Text.DELIMITER))
 			output += Text.DELIMITER;
 
-		// if the last line is not footer line, add a line break
-		if (!getLastLine(output).matches("[A-Za-z\\-]+:.*")) //$NON-NLS-1$
+		// if the last line is not footer line, and is not empty, add a line
+		// break
+		String lastLine = getLastLine(output);
+		if (!lastLine.isEmpty() && !lastLine.matches("[A-Za-z\\-]+:.*")) //$NON-NLS-1$
 			output += Text.DELIMITER;
 		output += getSignedOff();
 		return output;
