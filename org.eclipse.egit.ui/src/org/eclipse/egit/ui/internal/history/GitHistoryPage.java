@@ -184,6 +184,8 @@ import org.eclipse.ui.texteditor.IUpdate;
 public class GitHistoryPage extends HistoryPage implements RefsChangedListener,
 		TableLoader, IShowInSource, IShowInTargetList {
 
+	private static final String CSS_CLASS = "org-eclipse-egit-ui-GitHistoryPage"; //$NON-NLS-1$
+
 	private static final String TEAM_UI_PLUGIN_ID = "org.eclipse.team.ui"; //$NON-NLS-1$
 
 	private static final String TEAM_UI_LINKING_PREFERENCE = "pref_generichistory_view_linking"; //$NON-NLS-1$
@@ -1453,6 +1455,8 @@ public class GitHistoryPage extends HistoryPage implements RefsChangedListener,
 		graph = new CommitGraphTable(graphDetailSplit, getSite(), popupMgr,
 				this, resources);
 
+		graph.getTable().setData(UIUtils.CSS_CLASS_KEY, CSS_CLASS);
+
 		Activator.getDefault().getPreferenceStore()
 				.addPropertyChangeListener(listener);
 
@@ -1478,6 +1482,8 @@ public class GitHistoryPage extends HistoryPage implements RefsChangedListener,
 				formatDiffs(diffs);
 			}
 		});
+
+		fileViewer.getControl().setData(UIUtils.CSS_CLASS_KEY, CSS_CLASS);
 
 		layoutSashForm(graphDetailSplit,
 				UIPreferences.RESOURCEHISTORY_GRAPH_SPLIT);

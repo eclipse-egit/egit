@@ -107,6 +107,12 @@ import org.eclipse.ui.services.IServiceLocator;
  */
 public class UIUtils {
 
+	/**
+	 * Key to use for {@link Control#setData(String, Object)} to set a CSS class
+	 * on an SWT element.
+	 */
+	public static final String CSS_CLASS_KEY = "org.eclipse.e4.ui.css.CssClassName"; //$NON-NLS-1$
+
 	/** Default image descriptor for files */
 	public static final ImageDescriptor DEFAULT_FILE_IMG = PlatformUI
 			.getWorkbench().getSharedImages()

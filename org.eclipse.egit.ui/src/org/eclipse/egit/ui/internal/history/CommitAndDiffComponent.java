@@ -14,6 +14,7 @@ import java.util.Objects;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import org.eclipse.egit.ui.UIUtils;
 import org.eclipse.egit.ui.internal.ActionUtils;
 import org.eclipse.egit.ui.internal.commit.DiffViewer;
 import org.eclipse.egit.ui.internal.dialogs.HyperlinkSourceViewer;
@@ -61,8 +62,6 @@ import org.eclipse.ui.editors.text.EditorsUI;
  * {@link DiffViewer}.
  */
 public class CommitAndDiffComponent {
-
-	private static final String CSS_CLASS_KEY = "org.eclipse.e4.ui.css.CssClassName"; //$NON-NLS-1$
 
 	private static final String CSS_CLASS = "org-eclipse-egit-ui-CommitAndDiffComponent"; //$NON-NLS-1$
 
@@ -332,8 +331,8 @@ public class CommitAndDiffComponent {
 			}
 		});
 
-		commentWidget.setData(CSS_CLASS_KEY, CSS_CLASS);
-		diffWidget.setData(CSS_CLASS_KEY, CSS_CLASS);
+		commentWidget.setData(UIUtils.CSS_CLASS_KEY, CSS_CLASS);
+		diffWidget.setData(UIUtils.CSS_CLASS_KEY, CSS_CLASS);
 	}
 
 	/**

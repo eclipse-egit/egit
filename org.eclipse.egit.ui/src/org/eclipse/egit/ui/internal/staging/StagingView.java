@@ -265,6 +265,8 @@ public class StagingView extends ViewPart
 	 */
 	public static final String VIEW_ID = "org.eclipse.egit.ui.StagingView"; //$NON-NLS-1$
 
+	private static final String CSS_CLASS = "org-eclipse-egit-ui-StagingView"; //$NON-NLS-1$
+
 	private static final String EMPTY_STRING = ""; //$NON-NLS-1$
 
 	private static final String SORT_ITEM_TOOLBAR_ID = "sortItem"; //$NON-NLS-1$
@@ -2281,6 +2283,7 @@ public class StagingView extends ViewPart
 				.applyTo(viewer.getControl());
 		viewer.getTree().setData(FormToolkit.KEY_DRAW_BORDER,
 				FormToolkit.TREE_BORDER);
+		viewer.getTree().setData(UIUtils.CSS_CLASS_KEY, CSS_CLASS);
 		StagingViewContentProvider contentProvider = createStagingContentProvider(
 				unstaged);
 		viewer.setContentProvider(contentProvider);

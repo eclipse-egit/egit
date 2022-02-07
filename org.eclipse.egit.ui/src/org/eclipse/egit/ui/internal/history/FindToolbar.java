@@ -26,6 +26,7 @@ import org.eclipse.core.runtime.jobs.IJobChangeEvent;
 import org.eclipse.core.runtime.jobs.JobChangeAdapter;
 import org.eclipse.egit.ui.Activator;
 import org.eclipse.egit.ui.UIPreferences;
+import org.eclipse.egit.ui.UIUtils;
 import org.eclipse.egit.ui.internal.UIIcons;
 import org.eclipse.egit.ui.internal.UIText;
 import org.eclipse.jface.action.Action;
@@ -90,8 +91,6 @@ public class FindToolbar extends Composite {
 		 */
 		public void setMessage(FindToolbar originator, String text);
 	}
-
-	private static final String CCS_CLASS_KEY = "org.eclipse.e4.ui.css.CssClassName"; //$NON-NLS-1$
 
 	private static final String NO_RESULTS_CLASS = "org-eclipse-egit-ui-FindToolbar-noResults"; //$NON-NLS-1$
 	/**
@@ -407,7 +406,7 @@ public class FindToolbar extends Composite {
 	}
 
 	private void setNotFoundBackgroundColor() {
-		patternField.setData(CCS_CLASS_KEY, NO_RESULTS_CLASS);
+		patternField.setData(UIUtils.CSS_CLASS_KEY, NO_RESULTS_CLASS);
 		patternField.reskin(SWT.ALL);
 		noResults = true;
 	}
@@ -415,7 +414,7 @@ public class FindToolbar extends Composite {
 	private void setNormalBackgroundColor() {
 		if (noResults) {
 			Color currentColor = patternField.getBackground();
-			patternField.setData(CCS_CLASS_KEY, null);
+			patternField.setData(UIUtils.CSS_CLASS_KEY, null);
 			patternField.reskin(SWT.ALL);
 			if (currentColor.equals(patternField.getBackground())) {
 				// If the theme has no definition for the text field's
