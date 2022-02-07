@@ -62,6 +62,10 @@ import org.eclipse.ui.editors.text.EditorsUI;
  */
 public class CommitAndDiffComponent {
 
+	private static final String CSS_CLASS_KEY = "org.eclipse.e4.ui.css.CssClassName"; //$NON-NLS-1$
+
+	private static final String CSS_CLASS = "org-eclipse-egit-ui-CommitAndDiffComponent"; //$NON-NLS-1$
+
 	private ScrolledComposite commentAndDiffScrolledComposite;
 
 	private Composite commentAndDiffComposite;
@@ -328,6 +332,8 @@ public class CommitAndDiffComponent {
 			}
 		});
 
+		commentWidget.setData(CSS_CLASS_KEY, CSS_CLASS);
+		diffWidget.setData(CSS_CLASS_KEY, CSS_CLASS);
 	}
 
 	/**

@@ -32,3 +32,12 @@ IEclipsePreferences#org-eclipse-ui-workbench:org-eclipse-egit-ui {
 			'org.eclipse.egit.ui.UncommittedChangeBackgroundColor=47,47,47'
 			'org.eclipse.egit.ui.UncommittedChangeForegroundColor=114,157,186'
 }
+
+/*
+ * The default e4_dark_partsytle.css has .MPart Composite > StyledText with a lighter background.
+ * Override this with a more specific selector.
+ */
+.MPart Composite > StyledText.org-eclipse-egit-ui-CommitAndDiffComponent {
+	background-color: inherit;
+	color: inherit;
+}
