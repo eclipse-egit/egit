@@ -32,17 +32,3 @@ IEclipsePreferences#org-eclipse-ui-workbench:org-eclipse-egit-ui {
 			'org.eclipse.egit.ui.UncommittedChangeBackgroundColor=47,47,47'
 			'org.eclipse.egit.ui.UncommittedChangeForegroundColor=114,157,186'
 }
-
-
-#org-eclipse-egit-ui-StagingView StyledText,
-Form Section LayoutComposite StyledText
- {
-    background-color: #313538;
-    color: #dddddd;
- }
-
-PushResultTable-SpellcheckableMessageAreaExtension StyledText {
-	background-color: #313538;
-	color: #dddddd;
-}
-
