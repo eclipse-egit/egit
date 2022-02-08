@@ -406,7 +406,7 @@ public class FindToolbar extends Composite {
 	}
 
 	private void setNotFoundBackgroundColor() {
-		patternField.setData(UIUtils.CSS_CLASS_KEY, NO_RESULTS_CLASS);
+		UIUtils.setCssClass(patternField, NO_RESULTS_CLASS);
 		patternField.reskin(SWT.ALL);
 		noResults = true;
 	}
@@ -414,7 +414,7 @@ public class FindToolbar extends Composite {
 	private void setNormalBackgroundColor() {
 		if (noResults) {
 			Color currentColor = patternField.getBackground();
-			patternField.setData(UIUtils.CSS_CLASS_KEY, null);
+			UIUtils.setCssClass(patternField, null);
 			patternField.reskin(SWT.ALL);
 			if (currentColor.equals(patternField.getBackground())) {
 				// If the theme has no definition for the text field's

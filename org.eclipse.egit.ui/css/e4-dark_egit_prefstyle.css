@@ -34,7 +34,7 @@ IEclipsePreferences#org-eclipse-ui-workbench:org-eclipse-egit-ui {
 }
 
 /*
- * The default e4_dark_partsytle.css has .MPart Composite > StyledText with a lighter background.
+ * The default e4_dark_partstyle.css has .MPart Composite > StyledText with a lighter background.
  * Override this with a more specific selector.
  */
 .MPart Composite > StyledText.org-eclipse-egit-ui-CommitAndDiffComponent {

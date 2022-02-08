@@ -1455,7 +1455,7 @@ public class GitHistoryPage extends HistoryPage implements RefsChangedListener,
 		graph = new CommitGraphTable(graphDetailSplit, getSite(), popupMgr,
 				this, resources);
 
-		graph.getTable().setData(UIUtils.CSS_CLASS_KEY, CSS_CLASS);
+		UIUtils.setCssClass(graph.getTable(), CSS_CLASS);
 
 		Activator.getDefault().getPreferenceStore()
 				.addPropertyChangeListener(listener);
@@ -1483,7 +1483,7 @@ public class GitHistoryPage extends HistoryPage implements RefsChangedListener,
 			}
 		});
 
-		fileViewer.getControl().setData(UIUtils.CSS_CLASS_KEY, CSS_CLASS);
+		UIUtils.setCssClass(fileViewer.getControl(), CSS_CLASS);
 
 		layoutSashForm(graphDetailSplit,
 				UIPreferences.RESOURCEHISTORY_GRAPH_SPLIT);
