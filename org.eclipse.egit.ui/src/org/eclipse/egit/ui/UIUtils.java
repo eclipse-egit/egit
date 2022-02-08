@@ -107,11 +107,9 @@ import org.eclipse.ui.services.IServiceLocator;
  */
 public class UIUtils {
 
-	/**
-	 * Key to use for {@link Control#setData(String, Object)} to set a CSS class
-	 * on an SWT element.
-	 */
-	public static final String CSS_CLASS_KEY = "org.eclipse.e4.ui.css.CssClassName"; //$NON-NLS-1$
+	private static final String CSS_CLASS_KEY = "org.eclipse.e4.ui.css.CssClassName"; //$NON-NLS-1$
+
+	private static final String CSS_DISABLED_KEY = "org.eclipse.e4.ui.css.disabled"; //$NON-NLS-1$
 
 	/** Default image descriptor for files */
 	public static final ImageDescriptor DEFAULT_FILE_IMG = PlatformUI
@@ -1072,5 +1070,30 @@ public class UIUtils {
 	public static String menuText(String text, int maxLength) {
 		String result = Utils.shortenText(text, maxLength);
 		return SPACES.matcher(result).replaceAll(" "); //$NON-NLS-1$
+	}
+
+	/**
+	 * Sets whether CSS styling of a widget is enabled (the default) or not.
+	 *
+	 * @param widget
+	 *            to set the CSS styling mode on
+	 * @param enabled
+	 *            {@code true} to enable CSS styling; {@code false} to disable
+	 *            it
+	 */
+	public static void setCssStyling(Widget widget, boolean enabled) {
+		widget.setData(CSS_DISABLED_KEY, Boolean.valueOf(!enabled));
+	}
+
+	/**
+	 * Sets the CSS class name for a widget.
+	 *
+	 * @param widget
+	 *            to set the CSS class name on
+	 * @param cssClass
+	 *            the CSS class value
+	 */
+	public static void setCssClass(Widget widget, String cssClass) {
+		widget.setData(CSS_CLASS_KEY, cssClass);
 	}
 }

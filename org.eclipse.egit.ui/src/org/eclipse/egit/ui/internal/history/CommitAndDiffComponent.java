@@ -331,8 +331,8 @@ public class CommitAndDiffComponent {
 			}
 		});
 
-		commentWidget.setData(UIUtils.CSS_CLASS_KEY, CSS_CLASS);
-		diffWidget.setData(UIUtils.CSS_CLASS_KEY, CSS_CLASS);
+		UIUtils.setCssClass(commentWidget, CSS_CLASS);
+		UIUtils.setCssClass(diffWidget, CSS_CLASS);
 	}
 
 	/**

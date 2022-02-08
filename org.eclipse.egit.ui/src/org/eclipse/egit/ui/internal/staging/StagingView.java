@@ -1112,6 +1112,13 @@ public class StagingView extends ViewPart
 		};
 		commitMessageText.setData(FormToolkit.KEY_DRAW_BORDER,
 				FormToolkit.TEXT_BORDER);
+		// Disable CSS styling. The StyledText behaves like a text editor and
+		// uses the text editor color and font preferences. CSS overrides those;
+		// see bug 559321.
+		//
+		// The widget still shows correctly because the theme/CSS engine does
+		// update the text editor preferences.
+		UIUtils.setCssStyling(commitMessageText.getTextWidget(), false);
 		GridDataFactory.fillDefaults().grab(true, true)
 				.applyTo(commitMessageText);
 		UIUtils.addBulbDecorator(
@@ -2283,7 +2290,7 @@ public class StagingView extends ViewPart
 				.applyTo(viewer.getControl());
 		viewer.getTree().setData(FormToolkit.KEY_DRAW_BORDER,
 				FormToolkit.TREE_BORDER);
-		viewer.getTree().setData(UIUtils.CSS_CLASS_KEY, CSS_CLASS);
+		UIUtils.setCssClass(viewer.getTree(), CSS_CLASS);
 		StagingViewContentProvider contentProvider = createStagingContentProvider(
 				unstaged);
 		viewer.setContentProvider(contentProvider);
