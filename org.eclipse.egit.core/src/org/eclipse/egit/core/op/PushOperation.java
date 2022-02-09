@@ -3,7 +3,7 @@
  * Copyright (C) 2011, Mathias Kinzler <mathias.kinzler@sap.com>
  * Copyright (C) 2012, Robin Stocker <robin@nibor.org>
  * Copyright (C) 2015, Stephan Hackstedt <stephan.hackstedt@googlemail.com>
- * Copyright (C) 2016, Thomas Wolf <thomas.wolf@paranor.ch>
+ * Copyright (C) 2016, 2022 Thomas Wolf <thomas.wolf@paranor.ch>
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License 2.0
@@ -211,10 +211,14 @@ public class PushOperation {
 						progress.newChild(totalWork));
 				try {
 					Iterable<PushResult> results = git.push()
-							.setRemote(remoteName).setDryRun(dryRun)
-							.setTimeout(timeout).setProgressMonitor(gitMonitor)
+							.setRemote(remoteName)
+							.setPushDefault(null) // Use git config
+							.setDryRun(dryRun)
+							.setTimeout(timeout)
+							.setProgressMonitor(gitMonitor)
 							.setCredentialsProvider(credentialsProvider)
-							.setOutputStream(out).call();
+							.setOutputStream(out)
+							.call();
 					for (PushResult result : results) {
 						operationResult.addOperationResult(result.getURI(),
 								result);
