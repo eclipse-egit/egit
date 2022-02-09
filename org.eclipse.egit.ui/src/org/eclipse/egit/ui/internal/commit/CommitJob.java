@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2012, 2020 Red Hat, Inc, and others.
+ * Copyright (c) 2012, 2022 Red Hat, Inc, and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License 2.0
  * which accompanies this distribution, and is available at
@@ -15,6 +15,7 @@
 package org.eclipse.egit.ui.internal.commit;
 
 import java.io.IOException;
+import java.net.URISyntaxException;
 import java.text.MessageFormat;
 
 import org.eclipse.core.runtime.CoreException;
@@ -41,6 +42,8 @@ import org.eclipse.jface.wizard.Wizard;
 import org.eclipse.jgit.api.errors.AbortedByHookException;
 import org.eclipse.jgit.api.errors.CanceledException;
 import org.eclipse.jgit.api.errors.JGitInternalException;
+import org.eclipse.jgit.lib.Constants;
+import org.eclipse.jgit.lib.ObjectId;
 import org.eclipse.jgit.lib.Repository;
 import org.eclipse.jgit.revwalk.RevCommit;
 import org.eclipse.jgit.transport.RemoteConfig;
@@ -135,7 +138,12 @@ public class CommitJob extends Job {
 				openCommitEditor(commit);
 			}
 			if (pushMode != null) {
-				pushUpstream(commit, pushMode);
+				try {
+					pushUpstream(commit, pushMode);
+				} catch (IOException e) {
+					return Activator.createErrorStatus(
+							UIText.PushJob_unexpectedError, e);
+				}
 			}
 		}
 		return Status.OK_STATUS;
@@ -175,31 +183,39 @@ public class CommitJob extends Job {
 		});
 	}
 
-	private void pushUpstream(final RevCommit commit, final PushMode pushTo) {
-		final RemoteConfig config = SimpleConfigurePushDialog
+	private void pushUpstream(final RevCommit commit, final PushMode pushTo)
+			throws IOException {
+		RemoteConfig config = SimpleConfigurePushDialog
 				.getConfiguredRemote(repository);
 		boolean alwaysShowPushWizard = Activator.getDefault()
 				.getPreferenceStore()
 				.getBoolean(UIPreferences.ALWAYS_SHOW_PUSH_WIZARD_ON_COMMIT);
-
-		if (alwaysShowPushWizard || pushTo == PushMode.GERRIT
-				|| config == null) {
+		String currentBranch = repository.getFullBranch();
+		if (ObjectId.isId(currentBranch)) {
+			currentBranch = null;
+		}
+		if (currentBranch != null && config == null) {
+			try {
+				config = new RemoteConfig(repository.getConfig(),
+						Constants.DEFAULT_REMOTE_NAME);
+			} catch (URISyntaxException e) {
+				throw new IOException(e.getLocalizedMessage(), e);
+			}
+		}
+		if (alwaysShowPushWizard || pushTo == PushMode.GERRIT || config == null
+				|| currentBranch == null) {
 			final Display display = PlatformUI.getWorkbench().getDisplay();
-			display.asyncExec(new Runnable() {
-
-				@Override
-				public void run() {
-					Wizard pushWizard = getPushWizard(commit, pushTo);
-					if (pushWizard != null) {
-						PushWizardDialog dialog = new PushWizardDialog(
-								display.getActiveShell(), pushWizard);
-						dialog.open();
-					}
+			display.asyncExec(() -> {
+				Wizard pushWizard = getPushWizard(commit, pushTo);
+				if (pushWizard != null) {
+					PushWizardDialog dialog = new PushWizardDialog(
+							display.getActiveShell(), pushWizard);
+					dialog.open();
 				}
 			});
 		} else {
-			PushOperationUI op = new PushOperationUI(repository,
-					config.getName(), false);
+			PushOperationUI op = new PushOperationUI(repository, currentBranch,
+					config, false);
 			op.start();
 		}
 	}
