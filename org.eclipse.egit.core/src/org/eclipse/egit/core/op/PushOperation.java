@@ -3,7 +3,7 @@
  * Copyright (C) 2011, Mathias Kinzler <mathias.kinzler@sap.com>
  * Copyright (C) 2012, Robin Stocker <robin@nibor.org>
  * Copyright (C) 2015, Stephan Hackstedt <stephan.hackstedt@googlemail.com>
- * Copyright (C) 2016, Thomas Wolf <thomas.wolf@paranor.ch>
+ * Copyright (C) 2016, 2022 Thomas Wolf <thomas.wolf@paranor.ch>
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License 2.0
@@ -17,7 +17,9 @@ package org.eclipse.egit.core.op;
 import java.io.OutputStream;
 import java.lang.reflect.InvocationTargetException;
 import java.net.URISyntaxException;
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.SubMonitor;
@@ -26,8 +28,13 @@ import org.eclipse.egit.core.EclipseGitProgressTransformer;
 import org.eclipse.egit.core.internal.CoreText;
 import org.eclipse.jgit.api.Git;
 import org.eclipse.jgit.api.errors.JGitInternalException;
+import org.eclipse.jgit.lib.Config;
+import org.eclipse.jgit.lib.ConfigConstants;
+import org.eclipse.jgit.lib.Constants;
+import org.eclipse.jgit.lib.ObjectId;
 import org.eclipse.jgit.lib.Repository;
 import org.eclipse.jgit.transport.CredentialsProvider;
+import org.eclipse.jgit.transport.PushConfig.PushDefault;
 import org.eclipse.jgit.transport.PushResult;
 import org.eclipse.jgit.transport.RemoteConfig;
 import org.eclipse.jgit.transport.RemoteRefUpdate;
@@ -51,6 +58,8 @@ public class PushOperation {
 
 	private final int timeout;
 
+	private final PushDefault pushDefault;
+
 	private OutputStream out;
 
 	private PushOperationResult operationResult;
@@ -71,10 +80,10 @@ public class PushOperation {
 	 * @param timeout
 	 *            the timeout in seconds (0 for no timeout)
 	 */
-	public PushOperation(final Repository localDb,
-			final PushOperationSpecification specification,
-			final boolean dryRun, int timeout) {
-		this(localDb, null, specification, dryRun, timeout);
+	public PushOperation(Repository localDb,
+			PushOperationSpecification specification, boolean dryRun,
+			int timeout) {
+		this(localDb, null, null, specification, dryRun, timeout);
 	}
 
 	/**
@@ -85,19 +94,83 @@ public class PushOperation {
 	 * @param dryRun
 	 * @param timeout
 	 */
-	public PushOperation(final Repository localDb, final String remoteName,
-			final boolean dryRun, int timeout) {
-		this(localDb, remoteName, null, dryRun, timeout);
+	public PushOperation(Repository localDb, String remoteName, boolean dryRun,
+			int timeout) {
+		this(localDb, remoteName, null, null, dryRun, timeout);
 	}
 
-	private PushOperation(final Repository localDb, final String remoteName,
-			PushOperationSpecification specification, final boolean dryRun,
+	/**
+	 * Creates a push operation for a remote configuration.
+	 *
+	 * @param localDb
+	 * @param remoteName
+	 * @param pushDefault
+	 * @param dryRun
+	 * @param timeout
+	 */
+	public PushOperation(Repository localDb, String remoteName,
+			PushDefault pushDefault, boolean dryRun, int timeout) {
+		this(localDb, remoteName, pushDefault, null, dryRun, timeout);
+	}
+
+	private PushOperation(Repository localDb, String remoteName,
+			PushDefault pushDefault, PushOperationSpecification specification,
+			boolean dryRun,
 			int timeout) {
 		this.localDb = localDb;
 		this.specification = specification;
 		this.dryRun = dryRun;
 		this.remoteName = remoteName;
 		this.timeout = timeout;
+		this.pushDefault = pushDefault;
+	}
+
+	/**
+	 * Determines the RemoteConfig to use for a given branch.
+	 *
+	 * @param branch
+	 *            short name of the branch to get the {@link RemoteConfig} for
+	 * @param config
+	 *            repository {@link Config} to use
+	 * @return the {@link RemoteConfig}, or {@code null} if nothing is
+	 *         configured
+	 */
+	public static RemoteConfig getRemote(String branch,
+			Config config) {
+		if (branch == null) {
+			return null;
+		}
+		String remoteName = null;
+		if (!ObjectId.isId(branch)) {
+			remoteName = config.getString(ConfigConstants.CONFIG_BRANCH_SECTION,
+					branch, ConfigConstants.CONFIG_REMOTE_SECTION);
+		}
+		// check if we find the configured and default Remotes
+		List<RemoteConfig> allRemotes;
+		try {
+			allRemotes = RemoteConfig.getAllRemoteConfigs(config);
+		} catch (URISyntaxException e) {
+			allRemotes = new ArrayList<>();
+		}
+
+		RemoteConfig configuredConfig = null;
+		RemoteConfig defaultConfig = null;
+		for (RemoteConfig cfg : allRemotes) {
+			if (remoteName != null && cfg.getName().equals(remoteName)) {
+				configuredConfig = cfg;
+			}
+			if (cfg.getName().equals(Constants.DEFAULT_REMOTE_NAME)) {
+				defaultConfig = cfg;
+			}
+		}
+
+		if (configuredConfig != null) {
+			return configuredConfig;
+		}
+		if (defaultConfig != null) {
+			return defaultConfig;
+		}
+		return null;
 	}
 
 	/**
@@ -211,10 +284,14 @@ public class PushOperation {
 						progress.newChild(totalWork));
 				try {
 					Iterable<PushResult> results = git.push()
-							.setRemote(remoteName).setDryRun(dryRun)
-							.setTimeout(timeout).setProgressMonitor(gitMonitor)
+							.setRemote(remoteName)
+							.setPushDefault(pushDefault)
+							.setDryRun(dryRun)
+							.setTimeout(timeout)
+							.setProgressMonitor(gitMonitor)
 							.setCredentialsProvider(credentialsProvider)
-							.setOutputStream(out).call();
+							.setOutputStream(out)
+							.call();
 					for (PushResult result : results) {
 						operationResult.addOperationResult(result.getURI(),
 								result);

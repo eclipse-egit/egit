@@ -15,11 +15,10 @@ package org.eclipse.egit.ui.internal.push;
 
 import java.io.IOException;
 import java.net.URISyntaxException;
-import java.util.ArrayList;
-import java.util.List;
 
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IProgressMonitor;
+import org.eclipse.egit.core.op.PushOperation;
 import org.eclipse.egit.core.op.PushOperationResult;
 import org.eclipse.egit.ui.Activator;
 import org.eclipse.egit.ui.internal.UIText;
@@ -36,10 +35,6 @@ import org.eclipse.jface.viewers.TableViewer;
 import org.eclipse.jface.window.Window;
 import org.eclipse.jface.wizard.WizardDialog;
 import org.eclipse.jgit.annotations.NonNull;
-import org.eclipse.jgit.lib.Config;
-import org.eclipse.jgit.lib.ConfigConstants;
-import org.eclipse.jgit.lib.Constants;
-import org.eclipse.jgit.lib.ObjectId;
 import org.eclipse.jgit.lib.Repository;
 import org.eclipse.jgit.transport.RefSpec;
 import org.eclipse.jgit.transport.RemoteConfig;
@@ -107,9 +102,11 @@ public class SimpleConfigurePushDialog extends AbstractConfigureRemoteDialog {
 			Activator.handleError(e.getMessage(), e, true);
 			return null;
 		}
-		if (branch == null)
+		if (branch == null) {
 			return null;
-		return getConfiguredRemote(branch, repository.getConfig());
+		}
+		return PushOperation.getRemote(branch,
+				repository.getConfig());
 	}
 
 	/**
@@ -128,7 +125,7 @@ public class SimpleConfigurePushDialog extends AbstractConfigureRemoteDialog {
 			return null;
 		}
 		branch = Repository.shortenRefName(branch);
-		return getConfiguredRemote(branch,
+		return PushOperation.getRemote(branch,
 				SelectionRepositoryStateCache.INSTANCE.getConfig(repository));
 	}
 
@@ -143,45 +140,6 @@ public class SimpleConfigurePushDialog extends AbstractConfigureRemoteDialog {
 			@NonNull RemoteConfig config) {
 		String target = config.getName();
 		return NLS.bind(UIText.SimpleConfigurePushDialog_PushToLabel, target);
-	}
-
-	private static RemoteConfig getConfiguredRemote(String branch,
-			Config config) {
-		if (branch == null) {
-			return null;
-		}
-		String remoteName = null;
-		if (!ObjectId.isId(branch))
-			remoteName = config.getString(
-					ConfigConstants.CONFIG_BRANCH_SECTION, branch,
-					ConfigConstants.CONFIG_REMOTE_SECTION);
-
-		// check if we find the configured and default Remotes
-		List<RemoteConfig> allRemotes;
-		try {
-			allRemotes = RemoteConfig.getAllRemoteConfigs(config);
-		} catch (URISyntaxException e) {
-			allRemotes = new ArrayList<>();
-		}
-
-		RemoteConfig configuredConfig = null;
-		RemoteConfig defaultConfig = null;
-		for (RemoteConfig cfg : allRemotes) {
-			if (remoteName != null && cfg.getName().equals(remoteName)) {
-				configuredConfig = cfg;
-			}
-			if (cfg.getName().equals(Constants.DEFAULT_REMOTE_NAME)) {
-				defaultConfig = cfg;
-			}
-		}
-
-		if (configuredConfig != null) {
-			return configuredConfig;
-		}
-		if (defaultConfig != null && !defaultConfig.getPushRefSpecs().isEmpty()) {
-			return defaultConfig;
-		}
-		return null;
 	}
 
 	/**

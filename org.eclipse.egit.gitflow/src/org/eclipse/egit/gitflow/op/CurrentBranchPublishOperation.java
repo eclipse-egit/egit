@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (C) 2015, Max Hohenegger <eclipse@hohenegger.eu>
+ * Copyright (C) 2015, 2022 Max Hohenegger <eclipse@hohenegger.eu> and others
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License 2.0
@@ -11,7 +11,6 @@
 package org.eclipse.egit.gitflow.op;
 
 import static org.eclipse.egit.gitflow.Activator.error;
-import static org.eclipse.jgit.lib.Constants.DEFAULT_REMOTE_NAME;
 
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
@@ -23,6 +22,9 @@ import org.eclipse.egit.core.op.PushOperation;
 import org.eclipse.egit.core.op.PushOperationResult;
 import org.eclipse.egit.gitflow.GitFlowRepository;
 import org.eclipse.egit.gitflow.internal.CoreText;
+import org.eclipse.jgit.lib.Repository;
+import org.eclipse.jgit.transport.PushConfig.PushDefault;
+import org.eclipse.jgit.transport.RemoteConfig;
 
 /**
  * git flow * publish
@@ -47,11 +49,19 @@ public class CurrentBranchPublishOperation extends GitFlowOperation {
 
 	@Override
 	public void execute(IProgressMonitor monitor) throws CoreException {
+		String fullBranchName;
+		try {
+			fullBranchName = repository.getRepository().getFullBranch();
+		} catch (IOException e) {
+			throw new CoreException(error(e.getLocalizedMessage(), e));
+		}
+		String shortBranchName = Repository.shortenRefName(fullBranchName);
+		RemoteConfig cfg = PushOperation.getRemote(shortBranchName,
+				repository.getRepository().getConfig());
 		try {
 			PushOperation pushOperation = new PushOperation(
-					repository.getRepository(), DEFAULT_REMOTE_NAME, false,
-					//TODO: check if multiple remotes exist? There is no explicit refspec?
-					timeout);
+					repository.getRepository(), cfg.getName(),
+					PushDefault.CURRENT, false, timeout);
 			pushOperation.run(monitor);
 			operationResult = pushOperation.getOperationResult();
 		} catch (InvocationTargetException e) {
@@ -60,10 +70,9 @@ public class CurrentBranchPublishOperation extends GitFlowOperation {
 					targetException));
 		}
 
-		String newLocalBranch = getCurrentBranchhName();
 		try {
-			repository.setRemote(newLocalBranch, DEFAULT_REMOTE_NAME);
-			repository.setUpstreamBranchName(newLocalBranch, repository.getRepository().getFullBranch());
+			repository.setRemote(shortBranchName, cfg.getName());
+			repository.setUpstreamBranchName(shortBranchName, fullBranchName);
 		} catch (IOException e) {
 			throw new CoreException(error(CoreText.unableToStoreGitConfig, e));
 		}
@@ -74,14 +83,6 @@ public class CurrentBranchPublishOperation extends GitFlowOperation {
 	 */
 	public PushOperationResult getOperationResult() {
 		return operationResult;
-	}
-
-	private String getCurrentBranchhName() {
-		try {
-			return repository.getRepository().getBranch();
-		} catch (IOException e) {
-			throw new IllegalStateException(e);
-		}
 	}
 
 	@Override
