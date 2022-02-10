@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (C) 2012, 2016 Mathias Kinzler <mathias.kinzler@sap.com> and others
+ * Copyright (C) 2012, 2022 Mathias Kinzler <mathias.kinzler@sap.com> and others
  * and other copyright owners as documented in the project's IP log.
  *
  * All rights reserved. This program and the accompanying materials
@@ -63,6 +63,8 @@ public class BranchConfigurationDialog extends TitleAreaDialog {
 
 	private Combo remoteText;
 
+	private Combo pushRemoteText;
+
 	private Combo branchText;
 
 	private BranchRebaseModeCombo rebase;
@@ -94,6 +96,13 @@ public class BranchConfigurationDialog extends TitleAreaDialog {
 		remoteText = new Combo(main, SWT.BORDER);
 		GridDataFactory.fillDefaults().grab(true, false).applyTo(remoteText);
 
+		Label pushRemoteLabel = new Label(main, SWT.NONE);
+		pushRemoteLabel
+				.setText(UIText.BranchConfigurationDialog_PushRemoteLabel);
+		pushRemoteText = new Combo(main, SWT.BORDER);
+		GridDataFactory.fillDefaults().grab(true, false)
+				.applyTo(pushRemoteText);
+
 		Label branchLabel = new Label(main, SWT.NONE);
 		branchLabel.setText(UIText.BranchConfigurationDialog_UpstreamBranchLabel);
 		branchText = new Combo(main, SWT.BORDER);
@@ -101,8 +110,10 @@ public class BranchConfigurationDialog extends TitleAreaDialog {
 
 		remoteText.add(BranchConfig.LOCAL_REPOSITORY);
 		for (String remote : myConfig
-				.getSubsections(ConfigConstants.CONFIG_REMOTE_SECTION))
+				.getSubsections(ConfigConstants.CONFIG_REMOTE_SECTION)) {
 			remoteText.add(remote);
+			pushRemoteText.add(remote);
+		}
 
 		remoteText.addSelectionListener(new SelectionAdapter() {
 			@Override
@@ -123,17 +134,26 @@ public class BranchConfigurationDialog extends TitleAreaDialog {
 		String branch = myConfig.getString(
 				ConfigConstants.CONFIG_BRANCH_SECTION, myBranchName,
 				ConfigConstants.CONFIG_KEY_MERGE);
-		if (branch == null)
+		if (branch == null) {
 			branch = ""; //$NON-NLS-1$
+		}
 		branchText.setText(branch);
 
 		String remote = myConfig.getString(
 				ConfigConstants.CONFIG_BRANCH_SECTION, myBranchName,
 				ConfigConstants.CONFIG_KEY_REMOTE);
-		if (remote == null)
+		if (remote == null) {
 			remote = ""; //$NON-NLS-1$
+		}
 		remoteText.setText(remote);
 		updateBranchItems();
+
+		remote = myConfig.getString(ConfigConstants.CONFIG_BRANCH_SECTION,
+				myBranchName, ConfigConstants.CONFIG_KEY_PUSH_REMOTE);
+		if (remote == null) {
+			remote = ""; //$NON-NLS-1$
+		}
+		pushRemoteText.setText(remote);
 
 		applyDialogFont(main);
 		return main;
@@ -222,13 +242,22 @@ public class BranchConfigurationDialog extends TitleAreaDialog {
 						myBranchName, ConfigConstants.CONFIG_KEY_MERGE);
 			}
 			String remote = remoteText.getText();
-			if (remote.length() > 0) {
+			if (!remote.isEmpty()) {
 				myConfig.setString(ConfigConstants.CONFIG_BRANCH_SECTION,
 						myBranchName, ConfigConstants.CONFIG_KEY_REMOTE,
 						remote);
 			} else {
 				myConfig.unset(ConfigConstants.CONFIG_BRANCH_SECTION,
 						myBranchName, ConfigConstants.CONFIG_KEY_REMOTE);
+			}
+			remote = pushRemoteText.getText();
+			if (!remote.isEmpty()) {
+				myConfig.setString(ConfigConstants.CONFIG_BRANCH_SECTION,
+						myBranchName, ConfigConstants.CONFIG_KEY_PUSH_REMOTE,
+						remote);
+			} else {
+				myConfig.unset(ConfigConstants.CONFIG_BRANCH_SECTION,
+						myBranchName, ConfigConstants.CONFIG_KEY_PUSH_REMOTE);
 			}
 			BranchRebaseMode rebaseMode = rebase.getRebaseMode();
 			if (rebaseMode == null) {
