@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (C) 2011, 2017 Mathias Kinzler <mathias.kinzler@sap.com> and others
+ * Copyright (C) 2011, 2022 Mathias Kinzler <mathias.kinzler@sap.com> and others
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License 2.0
@@ -15,7 +15,6 @@ package org.eclipse.egit.ui.internal.push;
 
 import java.io.IOException;
 import java.net.URISyntaxException;
-import java.util.ArrayList;
 import java.util.List;
 
 import org.eclipse.core.runtime.CoreException;
@@ -150,35 +149,48 @@ public class SimpleConfigurePushDialog extends AbstractConfigureRemoteDialog {
 		if (branch == null) {
 			return null;
 		}
+		String defaultPushRemote = config.getString(
+				ConfigConstants.CONFIG_REMOTE_SECTION, branch,
+				ConfigConstants.CONFIG_KEY_PUSH_DEFAULT);
 		String remoteName = null;
-		if (!ObjectId.isId(branch))
+		if (!ObjectId.isId(branch)) {
 			remoteName = config.getString(
 					ConfigConstants.CONFIG_BRANCH_SECTION, branch,
-					ConfigConstants.CONFIG_REMOTE_SECTION);
-
+					ConfigConstants.CONFIG_KEY_PUSH_REMOTE);
+			if (remoteName == null) {
+				if (defaultPushRemote != null) {
+					remoteName = defaultPushRemote;
+				} else {
+					remoteName = config.getString(
+							ConfigConstants.CONFIG_BRANCH_SECTION, branch,
+							ConfigConstants.CONFIG_KEY_REMOTE);
+				}
+			}
+		}
+		if (defaultPushRemote == null) {
+			defaultPushRemote = Constants.DEFAULT_REMOTE_NAME;
+		}
 		// check if we find the configured and default Remotes
 		List<RemoteConfig> allRemotes;
 		try {
 			allRemotes = RemoteConfig.getAllRemoteConfigs(config);
 		} catch (URISyntaxException e) {
-			allRemotes = new ArrayList<>();
+			return null;
 		}
 
-		RemoteConfig configuredConfig = null;
 		RemoteConfig defaultConfig = null;
 		for (RemoteConfig cfg : allRemotes) {
 			if (remoteName != null && cfg.getName().equals(remoteName)) {
-				configuredConfig = cfg;
-			}
-			if (cfg.getName().equals(Constants.DEFAULT_REMOTE_NAME)) {
+				return cfg;
+			} else if (cfg.getName().equals(defaultPushRemote)) {
+				defaultConfig = cfg;
+			} else if (defaultConfig == null
+					&& cfg.getName().equals(Constants.DEFAULT_REMOTE_NAME)) {
 				defaultConfig = cfg;
 			}
 		}
 
-		if (configuredConfig != null) {
-			return configuredConfig;
-		}
-		if (defaultConfig != null && !defaultConfig.getPushRefSpecs().isEmpty()) {
+		if (defaultConfig != null) {
 			return defaultConfig;
 		}
 		return null;
