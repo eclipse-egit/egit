@@ -17,7 +17,6 @@ package org.eclipse.egit.core.op;
 import java.io.OutputStream;
 import java.lang.reflect.InvocationTargetException;
 import java.net.URISyntaxException;
-import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
@@ -140,33 +139,46 @@ public class PushOperation {
 		if (branch == null) {
 			return null;
 		}
+		String defaultPushRemote = config.getString(
+				ConfigConstants.CONFIG_REMOTE_SECTION, branch,
+				ConfigConstants.CONFIG_KEY_PUSH_DEFAULT);
 		String remoteName = null;
 		if (!ObjectId.isId(branch)) {
 			remoteName = config.getString(ConfigConstants.CONFIG_BRANCH_SECTION,
-					branch, ConfigConstants.CONFIG_REMOTE_SECTION);
+					branch, ConfigConstants.CONFIG_KEY_PUSH_REMOTE);
+			if (remoteName == null) {
+				if (defaultPushRemote != null) {
+					remoteName = defaultPushRemote;
+				} else {
+					remoteName = config.getString(
+							ConfigConstants.CONFIG_BRANCH_SECTION, branch,
+							ConfigConstants.CONFIG_KEY_REMOTE);
+				}
+			}
+		}
+		if (defaultPushRemote == null) {
+			defaultPushRemote = Constants.DEFAULT_REMOTE_NAME;
 		}
 		// check if we find the configured and default Remotes
 		List<RemoteConfig> allRemotes;
 		try {
 			allRemotes = RemoteConfig.getAllRemoteConfigs(config);
 		} catch (URISyntaxException e) {
-			allRemotes = new ArrayList<>();
+			return null;
 		}
 
-		RemoteConfig configuredConfig = null;
 		RemoteConfig defaultConfig = null;
 		for (RemoteConfig cfg : allRemotes) {
 			if (remoteName != null && cfg.getName().equals(remoteName)) {
-				configuredConfig = cfg;
-			}
-			if (cfg.getName().equals(Constants.DEFAULT_REMOTE_NAME)) {
+				return cfg;
+			} else if (cfg.getName().equals(defaultPushRemote)) {
+				defaultConfig = cfg;
+			} else if (defaultConfig == null
+					&& cfg.getName().equals(Constants.DEFAULT_REMOTE_NAME)) {
 				defaultConfig = cfg;
 			}
 		}
 
-		if (configuredConfig != null) {
-			return configuredConfig;
-		}
 		if (defaultConfig != null) {
 			return defaultConfig;
 		}
