@@ -3387,6 +3387,9 @@ public class UIText extends NLS {
 	public static String BranchConfigurationDialog_ExceptionGettingRefs;
 
 	/** */
+	public static String BranchConfigurationDialog_PushRemoteLabel;
+
+	/** */
 	public static String BranchConfigurationDialog_RemoteLabel;
 
 	/** */
