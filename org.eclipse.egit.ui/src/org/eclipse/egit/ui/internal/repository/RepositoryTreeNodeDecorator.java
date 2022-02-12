@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2018, 2019 Thomas Wolf <thomas.wolf@paranor.ch> and others.
+ * Copyright (c) 2018, 2022 Thomas Wolf <thomas.wolf@paranor.ch> and others.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License 2.0
@@ -437,10 +437,19 @@ public class RepositoryTreeNodeDecorator extends GitDecorator
 	}
 
 	private void decorateTag(TagNode node, IDecoration decoration) {
-		if (verboseBranchMode && node.getCommitId() != null
-				&& node.getCommitId().length() > 0) {
-			decoration.addSuffix(" " + node.getCommitId().substring(0, 7) + ' ' //$NON-NLS-1$
-					+ node.getCommitShortMessage());
+		if (verboseBranchMode) {
+			String suffix = ""; //$NON-NLS-1$
+			if (node.getCommitId() != null) {
+				suffix += ' '
+						+ abbreviate(ObjectId.fromString(node.getCommitId()));
+			}
+			String message = node.getShortMessage();
+			if (!message.isEmpty()) {
+				suffix += ' ' + message;
+			}
+			if (!suffix.isEmpty()) {
+				decoration.addSuffix(suffix);
+			}
 		}
 	}
 
