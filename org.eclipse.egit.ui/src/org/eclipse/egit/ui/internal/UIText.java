@@ -4007,6 +4007,9 @@ public class UIText extends NLS {
 	public static String RepositoriesView_NothingToPasteMessage;
 
 	/** */
+	public static String RepositoriesView_OpenAllInCommitViewerLabel;
+
+	/** */
 	public static String RepositoriesView_PasteRepoAlreadyThere;
 
 	/** */

@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2010, 2020 SAP AG and others.
+ * Copyright (c) 2010, 2022 SAP AG and others.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License 2.0
@@ -609,7 +609,7 @@ public class RepositoriesViewContentProvider implements ITreeContentProvider {
 			String message = commit.getShortMessage();
 			return new TagNode(parentNode, repo, ref, annotated, id, message);
 		} else {
-			return new TagNode(parentNode, repo, ref, annotated, "", ""); //$NON-NLS-1$ //$NON-NLS-2$
+			return new TagNode(parentNode, repo, ref, annotated, null, ""); //$NON-NLS-1$
 		}
 	}
 

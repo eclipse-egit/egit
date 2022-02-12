@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2010, 2013 SAP AG.
+ * Copyright (c) 2010, 2022 SAP AG.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License 2.0
  * which accompanies this distribution, and is available at
@@ -101,6 +101,12 @@ public class RepositoriesViewPropertyTester extends AbstractPropertyTester {
 			}
 			Ref ref = (Ref) node.getObject();
 			return isRefCheckedOut(repository, ref);
+		}
+		if (property.equals("isCommit")) { //$NON-NLS-1$
+			if (node instanceof TagNode) {
+				return ((TagNode) node).getCommitId() != null;
+			}
+			return node.getObject() instanceof Ref;
 		}
 		if (property.equals("isLocalBranch")) { //$NON-NLS-1$
 			if (!(node.getObject() instanceof Ref)) {

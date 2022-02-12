@@ -1311,19 +1311,15 @@
          </activeWhen>
       </handler>
       <handler
-            commandId="org.eclipse.egit.ui.internal.reflog.OpenInCommitViewerCommand">
+            commandId="org.eclipse.egit.ui.history.OpenInCommitViewerCommand">
          <class
                class="org.eclipse.egit.ui.internal.reflog.command.OpenInCommitViewerHandler">
          </class>
          <activeWhen>
             <and>
-               <count
-                     value="1">
-               </count>
+               <count value="1" />
                <iterate>
-                  <adapt
-                        type="org.eclipse.jgit.lib.ReflogEntry">
-                  </adapt>
+                  <adapt type="org.eclipse.jgit.lib.ReflogEntry" />
                </iterate>
             </and>
          </activeWhen>
@@ -1335,13 +1331,9 @@
          </class>
          <activeWhen>
             <and>
-               <count
-                     value="1">
-               </count>
+               <count value="1" />
                <iterate>
-                  <adapt
-                        type="org.eclipse.jgit.lib.ReflogEntry">
-                  </adapt>
+                  <adapt type="org.eclipse.jgit.lib.ReflogEntry" />
                </iterate>
             </and>
          </activeWhen>
@@ -3007,6 +2999,41 @@
          </activeWhen>
       </handler>
       <handler
+            commandId="org.eclipse.egit.ui.history.OpenInCommitViewerCommand">
+         <class
+               class="org.eclipse.egit.ui.internal.repository.tree.command.OpenInCommitViewerCommand">
+         </class>
+         <activeWhen>
+            <or>
+               <and>
+                  <count value="1" />
+                  <iterate>
+                     <or>
+                        <instanceof value="org.eclipse.egit.ui.internal.repository.tree.RefNode" />
+                        <instanceof value="org.eclipse.egit.ui.internal.repository.tree.AdditionalRefNode" />
+                        <and>
+                  	       <instanceof value="org.eclipse.egit.ui.internal.repository.tree.TagNode" />
+                   	       <test property="GitRepository.isCommit" />
+                        </and>
+                        <instanceof value="org.eclipse.egit.ui.internal.repository.tree.StashedCommitNode" />
+                     </or>
+                  </iterate>
+               </and>
+               <and>
+                  <count value="(1-" />
+                  <iterate>
+                     <or>
+                        <instanceof value="org.eclipse.egit.ui.internal.repository.tree.RefNode" />
+                        <instanceof value="org.eclipse.egit.ui.internal.repository.tree.AdditionalRefNode" />
+                  	    <instanceof value="org.eclipse.egit.ui.internal.repository.tree.TagNode" />
+                        <instanceof value="org.eclipse.egit.ui.internal.repository.tree.StashedCommitNode" />
+                     </or>
+                  </iterate>
+               </and>
+            </or>
+         </activeWhen>
+      </handler>
+      <handler
             commandId="org.eclipse.egit.ui.commit.UnifiedDiffCommand">
          <class
                class="org.eclipse.egit.ui.internal.commit.command.UnifiedDiffHandler">
@@ -4025,8 +4052,9 @@
       <menuContribution
             locationURI="popup:org.eclipse.egit.ui.internal.reflogview.popup">
          <command
-               commandId="org.eclipse.egit.ui.internal.reflog.OpenInCommitViewerCommand"
+               commandId="org.eclipse.egit.ui.history.OpenInCommitViewerCommand"
                label="%RefLogViewOpenInCommitViewer.label"
+               tooltip="%OpenInCommitViewerCommand.tooltip"
                style="push">
          </command>
          <command
@@ -5327,17 +5355,11 @@
             <visibleWhen checkEnabled="true" />
          </command>
          <command
-               commandId="org.eclipse.egit.ui.RepositoriesViewOpen"
-               label="%OpenInCommitViewerCommand.name"
+               commandId="org.eclipse.egit.ui.history.OpenInCommitViewerCommand"
+               label="%RepoViewOpenInCommitViewer.label"
+               tooltip="%OpenInCommitViewerCommand.tooltip"
                style="push">
-            <visibleWhen checkEnabled="false">
-               <and>
-                  <count value="1" />
-                  <iterate>
-                     <instanceof value="org.eclipse.egit.ui.internal.repository.tree.StashedCommitNode" />
-                  </iterate>
-               </and>
-            </visibleWhen>
+            <visibleWhen checkEnabled="true" />
          </command>
       </menuContribution>
       <menuContribution
@@ -6988,10 +7010,6 @@
             icon="icons/obj16/delete_obj.png">
       </image>
       <image
-            commandId="org.eclipse.egit.ui.internal.reflog.OpenInCommitViewerCommand"
-            icon="icons/obj16/open-commit.png">
-      </image>
-      <image
             commandId="org.eclipse.egit.ui.internal.reflog.CopyCommand"
             icon="icons/elcl16/sha1.png">
       </image>
@@ -7010,10 +7028,6 @@
       <image
             commandId="org.eclipse.egit.ui.history.CompareVersionsInTree"
             icon="icons/elcl16/compare_view.png">
-      </image>
-      <image
-            commandId="org.eclipse.egit.ui.RepositoriesViewOpen"
-            icon="icons/obj16/open-commit.png">
       </image>
       <image
             commandId="org.eclipse.egit.ui.team.Revert"
@@ -7102,7 +7116,7 @@
             class="org.eclipse.egit.ui.internal.repository.tree.RepositoriesViewPropertyTester"
             id="org.eclipse.egit.ui.RepositoryTester"
             namespace="GitRepository"
-            properties="isBare,isSafe,canCheckout,canCommit,canAmend,canResetHead,canStash,isRefCheckedOut,isLocalBranch,fetchExists,pushExists,canMerge,canAbortRebase,canContinueRebase,isSubmodule,containsHead,hasGithubConfiguration,hasGitlabConfiguration,hasGiteaConfiguration,hasGerritConfiguration,canFetchFromGerrit,canPushToGerrit,canEnableLfs"
+            properties="isBare,isSafe,canCheckout,canCommit,canAmend,canResetHead,canStash,isRefCheckedOut,isLocalBranch,fetchExists,pushExists,canMerge,canAbortRebase,canContinueRebase,isSubmodule,containsHead,hasGithubConfiguration,hasGitlabConfiguration,hasGiteaConfiguration,hasGerritConfiguration,canFetchFromGerrit,canPushToGerrit,canEnableLfs,isCommit"
             type="org.eclipse.egit.ui.internal.repository.tree.RepositoryTreeNode">
       </propertyTester>
       <propertyTester
@@ -7961,10 +7975,6 @@
   <extension
         name="%ReflogViewCommands"
         point="org.eclipse.ui.commands">
-     <command
-           id="org.eclipse.egit.ui.internal.reflog.OpenInCommitViewerCommand"
-           name="%OpenInCommitViewerCommand.name">
-     </command>
      <command
            id="org.eclipse.egit.ui.internal.reflog.CopyCommand"
            name="%ReflogCopyCommandName">
