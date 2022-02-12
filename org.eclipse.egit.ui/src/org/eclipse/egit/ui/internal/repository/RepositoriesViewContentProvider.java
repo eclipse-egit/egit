@@ -608,9 +608,12 @@ public class RepositoriesViewContentProvider implements ITreeContentProvider {
 			String id = commit.getId().name();
 			String message = commit.getShortMessage();
 			return new TagNode(parentNode, repo, ref, annotated, id, message);
-		} else {
-			return new TagNode(parentNode, repo, ref, annotated, null, ""); //$NON-NLS-1$
+		} else if (annotated) {
+			RevTag tag = (RevTag) revObject;
+			String message = tag.getShortMessage();
+			return new TagNode(parentNode, repo, ref, true, null, message);
 		}
+		return new TagNode(parentNode, repo, ref, false, null, ""); //$NON-NLS-1$
 	}
 
 	private Object[] handleException(Exception e, RepositoryTreeNode parentNode) {
