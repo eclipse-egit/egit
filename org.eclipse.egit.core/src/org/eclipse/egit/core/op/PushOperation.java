@@ -160,11 +160,7 @@ public class PushOperation {
 			}
 		}
 
-		if (defaultConfig != null
-				&& !defaultConfig.getPushRefSpecs().isEmpty()) {
-			return defaultConfig;
-		}
-		return null;
+		return defaultConfig;
 	}
 
 	/**

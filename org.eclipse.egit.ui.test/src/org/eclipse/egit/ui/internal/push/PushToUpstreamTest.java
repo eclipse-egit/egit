@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2014, 2016 Robin Stocker <robin@nibor.org> and others.
+ * Copyright (c) 2014, 2022 Robin Stocker <robin@nibor.org> and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License 2.0
  * which accompanies this distribution, and is available at
@@ -20,19 +20,21 @@ import org.eclipse.egit.core.op.BranchOperation;
 import org.eclipse.egit.core.op.CreateLocalBranchOperation;
 import org.eclipse.egit.ui.JobFamilies;
 import org.eclipse.egit.ui.common.LocalRepositoryTestCase;
+import org.eclipse.egit.ui.internal.UIText;
 import org.eclipse.egit.ui.test.ContextMenuHelper;
 import org.eclipse.egit.ui.test.JobJoiner;
 import org.eclipse.egit.ui.test.TestUtil;
 import org.eclipse.jgit.lib.ConfigConstants;
 import org.eclipse.jgit.lib.ObjectId;
 import org.eclipse.jgit.lib.Repository;
+import org.eclipse.swtbot.swt.finder.SWTBot;
 import org.eclipse.swtbot.swt.finder.widgets.SWTBotShell;
 import org.eclipse.swtbot.swt.finder.widgets.SWTBotTree;
 import org.junit.Before;
 import org.junit.Test;
 
 /**
- * Tests for "Push to Upstream" action.
+ * Tests for the "Push to Upstream" action.
  */
 public class PushToUpstreamTest extends LocalRepositoryTestCase {
 
@@ -50,7 +52,34 @@ public class PushToUpstreamTest extends LocalRepositoryTestCase {
 	@Test
 	public void pushWithoutConfig() throws Exception {
 		checkoutNewLocalBranch("foo");
+		// There is no "origin" config.
 		assertPushToUpstreamDisabled();
+	}
+
+	@Test
+	public void pushWithOriginConfig() throws Exception {
+		checkoutNewLocalBranch("foo");
+		// Existing configuration without push refspec
+		String remoteName = "origin";
+		repository.getConfig().setString("remote", remoteName, "url",
+				repository.getConfig().getString("remote", "push", "pushurl"));
+		repository.getConfig().setString("remote", remoteName, "fetch",
+				"refs/heads/*:refs/remotes/origin/*");
+		pushToUpstream("origin", "foo", true, false);
+		assertBranchPushed("foo", remoteRepository);
+	}
+
+	@Test
+	public void pushIsDisabledWithPushDefaultNothing() throws Exception {
+		checkoutNewLocalBranch("foo");
+		repository.getConfig().setString(ConfigConstants.CONFIG_PUSH_SECTION,
+				null, ConfigConstants.CONFIG_KEY_DEFAULT, "nothing");
+		String remoteName = "origin";
+		repository.getConfig().setString("remote", remoteName, "url",
+				repository.getConfig().getString("remote", "push", "pushurl"));
+		repository.getConfig().setString("remote", remoteName, "fetch",
+				"refs/heads/*:refs/remotes/origin/*");
+		assertPushToUpstreamDisabled("origin");
 	}
 
 	@Test
@@ -68,6 +97,55 @@ public class PushToUpstreamTest extends LocalRepositoryTestCase {
 	}
 
 	@Test
+	public void pushWithExistingUpstreamConfigurationDifferent()
+			throws Exception {
+		checkoutNewLocalBranch("bar");
+		// Existing configuration
+		String remoteName = "fetch";
+		repository.getConfig().setString(ConfigConstants.CONFIG_BRANCH_SECTION,
+				"bar", ConfigConstants.CONFIG_KEY_REMOTE, remoteName);
+		repository.getConfig().setString(ConfigConstants.CONFIG_BRANCH_SECTION,
+				"bar", ConfigConstants.CONFIG_KEY_MERGE, "refs/heads/bar2");
+
+		pushToUpstream(remoteName, "bar", true, false);
+		assertBranchPushed("bar", "bar2", remoteRepository);
+	}
+
+	@Test
+	public void pushWithExistingUpstreamConfigurationPushDefaultUpstream()
+			throws Exception {
+		checkoutNewLocalBranch("bar");
+		repository.getConfig().setString(ConfigConstants.CONFIG_PUSH_SECTION,
+				null, ConfigConstants.CONFIG_KEY_DEFAULT, "upstream");
+		// Existing configuration
+		String remoteName = "fetch";
+		repository.getConfig().setString(ConfigConstants.CONFIG_BRANCH_SECTION,
+				"bar", ConfigConstants.CONFIG_KEY_REMOTE, remoteName);
+		repository.getConfig().setString(ConfigConstants.CONFIG_BRANCH_SECTION,
+				"bar", ConfigConstants.CONFIG_KEY_MERGE, "refs/heads/bar2");
+
+		pushToUpstream(remoteName, "bar", false, false);
+		assertBranchPushed("bar", "bar2", remoteRepository);
+	}
+
+	@Test
+	public void pushWithExistingUpstreamConfigurationPushDefaultCurrent()
+			throws Exception {
+		checkoutNewLocalBranch("bar");
+		repository.getConfig().setString(ConfigConstants.CONFIG_PUSH_SECTION,
+				null, ConfigConstants.CONFIG_KEY_DEFAULT, "current");
+		// Existing configuration
+		String remoteName = "fetch";
+		repository.getConfig().setString(ConfigConstants.CONFIG_BRANCH_SECTION,
+				"bar", ConfigConstants.CONFIG_KEY_REMOTE, remoteName);
+		repository.getConfig().setString(ConfigConstants.CONFIG_BRANCH_SECTION,
+				"bar", ConfigConstants.CONFIG_KEY_MERGE, "refs/heads/bar2");
+
+		pushToUpstream(remoteName, "bar", false, false);
+		assertBranchPushed("bar", remoteRepository);
+	}
+
+	@Test
 	public void pushWithDefaultRemoteWithPushRefSpecs() throws Exception {
 		checkoutNewLocalBranch("baz");
 		String remoteName = "origin";
@@ -76,7 +154,7 @@ public class PushToUpstreamTest extends LocalRepositoryTestCase {
 		repository.getConfig().setString("remote", remoteName, "push",
 				"refs/heads/*:refs/heads/*");
 
-		pushToUpstream(remoteName);
+		pushToUpstream(remoteName, "baz", false, true);
 		assertBranchPushed("baz", remoteRepository);
 	}
 
@@ -91,11 +169,16 @@ public class PushToUpstreamTest extends LocalRepositoryTestCase {
 
 	private void assertBranchPushed(String branchName, Repository remoteRepo)
 			throws Exception {
-		ObjectId pushed = remoteRepo.resolve(branchName);
-		assertNotNull("Expected '" + branchName
+		assertBranchPushed(branchName, branchName, remoteRepo);
+	}
+
+	private void assertBranchPushed(String localName, String remoteName,
+			Repository remoteRepo) throws Exception {
+		ObjectId pushed = remoteRepo.resolve(remoteName);
+		assertNotNull("Expected '" + remoteName
 				+ "' to resolve to non-null ObjectId on remote repository",
 				pushed);
-		ObjectId local = repository.resolve(branchName);
+		ObjectId local = repository.resolve(localName);
 		assertEquals(
 				"Expected local branch to be the same as branch on remote after pushing",
 				local, pushed);
@@ -108,22 +191,45 @@ public class PushToUpstreamTest extends LocalRepositoryTestCase {
 	}
 
 	private void pushToUpstream(String remoteName) {
+		pushToUpstream(remoteName, "", false, false);
+	}
+
+	private void pushToUpstream(String remoteName, String branchName,
+			boolean expectBranchWizard, boolean expectMultipleWarning) {
 		SWTBotTree project = selectProject();
-		JobJoiner joiner = JobJoiner.startListening(JobFamilies.PUSH, 20,
-				TimeUnit.SECONDS);
-		ContextMenuHelper
-				.clickContextMenu(project,
-						getPushToUpstreamMenuPath(remoteName));
-		TestUtil.openJobResultDialog(joiner.join());
+		JobJoiner joiner = null;
+		if (!expectBranchWizard) {
+			joiner = JobJoiner.startListening(JobFamilies.PUSH, 20,
+					TimeUnit.SECONDS);
+		}
+		ContextMenuHelper.clickContextMenu(project,
+				getPushToUpstreamMenuPath(remoteName));
+		if (expectBranchWizard) {
+			PushBranchWizardTester tester = PushBranchWizardTester
+					.forBranchName(branchName);
+			tester.next();
+			TestUtil.openJobResultDialog(tester.finish());
+		} else if (expectMultipleWarning) {
+			SWTBot dialog = bot.shell(UIText.PushOperationUI_PushMultipleTitle)
+					.bot();
+			dialog.button(UIText.PushOperationUI_PushMultipleOkLabel).click();
+		}
+		if (joiner != null) {
+			TestUtil.openJobResultDialog(joiner.join());
+		}
 		SWTBotShell resultDialog = TestUtil
 				.botForShellStartingWith("Push Results");
 		resultDialog.close();
 	}
 
 	private void assertPushToUpstreamDisabled() {
+		assertPushToUpstreamDisabled("Upstream");
+	}
+
+	private void assertPushToUpstreamDisabled(String remoteName) {
 		SWTBotTree project = selectProject();
 		boolean enabled = ContextMenuHelper.isContextMenuItemEnabled(project,
-				getPushToUpstreamMenuPath("Upstream"));
+				getPushToUpstreamMenuPath(remoteName));
 		assertFalse("Expected Push to Upstream to be disabled", enabled);
 	}
 
