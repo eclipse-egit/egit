@@ -19,6 +19,7 @@ import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 import org.eclipse.core.runtime.Platform;
+import org.eclipse.core.runtime.jobs.Job;
 import org.eclipse.egit.ui.JobFamilies;
 import org.eclipse.egit.ui.internal.UIText;
 import org.eclipse.egit.ui.test.ContextMenuHelper;
@@ -178,10 +179,10 @@ public class PushBranchWizardTester {
 		wizard.button(UIText.PushBranchWizard_previewButton).click();
 	}
 
-	public void finish() {
+	public Job finish() {
 		JobJoiner jobJoiner = JobJoiner.startListening(JobFamilies.PUSH, 60,
 				TimeUnit.SECONDS);
 		wizard.button(UIText.PushBranchWizard_pushButton).click();
-		jobJoiner.join();
+		return jobJoiner.join();
 	}
 }

@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (C) 2010, Mathias Kinzler <mathias.kinzler@sap.com>
+ * Copyright (C) 2010, 2022 Mathias Kinzler <mathias.kinzler@sap.com> and others
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License 2.0
@@ -10,49 +10,60 @@
  *******************************************************************************/
 package org.eclipse.egit.ui.internal.actions;
 
+import java.io.IOException;
+import java.util.List;
 import java.util.Map;
 
 import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.commands.ExecutionException;
-import org.eclipse.egit.ui.internal.UIText;
 import org.eclipse.egit.ui.internal.push.PushOperationUI;
 import org.eclipse.egit.ui.internal.push.SimpleConfigurePushDialog;
-import org.eclipse.jface.dialogs.MessageDialog;
+import org.eclipse.egit.ui.internal.selection.SelectionRepositoryStateCache;
 import org.eclipse.jgit.lib.Repository;
+import org.eclipse.jgit.transport.PushConfig;
+import org.eclipse.jgit.transport.PushConfig.PushDefault;
+import org.eclipse.jgit.transport.RefSpec;
 import org.eclipse.jgit.transport.RemoteConfig;
 import org.eclipse.ui.commands.IElementUpdater;
 import org.eclipse.ui.menus.UIElement;
 
 /**
- * Action for "Simple Push"
+ * Handler for "Push to Upstream". The handler displays the configured remote
+ * name.
  */
 public class SimplePushActionHandler extends RepositoryActionHandler
 		implements IElementUpdater {
+
 	@Override
 	public Object execute(ExecutionEvent event) throws ExecutionException {
 		final Repository repository = getRepository(true, event);
-		if (repository == null)
-			return null;
-		RemoteConfig config = SimpleConfigurePushDialog
-				.getConfiguredRemote(repository);
-		if (config == null) {
-			MessageDialog.openInformation(getShell(event),
-					UIText.SimplePushActionHandler_NothingToPushDialogTitle,
-					UIText.SimplePushActionHandler_NothingToPushDialogMessage);
+		if (repository == null) {
 			return null;
 		}
-
-		PushOperationUI op = new PushOperationUI(repository, config.getName(), false);
-		op.start();
+		try {
+			PushOperationUI.pushToUpstream(getShell(event), repository);
+		} catch (IOException e) {
+			throw new ExecutionException(e.getLocalizedMessage(), e);
+		}
 		return null;
 	}
 
 	@Override
 	public boolean isEnabled() {
-		final Repository repository = getRepository();
-		return repository != null
-				&& SimpleConfigurePushDialog
-						.getConfiguredRemoteCached(repository) != null;
+		Repository repository = getRepository();
+		RemoteConfig config = SimpleConfigurePushDialog
+				.getConfiguredRemoteCached(repository);
+		if (config == null) {
+			return false;
+		}
+		List<RefSpec> refSpecs = config.getPushRefSpecs();
+		if (!refSpecs.isEmpty()) {
+			// It's too expensive to determine if anything would match
+			return true;
+		}
+		PushDefault pushDefault = SelectionRepositoryStateCache.INSTANCE
+				.getConfig(repository).get(PushConfig::new).getPushDefault();
+		return !PushDefault.NOTHING.equals(pushDefault);
 	}
 
 	@Override
@@ -64,4 +75,5 @@ public class SimplePushActionHandler extends RepositoryActionHandler
 					.getSimplePushCommandLabel(config));
 		}
 	}
+
 }
