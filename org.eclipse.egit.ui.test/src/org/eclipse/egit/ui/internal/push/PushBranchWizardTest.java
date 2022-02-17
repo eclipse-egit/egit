@@ -69,6 +69,39 @@ public class PushBranchWizardTest extends LocalRepositoryTestCase {
 	}
 
 	@Test
+	public void pushFinishInitiallyPossible() throws Exception {
+		checkoutNewLocalBranch("foo");
+
+		PushBranchWizardTester wizard = PushBranchWizardTester
+				.startWizard(selectProject(), "foo");
+		wizard.selectRemote("fetch");
+		wizard.selectMerge();
+		wizard.finish();
+
+		assertBranchPushed("foo", remoteRepository);
+		assertBranchConfig("foo", "fetch", "refs/heads/foo", "false");
+	}
+
+	@Test
+	public void pushFinishWithConfirmation() throws Exception {
+		checkoutNewLocalBranch("foo");
+
+		PushBranchWizardTester wizard = PushBranchWizardTester
+				.startWizard(selectProject(), "foo");
+		wizard.selectRemote("fetch");
+		wizard.selectMerge();
+		assertTrue(wizard.canFinish());
+		wizard.next();
+		wizard.prev();
+		assertFalse(wizard.canFinish());
+		wizard.next();
+		wizard.finish();
+
+		assertBranchPushed("foo", remoteRepository);
+		assertBranchConfig("foo", "fetch", "refs/heads/foo", "false");
+	}
+
+	@Test
 	public void pushHeadToExistingRemote() throws Exception {
 		try (Git git = new Git(repository)) {
 			AnyObjectId head = repository.resolve(Constants.HEAD);
@@ -144,8 +177,10 @@ public class PushBranchWizardTest extends LocalRepositoryTestCase {
 
 		PushBranchWizardTester wizard = PushBranchWizardTester.startWizard(
 				selectProject(), "foo");
+		assertFalse(wizard.canFinish());
 		wizard.enterRemoteOnInitialPage("origin", uri.toString());
 		wizard.next();
+		assertFalse(wizard.canFinish());
 		wizard.selectMerge();
 		wizard.next();
 		wizard.finish();

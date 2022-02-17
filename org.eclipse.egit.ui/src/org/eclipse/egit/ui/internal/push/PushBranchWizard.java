@@ -23,6 +23,8 @@ import org.eclipse.egit.ui.internal.SecureStoreUtils;
 import org.eclipse.egit.ui.internal.UIIcons;
 import org.eclipse.egit.ui.internal.UIText;
 import org.eclipse.egit.ui.internal.components.RepositorySelection;
+import org.eclipse.jface.dialogs.IPageChangeProvider;
+import org.eclipse.jface.wizard.IWizardContainer;
 import org.eclipse.jface.wizard.Wizard;
 import org.eclipse.jgit.lib.BranchConfig.BranchRebaseMode;
 import org.eclipse.jgit.lib.ConfigConstants;
@@ -53,6 +55,7 @@ public class PushBranchWizard extends Wizard {
 	private PushBranchPage pushBranchPage;
 	private ConfirmationPage confirmationPage;
 
+	private boolean confirmationRequired;
 
 	/**
 	 * @param repository
@@ -107,6 +110,23 @@ public class PushBranchWizard extends Wizard {
 			}
 		};
 
+		// Allow finish directly initially, but only initially: once the
+		// confirmation page was shown, the wizard can be finished only from the
+		// confirmation page. If we do have the addRemotePage, then the
+		// confirmation page is mandatory.
+		confirmationRequired = addRemotePage != null;
+		if (!confirmationRequired) {
+			confirmationPage.setPageComplete(true);
+			IWizardContainer container = getContainer();
+			if (container instanceof IPageChangeProvider) {
+				((IPageChangeProvider) container)
+						.addPageChangedListener(event -> {
+							if (event.getSelectedPage() == confirmationPage) {
+								confirmationRequired = true;
+							}
+						});
+			}
+		}
 		setNeedsProgressMonitor(true);
 		setDefaultPageImageDescriptor(UIIcons.WIZBAN_PUSH);
 	}
@@ -130,7 +150,8 @@ public class PushBranchWizard extends Wizard {
 
 	@Override
 	public boolean canFinish() {
-		return getContainer().getCurrentPage() == confirmationPage
+		return (!confirmationRequired
+				|| getContainer().getCurrentPage() == confirmationPage)
 				&& confirmationPage.isPageComplete();
 	}
 
@@ -231,16 +252,22 @@ public class PushBranchWizard extends Wizard {
 
 	private void startPush() throws IOException {
 		PushOperationResult result = confirmationPage.getConfirmedResult();
-		PushOperationSpecification pushSpec = result
-				.deriveSpecification(confirmationPage
+		PushOperationSpecification pushSpec;
+		if (result != null) {
+			pushSpec = result.deriveSpecification(confirmationPage
 						.isRequireUnchangedSelected());
-
+		} else {
+			// User bypassed confirmation.
+			pushSpec = PushOperationSpecification.create(repository,
+					pushBranchPage.getRemoteConfig(), getRefSpecs());
+		}
 		PushOperationUI pushOperationUI = new PushOperationUI(repository,
 				pushSpec, false);
 		pushOperationUI.setCredentialsProvider(new EGitCredentialsProvider());
 		pushOperationUI.setShowConfigureButton(false);
-		if (confirmationPage.isShowOnlyIfChangedSelected())
+		if (result != null && confirmationPage.isShowOnlyIfChangedSelected()) {
 			pushOperationUI.setExpectedResult(result);
+		}
 		pushOperationUI.start();
 	}
 

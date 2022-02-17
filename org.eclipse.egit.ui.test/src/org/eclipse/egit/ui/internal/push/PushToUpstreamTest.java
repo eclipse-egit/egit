@@ -207,7 +207,6 @@ public class PushToUpstreamTest extends LocalRepositoryTestCase {
 		if (expectBranchWizard) {
 			PushBranchWizardTester tester = PushBranchWizardTester
 					.forBranchName(branchName);
-			tester.next();
 			TestUtil.openJobResultDialog(tester.finish());
 		} else if (expectMultipleWarning) {
 			SWTBot dialog = bot.shell(UIText.PushOperationUI_PushMultipleTitle)
