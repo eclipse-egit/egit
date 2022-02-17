@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "78654aa7_b4c20fdb",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/dialogs/BranchConfigurationDialog.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 151,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2022-02-17T21:59:11Z",
+      "side": 1,
+      "message": "nit: missing braces",
+      "revId": "bd91faf42b5ab1cc04354a2707970de758b8ffc8",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": true
+    }
+  ]
+}
