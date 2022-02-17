@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (C) 2008, Marek Zawirski <marek.zawirski@gmail.com>
+ * Copyright (C) 2008, 2022 Marek Zawirski <marek.zawirski@gmail.com> and others
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License 2.0
@@ -10,12 +10,18 @@
  *******************************************************************************/
 package org.eclipse.egit.core.op;
 
+import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.LinkedHashMap;
 import java.util.Set;
 
+import org.eclipse.jgit.lib.Repository;
+import org.eclipse.jgit.transport.RefSpec;
+import org.eclipse.jgit.transport.RemoteConfig;
 import org.eclipse.jgit.transport.RemoteRefUpdate;
+import org.eclipse.jgit.transport.Transport;
 import org.eclipse.jgit.transport.URIish;
 
 /**
@@ -82,4 +88,62 @@ public class PushOperationSpecification {
 	public Collection<RemoteRefUpdate> getRefUpdates(final URIish uri) {
 		return Collections.unmodifiableCollection(urisRefUpdates.get(uri));
 	}
+
+	/**
+	 * Creates a {@link PushOperationSpecification} for the given
+	 * {@link RemoteConfig} and {@link RefSpec}s.
+	 *
+	 * @param repository
+	 *            {@link Repository} to push from
+	 * @param config
+	 *            {@link RemoteConfig} to push to
+	 * @param refSpecs
+	 *            the {@link RefSpec}s defining what to push
+	 * @return the {@link PushOperationSpecification}
+	 * @throws IOException
+	 *             if an error occurs
+	 */
+	public static PushOperationSpecification create(Repository repository,
+			RemoteConfig config, Collection<RefSpec> refSpecs)
+			throws IOException {
+		PushOperationSpecification result = new PushOperationSpecification();
+		Collection<RemoteRefUpdate> remoteRefUpdates = Transport
+				.findRemoteRefUpdatesFor(repository, refSpecs,
+						config.getFetchRefSpecs());
+		boolean added = false;
+		for (URIish uri : config.getPushURIs()) {
+			result.addURIRefUpdates(uri, copyUpdates(remoteRefUpdates, false));
+			added = true;
+		}
+		if (!added && !config.getURIs().isEmpty()) {
+			result.addURIRefUpdates(config.getURIs().get(0), remoteRefUpdates);
+		}
+		return result;
+	}
+
+	/**
+	 * Creates a copy of a collection of {@link RemoteRefUpdate}s. The copy
+	 * contains copies of the original updates.
+	 *
+	 * @param refUpdates
+	 *            {@link RemoteRefUpdate}s to copy
+	 * @param withExpectedOid
+	 *            {@code true} if the expected OIDs of the original
+	 *            {@link RemoteRefUpdate}s shall be retained, {@code false} if
+	 *            not
+	 * @return the copied collection
+	 * @throws IOException
+	 *             if the
+	 */
+	public static Collection<RemoteRefUpdate> copyUpdates(
+			Collection<RemoteRefUpdate> refUpdates, boolean withExpectedOid)
+			throws IOException {
+		Collection<RemoteRefUpdate> copy = new ArrayList<>(refUpdates.size());
+		for (RemoteRefUpdate rru : refUpdates) {
+			copy.add(new RemoteRefUpdate(rru,
+					withExpectedOid ? rru.getExpectedOldObjectId() : null));
+		}
+		return copy;
+	}
+
 }

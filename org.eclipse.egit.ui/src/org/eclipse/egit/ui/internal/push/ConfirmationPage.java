@@ -1,7 +1,7 @@
 /*******************************************************************************
  * Copyright (C) 2008, Marek Zawirski <marek.zawirski@gmail.com>
  * Copyright (C) 2010, Mathias Kinzler <mathias.kinzler@sap.com>
- * Copyright (C) 2012, Robin Stocker <robin@nibor.org>
+ * Copyright (C) 2012, 2022 Robin Stocker <robin@nibor.org> and others
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License 2.0
@@ -14,7 +14,6 @@ package org.eclipse.egit.ui.internal.push;
 
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
-import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
@@ -49,14 +48,6 @@ import org.eclipse.swt.widgets.Control;
 import org.eclipse.ui.PlatformUI;
 
 class ConfirmationPage extends WizardPage {
-	static Collection<RemoteRefUpdate> copyUpdates(
-			final Collection<RemoteRefUpdate> refUpdates) throws IOException {
-		final Collection<RemoteRefUpdate> copy = new ArrayList<>(
-				refUpdates.size());
-		for (final RemoteRefUpdate rru : refUpdates)
-			copy.add(new RemoteRefUpdate(rru, null));
-		return copy;
-	}
 
 	private final Repository local;
 
@@ -196,8 +187,10 @@ class ConfirmationPage extends WizardPage {
 			}
 
 			final PushOperationSpecification spec = new PushOperationSpecification();
-			for (final URIish uri : displayedRepoSelection.getPushURIs())
-				spec.addURIRefUpdates(uri, copyUpdates(updates));
+			for (final URIish uri : displayedRepoSelection.getPushURIs()) {
+				spec.addURIRefUpdates(uri,
+						PushOperationSpecification.copyUpdates(updates, false));
+			}
 			operation = new PushOperation(local, spec, true,
 					GitSettings.getRemoteConnectionTimeout());
 			if (credentials != null)
