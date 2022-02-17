@@ -221,9 +221,10 @@ public class PushWizard extends Wizard {
 						.findRemoteRefUpdatesFor(localDb, pushSpecs,
 								config.getFetchRefSpecs());
 				spec = new PushOperationSpecification();
-				for (final URIish uri : repoPage.getSelection().getPushURIs())
-					spec.addURIRefUpdates(uri, ConfirmationPage
-							.copyUpdates(updates));
+				for (final URIish uri : repoPage.getSelection().getPushURIs()) {
+					spec.addURIRefUpdates(uri, PushOperationSpecification
+							.copyUpdates(updates, false));
+				}
 			} else if (confirmPage.isConfirmed()) {
 				final PushOperationResult confirmedResult = confirmPage
 						.getConfirmedResult();
@@ -248,9 +249,10 @@ public class PushWizard extends Wizard {
 				}
 
 				spec = new PushOperationSpecification();
-				for (final URIish uri : repoPage.getSelection().getPushURIs())
-					spec.addURIRefUpdates(uri, ConfirmationPage
-							.copyUpdates(updates));
+				for (final URIish uri : repoPage.getSelection().getPushURIs()) {
+					spec.addURIRefUpdates(uri, PushOperationSpecification
+							.copyUpdates(updates, false));
+				}
 			}
 			int timeout = GitSettings.getRemoteConnectionTimeout();
 			return new PushOperation(localDb, spec, false, timeout);

@@ -57,7 +57,6 @@ import org.eclipse.jgit.transport.RefSpec;
 import org.eclipse.jgit.transport.RemoteConfig;
 import org.eclipse.jgit.transport.RemoteRefUpdate;
 import org.eclipse.jgit.transport.Transport;
-import org.eclipse.jgit.transport.URIish;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.widgets.Composite;
@@ -259,13 +258,6 @@ public class PushOperationUI {
 			// we don't use the configuration directly, as it may contain
 			// unsaved changes and as we may need
 			// to add the default push RefSpec here
-			spec = new PushOperationSpecification();
-
-			List<URIish> urisToPush = new ArrayList<>();
-			for (URIish uri : config.getPushURIs())
-				urisToPush.add(uri);
-			if (urisToPush.isEmpty() && !config.getURIs().isEmpty())
-				urisToPush.add(config.getURIs().get(0));
 
 			List<RefSpec> pushRefSpecs = new ArrayList<>();
 			if (branchName == null) {
@@ -284,22 +276,15 @@ public class PushOperationUI {
 						.add(new RefSpec(branchName + ':' + remoteBranchName));
 			}
 
-			for (URIish uri : urisToPush) {
-				try {
-					// Fetch ref specs are passed here to make sure that the
-					// returned remote ref updates include tracking branch
-					// updates.
-					Collection<RemoteRefUpdate> remoteRefUpdates = Transport
-							.findRemoteRefUpdatesFor(repository, pushRefSpecs,
-									config.getFetchRefSpecs());
-					spec.addURIRefUpdates(uri, remoteRefUpdates);
-				} catch (NotSupportedException e) {
-					throw new CoreException(Activator.createErrorStatus(
-							e.getMessage(), e));
-				} catch (IOException e) {
-					throw new CoreException(Activator.createErrorStatus(
-							e.getMessage(), e));
-				}
+			try {
+				spec = PushOperationSpecification.create(repository, config,
+						pushRefSpecs);
+			} catch (NotSupportedException e) {
+				throw new CoreException(
+						Activator.createErrorStatus(e.getMessage(), e));
+			} catch (IOException e) {
+				throw new CoreException(
+						Activator.createErrorStatus(e.getMessage(), e));
 			}
 		}
 		op = new PushOperation(repository, spec, dryRun,
