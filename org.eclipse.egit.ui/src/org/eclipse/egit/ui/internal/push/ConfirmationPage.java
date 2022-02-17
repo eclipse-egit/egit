@@ -129,11 +129,12 @@ class ConfirmationPage extends WizardPage {
 	}
 
 	boolean isRequireUnchangedSelected() {
-		return requireUnchangedButton.getSelection();
+		return requireUnchangedButton != null
+				&& requireUnchangedButton.getSelection();
 	}
 
 	boolean isShowOnlyIfChangedSelected() {
-		return showOnlyIfChanged.getSelection();
+		return showOnlyIfChanged != null && showOnlyIfChanged.getSelection();
 	}
 
 	private void checkPreviousPagesSelections(RepositorySelection repositorySelection,  List<RefSpec> refSpecs) {

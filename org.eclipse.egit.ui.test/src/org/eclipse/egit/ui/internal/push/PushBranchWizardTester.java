@@ -179,6 +179,14 @@ public class PushBranchWizardTester {
 		wizard.button(UIText.PushBranchWizard_previewButton).click();
 	}
 
+	public void prev() {
+		wizard.button(IDialogConstants.BACK_LABEL).click();
+	}
+
+	public boolean canFinish() {
+		return wizard.button(UIText.PushBranchWizard_pushButton).isEnabled();
+	}
+
 	public Job finish() {
 		JobJoiner jobJoiner = JobJoiner.startListening(JobFamilies.PUSH, 60,
 				TimeUnit.SECONDS);
