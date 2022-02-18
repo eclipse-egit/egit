@@ -1,5 +1,6 @@
 /*******************************************************************************
- * Copyright (c) 2012 SAP AG.
+ * Copyright (c) 2012, 2022 SAP AG and others.
+ *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License 2.0
  * which accompanies this distribution, and is available at
@@ -12,6 +13,7 @@
  *******************************************************************************/
 package org.eclipse.egit.ui.internal.repository;
 
+import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -24,6 +26,7 @@ import org.eclipse.jface.action.IAction;
 import org.eclipse.jface.action.IToolBarManager;
 import org.eclipse.jface.action.Separator;
 import org.eclipse.jface.resource.ImageDescriptor;
+import org.eclipse.jgit.lib.Config;
 import org.eclipse.jgit.lib.ConfigConstants;
 import org.eclipse.jgit.lib.Repository;
 import org.eclipse.ui.IActionBars;
@@ -134,6 +137,11 @@ public class BranchPropertySource implements IPropertySource {
 				UIText.BranchPropertySource_RemoteDescriptor);
 		desc.setCategory(UIText.BranchPropertySource_UpstreamConfigurationCategory);
 		resultList.add(desc);
+		desc = new PropertyDescriptor(ConfigConstants.CONFIG_KEY_PUSH_REMOTE,
+				UIText.BranchPropertySource_PushRemoteDescriptor);
+		desc.setCategory(
+				UIText.BranchPropertySource_UpstreamConfigurationCategory);
+		resultList.add(desc);
 		desc = new PropertyDescriptor(ConfigConstants.CONFIG_KEY_REBASE,
 				UIText.BranchPropertySource_RebaseDescriptor);
 		desc.setCategory(UIText.BranchPropertySource_UpstreamConfigurationCategory);
@@ -145,11 +153,33 @@ public class BranchPropertySource implements IPropertySource {
 	@Override
 	public Object getPropertyValue(Object id) {
 		String actId = ((String) id);
-		String value = myRepository.getConfig().getString(
+		Config config = myRepository.getConfig();
+		String value = config.getString(
 				ConfigConstants.CONFIG_BRANCH_SECTION, myBranchName, actId);
-		if (value == null || value.length() == 0)
+		if (value == null || value.isEmpty()) {
+			if (ConfigConstants.CONFIG_KEY_PUSH_REMOTE.equals(actId)) {
+				value = config.getString(ConfigConstants.CONFIG_REMOTE_SECTION,
+						null, ConfigConstants.CONFIG_KEY_PUSH_DEFAULT);
+				String source = null;
+				if (value == null) {
+					value = config.getString(
+							ConfigConstants.CONFIG_BRANCH_SECTION, myBranchName,
+							ConfigConstants.CONFIG_KEY_REMOTE);
+					if (value != null) {
+						source = UIText.BranchPropertySource_RemoteDescriptor;
+					}
+				} else {
+					source = ConfigConstants.CONFIG_REMOTE_SECTION + '.'
+							+ ConfigConstants.CONFIG_KEY_PUSH_DEFAULT;
+				}
+				if (value != null) {
+					return MessageFormat.format(
+							UIText.BranchPropertySource_ValueNotSetDefault,
+							source, value);
+				}
+			}
 			return UIText.BranchPropertySource_ValueNotSet;
-
+		}
 		return value;
 	}
 

@@ -3495,6 +3495,9 @@ public class UIText extends NLS {
 	public static String BranchRenameDialog_ButtonOK;
 
 	/** */
+	public static String BranchPropertySource_PushRemoteDescriptor;
+
+	/** */
 	public static String BranchPropertySource_RebaseDescriptor;
 
 	/** */
@@ -3508,6 +3511,9 @@ public class UIText extends NLS {
 
 	/** */
 	public static String BranchPropertySource_ValueNotSet;
+
+	/** */
+	public static String BranchPropertySource_ValueNotSetDefault;
 
 	/** */
 	public static String BranchResultDialog_buttonCommit;
