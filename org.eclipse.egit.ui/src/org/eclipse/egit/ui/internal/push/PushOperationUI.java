@@ -18,12 +18,14 @@ import java.lang.reflect.InvocationTargetException;
 import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.jobs.Job;
+import org.eclipse.egit.core.RepositoryUtil;
 import org.eclipse.egit.core.internal.credentials.EGitCredentialsProvider;
 import org.eclipse.egit.core.op.PushOperation;
 import org.eclipse.egit.core.op.PushOperationResult;
@@ -48,7 +50,6 @@ import org.eclipse.jgit.lib.BranchConfig;
 import org.eclipse.jgit.lib.Config;
 import org.eclipse.jgit.lib.Constants;
 import org.eclipse.jgit.lib.ObjectId;
-import org.eclipse.jgit.lib.Ref;
 import org.eclipse.jgit.lib.Repository;
 import org.eclipse.jgit.transport.CredentialsProvider;
 import org.eclipse.jgit.transport.PushConfig;
@@ -377,18 +378,35 @@ public class PushOperationUI {
 		}
 		List<RefSpec> refSpecs = remoteCfg.getPushRefSpecs();
 		if (!refSpecs.isEmpty()) {
-			Collection<RemoteRefUpdate> updates = Transport
-					.findRemoteRefUpdatesFor(repository, refSpecs,
-							remoteCfg.getFetchRefSpecs());
-			if (updates.isEmpty()) {
-				nothingToPush(parent);
-				return null;
-			} else if (updates.size() > 1) {
-				List<String> allLocalNames = updates.stream()
-						.map(RemoteRefUpdate::getSrcRef)
-						.collect(Collectors.toList());
-				if (!warnMultiple(parent, allLocalNames)) {
+			RefSpec match = refSpecs.stream().filter(RefSpec::isMatching)
+					.findAny().orElse(null);
+			if (match != null) {
+				if (repository.getRefDatabase()
+							.getRefsByPrefix(Constants.R_HEADS).size() > 1) {
+					if (!warnMatching(parent,
+							RepositoryUtil.INSTANCE
+									.getRepositoryName(repository),
+							remoteCfg.getName(),
+							MessageFormat.format(
+									UIText.PushOperationUI_PushMatchingPushRefSpec,
+									remoteCfg.getName(), match))) {
+						return null;
+					}
+				}
+			} else {
+				Collection<RemoteRefUpdate> updates = Transport
+						.findRemoteRefUpdatesFor(repository, refSpecs,
+								remoteCfg.getFetchRefSpecs());
+				if (updates.isEmpty()) {
+					nothingToPush(parent);
 					return null;
+				} else if (updates.size() > 1) {
+					List<String> allLocalNames = updates.stream()
+							.map(RemoteRefUpdate::getSrcRef)
+							.collect(Collectors.toList());
+					if (!warnMultiple(parent, allLocalNames)) {
+						return null;
+					}
 				}
 			}
 			return new PushOperationUI(repository, remoteCfg.getName(), false);
@@ -400,16 +418,24 @@ public class PushOperationUI {
 				return new PushOperationUI(repository, remoteCfg.getName(),
 						false);
 			case MATCHING:
-				List<String> allLocalNames = repository.getRefDatabase()
-						.getRefsByPrefix(Constants.R_HEADS).stream()
-						.map(Ref::getName).collect(Collectors.toList());
-				if (allLocalNames.size() > 1) {
-					if (!warnMultiple(parent, allLocalNames)) {
+				int numberOfBranches = repository.getRefDatabase()
+						.getRefsByPrefix(Constants.R_HEADS).size();
+				if (numberOfBranches == 0) {
+					nothingToPush(parent);
+					return null;
+				}
+				if (numberOfBranches > 1) {
+					if (!warnMatching(parent,
+							RepositoryUtil.INSTANCE
+									.getRepositoryName(repository),
+							remoteCfg.getName(), "push.default=matching")) { //$NON-NLS-1$
 						return null;
 					}
 				}
-				return new PushOperationUI(repository, remoteCfg.getName(),
-						false);
+				PushOperationSpecification spec = PushOperationSpecification
+						.create(repository, remoteCfg,
+								Collections.singleton(new RefSpec(":"))); //$NON-NLS-1$
+				return new PushOperationUI(repository, spec, false);
 			case NOTHING:
 				nothingToPush(parent);
 				return null;
@@ -418,7 +444,7 @@ public class PushOperationUI {
 				BranchConfig branchCfg = new BranchConfig(config, shortBranch);
 				String upstreamBranch = branchCfg.getMerge();
 				if (upstreamBranch == null) {
-					// Nothing configured; fall back to current
+					// Nothing configured
 					pushBranchDialog(parent, repository);
 					return null;
 				}
@@ -464,6 +490,18 @@ public class PushOperationUI {
 			PushWizardDialog dialog = new PushWizardDialog(shell, wizard);
 			dialog.open();
 		}
+	}
+
+	private static boolean warnMatching(Shell shell, String repository,
+			String remote, String cause) {
+		MessageDialog dialog = new MessageDialog(shell,
+				UIText.PushOperationUI_PushMatchingTitle, null,
+				MessageFormat.format(UIText.PushOperationUI_PushMatchingMessage,
+						repository, remote, cause),
+				MessageDialog.QUESTION, IDialogConstants.OK_ID,
+				UIText.PushOperationUI_PushMultipleOkLabel,
+				IDialogConstants.CANCEL_LABEL);
+		return dialog.open() == Window.OK;
 	}
 
 	private static boolean warnMultiple(Shell shell, List<String> refNames) {

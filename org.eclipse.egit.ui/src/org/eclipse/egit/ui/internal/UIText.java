@@ -2391,6 +2391,15 @@ public class UIText extends NLS {
 	public static String PushOperationUI_PushJobName;
 
 	/** */
+	public static String PushOperationUI_PushMatchingMessage;
+
+	/** */
+	public static String PushOperationUI_PushMatchingPushRefSpec;
+
+	/** */
+	public static String PushOperationUI_PushMatchingTitle;
+
+	/** */
 	public static String PushOperationUI_PushMultipleMessage;
 
 	/** */
