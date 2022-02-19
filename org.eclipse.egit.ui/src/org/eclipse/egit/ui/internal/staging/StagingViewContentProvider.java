@@ -33,6 +33,8 @@ import java.util.Map;
 import java.util.Set;
 import java.util.TreeSet;
 import java.util.regex.Pattern;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import org.eclipse.core.resources.IContainer;
 import org.eclipse.core.resources.IFile;
@@ -283,6 +285,11 @@ public class StagingViewContentProvider extends WorkbenchContentProvider {
 		List<StagingEntry> stagingEntries = new ArrayList<>();
 		addFilteredDescendants(folder, getFilterPattern(), stagingEntries);
 		return stagingEntries;
+	}
+
+	List<StagingEntry> getStagingEntriesFiltered() {
+		return Stream.of(content).filter(this::isInFilter)
+				.collect(Collectors.toList());
 	}
 
 	Collection<StagingFolderEntry> getUntrackedFileFolders() {

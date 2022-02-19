@@ -871,8 +871,8 @@ public class StagingView extends ViewPart
 				UIIcons.UNSTAGE_ALL) {
 			@Override
 			public void run() {
-				unstage(Arrays.asList(
-						getContentProvider(stagedViewer).getStagingEntries()));
+				unstage(getContentProvider(stagedViewer)
+						.getStagingEntriesFiltered());
 			}
 		};
 		unstageAllAction
@@ -881,8 +881,8 @@ public class StagingView extends ViewPart
 				UIIcons.ELCL16_ADD_ALL) {
 			@Override
 			public void run() {
-				stage(Arrays.asList(getContentProvider(unstagedViewer)
-						.getStagingEntries()));
+				stage(getContentProvider(unstagedViewer)
+						.getStagingEntriesFiltered());
 			}
 		};
 		stageAllAction.setToolTipText(UIText.StagingView_StageAllItemTooltip);
