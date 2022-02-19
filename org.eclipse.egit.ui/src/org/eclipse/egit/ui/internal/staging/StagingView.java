@@ -871,8 +871,8 @@ public class StagingView extends ViewPart
 				UIIcons.UNSTAGE_ALL) {
 			@Override
 			public void run() {
-				unstage(Arrays.asList(
-						getContentProvider(stagedViewer).getStagingEntries()));
+				unstage(getContentProvider(stagedViewer)
+						.getStagingEntriesFiltered());
 			}
 		};
 		unstageAllAction
@@ -881,8 +881,8 @@ public class StagingView extends ViewPart
 				UIIcons.ELCL16_ADD_ALL) {
 			@Override
 			public void run() {
-				stage(Arrays.asList(getContentProvider(unstagedViewer)
-						.getStagingEntries()));
+				stage(getContentProvider(unstagedViewer)
+						.getStagingEntriesFiltered());
 			}
 		};
 		stageAllAction.setToolTipText(UIText.StagingView_StageAllItemTooltip);
@@ -2290,10 +2290,10 @@ public class StagingView extends ViewPart
 					Object newInput) {
 				super.inputChanged(viewer, oldInput, newInput);
 				if (unstaged) {
-					stageAllAction.setEnabled(getCount() > 0);
+					stageAllAction.setEnabled(hasVisibleItems());
 					unstagedToolBarManager.update(true);
 				} else {
-					unstageAllAction.setEnabled(getCount() > 0);
+					unstageAllAction.setEnabled(hasVisibleItems());
 					stagedToolBarManager.update(true);
 				}
 			}
@@ -3372,6 +3372,12 @@ public class StagingView extends ViewPart
 			} finally {
 				setRedraw(true);
 			}
+			stageAllAction
+					.setEnabled(unstagedViewer.getTree().getItemCount() > 0);
+			unstagedToolBarManager.update(true);
+			unstageAllAction
+					.setEnabled(stagedViewer.getTree().getItemCount() > 0);
+			stagedToolBarManager.update(true);
 		});
 	}
 

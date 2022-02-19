@@ -33,6 +33,8 @@ import java.util.Map;
 import java.util.Set;
 import java.util.TreeSet;
 import java.util.regex.Pattern;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import org.eclipse.core.resources.IContainer;
 import org.eclipse.core.resources.IFile;
@@ -264,6 +266,15 @@ public class StagingViewContentProvider extends WorkbenchContentProvider {
 		children.add(child);
 	}
 
+	boolean hasVisibleItems() {
+		Pattern filterPattern = getFilterPattern();
+		if (filterPattern == null && showUntracked) {
+			return getCount() > 0;
+		}
+		return Stream.of(content)
+				.anyMatch(entry -> matches(entry, filterPattern));
+	}
+
 	int getShownCount() {
 		Pattern filterPattern = getFilterPattern();
 		if (filterPattern == null && showUntracked) {
@@ -283,6 +294,11 @@ public class StagingViewContentProvider extends WorkbenchContentProvider {
 		List<StagingEntry> stagingEntries = new ArrayList<>();
 		addFilteredDescendants(folder, getFilterPattern(), stagingEntries);
 		return stagingEntries;
+	}
+
+	List<StagingEntry> getStagingEntriesFiltered() {
+		return Stream.of(content).filter(this::isInFilter)
+				.collect(Collectors.toList());
 	}
 
 	Collection<StagingFolderEntry> getUntrackedFileFolders() {
