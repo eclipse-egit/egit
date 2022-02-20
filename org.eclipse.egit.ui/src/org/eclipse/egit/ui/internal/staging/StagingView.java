@@ -1699,7 +1699,7 @@ public class StagingView extends ViewPart
 
 			@Override
 			public void run() {
-				updateUnstageViewer();
+				updateUnstagedViewer();
 				refreshViewersPreservingExpandedElements();
 			}
 
@@ -1741,7 +1741,7 @@ public class StagingView extends ViewPart
 		unstagedToolBarManager.createControl(unstagedToolbarComposite);
 	}
 
-	private void updateUnstageViewer() {
+	private void updateUnstagedViewer() {
 		StagingViewContentProvider stagingViewContentProvider = (StagingViewContentProvider) unstagedViewer
 				.getContentProvider();
 		stagingViewContentProvider
@@ -1752,7 +1752,7 @@ public class StagingView extends ViewPart
 			unstagedViewer.refresh();
 			Object[] expandFolders = stagingViewContentProvider
 					.getUntrackedFileFolders()
-					.toArray(value -> new StagingFolderEntry[value]);
+					.toArray(new StagingFolderEntry[0]);
 			if (!hideUntrackedAction.isChecked() && expandFolders.length > 0) {
 				unstagedViewer.setExpandedElements(expandFolders);
 			}
@@ -3667,7 +3667,7 @@ public class StagingView extends ViewPart
 			Repository repo = Adapters.adapt(firstElement, Repository.class);
 			if (repo != null) {
 				if (currentRepository != repo) {
-					reload(repo, true);
+					reload(repo);
 				}
 			} else {
 				IResource resource = AdapterUtils
@@ -4078,11 +4078,6 @@ public class StagingView extends ViewPart
 	 * @param repository
 	 */
 	public void reload(final Repository repository) {
-		reload(repository, false);
-	}
-
-	private void reload(final Repository repository,
-			final boolean repoChanged) {
 		if (isDisposed()) {
 			return;
 		}
@@ -4203,10 +4198,10 @@ public class StagingView extends ViewPart
 			updateCommitButtons();
 			updateSectionText();
 
-			if (repoChanged) {
-				// make sure to keep default UI behavior to show untrack files.
+			if (repositoryChanged && hideUntrackedAction.isChecked()) {
+				// Always show untracked files when the repository changed
 				hideUntrackedAction.setChecked(false);
-				updateUnstageViewer();
+				updateUnstagedViewer();
 			}
 		});
 	}
