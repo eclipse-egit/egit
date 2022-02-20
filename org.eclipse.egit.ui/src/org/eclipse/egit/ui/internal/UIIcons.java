@@ -105,6 +105,9 @@ public class UIIcons {
 	/** Filter icon */
 	public final static ImageDescriptor ELCL16_FILTER;
 
+	/** Filter icon */
+	public final static ImageDescriptor ELCL16_HIDE_UNTRACKED;
+
 	/** Preview icon */
 	public final static ImageDescriptor ELCL16_PREVIEW;
 
@@ -434,6 +437,7 @@ public class UIIcons {
 		ELCL16_COLUMN_LAYOUT = map("elcl16/horizontal_view.png"); //$NON-NLS-1$
 		ELCL16_FILTER = map("elcl16/filter_ps_funnel.png"); //$NON-NLS-1$
 		ELCL16_PREVIEW = map("elcl16/preview.png"); //$NON-NLS-1$
+		ELCL16_HIDE_UNTRACKED = map("elcl16/hide_untracked.png"); //$NON-NLS-1$
 		FILTERNONE = map("elcl16/filter_none_funnel.png"); //$NON-NLS-1$
 		FILTERRESOURCE = map("elcl16/filter_resource_funnel.png"); //$NON-NLS-1$
 		FILTERPROJECT = map("elcl16/filter_project_funnel.png"); //$NON-NLS-1$

@@ -5899,6 +5899,9 @@ public class UIText extends NLS {
 	public static String StagingView_Conflict_MD_short;
 
 	/** */
+	public static String StagingView_HideUntrackedFiles;
+
+	/** */
 	public static String StagingView_UnstagedChanges;
 
 	/** */
@@ -5906,9 +5909,6 @@ public class UIText extends NLS {
 
 	/** */
 	public static String StagingView_ShowFileNamesFirst;
-
-	/** */
-	public static String StagingView_ShowUntrackedFiles;
 
 	/** */
 	public static String StagingView_StagedChanges;

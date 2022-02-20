@@ -271,7 +271,7 @@ public class StagingView extends ViewPart
 
 	private static final String SORT_ITEM_TOOLBAR_ID = "sortItem"; //$NON-NLS-1$
 
-	private static final String SHOW_UNTRACKED_TOOLBAR_ID = "showUntracked"; //$NON-NLS-1$
+	private static final String HIDE_UNTRACKED_TOOLBAR_ID = "hideUntracked"; //$NON-NLS-1$
 
 	private static final String EXPAND_ALL_ITEM_TOOLBAR_ID = "expandAllItem"; //$NON-NLS-1$
 
@@ -718,7 +718,7 @@ public class StagingView extends ViewPart
 
 	private Action sortAction;
 
-	private Action showUntrackedAction;
+	private Action hideUntrackedAction;
 
 	private SashForm stagingSashForm;
 
@@ -1694,7 +1694,7 @@ public class StagingView extends ViewPart
 		unstagedCollapseAllAction.setImageDescriptor(UIIcons.COLLAPSEALL);
 		unstagedCollapseAllAction.setId(COLLAPSE_ALL_ITEM_TOOLBAR_ID);
 
-		showUntrackedAction = new Action(UIText.StagingView_ShowUntrackedFiles,
+		hideUntrackedAction = new Action(UIText.StagingView_HideUntrackedFiles,
 				IAction.AS_CHECK_BOX) {
 
 			@Override
@@ -1704,9 +1704,9 @@ public class StagingView extends ViewPart
 			}
 
 		};
-		showUntrackedAction.setImageDescriptor(UIIcons.UNTRACKED_FILE);
-		showUntrackedAction.setId(SHOW_UNTRACKED_TOOLBAR_ID);
-		showUntrackedAction.setChecked(true);
+		hideUntrackedAction.setImageDescriptor(UIIcons.ELCL16_HIDE_UNTRACKED);
+		hideUntrackedAction.setId(HIDE_UNTRACKED_TOOLBAR_ID);
+		hideUntrackedAction.setChecked(false);
 
 		sortAction = new Action(UIText.StagingView_UnstagedSort,
 				IAction.AS_CHECK_BOX) {
@@ -1731,7 +1731,7 @@ public class StagingView extends ViewPart
 
 		unstagedToolBarManager.add(stageAction);
 		unstagedToolBarManager.add(stageAllAction);
-		unstagedToolBarManager.add(showUntrackedAction);
+		unstagedToolBarManager.add(hideUntrackedAction);
 		unstagedToolBarManager.add(presentationAction);
 		unstagedToolBarManager.add(sortAction);
 		unstagedToolBarManager.add(unstagedExpandAllAction);
@@ -1745,7 +1745,7 @@ public class StagingView extends ViewPart
 		StagingViewContentProvider stagingViewContentProvider = (StagingViewContentProvider) unstagedViewer
 				.getContentProvider();
 		stagingViewContentProvider
-				.setShowUntracked(showUntrackedAction.isChecked());
+				.setShowUntracked(!hideUntrackedAction.isChecked());
 		updateSectionText();
 		setRedraw(false);
 		try {
@@ -1753,7 +1753,7 @@ public class StagingView extends ViewPart
 			Object[] expandFolders = stagingViewContentProvider
 					.getUntrackedFileFolders()
 					.toArray(value -> new StagingFolderEntry[value]);
-			if (showUntrackedAction.isChecked() && expandFolders.length > 0) {
+			if (!hideUntrackedAction.isChecked() && expandFolders.length > 0) {
 				unstagedViewer.setExpandedElements(expandFolders);
 			}
 		} finally {
@@ -3008,7 +3008,7 @@ public class StagingView extends ViewPart
 		int count = contentProvider.getCount();
 		int shownCount = contentProvider.getShownCount();
 		if ((getFilterPattern() != null
-				|| (unstagedCount && !showUntrackedAction.isChecked()
+				|| (unstagedCount && hideUntrackedAction.isChecked()
 						&& shownCount < count))
 				&& count > 0) {
 			return shownCount + "/" + count; //$NON-NLS-1$
@@ -4205,7 +4205,7 @@ public class StagingView extends ViewPart
 
 			if (repoChanged) {
 				// make sure to keep default UI behavior to show untrack files.
-				showUntrackedAction.setChecked(true);
+				hideUntrackedAction.setChecked(false);
 				updateUnstageViewer();
 			}
 		});
