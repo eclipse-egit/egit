@@ -305,7 +305,10 @@ public class StagingViewContentProvider extends WorkbenchContentProvider {
 		Set<StagingFolderEntry> folders = new HashSet<>();
 		for (StagingEntry entry : content) {
 			if (!entry.isTracked() && !entry.isStaged()) {
-				folders.add(entry.getParent());
+				StagingFolderEntry parent = entry.getParent();
+				if (parent != null) {
+					folders.add(parent);
+				}
 			}
 		}
 		return folders;
