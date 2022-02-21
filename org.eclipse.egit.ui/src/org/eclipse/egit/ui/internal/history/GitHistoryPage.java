@@ -2723,8 +2723,7 @@ public class GitHistoryPage extends HistoryPage implements RefsChangedListener,
 				for (File file : inFiles) {
 					if (!file.isAbsolute()) {
 						// Assume it's a git path
-						IPath filePath = Path
-								.fromPortableString(file.getPath());
+						IPath filePath = new Path(file.getPath());
 						paths.add(new FilterPath(filePath.toString(), false));
 					}
 				}
@@ -2744,16 +2743,22 @@ public class GitHistoryPage extends HistoryPage implements RefsChangedListener,
 					isRegularFile = file.isFile();
 				}
 
-				if (gitDirPath.isPrefixOf(filePath)) {
-					throw new IllegalStateException(
-							NLS.bind(
-									UIText.GitHistoryPage_FileOrFolderPartOfGitDirMessage,
-									filePath.toOSString()));
+				IPath pathToAdd;
+				if (!file.isAbsolute()) {
+					// Assume it's a git path; already relative to working tree
+					pathToAdd = filePath;
+				} else {
+					if (gitDirPath.isPrefixOf(filePath)) {
+						throw new IllegalStateException(NLS.bind(
+								UIText.GitHistoryPage_FileOrFolderPartOfGitDirMessage,
+								filePath.toOSString()));
+					}
+					pathToAdd = filePath.removeFirstSegments(segmentCount);
 				}
-				IPath pathToAdd = filePath.removeFirstSegments(segmentCount)
-						.setDevice(null);
-				if (!pathToAdd.isEmpty())
+				pathToAdd = pathToAdd.setDevice(null);
+				if (!pathToAdd.isEmpty()) {
 					paths.add(new FilterPath(pathToAdd.toString(), isRegularFile));
+				}
 			}
 		} else
 			paths = new ArrayList<>(0);
