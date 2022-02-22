@@ -50,6 +50,7 @@ import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.graphics.Rectangle;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
+import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.ScrollBar;
 import org.eclipse.ui.IWorkbenchPartSite;
 import org.eclipse.ui.PlatformUI;
@@ -80,9 +81,6 @@ public class CommitAndDiffComponent {
 
 	private Point diffCaret = new Point(0, 0);
 
-	/** True during {@link #resizeCommentAndDiffScrolledComposite()}. */
-	private volatile boolean resizing;
-
 	/**
 	 * Creates a new {@link CommitAndDiffComponent}.
 	 *
@@ -94,8 +92,6 @@ public class CommitAndDiffComponent {
 	public CommitAndDiffComponent(Composite parent, IWorkbenchPartSite site) {
 		commentAndDiffScrolledComposite = new ScrolledComposite(parent,
 				SWT.H_SCROLL | SWT.V_SCROLL);
-		commentAndDiffScrolledComposite.setExpandHorizontal(true);
-		commentAndDiffScrolledComposite.setExpandVertical(true);
 
 		commentAndDiffComposite = new Composite(commentAndDiffScrolledComposite,
 				SWT.NONE);
@@ -113,6 +109,7 @@ public class CommitAndDiffComponent {
 			public void inputDocumentChanged(IDocument oldInput,
 					IDocument newInput) {
 				commentCaret = new Point(0, 0);
+				resizeCommentAndDiffScrolledComposite();
 			}
 
 			@Override
@@ -121,8 +118,6 @@ public class CommitAndDiffComponent {
 				// Nothing
 			}
 		});
-		commentViewer.addTextListener(
-				event -> resizeCommentAndDiffScrolledComposite());
 
 		StyledText commentWidget = commentViewer.getTextWidget();
 		commentWidget.addVerifyKeyListener(event -> {
@@ -139,6 +134,8 @@ public class CommitAndDiffComponent {
 		});
 
 		commentAndDiffComposite
+				.setBackground(commentViewer.getControl().getBackground());
+		commentAndDiffScrolledComposite
 				.setBackground(commentViewer.getControl().getBackground());
 
 		HyperlinkSourceViewer.Configuration configuration = new HyperlinkSourceViewer.Configuration(
@@ -222,6 +219,7 @@ public class CommitAndDiffComponent {
 			public void inputDocumentChanged(IDocument oldInput,
 					IDocument newInput) {
 				diffCaret = new Point(0, 0);
+				resizeCommentAndDiffScrolledComposite();
 			}
 
 			@Override
@@ -230,8 +228,6 @@ public class CommitAndDiffComponent {
 				// Nothing
 			}
 		});
-		diffViewer.addTextListener(
-				event -> resizeCommentAndDiffScrolledComposite());
 
 		ActionUtils.UpdateableAction selectAll = ActionUtils.createGlobalAction(
 				ActionFactory.SELECT_ALL,
@@ -271,13 +267,16 @@ public class CommitAndDiffComponent {
 					diffWidget.getLineHeight(event.caretOffset));
 		});
 
-		commentAndDiffScrolledComposite
-				.addControlListener(new ControlAdapter() {
+		// "Live" resizing the contents of the ScrolledComposite takes too long.
+		// Resize once after the resize is done. Note that resizing is needed
+		// only if word-wrap is on.
+		commentAndDiffScrolledComposite.addControlListener(
+				new Resizer(commentAndDiffScrolledComposite) {
+
 					@Override
 					public void controlResized(ControlEvent e) {
-						if (!resizing && commentViewer.getTextWidget()
-								.getWordWrap()) {
-							resizeCommentAndDiffScrolledComposite();
+						if (commentViewer.getTextWidget().getWordWrap()) {
+							super.controlResized(e);
 						}
 					}
 				});
@@ -370,13 +369,32 @@ public class CommitAndDiffComponent {
 	 *            whether to word-wrap
 	 */
 	public void setWrap(boolean wrap) {
+		if (Display.getCurrent() == null) {
+			StyledText text = commentViewer.getTextWidget();
+			if (!text.isDisposed()) {
+				text.getDisplay().asyncExec(() -> {
+					if (text.isDisposed()) {
+						return;
+					}
+					internalSetWrap(wrap);
+				});
+			}
+		} else {
+			internalSetWrap(wrap);
+		}
+	}
+
+	private void internalSetWrap(boolean wrap) {
 		commentViewer.getTextWidget().setWordWrap(wrap);
 		diffViewer.getTextWidget().setWordWrap(wrap);
 		resizeCommentAndDiffScrolledComposite();
 	}
 
+
 	private void resizeCommentAndDiffScrolledComposite() {
-		resizing = true;
+		if (commentAndDiffComposite.isDisposed()) {
+			return;
+		}
 		long start = 0;
 		int lines = 0;
 		boolean trace = GitTraceLocation.HISTORYVIEW.isActive();
@@ -391,11 +409,25 @@ public class CommitAndDiffComponent {
 			start = System.currentTimeMillis();
 		}
 
-		Point size = commentAndDiffComposite.computeSize(SWT.DEFAULT,
+		Point oldSize = commentAndDiffComposite.getSize();
+		Rectangle minSize = commentAndDiffScrolledComposite.getClientArea();
+		Point size;
+		StyledText text = commentViewer.getTextWidget();
+		if (text == null) {
+			size = new Point(0, 0);
+		} else if (text.getWordWrap()) {
+			size = commentAndDiffComposite.computeSize(minSize.width,
+					SWT.DEFAULT);
+		} else {
+			size = commentAndDiffComposite.computeSize(SWT.DEFAULT,
 				SWT.DEFAULT);
-		commentAndDiffComposite.layout();
-		commentAndDiffScrolledComposite.setMinSize(size);
-		resizing = false;
+		}
+		size.x = Math.max(minSize.width, size.x);
+		size.y = Math.max(minSize.height, size.y);
+		if (!size.equals(oldSize)) {
+			commentAndDiffComposite.setSize(size);
+			commentAndDiffComposite.layout();
+		}
 
 		if (trace) {
 			long stop = System.currentTimeMillis();
@@ -501,6 +533,40 @@ public class CommitAndDiffComponent {
 				italicToken = new Token(italic);
 			}
 			return italicToken;
+		}
+	}
+
+	private class Resizer extends ControlAdapter implements Runnable {
+
+		private final Control control;
+
+		private long lastEventTime;
+
+		Resizer(Control control) {
+			this.control = control;
+		}
+
+		@Override
+		public void controlResized(ControlEvent e) {
+			lastEventTime = System.currentTimeMillis();
+			schedule();
+		}
+
+		private void schedule() {
+			control.getDisplay().timerExec(300, this);
+		}
+
+		@Override
+		public void run() {
+			if (control.isDisposed()) {
+				return;
+			}
+			long now = System.currentTimeMillis();
+			if (now - lastEventTime > 300) {
+				resizeCommentAndDiffScrolledComposite();
+			} else {
+				schedule();
+			}
 		}
 	}
 }
