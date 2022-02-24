@@ -102,8 +102,7 @@ public class PushBranchWizardTester {
 
 	public void enterBranchName(String branchName) {
 		wizard.textWithLabel(UIText.PushBranchPage_RemoteBranchNameLabel)
-				.setText(
-				branchName);
+				.setText(branchName);
 	}
 
 	public void assertBranchName(String branchName) {
@@ -192,5 +191,9 @@ public class PushBranchWizardTester {
 				TimeUnit.SECONDS);
 		wizard.button(UIText.PushBranchWizard_pushButton).click();
 		return jobJoiner.join();
+	}
+
+	public void cancel() {
+		wizard.button(IDialogConstants.CANCEL_LABEL).click();
 	}
 }

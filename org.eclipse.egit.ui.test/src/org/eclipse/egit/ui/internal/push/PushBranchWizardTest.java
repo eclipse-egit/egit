@@ -83,6 +83,18 @@ public class PushBranchWizardTest extends LocalRepositoryTestCase {
 	}
 
 	@Test
+	public void pushFinishInitiallyDisabledWhenNoBranch() throws Exception {
+		checkoutNewLocalBranch("foo");
+
+		PushBranchWizardTester wizard = PushBranchWizardTester
+				.startWizard(selectProject(), "foo");
+		wizard.selectRemote("fetch");
+		wizard.enterBranchName("");
+		assertFalse(wizard.canFinish());
+		wizard.cancel();
+	}
+
+	@Test
 	public void pushFinishWithConfirmation() throws Exception {
 		checkoutNewLocalBranch("foo");
 

@@ -23,9 +23,9 @@ import org.eclipse.egit.ui.internal.SecureStoreUtils;
 import org.eclipse.egit.ui.internal.UIIcons;
 import org.eclipse.egit.ui.internal.UIText;
 import org.eclipse.egit.ui.internal.components.RepositorySelection;
-import org.eclipse.jface.dialogs.IPageChangeProvider;
-import org.eclipse.jface.wizard.IWizardContainer;
+import org.eclipse.jface.wizard.IWizardPage;
 import org.eclipse.jface.wizard.Wizard;
+import org.eclipse.jface.wizard.WizardPage;
 import org.eclipse.jgit.lib.BranchConfig.BranchRebaseMode;
 import org.eclipse.jgit.lib.ConfigConstants;
 import org.eclipse.jgit.lib.Constants;
@@ -100,8 +100,10 @@ public class PushBranchWizard extends Wizard {
 		pushBranchPage.setShowNewRemoteButton(addRemotePage == null);
 
 		confirmationPage = new ConfirmationPage(repository) {
+
 			@Override
 			public void setVisible(boolean visible) {
+				confirmationRequired = true;
 				setSelection(getRepositorySelection(), getRefSpecs());
 				AddRemotePage remotePage = getAddRemotePage();
 				if (remotePage != null)
@@ -110,23 +112,7 @@ public class PushBranchWizard extends Wizard {
 			}
 		};
 
-		// Allow finish directly initially, but only initially: once the
-		// confirmation page was shown, the wizard can be finished only from the
-		// confirmation page. If we do have the addRemotePage, then the
-		// confirmation page is mandatory.
 		confirmationRequired = addRemotePage != null;
-		if (!confirmationRequired) {
-			confirmationPage.setPageComplete(true);
-			IWizardContainer container = getContainer();
-			if (container instanceof IPageChangeProvider) {
-				((IPageChangeProvider) container)
-						.addPageChangedListener(event -> {
-							if (event.getSelectedPage() == confirmationPage) {
-								confirmationRequired = true;
-							}
-						});
-			}
-		}
 		setNeedsProgressMonitor(true);
 		setDefaultPageImageDescriptor(UIIcons.WIZBAN_PUSH);
 	}
@@ -150,8 +136,10 @@ public class PushBranchWizard extends Wizard {
 
 	@Override
 	public boolean canFinish() {
-		return (!confirmationRequired
-				|| getContainer().getCurrentPage() == confirmationPage)
+		if (!confirmationRequired) {
+			return pushBranchPage.isPageComplete();
+		}
+		return getContainer().getCurrentPage() == confirmationPage
 				&& confirmationPage.isPageComplete();
 	}
 
@@ -169,14 +157,22 @@ public class PushBranchWizard extends Wizard {
 			}
 			startPush();
 		} catch (IOException e) {
-			confirmationPage.setErrorMessage(e.getMessage());
+			showError(e.getMessage());
 			return false;
 		} catch (URISyntaxException e) {
-			confirmationPage.setErrorMessage(e.getMessage());
+			showError(e.getMessage());
 			return false;
 		}
 
 		return true;
+	}
+
+	private void showError(String message) {
+		IWizardPage page = getContainer().getCurrentPage();
+		if (page instanceof WizardPage) {
+			((WizardPage) page).setErrorMessage(message);
+			((WizardPage) page).setPageComplete(false);
+		}
 	}
 
 	private AddRemotePage getAddRemotePage() {
