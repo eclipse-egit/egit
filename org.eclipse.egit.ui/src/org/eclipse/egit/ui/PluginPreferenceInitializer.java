@@ -55,7 +55,8 @@ public class PluginPreferenceInitializer extends AbstractPreferenceInitializer {
 		store.setDefault(UIPreferences.RESOURCEHISTORY_SHOW_RELATIVE_DATE, true);
 		store.setDefault(UIPreferences.RESOURCEHISTORY_SHOW_EMAIL_ADDRESSES, false);
 		store.setDefault(UIPreferences.RESOURCEHISTORY_SHOW_NOTES, false);
-		store.setDefault(UIPreferences.RESOURCEHISTORY_SHOW_COMMENT_WRAP, true);
+		store.setDefault(UIPreferences.RESOURCEHISTORY_SHOW_COMMENT_WRAP,
+				false);
 		store.setDefault(UIPreferences.RESOURCEHISTORY_SHOW_REV_DETAIL, true);
 		store.setDefault(UIPreferences.RESOURCEHISTORY_SHOW_REV_COMMENT, true);
 		store.setDefault(UIPreferences.RESOURCEHISTORY_SHOW_TOOLTIPS, false);
