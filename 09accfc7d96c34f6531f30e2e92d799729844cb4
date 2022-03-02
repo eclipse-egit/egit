@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "33945fbb_ee55f680",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/internal/ReportingTypedConfigGetter.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2022-03-02T18:48:16Z",
+      "side": 1,
+      "message": "I think this is now addressed in jgit",
+      "parentUuid": "af6e7d05_617e368c",
+      "revId": "09accfc7d96c34f6531f30e2e92d799729844cb4",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "aa0e9826_c83b5fee",
         "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/internal/ReportingTypedConfigGetter.java",
         "patchSetId": 1
@@ -33,6 +51,24 @@
       "revId": "09accfc7d96c34f6531f30e2e92d799729844cb4",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ca7f2160_2a1f9d83",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/internal/ReportingTypedConfigGetter.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2022-03-02T18:48:16Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "aa0e9826_c83b5fee",
+      "revId": "09accfc7d96c34f6531f30e2e92d799729844cb4",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
     }
   ]
 }
