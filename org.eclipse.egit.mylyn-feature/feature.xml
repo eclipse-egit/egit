@@ -2,7 +2,7 @@
 <feature
       id="org.eclipse.egit.mylyn"
       label="%featureName"
-      version="6.1.0.qualifier"
+      version="6.2.0.qualifier"
       provider-name="%providerName"
       plugin="org.eclipse.egit"
       license-feature="org.eclipse.license"
@@ -26,7 +26,7 @@
    </url>
 
    <requires>
-      <import feature="org.eclipse.egit" version="6.1.0" match="equivalent"/>
+      <import feature="org.eclipse.egit" version="6.2.0" match="equivalent"/>
       <import feature="org.eclipse.mylyn.team_feature" version="3.20.0" match="greaterOrEqual"/>
    </requires>
 

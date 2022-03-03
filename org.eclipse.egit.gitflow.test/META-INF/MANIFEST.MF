@@ -3,13 +3,13 @@ Bundle-ManifestVersion: 2
 Bundle-Name: GitFlow Test
 Automatic-Module-Name: org.eclipse.egit.gitflow.test
 Bundle-SymbolicName: org.eclipse.egit.gitflow.test;singleton:=true
-Bundle-Version: 6.1.0.qualifier
+Bundle-Version: 6.2.0.qualifier
 Fragment-Host: org.eclipse.egit.gitflow
 Bundle-RequiredExecutionEnvironment: JavaSE-11
-Import-Package: org.eclipse.egit.core;version="[6.1.0,6.2.0)",
- org.eclipse.jgit.junit;version="[6.1.0,6.2.0)",
+Import-Package: org.eclipse.egit.core;version="[6.2.0,6.3.0)",
+ org.eclipse.jgit.junit;version="[6.2.0,6.3.0)",
  org.junit.rules;version="[4.13.0,5.0.0)",
  org.junit;version="[4.13.0,5.0.0)"
 Require-Bundle: org.eclipse.core.resources;bundle-version="[3.13.800,4.0.0)",
- org.eclipse.egit.core.junit;bundle-version="[6.1.0,6.2.0)",
+ org.eclipse.egit.core.junit;bundle-version="[6.2.0,6.3.0)",
  org.hamcrest;bundle-version="[1.1.0,3.0.0)"
