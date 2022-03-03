@@ -1,0 +1,142 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0f42e695_e1c696b0",
+        "filename": "DEPENDENCIES",
+        "patchSetId": 1
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2022-03-03T21:45:42Z",
+      "side": 1,
+      "message": "I don\u0027t think egit depends on batik",
+      "range": {
+        "startLine": 53,
+        "startChar": 0,
+        "endLine": 60,
+        "endChar": 98
+      },
+      "revId": "2863fd931b7d479b49d802ff51deaf0358e8d698",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b88da289_afd2fb75",
+        "filename": "DEPENDENCIES",
+        "patchSetId": 1
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2022-03-03T21:45:42Z",
+      "side": 1,
+      "message": "I don\u0027t think egit depends on felix",
+      "range": {
+        "startLine": 69,
+        "startChar": 0,
+        "endLine": 74,
+        "endChar": 0
+      },
+      "revId": "2863fd931b7d479b49d802ff51deaf0358e8d698",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c6b42170_74421708",
+        "filename": "DEPENDENCIES",
+        "patchSetId": 1
+      },
+      "lineNbr": 219,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2022-03-03T21:45:42Z",
+      "side": 1,
+      "message": "no idea why these plugins are listed as egit dependencies",
+      "range": {
+        "startLine": 218,
+        "startChar": 0,
+        "endLine": 219,
+        "endChar": 118
+      },
+      "revId": "2863fd931b7d479b49d802ff51deaf0358e8d698",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bb59630d_d92b913c",
+        "filename": "DEPENDENCIES",
+        "patchSetId": 1
+      },
+      "lineNbr": 268,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2022-03-03T21:45:42Z",
+      "side": 1,
+      "message": "I don\u0027t think egit depends on pde",
+      "range": {
+        "startLine": 249,
+        "startChar": 0,
+        "endLine": 268,
+        "endChar": 88
+      },
+      "revId": "2863fd931b7d479b49d802ff51deaf0358e8d698",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "02c9b4fe_1faba605",
+        "filename": "DEPENDENCIES",
+        "patchSetId": 1
+      },
+      "lineNbr": 316,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2022-03-03T21:45:42Z",
+      "side": 1,
+      "message": "egit uses junit 4.13",
+      "range": {
+        "startLine": 307,
+        "startChar": 0,
+        "endLine": 316,
+        "endChar": 73
+      },
+      "revId": "2863fd931b7d479b49d802ff51deaf0358e8d698",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "498378b6_ee7ce382",
+        "filename": "DEPENDENCIES",
+        "patchSetId": 1
+      },
+      "lineNbr": 321,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2022-03-03T21:45:42Z",
+      "side": 1,
+      "message": "can\u0027t find these dependencies in egit",
+      "range": {
+        "startLine": 320,
+        "startChar": 0,
+        "endLine": 321,
+        "endChar": 96
+      },
+      "revId": "2863fd931b7d479b49d802ff51deaf0358e8d698",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": true
+    }
+  ]
+}
