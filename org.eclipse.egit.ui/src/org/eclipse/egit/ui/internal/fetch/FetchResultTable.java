@@ -1,5 +1,6 @@
 /*******************************************************************************
- * Copyright (c) 2009, 2013 Shawn O. Pearce and others.
+ * Copyright (c) 2009, 2022 Shawn O. Pearce and others.
+ *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License 2.0
  * which accompanies this distribution, and is available at
@@ -12,10 +13,13 @@ package org.eclipse.egit.ui.internal.fetch;
 import java.io.IOException;
 import java.text.MessageFormat;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
+import org.eclipse.core.runtime.IProgressMonitor;
+import org.eclipse.core.runtime.IStatus;
+import org.eclipse.core.runtime.Status;
+import org.eclipse.core.runtime.jobs.ISchedulingRule;
+import org.eclipse.egit.core.UnitOfWork;
 import org.eclipse.egit.ui.Activator;
 import org.eclipse.egit.ui.UIUtils;
 import org.eclipse.egit.ui.internal.CommonUtils;
@@ -36,23 +40,25 @@ import org.eclipse.jface.viewers.DelegatingStyledCellLabelProvider.IStyledLabelP
 import org.eclipse.jface.viewers.IDecoration;
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.IStructuredSelection;
+import org.eclipse.jface.viewers.ITreeContentProvider;
+import org.eclipse.jface.viewers.StructuredSelection;
 import org.eclipse.jface.viewers.StyledString;
 import org.eclipse.jface.viewers.TreeViewer;
 import org.eclipse.jface.viewers.Viewer;
 import org.eclipse.jface.viewers.ViewerComparator;
+import org.eclipse.jgit.api.errors.InvalidConfigurationException;
+import org.eclipse.jgit.lib.AbbrevConfig;
 import org.eclipse.jgit.lib.ConfigConstants;
 import org.eclipse.jgit.lib.Constants;
 import org.eclipse.jgit.lib.ObjectId;
-import org.eclipse.jgit.lib.ObjectReader;
 import org.eclipse.jgit.lib.Repository;
 import org.eclipse.jgit.notes.NoteMap;
 import org.eclipse.jgit.revwalk.RevCommit;
 import org.eclipse.jgit.revwalk.RevWalk;
 import org.eclipse.jgit.transport.FetchResult;
 import org.eclipse.jgit.transport.TrackingRefUpdate;
+import org.eclipse.jgit.util.StringUtils;
 import org.eclipse.swt.SWT;
-import org.eclipse.swt.events.DisposeEvent;
-import org.eclipse.swt.events.DisposeListener;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.ToolBar;
@@ -60,19 +66,72 @@ import org.eclipse.swt.widgets.Tree;
 import org.eclipse.ui.ISharedImages;
 import org.eclipse.ui.OpenAndLinkWithEditorHelper;
 import org.eclipse.ui.PlatformUI;
+import org.eclipse.ui.model.BaseWorkbenchContentProvider;
+import org.eclipse.ui.model.IWorkbenchAdapter3;
 import org.eclipse.ui.model.WorkbenchAdapter;
-import org.eclipse.ui.model.WorkbenchContentProvider;
+import org.eclipse.ui.progress.DeferredTreeContentManager;
+import org.eclipse.ui.progress.IDeferredWorkbenchAdapter;
+import org.eclipse.ui.progress.IElementCollector;
+import org.eclipse.ui.progress.WorkbenchJob;
 
 /**
  * Component displaying table with results of fetch operation.
  */
-class FetchResultTable {
+public class FetchResultTable {
 
-	private class FetchResultAdapter extends WorkbenchAdapter {
+	private static class CommitAdapter extends RepositoryCommit
+			implements IDeferredWorkbenchAdapter, ISchedulingRule {
+
+		private volatile FileDiff[] diffs;
+
+		CommitAdapter(Repository repository, RevCommit commit) {
+			super(repository, commit);
+		}
+
+		@Override
+		public Object[] getChildren(Object o) {
+			return diffs;
+		}
+
+		@Override
+		public void fetchDeferredChildren(Object object,
+				IElementCollector collector, IProgressMonitor monitor) {
+			if (diffs != null) {
+				return;
+			}
+			diffs = getDiffs();
+			collector.add(diffs, monitor);
+		}
+
+		@Override
+		public boolean isContainer() {
+			return true;
+		}
+
+		@Override
+		public ISchedulingRule getRule(Object object) {
+			return this;
+		}
+
+		@Override
+		public boolean contains(ISchedulingRule rule) {
+			return this == rule;
+		}
+
+		@Override
+		public boolean isConflicting(ISchedulingRule rule) {
+			return this == rule;
+		}
+	}
+
+	private class FetchResultAdapter extends WorkbenchAdapter
+			implements IDeferredWorkbenchAdapter, ISchedulingRule {
 
 		private final TrackingRefUpdate update;
 
-		private Object[] children;
+		private volatile Object[] children;
+
+		private boolean loadingTriggered;
 
 		public FetchResultAdapter(TrackingRefUpdate update) {
 			this.update = update;
@@ -122,7 +181,7 @@ class FetchResultTable {
 					return UIIcons.NOTE;
 				break;
 			default:
-				return super.getImageDescriptor(object);
+				break;
 			}
 			return super.getImageDescriptor(object);
 		}
@@ -136,44 +195,69 @@ class FetchResultTable {
 					StyledString.DECORATIONS_STYLER);
 			styled.append(']', StyledString.DECORATIONS_STYLER);
 
-			styled.append(MessageFormat.format(
-					UIText.FetchResultTable_counterCommits,
-					Integer.valueOf(getChildren(this).length)),
-					StyledString.COUNTER_STYLER);
+			Object[] commits = getChildren(this);
+			if (commits != null) {
+				styled.append(
+						MessageFormat.format(
+								UIText.FetchResultTable_counterCommits,
+								Integer.valueOf(commits.length)),
+						StyledString.COUNTER_STYLER);
+			} else if (!loadingTriggered) {
+				// Careful here. We're creating the label, but the deferred
+				// loading job calls getLabel again to include it in the job
+				// name. So do this only once, otherwise we get an endless
+				// recursion.
+				loadingTriggered = true;
+				((ITreeContentProvider) treeViewer.getContentProvider())
+						.getChildren(this);
+			}
 		}
 
 		@Override
 		public Object[] getChildren(Object object) {
-			if (children != null)
-				return children;
-
-			switch (update.getResult()) {
-			case FORCED:
-				if (isPruned())
-					return NO_CHILDREN;
-				// else
-				//$FALL-THROUGH$
-			case FAST_FORWARD:
-				try (RevWalk walk = new RevWalk(reader)) {
-					walk.setRetainBody(true);
-					walk.markStart(walk.parseCommit(update.getNewObjectId()));
-					walk.markUninteresting(walk.parseCommit(update
-							.getOldObjectId()));
-					List<RepositoryCommit> commits = new ArrayList<>();
-					for (RevCommit commit : walk)
-						commits.add(new RepositoryCommit(repo, commit));
-					children = commits.toArray();
-					break;
-				} catch (IOException e) {
-					Activator.logError(
-							"Error parsing commits from fetch result", e); //$NON-NLS-1$
-				}
-				//$FALL-THROUGH$
-			default:
-				children = super.getChildren(object);
-			}
 			return children;
 		}
+
+		@Override
+		public void fetchDeferredChildren(Object object,
+				IElementCollector collector, IProgressMonitor monitor) {
+			if (children != null) {
+				return;
+			}
+			switch (update.getResult()) {
+			case FORCED:
+				if (isPruned()) {
+					children = NO_CHILDREN;
+					return;
+				}
+				break;
+			case FAST_FORWARD:
+				break;
+			default:
+				children = NO_CHILDREN;
+				return;
+			}
+			try (RevWalk walk = new RevWalk(repo)) {
+				walk.setRetainBody(true);
+				walk.markStart(walk.parseCommit(update.getNewObjectId()));
+				walk.markUninteresting(
+						walk.parseCommit(update.getOldObjectId()));
+				List<CommitAdapter> commits = new ArrayList<>();
+				for (RevCommit commit : walk) {
+					if (monitor.isCanceled()) {
+						break;
+					}
+					commits.add(new CommitAdapter(repo, commit));
+				}
+				children = commits.toArray();
+				collector.add(children, monitor);
+			} catch (IOException e) {
+				Activator.logError("Error parsing commits from fetch result", //$NON-NLS-1$
+						e);
+				children = NO_CHILDREN;
+			}
+		}
+
 
 		/**
 		 * Shorten ref name
@@ -242,8 +326,43 @@ class FetchResultTable {
 			return update.getNewObjectId().equals(ObjectId.zeroId());
 		}
 
-		public boolean isRemoteBranch(String branchName) {
+		boolean isRemoteBranch(String branchName) {
 			return update.getRemoteName().equals(branchName);
+		}
+
+		String getName() {
+			String result = update.getRemoteName();
+			if (StringUtils.isEmptyOrNull(result)) {
+				result = update.getLocalName();
+			}
+			return result;
+		}
+
+		@Override
+		public boolean isContainer() {
+			switch (update.getResult()) {
+			case FORCED:
+				return !isPruned();
+			case FAST_FORWARD:
+				return true;
+			default:
+				return false;
+			}
+		}
+
+		@Override
+		public ISchedulingRule getRule(Object object) {
+			return this;
+		}
+
+		@Override
+		public boolean contains(ISchedulingRule rule) {
+			return this == rule;
+		}
+
+		@Override
+		public boolean isConflicting(ISchedulingRule rule) {
+			return this == rule;
 		}
 	}
 
@@ -253,18 +372,23 @@ class FetchResultTable {
 
 	private Repository repo;
 
-	private ObjectReader reader;
-
-	private Map<ObjectId, String> abbrevations;
-
 	private String remoteBranchOfCurrentBranch;
 
+	private int oidLength = Constants.OBJECT_ID_ABBREV_STRING_LENGTH;
+
+	/**
+	 * Creates a new {@link FetchResultTable} under the given parent.
+	 *
+	 * @param parent
+	 *            {@link Composite} to create the table in
+	 */
 	@SuppressWarnings("unused")
-	FetchResultTable(final Composite parent) {
+	public FetchResultTable(final Composite parent) {
 		treePanel = new Composite(parent, SWT.NONE);
 		GridLayoutFactory.swtDefaults().numColumns(2).applyTo(treePanel);
 		treeViewer = new TreeViewer(treePanel);
-		treeViewer.setAutoExpandLevel(2);
+		treeViewer.setUseHashlookup(true);
+		treeViewer.setAutoExpandLevel(1);
 
 		addToolbar(treePanel);
 
@@ -272,14 +396,10 @@ class FetchResultTable {
 
 			@Override
 			public StyledString getStyledText(Object element) {
-				// TODO Replace with use of IWorkbenchAdapter3 when is no longer
-				// supported
-				if (element instanceof FetchResultAdapter)
-					return ((FetchResultAdapter) element)
+				if (element instanceof IWorkbenchAdapter3) {
+					return ((IWorkbenchAdapter3) element)
 							.getStyledText(element);
-				if (element instanceof RepositoryCommit)
-					return ((RepositoryCommit) element).getStyledText(element);
-
+				}
 				return super.getStyledText(element);
 			}
 		};
@@ -317,14 +437,6 @@ class FetchResultTable {
 					FetchResultAdapter f1 = (FetchResultAdapter) e1;
 					FetchResultAdapter f2 = (FetchResultAdapter) e2;
 
-					// branches come before tags
-					if (f1.getChildren(f1).length > 0
-							&& f2.getChildren(f2).length == 0)
-						return -1;
-					if (f1.getChildren(f1).length == 0
-							&& f2.getChildren(f2).length > 0)
-						return 1;
-
 					// currently checked out branch comes before other branches
 					if (f1.isRemoteBranch(remoteBranchOfCurrentBranch)) {
 						return -1;
@@ -335,13 +447,14 @@ class FetchResultTable {
 
 					// otherwise sort by name
 					return CommonUtils.STRING_ASCENDING_COMPARATOR
-							.compare(f1.getLabel(f1), f2.getLabel(f2));
+							.compare(f1.getName(), f2.getName());
 				}
 
 				// nested inside of branches: don't change commit order
-				if (e1 instanceof RepositoryCommit
-						&& e2 instanceof RepositoryCommit)
+				if (e1 instanceof CommitAdapter
+						&& e2 instanceof CommitAdapter) {
 					return 0;
+				}
 
 				// nested inside commits: sort by path
 				if (e1 instanceof FileDiff && e2 instanceof FileDiff) {
@@ -358,69 +471,123 @@ class FetchResultTable {
 		final Tree tree = treeViewer.getTree();
 		GridDataFactory.fillDefaults().grab(true, true).applyTo(tree);
 
-		treePanel.addDisposeListener(new DisposeListener() {
-			@Override
-			public void widgetDisposed(DisposeEvent e) {
-				if (reader != null)
-					reader.close();
-			}
-		});
+		treeViewer.setContentProvider(new BaseWorkbenchContentProvider() {
 
-		treeViewer.setContentProvider(new WorkbenchContentProvider() {
+			private DeferredTreeContentManager loader = new DeferredTreeContentManager(
+					treeViewer) {
+
+				@Override
+				protected void addChildren(Object parentItem, Object[] children,
+						IProgressMonitor monitor) {
+					WorkbenchJob updateJob = new WorkbenchJob(
+							UIText.FetchResultTable_addingChildren) {
+
+						@Override
+						public IStatus runInUIThread(
+								IProgressMonitor updateMonitor) {
+							// Cancel the job if the tree viewer got closed
+							if (treeViewer.getControl().isDisposed()
+									|| updateMonitor.isCanceled()) {
+								return Status.CANCEL_STATUS;
+							}
+							treeViewer.add(parentItem, children);
+							// Update parent label to get the count
+							treeViewer.update(parentItem, null);
+							// If this is the top item in the viewer, expand it
+							if (children.length > 0) {
+								int topItems = tree.getItemCount();
+								if (topItems > 0 && parentItem == tree
+										.getItem(0).getData()) {
+									treeViewer.expandToLevel(parentItem, 1,
+											true);
+								}
+							}
+							return Status.OK_STATUS;
+						}
+					};
+					updateJob.setSystem(true);
+					updateJob.schedule();
+				}
+			};
+
+			private Object currentInput;
+
+			@Override
+			public void dispose() {
+				if (loader != null && currentInput != null) {
+					loader.cancel(currentInput);
+				}
+				currentInput = null;
+				loader = null;
+				super.dispose();
+			}
+
+			@Override
+			public void inputChanged(Viewer viewer, Object oldInput,
+					Object newInput) {
+				if (loader != null && oldInput != null) {
+					loader.cancel(oldInput);
+				}
+				currentInput = newInput;
+				super.inputChanged(viewer, oldInput, newInput);
+			}
 
 			@Override
 			public Object[] getElements(Object inputElement) {
-				if (inputElement == null)
-					return new FetchResultAdapter[0];
-
-				final FetchResult result = (FetchResult) inputElement;
-				TrackingRefUpdate[] updates = result.getTrackingRefUpdates()
-						.toArray(new TrackingRefUpdate[0]);
-				FetchResultAdapter[] elements = new FetchResultAdapter[updates.length];
-				for (int i = 0; i < elements.length; i++)
-					elements[i] = new FetchResultAdapter(updates[i]);
-				return elements;
+				if (!(inputElement instanceof FetchResult)) {
+					return new Object[0];
+				}
+				FetchResult result = (FetchResult) inputElement;
+				return result.getTrackingRefUpdates().stream()
+						.map(FetchResultAdapter::new).toArray();
 			}
 
 			@Override
 			public Object[] getChildren(Object element) {
-				if (element instanceof RepositoryCommit) {
-					return ((RepositoryCommit) element).getDiffs();
+				Object[] children = super.getChildren(element);
+				if (children != null) {
+					return children;
 				}
-				return super.getChildren(element);
+				if (loader == null) {
+					return new Object[0];
+				}
+				return loader.getChildren(element);
 			}
 
 			@Override
 			public boolean hasChildren(Object element) {
-				if (element instanceof RepositoryCommit) {
-					// always return true for commits to avoid commit diff
-					// calculation in UI thread, see bug 458839
-					return true;
+				if (element instanceof IDeferredWorkbenchAdapter) {
+					return ((IDeferredWorkbenchAdapter) element).isContainer();
 				}
 				return super.hasChildren(element);
 			}
 		});
 
 		new OpenAndLinkWithEditorHelper(treeViewer) {
+
 			@Override
 			protected void linkToEditor(ISelection selection) {
 				// Not supported
-
 			}
+
 			@Override
 			protected void open(ISelection selection, boolean activate) {
 				handleOpen(selection, OpenStrategy.activateOnOpen());
 			}
+
 			@Override
 			protected void activate(ISelection selection) {
 				handleOpen(selection, true);
 			}
+
 			private void handleOpen(ISelection selection, boolean activateOnOpen) {
-				if (selection instanceof IStructuredSelection)
-					for (Object element : ((IStructuredSelection) selection)
-							.toArray())
-						if (element instanceof RepositoryCommit)
+				if (selection instanceof IStructuredSelection) {
+					for (Object element : (IStructuredSelection) selection) {
+						if (element instanceof RepositoryCommit) {
 							CommitEditor.openQuiet((RepositoryCommit) element, activateOnOpen);
+						}
+					}
+				}
 			}
 		};
 	}
@@ -431,35 +598,50 @@ class FetchResultTable {
 		UIUtils.addExpansionItems(toolbar, treeViewer);
 	}
 
-	void setData(final Repository db, final FetchResult fetchResult) {
+	/**
+	 * Sets the {@link FetchResult} to show.
+	 *
+	 * @param db
+	 *            {@link Repository} the fetch was done in
+	 * @param fetchResult
+	 *            {@link FetchResult} describing the outcome of the fetch
+	 *            operation
+	 */
+	public void setData(final Repository db, final FetchResult fetchResult) {
+		treeViewer.setSelection(StructuredSelection.EMPTY);
 		treeViewer.setInput(null);
 		repo = db;
-		reader = db.newObjectReader();
-		abbrevations = new HashMap<>();
-		try {
-			String branch = repo.getBranch();
-			if (branch != null) {
-				remoteBranchOfCurrentBranch = repo.getConfig().getString(
-						ConfigConstants.CONFIG_BRANCH_SECTION, branch,
-						ConfigConstants.CONFIG_KEY_MERGE);
+		UnitOfWork.execute(db, () -> {
+			try {
+				oidLength = AbbrevConfig.parseFromConfig(db).get();
+			} catch (InvalidConfigurationException e) {
+				Activator.logError(e.getLocalizedMessage(), e);
+				oidLength = Constants.OBJECT_ID_ABBREV_STRING_LENGTH;
 			}
-		} catch (IOException e) {
-			remoteBranchOfCurrentBranch = null;
-		}
+			try {
+				String branch = repo.getBranch();
+				if (branch != null) {
+					remoteBranchOfCurrentBranch = repo.getConfig().getString(
+							ConfigConstants.CONFIG_BRANCH_SECTION, branch,
+							ConfigConstants.CONFIG_KEY_MERGE);
+				}
+			} catch (IOException e) {
+				remoteBranchOfCurrentBranch = null;
+			}
+		});
 		treeViewer.setInput(fetchResult);
 	}
 
 	private String safeAbbreviate(ObjectId objectId) {
-		return abbrevations.computeIfAbsent(objectId, id -> {
-			try {
-				return reader.abbreviate(id).name();
-			} catch (IOException cannotAbbreviate) {
-				return id.name();
-			}
-		});
+		return objectId.name().substring(0, oidLength);
 	}
 
-	Control getControl() {
+	/**
+	 * Retrieves the top-level {@link Control} of this {@link FetchResultTable}.
+	 *
+	 * @return the control
+	 */
+	public Control getControl() {
 		return treePanel;
 	}
 

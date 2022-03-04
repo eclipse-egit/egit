@@ -1,5 +1,6 @@
 /*******************************************************************************
- * Copyright (c) 2010, 2012 SAP AG and others.
+ * Copyright (c) 2010, 2022 SAP AG and others.
+ *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License 2.0
  * which accompanies this distribution, and is available at
@@ -16,7 +17,7 @@ package org.eclipse.egit.ui.internal.pull;
 import org.eclipse.egit.core.RepositoryUtil;
 import org.eclipse.egit.ui.UIUtils;
 import org.eclipse.egit.ui.internal.UIText;
-import org.eclipse.egit.ui.internal.fetch.FetchResultDialog;
+import org.eclipse.egit.ui.internal.fetch.FetchResultTable;
 import org.eclipse.egit.ui.internal.merge.MergeResultDialog;
 import org.eclipse.egit.ui.internal.rebase.RebaseResultDialog;
 import org.eclipse.jface.dialogs.Dialog;
@@ -35,7 +36,6 @@ import org.eclipse.jgit.transport.FetchResult;
 import org.eclipse.osgi.util.NLS;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.graphics.Point;
-import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
@@ -99,17 +99,11 @@ public class PullResultDialog extends Dialog {
 		GridLayoutFactory.fillDefaults().applyTo(fetchResultGroup);
 		GridDataFactory.fillDefaults().grab(true, true).applyTo(
 				fetchResultGroup);
-		FetchResult fRes = result.getFetchResult();
 		if (hasFetchResults()) {
-			GridLayoutFactory.fillDefaults().applyTo(fetchResultGroup);
-			FetchResultDialog dlg = new FetchResultDialog(getParentShell(),
-					repo, fRes, result.getFetchedFrom());
-			Control fresult = dlg.createFetchResultTable(fetchResultGroup);
-			Object layoutData = fresult.getLayoutData();
-			if (layoutData instanceof GridData)
-				GridDataFactory.createFrom((GridData) layoutData)
-						.hint(SWT.DEFAULT, 130).applyTo(fresult);
-
+			FetchResultTable table = new FetchResultTable(fetchResultGroup);
+			GridDataFactory.fillDefaults().grab(true, true)
+					.hint(600, 130).applyTo(table.getControl());
+			table.setData(repo, result.getFetchResult());
 		} else {
 			GridLayoutFactory.swtDefaults().applyTo(fetchResultGroup);
 			Label noResult = new Label(fetchResultGroup, SWT.NONE);

@@ -2,7 +2,7 @@
  * Copyright (C) 2008, Marek Zawirski <marek.zawirski@gmail.com>
  * Copyright (C) 2010, Mathias Kinzler <mathias.kinzler@sap.com>
  * Copyright (C) 2016, Lars Vogel <Lars.Vogel@vogella.com>
- * Copyright (C) 2017, Thomas Wolf <thomas.wolf@paranor.ch>
+ * Copyright (C) 2017, 2022 Thomas Wolf <thomas.wolf@paranor.ch> and others.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License 2.0
@@ -104,7 +104,7 @@ public class FetchResultDialog extends TitleAndImageDialog {
 	}
 
 	@Override
-	public Control createDialogArea(final Composite parent) {
+	protected Control createDialogArea(final Composite parent) {
 		final Composite composite = (Composite) super.createDialogArea(parent);
 
 		setTitle(NLS.bind(UIText.FetchResultDialog_labelNonEmptyResult,
@@ -118,26 +118,15 @@ public class FetchResultDialog extends TitleAndImageDialog {
 					sourceString));
 		}
 
-		createFetchResultTable(composite);
+		FetchResultTable table = new FetchResultTable(composite);
+		GridDataFactory.fillDefaults().grab(true, true).hint(600, 300)
+				.applyTo(table.getControl());
+		if (result.getFetchResult() != null) {
+			table.setData(localDb, result.getFetchResult());
+		}
 
 		applyDialogFont(composite);
 		return composite;
-	}
-
-	/**
-	 * Create fetch result table under given parent composite
-	 *
-	 * @param parent
-	 * @return main result table control
-	 */
-	public Control createFetchResultTable(Composite parent) {
-		final FetchResultTable table = new FetchResultTable(parent);
-		if (result.getFetchResult() != null)
-			table.setData(localDb, result.getFetchResult());
-		final Control tableControl = table.getControl();
-		GridDataFactory.fillDefaults().grab(true, true).hint(600, 300)
-				.applyTo(tableControl);
-		return table.getControl();
 	}
 
 	@Override
