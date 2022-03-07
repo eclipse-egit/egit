@@ -1,0 +1,90 @@
+<?xml version='1.0' encoding='utf-8' ?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+		<title>JGit 6.1 New and Noteworthy</title>
+		<link type="text/css" rel="stylesheet" href="../../../book.css"/>
+	</head>
+	<body>
+		<table class="navigation" style="width: 100%;" border="0" summary="navigation">
+			<tr>
+				<th style="width: 100%" align="center" colspan="3">JGit 6.1 New and Noteworthy</th>
+			</tr>
+			<tr>
+				<td style="width: 20%" align="left"></td>
+				<td style="width: 60%" align="center"></td>
+				<td style="width: 20%" align="right">
+					<a href="Contributors.html" title="Contributors">
+						<img alt="Next" border="0" src="../../../images/next.gif"/>
+					</a>
+				</td>
+			</tr>
+			<tr>
+				<td style="width: 20%" align="left" valign="top"></td>
+				<td style="width: 60%" align="center"></td>
+				<td style="width: 20%" align="right" valign="top">Contributors</td>
+			</tr>
+		</table><hr class="navigation-separator"/>
+		<h1 id="JGit">JGit</h1>
+		<h2 id="Dependencies">Dependencies</h2>
+		<ul>
+			<li>
+				<a href="https://mina.apache.org/sshd-project/" target="egit_external">Apache MINA sshd</a> has been updated to version 
+				<b>2.8.0</b> (previously 2.7.0).
+				<ul>
+					<li>Affected JGit bundles: <code>org.eclipse.jgit.ssh.apache</code> and <code>org.eclipse.jgit.ssh.apache.agent</code>. As always, these bundles may not work with other versions of Apache MINA sshd because of possible incompatible upstream API changes.</li>
+				</ul>
+			</li>
+			<li>Logging: JGit only uses <code>org.slf4j.api</code>, version 1.7.30. The tests and the command-line program from <code>org.eclipse.jgit.pgm</code> now use the <code>org.slf4j.binding.simple</code> logging back-end; log4j has been removed. (Previously, JGit used log4j 1.2.15 in tests and in the command-line program: i.e., the old log4j, not the newer log4j2.)</li>
+		</ul>
+		<h2 id="SSH">SSH</h2>
+		<p>The (optional) bundle <code>org.eclipse.jgit.ssh.apache.agent</code> newly also supports communicating with the SSH agent of Microsoft's port of OpenSSH, Win32-OpenSSH, via a Windows named pipe.</p>
+		<p>Bundle <code>org.eclipse.jgit.ssh.apache</code> fully implements the SSH configuration properties <tt>IdentityAgent</tt> and <tt>AddKeysToAgent</tt>.</p>
+		<p>JGit implements the newer 
+			<a href="https://tools.ietf.org/html/draft-miller-ssh-agent-04" target="egit_external">SSH2 agent protocol</a>; the older 
+			<a href="https://tools.ietf.org/html/draft-ietf-secsh-agent-02" target="egit_external">SSH1 protocol</a> is 
+			<i>not</i> supported.
+		</p>
+		<h3 id="SSH_Agent_Support_on_Linux.2C_OS_X.2C_BSD">SSH Agent Support on Linux, OS X, BSD</h3>
+		<p>On Linux, OS X, and BSD, the only agent communication mechanism supported is the usual communication via a Unix domain socket. This is the only protocol the OpenSSH SSH agent supports. A Unix domain socket appears as a special file in the file system; this file name is typically available in the environment variable <tt>SSH_AUTH_SOCK</tt>.</p>
+		<p>The SSH config <tt>IdentityAgent</tt> can be set to this socket filename to specify exactly which Unix domain socket to use, or it can be set to <tt>SSH_AUTH_SOCK</tt> to use the value from that environment variable. If <tt>IdentityAgent</tt> is not set at all, JGit uses <tt>SSH_AUTH_SOCK</tt> by default. If the variable is not set, no SSH agent will be used. <tt>IdentityAgent</tt> can also be set to <tt>none</tt> to not use any SSH agent.</p>
+		<h3 id="SSH_Agent_Support_on_Windows">SSH Agent Support on Windows</h3>
+		<p>On Windows, two different agent communication mechanisms are supported:</p>
+		<ul>
+			<li>A transport over a Windows named pipe. This is used by Win32-OpenSSH, and is available for Pageant since version 0.75.</li>
+			<li>A Pageant-specific legacy transport via shared memory; useful for Pageant and GPG's gpg-agent.</li>
+		</ul>
+		<p>Possible settings of <tt>IdentityAgent</tt> to select a particular transport are</p>
+		<ul>
+			<li><tt>//./pipe/openssh-ssh-agent</tt>: the Windows named pipe of Win32-OpenSSH.</li>
+			<li><tt>//./pageant</tt>: the shared-memory mechanism of Pageant (can also be used for gpg-agent).</li>
+			<li><tt>none</tt>: do not use any SSH agent.</li>
+			<li><tt>//./pipe/&lt;any_valid_pipe_name&gt;</tt>: use a specific Windows named pipe.</li>
+		</ul>
+		<p>The default transport on Windows if <tt>IdentityAgent</tt> is not set at all is the Pageant shared-memory transport. Environment variable <tt>SSH_AUTH_SOCK</tt> needs not be set for Pageant, and 
+			<i>must not</i> be set for Win32-OpenSSH.
+		</p>
+		<p>Neither Pageant (as of version 0.76) nor Win32-OpenSSH (as of version 8.6) support the <tt>confirm</tt> or lifetime constraints for <tt>AddKeysToAgent</tt>. Do not use these configurations on Windows with these agents. gpg-agent apparently does support these settings.</p>
+		<p>To use gpg-agent, choose the Pageant shared memory communication, and run gpg-agent with option <tt>enable-putty-support</tt>.</p>
+		<h2 id="Other_Changes">Other Changes</h2>
+		<p>The complete list of new features and bug fixes is available in the 
+			<a href="https://projects.eclipse.org/projects/technology.jgit/releases/6.1/" target="egit_external">release notes</a>.
+		</p><hr class="navigation-separator"/>
+		<table class="navigation" style="width: 100%;" border="0" summary="navigation">
+			<tr>
+				<td style="width: 20%" align="left"></td>
+				<td style="width: 60%" align="center"></td>
+				<td style="width: 20%" align="right">
+					<a href="Contributors.html" title="Contributors">
+						<img alt="Next" border="0" src="../../../images/next.gif"/>
+					</a>
+				</td>
+			</tr>
+			<tr>
+				<td style="width: 20%" align="left" valign="top"></td>
+				<td style="width: 60%" align="center"></td>
+				<td style="width: 20%" align="right" valign="top">Contributors</td>
+			</tr>
+		</table>
+	</body>
+</html>
