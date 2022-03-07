@@ -257,12 +257,7 @@
         <artifactId>target-platform-configuration</artifactId>
         <configuration>
           <target>
-            <artifact>
-              <groupId>org.eclipse.egit</groupId>
-              <artifactId>org.eclipse.egit.target</artifactId>
-              <version>${egit-version}</version>
-              <classifier>${target-platform}</classifier>
-            </artifact>
+            <file>${project.basedir}/../org.eclipse.egit.target/${target-platform}.target</file>
           </target>
           <resolver>p2</resolver>
           <pomDependencies>consider</pomDependencies>
