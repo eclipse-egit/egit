@@ -1,0 +1,157 @@
+<?xml version='1.0' encoding='utf-8' ?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+		<title>EGit 6.1 New and Noteworthy</title>
+		<link type="text/css" rel="stylesheet" href="../../../book.css"/>
+	</head>
+	<body>
+		<table class="navigation" style="width: 100%;" border="0" summary="navigation">
+			<tr>
+				<th style="width: 100%" align="center" colspan="3">EGit 6.1 New and Noteworthy</th>
+			</tr>
+			<tr>
+				<td style="width: 20%" align="left"></td>
+				<td style="width: 60%" align="center"></td>
+				<td style="width: 20%" align="right">
+					<a href="Contributors.html" title="Contributors">
+						<img alt="Next" border="0" src="../../../images/next.gif"/>
+					</a>
+				</td>
+			</tr>
+			<tr>
+				<td style="width: 20%" align="left" valign="top"></td>
+				<td style="width: 60%" align="center"></td>
+				<td style="width: 20%" align="right" valign="top">Contributors</td>
+			</tr>
+		</table><hr class="navigation-separator"/>
+		<h1 id="EGit">EGit</h1>
+		<h2 id="Commit_Messages">Commit Messages</h2>
+		<p>EGit 6.1 has full support for git config <tt>
+			<a href="https://git-scm.com/docs/git-config#Documentation/git-config.txt-commitcleanup" target="egit_external">commit.cleanup</a></tt>. This 
+			<b>changes the behavior</b> in the UI from previous EGit versions. Previously, EGit used the text the user entered as-is as commit message (except when squashing commits, where it did already remove comment lines). EGit 6.1 now always cleans up commit messages as specified by the git config <tt>commit.cleanup</tt>. The default setting is "strip", which means to remove comment lines, trailing whitespace, leading and trailing empty lines, and to collapse multiple consecutive empty lines to a single one.
+		</p>
+		<p>A 
+			<i>comment line</i> in a commit message is a line that has a <tt>#</tt> as the first non-whitespace character. Beware of this if you have the habit to start commit message lines with a hash (for instance, to use an issue reference of Github or similar git servers): A commit message line like "<tt>#123 Fix the furtible gobble</tt>" is a 
+			<i>comment line</i> and will be removed! To avoid this, let the line start with some other character, for instance, write "<tt>Issue #123: ...</tt>" or "<tt>[#123] ...</tt>", or place the issue number at the end. (Or on Github, don't put the issue number in the commit title at all and have a body line like "<tt>Fixes #123</tt>", which on Github will close the issue when the commit is merged.)
+		</p>
+		<p>EGit 6.1 comes with two UI features to help users with this behavioral change. First, wherever the user can edit a commit message, comment lines are colored differently.</p>
+		<p>
+			<img alt="&quot;Colored comment lines in a commit message in EGit 6.1&quot;" border="0" src="images/EGit_6.1_Commit_Message_Comment.png_"/>
+		</p>
+		<p>The green lines are comments, and will be removed before making the commit. The color is configurable in the color preferences of Eclipse at 
+			<i>Preferences&rarr;General&rarr;Appearance&rarr;Colors and Fonts</i> in the "Git" section.
+		</p>
+		<p>Second, there is a new "preview" button for the commit message. When activated, it shows a read-only view of the final commit message.</p>
+		<p>
+			<img alt="&quot;The commit message preview shows the final commit message, with comment lines removed.&quot;" border="0" src="images/EGit_6.1_Commit_Message_Preview.png"/>
+		</p>
+		<p>This preview shows the final verbatim commit message that will be used. (A Gerrit Change-Id of all zeroes will still be replaced upon commit.)</p>
+		<dl>
+			<dd>
+				<b>Note:</b> EGit and JGit 6.1 only recognize the comment character <tt>#</tt>. The git config <tt>core.commentChar</tt> is not implemented yet.
+			</dd>
+		</dl>
+		<h2 id="Fetching_Pull_Requests">Fetching Pull Requests</h2>
+		<p>Fetching pull requests has been enabled also for 
+			<a href="https://gitea.com" target="egit_external">Gitea</a> servers. By default, the command 
+			<i>Fetch Gitea Pull Request...</i> is enabled if the host of a remote URI is "gitea.com". For self-hosted installations running at other host names, define custom host name patterns at 
+			<i>Preferences&rarr;Version Control (Team)&rarr;Git&rarr;Servers</i>.
+		</p>
+		<h2 id="Git_Repositories_View">Git Repositories View</h2>
+		<p>The 
+			<i>Open in Commit Viewer</i> command is now also available on branches and tags shown in the Git Repositories view.
+		</p>
+		<h2 id="Git_Staging_View">Git Staging View</h2>
+		<h3 id=".27.27Commit_.26_Push.27.27">
+			<i>Commit &amp; Push</i>
+		</h3>
+		<p>The 
+			<i>Commit &amp; Push</i> button in the Git Staging view newly also takes into account the <tt>
+			<a href="https://git-scm.com/docs/git-config#Documentation/git-config.txt-branchltnamegtmerge" target="egit_external">branch.&amp;lt;name&gt;.merge</a></tt> git configuration. This configuration defines an upstream branch to push to; if not set, EGit will push to an upstream branch with the same name as the currently checked-out local branch. 
+			<i>Commit &amp; Push</i> also ensures that it only pushes the currently checked-out branch, even if the git remote configuration has a push Refspec that would result in pushing several branches.
+		</p>
+		<dl>
+			<dd>The push is done as if the 
+				<i>Push Branch...</i> dialog were run with its default settings: the remote to push to is determined normally via git configs <tt>
+				<a href="https://git-scm.com/docs/git-config#Documentation/git-config.txt-branchltnamegtpushRemote" target="egit_external">branch.&amp;lt;name&gt;.pushRemote</a></tt>, <tt>
+				<a href="https://git-scm.com/docs/git-config#Documentation/git-config.txt-remotepushDefault" target="egit_external">remote.pushDefault</a></tt>, <tt>
+				<a href="https://git-scm.com/docs/git-config#Documentation/git-config.txt-branchltnamegtremote" target="egit_external">branch.&amp;lt;name&gt;.remote</a></tt>, "<tt>origin</tt>"; the upstream branch to push to is determined by <tt>branch.&lt;name&gt;.merge</tt> or, if that is not set, by the name of the local branch.
+			</dd>
+		</dl>
+		<h3 id="Hiding_Untracked_Files">Hiding Untracked Files</h3>
+		<p>The view of the unstaged files has a new button to show or hide untracked files:</p>
+		<p>
+			<img alt="&quot;Screenshot of the unstaged files viewer with the new button highlighted.&quot;" border="0" src="images/EGit_6.1_Show_Untracked.png"/>
+		</p>
+		<p>By default, untracked files are shown. When the button is selected, untracked files are hidden.</p>
+		<p>
+			<img alt="&quot;Screenshot of the unstaged files viewer with unstaged files hidden.&quot;" border="0" src="images/EGit_6.1_Hide_Untracked.png"/>
+		</p>
+		<p>The title of the unstaged view shows the number of visible items and the total number of items, for instance, "(1/2)": one file of two is visible, one is filtered out from the view.</p>
+		<p>When the input for the Git Staging view changes to a different repository, the button is reset and untracked files are shown again.</p>
+		<h2 id=".27.27Push_to_Upstream.27.27">
+			<i>Push to Upstream</i>
+		</h2>
+		<p>The 
+			<i>Push to Upstream</i> command has been improved to take into account more of the git configuration to figure out what to push where. 
+		</p>
+		<dl>
+			<dd>
+				<b>Note</b>: in the UI, the command is frequently shown as <em>Push to 'origin'</em> in the context menus. Its label adapts to show the name of the 
+				<a href="https://git-scm.com/book/en/v2/Git-Basics-Working-with-Remotes" target="egit_external">git remote configuration</a> it'll use for pushing.
+			</dd>
+		</dl>
+		<p>Previously, it would push either whatever was defined in git config <tt>
+			<a href="https://git-scm.com/docs/git-config#Documentation/git-config.txt-remoteltnamegtpush" target="egit_external">remote.&amp;lt;name&gt;.push</a></tt>, or if nothing was configured there, it would push the current branch to an upstream branch of the same name.
+		</p>
+		<p>This behavior was sometimes a bit strange. First, if the remote had a push 
+			<a href="https://git-scm.com/book/en/v2/Git-Internals-The-Refspec" target="egit_external">Refspec</a> with wildcards (or several push refspecs), the command would push several branches, not just the currently checked out branch. Second, if the currently checked out branch did have an upstream branch configured vis git config <tt>
+			<a href="https://git-scm.com/docs/git-config#Documentation/git-config.txt-branchltnamegtmerge" target="egit_external">branch.&amp;lt;name&gt;.merge</a></tt>, this was not honored.
+		</p>
+		<p>In EGit 6.1, the 
+			<i>Push to Upstream</i> command now considers also git configs <tt>
+			<a href="https://git-scm.com/docs/git-config#Documentation/git-config.txt-branchltnamegtpushRemote" target="egit_external">branch.&amp;lt;name&gt;.pushRemote</a></tt> and <tt>
+			<a href="https://git-scm.com/docs/git-config#Documentation/git-config.txt-remotepushDefault" target="egit_external">remote.pushDefault</a></tt>, and also <tt>
+			<a href="https://git-scm.com/docs/git-config#Documentation/git-config.txt-pushdefault" target="egit_external">push.default</a></tt>. If <tt>push.default</tt> is "simple" (which is the git default) or "upstream", it will also honor a <tt>branch.&lt;name&gt;.merge</tt> configuration (unless the remote has a push Refspec, which takes precedence).
+		</p>
+		<p>The command newly shows a dialog to configure the push if the git configuration for pushing is incomplete or ambiguous. It also shows a warning dialog when the git configuration would result in more than one branch being pushed.</p>
+		<p>The 
+			<i>Push to Upstream</i> command corresponds to a simple 
+			<b><tt>git push</tt></b> on the command-line. To perform the equivalent of 
+			<b><tt>git push &lt;remote&gt; &lt;branch&gt;</tt></b>, use the 
+			<i>Push Branch...</i> command.
+		</p>
+		<h2 id="SSH_Agent_Support">SSH Agent Support</h2>
+		<p>On Windows, JGit 6.1 supports not only Pageant or gpg-agent running in Pageant mode, but newly also Win32-OpenSSH, the OpenSSH port from Microsoft that is included in modern Windows.</p>
+		<p>EGit 6.1 on Windows has an enhanced SSH agent preference where the user can define which SSH agent, if running, should be used by default if nothing is specified via the <tt>IdentityAgent</tt> setting in the SSH configuration file <tt>~/.ssh/config</tt>.</p>
+		<p>
+			<img alt="&quot;Screenshot of the EGit preferences with the default SSH agent selector available on Windows highlighted&quot;" border="0" src="images/EGit_6.1_Win_SSH_Agent_Preferences.png"/>
+		</p>
+		<p>Note that the choice between "Pageant" and "Win32-OpenSSH" applies only if the SSH configuration file doesn't specify anything else; it can be overridden by the <tt>IdentityAgent</tt> configuration setting. The setting for "Use SSH agent for SSH connections", on the other hand, is a global master switch, and switches off SSH agent use no matter what the SSH configuration file says. SSH configurations related to SSH agents are considered only if this setting is switched on.</p>
+		<p>On Linux or OS X, the choice preference is not shown since there is only one communication mechanism with SSH agents (via a Unix domain socket, normally provided via environment variable <tt>SSH_AUTH_SOCK</tt>). Using this environment variable is the single default.</p>
+		<p>See also the 
+			<a href="../../../JGit/New_and_Noteworthy/6.1/6.1.html#SSH" title="JGit/New_and_Noteworthy/6.1#SSH">JGit description of SSH agent support</a> for additional details.
+		</p>
+		<h2 id="Other_Changes">Other Changes</h2>
+		<p>The complete list of new features and bug fixes is available in the 
+			<a href="https://projects.eclipse.org/projects/technology.egit/releases/6.1/" target="egit_external">release notes</a>.
+		</p><hr class="navigation-separator"/>
+		<table class="navigation" style="width: 100%;" border="0" summary="navigation">
+			<tr>
+				<td style="width: 20%" align="left"></td>
+				<td style="width: 60%" align="center"></td>
+				<td style="width: 20%" align="right">
+					<a href="Contributors.html" title="Contributors">
+						<img alt="Next" border="0" src="../../../images/next.gif"/>
+					</a>
+				</td>
+			</tr>
+			<tr>
+				<td style="width: 20%" align="left" valign="top"></td>
+				<td style="width: 60%" align="center"></td>
+				<td style="width: 20%" align="right" valign="top">Contributors</td>
+			</tr>
+		</table>
+	</body>
+</html>

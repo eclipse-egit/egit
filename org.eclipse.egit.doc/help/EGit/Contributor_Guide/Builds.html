@@ -163,16 +163,16 @@
 		<h2 id="Dependencies_and_License_Check">Dependencies and License Check</h2>
 		<p>In order to update the list of dependencies run the dash-licenses Maven plugin</p>
 		<pre style="width: 55em;">
-mvn org.eclipse.dash:license-tool-plugin:license-check -Ddash.summary=DEPENDENCIES
+mvn org.eclipse.dash:license-tool-plugin:license-check -Ddash.summary=DEPENDENCIES -Ddash.projectId=technology.jgit
+mvn org.eclipse.dash:license-tool-plugin:license-check -Ddash.summary=DEPENDENCIES -Ddash.projectId=technology.egit
 </pre>
-		<p>then sort the entries in the file <code>DEPENDENCIES</code> and check for changes against the previous version.
+		<p>for jgit and egit and then sort the entries in the file <code>DEPENDENCIES</code> and check for changes against the previous version.
 			If necessary file CQs for new dependencies which are flagged 
 			<i>restricted</i> by the tool.
 			See the 
 			<a href="https://www.eclipse.org/projects/handbook/#ip-license-tool" target="egit_external">Eclipse projects handbook</a>.
 		</p>
-		<p>Currently this tool requires Java 11, hence first build JGit/EGit using the Java version they require
-			and then use Java 11 to run the license check.</p>
+		<p>This tool requires Java 11.</p>
 		<h2 id="JGit_Bazel_Build">JGit Bazel Build</h2>
 		<p>Since Gerrit is built using 
 			<a href="https://www.bazel.io/" target="egit_external">Bazel</a> a Bazel build was also implemented for JGit.

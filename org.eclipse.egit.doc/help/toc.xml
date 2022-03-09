@@ -450,31 +450,34 @@
 		</topic>
 		<topic href="help/JGit/User_Guide/Updating-This-Document.html" label="Updating This Document"></topic>
 	</topic>
-	<topic href="help/EGit/New_and_Noteworthy/6.0/6.0.html" label="EGit 6.0 New and Noteworthy">
-		<topic href="help/EGit/New_and_Noteworthy/6.0/6.0.html" label="EGit">
-			<topic href="help/EGit/New_and_Noteworthy/6.0/6.0.html#Prerequisites" label="Prerequisites"></topic>
-			<topic href="help/EGit/New_and_Noteworthy/6.0/6.0.html#Fetching_Pull_Requests" label="Fetching Pull Requests">
-				<topic href="help/EGit/New_and_Noteworthy/6.0/6.0.html#Configuring_Hosts_for_Pull_Requests" label="Configuring Hosts for Pull Requests"></topic>
+	<topic href="help/EGit/New_and_Noteworthy/6.1/6.1.html" label="EGit 6.1 New and Noteworthy">
+		<topic href="help/EGit/New_and_Noteworthy/6.1/6.1.html" label="EGit">
+			<topic href="help/EGit/New_and_Noteworthy/6.1/6.1.html#Commit_Messages" label="Commit Messages"></topic>
+			<topic href="help/EGit/New_and_Noteworthy/6.1/6.1.html#Fetching_Pull_Requests" label="Fetching Pull Requests"></topic>
+			<topic href="help/EGit/New_and_Noteworthy/6.1/6.1.html#Git_Repositories_View" label="Git Repositories View"></topic>
+			<topic href="help/EGit/New_and_Noteworthy/6.1/6.1.html#Git_Staging_View" label="Git Staging View">
+				<topic href="help/EGit/New_and_Noteworthy/6.1/6.1.html#.27.27Commit_.26_Push.27.27" label="&apos;&apos;Commit &amp; Push&apos;&apos;"></topic>
+				<topic href="help/EGit/New_and_Noteworthy/6.1/6.1.html#Hiding_Untracked_Files" label="Hiding Untracked Files"></topic>
 			</topic>
-			<topic href="help/EGit/New_and_Noteworthy/6.0/6.0.html#SSH_Agent" label="SSH Agent">
-				<topic href="help/EGit/New_and_Noteworthy/6.0/6.0.html#Limitations" label="Limitations"></topic>
-			</topic>
-			<topic href="help/EGit/New_and_Noteworthy/6.0/6.0.html#Other_Changes" label="Other Changes"></topic>
+			<topic href="help/EGit/New_and_Noteworthy/6.1/6.1.html#.27.27Push_to_Upstream.27.27" label="&apos;&apos;Push to Upstream&apos;&apos;"></topic>
+			<topic href="help/EGit/New_and_Noteworthy/6.1/6.1.html#SSH_Agent_Support" label="SSH Agent Support"></topic>
+			<topic href="help/EGit/New_and_Noteworthy/6.1/6.1.html#Other_Changes" label="Other Changes"></topic>
 		</topic>
-		<topic href="help/EGit/New_and_Noteworthy/6.0/Contributors.html" label="Contributors"></topic>
-		<topic href="help/EGit/New_and_Noteworthy/6.0/See-Also.html" label="See Also"></topic>
-		<topic href="help/EGit/New_and_Noteworthy/6.0/Updating-This-Document.html" label="Updating This Document"></topic>
+		<topic href="help/EGit/New_and_Noteworthy/6.1/Contributors.html" label="Contributors"></topic>
+		<topic href="help/EGit/New_and_Noteworthy/6.1/See-Also.html" label="See Also"></topic>
+		<topic href="help/EGit/New_and_Noteworthy/6.1/Updating-This-Document.html" label="Updating This Document"></topic>
 	</topic>
-	<topic href="help/JGit/New_and_Noteworthy/6.0/6.0.html" label="JGit 6.0 New and Noteworthy">
-		<topic href="help/JGit/New_and_Noteworthy/6.0/6.0.html" label="JGit">
-			<topic href="help/JGit/New_and_Noteworthy/6.0/6.0.html#Prerequisites" label="Prerequisites"></topic>
-			<topic href="help/JGit/New_and_Noteworthy/6.0/6.0.html#API_changes" label="API changes"></topic>
-			<topic href="help/JGit/New_and_Noteworthy/6.0/6.0.html#SSH_Agent_Support" label="SSH Agent Support">
-				<topic href="help/JGit/New_and_Noteworthy/6.0/6.0.html#Limitations" label="Limitations"></topic>
+	<topic href="help/JGit/New_and_Noteworthy/6.1/6.1.html" label="JGit 6.1 New and Noteworthy">
+		<topic href="help/JGit/New_and_Noteworthy/6.1/6.1.html" label="JGit">
+			<topic href="help/JGit/New_and_Noteworthy/6.1/6.1.html#Dependencies" label="Dependencies"></topic>
+			<topic href="help/JGit/New_and_Noteworthy/6.1/6.1.html#SSH" label="SSH">
+				<topic href="help/JGit/New_and_Noteworthy/6.1/6.1.html#SSH_Agent_Support_on_Linux.2C_OS_X.2C_BSD" label="SSH Agent Support on Linux, OS X, BSD"></topic>
+				<topic href="help/JGit/New_and_Noteworthy/6.1/6.1.html#SSH_Agent_Support_on_Windows" label="SSH Agent Support on Windows"></topic>
 			</topic>
+			<topic href="help/JGit/New_and_Noteworthy/6.1/6.1.html#Other_Changes" label="Other Changes"></topic>
 		</topic>
-		<topic href="help/JGit/New_and_Noteworthy/6.0/Contributors.html" label="Contributors"></topic>
-		<topic href="help/JGit/New_and_Noteworthy/6.0/Updating-This-Document.html" label="Updating This Document"></topic>
+		<topic href="help/JGit/New_and_Noteworthy/6.1/Contributors.html" label="Contributors"></topic>
+		<topic href="help/JGit/New_and_Noteworthy/6.1/Updating-This-Document.html" label="Updating This Document"></topic>
 	</topic>
 	<topic href="help/EGit/Git_For_Eclipse_Users/Git-For-Eclipse-Users.html" label="Git for Eclipse Users">
 		<topic href="help/EGit/Git_For_Eclipse_Users/Git-For-Eclipse-Users.html" label="Centralised version control systems"></topic>
