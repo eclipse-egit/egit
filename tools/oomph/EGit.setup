@@ -130,15 +130,6 @@
       xsi:type="pde:APIBaselineTask"
       name="EGit"
       activate="false"
-      version="5.12.0"
-      location="${workspace.location/../api.baseline/5.12.0}"
-      remoteURI="https://download.eclipse.org/egit/updates-5.12/org.eclipse.egit.repository-5.12.0.202106070339-r.zip">
-    <description>EGit 5.12.0 API baseline; to be used with branch stable-5.13</description>
-  </setupTask>
-  <setupTask
-      xsi:type="pde:APIBaselineTask"
-      name="EGit"
-      activate="false"
       version="5.13.0"
       location="${workspace.location/../api.baseline/5.13.0}"
       remoteURI="https://download.eclipse.org/egit/updates-5.13/org.eclipse.egit.repository-5.13.0.202109080827-r.zip">
@@ -147,11 +138,21 @@
   <setupTask
       xsi:type="pde:APIBaselineTask"
       name="EGit"
+      activate="false"
       version="6.0.0"
       location="${workspace.location/../api.baseline/6.0.0}"
       remoteURI="https://download.eclipse.org/egit/updates-6.0/org.eclipse.egit.repository-6.0.0.202111291000-r.zip">
-    <description>EGit 6.0.0 API baseline; to be used with branch master</description>
+    <description>EGit 6.0.0 API baseline; to be used with branch stable-6.1</description>
   </setupTask>
+  <setupTask
+      xsi:type="pde:APIBaselineTask"
+      name="EGit"
+      version="6.1.0"
+      location="${workspace.location/../api.baseline/6.1.0}"
+      remoteURI="https://download.eclipse.org/egit/updates-6.1/org.eclipse.egit.repository-6.1.0.202203080745-r.zip">
+    <description>EGit 6.1.0 API baseline; to be used with branch master</description>
+  </setupTask>
+
   <stream name="master"
       label="Workspace setup for branch master">
     <setupTask
