@@ -16,6 +16,24 @@
       "revId": "ad97c593cf0bd9d897fc5c7704ec4d912c103034",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "80f0a813_af566942",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/repository/RepositoryTreeNodeDecorator.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 441,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2022-03-14T21:37:22Z",
+      "side": 1,
+      "message": "you are right this doesn\u0027t need to be threadsafe",
+      "parentUuid": "35495994_dd2006fc",
+      "revId": "ad97c593cf0bd9d897fc5c7704ec4d912c103034",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": true
     }
   ]
 }
