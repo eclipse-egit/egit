@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "35495994_dd2006fc",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/repository/RepositoryTreeNodeDecorator.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 441,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2022-03-14T21:32:32Z",
+      "side": 1,
+      "message": "Why StringBuffer instead of StringBuilder?",
+      "revId": "ad97c593cf0bd9d897fc5c7704ec4d912c103034",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": true
+    }
+  ]
+}
