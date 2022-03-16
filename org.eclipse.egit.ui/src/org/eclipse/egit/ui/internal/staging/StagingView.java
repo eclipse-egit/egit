@@ -65,6 +65,7 @@ import org.eclipse.core.runtime.preferences.IEclipsePreferences.PreferenceChange
 import org.eclipse.core.runtime.preferences.InstanceScope;
 import org.eclipse.egit.core.AdapterUtils;
 import org.eclipse.egit.core.RepositoryUtil;
+import org.eclipse.egit.core.UnitOfWork;
 import org.eclipse.egit.core.internal.gerrit.GerritUtil;
 import org.eclipse.egit.core.internal.indexdiff.IndexDiffCache;
 import org.eclipse.egit.core.internal.indexdiff.IndexDiffCacheEntry;
@@ -292,7 +293,7 @@ public class StagingView extends ViewPart
 
 	private RepositoryNode titleNode;
 
-	private Map<File, ViewerLabel> titleLabels = new HashMap<>();
+	private final Map<File, ViewerLabel> titleLabels = new HashMap<>();
 
 	private DecoratingLabelProvider titleLabelProvider;
 
@@ -374,6 +375,11 @@ public class StagingView extends ViewPart
 	/** The currently set repository, if it's not a bare repository. */
 	@Nullable
 	private Repository currentRepository;
+
+	/** The push mode; key is whether the Change-ID button is checked. */
+	private final Map<Boolean, PushMode> currentPushMode = new HashMap<>();
+
+	private boolean pushesHeadOnly;
 
 	private Presentation presentation = Presentation.LIST;
 
@@ -1227,7 +1233,7 @@ public class StagingView extends ViewPart
 				if (repository == null) {
 					return;
 				}
-				PushMode mode = getPushMode();
+				PushMode mode = getPushMode(repository);
 				if (mode == null) {
 					return;
 				}
@@ -1338,6 +1344,8 @@ public class StagingView extends ViewPart
 
 		final ICommitMessageComponentNotifications listener = new ICommitMessageComponentNotifications() {
 
+			private boolean addChangeState = addChangeIdAction.isChecked();
+
 			@Override
 			public void updateSignedOffToggleSelection(boolean selection) {
 				signedOffByAction.setChecked(selection);
@@ -1345,8 +1353,11 @@ public class StagingView extends ViewPart
 
 			@Override
 			public void updateChangeIdToggleSelection(boolean selection) {
-				addChangeIdAction.setChecked(selection);
-				updateCommitButtons();
+				if (selection != addChangeState) {
+					addChangeIdAction.setChecked(selection);
+					addChangeState = selection;
+					updateCommitAndPush(currentRepository);
+				}
 			}
 
 			@Override
@@ -1499,23 +1510,38 @@ public class StagingView extends ViewPart
 		}
 		boolean indexDiffAvailable = indexDiffAvailable(indexDiff);
 		boolean noConflicts = noConflicts(indexDiff);
-		boolean commitEnabled = noConflicts && indexDiffAvailable
-				&& isCommitPossible() && !isCommitBlocked();
-		commitButton.setEnabled(commitEnabled);
+		UnitOfWork.execute(currentRepository, () -> {
 
-		final Repository repo = currentRepository;
-		commitAndPushButton.setEnabled(
-				repo != null && (commitEnabled || canPushHeadOnly())
-						&& !repo.getRepositoryState().isRebasing());
-		PushMode pushMode = getPushMode();
+			boolean commitEnabled = noConflicts && indexDiffAvailable
+					&& isCommitPossible() && !isCommitBlocked();
+			commitButton.setEnabled(commitEnabled);
+
+			final Repository repo = currentRepository;
+			pushesHeadOnly = canPushHeadOnly();
+			commitAndPushButton
+					.setEnabled(
+							repo != null && (commitEnabled || pushesHeadOnly)
+							&& !repo.getRepositoryState().isRebasing());
+			updateCommitAndPush(repo);
+		});
+	}
+
+	/**
+	 * Updates the text and image of the "Commit&Push" button depending on
+	 * whether the Change-Id button is selected (and the commit text has a
+	 * Change-Id line).
+	 *
+	 * @param repository
+	 *            to work with
+	 */
+	private void updateCommitAndPush(Repository repository) {
+		PushMode pushMode = getPushMode(repository);
 		commitAndPushButton.setImage(getImage(
-				pushMode != null && pushMode == PushMode.GERRIT ? UIIcons.GERRIT
-						: UIIcons.PUSH));
-		commitAndPushButton
-				.setText(canPushHeadOnly() ? UIText.StagingView_PushHEAD
-						: canPushWithoutConfirmation(pushMode)
-								? UIText.StagingView_CommitAndPush
-								: UIText.StagingView_CommitAndPushWithEllipsis);
+				pushMode == PushMode.GERRIT ? UIIcons.GERRIT : UIIcons.PUSH));
+		commitAndPushButton.setText(pushesHeadOnly ? UIText.StagingView_PushHEAD
+				: canPushWithoutConfirmation(pushMode)
+						? UIText.StagingView_CommitAndPush
+						: UIText.StagingView_CommitAndPushWithEllipsis);
 		commitAndPushButton.requestLayout();
 	}
 
@@ -4008,6 +4034,7 @@ public class StagingView extends ViewPart
 		removeRepositoryListeners();
 		realRepository = repository;
 		currentRepository = null;
+		currentPushMode.clear();
 		if (isDisposed()) {
 			return;
 		}
@@ -4107,6 +4134,7 @@ public class StagingView extends ViewPart
 			if (repositoryChanged) {
 				titleNode = new RepositoryNode(null, repository);
 				updateTitle(true);
+				currentPushMode.clear();
 				// Reset paths, they're from the old repository
 				resetPathsToExpand();
 				removeRepositoryListeners();
@@ -4116,8 +4144,15 @@ public class StagingView extends ViewPart
 										.getRepositoryState().isRebasing()));
 				configChangedListener = repository.getListenerList()
 						.addConfigChangedListener(
-								event -> updateCommitAuthorAndCommitter(
-										repository));
+								event -> {
+									updateCommitAuthorAndCommitter(repository);
+									// Configs related to the push mode might
+									// have changed
+									asyncExec(() -> {
+										currentPushMode.clear();
+										updateCommitAndPush(repository);
+									});
+								});
 			} else if (titleNode != null) {
 				// The label decoration may need an update.
 				updateTitle(false);
@@ -4669,7 +4704,7 @@ public class StagingView extends ViewPart
 
 		PushMode pushMode = null;
 		if (pushUpstream) {
-			pushMode = getPushMode();
+			pushMode = getPushMode(currentRepository);
 		}
 		Job commitJob = new CommitJob(currentRepository, commitOperation)
 				.setOpenCommitEditor(openNewCommitsAction.isChecked())
@@ -4695,19 +4730,28 @@ public class StagingView extends ViewPart
 		return true;
 	}
 
-	private PushMode getPushMode() {
-		final Repository repository = currentRepository;
+	private PushMode getPushMode(Repository repository) {
 		PushMode pushMode = null;
 		if (repository != null) {
 			pushMode = PushMode.UPSTREAM; // default mode
+			boolean withChangeId = addChangeIdAction.isChecked();
+			if (repository == currentRepository) {
+				pushMode = currentPushMode.get(Boolean.valueOf(withChangeId));
+				if (pushMode != null) {
+					return pushMode;
+				}
+			}
 			try {
-				if (addChangeIdAction.isChecked() && RemoteConfig
+				if (withChangeId && RemoteConfig
 						.getAllRemoteConfigs(repository.getConfig()).stream()
 						.anyMatch(GerritUtil::isGerritPush)) {
 					pushMode = PushMode.GERRIT;
 				}
 			} catch (URISyntaxException ex) {
 				// ignore, stick to default
+			}
+			if (repository == currentRepository) {
+				currentPushMode.put(Boolean.valueOf(withChangeId), pushMode);
 			}
 		}
 		return pushMode;
