@@ -66,6 +66,7 @@ import org.eclipse.core.runtime.preferences.InstanceScope;
 import org.eclipse.egit.core.AdapterUtils;
 import org.eclipse.egit.core.RepositoryUtil;
 import org.eclipse.egit.core.UnitOfWork;
+import org.eclipse.egit.core.internal.Utils;
 import org.eclipse.egit.core.internal.gerrit.GerritUtil;
 import org.eclipse.egit.core.internal.indexdiff.IndexDiffCache;
 import org.eclipse.egit.core.internal.indexdiff.IndexDiffCacheEntry;
@@ -2102,7 +2103,7 @@ public class StagingView extends ViewPart
 				// Git config might have changed commit.cleanup?
 				Repository repo = currentRepository;
 				if (repo != null) {
-					setCleanup(repo, true);
+					setCleanup(repo);
 				}
 			}
 		};
@@ -4146,11 +4147,13 @@ public class StagingView extends ViewPart
 						.addConfigChangedListener(
 								event -> {
 									updateCommitAuthorAndCommitter(repository);
-									// Configs related to the push mode might
-									// have changed
+									// Configs related to the push mode or to
+									// commit message cleaning might have
+									// changed
 									asyncExec(() -> {
 										currentPushMode.clear();
 										updateCommitAndPush(repository);
+										setCleanup(repository);
 									});
 								});
 			} else if (titleNode != null) {
@@ -4436,7 +4439,6 @@ public class StagingView extends ViewPart
 				|| commitMessageComponent.getRepository() != currentRepository) {
 			oldState = loadCommitMessageComponentState();
 			commitMessageComponent.setRepository(currentRepository);
-			setCleanup(currentRepository, false);
 			if (oldState == null) {
 				loadInitialState(helper);
 			} else {
@@ -4449,10 +4451,9 @@ public class StagingView extends ViewPart
 					|| !commitMessageComponent.isAmending()) {
 				if (!commitMessageComponent.isAmending()
 						&& userEnteredCommitMessage())
-					addHeadChangedWarning(commitMessageComponent
-							.getCommitMessage());
+					addHeadChangedWarning(commitMessageText.getText(),
+							commitMessageComponent.getCommentChar());
 				else {
-					setCleanup(currentRepository, false);
 					loadInitialState(helper);
 				}
 				changed = true;
@@ -4466,19 +4467,6 @@ public class StagingView extends ViewPart
 				.isAmending());
 		amendPreviousCommitAction.setEnabled(helper.amendAllowed());
 		updateMessage();
-	}
-
-	private void setCleanup(Repository repo, boolean redraw) {
-		if (repo != null) {
-			CommitConfig config = repo.getConfig().get(CommitConfig.KEY);
-			CleanupMode mode = config.resolve(CleanupMode.DEFAULT, true);
-			commitMessageText.setCleanupMode(mode, '#');
-		} else {
-			commitMessageText.setCleanupMode(CleanupMode.STRIP, '#');
-		}
-		if (redraw) {
-			commitMessageText.invalidatePresentation();
-		}
 	}
 
 	private void updateCommitAuthorAndCommitter(Repository repository) {
@@ -4514,11 +4502,29 @@ public class StagingView extends ViewPart
 				getCommitId(helper.getPreviousCommit()));
 		commitMessageComponent.enableListeners(false);
 		commitMessageComponent.setAuthor(oldState.getAuthor());
+		String oldMessage = oldState.getCommitMessage(); // Raw, not cleaned
+		CommitConfig config = commitMessageComponent.getRepository().getConfig()
+				.get(CommitConfig.KEY);
+		// If the old state stored a comment char, use that one
+		char commentChar = oldState.getAutoCommentChar();
+		if (config.isAutoCommentChar() || commentChar != '\0') {
+			if (commentChar == '\0') {
+				commentChar = config
+						.getCommentChar(Utils.normalizeLineEndings(oldMessage));
+			}
+			commitMessageComponent.setAutoCommentChar(commentChar);
+		} else {
+			commentChar = config.getCommentChar();
+			commitMessageComponent.setAutoCommentChar('\0');
+		}
+		commitMessageComponent.setCommentChar(commentChar);
+		CleanupMode mode = config.resolve(CleanupMode.DEFAULT, true);
+		commitMessageText.setCleanupMode(mode, commentChar);
 		if (headCommitChanged) {
-			addHeadChangedWarning(oldState.getCommitMessage());
+			addHeadChangedWarning(oldMessage, commentChar);
 		} else {
 			commitMessageComponent
-					.setCommitMessage(oldState.getCommitMessage());
+					.setCommitMessage(oldMessage);
 			commitMessageComponent
 					.setCaretPosition(oldState.getCaretPosition());
 		}
@@ -4541,10 +4547,13 @@ public class StagingView extends ViewPart
 		commitMessageComponent.enableListeners(true);
 	}
 
-	private void addHeadChangedWarning(String commitMessage) {
-		if (!commitMessage.startsWith(UIText.StagingView_headCommitChanged)) {
-			String message = UIText.StagingView_headCommitChanged
-					+ Text.DELIMITER + Text.DELIMITER + commitMessage;
+	private void addHeadChangedWarning(String commitMessage,
+			char commentStart) {
+		String warning = new StringBuilder().append(commentStart).append(' ')
+				.append(UIText.StagingView_headCommitChanged).toString();
+		if (!commitMessage.startsWith(warning)) {
+			String message = warning + Text.DELIMITER + Text.DELIMITER
+					+ commitMessage;
 			commitMessageComponent.setCommitMessage(message);
 		}
 	}
@@ -4553,11 +4562,31 @@ public class StagingView extends ViewPart
 		commitMessageComponent.enableListeners(false);
 		commitMessageComponent.resetState();
 		commitMessageComponent.setAuthor(helper.getAuthor());
+		CommitConfig config = commitMessageComponent.getRepository().getConfig()
+				.get(CommitConfig.KEY);
+		String initialMessage;
+		char commentChar;
 		if (helper.shouldUseCommitTemplate()) {
-			commitMessageComponent.setCommitMessage(helper.getCommitTemplate());
+			initialMessage = helper.getCommitTemplate();
+			commentChar = '\0';
 		} else {
-			commitMessageComponent.setCommitMessage(helper.getCommitMessage());
+			initialMessage = helper.getCommitMessage();
+			commentChar = helper.getCommentChar();
 		}
+		if (config.isAutoCommentChar() || commentChar != '\0') {
+			if (commentChar == '\0') {
+				commentChar = config.getCommentChar(
+						Utils.normalizeLineEndings(initialMessage));
+			}
+			commitMessageComponent.setAutoCommentChar(commentChar);
+		} else {
+			commentChar = config.getCommentChar();
+			commitMessageComponent.setAutoCommentChar('\0');
+		}
+		commitMessageComponent.setCommentChar(commentChar);
+		CleanupMode mode = config.resolve(CleanupMode.DEFAULT, true);
+		commitMessageText.setCleanupMode(mode, commentChar);
+		commitMessageComponent.setCommitMessage(initialMessage);
 		commitMessageComponent.setCommitter(helper.getCommitter());
 		commitMessageComponent.setHeadCommit(getCommitId(helper
 				.getPreviousCommit()));
@@ -4571,21 +4600,51 @@ public class StagingView extends ViewPart
 		commitMessageComponent.enableListeners(true);
 	}
 
-	private boolean userEnteredCommitMessage() {
-		if (commitMessageComponent.getRepository() == null)
-			return false;
-		String message = commitMessageComponent.getCommitMessage().replace(
-				UIText.StagingView_headCommitChanged, ""); //$NON-NLS-1$
-		if (message == null || message.trim().length() == 0)
-			return false;
+	private void setCleanup(Repository repo) {
+		if (repo != null) {
+			CommitConfig config = repo.getConfig().get(CommitConfig.KEY);
+			CleanupMode mode = config.resolve(CleanupMode.DEFAULT, true);
+			char commentChar;
+			if (config.isAutoCommentChar()) {
+				commentChar = commitMessageComponent.getAutoCommentChar();
+				if (commentChar == '\0') {
+					String currentMessage = Utils
+							.normalizeLineEndings(commitMessageText.getText());
+					commentChar = config.getCommentChar(currentMessage);
+					commitMessageComponent.setCommentChar(commentChar);
+					commitMessageComponent.setAutoCommentChar(commentChar);
+				}
+			} else {
+				commentChar = config.getCommentChar();
+				commitMessageComponent.setCommentChar(commentChar);
+				commitMessageComponent.setAutoCommentChar('\0');
+			}
+			commitMessageText.setCleanupMode(mode, commentChar);
+		} else {
+			commitMessageText.setCleanupMode(CleanupMode.STRIP, '#');
+		}
+		commitMessageText.invalidatePresentation();
+	}
 
+	private boolean userEnteredCommitMessage() {
+		if (commitMessageComponent.getRepository() == null) {
+			return false;
+		}
+		String warning = new StringBuilder()
+				.append(commitMessageComponent.getCommentChar()).append(' ')
+				.append(UIText.StagingView_headCommitChanged).toString();
+		String message = commitMessageComponent.getCommitMessage()
+				.replace(warning, ""); //$NON-NLS-1$
+		if (message.trim().isEmpty()) {
+			return false;
+		}
 		String chIdLine = "Change-Id: I" + ObjectId.zeroId().name(); //$NON-NLS-1$
 		Repository repo = currentRepository;
 		if (repo != null && GerritUtil.getCreateChangeId(repo.getConfig())
 				&& commitMessageComponent.getCreateChangeId()) {
-			if (message.trim().equals(chIdLine))
+			if (message.trim().equals(chIdLine)) {
 				return false;
-
+			}
 			// change id was added automatically, but there is more in the
 			// message; strip the id, and check for the signed-off-by tag
 			message = message.replace(chIdLine, ""); //$NON-NLS-1$
@@ -4596,9 +4655,9 @@ public class StagingView extends ViewPart
 				&& commitMessageComponent.isSignedOff()
 				&& message.trim().equals(
 						Constants.SIGNED_OFF_BY_TAG
-								+ commitMessageComponent.getCommitter()))
+								+ commitMessageComponent.getCommitter())) {
 			return false;
-
+		}
 		return true;
 	}
 

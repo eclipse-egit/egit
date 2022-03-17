@@ -41,6 +41,7 @@ import org.eclipse.core.runtime.SubMonitor;
 import org.eclipse.core.runtime.jobs.Job;
 import org.eclipse.egit.core.EclipseGitProgressTransformer;
 import org.eclipse.egit.core.IteratorService;
+import org.eclipse.egit.core.internal.Utils;
 import org.eclipse.egit.core.internal.util.ResourceUtil;
 import org.eclipse.egit.core.op.CommitOperation;
 import org.eclipse.egit.core.project.RepositoryMapping;
@@ -186,14 +187,23 @@ public class CommitUI  {
 		commitDialog.setAuthor(commitHelper.getAuthor());
 		commitDialog.setCommitter(commitHelper.getCommitter());
 		commitDialog.setAllowToChangeSelection(!commitHelper.isMergedResolved && !commitHelper.isCherryPickResolved);
+		String initialMessage;
+		char commentChar;
 		if (commitHelper.shouldUseCommitTemplate()) {
-			commitDialog.setCommitMessage(commitHelper.getCommitTemplate());
+			initialMessage = commitHelper.getCommitTemplate();
+			commentChar = '\0';
 		} else {
-			commitDialog.setCommitMessage(commitHelper.getCommitMessage());
+			initialMessage = commitHelper.getCommitMessage();
+			commentChar = commitHelper.getCommentChar();
 		}
 		CommitConfig config = repo.getConfig().get(CommitConfig.KEY);
 		CleanupMode mode = config.resolve(CleanupMode.DEFAULT, true);
-		commitDialog.setCleanupMode(mode, '#');
+		if (commentChar == '\0') {
+			commentChar = config
+					.getCommentChar(Utils.normalizeLineEndings(initialMessage));
+		}
+		commitDialog.setCleanupMode(mode, commentChar);
+		commitDialog.setCommitMessage(initialMessage);
 		if (commitDialog.open() != IDialogConstants.OK_ID)
 			return false;
 

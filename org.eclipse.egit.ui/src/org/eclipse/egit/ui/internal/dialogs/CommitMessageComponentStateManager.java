@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (C) 2011, Jens Baumgart <jens.baumgart@sap.com>
+ * Copyright (C) 2011, 2022 Jens Baumgart <jens.baumgart@sap.com> and others.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License 2.0
@@ -18,7 +18,6 @@ import org.eclipse.jgit.lib.Repository;
 /**
  * This class is used to load / save the state of a
  * {@link CommitMessageComponentState} in the dialog settings.
- *
  */
 public class CommitMessageComponentStateManager {
 
@@ -37,12 +36,17 @@ public class CommitMessageComponentStateManager {
 	public static void persistState(Repository repository,
 			CommitMessageComponentState state) {
 		IDialogSettings dialogSettings = getDialogSettings();
-		String[] values = new String[] { Boolean.toString(state.getAmend()),
-				state.getAuthor(), state.getCommitMessage(),
+		char autoCommentChar = state.getAutoCommentChar();
+		String[] values = new String[] {
+				Boolean.toString(state.getAmend()),
+				state.getAuthor(),
+				state.getCommitMessage(),
 				state.getCommitter(),
 				state.getHeadCommit().getName().toString(),
 				String.valueOf(state.getCaretPosition()),
-				Boolean.toString(state.getSign()) };
+				Boolean.toString(state.getSign()),
+				autoCommentChar == '\0' ? "" : String.valueOf(autoCommentChar) //$NON-NLS-1$
+		};
 		dialogSettings.put(repository.getDirectory().getAbsolutePath(), values);
 	}
 
@@ -73,6 +77,9 @@ public class CommitMessageComponentStateManager {
 		}
 		if (values.length > 6) {
 			state.setSign(Boolean.parseBoolean(values[6]));
+		}
+		if (values.length > 7 && !values[7].isEmpty()) {
+			state.setAutoCommentChar(values[7].charAt(0));
 		}
 		return state;
 	}

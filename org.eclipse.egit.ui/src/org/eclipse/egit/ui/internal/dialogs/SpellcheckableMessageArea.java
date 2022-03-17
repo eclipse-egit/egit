@@ -131,9 +131,9 @@ public class SpellcheckableMessageArea extends Composite {
 
 	private Token commentColoring;
 
-	private CleanupMode cleanupMode;
+	private CleanupMode cleanupMode = CleanupMode.STRIP;
 
-	private char commentChar;
+	private char commentChar = '#';
 
 	/**
 	 * Creates an editable {@link SpellcheckableMessageArea}.
@@ -405,7 +405,8 @@ public class SpellcheckableMessageArea extends Composite {
 								return;
 							}
 						}
-						int[] segments = calculateWrapOffsets(e.lineText, MAX_LINE_WIDTH);
+						int[] segments = calculateWrapOffsets(e.lineText,
+								MAX_LINE_WIDTH, commentChar);
 						if (segments != null) {
 							char[] segmentsChars = new char[segments.length];
 							Arrays.fill(segmentsChars, '\n');
@@ -685,10 +686,10 @@ public class SpellcheckableMessageArea extends Composite {
 		}
 		CleanupMode mode = cleanupMode;
 		if (mode != null) {
-			text = CommitConfig.cleanText(text, mode, '#');
+			text = CommitConfig.cleanText(text, mode, commentChar);
 		}
 		if (shouldHardWrap()) {
-			text = wrapCommitMessage(text);
+			text = wrapCommitMessage(text, commentChar);
 		}
 		text = TRAILING_WHITE_SPACE_ON_LINES.matcher(text).replaceAll(""); //$NON-NLS-1$
 		text = TRAILING_NEWLINES.matcher(text).replaceFirst("\n"); //$NON-NLS-1$
@@ -702,17 +703,19 @@ public class SpellcheckableMessageArea extends Composite {
 	 * @param text
 	 *            of the whole commit message, including footer, using '\n' as
 	 *            line delimiter
+	 * @param commentChar
+	 *            character starting comment lines
 	 * @return the wrapped text
 	 */
-	protected static String wrapCommitMessage(String text) {
+	protected static String wrapCommitMessage(String text, char commentChar) {
 		// protected in order to be easily testable
 		int footerStart = CommonUtils.getFooterOffset(text);
 		if (footerStart < 0) {
-			return hardWrap(text);
+			return hardWrap(text, commentChar);
 		} else {
 			// Do not wrap footer lines.
 			String footer = text.substring(footerStart);
-			text = hardWrap(text.substring(0, footerStart));
+			text = hardWrap(text.substring(0, footerStart), commentChar);
 			return text + footer;
 		}
 	}
@@ -722,11 +725,14 @@ public class SpellcheckableMessageArea extends Composite {
 	 *
 	 * @param text
 	 *            the text to wrap, must use '\n' as line delimiter
+	 * @param commentChar
+	 *            character starting comment lines
 	 * @return the wrapped text
 	 */
-	protected static String hardWrap(String text) {
+	protected static String hardWrap(String text, char commentChar) {
 		// protected for testing
-		int[] wrapOffsets = calculateWrapOffsets(text, MAX_LINE_WIDTH);
+		int[] wrapOffsets = calculateWrapOffsets(text, MAX_LINE_WIDTH,
+				commentChar);
 		if (wrapOffsets != null) {
 			StringBuilder builder = new StringBuilder(text.length() + wrapOffsets.length);
 			int prev = 0;
@@ -859,13 +865,17 @@ public class SpellcheckableMessageArea extends Composite {
 	 * no longer than <code>maxLineLength</code> if possible.
 	 *
 	 * @param line
-	 *            the line to wrap (can contain '\n', but no other line delimiters)
+	 *            the line to wrap (can contain '\n', but no other line
+	 *            delimiters)
 	 * @param maxLineLength
 	 *            the maximum line length
+	 * @param commentChar
+	 *            character that starts comments in commit messages
 	 * @return an array of offsets where hard-wraps should be inserted, or
 	 *         <code>null</code> if the line does not need to be wrapped
 	 */
-	public static int[] calculateWrapOffsets(final String line, final int maxLineLength) {
+	public static int[] calculateWrapOffsets(String line, int maxLineLength,
+			char commentChar) {
 		if (line.length() == 0)
 			return null;
 
@@ -896,7 +906,8 @@ public class SpellcheckableMessageArea extends Composite {
 					// such as " * <very_long_word>".
 					//
 					// Never break at a comment character
-					if (ch != '#' && (nofPreviousWordChars > maxLineLength / 10
+					if (ch != commentChar
+							&& (nofPreviousWordChars > maxLineLength / 10
 							|| nofPreviousWordChars > 0
 									&& (i - lineStart) > maxLineLength / 2)) {
 						wordStart = i;
