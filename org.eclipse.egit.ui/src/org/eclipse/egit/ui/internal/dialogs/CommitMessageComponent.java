@@ -170,6 +170,10 @@ public class CommitMessageComponent {
 
 	private boolean createChangeId = false;
 
+	private char commentChar = '#';
+
+	private char autoCommentChar;
+
 	private IPreviousValueProposalHandler authorHandler;
 
 	private IPreviousValueProposalHandler committerHandler;
@@ -221,6 +225,8 @@ public class CommitMessageComponent {
 		filesToCommit = new ArrayList<>();
 		headCommitId = null;
 		listenersEnabled = false;
+		commentChar = '#';
+		autoCommentChar = '\0';
 	}
 
 	/**
@@ -307,6 +313,45 @@ public class CommitMessageComponent {
 	 */
 	public void setCommitter(String committer) {
 		this.committer = committer;
+	}
+
+	/**
+	 * Retrieves the comment character.
+	 *
+	 * @return the character
+	 */
+	public char getCommentChar() {
+		return commentChar;
+	}
+
+	/**
+	 * Pre-sets the comment character.
+	 *
+	 * @param commentChar
+	 *            the character
+	 */
+	public void setCommentChar(char commentChar) {
+		this.commentChar = commentChar;
+	}
+
+	/**
+	 * Retrieves the character chosen via git config
+	 * {@code core.commentChar=auto}.
+	 *
+	 * @return the character, or {@code '\000'} if none
+	 */
+	public char getAutoCommentChar() {
+		return autoCommentChar;
+	}
+
+	/**
+	 * Pre-sets the comment character for {@code core.commentChar=auto}.
+	 *
+	 * @param commentChar
+	 *            the character, or {@code '\000'} if none
+	 */
+	public void setAutoCommentChar(char commentChar) {
+		autoCommentChar = commentChar;
 	}
 
 	/**
@@ -457,6 +502,7 @@ public class CommitMessageComponent {
 		state.setCommitter(getCommitter());
 		state.setHeadCommit(getHeadCommit());
 		state.setSign(isSignCommit());
+		state.setAutoCommentChar(getAutoCommentChar());
 		return state;
 	}
 

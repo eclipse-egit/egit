@@ -548,7 +548,8 @@ public class CreateTagDialog extends TitleAreaDialog {
 				SWT.BORDER);
 		CommitConfig config = repo.getConfig().get(CommitConfig.KEY);
 		tagMessageText
-				.setCleanupMode(config.resolve(CleanupMode.DEFAULT, true), '#');
+				.setCleanupMode(config.resolve(CleanupMode.DEFAULT, true),
+						config.getCommentChar());
 		Point size = tagMessageText.getTextWidget().getSize();
 		tagMessageText.setLayoutData(GridDataFactory.fillDefaults().hint(size)
 				.grab(true, true).create());
