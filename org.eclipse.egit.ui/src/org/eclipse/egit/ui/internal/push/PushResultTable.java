@@ -196,7 +196,7 @@ class PushResultTable {
 				.applyTo(messageGroup);
 
 		final SpellcheckableMessageArea text = new SpellcheckableMessageArea(
-				messageGroup, EMPTY_STRING, SWT.BORDER) {
+				messageGroup, EMPTY_STRING, true, SWT.BORDER) {
 
 			@Override
 			protected void createMarginPainter() {
