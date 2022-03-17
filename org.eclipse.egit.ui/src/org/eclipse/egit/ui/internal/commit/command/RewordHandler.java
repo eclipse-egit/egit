@@ -58,14 +58,15 @@ public class RewordHandler extends SelectionHandler {
 
 		CommitConfig config = repo.getConfig().get(CommitConfig.KEY);
 		CleanupMode mode = config.resolve(CleanupMode.DEFAULT, true);
+		String oldMessage = commit.getFullMessage();
 		CommitMessageEditorDialog dialog = new CommitMessageEditorDialog(shell,
-				repo, commit.getFullMessage(), mode, '#');
+				repo, oldMessage, mode, config.getCommentChar(oldMessage));
 		if (dialog.open() != Window.OK) {
 			return null;
 		}
 		String newMessage = dialog.getCommitMessage();
 		if (StringUtils.isEmptyOrNull(newMessage)
-				|| newMessage.equals(commit.getFullMessage())) {
+				|| newMessage.equals(oldMessage)) {
 			return null;
 		}
 

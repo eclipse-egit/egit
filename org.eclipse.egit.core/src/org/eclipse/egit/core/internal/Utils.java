@@ -204,4 +204,23 @@ public final class Utils {
 		}
 		return OK_STATUS;
 	}
+
+	/**
+	 * Looks for a "# Conflicts:" line and returns the comment character from
+	 * it.
+	 *
+	 * @param message
+	 *            to examine
+	 * @return the comment character, or {@code '\0'} if none found
+	 */
+	public static char commentCharFromMergeMessage(String message) {
+		// Luckily git does _not_ localize the # Conflicts: line! So we can look
+		// for this and figure out the comment character to use from it.
+		Pattern CONFLICT_LINE = Pattern.compile("(?:^|\\R)(.) Conflicts:\\R"); //$NON-NLS-1$
+		Matcher m = CONFLICT_LINE.matcher(message);
+		if (m.find()) {
+			return m.group(1).charAt(0);
+		}
+		return '\0';
+	}
 }

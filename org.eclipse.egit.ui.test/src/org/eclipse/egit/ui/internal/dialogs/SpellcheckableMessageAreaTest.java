@@ -188,14 +188,16 @@ public class SpellcheckableMessageAreaTest {
 	}
 
 	private static String wrap(String text, String lineDelimiter) {
-		String wrapped = SpellcheckableMessageArea.hardWrap(Utils.normalizeLineEndings(text));
+		String wrapped = SpellcheckableMessageArea
+				.hardWrap(Utils.normalizeLineEndings(text), '#');
 		return wrapped.replaceAll("\n", lineDelimiter);
 	}
 
 	@Test
 	public void dontWrapShortMessage() {
 		String input = "short";
-		assertEquals(input, SpellcheckableMessageArea.wrapCommitMessage(input));
+		assertEquals(input,
+				SpellcheckableMessageArea.wrapCommitMessage(input, '#'));
 	}
 
 	@Test
@@ -203,7 +205,8 @@ public class SpellcheckableMessageAreaTest {
 		String input = "short\n\nfoo\n\n"
 				+ "Change-Id: I0000000000000000000000000000000000000000\n"
 				+ "Signed-off-by: Some-Arguablylong Name <jsomearguablylong.name@somecompany.com>";
-		assertEquals(input, SpellcheckableMessageArea.wrapCommitMessage(input));
+		assertEquals(input,
+				SpellcheckableMessageArea.wrapCommitMessage(input, '#'));
 	}
 
 	@Test
@@ -218,7 +221,7 @@ public class SpellcheckableMessageAreaTest {
 				+ "Change-Id: I0000000000000000000000000000000000000000\n"
 				+ "Signed-off-by: Some-Arguablylong Name <somearguablylong.name@somecompany.com>";
 		assertEquals(expected,
-				SpellcheckableMessageArea.wrapCommitMessage(input));
+				SpellcheckableMessageArea.wrapCommitMessage(input, '#'));
 	}
 
 	@Test
@@ -227,7 +230,7 @@ public class SpellcheckableMessageAreaTest {
 		String expected = " x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x\n"
 				+ "x x x x x x";
 		assertEquals(expected,
-				SpellcheckableMessageArea.wrapCommitMessage(input));
+				SpellcheckableMessageArea.wrapCommitMessage(input, '#'));
 	}
 
 	@Test
@@ -259,7 +262,7 @@ public class SpellcheckableMessageAreaTest {
 				+ "Change-Id: I0000000000000000000000000000000000000000\n"
 				+ "Signed-off-by: Some-Arguablylong Name <somearguablylong.name@somecompany.com>";
 		assertEquals(expected,
-				SpellcheckableMessageArea.wrapCommitMessage(input));
+				SpellcheckableMessageArea.wrapCommitMessage(input, '#'));
 	}
 
 	@Test
@@ -270,13 +273,24 @@ public class SpellcheckableMessageAreaTest {
 				+ "123456789 123456789 123456789 123456789 123456789 123456789\n"
 				+ "123456789 #23456789\n\n";
 		assertEquals(expected,
-				SpellcheckableMessageArea.wrapCommitMessage(input));
+				SpellcheckableMessageArea.wrapCommitMessage(input, '#'));
 		input = "short\n\n"
 				+ "123456789 123456789 123456789 123456789 123456789 123456789 123456789 1#3456789\n\n";
 		expected = "short\n\n"
 				+ "123456789 123456789 123456789 123456789 123456789 123456789 123456789\n"
 				+ "1#3456789\n\n";
 		assertEquals(expected,
-				SpellcheckableMessageArea.wrapCommitMessage(input));
+				SpellcheckableMessageArea.wrapCommitMessage(input, '#'));
+	}
+
+	@Test
+	public void testWrappingWithCommentChar() {
+		String input = "short\n\n"
+				+ "123456789 123456789 123456789 123456789 123456789 123456789 123456789 ;23456789\n\n";
+		String expected = "short\n\n"
+				+ "123456789 123456789 123456789 123456789 123456789 123456789\n"
+				+ "123456789 ;23456789\n\n";
+		assertEquals(expected,
+				SpellcheckableMessageArea.wrapCommitMessage(input, ';'));
 	}
 }

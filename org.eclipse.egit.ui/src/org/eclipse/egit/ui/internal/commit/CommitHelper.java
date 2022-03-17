@@ -18,6 +18,7 @@ package org.eclipse.egit.ui.internal.commit;
 
 import java.io.IOException;
 
+import org.eclipse.egit.core.internal.Utils;
 import org.eclipse.egit.ui.Activator;
 import org.eclipse.egit.ui.internal.UIText;
 import org.eclipse.jgit.errors.ConfigInvalidException;
@@ -60,6 +61,8 @@ public class CommitHelper {
 
 	private String commitTemplate;
 
+	private char commentChar;
+
 	/**
 	 * @param repository
 	 */
@@ -70,6 +73,7 @@ public class CommitHelper {
 
 	private void calculateCommitInfo() {
 		Repository mergeRepository = null;
+		commentChar = '\0';
 		isMergedResolved = false;
 		isCherryPickResolved = false;
 		RepositoryState state = repository.getRepositoryState();
@@ -98,6 +102,7 @@ public class CommitHelper {
 
 		if (isMergedResolved || isCherryPickResolved) {
 			commitMessage = getMergeResolveMessage(mergeRepository);
+			commentChar = Utils.commentCharFromMergeMessage(commitMessage);
 		}
 
 		if (isCherryPickResolved) {
@@ -207,6 +212,16 @@ public class CommitHelper {
 	 */
 	public String getCommitMessage() {
 		return commitMessage;
+	}
+
+	/**
+	 * Retrieves the comment character determined from the commit message, if
+	 * any.
+	 *
+	 * @return the character, or {@code '\0'} if none as determined
+	 */
+	public char getCommentChar() {
+		return commentChar;
 	}
 
 	/**

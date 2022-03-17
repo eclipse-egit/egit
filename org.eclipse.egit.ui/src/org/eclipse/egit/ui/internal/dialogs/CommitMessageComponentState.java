@@ -31,6 +31,8 @@ public class CommitMessageComponentState {
 
 	private boolean sign;
 
+	private char autoCommentChar;
+
 	/**
 	 * @return commit message
 	 */
@@ -113,6 +115,28 @@ public class CommitMessageComponentState {
 	 */
 	public void setSign(boolean sign) {
 		this.sign = sign;
+	}
+
+	/**
+	 * Retrieves the comment character to use for git config
+	 * {@code core.commentChar=auto}.
+	 *
+	 * @return the character, or {@code '\000'} of none stored
+	 */
+	public char getAutoCommentChar() {
+		return autoCommentChar;
+	}
+
+	/**
+	 * Sets the comment character determined by git config
+	 * {@code core.commentChar=auto}.
+	 *
+	 * @param commentChar
+	 *            the comment character, or {@code '\000'} if not
+	 *            auto-determined
+	 */
+	public void setAutoCommentChar(char commentChar) {
+		this.autoCommentChar = commentChar;
 	}
 
 	/**
