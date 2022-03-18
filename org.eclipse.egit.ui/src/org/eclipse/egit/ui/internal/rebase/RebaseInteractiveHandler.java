@@ -42,29 +42,33 @@ public class RebaseInteractiveHandler implements InteractiveHandler2 {
 	@Override
 	public ModifyResult editCommitMessage(String message, CleanupMode mode,
 			char commentChar) {
-		String[] result = { message };
+		String[] msg = { message };
 		boolean[] doChangeId = { false };
+		CleanupMode[] finalMode = { mode };
 		PlatformUI.getWorkbench().getDisplay().syncExec(() -> {
 			CommitMessageEditorDialog dialog = new CommitMessageEditorDialog(
 					PlatformUI.getWorkbench().getModalDialogShellProvider()
 							.getShell(),
 					repository, message, mode, commentChar);
 			if (dialog.open() == Window.OK) {
-				result[0] = dialog.getCommitMessage();
+				msg[0] = dialog.getCommitMessage();
 				doChangeId[0] = dialog.isWithChangeId();
+				finalMode[0] = CleanupMode.VERBATIM;
 			}
 		});
-		String msg = result[0];
+		String edited = msg[0];
 		return new ModifyResult() {
 
 			@Override
 			public String getMessage() {
-				return msg == null ? "" : msg; //$NON-NLS-1$
+				return edited == null ? "" : edited; //$NON-NLS-1$
 			}
 
 			@Override
 			public CleanupMode getCleanupMode() {
-				return CleanupMode.VERBATIM;
+				CleanupMode result = finalMode[0];
+				assert result != null;
+				return result;
 			}
 
 			@Override

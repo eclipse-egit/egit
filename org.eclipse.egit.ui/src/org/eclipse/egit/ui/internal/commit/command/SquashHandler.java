@@ -81,6 +81,7 @@ public class SquashHandler extends SelectionHandler {
 					CleanupMode mode, char commentChar) {
 				String[] msg = { message };
 				boolean[] doChangeId = { false };
+				CleanupMode[] finalMode = { mode };
 				PlatformUI.getWorkbench().getDisplay().syncExec(() -> {
 					Shell parentShell = PlatformUI.getWorkbench()
 							.getModalDialogShellProvider().getShell();
@@ -91,6 +92,7 @@ public class SquashHandler extends SelectionHandler {
 					if (dialog.open() == Window.OK) {
 						msg[0] = dialog.getCommitMessage();
 						doChangeId[0] = dialog.isWithChangeId();
+						finalMode[0] = CleanupMode.VERBATIM;
 					}
 				});
 
@@ -104,7 +106,9 @@ public class SquashHandler extends SelectionHandler {
 
 					@Override
 					public CleanupMode getCleanupMode() {
-						return CleanupMode.VERBATIM;
+						CleanupMode result = finalMode[0];
+						assert result != null;
+						return result;
 					}
 
 					@Override
