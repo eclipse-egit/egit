@@ -53,7 +53,10 @@ abstract class RepositoriesViewCommandHandler<T extends RepositoryTreeNode<?>>
 
 	public RepositoriesView getView(ExecutionEvent event) throws ExecutionException {
 		IWorkbenchPart part = HandlerUtil.getActivePartChecked(event);
-		return (RepositoriesView) part;
+		if (part instanceof RepositoriesView) {
+			return (RepositoriesView) part;
+		}
+		return getRepositoriesView();
 	}
 
 	public Shell getShell(ExecutionEvent event) {
@@ -96,13 +99,7 @@ abstract class RepositoriesViewCommandHandler<T extends RepositoryTreeNode<?>>
 	protected void expandRepositoryGroup(ExecutionEvent event,
 			RepositoryGroup group) throws ExecutionException {
 		if (group != null) {
-			RepositoriesView view = null;
-			IWorkbenchPart part = HandlerUtil.getActivePartChecked(event);
-			if (part instanceof RepositoriesView) {
-				view = ((RepositoriesView) part);
-			} else {
-				view = getRepositoriesView();
-			}
+			RepositoriesView view = getView(event);
 			if (view != null) {
 				view.expandNodeForGroup(group);
 			}
