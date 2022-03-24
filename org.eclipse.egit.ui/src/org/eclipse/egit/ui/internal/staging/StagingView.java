@@ -224,6 +224,7 @@ import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.ScrollBar;
 import org.eclipse.swt.widgets.Text;
+import org.eclipse.swt.widgets.ToolBar;
 import org.eclipse.swt.widgets.Tree;
 import org.eclipse.swt.widgets.TreeItem;
 import org.eclipse.ui.IActionBars;
@@ -744,6 +745,10 @@ public class StagingView extends ViewPart
 
 	private Button commitAndPushButton;
 
+	private PushSettings pushSettings;
+
+	private ToolBar pushSettingsBar;
+
 	private Section rebaseSection;
 
 	private Button rebaseContinueButton;
@@ -1213,10 +1218,18 @@ public class StagingView extends ViewPart
 				.createComposite(buttonsContainer);
 		GridDataFactory.fillDefaults().align(SWT.FILL, SWT.CENTER)
 				.applyTo(commitButtonsContainer);
-		GridLayoutFactory.fillDefaults().numColumns(2)
+		GridLayoutFactory.fillDefaults().numColumns(3)
 				.applyTo(commitButtonsContainer);
 
-		this.commitAndPushButton = toolkit.createButton(commitButtonsContainer,
+		ToolBarManager settingsManager = new ToolBarManager(
+				SWT.FLAT | SWT.HORIZONTAL);
+		pushSettings = new PushSettings();
+		settingsManager.add(pushSettings);
+		pushSettingsBar = settingsManager.createControl(commitButtonsContainer);
+		GridDataFactory.fillDefaults().align(SWT.FILL, SWT.CENTER)
+				.applyTo(pushSettingsBar);
+
+		commitAndPushButton = toolkit.createButton(commitButtonsContainer,
 				UIText.StagingView_CommitAndPushWithEllipsis, SWT.PUSH);
 		commitAndPushButton.setImage(getImage(UIIcons.PUSH));
 		commitAndPushButton.addSelectionListener(new SelectionAdapter() {
@@ -1238,7 +1251,8 @@ public class StagingView extends ViewPart
 					return;
 				}
 				try {
-					Wizard wizard = mode.getWizard(repository, null);
+					Wizard wizard = mode.getWizard(repository, null,
+							pushSettings.isForce());
 					if (wizard != null) {
 						PushWizardDialog dialog = new PushWizardDialog(
 								commitAndPushButton.getShell(), wizard);
@@ -1252,7 +1266,7 @@ public class StagingView extends ViewPart
 		GridDataFactory.fillDefaults().align(SWT.FILL, SWT.CENTER)
 				.applyTo(commitAndPushButton);
 
-		this.commitButton = toolkit.createButton(commitButtonsContainer,
+		commitButton = toolkit.createButton(commitButtonsContainer,
 				UIText.StagingView_Commit, SWT.PUSH);
 		commitButton.setImage(getImage(UIIcons.COMMIT));
 		commitButton.setText(UIText.StagingView_Commit);
@@ -1536,13 +1550,19 @@ public class StagingView extends ViewPart
 	 */
 	private void updateCommitAndPush(Repository repository) {
 		PushMode pushMode = getPushMode(repository);
-		commitAndPushButton.setImage(getImage(
-				pushMode == PushMode.GERRIT ? UIIcons.GERRIT : UIIcons.PUSH));
+		if (pushMode == PushMode.GERRIT) {
+			pushSettingsBar.setVisible(false);
+			commitAndPushButton.setImage(getImage(UIIcons.GERRIT));
+		} else {
+			pushSettingsBar.setVisible(true);
+			pushSettingsBar.setEnabled(commitAndPushButton.isEnabled());
+			commitAndPushButton.setImage(getImage(UIIcons.PUSH));
+		}
 		commitAndPushButton.setText(pushesHeadOnly ? UIText.StagingView_PushHEAD
 				: canPushWithoutConfirmation(pushMode)
 						? UIText.StagingView_CommitAndPush
 						: UIText.StagingView_CommitAndPushWithEllipsis);
-		commitAndPushButton.requestLayout();
+		commitAndPushButton.getParent().requestLayout();
 	}
 
 	private void saveSashFormWeightsOnDisposal(final SashForm sashForm,
@@ -4041,6 +4061,7 @@ public class StagingView extends ViewPart
 		StagingViewUpdate update = new StagingViewUpdate(null, null, null);
 		setStagingViewerInput(unstagedViewer, update, null, null);
 		setStagingViewerInput(stagedViewer, update, null, null);
+		pushSettings.refresh(null);
 		enableCommitWidgets(false);
 		refreshAction.setEnabled(false);
 		updateSectionText();
@@ -4134,6 +4155,7 @@ public class StagingView extends ViewPart
 			if (repositoryChanged) {
 				titleNode = new RepositoryNode(null, repository);
 				updateTitle(true);
+				pushSettings.refresh(repository);
 				currentPushMode.clear();
 				// Reset paths, they're from the old repository
 				resetPathsToExpand();
@@ -4708,7 +4730,9 @@ public class StagingView extends ViewPart
 		}
 		Job commitJob = new CommitJob(currentRepository, commitOperation)
 				.setOpenCommitEditor(openNewCommitsAction.isChecked())
-				.setPushUpstream(pushMode);
+				.setPushUpstream(pushMode)
+				.setForce(pushSettings.isForce())
+				.setDialog(pushSettings.alwaysShowDialog());
 
 		commitJob.addJobChangeListener(new JobChangeAdapter() {
 
@@ -4736,9 +4760,10 @@ public class StagingView extends ViewPart
 			pushMode = PushMode.UPSTREAM; // default mode
 			boolean withChangeId = addChangeIdAction.isChecked();
 			if (repository == currentRepository) {
-				pushMode = currentPushMode.get(Boolean.valueOf(withChangeId));
-				if (pushMode != null) {
-					return pushMode;
+				PushMode cached = currentPushMode
+						.get(Boolean.valueOf(withChangeId));
+				if (cached != null) {
+					return cached;
 				}
 			}
 			try {
@@ -5078,9 +5103,7 @@ public class StagingView extends ViewPart
 		if (repo != null && pushMode != PushMode.GERRIT) {
 			final RemoteConfig config = SimpleConfigurePushDialog
 					.getConfiguredRemote(repo);
-			boolean alwaysShowPushWizard = Activator.getDefault()
-					.getPreferenceStore().getBoolean(
-							UIPreferences.ALWAYS_SHOW_PUSH_WIZARD_ON_COMMIT);
+			boolean alwaysShowPushWizard = pushSettings.alwaysShowDialog();
 			return config != null && !alwaysShowPushWizard;
 		}
 		return false;
@@ -5099,5 +5122,105 @@ public class StagingView extends ViewPart
 			}
 		}
 		return entry;
+	}
+
+	private static class PushSettings extends DropDownMenuAction {
+
+		private static final String PER_REPO_SETTINGS = StagingView.class
+				.getName() + ".PER_REPOSITORY_SETTINGS"; //$NON-NLS-1$
+
+		private static final String EMPTY = ""; //$NON-NLS-1$
+
+		private boolean forceState;
+
+		private boolean dialogState;
+
+		IDialogSettings savedSettings;
+
+		String key;
+
+		String[] values;
+
+		public PushSettings() {
+			super(UIText.StagingView_PushSettings);
+			setImageDescriptor(UIIcons.SETTINGS);
+			savedSettings = DialogSettings.getOrCreateSection(
+					Activator.getDefault().getDialogSettings(),
+					PER_REPO_SETTINGS);
+		}
+
+		public void refresh(Repository repository) {
+			if (repository == null) {
+				savedSettings = null;
+				key = null;
+				forceState = false;
+				dialogState = false;
+				setImageDescriptor(UIIcons.SETTINGS);
+				setEnabled(false);
+			} else {
+				key = repository.getDirectory().getAbsolutePath();
+				values = savedSettings.getArray(key);
+				if (values == null || values.length < 2) {
+					values = new String[] { Boolean.FALSE.toString(), EMPTY };
+				}
+				forceState = Boolean.parseBoolean(values[0]);
+				if (StringUtils.isEmptyOrNull(values[1])) {
+					Activator.getDefault().getPreferenceStore().getBoolean(
+							UIPreferences.ALWAYS_SHOW_PUSH_WIZARD_ON_COMMIT);
+				} else {
+					dialogState = Boolean.parseBoolean(values[1]);
+				}
+				updateImage();
+				setEnabled(true);
+			}
+		}
+
+		private void updateImage() {
+			setImageDescriptor(
+					forceState ? UIIcons.SETTINGS_FORCE : UIIcons.SETTINGS);
+		}
+
+		@Override
+		protected Collection<IContributionItem> getActions() {
+			if (!isEnabled()) {
+				return Collections.emptyList();
+			}
+			List<IContributionItem> items = new ArrayList<>(2);
+			Action forceAction = new Action(UIText.StagingView_PushForce,
+					IAction.AS_CHECK_BOX) {
+
+				@Override
+				public void run() {
+					forceState = isChecked();
+					values[0] = Boolean.toString(forceState);
+					savedSettings.put(key, values);
+					updateImage();
+				}
+			};
+			forceAction.setChecked(forceState);
+			items.add(new ActionContributionItem(forceAction));
+			Action showDialogAction = new Action(
+					UIText.StagingView_PushDialogAlways,
+					IAction.AS_CHECK_BOX) {
+
+				@Override
+				public void run() {
+					dialogState = isChecked();
+					values[1] = Boolean.toString(dialogState);
+					savedSettings.put(key, values);
+				}
+			};
+			showDialogAction.setChecked(dialogState);
+			items.add(new ActionContributionItem(showDialogAction));
+			return items;
+		}
+
+		public boolean isForce() {
+			return forceState;
+		}
+
+		public boolean alwaysShowDialog() {
+			return dialogState;
+		}
 	}
 }

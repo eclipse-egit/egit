@@ -27,7 +27,6 @@ import org.eclipse.egit.core.internal.signing.GpgConfigurationException;
 import org.eclipse.egit.core.op.CommitOperation;
 import org.eclipse.egit.ui.Activator;
 import org.eclipse.egit.ui.JobFamilies;
-import org.eclipse.egit.ui.UIPreferences;
 import org.eclipse.egit.ui.internal.UIText;
 import org.eclipse.egit.ui.internal.decorators.GitLightweightDecorator;
 import org.eclipse.egit.ui.internal.dialogs.CommitMessageComponentStateManager;
@@ -65,6 +64,10 @@ public class CommitJob extends Job {
 
 	private PushMode pushMode;
 
+	private boolean force;
+
+	private boolean alwaysShowDialog;
+
 	/**
 	 * @param repository
 	 *            the repository to commit to
@@ -98,6 +101,30 @@ public class CommitJob extends Job {
 	 */
 	public CommitJob setPushUpstream(final PushMode pushMode) {
 		this.pushMode = pushMode;
+		return this;
+	}
+
+	/**
+	 * If the push mode is {@link PushMode#UPSTREAM}, set whether to force push.
+	 *
+	 * @param force
+	 *            whether to force push
+	 * @return this commit job instance
+	 */
+	public CommitJob setForce(boolean force) {
+		this.force = force;
+		return this;
+	}
+
+	/**
+	 * Set whether to use a dialog always.
+	 *
+	 * @param showDialog
+	 *            whether to force showing a dialog
+	 * @return this commit job instance
+	 */
+	public CommitJob setDialog(boolean showDialog) {
+		this.alwaysShowDialog = showDialog;
 		return this;
 	}
 
@@ -139,7 +166,7 @@ public class CommitJob extends Job {
 			}
 			if (pushMode != null) {
 				try {
-					pushUpstream(commit, pushMode);
+					pushUpstream(commit, pushMode, force, alwaysShowDialog);
 				} catch (IOException e) {
 					return Activator.createErrorStatus(
 							UIText.PushJob_unexpectedError, e);
@@ -183,13 +210,11 @@ public class CommitJob extends Job {
 		});
 	}
 
-	private void pushUpstream(final RevCommit commit, final PushMode pushTo)
+	private void pushUpstream(RevCommit commit, PushMode pushTo,
+			boolean forcePush, boolean showDialog)
 			throws IOException {
 		RemoteConfig config = SimpleConfigurePushDialog
 				.getConfiguredRemote(repository);
-		boolean alwaysShowPushWizard = Activator.getDefault()
-				.getPreferenceStore()
-				.getBoolean(UIPreferences.ALWAYS_SHOW_PUSH_WIZARD_ON_COMMIT);
 		String currentBranch = repository.getFullBranch();
 		if (ObjectId.isId(currentBranch)) {
 			currentBranch = null;
@@ -202,11 +227,11 @@ public class CommitJob extends Job {
 				throw new IOException(e.getLocalizedMessage(), e);
 			}
 		}
-		if (alwaysShowPushWizard || pushTo == PushMode.GERRIT || config == null
+		if (showDialog || pushTo == PushMode.GERRIT || config == null
 				|| currentBranch == null) {
 			final Display display = PlatformUI.getWorkbench().getDisplay();
 			display.asyncExec(() -> {
-				Wizard pushWizard = getPushWizard(commit, pushTo);
+				Wizard pushWizard = getPushWizard(commit, pushTo, forcePush);
 				if (pushWizard != null) {
 					PushWizardDialog dialog = new PushWizardDialog(
 							display.getActiveShell(), pushWizard);
@@ -216,16 +241,17 @@ public class CommitJob extends Job {
 		} else {
 			PushOperationUI op = new PushOperationUI(repository, currentBranch,
 					config, false);
+			op.setForce(forcePush);
 			op.start();
 		}
 	}
 
-	private Wizard getPushWizard(final RevCommit commit,
-			final PushMode pushTo) {
+	private Wizard getPushWizard(RevCommit commit, PushMode pushTo,
+			boolean forcePush) {
 		Repository repo = repository;
 		if (pushTo != null && repo != null) {
 			try {
-				return pushTo.getWizard(repo, commit);
+				return pushTo.getWizard(repo, commit, forcePush);
 			} catch (IOException e) {
 				Activator.handleError(
 						NLS.bind(UIText.CommitUI_pushFailedMessage, e), e,

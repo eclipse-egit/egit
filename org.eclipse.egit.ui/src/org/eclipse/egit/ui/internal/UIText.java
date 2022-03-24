@@ -5941,7 +5941,16 @@ public class UIText extends NLS {
 	public static String StagingView_CommitAndPushWithEllipsis;
 
 	/** */
+	public static String StagingView_PushDialogAlways;
+
+	/** */
+	public static String StagingView_PushForce;
+
+	/** */
 	public static String StagingView_PushHEAD;
+
+	/** */
+	public static String StagingView_PushSettings;
 
 	/** */
 	public static String StagingView_Committer;

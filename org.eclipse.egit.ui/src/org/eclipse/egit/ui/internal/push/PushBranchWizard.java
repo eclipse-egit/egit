@@ -117,6 +117,16 @@ public class PushBranchWizard extends Wizard {
 		setDefaultPageImageDescriptor(UIIcons.WIZBAN_PUSH);
 	}
 
+	/**
+	 * Pre-sets the "force push" setting.
+	 *
+	 * @param force
+	 *            whether to force push
+	 */
+	public void setForce(boolean force) {
+		pushBranchPage.setForceUpdate(force);
+	}
+
 	@Override
 	public void addPages() {
 		if (addRemotePage != null)

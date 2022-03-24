@@ -390,6 +390,17 @@ public class UIIcons {
 	 */
 	public final static ImageDescriptor IGNORE_RIGHT_CHANGES;
 
+	/**
+	 * Icon for the "Push Settings" in the staging view.
+	 */
+	public final static ImageDescriptor SETTINGS;
+
+	/**
+	 * Icon for the "Push Settings" in the staging view when "force push" is
+	 * enabled.
+	 */
+	public final static ImageDescriptor SETTINGS_FORCE;
+
 	/** base URL */
 	public final static URL base;
 
@@ -516,6 +527,9 @@ public class UIIcons {
 		REMOVE_FROM_REPO_GROUP = map("obj16/clear.png"); //$NON-NLS-1$
 		IGNORE_LEFT_CHANGES = map("etool16/merge_ignore_left.png"); //$NON-NLS-1$
 		IGNORE_RIGHT_CHANGES = map("etool16/merge_ignore_right.png"); //$NON-NLS-1$
+		SETTINGS = map("obj16/settings.png"); //$NON-NLS-1$
+		SETTINGS_FORCE = new DecorationOverlayIcon(SETTINGS, OVR_STAGED_ADD,
+				IDecoration.TOP_RIGHT);
 	}
 
 	private static ImageDescriptor map(final String icon) {

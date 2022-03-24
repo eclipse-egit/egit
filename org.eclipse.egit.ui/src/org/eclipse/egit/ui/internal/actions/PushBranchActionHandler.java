@@ -32,7 +32,8 @@ public class PushBranchActionHandler extends RepositoryActionHandler {
 			return null;
 		}
 		try {
-			Wizard wizard = PushMode.UPSTREAM.getWizard(repository, null);
+			Wizard wizard = PushMode.UPSTREAM.getWizard(repository, null,
+					false);
 			if (wizard != null) {
 				PushWizardDialog dlg = new PushWizardDialog(getShell(event),
 						wizard);
