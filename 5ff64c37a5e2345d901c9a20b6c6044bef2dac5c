@@ -16,6 +16,23 @@
       "message": "Gunnar, can you give this a try? I think this should solve your use case, while still only pushing the currently checked out branch. The staging view has a new drop-down menu next to the \"Commit \u0026 Push\" button where the user can set a sticky \"force push\" flag. (Sticky per repository.)",
       "revId": "5ff64c37a5e2345d901c9a20b6c6044bef2dac5c",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "97aeb123_3659961b",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2022-03-25T07:15:08Z",
+      "side": 1,
+      "message": "The same would need to be added to the commit dialog.",
+      "revId": "5ff64c37a5e2345d901c9a20b6c6044bef2dac5c",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31"
     }
   ]
 }
