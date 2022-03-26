@@ -49,7 +49,6 @@ import org.eclipse.egit.ui.UIUtils;
 import org.eclipse.egit.ui.internal.UIText;
 import org.eclipse.egit.ui.internal.dialogs.BasicConfigurationDialog;
 import org.eclipse.egit.ui.internal.dialogs.CommitDialog;
-import org.eclipse.egit.ui.internal.push.PushMode;
 import org.eclipse.jface.dialogs.IDialogConstants;
 import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.operation.IRunnableWithProgress;
@@ -211,19 +210,14 @@ public class CommitUI  {
 			commitOperation.setAmending(true);
 		commitOperation.setSign(commitDialog.isSignCommit());
 
-		final boolean gerritMode = commitDialog.getCreateChangeId();
-
-		PushMode pushMode = null;
-		if (commitDialog.isPushRequested()) {
-			pushMode = gerritMode ? PushMode.GERRIT : PushMode.UPSTREAM;
-		}
-
-		commitOperation.setComputeChangeId(gerritMode);
+		commitOperation.setComputeChangeId(commitDialog.getCreateChangeId());
 		commitOperation.setCommitAll(commitHelper.isMergedResolved);
 		if (commitHelper.isMergedResolved)
 			commitOperation.setRepository(repo);
 		Job commitJob = new CommitJob(repo, commitOperation)
-				.setPushUpstream(pushMode);
+				.setPushUpstream(commitDialog.getPushMode())
+				.setForce(commitDialog.isForce())
+				.setDialog(commitDialog.alwaysShowPushDialog());
 		commitJob.schedule();
 
 		return true;

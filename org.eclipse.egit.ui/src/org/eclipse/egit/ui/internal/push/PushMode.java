@@ -28,22 +28,26 @@ public enum PushMode {
 	UPSTREAM {
 		@Override
 		public Wizard getWizard(@NonNull Repository repository,
-				RevCommit commit)
+				RevCommit commit, boolean force)
 				throws IOException {
+			PushBranchWizard result = null;
 			String fullBranch = repository.getFullBranch();
 			if (fullBranch != null
 					&& fullBranch.startsWith(Constants.R_HEADS)) {
 				Ref ref = repository.exactRef(fullBranch);
-				return new PushBranchWizard(repository, ref);
+				result = new PushBranchWizard(repository, ref);
 			} else if (commit != null) {
-				return new PushBranchWizard(repository, commit.getId());
+				result = new PushBranchWizard(repository, commit.getId());
 			} else {
 				ObjectId head = repository.resolve(Constants.HEAD);
 				if (head != null) {
-					return new PushBranchWizard(repository, head);
+					result = new PushBranchWizard(repository, head);
 				}
 			}
-			return null;
+			if (result != null) {
+				result.setForce(force);
+			}
+			return result;
 		}
 	},
 
@@ -51,7 +55,7 @@ public enum PushMode {
 	GERRIT {
 		@Override
 		public Wizard getWizard(@NonNull Repository repository,
-				RevCommit commit)
+				RevCommit commit, boolean force)
 				throws IOException {
 			Ref ref = repository.exactRef(Constants.HEAD);
 			if (ref != null) {
@@ -68,11 +72,14 @@ public enum PushMode {
 	 *            to push to
 	 * @param commit
 	 *            to push
+	 * @param force
+	 *            whether to pre-configure the wizard for force pushing, if
+	 *            applicable
 	 * @return a {@link Wizard}, or {@code null} if the repo has no HEAD
 	 * @throws IOException
 	 *             if some I/O problem prevent reading information, for instance
 	 *             from a git config file
 	 */
 	public abstract Wizard getWizard(@NonNull Repository repository,
-			RevCommit commit) throws IOException;
+			RevCommit commit, boolean force) throws IOException;
 }

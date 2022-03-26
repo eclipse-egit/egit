@@ -2541,6 +2541,9 @@ public class UIText extends NLS {
 	public static String CommitDialog_ErrorNoMessage;
 
 	/** */
+	public static String CommitDialog_InvalidConfig;
+
+	/** */
 	public static String CommitDialog_SelectAll;
 
 	/** */
@@ -5879,6 +5882,15 @@ public class UIText extends NLS {
 
 	/** */
 	public static String GitTemplateVariableResolver_GitConfigDescription;
+
+	/** */
+	public static String PushSettings_DialogAlways;
+
+	/** */
+	public static String PushSettings_Force;
+
+	/** */
+	public static String PushSettings_Title;
 
 	/** */
 	public static String StagingView_CompareWithHeadMenuLabel;

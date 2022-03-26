@@ -92,6 +92,8 @@ public class PushOperationUI {
 
 	private @NonNull PushMode pushMode = PushMode.UPSTREAM;
 
+	private boolean force;
+
 	/**
 	 * Push to the given remote using the git configuration, pushing either
 	 * whatever is configured in the push refspecs of the {@link RemoteConfig}
@@ -273,8 +275,8 @@ public class PushOperationUI {
 						&& trackingBranchName.startsWith(Constants.R_HEADS)) {
 					remoteBranchName = trackingBranchName;
 				}
-				pushRefSpecs
-						.add(new RefSpec(branchName + ':' + remoteBranchName));
+				pushRefSpecs.add(new RefSpec((force ? "+" : "") + branchName //$NON-NLS-1$ //$NON-NLS-2$
+						+ ':' + remoteBranchName));
 			}
 
 			try {
@@ -336,6 +338,16 @@ public class PushOperationUI {
 	 */
 	public void setPushMode(@NonNull PushMode mode) {
 		pushMode = mode;
+	}
+
+	/**
+	 * If the push is for a specific branch (as in "Commit & Push", set whether
+	 * to force push.
+	 *
+	 * @param force
+	 */
+	public void setForce(boolean force) {
+		this.force = force;
 	}
 
 	/**
@@ -485,7 +497,7 @@ public class PushOperationUI {
 
 	private static void pushBranchDialog(Shell shell,
 			@NonNull Repository repo) throws IOException {
-		Wizard wizard = PushMode.UPSTREAM.getWizard(repo, null);
+		Wizard wizard = PushMode.UPSTREAM.getWizard(repo, null, false);
 		if (wizard != null) {
 			PushWizardDialog dialog = new PushWizardDialog(shell, wizard);
 			dialog.open();
