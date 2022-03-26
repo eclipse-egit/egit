@@ -4736,9 +4736,10 @@ public class StagingView extends ViewPart
 			pushMode = PushMode.UPSTREAM; // default mode
 			boolean withChangeId = addChangeIdAction.isChecked();
 			if (repository == currentRepository) {
-				pushMode = currentPushMode.get(Boolean.valueOf(withChangeId));
-				if (pushMode != null) {
-					return pushMode;
+				PushMode cached = currentPushMode
+						.get(Boolean.valueOf(withChangeId));
+				if (cached != null) {
+					return cached;
 				}
 			}
 			try {
