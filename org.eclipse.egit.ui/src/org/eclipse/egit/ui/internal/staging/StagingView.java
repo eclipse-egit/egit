@@ -99,6 +99,7 @@ import org.eclipse.egit.ui.internal.commit.CommitJob;
 import org.eclipse.egit.ui.internal.commit.CommitMessageHistory;
 import org.eclipse.egit.ui.internal.commit.CommitProposalProcessor;
 import org.eclipse.egit.ui.internal.commit.DiffViewer;
+import org.eclipse.egit.ui.internal.commit.PushSettings;
 import org.eclipse.egit.ui.internal.components.DropDownMenuAction;
 import org.eclipse.egit.ui.internal.components.PartVisibilityListener;
 import org.eclipse.egit.ui.internal.components.RepositoryMenuUtil.RepositoryToolbarAction;
@@ -745,6 +746,8 @@ public class StagingView extends ViewPart
 
 	private Button commitAndPushButton;
 
+	private PushSettings pushSettings;
+
 	private Section rebaseSection;
 
 	private Button rebaseContinueButton;
@@ -1214,10 +1217,16 @@ public class StagingView extends ViewPart
 				.createComposite(buttonsContainer);
 		GridDataFactory.fillDefaults().align(SWT.FILL, SWT.CENTER)
 				.applyTo(commitButtonsContainer);
-		GridLayoutFactory.fillDefaults().numColumns(2)
+		GridLayoutFactory.fillDefaults().numColumns(3)
 				.applyTo(commitButtonsContainer);
 
-		this.commitAndPushButton = toolkit.createButton(commitButtonsContainer,
+		pushSettings = new PushSettings();
+		Control pushSettingsUi = pushSettings
+				.createControl(commitButtonsContainer);
+		GridDataFactory.fillDefaults().align(SWT.FILL, SWT.CENTER)
+				.applyTo(pushSettingsUi);
+
+		commitAndPushButton = toolkit.createButton(commitButtonsContainer,
 				UIText.StagingView_CommitAndPushWithEllipsis, SWT.PUSH);
 		commitAndPushButton.setImage(getImage(UIIcons.PUSH));
 		commitAndPushButton.addSelectionListener(new SelectionAdapter() {
@@ -1239,7 +1248,8 @@ public class StagingView extends ViewPart
 					return;
 				}
 				try {
-					Wizard wizard = mode.getWizard(repository, null);
+					Wizard wizard = mode.getWizard(repository, null,
+							pushSettings.isForce());
 					if (wizard != null) {
 						PushWizardDialog dialog = new PushWizardDialog(
 								commitAndPushButton.getShell(), wizard);
@@ -1253,7 +1263,7 @@ public class StagingView extends ViewPart
 		GridDataFactory.fillDefaults().align(SWT.FILL, SWT.CENTER)
 				.applyTo(commitAndPushButton);
 
-		this.commitButton = toolkit.createButton(commitButtonsContainer,
+		commitButton = toolkit.createButton(commitButtonsContainer,
 				UIText.StagingView_Commit, SWT.PUSH);
 		commitButton.setImage(getImage(UIIcons.COMMIT));
 		commitButton.setText(UIText.StagingView_Commit);
@@ -1537,13 +1547,19 @@ public class StagingView extends ViewPart
 	 */
 	private void updateCommitAndPush(Repository repository) {
 		PushMode pushMode = getPushMode(repository);
-		commitAndPushButton.setImage(getImage(
-				pushMode == PushMode.GERRIT ? UIIcons.GERRIT : UIIcons.PUSH));
+		if (pushMode == PushMode.GERRIT) {
+			pushSettings.setVisible(false);
+			commitAndPushButton.setImage(getImage(UIIcons.GERRIT));
+		} else {
+			pushSettings.setVisible(true);
+			pushSettings.setEnabled(commitAndPushButton.isEnabled());
+			commitAndPushButton.setImage(getImage(UIIcons.PUSH));
+		}
 		commitAndPushButton.setText(pushesHeadOnly ? UIText.StagingView_PushHEAD
 				: canPushWithoutConfirmation(pushMode)
 						? UIText.StagingView_CommitAndPush
 						: UIText.StagingView_CommitAndPushWithEllipsis);
-		commitAndPushButton.requestLayout();
+		commitAndPushButton.getParent().requestLayout();
 	}
 
 	private void saveSashFormWeightsOnDisposal(final SashForm sashForm,
@@ -4042,6 +4058,7 @@ public class StagingView extends ViewPart
 		StagingViewUpdate update = new StagingViewUpdate(null, null, null);
 		setStagingViewerInput(unstagedViewer, update, null, null);
 		setStagingViewerInput(stagedViewer, update, null, null);
+		pushSettings.load(null);
 		enableCommitWidgets(false);
 		refreshAction.setEnabled(false);
 		updateSectionText();
@@ -4135,6 +4152,7 @@ public class StagingView extends ViewPart
 			if (repositoryChanged) {
 				titleNode = new RepositoryNode(null, repository);
 				updateTitle(true);
+				pushSettings.load(repository);
 				currentPushMode.clear();
 				// Reset paths, they're from the old repository
 				resetPathsToExpand();
@@ -4767,7 +4785,9 @@ public class StagingView extends ViewPart
 		}
 		Job commitJob = new CommitJob(currentRepository, commitOperation)
 				.setOpenCommitEditor(openNewCommitsAction.isChecked())
-				.setPushUpstream(pushMode);
+				.setPushUpstream(pushMode)
+				.setForce(pushSettings.isForce())
+				.setDialog(pushSettings.alwaysShowDialog());
 
 		commitJob.addJobChangeListener(new JobChangeAdapter() {
 
@@ -4871,6 +4891,10 @@ public class StagingView extends ViewPart
 
 		if (cacheEntry != null) {
 			cacheEntry.removeIndexDiffChangedListener(myIndexDiffListener);
+		}
+
+		if (pushSettings != null) {
+			pushSettings.dispose();
 		}
 
 		if (undoRedoActionGroup != null) {
@@ -5138,9 +5162,7 @@ public class StagingView extends ViewPart
 		if (repo != null && pushMode != PushMode.GERRIT) {
 			final RemoteConfig config = SimpleConfigurePushDialog
 					.getConfiguredRemote(repo);
-			boolean alwaysShowPushWizard = Activator.getDefault()
-					.getPreferenceStore().getBoolean(
-							UIPreferences.ALWAYS_SHOW_PUSH_WIZARD_ON_COMMIT);
+			boolean alwaysShowPushWizard = pushSettings.alwaysShowDialog();
 			return config != null && !alwaysShowPushWizard;
 		}
 		return false;
