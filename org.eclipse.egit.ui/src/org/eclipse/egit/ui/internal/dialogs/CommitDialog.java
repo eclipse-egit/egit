@@ -36,6 +36,8 @@ import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.Path;
 import org.eclipse.core.runtime.jobs.IJobChangeEvent;
 import org.eclipse.core.runtime.jobs.JobChangeAdapter;
+import org.eclipse.egit.core.RepositoryUtil;
+import org.eclipse.egit.core.internal.gerrit.GerritUtil;
 import org.eclipse.egit.core.internal.signing.GpgSetup;
 import org.eclipse.egit.core.internal.util.ResourceUtil;
 import org.eclipse.egit.ui.Activator;
@@ -48,12 +50,14 @@ import org.eclipse.egit.ui.internal.UIText;
 import org.eclipse.egit.ui.internal.commit.CommitHelper;
 import org.eclipse.egit.ui.internal.commit.CommitMessageHistory;
 import org.eclipse.egit.ui.internal.commit.CommitProposalProcessor;
+import org.eclipse.egit.ui.internal.commit.PushSettings;
 import org.eclipse.egit.ui.internal.components.CachedCheckboxTreeViewer;
 import org.eclipse.egit.ui.internal.components.FilteredCheckboxTree;
 import org.eclipse.egit.ui.internal.decorators.IProblemDecoratable;
 import org.eclipse.egit.ui.internal.decorators.ProblemLabelDecorator;
 import org.eclipse.egit.ui.internal.dialogs.CommitItem.Status;
 import org.eclipse.egit.ui.internal.dialogs.CommitMessageComponent.CommitStatus;
+import org.eclipse.egit.ui.internal.push.PushMode;
 import org.eclipse.egit.ui.internal.staging.StagingView;
 import org.eclipse.jface.action.Action;
 import org.eclipse.jface.action.IAction;
@@ -97,6 +101,7 @@ import org.eclipse.jgit.lib.FileMode;
 import org.eclipse.jgit.lib.IndexDiff;
 import org.eclipse.jgit.lib.Repository;
 import org.eclipse.jgit.lib.RepositoryState;
+import org.eclipse.jgit.transport.RemoteConfig;
 import org.eclipse.jgit.treewalk.FileTreeIterator;
 import org.eclipse.jgit.treewalk.filter.PathFilterGroup;
 import org.eclipse.osgi.util.NLS;
@@ -409,7 +414,11 @@ public class CommitDialog extends TitleAreaDialog {
 
 	private Repository repository;
 
-	private boolean isPushRequested = false;
+	private boolean isGerritRepo;
+
+	private boolean pushRequested;
+
+	private PushSettings pushSettings;
 
 	private boolean signCommit = false;
 
@@ -425,7 +434,9 @@ public class CommitDialog extends TitleAreaDialog {
 	}
 
 	/**
-	 * @return The message the user entered
+	 * Retrieves the commit message.
+	 *
+	 * @return the message the user entered
 	 */
 	public String getCommitMessage() {
 		return commitMessage;
@@ -433,10 +444,32 @@ public class CommitDialog extends TitleAreaDialog {
 
 	/**
 	 * Preset a commit message. This might be for amending a commit.
-	 * @param s the commit message
+	 *
+	 * @param s
+	 *            the commit message
 	 */
 	public void setCommitMessage(String s) {
 		this.commitMessage = s;
+	}
+
+	/**
+	 * Tells whether a push should be a force push.
+	 *
+	 * @return {@code true} if the "force push" flag is set, {@code false}
+	 *         otherwise
+	 */
+	public boolean isForce() {
+		return pushSettings != null && pushSettings.isForce();
+	}
+
+	/**
+	 * Tells whether a push should show a push dialog.
+	 *
+	 * @return {@code true} if a dialog should be shown, {@code false} if the
+	 *         push may be performed without dialog, if possible
+	 */
+	public boolean alwaysShowPushDialog() {
+		return pushSettings != null && pushSettings.alwaysShowDialog();
 	}
 
 	/**
@@ -447,8 +480,7 @@ public class CommitDialog extends TitleAreaDialog {
 	 * @param commentChar
 	 *            to use
 	 */
-	public void setCleanupMode(@NonNull
-	CleanupMode mode, char commentChar) {
+	public void setCleanupMode(@NonNull CleanupMode mode, char commentChar) {
 		this.cleanup = mode;
 		this.commentChar = commentChar;
 	}
@@ -591,20 +623,56 @@ public class CommitDialog extends TitleAreaDialog {
 	}
 
 	/**
-	 * @return true if push shall be executed
+	 * Retrieves the {@link PushMode}.
+	 *
+	 * @return the {@link PushMode}, or {@code null} if no push was requested
 	 */
-	public boolean isPushRequested() {
-		return isPushRequested;
+	public PushMode getPushMode() {
+		if (!pushRequested) {
+			return null;
+		}
+		return isGerritRepo && getCreateChangeId() ? PushMode.GERRIT
+				: PushMode.UPSTREAM;
+	}
+
+	private boolean isGerritRepo() {
+		try {
+			return RemoteConfig.getAllRemoteConfigs(repository.getConfig())
+					.stream().anyMatch(GerritUtil::isGerritPush);
+		} catch (Exception e) {
+			Activator.handleError(
+					MessageFormat
+							.format(UIText.CommitDialog_InvalidConfig,
+									RepositoryUtil.INSTANCE
+											.getRepositoryName(repository)),
+					e, true);
+		}
+		return false;
 	}
 
 	@Override
 	protected void createButtonsForButtonBar(Composite parent) {
 		toolkit.adapt(parent, false, false);
-		commitAndPushButton = createButton(parent, COMMIT_AND_PUSH_ID,
+		isGerritRepo = isGerritRepo();
+		GridLayout buttonsLayout = (GridLayout) parent.getLayout();
+		GridLayoutFactory.fillDefaults().numColumns(2).applyTo(parent);
+		pushSettings = new PushSettings(repository);
+		Control pushControl = pushSettings.createControl(parent);
+		GridDataFactory.fillDefaults().align(SWT.FILL, SWT.CENTER)
+				.applyTo(pushControl);
+		if (isGerritRepo && commitMessageComponent.getCreateChangeId()) {
+			pushSettings.setVisible(false);
+		}
+		Composite buttonsContainer = new Composite(parent, SWT.NONE);
+		buttonsContainer.setLayout(buttonsLayout);
+		GridDataFactory.fillDefaults().align(SWT.FILL, SWT.CENTER)
+				.applyTo(buttonsContainer);
+		toolkit.adapt(buttonsContainer, false, false);
+		commitAndPushButton = createButton(buttonsContainer, COMMIT_AND_PUSH_ID,
 				UIText.CommitDialog_CommitAndPush, false);
-		commitButton = createButton(parent, IDialogConstants.OK_ID,
+		commitButton = createButton(buttonsContainer, IDialogConstants.OK_ID,
 				UIText.CommitDialog_Commit, true);
-		createButton(parent, IDialogConstants.CANCEL_ID,
+		createButton(buttonsContainer, IDialogConstants.CANCEL_ID,
 				IDialogConstants.CANCEL_LABEL, false);
 		updateMessage();
 	}
@@ -614,7 +682,7 @@ public class CommitDialog extends TitleAreaDialog {
 		if (IDialogConstants.OK_ID == buttonId)
 			okPressed();
 		else if (COMMIT_AND_PUSH_ID == buttonId) {
-			isPushRequested = true;
+			pushRequested = true;
 			okPressed();
 		} else if (IDialogConstants.CANCEL_ID == buttonId)
 			cancelPressed();
@@ -728,6 +796,9 @@ public class CommitDialog extends TitleAreaDialog {
 			@Override
 			public void widgetDisposed(DisposeEvent e) {
 				toolkit.dispose();
+				if (pushSettings != null) {
+					pushSettings.dispose();
+				}
 			}
 		});
 		return super.createContents(parent);
@@ -1130,6 +1201,10 @@ public class CommitDialog extends TitleAreaDialog {
 			@Override
 			public void updateChangeIdToggleSelection(boolean selection) {
 				changeIdItem.setSelection(selection);
+				if (isGerritRepo) {
+					pushSettings.setVisible(!selection);
+					pushSettings.getControl().getParent().requestLayout();
+				}
 			}
 
 			@Override

@@ -275,7 +275,7 @@ public final class UIPreferences {
 	 */
 	public static final String STAGING_VIEW_PRESENTATION_CHANGED = "StagingView_Presentation_Changed"; //$NON-NLS-1$
 	/** */
-	public static final String PAGE_COMMIT_PREFERENCES = "org.eclipse.egit.ui.internal.preferences.CommitDialogPreferencePage"; //$NON-NLS-1$
+	public static final String PAGE_COMMIT_PREFERENCES = "org.eclipse.egit.ui.internal.preferences.CommittingPreferencePage"; //$NON-NLS-1$
 	/** */
 	public static final String BLAME_IGNORE_WHITESPACE = "Blame_IgnoreWhitespace"; //$NON-NLS-1$
 	/** */
