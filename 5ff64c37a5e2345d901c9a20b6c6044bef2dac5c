@@ -33,6 +33,24 @@
       "message": "The same would need to be added to the commit dialog.",
       "revId": "5ff64c37a5e2345d901c9a20b6c6044bef2dac5c",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "ddf62a4e_0c0d4075",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2022-03-26T17:39:20Z",
+      "side": 1,
+      "message": "Done.",
+      "parentUuid": "97aeb123_3659961b",
+      "revId": "5ff64c37a5e2345d901c9a20b6c6044bef2dac5c",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31"
     }
   ]
 }
