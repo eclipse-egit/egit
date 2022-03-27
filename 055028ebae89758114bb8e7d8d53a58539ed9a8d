@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "f5287586_0e3a5231",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2022-03-27T15:25:45Z",
+      "side": 1,
+      "message": "PS 4: I put a bit more effort into the cogwheel icon. I think this looks better in both light \u0026 dark modes. Since the gradient fill makes the top right cog lighter, the \"+\" overlay is now also a little bit more prominent.",
+      "revId": "055028ebae89758114bb8e7d8d53a58539ed9a8d",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31"
+    }
+  ]
+}
