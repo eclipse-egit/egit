@@ -413,13 +413,15 @@ public class GitPreferenceRoot extends DoublePreferencesPreferencePage
 	@Override
 	protected void initialize() {
 		super.initialize();
-		useSshAgent.setPropertyChangeListener(event -> {
-			if (FieldEditor.VALUE.equals(event.getProperty())) {
-				defaultSshAgent.setEnabled(
-						((Boolean) event.getNewValue()).booleanValue(),
-						remoteConnectionsGroup);
-			}
-		});
+		if (defaultSshAgent != null) {
+			useSshAgent.setPropertyChangeListener(event -> {
+				if (FieldEditor.VALUE.equals(event.getProperty())) {
+					defaultSshAgent.setEnabled(
+							((Boolean) event.getNewValue()).booleanValue(),
+							remoteConnectionsGroup);
+				}
+			});
+		}
 	}
 
 	private String getProductName() {
