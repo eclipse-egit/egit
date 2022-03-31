@@ -3080,6 +3080,7 @@ public class StagingView extends ViewPart
 		// commit message area would not get updated and cause visual
 		// corruption. A simple requestLayout() is not good enough.
 		if (needsRefresh) {
+			commitMessageSection.requestLayout();
 			commitMessageSection.redraw();
 		}
 	}
