@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "6c410b76_f60c45ab",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 440
+      },
+      "writtenOn": "2022-04-01T18:32:39Z",
+      "side": 1,
+      "message": "Sorry for being late with this question. Is not using any kind of scheduling rule really correct here? I\u0027m not an expert of the jgit internals, but my naive thinking says that \"fetch from upstream\" and \"rename branch\" should not run in parallel, since the first might try to create new files in the current branch (and in the refs directory), while the second is trying to rename the same refs directory. On my Windows machine (with bad git performance due to company anti virus) I regularly have waiting tasks like described in my progress view, and those are currently running one after the other, not concurrently.\nI agree that the workspace job is not necessary.",
+      "revId": "e643798f9760849ac6b17e6832a42a1040606ec5",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31"
+    }
+  ]
+}
