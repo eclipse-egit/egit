@@ -5677,6 +5677,10 @@
                   </test>
                </visibleWhen>
             </menu>
+            <separator
+                  name="org.eclipse.egit.ui.pullPushSeparator"
+                  visible="true">
+            </separator>
             <command
                   commandId="org.eclipse.egit.ui.team.SimplePush"
                   label="%PushToUpstreamAction.label"
