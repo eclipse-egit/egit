@@ -26,20 +26,17 @@ import org.eclipse.egit.ui.internal.CommonUtils;
 import org.eclipse.egit.ui.internal.UIIcons;
 import org.eclipse.egit.ui.internal.UIText;
 import org.eclipse.egit.ui.internal.WorkbenchStyledLabelProvider;
-import org.eclipse.egit.ui.internal.commit.CommitEditor;
 import org.eclipse.egit.ui.internal.commit.RepositoryCommit;
+import org.eclipse.egit.ui.internal.commit.RepositoryCommitOpener;
 import org.eclipse.egit.ui.internal.history.FileDiff;
 import org.eclipse.jface.layout.GridDataFactory;
 import org.eclipse.jface.layout.GridLayoutFactory;
 import org.eclipse.jface.resource.ImageDescriptor;
-import org.eclipse.jface.util.OpenStrategy;
 import org.eclipse.jface.viewers.ColumnViewerToolTipSupport;
 import org.eclipse.jface.viewers.DecorationOverlayIcon;
 import org.eclipse.jface.viewers.DelegatingStyledCellLabelProvider;
 import org.eclipse.jface.viewers.DelegatingStyledCellLabelProvider.IStyledLabelProvider;
 import org.eclipse.jface.viewers.IDecoration;
-import org.eclipse.jface.viewers.ISelection;
-import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.viewers.ITreeContentProvider;
 import org.eclipse.jface.viewers.StructuredSelection;
 import org.eclipse.jface.viewers.StyledString;
@@ -64,7 +61,6 @@ import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.ToolBar;
 import org.eclipse.swt.widgets.Tree;
 import org.eclipse.ui.ISharedImages;
-import org.eclipse.ui.OpenAndLinkWithEditorHelper;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.model.BaseWorkbenchContentProvider;
 import org.eclipse.ui.model.IWorkbenchAdapter3;
@@ -382,7 +378,6 @@ public class FetchResultTable {
 	 * @param parent
 	 *            {@link Composite} to create the table in
 	 */
-	@SuppressWarnings("unused")
 	public FetchResultTable(final Composite parent) {
 		treePanel = new Composite(parent, SWT.NONE);
 		GridLayoutFactory.swtDefaults().numColumns(2).applyTo(treePanel);
@@ -563,33 +558,7 @@ public class FetchResultTable {
 			}
 		});
 
-		new OpenAndLinkWithEditorHelper(treeViewer) {
-
-			@Override
-			protected void linkToEditor(ISelection selection) {
-				// Not supported
-			}
-
-			@Override
-			protected void open(ISelection selection, boolean activate) {
-				handleOpen(selection, OpenStrategy.activateOnOpen());
-			}
-
-			@Override
-			protected void activate(ISelection selection) {
-				handleOpen(selection, true);
-			}
-
-			private void handleOpen(ISelection selection, boolean activateOnOpen) {
-				if (selection instanceof IStructuredSelection) {
-					for (Object element : (IStructuredSelection) selection) {
-						if (element instanceof RepositoryCommit) {
-							CommitEditor.openQuiet((RepositoryCommit) element, activateOnOpen);
-						}
-					}
-				}
-			}
-		};
+		RepositoryCommitOpener.setup(treeViewer);
 	}
 
 	private void addToolbar(Composite parent) {

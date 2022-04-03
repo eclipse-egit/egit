@@ -17,13 +17,12 @@ import org.eclipse.egit.ui.UIUtils;
 import org.eclipse.egit.ui.internal.UIIcons;
 import org.eclipse.egit.ui.internal.UIText;
 import org.eclipse.egit.ui.internal.WorkbenchStyledLabelProvider;
-import org.eclipse.egit.ui.internal.commit.CommitEditor;
 import org.eclipse.egit.ui.internal.commit.RepositoryCommit;
+import org.eclipse.egit.ui.internal.commit.RepositoryCommitOpener;
 import org.eclipse.egit.ui.internal.dialogs.SpellcheckableMessageArea;
 import org.eclipse.jface.dialogs.IDialogSettings;
 import org.eclipse.jface.layout.GridDataFactory;
 import org.eclipse.jface.layout.GridLayoutFactory;
-import org.eclipse.jface.util.OpenStrategy;
 import org.eclipse.jface.viewers.ColumnViewerToolTipSupport;
 import org.eclipse.jface.viewers.DelegatingStyledCellLabelProvider;
 import org.eclipse.jface.viewers.DelegatingStyledCellLabelProvider.IStyledLabelProvider;
@@ -53,7 +52,6 @@ import org.eclipse.swt.widgets.Group;
 import org.eclipse.swt.widgets.Text;
 import org.eclipse.swt.widgets.ToolBar;
 import org.eclipse.swt.widgets.Tree;
-import org.eclipse.ui.OpenAndLinkWithEditorHelper;
 import org.eclipse.ui.model.IWorkbenchAdapter3;
 
 /**
@@ -81,7 +79,6 @@ class PushResultTable {
 		this(parent, null);
 	}
 
-	@SuppressWarnings("unused")
 	PushResultTable(final Composite parent,
 			final IDialogSettings dialogSettings) {
 		root = new SashForm(parent, SWT.VERTICAL);
@@ -226,28 +223,7 @@ class PushResultTable {
 
 		initializeSashWeights(root, new int[] { 3, 2 }, dialogSettings);
 
-		new OpenAndLinkWithEditorHelper(treeViewer) {
-			@Override
-			protected void linkToEditor(ISelection selection) {
-				// Not supported
-			}
-			@Override
-			protected void open(ISelection selection, boolean activate) {
-				handleOpen(selection, OpenStrategy.activateOnOpen());
-			}
-			@Override
-			protected void activate(ISelection selection) {
-				handleOpen(selection, true);
-			}
-			private void handleOpen(ISelection selection, boolean activateOnOpen) {
-				if (selection instanceof IStructuredSelection)
-					for (Object element : ((IStructuredSelection) selection)
-							.toArray())
-						if (element instanceof RepositoryCommit)
-							CommitEditor.openQuiet((RepositoryCommit) element, activateOnOpen);
-			}
-		};
-
+		RepositoryCommitOpener.setup(treeViewer);
 	}
 
 	private void addToolbar(Composite parent) {
