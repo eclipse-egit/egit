@@ -280,7 +280,7 @@ public class PushSettings {
 
 		@Override
 		protected Collection<IContributionItem> getActions() {
-			if (!isEnabled()) {
+			if (!PushSettingsAction.this.isEnabled()) {
 				return Collections.emptyList();
 			}
 			List<IContributionItem> items = new ArrayList<>(2);
