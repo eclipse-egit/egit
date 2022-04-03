@@ -20,20 +20,17 @@ import java.util.Set;
 import org.eclipse.egit.ui.Activator;
 import org.eclipse.egit.ui.UIUtils;
 import org.eclipse.egit.ui.internal.UIText;
-import org.eclipse.egit.ui.internal.commit.CommitEditor;
 import org.eclipse.egit.ui.internal.commit.RepositoryCommit;
+import org.eclipse.egit.ui.internal.commit.RepositoryCommitOpener;
 import org.eclipse.egit.ui.internal.dialogs.CleanupUncomittedChangesDialog;
 import org.eclipse.jface.dialogs.Dialog;
 import org.eclipse.jface.dialogs.IDialogConstants;
 import org.eclipse.jface.dialogs.IDialogSettings;
 import org.eclipse.jface.layout.GridDataFactory;
-import org.eclipse.jface.util.OpenStrategy;
 import org.eclipse.jface.viewers.DelegatingStyledCellLabelProvider;
 import org.eclipse.jface.viewers.DelegatingStyledCellLabelProvider.IStyledLabelProvider;
 import org.eclipse.jface.viewers.ILabelProviderListener;
-import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.IStructuredContentProvider;
-import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.viewers.StyledString;
 import org.eclipse.jface.viewers.TableViewer;
 import org.eclipse.jface.viewers.Viewer;
@@ -56,7 +53,6 @@ import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Text;
-import org.eclipse.ui.OpenAndLinkWithEditorHelper;
 import org.eclipse.ui.model.WorkbenchLabelProvider;
 
 /**
@@ -110,7 +106,6 @@ public class MergeResultDialog extends Dialog {
 				true).setFocus();
 	}
 
-	@SuppressWarnings("unused")
 	@Override
 	public Control createDialogArea(final Composite parent) {
 		final Composite composite = (Composite) super.createDialogArea(parent);
@@ -242,29 +237,7 @@ public class MergeResultDialog extends Dialog {
 				.align(SWT.FILL, SWT.FILL).span(2, 1)
 				.applyTo(viewer.getControl());
 		viewer.setInput(mergeResult);
-
-		new OpenAndLinkWithEditorHelper(viewer) {
-			@Override
-			protected void linkToEditor(ISelection selection) {
-				// Not supported
-
-			}
-			@Override
-			protected void open(ISelection selection, boolean activate) {
-				handleOpen(selection, OpenStrategy.activateOnOpen());
-			}
-			@Override
-			protected void activate(ISelection selection) {
-				handleOpen(selection, true);
-			}
-			private void handleOpen(ISelection selection, boolean activateOnOpen) {
-				if (selection instanceof IStructuredSelection)
-					for (Object element : ((IStructuredSelection) selection)
-							.toArray())
-						if (element instanceof RepositoryCommit)
-							CommitEditor.openQuiet((RepositoryCommit) element, activateOnOpen);
-			}
-		};
+		RepositoryCommitOpener.setup(viewer);
 
 		return composite;
 	}
