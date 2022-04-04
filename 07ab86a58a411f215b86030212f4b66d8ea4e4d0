@@ -16,6 +16,24 @@
       "message": "I was wondering shortly whether that might introduce some delay under bad circumstances, but I guess that is not a problem, right?",
       "revId": "07ab86a58a411f215b86030212f4b66d8ea4e4d0",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "86f2d3b6_6c55ef68",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2022-04-04T18:22:56Z",
+      "side": 1,
+      "message": "It just moves that delay from the initialization of the staging view or from a git command to some earlier point. But as your thread dump clearly showed, this needs to be done before a git command wants to use it, otherwise if the user has chosen to use the external gpg signer, the git command may still get the BouncyCastle signer and wrongly use that.\n\nOf course, if the Eclipse being started doesn\u0027t have a staging view open, the delay is \"new\". But not really a problem.\n\nNote that real fix for the deadlock is in the JGit changes linked to this bug.",
+      "parentUuid": "e0f917c3_3964332a",
+      "revId": "07ab86a58a411f215b86030212f4b66d8ea4e4d0",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31"
     }
   ]
 }
