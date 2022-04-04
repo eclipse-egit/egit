@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "e0f917c3_3964332a",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 440
+      },
+      "writtenOn": "2022-04-04T17:56:54Z",
+      "side": 1,
+      "message": "I was wondering shortly whether that might introduce some delay under bad circumstances, but I guess that is not a problem, right?",
+      "revId": "07ab86a58a411f215b86030212f4b66d8ea4e4d0",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31"
+    }
+  ]
+}
