@@ -152,7 +152,7 @@ public enum HiddenResources {
 								f.delete(true, sub.newChild(1));
 							} catch (CoreException e) {
 								Activator.logWarning(MessageFormat.format(
-										"Cannot clean up internal hidden resource {}", //$NON-NLS-1$
+										"Cannot clean up internal hidden resource {0}", //$NON-NLS-1$
 										f), e);
 							}
 						}
@@ -166,7 +166,7 @@ public enum HiddenResources {
 							rsc.delete(true, null);
 						} catch (CoreException e) {
 							Activator.logWarning(MessageFormat.format(
-									"Cannot clean up internal hidden folder {}", //$NON-NLS-1$
+									"Cannot clean up internal hidden folder {0}", //$NON-NLS-1$
 									rsc), e);
 						}
 					}
@@ -183,7 +183,7 @@ public enum HiddenResources {
 					monitor);
 		} catch (CoreException e) {
 			Activator.logWarning(MessageFormat.format(
-					"Cannot clean up internal hidden project {}", project), e); //$NON-NLS-1$
+					"Cannot clean up internal hidden project {0}", project), e); //$NON-NLS-1$
 		}
 	}
 
