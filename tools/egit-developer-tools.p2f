@@ -102,11 +102,6 @@
         <repository location='https://download.eclipse.org/egit/updates-nightly'/>
       </repositories>
     </iu>
-    <iu id='org.eclipse.egit.mylyn.feature.group' name='EGit Mylyn' version='0.0.0'>
-      <repositories size='1'>
-        <repository location='https://download.eclipse.org/egit/updates-nightly'/>
-      </repositories>
-    </iu>
     <iu id='org.eclipse.jgit.feature.group' name='Eclipse JGit' version='0.0.0'>
       <repositories size='1'>
         <repository location='https://download.eclipse.org/egit/updates-nightly'/>
@@ -130,26 +125,6 @@
     <iu id='com.github.spotbugs.plugin.eclipse.feature.group' name='SpotBugs Feature' version='0.0.0'>
       <repositories size='1'>
         <repository location='https://spotbugs.github.io/eclipse/'/>
-      </repositories>
-    </iu>
-    <iu id='org.eclipse.mylyn_feature.feature.group' name='Mylyn' version='0.0.0'>
-      <repositories size='1'>
-        <repository location='https://download.eclipse.org/mylyn/snapshots/weekly'/>
-      </repositories>
-    </iu>
-    <iu id='org.eclipse.mylyn.bugzilla_feature.feature.group' name='Mylyn Tasks Connector: Bugzilla' version='0.0.0'>
-      <repositories size='1'>
-        <repository location='https://download.eclipse.org/mylyn/snapshots/weekly'/>
-      </repositories>
-    </iu>
-    <iu id='org.eclipse.mylyn.reviews.feature.feature.group' name='Mylyn Reviews' version='0.0.0'>
-      <repositories size='1'>
-        <repository location='https://download.eclipse.org/reviews/nightly'/>
-      </repositories>
-    </iu>
-    <iu id='org.eclipse.mylyn.gerrit.feature.feature.group' name='Mylyn Reviews Connector: Gerrit' version='0.0.0'>
-      <repositories size='1'>
-        <repository location='https://download.eclipse.org/reviews/nightly'/>
       </repositories>
     </iu>
     <iu id='org.eclipse.swtbot.forms.feature.group' name='SWTBot for Eclipse Forms Testing (incubation)' version='0.0.0'>
