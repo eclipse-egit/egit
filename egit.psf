@@ -10,9 +10,6 @@
 <project reference="1.0,https://git.eclipse.org/r/egit/egit,master,org.eclipse.egit.gitflow"/>
 <project reference="1.0,https://git.eclipse.org/r/egit/egit,master,org.eclipse.egit.gitflow-feature"/>
 <project reference="1.0,https://git.eclipse.org/r/egit/egit,master,org.eclipse.egit.gitflow.ui"/>
-<project reference="1.0,https://git.eclipse.org/r/egit/egit,master,org.eclipse.egit.mylyn-feature"/>
-<project reference="1.0,https://git.eclipse.org/r/egit/egit,master,org.eclipse.egit.mylyn.ui"/>
-<project reference="1.0,https://git.eclipse.org/r/egit/egit,master,org.eclipse.egit.mylyn.ui.test"/>
 <project reference="1.0,https://git.eclipse.org/r/egit/egit,master,org.eclipse.egit.repository"/>
 <project reference="1.0,https://git.eclipse.org/r/egit/egit,master,org.eclipse.egit.source-feature"/>
 <project reference="1.0,https://git.eclipse.org/r/egit/egit,master,org.eclipse.egit.target"/>
