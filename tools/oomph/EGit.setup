@@ -215,34 +215,6 @@
       <description>EGit</description>
     </setupTask>
     <setupTask
-        xsi:type="git:GitCloneTask"
-        id="git.clone.egit-github"
-        remoteURI="egit/egit-github"
-        checkoutBranch="master">
-      <annotation
-          source="http://www.eclipse.org/oomph/setup/InducedChoices">
-        <detail
-            key="inherit">
-          <value>eclipse.git.gerrit.remoteURIs</value>
-        </detail>
-        <detail
-            key="label">
-          <value>EGit GitHub Connector Gerrit Repository</value>
-        </detail>
-        <detail
-            key="target">
-          <value>remoteURI</value>
-        </detail>
-      </annotation>
-      <configSections
-          name="gerrit">
-        <properties
-            key="createchangeid"
-            value="true"/>
-      </configSections>
-      <description>EGit GitHub Connector</description>
-    </setupTask>
-    <setupTask
         xsi:type="projects:ProjectsImportTask">
       <sourceLocator
           rootFolder="${git.clone.jgit.location}"
@@ -257,9 +229,6 @@
       <sourceLocator
           rootFolder="${git.clone.egit.location}"
           locateNestedProjects="true"/>
-      <sourceLocator
-          rootFolder="${git.clone.egit-github.location}"
-          locateNestedProjects="true"/>
       <description>Import the EGit/JGit projects from the git clones into the workspace</description>
     </setupTask>
     <setupTask
@@ -271,31 +240,6 @@
     <setupTask
         xsi:type="setup.workingsets:WorkingSetTask"
         id="egit.workingsets">
-      <workingSet
-          name="EGit GitHub Connector">
-        <predicate
-            xsi:type="predicates:AndPredicate">
-          <operand
-              xsi:type="predicates:RepositoryPredicate"
-              project="org.eclipse.mylyn.github.core"/>
-          <operand
-              xsi:type="workingsets:ExclusionPredicate"
-              excludedWorkingSet="//@streams[name='master']/@setupTasks.5/@workingSets.6 //@streams[name='master']/@setupTasks.5/@workingSets.1"/>
-        </predicate>
-      </workingSet>
-      <workingSet
-          name="EGit GitHub Connector Tests">
-        <predicate
-            xsi:type="predicates:AndPredicate">
-          <operand
-              xsi:type="predicates:RepositoryPredicate"
-              project="org.eclipse.mylyn.github.core"/>
-          <operand
-              xsi:type="predicates:FilePredicate"
-              filePattern="META-INF/MANIFEST.MF"
-              contentPattern="org\.junit"/>
-        </predicate>
-      </workingSet>
       <workingSet
           name="EGit">
         <predicate
