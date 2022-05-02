@@ -2,5 +2,13 @@ provides.0.namespace = org.eclipse.equinox.p2.iu
 provides.0.name = org.eclipse.egit.import.feature.group
 provides.0.version = $version$
 
+provides.1.namespace = org.eclipse.equinox.p2.iu
+provides.1.name = org.eclipse.egit.mylyn.feature.group
+provides.1.version = $version$
+
+provides.2.namespace = org.eclipse.equinox.p2.iu
+provides.2.name = org.eclipse.mylyn.github.feature.feature.group
+provides.2.version = $version$
+
 update.matchExp=providedCapabilities.exists(pc | pc.namespace == 'org.eclipse.equinox.p2.iu' && (pc.name == 'org.eclipse.egit.ui' && pc.version < '$version$' || pc.name == 'org.eclipse.egit.ui.smartimport' || pc.name == 'org.eclipse.egit.ui.importer') )
 update.severity=0
