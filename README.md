@@ -20,10 +20,6 @@ This package is composed of the following major components.
     branching model.
 - __org.eclipse.egit.gitflow.ui__: bundle implementing a user interface
     for the gitflow branching model.
-- __org.eclipse.egit.mylyn__: bundle integrating _EGit_ with _Eclipse Mylyn_
-    which provides integration for Eclipse with task tracking systems.
-- __org.eclipse.egit.mylyn.ui__: bundle integrating _EGit_ user interface with
-    _Eclipse Mylyn_ task based user interface.
 - __org.eclipse.egit.target__: Eclipse target platform providing EGit
     3rd party dependencies for the build and for running EGit in Eclipse
     workspace.
@@ -37,7 +33,6 @@ This package is composed of the following major components.
 - __org.eclipse.egit.core.junit__: Reusable classes used by _EGit_ tests
 - __org.eclipse.egit.core.test__: Unit tests for org.eclipse.egit.core.
 - __org.eclipse.egit.gitflow.test__: Unit tests for org.eclipse.egit.gitflow.
-- __org.eclipse.egit.mylyn.ui.test__: UI tests for org.eclipse.egit.mylyn.ui.
 - __org.eclipse.egit.ui.importer.test__: UI tests for org.eclipse.egit.ui.smartimport.
 - __org.eclipse.egit.ui.test__: UI tests for org.eclipse.egit.ui.
 
@@ -49,8 +44,6 @@ This package is composed of the following major components.
     implementation bundles
 - __org.eclipse.egit.gitflow-feature__: Eclipse feature for installing the
     optional gitflow bundle.
-- __org.eclipse.egit.mylyn-feature__: Eclipse feature for installing the EGit
-    task based interface integration.
 - __org.eclipse.egit.repository__: Definitions for the EGit p2 repository
     which can be used to install and upgrade EGit, includes all the features
     and plugins from the JGit p2 repository.
