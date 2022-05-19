@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "1ec3db8e_29106ffc",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/decorators/GitLightweightDecorator.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 360,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2022-05-19T14:24:53Z",
+      "side": 1,
+      "message": "This asynchronously executed task should probably check that neither the display nor the decorator itself was disposed in the meantime.\n\nIs it possible now that some early decoration tries to access colors or fonts before they are initialized?",
+      "revId": "02ce4e9577412fd20810a99270b5154678535747",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31"
+    }
+  ]
+}
