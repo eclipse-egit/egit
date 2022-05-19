@@ -100,6 +100,23 @@
     {
       "unresolved": false,
       "key": {
+        "uuid": "de1f1a1a_d8cea99f",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1093
+      },
+      "writtenOn": "2022-05-19T06:25:13Z",
+      "side": 1,
+      "message": "If the team agrees in general about this change, I can update the Gerrit based on Matthias suggestions.",
+      "revId": "419ff0f91b996f8095319136c29e4602e85a33d7",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31"
+    },
+    {
+      "unresolved": false,
+      "key": {
         "uuid": "e7dfcf21_53ba5109",
         "filename": "org.eclipse.egit.ui/plugin.properties",
         "patchSetId": 1
