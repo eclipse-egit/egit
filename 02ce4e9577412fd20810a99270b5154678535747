@@ -34,6 +34,24 @@
       "parentUuid": "1ec3db8e_29106ffc",
       "revId": "02ce4e9577412fd20810a99270b5154678535747",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "f5645942_aac65fe8",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/decorators/GitLightweightDecorator.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 360,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2022-05-19T17:14:19Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "dce8bc1b_9e81dc3b",
+      "revId": "02ce4e9577412fd20810a99270b5154678535747",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31"
     }
   ]
 }
