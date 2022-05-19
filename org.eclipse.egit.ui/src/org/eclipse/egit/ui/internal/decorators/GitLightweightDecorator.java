@@ -335,7 +335,7 @@ public class GitLightweightDecorator extends GitDecorator
 
 		private void reload() {
 			Display display = PlatformUI.getWorkbench().getDisplay();
-			display.syncExec(() -> {
+			Runnable task = () -> {
 				Map<String, Object> newResources = new HashMap<>();
 				ITheme theme = PlatformUI.getWorkbench().getThemeManager()
 						.getCurrentTheme();
@@ -352,8 +352,13 @@ public class GitLightweightDecorator extends GitDecorator
 				colorsOrFonts = newResources;
 				defaultBackground = display
 						.getSystemColor(SWT.COLOR_LIST_BACKGROUND).getRGB();
-			});
-			notifyListeners();
+				notifyListeners();
+			};
+			if (Display.getCurrent() != null) {
+				task.run();
+			} else {
+				display.asyncExec(task);
+			}
 		}
 
 		private void notifyListeners() {
