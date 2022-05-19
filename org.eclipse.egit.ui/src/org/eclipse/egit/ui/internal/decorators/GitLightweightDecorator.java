@@ -324,6 +324,8 @@ public class GitLightweightDecorator extends GitDecorator
 
 		private volatile RGB defaultBackground;
 
+		private volatile boolean disposed;
+
 		/**
 		 * Creates a new {@link ChangeTrackingColorsAndFonts} object.
 		 */
@@ -335,7 +337,10 @@ public class GitLightweightDecorator extends GitDecorator
 
 		private void reload() {
 			Display display = PlatformUI.getWorkbench().getDisplay();
-			display.syncExec(() -> {
+			Runnable task = () -> {
+				if (disposed) {
+					return;
+				}
 				Map<String, Object> newResources = new HashMap<>();
 				ITheme theme = PlatformUI.getWorkbench().getThemeManager()
 						.getCurrentTheme();
@@ -352,8 +357,13 @@ public class GitLightweightDecorator extends GitDecorator
 				colorsOrFonts = newResources;
 				defaultBackground = display
 						.getSystemColor(SWT.COLOR_LIST_BACKGROUND).getRGB();
-			});
-			notifyListeners();
+				notifyListeners();
+			};
+			if (Display.getCurrent() != null) {
+				task.run();
+			} else {
+				display.asyncExec(task);
+			}
 		}
 
 		private void notifyListeners() {
@@ -389,6 +399,10 @@ public class GitLightweightDecorator extends GitDecorator
 		 * reacting on color or font changes.
 		 */
 		public void dispose() {
+			if (disposed) {
+				return;
+			}
+			disposed = true;
 			listeners.clear();
 			PlatformUI.getWorkbench().getThemeManager().getCurrentTheme()
 					.removePropertyChangeListener(themeListener);
