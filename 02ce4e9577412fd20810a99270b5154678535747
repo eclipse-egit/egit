@@ -16,6 +16,24 @@
       "message": "This asynchronously executed task should probably check that neither the display nor the decorator itself was disposed in the meantime.\n\nIs it possible now that some early decoration tries to access colors or fonts before they are initialized?",
       "revId": "02ce4e9577412fd20810a99270b5154678535747",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "dce8bc1b_9e81dc3b",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/decorators/GitLightweightDecorator.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 360,
+      "author": {
+        "id": 1179
+      },
+      "writtenOn": "2022-05-19T14:28:21Z",
+      "side": 1,
+      "message": "\u003e This asynchronously executed task should probably check that neither the display nor the decorator itself was disposed in the meantime.\n\nRight, forgot that.\n\n\u003e Is it possible now that some early decoration tries to access colors or fonts before they are initialized?\n\nYes, see commit message - it will use defaults, what ever it is for fonts/colors, till the UI task does the init right",
+      "parentUuid": "1ec3db8e_29106ffc",
+      "revId": "02ce4e9577412fd20810a99270b5154678535747",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31"
     }
   ]
 }
