@@ -19,13 +19,13 @@ import org.eclipse.egit.ui.internal.UIText;
 public enum GitServer {
 
 	/**
-	 * A {@link GitServer} describing Github git servers.
+	 * A {@link GitServer} describing GitHub git servers.
 	 */
 	GITHUB(ServerType.GITHUB) {
 
 		@Override
 		public String getName() {
-			return "Github"; //$NON-NLS-1$
+			return "GitHub"; //$NON-NLS-1$
 		}
 
 		@Override
@@ -55,18 +55,18 @@ public enum GitServer {
 
 		@Override
 		public String getWizardTitle() {
-			return UIText.GitServer_WizardTitleGithub;
+			return UIText.GitServer_WizardTitleGitHub;
 		}
 	},
 
 	/**
-	 * A {@link GitServer} describing Gitlab git servers.
+	 * A {@link GitServer} describing GitLab git servers.
 	 */
 	GITLAB(ServerType.GITLAB) {
 
 		@Override
 		public String getName() {
-			return "Gitlab"; //$NON-NLS-1$
+			return "GitLab"; //$NON-NLS-1$
 		}
 
 		@Override
@@ -96,7 +96,7 @@ public enum GitServer {
 
 		@Override
 		public String getWizardTitle() {
-			return UIText.GitServer_WizardTitleGitlab;
+			return UIText.GitServer_WizardTitleGitLab;
 		}
 	},
 

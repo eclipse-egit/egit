@@ -75,11 +75,11 @@ public final class GitHosts {
 	 */
 	public enum ServerType {
 
-		/** A {@link ServerType} describing Github git servers. */
+		/** A {@link ServerType} describing GitHub git servers. */
 		GITHUB(GITHUB_ID, "refs/pull/", "/head", //$NON-NLS-1$ //$NON-NLS-2$
 				"https?://.*/pull/(\\d+)(?:[/?#].*)?"), //$NON-NLS-1$
 
-		/** A {@link ServerType} describing Gitlab git servers. */
+		/** A {@link ServerType} describing GitLab git servers. */
 		GITLAB(GITLAB_ID, "refs/merge-requests/", "/head", //$NON-NLS-1$ //$NON-NLS-2$
 				"https?://.*/merge_requests/(\\d+)(?:[/?#].*)?"), //$NON-NLS-1$
 
@@ -252,7 +252,7 @@ public final class GitHosts {
 	 *            {@link Config} to check
 	 * @param server
 	 *            {@link ServerType} to test for
-	 * @return {@code true} if there is at least one Github
+	 * @return {@code true} if there is at least one GitHub
 	 *         {@link RemoteConfig}, {@code false} otherwise
 	 * @throws URISyntaxException
 	 *             if the {@link Config} is invalid

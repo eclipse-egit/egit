@@ -439,11 +439,11 @@
             </with>
          </or>
       </definition>
-      <definition id="org.eclipse.egit.ui.fileOrFolderFetchFromGithub">
+      <definition id="org.eclipse.egit.ui.fileOrFolderFetchFromGitHub">
          <or>
             <test
                   property="GitSelection.fileOrFolderInRepository"
-                  args="hasGithubConfiguration">
+                  args="hasGitHubConfiguration">
             </test>
             <with variable="activePart">
                <instanceof
@@ -457,18 +457,18 @@
                            property="GitResource.isShared">
                      </test>
                      <test
-                           property="GitResource.hasGithubConfiguration">
+                           property="GitResource.hasGitHubConfiguration">
                      </test>
                   </adapt>
                </with>
             </with>
          </or>
       </definition>
-      <definition id="org.eclipse.egit.ui.fileOrFolderFetchFromGitlab">
+      <definition id="org.eclipse.egit.ui.fileOrFolderFetchFromGitLab">
          <or>
             <test
                   property="GitSelection.fileOrFolderInRepository"
-                  args="hasGitlabConfiguration">
+                  args="hasGitLabConfiguration">
             </test>
             <with variable="activePart">
                <instanceof
@@ -482,7 +482,7 @@
                            property="GitResource.isShared">
                      </test>
                      <test
-                           property="GitResource.hasGitlabConfiguration">
+                           property="GitResource.hasGitLabConfiguration">
                      </test>
                   </adapt>
                </with>
@@ -1155,14 +1155,14 @@
       <command
             categoryId="org.eclipse.egit.ui.commandCategory"
             defaultHandler="org.eclipse.egit.ui.internal.commands.shared.FetchChangeFromServerCommandFactory:GITHUB"
-            id="org.eclipse.egit.ui.FetchGithubPR"
-            name="%FetchFromGithubCommand.name">
+            id="org.eclipse.egit.ui.FetchGitHubPR"
+            name="%FetchFromGitHubCommand.name">
       </command>
       <command
             categoryId="org.eclipse.egit.ui.commandCategory"
             defaultHandler="org.eclipse.egit.ui.internal.commands.shared.FetchChangeFromServerCommandFactory:GITLAB"
-            id="org.eclipse.egit.ui.FetchGitlabMergeRequest"
-            name="%FetchFromGitlabCommand.name">
+            id="org.eclipse.egit.ui.FetchGitLabMergeRequest"
+            name="%FetchFromGitLabCommand.name">
       </command>
       <command
             categoryId="org.eclipse.egit.ui.commandCategory"
@@ -4813,8 +4813,8 @@
             </visibleWhen>
          </command>
          <command
-               commandId="org.eclipse.egit.ui.FetchGithubPR"
-               label="%FetchFromGithubCommand.label"
+               commandId="org.eclipse.egit.ui.FetchGitHubPR"
+               label="%FetchFromGitHubCommand.label"
                style="push">
             <visibleWhen
                   checkEnabled="false">
@@ -4828,7 +4828,7 @@
                               value="org.eclipse.egit.ui.internal.repository.tree.RepositoryNode">
                         </instanceof>
                         <test
-                              property="GitRepository.hasGithubConfiguration">
+                              property="GitRepository.hasGitHubConfiguration">
                         </test>
                      </and>
                   </iterate>
@@ -4836,8 +4836,8 @@
             </visibleWhen>
          </command>
          <command
-               commandId="org.eclipse.egit.ui.FetchGitlabMergeRequest"
-               label="%FetchFromGitlabCommand.label"
+               commandId="org.eclipse.egit.ui.FetchGitLabMergeRequest"
+               label="%FetchFromGitLabCommand.label"
                style="push">
             <visibleWhen
                   checkEnabled="false">
@@ -4851,7 +4851,7 @@
                               value="org.eclipse.egit.ui.internal.repository.tree.RepositoryNode">
                         </instanceof>
                         <test
-                              property="GitRepository.hasGitlabConfiguration">
+                              property="GitRepository.hasGitLabConfiguration">
                         </test>
                      </and>
                   </iterate>
@@ -5729,26 +5729,26 @@
                </visibleWhen>
             </command>
             <command
-                  commandId="org.eclipse.egit.ui.FetchGithubPR"
-                  label="%FetchFromGithubCommand.label"
+                  commandId="org.eclipse.egit.ui.FetchGitHubPR"
+                  label="%FetchFromGitHubCommand.label"
                   style="push">
                <visibleWhen
                      checkEnabled="false">
                   <test
                         property="GitSelection.projectsSingleRepository"
-                        args="hasGithubConfiguration">
+                        args="hasGitHubConfiguration">
                   </test>
                </visibleWhen>
             </command>
             <command
-                  commandId="org.eclipse.egit.ui.FetchGitlabMergeRequest"
-                  label="%FetchFromGitlabCommand.label"
+                  commandId="org.eclipse.egit.ui.FetchGitLabMergeRequest"
+                  label="%FetchFromGitLabCommand.label"
                   style="push">
                <visibleWhen
                      checkEnabled="false">
                   <test
                         property="GitSelection.projectsSingleRepository"
-                        args="hasGitlabConfiguration">
+                        args="hasGitLabConfiguration">
                   </test>
                </visibleWhen>
             </command>
@@ -5930,24 +5930,24 @@
                   </visibleWhen>
                </command>
                <command
-                     commandId="org.eclipse.egit.ui.FetchGithubPR"
-                     label="%FetchFromGithubCommand.label"
+                     commandId="org.eclipse.egit.ui.FetchGitHubPR"
+                     label="%FetchFromGitHubCommand.label"
                      style="push">
                   <visibleWhen
                         checkEnabled="false">
                      <reference
-                           definitionId="org.eclipse.egit.ui.fileOrFolderFetchFromGithub">
+                           definitionId="org.eclipse.egit.ui.fileOrFolderFetchFromGitHub">
                      </reference>
                   </visibleWhen>
                </command>
                <command
-                     commandId="org.eclipse.egit.ui.FetchGitlabMergeRequest"
-                     label="%FetchFromGitlabCommand.label"
+                     commandId="org.eclipse.egit.ui.FetchGitLabMergeRequest"
+                     label="%FetchFromGitLabCommand.label"
                      style="push">
                   <visibleWhen
                         checkEnabled="false">
                      <reference
-                           definitionId="org.eclipse.egit.ui.fileOrFolderFetchFromGitlab">
+                           definitionId="org.eclipse.egit.ui.fileOrFolderFetchFromGitLab">
                      </reference>
                   </visibleWhen>
                </command>
@@ -6914,11 +6914,11 @@
             icon="icons/obj16/gerrit_fetch.png">
       </image>
       <image
-            commandId="org.eclipse.egit.ui.FetchGithubPR"
+            commandId="org.eclipse.egit.ui.FetchGitHubPR"
             icon="icons/obj16/fetch.png">
       </image>
       <image
-            commandId="org.eclipse.egit.ui.FetchGitlabMergeRequest"
+            commandId="org.eclipse.egit.ui.FetchGitLabMergeRequest"
             icon="icons/obj16/fetch.png">
       </image>
       <image
@@ -7120,14 +7120,14 @@
             class="org.eclipse.egit.ui.internal.repository.tree.RepositoriesViewPropertyTester"
             id="org.eclipse.egit.ui.RepositoryTester"
             namespace="GitRepository"
-            properties="isBare,isSafe,canCheckout,canCommit,canAmend,canResetHead,canStash,isRefCheckedOut,isLocalBranch,fetchExists,pushExists,canMerge,canAbortRebase,canContinueRebase,isSubmodule,containsHead,hasGithubConfiguration,hasGitlabConfiguration,hasGiteaConfiguration,hasGerritConfiguration,canFetchFromGerrit,canPushToGerrit,canEnableLfs,isCommit"
+            properties="isBare,isSafe,canCheckout,canCommit,canAmend,canResetHead,canStash,isRefCheckedOut,isLocalBranch,fetchExists,pushExists,canMerge,canAbortRebase,canContinueRebase,isSubmodule,containsHead,hasGitHubConfiguration,hasGitLabConfiguration,hasGiteaConfiguration,hasGerritConfiguration,canFetchFromGerrit,canPushToGerrit,canEnableLfs,isCommit"
             type="org.eclipse.egit.ui.internal.repository.tree.RepositoryTreeNode">
       </propertyTester>
       <propertyTester
             class="org.eclipse.egit.ui.internal.ResourcePropertyTester"
             id="org.eclipse.egit.ui.ResourceTester"
             namespace="GitResource"
-            properties="isShared,isContainer,isSafe,canCheckout,canCommit,canAmend,canResetHead,canAbortRebase,canContinueRebase,hasGithubConfiguration,hasGitlabConfiguration,hasGiteaConfiguration,hasGerritConfiguration,canFetchFromGerrit,canPushToGerrit"
+            properties="isShared,isContainer,isSafe,canCheckout,canCommit,canAmend,canResetHead,canAbortRebase,canContinueRebase,hasGitHubConfiguration,hasGitLabConfiguration,hasGiteaConfiguration,hasGerritConfiguration,canFetchFromGerrit,canPushToGerrit"
             type="org.eclipse.core.resources.IResource">
       </propertyTester>
       <propertyTester

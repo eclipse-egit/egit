@@ -3216,10 +3216,10 @@ public class UIText extends NLS {
 	public static String GitServer_PullRequestSingular;
 
 	/** */
-	public static String GitServer_WizardTitleGithub;
+	public static String GitServer_WizardTitleGitHub;
 
 	/** */
-	public static String GitServer_WizardTitleGitlab;
+	public static String GitServer_WizardTitleGitLab;
 
 	/** */
 	public static String GitServer_WizardTitleGitea;
@@ -4481,7 +4481,7 @@ public class UIText extends NLS {
 	public static String GerritSelectRepositoryPage_FinishButtonLabel;
 
 	/** */
-	public static String GithubSelectRepositoryPage_PageTitle;
+	public static String GitHubSelectRepositoryPage_PageTitle;
 
 	/** */
 	public static String MergeAction_CannotMerge;
