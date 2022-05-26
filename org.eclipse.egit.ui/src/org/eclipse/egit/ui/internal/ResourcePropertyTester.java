@@ -119,11 +119,11 @@ public class ResourcePropertyTester extends AbstractPropertyTester {
 				return SelectionRepositoryStateCache.INSTANCE
 						.getHead(repository) != null;
 			}
-			if ("hasGithubConfiguration".equals(property)) { //$NON-NLS-1$
+			if ("hasGitHubConfiguration".equals(property)) { //$NON-NLS-1$
 				return hasServerConfiguration(repository,
 						GitHosts.ServerType.GITHUB);
 			}
-			if ("hasGitlabConfiguration".equals(property)) { //$NON-NLS-1$
+			if ("hasGitLabConfiguration".equals(property)) { //$NON-NLS-1$
 				return hasServerConfiguration(repository,
 						GitHosts.ServerType.GITLAB);
 			}

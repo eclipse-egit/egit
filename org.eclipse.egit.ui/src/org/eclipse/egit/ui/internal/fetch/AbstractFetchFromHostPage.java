@@ -734,8 +734,8 @@ public abstract class AbstractFetchFromHostPage extends WizardPage {
 	 * URL. Different wizards might want to return different keys, for instance
 	 * depending on the type of server being fetched from, to avoid that
 	 * settings from one fetch wizard affect other fetch wizards. (For instance,
-	 * if a repository has both Gerrit and Github remotes, the selection in the
-	 * "Fetch from Gerrit" wizard should probably not affect the "Fetch Github
+	 * if a repository has both Gerrit and GitHub remotes, the selection in the
+	 * "Fetch from Gerrit" wizard should probably not affect the "Fetch GitHub
 	 * Pull Request" wizard, and vice versa.)
 	 * <p>
 	 * Note: for historical reasons, "Fetch from Gerrit" uses an empty string.

@@ -224,7 +224,7 @@
         </detail>
         <detail
             key="label">
-          <value>EGit Github Connector Gerrit Repository</value>
+          <value>EGit GitHub Connector Gerrit Repository</value>
         </detail>
         <detail
             key="target">
@@ -237,7 +237,7 @@
             key="createchangeid"
             value="true"/>
       </configSections>
-      <description>EGit Github Connector</description>
+      <description>EGit GitHub Connector</description>
     </setupTask>
     <setupTask
         xsi:type="projects:ProjectsImportTask">
@@ -269,7 +269,7 @@
         xsi:type="setup.workingsets:WorkingSetTask"
         id="egit.workingsets">
       <workingSet
-          name="EGit Github Connector">
+          name="EGit GitHub Connector">
         <predicate
             xsi:type="predicates:AndPredicate">
           <operand
@@ -281,7 +281,7 @@
         </predicate>
       </workingSet>
       <workingSet
-          name="EGit Github Connector Tests">
+          name="EGit GitHub Connector Tests">
         <predicate
             xsi:type="predicates:AndPredicate">
           <operand
