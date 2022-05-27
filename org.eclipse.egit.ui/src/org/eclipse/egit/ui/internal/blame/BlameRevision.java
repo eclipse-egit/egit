@@ -1,5 +1,5 @@
 /******************************************************************************
- *  Copyright (c) 2011, 2013 GitHub Inc and others.
+ *  Copyright (c) 2011, 2022 GitHub Inc and others.
  *  All rights reserved. This program and the accompanying materials
  *  are made available under the terms of the Eclipse Public License 2.0
  *  which accompanies this distribution, and is available at
@@ -236,10 +236,10 @@ public class BlameRevision extends Revision {
 			if (diffEntry == null)
 				return null;
 
-			RawText oldText = readText(repository, diffEntry.getOldId(), reader,
-					diffEntry.getOldPath());
-			RawText newText = readText(repository, diffEntry.getNewId(), reader,
-					diffEntry.getNewPath());
+			RawText oldText = readText(repository, parentCommit,
+					diffEntry.getOldId(), reader, diffEntry.getOldPath());
+			RawText newText = readText(repository, commit, diffEntry.getNewId(),
+					reader, diffEntry.getNewPath());
 
 			StoredConfig config = repository.getConfig();
 			DiffAlgorithm diffAlgorithm = DiffAlgorithm.getAlgorithm(config
@@ -256,11 +256,13 @@ public class BlameRevision extends Revision {
 		}
 	}
 
-	private static RawText readText(Repository db, AbbreviatedObjectId blobId,
-			ObjectReader reader, String path) throws IOException {
+	private static RawText readText(Repository db, RevCommit commit,
+			AbbreviatedObjectId blobId, ObjectReader reader, String path)
+			throws IOException {
 		ObjectLoader oldLoader = LfsFactory.getInstance().applySmudgeFilter(db,
 				reader.open(blobId.toObjectId(), Constants.OBJ_BLOB),
-				LfsFactory.getAttributesForPath(db, path).get(Constants.ATTR_DIFF));
+				LfsFactory.getAttributesForPath(db, path, commit)
+						.get(Constants.ATTR_DIFF));
 		return new RawText(oldLoader.getCachedBytes());
 	}
 
