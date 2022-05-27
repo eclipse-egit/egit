@@ -52,6 +52,24 @@
       "parentUuid": "b7882ebc_6e46f735",
       "revId": "9ecfad2dab8af3c3210c43a7dc1f3594b26d664f",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "260945dc_fa496e01",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 119988
+      },
+      "writtenOn": "2022-05-27T13:07:59Z",
+      "side": 1,
+      "message": "See also bugzilla comment since the formatting seems to be very bad here:\n\nhttps://bugs.eclipse.org/bugs/show_bug.cgi?id\u003d580028#c6",
+      "parentUuid": "99997a7c_ff24a407",
+      "revId": "9ecfad2dab8af3c3210c43a7dc1f3594b26d664f",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31"
     }
   ]
 }
