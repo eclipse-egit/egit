@@ -19,8 +19,10 @@ import java.util.Map;
 
 import org.eclipse.egit.core.internal.CompareCoreUtils;
 import org.eclipse.egit.core.internal.Utils;
+import org.eclipse.egit.ui.Activator;
 import org.eclipse.jface.text.revisions.Revision;
 import org.eclipse.jface.text.source.LineRange;
+import org.eclipse.jgit.attributes.Attributes;
 import org.eclipse.jgit.diff.DiffAlgorithm;
 import org.eclipse.jgit.diff.DiffAlgorithm.SupportedAlgorithm;
 import org.eclipse.jgit.diff.DiffEntry;
@@ -258,10 +260,21 @@ public class BlameRevision extends Revision {
 
 	private static RawText readText(Repository db, AbbreviatedObjectId blobId,
 			ObjectReader reader, String path) throws IOException {
-		ObjectLoader oldLoader = LfsFactory.getInstance().applySmudgeFilter(db,
-				reader.open(blobId.toObjectId(), Constants.OBJ_BLOB),
-				LfsFactory.getAttributesForPath(db, path).get(Constants.ATTR_DIFF));
-		return new RawText(oldLoader.getCachedBytes());
+		Attributes attributes = null;
+		try {
+			attributes = LfsFactory.getAttributesForPath(db, path);
+		} catch (IOException e) {
+			Activator.logWarning(
+					"Failed to retrieve attributes for path: " + path, e); //$NON-NLS-1$
+		}
+		ObjectLoader oldLoader = reader.open(blobId.toObjectId(),
+				Constants.OBJ_BLOB);
+		ObjectLoader loader = oldLoader;
+		if (attributes != null) {
+			loader = LfsFactory.getInstance().applySmudgeFilter(db, oldLoader,
+					attributes.get(Constants.ATTR_DIFF));
+		}
+		return new RawText(loader.getCachedBytes());
 	}
 
 	/**
