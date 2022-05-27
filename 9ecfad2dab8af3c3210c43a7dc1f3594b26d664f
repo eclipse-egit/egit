@@ -16,6 +16,24 @@
       "message": "Seems to work, thanks Thomas!\n\nShould I see if I can write a test? Since I was already looking into the problem.",
       "revId": "9ecfad2dab8af3c3210c43a7dc1f3594b26d664f",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "b7882ebc_6e46f735",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2022-05-27T12:08:39Z",
+      "side": 1,
+      "message": "A test would be great. I didn\u0027t see any UI tests for these blame hovers yet, though.",
+      "parentUuid": "73c8553e_fe7ac14e",
+      "revId": "9ecfad2dab8af3c3210c43a7dc1f3594b26d664f",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31"
     }
   ]
 }
