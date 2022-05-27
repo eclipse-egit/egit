@@ -62,10 +62,10 @@
   <properties>
     <maven-version-minimum>3.6.3</maven-version-minimum>
     <egit-version>6.2.0-SNAPSHOT</egit-version>
-    <tycho-version>2.7.0</tycho-version>
+    <tycho-version>2.7.3</tycho-version>
     <tycho-extras-version>${tycho-version}</tycho-extras-version>
     <java-version>11</java-version>
-    <ecj-version>3.27.0</ecj-version>
+    <ecj-version>3.29.0</ecj-version>
     <spotbugs-maven-plugin-version>4.4.1</spotbugs-maven-plugin-version>
     <jgit-site>file:/${basedir}/../../jgit/org.eclipse.jgit.packaging/org.eclipse.jgit.repository/target/repository</jgit-site>
     <license-site>https://download.eclipse.org/cbi/updates/license</license-site>
