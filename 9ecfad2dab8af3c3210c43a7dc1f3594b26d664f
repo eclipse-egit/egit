@@ -34,6 +34,24 @@
       "parentUuid": "73c8553e_fe7ac14e",
       "revId": "9ecfad2dab8af3c3210c43a7dc1f3594b26d664f",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "99997a7c_ff24a407",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 119988
+      },
+      "writtenOn": "2022-05-27T13:06:01Z",
+      "side": 1,
+      "message": "I was thinking something more simple, just a test for BlameRevision. Since I cannot edit this commit (I\u0027m not an EGit committer), could you add the test (replace the copy-right header as necessary/fitting)?\n\n/******************************************************************************\n *  Copyright (c) 2022 Simeon Andreev and others.\n *  All rights reserved. This program and the accompanying materials\n *  are made available under the terms of the Eclipse Public License 2.0\n *  which accompanies this distribution, and is available at\n *  https://www.eclipse.org/legal/epl-2.0/\n *\n *  SPDX-License-Identifier: EPL-2.0\n *\n *  Contributors:\n *    Simeon Andreev - initial API and implementation\n *****************************************************************************/\npackage org.eclipse.egit.ui.internal.blame;\n\nimport static org.junit.Assert.assertEquals;\nimport static org.junit.Assert.assertNotNull;\n\nimport java.io.File;\nimport java.nio.file.Files;\n\nimport org.eclipse.egit.ui.internal.blame.BlameRevision.Diff;\nimport org.eclipse.jgit.api.Git;\nimport org.eclipse.jgit.diff.RawText;\nimport org.eclipse.jgit.junit.RepositoryTestCase;\nimport org.eclipse.jgit.revwalk.RevCommit;\nimport org.junit.Test;\n\n/**\n * Unit tests of {@link BlameRevision}\n */\npublic class BlameRevisionTest extends RepositoryTestCase {\n\n\t@Test\n\tpublic void testBlameRevisionForMovedFile() throws Exception {\n\t\tFile file1 \u003d null;\n\t\tFile file2 \u003d null;\n\t\ttry (Git git \u003d new Git(db)) {\n\t\t\tgit.commit().setMessage(\"initial commit\").call();\n\n\t\t\tString defaultContent \u003d \"line1\";\n\t\t\tString originalLine \u003d defaultContent + \"\\n\";\n\t\t\tString changedLine \u003d defaultContent + \" changed \" + \"\\n\";\n\n\t\t\tfile1 \u003d writeTrashFile(\"file1.txt\", originalLine);\n\t\t\tgit.add().addFilepattern(\".\").call();\n\t\t\tRevCommit commit1 \u003d git.commit().setMessage(\"file1 added\").call();\n\n\t\t\twriteTrashFile(\"file1.txt\", changedLine);\n\t\t\tgit.add().addFilepattern(\".\").call();\n\t\t\tRevCommit commit2 \u003d git.commit().setMessage(\"file1 changed\").call();\n\n\t\t\tfile1.delete();\n\t\t\tfile2 \u003d writeTrashFile(\"file2.txt\", changedLine);\n\t\t\tgit.add().addFilepattern(\".\").call();\n\t\t\tgit.commit().setMessage(\"file1 renamed to file2\").call();\n\n\t\t\tBlameRevision blameRevision \u003d new BlameRevision();\n\t\t\tblameRevision.setRepository(db);\n\t\t\tblameRevision.setCommit(commit2);\n\t\t\tblameRevision.setSourcePath(file1.getName());\n\n\t\t\tDiff diff \u003d blameRevision.getDiffToParent(commit1);\n\t\t\tassertNotNull(\"Expected a diff for a moved file\", diff);\n\n\t\t\tRawText diffOldText \u003d diff.getOldText();\n\t\t\tRawText diffNewText \u003d diff.getNewText();\n\t\t\tassertEquals(\"Unexpected diff old text for a moved file\",\n\t\t\t\t\toriginalLine, toString(diffOldText));\n\t\t\tassertEquals(\"Unexpected diff new text for a moved file\",\n\t\t\t\t\tchangedLine, toString(diffNewText));\n\t\t} finally {\n\t\t\tFile[] files \u003d { file1, file2 };\n\t\t\tfor (File file : files) {\n\t\t\t\tif (file !\u003d null) {\n\t\t\t\t\tFiles.deleteIfExists(file.toPath());\n\t\t\t\t}\n\t\t\t}\n\t\t}\n\t}\n\n\tprivate String toString(RawText diffOldText) {\n\t\tbyte[] rawContent \u003d diffOldText.getRawContent();\n\t\treturn new String(rawContent);\n\t}\n}",
+      "parentUuid": "b7882ebc_6e46f735",
+      "revId": "9ecfad2dab8af3c3210c43a7dc1f3594b26d664f",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31"
     }
   ]
 }
