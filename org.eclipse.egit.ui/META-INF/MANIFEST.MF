@@ -145,4 +145,3 @@ Service-Component: OSGI-INF/org.eclipse.egit.ui.internal.ApplicationActiveListen
  OSGI-INF/org.eclipse.egit.ui.internal.clone.GitCloneDropAdapter.xml,
  OSGI-INF/org.eclipse.egit.ui.internal.credentials.EGitCredentialsUI.xml,
  OSGI-INF/org.eclipse.egit.ui.internal.trace.DebugOptionsHandler.xml
-Bundle-ActivationPolicy: lazy
