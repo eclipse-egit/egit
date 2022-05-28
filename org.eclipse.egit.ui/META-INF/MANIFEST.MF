@@ -138,6 +138,7 @@ Export-Package: org.eclipse.egit.ui;version="6.2.0";x-friends:="org.eclipse.egit
  org.eclipse.egit.ui.internal.synchronize.model;version="6.2.0";x-friends:="org.eclipse.egit.mylyn.ui",
  org.eclipse.egit.ui.internal.trace;version="6.2.0";x-internal:=true,
  org.eclipse.egit.ui.internal.variables;version="6.2.0";x-internal:=true
+Bundle-ActivationPolicy: lazy
 Service-Component: OSGI-INF/org.eclipse.egit.ui.internal.ApplicationActiveListener.xml,
  OSGI-INF/org.eclipse.egit.ui.internal.ConfigurationChecker$Checker.xml,
  OSGI-INF/org.eclipse.egit.ui.internal.ExternalRepositoryScanner.xml,
@@ -145,4 +146,3 @@ Service-Component: OSGI-INF/org.eclipse.egit.ui.internal.ApplicationActiveListen
  OSGI-INF/org.eclipse.egit.ui.internal.clone.GitCloneDropAdapter.xml,
  OSGI-INF/org.eclipse.egit.ui.internal.credentials.EGitCredentialsUI.xml,
  OSGI-INF/org.eclipse.egit.ui.internal.trace.DebugOptionsHandler.xml
-Bundle-ActivationPolicy: lazy
