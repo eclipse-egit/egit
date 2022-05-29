@@ -16,6 +16,24 @@
       "message": "This one was actually duplicated, see line 37.",
       "revId": "6672768d04506022c7feb4a3650f054ddac9047a",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "93e38553_4d9e698c",
+        "filename": "org.eclipse.egit.ui/META-INF/MANIFEST.MF",
+        "patchSetId": 2
+      },
+      "lineNbr": 148,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2022-05-29T12:35:40Z",
+      "side": 0,
+      "message": "I know. As far as I remember, it will get re-added if a full build occurs. At least that\u0027s what I observed; but maybe that was fixed, too.",
+      "parentUuid": "65c95f4c_eaecc83f",
+      "revId": "6672768d04506022c7feb4a3650f054ddac9047a",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31"
     }
   ]
 }
