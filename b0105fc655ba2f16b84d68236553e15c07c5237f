@@ -16,6 +16,24 @@
       "message": "I see now 2 compilation errors in Eclipse.\n\nDescription\tResource\tPath\tLocation\tType\n\nThe project was not built since its build path is incomplete. Cannot find the class file for org.apache.log4j.Logger. Fix the build path then try building this project\torg.eclipse.egit.ui.test\t\tUnknown\tJava Problem\n\nThe type org.apache.log4j.Logger cannot be resolved. It is indirectly referenced from required .class files\tCommitDialogTester.java\t/org.eclipse.egit.ui.test/src/org/eclipse/egit/ui/common\tline 193\tJava Problem\n\nI see this is probably because of SWTbot 4.0.0 used from https://download.eclipse.org/technology/swtbot/snapshots/\n\nDo we *really* want use snapshot version?",
       "revId": "b0105fc655ba2f16b84d68236553e15c07c5237f",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "baae3402_83bbf7bb",
+        "filename": "org.eclipse.egit.ui.test/META-INF/MANIFEST.MF",
+        "patchSetId": 1
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2022-05-30T14:15:24Z",
+      "side": 1,
+      "message": "6 years ago we switched to using snapshot to get an important fix in SWTBot. We might consider going back to releases now. IIRC, we only had troubles with snapshot once.\n\nI don\u0027t see these build path problems. Try reloading the target platform.",
+      "parentUuid": "7c7d60d3_c076ce54",
+      "revId": "b0105fc655ba2f16b84d68236553e15c07c5237f",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31"
     }
   ]
 }
