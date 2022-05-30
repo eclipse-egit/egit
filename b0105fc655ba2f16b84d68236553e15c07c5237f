@@ -34,6 +34,24 @@
       "parentUuid": "7c7d60d3_c076ce54",
       "revId": "b0105fc655ba2f16b84d68236553e15c07c5237f",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "aa6a3b2a_189694c3",
+        "filename": "org.eclipse.egit.ui.test/META-INF/MANIFEST.MF",
+        "patchSetId": 1
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1179
+      },
+      "writtenOn": "2022-05-30T14:25:30Z",
+      "side": 1,
+      "message": "Interesting, haven\u0027t noticed that yet. If using snapshots is expected, we are fine, I see no compilation error with that.\n\nI\u0027ve pushed https://github.com/eclipse-platform/eclipse.platform.ui/pull/88",
+      "parentUuid": "baae3402_83bbf7bb",
+      "revId": "b0105fc655ba2f16b84d68236553e15c07c5237f",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31"
     }
   ]
 }
