@@ -70,6 +70,24 @@
       "parentUuid": "aa6a3b2a_189694c3",
       "revId": "b0105fc655ba2f16b84d68236553e15c07c5237f",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "2331ecb4_c0333841",
+        "filename": "org.eclipse.egit.ui.test/META-INF/MANIFEST.MF",
+        "patchSetId": 1
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1179
+      },
+      "writtenOn": "2022-05-30T14:42:18Z",
+      "side": 1,
+      "message": "The only reason the SWTbot is there is that I use this file to setup IDE to work on both SDK and EGit :-)",
+      "parentUuid": "7e635eb1_a1faeb21",
+      "revId": "b0105fc655ba2f16b84d68236553e15c07c5237f",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31"
     }
   ]
 }
