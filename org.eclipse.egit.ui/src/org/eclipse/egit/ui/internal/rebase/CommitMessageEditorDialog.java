@@ -14,6 +14,7 @@
  *******************************************************************************/
 package org.eclipse.egit.ui.internal.rebase;
 
+import java.text.MessageFormat;
 import java.util.regex.Pattern;
 
 import org.eclipse.egit.core.internal.Utils;
@@ -178,7 +179,9 @@ public class CommitMessageEditorDialog extends TitleAreaDialog {
 		composite.setLayout(gridLayout);
 
 		setTitle(UIText.RebaseInteractiveHandler_EditMessageDialogTitle);
-		setMessage(UIText.RebaseInteractiveHandler_EditMessageDialogText);
+		setMessage(MessageFormat.format(
+				UIText.RebaseInteractiveHandler_EditMessageDialogText,
+				Character.toString(commentChar)));
 
 		Config config = repository.getConfig();
 
