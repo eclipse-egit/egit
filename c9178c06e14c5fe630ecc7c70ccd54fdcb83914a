@@ -165,6 +165,24 @@
     {
       "unresolved": false,
       "key": {
+        "uuid": "a8f97699_2a9eaab4",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/actions/MergeToolActionHandler.java",
+        "patchSetId": 15
+      },
+      "lineNbr": 133,
+      "author": {
+        "id": 1179
+      },
+      "writtenOn": "2022-06-02T16:40:58Z",
+      "side": 1,
+      "message": "Will be done in next commit, to avoid heave merge",
+      "parentUuid": "ad87f320_cb79f73b",
+      "revId": "c9178c06e14c5fe630ecc7c70ccd54fdcb83914a",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31"
+    },
+    {
+      "unresolved": false,
+      "key": {
         "uuid": "7363ca5c_a4f99abc",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/actions/MergeToolActionHandler.java",
         "patchSetId": 15
