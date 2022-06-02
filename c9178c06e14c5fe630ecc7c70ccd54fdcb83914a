@@ -145,6 +145,24 @@
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31"
     },
     {
+      "unresolved": true,
+      "key": {
+        "uuid": "ad87f320_cb79f73b",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/actions/MergeToolActionHandler.java",
+        "patchSetId": 15
+      },
+      "lineNbr": 133,
+      "author": {
+        "id": 1179
+      },
+      "writtenOn": "2022-06-02T12:34:44Z",
+      "side": 1,
+      "message": "For now we can automatically select \"Last head\" option if \"external merge\" is selected in preferences, and in external merge case always unconditionally use that option, independently what is selected.",
+      "parentUuid": "dfffdeef_98938739",
+      "revId": "c9178c06e14c5fe630ecc7c70ccd54fdcb83914a",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31"
+    },
+    {
       "unresolved": false,
       "key": {
         "uuid": "7363ca5c_a4f99abc",
