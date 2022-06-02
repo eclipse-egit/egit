@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "cc06663a_4d4cf6b3",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/preferences/DiffPreferencePage.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 248,
+      "author": {
+        "id": 1179
+      },
+      "writtenOn": "2022-06-02T15:47:19Z",
+      "side": 1,
+      "message": "We miss here two modes, will add back",
+      "range": {
+        "startLine": 248,
+        "startChar": 9,
+        "endLine": 248,
+        "endChar": 17
+      },
+      "revId": "2a8fb6f4ff23d1e76abf6317d84680aa586ddc6d",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "8ee504c0_854cb015",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/preferences/GitPreferenceRoot.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1179
+      },
+      "writtenOn": "2022-06-02T15:47:19Z",
+      "side": 1,
+      "message": "Left over from a merge, will remove",
+      "range": {
+        "startLine": 64,
+        "startChar": 33,
+        "endLine": 64,
+        "endChar": 60
+      },
+      "revId": "2a8fb6f4ff23d1e76abf6317d84680aa586ddc6d",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31"
+    }
+  ]
+}
