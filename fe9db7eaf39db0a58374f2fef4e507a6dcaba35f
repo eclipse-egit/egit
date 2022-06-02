@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "48a0f770_d67e4635",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/actions/MergeToolActionHandler.java",
+        "patchSetId": 14
+      },
+      "lineNbr": 114,
+      "author": {
+        "id": 119988
+      },
+      "writtenOn": "2022-06-02T11:10:49Z",
+      "side": 1,
+      "message": "I don\u0027t think this switch works.\n\nI have a merge conflict that has kind \"15\", and none of the cases here match that. The kind seems to be a composition of flags. In my case, the code in GitMergeEditorInput.buildDiffContainer() sets kinds \"CONFLICTING\" (12) and \"CHANGE\" (3):\n\nint kind \u003d Differencer.NO_CHANGE;\nif (conflicting) {\n\tkind \u003d Differencer.CONFLICTING + Differencer.CHANGE;\n} else if (modified) {\n\tkind \u003d Differencer.LEFT + Differencer.ADDITION;\n}\n\nBy the looks of it we are supposed to use Differencer.CHANGE_TYPE_MASK here... maybe other masks also. Will have to check.",
+      "revId": "fe9db7eaf39db0a58374f2fef4e507a6dcaba35f",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31"
+    }
+  ]
+}
