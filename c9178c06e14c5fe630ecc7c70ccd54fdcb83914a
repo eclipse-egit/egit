@@ -16,6 +16,179 @@
       "message": "Andrey, do we try to add tests here? I have no idea how that would work, but I guess we could try.\n\nI\u0027ve manually set an external merge tool to kdiff3, from the new preference page. I see the merge tool is called.",
       "revId": "c9178c06e14c5fe630ecc7c70ccd54fdcb83914a",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "944ff2f6_365713a7",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 15
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1179
+      },
+      "writtenOn": "2022-06-02T12:15:34Z",
+      "side": 1,
+      "message": "After merging main changes, yes, for major basic use case we have - external diff with tool configured by git attributes / internal diff if file is not matching git attributes.",
+      "parentUuid": "347c06c0_1eed6b4f",
+      "revId": "c9178c06e14c5fe630ecc7c70ccd54fdcb83914a",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "12cbbf92_95f59288",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/CompareUtils.java",
+        "patchSetId": 15
+      },
+      "lineNbr": 410,
+      "author": {
+        "id": 1179
+      },
+      "writtenOn": "2022-06-02T12:15:34Z",
+      "side": 1,
+      "message": "Is fixed in next commit",
+      "range": {
+        "startLine": 410,
+        "startChar": 3,
+        "endLine": 410,
+        "endChar": 23
+      },
+      "revId": "c9178c06e14c5fe630ecc7c70ccd54fdcb83914a",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "8dba1110_10bfa348",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/DiffContainerJob.java",
+        "patchSetId": 15
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1179
+      },
+      "writtenOn": "2022-06-02T12:15:34Z",
+      "side": 1,
+      "message": "Is fixed in next commit",
+      "range": {
+        "startLine": 87,
+        "startChar": 3,
+        "endLine": 87,
+        "endChar": 23
+      },
+      "revId": "c9178c06e14c5fe630ecc7c70ccd54fdcb83914a",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "299dd77a_b2ee57a8",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/actions/MergeToolActionHandler.java",
+        "patchSetId": 15
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 1179
+      },
+      "writtenOn": "2022-06-02T12:15:34Z",
+      "side": 1,
+      "message": "Fixed in next commit",
+      "range": {
+        "startLine": 103,
+        "startChar": 3,
+        "endLine": 103,
+        "endChar": 23
+      },
+      "revId": "c9178c06e14c5fe630ecc7c70ccd54fdcb83914a",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "92b3bad0_0a1597d6",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/actions/MergeToolActionHandler.java",
+        "patchSetId": 15
+      },
+      "lineNbr": 122,
+      "author": {
+        "id": 1179
+      },
+      "writtenOn": "2022-06-02T12:15:34Z",
+      "side": 1,
+      "message": "Fixed in next commit",
+      "range": {
+        "startLine": 122,
+        "startChar": 6,
+        "endLine": 122,
+        "endChar": 26
+      },
+      "revId": "c9178c06e14c5fe630ecc7c70ccd54fdcb83914a",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "dfffdeef_98938739",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/actions/MergeToolActionHandler.java",
+        "patchSetId": 15
+      },
+      "lineNbr": 133,
+      "author": {
+        "id": 1179
+      },
+      "writtenOn": "2022-06-02T12:15:34Z",
+      "side": 1,
+      "message": "Trying to run merge on a file, using \"local pre-merged version\" or \"working tree version\", I get two CCE\u0027s, only \"head\" works with current code\n\n\nCaused by: java.lang.ClassCastException: class org.eclipse.egit.ui.internal.merge.AbstractGitCompareEditorInput$HiddenResourceTypedElement cannot be cast to class org.eclipse.egit.ui.internal.revision.ResourceEditableRevision (org.eclipse.egit.ui.internal.merge.AbstractGitCompareEditorInput$HiddenResourceTypedElement and org.eclipse.egit.ui.internal.revision.ResourceEditableRevision are in unnamed module of loader org.eclipse.osgi.internal.loader.EquinoxClassLoader @952bf07)\n\tat org.eclipse.egit.ui.internal.actions.MergeToolActionHandler.mergeModified(MergeToolActionHandler.java:137)\n\tat org.eclipse.egit.ui.internal.actions.MergeToolActionHandler.executeExternalToolForChildren(MergeToolActionHandler.java:124)\n\tat org.eclipse.egit.ui.internal.actions.MergeToolActionHandler.executeExternalToolForChildren(MergeToolActionHandler.java:120)\n\tat org.eclipse.egit.ui.internal.actions.MergeToolActionHandler.openMergeToolExternal(MergeToolActionHandler.java:110)\n\tat org.eclipse.egit.ui.internal.actions.MergeToolActionHandler.execute(MergeToolActionHandler.java:87)\n\tat org.eclipse.ui.internal.handlers.HandlerProxy.execute(HandlerProxy.java:283)\n\tat org.eclipse.ui.internal.handlers.E4HandlerProxy.execute(E4HandlerProxy.java:97)\n\tat java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method)\n\tat java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)\n\tat java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)\n\tat java.base/java.lang.reflect.Method.invoke(Method.java:566)\n\tat org.eclipse.e4.core.internal.di.MethodRequestor.execute(MethodRequestor.java:58)\n\t... 45 more\n\n\nSecond one (working tree):\n\nCaused by: java.lang.ClassCastException: class org.eclipse.team.internal.ui.synchronize.LocalResourceTypedElement cannot be cast to class org.eclipse.egit.ui.internal.revision.ResourceEditableRevision (org.eclipse.team.internal.ui.synchronize.LocalResourceTypedElement is in unnamed module of loader org.eclipse.osgi.internal.loader.EquinoxClassLoader @2b87561d; org.eclipse.egit.ui.internal.revision.ResourceEditableRevision is in unnamed module of loader org.eclipse.osgi.internal.loader.EquinoxClassLoader @952bf07)\n\tat org.eclipse.egit.ui.internal.actions.MergeToolActionHandler.mergeModified(MergeToolActionHandler.java:137)\n\tat org.eclipse.egit.ui.internal.actions.MergeToolActionHandler.executeExternalToolForChildren(MergeToolActionHandler.java:124)\n\tat org.eclipse.egit.ui.internal.actions.MergeToolActionHandler.executeExternalToolForChildren(MergeToolActionHandler.java:120)\n\tat org.eclipse.egit.ui.internal.actions.MergeToolActionHandler.openMergeToolExternal(MergeToolActionHandler.java:110)\n\tat org.eclipse.egit.ui.internal.actions.MergeToolActionHandler.execute(MergeToolActionHandler.java:87)\n\tat org.eclipse.ui.internal.handlers.HandlerProxy.execute(HandlerProxy.java:283)\n\tat org.eclipse.ui.internal.handlers.E4HandlerProxy.execute(E4HandlerProxy.java:97)\n\tat java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method)\n\tat java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)\n\tat java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)\n\tat java.base/java.lang.reflect.Method.invoke(Method.java:566)\n\tat org.eclipse.e4.core.internal.di.MethodRequestor.execute(MethodRequestor.java:58)\n\t... 45 more",
+      "revId": "c9178c06e14c5fe630ecc7c70ccd54fdcb83914a",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "7363ca5c_a4f99abc",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/actions/MergeToolActionHandler.java",
+        "patchSetId": 15
+      },
+      "lineNbr": 196,
+      "author": {
+        "id": 1179
+      },
+      "writtenOn": "2022-06-02T12:15:34Z",
+      "side": 1,
+      "message": "Fixed in next commit",
+      "range": {
+        "startLine": 196,
+        "startChar": 3,
+        "endLine": 196,
+        "endChar": 23
+      },
+      "revId": "c9178c06e14c5fe630ecc7c70ccd54fdcb83914a",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "f2d85f81_6e51f145",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/actions/MergeToolActionHandler.java",
+        "patchSetId": 15
+      },
+      "lineNbr": 225,
+      "author": {
+        "id": 1179
+      },
+      "writtenOn": "2022-06-02T12:15:34Z",
+      "side": 1,
+      "message": "Fixed in next commit",
+      "range": {
+        "startLine": 225,
+        "startChar": 4,
+        "endLine": 225,
+        "endChar": 24
+      },
+      "revId": "c9178c06e14c5fe630ecc7c70ccd54fdcb83914a",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31"
     }
   ]
 }
