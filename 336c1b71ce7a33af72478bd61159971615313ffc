@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "226cb3ca_a6337d5c",
+        "filename": "org.eclipse.egit.ui.test/src/org/eclipse/egit/ui/internal/difftool/ExternalDiffToolUiTest.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 119988
+      },
+      "writtenOn": "2022-06-03T14:41:36Z",
+      "side": 1,
+      "message": "This is similar to what we already have in our product.\n\nI can look into writing also a test for invoking a merge tool from the UI, shouldn\u0027t be too much trouble (I think).\n\nAndrey?",
+      "revId": "336c1b71ce7a33af72478bd61159971615313ffc",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31"
+    }
+  ]
+}
