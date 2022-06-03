@@ -24,6 +24,30 @@
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "330afd78_85f40d97",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/preferences/DiffPreferencePage.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 401,
+      "author": {
+        "id": 1179
+      },
+      "writtenOn": "2022-06-03T11:47:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "15409f9a_0bc648db",
+      "range": {
+        "startLine": 401,
+        "startChar": 28,
+        "endLine": 401,
+        "endChar": 56
+      },
+      "revId": "e75594f179a4a0539fb5df6f1a9c64d9cadedbf8",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "97ab3740_06b98256",
@@ -37,6 +61,30 @@
       "writtenOn": "2022-06-02T16:39:13Z",
       "side": 1,
       "message": "Just realized, that all changes are immediately persisted to the store. This is not OK, we should only persist on \"Apply\" or \"OK\".",
+      "range": {
+        "startLine": 418,
+        "startChar": 14,
+        "endLine": 418,
+        "endChar": 41
+      },
+      "revId": "e75594f179a4a0539fb5df6f1a9c64d9cadedbf8",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "ce4315ef_885fc32b",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/preferences/DiffPreferencePage.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 418,
+      "author": {
+        "id": 1179
+      },
+      "writtenOn": "2022-06-03T11:47:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "97ab3740_06b98256",
       "range": {
         "startLine": 418,
         "startChar": 14,

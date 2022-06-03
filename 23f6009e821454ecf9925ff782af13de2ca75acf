@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "0051ecd8_43e18c61",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 12
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1179
+      },
+      "writtenOn": "2022-06-03T11:47:36Z",
+      "side": 1,
+      "message": "Should be OK now. Unfortunately egit master uses jgit 6.2.0 branch to building, for some strange reason, so we don\u0027t see latest jgit changes we need",
+      "revId": "23f6009e821454ecf9925ff782af13de2ca75acf",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31"
+    }
+  ]
+}
