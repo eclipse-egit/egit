@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "2637b77d_bd2abb2d",
+        "filename": "org.eclipse.egit.ui.test/src/org/eclipse/egit/ui/internal/external/tools/ExternalMergeToolUiTest.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 133,
+      "author": {
+        "id": 119988
+      },
+      "writtenOn": "2022-06-03T21:28:04Z",
+      "side": 1,
+      "message": "This is unfortunately the only prevention I could think of, for the dialog that is opened.\n\nToolsUtils.askUserAboutToolExecution() uses MessageBox from SWT, which in turn opens a dialog via GTK+ API. There is no actual SWT Shell object, to detect with SWTBot (...). So our options are:\n\n1. Prevent the dialog from opening, done with \"exit 1\" here.\n2. Open another type of dialog, which is an actual Shell.",
+      "revId": "0a0f748dcb9dba44aa9b8e23c67f862fbbab87b8",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31"
+    }
+  ]
+}
