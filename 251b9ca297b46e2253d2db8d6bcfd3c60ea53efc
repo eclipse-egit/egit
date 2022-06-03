@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "bb7ae88e_e07c48fa",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 10
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 119988
+      },
+      "writtenOn": "2022-06-03T15:46:46Z",
+      "side": 1,
+      "message": "I have to add a check to each test, so that they only run on Linux. They won\u0027t run on Windows.\n\nWill do this next Monday.",
+      "revId": "251b9ca297b46e2253d2db8d6bcfd3c60ea53efc",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a94296ce_9978c2a2",
+        "filename": "org.eclipse.egit.ui.test/src/org/eclipse/egit/ui/internal/external/tools/ExternalMergeToolUiTest.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 119988
+      },
+      "writtenOn": "2022-06-03T15:46:46Z",
+      "side": 1,
+      "message": "There is a weird pop-up at the end of the test, showing status of running the command (that nothing changed from running the command).\n\nIt gets auto-closed (fast) but I don\u0027t know by what. Possibly its the end of the test... I\u0027ll have to check whether several tests can be ran. Likely we need to disable the pop-up or tell the SWTBot to close it.",
+      "revId": "251b9ca297b46e2253d2db8d6bcfd3c60ea53efc",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31"
+    }
+  ]
+}
