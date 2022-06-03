@@ -16,6 +16,24 @@
       "message": "Should be OK now. Unfortunately egit master uses jgit 6.2.0 branch to building, for some strange reason, so we don\u0027t see latest jgit changes we need",
       "revId": "23f6009e821454ecf9925ff782af13de2ca75acf",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "5ca70943_4bb5ac24",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 12
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2022-06-03T16:58:51Z",
+      "side": 1,
+      "message": "We\u0027re currently in that \"limbo\" state where both the master branch and the stable-6.2 branch produce 6.2 artifacts. During that time, both builds publish the the same location in the Nexus repo, so EGit picks up whatever build terminated last, which may give such problems.\n\nRe-running the JGit master build once is usually sufficient to resolve the problem.\n\nMatthias will switch master soon to produce 6.3 artifacts, and then this problem will disappear.",
+      "parentUuid": "0051ecd8_43e18c61",
+      "revId": "23f6009e821454ecf9925ff782af13de2ca75acf",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31"
     }
   ]
 }
