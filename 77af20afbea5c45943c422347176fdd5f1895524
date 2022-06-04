@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "c9d5d98d_af48b627",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 12
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 119988
+      },
+      "writtenOn": "2022-06-04T12:08:21Z",
+      "side": 1,
+      "message": "I added assumeTrue() calls to ensure the new tests run only on Linux, change is ready from my POV.",
+      "revId": "77af20afbea5c45943c422347176fdd5f1895524",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31"
+    }
+  ]
+}
