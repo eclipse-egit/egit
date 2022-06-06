@@ -10,6 +10,12 @@
  *******************************************************************************/
 package org.eclipse.egit.ui.internal.external.tools;
 
+import static org.eclipse.jgit.lib.ConfigConstants.CONFIG_DIFFTOOL_SECTION;
+import static org.eclipse.jgit.lib.ConfigConstants.CONFIG_DIFF_SECTION;
+import static org.eclipse.jgit.lib.ConfigConstants.CONFIG_KEY_CMD;
+import static org.eclipse.jgit.lib.ConfigConstants.CONFIG_KEY_PROMPT;
+import static org.eclipse.jgit.lib.ConfigConstants.CONFIG_KEY_TOOL;
+import static org.eclipse.jgit.lib.ConfigConstants.CONFIG_KEY_TRUST_EXIT_CODE;
 import static org.junit.Assert.assertTrue;
 
 import java.util.List;
@@ -19,6 +25,7 @@ import org.eclipse.egit.ui.UIPreferences;
 import org.eclipse.egit.ui.internal.diffmerge.DiffToolMode;
 import org.eclipse.egit.ui.test.ContextMenuHelper;
 import org.eclipse.egit.ui.test.TestUtil;
+import org.eclipse.jgit.lib.StoredConfig;
 import org.eclipse.swtbot.swt.finder.widgets.SWTBotTree;
 import org.eclipse.swtbot.swt.finder.widgets.SWTBotTreeItem;
 import org.junit.After;
@@ -58,7 +65,7 @@ public class ExternalDiffToolUiTest extends ExternalToolUiTestCase {
 	}
 
 	@Test
-	public void testExternalDiffTool() throws Exception {
+	public void testExternalDiffToolPreference() throws Exception {
 		assumePosixPlatform();
 
 		preferenceNode.putInt(UIPreferences.DIFF_TOOL_MODE,
@@ -83,6 +90,38 @@ public class ExternalDiffToolUiTest extends ExternalToolUiTestCase {
 				+ actualCommandOutput, matchingOutput);
 	}
 
+	@Test
+	public void testExternalDiffToolGitConfig() throws Exception {
+		assumePosixPlatform();
+
+		createMergeConflict();
+
+		int runs = 2;
+		for (int i = 0; i < runs; ++i) {
+			clearResultFile();
+
+			String toolName = "custom_tool" + i;
+			configureEchoTool(toolName);
+			preferenceNode.putInt(UIPreferences.DIFF_TOOL_MODE,
+					DiffToolMode.GIT_CONFIG.ordinal());
+			preferenceNode.put(UIPreferences.DIFF_TOOL_CUSTOM, toolName);
+
+			triggerCompareWithPreviousAction();
+
+			List<String> commandOutputLines = waitForToolOutput();
+
+			String actualCommandOutput = String.join(System.lineSeparator(),
+					commandOutputLines);
+			String expectedOutputPattern = toolName
+					+ " local=.*.txt remote=.*.txt";
+			boolean matchingOutput = Pattern.matches(expectedOutputPattern,
+					actualCommandOutput);
+			assertTrue("Command output doesn't match expected pattern: "
+					+ expectedOutputPattern + ", command output: "
+					+ actualCommandOutput, matchingOutput);
+		}
+	}
+
 	private void triggerCompareWithPreviousAction() {
 		SWTBotTree packageExplorer = TestUtil.getExplorerTree();
 		SWTBotTreeItem project1 = getProjectItem(packageExplorer, PROJ1)
@@ -97,5 +136,38 @@ public class ExternalDiffToolUiTest extends ExternalToolUiTestCase {
 				util.getPluginLocalizedValue("CompareWithMenu.label"),
 				util.getPluginLocalizedValue(
 						"CompareWithPreviousAction.label"));
+	}
+
+	private void configureEchoTool(String toolName) throws Exception {
+		StoredConfig config = testRepository.getRepository().getConfig();
+		config.clear();
+		// the default diff tool is configured without a subsection
+		String subsection = null;
+		config.setString(CONFIG_DIFF_SECTION, subsection, CONFIG_KEY_TOOL,
+				toolName);
+
+		String command = getEchoCommand(toolName);
+
+		config.setString(CONFIG_DIFFTOOL_SECTION, toolName, CONFIG_KEY_CMD,
+				command);
+		config.setString(CONFIG_DIFFTOOL_SECTION, toolName,
+				CONFIG_KEY_TRUST_EXIT_CODE, String.valueOf(Boolean.TRUE));
+		/*
+		 * prevent prompts as we are running in tests and there is no user to
+		 * interact with on the command line
+		 */
+		config.setString(CONFIG_DIFFTOOL_SECTION, toolName, CONFIG_KEY_PROMPT,
+				String.valueOf(false));
+		config.save();
+	}
+
+	private String getEchoCommand(String toolName) {
+		/*
+		 * Use 'MERGED' placeholder, as both 'LOCAL' and 'REMOTE' will be
+		 * replaced with full paths to a temporary file during some of the
+		 * tests.
+		 */
+		return "(echo " + toolName + "  local=\"$LOCAL\" remote=\"$REMOTE\" > "
+				+ resultFile.toAbsolutePath().toString() + ")";
 	}
 }

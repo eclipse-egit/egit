@@ -71,6 +71,10 @@ public abstract class ExternalToolUiTestCase extends LocalRepositoryTestCase {
 		Files.delete(resultFile);
 	}
 
+	protected void clearResultFile() throws Exception {
+		Files.write(resultFile, new byte[] {});
+	}
+
 	protected List<String> waitForToolOutput() {
 		WaitForToolOutput waitForToolOutput = new WaitForToolOutput(resultFile);
 		bot.waitUntil(waitForToolOutput, 5_000, 250);
