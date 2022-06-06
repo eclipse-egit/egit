@@ -1,0 +1,131 @@
+<?xml version='1.0' encoding='utf-8' ?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+		<title>EGit 6.2 New and Noteworthy</title>
+		<link type="text/css" rel="stylesheet" href="../../../book.css"/>
+	</head>
+	<body>
+		<table class="navigation" style="width: 100%;" border="0" summary="navigation">
+			<tr>
+				<th style="width: 100%" align="center" colspan="3">EGit 6.2 New and Noteworthy</th>
+			</tr>
+			<tr>
+				<td style="width: 20%" align="left"></td>
+				<td style="width: 60%" align="center"></td>
+				<td style="width: 20%" align="right">
+					<a href="Contributors.html" title="Contributors">
+						<img alt="Next" border="0" src="../../../images/next.gif"/>
+					</a>
+				</td>
+			</tr>
+			<tr>
+				<td style="width: 20%" align="left" valign="top"></td>
+				<td style="width: 60%" align="center"></td>
+				<td style="width: 20%" align="right" valign="top">Contributors</td>
+			</tr>
+		</table><hr class="navigation-separator"/>
+		<h1 id="EGit">EGit</h1>
+		<h2 id="Commit_Messages">Commit Messages</h2>
+		<p>EGit 6.1 had introduced support for git config <tt>
+			<a href="https://git-scm.com/docs/git-config#Documentation/git-config.txt-commitcleanup" target="egit_external">commit.cleanup</a></tt>, including syntax coloring comment lines in commit messages, and a preview of the final commit message after cleaning.
+		</p>
+		<p>EGit 6.2 adds support for git config <tt>
+			<a href="https://git-scm.com/docs/git-config#Documentation/git-config.txt-corecommentChar" target="egit_external">core.commentChar</a></tt>. It enables users to change the default comment character # to some other ASCII character. EGit 6.2 takes this setting into account and determines comment lines in commit messages accordingly, for instance with <tt>core.commentChar = ;</tt> as:
+		</p>
+		<p>
+			<img alt="&quot;Dialog shown to edit the commit message when squashing two commits&quot;" border="0" src="images/EGit_6.2_CommentChar.png"/>
+		</p>
+		<h2 id="Git_Staging_View">Git Staging View</h2>
+		<p>The Git Staging View has a new "Push Settings" button with a cogwheel icon, providing a way to customize some settings for the <tt>push</tt> part of the 
+			<i>Commit &amp; Push</i> operation.
+		</p>
+		<p>
+			<img alt="&quot;The new Push Settings button with its drop-down menu expanded&quot;" border="0" src="images/EGit_6.2_Staging_Push_Settings.png"/>
+		</p>
+		<p>There are options to perform a force push, or to open a push dialog instead of just pushing automatically. If the "Force Push" option is active, the button's icon shows a little green plus sign top-right.</p>
+		<p>Settings made here are persisted; they are stored separately per repository, and they will be in effect for any 
+			<i>Commit &amp; Push</i> operation on a particular repository until changed again via this "Push Settings" button.
+		</p>
+		<p>
+			<i>Commit &amp; Push</i> performs the equivalent of
+		</p>
+		<pre> git push &lt;remote&gt; HEAD:&lt;upstream branch&gt;
+</pre>
+		<p>The remote is determined via git configs <tt>
+			<a href="https://git-scm.com/docs/git-config#Documentation/git-config.txt-branchltnamegtpushRemote" target="egit_external">branch.&amp;lt;name&gt;.pushRemote</a></tt>, <tt>
+			<a href="https://git-scm.com/docs/git-config#Documentation/git-config.txt-remotepushDefault" target="egit_external">remote.pushDefault</a></tt>, <tt>
+			<a href="https://git-scm.com/docs/git-config#Documentation/git-config.txt-branchltnamegtremote" target="egit_external">branch.&amp;lt;name&gt;.remote</a></tt>, "<tt>origin</tt>".
+			The upstream branch is determined from the <tt>
+			<a href="https://git-scm.com/docs/git-config#Documentation/git-config.txt-branchltnamegtmerge" target="egit_external">branch.&amp;lt;name&gt;.merge</a></tt> git configuration of the currently checked out branch; if none is set, the upstream branch is assumed to have the same name as the current local branch.
+		</p>
+		<p>Activating the "Force Push" option changes this to</p>
+		<pre> git push &lt;remote&gt; +HEAD:&lt;upstream branch&gt;
+</pre>
+		<p>
+			<b>Note:</b> if the repository is configured for Gerrit and the 
+			<i>Commit &amp; Push</i> operation will attempt pushing to Gerrit, then the "Push Settings" button is not available. First, the command will in that case always use a dialog, and second, force pushing a commit as a new change or patch set to Gerrit makes no sense.
+		</p>
+		<h2 id="Support_for_External_Diff_and_Merge_Tools">Support for External Diff and Merge Tools</h2>
+		<p>EGit 6.2 supports the use of external diff and merge tools. An external tool can be configured via a new preference page, potentially combined with git repository configuration, as well as per product customization.</p>
+		<p>To configure an external diff or merge tool via the preference page:</p>
+		<ol>
+			<li>Navigate to the preference page: <b>Main menu -&gt; Window -&gt; Preferences -&gt; Version Control (Team) -&gt; Git -&gt; Diff/Merge</b></li>
+			<li>In the diff or merge section, select the radio button for an external tool and select a tool from the combo box. Only tools available on your system are listed.</li>
+		</ol>
+		<p>
+			<img border="0" src="images/Bug552338_external_diff_merge_tool_preference_page.png"/>
+		</p>
+		<p>Alternatively, you can select using the available git configuration and configure a tool via <tt>git config</tt>:</p>
+		<pre>[merge]
+       tool = customMergeTool
+[mergetool "customMergeTool"]
+       cmd = kdiff3 "$LOCAL" "$REMOTE" "$MERGED" "$BASE"
+       path = /usr/bin/kdiff3
+       prompt = false
+       trustExitCode = false
+</pre>
+		<pre>[diff]
+	  tool = customDiffTool
+[difftool "customDiffTool"]
+       cmd = kdiff3 "$LOCAL" "$REMOTE"
+</pre>
+		<p>To use a tool available on your system as default, specify e.g. the following via git config:</p>
+		<pre>[merge]
+       tool = kdiff3
+</pre>
+		<p>You can override the default tool per folder and per file type, using the <tt>.gitattributes</tt> file in a folder. The override will apply for subfolders, as long as a subfolder does not override the tool via <tt>.gitattributes</tt>:</p>
+		<pre>attributes:
+*	mergetool=kdiff3
+*.txt	difftool=kompare
+</pre>
+		<p>To configure an external diff or merge tool via product customization, specify the following in your customization file (passed to Eclipse via the command line argument, e.g. <tt>-pluginCustomization /some/path/my_customization.ini</tt>):</p>
+		<pre>org.eclipse.egit.ui/diff_tool_custom=kdiff3
+org.eclipse.egit.ui/diff_tool_mode=3
+</pre>
+		<p>You can also configure a external tools per-extension. The value of the preference is comma separated pairs of extension and invocation command:</p>
+		<pre>org.eclipse.egit.ui/external_diff_tool_per_extension=txt,/usr/bin/kdiff3 "$LOCAL" "$REMOTE"
+org.eclipse.egit.ui/diff_tool_mode=1
+</pre>
+		<h2 id="Other_Changes">Other Changes</h2>
+		<p>The complete list of new features and bug fixes is available in the 
+			<a href="https://projects.eclipse.org/projects/technology.egit/releases/6.2/" target="egit_external">release notes</a>.
+		</p><hr class="navigation-separator"/>
+		<table class="navigation" style="width: 100%;" border="0" summary="navigation">
+			<tr>
+				<td style="width: 20%" align="left"></td>
+				<td style="width: 60%" align="center"></td>
+				<td style="width: 20%" align="right">
+					<a href="Contributors.html" title="Contributors">
+						<img alt="Next" border="0" src="../../../images/next.gif"/>
+					</a>
+				</td>
+			</tr>
+			<tr>
+				<td style="width: 20%" align="left" valign="top"></td>
+				<td style="width: 60%" align="center"></td>
+				<td style="width: 20%" align="right" valign="top">Contributors</td>
+			</tr>
+		</table>
+	</body>
+</html>
