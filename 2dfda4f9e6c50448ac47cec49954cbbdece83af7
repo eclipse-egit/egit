@@ -101,6 +101,41 @@
       "message": "The repo config has the user config as parent; querying the repo config gives the combined settings. So you\u0027ve already considered the user config, and this else-branch should not be necessary.",
       "revId": "2dfda4f9e6c50448ac47cec49954cbbdece83af7",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "88ad5b2e_a4805081",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/diffmerge/DiffMergeSettings.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 206,
+      "author": {
+        "id": 119988
+      },
+      "writtenOn": "2022-06-06T13:33:13Z",
+      "side": 1,
+      "message": "Thanks, I was hoping this was the case.",
+      "parentUuid": "a27d4652_245212a5",
+      "revId": "2dfda4f9e6c50448ac47cec49954cbbdece83af7",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "8266c1d8_54a1b480",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/diffmerge/DiffMergeSettings.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 225,
+      "author": {
+        "id": 119988
+      },
+      "writtenOn": "2022-06-06T13:33:13Z",
+      "side": 1,
+      "message": "Andrey, any idea what the point is of writing this? I find no one reading this preference? Except for the same method calling this, when its done. It seems pointless to read a config, store a preference, then read the preference.\n\nIs the preference meant to cache the git config value, so we avoid reading the git config on each invocation? If so, I\u0027ll adjust the code. But when do we clear this cache?",
+      "revId": "2dfda4f9e6c50448ac47cec49954cbbdece83af7",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31"
     }
   ]
 }
