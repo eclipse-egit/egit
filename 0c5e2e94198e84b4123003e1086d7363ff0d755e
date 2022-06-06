@@ -1,0 +1,174 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "3a27d83c_5f796484",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/CompareUtils.java",
+        "patchSetId": 16
+      },
+      "lineNbr": 354,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2022-06-06T12:25:57Z",
+      "side": 1,
+      "message": "Message needs to be externalized.",
+      "revId": "0c5e2e94198e84b4123003e1086d7363ff0d755e",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d382d2ea_3b28dd67",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/CompareUtils.java",
+        "patchSetId": 16
+      },
+      "lineNbr": 402,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2022-06-06T12:25:57Z",
+      "side": 1,
+      "message": "Message needs to be externalized.",
+      "revId": "0c5e2e94198e84b4123003e1086d7363ff0d755e",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "63b36101_2bb2b2a1",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/CompareUtils.java",
+        "patchSetId": 16
+      },
+      "lineNbr": 408,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2022-06-06T12:25:57Z",
+      "side": 1,
+      "message": "No e.printStackTrace() in production code, please. Message needs to be externalized. User Activator.handleError().",
+      "revId": "0c5e2e94198e84b4123003e1086d7363ff0d755e",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "2fdd597e_314f2ef0",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/CompareUtils.java",
+        "patchSetId": 16
+      },
+      "lineNbr": 410,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2022-06-06T12:25:57Z",
+      "side": 1,
+      "message": "No e.printStackTrace() in production code, please. Use the Activator.handleError() instead, with last parameter \"true\" to also show the error to the user.",
+      "revId": "0c5e2e94198e84b4123003e1086d7363ff0d755e",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f3857bb2_9dbea161",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/DiffContainerJob.java",
+        "patchSetId": 16
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2022-06-06T12:25:57Z",
+      "side": 1,
+      "message": "No e.printStackTrace() in production code, please.",
+      "revId": "0c5e2e94198e84b4123003e1086d7363ff0d755e",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "fc026e89_be716ac3",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/actions/MergeToolActionHandler.java",
+        "patchSetId": 16
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2022-06-06T12:25:57Z",
+      "side": 1,
+      "message": "Externalize job name.",
+      "revId": "0c5e2e94198e84b4123003e1086d7363ff0d755e",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "5ceec6a1_1d5062a2",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/actions/MergeToolActionHandler.java",
+        "patchSetId": 16
+      },
+      "lineNbr": 192,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2022-06-06T12:25:57Z",
+      "side": 1,
+      "message": "Message needs to be externailzed.",
+      "revId": "0c5e2e94198e84b4123003e1086d7363ff0d755e",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ab7cbd4c_af55b62a",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/actions/MergeToolActionHandler.java",
+        "patchSetId": 16
+      },
+      "lineNbr": 199,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2022-06-06T12:25:57Z",
+      "side": 1,
+      "message": "Message needs to be externalized.",
+      "revId": "0c5e2e94198e84b4123003e1086d7363ff0d755e",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e02390e2_cb4b69fe",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/actions/MergeToolActionHandler.java",
+        "patchSetId": 16
+      },
+      "lineNbr": 210,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2022-06-06T12:25:57Z",
+      "side": 1,
+      "message": "Message needs to be externalized.",
+      "revId": "0c5e2e94198e84b4123003e1086d7363ff0d755e",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f910d728_3b6a1214",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/actions/MergeToolActionHandler.java",
+        "patchSetId": 16
+      },
+      "lineNbr": 245,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2022-06-06T12:25:57Z",
+      "side": 1,
+      "message": "Message needs to be externalized.",
+      "revId": "0c5e2e94198e84b4123003e1086d7363ff0d755e",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31"
+    }
+  ]
+}
