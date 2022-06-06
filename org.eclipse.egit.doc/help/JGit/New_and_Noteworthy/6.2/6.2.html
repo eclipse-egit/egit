@@ -1,0 +1,85 @@
+<?xml version='1.0' encoding='utf-8' ?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+		<title>JGit 6.2 New and Noteworthy</title>
+		<link type="text/css" rel="stylesheet" href="../../../book.css"/>
+	</head>
+	<body>
+		<table class="navigation" style="width: 100%;" border="0" summary="navigation">
+			<tr>
+				<th style="width: 100%" align="center" colspan="3">JGit 6.2 New and Noteworthy</th>
+			</tr>
+			<tr>
+				<td style="width: 20%" align="left"></td>
+				<td style="width: 60%" align="center"></td>
+				<td style="width: 20%" align="right">
+					<a href="Contributors.html" title="Contributors">
+						<img alt="Next" border="0" src="../../../images/next.gif"/>
+					</a>
+				</td>
+			</tr>
+			<tr>
+				<td style="width: 20%" align="left" valign="top"></td>
+				<td style="width: 60%" align="center"></td>
+				<td style="width: 20%" align="right" valign="top">Contributors</td>
+			</tr>
+		</table><hr class="navigation-separator"/>
+		<h1 id="JGit">JGit</h1>
+		<h2 id="New_Features">New Features</h2>
+		<h3 id="Git_config_core.commentChar">Git config core.commentChar</h3>
+		<p>The git config <tt>
+			<a href="https://git-scm.com/docs/git-config#Documentation/git-config.txt-corecommentChar" target="egit_external">core.commentChar</a></tt> is supported as of JGit 6.2. It enables users to change the default character indicating comment lines in commit messages, which by default is <tt>#</tt>. The <tt>auto</tt> setting is also supported.
+		</p>
+		<h3 id="Negative_Refspecs">Negative Refspecs</h3>
+		<p>JGit 6.2 supports 
+			<i>negative refspecs</i> when fetching, introduced in C git 2.29. Negative refspecs enable a git client to specify that some refs should 
+			<i>not</i> be fetched. A negative refspec has the form <tt>^refs/...</tt> and it many contain the <tt>*</tt> wildcard. For the details, see the 
+			<a href="https://git-scm.com/docs/git-fetch#Documentation/git-fetch.txt-ltrefspecgt" target="egit_external">git fetch documentation</a>, or the 
+			<a href="https://github.blog/2020-10-19-git-2-29-released/#user-content-negative-refspecs" target="egit_external">git 2.29 announcement</a>.
+		</p>
+		<h3 id="Support_for_External_Diff_and_Merge_Tools">Support for External Diff and Merge Tools</h3>
+		<p>JGit 6.2 supports the use of external diff and merge tools. To invoke a merge or diff tool use, for instance:</p>
+		<pre>jgit difftool --tool=kdiff3
+jgit mergetool --tool=kdiff3
+</pre>
+		<p>The list of diff or merge tools configured on the system may be obtained via</p>
+		<pre>jgit difftool --tool-help
+jgit mergetool --tool-help
+</pre>
+		<p>Diff or merge tools are defined in the git configuration files, typically in the repository or user git config. The mechanism is the same for both. An example of a merge tool definition might be</p>
+		<pre>[merge]
+       tool = customTool
+[mergetool "customTool"]
+       cmd = echo
+       path = /usr/bin/echo
+       prompt = false
+       trustExitCode = false
+</pre>
+		<p>For a diff tool definition, use <tt>diff.tool = &lt;name&gt;</tt> and define it via <tt>diff.&lt;name&gt;.*</tt> instead of <tt>merge.tool</tt> and <tt>merge.&lt;name&gt;.*</tt>.</p>
+		<p>For the details of configurations and possible parameters to the <tt>difftool</tt> or <tt>mergetool</tt> commands, see the official git documentation on <tt>
+			<a href="https://git-scm.com/docs/git-difftool" target="egit_external">git difftool</a></tt> and <tt>
+			<a href="https://git-scm.com/docs/git-mergetool" target="egit_external">git mergetool</a></tt>.
+		</p>
+		<h2 id="Other_Changes">Other Changes</h2>
+		<p>The complete list of new features and bug fixes is available in the 
+			<a href="https://projects.eclipse.org/projects/technology.jgit/releases/6.2/" target="egit_external">release notes</a>.
+		</p><hr class="navigation-separator"/>
+		<table class="navigation" style="width: 100%;" border="0" summary="navigation">
+			<tr>
+				<td style="width: 20%" align="left"></td>
+				<td style="width: 60%" align="center"></td>
+				<td style="width: 20%" align="right">
+					<a href="Contributors.html" title="Contributors">
+						<img alt="Next" border="0" src="../../../images/next.gif"/>
+					</a>
+				</td>
+			</tr>
+			<tr>
+				<td style="width: 20%" align="left" valign="top"></td>
+				<td style="width: 60%" align="center"></td>
+				<td style="width: 20%" align="right" valign="top">Contributors</td>
+			</tr>
+		</table>
+	</body>
+</html>

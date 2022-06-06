@@ -231,6 +231,11 @@ mvn org.eclipse.dash:license-tool-plugin:license-check -Ddash.summary=DEPENDENCI
 		<pre>bazel build --java_toolchain //tools:error_prone_warnings_toolchain :all
 </pre>
 		<p>Note that the Bazel build does not yet support building JGit OSGi bundles, Eclipse features and the p2 repository which are required to install JGit in Eclipse.</p>
+		<h2 id="Updating_build_version">Updating build version</h2>
+		<p>use the tools/version.sh script to update the build version in all build files, e.g.</p>
+		<pre style="width: 55em;">
+./tools/version.sh --snapshot=6.2.0-SNAPSHOT
+</pre>
 		<h2 id="FindBugs_and_PMD">FindBugs and PMD</h2>
 		<p>As part of the build, JGit and EGit run FindBugs and PMD to find issues.</p>
 		<ul>
@@ -273,13 +278,40 @@ latest stable branch:  /home/data/httpd/download.eclipse.org/egit/updates-stable
 				<a href="https://ci.eclipse.org/egit/" target="egit_external">https://ci.eclipse.org/egit/</a>
 			</li>
 		</ul>
+		<h2 id="Creating_a_release">Creating a release</h2>
+		<p>Use the tools/release.sh script to create a new release, e.g.</p>
+		<pre style="width: 55em;">
+./tools/release.sh v6.1.0.202203080745-r
+</pre>
+		<ul>
+			<li>release versions have 5 parts <pre>major.minor.patch.buildTimestamp-qualifier</pre>
+				<ul>
+					<li>Traditionally we use local time in EST timezone for the buildTimestamp part of the version number since our build servers run in that timezone.</li>
+					<li>qualifier is <pre>m1,m2, ...</pre> for milestones, <pre>rc1, rc2, ...</pre> for release candidates and <pre>r</pre> for releases</li>
+				</ul>
+			</li>
+			<li>We sign release tags, follow 
+				<a href="https://git-scm.com/book/en/v2/Git-Tools-Signing-Your-Work" target="egit_external">Git Tools - Signing Your Work</a> to set this up on your computer before creating the first release.
+			</li>
+			<li>We create all milestones and releases on a dedicated stable branch to avoid interference with ongoing development on master. E.g. use the stable-6.1 branch for releasing 6.1.0 and subsequent patch releases like 6.1.1.</li>
+			<li>push the locally created release commit to git.eclipse.org for review</li>
+			<li>wait for the verification build to succeed and vote +1 on verified</li>
+			<li>review and submit the release change, then push the release tag to git.eclipse.org</li>
+			<li>the CI job will build the release version and deploy it to the Eclipse Maven repo at repo.eclipse.org</li>
+		</ul>
 		<h2 id="Contribution_to_Release_Train">Contribution to Release Train</h2>
 		<p>The release train contribution for JGit and EGit is maintained in the git repository </p>
 		<pre>ssh://git.eclipse.org/gitroot/simrel/org.eclipse.simrel.build.git
 </pre>
-		<p>in the file</p>
-		<pre>egit.aggrcon
+		<p>in the files</p>
+		<pre>
+simrel.aggr
+egit.aggrcon
 </pre>
+		<p>Open simrel.aggr using the 
+			<a href="https://wiki.eclipse.org/CBI/aggregator" target="egit_external">CBI aggregator editor</a> to edit these files.
+			This editor knows the structure of these files and can check their validity.
+		</p>
 		<p>The release train build is coordinated on the 
 			<a href="https://dev.eclipse.org/mailman/listinfo/cross-project-issues-dev" target="egit_external">cross-project-issues-dev mailing list</a>
 		</p>
