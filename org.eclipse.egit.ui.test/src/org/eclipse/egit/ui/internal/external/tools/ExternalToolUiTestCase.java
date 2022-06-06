@@ -15,9 +15,16 @@ import static org.hamcrest.Matchers.hasItem;
 import static org.hamcrest.Matchers.is;
 
 import java.io.File;
+import java.io.IOException;
 import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.nio.file.StandardOpenOption;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
+import java.util.function.BiConsumer;
 
+import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.Path;
 import org.eclipse.core.runtime.preferences.DefaultScope;
@@ -31,6 +38,7 @@ import org.eclipse.jgit.api.MergeResult;
 import org.eclipse.jgit.api.MergeResult.MergeStatus;
 import org.eclipse.jgit.junit.TestRepository;
 import org.eclipse.jgit.lib.Repository;
+import org.eclipse.jgit.lib.StoredConfig;
 import org.eclipse.jgit.util.FS;
 import org.eclipse.jgit.util.FS_POSIX;
 import org.eclipse.swtbot.swt.finder.SWTBot;
@@ -52,6 +60,8 @@ public abstract class ExternalToolUiTestCase extends LocalRepositoryTestCase {
 
 	protected TestRepository testRepository;
 
+	private List<java.nio.file.Path> createdFiles;
+
 	@Before
 	public void setUp() throws Exception {
 		FS.FileStoreAttributes.setBackground(false);
@@ -64,11 +74,20 @@ public abstract class ExternalToolUiTestCase extends LocalRepositoryTestCase {
 
 		resultFile = Files.createTempFile(
 				ExternalToolUiTestCase.class.getSimpleName(), "test_output_file");
+
+		createdFiles = new ArrayList<>();
+		createdFiles.add(resultFile);
 	}
 
 	@After
 	public void tearDown() throws Exception {
-		Files.delete(resultFile);
+		for (java.nio.file.Path createdFile : createdFiles) {
+			Files.deleteIfExists(createdFile);
+		}
+	}
+
+	protected void clearResultFile() throws Exception {
+		Files.write(resultFile, new byte[] {});
 	}
 
 	protected List<String> waitForToolOutput() {
@@ -78,8 +97,30 @@ public abstract class ExternalToolUiTestCase extends LocalRepositoryTestCase {
 		return commandOutputLines;
 	}
 
+	protected void configureTools(
+			BiConsumer<String, StoredConfig> configureDefaultTool,
+			BiConsumer<String, StoredConfig> configureToolSubsection,
+			String defaultToolName, String... extraToolNames) throws Exception {
+		StoredConfig config = testRepository.getRepository().getConfig();
+		config.clear();
+
+		configureDefaultTool.accept(defaultToolName, config);
+
+		List<String> toolNames = new ArrayList<>();
+		toolNames.add(defaultToolName);
+		if (extraToolNames != null) {
+			toolNames.addAll(Arrays.asList(extraToolNames));
+		}
+
+		for (String toolName : toolNames) {
+			configureToolSubsection.accept(toolName, config);
+		}
+
+		config.save();
+	}
+
 	protected void createMergeConflict() throws Exception {
-		IPath path = new Path(PROJ1).append("folder/test.txt");
+		IPath path = new Path(PROJ1).append(FOLDER).append(FILE1);
 		testRepository.branch("stable").commit().add(path.toString(), "stable")
 				.create();
 		touchAndSubmit("master", "master");
@@ -94,6 +135,27 @@ public abstract class ExternalToolUiTestCase extends LocalRepositoryTestCase {
 		IndexDiffCache.INSTANCE
 				.getIndexDiffCacheEntry(testRepository.getRepository());
 		TestUtil.joinJobs(JobFamilies.INDEX_DIFF_CACHE_UPDATE);
+	}
+
+	protected void writeFolderGitAttributes(String gitAttributesContents)
+			throws IOException {
+		writeProjectFile(FOLDER + "/.gitattributes", gitAttributesContents);
+	}
+
+	protected void writeProjectFile(String projectFilePath,
+			String gitAttributesContents) throws IOException {
+		java.nio.file.Path path = getProjectFilePath(projectFilePath);
+		Files.write(path, gitAttributesContents.getBytes(),
+				StandardOpenOption.CREATE_NEW);
+		createdFiles.add(path);
+	}
+
+	protected java.nio.file.Path getProjectFilePath(String path) {
+		IPath workspacePath = ResourcesPlugin.getWorkspace().getRoot()
+				.getProject(PROJ1).getFile(new Path(path)).getLocation();
+		java.nio.file.Path filePath = Paths
+				.get(workspacePath.toFile().getAbsolutePath());
+		return filePath;
 	}
 
 	protected static void assumePosixPlatform() {

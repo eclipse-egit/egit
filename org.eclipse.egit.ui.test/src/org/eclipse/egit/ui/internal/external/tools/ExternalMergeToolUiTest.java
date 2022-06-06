@@ -37,9 +37,9 @@ import org.junit.Test;
  */
 public class ExternalMergeToolUiTest extends ExternalToolUiTestCase {
 
-	private int previousMergeToolModePreference;
-
 	private String previousCustomToolPreference;
+
+	private int previousMergeToolModePreference;
 
 	@Override
 	@Before
@@ -70,7 +70,7 @@ public class ExternalMergeToolUiTest extends ExternalToolUiTestCase {
 		assumePosixPlatform();
 
 		String toolName = "custom_tool";
-		configureEchoTool(toolName);
+		configureEchoTools(toolName);
 		preferenceNode.putInt(UIPreferences.MERGE_TOOL_MODE,
 				MergeToolMode.EXTERNAL.ordinal());
 		preferenceNode.put(UIPreferences.MERGE_TOOL_CUSTOM, toolName);
@@ -82,7 +82,71 @@ public class ExternalMergeToolUiTest extends ExternalToolUiTestCase {
 
 		String actualCommandOutput = String.join(System.lineSeparator(),
 				commandOutputLines);
-		String expectedOutputPattern = "test_command .*.txt";
+		String expectedOutputPattern = toolName + " merged=.*.txt";
+		boolean matchingOutput = Pattern.matches(expectedOutputPattern,
+				actualCommandOutput);
+		assertTrue("Command output doesn't match expected pattern: "
+				+ expectedOutputPattern + ", command output: "
+				+ actualCommandOutput, matchingOutput);
+	}
+
+	@Test
+	public void testExternalMergeToolGitConfig() throws Exception {
+		assumePosixPlatform();
+
+		createMergeConflict();
+
+		// run with differently configured tools, to ensure the git config is
+		// not cached improperly
+		int runs = 2;
+		for (int i = 0; i < runs; ++i) {
+			clearResultFile();
+
+			String toolName = "custom_tool" + i;
+			configureEchoTools(toolName);
+			preferenceNode.putInt(UIPreferences.MERGE_TOOL_MODE,
+					MergeToolMode.GIT_CONFIG.ordinal());
+			preferenceNode.put(UIPreferences.MERGE_TOOL_CUSTOM, toolName);
+
+			triggerMergeToolAction();
+
+			List<String> commandOutputLines = waitForToolOutput();
+
+			String actualCommandOutput = String.join(System.lineSeparator(),
+					commandOutputLines);
+			String expectedOutputPattern = toolName + " merged=.*.txt";
+			boolean matchingOutput = Pattern.matches(expectedOutputPattern,
+					actualCommandOutput);
+			assertTrue("Command output doesn't match expected pattern: "
+					+ expectedOutputPattern + ", command output: "
+					+ actualCommandOutput, matchingOutput);
+		}
+	}
+
+	@Test
+	public void testExternalDiffToolGitAttributesOverride() throws Exception {
+		assumePosixPlatform();
+
+		String toolNameGitConfig = "custom_tool_git_config";
+		String toolNameGitAttributes = "custom_tool_git_attributes";
+		configureEchoTools(toolNameGitConfig, toolNameGitAttributes);
+		preferenceNode.putInt(UIPreferences.MERGE_TOOL_MODE,
+				MergeToolMode.GIT_CONFIG.ordinal());
+		preferenceNode.put(UIPreferences.MERGE_TOOL_CUSTOM, toolNameGitConfig);
+
+		String gitAttributesContents = "atttributes:" + "\n" + "*.txt" + "\t"
+				+ "mergetool=" + toolNameGitAttributes;
+		writeFolderGitAttributes(gitAttributesContents);
+
+		createMergeConflict();
+		triggerMergeToolAction();
+
+		List<String> commandOutputLines = waitForToolOutput();
+
+		String actualCommandOutput = String.join(System.lineSeparator(),
+				commandOutputLines);
+		// expect the command from the tool in the git attributes
+		String expectedOutputPattern = toolNameGitAttributes + " merged=.*.txt";
 		boolean matchingOutput = Pattern.matches(expectedOutputPattern,
 				actualCommandOutput);
 		assertTrue("Command output doesn't match expected pattern: "
@@ -105,14 +169,23 @@ public class ExternalMergeToolUiTest extends ExternalToolUiTestCase {
 				util.getPluginLocalizedValue("MergeToolAction.label"));
 	}
 
-	private void configureEchoTool(String toolName) throws Exception {
-		StoredConfig config = testRepository.getRepository().getConfig();
+	private void configureEchoTools(String defaultToolName,
+			String... extraToolNames) throws Exception {
+		configureTools(this::configureDefaultTool,
+				this::configureEchoToolSubsection, defaultToolName,
+				extraToolNames);
+	}
+
+	private void configureDefaultTool(String toolName, StoredConfig config) {
 		// the default merge tool is configured without a subsection
 		String subsection = null;
 		config.setString(CONFIG_MERGE_SECTION, subsection, CONFIG_KEY_TOOL,
 				toolName);
+	}
 
-		String command = getEchoCommand();
+	private void configureEchoToolSubsection(String toolName,
+			StoredConfig config) {
+		String command = getEchoCommand(toolName);
 
 		config.setString(CONFIG_MERGETOOL_SECTION, toolName, CONFIG_KEY_CMD,
 				command);
@@ -124,17 +197,16 @@ public class ExternalMergeToolUiTest extends ExternalToolUiTestCase {
 		 */
 		config.setString(CONFIG_MERGETOOL_SECTION, toolName, CONFIG_KEY_PROMPT,
 				String.valueOf(false));
-		config.save();
 	}
 
-	private String getEchoCommand() {
+	private String getEchoCommand(String toolName) {
 		/*
 		 * Use 'MERGED' placeholder, as both 'LOCAL' and 'REMOTE' will be
 		 * replaced with full paths to a temporary file during some of the tests.
 		 *
 		 * Exit with non-zero code, to prevent a native dialog from being shown.
 		 */
-		return "(echo test_command \"$MERGED\" > "
+		return "(echo " + toolName + " merged=\"$MERGED\" > "
 				+ resultFile.toAbsolutePath().toString() + "; exit 1)";
 	}
 }

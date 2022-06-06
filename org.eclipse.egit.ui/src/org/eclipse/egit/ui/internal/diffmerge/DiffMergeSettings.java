@@ -14,6 +14,7 @@ import java.io.IOException;
 import java.util.Objects;
 import java.util.Optional;
 import java.util.Set;
+import java.util.function.Function;
 
 import org.eclipse.core.runtime.Platform;
 import org.eclipse.egit.ui.Activator;
@@ -26,6 +27,7 @@ import org.eclipse.jgit.internal.diffmergetool.DiffTools;
 import org.eclipse.jgit.internal.diffmergetool.MergeTools;
 import org.eclipse.jgit.internal.diffmergetool.ToolException;
 import org.eclipse.jgit.lib.Repository;
+import org.eclipse.jgit.lib.StoredConfig;
 import org.eclipse.jgit.storage.file.FileBasedConfig;
 import org.eclipse.jgit.util.FS;
 import org.eclipse.jgit.util.StringUtils;
@@ -132,7 +134,9 @@ public final class DiffMergeSettings {
 
 		if (!toolName.isPresent() && diffToolMode == DiffToolMode.GIT_CONFIG) {
 			// try to read from git config
-			toolName = DiffMergeSettings.readDiffToolFromGitConfig();
+			toolName = DiffMergeSettings.readExternalToolFromGitConfig(
+					c -> getDiffToolFromGitConfig(c), repository,
+					UIPreferences.DIFF_TOOL_FROM_GIT_CONFIG);
 		}
 
 		if (diffToolMode == DiffToolMode.EXTERNAL) {
@@ -176,54 +180,74 @@ public final class DiffMergeSettings {
 		if (!toolName.isPresent()
 				&& mergeToolMode == MergeToolMode.GIT_CONFIG) {
 			// try to read from git config
-			toolName = DiffMergeSettings.readDiffToolFromGitConfig();
+			toolName = DiffMergeSettings
+					.readExternalToolFromGitConfig(
+							c -> getMergeToolFromGitConfig(c), repository,
+							UIPreferences.MERGE_TOOL_FROM_GIT_CONFIG);
 		}
 
 		if (mergeToolMode == MergeToolMode.EXTERNAL) {
 			// check Eclipse preferences
-			toolName = Optional.of(getDiffToolName());
+			toolName = Optional.of(getMergeToolName());
 		}
 
 		return toolName;
 	}
 
 	/**
-	 * @return the selected diff tool name. If the value is not present,
-	 *         internal eclipse diff should be used
+	 * Checks the configuration of the specified repository, for a configured
+	 * external tool. Stores a non-empty preference value, if a configuration is
+	 * found.
+	 *
+	 * @param readConfiguredExternalTool
+	 *            retrieves a configured external tool from a git config
+	 * @param repository
+	 *            the config of this repository will be read
+	 * @param preferenceName
+	 *            the preference to update after reading the git config value
+	 * @return the selected external tool name. If the value is not present,
+	 *         internal eclipse tool should be used
 	 */
-	private static Optional<String> readDiffToolFromGitConfig() {
-		FileBasedConfig config = loadUserConfig();
-		updateDefaultDiffToolFromGitConfig(config);
-		return Optional.ofNullable(
-				getStore().getString(UIPreferences.DIFF_TOOL_FROM_GIT_CONFIG));
+	private static Optional<String> readExternalToolFromGitConfig(
+			Function<StoredConfig, String> readConfiguredExternalTool,
+			Repository repository, String preferenceName) {
+		StoredConfig repoConfig = repository.getConfig();
+		String externalTool = readConfiguredExternalTool.apply(repoConfig);
+		if (externalTool != null) {
+			updateDefaultExternalToolPreference(externalTool, preferenceName);
+		}
+		return Optional.ofNullable(getStore().getString(preferenceName));
 	}
 
-	/**
-	 * Updates preferences with the current diff tool.
-	 *
-	 * @param config
-	 */
-	private static void updateDefaultDiffToolFromGitConfig(
-			FileBasedConfig config) {
-		String diffTool = getCustomDiffToolFromGitConfig(config);
-		if (diffTool != null) {
-			getStore().setValue(UIPreferences.DIFF_TOOL_FROM_GIT_CONFIG,
-					diffTool);
+	private static void updateDefaultExternalToolPreference(String externalTool,
+			String preferenceName) {
+		if (externalTool != null) {
+			getStore().setValue(preferenceName, externalTool);
 		} else {
-			getStore().setValue(UIPreferences.DIFF_TOOL_FROM_GIT_CONFIG, ""); //$NON-NLS-1$
+			getStore().setValue(preferenceName, ""); //$NON-NLS-1$
 		}
 	}
 
 	/**
 	 * @param config
 	 *            to read from
-	 * @return provides a name of a custom diff tool defined tin git
+	 * @return provides a name of a custom diff tool defined in the git
 	 *         configuration
 	 */
-	private static String getCustomDiffToolFromGitConfig(
-			FileBasedConfig config) {
+	private static String getDiffToolFromGitConfig(StoredConfig config) {
 		DiffTools diffToolManager = new DiffTools(config);
 		return diffToolManager.getDefaultToolName(false);
+	}
+
+	/**
+	 * @param config
+	 *            to read from
+	 * @return provides a name of a custom merge tool defined in the git
+	 *         configuration
+	 */
+	private static String getMergeToolFromGitConfig(StoredConfig config) {
+		MergeTools mergeToolManager = new MergeTools(config);
+		return mergeToolManager.getDefaultToolName(false);
 	}
 
 	private static FileBasedConfig loadUserConfig() {
