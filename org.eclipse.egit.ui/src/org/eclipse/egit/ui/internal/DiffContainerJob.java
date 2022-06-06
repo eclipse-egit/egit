@@ -52,6 +52,7 @@ import org.eclipse.core.runtime.Status;
 import org.eclipse.core.runtime.jobs.Job;
 import org.eclipse.egit.ui.Activator;
 import org.eclipse.egit.ui.internal.merge.GitMergeEditorInput;
+import org.eclipse.jgit.lib.Repository;
 
 /**
  *
@@ -91,6 +92,13 @@ public class DiffContainerJob extends Job {
 			return error;
 		}
 		return Status.OK_STATUS;
+	}
+
+	/**
+	 * @return repository for given input
+	 */
+	public Repository getRepository() {
+		return gitMergeInput.getRepository();
 	}
 
 }

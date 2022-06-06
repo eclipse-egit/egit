@@ -43,6 +43,7 @@ import org.eclipse.egit.ui.Activator;
 import org.eclipse.egit.ui.UIPreferences;
 import org.eclipse.egit.ui.internal.DiffContainerJob;
 import org.eclipse.egit.ui.internal.ToolsUtils;
+import org.eclipse.egit.ui.internal.UIText;
 import org.eclipse.egit.ui.internal.diffmerge.DiffMergeSettings;
 import org.eclipse.egit.ui.internal.merge.GitMergeEditorInput;
 import org.eclipse.egit.ui.internal.merge.MergeInputMode;
@@ -59,6 +60,7 @@ import org.eclipse.jgit.internal.diffmergetool.PromptContinueHandler;
 import org.eclipse.jgit.internal.diffmergetool.ToolException;
 import org.eclipse.jgit.lib.Repository;
 import org.eclipse.jgit.lib.internal.BooleanTriState;
+import org.eclipse.osgi.util.NLS;
 import org.eclipse.swt.SWT;
 
 /**
@@ -106,41 +108,45 @@ public class MergeToolActionHandler extends RepositoryActionHandler {
 			throws ExecutionException {
 		final GitMergeEditorInput gitMergeInput = (GitMergeEditorInput) input;
 		DiffContainerJob job = new DiffContainerJob(
-				"Prepare filelist for external merge tools", gitMergeInput); //$NON-NLS-1$
+				UIText.MergeToolActionHandler_openExternalMergeToolJobName,
+				gitMergeInput);
 		job.schedule();
 		try {
 			job.join();
 		} catch (InterruptedException e) {
+			Thread.interrupted();
 			throw new ExecutionException(
-					"Interrupted while computing merge contents.", //$NON-NLS-1$
+					UIText.MergeToolActionHandler_openExternalMergeToolWaitInterrupted,
 					e);
 		}
 		IDiffContainer diffCont = job.getDiffContainer();
-		executeExternalToolForChildren(diffCont);
+		executeExternalToolForChildren(diffCont, job.getRepository());
 	}
 
 	private static void executeExternalToolForChildren(
-			IDiffContainer diffCont) throws ExecutionException {
+			IDiffContainer diffCont, Repository repo)
+			throws ExecutionException {
 		if (diffCont != null && diffCont.hasChildren()) {
 			IDiffElement[] difContChilds = diffCont.getChildren();
 			for (IDiffElement diffElement : difContChilds) {
 				int diffKind = diffElement.getKind();
 				if (diffKind == Differencer.NO_CHANGE) {
 					executeExternalToolForChildren(
-							(IDiffContainer) diffElement);
+							(IDiffContainer) diffElement, repo);
 				} else if ((diffKind & Differencer.CONFLICTING) != 0) {
 					try {
-						mergeModified((DiffNode) diffElement);
+						mergeModified((DiffNode) diffElement, repo);
 					} catch (IOException | CoreException e) {
 						throw new ExecutionException(
-								"Failed to run external merge tool.", e); //$NON-NLS-1$
+								UIText.MergeToolActionHandler_externalMergeToolRunFailed,
+								e);
 					}
 				}
 			}
 		}
 	}
 
-	private static void mergeModified(DiffNode node)
+	private static void mergeModified(DiffNode node, Repository repo)
 			throws IOException, CoreException {
 		// get the left resource and revisions
 		FileRevisionTypedElement leftRevision = (ResourceEditableRevision)node.getLeft();
@@ -149,36 +155,26 @@ public class MergeToolActionHandler extends RepositoryActionHandler {
 		FileRevisionTypedElement baseRevision = (FileRevisionTypedElement)node.getAncestor();
 		// get the relative project path from right revision here
 		String mergedFilePath = null;
-		String mergedAbsoluteFilePath = null;
+		Repository repository = repo;
 		if (leftResource != null) {
-			mergedFilePath = leftResource.getName();
-			mergedAbsoluteFilePath = leftResource.getRawLocation().toOSString();
+			IPath relativePath = ResourceUtil.getRepositoryRelativePath(
+					leftResource.getRawLocation(), repository);
+			mergedFilePath = relativePath == null ? leftResource.getName()
+					: relativePath.toOSString();
 		} else if (leftRevision != null) {
 			mergedFilePath = leftRevision.getPath();
-			mergedAbsoluteFilePath = mergedFilePath;
-		}
-		Repository repository = null;
-		// get repo
-		IPath[] paths = new Path[1];
-		paths[0] = new Path(mergedAbsoluteFilePath);
-		Map<Repository, Collection<String>> pathsByRepository = ResourceUtil
-				.splitPathsByRepository(Arrays.asList(paths));
-		Set<Repository> repos = pathsByRepository.keySet();
-		if (repos.size() >= 1) {
-			repository = repos.iterator().next();
-		}
-		if (repository == null) {
-			return;
 		}
 		boolean isMergeSuccessful = true;
 		FileElement merged = new FileElement(mergedFilePath,
 				FileElement.Type.MERGED, repository.getWorkTree());
 		long modifiedBefore = merged.getFile().lastModified();
+
 		try {
 			// create the merge tool manager
 			MergeTools mergeTools = new MergeTools(repository);
 			// get the selected tool name
-			Optional<String> toolNameToUse = Optional.ofNullable(DiffMergeSettings.getMergeToolName());
+			Optional<String> toolNameToUse = DiffMergeSettings
+					.getMergeToolName(repository, mergedFilePath);
 			BooleanTriState prompt = BooleanTriState.FALSE;
 
 			PromptContinueHandler promptContinueHandler = new FileNamePromptContinueHandler(
@@ -201,16 +197,19 @@ public class MergeToolActionHandler extends RepositoryActionHandler {
 			mergeTools.merge(local, remote, merged, base, tempDir,
 					toolNameToUse, prompt, false, promptContinueHandler,
 					tools -> {
-						ToolsUtils.informUser("No tool configured.", //$NON-NLS-1$
-								"No mergetool is set. Will try a preconfigured one now. To configure one open the git config settings."); //$NON-NLS-1$
+						ToolsUtils.informUser(
+								UIText.MergeToolActionHandler_noToolConfiguredDialogTitle,
+								UIText.MergeToolActionHandler_noToolConfiguredDialogContent);
 					});
 		} catch (ToolException e) {
 			isMergeSuccessful = false;
-			Activator.logWarning("Failed to run external merge tool.", e); //$NON-NLS-1$
 			if (e.isCommandExecutionError()) {
-				ToolsUtils.informUserAboutError("mergetool - error", //$NON-NLS-1$
-						e.getMessage() + "\n\nMerge aborted!"); //$NON-NLS-1$
+				Activator.handleError(
+						UIText.MergeToolActionHandler_mergeToolErrorDialogContent,
+						e, true);
 				return; // abort the merge process
+			} else {
+				Activator.logWarning("Failed to run external merge tool.", e); //$NON-NLS-1$
 			}
 		}
 		// if merge was successful check file modified
@@ -218,9 +217,10 @@ public class MergeToolActionHandler extends RepositoryActionHandler {
 			long modifiedAfter = merged.getFile().lastModified();
 			if (modifiedBefore == modifiedAfter) {
 				int response = ToolsUtils.askUserAboutToolExecution(
-						"mergetool - trustExitCode: false", //$NON-NLS-1$
-						mergedFilePath
-								+ " seems unchanged.\n\nWas the merge successful?"); //$NON-NLS-1$
+						UIText.MergeToolActionHandler_mergeToolNoChangeDialogTitle,
+						NLS.bind(
+								UIText.MergeToolActionHandler_mergeToolNoChangeDialogContent,
+								mergedFilePath));
 				if (response == SWT.NO) {
 					isMergeSuccessful = false;
 				} else if (response == SWT.CANCEL) {
@@ -231,14 +231,17 @@ public class MergeToolActionHandler extends RepositoryActionHandler {
 		// if automatically or manually successful
 		// -> add the file to the index
 		if (isMergeSuccessful && GitPreferenceRoot.autoAddToIndex()) {
-			Git git = new Git(repository);
-			try {
+			try (Git git = new Git(repository)) {
 				git.add().addFilepattern(mergedFilePath).call();
+				if (leftResource != null) {
+					leftResource.getParent().refreshLocal(IResource.DEPTH_ONE,
+							null);
+				}
 			} catch (GitAPIException e) {
-				Activator.logError("Failed to add merged file to git.", e); //$NON-NLS-1$
+				Activator.handleError(
+						UIText.MergeToolActionHandler_mergeToolFailedAddMergedToGit,
+						e, true);
 			}
-			git.close();
-			repository.close();
 		}
 	}
 
@@ -252,10 +255,11 @@ public class MergeToolActionHandler extends RepositoryActionHandler {
 
 		@Override
 		public boolean prompt(String toolName) {
-			int response = ToolsUtils.askUserAboutToolExecution("mergetool", //$NON-NLS-1$
-					"Merging file: " //$NON-NLS-1$
-							+ fileName + "\n\nLaunch '" //$NON-NLS-1$
-							+ toolName + "' ?"); //$NON-NLS-1$
+			int response = ToolsUtils.askUserAboutToolExecution(
+					UIText.MergeToolActionHandler_mergeToolPromptDialogTitle,
+					NLS.bind(
+							UIText.MergeToolActionHandler_mergeToolPromptDialogContent,
+							fileName, toolName));
 
 			return response == SWT.YES;
 		}

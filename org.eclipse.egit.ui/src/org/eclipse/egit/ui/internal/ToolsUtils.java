@@ -52,7 +52,6 @@ import org.eclipse.jface.dialogs.ErrorDialog;
 import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Display;
-import org.eclipse.swt.widgets.MessageBox;
 import org.eclipse.ui.PlatformUI;
 
 /**
@@ -72,12 +71,9 @@ public class ToolsUtils {
 		Runnable runnable = new Runnable() {
 			@Override
 			public void run() {
-				MessageBox mbox = new MessageBox(
-						Display.getDefault().getActiveShell(),
-						SWT.ICON_QUESTION | SWT.YES | SWT.NO | SWT.CANCEL);
-				mbox.setText(textHeader);
-				mbox.setMessage(message);
-				result.set(mbox.open());
+				boolean ok = MessageDialog.openQuestion(null, textHeader,
+						message);
+				result.set(ok ? SWT.YES : SWT.NO);
 			}
 		};
 		if (Display.getCurrent() == null) {
