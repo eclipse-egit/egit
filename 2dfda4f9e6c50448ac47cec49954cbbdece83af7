@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d65a5fbc_c549235f",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/actions/MergeToolActionHandler.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 248,
+      "author": {
+        "id": 119988
+      },
+      "writtenOn": "2022-06-06T13:13:00Z",
+      "side": 1,
+      "message": "Still to clarify what we are doing here, whether we must show this to the user.\n\nProbably yes, I think merge tools add files after merges. So likely the user expects this to be the case, and would wonder if this exception was logged but not shown as a dialog.",
+      "revId": "2dfda4f9e6c50448ac47cec49954cbbdece83af7",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b91a97d3_409d3c33",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/diffmerge/DiffMergeSettings.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 180,
+      "author": {
+        "id": 119988
+      },
+      "writtenOn": "2022-06-06T13:13:00Z",
+      "side": 1,
+      "message": "This branch overwrites the preference UIPreferences.DIFF_TOOL_FROM_GIT_CONFIG.\n\nAndrey, I assume this code was meant to read a config value and update Eclipse preferences, but for some reason the code was written only for the external diff tool case (and for another reason, re-used for the merge tool)?\n\nI\u0027ll have to think on how to change and re-use the existing code, so that we avoid duplication.",
+      "revId": "2dfda4f9e6c50448ac47cec49954cbbdece83af7",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a77bb8c9_d74ab83a",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/diffmerge/DiffMergeSettings.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 197,
+      "author": {
+        "id": 119988
+      },
+      "writtenOn": "2022-06-06T13:13:00Z",
+      "side": 1,
+      "message": "While writing the N\u0026N page and trying out the \"use git config\" option from the Diff/Merge preference page, I noticed that a .git/config file specifying a default merge/diff tool didn\u0027t work when invoking commands from the UI (compare to previous version, invoke merge tool).\n\nThis fixes the problem. I\u0027ll add a docu comment to the method with the next change - its not the only problem.",
+      "revId": "2dfda4f9e6c50448ac47cec49954cbbdece83af7",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31"
+    }
+  ]
+}
