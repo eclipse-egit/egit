@@ -213,6 +213,9 @@ public final class UIPreferences {
 	public static final String DIFF_TOOL_FROM_GIT_CONFIG = "diff_tool_from_git_config"; //$NON-NLS-1$
 
 	/** */
+	public static final String MERGE_TOOL_FROM_GIT_CONFIG = "merge_tool_from_git_config"; //$NON-NLS-1$
+
+	/** */
 	public static final String DIFF_TOOL_MODE = "diff_tool_mode"; //$NON-NLS-1$
 
 	/**

@@ -43,6 +43,7 @@ import org.eclipse.egit.ui.Activator;
 import org.eclipse.egit.ui.UIPreferences;
 import org.eclipse.egit.ui.internal.DiffContainerJob;
 import org.eclipse.egit.ui.internal.ToolsUtils;
+import org.eclipse.egit.ui.internal.UIText;
 import org.eclipse.egit.ui.internal.diffmerge.DiffMergeSettings;
 import org.eclipse.egit.ui.internal.merge.GitMergeEditorInput;
 import org.eclipse.egit.ui.internal.merge.MergeInputMode;
@@ -59,6 +60,7 @@ import org.eclipse.jgit.internal.diffmergetool.PromptContinueHandler;
 import org.eclipse.jgit.internal.diffmergetool.ToolException;
 import org.eclipse.jgit.lib.Repository;
 import org.eclipse.jgit.lib.internal.BooleanTriState;
+import org.eclipse.osgi.util.NLS;
 import org.eclipse.swt.SWT;
 
 /**
@@ -106,13 +108,15 @@ public class MergeToolActionHandler extends RepositoryActionHandler {
 			throws ExecutionException {
 		final GitMergeEditorInput gitMergeInput = (GitMergeEditorInput) input;
 		DiffContainerJob job = new DiffContainerJob(
-				"Prepare filelist for external merge tools", gitMergeInput); //$NON-NLS-1$
+				UIText.MergeToolActionHandler_openExternalMergeToolJobName,
+				gitMergeInput);
 		job.schedule();
 		try {
 			job.join();
 		} catch (InterruptedException e) {
+			Thread.interrupted();
 			throw new ExecutionException(
-					"Interrupted while computing merge contents.", //$NON-NLS-1$
+					UIText.MergeToolActionHandler_openExternalMergeToolWaitInterrupted,
 					e);
 		}
 		IDiffContainer diffCont = job.getDiffContainer();
@@ -133,7 +137,8 @@ public class MergeToolActionHandler extends RepositoryActionHandler {
 						mergeModified((DiffNode) diffElement);
 					} catch (IOException | CoreException e) {
 						throw new ExecutionException(
-								"Failed to run external merge tool.", e); //$NON-NLS-1$
+								UIText.MergeToolActionHandler_externalMergeToolRunFailed,
+								e);
 					}
 				}
 			}
@@ -201,15 +206,19 @@ public class MergeToolActionHandler extends RepositoryActionHandler {
 			mergeTools.merge(local, remote, merged, base, tempDir,
 					toolNameToUse, prompt, false, promptContinueHandler,
 					tools -> {
-						ToolsUtils.informUser("No tool configured.", //$NON-NLS-1$
-								"No mergetool is set. Will try a preconfigured one now. To configure one open the git config settings."); //$NON-NLS-1$
+						ToolsUtils.informUser(
+								UIText.MergeToolActionHandler_noToolConfiguredDialogTitle,
+								UIText.MergeToolActionHandler_noToolConfiguredDialogContent);
 					});
 		} catch (ToolException e) {
 			isMergeSuccessful = false;
 			Activator.logWarning("Failed to run external merge tool.", e); //$NON-NLS-1$
 			if (e.isCommandExecutionError()) {
-				ToolsUtils.informUserAboutError("mergetool - error", //$NON-NLS-1$
-						e.getMessage() + "\n\nMerge aborted!"); //$NON-NLS-1$
+				ToolsUtils.informUserAboutError(
+						UIText.MergeToolActionHandler_mergeToolErrorDialogTitle,
+						NLS.bind(
+								UIText.MergeToolActionHandler_mergeToolErrorDialogContent,
+								e.getMessage()));
 				return; // abort the merge process
 			}
 		}
@@ -218,9 +227,10 @@ public class MergeToolActionHandler extends RepositoryActionHandler {
 			long modifiedAfter = merged.getFile().lastModified();
 			if (modifiedBefore == modifiedAfter) {
 				int response = ToolsUtils.askUserAboutToolExecution(
-						"mergetool - trustExitCode: false", //$NON-NLS-1$
-						mergedFilePath
-								+ " seems unchanged.\n\nWas the merge successful?"); //$NON-NLS-1$
+						UIText.MergeToolActionHandler_mergeToolNoChangeDialogTitle,
+						NLS.bind(
+								UIText.MergeToolActionHandler_mergeToolNoChangeDialogContent,
+								mergedFilePath));
 				if (response == SWT.NO) {
 					isMergeSuccessful = false;
 				} else if (response == SWT.CANCEL) {
@@ -252,10 +262,11 @@ public class MergeToolActionHandler extends RepositoryActionHandler {
 
 		@Override
 		public boolean prompt(String toolName) {
-			int response = ToolsUtils.askUserAboutToolExecution("mergetool", //$NON-NLS-1$
-					"Merging file: " //$NON-NLS-1$
-							+ fileName + "\n\nLaunch '" //$NON-NLS-1$
-							+ toolName + "' ?"); //$NON-NLS-1$
+			int response = ToolsUtils.askUserAboutToolExecution(
+					UIText.MergeToolActionHandler_mergeToolPromptDialogTitle,
+					NLS.bind(
+							UIText.MergeToolActionHandler_mergeToolPromptDialogContent,
+							fileName, toolName));
 
 			return response == SWT.YES;
 		}
