@@ -122,6 +122,24 @@
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "a90148c8_d4a5835a",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/diffmerge/DiffMergeSettings.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 197,
+      "author": {
+        "id": 119988
+      },
+      "writtenOn": "2022-06-06T15:46:16Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a77bb8c9_d74ab83a",
+      "revId": "2dfda4f9e6c50448ac47cec49954cbbdece83af7",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "a27d4652_245212a5",
