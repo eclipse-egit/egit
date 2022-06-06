@@ -14,11 +14,11 @@ p2/orbit/p2.eclipse.feature/org.eclipse.e4.rcp/4.17.0.v20200831-1002, EPL-2.0, a
 p2/orbit/p2.eclipse.feature/org.eclipse.emf.common/2.20.0.v20200822-0801, , approved, eclipse
 p2/orbit/p2.eclipse.feature/org.eclipse.emf.ecore/2.23.0.v20200630-0516, , approved, eclipse
 p2/orbit/p2.eclipse.feature/org.eclipse.jdt/3.18.500.v20200902-1800, , approved, eclipse
-p2/orbit/p2.eclipse.feature/org.eclipse.jgit.gpg.bc/6.2.0.202205022107, , approved, eclipse
-p2/orbit/p2.eclipse.feature/org.eclipse.jgit.http.apache/6.2.0.202205022107, , approved, eclipse
-p2/orbit/p2.eclipse.feature/org.eclipse.jgit.junit/6.2.0.202205022107, , approved, eclipse
-p2/orbit/p2.eclipse.feature/org.eclipse.jgit.ssh.apache/6.2.0.202205022107, , approved, eclipse
-p2/orbit/p2.eclipse.feature/org.eclipse.jgit/6.2.0.202205022107, , approved, eclipse
+p2/orbit/p2.eclipse.feature/org.eclipse.jgit.gpg.bc/6.2.0.202206062057, , approved, eclipse
+p2/orbit/p2.eclipse.feature/org.eclipse.jgit.http.apache/6.2.0.202206062057, , approved, eclipse
+p2/orbit/p2.eclipse.feature/org.eclipse.jgit.junit/6.2.0.202206062057, , approved, eclipse
+p2/orbit/p2.eclipse.feature/org.eclipse.jgit.ssh.apache/6.2.0.202206062057, , approved, eclipse
+p2/orbit/p2.eclipse.feature/org.eclipse.jgit/6.2.0.202206062057, , approved, eclipse
 p2/orbit/p2.eclipse.feature/org.eclipse.license/2.0.2.v20181016-2210, EPL-2.0, approved, eclipse.platform
 p2/orbit/p2.eclipse.feature/org.eclipse.mylyn.commons.identity/1.17.2.v20200813-0821, , approved, eclipse
 p2/orbit/p2.eclipse.feature/org.eclipse.mylyn.commons.notifications/1.17.2.v20200813-0821, , approved, eclipse
@@ -30,31 +30,31 @@ p2/orbit/p2.eclipse.feature/org.eclipse.mylyn.monitor/3.25.2.v20200813-0821, , a
 p2/orbit/p2.eclipse.feature/org.eclipse.mylyn.team_feature/3.25.2.v20200828-1617, , approved, eclipse
 p2/orbit/p2.eclipse.feature/org.eclipse.mylyn_feature/3.25.2.v20200814-0512, , approved, eclipse
 p2/orbit/p2.eclipse.feature/org.eclipse.pde/3.14.500.v20200902-1800, , approved, eclipse
-p2/orbit/p2.eclipse.plugin/com.google.gson/2.8.9.v20220111-1409, Apache-2.0, approved, CQ23496
+p2/orbit/p2.eclipse.plugin/com.google.gson/2.8.9.v20220111-1409, , approved, orbit
 p2/orbit/p2.eclipse.plugin/com.google.guava/21.0.0.v20170206-1425, Apache-2.0 AND LicenseRef-Public-Domain, approved, CQ12563
-p2/orbit/p2.eclipse.plugin/com.ibm.icu/67.1.0.v20200706-1749, ICU AND Unicode-TOU AND BSD-3-Clause AND BSD-2-Clause AND LicenseRef-ipadic-license AND LicenseRef-Public-Domain, approved, CQ22320
+p2/orbit/p2.eclipse.plugin/com.ibm.icu/67.1.0.v20200706-1749, , approved, orbit
 p2/orbit/p2.eclipse.plugin/com.jcraft.jsch/0.1.55.v20190404-1902, BSD-3-Clause, approved, CQ19435
-p2/orbit/p2.eclipse.plugin/com.sun.jna.platform/5.8.0.v20210406-1004, Apache-2.0 OR LGPL-2.1-or-later, approved, CQ23218
-p2/orbit/p2.eclipse.plugin/com.sun.jna/5.8.0.v20210503-0343, Apache-2.0 OR LGPL-2.1-or-later, approved, CQ23217
+p2/orbit/p2.eclipse.plugin/com.sun.jna.platform/5.8.0.v20210406-1004, , approved, orbit
+p2/orbit/p2.eclipse.plugin/com.sun.jna/5.8.0.v20210503-0343, , approved, orbit
 p2/orbit/p2.eclipse.plugin/com.sun.xml.bind/2.2.0.v201505121915, CDDL-1.0, approved, CQ3671
 p2/orbit/p2.eclipse.plugin/jakarta.servlet-api/4.0.0, , approved, eclipse
-p2/orbit/p2.eclipse.plugin/javaewah/1.1.13.v20211029-0839, Apache-2.0, approved, CQ23497
+p2/orbit/p2.eclipse.plugin/javaewah/1.1.13.v20211029-0839, , approved, orbit
 p2/orbit/p2.eclipse.plugin/javax.activation/1.1.0.v201211130549, Apache-2.0, approved, CQ2059
-p2/orbit/p2.eclipse.plugin/javax.annotation/1.3.5.v20200504-1837, EPL-1.0, approved, orbit
+p2/orbit/p2.eclipse.plugin/javax.annotation/1.3.5.v20200504-1837, , approved, orbit
 p2/orbit/p2.eclipse.plugin/javax.inject/1.0.0.v20091030, Apache-2.0, approved, CQ3555
 p2/orbit/p2.eclipse.plugin/javax.xml.bind/2.2.0.v201105210648, CDDL-1.0, approved, CQ3670
 p2/orbit/p2.eclipse.plugin/javax.xml.stream/1.0.1.v201004272200, Apache-2.0, approved, CQ1106
 p2/orbit/p2.eclipse.plugin/javax.xml/1.3.4.v201005080400, Apache-2.0 OR LicenseRef-Public-Domain OR W3C, approved, CQ1448
 p2/orbit/p2.eclipse.plugin/net.bytebuddy.byte-buddy-agent/1.9.0.v20181106-1534, Apache-2.0, approved, CQ17978
 p2/orbit/p2.eclipse.plugin/net.bytebuddy.byte-buddy/1.9.0.v20181107-1410, Apache-2.0 AND BSD-3-Clause, approved, CQ17977
-p2/orbit/p2.eclipse.plugin/net.i2p.crypto.eddsa/0.3.0.v20210923-1401, CC0-1.0, approved, CQ22537
-p2/orbit/p2.eclipse.plugin/org.apache.ant/1.10.12.v20211102-1452, Apache-2.0 AND EPL-2.0 AND W3C AND LicenseRef-Flora AND LicenseRef-Public-Domain, approved, CQ23806
+p2/orbit/p2.eclipse.plugin/net.i2p.crypto.eddsa/0.3.0.v20220506-1020, CC0-1.0, approved, CQ22537
+p2/orbit/p2.eclipse.plugin/org.apache.ant/1.10.12.v20211102-1452, , approved, orbit
 p2/orbit/p2.eclipse.plugin/org.apache.batik.constants/1.13.0.v20200622-2037, Apache-2.0, approved, CQ22304
 p2/orbit/p2.eclipse.plugin/org.apache.batik.css/1.13.0.v20200622-2037, Apache-2.0, approved, CQ22303
 p2/orbit/p2.eclipse.plugin/org.apache.batik.i18n/1.13.0.v20200622-2037, Apache-2.0, approved, CQ22301
 p2/orbit/p2.eclipse.plugin/org.apache.batik.util/1.13.0.v20200622-2037, Apache-2.0, approved, CQ22302
-p2/orbit/p2.eclipse.plugin/org.apache.commons.codec/1.14.0.v20200818-1422, Apache-2.0, approved, orbit
-p2/orbit/p2.eclipse.plugin/org.apache.commons.compress/1.21.0.v20211103-2100, Apache-2.0 AND BSD-3-Clause AND bzip2-1.0.6 AND LicenseRef-Public-Domain, approved, CQ23710
+p2/orbit/p2.eclipse.plugin/org.apache.commons.codec/1.14.0.v20200818-1422, , approved, orbit
+p2/orbit/p2.eclipse.plugin/org.apache.commons.compress/1.21.0.v20211103-2100, , approved, orbit
 p2/orbit/p2.eclipse.plugin/org.apache.commons.httpclient/3.1.0.v201012070820, Apache-2.0, approved, CQ1765
 p2/orbit/p2.eclipse.plugin/org.apache.commons.io/2.6.0.v20190123-2029, Apache-2.0, approved, CQ16712
 p2/orbit/p2.eclipse.plugin/org.apache.commons.jxpath/1.3.0.v200911051830, Apache-2.0, approved, CQ10790
@@ -64,21 +64,21 @@ p2/orbit/p2.eclipse.plugin/org.apache.felix.gogo.command/1.0.2.v20170914-1324, A
 p2/orbit/p2.eclipse.plugin/org.apache.felix.gogo.runtime/1.1.0.v20180713-1646, Apache-2.0, approved, CQ16863
 p2/orbit/p2.eclipse.plugin/org.apache.felix.gogo.shell/1.1.0.v20180713-1646, Apache-2.0, approved, CQ16862
 p2/orbit/p2.eclipse.plugin/org.apache.felix.scr/2.1.16.v20200110-1820, Apache-2.0 AND MIT, approved, CQ21362
-p2/orbit/p2.eclipse.plugin/org.apache.httpcomponents.httpclient/4.5.13.v20210128-2225, Apache-2.0, approved, CQ22918
-p2/orbit/p2.eclipse.plugin/org.apache.httpcomponents.httpcore/4.4.15.v20220209-2345, Apache-2.0, approved, CQ21197
-p2/orbit/p2.eclipse.plugin/org.apache.log4j/1.2.19.v20220208-1728, Apache-2.0, approved, orbit
+p2/orbit/p2.eclipse.plugin/org.apache.httpcomponents.httpclient/4.5.13.v20210128-2225, , approved, orbit
+p2/orbit/p2.eclipse.plugin/org.apache.httpcomponents.httpcore/4.4.15.v20220209-2345, , approved, orbit
+p2/orbit/p2.eclipse.plugin/org.apache.log4j/1.2.19.v20220208-1728, , approved, orbit
 p2/orbit/p2.eclipse.plugin/org.apache.lucene.analyzers-common/6.1.0.v20161115-1612, Apache-2.0 OR BSD-2-Clause OR W3C, approved, CQ12060
 p2/orbit/p2.eclipse.plugin/org.apache.lucene.core/6.1.0.v20170814-1820, , approved, CQ12024
 p2/orbit/p2.eclipse.plugin/org.apache.lucene.queryparser/6.1.0.v20161115-1612, Apache-2.0, approved, CQ12063
-p2/orbit/p2.eclipse.plugin/org.apache.sshd.osgi/2.8.0.v20211227-1750, Apache-2.0, approved, CQ23892
-p2/orbit/p2.eclipse.plugin/org.apache.sshd.sftp/2.8.0.v20211227-1750, Apache-2.0, approved, CQ23893
+p2/orbit/p2.eclipse.plugin/org.apache.sshd.osgi/2.8.0.v20211227-1750, , approved, orbit
+p2/orbit/p2.eclipse.plugin/org.apache.sshd.sftp/2.8.0.v20211227-1750, , approved, orbit
 p2/orbit/p2.eclipse.plugin/org.apache.xerces/2.9.0.v201101211617, Apache-2.0, approved, CQ1148
 p2/orbit/p2.eclipse.plugin/org.apache.xml.resolver/1.2.0.v201005080400, Apache-2.0, approved, CQ1441
 p2/orbit/p2.eclipse.plugin/org.apache.xml.serializer/2.7.1.v201005080400, Apache-2.0, approved, CQ1443
 p2/orbit/p2.eclipse.plugin/org.apache.xmlgraphics/2.4.0.v20200622-2037, Apache-2.0, approved, CQ22305
 p2/orbit/p2.eclipse.plugin/org.apiguardian/1.1.0.v20190826-0900, EPL-2.0 AND Apache-2.0, approved, CQ20556
-p2/orbit/p2.eclipse.plugin/org.bouncycastle.bcpg/1.70.0.v20220105-1522, MIT, approved, orbit
-p2/orbit/p2.eclipse.plugin/org.bouncycastle.bcprov/1.70.0.v20220105-1522, MIT, approved, orbit
+p2/orbit/p2.eclipse.plugin/org.bouncycastle.bcpg/1.70.0.v20220507-1208, , approved, orbit
+p2/orbit/p2.eclipse.plugin/org.bouncycastle.bcprov/1.70.0.v20220507-1208, , approved, orbit
 p2/orbit/p2.eclipse.plugin/org.eclipse.ant.core/3.5.800.v20200608-1251, EPL-2.0, approved, eclipse.platform
 p2/orbit/p2.eclipse.plugin/org.eclipse.ant.launching/1.2.1000.v20200610-1458, EPL-2.0, approved, eclipse.platform
 p2/orbit/p2.eclipse.plugin/org.eclipse.ant.ui/3.7.900.v20200724-1008, EPL-2.0, approved, eclipse.platform
@@ -197,17 +197,17 @@ p2/orbit/p2.eclipse.plugin/org.eclipse.jface.databinding/1.12.0.v20200717-1533, 
 p2/orbit/p2.eclipse.plugin/org.eclipse.jface.notifications/0.2.0.v20200810-0826, EPL-2.0, approved, eclipse.platform
 p2/orbit/p2.eclipse.plugin/org.eclipse.jface.text/3.16.400.v20200807-0831, EPL-2.0, approved, eclipse.platform
 p2/orbit/p2.eclipse.plugin/org.eclipse.jface/3.21.0.v20200821-1458, EPL-2.0, approved, eclipse.platform
-p2/orbit/p2.eclipse.plugin/org.eclipse.jgit.archive/6.2.0.202205022100, , approved, eclipse
-p2/orbit/p2.eclipse.plugin/org.eclipse.jgit.gpg.bc/6.2.0.202205022100, , approved, eclipse
-p2/orbit/p2.eclipse.plugin/org.eclipse.jgit.http.apache/6.2.0.202205022100, , approved, eclipse
-p2/orbit/p2.eclipse.plugin/org.eclipse.jgit.http.server/6.2.0.202205022100, , approved, eclipse
-p2/orbit/p2.eclipse.plugin/org.eclipse.jgit.junit.http/6.2.0.202205022100, , approved, eclipse
-p2/orbit/p2.eclipse.plugin/org.eclipse.jgit.junit.ssh/6.2.0.202205022100, , approved, eclipse
-p2/orbit/p2.eclipse.plugin/org.eclipse.jgit.junit/6.2.0.202205022100, , approved, eclipse
-p2/orbit/p2.eclipse.plugin/org.eclipse.jgit.lfs/6.2.0.202205022100, , approved, eclipse
-p2/orbit/p2.eclipse.plugin/org.eclipse.jgit.ssh.apache.agent/6.2.0.202205022100, , approved, eclipse
-p2/orbit/p2.eclipse.plugin/org.eclipse.jgit.ssh.apache/6.2.0.202205022100, , approved, eclipse
-p2/orbit/p2.eclipse.plugin/org.eclipse.jgit/6.2.0.202205022100, , approved, eclipse
+p2/orbit/p2.eclipse.plugin/org.eclipse.jgit.archive/6.2.0.202206062009, , approved, eclipse
+p2/orbit/p2.eclipse.plugin/org.eclipse.jgit.gpg.bc/6.2.0.202206062009, , approved, eclipse
+p2/orbit/p2.eclipse.plugin/org.eclipse.jgit.http.apache/6.2.0.202206062009, , approved, eclipse
+p2/orbit/p2.eclipse.plugin/org.eclipse.jgit.http.server/6.2.0.202206062009, , approved, eclipse
+p2/orbit/p2.eclipse.plugin/org.eclipse.jgit.junit.http/6.2.0.202206062009, , approved, eclipse
+p2/orbit/p2.eclipse.plugin/org.eclipse.jgit.junit.ssh/6.2.0.202206062009, , approved, eclipse
+p2/orbit/p2.eclipse.plugin/org.eclipse.jgit.junit/6.2.0.202206062009, , approved, eclipse
+p2/orbit/p2.eclipse.plugin/org.eclipse.jgit.lfs/6.2.0.202206062009, , approved, eclipse
+p2/orbit/p2.eclipse.plugin/org.eclipse.jgit.ssh.apache.agent/6.2.0.202206062009, , approved, eclipse
+p2/orbit/p2.eclipse.plugin/org.eclipse.jgit.ssh.apache/6.2.0.202206062009, , approved, eclipse
+p2/orbit/p2.eclipse.plugin/org.eclipse.jgit/6.2.0.202206062009, , approved, eclipse
 p2/orbit/p2.eclipse.plugin/org.eclipse.ltk.core.refactoring/3.11.100.v20200720-0748, EPL-2.0, approved, eclipse.platform
 p2/orbit/p2.eclipse.plugin/org.eclipse.ltk.ui.refactoring/3.11.100.v20200817-1715, EPL-2.0, approved, eclipse.platform
 p2/orbit/p2.eclipse.plugin/org.eclipse.mylyn.commons.core/3.25.2.v20200813-0821, , approved, eclipse
@@ -267,9 +267,9 @@ p2/orbit/p2.eclipse.plugin/org.eclipse.swt.cocoa.macosx.x86_64/3.115.0.v20200831
 p2/orbit/p2.eclipse.plugin/org.eclipse.swt.gtk.linux.x86_64/3.115.0.v20200831-1002, EPL-2.0, approved, eclipse.platform
 p2/orbit/p2.eclipse.plugin/org.eclipse.swt.win32.win32.x86_64/3.115.0.v20200831-1002, EPL-2.0, approved, eclipse.platform
 p2/orbit/p2.eclipse.plugin/org.eclipse.swt/3.115.0.v20200831-1002, EPL-2.0, approved, eclipse.platform
-p2/orbit/p2.eclipse.plugin/org.eclipse.swtbot.eclipse.finder/4.0.0.202205030445, , approved, eclipse
-p2/orbit/p2.eclipse.plugin/org.eclipse.swtbot.junit4_x/4.0.0.202205030445, , approved, eclipse
-p2/orbit/p2.eclipse.plugin/org.eclipse.swtbot.swt.finder/4.0.0.202205030445, , approved, eclipse
+p2/orbit/p2.eclipse.plugin/org.eclipse.swtbot.eclipse.finder/4.0.0.202206011610, , approved, eclipse
+p2/orbit/p2.eclipse.plugin/org.eclipse.swtbot.junit4_x/4.0.0.202206011610, , approved, eclipse
+p2/orbit/p2.eclipse.plugin/org.eclipse.swtbot.swt.finder/4.0.0.202206011610, , approved, eclipse
 p2/orbit/p2.eclipse.plugin/org.eclipse.team.core/3.8.1100.v20200806-0621, EPL-2.0, approved, eclipse.platform
 p2/orbit/p2.eclipse.plugin/org.eclipse.team.ui/3.8.1000.v20200806-0621, EPL-2.0, approved, eclipse.platform
 p2/orbit/p2.eclipse.plugin/org.eclipse.text/3.10.300.v20200807-0831, EPL-2.0, approved, eclipse.platform
@@ -310,16 +310,16 @@ p2/orbit/p2.eclipse.plugin/org.junit.platform.runner/1.6.0.v20200203-2009, EPL-2
 p2/orbit/p2.eclipse.plugin/org.junit.platform.suite.api/1.6.0.v20200203-2009, EPL-2.0, approved, CQ21546
 p2/orbit/p2.eclipse.plugin/org.junit.vintage.engine/5.6.0.v20200203-2009, EPL-2.0, approved, CQ21546
 p2/orbit/p2.eclipse.plugin/org.junit/4.13.0.v20200204-1500, EPL-1.0, approved, CQ21439
-p2/orbit/p2.eclipse.plugin/org.junit/4.13.2.v20211018-1956, EPL-1.0, approved, orbit
+p2/orbit/p2.eclipse.plugin/org.junit/4.13.2.v20211018-1956, , approved, orbit
 p2/orbit/p2.eclipse.plugin/org.mockito/2.23.0.v20200310-1642, MIT, approved, CQ17976
-p2/orbit/p2.eclipse.plugin/org.objectweb.asm.tree/8.0.1.v20200420-1007, unknown, restricted, none
+p2/orbit/p2.eclipse.plugin/org.objectweb.asm.tree/8.0.1.v20200420-1007, BSD-3-Clause, approved, CQ21853
 p2/orbit/p2.eclipse.plugin/org.objectweb.asm/8.0.1.v20200420-1007, BSD-3-Clause, approved, #1989
 p2/orbit/p2.eclipse.plugin/org.objenesis/2.6.0.v20180420-1519, Apache-2.0, approved, CQ15482
 p2/orbit/p2.eclipse.plugin/org.opentest4j/1.2.0.v20190826-0900, EPL-2.0 AND Apache-2.0, approved, CQ20556
 p2/orbit/p2.eclipse.plugin/org.sat4j.core/2.3.5.v201308161310, EPL-1.0, approved, CQ7311
 p2/orbit/p2.eclipse.plugin/org.sat4j.pb/2.3.5.v201404071733, EPL-1.0, approved, CQ7311
-p2/orbit/p2.eclipse.plugin/org.slf4j.api/1.7.30.v20200204-2150, MIT, approved, CQ21574
-p2/orbit/p2.eclipse.plugin/org.tukaani.xz/1.9.0.v20210624-1259, LicenseRef-Public-Domain, approved, CQ23498
+p2/orbit/p2.eclipse.plugin/org.slf4j.api/1.7.30.v20200204-2150, , approved, orbit
+p2/orbit/p2.eclipse.plugin/org.tukaani.xz/1.9.0.v20210624-1259, , approved, orbit
 p2/orbit/p2.eclipse.plugin/org.w3c.css.sac/1.3.1.v200903091627, Apache-2.0 OR LicenseRef-Public-Domain OR W3C, approved, CQ1448
 p2/orbit/p2.eclipse.plugin/org.w3c.dom.events/3.0.0.draft20060413_v201105210656, Apache-2.0, approved, CQ208
 p2/orbit/p2.eclipse.plugin/org.w3c.dom.smil/1.0.1.v200903091627, Apache-2.0 OR LicenseRef-Public-Domain OR W3C, approved, CQ1448
