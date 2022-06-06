@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "bd48fe92_430e0e9e",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/CompareUtils.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 460,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2022-06-06T12:29:25Z",
+      "side": 1,
+      "message": "The standard way to deal with errors is Activator.handleError(). No need for ToolUtils.informUserAboutError.",
+      "revId": "5df5e5d4510165691bc868f40704b9611df74f5c",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31"
+    }
+  ]
+}
