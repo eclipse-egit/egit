@@ -1,6 +1,23 @@
 {
   "comments": [
     {
+      "unresolved": true,
+      "key": {
+        "uuid": "dd368dcb_ff5f1a16",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2022-06-06T13:19:08Z",
+      "side": 1,
+      "message": "Stray empty line.",
+      "revId": "2dfda4f9e6c50448ac47cec49954cbbdece83af7",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31"
+    },
+    {
       "unresolved": false,
       "key": {
         "uuid": "131c0aee_06a60517",
@@ -65,6 +82,23 @@
       "writtenOn": "2022-06-06T13:13:00Z",
       "side": 1,
       "message": "While writing the N\u0026N page and trying out the \"use git config\" option from the Diff/Merge preference page, I noticed that a .git/config file specifying a default merge/diff tool didn\u0027t work when invoking commands from the UI (compare to previous version, invoke merge tool).\n\nThis fixes the problem. I\u0027ll add a docu comment to the method with the next change - its not the only problem.",
+      "revId": "2dfda4f9e6c50448ac47cec49954cbbdece83af7",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a27d4652_245212a5",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/diffmerge/DiffMergeSettings.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 206,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2022-06-06T13:19:08Z",
+      "side": 1,
+      "message": "The repo config has the user config as parent; querying the repo config gives the combined settings. So you\u0027ve already considered the user config, and this else-branch should not be necessary.",
       "revId": "2dfda4f9e6c50448ac47cec49954cbbdece83af7",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31"
     }
