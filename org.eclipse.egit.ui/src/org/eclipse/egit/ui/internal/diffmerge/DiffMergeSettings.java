@@ -26,6 +26,7 @@ import org.eclipse.jgit.internal.diffmergetool.DiffTools;
 import org.eclipse.jgit.internal.diffmergetool.MergeTools;
 import org.eclipse.jgit.internal.diffmergetool.ToolException;
 import org.eclipse.jgit.lib.Repository;
+import org.eclipse.jgit.lib.StoredConfig;
 import org.eclipse.jgit.storage.file.FileBasedConfig;
 import org.eclipse.jgit.util.FS;
 import org.eclipse.jgit.util.StringUtils;
@@ -132,7 +133,7 @@ public final class DiffMergeSettings {
 
 		if (!toolName.isPresent() && diffToolMode == DiffToolMode.GIT_CONFIG) {
 			// try to read from git config
-			toolName = DiffMergeSettings.readDiffToolFromGitConfig();
+			toolName = DiffMergeSettings.readDiffToolFromGitConfig(repository);
 		}
 
 		if (diffToolMode == DiffToolMode.EXTERNAL) {
@@ -176,7 +177,7 @@ public final class DiffMergeSettings {
 		if (!toolName.isPresent()
 				&& mergeToolMode == MergeToolMode.GIT_CONFIG) {
 			// try to read from git config
-			toolName = DiffMergeSettings.readDiffToolFromGitConfig();
+			toolName = DiffMergeSettings.readDiffToolFromGitConfig(repository);
 		}
 
 		if (mergeToolMode == MergeToolMode.EXTERNAL) {
@@ -188,12 +189,22 @@ public final class DiffMergeSettings {
 	}
 
 	/**
+	 * @param repository
+	 *            the config of this repository will be read
 	 * @return the selected diff tool name. If the value is not present,
 	 *         internal eclipse diff should be used
 	 */
-	private static Optional<String> readDiffToolFromGitConfig() {
-		FileBasedConfig config = loadUserConfig();
-		updateDefaultDiffToolFromGitConfig(config);
+	private static Optional<String> readDiffToolFromGitConfig(
+			Repository repository) {
+		StoredConfig repoConfig = repository.getConfig();
+		String diffTool = getCustomDiffToolFromGitConfig(repoConfig);
+		if (diffTool != null) {
+			updateDefaultDiffToolPreference(diffTool);
+		} else {
+			// we found nothing in the repo config, check the global user config
+			FileBasedConfig config = loadUserConfig();
+			updateDefaultDiffToolFromGitConfig(config);
+		}
 		return Optional.ofNullable(
 				getStore().getString(UIPreferences.DIFF_TOOL_FROM_GIT_CONFIG));
 	}
@@ -206,6 +217,10 @@ public final class DiffMergeSettings {
 	private static void updateDefaultDiffToolFromGitConfig(
 			FileBasedConfig config) {
 		String diffTool = getCustomDiffToolFromGitConfig(config);
+		updateDefaultDiffToolPreference(diffTool);
+	}
+
+	private static void updateDefaultDiffToolPreference(String diffTool) {
 		if (diffTool != null) {
 			getStore().setValue(UIPreferences.DIFF_TOOL_FROM_GIT_CONFIG,
 					diffTool);
@@ -221,7 +236,7 @@ public final class DiffMergeSettings {
 	 *         configuration
 	 */
 	private static String getCustomDiffToolFromGitConfig(
-			FileBasedConfig config) {
+			StoredConfig config) {
 		DiffTools diffToolManager = new DiffTools(config);
 		return diffToolManager.getDefaultToolName(false);
 	}
