@@ -16,6 +16,108 @@
       "message": "I added assumeTrue() calls to ensure the new tests run only on Linux, change is ready from my POV.",
       "revId": "77af20afbea5c45943c422347176fdd5f1895524",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ae89cb43_225d71e4",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/actions/MergeToolActionHandler.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 115,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2022-06-06T12:34:22Z",
+      "side": 1,
+      "message": "Externalize error message. Also: reset interrupted flag?",
+      "revId": "77af20afbea5c45943c422347176fdd5f1895524",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "5bcf367b_ca06711d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/actions/MergeToolActionHandler.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 136,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2022-06-06T12:34:22Z",
+      "side": 1,
+      "message": "Externalize error message.",
+      "revId": "77af20afbea5c45943c422347176fdd5f1895524",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "7579ed74_e6499d3b",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/actions/MergeToolActionHandler.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 205,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2022-06-06T12:34:22Z",
+      "side": 1,
+      "message": "Don\u0027t remember if I mentioned this one already in an earlier commit: externalize.",
+      "revId": "77af20afbea5c45943c422347176fdd5f1895524",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d24f7807_bdbbb0df",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/actions/MergeToolActionHandler.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 212,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2022-06-06T12:34:22Z",
+      "side": 1,
+      "message": "Don\u0027t remember if I mentioned this one already in an earlier commit: externalize.",
+      "revId": "77af20afbea5c45943c422347176fdd5f1895524",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "aef98585_a3617e4b",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/actions/MergeToolActionHandler.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 238,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2022-06-06T12:34:22Z",
+      "side": 1,
+      "message": "Is logging good enough here? Shouldn\u0027t the problem be reported to the user, too?",
+      "revId": "77af20afbea5c45943c422347176fdd5f1895524",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "62855e72_9afc8d7e",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/actions/MergeToolActionHandler.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 258,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2022-06-06T12:34:22Z",
+      "side": 1,
+      "message": "Message needs to be externalized.",
+      "revId": "77af20afbea5c45943c422347176fdd5f1895524",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31"
     }
   ]
 }
