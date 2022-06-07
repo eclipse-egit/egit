@@ -33,6 +33,23 @@
       "message": "LGTM. Note that Matthias has started preparing the release, so if this should go into 6.2, it would have to go in today.",
       "revId": "f14477d4591f836a6a679db5b34a9b3d4cea6bb2",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "40cba3c5_0ff8a76f",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 119988
+      },
+      "writtenOn": "2022-06-07T06:36:32Z",
+      "side": 1,
+      "message": "OK, we should merge from my POV, to ensure the feature is complete in EGit 6.2.\n\nWe can deal with the remaining questions after that, they are minor.",
+      "revId": "f14477d4591f836a6a679db5b34a9b3d4cea6bb2",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31"
     }
   ]
 }
