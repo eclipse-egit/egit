@@ -106,6 +106,24 @@
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "745aed7d_c31d98ab",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/actions/MergeToolActionHandler.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 248,
+      "author": {
+        "id": 1179
+      },
+      "writtenOn": "2022-06-07T10:54:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a142ddf4_b33b95ba",
+      "revId": "2dfda4f9e6c50448ac47cec49954cbbdece83af7",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "b91a97d3_409d3c33",
@@ -260,6 +278,24 @@
       "side": 1,
       "message": "I think this was misunderstanding. \n\nThat shouldn\u0027t be extra config value, it should simply return empty string if nothing is configured. I think we can remove both MERGE_TOOL_FROM_GIT_CONFIG and DIFF_TOOL_FROM_GIT_CONFIG and the code that tries to save this value to preferences.",
       "parentUuid": "8266c1d8_54a1b480",
+      "revId": "2dfda4f9e6c50448ac47cec49954cbbdece83af7",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "bbbb6441_1b587eff",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/diffmerge/DiffMergeSettings.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 225,
+      "author": {
+        "id": 1179
+      },
+      "writtenOn": "2022-06-07T10:54:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "22fec3b9_f43b46f9",
       "revId": "2dfda4f9e6c50448ac47cec49954cbbdece83af7",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31"
     }

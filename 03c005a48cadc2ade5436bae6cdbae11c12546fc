@@ -59,6 +59,30 @@
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "593fbdee_5c0e2c6d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/UIPreferences.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 213,
+      "author": {
+        "id": 1179
+      },
+      "writtenOn": "2022-06-07T10:54:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "36532c46_d2722503",
+      "range": {
+        "startLine": 213,
+        "startChar": 28,
+        "endLine": 213,
+        "endChar": 53
+      },
+      "revId": "03c005a48cadc2ade5436bae6cdbae11c12546fc",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "1d5d2d04_965b80cb",
@@ -82,6 +106,30 @@
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "d7540c2d_a5efa1ce",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/UIPreferences.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 216,
+      "author": {
+        "id": 1179
+      },
+      "writtenOn": "2022-06-07T10:54:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1d5d2d04_965b80cb",
+      "range": {
+        "startLine": 216,
+        "startChar": 28,
+        "endLine": 216,
+        "endChar": 54
+      },
+      "revId": "03c005a48cadc2ade5436bae6cdbae11c12546fc",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "17b5f031_ad8ba46c",
@@ -95,6 +143,30 @@
       "writtenOn": "2022-06-07T07:35:11Z",
       "side": 1,
       "message": "This should be removed, along with the constants and below changed to \n\nreturn Optional.ofNullable(externalTool);",
+      "range": {
+        "startLine": 217,
+        "startChar": 3,
+        "endLine": 217,
+        "endChar": 38
+      },
+      "revId": "03c005a48cadc2ade5436bae6cdbae11c12546fc",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "575e791a_38a9660c",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/diffmerge/DiffMergeSettings.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 217,
+      "author": {
+        "id": 1179
+      },
+      "writtenOn": "2022-06-07T10:54:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "17b5f031_ad8ba46c",
       "range": {
         "startLine": 217,
         "startChar": 3,
