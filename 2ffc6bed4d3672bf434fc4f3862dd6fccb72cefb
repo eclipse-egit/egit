@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "b0ff6223_51ae0da4",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2022-06-07T06:25:01Z",
+      "side": 1,
+      "message": "I don\u0027t see a merge from master to stable-6.2 before this?",
+      "revId": "2ffc6bed4d3672bf434fc4f3862dd6fccb72cefb",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31"
+    }
+  ]
+}
