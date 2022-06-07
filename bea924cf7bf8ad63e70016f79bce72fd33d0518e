@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "aac82420_d6d9ef5c",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2022-06-07T06:48:32Z",
+      "side": 1,
+      "message": "I\u0027ve compressed the diff/merge preference screenshot. (Also on-Wiki.)",
+      "revId": "bea924cf7bf8ad63e70016f79bce72fd33d0518e",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31"
+    }
+  ]
+}
