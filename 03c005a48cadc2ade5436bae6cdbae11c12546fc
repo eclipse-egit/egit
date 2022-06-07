@@ -1,0 +1,90 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "8ab73797_1a8505bf",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 5
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1179
+      },
+      "writtenOn": "2022-06-07T07:35:11Z",
+      "side": 1,
+      "message": "I was on vacation yesterday.\n\nYes, we should fix that for 6.2.\n\nI\u0027ve added few comments, I think they should be fixed (nothing complicated).\n\n@Thomas: after few issues below are fixed, should this patch target \"stable-6.2\" branch directly? Or should we merge to master and back propagate to \"stable-6.2\"?",
+      "revId": "03c005a48cadc2ade5436bae6cdbae11c12546fc",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "36532c46_d2722503",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/UIPreferences.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 213,
+      "author": {
+        "id": 1179
+      },
+      "writtenOn": "2022-06-07T07:35:11Z",
+      "side": 1,
+      "message": "Should be removed",
+      "range": {
+        "startLine": 213,
+        "startChar": 28,
+        "endLine": 213,
+        "endChar": 53
+      },
+      "revId": "03c005a48cadc2ade5436bae6cdbae11c12546fc",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "1d5d2d04_965b80cb",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/UIPreferences.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 216,
+      "author": {
+        "id": 1179
+      },
+      "writtenOn": "2022-06-07T07:35:11Z",
+      "side": 1,
+      "message": "Should be removed",
+      "range": {
+        "startLine": 216,
+        "startChar": 28,
+        "endLine": 216,
+        "endChar": 54
+      },
+      "revId": "03c005a48cadc2ade5436bae6cdbae11c12546fc",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "17b5f031_ad8ba46c",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/diffmerge/DiffMergeSettings.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 217,
+      "author": {
+        "id": 1179
+      },
+      "writtenOn": "2022-06-07T07:35:11Z",
+      "side": 1,
+      "message": "This should be removed, along with the constants and below changed to \n\nreturn Optional.ofNullable(externalTool);",
+      "range": {
+        "startLine": 217,
+        "startChar": 3,
+        "endLine": 217,
+        "endChar": 38
+      },
+      "revId": "03c005a48cadc2ade5436bae6cdbae11c12546fc",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31"
+    }
+  ]
+}

@@ -72,6 +72,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "b59b88c5_f8bff195",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/actions/MergeToolActionHandler.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 248,
+      "author": {
+        "id": 1179
+      },
+      "writtenOn": "2022-06-07T07:35:11Z",
+      "side": 1,
+      "message": "Yes, ToolsUtils.informUserAboutError() would make sense",
+      "parentUuid": "d65a5fbc_c549235f",
+      "revId": "2dfda4f9e6c50448ac47cec49954cbbdece83af7",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "b91a97d3_409d3c33",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/diffmerge/DiffMergeSettings.java",
         "patchSetId": 1
@@ -206,6 +224,24 @@
       "writtenOn": "2022-06-06T13:33:13Z",
       "side": 1,
       "message": "Andrey, any idea what the point is of writing this? I find no one reading this preference? Except for the same method calling this, when its done. It seems pointless to read a config, store a preference, then read the preference.\n\nIs the preference meant to cache the git config value, so we avoid reading the git config on each invocation? If so, I\u0027ll adjust the code. But when do we clear this cache?",
+      "revId": "2dfda4f9e6c50448ac47cec49954cbbdece83af7",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "22fec3b9_f43b46f9",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/diffmerge/DiffMergeSettings.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 225,
+      "author": {
+        "id": 1179
+      },
+      "writtenOn": "2022-06-07T07:35:11Z",
+      "side": 1,
+      "message": "I think this was misunderstanding. \n\nThat shouldn\u0027t be extra config value, it should simply return empty string if nothing is configured. I think we can remove both MERGE_TOOL_FROM_GIT_CONFIG and DIFF_TOOL_FROM_GIT_CONFIG and the code that tries to save this value to preferences.",
+      "parentUuid": "8266c1d8_54a1b480",
       "revId": "2dfda4f9e6c50448ac47cec49954cbbdece83af7",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31"
     }
