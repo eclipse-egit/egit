@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (C) 2010, Mathias Kinzler <mathias.kinzler@sap.com>
+ * Copyright (C) 2010, 2019, 2020 Mathias Kinzler <mathias.kinzler@sap.com> and others.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License 2.0
@@ -7,6 +7,9 @@
  * https://www.eclipse.org/legal/epl-2.0/
  *
  * SPDX-License-Identifier: EPL-2.0
+ *
+ * Contributors:
+ *    Andre Bossert <andre.bossert@siemens.com> - external merge and diff tools
  *******************************************************************************/
 package org.eclipse.egit.ui.internal.history.command;
 
@@ -105,7 +108,8 @@ public class ShowVersionsHandler extends AbstractHistoryCommandHandler {
 											.createFileElement(resource),
 									right, null);
 							try {
-								CompareUtils.openInCompare(workbenchPage, in);
+								CompareUtils.openInCompare(workbenchPage,
+										map.getRepository(), in);
 							} catch (Exception e) {
 								errorOccurred = true;
 							}
@@ -153,7 +157,7 @@ public class ShowVersionsHandler extends AbstractHistoryCommandHandler {
 								new LocalNonWorkspaceTypedElement(repo,
 										new Path(fileInput.getAbsolutePath())),
 								right, null);
-						CompareUtils.openInCompare(workbenchPage, in);
+						CompareUtils.openInCompare(workbenchPage, repo, in);
 					} else {
 						try {
 							EgitUiEditorUtils.openEditor(getPart(event)

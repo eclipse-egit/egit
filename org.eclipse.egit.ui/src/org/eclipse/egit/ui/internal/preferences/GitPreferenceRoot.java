@@ -61,22 +61,11 @@ public class GitPreferenceRoot extends DoublePreferencesPreferencePage
 		implements IWorkbenchPreferencePage {
 	private final static int GROUP_SPAN = 3;
 
-	private final static String[][] MERGE_MODE_NAMES_AND_VALUES = new String[4][2];
-
 	private final static String[][] HTTP_CLIENT_NAMES_AND_VALUES = new String[2][2];
 
 	private final static boolean HAS_DEBUG_UI = hasDebugUiBundle();
 
 	static {
-		MERGE_MODE_NAMES_AND_VALUES[0][0] = UIText.GitPreferenceRoot_MergeMode_0_Label;
-		MERGE_MODE_NAMES_AND_VALUES[0][1] = "0";//$NON-NLS-1$
-		MERGE_MODE_NAMES_AND_VALUES[1][0] = UIText.GitPreferenceRoot_MergeMode_3_Label;
-		MERGE_MODE_NAMES_AND_VALUES[1][1] = "3"; //$NON-NLS-1$
-		MERGE_MODE_NAMES_AND_VALUES[2][0] = UIText.GitPreferenceRoot_MergeMode_1_Label;
-		MERGE_MODE_NAMES_AND_VALUES[2][1] = "1";//$NON-NLS-1$
-		MERGE_MODE_NAMES_AND_VALUES[3][0] = UIText.GitPreferenceRoot_MergeMode_2_Label;
-		MERGE_MODE_NAMES_AND_VALUES[3][1] = "2"; //$NON-NLS-1$
-
 		HTTP_CLIENT_NAMES_AND_VALUES[0][0] = UIText.GitPreferenceRoot_HttpClient_Jdk_Label;
 		HTTP_CLIENT_NAMES_AND_VALUES[0][1] = "jdk"; //$NON-NLS-1$
 		HTTP_CLIENT_NAMES_AND_VALUES[1][0] = UIText.GitPreferenceRoot_HttpClient_Apache_Label;
@@ -94,6 +83,14 @@ public class GitPreferenceRoot extends DoublePreferencesPreferencePage
 	 */
 	public GitPreferenceRoot() {
 		super(FLAT);
+	}
+
+	/**
+	 * @return true if add to index automatically is enabled
+	 */
+	public static boolean autoAddToIndex() {
+		return Activator.getDefault().getPreferenceStore()
+				.getBoolean(UIPreferences.MERGE_TOOL_AUTO_ADD_TO_INDEX);
 	}
 
 	@Override
@@ -334,19 +331,6 @@ public class GitPreferenceRoot extends DoublePreferencesPreferencePage
 			}
 		});
 		updateMargins(repoChangeScannerGroup);
-
-		Group mergeGroup = new Group(main, SWT.SHADOW_ETCHED_IN);
-		GridDataFactory.fillDefaults().grab(true, false).span(GROUP_SPAN, 1)
-				.applyTo(mergeGroup);
-		mergeGroup.setText(UIText.GitPreferenceRoot_MergeGroupHeader);
-		ComboFieldEditor mergeMode = new ComboFieldEditor(
-				UIPreferences.MERGE_MODE,
-				UIText.GitPreferenceRoot_MergeModeLabel,
-				MERGE_MODE_NAMES_AND_VALUES, mergeGroup);
-		mergeMode.getLabelControl(mergeGroup).setToolTipText(
-				UIText.GitPreferenceRoot_MergeModeTooltip);
-		addField(mergeMode);
-		updateMargins(mergeGroup);
 
 		Group blameGroup = new Group(main, SWT.SHADOW_ETCHED_IN);
 		GridDataFactory.fillDefaults().grab(true, false).span(GROUP_SPAN, 1)

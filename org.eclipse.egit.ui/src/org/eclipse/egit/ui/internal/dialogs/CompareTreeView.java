@@ -15,6 +15,7 @@
  *    Marc Khouzam <marc.khouzam@ericsson.com> - Add compare mode toggle
  *    Marc Khouzam <marc.khouzam@ericsson.com> - Skip expensive computations for equal content (bug 431610)
  *    Thomas Wolf <thomas.wolf@paranor.ch> - Prevent NPE on empty content; git attributes
+ *    Andre Bossert <andre.bossert@siemens.com> - external merge and diff tools
  *******************************************************************************/
 package org.eclipse.egit.ui.internal.dialogs;
 
@@ -280,6 +281,7 @@ public class CompareTreeView extends ViewPart implements IMenuListener, IShowInS
 								.getActiveWorkbenchWindow().getActivePage());
 				CompareUtils.openInCompare(PlatformUI.getWorkbench()
 						.getActiveWorkbenchWindow().getActivePage(),
+						getRepository(),
 						compareInput);
 			} else {
 				IFile file = fileNode.getFile();

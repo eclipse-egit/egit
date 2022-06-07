@@ -7,6 +7,7 @@
  * Copyright (C) 2015, Jan-Ove Weichel <ovi.weichel@gmail.com>
  * Copyright (C) 2015, SAP SE (Christian Georgi <christian.georgi@sap.com>)
  * Copyright (C) 2016, 2019 Thomas Wolf <thomas.wolf@paranor.ch>
+ * Copyright (C) 2020, Andre Bossert <andre.bossert@siemens.com>
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License 2.0
@@ -155,7 +156,12 @@ public class PluginPreferenceInitializer extends AbstractPreferenceInitializer {
 		store.setDefault(UIPreferences.HISTORY_MAX_BRANCH_LENGTH, 18);
 		store.setDefault(UIPreferences.HISTORY_MAX_DIFF_LINES, 1000);
 		store.setDefault(UIPreferences.CLONE_WIZARD_SHOW_DETAILED_FAILURE_DIALOG, true);
-		store.setDefault(UIPreferences.MERGE_MODE, "3"); //$NON-NLS-1$
+		store.setDefault(UIPreferences.MERGE_MODE, 0);
+		store.setDefault(UIPreferences.MERGE_TOOL_MODE, 0);
+		store.setDefault(UIPreferences.MERGE_TOOL_CUSTOM, "none"); //$NON-NLS-1$
+		store.setDefault(UIPreferences.MERGE_TOOL_AUTO_ADD_TO_INDEX, true);
+		store.setDefault(UIPreferences.DIFF_TOOL_CUSTOM, "none"); //$NON-NLS-1$
+		store.setDefault(UIPreferences.DIFF_TOOL_MODE, 0);
 		store.setDefault(UIPreferences.USE_LOGICAL_MODEL, true);
 
 		store.setDefault(UIPreferences.REBASE_INTERACTIVE_SYNC_SELECTION, true);

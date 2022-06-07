@@ -20,6 +20,7 @@
  * Copyright (C) 2017, Wim Jongman <wim.jongman@remainsoftware.com> bug 358152
  * Copyright (C) 2019, Alexander Nittka <alex@nittka.de> bug 545123
  * Copyright (C) 2019, Simon Muschel <smuschel@gmx.de> - Bug 451087, 451817
+ * Copyright (C) 2020, Andre Bossert <andre.bossert@siemens.com>
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License 2.0
@@ -762,27 +763,6 @@ public class UIText extends NLS {
 	public static String GitPreferenceRoot_HttpClient_Apache_Label;
 
 	/** */
-	public static String GitPreferenceRoot_MergeGroupHeader;
-
-	/** */
-	public static String GitPreferenceRoot_MergeMode_0_Label;
-
-	/** */
-	public static String GitPreferenceRoot_MergeMode_1_Label;
-
-	/** */
-	public static String GitPreferenceRoot_MergeMode_2_Label;
-
-	/** */
-	public static String GitPreferenceRoot_MergeMode_3_Label;
-
-	/** */
-	public static String GitPreferenceRoot_MergeModeLabel;
-
-	/** */
-	public static String GitPreferenceRoot_MergeModeTooltip;
-
-	/** */
 	public static String GitPreferenceRoot_RemoteConnectionsGroupHeader;
 
 	/** */
@@ -1465,6 +1445,9 @@ public class UIText extends NLS {
 
 	/** */
 	public static String CompareTreeView_CompareModeTooltip;
+
+	/** */
+	public static String CompareUtils_DiffToolExecutionFailed;
 
 	/** */
 	public static String CompareUtils_errorGettingEncoding;
@@ -2808,6 +2791,57 @@ public class UIText extends NLS {
 	public static String CompareUtils_errorCommonAncestor;
 
 	/** */
+	public static String CompareUtils_ExecutingExtDiffTool;
+
+	/** */
+	public static String CompareUtils_ExternalDiffToolDied;
+
+	/** */
+	public static String CompareUtils_GitConfigurationErrorText;
+
+	/** */
+	public static String CompareUtils_NoDiffToolsDefined;
+
+	/** */
+	public static String CompareUtils_NoDiffToolSpecified;
+
+	/** */
+	public static String MergeToolActionHandler_openExternalMergeToolJobName;
+
+	/** */
+	public static String MergeToolActionHandler_openExternalMergeToolWaitInterrupted;
+
+	/** */
+	public static String MergeToolActionHandler_externalMergeToolRunFailed;
+
+	/** */
+	public static String MergeToolActionHandler_noToolConfiguredDialogTitle;
+
+	/** */
+	public static String MergeToolActionHandler_noToolConfiguredDialogContent;
+
+	/** */
+	public static String MergeToolActionHandler_mergeToolErrorDialogTitle;
+
+	/** */
+	public static String MergeToolActionHandler_mergeToolErrorDialogContent;
+
+	/** */
+	public static String MergeToolActionHandler_mergeToolFailedAddMergedToGit;
+
+	/** */
+	public static String MergeToolActionHandler_mergeToolNoChangeDialogTitle;
+
+	/** */
+	public static String MergeToolActionHandler_mergeToolNoChangeDialogContent;
+
+	/** */
+	public static String MergeToolActionHandler_mergeToolPromptDialogTitle;
+
+	/** */
+	public static String MergeToolActionHandler_mergeToolPromptDialogContent;
+
+	/** */
 	public static String ConfirmationPage_cantConnectToAnyTitle;
 
 	/** */
@@ -3216,10 +3250,10 @@ public class UIText extends NLS {
 	public static String GitServer_PullRequestSingular;
 
 	/** */
-	public static String GitServer_WizardTitleGithub;
+	public static String GitServer_WizardTitleGitHub;
 
 	/** */
-	public static String GitServer_WizardTitleGitlab;
+	public static String GitServer_WizardTitleGitLab;
 
 	/** */
 	public static String GitServer_WizardTitleGitea;
@@ -4223,6 +4257,51 @@ public class UIText extends NLS {
 	public static String DiffEditorInput_Tooltip2;
 
 	/** */
+	public static String DiffPreferencePage_DiffToolSection;
+
+	/** */
+	public static String DiffPreferencePage_DiffToolToUse;
+
+	/** */
+	public static String DiffPreferencePage_MergeAddExternalMergedFile;
+
+	/** */
+	public static String DiffPreferencePage_MergeLastHeadMode;
+
+	/** */
+	public static String DiffPreferencePage_MergeModePremergedOursMode;
+
+	/** */
+	public static String DiffPreferencePage_MergePromptMode;
+
+	/** */
+	public static String DiffPreferencePage_MergeToolContent;
+
+	/** */
+	public static String DiffPreferencePage_MergeToolSection;
+
+	/** */
+	public static String DiffPreferencePage_MergeToolToUse;
+
+	/** */
+	public static String DiffPreferencePage_MergeWorkspaceMode;
+
+	/** */
+	public static String DiffPreferencePage_UseBuiltInEditor;
+
+	/** */
+	public static String DiffPreferencePage_UseExternal;
+
+	/** */
+	public static String DiffPreferencePage_UseExternalForType;
+
+	/** */
+	public static String DiffPreferencePage_UseGitConfig;
+
+	/** */
+	public static String DiffPreferencePage_WarningMessage;
+
+	/** */
 	public static String DiscardChangesAction_confirmActionTitle;
 
 	/** */
@@ -4481,7 +4560,7 @@ public class UIText extends NLS {
 	public static String GerritSelectRepositoryPage_FinishButtonLabel;
 
 	/** */
-	public static String GithubSelectRepositoryPage_PageTitle;
+	public static String GitHubSelectRepositoryPage_PageTitle;
 
 	/** */
 	public static String MergeAction_CannotMerge;

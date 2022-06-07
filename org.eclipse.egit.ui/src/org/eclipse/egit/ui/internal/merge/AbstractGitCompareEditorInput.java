@@ -806,7 +806,7 @@ public abstract class AbstractGitCompareEditorInput extends CompareEditorInput {
 	 *
 	 * @return the {@link Repository}
 	 */
-	protected Repository getRepository() {
+	public Repository getRepository() {
 		return repository;
 	}
 

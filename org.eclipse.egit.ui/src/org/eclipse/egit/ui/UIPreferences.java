@@ -9,6 +9,7 @@
  * Copyright (C) 2015, Jan-Ove Weichel <ovi.weichel@gmail.com>
  * Copyright (C) 2015, SAP SE (Christian Georgi <christian.georgi@sap.com>)
  * Copyright (C) 2016, 2019 Thomas Wolf <thomas.wolf@paranor.ch>
+ * Copyright (C) 2020, Andre Bossert <andre.bossert@siemens.com>
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License 2.0
@@ -195,6 +196,29 @@ public final class UIPreferences {
 
 	/** */
 	public static final String MERGE_MODE = "merge_mode"; //$NON-NLS-1$
+
+	/** */
+	public static final String MERGE_TOOL_MODE = "merge_tool_mode"; //$NON-NLS-1$
+
+	/** */
+	public static final String MERGE_TOOL_CUSTOM = "merge_tool_custom"; //$NON-NLS-1$
+
+	/** */
+	public static final String MERGE_TOOL_AUTO_ADD_TO_INDEX = "merge_tool_auto_add"; //$NON-NLS-1$
+
+	/** */
+	public static final String DIFF_TOOL_CUSTOM = "diff_tool_custom"; //$NON-NLS-1$
+
+	/** */
+	public static final String DIFF_TOOL_MODE = "diff_tool_mode"; //$NON-NLS-1$
+
+	/**
+	 * A preference that specifies an external diff tool to use for specific
+	 * file extensions. The value format is comma separated alternating pairs of
+	 * extension and command, e.g. {@code ext1,command1,ext2,command2}.
+	 */
+	public static final String EXTERNAL_DIFF_TOOL_FOR_EXTENSION = "external_diff_tool_per_extension"; //$NON-NLS-1$
+
 	/** */
 	public static final String SHOW_REBASE_CONFIRM = "show_rebase_confirm"; //$NON-NLS-1$
 	/** */
