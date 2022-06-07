@@ -16,6 +16,23 @@
       "message": "I had doubts this was true:\n\n\u003e You can override the default tool per folder and per file type, using the .gitattributes file in a folder. The override will apply for subfolders, as long as a subfolder does not override the tool via .gitattributes: \n\nLooking at the code in: org.eclipse.jgit.internal.diffmergetool.ExternalToolUtils.getExternalToolFromAttributes(Repository, String, String)\n\nAnd in particular:\n\n\t\t\t\t\tString treePath \u003d walk.getPathString();\n\t\t\t\t\tif (treePath.equals(path)) {\n\t\t\t\t\t\tAttributes attrs \u003d walk.getAttributes();\n\t\t\t\t\t\tif (attrs.containsKey(toolKey)) {\n\t\t\t\t\t\t\treturn Optional.of(attrs.getValue(toolKey));\n\t\t\t\t\t\t}\n\t\t\t\t\t}\n\nBut after testing it, it works.\n\nShould I extend the test to create a merge conflict that is more than 1 folder deep? Would be slightly different to the base I used for the test.",
       "revId": "f14477d4591f836a6a679db5b34a9b3d4cea6bb2",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "f16b8b74_5e124ed9",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2022-06-07T06:34:41Z",
+      "side": 1,
+      "message": "LGTM. Note that Matthias has started preparing the release, so if this should go into 6.2, it would have to go in today.",
+      "revId": "f14477d4591f836a6a679db5b34a9b3d4cea6bb2",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31"
     }
   ]
 }
