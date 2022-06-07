@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f87adf37_989d47ae",
+        "filename": "org.eclipse.egit.doc/help/EGit/New_and_Noteworthy/6.2/images/Bug552338_external_diff_merge_tool_preference_page.png",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2022-06-07T13:08:41Z",
+      "side": 1,
+      "message": "We can save about 90kB if we compress this. Compressed version on Wiki, or in PS 3. Perhaps not worth the trouble, though.",
+      "revId": "5a19111675d9be5d968a62c9843781a73f057397",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31"
+    }
+  ]
+}
