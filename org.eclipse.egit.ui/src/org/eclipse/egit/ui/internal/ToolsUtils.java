@@ -45,10 +45,6 @@ package org.eclipse.egit.ui.internal;
 
 import java.util.concurrent.atomic.AtomicInteger;
 
-import org.eclipse.core.runtime.IStatus;
-import org.eclipse.core.runtime.Status;
-import org.eclipse.egit.core.Activator;
-import org.eclipse.jface.dialogs.ErrorDialog;
 import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Display;
@@ -82,22 +78,6 @@ public class ToolsUtils {
 			runnable.run();
 		}
 		return result.get();
-	}
-
-	/**
-	 * @param textHeader
-	 * @param message
-	 */
-	public static void informUserAboutError(String textHeader, String message) {
-		IStatus status = new Status(IStatus.ERROR, Activator.PLUGIN_ID,
-				message);
-		Runnable runnable = () -> ErrorDialog.openError(null, textHeader,
-				null, status);
-		if (Display.getCurrent() == null) {
-			PlatformUI.getWorkbench().getDisplay().asyncExec(runnable);
-		} else {
-			runnable.run();
-		}
 	}
 
 	/**
