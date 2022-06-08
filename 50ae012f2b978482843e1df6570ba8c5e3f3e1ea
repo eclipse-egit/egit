@@ -1,6 +1,23 @@
 {
   "comments": [
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "e423cc5a_279900a1",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1179
+      },
+      "writtenOn": "2022-06-08T21:04:15Z",
+      "side": 1,
+      "message": "Haven\u0027t checked in IDE, but looks better now.",
+      "revId": "50ae012f2b978482843e1df6570ba8c5e3f3e1ea",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "533cf9b0_fd34cd39",
@@ -14,6 +31,47 @@
       "writtenOn": "2022-06-08T17:04:57Z",
       "side": 1,
       "message": "Do we really need both \u0027DiffToolExecutionFailed\u0027 and \u0027ExternalDiffToolDied\u0027 ?",
+      "revId": "50ae012f2b978482843e1df6570ba8c5e3f3e1ea",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c6e90f01_2a66c419",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/UIText.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 2776,
+      "author": {
+        "id": 1179
+      },
+      "writtenOn": "2022-06-08T21:04:15Z",
+      "side": 1,
+      "message": "I don\u0027t know.",
+      "parentUuid": "533cf9b0_fd34cd39",
+      "revId": "50ae012f2b978482843e1df6570ba8c5e3f3e1ea",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d5f78df9_574afbdd",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/uitext.properties",
+        "patchSetId": 1
+      },
+      "lineNbr": 954,
+      "author": {
+        "id": 1179
+      },
+      "writtenOn": "2022-06-08T21:04:15Z",
+      "side": 1,
+      "message": "Is this really 1, not 0?",
+      "range": {
+        "startLine": 954,
+        "startChar": 81,
+        "endLine": 954,
+        "endChar": 82
+      },
       "revId": "50ae012f2b978482843e1df6570ba8c5e3f3e1ea",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31"
     }
