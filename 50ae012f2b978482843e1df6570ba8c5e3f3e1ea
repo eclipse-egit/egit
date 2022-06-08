@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "533cf9b0_fd34cd39",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/UIText.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 2776,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2022-06-08T17:04:57Z",
+      "side": 1,
+      "message": "Do we really need both \u0027DiffToolExecutionFailed\u0027 and \u0027ExternalDiffToolDied\u0027 ?",
+      "revId": "50ae012f2b978482843e1df6570ba8c5e3f3e1ea",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31"
+    }
+  ]
+}
