@@ -1447,18 +1447,6 @@ public class UIText extends NLS {
 	public static String CompareTreeView_CompareModeTooltip;
 
 	/** */
-	public static String CompareUtils_DiffToolExecutionFailed;
-
-	/** */
-	public static String CompareUtils_errorGettingEncoding;
-
-	/** */
-	public static String CompareUtils_errorGettingHeadCommit;
-
-	/** */
-	public static String CompareUtils_wrongResourceArgument;
-
-	/** */
 	public static String MergeHandler_MergeBranchDialogButton;
 
 	/** */
@@ -2785,10 +2773,16 @@ public class UIText extends NLS {
 	public static String CompareWithPreviousActionHandler_TitleRevisionNotFound;
 
 	/** */
-	public static String CompareUtils_jobName;
+	public static String CompareUtils_DiffToolExecutionFailed;
 
 	/** */
 	public static String CompareUtils_errorCommonAncestor;
+
+	/** */
+	public static String CompareUtils_errorGettingEncoding;
+
+	/** */
+	public static String CompareUtils_errorGettingHeadCommit;
 
 	/** */
 	public static String CompareUtils_ExecutingExtDiffTool;
@@ -2800,10 +2794,16 @@ public class UIText extends NLS {
 	public static String CompareUtils_GitConfigurationErrorText;
 
 	/** */
+	public static String CompareUtils_jobName;
+
+	/** */
 	public static String CompareUtils_NoDiffToolsDefined;
 
 	/** */
 	public static String CompareUtils_NoDiffToolSpecified;
+
+	/** */
+	public static String CompareUtils_wrongResourceArgument;
 
 	/** */
 	public static String MergeToolActionHandler_openExternalMergeToolJobName;
