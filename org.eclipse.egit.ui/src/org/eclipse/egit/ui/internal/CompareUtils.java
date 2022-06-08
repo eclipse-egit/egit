@@ -465,15 +465,14 @@ public class CompareUtils {
 								});
 					}
 				} catch (ToolException e) {
-					ToolsUtils.informUserAboutError(
-							UIText.CompareUtils_ExternalDiffToolDied
-									+ changedFilePath,
-							e.getMessage());
+					return Activator.createErrorStatus(
+							NLS.bind(UIText.CompareUtils_ExternalDiffToolDied,
+									changedFilePath),
+							e);
 				} catch (CoreException e) {
-					ToolsUtils.informUserAboutError(
-							UIText.CompareUtils_DiffToolExecutionFailed
-									+ changedFilePath,
-							e.getMessage());
+					return Activator.createErrorStatus(NLS.bind(
+							UIText.CompareUtils_DiffToolExecutionFailed,
+							changedFilePath), e);
 				}
 				return Status.OK_STATUS;
 			}
