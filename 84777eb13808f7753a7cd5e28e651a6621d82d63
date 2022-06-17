@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "7d383d72_b938776e",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2022-06-17T17:33:21Z",
+      "side": 1,
+      "message": "This is really a pity. But apparently nobody cared enough to keep Mylyn alive.\n\nWe should also change the EGit builds to not trigger the egit-github builds anymore.\nAnd the mylyn bundles there also should go.\n\nWhat do we do with org.eclipse.egit.github.core? With Eclipse TLP having moved to Github, it might make sense to keep that one alive.\n\n-1 because of the partial revert in the oomph setup.",
+      "revId": "84777eb13808f7753a7cd5e28e651a6621d82d63",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d53a04b5_c1e2a052",
+        "filename": "tools/oomph/EGit.setup",
+        "patchSetId": 3
+      },
+      "lineNbr": 141,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2022-06-17T17:33:21Z",
+      "side": 1,
+      "message": "Somehow this undoes the change I had made for 6.3.",
+      "revId": "84777eb13808f7753a7cd5e28e651a6621d82d63",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31"
+    }
+  ]
+}
