@@ -18,6 +18,23 @@
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "965b37fc_aa993bac",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2022-06-17T17:36:25Z",
+      "side": 1,
+      "message": "Do we have to do something for users who have installed EGit 6.1 or 6.2 including the egit-mylyn feature on an Eclipse where Mylyn is present, so that an update to EGit 6.3 will work seamlessly?",
+      "revId": "84777eb13808f7753a7cd5e28e651a6621d82d63",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "d53a04b5_c1e2a052",
