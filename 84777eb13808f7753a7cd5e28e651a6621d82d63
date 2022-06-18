@@ -35,6 +35,42 @@
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "ba06ffc9_ac85af51",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2022-06-18T19:32:44Z",
+      "side": 1,
+      "message": "Yes, so many years went into its development and now it\u0027s abandoned. If someone revives Mylyn we can revert this deletion.\n\nYes we should also delete the egit-github builds.\n\nI plan to move org.eclipse.egit.github.core and its tests to the EGit repository.\nQuestion is with or without its history ?\n\nWe can then archive the egit-github repo.\n\nI didn\u0027t intend to revert your oomph setup update. I created this change earlier and didn\u0027t spot this when rebasing it on current master. Should be fixed now.",
+      "parentUuid": "7d383d72_b938776e",
+      "revId": "84777eb13808f7753a7cd5e28e651a6621d82d63",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ff770550_79b17030",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2022-06-18T19:32:44Z",
+      "side": 1,
+      "message": "I guess we should add some p2.inf magic to uninstall old versions of this feature when updating to egit 6.2 or newer. I wagely remember we did something like this in the past when the smart import was merged into the egit.ui bundle",
+      "parentUuid": "965b37fc_aa993bac",
+      "revId": "84777eb13808f7753a7cd5e28e651a6621d82d63",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "d53a04b5_c1e2a052",
@@ -48,6 +84,24 @@
       "writtenOn": "2022-06-17T17:33:21Z",
       "side": 1,
       "message": "Somehow this undoes the change I had made for 6.3.",
+      "revId": "84777eb13808f7753a7cd5e28e651a6621d82d63",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "ba82ad06_fb1ea0d2",
+        "filename": "tools/oomph/EGit.setup",
+        "patchSetId": 3
+      },
+      "lineNbr": 141,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2022-06-18T19:32:44Z",
+      "side": 1,
+      "message": "this wasn\u0027t my intention, reverted the revert",
+      "parentUuid": "d53a04b5_c1e2a052",
       "revId": "84777eb13808f7753a7cd5e28e651a6621d82d63",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31"
     }
