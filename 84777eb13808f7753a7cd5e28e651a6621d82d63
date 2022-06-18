@@ -125,6 +125,24 @@
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "e2f7824a_5fac1b48",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2022-06-18T20:44:08Z",
+      "side": 1,
+      "message": "I\u0027d say go with the simpler way: leave it there, just remove the Mylyn stuff in egit-github. After all, sometimes projects do get revived (like BIRT, or GEF classic).",
+      "parentUuid": "31914127_f614eae7",
+      "revId": "84777eb13808f7753a7cd5e28e651a6621d82d63",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "d53a04b5_c1e2a052",
