@@ -71,6 +71,42 @@
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "f3954f36_758a8967",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2022-06-18T19:58:53Z",
+      "side": 1,
+      "message": "\u003e I plan to move org.eclipse.egit.github.core and its tests to the EGit repository.\n\u003e Question is with or without its history ?\n\nThat was my initial idea, too. But getting it over with history would be a nightmare. You\u0027d first have to excise all commits not touching it from the git history.\n\nOn second thought, this is not necessary. If we remove all the Mylyn-dependent bundles from egit-github, then org.eclipse.egit.github.core can remain there. It has no dependencies on EGit, so building it and even consuming it in EGit for whatever great Github improvements people have in mind should then be no trouble.\n\n(It\u0027s also a bit special insofar as it still has BREE Java 1.8 for Android compatibility.)",
+      "parentUuid": "ba06ffc9_ac85af51",
+      "revId": "84777eb13808f7753a7cd5e28e651a6621d82d63",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c6c842f4_5cdd7f5e",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2022-06-18T19:58:53Z",
+      "side": 1,
+      "message": "Exactly. We\u0027ll have to test. IIRC the trick was to make some other bundle/IU claim it also provided a new version of the removed IUs.",
+      "parentUuid": "ff770550_79b17030",
+      "revId": "84777eb13808f7753a7cd5e28e651a6621d82d63",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "d53a04b5_c1e2a052",
