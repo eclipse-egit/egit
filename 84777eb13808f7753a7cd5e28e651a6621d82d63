@@ -107,6 +107,24 @@
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "31914127_f614eae7",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2022-06-18T20:10:34Z",
+      "side": 1,
+      "message": "We could use git-filter-repo [1] to extract the history (which would be rewritten by this surgery) of org.eclipse.egit.github.core and org.eclipse.egit.github.core.test, push that to the egit repo (direct push without review) as an independent second version graph and then merge it into the egit repo\u0027s master branch.\n\nOf course instead we can leave it in the egit-github repo and delete all the mylyn related stuff there.\n\nAdvantage of the first approach is one less repo to maintain, advantage of the second approach is it\u0027s easier and easier to revert in case mylyn is revived.\n\n[1] https://github.com/newren/git-filter-repo/",
+      "parentUuid": "f3954f36_758a8967",
+      "revId": "84777eb13808f7753a7cd5e28e651a6621d82d63",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "d53a04b5_c1e2a052",
