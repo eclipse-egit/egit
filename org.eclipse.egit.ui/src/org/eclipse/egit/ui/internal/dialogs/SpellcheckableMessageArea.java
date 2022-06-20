@@ -22,6 +22,7 @@ import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.function.Supplier;
 import java.util.regex.Pattern;
 
@@ -131,9 +132,11 @@ public class SpellcheckableMessageArea extends Composite {
 
 	private Token commentColoring;
 
-	private CleanupMode cleanupMode = CleanupMode.STRIP;
+	private @NonNull CleanupMode cleanupMode = CleanupMode.STRIP;
 
 	private char commentChar = '#';
+
+	private CopyOnWriteArrayList<Runnable> cleanupChangeListeners = new CopyOnWriteArrayList<>();
 
 	/**
 	 * Creates an editable {@link SpellcheckableMessageArea}.
@@ -347,6 +350,7 @@ public class SpellcheckableMessageArea extends Composite {
 			@Override
 			public void widgetDisposed(DisposeEvent disposeEvent) {
 				support.uninstall();
+				cleanupChangeListeners.clear();
 				Activator.getDefault().getPreferenceStore().removePropertyChangeListener(propertyChangeListener);
 				PlatformUI.getWorkbench().getThemeManager()
 						.removePropertyChangeListener(themeListener);
@@ -631,6 +635,29 @@ public class SpellcheckableMessageArea extends Composite {
 	}
 
 	/**
+	 * Adds a {@link Runnable} that will be invoked whenever
+	 * {@link #setCleanupMode(CleanupMode, char)} changes either the
+	 * {@link CleanupMode} or the comment character.
+	 *
+	 * @param listener
+	 *            to add
+	 */
+	public void addCleanupChangeListener(Runnable listener) {
+		cleanupChangeListeners.addIfAbsent(listener);
+	}
+
+	/**
+	 * Removes a previously installed cleanup mode or comment character change
+	 * listener.
+	 *
+	 * @param listener
+	 *            to remove
+	 */
+	public void removeCleanupChangeListener(Runnable listener) {
+		cleanupChangeListeners.remove(listener);
+	}
+
+	/**
 	 * @return widget
 	 */
 	public StyledText getTextWidget() {
@@ -684,10 +711,7 @@ public class SpellcheckableMessageArea extends Composite {
 		if (text == null) {
 			return ""; //$NON-NLS-1$
 		}
-		CleanupMode mode = cleanupMode;
-		if (mode != null) {
-			text = CommitConfig.cleanText(text, mode, commentChar);
-		}
+		text = CommitConfig.cleanText(text, cleanupMode, commentChar);
 		if (shouldHardWrap()) {
 			text = wrapCommitMessage(text, commentChar);
 		}
@@ -802,6 +826,25 @@ public class SpellcheckableMessageArea extends Composite {
 	}
 
 	/**
+	 * Retrieves the currently set {@link CleanupMode}.
+	 *
+	 * @return the {@link CleanupMode}, never {@code null}
+	 */
+	@NonNull
+	public CleanupMode getCleanupMode() {
+		return cleanupMode;
+	}
+
+	/**
+	 * Retrieves the currently set comment character.
+	 *
+	 * @return the comment character
+	 */
+	public char getCommentChar() {
+		return commentChar;
+	}
+
+	/**
 	 * Sets the clean-up mode; has no effect on a read-only
 	 * {@link SpellcheckableMessageArea}.
 	 *
@@ -820,8 +863,13 @@ public class SpellcheckableMessageArea extends Composite {
 			throw new IllegalArgumentException(
 					"Clean-up mode must not be " + mode); //$NON-NLS-1$
 		}
+		boolean changed = this.cleanupMode != mode
+				|| this.commentChar != commentChar;
 		this.cleanupMode = mode;
 		this.commentChar = commentChar;
+		if (changed) {
+			cleanupChangeListeners.forEach(Runnable::run);
+		}
 	}
 
 	/**

@@ -1005,6 +1005,7 @@ public class StagingView extends ViewPart
 					previewLayout.topControl = commitMessagePreview;
 					commitMessageSection.setText(
 							UIText.StagingView_CommitMessagePreview);
+					setCommentCharTooltip();
 					previewer
 							.setText(commitMessageComponent.getRepository(),
 									commitMessageComponent.getCommitMessage());
@@ -1012,6 +1013,7 @@ public class StagingView extends ViewPart
 					previewLayout.topControl = commitMessageText;
 					commitMessageSection
 							.setText(UIText.StagingView_CommitMessage);
+					setCommentCharTooltip();
 				}
 				previewLayout.topControl.getParent().layout(true, true);
 				commitMessageSection.redraw();
@@ -1346,6 +1348,8 @@ public class StagingView extends ViewPart
 		stagedSection.setToolTipText(UIText.StagingView_StagedChangesTooltip);
 		unstagedSection
 				.setToolTipText(UIText.StagingView_UnstagedChangesTooltip);
+		setCommentCharTooltip();
+		commitMessageText.addCleanupChangeListener(this::setCommentCharTooltip);
 		updateToolbar();
 		enableCommitWidgets(false);
 		refreshAction.setEnabled(false);
@@ -1471,6 +1475,24 @@ public class StagingView extends ViewPart
 		}
 		if (label.hasNewText()) {
 			form.setText(label.getText());
+		}
+	}
+
+	private void setCommentCharTooltip() {
+		if (previewLayout.topControl != commitMessageText) {
+			commitMessageSection.setToolTipText(null);
+			return;
+		}
+		switch (commitMessageText.getCleanupMode()) {
+		case STRIP:
+		case SCISSORS:
+			commitMessageSection.setToolTipText(MessageFormat.format(
+					UIText.StagingView_CommentChar,
+					String.valueOf(commitMessageText.getCommentChar())));
+			break;
+		default:
+			commitMessageSection.setToolTipText(null);
+			break;
 		}
 	}
 
