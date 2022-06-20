@@ -27,6 +27,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.regex.Pattern;
 
+import org.eclipse.egit.core.internal.Utils;
 import org.eclipse.egit.core.internal.gerrit.GerritUtil;
 import org.eclipse.egit.core.settings.GitSettings;
 import org.eclipse.egit.core.util.RevCommitUtils;
@@ -48,6 +49,8 @@ import org.eclipse.jface.text.DocumentEvent;
 import org.eclipse.jface.text.IDocument;
 import org.eclipse.jface.text.IDocumentListener;
 import org.eclipse.jface.text.IRegion;
+import org.eclipse.jgit.lib.CommitConfig;
+import org.eclipse.jgit.lib.CommitConfig.CleanupMode;
 import org.eclipse.jgit.lib.Constants;
 import org.eclipse.jgit.lib.GpgConfig;
 import org.eclipse.jgit.lib.GpgConfig.GpgFormat;
@@ -142,7 +145,11 @@ public class CommitMessageComponent {
 
 	private String commitMessageBeforeAmending = EMPTY_STRING;
 
-	private int carePositionBeforeAmending = CommitMessageComponentState.CARET_DEFAULT_POSITION;
+	private int caretPositionBeforeAmending = CommitMessageComponentState.CARET_DEFAULT_POSITION;
+
+	private char commentCharBeforeAmending = '#';
+
+	private char autoCommentCharBeforeAmending;
 
 	private String previousCommitMessage = EMPTY_STRING;
 
@@ -211,7 +218,7 @@ public class CommitMessageComponent {
 		commitMessage = null;
 		caretPosition = CommitMessageComponentState.CARET_DEFAULT_POSITION;
 		commitMessageBeforeAmending = EMPTY_STRING;
-		carePositionBeforeAmending = CommitMessageComponentState.CARET_DEFAULT_POSITION;
+		caretPositionBeforeAmending = CommitMessageComponentState.CARET_DEFAULT_POSITION;
 		previousCommitMessage = EMPTY_STRING;
 		previousCaretPosition = CommitMessageComponentState.CARET_DEFAULT_POSITION;
 		author = null;
@@ -227,6 +234,8 @@ public class CommitMessageComponent {
 		listenersEnabled = false;
 		commentChar = '#';
 		autoCommentChar = '\0';
+		commentCharBeforeAmending = '#';
+		autoCommentCharBeforeAmending = '\0';
 	}
 
 	/**
@@ -419,7 +428,9 @@ public class CommitMessageComponent {
 	public void setAmendAllowed(boolean amendAllowed) {
 		this.amendAllowed = amendAllowed;
 		commitMessageBeforeAmending = EMPTY_STRING;
-		carePositionBeforeAmending = CommitMessageComponentState.CARET_DEFAULT_POSITION;
+		caretPositionBeforeAmending = CommitMessageComponentState.CARET_DEFAULT_POSITION;
+		commentCharBeforeAmending = '#';
+		autoCommentCharBeforeAmending = '\0';
 	}
 
 	/**
@@ -427,24 +438,45 @@ public class CommitMessageComponent {
 	 */
 	public void setAmendingButtonSelection(boolean selection) {
 		amending = selection;
+		CommitConfig config = repository.getConfig().get(CommitConfig.KEY);
 		if (!selection) {
 			originalChangeId = null;
 			authorText.setText(author);
+			commentChar = commentCharBeforeAmending;
+			autoCommentChar = autoCommentCharBeforeAmending;
+			CleanupMode mode = config.resolve(CleanupMode.DEFAULT, true);
+			commitText.setCleanupMode(mode, commentChar);
 			commitText.setText(commitMessageBeforeAmending);
 			commitText.getTextWidget()
-					.setCaretOffset(carePositionBeforeAmending);
+					.setCaretOffset(caretPositionBeforeAmending);
 			commitMessageBeforeAmending = EMPTY_STRING;
-			carePositionBeforeAmending = CommitMessageComponentState.CARET_DEFAULT_POSITION;
+			caretPositionBeforeAmending = CommitMessageComponentState.CARET_DEFAULT_POSITION;
+			commentCharBeforeAmending = '#';
+			autoCommentCharBeforeAmending = '\0';
 		} else {
 			getHeadCommitInfo();
 			saveOriginalChangeId();
 			commitMessageBeforeAmending = commitText.getText();
-			carePositionBeforeAmending = commitText.getTextWidget()
+			caretPositionBeforeAmending = commitText.getTextWidget()
 					.getCaretOffset();
+			commentCharBeforeAmending = commentChar;
+			autoCommentCharBeforeAmending = autoCommentChar;
+			if (config.isAutoCommentChar()) {
+				commentChar = config.getCommentChar(
+						Utils.normalizeLineEndings(previousCommitMessage));
+				autoCommentChar = commentChar;
+			} else {
+				commentChar = config.getCommentChar();
+				autoCommentChar = '\0';
+			}
+			CleanupMode mode = config.resolve(CleanupMode.DEFAULT, true);
+			commitText.setCleanupMode(mode, commentChar);
+
 			commitText.setText(previousCommitMessage);
 			commitText.getTextWidget().setCaretOffset(previousCaretPosition);
-			if (previousAuthor != null)
+			if (previousAuthor != null) {
 				authorText.setText(previousAuthor);
+			}
 		}
 		refreshChangeIdText();
 	}
