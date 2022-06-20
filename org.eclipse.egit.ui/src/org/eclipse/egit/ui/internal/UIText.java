@@ -6062,6 +6062,9 @@ public class UIText extends NLS {
 	public static String StagingView_Assume_Unchanged;
 
 	/** */
+	public static String StagingView_CommentChar;
+
+	/** */
 	public static String StagingView_Commit;
 
 	/** */
