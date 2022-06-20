@@ -183,12 +183,6 @@ public class DiffPreferencePage extends FieldEditorPreferencePage
 			useExternal.setSelection(true);
 		}
 
-		useExternal.addListener(SWT.Selection, event -> {
-			if (useExternal.getSelection()) {
-				prefsManager.setActiveMode(DiffToolMode.EXTERNAL);
-				useExternalForType.setEnabled(false);
-			}
-		});
 		diffControls.put(useExternal, DiffToolMode.EXTERNAL);
 
 		// Custom diff tool combo
@@ -202,6 +196,16 @@ public class DiffPreferencePage extends FieldEditorPreferencePage
 		for (String tool : diffToolsList) {
 			customDiffCombo.add(tool);
 		}
+
+		useExternal.addListener(SWT.Selection, event -> {
+			if (useExternal.getSelection()) {
+				prefsManager.setActiveMode(DiffToolMode.EXTERNAL);
+				useExternalForType.setEnabled(false);
+				prefsManager.setCustomTool(DIFF_TOOL_CUSTOM,
+						customDiffCombo.getText());
+			}
+		});
+
 		IPreferenceStore store = getPreferenceStore();
 		String defaultCustomDiffTool = store.getString(DIFF_TOOL_CUSTOM);
 		if (diffToolsList.contains(defaultCustomDiffTool)) {
@@ -359,8 +363,6 @@ public class DiffPreferencePage extends FieldEditorPreferencePage
 		if (prefsManager.isActiveMode(MergeToolMode.EXTERNAL)) {
 			mergeUseExternalTool.setSelection(true);
 		}
-		mergeUseExternalTool.addListener(SWT.Selection,
-				event -> prefsManager.setActiveMode(MergeToolMode.EXTERNAL));
 		mergeControls.put(mergeUseExternalTool, MergeToolMode.EXTERNAL);
 
 		Composite mergeToolCustomCont = new Composite(toolToUseSection, SWT.None);
@@ -371,6 +373,12 @@ public class DiffPreferencePage extends FieldEditorPreferencePage
 		for (String tool : mergeTools) {
 			customMergeCombo.add(tool);
 		}
+
+		mergeUseExternalTool.addListener(SWT.Selection, event -> {
+			prefsManager.setActiveMode(MergeToolMode.EXTERNAL);
+			prefsManager.setCustomTool(MERGE_TOOL_CUSTOM,
+					customMergeCombo.getText());
+		});
 
 		IPreferenceStore store = getPreferenceStore();
 		String defaultCustomMergeTool = store.getString(MERGE_TOOL_CUSTOM);
