@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "0d55d53f_ff694df4",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2022-06-20T21:03:20Z",
+      "side": 1,
+      "message": "Looks like the Jenkins slave node/pod has lost its git installation.",
+      "revId": "6ac470f510469716831e40250b57857497abb747",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31"
+    }
+  ]
+}
