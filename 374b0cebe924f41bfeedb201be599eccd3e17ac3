@@ -16,6 +16,23 @@
       "message": "Thomas, this fixes the problem you ran into. There are still no dialogs if calling a tool fails.\n\nHowever Andrey has a suggestion to just remove the radio buttons for external diff/merge tools. Leaving only the \"use git config\". This will still allow users to use external tools, but they\u0027ll configure which tool is used themselves (and so its up to the users to ensure their configuration works).",
       "revId": "374b0cebe924f41bfeedb201be599eccd3e17ac3",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "087a1697_74bd18fc",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 119988
+      },
+      "writtenOn": "2022-06-20T09:53:20Z",
+      "side": 1,
+      "message": "Andrey, we contributed the preference page right? Via https://bugs.eclipse.org/bugs/show_bug.cgi?id\u003d552338.\n\nSo no need to involve also Andre? Should I add Andre to CC either way?",
+      "revId": "374b0cebe924f41bfeedb201be599eccd3e17ac3",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31"
     }
   ]
 }
