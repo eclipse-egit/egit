@@ -33,6 +33,24 @@
       "message": "Andrey, we contributed the preference page right? Via https://bugs.eclipse.org/bugs/show_bug.cgi?id\u003d552338.\n\nSo no need to involve also Andre? Should I add Andre to CC either way?",
       "revId": "374b0cebe924f41bfeedb201be599eccd3e17ac3",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "b3791613_ab412bb0",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1179
+      },
+      "writtenOn": "2022-06-21T09:34:20Z",
+      "side": 1,
+      "message": "Yes and no. We heavily changed original \"small\" preferences addition from Andre, which included the combo.\n\nLet us fix this issue with your patch and remove the combo in a different commit, and discuss that on a different issue where you can add Andre.",
+      "parentUuid": "087a1697_74bd18fc",
+      "revId": "374b0cebe924f41bfeedb201be599eccd3e17ac3",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31"
     }
   ]
 }
