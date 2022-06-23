@@ -21,7 +21,6 @@ import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Map.Entry;
-import java.util.Set;
 
 import org.eclipse.egit.ui.Activator;
 import org.eclipse.egit.ui.UIPreferences;
@@ -36,12 +35,9 @@ import org.eclipse.jface.preference.FieldEditorPreferencePage;
 import org.eclipse.jface.preference.IPreferenceStore;
 import org.eclipse.jgit.util.StringUtils;
 import org.eclipse.swt.SWT;
-import org.eclipse.swt.events.SelectionAdapter;
-import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
-import org.eclipse.swt.widgets.Combo;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Group;
@@ -175,64 +171,6 @@ public class DiffPreferencePage extends FieldEditorPreferencePage
 			}
 		});
 
-		// Third radio + combo
-
-		Button useExternal = new Button(diffGroup, SWT.RADIO);
-		useExternal.setText(UIText.DiffPreferencePage_UseExternal);
-		if (prefsManager.isActiveMode(DiffToolMode.EXTERNAL)) {
-			useExternal.setSelection(true);
-		}
-
-		diffControls.put(useExternal, DiffToolMode.EXTERNAL);
-
-		// Custom diff tool combo
-
-		Composite diffToolCustomCont = new Composite(diffGroup, SWT.None);
-		diffToolCustomCont.setLayout(createGridWithLeftMergins());
-
-		Combo customDiffCombo = new Combo(diffToolCustomCont, SWT.READ_ONLY);
-		Set<String> diffToolsList = DiffMergeSettings.getAvailableDiffTools();
-
-		for (String tool : diffToolsList) {
-			customDiffCombo.add(tool);
-		}
-
-		useExternal.addListener(SWT.Selection, event -> {
-			if (useExternal.getSelection()) {
-				prefsManager.setActiveMode(DiffToolMode.EXTERNAL);
-				useExternalForType.setEnabled(false);
-				prefsManager.setCustomTool(DIFF_TOOL_CUSTOM,
-						customDiffCombo.getText());
-			}
-		});
-
-		IPreferenceStore store = getPreferenceStore();
-		String defaultCustomDiffTool = store.getString(DIFF_TOOL_CUSTOM);
-		if (diffToolsList.contains(defaultCustomDiffTool)) {
-			customDiffCombo.setText(defaultCustomDiffTool);
-		} else {
-			customDiffCombo
-					.setText(diffToolsList.stream().findFirst().orElse("")); //$NON-NLS-1$
-		}
-		customDiffCombo
-				.setEnabled(prefsManager.isActiveMode(DiffToolMode.EXTERNAL));
-
-		customDiffCombo.addListener(SWT.Selection, event -> {
-			prefsManager.setCustomTool(DIFF_TOOL_CUSTOM,
-					customDiffCombo.getText());
-		});
-
-		useExternal.addSelectionListener(new SelectionAdapter() {
-			@Override
-			public void widgetSelected(SelectionEvent e) {
-				customDiffCombo.setEnabled(useExternal.getSelection());
-			}
-		});
-		prefsManager.addControlWithCustomReset(customDiffCombo, () -> {
-			customDiffCombo.setEnabled(false);
-			customDiffCombo.setText(store.getString(DIFF_TOOL_CUSTOM));
-		});
-
 		prefsManager.bindButtons(diffControls);
 
 		updateMargins(diffGroup);
@@ -356,60 +294,6 @@ public class DiffPreferencePage extends FieldEditorPreferencePage
 			}
 		});
 
-		// Third radio with combo selection
-
-		Button mergeUseExternalTool = new Button(toolToUseSection, SWT.RADIO);
-		mergeUseExternalTool.setText(UIText.DiffPreferencePage_UseExternal);
-		if (prefsManager.isActiveMode(MergeToolMode.EXTERNAL)) {
-			mergeUseExternalTool.setSelection(true);
-		}
-		mergeControls.put(mergeUseExternalTool, MergeToolMode.EXTERNAL);
-
-		Composite mergeToolCustomCont = new Composite(toolToUseSection, SWT.None);
-		mergeToolCustomCont.setLayout(new GridLayout());
-
-		Combo customMergeCombo = new Combo(mergeToolCustomCont, SWT.READ_ONLY);
-		Set<String> mergeTools = DiffMergeSettings.getAvailableMergeTools();
-		for (String tool : mergeTools) {
-			customMergeCombo.add(tool);
-		}
-
-		mergeUseExternalTool.addListener(SWT.Selection, event -> {
-			prefsManager.setActiveMode(MergeToolMode.EXTERNAL);
-			prefsManager.setCustomTool(MERGE_TOOL_CUSTOM,
-					customMergeCombo.getText());
-		});
-
-		IPreferenceStore store = getPreferenceStore();
-		String defaultCustomMergeTool = store.getString(MERGE_TOOL_CUSTOM);
-		if (mergeTools.contains(defaultCustomMergeTool)) {
-			customMergeCombo.setText(defaultCustomMergeTool);
-		} else {
-			customMergeCombo
-					.setText(mergeTools.stream().findFirst().orElse("")); //$NON-NLS-1$
-		}
-		if (prefsManager.isActiveMode(MergeToolMode.INTERNAL)) {
-			customMergeCombo.setEnabled(false);
-		} else {
-			customMergeCombo.setEnabled(true);
-		}
-		mergeUseExternalTool.addSelectionListener(new SelectionAdapter() {
-			@Override
-			public void widgetSelected(SelectionEvent e) {
-				customMergeCombo.setEnabled(mergeUseExternalTool.getSelection());
-				useExternalForType.setEnabled(false);
-			}
-		});
-		customMergeCombo.addListener(SWT.Selection, event -> {
-			prefsManager.setCustomTool(MERGE_TOOL_CUSTOM,
-					customMergeCombo.getText());
-		});
-
-		prefsManager.addControlWithCustomReset(customMergeCombo, () -> {
-			customMergeCombo.setEnabled(false);
-			customMergeCombo.setText(store.getString(MERGE_TOOL_CUSTOM));
-		});
-
 		addField(new BooleanFieldEditor(
 				UIPreferences.MERGE_TOOL_AUTO_ADD_TO_INDEX,
 				UIText.DiffPreferencePage_MergeAddExternalMergedFile,
@@ -435,15 +319,11 @@ public class DiffPreferencePage extends FieldEditorPreferencePage
 		/** Key is the mode, value is selection */
 		private Map<String, Integer> modeSelections;
 
-		/** Key is the tool key, value is tool selection */
-		private Map<String, String> toolSelections;
-
 		public DiffMergePreferencesManager(IPreferenceStore store) {
 			this.store = store;
 			buttons = new LinkedHashMap<>();
 			customResetControls = new LinkedHashMap<>();
 			modeSelections = new LinkedHashMap<>();
-			toolSelections = new LinkedHashMap<>();
 		}
 
 		/**
@@ -493,9 +373,6 @@ public class DiffPreferencePage extends FieldEditorPreferencePage
 			for (Entry<String, Integer> entry : modeSelections.entrySet()) {
 				store.setValue(entry.getKey(), entry.getValue().intValue());
 			}
-			for (Entry<String, String> entry : toolSelections.entrySet()) {
-				store.setValue(entry.getKey(), entry.getValue());
-			}
 		}
 
 		/**
@@ -543,21 +420,6 @@ public class DiffPreferencePage extends FieldEditorPreferencePage
 				modeId = store.getInt(MERGE_MODE);
 			}
 			setButtonsSelectionsForMode(modeId);
-		}
-
-		/**
-		 * Sets selected custom external diff/merge tool.
-		 *
-		 * @param toolId
-		 *            either {@link #DIFF_TOOL_CUSTOM} or
-		 *            {@link #MERGE_TOOL_CUSTOM}
-		 *
-		 * @param selection
-		 *            tool to be set
-		 *
-		 */
-		private void setCustomTool(String toolId, String selection) {
-			toolSelections.put(toolId, selection);
 		}
 
 		/**
