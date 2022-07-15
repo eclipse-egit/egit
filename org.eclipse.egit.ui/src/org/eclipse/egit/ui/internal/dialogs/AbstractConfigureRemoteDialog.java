@@ -222,7 +222,7 @@ public abstract class AbstractConfigureRemoteDialog
 	@Override
 	protected Control createDialogArea(Composite parent) {
 		final Composite main = new Composite(parent, SWT.NONE);
-		GridLayoutFactory.fillDefaults().applyTo(main);
+		GridLayoutFactory.swtDefaults().applyTo(main);
 		GridDataFactory.fillDefaults().grab(true, true)
 				.minSize(SWT.DEFAULT, SWT.DEFAULT).applyTo(main);
 
@@ -254,7 +254,7 @@ public abstract class AbstractConfigureRemoteDialog
 		}
 
 		final Composite sameUriDetails = new Composite(main, SWT.NONE);
-		GridLayoutFactory.fillDefaults().numColumns(4).equalWidth(false)
+		GridLayoutFactory.swtDefaults().numColumns(4).equalWidth(false)
 				.applyTo(sameUriDetails);
 		GridDataFactory.fillDefaults().grab(true, false)
 				.applyTo(sameUriDetails);
@@ -314,7 +314,7 @@ public abstract class AbstractConfigureRemoteDialog
 		GridDataFactory.fillDefaults().grab(true, true)
 				.minSize(SWT.DEFAULT, SWT.DEFAULT).applyTo(refSpecGroup);
 		refSpecGroup.setText(UIText.AbstractConfigureRemoteDialog_RefMappingGroup);
-		GridLayoutFactory.fillDefaults().numColumns(2).applyTo(refSpecGroup);
+		GridLayoutFactory.swtDefaults().numColumns(2).applyTo(refSpecGroup);
 
 		specViewer = new TableViewer(refSpecGroup, SWT.BORDER | SWT.MULTI);
 		specViewer.setContentProvider(ArrayContentProvider.getInstance());
@@ -361,7 +361,7 @@ public abstract class AbstractConfigureRemoteDialog
 				});
 
 		Composite buttonArea = new Composite(refSpecGroup, SWT.NONE);
-		GridLayoutFactory.fillDefaults().applyTo(buttonArea);
+		GridLayoutFactory.swtDefaults().applyTo(buttonArea);
 		GridDataFactory.fillDefaults().grab(false, true)
 				.minSize(SWT.DEFAULT, SWT.DEFAULT).applyTo(buttonArea);
 
