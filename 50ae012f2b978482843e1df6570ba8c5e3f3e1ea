@@ -53,6 +53,24 @@
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "419b1fed_bdd02613",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/UIText.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 2776,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2022-07-16T09:16:51Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "c6e90f01_2a66c419",
+      "revId": "50ae012f2b978482843e1df6570ba8c5e3f3e1ea",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "d5f78df9_574afbdd",
@@ -90,6 +108,30 @@
       "side": 1,
       "message": "Good catch; I just moved that from above. The only use passes two parameters, an IPath and an IResource. Unclear what was intended; the code is from 2015 from I58d2a5d969886fc00e5aee8f7b83ac57cf6cfa7f .",
       "parentUuid": "d5f78df9_574afbdd",
+      "range": {
+        "startLine": 954,
+        "startChar": 81,
+        "endLine": 954,
+        "endChar": 82
+      },
+      "revId": "50ae012f2b978482843e1df6570ba8c5e3f3e1ea",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "2b951f19_5d7ad118",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/uitext.properties",
+        "patchSetId": 1
+      },
+      "lineNbr": 954,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2022-07-16T09:16:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f9ffdb9e_e701a161",
       "range": {
         "startLine": 954,
         "startChar": 81,
