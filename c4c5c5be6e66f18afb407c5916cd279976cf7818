@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f9acd997_ccb2b785",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/uitext.properties",
+        "patchSetId": 2
+      },
+      "lineNbr": 946,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2022-07-17T09:41:11Z",
+      "side": 1,
+      "message": "move these lines after line 947 to sort by key alphabetically ?",
+      "range": {
+        "startLine": 945,
+        "startChar": 0,
+        "endLine": 946,
+        "endChar": 62
+      },
+      "revId": "c4c5c5be6e66f18afb407c5916cd279976cf7818",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31"
+    }
+  ]
+}
