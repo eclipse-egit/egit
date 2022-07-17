@@ -22,6 +22,30 @@
       },
       "revId": "c4c5c5be6e66f18afb407c5916cd279976cf7818",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "9d456982_ed91cb87",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/uitext.properties",
+        "patchSetId": 2
+      },
+      "lineNbr": 946,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2022-07-17T10:34:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f9acd997_ccb2b785",
+      "range": {
+        "startLine": 945,
+        "startChar": 0,
+        "endLine": 946,
+        "endChar": 62
+      },
+      "revId": "c4c5c5be6e66f18afb407c5916cd279976cf7818",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31"
     }
   ]
 }
