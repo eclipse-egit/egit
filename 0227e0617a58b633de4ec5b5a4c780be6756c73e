@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "9b313b71_e987b988",
+        "filename": "tools/oomph/EGit.setup",
+        "patchSetId": 1
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2022-08-03T20:06:49Z",
+      "side": 0,
+      "message": "So where are the PDE API tools then? When a new Eclipse is provisioned, I want them to be present. Are they included by default already?",
+      "revId": "0227e0617a58b633de4ec5b5a4c780be6756c73e",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31"
+    }
+  ]
+}
