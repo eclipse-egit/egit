@@ -16,6 +16,24 @@
       "message": "So where are the PDE API tools then? When a new Eclipse is provisioned, I want them to be present. Are they included by default already?",
       "revId": "0227e0617a58b633de4ec5b5a4c780be6756c73e",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "770dcdce_eb5747e3",
+        "filename": "tools/oomph/EGit.setup",
+        "patchSetId": 1
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1220
+      },
+      "writtenOn": "2022-08-05T08:08:57Z",
+      "side": 0,
+      "message": "This isn\u0027t the whole of PDE API tools but rather some older EE profiles supported by PDE that no one ever uses (and were argued to be useless and unusable):\n\nhttps://github.com/eclipse-pde/eclipse.pde/issues/102\nhttps://github.com/eclipse-pde/eclipse.pde/pull/147\nhttps://github.com/eclipse-pde/eclipse.pde/pull/148\n\nThis feature was separate from the PDE\u0027s general feature which continues to include the PDE API tools plugins:",
+      "parentUuid": "9b313b71_e987b988",
+      "revId": "0227e0617a58b633de4ec5b5a4c780be6756c73e",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31"
     }
   ]
 }
