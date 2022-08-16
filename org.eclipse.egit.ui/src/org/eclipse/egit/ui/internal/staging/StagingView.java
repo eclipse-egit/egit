@@ -24,6 +24,8 @@ import static org.eclipse.egit.ui.internal.CommonUtils.runCommand;
 import java.io.File;
 import java.io.IOException;
 import java.net.URISyntaxException;
+import java.nio.file.Files;
+import java.nio.file.LinkOption;
 import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -3896,7 +3898,8 @@ public class StagingView extends ViewPart
 			// tree. If it has been deleted, the user resolved the conflict in
 			// favour of the deletion. In other conflicts, if the user removes
 			// the file, we also should remove it from the index.
-			if (!entry.getLocation().toFile().exists()) {
+			if (!Files.exists(entry.getLocation().toFile().toPath(),
+					LinkOption.NOFOLLOW_LINKS)) {
 				rmPaths.add(entry.getPath());
 			} else {
 				addPaths.add(entry.getPath());
