@@ -21,7 +21,10 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
+import java.nio.file.LinkOption;
+import java.nio.file.attribute.FileTime;
 import java.util.Collections;
+import java.util.Objects;
 
 import org.eclipse.compare.ISharedDocumentAdapter;
 import org.eclipse.compare.internal.Utilities;
@@ -85,7 +88,7 @@ public class LocalNonWorkspaceTypedElement extends LocalResourceTypedElement
 
 	private boolean fDirty;
 
-	private long timestamp;
+	private FileTime timestamp;
 
 	private boolean useSharedDocument = true;
 
@@ -118,7 +121,16 @@ public class LocalNonWorkspaceTypedElement extends LocalResourceTypedElement
 		isFile = file.isFile();
 		exists = isFile || isSymlink || file.exists();
 		if (exists) {
-			timestamp = file.lastModified();
+			timestamp = getTimestamp(file);
+		}
+	}
+
+	private FileTime getTimestamp(File file) {
+		try {
+			return Files.getLastModifiedTime(file.toPath(),
+					LinkOption.NOFOLLOW_LINKS);
+		} catch (IOException e) {
+			return null;
 		}
 	}
 
@@ -164,7 +176,7 @@ public class LocalNonWorkspaceTypedElement extends LocalResourceTypedElement
 		if (exists) {
 			try {
 				File file = path.toFile();
-				timestamp = file.lastModified();
+				timestamp = getTimestamp(file);
 				if (isSymlink) {
 					String symLink = FileUtils.readSymLink(file);
 					return new ByteArrayInputStream(Constants.encode(symLink));
@@ -219,18 +231,19 @@ public class LocalNonWorkspaceTypedElement extends LocalResourceTypedElement
 
 	@Override
 	public long getModificationDate() {
-		return timestamp;
+		return timestamp != null ? timestamp.toMillis() : 0;
 	}
 
 	@Override
 	public boolean isSynchronized() {
-		return path.toFile().lastModified() == timestamp;
+		return Objects.equals(getTimestamp(path.toFile()), timestamp);
 	}
 
 	/** {@inheritDoc} */
 	@Override
 	public void update() {
-		exists = path.toFile().exists();
+		exists = Files.exists(path.toFile().toPath(),
+				LinkOption.NOFOLLOW_LINKS);
 	}
 
 	/** {@inheritDoc} */
@@ -252,7 +265,7 @@ public class LocalNonWorkspaceTypedElement extends LocalResourceTypedElement
 	}
 
 	private void refreshTimestamp() {
-		timestamp = path.toFile().lastModified();
+		timestamp = getTimestamp(path.toFile());
 	}
 
 	/** {@inheritDoc} */

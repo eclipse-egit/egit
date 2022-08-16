@@ -18,6 +18,7 @@ import java.lang.reflect.InvocationTargetException;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.nio.charset.Charset;
+import java.nio.file.Files;
 import java.text.MessageFormat;
 import java.time.Instant;
 import java.util.ArrayList;
@@ -438,17 +439,23 @@ public class GitMergeEditorInput extends AbstractGitCompareEditorInput {
 				assert location != null;
 				IFile file = ResourceUtil.getFileForLocation(location, false);
 				boolean useWorkingTree = !conflicting || useWorkspace;
-				boolean stage2FromWorkingTree = false;
+				boolean useCustomLabel = false;
 				if (!useWorkingTree && conflicting && dirCacheEntry != null) {
 					// Normal conflict stages have a zero timestamp. If it's not
 					// zero, we marked it below when the content was saved to
 					// the working tree file in an earlier merge editor.
 					useWorkingTree = !Instant.EPOCH
 							.equals(dirCacheEntry.getLastModifiedInstant());
-					stage2FromWorkingTree = useWorkingTree;
+					useCustomLabel = useWorkingTree;
 				}
 				if (useWorkingTree) {
+					boolean isSymLink = Files
+							.isSymbolicLink(location.toFile().toPath());
 					boolean useOursFilter = conflicting && useOurs;
+					if (isSymLink && useOursFilter) {
+						useOursFilter = false;
+						useCustomLabel = true;
+					}
 					int conflictMarkerSize = 7; // Git default
 					if (useOursFilter) {
 						Attributes attributes = tw.getAttributes();
@@ -513,11 +520,21 @@ public class GitMergeEditorInput extends AbstractGitCompareEditorInput {
 									new LocalResourceSaver(item));
 						}
 					} else {
-						if (file != null) {
+						if (!isSymLink && file != null) {
 							item = new LocalResourceTypedElement(file);
 						} else {
 							item = new LocalNonWorkspaceTypedElement(repository,
 									location);
+							if (isSymLink) {
+								item.addContentChangeListener(source -> {
+									try {
+										item.commit(null);
+									} catch (CoreException e) {
+										Activator.handleStatus(e.getStatus(),
+												true);
+									}
+								});
+							}
 						}
 						item.setSharedDocumentListener(
 								new LocalResourceSaver(item));
@@ -585,7 +602,7 @@ public class GitMergeEditorInput extends AbstractGitCompareEditorInput {
 				// create the node as child
 				DiffNode node = new MergeDiffNode(fileParent, kind, ancestor,
 						left, right);
-				if (stage2FromWorkingTree) {
+				if (useCustomLabel) {
 					customLabels.put(node, tw.getNameString());
 				} else if (left instanceof EditableRevision) {
 					String name = tw.getNameString();
