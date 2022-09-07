@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "154a0e0d_f21c23e0",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2022-09-07T17:51:46Z",
+      "side": 1,
+      "message": "Actually, this isn\u0027t used anywhere. So is it worth keeping it?\n\nWhen I wrote that message on egit-dev, I mistakenly thought we used it in the git history view, but the parent/child links there are done differently.",
+      "revId": "1245dce723f547383ef2877d5ba4db063496f969",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31"
+    }
+  ]
+}
