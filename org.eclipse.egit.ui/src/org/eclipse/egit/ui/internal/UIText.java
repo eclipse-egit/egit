@@ -1312,6 +1312,12 @@ public class UIText extends NLS {
 	public static String ClearCredentialsCommand_clearingCredentialsFailed;
 
 	/** */
+	public static String CommitHyperlinkDetector_CommitNotFound;
+
+	/**	 */
+	public static String CommitHyperlinkDetector_CommitNotFoundInRepositories;
+
+	/** */
 	public static String CheckoutCommand_CheckoutLabel;
 
 	/** */
