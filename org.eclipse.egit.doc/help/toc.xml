@@ -450,28 +450,22 @@
 		</topic>
 		<topic href="help/JGit/User_Guide/Updating-This-Document.html" label="Updating This Document"></topic>
 	</topic>
-	<topic href="help/EGit/New_and_Noteworthy/6.2/6.2.html" label="EGit 6.2 New and Noteworthy">
-		<topic href="help/EGit/New_and_Noteworthy/6.2/6.2.html" label="EGit">
-			<topic href="help/EGit/New_and_Noteworthy/6.2/6.2.html#Commit_Messages" label="Commit Messages"></topic>
-			<topic href="help/EGit/New_and_Noteworthy/6.2/6.2.html#Git_Staging_View" label="Git Staging View"></topic>
-			<topic href="help/EGit/New_and_Noteworthy/6.2/6.2.html#Support_for_External_Diff_and_Merge_Tools" label="Support for External Diff and Merge Tools"></topic>
-			<topic href="help/EGit/New_and_Noteworthy/6.2/6.2.html#Other_Changes" label="Other Changes"></topic>
+	<topic href="help/EGit/New_and_Noteworthy/6.3/6.3.html" label="EGit 6.3 New and Noteworthy">
+		<topic href="help/EGit/New_and_Noteworthy/6.3/6.3.html" label="EGit">
+			<topic href="help/EGit/New_and_Noteworthy/6.3/6.3.html#Removal_of_Mylyn_integration" label="Removal of Mylyn integration"></topic>
+			<topic href="help/EGit/New_and_Noteworthy/6.3/6.3.html#Other_Changes" label="Other Changes"></topic>
 		</topic>
-		<topic href="help/EGit/New_and_Noteworthy/6.2/Contributors.html" label="Contributors"></topic>
-		<topic href="help/EGit/New_and_Noteworthy/6.2/See-Also.html" label="See Also"></topic>
-		<topic href="help/EGit/New_and_Noteworthy/6.2/Updating-This-Document.html" label="Updating This Document"></topic>
+		<topic href="help/EGit/New_and_Noteworthy/6.3/Contributors.html" label="Contributors"></topic>
+		<topic href="help/EGit/New_and_Noteworthy/6.3/See-Also.html" label="See Also"></topic>
+		<topic href="help/EGit/New_and_Noteworthy/6.3/Updating-This-Document.html" label="Updating This Document"></topic>
 	</topic>
-	<topic href="help/JGit/New_and_Noteworthy/6.2/6.2.html" label="JGit 6.2 New and Noteworthy">
-		<topic href="help/JGit/New_and_Noteworthy/6.2/6.2.html" label="JGit">
-			<topic href="help/JGit/New_and_Noteworthy/6.2/6.2.html#New_Features" label="New Features">
-				<topic href="help/JGit/New_and_Noteworthy/6.2/6.2.html#Git_config_core.commentChar" label="Git config core.commentChar"></topic>
-				<topic href="help/JGit/New_and_Noteworthy/6.2/6.2.html#Negative_Refspecs" label="Negative Refspecs"></topic>
-				<topic href="help/JGit/New_and_Noteworthy/6.2/6.2.html#Support_for_External_Diff_and_Merge_Tools" label="Support for External Diff and Merge Tools"></topic>
-			</topic>
-			<topic href="help/JGit/New_and_Noteworthy/6.2/6.2.html#Other_Changes" label="Other Changes"></topic>
+	<topic href="help/JGit/New_and_Noteworthy/6.3/6.3.html" label="JGit 6.3 New and Noteworthy">
+		<topic href="help/JGit/New_and_Noteworthy/6.3/6.3.html" label="JGit">
+			<topic href="help/JGit/New_and_Noteworthy/6.3/6.3.html#Shallow_Clone_and_Fetch" label="Shallow Clone and Fetch"></topic>
+			<topic href="help/JGit/New_and_Noteworthy/6.3/6.3.html#Other_Changes" label="Other Changes"></topic>
 		</topic>
-		<topic href="help/JGit/New_and_Noteworthy/6.2/Contributors.html" label="Contributors"></topic>
-		<topic href="help/JGit/New_and_Noteworthy/6.2/Updating-This-Document.html" label="Updating This Document"></topic>
+		<topic href="help/JGit/New_and_Noteworthy/6.3/Contributors.html" label="Contributors"></topic>
+		<topic href="help/JGit/New_and_Noteworthy/6.3/Updating-This-Document.html" label="Updating This Document"></topic>
 	</topic>
 	<topic href="help/EGit/Git_For_Eclipse_Users/Git-For-Eclipse-Users.html" label="Git for Eclipse Users">
 		<topic href="help/EGit/Git_For_Eclipse_Users/Git-For-Eclipse-Users.html" label="Centralised version control systems"></topic>
@@ -519,7 +513,10 @@
 			<topic href="help/EGit/Contributor_Guide/Builds.html#FindBugs_and_PMD" label="FindBugs and PMD"></topic>
 			<topic href="help/EGit/Contributor_Guide/Builds.html#Checking_for_JGit_API_Changes_using_API_Baseline" label="Checking for JGit API Changes using API Baseline"></topic>
 			<topic href="help/EGit/Contributor_Guide/Builds.html#Signing_and_Publishing" label="Signing and Publishing"></topic>
-			<topic href="help/EGit/Contributor_Guide/Builds.html#Creating_a_release" label="Creating a release"></topic>
+			<topic href="help/EGit/Contributor_Guide/Builds.html#Creating_a_release" label="Creating a release">
+				<topic href="help/EGit/Contributor_Guide/Builds.html#Release_Notes" label="Release Notes"></topic>
+				<topic href="help/EGit/Contributor_Guide/Builds.html#New_and_Noteworthy" label="New and Noteworthy"></topic>
+			</topic>
 			<topic href="help/EGit/Contributor_Guide/Builds.html#Contribution_to_Release_Train" label="Contribution to Release Train"></topic>
 		</topic>
 		<topic href="help/EGit/Contributor_Guide/Documentation.html" label="Documentation">
