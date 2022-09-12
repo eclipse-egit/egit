@@ -299,7 +299,31 @@ latest stable branch:  /home/data/httpd/download.eclipse.org/egit/updates-stable
 			<li>review and submit the release change, then push the release tag to git.eclipse.org</li>
 			<li>the CI job will build the release version and deploy it to the Eclipse Maven repo at repo.eclipse.org</li>
 		</ul>
+		<h3 id="Release_Notes">Release Notes</h3>
+		<p>We create a release record for each release in the Eclipse project portal and publish release notes there.</p>
+		<ul>
+			<li>
+				<a href="https://projects.eclipse.org/projects/technology.jgit/governance" target="egit_external">JGit releases</a>
+			</li>
+			<li>
+				<a href="https://projects.eclipse.org/projects/technology.egit/governance" target="egit_external">EGit releases</a>
+			</li>
+		</ul>
+		<h3 id="New_and_Noteworthy">New and Noteworthy</h3>
+		<p>For major and minor releases (e.g. 6.0.0, 6.3.0) we create a New and Noteworthy page</p>
+		<ul>
+			<li>
+				<a href="https://wiki.eclipse.org/JGit/New_and_Noteworthy" target="egit_external">JGit New and Noteworthy</a>
+			</li>
+			<li>
+				<a href="https://wiki.eclipse.org/EGit/New_and_Noteworthy" target="egit_external">EGit New and Noteworthy</a>
+			</li>
+		</ul>
 		<h2 id="Contribution_to_Release_Train">Contribution to Release Train</h2>
+		<p>We participate in the 
+			<a href="https://wiki.eclipse.org/Simultaneous_Release" target="egit_external">Eclipse simultaneous release</a> and its 
+			<a href="https://wiki.eclipse.org/Category:SimRel-2022-09" target="egit_external">schedule</a>.
+		</p>
 		<p>The release train contribution for JGit and EGit is maintained in the git repository </p>
 		<pre>ssh://git.eclipse.org/gitroot/simrel/org.eclipse.simrel.build.git
 </pre>
@@ -308,12 +332,40 @@ latest stable branch:  /home/data/httpd/download.eclipse.org/egit/updates-stable
 simrel.aggr
 egit.aggrcon
 </pre>
+		<p>Checkout the master branch and update the versions of jgit and egit to be contributed and the URL of the new version.</p>
+		<p>Milestones (version ends with -m1, -m2, -m3) and release candidates (version ends with -rc1) are deployed on the download server to egit/staging/&lt;tag name&gt;, the final release (version ends with -r) goes to egit/updates-&lt;major version&gt;.&lt;minor version&gt;[.&lt;micro version&gt;]. The releases on the download server can be browsed 
+			<a href="https://download.eclipse.org/justj/?file=egit" target="egit_external">here</a>. Old releases are moved to the 
+			<a href="https://archive.eclipse.org/justj/?file=egit" target="egit_external">archive server</a>. Committers can trigger archiving 
+			<a href="https://download.eclipse.org/egit/" target="egit_external">on this page</a>.
+		</p>
+		<p>All these builds are deployed to the corresponding release repositories on nexus.
+			Maven artefacts:</p>
+		<ul>
+			<li>
+				<a href="https://repo.eclipse.org/content/groups/releases/org/eclipse/jgit/" target="egit_external">jgit maven artefacts</a>
+			</li>
+			<li>
+				<a href="https://repo.eclipse.org/content/groups/releases/org/eclipse/egit/" target="egit_external">egit maven artefacts</a>
+			</li>
+		</ul>
+		<p>Corresponding p2 repositories are exposed dynamically using the Nexus Unzip Plugin:</p>
+		<ul>
+			<li>
+				<a href="https://repo.eclipse.org/content/unzip/releases.unzip/org/eclipse/jgit/" target="egit_external">jgit p2 repos</a>
+			</li>
+			<li>
+				<a href="https://repo.eclipse.org/content/unzip/releases.unzip/org/eclipse/egit/" target="egit_external">egit p2 repos</a>
+			</li>
+		</ul>
+		<p>Final releases of jgit are also deployed to Maven central using Sonatype's OSS Nexus using some scripts located in the jgit repository under tools/maven-central.</p>
 		<p>Open simrel.aggr using the 
 			<a href="https://wiki.eclipse.org/CBI/aggregator" target="egit_external">CBI aggregator editor</a> to edit these files.
 			This editor knows the structure of these files and can check their validity.
 		</p>
+		<p>Push the change for review, review and submit it when the verification build job has voted +1 on verified.
+			Note that the simultaneous release repository only accepts fast-forward submits. This means if another project's change has been submitted you may have to rebase your change.</p>
 		<p>The release train build is coordinated on the 
-			<a href="https://dev.eclipse.org/mailman/listinfo/cross-project-issues-dev" target="egit_external">cross-project-issues-dev mailing list</a>
+			<a href="https://dev.eclipse.org/mailman/listinfo/cross-project-issues-dev" target="egit_external">cross-project-issues-dev mailing list</a>.
 		</p>
 		<p>
 			<br/>
