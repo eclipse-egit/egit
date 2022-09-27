@@ -6314,16 +6314,21 @@
             label="%ShowBlameAction_label"
             style="push">
             <visibleWhen checkEnabled="false">
-               <with variable="activeEditorInput">
-                  <or>
-                     <adapt type="org.eclipse.core.resources.IFile">
-                        <test property="GitResource.isShared" />
-                     </adapt>
-                     <adapt type="org.eclipse.team.core.history.IFileRevision">
-                        <instanceof value="org.eclipse.egit.core.internal.storage.CommitFileRevision" />
-                     </adapt>
-                  </or>
-               </with>
+               <and>
+                  <with variable="activeEditorInput">
+                     <or>
+                        <adapt type="org.eclipse.core.resources.IFile">
+                           <test property="GitResource.isShared" />
+                        </adapt>
+                        <adapt type="org.eclipse.team.core.history.IFileRevision">
+                           <instanceof value="org.eclipse.egit.core.internal.storage.CommitFileRevision" />
+                        </adapt>
+                     </or>
+                  </with>
+                  <with variable="activeEditor">
+                     <test property="org.eclipse.egit.ui.EditorProperty.canShowRevisions" args="notAlready" />
+                  </with>
+               </and>
             </visibleWhen>
          </command>
       </menuContribution>
@@ -7167,6 +7172,14 @@
             namespace="org.eclipse.egit.ui.BundleProperty"
             properties="isBundleInstalled"
             type="java.util.Collection">
+      </propertyTester>
+      <propertyTester
+            class="org.eclipse.egit.ui.internal.expressions.EditorPropertyTester"
+            id="org.eclipse.egit.ui.EditorPropertyTester"
+            namespace="org.eclipse.egit.ui.EditorProperty"
+            properties="canShowRevisions"
+            type="org.eclipse.ui.IEditorPart">
+         <!-- Type cannot be restricted to text editors because of multi-page editors. -->
       </propertyTester>
    </extension>
    <extension
