@@ -58,6 +58,7 @@ import org.eclipse.egit.ui.internal.UIText;
 import org.eclipse.egit.ui.internal.revision.EditableRevision;
 import org.eclipse.egit.ui.internal.revision.FileRevisionTypedElement;
 import org.eclipse.egit.ui.internal.revision.GitCompareFileRevisionEditorInput.EmptyTypedElement;
+import org.eclipse.egit.ui.internal.revision.LocationEditableRevision;
 import org.eclipse.egit.ui.internal.revision.ResourceEditableRevision;
 import org.eclipse.egit.ui.internal.synchronize.compare.LocalNonWorkspaceTypedElement;
 import org.eclipse.jface.action.ToolBarManager;
@@ -448,9 +449,9 @@ public class GitMergeEditorInput extends AbstractGitCompareEditorInput {
 							.equals(dirCacheEntry.getLastModifiedInstant());
 					useCustomLabel = useWorkingTree;
 				}
+				boolean isSymLink = Files
+						.isSymbolicLink(location.toFile().toPath());
 				if (useWorkingTree) {
-					boolean isSymLink = Files
-							.isSymbolicLink(location.toFile().toPath());
 					boolean useOursFilter = conflicting && useOurs;
 					if (isSymLink && useOursFilter) {
 						useOursFilter = false;
@@ -541,10 +542,6 @@ public class GitMergeEditorInput extends AbstractGitCompareEditorInput {
 					}
 					left = item;
 				} else {
-					IFile rsc = file != null ? file
-							: createHiddenResource(location.toFile().toURI(),
-									tw.getNameString(), null);
-					assert rsc != null;
 					// Stage 2 from index with backing IResource
 					rev = GitFileRevision.inIndex(repository, gitPath,
 							DirCacheEntry.STAGE_2);
@@ -554,8 +551,18 @@ public class GitMergeEditorInput extends AbstractGitCompareEditorInput {
 								.getProgressService();
 						assert runnableContext != null;
 					}
-					left = new ResourceEditableRevision(rev, rsc,
-							runnableContext);
+					if (isSymLink) {
+						left = new LocationEditableRevision(rev, location,
+								runnableContext);
+					} else {
+						IFile rsc = file != null ? file
+								: createHiddenResource(
+										location.toFile().toURI(),
+										tw.getNameString(), null);
+						assert rsc != null;
+						left = new ResourceEditableRevision(rev, rsc,
+								runnableContext);
+					}
 					// 'left' saves to the working tree. Update the index entry
 					// with the current time. Normal conflict stages have a
 					// timestamp of zero, so this is a non-invasive fully
