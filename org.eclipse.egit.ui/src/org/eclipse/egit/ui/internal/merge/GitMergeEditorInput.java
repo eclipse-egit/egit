@@ -58,8 +58,8 @@ import org.eclipse.egit.ui.internal.UIText;
 import org.eclipse.egit.ui.internal.revision.EditableRevision;
 import org.eclipse.egit.ui.internal.revision.FileRevisionTypedElement;
 import org.eclipse.egit.ui.internal.revision.GitCompareFileRevisionEditorInput.EmptyTypedElement;
-import org.eclipse.egit.ui.internal.revision.LocationEditableRevision;
 import org.eclipse.egit.ui.internal.revision.ResourceEditableRevision;
+import org.eclipse.egit.ui.internal.revision.SymlinkEditableRevision;
 import org.eclipse.egit.ui.internal.synchronize.compare.LocalNonWorkspaceTypedElement;
 import org.eclipse.jface.action.ToolBarManager;
 import org.eclipse.jface.operation.IRunnableContext;
@@ -552,7 +552,7 @@ public class GitMergeEditorInput extends AbstractGitCompareEditorInput {
 						assert runnableContext != null;
 					}
 					if (isSymLink) {
-						left = new LocationEditableRevision(rev, location,
+						left = new SymlinkEditableRevision(rev, location,
 								runnableContext);
 					} else {
 						IFile rsc = file != null ? file

@@ -50,7 +50,7 @@ import org.eclipse.team.core.history.IFileRevision;
  * tree.
  * </p>
  */
-public class LocationEditableRevision extends EditableRevision {
+public class SymlinkEditableRevision extends EditableRevision {
 
 	private final IPath location;
 
@@ -61,7 +61,7 @@ public class LocationEditableRevision extends EditableRevision {
 	 * @param location
 	 * @param runnableContext
 	 */
-	public LocationEditableRevision(IFileRevision fileRevision,
+	public SymlinkEditableRevision(IFileRevision fileRevision,
 			@NonNull IPath location,
 			@NonNull IRunnableContext runnableContext) {
 		super(fileRevision, null);
@@ -150,7 +150,7 @@ public class LocationEditableRevision extends EditableRevision {
 		if (obj == null || !super.equals(obj) || getClass() != obj.getClass()) {
 			return false;
 		}
-		LocationEditableRevision other = (LocationEditableRevision) obj;
+		SymlinkEditableRevision other = (SymlinkEditableRevision) obj;
 		return Objects.equals(location, other.location)
 				&& Objects.equals(runnableContext, other.runnableContext);
 	}
