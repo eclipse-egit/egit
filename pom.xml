@@ -79,6 +79,9 @@
     <uitest.vmparams>-Degit.test.tmpdir=${egit.test.tmpdir} -Dorg.eclipse.swtbot.search.timeout=30000 -Dorg.eclipse.swtbot.screenshots.dir=target/screenshots -Xmx1024m</uitest.vmparams>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+    <!-- license check -->
+    <dash.fail>true</dash.fail>
+    <dash.projectId>technology.egit</dash.projectId>
   </properties>
 
   <profiles>
@@ -280,6 +283,18 @@
             </environment>
           </environments>
         </configuration>
+      </plugin>
+      <plugin>
+        <groupId>org.eclipse.dash</groupId>
+        <artifactId>license-tool-plugin</artifactId>
+        <executions>
+          <execution>
+            <id>license-check</id>
+            <goals>
+              <goal>license-check</goal>
+            </goals>
+          </execution>
+        </executions>
       </plugin>
     </plugins>
     <pluginManagement>
