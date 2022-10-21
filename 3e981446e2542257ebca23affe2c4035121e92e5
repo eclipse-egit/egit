@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "03ab89b4_b4ad98eb",
+        "filename": "pom.xml",
+        "patchSetId": 3
+      },
+      "lineNbr": 298,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2022-10-21T08:02:21Z",
+      "side": 1,
+      "message": "Probably this should set includeScope\u003druntime, or at least excludeScope\u003dtest? Or in the worst case exclude specific artifacts.\n\nFor instance, the build currently fails because it cannot find the JGit SNAPSHOT versions in clearlydefined or elsewhere. We *know* that licensing for JGit is fine (it runs its own dash check), so just exclude all org.eclipse.jgit*.\n\nIt also complains about some swtbot versions; probably because we\u0027re using snapshots again. And that\u0027s a test dependency anyway, so exclude all org.eclipse.swtbot*.\n\nIt also complains about jakarta.servlet-api, which is strange. Plus a number of other org.eclipse bundles that we may asssume fine. And why does it even look at org.eclipse.tools.layout.spy? We\u0027re not using it AFAIK; it must be some n-times-removed transitive dependency.\n\nThe jdt 3.18 dependency comes from test code only.\n\nIn any case it seems to me it might be sufficient to limit the license checking to bundles we actually distribute in the p2 repo. (egit, egit.core, egit.doc, egit.gitflow, egit.ui).",
+      "revId": "3e981446e2542257ebca23affe2c4035121e92e5",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31"
+    }
+  ]
+}
