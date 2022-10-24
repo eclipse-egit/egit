@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (C) 2008, Marek Zawirski <marek.zawirski@gmail.com>
+ * Copyright (C) 2008, 2022 Marek Zawirski <marek.zawirski@gmail.com> and others.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License 2.0
@@ -33,7 +33,12 @@ import org.eclipse.jgit.transport.URIish;
  * @see PushOperation
  */
 public class PushOperationResult {
+
 	private LinkedHashMap<URIish, Entry> urisEntries;
+
+	private String hookOut;
+
+	private String hookErr;
 
 	/**
 	 * Construct empty push operation result.
@@ -115,6 +120,37 @@ public class PushOperationResult {
 	 */
 	public String getErrorMessage(final URIish uri) {
 		return urisEntries.get(uri).getErrorMessage();
+	}
+
+	/**
+	 * Sets the output of a pre-push hook.
+	 *
+	 * @param stdout
+	 *            of the pre-push hook
+	 * @param stderr
+	 *            of the pre-push hook
+	 */
+	public void setHookOutput(String stdout, String stderr) {
+		hookOut = stdout;
+		hookErr = stderr;
+	}
+
+	/**
+	 * Retrieves the stdout output of a pre-push hook, if any.
+	 *
+	 * @return the hook's output to stdout, or an empty string
+	 */
+	public String getHookStdOut() {
+		return hookOut == null ? "" : hookOut; //$NON-NLS-1$
+	}
+
+	/**
+	 * Retrieves the stderr output of a pre-push hook, if any.
+	 *
+	 * @return the hook's output to stderr, or an empty string
+	 */
+	public String getHookStdErr() {
+		return hookErr == null ? "" : hookErr; //$NON-NLS-1$
 	}
 
 	/**

@@ -2992,6 +2992,9 @@ public class UIText extends NLS {
 	public static String PushResultTable_MessageText;
 
 	/** */
+	public static String PushResultTable_PrePushHookOutput;
+
+	/** */
 	public static String PushResultTable_repository;
 
 	/** */

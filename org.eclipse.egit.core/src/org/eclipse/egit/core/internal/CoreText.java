@@ -424,6 +424,9 @@ public class CoreText extends NLS {
 	public static String PullOperation_TaskName;
 
 	/** */
+	public static String PushOperation_ForUri;
+
+	/** */
 	public static String PushOperation_InternalExceptionOccurredMessage;
 
 	/** */

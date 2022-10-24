@@ -3,7 +3,7 @@
  * Copyright (C) 2011, Mathias Kinzler <mathias.kinzler@sap.com>
  * Copyright (C) 2012, Robin Stocker <robin@nibor.org>
  * Copyright (C) 2015, Stephan Hackstedt <stephan.hackstedt@googlemail.com>
- * Copyright (C) 2016, 2022 Thomas Wolf <thomas.wolf@paranor.ch>
+ * Copyright (C) 2016, 2022 Thomas Wolf <twolf@apache.org>
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License 2.0
@@ -14,9 +14,13 @@
  *******************************************************************************/
 package org.eclipse.egit.core.op;
 
+import java.io.ByteArrayOutputStream;
 import java.io.OutputStream;
+import java.io.PrintStream;
 import java.lang.reflect.InvocationTargetException;
 import java.net.URISyntaxException;
+import java.nio.charset.Charset;
+import java.text.MessageFormat;
 import java.util.Collection;
 import java.util.List;
 
@@ -39,6 +43,7 @@ import org.eclipse.jgit.transport.RemoteRefUpdate;
 import org.eclipse.jgit.transport.RemoteRefUpdate.Status;
 import org.eclipse.jgit.transport.Transport;
 import org.eclipse.jgit.transport.URIish;
+import org.eclipse.jgit.util.SystemReader;
 import org.eclipse.osgi.util.NLS;
 
 /**
@@ -230,7 +235,11 @@ public class PushOperation {
 
 		operationResult = new PushOperationResult();
 		try (Git git = new Git(localDb)) {
-			if (specification != null)
+			Charset hookCharset = SystemReader.getInstance()
+					.getDefaultCharset();
+			if (specification != null) {
+				StringBuilder allHookOutputs = new StringBuilder();
+				StringBuilder allHookErrors = new StringBuilder();
 				for (final URIish uri : specification.getURIs()) {
 					if (progress.isCanceled()) {
 						operationResult.addOperationResult(uri,
@@ -251,13 +260,27 @@ public class PushOperation {
 							transport.setCredentialsProvider(
 									credentialsProvider);
 						}
-						PushResult result = transport.push(gitSubMonitor,
-								refUpdates, out);
-
-						operationResult.addOperationResult(result.getURI(),
-								result);
-						specification.addURIRefUpdates(result.getURI(),
-								result.getRemoteUpdates());
+						try (ByteArrayOutputStream hookOutBytes = new ByteArrayOutputStream();
+								ByteArrayOutputStream hookErrBytes = new ByteArrayOutputStream();
+								PrintStream stdout = new PrintStream(hookOutBytes, true, hookCharset);
+								PrintStream stderr = new PrintStream(hookErrBytes, true, hookCharset)) {
+							transport.setHookOutputStream(stdout);
+							transport.setHookErrorStream(stderr);
+							PushResult result = transport.push(gitSubMonitor,
+									refUpdates, out);
+							stdout.flush();
+							stderr.flush();
+							addHookMessage(result.getURI(),
+									hookOutBytes.toString(hookCharset),
+									allHookOutputs);
+							addHookMessage(result.getURI(),
+									hookErrBytes.toString(hookCharset),
+									allHookErrors);
+							operationResult.addOperationResult(result.getURI(),
+									result);
+							specification.addURIRefUpdates(result.getURI(),
+									result.getRemoteUpdates());
+						}
 					} catch (JGitInternalException e) {
 						String errorMessage = e.getCause() != null
 								? e.getCause().getMessage() : e.getMessage();
@@ -269,10 +292,17 @@ public class PushOperation {
 						handleException(uri, e, e.getMessage());
 					}
 				}
-			else {
+				operationResult.setHookOutput(allHookOutputs.toString(),
+						allHookErrors.toString());
+			} else {
 				final EclipseGitProgressTransformer gitMonitor = new EclipseGitProgressTransformer(
 						progress.newChild(totalWork));
-				try {
+				try (ByteArrayOutputStream hookOutBytes = new ByteArrayOutputStream();
+						ByteArrayOutputStream hookErrBytes = new ByteArrayOutputStream();
+						PrintStream stdout = new PrintStream(hookOutBytes, true,
+								hookCharset);
+						PrintStream stderr = new PrintStream(hookErrBytes, true,
+								hookCharset)) {
 					Iterable<PushResult> results = git.push()
 							.setRemote(remoteName)
 							.setDryRun(dryRun)
@@ -280,7 +310,14 @@ public class PushOperation {
 							.setProgressMonitor(gitMonitor)
 							.setCredentialsProvider(credentialsProvider)
 							.setOutputStream(out)
+							.setHookOutputStream(stdout)
+							.setHookErrorStream(stderr)
 							.call();
+					stdout.flush();
+					stderr.flush();
+					operationResult.setHookOutput(
+							hookOutBytes.toString(hookCharset),
+							hookErrBytes.toString(hookCharset));
 					for (PushResult result : results) {
 						operationResult.addOperationResult(result.getURI(),
 								result);
@@ -298,6 +335,18 @@ public class PushOperation {
 					handleException(uri, e, e.getMessage());
 				}
 			}
+		}
+	}
+
+	private void addHookMessage(URIish uri, String msg, StringBuilder all) {
+		if (!msg.isEmpty()) {
+			if (all.length() > 0 && all.charAt(all.length() - 1) != '\n') {
+				all.append('\n');
+			}
+			all.append(
+					MessageFormat.format(CoreText.PushOperation_ForUri, uri));
+			all.append('\n');
+			all.append(msg);
 		}
 	}
 

@@ -1,5 +1,6 @@
 /*******************************************************************************
- * Copyright (C) 2008, 2015 Marek Zawirski <marek.zawirski@gmail.com> and others.
+ * Copyright (C) 2008, 2022 Marek Zawirski <marek.zawirski@gmail.com> and others.
+ *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License 2.0
  * which accompanies this distribution, and is available at
@@ -9,8 +10,11 @@
  *******************************************************************************/
 package org.eclipse.egit.ui.internal.push;
 
+import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import org.eclipse.egit.core.op.PushOperationResult;
 import org.eclipse.egit.ui.UIUtils;
@@ -74,6 +78,8 @@ class PushResultTable {
 	private ObjectReader reader;
 
 	private Repository repo;
+
+	private String hookResult;
 
 	PushResultTable(final Composite parent) {
 		this(parent, null);
@@ -216,8 +222,13 @@ class PushResultTable {
 					return;
 				}
 				Object selected = structuredSelection.getFirstElement();
-				if (selected instanceof RefUpdateElement)
-					text.setText(getResult((RefUpdateElement) selected));
+				if (selected instanceof RefUpdateElement) {
+					String toShow = getResult((RefUpdateElement) selected);
+					if (!hookResult.isEmpty()) {
+						toShow = hookResult + toShow;
+					}
+					text.setText(toShow);
+				}
 			}
 		});
 
@@ -299,6 +310,28 @@ class PushResultTable {
 		sashForm.setWeights(defaultValues);
 	}
 
+	private String formatHookOutput(String hookOutput, String hookError) {
+		String out = hookOutput.strip();
+		String err = hookError.strip();
+		if (out.isEmpty() && err.isEmpty()) {
+			return ""; //$NON-NLS-1$
+		}
+		if (!out.isEmpty()) {
+			out = prefixLines("stdout: ", out); //$NON-NLS-1$
+		}
+		if (!err.isEmpty()) {
+			err = prefixLines("stderr: ", err); //$NON-NLS-1$
+		}
+		return MessageFormat.format(UIText.PushResultTable_PrePushHookOutput,
+				out, err);
+	}
+
+	private String prefixLines(String prefix, String text) {
+		return Stream.of(text.split("\n")) //$NON-NLS-1$
+				.map(s -> prefix + s.stripTrailing())
+				.collect(Collectors.joining("\n", "", "\n")); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+	}
+
 	void setData(final Repository localDb, final PushOperationResult result) {
 		reader = localDb.newObjectReader();
 		repo = localDb;
@@ -311,22 +344,27 @@ class PushResultTable {
 			return;
 		}
 
+		hookResult = formatHookOutput(result.getHookStdOut(),
+				result.getHookStdErr()).replaceAll("\n", Text.DELIMITER); //$NON-NLS-1$
 		final List<RefUpdateElement> results = new ArrayList<>();
 
-		for (URIish uri : result.getURIs())
-			if (result.isSuccessfulConnection(uri))
+		for (URIish uri : result.getURIs()) {
+			if (result.isSuccessfulConnection(uri)) {
 				for (RemoteRefUpdate update : result.getPushResult(uri)
-						.getRemoteUpdates())
+						.getRemoteUpdates()) {
 					results.add(new RefUpdateElement(result, update, uri,
 							reader, repo));
-
+				}
+			}
+		}
 		treeViewer.setInput(results.toArray());
 		// select the first row of table to get the details of the first
 		// push result shown in the Text control
 		Tree table = treeViewer.getTree();
-		if (table.getItemCount() > 0)
+		if (table.getItemCount() > 0) {
 			treeViewer.setSelection(new StructuredSelection(table.getItem(0)
 					.getData()));
+		}
 		root.layout();
 	}
 

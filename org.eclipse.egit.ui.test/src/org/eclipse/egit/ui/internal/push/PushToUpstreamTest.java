@@ -1,5 +1,6 @@
 /*******************************************************************************
  * Copyright (c) 2014, 2022 Robin Stocker <robin@nibor.org> and others.
+ *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License 2.0
  * which accompanies this distribution, and is available at
@@ -12,10 +13,15 @@ package org.eclipse.egit.ui.internal.push;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertTrue;
 
 import java.io.File;
+import java.nio.file.Files;
+import java.text.MessageFormat;
 import java.util.concurrent.TimeUnit;
+import java.util.stream.Collectors;
 
+import org.eclipse.egit.core.internal.CoreText;
 import org.eclipse.egit.core.op.BranchOperation;
 import org.eclipse.egit.core.op.CreateLocalBranchOperation;
 import org.eclipse.egit.ui.JobFamilies;
@@ -25,6 +31,7 @@ import org.eclipse.egit.ui.test.ContextMenuHelper;
 import org.eclipse.egit.ui.test.JobJoiner;
 import org.eclipse.egit.ui.test.TestUtil;
 import org.eclipse.jgit.lib.ConfigConstants;
+import org.eclipse.jgit.lib.Constants;
 import org.eclipse.jgit.lib.ObjectId;
 import org.eclipse.jgit.lib.Repository;
 import org.eclipse.swtbot.swt.finder.SWTBot;
@@ -66,6 +73,46 @@ public class PushToUpstreamTest extends LocalRepositoryTestCase {
 		repository.getConfig().setString("remote", remoteName, "fetch",
 				"refs/heads/*:refs/remotes/origin/*");
 		pushToUpstream("origin", "foo", true, false);
+		assertBranchPushed("foo", remoteRepository);
+	}
+
+	@Test
+	public void pushWithHook() throws Exception {
+		checkoutNewLocalBranch("foo");
+		// Existing configuration without push refspec
+		String remoteName = "origin";
+		String pushUrl = repository.getConfig().getString("remote", "push",
+				"pushurl");
+		repository.getConfig().setString("remote", remoteName, "url", pushUrl);
+		repository.getConfig().setString("remote", remoteName, "fetch",
+				"refs/heads/*:refs/remotes/origin/*");
+		File gitDir = repository.getDirectory();
+		File hookDir = new File(gitDir, "hooks");
+		assertTrue(hookDir.mkdir() || hookDir.isDirectory());
+		File hookFile = new File(hookDir, "pre-push");
+		Files.writeString(hookFile.toPath(), "#!/bin/sh\n"
+				+ "echo \"1:$1 2:$2 3:$3\"\n" // to stdout
+				+ "cat - 1>&2\n" // to stderr
+				+ "exit 0\n");
+		if (repository.getFS().supportsExecute()) {
+			repository.getFS().setExecute(hookFile, true);
+		}
+		String headId = repository.resolve(Constants.HEAD).getName();
+		String forUri = MessageFormat.format(CoreText.PushOperation_ForUri,
+				pushUrl);
+		String expectedHookOutput = MessageFormat.format(
+				UIText.PushResultTable_PrePushHookOutput,
+				"stdout: " + forUri+ '\n'
+				+ "stdout: 1:" + pushUrl + " 2:" + pushUrl + " 3:\n",
+				"stderr: " + forUri + '\n'
+				+ "stderr: refs/heads/foo " + headId
+				+ " refs/heads/foo "+ ObjectId.zeroId().getName() + '\n');
+		String resultText = pushToUpstream("origin", "foo", true, false);
+		assertEquals("Hook message doesn't match: " + resultText,
+				expectedHookOutput,
+				resultText.substring(0, Math.min(resultText.length(),
+						expectedHookOutput.length())));
+
 		assertBranchPushed("foo", remoteRepository);
 	}
 
@@ -194,7 +241,7 @@ public class PushToUpstreamTest extends LocalRepositoryTestCase {
 		pushToUpstream(remoteName, "", false, false);
 	}
 
-	private void pushToUpstream(String remoteName, String branchName,
+	private String pushToUpstream(String remoteName, String branchName,
 			boolean expectBranchWizard, boolean expectMultipleWarning) {
 		SWTBotTree project = selectProject();
 		JobJoiner joiner = null;
@@ -218,7 +265,10 @@ public class PushToUpstreamTest extends LocalRepositoryTestCase {
 		}
 		SWTBotShell resultDialog = TestUtil
 				.botForShellStartingWith("Push Results");
+		String resultText = resultDialog.bot().styledText().getLines().stream()
+				.collect(Collectors.joining("\n"));
 		resultDialog.close();
+		return resultText;
 	}
 
 	private void assertPushToUpstreamDisabled() {
