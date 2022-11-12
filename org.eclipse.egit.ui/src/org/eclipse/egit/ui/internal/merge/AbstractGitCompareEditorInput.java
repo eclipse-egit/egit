@@ -42,24 +42,18 @@ import org.eclipse.core.resources.IContainer;
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.IResource;
-import org.eclipse.core.resources.IWorkspace;
-import org.eclipse.core.resources.IWorkspaceRunnable;
-import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.Adapters;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.IProgressMonitor;
-import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Path;
-import org.eclipse.core.runtime.Status;
-import org.eclipse.core.runtime.SubMonitor;
-import org.eclipse.core.runtime.jobs.Job;
 import org.eclipse.egit.core.info.GitInfo;
 import org.eclipse.egit.core.internal.efs.HiddenResources;
 import org.eclipse.egit.core.internal.indexdiff.IndexDiffCache;
 import org.eclipse.egit.core.internal.indexdiff.IndexDiffCacheEntry;
 import org.eclipse.egit.core.internal.util.ResourceUtil;
 import org.eclipse.egit.ui.Activator;
+import org.eclipse.egit.ui.internal.CompareUtils;
 import org.eclipse.egit.ui.internal.UIIcons;
 import org.eclipse.egit.ui.internal.UIText;
 import org.eclipse.jface.action.ActionContributionItem;
@@ -455,55 +449,9 @@ public abstract class AbstractGitCompareEditorInput extends CompareEditorInput {
 	}
 
 	private void cleanUp() {
-		if (toDelete == null || toDelete.isEmpty()) {
-			return;
-		}
 		List<IFile> toClean = toDelete;
 		toDelete = null;
-		// Don't clean up if the workbench is shutting down; we would exit with
-		// unsaved workspace changes. Instead, EGit core cleans the project on
-		// start.
-		Job job = new Job(UIText.GitMergeEditorInput_ResourceCleanupJobName) {
-
-			@Override
-			public boolean shouldSchedule() {
-				return super.shouldSchedule()
-						&& !PlatformUI.getWorkbench().isClosing();
-			}
-
-			@Override
-			public boolean shouldRun() {
-				return super.shouldRun()
-						&& !PlatformUI.getWorkbench().isClosing();
-			}
-
-			@Override
-			protected IStatus run(IProgressMonitor monitor) {
-				IWorkspaceRunnable remove = m -> {
-					SubMonitor progress = SubMonitor.convert(m, toClean.size());
-					for (IFile tmp : toClean) {
-						if (PlatformUI.getWorkbench().isClosing()) {
-							return;
-						}
-						try {
-							tmp.delete(true, progress.newChild(1));
-						} catch (CoreException e) {
-							// Ignore
-						}
-					}
-				};
-				try {
-					ResourcesPlugin.getWorkspace().run(remove, null,
-							IWorkspace.AVOID_UPDATE, monitor);
-				} catch (CoreException e) {
-					return e.getStatus();
-				}
-				return Status.OK_STATUS;
-			}
-		};
-		job.setSystem(true);
-		job.setUser(false);
-		job.schedule();
+		CompareUtils.cleanHiddenResources(toClean);
 	}
 
 	private static boolean isUIThread() {
