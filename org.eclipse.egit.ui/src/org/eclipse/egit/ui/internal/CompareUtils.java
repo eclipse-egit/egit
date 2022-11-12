@@ -21,11 +21,14 @@
 package org.eclipse.egit.ui.internal;
 
 import java.io.ByteArrayInputStream;
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.nio.ByteBuffer;
 import java.nio.file.Files;
 import java.time.Instant;
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
@@ -37,11 +40,14 @@ import org.eclipse.compare.CompareUI;
 import org.eclipse.compare.IContentChangeListener;
 import org.eclipse.compare.IContentChangeNotifier;
 import org.eclipse.compare.ITypedElement;
+import org.eclipse.compare.internal.CompareAction;
 import org.eclipse.compare.internal.ComparePreferencePage;
 import org.eclipse.compare.internal.CompareUIPlugin;
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IFolder;
 import org.eclipse.core.resources.IResource;
+import org.eclipse.core.resources.IWorkspace;
+import org.eclipse.core.resources.IWorkspaceRunnable;
 import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IPath;
@@ -49,6 +55,7 @@ import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Path;
 import org.eclipse.core.runtime.Status;
+import org.eclipse.core.runtime.SubMonitor;
 import org.eclipse.core.runtime.jobs.Job;
 import org.eclipse.core.runtime.preferences.DefaultScope;
 import org.eclipse.core.runtime.preferences.IEclipsePreferences;
@@ -58,6 +65,7 @@ import org.eclipse.core.runtime.preferences.InstanceScope;
 import org.eclipse.egit.core.EclipseGitProgressTransformer;
 import org.eclipse.egit.core.attributes.Filtering;
 import org.eclipse.egit.core.internal.CompareCoreUtils;
+import org.eclipse.egit.core.internal.efs.HiddenResources;
 import org.eclipse.egit.core.internal.storage.GitFileRevision;
 import org.eclipse.egit.core.internal.storage.WorkingTreeFileRevision;
 import org.eclipse.egit.core.internal.storage.WorkspaceFileRevision;
@@ -76,7 +84,11 @@ import org.eclipse.egit.ui.internal.synchronize.GitSynchronizer;
 import org.eclipse.egit.ui.internal.synchronize.ModelAwareGitSynchronizer;
 import org.eclipse.egit.ui.internal.synchronize.compare.LocalNonWorkspaceTypedElement;
 import org.eclipse.jface.action.Action;
+import org.eclipse.jface.action.IAction;
 import org.eclipse.jface.util.OpenStrategy;
+import org.eclipse.jface.viewers.ISelection;
+import org.eclipse.jface.viewers.IStructuredSelection;
+import org.eclipse.jface.viewers.StructuredSelection;
 import org.eclipse.jgit.annotations.NonNull;
 import org.eclipse.jgit.api.errors.CanceledException;
 import org.eclipse.jgit.diff.DiffConfig;
@@ -126,10 +138,13 @@ import org.eclipse.team.ui.synchronize.SaveableCompareEditorInput;
 import org.eclipse.ui.IEditorInput;
 import org.eclipse.ui.IEditorPart;
 import org.eclipse.ui.IEditorReference;
+import org.eclipse.ui.IPartListener;
 import org.eclipse.ui.IReusableEditor;
 import org.eclipse.ui.IWorkbenchPage;
+import org.eclipse.ui.IWorkbenchPart;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.actions.ActionFactory.IWorkbenchAction;
+import org.eclipse.ui.part.EditorPart;
 
 /**
  * A collection of helper methods useful for comparing content
@@ -1222,6 +1237,181 @@ public class CompareUtils {
 			}
 		};
 		job.setUser(true);
+		job.schedule();
+	}
+
+	/**
+	 * Compares two arbitrary files in a git working tree.
+	 *
+	 * @param aFile
+	 *            first {@link IFile} to compare, may be {@code null} if the
+	 *            file is not in the Eclipse workspace
+	 * @param bFile
+	 *            second {@link IFile} to compare, may be {@code null} if the
+	 *            file is not in the Eclipse workspace
+	 * @param a
+	 *            {@link File} corresponding to the first file; used if
+	 *            {@code aFile == null}
+	 * @param b
+	 *            {@link File} corresponding to the second file; used if
+	 *            {@code bFile == null}
+	 * @param sourcePart
+	 *            {@link IWorkbenchPart} the comparison is initiated in
+	 */
+	public static void compareFiles(IFile aFile, IFile bFile, File a, File b,
+			IWorkbenchPart sourcePart) {
+		// This is a gruesome hack, but unfortunately org.eclipse.compare
+		// has _no_ public method or other way to compare two resources.
+		// It also has no command to do so, only an action that is implemented
+		// in an internal class and that uses a CompareEditorInput that is
+		// package-visible only.
+		//
+		// Looks like a major oversight. So we use that internal action class
+		// that does what we want, and configure it so it works.
+		List<IFile> toDelete = new ArrayList<>();
+		// Hidden resources are exactly the mechanism used by
+		// org.eclipse.compare.internal.CompareWithOtherResourceHandler. But
+		// that command is also internal, and it always opens a dialog that we
+		// neither need nor want.
+		IFile aTmp = aFile;
+		IFile bTmp = bFile;
+		try {
+			if (aTmp == null) {
+				aTmp = HiddenResources.INSTANCE.createFile(a.toURI(),
+						a.getName(), null, null);
+				toDelete.add(aTmp);
+			}
+			if (bTmp == null) {
+				bTmp = HiddenResources.INSTANCE.createFile(b.toURI(),
+						b.getName(), null, null);
+				toDelete.add(bTmp);
+			}
+		} catch (CoreException e) {
+			Activator.logError(UIText.CompareUtils_errorHiddenResourceCreate,
+					e);
+			cleanHiddenResources(toDelete);
+			return;
+		}
+		@SuppressWarnings("restriction")
+		class CompareWithEachOther extends CompareAction {
+
+			@Override
+			public void run(ISelection selection) {
+				if (isEnabled(selection)) {
+					if (!toDelete.isEmpty()) {
+						CompareEditorInput input = fInput;
+						fWorkbenchPage.addPartListener(new IPartListener() {
+
+							private final IWorkbenchPage page = fWorkbenchPage;
+
+							private IWorkbenchPart compareEditor;
+
+							@Override
+							public void partActivated(IWorkbenchPart part) {
+								if ((part instanceof EditorPart)
+										&& ((EditorPart) part)
+												.getEditorInput() == input) {
+									compareEditor = part;
+								}
+							}
+
+							@Override
+							public void partBroughtToTop(IWorkbenchPart part) {
+								// Nothing
+							}
+
+							@Override
+							public void partClosed(IWorkbenchPart part) {
+								if (part != null && part == compareEditor) {
+									cleanHiddenResources(toDelete);
+									page.removePartListener(this);
+								}
+							}
+
+							@Override
+							public void partDeactivated(IWorkbenchPart part) {
+								// Nothing
+							}
+
+							@Override
+							public void partOpened(IWorkbenchPart part) {
+								// Nothing
+							}
+
+						});
+					}
+					super.run(selection);
+				} else {
+					cleanHiddenResources(toDelete);
+				}
+			}
+
+			@Override
+			public void setActivePart(IAction action,
+					IWorkbenchPart targetPart) {
+				super.setActivePart(action, targetPart);
+			}
+		}
+		CompareWithEachOther compare = new CompareWithEachOther();
+		compare.setActivePart(null, sourcePart);
+		IStructuredSelection selection = new StructuredSelection(
+				List.of(aTmp, bTmp));
+		compare.run(selection);
+	}
+
+	/**
+	 * Removes hidden resources.
+	 *
+	 * @param toClean
+	 *            hidden {@link IFile}s to remove
+	 */
+	public static void cleanHiddenResources(Collection<IFile> toClean) {
+		if (toClean == null || toClean.isEmpty()) {
+			return;
+		}
+		// Don't clean up if the workbench is shutting down; we would exit with
+		// unsaved workspace changes. Instead, EGit core cleans the project on
+		// start.
+		Job job = new Job(UIText.CompareUtils_ResourceCleanupJobName) {
+
+			@Override
+			public boolean shouldSchedule() {
+				return super.shouldSchedule()
+						&& !PlatformUI.getWorkbench().isClosing();
+			}
+
+			@Override
+			public boolean shouldRun() {
+				return super.shouldRun()
+						&& !PlatformUI.getWorkbench().isClosing();
+			}
+
+			@Override
+			protected IStatus run(IProgressMonitor monitor) {
+				IWorkspaceRunnable remove = m -> {
+					SubMonitor progress = SubMonitor.convert(m, toClean.size());
+					for (IFile tmp : toClean) {
+						if (PlatformUI.getWorkbench().isClosing()) {
+							return;
+						}
+						try {
+							tmp.delete(true, progress.newChild(1));
+						} catch (CoreException e) {
+							// Ignore
+						}
+					}
+				};
+				try {
+					ResourcesPlugin.getWorkspace().run(remove, null,
+							IWorkspace.AVOID_UPDATE, monitor);
+				} catch (CoreException e) {
+					return e.getStatus();
+				}
+				return Status.OK_STATUS;
+			}
+		};
+		job.setSystem(true);
+		job.setUser(false);
 		job.schedule();
 	}
 

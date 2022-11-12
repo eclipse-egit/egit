@@ -3238,24 +3238,10 @@ public class StagingView extends ViewPart
 						};
 						menuMgr.add(compareWithHead);
 					}
-					if (stagingEntryList.size() == 2
-							&& stagingEntryList.get(0).isStaged()) {
-						Action compareWithHead = new Action(
-								UIText.StagingView_CompareWithEachOtherLabel,
-								UIIcons.ELCL16_COMPARE_VIEW) {
-
-							@Override
-							public void run() {
-								String left = stagingEntryList.get(0).getPath();
-								String right = stagingEntryList.get(1)
-										.getPath();
-								CompareUtils.compareBetween(currentRepository,
-										left, right, GitFileRevision.INDEX,
-										GitFileRevision.INDEX, StagingView.this
-												.getViewSite().getPage());
-							}
-						};
-						menuMgr.add(compareWithHead);
+					if (stagingEntryList.size() == 2) {
+						menuMgr.add(
+								compareWithEachOther(stagingEntryList.get(0),
+										stagingEntryList.get(1)));
 					}
 				}
 
@@ -3371,6 +3357,34 @@ public class StagingView extends ViewPart
 			}
 		});
 
+	}
+
+	private IAction compareWithEachOther(StagingEntry left,
+			StagingEntry right) {
+		if (left.isStaged()) {
+			return new Action(UIText.StagingView_CompareWithEachOtherLabel,
+					UIIcons.ELCL16_COMPARE_VIEW) {
+
+				@Override
+				public void run() {
+					CompareUtils.compareBetween(currentRepository,
+							left.getPath(), right.getPath(),
+							GitFileRevision.INDEX, GitFileRevision.INDEX,
+							StagingView.this.getViewSite().getPage());
+				}
+			};
+		}
+		// Unstaged.
+		return new Action(UIText.StagingView_CompareWithEachOtherLabel,
+				UIIcons.ELCL16_COMPARE_VIEW) {
+
+			@Override
+			public void run() {
+				CompareUtils.compareFiles(left.getFile(), right.getFile(),
+						left.getLocation().toFile(),
+						right.getLocation().toFile(), StagingView.this);
+			}
+		};
 	}
 
 	private boolean anyElementIsExistingFile(IStructuredSelection s) {
