@@ -5978,6 +5978,9 @@ public class UIText extends NLS {
 	public static String PushSettings_Title;
 
 	/** */
+	public static String StagingView_CompareWithEachOtherLabel;
+
+	/** */
 	public static String StagingView_CompareWithHeadMenuLabel;
 
 	/** */
