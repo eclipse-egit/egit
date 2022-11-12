@@ -39,6 +39,12 @@ public class CompareEditorTester {
 		return new CompareEditorTester(editor);
 	}
 
+	public static CompareEditorTester withTitleContaining(String title) {
+		SWTWorkbenchBot bot = new SWTWorkbenchBot();
+		SWTBotEditor editor = bot.editor(new CompareEditorTitleMatcher(title));
+		return new CompareEditorTester(editor);
+	}
+
 	private CompareEditorTester(SWTBotEditor editor) {
 		this.editor = editor;
 	}

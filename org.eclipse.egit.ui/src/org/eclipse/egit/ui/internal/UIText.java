@@ -2785,6 +2785,9 @@ public class UIText extends NLS {
 	public static String CompareUtils_errorGettingHeadCommit;
 
 	/** */
+	public static String CompareUtils_errorRenameDetection;
+
+	/** */
 	public static String CompareUtils_ExecutingExtDiffTool;
 
 	/** */
