@@ -77,6 +77,7 @@ import org.eclipse.egit.core.internal.indexdiff.IndexDiffData;
 import org.eclipse.egit.core.internal.job.JobUtil;
 import org.eclipse.egit.core.internal.job.RuleUtil;
 import org.eclipse.egit.core.internal.signing.GpgSetup;
+import org.eclipse.egit.core.internal.storage.GitFileRevision;
 import org.eclipse.egit.core.op.AssumeUnchangedOperation;
 import org.eclipse.egit.core.op.CommitOperation;
 import org.eclipse.egit.core.op.DiscardChangesOperation;
@@ -88,6 +89,7 @@ import org.eclipse.egit.ui.UIPreferences;
 import org.eclipse.egit.ui.UIUtils;
 import org.eclipse.egit.ui.internal.ActionUtils;
 import org.eclipse.egit.ui.internal.CommonUtils;
+import org.eclipse.egit.ui.internal.CompareUtils;
 import org.eclipse.egit.ui.internal.UIIcons;
 import org.eclipse.egit.ui.internal.UIText;
 import org.eclipse.egit.ui.internal.actions.ActionCommands;
@@ -3232,6 +3234,25 @@ public class StagingView extends ViewPart
 								runCommand(
 										ActionCommands.COMPARE_INDEX_WITH_HEAD_ACTION,
 										fileSelection);
+							}
+						};
+						menuMgr.add(compareWithHead);
+					}
+					if (stagingEntryList.size() == 2
+							&& stagingEntryList.get(0).isStaged()) {
+						Action compareWithHead = new Action(
+								UIText.StagingView_CompareWithEachOtherLabel,
+								UIIcons.ELCL16_COMPARE_VIEW) {
+
+							@Override
+							public void run() {
+								String left = stagingEntryList.get(0).getPath();
+								String right = stagingEntryList.get(1)
+										.getPath();
+								CompareUtils.compareBetween(currentRepository,
+										left, right, GitFileRevision.INDEX,
+										GitFileRevision.INDEX, StagingView.this
+												.getViewSite().getPage());
 							}
 						};
 						menuMgr.add(compareWithHead);
