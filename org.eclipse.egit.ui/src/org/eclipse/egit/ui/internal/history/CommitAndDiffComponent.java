@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (C) 2019 Thomas Wolf <thomas.wolf@paranor.ch>
+ * Copyright (C) 2019, 2022 Thomas Wolf <twolf@apache.org>
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License 2.0
