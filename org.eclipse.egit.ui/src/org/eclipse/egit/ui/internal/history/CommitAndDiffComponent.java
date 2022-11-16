@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (C) 2019 Thomas Wolf <thomas.wolf@paranor.ch>
+ * Copyright (C) 2019, 2022 Thomas Wolf <twolf@apache.org>
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License 2.0
@@ -409,26 +409,20 @@ public class CommitAndDiffComponent {
 			start = System.currentTimeMillis();
 		}
 
-		Point oldSize = commentAndDiffComposite.getSize();
-		Rectangle minSize = commentAndDiffScrolledComposite.getClientArea();
 		Point size;
 		StyledText text = commentViewer.getTextWidget();
 		if (text == null) {
 			size = new Point(0, 0);
 		} else if (text.getWordWrap()) {
+			Rectangle minSize = commentAndDiffScrolledComposite.getClientArea();
 			size = commentAndDiffComposite.computeSize(minSize.width,
 					SWT.DEFAULT);
 		} else {
 			size = commentAndDiffComposite.computeSize(SWT.DEFAULT,
 				SWT.DEFAULT);
 		}
-		size.x = Math.max(minSize.width, size.x);
-		size.y = Math.max(minSize.height, size.y);
-		if (!size.equals(oldSize)) {
-			commentAndDiffComposite.setSize(size);
-			commentAndDiffComposite.layout();
-		}
-
+		commentAndDiffComposite.setSize(size);
+		commentAndDiffComposite.layout();
 		if (trace) {
 			long stop = System.currentTimeMillis();
 			long time = stop - start;

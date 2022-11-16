@@ -21,23 +21,33 @@
 package org.eclipse.egit.ui.internal;
 
 import java.io.ByteArrayInputStream;
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.nio.ByteBuffer;
 import java.nio.file.Files;
 import java.time.Instant;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import org.eclipse.compare.CompareEditorInput;
 import org.eclipse.compare.CompareUI;
 import org.eclipse.compare.IContentChangeListener;
 import org.eclipse.compare.IContentChangeNotifier;
 import org.eclipse.compare.ITypedElement;
+import org.eclipse.compare.internal.CompareAction;
 import org.eclipse.compare.internal.ComparePreferencePage;
 import org.eclipse.compare.internal.CompareUIPlugin;
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IFolder;
 import org.eclipse.core.resources.IResource;
+import org.eclipse.core.resources.IWorkspace;
+import org.eclipse.core.resources.IWorkspaceRunnable;
 import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IPath;
@@ -45,14 +55,17 @@ import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Path;
 import org.eclipse.core.runtime.Status;
+import org.eclipse.core.runtime.SubMonitor;
 import org.eclipse.core.runtime.jobs.Job;
 import org.eclipse.core.runtime.preferences.DefaultScope;
 import org.eclipse.core.runtime.preferences.IEclipsePreferences;
 import org.eclipse.core.runtime.preferences.IEclipsePreferences.IPreferenceChangeListener;
 import org.eclipse.core.runtime.preferences.IEclipsePreferences.PreferenceChangeEvent;
 import org.eclipse.core.runtime.preferences.InstanceScope;
+import org.eclipse.egit.core.EclipseGitProgressTransformer;
 import org.eclipse.egit.core.attributes.Filtering;
 import org.eclipse.egit.core.internal.CompareCoreUtils;
+import org.eclipse.egit.core.internal.efs.HiddenResources;
 import org.eclipse.egit.core.internal.storage.GitFileRevision;
 import org.eclipse.egit.core.internal.storage.WorkingTreeFileRevision;
 import org.eclipse.egit.core.internal.storage.WorkspaceFileRevision;
@@ -71,8 +84,17 @@ import org.eclipse.egit.ui.internal.synchronize.GitSynchronizer;
 import org.eclipse.egit.ui.internal.synchronize.ModelAwareGitSynchronizer;
 import org.eclipse.egit.ui.internal.synchronize.compare.LocalNonWorkspaceTypedElement;
 import org.eclipse.jface.action.Action;
+import org.eclipse.jface.action.IAction;
 import org.eclipse.jface.util.OpenStrategy;
+import org.eclipse.jface.viewers.ISelection;
+import org.eclipse.jface.viewers.IStructuredSelection;
+import org.eclipse.jface.viewers.StructuredSelection;
 import org.eclipse.jgit.annotations.NonNull;
+import org.eclipse.jgit.api.errors.CanceledException;
+import org.eclipse.jgit.diff.DiffConfig;
+import org.eclipse.jgit.diff.DiffEntry;
+import org.eclipse.jgit.diff.DiffEntry.ChangeType;
+import org.eclipse.jgit.diff.RenameDetector;
 import org.eclipse.jgit.dircache.DirCache;
 import org.eclipse.jgit.dircache.DirCacheCheckout.CheckoutMetadata;
 import org.eclipse.jgit.dircache.DirCacheEditor;
@@ -84,6 +106,7 @@ import org.eclipse.jgit.internal.diffmergetool.FileElement.Type;
 import org.eclipse.jgit.internal.diffmergetool.PromptContinueHandler;
 import org.eclipse.jgit.internal.diffmergetool.ToolException;
 import org.eclipse.jgit.internal.diffmergetool.UserDefinedDiffTool;
+import org.eclipse.jgit.lib.AbbreviatedObjectId;
 import org.eclipse.jgit.lib.Constants;
 import org.eclipse.jgit.lib.CoreConfig.AutoCRLF;
 import org.eclipse.jgit.lib.CoreConfig.EolStreamType;
@@ -95,6 +118,7 @@ import org.eclipse.jgit.lib.Repository;
 import org.eclipse.jgit.lib.internal.BooleanTriState;
 import org.eclipse.jgit.revwalk.RevCommit;
 import org.eclipse.jgit.revwalk.RevWalk;
+import org.eclipse.jgit.treewalk.AbstractTreeIterator;
 import org.eclipse.jgit.treewalk.FileTreeIterator;
 import org.eclipse.jgit.treewalk.TreeWalk;
 import org.eclipse.jgit.treewalk.TreeWalk.OperationType;
@@ -114,10 +138,13 @@ import org.eclipse.team.ui.synchronize.SaveableCompareEditorInput;
 import org.eclipse.ui.IEditorInput;
 import org.eclipse.ui.IEditorPart;
 import org.eclipse.ui.IEditorReference;
+import org.eclipse.ui.IPartListener;
 import org.eclipse.ui.IReusableEditor;
 import org.eclipse.ui.IWorkbenchPage;
+import org.eclipse.ui.IWorkbenchPart;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.actions.ActionFactory.IWorkbenchAction;
+import org.eclipse.ui.part.EditorPart;
 
 /**
  * A collection of helper methods useful for comparing content
@@ -966,7 +993,172 @@ public class CompareUtils {
 	 */
 	public static void compareBetween(Repository repository, String gitPath,
 			String leftRev, String rightRev, IWorkbenchPage page) {
-		compareBetween(repository, gitPath, gitPath, leftRev, rightRev, page);
+		compareBetween(repository, gitPath, null, leftRev, rightRev, page);
+	}
+
+	private static class DeleteView extends DiffEntry {
+
+		private static final AbbreviatedObjectId A_ZERO = AbbreviatedObjectId
+				.fromObjectId(ObjectId.zeroId());
+
+		public DeleteView(DiffEntry modify) {
+			this.changeType = ChangeType.DELETE;
+			this.diffAttribute = modify.getDiffAttribute();
+			this.newId = A_ZERO;
+			this.newPath = DiffEntry.DEV_NULL;
+			this.newMode = FileMode.MISSING;
+			this.oldId = modify.getOldId();
+			this.oldPath = modify.getOldPath();
+			this.oldMode = modify.getOldMode();
+		}
+	}
+
+	/**
+	 * Finds the name of {@code gitPath} in {@code oldRev}. If {@code oldRev} is
+	 * a direct parent of {@code newRev}, runs a rename detection for the single
+	 * path {@code gitPath} to discover the name. If no name can be determined,
+	 * or if {@code gitPath} exists in the old revision, or {@code oldRev} is
+	 * not a direct parent of {@code newRev}, returns {@code gitPath}.
+	 *
+	 * @param repository
+	 *            {@link Repository} to work in
+	 * @param newRev
+	 *            new revision, may be {@link GitFileRevision#INDEX} to denote
+	 *            the index
+	 * @param oldRev
+	 *            new revision, may be {@link GitFileRevision#INDEX} to denote
+	 *            the index
+	 * @param gitPath
+	 *            git path in {@code newRev} to find a path for in
+	 *            {@code oldRev}
+	 * @param progress
+	 *            for progress reporting and cancellation, may be {@code null}
+	 * @return a path corresponding to {@code gitPath} in {@code oldRev}
+	 */
+	private static String findRename(Repository repository, String newRev,
+			String oldRev, String gitPath, IProgressMonitor progress) {
+		try {
+			AbstractTreeIterator newTree = null;
+			RevCommit newCommit = null;
+			DirCache index = null;
+			if (GitFileRevision.INDEX.equals(newRev)) {
+				index = repository.readDirCache();
+				newTree = new DirCacheIterator(index);
+			} else {
+				ObjectId newOid = repository.resolve(newRev);
+				if (newOid == null) {
+					return gitPath;
+				}
+				newCommit = repository.parseCommit(newOid);
+			}
+			AbstractTreeIterator oldTree = null;
+			RevCommit oldCommit = null;
+			if (GitFileRevision.INDEX.equals(oldRev)) {
+				if (index == null) {
+					index = repository.readDirCache();
+				}
+				oldTree = new DirCacheIterator(index);
+			} else {
+				ObjectId oldId = repository.resolve(oldRev);
+				if (oldId == null) {
+					return gitPath;
+				}
+				oldCommit = repository.parseCommit(oldId);
+			}
+			// Only for INDEX vs. HEAD, or if oldRev turns out to be a direct
+			// parent of newRev
+			if ((GitFileRevision.INDEX.equals(newRev)
+					&& Constants.HEAD.equals(oldRev))
+					|| isParent(oldCommit, newCommit)) {
+				try (TreeWalk walk = new TreeWalk(repository)) {
+					walk.setFilter(PathFilterGroup.createFromStrings(gitPath));
+					walk.setRecursive(true);
+					if (oldCommit != null) {
+						walk.addTree(oldCommit.getTree());
+					} else {
+						walk.addTree(oldTree);
+					}
+					if (walk.next()) {
+						// gitPath exists in the old revision.
+						return gitPath;
+					}
+					// gitPath not in old revision. Run rename detection for
+					// additions.
+					walk.reset();
+					walk.setFilter(TreeFilter.ANY_DIFF);
+					if (oldCommit != null) {
+						walk.addTree(oldCommit.getTree());
+					} else {
+						walk.addTree(oldTree);
+					}
+					if (newCommit != null) {
+						walk.addTree(newCommit.getTree());
+					} else {
+						walk.addTree(newTree);
+					}
+					walk.setRecursive(true);
+					List<DiffEntry> diffs = DiffEntry.scan(walk);
+					RenameDetector renameDetector = new RenameDetector(
+							walk.getObjectReader(),
+							repository.getConfig().get(DiffConfig.KEY));
+					// We're only interested in one particular path, and it's an
+					// addition. Changing MODIFY to DELETE means doing copy
+					// detection, too. (The standard way inside the rename
+					// detector would split MODIFY into a DELETE and an ADD, but
+					// we don't want these extra ADDs.)
+					List<DiffEntry> filtered = diffs.stream()
+							.map(d -> {
+								switch (d.getChangeType()) {
+								case ADD:
+									if (d.getNewPath().equals(gitPath)) {
+										return d;
+									}
+									// We're not interested in any other
+									// additions.
+									break;
+								case DELETE:
+									return d;
+								case MODIFY:
+									return new DeleteView(d);
+								default:
+									break;
+								}
+								return null;
+							}).filter(Objects::nonNull)
+							.collect(Collectors.toList());
+					renameDetector.reset();
+					renameDetector.addAll(filtered);
+					EclipseGitProgressTransformer monitor = new EclipseGitProgressTransformer(
+							progress);
+					List<DiffEntry> renamed = renameDetector.compute(monitor);
+					for (DiffEntry ent : renamed) {
+						if (isRename(ent)
+								&& ent.getNewPath().equals(gitPath)) {
+							return ent.getOldPath();
+						}
+					}
+				}
+			}
+		} catch (CanceledException e) {
+			// From the RenameDetector; ignore
+		} catch (IOException e) {
+			Activator.logError(
+					NLS.bind(UIText.CompareUtils_errorRenameDetection, gitPath),
+					e);
+		}
+		return gitPath;
+	}
+
+	private static boolean isParent(RevCommit old, RevCommit newCommit) {
+		if (old == null || newCommit == null) {
+			return false;
+		}
+		return Stream.of(newCommit.getParents()).anyMatch(p -> p.equals(old));
+	}
+
+	private static boolean isRename(DiffEntry ent) {
+		return ChangeType.RENAME.equals(ent.getChangeType())
+				|| ChangeType.COPY.equals(ent.getChangeType());
 	}
 
 	/**
@@ -979,7 +1171,9 @@ public class CompareUtils {
 	 *            The repository relative path to be used for the left revision.
 	 * @param rightGitPath
 	 *            The repository relative path to be used for the right
-	 *            revision.
+	 *            revision. If {@code null}, a rename detection may be run to
+	 *            try to determine it; if none found, {@code leftGitPath} is
+	 *            used.
 	 * @param leftRev
 	 *            Left revision of the comparison (usually the local or "new"
 	 *            revision). Won't be used if <code>includeLocal</code> is
@@ -987,13 +1181,12 @@ public class CompareUtils {
 	 * @param rightRev
 	 *            Right revision of the comparison (usually the "old" revision).
 	 * @param page
-	 *            If not {@null} try to re-use a compare editor on this
-	 *            page if any is available. Otherwise open a new one.
+	 *            If not {@null} try to re-use a compare editor on this page if
+	 *            any is available. Otherwise open a new one.
 	 */
-	public static void compareBetween(final Repository repository,
-			final String leftGitPath, final String rightGitPath,
-			final String leftRev, final String rightRev,
-			final IWorkbenchPage page) {
+	public static void compareBetween(Repository repository, String leftGitPath,
+			String rightGitPath, String leftRev, String rightRev,
+			IWorkbenchPage page) {
 
 		Job job = new Job(UIText.CompareUtils_jobName) {
 
@@ -1002,12 +1195,22 @@ public class CompareUtils {
 				if (monitor.isCanceled()) {
 					return Status.CANCEL_STATUS;
 				}
+				String rightPath = rightGitPath;
+				if (rightGitPath == null) {
+					// Run a Diff with rename detection for the path to
+					// determine the path in the right rev.
+					rightPath = findRename(repository, leftRev, rightRev,
+							leftGitPath, monitor);
+					if (monitor.isCanceled()) {
+						return Status.CANCEL_STATUS;
+					}
+				}
+
 				final ITypedElement left;
 				final ITypedElement right;
 				try {
 					left = getTypedElementFor(repository, leftGitPath, leftRev);
-					right = getTypedElementFor(repository, rightGitPath,
-							rightRev);
+					right = getTypedElementFor(repository, rightPath, rightRev);
 				} catch (IOException e) {
 					return Activator.createErrorStatus(
 							UIText.CompareWithRefAction_errorOnSynchronize, e);
@@ -1017,7 +1220,7 @@ public class CompareUtils {
 						&& !GitFileRevision.INDEX.equals(leftRev)
 						&& !GitFileRevision.INDEX.equals(rightRev)) {
 					commonAncestor = getTypedElementForCommonAncestor(
-							repository, rightGitPath, leftRev, rightRev);
+							repository, rightPath, leftRev, rightRev);
 				} else {
 					commonAncestor = null;
 				}
@@ -1034,6 +1237,181 @@ public class CompareUtils {
 			}
 		};
 		job.setUser(true);
+		job.schedule();
+	}
+
+	/**
+	 * Compares two arbitrary files in a git working tree.
+	 *
+	 * @param aFile
+	 *            first {@link IFile} to compare, may be {@code null} if the
+	 *            file is not in the Eclipse workspace
+	 * @param bFile
+	 *            second {@link IFile} to compare, may be {@code null} if the
+	 *            file is not in the Eclipse workspace
+	 * @param a
+	 *            {@link File} corresponding to the first file; used if
+	 *            {@code aFile == null}
+	 * @param b
+	 *            {@link File} corresponding to the second file; used if
+	 *            {@code bFile == null}
+	 * @param sourcePart
+	 *            {@link IWorkbenchPart} the comparison is initiated in
+	 */
+	public static void compareFiles(IFile aFile, IFile bFile, File a, File b,
+			IWorkbenchPart sourcePart) {
+		// This is a gruesome hack, but unfortunately org.eclipse.compare
+		// has _no_ public method or other way to compare two resources.
+		// It also has no command to do so, only an action that is implemented
+		// in an internal class and that uses a CompareEditorInput that is
+		// package-visible only.
+		//
+		// Looks like a major oversight. So we use that internal action class
+		// that does what we want, and configure it so it works.
+		List<IFile> toDelete = new ArrayList<>();
+		// Hidden resources are exactly the mechanism used by
+		// org.eclipse.compare.internal.CompareWithOtherResourceHandler. But
+		// that command is also internal, and it always opens a dialog that we
+		// neither need nor want.
+		IFile aTmp = aFile;
+		IFile bTmp = bFile;
+		try {
+			if (aTmp == null) {
+				aTmp = HiddenResources.INSTANCE.createFile(a.toURI(),
+						a.getName(), null, null);
+				toDelete.add(aTmp);
+			}
+			if (bTmp == null) {
+				bTmp = HiddenResources.INSTANCE.createFile(b.toURI(),
+						b.getName(), null, null);
+				toDelete.add(bTmp);
+			}
+		} catch (CoreException e) {
+			Activator.logError(UIText.CompareUtils_errorHiddenResourceCreate,
+					e);
+			cleanHiddenResources(toDelete);
+			return;
+		}
+		@SuppressWarnings("restriction")
+		class CompareWithEachOther extends CompareAction {
+
+			@Override
+			public void run(ISelection selection) {
+				if (isEnabled(selection)) {
+					if (!toDelete.isEmpty()) {
+						CompareEditorInput input = fInput;
+						fWorkbenchPage.addPartListener(new IPartListener() {
+
+							private final IWorkbenchPage page = fWorkbenchPage;
+
+							private IWorkbenchPart compareEditor;
+
+							@Override
+							public void partActivated(IWorkbenchPart part) {
+								if ((part instanceof EditorPart)
+										&& ((EditorPart) part)
+												.getEditorInput() == input) {
+									compareEditor = part;
+								}
+							}
+
+							@Override
+							public void partBroughtToTop(IWorkbenchPart part) {
+								// Nothing
+							}
+
+							@Override
+							public void partClosed(IWorkbenchPart part) {
+								if (part != null && part == compareEditor) {
+									cleanHiddenResources(toDelete);
+									page.removePartListener(this);
+								}
+							}
+
+							@Override
+							public void partDeactivated(IWorkbenchPart part) {
+								// Nothing
+							}
+
+							@Override
+							public void partOpened(IWorkbenchPart part) {
+								// Nothing
+							}
+
+						});
+					}
+					super.run(selection);
+				} else {
+					cleanHiddenResources(toDelete);
+				}
+			}
+
+			@Override
+			public void setActivePart(IAction action,
+					IWorkbenchPart targetPart) {
+				super.setActivePart(action, targetPart);
+			}
+		}
+		CompareWithEachOther compare = new CompareWithEachOther();
+		compare.setActivePart(null, sourcePart);
+		IStructuredSelection selection = new StructuredSelection(
+				List.of(aTmp, bTmp));
+		compare.run(selection);
+	}
+
+	/**
+	 * Removes hidden resources.
+	 *
+	 * @param toClean
+	 *            hidden {@link IFile}s to remove
+	 */
+	public static void cleanHiddenResources(Collection<IFile> toClean) {
+		if (toClean == null || toClean.isEmpty()) {
+			return;
+		}
+		// Don't clean up if the workbench is shutting down; we would exit with
+		// unsaved workspace changes. Instead, EGit core cleans the project on
+		// start.
+		Job job = new Job(UIText.CompareUtils_ResourceCleanupJobName) {
+
+			@Override
+			public boolean shouldSchedule() {
+				return super.shouldSchedule()
+						&& !PlatformUI.getWorkbench().isClosing();
+			}
+
+			@Override
+			public boolean shouldRun() {
+				return super.shouldRun()
+						&& !PlatformUI.getWorkbench().isClosing();
+			}
+
+			@Override
+			protected IStatus run(IProgressMonitor monitor) {
+				IWorkspaceRunnable remove = m -> {
+					SubMonitor progress = SubMonitor.convert(m, toClean.size());
+					for (IFile tmp : toClean) {
+						if (PlatformUI.getWorkbench().isClosing()) {
+							return;
+						}
+						try {
+							tmp.delete(true, progress.newChild(1));
+						} catch (CoreException e) {
+							// Ignore
+						}
+					}
+				};
+				try {
+					ResourcesPlugin.getWorkspace().run(remove, null,
+							IWorkspace.AVOID_UPDATE, monitor);
+				} catch (CoreException e) {
+					return e.getStatus();
+				}
+				return Status.OK_STATUS;
+			}
+		};
+		job.setSystem(true);
+		job.setUser(false);
 		job.schedule();
 	}
 

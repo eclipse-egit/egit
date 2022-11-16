@@ -13,13 +13,13 @@ package org.eclipse.egit.core.internal.indexdiff;
 import static org.hamcrest.CoreMatchers.not;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.hasItem;
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
-import java.io.OutputStream;
-import java.nio.file.Files;
+import java.io.ByteArrayInputStream;
 import java.util.concurrent.Callable;
-import java.util.concurrent.atomic.AtomicBoolean;
+import java.util.concurrent.atomic.AtomicInteger;
 import java.util.concurrent.atomic.AtomicReference;
 
 import org.eclipse.core.resources.IFile;
@@ -42,7 +42,7 @@ public class IndexDiffCacheTest extends GitTestCase {
 
 	Repository repository;
 
-	private AtomicBoolean listenerCalled;
+	private AtomicInteger listenerCalled;
 
 	private AtomicReference<IndexDiffData> indexDiffDataResult;
 
@@ -54,13 +54,13 @@ public class IndexDiffCacheTest extends GitTestCase {
 		super.setUp();
 		testRepository = new TestRepository(gitDir);
 		repository = testRepository.getRepository();
-		listenerCalled = new AtomicBoolean(false);
+		listenerCalled = new AtomicInteger(0);
 		indexDiffDataResult = new AtomicReference<>(null);
 		indexDiffListener = new IndexDiffChangedListener() {
 			@Override
 			public void indexDiffChanged(Repository repo,
 					IndexDiffData indexDiffData) {
-				listenerCalled.set(true);
+				listenerCalled.incrementAndGet();
 				indexDiffDataResult.set(indexDiffData);
 			}
 		};
@@ -81,9 +81,10 @@ public class IndexDiffCacheTest extends GitTestCase {
 		new ConnectProviderOperation(project.project, repository.getDirectory())
 				.execute(null);
 		// create first commit containing a dummy file
-		testRepository
-				.createInitialCommit("testBranchOperation\n\nfirst commit\n");
 		prepareCacheEntry();
+		listenerCalled.set(0);
+		testRepository
+				.createInitialCommit("testAddingAFile\n\nfirst commit\n");
 		waitForListenerCalled();
 		final String fileName = "aFile";
 		// This call should trigger an indexDiffChanged event (triggered via
@@ -109,7 +110,11 @@ public class IndexDiffCacheTest extends GitTestCase {
 	public void testAddFileFromUntrackedFolder() throws Exception {
 		testRepository.connect(project.project);
 		testRepository.addToIndex(project.project);
-		testRepository.createInitialCommit("testAddFileFromUntrackedFolder\n\nfirst commit\n");
+		prepareCacheEntry();
+		listenerCalled.set(0);
+		testRepository.createInitialCommit(
+				"testAddFileFromUntrackedFolder\n\nfirst commit\n");
+		waitForListenerCalled();
 
 		IFile[] fileA = { null };
 		runInWorkspace(() -> {
@@ -120,8 +125,6 @@ public class IndexDiffCacheTest extends GitTestCase {
 			project.createFile("folder/b/file", new byte[] {});
 			return null;
 		});
-
-		prepareCacheEntry();
 
 		IndexDiffData data1 = waitForListenerCalled();
 		assertThat(data1.getUntrackedFolders(), hasItem("Project-1/folder/"));
@@ -146,8 +149,10 @@ public class IndexDiffCacheTest extends GitTestCase {
 			return null;
 		});
 		testRepository.addToIndex(project.project);
-		testRepository.createInitialCommit("testAddFileInIgnoredFolder\n\nfirst commit\n");
 		prepareCacheEntry();
+		listenerCalled.set(0);
+		testRepository
+				.createInitialCommit("testAddIgnoredFolder\n\nfirst commit\n");
 
 		IndexDiffData data1 = waitForListenerCalled();
 		assertThat(data1.getIgnoredNotInIndex(), hasItem("Project-1/ignore"));
@@ -179,8 +184,9 @@ public class IndexDiffCacheTest extends GitTestCase {
 			return null;
 		});
 		testRepository.addToIndex(project.project);
-		testRepository.createInitialCommit("testRemoveIgnoredFile\n\nfirst commit\n");
 		IndexDiffCacheEntry entry = prepareCacheEntry();
+		listenerCalled.set(0);
+		testRepository.createInitialCommit("testRemoveIgnoredFile\n\nfirst commit\n");
 
 		IndexDiffData data1 = waitForListenerCalled();
 		assertThat(data1.getIgnoredNotInIndex(), hasItem("Project-1/sub/ignore"));
@@ -210,9 +216,11 @@ public class IndexDiffCacheTest extends GitTestCase {
 			return null;
 		});
 		testRepository.addToIndex(project.project);
-		testRepository
-				.createInitialCommit("testRemoveIgnoredFile\n\nfirst commit\n");
 		prepareCacheEntry();
+		listenerCalled.set(0);
+		testRepository
+				.createInitialCommit(
+						"testAddAndRemoveGitIgnoreFileToIgnoredDir\n\nfirst commit\n");
 
 		IndexDiffData data1 = waitForListenerCalled();
 		assertThat(data1.getIgnoredNotInIndex(),
@@ -247,9 +255,11 @@ public class IndexDiffCacheTest extends GitTestCase {
 			return null;
 		});
 		testRepository.addToIndex(project.project);
-		testRepository
-				.createInitialCommit("testRemoveIgnoredFile\n\nfirst commit\n");
 		prepareCacheEntry();
+		listenerCalled.set(0);
+		testRepository
+				.createInitialCommit(
+						"testAddAndRemoveFileToIgnoredDir\n\nfirst commit\n");
 
 		IndexDiffData data1 = waitForListenerCalled();
 		assertThat(data1.getIgnoredNotInIndex(), hasItem("Project-1/sub"));
@@ -273,19 +283,20 @@ public class IndexDiffCacheTest extends GitTestCase {
 			return null;
 		});
 		testRepository.addToIndex(project.project);
-		testRepository
-				.createInitialCommit("testRemoveIgnoredFile\n\nfirst commit\n");
 		prepareCacheEntry();
+		listenerCalled.set(0);
+		testRepository
+				.createInitialCommit(
+						"testModifyFileInIgnoredDir\n\nfirst commit\n");
 
 		IndexDiffData data1 = waitForListenerCalled();
 		assertThat(data1.getIgnoredNotInIndex(),
 				hasItem("Project-1/sub/ignore"));
 
 		IFile file = project.getProject().getFile("sub/ignore");
-		try (OutputStream str = Files
-				.newOutputStream((file.getLocation().toFile().toPath()))) {
-			str.write("other contents".getBytes("UTF-8"));
-		}
+		file.setContents(
+				new ByteArrayInputStream("other contents".getBytes("UTF-8")), 0,
+				null);
 
 		// no job should be triggered for that change.
 		waitForListenerNotCalled();
@@ -303,7 +314,7 @@ public class IndexDiffCacheTest extends GitTestCase {
 	}
 
 	private IndexDiffCacheEntry prepareCacheEntry() {
-		listenerCalled.set(false);
+		listenerCalled.set(0);
 		indexDiffDataResult.set(null);
 
 		IndexDiffCache.INSTANCE.addIndexDiffChangedListener(indexDiffListener);
@@ -315,23 +326,24 @@ public class IndexDiffCacheTest extends GitTestCase {
 
 	private IndexDiffData waitForListenerCalled() throws InterruptedException {
 		long time = 0;
-		while (!listenerCalled.get() && time < 60000) {
+		while (listenerCalled.get() == 0 && time < 60000) {
 			Thread.sleep(100);
 			time += 100;
 		}
-		assertTrue("indexDiffChanged was not called after " + time + " ms", listenerCalled.get());
-		listenerCalled.set(false);
+		assertTrue("indexDiffChanged was not called after " + time + " ms",
+				listenerCalled.get() > 0);
+		listenerCalled.set(0);
 		return indexDiffDataResult.get();
 	}
 
 	private void waitForListenerNotCalled() throws InterruptedException {
 		long time = 0;
-		while (!listenerCalled.get() && time < 1000) {
+		while (listenerCalled.get() == 0 && time < 1000) {
 			Thread.sleep(100);
 			time += 100;
 		}
-		assertTrue("indexDiffChanged was called where it shouldn't have been",
-				!listenerCalled.get());
+		assertEquals("indexDiffChanged was called where it shouldn't have been",
+				0, listenerCalled.get());
 	}
 
 }

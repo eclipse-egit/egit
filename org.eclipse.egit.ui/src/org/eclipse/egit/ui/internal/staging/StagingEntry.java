@@ -241,6 +241,9 @@ public class StagingEntry extends PlatformObject
 			fileLoaded = true;
 			file = fileProvider.apply(this);
 		}
+		if (file != null && !file.getProject().isAccessible()) {
+			return null;
+		}
 		return file;
 	}
 

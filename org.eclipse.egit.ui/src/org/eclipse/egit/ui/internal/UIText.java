@@ -2785,6 +2785,15 @@ public class UIText extends NLS {
 	public static String CompareUtils_errorGettingHeadCommit;
 
 	/** */
+	public static String CompareUtils_errorHiddenResourceCreate;
+
+	/** */
+	public static String CompareUtils_errorHiddenResourceDelete;
+
+	/** */
+	public static String CompareUtils_errorRenameDetection;
+
+	/** */
 	public static String CompareUtils_ExecutingExtDiffTool;
 
 	/** */
@@ -2801,6 +2810,9 @@ public class UIText extends NLS {
 
 	/** */
 	public static String CompareUtils_NoDiffToolSpecified;
+
+	/** */
+	public static String CompareUtils_ResourceCleanupJobName;
 
 	/** */
 	public static String CompareUtils_wrongResourceArgument;
@@ -5756,9 +5768,6 @@ public class UIText extends NLS {
 	public static String GitMergeEditorInput_MergeEditorTitle;
 
 	/** */
-	public static String GitMergeEditorInput_ResourceCleanupJobName;
-
-	/** */
 	public static String GitMergeEditorInput_ToggleCurrentChangesLabel;
 
 	/** */
@@ -5973,6 +5982,9 @@ public class UIText extends NLS {
 
 	/** */
 	public static String PushSettings_Title;
+
+	/** */
+	public static String StagingView_CompareWithEachOtherLabel;
 
 	/** */
 	public static String StagingView_CompareWithHeadMenuLabel;

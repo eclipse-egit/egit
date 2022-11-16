@@ -77,6 +77,7 @@ import org.eclipse.egit.core.internal.indexdiff.IndexDiffData;
 import org.eclipse.egit.core.internal.job.JobUtil;
 import org.eclipse.egit.core.internal.job.RuleUtil;
 import org.eclipse.egit.core.internal.signing.GpgSetup;
+import org.eclipse.egit.core.internal.storage.GitFileRevision;
 import org.eclipse.egit.core.op.AssumeUnchangedOperation;
 import org.eclipse.egit.core.op.CommitOperation;
 import org.eclipse.egit.core.op.DiscardChangesOperation;
@@ -88,6 +89,7 @@ import org.eclipse.egit.ui.UIPreferences;
 import org.eclipse.egit.ui.UIUtils;
 import org.eclipse.egit.ui.internal.ActionUtils;
 import org.eclipse.egit.ui.internal.CommonUtils;
+import org.eclipse.egit.ui.internal.CompareUtils;
 import org.eclipse.egit.ui.internal.UIIcons;
 import org.eclipse.egit.ui.internal.UIText;
 import org.eclipse.egit.ui.internal.actions.ActionCommands;
@@ -3236,6 +3238,11 @@ public class StagingView extends ViewPart
 						};
 						menuMgr.add(compareWithHead);
 					}
+					if (stagingEntryList.size() == 2) {
+						menuMgr.add(
+								compareWithEachOther(stagingEntryList.get(0),
+										stagingEntryList.get(1)));
+					}
 				}
 
 				Set<StagingEntry.Action> availableActions = getAvailableActions(fileSelection);
@@ -3350,6 +3357,34 @@ public class StagingView extends ViewPart
 			}
 		});
 
+	}
+
+	private IAction compareWithEachOther(StagingEntry left,
+			StagingEntry right) {
+		if (left.isStaged()) {
+			return new Action(UIText.StagingView_CompareWithEachOtherLabel,
+					UIIcons.ELCL16_COMPARE_VIEW) {
+
+				@Override
+				public void run() {
+					CompareUtils.compareBetween(currentRepository,
+							left.getPath(), right.getPath(),
+							GitFileRevision.INDEX, GitFileRevision.INDEX,
+							StagingView.this.getViewSite().getPage());
+				}
+			};
+		}
+		// Unstaged.
+		return new Action(UIText.StagingView_CompareWithEachOtherLabel,
+				UIIcons.ELCL16_COMPARE_VIEW) {
+
+			@Override
+			public void run() {
+				CompareUtils.compareFiles(left.getFile(), right.getFile(),
+						left.getLocation().toFile(),
+						right.getLocation().toFile(), StagingView.this);
+			}
+		};
 	}
 
 	private boolean anyElementIsExistingFile(IStructuredSelection s) {
