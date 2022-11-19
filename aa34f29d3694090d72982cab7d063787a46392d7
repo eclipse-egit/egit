@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "011a8865_e289c125",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2022-11-19T17:56:13Z",
+      "side": 1,
+      "message": "We have a problem here. The new mockito works in RerfFilterHelperTest only with hamcrest 2.2.0, but org.eclipse.swtbot.eclipse.finder works only with hamcrest 1.3.0 matchers.\n\nPerhaps the RefFilterHelperTest can be rewritten not to use org.mockito.hamcrest.MockitoHamcrest.argThat(), but I don\u0027t quite see how.",
+      "revId": "aa34f29d3694090d72982cab7d063787a46392d7",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31"
+    }
+  ]
+}
