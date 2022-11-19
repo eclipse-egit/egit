@@ -23,7 +23,6 @@ import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
-import static org.mockito.hamcrest.MockitoHamcrest.argThat;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -53,6 +52,7 @@ import org.hamcrest.TypeSafeMatcher;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
+import org.mockito.ArgumentCaptor;
 
 public class RefFilterHelperTest extends LocalRepositoryTestCase {
 
@@ -135,10 +135,15 @@ public class RefFilterHelperTest extends LocalRepositoryTestCase {
 		List<String> filters = Arrays.asList("Mock", "test", "filter");
 
 		refFilterHelper.setConfiguredFilters(filters, false);
+		ArgumentCaptor<String> prefString = ArgumentCaptor
+				.forClass(String.class);
 		verify(prefStore).setValue(
 				eq(getRepoSpecificPrefKeyForConfiguredFilters()),
-				argThat(refFilterConfigStringOf(
-						containsInAnyOrder("Mock", "test", "filter"))));
+				prefString.capture());
+		assertThat("Unexpected filter list in preference value",
+				prefString.getValue(),
+				refFilterConfigStringOf(
+						containsInAnyOrder("Mock", "test", "filter")));
 		verify(prefStore, never()).save();
 	}
 
@@ -147,10 +152,15 @@ public class RefFilterHelperTest extends LocalRepositoryTestCase {
 		List<String> filters = Arrays.asList("Mock", "test", "filter");
 
 		refFilterHelper.setConfiguredFilters(filters, true);
+		ArgumentCaptor<String> prefString = ArgumentCaptor
+				.forClass(String.class);
 		verify(prefStore).setValue(
 				eq(getRepoSpecificPrefKeyForConfiguredFilters()),
-				argThat(refFilterConfigStringOf(
-						containsInAnyOrder("Mock", "test", "filter"))));
+				prefString.capture());
+		assertThat("Unexpected filter list in preference value",
+				prefString.getValue(),
+				refFilterConfigStringOf(
+						containsInAnyOrder("Mock", "test", "filter")));
 		verify(prefStore).save();
 	}
 
@@ -174,10 +184,15 @@ public class RefFilterHelperTest extends LocalRepositoryTestCase {
 		List<String> filters = Arrays.asList("Mock", "test", "filter");
 
 		refFilterHelper.setSelectedFilters(filters, false);
+		ArgumentCaptor<String> prefString = ArgumentCaptor
+				.forClass(String.class);
 		verify(prefStore).setValue(
 				eq(getRepoSpecificPrefKeyForSelectedFilters()),
-				argThat(refFilterConfigStringOf(
-						containsInAnyOrder("Mock", "test", "filter"))));
+				prefString.capture());
+		assertThat("Unexpected filter list in preference value",
+				prefString.getValue(),
+				refFilterConfigStringOf(
+						containsInAnyOrder("Mock", "test", "filter")));
 		verify(prefStore, never()).save();
 	}
 
@@ -186,10 +201,15 @@ public class RefFilterHelperTest extends LocalRepositoryTestCase {
 		List<String> filters = Arrays.asList("Mock", "test", "filter");
 
 		refFilterHelper.setSelectedFilters(filters, true);
+		ArgumentCaptor<String> prefString = ArgumentCaptor
+				.forClass(String.class);
 		verify(prefStore).setValue(
 				eq(getRepoSpecificPrefKeyForSelectedFilters()),
-				argThat(refFilterConfigStringOf(
-						containsInAnyOrder("Mock", "test", "filter"))));
+				prefString.capture());
+		assertThat("Unexpected filter list in preference value",
+				prefString.getValue(),
+				refFilterConfigStringOf(
+						containsInAnyOrder("Mock", "test", "filter")));
 		verify(prefStore).save();
 	}
 
@@ -214,10 +234,15 @@ public class RefFilterHelperTest extends LocalRepositoryTestCase {
 		List<String> filters = Arrays.asList("Mock", "test", "filter");
 
 		refFilterHelper.setLastSelectedFilters(filters, false);
+		ArgumentCaptor<String> prefString = ArgumentCaptor
+				.forClass(String.class);
 		verify(prefStore).setValue(
 				eq(getRepoSpecificPrefKeyForLastSelectedFilters()),
-				argThat(refFilterConfigStringOf(
-						containsInAnyOrder("Mock", "test", "filter"))));
+				prefString.capture());
+		assertThat("Unexpected filter list in preference value",
+				prefString.getValue(),
+				refFilterConfigStringOf(
+						containsInAnyOrder("Mock", "test", "filter")));
 		verify(prefStore, never()).save();
 	}
 
@@ -226,10 +251,15 @@ public class RefFilterHelperTest extends LocalRepositoryTestCase {
 		List<String> filters = Arrays.asList("Mock", "test", "filter");
 
 		refFilterHelper.setLastSelectedFilters(filters, true);
+		ArgumentCaptor<String> prefString = ArgumentCaptor
+				.forClass(String.class);
 		verify(prefStore).setValue(
 				eq(getRepoSpecificPrefKeyForLastSelectedFilters()),
-				argThat(refFilterConfigStringOf(
-						containsInAnyOrder("Mock", "test", "filter"))));
+				prefString.capture());
+		assertThat("Unexpected filter list in preference value",
+				prefString.getValue(),
+				refFilterConfigStringOf(
+						containsInAnyOrder("Mock", "test", "filter")));
 		verify(prefStore).save();
 	}
 
@@ -311,15 +341,23 @@ public class RefFilterHelperTest extends LocalRepositoryTestCase {
 
 		refFilterHelper.setRefFilters(testSet);
 
+		ArgumentCaptor<String> prefString = ArgumentCaptor
+				.forClass(String.class);
 		verify(prefStore).setValue(
 				eq(getRepoSpecificPrefKeyForConfiguredFilters()),
-				argThat(refFilterConfigStringOf(
-						containsInAnyOrder("Mock", "test", "filter"))));
+				prefString.capture());
+		assertThat("Unexpected filter list in preference value",
+				prefString.getValue(),
+				refFilterConfigStringOf(
+						containsInAnyOrder("Mock", "test", "filter")));
 
 		verify(prefStore).setValue(
 				eq(getRepoSpecificPrefKeyForSelectedFilters()),
-				argThat(refFilterConfigStringOf(
-						containsInAnyOrder("refs/heads/**", "filter"))));
+				prefString.capture());
+		assertThat("Unexpected filter list in preference value",
+				prefString.getValue(),
+				refFilterConfigStringOf(
+						containsInAnyOrder("refs/heads/**", "filter")));
 
 		verify(prefStore).save();
 	}
@@ -339,10 +377,15 @@ public class RefFilterHelperTest extends LocalRepositoryTestCase {
 
 		refFilterHelper.saveSelectionStateAsLastSelectionState(testSet);
 
+		ArgumentCaptor<String> prefString = ArgumentCaptor
+				.forClass(String.class);
 		verify(prefStore).setValue(
 				eq(getRepoSpecificPrefKeyForLastSelectedFilters()),
-				argThat(refFilterConfigStringOf(
-						containsInAnyOrder("refs/heads/**", "filter"))));
+				prefString.capture());
+		assertThat("Unexpected filter list in preference value",
+				prefString.getValue(),
+				refFilterConfigStringOf(
+						containsInAnyOrder("refs/heads/**", "filter")));
 
 		verify(prefStore).save();
 	}
