@@ -16,6 +16,24 @@
       "message": "Two mockito versions in the target platform is even more confusing. If we want that, then I guess the change in the UI MANIFEST and probably also in the one file in the core tests need to be undone.\n\nOtherwise I have now a way for that RefFilterHelperTest to avoid using the mixture of mockito and hamcrest matchers via argThat(): use a mockito ArgumentCaptor to capture the argument, then use hamcrest assertThat together with the hamcrest matcher.",
       "revId": "344cfba271ef6477e8acc464cb58c688deff4bb3",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "fcb4f441_65dbd412",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 6
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2022-11-19T22:51:33Z",
+      "side": 1,
+      "message": "\u003e Otherwise I have now a way for that RefFilterHelperTest to avoid using the mixture of mockito and hamcrest matchers via argThat(): use a mockito ArgumentCaptor to capture the argument, then use hamcrest assertThat together with the hamcrest matcher.\n\nI\u0027ve pushed that attempt as https://git.eclipse.org/r/c/egit/egit/+/197122 . Didn\u0027t want to put a new patch set onto this; if my attempt doesn\u0027t work, it\u0027s then simpler to fix this one with the two mockito versions.",
+      "parentUuid": "f41073ab_6e0f4850",
+      "revId": "344cfba271ef6477e8acc464cb58c688deff4bb3",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31"
     }
   ]
 }
