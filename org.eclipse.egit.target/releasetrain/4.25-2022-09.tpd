@@ -1,6 +1,6 @@
 target "4.24-2022-06" with source configurePhase
 
-location "https://download.eclipse.org/staging/2022-09/" {
+location "https://download.eclipse.org/releases/2022-09/" {
 	// Eclipse platform
 	org.eclipse.sdk.ide lazy
 	org.eclipse.ecf.core.feature.feature.group lazy
