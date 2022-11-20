@@ -22,6 +22,30 @@
       },
       "revId": "accc5112dd6ec86b1195fd364a23034aa12ea1ff",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "9da3dfce_0e6d4c57",
+        "filename": "org.eclipse.egit.ui.test/src/org/eclipse/egit/ui/test/history/RefFilterHelperTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 361,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2022-11-20T10:02:13Z",
+      "side": 0,
+      "message": "This apparently happened automatically on save. The EGit BREE is Java 11, so this should be fine.",
+      "parentUuid": "d1627a20_8e371d98",
+      "range": {
+        "startLine": 361,
+        "startChar": 29,
+        "endLine": 361,
+        "endChar": 32
+      },
+      "revId": "accc5112dd6ec86b1195fd364a23034aa12ea1ff",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31"
     }
   ]
 }
