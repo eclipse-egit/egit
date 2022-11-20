@@ -279,9 +279,7 @@ public class PullWizardPage extends WizardPage {
 						setSelectedRemote(current);
 					}
 				}
-			} catch (URISyntaxException ex) {
-				Activator.logError(ex.getMessage(), ex);
-			} catch (IOException ex) {
+			} catch (URISyntaxException | IOException ex) {
 				Activator.logError(ex.getMessage(), ex);
 			}
 		}

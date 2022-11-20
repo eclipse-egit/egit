@@ -838,13 +838,8 @@ public class UIUtils {
 			Event event) {
 		try {
 			service.executeCommand(id, event);
-		} catch (ExecutionException e) {
-			Activator.handleError(e.getMessage(), e, false);
-		} catch (NotDefinedException e) {
-			Activator.handleError(e.getMessage(), e, false);
-		} catch (NotEnabledException e) {
-			Activator.handleError(e.getMessage(), e, false);
-		} catch (NotHandledException e) {
+		} catch (ExecutionException | NotDefinedException | NotEnabledException
+				| NotHandledException e) {
 			Activator.handleError(e.getMessage(), e, false);
 		}
 	}

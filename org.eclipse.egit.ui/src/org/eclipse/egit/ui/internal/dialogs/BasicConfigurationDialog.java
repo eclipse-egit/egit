@@ -102,9 +102,7 @@ public class BasicConfigurationDialog extends TitleAreaDialog {
 				FS.DETECTED);
 		try {
 			c.load();
-		} catch (IOException e) {
-			Activator.handleError(e.getMessage(), e, true);
-		} catch (ConfigInvalidException e) {
+		} catch (IOException | ConfigInvalidException e) {
 			Activator.handleError(e.getMessage(), e, true);
 		}
 		return c;
@@ -114,9 +112,7 @@ public class BasicConfigurationDialog extends TitleAreaDialog {
 		StoredConfig c = repo.getConfig();
 		try {
 			c.load();
-		} catch (IOException e) {
-			Activator.handleError(e.getMessage(), e, true);
-		} catch (ConfigInvalidException e) {
+		} catch (IOException | ConfigInvalidException e) {
 			Activator.handleError(e.getMessage(), e, true);
 		}
 		return c;

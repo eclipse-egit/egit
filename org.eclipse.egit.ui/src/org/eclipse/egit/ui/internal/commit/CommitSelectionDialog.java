@@ -211,9 +211,7 @@ public class CommitSelectionDialog extends FilteredItemsSelectionDialog {
 								itemsFilter);
 					}
 				}
-			} catch (RevisionSyntaxException ignored) {
-				// Ignore and advance
-			} catch (IOException ignored) {
+			} catch (RevisionSyntaxException | IOException ignored) {
 				// Ignore and advance
 			}
 			progress.worked(1);

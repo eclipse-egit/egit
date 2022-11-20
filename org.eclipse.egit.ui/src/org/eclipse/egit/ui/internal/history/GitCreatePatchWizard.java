@@ -188,9 +188,7 @@ public class GitCreatePatchWizard extends Wizard {
 						} else {
 							copyToClipboard(content);
 						}
-					} catch (IOException e) {
-						throw new InvocationTargetException(e);
-					} catch (CoreException e) {
+					} catch (IOException | CoreException e) {
 						throw new InvocationTargetException(e);
 					}
 				}

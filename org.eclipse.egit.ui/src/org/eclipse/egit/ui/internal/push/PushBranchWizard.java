@@ -166,10 +166,7 @@ public class PushBranchWizard extends Wizard {
 				configureUpstream();
 			}
 			startPush();
-		} catch (IOException e) {
-			showError(e.getMessage());
-			return false;
-		} catch (URISyntaxException e) {
+		} catch (IOException | URISyntaxException e) {
 			showError(e.getMessage());
 			return false;
 		}
