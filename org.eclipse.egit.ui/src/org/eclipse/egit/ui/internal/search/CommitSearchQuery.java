@@ -44,7 +44,7 @@ import org.eclipse.search.ui.ISearchResult;
  */
 public class CommitSearchQuery implements ISearchQuery {
 
-	private abstract class SearchMatcher {
+	private abstract static class SearchMatcher {
 
 		abstract boolean matches(Pattern pattern, RevCommit commit);
 
