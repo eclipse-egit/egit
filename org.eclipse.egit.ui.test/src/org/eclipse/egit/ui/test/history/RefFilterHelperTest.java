@@ -401,7 +401,7 @@ public class RefFilterHelperTest extends LocalRepositoryTestCase {
 	}
 
 	private Matcher<Ref> ref(Matcher<String> refName) {
-		return new TypeSafeMatcher<Ref>() {
+		return new TypeSafeMatcher<>() {
 			@Override
 			public void describeTo(Description description) {
 				description.appendText("A ref with the name ");

@@ -223,7 +223,7 @@ public class GitHistoryRefFilterConfigurationDialogTest
 
 	private Matcher<SWTBotTableItem> newTableRowMatcher(String text,
 			boolean preConfigured, boolean checked) {
-		return new TypeSafeMatcher<SWTBotTableItem>() {
+		return new TypeSafeMatcher<>() {
 
 			@Override
 			public void describeTo(Description description) {
