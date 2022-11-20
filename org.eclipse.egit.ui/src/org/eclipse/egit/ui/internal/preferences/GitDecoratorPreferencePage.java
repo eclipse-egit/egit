@@ -324,7 +324,7 @@ public class GitDecoratorPreferencePage extends PreferencePage implements
 	 * When controls in the tab change it will emit update() to any registered
 	 * observers. This is currently used for updating the decoration preview.
 	 */
-	private abstract class Tab {
+	private abstract static class Tab {
 
 		private Preview toUpdate;
 
@@ -827,7 +827,7 @@ public class GitDecoratorPreferencePage extends PreferencePage implements
 		super.dispose();
 	}
 
-	private abstract class Preview {
+	private abstract static class Preview {
 
 		protected PreferenceStore store = new PreferenceStore();
 		protected final TreeViewer fViewer;
