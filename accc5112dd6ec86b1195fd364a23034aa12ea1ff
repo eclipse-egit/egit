@@ -46,6 +46,30 @@
       },
       "revId": "accc5112dd6ec86b1195fd364a23034aa12ea1ff",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c555008a_76f8963a",
+        "filename": "org.eclipse.egit.ui.test/src/org/eclipse/egit/ui/test/history/RefFilterHelperTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 361,
+      "author": {
+        "id": 1684
+      },
+      "writtenOn": "2022-11-20T10:08:33Z",
+      "side": 0,
+      "message": "Thanks for confirming.\n\nMay be convert all file to be Java 11 conform in its own change to avoid non intended changes?",
+      "parentUuid": "9da3dfce_0e6d4c57",
+      "range": {
+        "startLine": 361,
+        "startChar": 29,
+        "endLine": 361,
+        "endChar": 32
+      },
+      "revId": "accc5112dd6ec86b1195fd364a23034aa12ea1ff",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31"
     }
   ]
 }
