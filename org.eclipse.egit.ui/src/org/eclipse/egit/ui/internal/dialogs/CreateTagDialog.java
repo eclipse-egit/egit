@@ -828,9 +828,7 @@ public class CreateTagDialog extends TitleAreaDialog {
 					return;
 				}
 			}
-		} catch (IOException e) {
-			// ignore
-		} catch (RevisionSyntaxException e) {
+		} catch (IOException | RevisionSyntaxException e) {
 			// ignore
 		}
 		setNoExistingTag();

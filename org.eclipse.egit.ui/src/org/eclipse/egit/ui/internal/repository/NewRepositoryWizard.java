@@ -104,9 +104,7 @@ public class NewRepositoryWizard extends Wizard implements INewWizard {
 					return true;
 				autoShareProjects(repository, projects);
 			}
-		} catch (GitAPIException e) {
-			org.eclipse.egit.ui.Activator.handleError(e.getMessage(), e, false);
-		} catch (IOException e) {
+		} catch (GitAPIException | IOException e) {
 			org.eclipse.egit.ui.Activator.handleError(e.getMessage(), e, false);
 		}
 		return true;

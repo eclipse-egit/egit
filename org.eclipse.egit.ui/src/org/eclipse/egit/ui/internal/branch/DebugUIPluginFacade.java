@@ -77,9 +77,7 @@ class DebugUIPluginFacade implements IDebugUIPluginFacade {
 				ModalContext.run(operation, true, progress,
 						PlatformUI.getWorkbench().getDisplay());
 			}
-		} catch (InvocationTargetException e) {
-			// ignore
-		} catch (InterruptedException e) {
+		} catch (InvocationTargetException | InterruptedException e) {
 			// ignore
 		}
 		return result[0];

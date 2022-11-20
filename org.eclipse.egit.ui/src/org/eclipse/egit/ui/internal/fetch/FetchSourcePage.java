@@ -158,11 +158,7 @@ public class FetchSourcePage extends WizardPage {
 				Collections.sort(proposals,
 						CommonUtils.REF_ASCENDING_COMPARATOR);
 				this.remoteRefs = proposals;
-			} catch (IllegalStateException e) {
-				setErrorMessage(e.getMessage());
-			} catch (InvocationTargetException e) {
-				setErrorMessage(e.getMessage());
-			} catch (InterruptedException e) {
+			} catch (IllegalStateException | InvocationTargetException | InterruptedException e) {
 				setErrorMessage(e.getMessage());
 			}
 		}

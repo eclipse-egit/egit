@@ -466,9 +466,7 @@ public class ConfigurationEditorComponent {
 					editable = false;
 				}
 			}
-		} catch (IOException e) {
-			Activator.handleError(e.getMessage(), e, true);
-		} catch (ConfigInvalidException e) {
+		} catch (IOException | ConfigInvalidException e) {
 			Activator.handleError(e.getMessage(), e, true);
 		}
 		tv.expandAll();
