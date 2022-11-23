@@ -34,6 +34,24 @@
       "parentUuid": "03ab89b4_b4ad98eb",
       "revId": "3e981446e2542257ebca23affe2c4035121e92e5",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "04dd89e1_0392b27f",
+        "filename": "pom.xml",
+        "patchSetId": 3
+      },
+      "lineNbr": 298,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2022-11-23T20:12:27Z",
+      "side": 1,
+      "message": "In a \u003cconfiguration\u003e element?\n\n  \u003cconfiguration\u003e\n    \u003cincludeScope\u003eruntime\u003c/includeScope\u003e\n  \u003c/configuration\u003e\n  \nThough looking again at the code[1], including/excluding scopes is probably not quite right. But group ids or artifacts might work.\n\n[1] https://github.com/eclipse/dash-licenses/blob/584190e86f5933b4098637502154891d1ee82608/maven-plugin/src/main/java/org/eclipse/dash/licenses/maven/AbstractArtifactFilteringMojo.java#L30",
+      "parentUuid": "88b1bb36_2da37dd5",
+      "revId": "3e981446e2542257ebca23affe2c4035121e92e5",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31"
     }
   ]
 }
