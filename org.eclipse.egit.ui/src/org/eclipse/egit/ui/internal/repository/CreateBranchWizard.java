@@ -97,9 +97,7 @@ public class CreateBranchWizard extends Wizard {
 					try {
 						cp.createBranch(newBranchName, checkoutNewBranch,
 								monitor);
-					} catch (CoreException ce) {
-						throw new InvocationTargetException(ce);
-					} catch (IOException ioe) {
+					} catch (CoreException | IOException ioe) {
 						throw new InvocationTargetException(ioe);
 					}
 				}

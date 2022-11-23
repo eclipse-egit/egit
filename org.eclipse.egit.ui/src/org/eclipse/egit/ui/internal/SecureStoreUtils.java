@@ -37,12 +37,7 @@ public class SecureStoreUtils {
 			try {
 				org.eclipse.egit.core.Activator.getDefault()
 						.getCredentialsStore().putCredentials(uri, credentials);
-			} catch (StorageException e) {
-				Activator.handleError(MessageFormat.format(
-						UIText.SecureStoreUtils_writingCredentialsFailed, uri),
-						e, true);
-				return false;
-			} catch (IOException e) {
+			} catch (StorageException | IOException e) {
 				Activator.handleError(MessageFormat.format(
 						UIText.SecureStoreUtils_writingCredentialsFailed, uri),
 						e, true);

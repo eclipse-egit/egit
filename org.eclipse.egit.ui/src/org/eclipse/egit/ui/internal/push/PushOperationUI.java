@@ -45,7 +45,6 @@ import org.eclipse.jface.viewers.TableViewer;
 import org.eclipse.jface.window.Window;
 import org.eclipse.jface.wizard.Wizard;
 import org.eclipse.jgit.annotations.NonNull;
-import org.eclipse.jgit.errors.NotSupportedException;
 import org.eclipse.jgit.lib.BranchConfig;
 import org.eclipse.jgit.lib.Config;
 import org.eclipse.jgit.lib.Constants;
@@ -282,9 +281,6 @@ public class PushOperationUI {
 			try {
 				spec = PushOperationSpecification.create(repository, config,
 						pushRefSpecs);
-			} catch (NotSupportedException e) {
-				throw new CoreException(
-						Activator.createErrorStatus(e.getMessage(), e));
 			} catch (IOException e) {
 				throw new CoreException(
 						Activator.createErrorStatus(e.getMessage(), e));

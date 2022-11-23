@@ -148,13 +148,8 @@ public abstract class RepositoryAction extends AbstractHandler implements
 		Command command = srv.getCommand(commandId);
 		try {
 			return command.executeWithChecks(event);
-		} catch (ExecutionException e) {
-			Activator.handleError(e.getMessage(), e, true);
-		} catch (NotDefinedException e) {
-			Activator.handleError(e.getMessage(), e, true);
-		} catch (NotEnabledException e) {
-			Activator.handleError(e.getMessage(), e, true);
-		} catch (NotHandledException e) {
+		} catch (ExecutionException | NotDefinedException | NotEnabledException
+				| NotHandledException e) {
 			Activator.handleError(e.getMessage(), e, true);
 		}
 		return null;

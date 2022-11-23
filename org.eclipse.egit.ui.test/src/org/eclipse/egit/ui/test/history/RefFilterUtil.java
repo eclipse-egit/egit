@@ -29,7 +29,7 @@ public class RefFilterUtil {
 	public static Matcher<RefFilter> newRefFilterMatcher(String filterString,
 			boolean preConfigured,
 			boolean selected) {
-		return new TypeSafeMatcher<RefFilterHelper.RefFilter>() {
+		return new TypeSafeMatcher<>() {
 			@Override
 			public void describeTo(Description description) {
 				description.appendText("a ref filter with ");

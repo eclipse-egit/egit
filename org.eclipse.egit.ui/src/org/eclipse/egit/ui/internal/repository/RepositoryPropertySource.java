@@ -356,9 +356,7 @@ public class RepositoryPropertySource implements IPropertySource {
 			userHomeConfig.load();
 			repositoryConfig.load();
 			effectiveConfig.load();
-		} catch (IOException e) {
-			showExceptionMessage(e);
-		} catch (ConfigInvalidException e) {
+		} catch (IOException | ConfigInvalidException e) {
 			showExceptionMessage(e);
 		}
 
