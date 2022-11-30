@@ -450,22 +450,22 @@
 		</topic>
 		<topic href="help/JGit/User_Guide/Updating-This-Document.html" label="Updating This Document"></topic>
 	</topic>
-	<topic href="help/EGit/New_and_Noteworthy/6.3/6.3.html" label="EGit 6.3 New and Noteworthy">
-		<topic href="help/EGit/New_and_Noteworthy/6.3/6.3.html" label="EGit">
-			<topic href="help/EGit/New_and_Noteworthy/6.3/6.3.html#Removal_of_Mylyn_integration" label="Removal of Mylyn integration"></topic>
-			<topic href="help/EGit/New_and_Noteworthy/6.3/6.3.html#Other_Changes" label="Other Changes"></topic>
+	<topic href="help/EGit/New_and_Noteworthy/6.4/6.4.html" label="EGit 6.4 New and Noteworthy">
+		<topic href="help/EGit/New_and_Noteworthy/6.4/6.4.html" label="EGit">
+			<topic href="help/EGit/New_and_Noteworthy/6.4/6.4.html#Compare_with_each_other_in_Staging_View" label="Compare with each other in Staging View"></topic>
+			<topic href="help/EGit/New_and_Noteworthy/6.4/6.4.html#Other_Changes" label="Other Changes"></topic>
 		</topic>
-		<topic href="help/EGit/New_and_Noteworthy/6.3/Contributors.html" label="Contributors"></topic>
-		<topic href="help/EGit/New_and_Noteworthy/6.3/See-Also.html" label="See Also"></topic>
-		<topic href="help/EGit/New_and_Noteworthy/6.3/Updating-This-Document.html" label="Updating This Document"></topic>
+		<topic href="help/EGit/New_and_Noteworthy/6.4/Contributors.html" label="Contributors"></topic>
+		<topic href="help/EGit/New_and_Noteworthy/6.4/See-Also.html" label="See Also"></topic>
+		<topic href="help/EGit/New_and_Noteworthy/6.4/Updating-This-Document.html" label="Updating This Document"></topic>
 	</topic>
-	<topic href="help/JGit/New_and_Noteworthy/6.3/6.3.html" label="JGit 6.3 New and Noteworthy">
-		<topic href="help/JGit/New_and_Noteworthy/6.3/6.3.html" label="JGit">
-			<topic href="help/JGit/New_and_Noteworthy/6.3/6.3.html#Shallow_Clone_and_Fetch" label="Shallow Clone and Fetch"></topic>
-			<topic href="help/JGit/New_and_Noteworthy/6.3/6.3.html#Other_Changes" label="Other Changes"></topic>
+	<topic href="help/JGit/New_and_Noteworthy/6.4/6.4.html" label="JGit 6.4 New and Noteworthy">
+		<topic href="help/JGit/New_and_Noteworthy/6.4/6.4.html" label="JGit">
+			<topic href="help/JGit/New_and_Noteworthy/6.4/6.4.html#New_options_in_command_line_client" label="New options in command line client"></topic>
+			<topic href="help/JGit/New_and_Noteworthy/6.4/6.4.html#Other_Changes" label="Other Changes"></topic>
 		</topic>
-		<topic href="help/JGit/New_and_Noteworthy/6.3/Contributors.html" label="Contributors"></topic>
-		<topic href="help/JGit/New_and_Noteworthy/6.3/Updating-This-Document.html" label="Updating This Document"></topic>
+		<topic href="help/JGit/New_and_Noteworthy/6.4/Contributors.html" label="Contributors"></topic>
+		<topic href="help/JGit/New_and_Noteworthy/6.4/Updating-This-Document.html" label="Updating This Document"></topic>
 	</topic>
 	<topic href="help/EGit/Git_For_Eclipse_Users/Git-For-Eclipse-Users.html" label="Git for Eclipse Users">
 		<topic href="help/EGit/Git_For_Eclipse_Users/Git-For-Eclipse-Users.html" label="Centralised version control systems"></topic>

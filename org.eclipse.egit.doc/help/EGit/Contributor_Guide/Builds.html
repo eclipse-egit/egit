@@ -161,18 +161,49 @@
 			<i>egit/org.eclipse.egit.repository/target/repository</i>. If not, make sure the target platform has been downloaded from within Eclipse (Windows&gt;Preferences&gt;Plug-in Development&gt;Target Platform). The default target platform defined in the maven build is currently Eclipse 4.6 (Neon). If you skip setting the system property <code>target-platform</code> the target platform for Eclipse 4.6 will be used. EGit built with that target platform can run on any Eclipse &gt;= 4.6. If you choose a higher target platform, the EGit produced may not run on Eclipses older than the target platform version.
 		</p>
 		<h2 id="Dependencies_and_License_Check">Dependencies and License Check</h2>
-		<p>In order to update the list of dependencies run the dash-licenses Maven plugin</p>
-		<pre style="width: 55em;">
-mvn org.eclipse.dash:license-tool-plugin:license-check -Ddash.summary=DEPENDENCIES -Ddash.projectId=technology.jgit
-mvn org.eclipse.dash:license-tool-plugin:license-check -Ddash.summary=DEPENDENCIES -Ddash.projectId=technology.egit
-</pre>
-		<p>for jgit and egit and then sort the entries in the file <code>DEPENDENCIES</code> and check for changes against the previous version.
-			If necessary file CQs for new dependencies which are flagged 
-			<i>restricted</i> by the tool.
-			See the 
+		<p>We use the 
+			<a href="https://github.com/eclipse/dash-licenses#example-maven-plugin" target="egit_external">dash-licenses Maven plugin</a> to check the license of 3rd party dependencies. See the 
 			<a href="https://www.eclipse.org/projects/handbook/#ip-license-tool" target="egit_external">Eclipse projects handbook</a>.
 		</p>
-		<p>This tool requires Java 11.</p>
+		<p>On the master branch with the following changes the maven build is now running the license-check automatically</p>
+		<ul>
+			<li>
+				<a href="https://git.eclipse.org/r/c/jgit/jgit/+/196333" target="egit_external">jgit</a>
+			</li>
+			<li>
+				<a href="https://git.eclipse.org/r/c/egit/egit/+/196335" target="egit_external">egit</a>
+			</li>
+		</ul>
+		<p>A summary of the check results is written to the 
+			<i>target/dash/summary</i> file. Dependencies which need to be vetted are marked as 
+			<i>restricted</i> in this file.
+		</p>
+		<p>It will fail the build if any dependency needs to be vetted:</p>
+		<pre>
+13:35:57  11:35:57 [INFO] --- license-tool-plugin:0.0.1-SNAPSHOT:license-check (license-check) @ egit-parent ---
+13:36:10  11:36:09 [INFO] Querying Eclipse Foundation for license data for 299 items.
+13:36:10  11:36:10 [INFO] Found 246 items.
+13:36:10  11:36:10 [INFO] License information could not be automatically verified for the following content:
+13:36:10  11:36:10 [INFO] 
+13:36:10  11:36:10 [INFO] p2/orbit/p2.eclipse.feature/org.eclipse.emf.ecore/2.23.0.v20200630-0516
+13:36:10  11:36:10 [INFO] 
+13:36:10  11:36:10 [INFO] This content is either not correctly mapped by the system, or requires review.
+13:36:10  11:36:10 [INFO] Summary file was written to: /home/jenkins/agent/workspace/egit.gerrit/repo/target/dash/summary
+13:36:10  11:36:10 [ERROR] Dependency license check failed. Some dependencies need to be vetted.
+</pre>
+		<p>If that happens run the build again locally and provide a 
+			<a href="https://gitlab.eclipse.org/-/profile/personal_access_tokens" target="egit_external">gitlab token with scope "api"</a> to automatically create review requests for the IP team:
+		</p>
+		<pre>
+mvn clean install -Ddash.iplab.token="&lt;gitlab token&gt;"
+</pre>
+		<p>Then wait until these requests have been approved.</p>
+		<p>You can set the option 
+			<i>dash.skip</i> to skip the license check:
+		</p>
+		<pre>
+mvn clean install -Ddash.skip
+</pre>
 		<h2 id="JGit_Bazel_Build">JGit Bazel Build</h2>
 		<p>Since Gerrit is built using 
 			<a href="https://www.bazel.io/" target="egit_external">Bazel</a> a Bazel build was also implemented for JGit.
