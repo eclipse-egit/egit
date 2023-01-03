@@ -492,8 +492,20 @@ public class RepositoriesView extends CommonNavigator implements IShowInSource, 
 					return;
 				}
 				if (element instanceof RefNode) {
-					executeOpenCommandWithConfirmation(element,
-							((RefNode) element).getObject().getName());
+					RefNode refNode = (RefNode) element;
+					String currentBranch = null;
+					try {
+						currentBranch = refNode.getRepository()
+								.getFullBranch();
+					} catch (IOException e) {
+						// it's okay to not know the current branch
+					}
+					String targetBranch = ((RefNode) element).getObject()
+							.getName();
+					if (!targetBranch.equals(currentBranch)) {
+						executeOpenCommandWithConfirmation(element,
+								targetBranch);
+					}
 				} else if (element instanceof TagNode) {
 					executeOpenCommandWithConfirmation(element,
 							((TagNode) element).getObject().getName());
