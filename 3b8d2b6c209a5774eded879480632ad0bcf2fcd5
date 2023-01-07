@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "3f77d2b5_c7218e11",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/repository/RepositoriesView.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 508,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2023-01-07T09:59:42Z",
+      "side": 1,
+      "message": "What about tags?\n\nI would have expected this check to be inside executeOpenCommandWithConfirmation(), and check that the commit being referenced (if any; a tag might reference a blob) equals HEAD.\n\nLike you I\u0027m unsure whether a check-out does anything useful if the commit to be checked out \u003d\u003d HEAD. If it does not, that check might need to be done in other places, too.",
+      "revId": "3b8d2b6c209a5774eded879480632ad0bcf2fcd5",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31"
+    }
+  ]
+}
