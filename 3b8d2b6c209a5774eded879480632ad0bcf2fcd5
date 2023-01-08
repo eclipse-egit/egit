@@ -34,6 +34,24 @@
       "parentUuid": "3f77d2b5_c7218e11",
       "revId": "3b8d2b6c209a5774eded879480632ad0bcf2fcd5",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a7246fa8_71ff904e",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/repository/RepositoriesView.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 508,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2023-01-08T19:31:13Z",
+      "side": 1,
+      "message": "Just realized that for branches your code is actually right. If we have two branches pointing at the same commit and have one checked out, checking out the other should still be possible.\n\nFor tags, one does have to check the commit being pointed to.",
+      "parentUuid": "43b1b612_eda6bfc5",
+      "revId": "3b8d2b6c209a5774eded879480632ad0bcf2fcd5",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31"
     }
   ]
 }
