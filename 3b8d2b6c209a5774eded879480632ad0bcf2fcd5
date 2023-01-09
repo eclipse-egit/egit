@@ -70,6 +70,24 @@
       "parentUuid": "a7246fa8_71ff904e",
       "revId": "3b8d2b6c209a5774eded879480632ad0bcf2fcd5",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "9c6a9da1_4e35e70a",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/repository/RepositoriesView.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 508,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2023-01-09T21:38:32Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "bfdc4fba_fe20ec35",
+      "revId": "3b8d2b6c209a5774eded879480632ad0bcf2fcd5",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31"
     }
   ]
 }
