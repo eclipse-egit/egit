@@ -52,6 +52,24 @@
       "parentUuid": "43b1b612_eda6bfc5",
       "revId": "3b8d2b6c209a5774eded879480632ad0bcf2fcd5",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "bfdc4fba_fe20ec35",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/repository/RepositoriesView.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 508,
+      "author": {
+        "id": 440
+      },
+      "writtenOn": "2023-01-09T17:47:42Z",
+      "side": 1,
+      "message": "In fact, I realized the same only after implementation. I had code that resolved everything to ObjectId and compared those, and then noticed I can no longer switch from current branch to another branch pointing to same commit.\nThat\u0027s why I effectively reverted all of that, and really just compare refName and repo.getFullBranch. I\u0027m aware that doesn\u0027t avoid the checkout for tags, but I\u0027m honestly not sure if trying to use the commit in the case of tags wouldn\u0027t lead to similar wrong situations in some cases (e.g. 2 branches and 1 tag pointing all to the same commit, and then switching from branch A to tag and then to branch B).\n\nThat\u0027s why in the end I would be happy with the simple solution that avoids this only for branches, since that is the 99% solution, and running the operation is not an error (similar like before).",
+      "parentUuid": "a7246fa8_71ff904e",
+      "revId": "3b8d2b6c209a5774eded879480632ad0bcf2fcd5",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31"
     }
   ]
 }
