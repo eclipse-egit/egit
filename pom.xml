@@ -63,7 +63,6 @@
     <maven-version-minimum>3.6.3</maven-version-minimum>
     <egit-version>6.5.0-SNAPSHOT</egit-version>
     <tycho-version>2.7.5</tycho-version>
-    <tycho-extras-version>${tycho-version}</tycho-extras-version>
     <java-version>11</java-version>
     <ecj-version>3.29.0</ecj-version>
     <spotbugs-maven-plugin-version>4.4.1</spotbugs-maven-plugin-version>
@@ -334,7 +333,7 @@
             <dependency>
               <groupId>org.eclipse.tycho.extras</groupId>
               <artifactId>tycho-sourceref-jgit</artifactId>
-              <version>${tycho-extras-version}</version>
+              <version>${tycho-version}</version>
             </dependency>
           </dependencies>
         </plugin>
@@ -428,7 +427,7 @@
         <plugin>
           <groupId>org.eclipse.cbi.maven.plugins</groupId>
           <artifactId>eclipse-jarsigner-plugin</artifactId>
-          <version>1.3.2</version>
+          <version>1.3.5</version>
         </plugin>
       </plugins>
     </pluginManagement>
