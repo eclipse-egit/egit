@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "7b209b41_d91ebb70",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 440
+      },
+      "writtenOn": "2023-02-01T17:01:36Z",
+      "side": 1,
+      "message": "Isn\u0027t 6.5 far away yet? Or are we merging also for milestones? I\u0027m a bit out of context there...",
+      "revId": "d25f5ea29cc3eb7a8b9b46df0ceed107329dbd84",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31"
+    }
+  ]
+}
