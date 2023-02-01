@@ -191,9 +191,9 @@ public class GitRepositoriesViewTest extends GitRepositoriesViewTestBase {
 		bot.activeEditor().close();
 		refreshAndWait();
 
-		// open a branch (checkout)
-		checkoutWithDoubleClick(tree, "master");
+		// opening current branch is a no-op
 		String contentMaster = getTestFileContent();
+		// open a branch (checkout)
 		checkoutWithDoubleClick(tree, "stable");
 		String contentStable = getTestFileContent();
 		assertNotEquals("Content of master and stable should differ",

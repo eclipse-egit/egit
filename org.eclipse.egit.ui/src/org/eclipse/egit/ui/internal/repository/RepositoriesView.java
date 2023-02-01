@@ -851,6 +851,9 @@ public class RepositoriesView extends CommonNavigator implements IShowInSource, 
 
 	private void executeOpenCommandWithConfirmation(RepositoryTreeNode element,
 			String refName) {
+		if (targetIsCurrentBranch(element, refName)) {
+			return;
+		}
 		if (!BranchOperationUI.checkoutWillShowQuestionDialog(refName)) {
 			IPreferenceStore store = Activator.getDefault()
 					.getPreferenceStore();
@@ -886,6 +889,17 @@ public class RepositoriesView extends CommonNavigator implements IShowInSource, 
 			}
 		}
 		executeOpenCommand(element);
+	}
+
+	private boolean targetIsCurrentBranch(RepositoryTreeNode element,
+			String refName) {
+		try {
+			Repository repository = element.getRepository();
+			return refName.equals(repository.getFullBranch());
+		} catch (IOException e) {
+			// ignore and just execute the checkout operation
+			return false;
+		}
 	}
 
 	private void executeOpenCommand(RepositoryTreeNode element) {
