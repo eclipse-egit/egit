@@ -303,10 +303,14 @@ public class ConnectProviderOperation implements IEGitOperation {
 		List<IPath> derived = new ArrayList<>();
 		IResource[] members = c.members(IContainer.INCLUDE_HIDDEN);
 		for (IResource r : members) {
-			if (r.isDerived())
+			if (r.isVirtual()) {
+				continue;
+			}
+			if (r.isDerived()) {
 				derived.add(r.getLocation());
-			else if (r instanceof IContainer)
+			} else if (r instanceof IContainer) {
 				derived.addAll(findDerivedResources((IContainer) r));
+			}
 		}
 		return derived;
 	}
