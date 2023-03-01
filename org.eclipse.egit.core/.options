@@ -8,3 +8,5 @@ org.eclipse.egit.core/debug/core/gpg = false
 org.eclipse.egit.core/debug/core/indexdiffcache = false
 # Trace location for ResourceRefreshJob
 org.eclipse.egit.core/debug/core/refresh = false
+# Trace location to enable the EGit progress monitor to show timings
+org.eclipse.egit.core/performance = false
