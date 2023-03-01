@@ -29,7 +29,9 @@ public enum GitTraceLocation implements ITraceLocation {
 	/** IndexDiffCache */
 	INDEXDIFFCACHE("/debug/core/indexdiffcache"), //$NON-NLS-1$
 	/** refreshing resources */
-	REFRESH("/debug/core/refresh"); //$NON-NLS-1$
+	REFRESH("/debug/core/refresh"), //$NON-NLS-1$
+	/** performance trace */
+	PERFORMANCE("/performance"); //$NON-NLS-1$
 
 	/**
 	 * Initializes the locations.
