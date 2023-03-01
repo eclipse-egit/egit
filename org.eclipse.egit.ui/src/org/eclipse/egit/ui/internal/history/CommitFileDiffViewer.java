@@ -842,9 +842,8 @@ public class CommitFileDiffViewer extends TableViewer {
 					if (loadJob.getInput().isSelectMarked()) {
 						setSelection(new StructuredSelection(interesting),
 								true);
-					} else {
-						reveal(interesting);
 					}
+					reveal(interesting);
 				}
 			} finally {
 				control.setRedraw(true);

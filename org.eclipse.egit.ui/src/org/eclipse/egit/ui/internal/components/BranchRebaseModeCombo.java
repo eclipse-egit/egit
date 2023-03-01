@@ -48,7 +48,7 @@ public class BranchRebaseModeCombo {
 			public String getText(Object element) {
 				if (element == BranchRebaseMode.REBASE) {
 					return UIText.BranchRebaseMode_Rebase;
-				} else if (element == BranchRebaseMode.PRESERVE) {
+				} else if (element == BranchRebaseMode.MERGES) {
 					return UIText.BranchRebaseMode_Preserve;
 				} else if (element == BranchRebaseMode.INTERACTIVE) {
 					return UIText.BranchRebaseMode_Interactive;
