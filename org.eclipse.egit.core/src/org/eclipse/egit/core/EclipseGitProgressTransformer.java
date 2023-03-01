@@ -13,17 +13,22 @@
  *******************************************************************************/
 package org.eclipse.egit.core;
 
+import java.time.Duration;
+import java.time.Instant;
 import java.util.concurrent.TimeUnit;
 
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.SubMonitor;
 import org.eclipse.jgit.lib.ProgressMonitor;
+import org.eclipse.jgit.util.SystemReader;
 
 /**
  * A JGit {@link ProgressMonitor} that reports progress and cancellation via an
  * Eclipse {@link IProgressMonitor}.
  */
 public class EclipseGitProgressTransformer implements ProgressMonitor {
+	private static boolean performanceTrace = SystemReader.getInstance()
+			.isPerformanceTraceEnabled();
 
 	private static long UPDATE_INTERVAL = TimeUnit.MILLISECONDS.toMillis(100);
 
@@ -44,6 +49,10 @@ public class EclipseGitProgressTransformer implements ProgressMonitor {
 	private int totalWork;
 
 	private long lastUpdatedAt;
+
+	private Boolean showDuration;
+
+	private Instant startTime;
 
 	/**
 	 * Create a new progress monitor.
@@ -68,6 +77,7 @@ public class EclipseGitProgressTransformer implements ProgressMonitor {
 		lastUpdatedAt = 0;
 		totalWork = total <= 0 ? UNKNOWN : total;
 		root.subTask(msg);
+		this.startTime = Instant.now();
 	}
 
 	@Override
@@ -112,6 +122,8 @@ public class EclipseGitProgressTransformer implements ProgressMonitor {
 			m.append(twstr);
 			m.append(')');
 
+			appendDuration(m, elapsedTime());
+
 			root.subTask(m.toString());
 			root.setWorkRemaining(100);
 			root.worked(1);
@@ -128,5 +140,59 @@ public class EclipseGitProgressTransformer implements ProgressMonitor {
 	@Override
 	public boolean isCancelled() {
 		return root.isCanceled();
+	}
+
+	@Override
+	public void showDuration(boolean enabled) {
+		showDuration = Boolean.valueOf(enabled);
+	}
+
+	private boolean showDuration() {
+		return showDuration != null ? showDuration.booleanValue()
+				: performanceTrace;
+	}
+
+	private Duration elapsedTime() {
+		return Duration.between(startTime, Instant.now());
+	}
+
+	/**
+	 * Append formatted duration if system property or environment variable
+	 * GIT_TRACE_PERFORMANCE is set to "true". If both are defined the system
+	 * property takes precedence.
+	 *
+	 * @param s
+	 *            StringBuilder to append the formatted duration to
+	 * @param duration
+	 *            duration to format
+	 */
+	@SuppressWarnings({ "boxing" })
+	private void appendDuration(StringBuilder s, Duration duration) {
+		if (!showDuration()) {
+			return;
+		}
+		long hours = duration.toHours();
+		int minutes = duration.toMinutesPart();
+		int seconds = duration.toSecondsPart();
+		s.append(" ["); //$NON-NLS-1$
+		if (hours > 0) {
+			s.append(hours).append(':');
+			s.append(String.format("%02d", minutes)).append(':'); //$NON-NLS-1$
+			s.append(String.format("%02d", seconds)); //$NON-NLS-1$
+		} else if (minutes > 0) {
+			s.append(minutes).append(':');
+			s.append(String.format("%02d", seconds)); //$NON-NLS-1$
+		} else {
+			s.append(seconds);
+		}
+		s.append('.').append(String.format("%03d", duration.toMillisPart())); //$NON-NLS-1$
+		if (hours > 0) {
+			s.append('h');
+		} else if (minutes > 0) {
+			s.append('m');
+		} else {
+			s.append('s');
+		}
+		s.append(']');
 	}
 }
