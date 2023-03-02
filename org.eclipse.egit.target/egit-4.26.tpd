@@ -3,5 +3,5 @@ target "egit-4.26" with source configurePhase
 include "projects/jetty-10.0.x.tpd"
 include "projects/license.tpd"
 include "projects/swtbot-snapshot.tpd"
-include "orbit/S20230101190934.tpd"
+include "orbit/R20230302014618-2023-03.tpd"
 include "releasetrain/4.26-2022-12.tpd"
