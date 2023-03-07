@@ -19,16 +19,15 @@ import java.util.concurrent.TimeUnit;
 
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.SubMonitor;
+import org.eclipse.egit.core.internal.trace.GitTraceLocation;
 import org.eclipse.jgit.lib.ProgressMonitor;
-import org.eclipse.jgit.util.SystemReader;
+import org.eclipse.jgit.util.StringUtils;
 
 /**
  * A JGit {@link ProgressMonitor} that reports progress and cancellation via an
  * Eclipse {@link IProgressMonitor}.
  */
 public class EclipseGitProgressTransformer implements ProgressMonitor {
-	private static boolean performanceTrace = SystemReader.getInstance()
-			.isPerformanceTraceEnabled();
 
 	private static long UPDATE_INTERVAL = TimeUnit.MILLISECONDS.toMillis(100);
 
@@ -62,22 +61,23 @@ public class EclipseGitProgressTransformer implements ProgressMonitor {
 	 */
 	public EclipseGitProgressTransformer(final IProgressMonitor eclipseMonitor) {
 		root = SubMonitor.convert(eclipseMonitor);
+		this.startTime = Instant.now();
 	}
 
 	@Override
 	public void start(final int totalTasks) {
-		// Nothing to do
+		this.startTime = Instant.now();
 	}
 
 	@Override
 	public void beginTask(final String name, final int total) {
+		this.startTime = Instant.now();
 		msg = name;
 		lastWorked = 0;
 		lastShown = 0;
 		lastUpdatedAt = 0;
 		totalWork = total <= 0 ? UNKNOWN : total;
 		root.subTask(msg);
-		this.startTime = Instant.now();
 	}
 
 	@Override
@@ -85,11 +85,17 @@ public class EclipseGitProgressTransformer implements ProgressMonitor {
 		if (work <= 0) {
 			return;
 		}
-		final int cmp = lastWorked + work;
+		int cmp = lastWorked + work;
+		StringBuilder m = new StringBuilder();
 		if (totalWork == UNKNOWN) {
 			long now = System.currentTimeMillis();
 			if (now < lastUpdatedAt || now - lastUpdatedAt > UPDATE_INTERVAL) {
-				root.subTask(msg + ", " + cmp); //$NON-NLS-1$
+				if (!StringUtils.isEmptyOrNull(msg)) {
+					m.append(msg).append(", "); //$NON-NLS-1$
+				}
+				m.append(cmp);
+				appendDuration(m, elapsedTime());
+				root.subTask(m.toString());
 				root.setWorkRemaining(100);
 				root.worked(1);
 				lastUpdatedAt = now;
@@ -97,7 +103,6 @@ public class EclipseGitProgressTransformer implements ProgressMonitor {
 		} else if (lastShown == 0
 				|| cmp * 100 / totalWork != lastShown * 100 / totalWork) {
 			// Percentage changed: update the subTask message
-			final StringBuilder m = new StringBuilder();
 			m.append(msg);
 			m.append(": "); //$NON-NLS-1$
 			while (m.length() < 25) {
@@ -148,8 +153,8 @@ public class EclipseGitProgressTransformer implements ProgressMonitor {
 	}
 
 	private boolean showDuration() {
-		return showDuration != null ? showDuration.booleanValue()
-				: performanceTrace;
+		return (showDuration != null && showDuration.booleanValue())
+				|| GitTraceLocation.PERFORMANCE.isActive();
 	}
 
 	private Duration elapsedTime() {
@@ -157,9 +162,8 @@ public class EclipseGitProgressTransformer implements ProgressMonitor {
 	}
 
 	/**
-	 * Append formatted duration if system property or environment variable
-	 * GIT_TRACE_PERFORMANCE is set to "true". If both are defined the system
-	 * property takes precedence.
+	 * Append formatted duration if this was set via API or the performance
+	 * trace location "org.eclipse.egit.core/performance" is active.
 	 *
 	 * @param s
 	 *            StringBuilder to append the formatted duration to
