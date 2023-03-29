@@ -15,6 +15,7 @@ import static org.junit.Assert.assertNotNull;
 
 import java.io.File;
 
+import org.eclipse.core.resources.IResource;
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.core.runtime.Path;
@@ -344,6 +345,11 @@ project.getProject(),
 		// setup workspace
 		testRepository.addToIndex(project.getProject().findMember(".classpath"));
 		testRepository.addToIndex(project.getProject().findMember(".project"));
+		IResource settings = project.getProject()
+				.findMember(".settings/org.eclipse.core.resources.prefs");
+		if (settings != null) {
+			testRepository.addToIndex(settings);
+		}
 		testRepository.commit("commit all");
 		testRepository.appendFileContent(file, "another line\n");
 		File newFile = testRepository.createFile(project.getProject(), "new-file");

@@ -82,11 +82,12 @@ public class CommitNonWSChangesTest extends LocalRepositoryTestCase {
 			showUntracked.select();
 
 		SWTBotTree tree = commitDialog.bot().tree();
-		assertEquals("Wrong row count", 4, tree.rowCount());
+		assertEquals("Wrong row count", 5, tree.rowCount());
 		assertTreeLineContent(tree, 0, "GeneralProject/.project");
-		assertTreeLineContent(tree, 1, "GeneralProject/folder/test.txt");
-		assertTreeLineContent(tree, 2, "GeneralProject/folder/test2.txt");
-		assertTreeLineContent(tree, 3, "ProjectWithoutDotProject/.project");
+		assertTreeLineContent(tree, 1, "GeneralProject/" + SETTINGS);
+		assertTreeLineContent(tree, 2, "GeneralProject/folder/test.txt");
+		assertTreeLineContent(tree, 3, "GeneralProject/folder/test2.txt");
+		assertTreeLineContent(tree, 4, "ProjectWithoutDotProject/.project");
 
 		commitDialog.bot().textWithLabel(UIText.CommitDialog_Author)
 				.setText(TestUtil.TESTAUTHOR);
@@ -100,6 +101,7 @@ public class CommitNonWSChangesTest extends LocalRepositoryTestCase {
 		// wait until commit is completed
 		Job.getJobManager().join(JobFamilies.COMMIT, null);
 		String[] paths = { "ProjectWithoutDotProject/.project",
+				"ProjectWithoutDotProject/" + SETTINGS,
 				"ProjectWithoutDotProject/folder/test.txt",
 				"ProjectWithoutDotProject/folder/test2.txt" };
 		TestUtil.assertRepositoryContainsFiles(repository, paths);
