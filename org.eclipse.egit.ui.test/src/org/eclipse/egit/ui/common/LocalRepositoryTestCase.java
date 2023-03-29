@@ -21,16 +21,20 @@ import java.io.File;
 import java.io.FilenameFilter;
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Optional;
 
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IFolder;
 import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.IProjectDescription;
+import org.eclipse.core.resources.IResource;
+import org.eclipse.core.resources.IWorkspace;
 import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.Path;
 import org.eclipse.core.runtime.preferences.IEclipsePreferences;
@@ -154,6 +158,8 @@ public abstract class LocalRepositoryTestCase extends EGitTestCase {
 
 	/** A folder obtained by checking in a project without .project */
 	protected static final String PROJ2 = "ProjectWithoutDotProject";
+
+	protected static final String SETTINGS = ".settings/org.eclipse.core.resources.prefs";
 
 	protected static final String FOLDER = "folder";
 
@@ -370,27 +376,24 @@ public abstract class LocalRepositoryTestCase extends EGitTestCase {
 			assertConnected(secondProject);
 		}
 
+		ArrayList<IFile> toCommit = new ArrayList<>();
 		IFile dotProject = firstProject.getFile(".project");
 		assertTrue(".project is not accessible: " + dotProject,
 				dotProject.isAccessible());
+		toCommit.add(dotProject);
 		IFolder folder = firstProject.getFolder(FOLDER);
-		IFile textFile = folder.getFile(FILE1);
-		IFile textFile2 = folder.getFile(FILE2);
-		IFile[] committableFiles = null;
+		toCommit.add(folder.getFile(FILE1));
+		toCommit.add(folder.getFile(FILE2));
+		getSettings(firstProject).ifPresent(f -> toCommit.add(f));
 		if (secondProject != null) {
 			folder = secondProject.getFolder(FOLDER);
-			IFile secondtextFile = folder.getFile(FILE1);
-			IFile secondtextFile2 = folder.getFile(FILE2);
-
-			committableFiles = new IFile[] { dotProject, textFile, textFile2,
-					secondtextFile, secondtextFile2 };
-		} else {
-			committableFiles = new IFile[] { dotProject, textFile, textFile2 };
+			toCommit.add(folder.getFile(FILE1));
+			toCommit.add(folder.getFile(FILE2));
+			getSettings(secondProject).ifPresent(f -> toCommit.add(f));
 		}
-		ArrayList<IFile> untracked = new ArrayList<>();
-		untracked.addAll(Arrays.asList(committableFiles));
+		ArrayList<IFile> untracked = new ArrayList<>(toCommit);
 		// commit to stable
-		CommitOperation op = new CommitOperation(committableFiles,
+		CommitOperation op = new CommitOperation(toCommit.toArray(new IFile[0]),
 				untracked, TestUtil.TESTAUTHOR, TestUtil.TESTCOMMITTER,
 				"Initial commit");
 		op.execute(null);
@@ -410,6 +413,14 @@ public abstract class LocalRepositoryTestCase extends EGitTestCase {
 		return gitDir;
 	}
 
+	private Optional<IFile> getSettings(IProject project) {
+		IResource rsc = project.findMember(SETTINGS);
+		if (rsc instanceof IFile) {
+			return Optional.of((IFile) rsc);
+		}
+		return Optional.empty();
+	}
+
 	protected Repository createLocalTestRepository(String repoName)
 			throws IOException {
 		File gitDir = new File(new File(testDirectory, repoName),
@@ -422,19 +433,21 @@ public abstract class LocalRepositoryTestCase extends EGitTestCase {
 
 	protected IProject createStandardTestProjectInRepository(
 			Repository repository, String name) throws Exception {
-		IProject project = ResourcesPlugin.getWorkspace().getRoot()
-				.getProject(name);
+		IWorkspace workspace = ResourcesPlugin.getWorkspace();
+		IProject project = workspace.getRoot().getProject(name);
 
 		if (project.exists()) {
 			project.delete(true, null);
 			TestUtil.waitForJobs(100, 5000);
 		}
-		IProjectDescription desc = ResourcesPlugin.getWorkspace()
-				.newProjectDescription(name);
-		desc.setLocation(
-				new Path(new File(repository.getWorkTree(), name).getPath()));
+		File projectDir = new File(repository.getWorkTree(), name);
+		IProjectDescription desc = workspace.newProjectDescription(name);
+		desc.setLocation(new Path(projectDir.getPath()));
 		project.create(desc, null);
 		project.open(null);
+		workspace.run(m -> project
+				.setDefaultCharset(StandardCharsets.UTF_8.name(), m), project,
+				IWorkspace.AVOID_UPDATE, null);
 		TestUtil.waitForJobs(50, 5000);
 
 		assertTrue("Project is not accessible: " + project,
@@ -451,6 +464,7 @@ public abstract class LocalRepositoryTestCase extends EGitTestCase {
 		textFile2.create(new ByteArrayInputStream(
 				"Some more content".getBytes(project.getDefaultCharset())),
 				false, null);
+		assertTrue(getSettings(project).isPresent());
 		return project;
 	}
 

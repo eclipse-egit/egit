@@ -1,27 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <?pde?>
 <!-- generated with https://github.com/eclipse-cbi/targetplatform-dsl -->
-<target name="egit-4.26" sequenceNumber="1677750391">
+<target name="egit-4.26" sequenceNumber="1682773064">
   <locations>
-    <location includeMode="slicer" includeAllPlatforms="false" includeSource="true" includeConfigurePhase="true" type="InstallableUnit">
-      <unit id="jakarta.servlet-api" version="4.0.0"/>
-      <unit id="jakarta.servlet-api.source" version="4.0.0"/>
-      <unit id="org.eclipse.jetty.http" version="10.0.6"/>
-      <unit id="org.eclipse.jetty.http.source" version="10.0.6"/>
-      <unit id="org.eclipse.jetty.io" version="10.0.6"/>
-      <unit id="org.eclipse.jetty.io.source" version="10.0.6"/>
-      <unit id="org.eclipse.jetty.security" version="10.0.6"/>
-      <unit id="org.eclipse.jetty.security.source" version="10.0.6"/>
-      <unit id="org.eclipse.jetty.server" version="10.0.6"/>
-      <unit id="org.eclipse.jetty.server.source" version="10.0.6"/>
-      <unit id="org.eclipse.jetty.servlet" version="10.0.6"/>
-      <unit id="org.eclipse.jetty.servlet.source" version="10.0.6"/>
-      <unit id="org.eclipse.jetty.util" version="10.0.6"/>
-      <unit id="org.eclipse.jetty.util.source" version="10.0.6"/>
-      <unit id="org.eclipse.jetty.util.ajax" version="10.0.6"/>
-      <unit id="org.eclipse.jetty.util.ajax.source" version="10.0.6"/>
-      <repository id="jetty-10.0.x" location="https://download.eclipse.org/eclipse/jetty/10.0.6/"/>
-    </location>
     <location includeMode="slicer" includeAllPlatforms="false" includeSource="true" includeConfigurePhase="true" type="InstallableUnit">
       <unit id="org.eclipse.license.feature.group" version="0.0.0"/>
       <repository id="eclipse-public-license" location="https://download.eclipse.org/cbi/updates/license/2.0.2.v20181016-2210"/>
@@ -81,14 +62,6 @@
       <unit id="org.apache.sshd.sftp.source" version="2.9.2.v20221117-1942"/>
       <unit id="org.assertj" version="3.20.2.v20210706-1104"/>
       <unit id="org.assertj.source" version="3.20.2.v20210706-1104"/>
-      <unit id="org.bouncycastle.bcpg" version="1.72.0.v20221013-1810"/>
-      <unit id="org.bouncycastle.bcpg.source" version="1.72.0.v20221013-1810"/>
-      <unit id="org.bouncycastle.bcpkix" version="1.72.0.v20221013-1810"/>
-      <unit id="org.bouncycastle.bcpkix.source" version="1.72.0.v20221013-1810"/>
-      <unit id="org.bouncycastle.bcprov" version="1.72.0.v20221013-1810"/>
-      <unit id="org.bouncycastle.bcprov.source" version="1.72.0.v20221013-1810"/>
-      <unit id="org.bouncycastle.bcutil" version="1.72.0.v20221013-1810"/>
-      <unit id="org.bouncycastle.bcutil.source" version="1.72.0.v20221013-1810"/>
       <unit id="org.junit" version="4.13.2.v20211018-1956"/>
       <unit id="org.junit.source" version="4.13.2.v20211018-1956"/>
       <unit id="org.kohsuke.args4j" version="2.33.0.v20160323-2218"/>
@@ -138,6 +111,86 @@
       <unit id="org.sat4j.pb" version="0.0.0"/>
       <unit id="org.eclipse.tools.layout.spy" version="0.0.0"/>
       <repository location="https://download.eclipse.org/releases/2022-12/"/>
+    </location>
+    <location includeDependencyDepth="none" includeDependencyScopes="compile" includeSource="true" missingManifest="error" type="Maven" label="jetty">
+    <dependencies>
+    	<dependency>
+    		<groupId>org.eclipse.jetty</groupId>
+    		<artifactId>jetty-http</artifactId>
+    		<version>10.0.15</version>
+    		<type>jar</type>
+    	</dependency>
+    	<dependency>
+    		<groupId>org.eclipse.jetty</groupId>
+    		<artifactId>jetty-io</artifactId>
+    		<version>10.0.15</version>
+    		<type>jar</type>
+    	</dependency>
+    	<dependency>
+    		<groupId>org.eclipse.jetty</groupId>
+    		<artifactId>jetty-security</artifactId>
+    		<version>10.0.15</version>
+    		<type>jar</type>
+    	</dependency>
+    	<dependency>
+    		<groupId>org.eclipse.jetty</groupId>
+    		<artifactId>jetty-server</artifactId>
+    		<version>10.0.15</version>
+    		<type>jar</type>
+    	</dependency>
+    	<dependency>
+    		<groupId>org.eclipse.jetty</groupId>
+    		<artifactId>jetty-servlet</artifactId>
+    		<version>10.0.15</version>
+    		<type>jar</type>
+    	</dependency>
+    	<dependency>
+    		<groupId>org.eclipse.jetty</groupId>
+    		<artifactId>jetty-util</artifactId>
+    		<version>10.0.15</version>
+    		<type>jar</type>
+    	</dependency>
+    	<dependency>
+    		<groupId>org.eclipse.jetty</groupId>
+    		<artifactId>jetty-util-ajax</artifactId>
+    		<version>10.0.15</version>
+    		<type>jar</type>
+    	</dependency>
+    	<dependency>
+    		<groupId>jakarta.servlet</groupId>
+    		<artifactId>jakarta.servlet-api</artifactId>
+    		<version>4.0.4</version>
+    		<type>jar</type>
+    	</dependency>
+    </dependencies>
+    </location>
+    <location includeDependencyDepth="none" includeDependencyScopes="compile" includeSource="true" missingManifest="error" type="Maven" label="bouncycastle">
+    <dependencies>
+    	<dependency>
+    		<groupId>org.bouncycastle</groupId>
+    		<artifactId>bcpg-jdk18on</artifactId>
+    		<version>1.73</version>
+    		<type>jar</type>
+    	</dependency>
+    	<dependency>
+    		<groupId>org.bouncycastle</groupId>
+    		<artifactId>bcprov-jdk18on</artifactId>
+    		<version>1.73</version>
+    		<type>jar</type>
+    	</dependency>
+    	<dependency>
+    		<groupId>org.bouncycastle</groupId>
+    		<artifactId>bcpkix-jdk18on</artifactId>
+    		<version>1.73</version>
+    		<type>jar</type>
+    	</dependency>
+    	<dependency>
+    		<groupId>org.bouncycastle</groupId>
+    		<artifactId>bcutil-jdk18on</artifactId>
+    		<version>1.73</version>
+    		<type>jar</type>
+    	</dependency>
+    </dependencies>
     </location>
   </locations>
 </target>

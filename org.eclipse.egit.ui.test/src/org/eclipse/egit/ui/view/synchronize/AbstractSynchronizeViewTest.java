@@ -23,6 +23,7 @@ import static org.junit.Assert.assertTrue;
 import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.UnsupportedEncodingException;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.concurrent.TimeUnit;
@@ -32,6 +33,7 @@ import org.eclipse.core.resources.IFolder;
 import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.IProjectDescription;
 import org.eclipse.core.resources.IResource;
+import org.eclipse.core.resources.IWorkspace;
 import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.Path;
@@ -203,14 +205,14 @@ public abstract class AbstractSynchronizeViewTest extends
 		myRepository.create();
 
 		// we need to commit into master first
-		IProject firstProject = ResourcesPlugin.getWorkspace().getRoot()
-				.getProject(EMPTY_PROJECT);
+		IWorkspace workspace = ResourcesPlugin.getWorkspace();
+		IProject firstProject = workspace.getRoot().getProject(EMPTY_PROJECT);
 
 		if (firstProject.exists()) {
 			firstProject.delete(true, null);
 			TestUtil.waitForJobs(100, 5000);
 		}
-		IProjectDescription desc = ResourcesPlugin.getWorkspace()
+		IProjectDescription desc = workspace
 				.newProjectDescription(EMPTY_PROJECT);
 		desc.setLocation(new Path(new File(myRepository.getWorkTree(),
 				EMPTY_PROJECT).getPath()));
@@ -218,6 +220,10 @@ public abstract class AbstractSynchronizeViewTest extends
 		firstProject.open(null);
 		assertTrue("Project is not accessible: " + firstProject,
 				firstProject.isAccessible());
+		workspace.run(
+				m -> firstProject
+						.setDefaultCharset(StandardCharsets.UTF_8.name(), m),
+				firstProject, IWorkspace.AVOID_UPDATE, null);
 
 		IFolder folder = firstProject.getFolder(FOLDER);
 		folder.create(false, true, null);

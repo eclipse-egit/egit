@@ -114,36 +114,9 @@
   <setupTask
       xsi:type="setup:VariableTask"
       name="egit.target.platform"
-      defaultValue="egit-4.25"
+      defaultValue="egit-4.26"
       storageURI="scope://Workspace"
       label="EGit Target Platform">
-    <choice
-        value="egit-4.17"
-        label="EGit 2020-09 (4.17) target"/>
-    <choice
-        value="egit-4.18"
-        label="EGit 2020-12 (4.18) target"/>
-    <choice
-        value="egit-4.19"
-        label="EGit 2021-03 (4.19) target"/>
-    <choice
-        value="egit-4.20"
-        label="EGit 2021-06 (4.20) target"/>
-    <choice
-        value="egit-4.21"
-        label="EGit 2021-09 (4.21) target"/>
-    <choice
-        value="egit-4.22"
-        label="EGit 2021-12 (4.22) target"/>
-    <choice
-        value="egit-4.23"
-        label="EGit 2022-03 (4.23) target"/>
-    <choice
-        value="egit-4.24"
-        label="EGit 2022-06 (4.24) target"/>
-    <choice
-        value="egit-4.25"
-        label="EGit 2022-09 (4.25) target"/>
     <choice
         value="egit-4.26"
         label="EGit 2022-12 (4.26) target"/>
