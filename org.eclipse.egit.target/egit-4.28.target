@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <?pde?>
 <!-- generated with https://github.com/eclipse-cbi/targetplatform-dsl -->
-<target name="egit-4.28" sequenceNumber="1683038199">
+<target name="egit-4.28" sequenceNumber="1684175058">
   <locations>
     <location includeMode="slicer" includeAllPlatforms="false" includeSource="true" includeConfigurePhase="true" type="InstallableUnit">
       <unit id="org.eclipse.license.feature.group" version="0.0.0"/>
@@ -50,10 +50,6 @@
       <unit id="org.apache.httpcomponents.httpcore.source" version="4.4.16.v20221207-1049"/>
       <unit id="org.apache.log4j" version="1.2.24.v20221221-2012"/>
       <unit id="org.apache.log4j.source" version="1.2.24.v20221221-2012"/>
-      <unit id="org.apache.sshd.osgi" version="2.9.2.v20221117-1942"/>
-      <unit id="org.apache.sshd.osgi.source" version="2.9.2.v20221117-1942"/>
-      <unit id="org.apache.sshd.sftp" version="2.9.2.v20221117-1942"/>
-      <unit id="org.apache.sshd.sftp.source" version="2.9.2.v20221117-1942"/>
       <unit id="org.junit" version="4.13.2.v20211018-1956"/>
       <unit id="org.junit.source" version="4.13.2.v20211018-1956"/>
       <unit id="org.kohsuke.args4j" version="2.33.0.v20160323-2218"/>
@@ -112,6 +108,22 @@
     		<groupId>org.slf4j</groupId>
     		<artifactId>slf4j-simple</artifactId>
     		<version>1.7.36</version>
+    		<type>jar</type>
+    	</dependency>
+    </dependencies>
+    </location>
+    <location includeDependencyDepth="none" includeDependencyScopes="compile" includeSource="true" missingManifest="error" type="Maven" label="sshd">
+    <dependencies>
+    	<dependency>
+    		<groupId>org.apache.sshd</groupId>
+    		<artifactId>sshd-osgi</artifactId>
+    		<version>2.10.0</version>
+    		<type>jar</type>
+    	</dependency>
+    	<dependency>
+    		<groupId>org.apache.sshd</groupId>
+    		<artifactId>sshd-sftp</artifactId>
+    		<version>2.10.0</version>
     		<type>jar</type>
     	</dependency>
     </dependencies>
