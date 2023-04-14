@@ -32,6 +32,8 @@ import org.eclipse.egit.core.internal.ProjectReferenceImporter;
 import org.eclipse.egit.core.project.RepositoryMapping;
 import org.eclipse.jgit.annotations.Nullable;
 import org.eclipse.jgit.lib.ConfigConstants;
+import org.eclipse.jgit.lib.Constants;
+import org.eclipse.jgit.lib.Repository;
 import org.eclipse.jgit.lib.StoredConfig;
 import org.eclipse.osgi.util.NLS;
 import org.eclipse.team.core.ProjectSetCapability;
@@ -67,16 +69,25 @@ public final class GitProjectSetCapability extends ProjectSetCapability {
 			return null;
 		}
 		String branch;
+		Repository repository = mapping.getRepository();
 		try {
-			branch = mapping.getRepository().getBranch();
+			branch = repository.getBranch();
 		} catch (IOException e) {
 			throw new TeamException(NLS.bind(
 					CoreText.GitProjectSetCapability_ExportCouldNotGetBranch,
 					project.getName()));
 		}
 		StoredConfig config = mapping.getRepository().getConfig();
-		String remote = config.getString(ConfigConstants.CONFIG_BRANCH_SECTION,
-				branch, ConfigConstants.CONFIG_KEY_REMOTE);
+		String remote;
+		if (RepositoryUtil.isDetachedHead(repository)) {
+			branch = RepositoryUtil.INSTANCE.mapCommitToRef(repository, branch,
+					false);
+			remote = Constants.DEFAULT_REMOTE_NAME;
+		} else {
+			remote = config.getString(ConfigConstants.CONFIG_BRANCH_SECTION,
+					branch, ConfigConstants.CONFIG_KEY_REMOTE);
+		}
+
 		String url = config.getString(ConfigConstants.CONFIG_REMOTE_SECTION,
 				remote, ConfigConstants.CONFIG_KEY_URL);
 		if (url == null)

@@ -37,8 +37,10 @@ import org.eclipse.core.runtime.Path;
 import org.eclipse.core.runtime.SubMonitor;
 import org.eclipse.egit.core.ProjectReference;
 import org.eclipse.egit.core.RepositoryUtil;
+import org.eclipse.egit.core.op.BranchOperation;
 import org.eclipse.egit.core.op.CloneOperation;
 import org.eclipse.egit.core.op.ConnectProviderOperation;
+import org.eclipse.egit.core.project.RepositoryMapping;
 import org.eclipse.egit.core.settings.GitSettings;
 import org.eclipse.jgit.lib.Config;
 import org.eclipse.jgit.lib.ConfigConstants;
@@ -111,6 +113,10 @@ public class ProjectReferenceImporter {
 
 				RepositoryUtil.INSTANCE.addConfiguredRepository(repositoryPath);
 
+				for (ProjectReference projectReference : projects) {
+					checkoutBranchIfNecessary(projectReference, monitor);
+				}
+
 				IPath newWorkDir = new Path(repositoryPath.getAbsolutePath())
 						.removeLastSegments(1);
 				List<IProject> p = importProjects(projects, newWorkDir,
@@ -119,6 +125,56 @@ public class ProjectReferenceImporter {
 			}
 		}
 		return importedProjects;
+	}
+
+	/**
+	 * Check whether current branch is the same as configured in project
+	 * reference. Checkout configured branch if current branch is different.
+	 *
+	 * @param projectReference
+	 *            the project reference to be checked
+	 * @param monitor
+	 *            progress monitor to be used for branch operation
+	 * @throws TeamException
+	 */
+	private static void checkoutBranchIfNecessary(
+			ProjectReference projectReference, IProgressMonitor monitor)
+			throws TeamException {
+
+		IProject projectInWorkspace = ResourcesPlugin.getWorkspace().getRoot()
+				.getProject(projectReference.getProjectDir());
+
+		if (projectInWorkspace != null) {
+			RepositoryMapping mapping = RepositoryMapping
+					.getMapping(projectInWorkspace);
+			if (mapping != null) {
+				// get current branch
+				String currentBranch;
+				Repository repository = mapping.getRepository();
+				try {
+					currentBranch = repository.getBranch();
+				} catch (IOException e) {
+					throw new TeamException(e.getMessage());
+				}
+				if (RepositoryUtil.isDetachedHead(repository)) {
+					currentBranch = RepositoryUtil.INSTANCE
+							.mapCommitToRef(repository, currentBranch, false);
+				}
+
+				// compare with current branch
+				String configuredBranch = projectReference.getBranch();
+				if (!configuredBranch.equals(currentBranch)) {
+					// Checkout configured branch
+					final BranchOperation branchOperation = new BranchOperation(
+							repository, configuredBranch);
+					try {
+						branchOperation.execute(monitor);
+					} catch (CoreException e) {
+						throw new TeamException(e.getMessage());
+					}
+				}
+			}
+		}
 	}
 
 	private static File cloneIfNecessary(final URIish gitUrl, final String refToCheckout, final IPath workDir,
