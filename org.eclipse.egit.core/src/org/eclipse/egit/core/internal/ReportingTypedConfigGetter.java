@@ -52,10 +52,10 @@ public class ReportingTypedConfigGetter extends DefaultTypedConfigGetter {
 			return super.getEnum(config, all, section, subsection, name,
 					defaultValue);
 		} catch (IllegalArgumentException e) {
-			String valueUsed;
+			String valueUsed = null;
 			if (defaultValue instanceof Config.ConfigEnum) {
 				valueUsed = ((Config.ConfigEnum) defaultValue).toConfigValue();
-			} else {
+			} else if (defaultValue != null) {
 				valueUsed = defaultValue.toString().toLowerCase(Locale.ROOT);
 			}
 			warn(config, join(section, subsection, name), valueUsed, e);
