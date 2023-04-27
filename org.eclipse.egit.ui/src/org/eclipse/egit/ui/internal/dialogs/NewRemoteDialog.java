@@ -12,17 +12,24 @@
  *******************************************************************************/
 package org.eclipse.egit.ui.internal.dialogs;
 
+import java.net.URISyntaxException;
 import java.util.Set;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import org.eclipse.egit.ui.internal.UIText;
+import org.eclipse.egit.ui.internal.clone.GitUrlChecker;
 import org.eclipse.jface.dialogs.IDialogConstants;
 import org.eclipse.jface.dialogs.TitleAreaDialog;
 import org.eclipse.jface.layout.GridDataFactory;
 import org.eclipse.jgit.lib.ConfigConstants;
 import org.eclipse.jgit.lib.Constants;
 import org.eclipse.jgit.lib.Repository;
+import org.eclipse.jgit.transport.URIish;
 import org.eclipse.osgi.util.NLS;
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.dnd.Clipboard;
+import org.eclipse.swt.dnd.TextTransfer;
 import org.eclipse.swt.events.ModifyEvent;
 import org.eclipse.swt.events.ModifyListener;
 import org.eclipse.swt.layout.GridLayout;
@@ -30,6 +37,7 @@ import org.eclipse.swt.layout.RowLayout;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
+import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Text;
@@ -70,7 +78,39 @@ public class NewRemoteDialog extends TitleAreaDialog {
 			nameText.setText(Constants.DEFAULT_REMOTE_NAME);
 			nameText.selectAll();
 		}
+		else {
+			getRemoteNameFromOrganization();
+		}
 		checkPage();
+	}
+
+	private void getRemoteNameFromOrganization() {
+		Clipboard clipboard = new Clipboard(Display.getCurrent());
+		try {
+			String text = (String) clipboard
+					.getContents(TextTransfer.getInstance());
+			if (text != null) {
+				text = GitUrlChecker.sanitizeAsGitUrl(text);
+				if (GitUrlChecker.isValidGitUrl(text)) {
+					final URIish u = new URIish(text);
+					String repoPath = u.getPath();
+					if (repoPath != null) {
+						// find the organization part in
+						// https://host/organization/repo.git
+						Matcher matcher = Pattern.compile("^/((?:\\w|-)+)/") //$NON-NLS-1$
+								.matcher(repoPath);
+					if (matcher.find()) {
+						nameText.setText(matcher.group(1));
+						nameText.selectAll();
+					}
+				}
+				}
+			}
+		} catch (URISyntaxException e) {
+			// nothing to do here, clipboard may contain arbitrary junk
+		} finally {
+			clipboard.dispose();
+		}
 	}
 
 	@Override
