@@ -108,10 +108,10 @@
    <bundle id="org.apache.commons.logging.source">
       <category name="EGit.dependencies"/>
    </bundle>
-   <bundle id="javaewah">
+   <bundle id="com.googlecode.javaewah.JavaEWAH">
       <category name="EGit.dependencies"/>
    </bundle>
-   <bundle id="javaewah.source">
+   <bundle id="com.googlecode.javaewah.JavaEWAH.source">
       <category name="EGit.dependencies"/>
    </bundle>
    <bundle id="bcpg">
