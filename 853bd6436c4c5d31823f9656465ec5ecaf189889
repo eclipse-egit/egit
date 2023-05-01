@@ -1,0 +1,78 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "dc50dd06_aad2ce4e",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/dialogs/NewRemoteDialog.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2023-05-01T17:34:12Z",
+      "side": 1,
+      "message": "EGit style would be \"} else {\" on one line.",
+      "revId": "853bd6436c4c5d31823f9656465ec5ecaf189889",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "268c73cd_935957c3",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/dialogs/NewRemoteDialog.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2023-05-01T17:34:12Z",
+      "side": 1,
+      "message": "Would be a little nicer if this returned the text extracted (or null if none), and setting nameText happened only in create() above.\n\nIf we factor out the pure text extraction (basically line 92 to 110) into a protected static method we could even write a little unit test for this. Might also make it easier to move this bit into GitServer or GitHosts if we ever have a need to do so (for instance, if just using the first path component turns out to be not good enough and we wanted to make this configurable in the GitServersPreferencePage.)",
+      "revId": "853bd6436c4c5d31823f9656465ec5ecaf189889",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d0878274_01fba393",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/dialogs/NewRemoteDialog.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2023-05-01T17:34:12Z",
+      "side": 1,
+      "message": "Static final field for this?",
+      "range": {
+        "startLine": 100,
+        "startChar": 24,
+        "endLine": 100,
+        "endChar": 39
+      },
+      "revId": "853bd6436c4c5d31823f9656465ec5ecaf189889",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d0272971_88deacaa",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/dialogs/NewRemoteDialog.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2023-05-01T17:34:12Z",
+      "side": 1,
+      "message": "There\u0027s an indentation problem here.",
+      "revId": "853bd6436c4c5d31823f9656465ec5ecaf189889",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31"
+    }
+  ]
+}
