@@ -36,10 +36,10 @@
    <feature url="features/org.eclipse.egit.gitflow.feature_0.0.0.qualifier.jar" id="org.eclipse.egit.gitflow.feature" version="0.0.0">
       <category name="EGit.additional"/>
    </feature>
-   <bundle id="org.apache.commons.codec">
+   <bundle id="org.apache.commons.commons-codec">
       <category name="EGit.dependencies"/>
    </bundle>
-   <bundle id="org.apache.commons.codec.source">
+   <bundle id="org.apache.commons.commons-codec.source">
       <category name="EGit.dependencies"/>
    </bundle>
    <bundle id="net.i2p.crypto.eddsa">
