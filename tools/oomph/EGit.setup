@@ -120,6 +120,12 @@
     <choice
         value="egit-4.26"
         label="EGit 2022-12 (4.26) target"/>
+    <choice
+        value="egit-4.27"
+        label="EGit 2023-03 (4.27) target"/>
+    <choice
+        value="egit-4.28"
+        label="EGit 2023-06 (4.28) target"/>
     <description>Default target platform for EGit development.</description>
   </setupTask>
   <setupTask

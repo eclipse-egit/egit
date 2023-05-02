@@ -1,0 +1,20 @@
+target "4.28-2023-06" with source configurePhase
+
+location "https://download.eclipse.org/staging/2023-06" {
+	// Eclipse platform
+	org.eclipse.sdk.ide lazy
+	org.eclipse.ecf.core.feature.feature.group lazy
+	org.eclipse.ecf.filetransfer.feature.feature.group lazy
+	org.eclipse.emf.sdk.feature.group lazy
+	org.eclipse.equinox.concurrent lazy
+	org.eclipse.equinox.p2.director lazy
+	org.eclipse.e4.tools.emf.ui lazy
+	org.eclipse.e4.tools.services lazy
+	org.eclipse.e4.ui.progress lazy
+	org.eclipse.e4.ui.workbench lazy
+	org.sat4j.core lazy
+	org.sat4j.pb lazy
+
+	// debugging SWT layouts
+	org.eclipse.tools.layout.spy lazy
+}
