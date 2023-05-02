@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "9637156d_5bc07ac6",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2023-05-02T17:55:44Z",
+      "side": 1,
+      "message": "Perhaps also add them to the Oomph setup file?",
+      "revId": "95a515a9d67221e35265521fe894b3c2f10035ec",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "fd8e9158_3ac5dd8e",
+        "filename": "org.eclipse.egit.target/releasetrain/4.27-2023-03.tpd",
+        "patchSetId": 1
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2023-05-02T17:55:44Z",
+      "side": 1,
+      "message": "Should be \"4.27-2023-03\"",
+      "range": {
+        "startLine": 1,
+        "startChar": 8,
+        "endLine": 1,
+        "endChar": 20
+      },
+      "revId": "95a515a9d67221e35265521fe894b3c2f10035ec",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31"
+    }
+  ]
+}
