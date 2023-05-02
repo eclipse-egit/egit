@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <?pde?>
 <!-- generated with https://github.com/eclipse-cbi/targetplatform-dsl -->
-<target name="egit-4.26" sequenceNumber="1683037478">
+<target name="egit-4.26" sequenceNumber="1683037621">
   <locations>
     <location includeMode="slicer" includeAllPlatforms="false" includeSource="true" includeConfigurePhase="true" type="InstallableUnit">
       <unit id="org.eclipse.license.feature.group" version="0.0.0"/>
@@ -54,8 +54,6 @@
       <unit id="org.apache.sshd.osgi.source" version="2.9.2.v20221117-1942"/>
       <unit id="org.apache.sshd.sftp" version="2.9.2.v20221117-1942"/>
       <unit id="org.apache.sshd.sftp.source" version="2.9.2.v20221117-1942"/>
-      <unit id="org.assertj" version="3.20.2.v20210706-1104"/>
-      <unit id="org.assertj.source" version="3.20.2.v20210706-1104"/>
       <unit id="org.junit" version="4.13.2.v20211018-1956"/>
       <unit id="org.junit.source" version="4.13.2.v20211018-1956"/>
       <unit id="org.kohsuke.args4j" version="2.33.0.v20160323-2218"/>
@@ -192,6 +190,16 @@
     		<groupId>org.bouncycastle</groupId>
     		<artifactId>bcutil-jdk18on</artifactId>
     		<version>1.73</version>
+    		<type>jar</type>
+    	</dependency>
+    </dependencies>
+    </location>
+    <location includeDependencyDepth="none" includeDependencyScopes="compile" includeSource="true" missingManifest="error" type="Maven" label="assertj">
+    <dependencies>
+    	<dependency>
+    		<groupId>org.assertj</groupId>
+    		<artifactId>assertj-core</artifactId>
+    		<version>3.24.2</version>
     		<type>jar</type>
     	</dependency>
     </dependencies>
