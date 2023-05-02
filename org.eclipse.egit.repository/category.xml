@@ -87,16 +87,16 @@
    <bundle id="com.jcraft.jzlib.source">
       <category name="EGit.dependencies"/>
    </bundle>
-   <bundle id="org.slf4j.api">
+   <bundle id="slf4j.api">
       <category name="EGit.dependencies"/>
    </bundle>
-   <bundle id="org.slf4j.api.source">
+   <bundle id="slf4j.api.source">
       <category name="EGit.dependencies"/>
    </bundle>
-   <bundle id="org.slf4j.binding.simple">
+   <bundle id="slf4j.simple">
       <category name="EGit.dependencies"/>
    </bundle>
-   <bundle id="org.slf4j.binding.simple.source">
+   <bundle id="slf4j.simple.source">
       <category name="EGit.dependencies"/>
    </bundle>
    <bundle id="org.tukaani.xz">

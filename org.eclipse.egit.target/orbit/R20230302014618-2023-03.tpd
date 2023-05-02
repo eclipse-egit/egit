@@ -55,10 +55,6 @@ location "https://download.eclipse.org/tools/orbit/downloads/drops/R202303020146
 	org.objectweb.asm.source [9.4.0.v20221107-1714,9.4.0.v20221107-1714]
 	org.objectweb.asm.tree [9.4.0.v20221107-1714,9.4.0.v20221107-1714]
 	org.objectweb.asm.tree.source [9.4.0.v20221107-1714,9.4.0.v20221107-1714]
-	org.slf4j.api [1.7.30.v20221112-0806,1.7.30.v20221112-0806]
-	org.slf4j.api.source [1.7.30.v20221112-0806,1.7.30.v20221112-0806]
-	org.slf4j.binding.simple [1.7.30.v20221112-0806,1.7.30.v20221112-0806]
-	org.slf4j.binding.simple.source [1.7.30.v20221112-0806,1.7.30.v20221112-0806]
 	org.tukaani.xz [1.9.0.v20210624-1259,1.9.0.v20210624-1259]
 	org.tukaani.xz.source [1.9.0.v20210624-1259,1.9.0.v20210624-1259]
 }

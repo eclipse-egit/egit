@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <?pde?>
 <!-- generated with https://github.com/eclipse-cbi/targetplatform-dsl -->
-<target name="egit-4.26" sequenceNumber="1683037621">
+<target name="egit-4.26" sequenceNumber="1683037777">
   <locations>
     <location includeMode="slicer" includeAllPlatforms="false" includeSource="true" includeConfigurePhase="true" type="InstallableUnit">
       <unit id="org.eclipse.license.feature.group" version="0.0.0"/>
@@ -66,10 +66,6 @@
       <unit id="org.objectweb.asm.source" version="9.4.0.v20221107-1714"/>
       <unit id="org.objectweb.asm.tree" version="9.4.0.v20221107-1714"/>
       <unit id="org.objectweb.asm.tree.source" version="9.4.0.v20221107-1714"/>
-      <unit id="org.slf4j.api" version="1.7.30.v20221112-0806"/>
-      <unit id="org.slf4j.api.source" version="1.7.30.v20221112-0806"/>
-      <unit id="org.slf4j.binding.simple" version="1.7.30.v20221112-0806"/>
-      <unit id="org.slf4j.binding.simple.source" version="1.7.30.v20221112-0806"/>
       <unit id="org.tukaani.xz" version="1.9.0.v20210624-1259"/>
       <unit id="org.tukaani.xz.source" version="1.9.0.v20210624-1259"/>
       <repository location="https://download.eclipse.org/tools/orbit/downloads/drops/R20230302014618/repository"/>
@@ -103,6 +99,22 @@
       <unit id="org.sat4j.pb" version="0.0.0"/>
       <unit id="org.eclipse.tools.layout.spy" version="0.0.0"/>
       <repository location="https://download.eclipse.org/releases/2022-12/"/>
+    </location>
+    <location includeDependencyDepth="none" includeDependencyScopes="compile" includeSource="true" missingManifest="error" type="Maven" label="slf4j">
+    <dependencies>
+    	<dependency>
+    		<groupId>org.slf4j</groupId>
+    		<artifactId>slf4j-api</artifactId>
+    		<version>1.7.36</version>
+    		<type>jar</type>
+    	</dependency>
+    	<dependency>
+    		<groupId>org.slf4j</groupId>
+    		<artifactId>slf4j-simple</artifactId>
+    		<version>1.7.36</version>
+    		<type>jar</type>
+    	</dependency>
+    </dependencies>
     </location>
     <location includeDependencyDepth="none" includeDependencyScopes="compile" includeSource="true" missingManifest="error" type="Maven" label="jetty">
     <dependencies>
