@@ -210,10 +210,10 @@
    <bundle id="org.eclipse.jetty.util.ajax.source">
       <category name="EGit.dependencies"/>
    </bundle>
-   <bundle id="org.apache.commons.compress">
+   <bundle id="org.apache.commons.commons-compress">
       <category name="EGit.dependencies"/>
    </bundle>
-   <bundle id="org.apache.commons.compress.source">
+   <bundle id="org.apache.commons.commons-compress.source">
       <category name="EGit.dependencies"/>
    </bundle>
    <bundle id="org.kohsuke.args4j">
