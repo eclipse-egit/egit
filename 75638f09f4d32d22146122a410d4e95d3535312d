@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "7b48d2e3_63e7b1a3",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2023-05-15T19:13:38Z",
+      "side": 1,
+      "message": "Now I\u0027m confused. How can this have worked without JGit change Id27e73e9712b7865353c9b32b5b768f6e998b05e ?\n\nThis change itself is fine, but should be committed only once the JGit change is in.",
+      "revId": "75638f09f4d32d22146122a410d4e95d3535312d",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31"
+    }
+  ]
+}
