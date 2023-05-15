@@ -16,6 +16,24 @@
       "message": "Now I\u0027m confused. How can this have worked without JGit change Id27e73e9712b7865353c9b32b5b768f6e998b05e ?\n\nThis change itself is fine, but should be committed only once the JGit change is in.",
       "revId": "75638f09f4d32d22146122a410d4e95d3535312d",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "3ed2c78b_51f28572",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2023-05-15T19:48:31Z",
+      "side": 1,
+      "message": "The JGit this build pulled definitely has version range \"[2.9.2,2.10.0)\" for sshd in the MANIFEST.MFs. And the 2.10.0 sshd-osgi at maven central definitely has version 2.10.0, and exports its packages with version 2.10.0.\n\nDo we end up with a target platform that contains both 2.9.2 and 2.10.0? Otherwise I don\u0027t see how the tycho tests could have run -- the target platform should be unresolvable.\n\nThe p2 repository built is inconsistent: it has the binary JARs for 2.9.2, but the source JARs for 2.10.0. [1]\n\n[1] https://ci.eclipse.org/egit/job/egit.gerrit/2827/artifact/org.eclipse.egit.repository/target/repository/plugins/",
+      "parentUuid": "7b48d2e3_63e7b1a3",
+      "revId": "75638f09f4d32d22146122a410d4e95d3535312d",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31"
     }
   ]
 }
