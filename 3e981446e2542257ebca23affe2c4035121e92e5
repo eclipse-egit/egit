@@ -70,6 +70,24 @@
       "parentUuid": "04dd89e1_0392b27f",
       "revId": "3e981446e2542257ebca23affe2c4035121e92e5",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "e15a0668_bf69e7fc",
+        "filename": "pom.xml",
+        "patchSetId": 3
+      },
+      "lineNbr": 298,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2023-05-20T14:00:17Z",
+      "side": 1,
+      "message": "for now I excluded test scope",
+      "parentUuid": "33d8d81a_9ee2c261",
+      "revId": "3e981446e2542257ebca23affe2c4035121e92e5",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31"
     }
   ]
 }
