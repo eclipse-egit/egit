@@ -1149,8 +1149,12 @@ public class RepositoriesView extends CommonNavigator implements IShowInSource, 
 				return Status.CANCEL_STATUS;
 			}
 
-			tv.refresh(true);
-
+			tv.getControl().setRedraw(false);
+			try {
+				tv.refresh(true);
+			} finally {
+				tv.getControl().setRedraw(true);
+			}
 			if (monitor.isCanceled()) {
 				return Status.CANCEL_STATUS;
 			}
