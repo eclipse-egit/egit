@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "2cb5011c_4c029b6d",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2023-05-22T15:44:01Z",
+      "side": 1,
+      "message": "So... \n\n(1) the product build will have to run with this gpg-sign profile enabled.\n(2) the maven call must be wrapped in a withCredentials block\n(3) we need this \"initialize PGP\" step\n(4) we need to use temurin-jdk17-latest as default jdk, or specify it in all\n    Jenkins jobs (parameter \u0027jdk\u0027).\n\nShall I look into the egit-pipelines modifications?",
+      "revId": "9370dfa5f3309c085705d04c27c2e803dc9cf7a6",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "310341aa_e2c48795",
+        "filename": "pom.xml",
+        "patchSetId": 2
+      },
+      "lineNbr": 394,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2023-05-22T15:44:01Z",
+      "side": 1,
+      "message": "This extra \u003cplugin\u003e causes the build failure.",
+      "range": {
+        "startLine": 394,
+        "startChar": 8,
+        "endLine": 394,
+        "endChar": 16
+      },
+      "revId": "9370dfa5f3309c085705d04c27c2e803dc9cf7a6",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31"
+    }
+  ]
+}
