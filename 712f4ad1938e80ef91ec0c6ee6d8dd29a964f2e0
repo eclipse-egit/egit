@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "6660c9db_1feb666a",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2023-05-22T20:53:38Z",
+      "side": 1,
+      "message": "PS 4 builds with https://git.eclipse.org/r/c/egit/egit-pipelines/+/201965 , which uses Java 17 and does the GPG signing. See the build artifacts of my test build: https://ci.eclipse.org/egit/job/thomas-test/92/artifact/org.eclipse.egit.repository/target/repository/plugins/ .",
+      "revId": "712f4ad1938e80ef91ec0c6ee6d8dd29a964f2e0",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31"
+    }
+  ]
+}
