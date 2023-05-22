@@ -62,7 +62,7 @@
   <properties>
     <maven-version-minimum>3.6.3</maven-version-minimum>
     <egit-version>6.6.0-SNAPSHOT</egit-version>
-    <tycho-version>2.7.5</tycho-version>
+    <tycho-version>4.0.0-SNAPSHOT</tycho-version>
     <java-version>11</java-version>
     <ecj-version>3.33.0</ecj-version>
     <spotbugs-maven-plugin-version>4.7.3.4</spotbugs-maven-plugin-version>
@@ -106,9 +106,6 @@
           <plugin>
             <groupId>org.eclipse.tycho</groupId>
             <artifactId>target-platform-configuration</artifactId>
-            <configuration>
-              <includePackedArtifacts>true</includePackedArtifacts>
-            </configuration>
           </plugin>
           <plugin>
             <groupId>org.eclipse.cbi.maven.plugins</groupId>
@@ -205,6 +202,10 @@
       <id>repo.eclipse.org.dash-releases</id>
       <url>https://repo.eclipse.org/content/repositories/dash-licenses-releases/</url>
     </pluginRepository>
+    <pluginRepository>
+      <id>tycho-snapshots</id>
+      <url>https://repo.eclipse.org/content/repositories/tycho-snapshots/</url>
+    </pluginRepository>
   </pluginRepositories>
 
   <repositories>
@@ -253,7 +254,6 @@
           <target>
             <file>${project.basedir}/../org.eclipse.egit.target/${target-platform}.target</file>
           </target>
-          <resolver>p2</resolver>
           <pomDependencies>consider</pomDependencies>
           <environments>
             <environment>
