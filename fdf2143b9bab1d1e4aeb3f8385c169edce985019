@@ -16,6 +16,24 @@
       "message": "\u003e https://ci.eclipse.org/egit/job/egit.gerrit/2842/ : FAILURE\n\n\nDamn. I got that test failure locally, too. But since it worked in a child Eclipse, I had thought it was a fluke. Apparently not. What is missing now??",
       "revId": "fdf2143b9bab1d1e4aeb3f8385c169edce985019",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "0bda7f92_a27692b5",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2023-05-23T22:09:03Z",
+      "side": 1,
+      "message": "I\u0027m beginning to think that this GitCloneSourceProviderExtensionTest is flawed; it assumes that extension points from plugin.xml/fragment.xml are returned in a particular order. I see no such guarantee anywhere.\n\nTotally unclear, though, why that test fails now when run on Tycho 4 in maven, but works when run from Eclipse. Both using the same target platform and the same JVM. Possibly these extraRequirements in the UI test pom pull in something else than what my local child Eclipse gets?",
+      "parentUuid": "e5988998_37fe29fc",
+      "revId": "fdf2143b9bab1d1e4aeb3f8385c169edce985019",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31"
     }
   ]
 }
