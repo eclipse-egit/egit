@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <?pde?>
 <!-- generated with https://github.com/eclipse-cbi/targetplatform-dsl -->
-<target name="egit-4.28" sequenceNumber="1684175058">
+<target name="egit-4.28" sequenceNumber="1684868624">
   <locations>
     <location includeMode="slicer" includeAllPlatforms="false" includeSource="true" includeConfigurePhase="true" type="InstallableUnit">
       <unit id="org.eclipse.license.feature.group" version="0.0.0"/>
@@ -95,6 +95,34 @@
       <unit id="org.sat4j.pb" version="0.0.0"/>
       <unit id="org.eclipse.tools.layout.spy" version="0.0.0"/>
       <repository location="https://download.eclipse.org/staging/2023-06"/>
+    </location>
+    <location includeDependencyDepth="none" includeDependencyScopes="compile" includeSource="true" missingManifest="error" type="Maven" label="osgi">
+    <dependencies>
+    	<dependency>
+    		<groupId>org.osgi</groupId>
+    		<artifactId>org.osgi.annotation.bundle</artifactId>
+    		<version>2.0.0</version>
+    		<type>jar</type>
+    	</dependency>
+    	<dependency>
+    		<groupId>org.osgi</groupId>
+    		<artifactId>org.osgi.annotation.versioning</artifactId>
+    		<version>1.1.2</version>
+    		<type>jar</type>
+    	</dependency>
+    	<dependency>
+    		<groupId>org.osgi</groupId>
+    		<artifactId>org.osgi.service.component.annotations</artifactId>
+    		<version>1.5.0</version>
+    		<type>jar</type>
+    	</dependency>
+    	<dependency>
+    		<groupId>org.osgi</groupId>
+    		<artifactId>org.osgi.service.metatype.annotations</artifactId>
+    		<version>1.4.1</version>
+    		<type>jar</type>
+    	</dependency>
+    </dependencies>
     </location>
     <location includeDependencyDepth="none" includeDependencyScopes="compile" includeSource="true" missingManifest="error" type="Maven" label="slf4j">
     <dependencies>
