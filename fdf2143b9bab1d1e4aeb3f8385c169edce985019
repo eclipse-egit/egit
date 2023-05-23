@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "e5988998_37fe29fc",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2023-05-23T20:09:10Z",
+      "side": 1,
+      "message": "\u003e https://ci.eclipse.org/egit/job/egit.gerrit/2842/ : FAILURE\n\n\nDamn. I got that test failure locally, too. But since it worked in a child Eclipse, I had thought it was a fluke. Apparently not. What is missing now??",
+      "revId": "fdf2143b9bab1d1e4aeb3f8385c169edce985019",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31"
+    }
+  ]
+}
