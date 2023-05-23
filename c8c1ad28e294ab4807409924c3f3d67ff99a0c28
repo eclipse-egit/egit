@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "58edcc9b_20c11537",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2023-05-23T18:36:48Z",
+      "side": 1,
+      "message": "\u003e Patch Set 3: Verified-1\n\u003e \n\u003e Build Failed \n\u003e \n\u003e https://ci.eclipse.org/egit/job/egit.gerrit/2841/ : FAILURE\n\n\nSo here we have now, when running the UI tests,\n\n  12:38:13  10:38:13 [ERROR] Cannot resolve project dependencies:\n  12:38:13  10:38:13 [ERROR]   Software being installed: org.eclipse.pde.feature.group 3.14.1400.v20221123-1800\n  12:38:13  10:38:13 [ERROR]   Missing requirement: org.eclipse.pde.feature.group 3.14.1400.v20221123-1800 requires \u0027org.eclipse.equinox.p2.iu; org.osgi.annotation.versioning 0.0.0\u0027 but it could not be found\n  \nThose dependencies indeed are there: https://github.com/eclipse-pde/eclipse.pde/blame/master/features/org.eclipse.pde-feature/feature.xml\n\nSo I suppose we have to add them to the target platform in the UI tests.",
+      "revId": "c8c1ad28e294ab4807409924c3f3d67ff99a0c28",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31"
+    }
+  ]
+}
