@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <?pde?>
 <!-- generated with https://github.com/eclipse-cbi/targetplatform-dsl -->
-<target name="egit-4.28" sequenceNumber="1684945761">
+<target name="egit-4.28" sequenceNumber="1685032836">
   <locations>
     <location includeMode="slicer" includeAllPlatforms="false" includeSource="true" includeConfigurePhase="true" type="InstallableUnit">
       <unit id="org.eclipse.license.feature.group" version="0.0.0"/>
@@ -99,7 +99,7 @@
     	<dependency>
     		<groupId>org.osgi</groupId>
     		<artifactId>org.osgi.service.component.annotations</artifactId>
-    		<version>1.5.0</version>
+    		<version>1.5.1</version>
     		<type>jar</type>
     	</dependency>
     	<dependency>
