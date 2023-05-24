@@ -52,6 +52,24 @@
       "parentUuid": "0bda7f92_a27692b5",
       "revId": "fdf2143b9bab1d1e4aeb3f8385c169edce985019",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "d206692c_2833c884",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2023-05-24T19:12:31Z",
+      "side": 1,
+      "message": "Looks like we can declare victory, the M3 contribution doesn\u0027t report unsigned bundles: https://download.eclipse.org/oomph/archive/simrel/egit.aggrcon/index.html",
+      "parentUuid": "d6ecde74_ecfa334d",
+      "revId": "fdf2143b9bab1d1e4aeb3f8385c169edce985019",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31"
     }
   ]
 }
