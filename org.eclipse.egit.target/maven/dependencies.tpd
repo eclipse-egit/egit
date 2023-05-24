@@ -72,6 +72,24 @@ maven bouncycastle
 	}
 }
 
+maven bytebuddy
+	scope = compile
+	dependencyDepth = none
+	missingManifest = error
+	includeSources
+{
+	dependency {
+		groupId = "net.bytebuddy"
+		artifactId = "byte-buddy"
+		version = "1.12.18"
+	}
+	dependency {
+		groupId = "net.bytebuddy"
+		artifactId = "byte-buddy-agent"
+		version = "1.12.18"
+	}
+}
+
 maven javaewah
 	scope = compile
 	dependencyDepth = none
