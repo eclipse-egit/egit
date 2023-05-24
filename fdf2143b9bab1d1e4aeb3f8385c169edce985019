@@ -34,6 +34,24 @@
       "parentUuid": "e5988998_37fe29fc",
       "revId": "fdf2143b9bab1d1e4aeb3f8385c169edce985019",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "d6ecde74_ecfa334d",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2023-05-24T10:42:26Z",
+      "side": 1,
+      "message": "Pushed https://git.eclipse.org/r/c/egit/egit/+/202036 to fix the failing test",
+      "parentUuid": "0bda7f92_a27692b5",
+      "revId": "fdf2143b9bab1d1e4aeb3f8385c169edce985019",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31"
     }
   ]
 }
