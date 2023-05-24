@@ -16,6 +16,24 @@
       "message": "Above we test for size() \u003d\u003d 4. The switch below has three. Do we have twice the same label, or what is the fourth?",
       "revId": "9b271537f7a7535dcfc19ac499a1efd9317114d3",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "b4f349d5_6db46692",
+        "filename": "org.eclipse.egit.ui.test/src/org/eclipse/egit/ui/wizards/clone/GitCloneSourceProviderExtensionTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2023-05-24T11:51:49Z",
+      "side": 1,
+      "message": "thanks, done",
+      "parentUuid": "b727e11e_7cacbef5",
+      "revId": "9b271537f7a7535dcfc19ac499a1efd9317114d3",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31"
     }
   ]
 }
