@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <?pde?>
 <!-- generated with https://github.com/eclipse-cbi/targetplatform-dsl -->
-<target name="egit-4.28" sequenceNumber="1684934747">
+<target name="egit-4.28" sequenceNumber="1684945761">
   <locations>
     <location includeMode="slicer" includeAllPlatforms="false" includeSource="true" includeConfigurePhase="true" type="InstallableUnit">
       <unit id="org.eclipse.license.feature.group" version="0.0.0"/>
@@ -34,8 +34,8 @@
       <unit id="org.apache.commons.io.source" version="2.8.0.v20210415-0900"/>
       <unit id="org.apache.commons.logging" version="1.2.0.v20180409-1502"/>
       <unit id="org.apache.commons.logging.source" version="1.2.0.v20180409-1502"/>
-      <unit id="org.apache.httpcomponents.httpclient" version="4.5.14.v20221207-1049"/>
-      <unit id="org.apache.httpcomponents.httpclient.source" version="4.5.14.v20221207-1049"/>
+      <unit id="org.apache.httpcomponents.httpclient" version="4.5.14.v20230516-1249"/>
+      <unit id="org.apache.httpcomponents.httpclient.source" version="4.5.14.v20230516-1249"/>
       <unit id="org.apache.httpcomponents.httpcore" version="4.4.16.v20221207-1049"/>
       <unit id="org.apache.httpcomponents.httpcore.source" version="4.4.16.v20221207-1049"/>
       <unit id="org.apache.log4j" version="1.2.24.v20221221-2012"/>
@@ -50,7 +50,7 @@
       <unit id="org.objectweb.asm.source" version="9.4.0.v20221107-1714"/>
       <unit id="org.objectweb.asm.tree" version="9.4.0.v20221107-1714"/>
       <unit id="org.objectweb.asm.tree.source" version="9.4.0.v20221107-1714"/>
-      <repository location="https://download.eclipse.org/tools/orbit/downloads/drops/R20230302014618/repository"/>
+      <repository location="https://download.eclipse.org/tools/orbit/downloads/drops/S20230516204213/repository"/>
     </location>
     <location includeMode="slicer" includeAllPlatforms="false" includeSource="true" includeConfigurePhase="true" type="InstallableUnit">
       <unit id="org.hamcrest" version="1.1.0.v20090501071000"/>
