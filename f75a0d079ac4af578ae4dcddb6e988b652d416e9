@@ -16,6 +16,24 @@
       "message": "I don\u0027t see any animation? What do you mean?",
       "revId": "f75a0d079ac4af578ae4dcddb6e988b652d416e9",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "955acc14_8e36be4f",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 440
+      },
+      "writtenOn": "2023-05-24T16:09:32Z",
+      "side": 1,
+      "message": "All list or tree views that have big amounts of items being removed/added lead to their progress bar \"button\" visually growing/shrinking during that refresh operation, because the redraw is called after each item added/removed. At least on Windows that is visible in all kinds of views where the number of items is big enough. It also blocks the UI thread completely, in many cases for several seconds. I\u0027ve previously fixed this the same way in many other places that potentially show many items and refresh the complete contents on selection or similar events. If needed, I can also produce an animated gif with my work IDE (there I have enough branches).",
+      "parentUuid": "f754a158_4d17d1f9",
+      "revId": "f75a0d079ac4af578ae4dcddb6e988b652d416e9",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31"
     }
   ]
 }
