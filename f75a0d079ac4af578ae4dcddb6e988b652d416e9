@@ -34,6 +34,24 @@
       "parentUuid": "f754a158_4d17d1f9",
       "revId": "f75a0d079ac4af578ae4dcddb6e988b652d416e9",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "b83baef4_8178bcd4",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2023-05-24T19:10:00Z",
+      "side": 1,
+      "message": "I usually take the tags of the Eclipse Platform UI repo for such tests -- a tag a day makes for a truly long list.\n\nYou mean the scroll bar thumb? I hadn\u0027t paid attention to that. I did notice a UI block on Windows. I trust your word that this fixes it there :-)\n\nIt\u0027s also not really fast on OS X (but faster than on Windows), and the change doesn\u0027t seem to have any effect on OS X.",
+      "parentUuid": "955acc14_8e36be4f",
+      "revId": "f75a0d079ac4af578ae4dcddb6e988b652d416e9",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31"
     }
   ]
 }
