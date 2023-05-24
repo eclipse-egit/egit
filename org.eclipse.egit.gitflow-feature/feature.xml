@@ -2,7 +2,7 @@
 <feature
       id="org.eclipse.egit.gitflow.feature"
       label="%featureName"
-      version="6.6.0.202305241045-m3"
+      version="6.6.0.qualifier"
       provider-name="%providerName"
       plugin="org.eclipse.egit.gitflow"
       license-feature="org.eclipse.license"
