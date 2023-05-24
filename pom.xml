@@ -254,6 +254,7 @@
           <target>
             <file>${project.basedir}/../org.eclipse.egit.target/${target-platform}.target</file>
           </target>
+          <requireEagerResolve>true</requireEagerResolve>
           <pomDependencies>consider</pomDependencies>
           <environments>
             <environment>
