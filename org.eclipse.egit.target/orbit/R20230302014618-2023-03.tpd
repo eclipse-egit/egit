@@ -39,8 +39,6 @@ location "https://download.eclipse.org/tools/orbit/downloads/drops/R202303020146
 	org.objectweb.asm.source [9.4.0.v20221107-1714,9.4.0.v20221107-1714]
 	org.objectweb.asm.tree [9.4.0.v20221107-1714,9.4.0.v20221107-1714]
 	org.objectweb.asm.tree.source [9.4.0.v20221107-1714,9.4.0.v20221107-1714]
-	org.tukaani.xz [1.9.0.v20210624-1259,1.9.0.v20210624-1259]
-	org.tukaani.xz.source [1.9.0.v20210624-1259,1.9.0.v20210624-1259]
 }
 
 // We can update to org.hamcrest 2.2.0 only once SWTBot does.

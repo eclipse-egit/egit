@@ -218,6 +218,19 @@ maven slf4j
 	}
 }
 
+maven xz
+	scope = compile
+	dependencyDepth = none
+	missingManifest = error
+	includeSources
+{
+	dependency {
+		groupId = "org.tukaani"
+		artifactId = "xz"
+		version = "1.9"
+	}
+}
+
 // Needed by PDE, which we include when running the UI tests
 maven osgi
 	scope = compile
