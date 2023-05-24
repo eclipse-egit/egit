@@ -16,6 +16,8 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.instanceOf;
 import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.notNullValue;
+import static org.junit.Assert.assertNull;
+import static org.junit.Assert.fail;
 
 import java.util.List;
 
@@ -32,19 +34,32 @@ public class GitCloneSourceProviderExtensionTest {
 				.getCloneSourceProvider();
 		assertThat(repositoryImports, is(notNullValue()));
 		assertThat(repositoryImports.size(), is(4));
-		assertThat(repositoryImports.get(1).getLabel(),
-				is("ServerWithoutPage1"));
-		assertThat(repositoryImports.get(1).hasFixLocation(), is(true));
-		assertThat(repositoryImports.get(1).getRepositoryServerProvider(),
-				instanceOf(TestRepositoryServerProvider.class));
-		assertThat(repositoryImports.get(2).getLabel(), is("TestServer"));
-		assertThat(repositoryImports.get(2).hasFixLocation(), is(false));
-		assertThat(repositoryImports.get(2).getRepositoryServerProvider(),
-				instanceOf(TestRepositoryServerProvider.class));
-		assertThat(repositoryImports.get(2).getRepositorySearchPage(),
-				instanceOf(TestRepositorySearchPage.class));
-		assertThat(repositoryImports.get(3).getLabel(),
-				is("ServerWithoutPage2"));
-		assertThat(repositoryImports.get(3).hasFixLocation(), is(false));
+
+		for (CloneSourceProvider ri : repositoryImports) {
+			String label = ri.getLabel();
+			switch (label) {
+			case "Clone URI":
+				assertThat(ri.hasFixLocation(), is(true));
+				assertNull(ri.getRepositoryServerProvider());
+				break;
+			case "ServerWithoutPage1":
+				assertThat(ri.hasFixLocation(), is(true));
+				assertThat(ri.getRepositoryServerProvider(),
+						instanceOf(TestRepositoryServerProvider.class));
+				break;
+			case "ServerWithoutPage2":
+				assertThat(ri.hasFixLocation(), is(false));
+				break;
+			case "TestServer":
+				assertThat(ri.hasFixLocation(), is(false));
+				assertThat(ri.getRepositoryServerProvider(),
+						instanceOf(TestRepositoryServerProvider.class));
+				assertThat(ri.getRepositorySearchPage(),
+						instanceOf(TestRepositorySearchPage.class));
+				break;
+			default:
+				fail("unexpected CloneSourceProvider " + label);
+			}
+		}
 	}
 }
