@@ -711,6 +711,10 @@
             label="%GitPreferences_keywords">
       </keyword>
       <keyword
+            id="org.eclipse.egit.ui.DiffPreferencePage"
+            label="%DiffPreferencePage_keywords">
+      </keyword>
+      <keyword
             id="org.eclipse.egit.ui.internal.preferences.ProjectsPreferencePage"
             label="%ProjectsPreferencePage_keywords">
       </keyword>

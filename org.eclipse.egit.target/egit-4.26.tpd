@@ -2,6 +2,6 @@ target "egit-4.26" with source configurePhase
 
 include "projects/license.tpd"
 include "projects/swtbot-snapshot.tpd"
-include "orbit/R20230302014618-2023-03.tpd"
+include "orbit/S20230516204213.tpd"
 include "maven/dependencies.tpd"
 include "releasetrain/4.26-2022-12.tpd"

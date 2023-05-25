@@ -251,7 +251,7 @@ maven osgi
 	dependency {
 		groupId ="org.osgi"
 		artifactId="org.osgi.service.component.annotations"
-		version="1.5.0"
+		version="1.5.1"
 	}
 	dependency {
 		groupId ="org.osgi"
