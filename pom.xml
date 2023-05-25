@@ -254,6 +254,7 @@
           <target>
             <file>${project.basedir}/../org.eclipse.egit.target/${target-platform}.target</file>
           </target>
+          <requireEagerResolve>true</requireEagerResolve>
           <pomDependencies>consider</pomDependencies>
           <environments>
             <environment>
@@ -422,9 +423,8 @@
         <plugin>
           <groupId>org.apache.maven.plugins</groupId>
           <artifactId>maven-pmd-plugin</artifactId>
-          <version>3.20.0</version>
+          <version>3.21.0</version>
           <configuration>
-            <sourceEncoding>utf-8</sourceEncoding>
             <minimumTokens>100</minimumTokens>
             <targetJdk>${java-version}</targetJdk>
             <format>xml</format>
