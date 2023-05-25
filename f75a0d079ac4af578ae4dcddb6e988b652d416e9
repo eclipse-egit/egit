@@ -52,6 +52,24 @@
       "parentUuid": "955acc14_8e36be4f",
       "revId": "f75a0d079ac4af578ae4dcddb6e988b652d416e9",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "9dfd20e2_f1ac214c",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 440
+      },
+      "writtenOn": "2023-05-25T09:55:16Z",
+      "side": 1,
+      "message": "If you mean to expand/collapse the tags, that is something entirely different. This is for the \"hierarchical layout\" button, which doesn\u0027t expand or collapse, but rather _removes and re-adds_ all the child nodes. And that causes a refresh after each single item being added/removed. You can often force this bug easily in filtered lists/trees. Just type a filter expression that matches nothing, then delete. Repeat as you like. And you will see the scrollbar thumb button of that view growing from 0 to 10000 elements, shrink similarly etc. Previous fixes have been in the about dialog lists, the target platform state view, the launch config plugins list etc.",
+      "parentUuid": "b83baef4_8178bcd4",
+      "revId": "f75a0d079ac4af578ae4dcddb6e988b652d416e9",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31"
     }
   ]
 }
