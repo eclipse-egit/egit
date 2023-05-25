@@ -34,6 +34,24 @@
       "parentUuid": "92f8fb6f_a0843d14",
       "revId": "350902bb74ab00cb982c1f830baab116106190e6",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "e9395bee_26e9a394",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2023-05-25T23:08:22Z",
+      "side": 1,
+      "message": "I merged stable-6.6 on top of this change and the build succeeded.\nThen I flipped the order of commits and first merged stable-6.6 and then bumped the version to 6.7.0. This the test errors I saw locally, looks like eager resolution helps. Let\u0027s see if this also fixes the build errors in the CI",
+      "parentUuid": "f68c4de5_9e88acfe",
+      "revId": "350902bb74ab00cb982c1f830baab116106190e6",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31"
     }
   ]
 }
