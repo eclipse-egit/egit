@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "92f8fb6f_a0843d14",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2023-05-25T21:53:34Z",
+      "side": 1,
+      "message": "\u003e https://ci.eclipse.org/egit/job/egit.gerrit/2865/ : FAILURE\n\nStill the same:\n\n  23:09:49  21:09:49 [ERROR] Cannot resolve project dependencies:\n  23:09:49  21:09:49 [ERROR]   Software being installed: org.eclipse.egit.repository raw:6.7.0.\u0027SNAPSHOT\u0027/format(n[.n\u003d0;[.n\u003d0;[-S]]]):6.7.0-SNAPSHOT\n  23:09:49  21:09:49 [ERROR]   Missing requirement: org.eclipse.egit.repository raw:6.7.0.\u0027SNAPSHOT\u0027/format(n[.n\u003d0;[.n\u003d0;[-S]]]):6.7.0-SNAPSHOT requires \u0027org.eclipse.equinox.p2.iu; org.eclipse.egit.source.feature.group 0.0.0\u0027 but it could not be found\n\nAnother tycho bug? Does it work locally? Does it work with eager resolution in tycho?",
+      "revId": "350902bb74ab00cb982c1f830baab116106190e6",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31"
+    }
+  ]
+}
