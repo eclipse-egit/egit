@@ -52,6 +52,24 @@
       "parentUuid": "f68c4de5_9e88acfe",
       "revId": "350902bb74ab00cb982c1f830baab116106190e6",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "b1047dd1_02d4555c",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2023-05-26T08:09:54Z",
+      "side": 1,
+      "message": "Looks much better. Seems some tests are newly unstable. Difficult to say why exactly, we\u0027re still running tests on a Java 11 JVM, using the 4.26 target. But we\u0027re using swtbot snapshot; maybe something changed there. For now I\u0027ve just retriggered the job, but in the long run we should investigate this and maybe improve the failing tests.",
+      "parentUuid": "e9395bee_26e9a394",
+      "revId": "350902bb74ab00cb982c1f830baab116106190e6",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31"
     }
   ]
 }
