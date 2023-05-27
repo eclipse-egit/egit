@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "c990d783_e8c02d30",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2023-05-27T19:14:00Z",
+      "side": 1,
+      "message": "Why does this process _all_ target files? Seems to me it would be sufficient to go through maven/dependencies.tpd once.\n\nEd Merks has something similar with the simrel maven generator and its reports.[1]\n\n[1] https://github.com/merks/simrel-maven/blob/main/README.md",
+      "revId": "83920e3d644c17c98a511dff34555c0b8ee8dbd7",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d95bce4f_a63c4f6a",
+        "filename": "org.eclipse.egit.target/pom.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2023-05-27T19:14:00Z",
+      "side": 1,
+      "message": "We generally use two spaces for indentation, not tabs. Please stick to that.",
+      "revId": "83920e3d644c17c98a511dff34555c0b8ee8dbd7",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "89ef436e_52830cc7",
+        "filename": "org.eclipse.egit.target/pom.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2023-05-27T19:14:00Z",
+      "side": 1,
+      "message": "Move that into a separate file.\n\nThis inline script is unmaintainable, and the extra XML character entities needed make the regex completely unreadable.",
+      "revId": "83920e3d644c17c98a511dff34555c0b8ee8dbd7",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31"
+    }
+  ]
+}
