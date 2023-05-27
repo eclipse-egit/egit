@@ -22,4 +22,84 @@
     <artifactId>egit-parent</artifactId>
     <version>6.6.0-SNAPSHOT</version>
   </parent>
+
+	<profiles>
+		<profile>
+			<id>update-check-for-target-maven-artifacts</id>
+			<activation>
+				<activeByDefault>false</activeByDefault>
+			</activation>
+			<properties>
+				<!-- ignore all versions with non numerical parts during update check -->
+				<maven.version.ignore>.*[a-zA-Z]+.*</maven.version.ignore>
+			</properties>
+			<build>
+				<plugins>
+					<!-- scan target files and add maven artifacts as dependencies to this pom -->
+					<plugin>
+						<groupId>org.codehaus.gmaven</groupId>
+						<artifactId>groovy-maven-plugin</artifactId>
+						<version>2.1.1</version>
+						<executions>
+							<execution>
+								<id>add-dependencies-from-m2e-target</id>
+								<phase>initialize</phase>
+								<goals>
+									<goal>execute</goal>
+								</goals>
+								<configuration>
+									<source>
+										import java.util.regex.Matcher;
+										import java.util.regex.Pattern;
+
+										def files = basedir.listFiles()
+										for (File file : files) {
+											if (file.getName().endsWith('.target')) {
+												log.info('analyzing target {}', file.getName())
+												String targetContent = file.getText('UTF-8')
+												Pattern pattern = Pattern.compile('&lt;groupId&gt;(.+?)&lt;/groupId&gt;\\s*&lt;artifactId&gt;(.+?)&lt;/artifactId&gt;\\s*&lt;version&gt;(.+?)&lt;/version&gt;', Pattern.DOTALL)
+												Matcher matcher = pattern.matcher(targetContent)
+
+												while (matcher.find()) {
+													String groupId = matcher.group(1)
+													String artifactId = matcher.group(2)
+													String version = matcher.group(3)
+													log.info('adding m2e target dependency {}:{}:{}', groupId, artifactId, version)
+
+													def dependency = new org.apache.maven.model.Dependency()
+													dependency.setGroupId(groupId)
+													dependency.setArtifactId(artifactId)
+													dependency.setVersion(version)
+													dependency.setScope("compile")
+
+													project.getDependencies().add(dependency)
+												}
+											}
+										}
+									</source>
+								</configuration>
+							</execution>
+						</executions>
+					</plugin>
+
+					<!-- this execution should be in a later phase than the groovy execution which adds artificial dependencies -->
+					<plugin>
+						<groupId>org.codehaus.mojo</groupId>
+						<artifactId>versions-maven-plugin</artifactId>
+						<version>2.15.0</version>
+						<executions>
+							<execution>
+								<id>dependency-updates</id>
+								<goals>
+									<goal>display-dependency-updates</goal>
+								</goals>
+								<phase>generate-resources</phase>
+							</execution>
+						</executions>
+					</plugin>
+				</plugins>
+			</build>
+		</profile>
+	</profiles>
+
 </project>
