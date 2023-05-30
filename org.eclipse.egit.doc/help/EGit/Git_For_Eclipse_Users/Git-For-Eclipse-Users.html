@@ -194,11 +194,11 @@
 		</dl>
 		<p>The current version of your repository is simply a pointer to the end of the tree. For this reason, it's often referred to as a 
 			<i>tip</i>, but <code>HEAD</code> is the symbolic identifier for what the current repository is pointing to. Similarly, any branch can be referred to by its changeset id, which includes that and all prior changes. The default branch is usually called 
-			<i>master</i>.
+			<i>main</i>.
 		</p>
 		<dl>
 			<dd>☞ 
-				<b>The default 'trunk' is called 'master' in Git</b>
+				<b>The default 'trunk' is called 'main' in Git</b>
 			</dd>
 			<dd>☞ 
 				<b>The tip of the current branch is referred to as 'HEAD</b>'
@@ -222,7 +222,9 @@
 			</dd>
 		</dl>
 		<h2 id="Merging">Merging</h2>
-		<p>With great power comes great flexibility, but ultimately, you want to get your changes into some kind of merged stream (like HEAD). One of the fears of unconstrained branching is that of unconstrained merge pains later on. SVN makes this slightly less difficult than CVS, but unless you merge to HEAD frequently, you can easily get lost – particularly when refactorings start happening.</p>
+		<p>With great power comes great flexibility, but ultimately, you want to get your changes into some kind of merged stream (like 
+			<i>main</i>). One of the fears of unconstrained branching is that of unconstrained merge pains later on. SVN makes this slightly less difficult than CVS, but unless you merge to HEAD frequently, you can easily get lost – particularly when refactorings start happening.
+		</p>
 		<dl>
 			<dd>☞ 
 				<b>It's painful to merge in a CVCS; therefore branches tend not to happen</b>
@@ -323,7 +325,7 @@ $ git init
 Initialized empty Git repository in /tmp/example/.git/
 $ echo "Hello, world" &gt; README.txt
 $ git commit # Won't commit files by default
-# On branch master
+# On branch main
 #
 # Initial commit
 #
@@ -335,12 +337,12 @@ nothing added to commit but untracked files present (use "git add" to track)
 $ git add README.txt # Similar to Team -&gt; Add to Version Control
 $ # git commit # Would prompt for message
 $ git commit -m "Added README.txt"
-[master (root-commit) 0dd1f35] Added README.txt
+[main (root-commit) 0dd1f35] Added README.txt
  1 files changed, 1 insertions(+), 0 deletions(-)
  create mode 100644 README.txt
 $ echo "Hello, solar system" &gt; README.txt
 $ git commit
-# On branch master
+# On branch main
 # Changed but not updated:
 #   (use "git add &lt;file&gt;..." to update what will be committed)
 #   (use "git checkout -- &lt;file&gt;..." to discard changes in working directory)
@@ -349,7 +351,7 @@ $ git commit
 #
 no changes added to commit (use "git add" and/or "git commit -a")
 $ git commit -a -m "Updated README.txt"
-[master 9b1939a] Updated README.txt
+[main 9b1939a] Updated README.txt
  1 files changed, 1 insertions(+), 1 deletions(-)
 $ git log --graph --oneline # Shows graph nodes (not much here) and change info
 * 9b1939a Updated README.txt
@@ -373,12 +375,12 @@ $ git commit -m "Added homepage"
 [web d47e30c] Added homepage
  1 files changed, 1 insertions(+), 0 deletions(-)
  create mode 100644 index.html
-$ git checkout master
+$ git checkout main
 $ git branch # See what branches we've got
   french
-* master
+* main
   web
-$ git merge web # pull 'web' into current branch 'master'
+$ git merge web # pull 'web' into current branch 'main'
 Merge made by recursive.
  index.html |    1 +
  1 files changed, 1 insertions(+), 0 deletions(-)
@@ -397,7 +399,7 @@ $ git log --graph --oneline
 * | 66a644c Ajouté README.txt
 |/  
 * 0dd1f35 Added README.txt
-$ git checkout master
+$ git checkout main
 $ git log --graph --oneline
 *   e3de4de Merge branch 'web'
 |\  
@@ -409,7 +411,7 @@ $ (mkdir /tmp/other;cd /tmp/other;git init) # Could do this in other process
 $ (cd /tmp/other;git config --bool core.bare true) # Need to tell git that /tmp/other is a bare repository so we can "push" to it
 Initialized empty Git repository in /tmp/other/.git/
 $ git remote add other /tmp/other # could be a URL over http/git
-$ git push other master # push branch 'master' to remote repository 'other'
+$ git push other main # push branch 'main' to remote repository 'other'
 Counting objects: 11, done.
 Delta compression using up to 2 threads.
 Compressing objects: 100% (7/7), done.
@@ -417,7 +419,7 @@ Writing objects: 100% (11/11), 981 bytes, done.
 Total 11 (delta 1), reused 0 (delta 0)
 Unpacking objects: 100% (11/11), done.
 To /tmp/other
- * [new branch]      master -&gt; master
+ * [new branch]      main -&gt; main
 $ git push --all other # Push all branches to 'other'
 Counting objects: 8, done.
 Delta compression using up to 2 threads.
@@ -433,7 +435,7 @@ $ git config --bool core.bare false # need to allow this repository to have chec
 $ ls # Nothing to be seen, but it's there
 $ git branch
   french
-* master
+* main
   web
 $ git checkout web # Get the contents of the 'web' branch in other
 $ ls

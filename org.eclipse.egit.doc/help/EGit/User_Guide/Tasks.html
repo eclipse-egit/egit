@@ -2460,38 +2460,8 @@ Sein oder nicht sein
 			<br/>
 		</p>
 		<h2 id="Working_with_Tasks">Working with Tasks</h2>
-		<p>Since EGit 0.11 a first integration with Mylyn is available to support working with task repositories.</p>
-		<h3 id="Installation">Installation</h3>
-		<p>You need to install the feature "EGit Mylyn" to use the EGit Mylyn integration. This requires also Mylyn to be installed.</p>
-		<h3 id="Commit_Message_Template">Commit Message Template</h3>
-		<ul>
-			<li>Configure the Mylyn commit message template under 
-				<b>Preferences &gt; Tasks &gt; Team</b> and edit 
-				<b>Commit Comment Template</b>.
-			</li>
-			<li>Use the following variables as well as any text to alter the commit message.
-				<ul>
-					<li>connector.task.prefix, repository.kind, repository.url, task.assignee, task.cc, task.description, task.id, task.key, task.keywords, task.lastmodified, task.notes, task.priority, task.product, task.reporter, task.resolution, task.status, task.summary, task.type, task.url, task.completiondate, task.creationdate, task.reminderdate</li>
-				</ul>
-			</li>
-		</ul>
-		<p>
-			<img border="0" src="images/Egit-0.11-configure-commit-template.png"/>
-		</p>
-		<ul>
-			<li>Before committing your change activate the corresponding Task using the Mylyn UI.</li>
-		</ul>
-		<p>
-			<img border="0" src="images/Egit-0.11-activate-task.png"/>
-		</p>
-		<ul>
-			<li>When launching the commit dialog EGit will pre-populate the commit message using the commit message template.</li>
-		</ul>
-		<p>
-			<img border="0" src="images/Egit-0.11-commit-using-template.png"/>
-		</p>
-		<p>See the 
-			<a href="http://wiki.eclipse.org/index.php/Mylyn/User_Guide" target="egit_external">Mylyn User Guide</a> for more information how to work with tasks.
+		<p>The EGit integration with Mylyn was moved to Mylyn in Eclipse 2023-06. See 
+			<a href="https://github.com/eclipse-mylyn/org.eclipse.mylyn/tree/main/mylyn.egit" target="egit_external">mylyn.egit</a>.
 		</p>
 		<h2 id="Viewing_Commits">Viewing Commits</h2>
 		<p>The Egit commit viewer allows commits to be opened in the Eclipse editor area.</p>
