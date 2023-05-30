@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "8037c98a_b60fff39",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2023-05-30T14:50:50Z",
+      "side": 1,
+      "message": "this seems to fix the problem, now I get pgp signatures",
+      "revId": "60193df481663a8f4ebbcb104d4e2c6a2fc934d5",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31"
+    }
+  ]
+}
