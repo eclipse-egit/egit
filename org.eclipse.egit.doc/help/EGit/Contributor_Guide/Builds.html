@@ -104,9 +104,16 @@
 &lt;/toolchains&gt;
 </pre>
 		<p>The <tt>jdkHome</tt> directory is the one that contains the <tt>bin</tt> directory in which there is the <tt>java</tt> executable.</p>
-		<p>Also include a definition for a Java 11 toolchain as shown above: EGit versions &gt;= 6.0.0 require at least Java 11 to build, and require a Java 11 toolchain definition for running the tests.</p>
-		<p>Building JGit versions &lt; 6.0.0 with maven requires running maven with Java 1.8 in all cases.</p>
-		<p>Building JGit versions &gt;= 6.0.0 with maven requires running maven and compiling with at least Java 11.</p>
+		<p>Also include a definition for a Java 11 toolchain as shown above.</p>
+		<ul>
+			<li>EGit versions &gt;= 6.0.0 require at least Java 11 to build, and require a Java 11 toolchain definition for running the tests.</li>
+			<li>EGit versions &gt;= 6.6.0 require at least Java 17 to build, and require a Java 11 toolchain definition for running the tests.</li>
+		</ul>
+		<ul>
+			<li>JGit versions &lt; 6.0.0 with maven require running maven with Java 1.8 in all cases.</li>
+			<li>JGit versions &gt;= 6.0.0 with maven require running maven and compiling with at least Java 11.</li>
+			<li>JGit versions &gt;= 6.6.0 with maven require running maven with at least Java 17.</li>
+		</ul>
 		<ul>
 			<li>Due to a 
 				<a href="https://wiki.eclipse.org/Tycho/How_Tos/Dependency_on_pom-first_artifacts" target="egit_external">limitation of Tycho</a> it is not possible to mix pom-first and manifest-first builds in the same reactor build hence the pom-first JGit build has to run separately before the build for the manifest-first JGit packaging project.

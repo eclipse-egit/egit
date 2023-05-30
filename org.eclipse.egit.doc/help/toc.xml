@@ -285,10 +285,7 @@
 					<topic href="help/EGit/User_Guide/Tasks.html#Show_in_Properties" label="Show in Properties"></topic>
 				</topic>
 			</topic>
-			<topic href="help/EGit/User_Guide/Tasks.html#Working_with_Tasks" label="Working with Tasks">
-				<topic href="help/EGit/User_Guide/Tasks.html#Installation" label="Installation"></topic>
-				<topic href="help/EGit/User_Guide/Tasks.html#Commit_Message_Template" label="Commit Message Template"></topic>
-			</topic>
+			<topic href="help/EGit/User_Guide/Tasks.html#Working_with_Tasks" label="Working with Tasks"></topic>
 			<topic href="help/EGit/User_Guide/Tasks.html#Viewing_Commits" label="Viewing Commits">
 				<topic href="help/EGit/User_Guide/Tasks.html#Tagging_a_commit" label="Tagging a commit"></topic>
 				<topic href="help/EGit/User_Guide/Tasks.html#Creating_a_branch_from_a_commit" label="Creating a branch from a commit"></topic>
@@ -450,19 +447,19 @@
 		</topic>
 		<topic href="help/JGit/User_Guide/Updating-This-Document.html" label="Updating This Document"></topic>
 	</topic>
-	<topic href="help/EGit/New_and_Noteworthy/6.5/6.5.html" label="EGit 6.5 New and Noteworthy">
-		<topic href="help/EGit/New_and_Noteworthy/6.5/6.5.html" label="EGit"></topic>
-		<topic href="help/EGit/New_and_Noteworthy/6.5/Contributors.html" label="Contributors"></topic>
-		<topic href="help/EGit/New_and_Noteworthy/6.5/See-Also.html" label="See Also"></topic>
-		<topic href="help/EGit/New_and_Noteworthy/6.5/Updating-This-Document.html" label="Updating This Document"></topic>
+	<topic href="help/EGit/New_and_Noteworthy/6.6/6.6.html" label="EGit 6.6 New and Noteworthy">
+		<topic href="help/EGit/New_and_Noteworthy/6.6/6.6.html" label="EGit"></topic>
+		<topic href="help/EGit/New_and_Noteworthy/6.6/Contributors.html" label="Contributors"></topic>
+		<topic href="help/EGit/New_and_Noteworthy/6.6/See-Also.html" label="See Also"></topic>
+		<topic href="help/EGit/New_and_Noteworthy/6.6/Updating-This-Document.html" label="Updating This Document"></topic>
 	</topic>
-	<topic href="help/JGit/New_and_Noteworthy/6.5/6.5.html" label="JGit 6.5 New and Noteworthy">
-		<topic href="help/JGit/New_and_Noteworthy/6.5/6.5.html" label="JGit">
-			<topic href="help/JGit/New_and_Noteworthy/6.5/6.5.html#Features" label="Features"></topic>
-			<topic href="help/JGit/New_and_Noteworthy/6.5/6.5.html#Other_Changes" label="Other Changes"></topic>
+	<topic href="help/JGit/New_and_Noteworthy/6.6/6.6.html" label="JGit 6.6 New and Noteworthy">
+		<topic href="help/JGit/New_and_Noteworthy/6.6/6.6.html" label="JGit">
+			<topic href="help/JGit/New_and_Noteworthy/6.6/6.6.html#Features" label="Features"></topic>
+			<topic href="help/JGit/New_and_Noteworthy/6.6/6.6.html#Other_Changes" label="Other Changes"></topic>
 		</topic>
-		<topic href="help/JGit/New_and_Noteworthy/6.5/Contributors.html" label="Contributors"></topic>
-		<topic href="help/JGit/New_and_Noteworthy/6.5/Updating-This-Document.html" label="Updating This Document"></topic>
+		<topic href="help/JGit/New_and_Noteworthy/6.6/Contributors.html" label="Contributors"></topic>
+		<topic href="help/JGit/New_and_Noteworthy/6.6/Updating-This-Document.html" label="Updating This Document"></topic>
 	</topic>
 	<topic href="help/EGit/Git_For_Eclipse_Users/Git-For-Eclipse-Users.html" label="Git for Eclipse Users">
 		<topic href="help/EGit/Git_For_Eclipse_Users/Git-For-Eclipse-Users.html" label="Centralised version control systems"></topic>
