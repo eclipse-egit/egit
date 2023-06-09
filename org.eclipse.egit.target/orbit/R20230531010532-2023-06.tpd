@@ -13,6 +13,10 @@ location "https://download.eclipse.org/tools/orbit/downloads/drops/R202305310105
 	jakarta.xml.bind.source [2.3.3.v20221203-1659,2.3.3.v20221203-1659]
 	javax.activation [2.0.0.v20221203-1659,2.0.0.v20221203-1659]
 	javax.activation.source [2.0.0.v20221203-1659,2.0.0.v20221203-1659]
+	javax.annotation [1.3.5.v20230504-0748,1.3.5.v20230504-0748]
+	javax.annotation.source [1.3.5.v20230504-0748,1.3.5.v20230504-0748]
+	javax.inject [1.0.0.v20220405-0441,1.0.0.v20220405-0441]
+	javax.inject.source [1.0.0.v20220405-0441,1.0.0.v20220405-0441]
 	javax.xml [1.4.1.v20220503-2331,1.4.1.v20220503-2331]
 	javax.xml.source [1.4.1.v20220503-2331,1.4.1.v20220503-2331]
 	net.i2p.crypto.eddsa [0.3.0.v20220506-1020,0.3.0.v20220506-1020]
@@ -39,6 +43,10 @@ location "https://download.eclipse.org/tools/orbit/downloads/drops/R202305310105
 	org.objectweb.asm.source [9.4.0.v20221107-1714,9.4.0.v20221107-1714]
 	org.objectweb.asm.tree [9.4.0.v20221107-1714,9.4.0.v20221107-1714]
 	org.objectweb.asm.tree.source [9.4.0.v20221107-1714,9.4.0.v20221107-1714]
+	org.objectweb.asm.analysis [9.4.0.v20221107-1714,9.4.0.v20221107-1714]
+	org.objectweb.asm.analysis.source [9.4.0.v20221107-1714,9.4.0.v20221107-1714]
+	org.objectweb.asm.util [9.4.0.v20221107-1714,9.4.0.v20221107-1714]
+	org.objectweb.asm.util.source [9.4.0.v20221107-1714,9.4.0.v20221107-1714]
 }
 
 // We can update to org.hamcrest 2.2.0 only once SWTBot does.
