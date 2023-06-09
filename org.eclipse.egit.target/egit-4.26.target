@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <?pde?>
 <!-- generated with https://github.com/eclipse-cbi/targetplatform-dsl -->
-<target name="egit-4.26" sequenceNumber="1685032835">
+<target name="egit-4.26" sequenceNumber="1686300904">
   <locations>
     <location includeMode="slicer" includeAllPlatforms="false" includeSource="true" includeConfigurePhase="true" type="InstallableUnit">
       <unit id="org.eclipse.license.feature.group" version="0.0.0"/>
@@ -50,7 +50,7 @@
       <unit id="org.objectweb.asm.source" version="9.4.0.v20221107-1714"/>
       <unit id="org.objectweb.asm.tree" version="9.4.0.v20221107-1714"/>
       <unit id="org.objectweb.asm.tree.source" version="9.4.0.v20221107-1714"/>
-      <repository location="https://download.eclipse.org/tools/orbit/downloads/drops/S20230516204213/repository"/>
+      <repository location="https://download.eclipse.org/tools/orbit/downloads/drops/R20230531010532/repository"/>
     </location>
     <location includeMode="slicer" includeAllPlatforms="false" includeSource="true" includeConfigurePhase="true" type="InstallableUnit">
       <unit id="org.hamcrest" version="1.1.0.v20090501071000"/>
