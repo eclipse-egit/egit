@@ -89,7 +89,7 @@ public class SynchronizeWorkspaceActionHandler extends RepositoryActionHandler {
 			if (rm == null)
 				continue; // Linked resources may not be in a repo
 			if (resource instanceof IProject)
-				result.put(rm.getRepository(), new HashSet<IResource>());
+				result.put(rm.getRepository(), new HashSet<>());
 			else if (resource instanceof IContainer) {
 				Set<IResource> containers = result.get(rm.getRepository());
 				if (containers == null) {

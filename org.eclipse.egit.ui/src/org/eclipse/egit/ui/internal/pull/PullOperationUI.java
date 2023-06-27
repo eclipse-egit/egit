@@ -71,7 +71,7 @@ public class PullOperationUI extends JobChangeAdapter {
 
 	/** pull results per repository */
 	protected final Map<Repository, Object> results = Collections
-			.synchronizedMap(new LinkedHashMap<Repository, Object>());
+			.synchronizedMap(new LinkedHashMap<>());
 
 	private final PullOperation pullOperation;
 
