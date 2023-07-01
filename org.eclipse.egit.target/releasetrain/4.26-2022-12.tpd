@@ -6,8 +6,8 @@ location "https://download.eclipse.org/releases/2022-12/" {
 	org.eclipse.ecf.core.feature.feature.group lazy
 	org.eclipse.ecf.filetransfer.feature.feature.group lazy
 	org.eclipse.emf.sdk.feature.group lazy
-	org.eclipse.equinox.concurrent lazy
 	org.eclipse.equinox.p2.director lazy
+	org.eclipse.equinox.sdk.feature.group lazy
 	org.eclipse.e4.tools.emf.ui lazy
 	org.eclipse.e4.tools.services lazy
 	org.eclipse.e4.ui.progress lazy

@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<?pde?>
+<!-- generated with https://github.com/eclipse-cbi/targetplatform-dsl -->
+<target name="4.28-2023-06" sequenceNumber="1686318469">
+  <locations>
+    <location includeMode="slicer" includeAllPlatforms="false" includeSource="true" includeConfigurePhase="true" type="InstallableUnit">
+      <unit id="org.apache.commons.jxpath" version="0.0.0"/>
+      <unit id="org.eclipse.sdk.ide" version="0.0.0"/>
+      <unit id="org.eclipse.ecf.core.feature.feature.group" version="0.0.0"/>
+      <unit id="org.eclipse.ecf.filetransfer.feature.feature.group" version="0.0.0"/>
+      <unit id="org.eclipse.emf.sdk.feature.group" version="0.0.0"/>
+      <unit id="org.eclipse.equinox.concurrent" version="0.0.0"/>
+      <unit id="org.eclipse.equinox.p2.director" version="0.0.0"/>
+      <unit id="org.eclipse.equinox.sdk.feature.group" version="3.23.800.v20230523-2142"/>
+      <unit id="org.eclipse.e4.tools.emf.ui" version="0.0.0"/>
+      <unit id="org.eclipse.e4.tools.services" version="0.0.0"/>
+      <unit id="org.eclipse.e4.ui.progress" version="0.0.0"/>
+      <unit id="org.eclipse.e4.ui.workbench" version="0.0.0"/>
+      <unit id="org.sat4j.core" version="0.0.0"/>
+      <unit id="org.sat4j.pb" version="0.0.0"/>
+      <unit id="org.eclipse.tools.layout.spy" version="0.0.0"/>
+      <repository location="https://download.eclipse.org/staging/2023-06"/>
+    </location>
+  </locations>
+</target>
