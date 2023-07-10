@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2010, SAP AG.
+ * Copyright (c) 2010, 2023 SAP AG and others
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License 2.0
  * which accompanies this distribution, and is available at
@@ -34,9 +34,12 @@ import org.eclipse.jface.layout.GridLayoutFactory;
 import org.eclipse.jface.preference.PreferencePage;
 import org.eclipse.jgit.events.ConfigChangedEvent;
 import org.eclipse.jgit.events.ConfigChangedListener;
+import org.eclipse.jgit.lib.Config;
+import org.eclipse.jgit.lib.Constants;
 import org.eclipse.jgit.lib.Repository;
 import org.eclipse.jgit.lib.StoredConfig;
 import org.eclipse.jgit.storage.file.FileBasedConfig;
+import org.eclipse.jgit.storage.file.UserConfigFile;
 import org.eclipse.jgit.util.FS;
 import org.eclipse.jgit.util.SystemReader;
 import org.eclipse.swt.SWT;
@@ -65,9 +68,13 @@ public class GlobalConfigurationPreferencePage extends PreferencePage implements
 
 	private FileBasedConfig userConfig;
 
+	private FileBasedConfig xdgConfig;
+
 	private FileBasedConfig sysConfig;
 
 	private StackLayout repoConfigStackLayout;
+
+	private StackLayout userConfigStackLayout;
 
 	private List<Repository> repositories;
 
@@ -77,13 +84,19 @@ public class GlobalConfigurationPreferencePage extends PreferencePage implements
 
 	private boolean userIsDirty;
 
+	private boolean xdgIsDirty;
+
 	private boolean sysIsDirty;
 
 	private ConfigurationEditorComponent userConfigEditor;
 
+	private ConfigurationEditorComponent xdgConfigEditor;
+
 	private ConfigurationEditorComponent sysConfigEditor;
 
 	private Composite repoConfigComposite;
+
+	private Composite userConfigComposite;
 
 	@Override
 	protected Control createContents(Composite parent) {
@@ -92,19 +105,97 @@ public class GlobalConfigurationPreferencePage extends PreferencePage implements
 				SWTUtils.MARGINS_NONE);
 		TabFolder tabFolder = new TabFolder(composite, SWT.NONE);
 		tabFolder.setLayoutData(SWTUtils.createHVFillGridData());
-		userConfigEditor = new ConfigurationEditorComponent(tabFolder,
-				userConfig, true, 5) {
-			@Override
-			protected void setErrorMessage(String message) {
-				GlobalConfigurationPreferencePage.this.setErrorMessage(message);
-			}
+		Control userTabControl;
+		if (xdgConfig != null) {
+			Composite userTab = new Composite(tabFolder, SWT.NONE);
+			String variable = SystemReader.getInstance().isWindows()
+					? '%' + Constants.XDG_CONFIG_HOME + '%'
+					: '$' + Constants.XDG_CONFIG_HOME;
+			String[] items = { "~" + File.separatorChar + ".gitconfig", //$NON-NLS-1$ //$NON-NLS-2$
+					variable + File.separatorChar + "git" //$NON-NLS-1$
+							+ File.separatorChar + Constants.CONFIG };
+			Combo userCombo = insertCombo(userTab,
+					UIText.GlobalConfigurationPreferencePage_userSettingLabel,
+					items);
+			userCombo.addSelectionListener(new SelectionAdapter() {
+				@Override
+				public void widgetSelected(SelectionEvent e) {
+					Combo combo = (Combo) e.widget;
+					switch (combo.getSelectionIndex()) {
+					case 0:
+						userConfigStackLayout.topControl = userConfigEditor
+								.getContents();
+						break;
+					case 1:
+						userConfigStackLayout.topControl = xdgConfigEditor
+								.getContents();
+						break;
+					default:
+						return;
+					}
+					userConfigComposite.layout();
+				}
+			});
 
-			@Override
-			protected void setDirty(boolean dirty) {
-				userIsDirty = dirty;
-				updateApplyButton();
-			}
-		};
+			userConfigComposite = new Composite(userTab, SWT.NONE);
+			GridDataFactory.fillDefaults().grab(true, true)
+					.applyTo(userConfigComposite);
+			userConfigStackLayout = new StackLayout();
+			userConfigComposite.setLayout(userConfigStackLayout);
+			userConfigEditor = new ConfigurationEditorComponent(
+					userConfigComposite, userConfig, true, 5) {
+				@Override
+				protected void setErrorMessage(String message) {
+					GlobalConfigurationPreferencePage.this
+							.setErrorMessage(message);
+				}
+
+				@Override
+				protected void setDirty(boolean dirty) {
+					userIsDirty = dirty;
+					updateApplyButton();
+				}
+			};
+			Control control = userConfigEditor.createContents();
+			Dialog.applyDialogFont(control);
+			userConfigStackLayout.topControl = control;
+
+			xdgConfigEditor = new ConfigurationEditorComponent(
+					userConfigComposite,
+					xdgConfig, true, 5) {
+				@Override
+				protected void setErrorMessage(String message) {
+					GlobalConfigurationPreferencePage.this
+							.setErrorMessage(message);
+				}
+
+				@Override
+				protected void setDirty(boolean dirty) {
+					xdgIsDirty = dirty;
+					updateApplyButton();
+				}
+			};
+			control = xdgConfigEditor.createContents();
+			Dialog.applyDialogFont(control);
+			userTabControl = userTab;
+		} else {
+			userConfigEditor = new ConfigurationEditorComponent(tabFolder,
+					userConfig, true, 5) {
+				@Override
+				protected void setErrorMessage(String message) {
+					GlobalConfigurationPreferencePage.this
+							.setErrorMessage(message);
+				}
+
+				@Override
+				protected void setDirty(boolean dirty) {
+					userIsDirty = dirty;
+					updateApplyButton();
+				}
+			};
+			userTabControl = userConfigEditor.createContents();
+			Dialog.applyDialogFont(userTabControl);
+		}
 		sysConfigEditor = new ConfigurationEditorComponent(tabFolder, sysConfig,
 				true, 5) {
 			@Override
@@ -120,17 +211,9 @@ public class GlobalConfigurationPreferencePage extends PreferencePage implements
 		};
 
 		Composite repoTab = new Composite(tabFolder, SWT.NONE);
-		GridLayoutFactory.swtDefaults().margins(0, 0).applyTo(repoTab);
-		GridDataFactory.fillDefaults().grab(true, true).applyTo(repoTab);
-		Composite repositoryComposite = new Composite(repoTab, SWT.NONE);
-		repositoryComposite.setLayout(new GridLayout(2, false));
-		GridDataFactory.fillDefaults().grab(true, false).applyTo(
-				repositoryComposite);
-		Label repoLabel = new Label(repositoryComposite, SWT.NONE);
-		repoLabel
-				.setText(UIText.GlobalConfigurationPreferencePage_repositorySettingRepositoryLabel);
-
-		Combo repoCombo = new Combo(repositoryComposite, SWT.READ_ONLY);
+		Combo repoCombo = insertCombo(repoTab,
+				UIText.GlobalConfigurationPreferencePage_repositorySettingRepositoryLabel,
+				getRepositoryComboItems());
 		repoCombo.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
@@ -138,7 +221,6 @@ public class GlobalConfigurationPreferencePage extends PreferencePage implements
 				showRepositoryConfiguration(combo.getSelectionIndex());
 			}
 		});
-		repoCombo.setItems(getRepositoryComboItems());
 
 		repoConfigComposite = new Composite(repoTab, SWT.NONE);
 		GridDataFactory.fillDefaults().grab(true, true).applyTo(repoConfigComposite);
@@ -158,14 +240,12 @@ public class GlobalConfigurationPreferencePage extends PreferencePage implements
 			repoCombo.setEnabled(false);
 		}
 
-		Control result = userConfigEditor.createContents();
-		Dialog.applyDialogFont(result);
 		TabItem userTabItem = new TabItem(tabFolder, SWT.FILL);
-		userTabItem.setControl(result);
+		userTabItem.setControl(userTabControl);
 		userTabItem.setText(
 				UIText.GlobalConfigurationPreferencePage_userSettingTabTitle);
 
-		result = sysConfigEditor.createContents();
+		Control result = sysConfigEditor.createContents();
 		Dialog.applyDialogFont(result);
 		TabItem sysTabItem = new TabItem(tabFolder, SWT.FILL);
 		sysTabItem.setControl(result);
@@ -187,7 +267,8 @@ public class GlobalConfigurationPreferencePage extends PreferencePage implements
 	@Override
 	protected void updateApplyButton() {
 		if (getApplyButton() != null)
-			getApplyButton().setEnabled(userIsDirty || sysIsDirty || !dirtyRepositories.isEmpty());
+			getApplyButton().setEnabled(userIsDirty || xdgIsDirty || sysIsDirty
+					|| !dirtyRepositories.isEmpty());
 	}
 
 	@Override
@@ -196,6 +277,14 @@ public class GlobalConfigurationPreferencePage extends PreferencePage implements
 		if (userIsDirty) {
 			try {
 				userConfigEditor.save();
+			} catch (IOException e) {
+				Activator.handleError(e.getMessage(), e, true);
+				ok = false;
+			}
+		}
+		if (xdgIsDirty) {
+			try {
+				xdgConfigEditor.save();
 			} catch (IOException e) {
 				Activator.handleError(e.getMessage(), e, true);
 				ok = false;
@@ -229,6 +318,9 @@ public class GlobalConfigurationPreferencePage extends PreferencePage implements
 	protected void performDefaults() {
 		try {
 			userConfigEditor.restore();
+			if (xdgConfigEditor != null) {
+				xdgConfigEditor.restore();
+			}
 			sysConfigEditor.restore();
 			for (ConfigurationEditorComponent editor : repoConfigEditors.values()) {
 				editor.restore();
@@ -244,8 +336,26 @@ public class GlobalConfigurationPreferencePage extends PreferencePage implements
 	public void init(IWorkbench workbench) {
 		if (sysConfig == null)
 			sysConfig = SystemReader.getInstance().openSystemConfig(null, FS.DETECTED);
-		if (userConfig == null)
-			userConfig = SystemReader.getInstance().openUserConfig(null, FS.DETECTED); // no inherit here!
+		if (userConfig == null) {
+			FileBasedConfig userCfg = SystemReader.getInstance()
+					.openUserConfig(null, FS.DETECTED);
+			FileBasedConfig xdgCfg = null;
+
+			if (userCfg instanceof UserConfigFile) {
+				Config base = userCfg.getBaseConfig();
+				if (base instanceof FileBasedConfig) {
+					xdgCfg = (FileBasedConfig) base;
+					userCfg = new FileBasedConfig(null, userCfg.getFile(),
+							FS.DETECTED);
+					if (xdgCfg.getFile() == null
+							|| !xdgCfg.getFile().isFile()) {
+						xdgCfg = null;
+					}
+				}
+			}
+			userConfig = userCfg;
+			xdgConfig = xdgCfg;
+		}
 		if (repositories == null) {
 			repositories = new ArrayList<>();
 			List<String> repoPaths = RepositoryUtil.INSTANCE
@@ -272,6 +382,22 @@ public class GlobalConfigurationPreferencePage extends PreferencePage implements
 	private void sortRepositoriesByName() {
 		Collections.sort(repositories, Comparator.comparing(this::getName,
 				String.CASE_INSENSITIVE_ORDER));
+	}
+
+	private Combo insertCombo(Composite parent, String label, String[] items) {
+		GridLayoutFactory.swtDefaults().margins(0, 0).applyTo(parent);
+		GridDataFactory.fillDefaults().grab(true, true).applyTo(parent);
+		Composite comboComposite = new Composite(parent, SWT.NONE);
+		comboComposite.setLayout(new GridLayout(2, false));
+		GridDataFactory.fillDefaults().grab(true, false)
+				.applyTo(comboComposite);
+		Label l = new Label(comboComposite, SWT.NONE);
+		l.setText(label);
+
+		Combo combo = new Combo(comboComposite, SWT.READ_ONLY);
+		combo.setItems(items);
+		combo.select(0);
+		return combo;
 	}
 
 	private String[] getRepositoryComboItems() {
