@@ -108,7 +108,7 @@ public class EGitCredentialsProvider extends CredentialsProvider {
 			}
 		}
 
-		if (!isSpecial && (userItem != null || passwordItem != null)) {
+		if (!isSpecial && (userItem != null && passwordItem != null)) {
 			UserPasswordCredentials credentials = null;
 			if ((user != null) && (password != null)) {
 				credentials = new UserPasswordCredentials(user, password);
@@ -129,12 +129,8 @@ public class EGitCredentialsProvider extends CredentialsProvider {
 					return false;
 				}
 			}
-			if (userItem != null) {
-				userItem.setValue(credentials.getUser());
-			}
-			if (passwordItem != null) {
-				passwordItem.setValue(credentials.getPassword().toCharArray());
-			}
+			userItem.setValue(credentials.getUser());
+			passwordItem.setValue(credentials.getPassword().toCharArray());
 			return true;
 		}
 
