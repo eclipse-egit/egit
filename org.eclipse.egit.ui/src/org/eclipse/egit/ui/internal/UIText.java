@@ -2353,6 +2353,12 @@ public class UIText extends NLS {
 	public static String PushBranchWizard_pushButton;
 
 	/** */
+	public static String PushCommitHandler_pushBranchLabel;
+
+	/** */
+	public static String PushCommitHandler_pushCommitLabel;
+
+	/** */
 	public static String PushCommitHandler_pushCommitTitle;
 
 	/** */
