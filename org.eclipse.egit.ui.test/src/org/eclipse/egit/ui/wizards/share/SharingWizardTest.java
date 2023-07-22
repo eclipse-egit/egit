@@ -14,6 +14,8 @@
 package org.eclipse.egit.ui.wizards.share;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
@@ -31,6 +33,7 @@ import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.Path;
 import org.eclipse.core.runtime.QualifiedName;
+import org.eclipse.egit.core.RepositoryCache;
 import org.eclipse.egit.core.RepositoryUtil;
 import org.eclipse.egit.core.op.DisconnectProviderOperation;
 import org.eclipse.egit.core.project.RepositoryMapping;
@@ -45,7 +48,9 @@ import org.eclipse.jface.dialogs.IDialogConstants;
 import org.eclipse.jgit.api.Git;
 import org.eclipse.jgit.junit.MockSystemReader;
 import org.eclipse.jgit.lib.Constants;
+import org.eclipse.jgit.lib.Ref;
 import org.eclipse.jgit.lib.Repository;
+import org.eclipse.jgit.lib.StoredConfig;
 import org.eclipse.jgit.storage.file.FileRepositoryBuilder;
 import org.eclipse.jgit.util.FileUtils;
 import org.eclipse.jgit.util.SystemReader;
@@ -157,6 +162,8 @@ public class SharingWizardTest extends LocalRepositoryTestCase {
 
 	@Test
 	public void shareProjectAndCreateRepo() throws Exception {
+		StoredConfig userConfig = SystemReader.getInstance().getUserConfig();
+		userConfig.setString("init", null, "defaultBranch", "foobar");
 		createProject(projectName0);
 		ExistingOrNewPage existingOrNewPage = sharingWizard
 				.openWizard(projectName0);
@@ -198,6 +205,14 @@ public class SharingWizardTest extends LocalRepositoryTestCase {
 						.getPersistentProperty(
 								new QualifiedName("org.eclipse.team.core",
 										"repository")));
+		Repository repository = RepositoryCache.INSTANCE
+				.getRepository(new File(repopath));
+		assertNotNull(repository);
+		Ref head = repository.exactRef(Constants.HEAD);
+		assertNotNull(head);
+		assertTrue(head.isSymbolic());
+		assertNull(head.getObjectId());
+		assertEquals(Constants.R_HEADS + "foobar", head.getTarget().getName());
 	}
 
 	@Test

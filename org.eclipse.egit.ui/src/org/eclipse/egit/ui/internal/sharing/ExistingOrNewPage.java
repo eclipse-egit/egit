@@ -51,6 +51,8 @@ import org.eclipse.jface.viewers.ViewerComparator;
 import org.eclipse.jface.window.Window;
 import org.eclipse.jface.wizard.WizardDialog;
 import org.eclipse.jface.wizard.WizardPage;
+import org.eclipse.jgit.api.Git;
+import org.eclipse.jgit.api.errors.GitAPIException;
 import org.eclipse.jgit.lib.Constants;
 import org.eclipse.jgit.lib.ObjectId;
 import org.eclipse.jgit.lib.Repository;
@@ -58,7 +60,6 @@ import org.eclipse.jgit.lib.RepositoryBuilder;
 import org.eclipse.jgit.revwalk.RevCommit;
 import org.eclipse.jgit.revwalk.RevTree;
 import org.eclipse.jgit.revwalk.RevWalk;
-import org.eclipse.jgit.storage.file.FileRepositoryBuilder;
 import org.eclipse.jgit.treewalk.TreeWalk;
 import org.eclipse.osgi.util.NLS;
 import org.eclipse.swt.SWT;
@@ -394,12 +395,11 @@ class ExistingOrNewPage extends WizardPage {
 		createRepo.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
-				File gitDir = new File(repositoryToCreate.getText(),
-						Constants.DOT_GIT);
+				File workingDir = new File(repositoryToCreate.getText());
+				File gitDir = new File(workingDir, Constants.DOT_GIT);
 				try {
-					try (Repository repository = FileRepositoryBuilder
-							.create(gitDir)) {
-						repository.create();
+					try (Git git = Git.init().setDirectory(workingDir).call()) {
+						// And close it.
 					}
 					for (IProject project : getProjects(false).keySet()) {
 						// If we don't refresh the project directories right
@@ -416,7 +416,7 @@ class ExistingOrNewPage extends WizardPage {
 									new NullProgressMonitor());
 					}
 					RepositoryUtil.INSTANCE.addConfiguredRepository(gitDir);
-				} catch (IOException e1) {
+				} catch (GitAPIException e1) {
 					String msg = NLS
 							.bind(UIText.ExistingOrNewPage_ErrorFailedToCreateRepository,
 									gitDir.toString());
