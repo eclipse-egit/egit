@@ -27,7 +27,6 @@ import java.util.Collections;
 import java.util.Objects;
 
 import org.eclipse.compare.ISharedDocumentAdapter;
-import org.eclipse.compare.internal.Utilities;
 import org.eclipse.core.filesystem.EFS;
 import org.eclipse.core.filesystem.IFileStore;
 import org.eclipse.core.resources.IContainer;
@@ -154,9 +153,12 @@ public class LocalNonWorkspaceTypedElement extends LocalResourceTypedElement
 		if (modifiedContent == null) {
 			try {
 				InputStream is = createStream();
-				modifiedContent = Utilities.readBytes(is);
+				modifiedContent = is.readAllBytes();
 			} catch (CoreException e) {
 				Activator.handleStatus(e.getStatus(), false);
+			} catch (IOException e) {
+				Activator.handleStatus(
+						Activator.createErrorStatus(e.getMessage(), e), false);
 			}
 		}
 		return modifiedContent;

@@ -1207,6 +1207,9 @@ public class UIText extends NLS {
 	public static String RepositoryPropertySource_SystemConfigurationMenu;
 
 	/** */
+	public static String RepositoryPropertySource_XdgConfigurationMenu;
+
+	/** */
 	public static String RepositoryPropertySource_SelectModeTooltip;
 
 	/** */
@@ -2687,6 +2690,9 @@ public class UIText extends NLS {
 
 	/** */
 	public static String GlobalConfigurationPreferencePage_systemSettingTabTitle;
+
+	/** */
+	public static String GlobalConfigurationPreferencePage_userSettingLabel;
 
 	/** */
 	public static String GlobalConfigurationPreferencePage_userSettingTabTitle;
