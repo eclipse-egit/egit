@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2010 SAP AG.
+ * Copyright (c) 2010, 2023 SAP AG and others
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License 2.0
  * which accompanies this distribution, and is available at
@@ -37,6 +37,7 @@ import org.eclipse.jgit.lib.Config;
 import org.eclipse.jgit.lib.Repository;
 import org.eclipse.jgit.lib.StoredConfig;
 import org.eclipse.jgit.storage.file.FileBasedConfig;
+import org.eclipse.jgit.storage.file.UserConfigFile;
 import org.eclipse.jgit.util.FS;
 import org.eclipse.jgit.util.SystemReader;
 import org.eclipse.osgi.util.NLS;
@@ -68,6 +69,8 @@ public class RepositoryPropertySource implements IPropertySource {
 	static final String EDITACTIONID = "Edit"; //$NON-NLS-1$
 
 	private static final String SYSTEM_ID_PREFIX = "system"; //$NON-NLS-1$
+
+	private static final String XDG_ID_PREFIX = "xdg"; //$NON-NLS-1$
 
 	private static final String USER_ID_PREFIX = "user"; //$NON-NLS-1$
 
@@ -106,6 +109,9 @@ public class RepositoryPropertySource implements IPropertySource {
 			case SYSTEM:
 				config = source.systemConfig;
 				break;
+			case XDG:
+				config = source.xdgConfig;
+				break;
 			case USER:
 				config = source.userHomeConfig;
 				break;
@@ -134,6 +140,8 @@ public class RepositoryPropertySource implements IPropertySource {
 
 	private final FileBasedConfig userHomeConfig;
 
+	private final FileBasedConfig xdgConfig;
+
 	private final StoredConfig repositoryConfig;
 
 	private final StoredConfig effectiveConfig;
@@ -156,7 +164,20 @@ public class RepositoryPropertySource implements IPropertySource {
 
 		effectiveConfig = repository.getConfig();
 		systemConfig = SystemReader.getInstance().openSystemConfig(null, FS.DETECTED);
-		userHomeConfig = SystemReader.getInstance().openUserConfig(null, FS.DETECTED);
+		FileBasedConfig userConfig = SystemReader.getInstance()
+				.openUserConfig(null, FS.DETECTED);
+		FileBasedConfig xdgCfg = null;
+
+		if (userConfig instanceof UserConfigFile) {
+			Config base = userConfig.getBaseConfig();
+			if (base instanceof FileBasedConfig) {
+				xdgCfg = (FileBasedConfig) base;
+				userConfig = new FileBasedConfig(null, userConfig.getFile(),
+						FS.DETECTED);
+			}
+		}
+		userHomeConfig = userConfig;
+		xdgConfig = xdgCfg;
 
 		if (effectiveConfig instanceof FileBasedConfig) {
 			File configFile = ((FileBasedConfig) effectiveConfig).getFile();
@@ -199,6 +220,12 @@ public class RepositoryPropertySource implements IPropertySource {
 					final Menu ctxMenu = mgr.createContextMenu(control);
 
 					for (final DisplayMode aMode : DisplayMode.values()) {
+						if (DisplayMode.XDG.equals(aMode)
+								&& (xdgConfig == null
+										|| xdgConfig.getFile() == null
+										|| !xdgConfig.getFile().isFile())) {
+							continue;
+						}
 						mgr.add(new Action(aMode.getText()) {
 							@Override
 							public void run() {
@@ -214,6 +241,11 @@ public class RepositoryPropertySource implements IPropertySource {
 								case EFFECTIVE:
 									enabled = false;
 									break;
+								case XDG:
+									enabled = xdgConfig != null
+											&& xdgConfig.getFile() != null
+											&& xdgConfig.getFile().canWrite();
+									break;
 								case SYSTEM:
 									enabled = systemConfig.getFile() != null
 											&& systemConfig.getFile()
@@ -224,14 +256,17 @@ public class RepositoryPropertySource implements IPropertySource {
 									break;
 								}
 								editAction.getAction().setEnabled(enabled);
+								// We change the action text, so force an update
+								// to get proper re-layout.
+								myPage.getSite().getActionBars()
+										.updateActionBars();
 								myPage.refresh();
 							}
 
 							@Override
 							public boolean isEnabled() {
 								return aMode != DisplayMode.SYSTEM
-												|| systemConfig
-												.getFile() != null;
+										|| systemConfig.getFile() != null;
 							}
 
 							@Override
@@ -353,6 +388,9 @@ public class RepositoryPropertySource implements IPropertySource {
 	public IPropertyDescriptor[] getPropertyDescriptors() {
 		try {
 			systemConfig.load();
+			if (xdgConfig != null) {
+				xdgConfig.load();
+			}
 			userHomeConfig.load();
 			repositoryConfig.load();
 			effectiveConfig.load();
@@ -385,6 +423,18 @@ public class RepositoryPropertySource implements IPropertySource {
 							UIText.RepositoryPropertySource_RepositoryConfigurationCategory,
 							location);
 			config = repositoryConfig;
+			break;
+		}
+		case XDG: {
+			if (xdgConfig == null) {
+				return new IPropertyDescriptor[0];
+			}
+			prefix = XDG_ID_PREFIX;
+			String location = xdgConfig.getFile().getAbsolutePath();
+			category = NLS.bind(
+					UIText.RepositoryPropertySource_GlobalConfigurationCategory,
+					location);
+			config = xdgConfig;
 			break;
 		}
 		case USER: {
@@ -440,6 +490,9 @@ public class RepositoryPropertySource implements IPropertySource {
 		if (actId.startsWith(SYSTEM_ID_PREFIX)) {
 			value = getValueFromConfig(systemConfig,
 					actId.substring(SYSTEM_ID_PREFIX.length()));
+		} else if (actId.startsWith(XDG_ID_PREFIX)) {
+			value = getValueFromConfig(xdgConfig,
+					actId.substring(XDG_ID_PREFIX.length()));
 		} else if (actId.startsWith(USER_ID_PREFIX)) {
 			value = getValueFromConfig(userHomeConfig,
 					actId.substring(USER_ID_PREFIX.length()));
@@ -482,7 +535,9 @@ public class RepositoryPropertySource implements IPropertySource {
 		EFFECTIVE(UIText.RepositoryPropertySource_EffectiveConfigurationAction),
 		/* System wide configuration */
 		SYSTEM(UIText.RepositoryPropertySource_SystemConfigurationMenu),
-		/* The user specific configuration */
+		/* The configuration at $XDG_CONFIG_HOME/git/config */
+		XDG(UIText.RepositoryPropertySource_XdgConfigurationMenu),
+		/* The configuration in the user's home directory */
 		USER(UIText.RepositoryPropertySource_GlobalConfigurationMenu),
 		/* The repository specific configuration */
 		REPO(UIText.RepositoryPropertySource_RepositoryConfigurationButton);
