@@ -1,0 +1,90 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "6aeeb7b8_0ef8e19b",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/staging/LazyCachedSupplier.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2023-09-01T21:19:27Z",
+      "side": 1,
+      "message": "document that this class isn\u0027t thread-safe ?",
+      "revId": "ffbf85d4cc5543be2347ca016f2cf75ccecd7551",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b8e26acf_3bcfab51",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/staging/StagingView.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1551,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2023-09-01T21:19:27Z",
+      "side": 1,
+      "message": "we don\u0027t use final for local variables, see https://wiki.eclipse.org/EGit/Contributor_Guide#Use_of_the_.22final.22_modifier",
+      "range": {
+        "startLine": 1551,
+        "startChar": 3,
+        "endLine": 1551,
+        "endChar": 8
+      },
+      "revId": "ffbf85d4cc5543be2347ca016f2cf75ccecd7551",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "6b75d174_b7d138a4",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/staging/StagingView.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 4922,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2023-09-01T21:19:27Z",
+      "side": 1,
+      "message": "declare this as `Supplier\u003cRepositoryState\u003e` ?",
+      "range": {
+        "startLine": 4922,
+        "startChar": 34,
+        "endLine": 4922,
+        "endChar": 53
+      },
+      "revId": "ffbf85d4cc5543be2347ca016f2cf75ccecd7551",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ffb3c8e4_85760f3d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/staging/StagingView.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 5212,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2023-09-01T21:19:27Z",
+      "side": 1,
+      "message": "declare this as `Supplier\u003cRepositoryState\u003e` ?",
+      "range": {
+        "startLine": 5212,
+        "startChar": 33,
+        "endLine": 5212,
+        "endChar": 52
+      },
+      "revId": "ffbf85d4cc5543be2347ca016f2cf75ccecd7551",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31"
+    }
+  ]
+}
