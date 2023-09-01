@@ -151,8 +151,7 @@ public class LocalNonWorkspaceTypedElement extends LocalResourceTypedElement
 	@Override
 	public byte[] getContent() {
 		if (modifiedContent == null) {
-			try {
-				InputStream is = createStream();
+			try (InputStream is = createStream()) {
 				modifiedContent = is.readAllBytes();
 			} catch (CoreException e) {
 				Activator.handleStatus(e.getStatus(), false);
