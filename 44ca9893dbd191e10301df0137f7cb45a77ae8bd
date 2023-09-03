@@ -16,6 +16,23 @@
       "message": "LGTM. The build _did_ use the correct JGit 6.6.1 release, the repo created contains the correct bundles.",
       "revId": "44ca9893dbd191e10301df0137f7cb45a77ae8bd",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "9b963b45_3be2ba74",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2023-09-03T22:54:54Z",
+      "side": 1,
+      "message": "The egit-stable build did not update the update-6.6 p2 repo, it created a new update-6.6.1. Which means automatic updates in Eclipse won\u0027t occur. But at least we can point Eclipse users to [1] to update manually.\n\n[1] https://download.eclipse.org/egit/updates-6.6.1/",
+      "revId": "44ca9893dbd191e10301df0137f7cb45a77ae8bd",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31"
     }
   ]
 }
