@@ -33,6 +33,24 @@
       "message": "The egit-stable build did not update the update-6.6 p2 repo, it created a new update-6.6.1. Which means automatic updates in Eclipse won\u0027t occur. But at least we can point Eclipse users to [1] to update manually.\n\n[1] https://download.eclipse.org/egit/updates-6.6.1/",
       "revId": "44ca9893dbd191e10301df0137f7cb45a77ae8bd",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "ffb55b2c_c7b951d9",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2023-09-03T23:27:12Z",
+      "side": 1,
+      "message": "If we want that automatic update installs this version we have to update the release repo https://download.eclipse.org/releases/2023-06/\nor we wait until 6.7 is released with 2023-09 which is available to 2023-06 installations via https://download.eclipse.org/releases/latest",
+      "parentUuid": "9b963b45_3be2ba74",
+      "revId": "44ca9893dbd191e10301df0137f7cb45a77ae8bd",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31"
     }
   ]
 }
