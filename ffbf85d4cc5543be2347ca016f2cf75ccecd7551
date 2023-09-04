@@ -130,6 +130,30 @@
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "c43b19e5_f591dc40",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/staging/StagingView.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 4922,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2023-09-04T09:04:05Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "f1feb4fe_028c34d4",
+      "range": {
+        "startLine": 4922,
+        "startChar": 34,
+        "endLine": 4922,
+        "endChar": 53
+      },
+      "revId": "ffbf85d4cc5543be2347ca016f2cf75ccecd7551",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "ffb3c8e4_85760f3d",
@@ -167,6 +191,30 @@
       "side": 1,
       "message": "That was the original intention. but we also need stateSupplier.getRepository() here - or more parameters.",
       "parentUuid": "ffb3c8e4_85760f3d",
+      "range": {
+        "startLine": 5212,
+        "startChar": 33,
+        "endLine": 5212,
+        "endChar": 52
+      },
+      "revId": "ffbf85d4cc5543be2347ca016f2cf75ccecd7551",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "15931720_cc441892",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/staging/StagingView.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 5212,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2023-09-04T09:04:05Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "7ad4d34c_179ef088",
       "range": {
         "startLine": 5212,
         "startChar": 33,
