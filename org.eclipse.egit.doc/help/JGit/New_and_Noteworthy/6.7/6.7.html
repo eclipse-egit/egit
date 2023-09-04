@@ -1,0 +1,95 @@
+<?xml version='1.0' encoding='utf-8' ?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+		<title>JGit 6.7 New and Noteworthy</title>
+		<link type="text/css" rel="stylesheet" href="../../../book.css"/>
+	</head>
+	<body>
+		<table class="navigation" style="width: 100%;" border="0" summary="navigation">
+			<tr>
+				<th style="width: 100%" align="center" colspan="3">JGit 6.7 New and Noteworthy</th>
+			</tr>
+			<tr>
+				<td style="width: 20%" align="left"></td>
+				<td style="width: 60%" align="center"></td>
+				<td style="width: 20%" align="right">
+					<a href="Contributors.html" title="Contributors">
+						<img alt="Next" border="0" src="../../../images/next.gif"/>
+					</a>
+				</td>
+			</tr>
+			<tr>
+				<td style="width: 20%" align="left" valign="top"></td>
+				<td style="width: 60%" align="center"></td>
+				<td style="width: 20%" align="right" valign="top">Contributors</td>
+			</tr>
+		</table><hr class="navigation-separator"/>
+		<h1 id="JGit">JGit</h1>
+		<h2 id="Features">Features</h2>
+		<h3 id="SSH_Connections_support_PKCS.2311_Hardware_Security_Modules">SSH Connections support PKCS#11 Hardware Security Modules</h3>
+		<p>The SSH transport <code>org.eclipse.jgit.ssh.apache</code> of JGit 6.7.0 supports using PKCS#11 Hardware Security Modules (HSM) for public-key authentication.
+			It uses Java's built-in mechanisms to access PKCS#11-compliant HSMs via the <code>SunPKCS11</code> security provider.</p>
+		<p>This can be configured in the SSH configuration file <tt>~/.ssh/config</tt> as follows:</p>
+		<pre> Host git.acme.com
+ Hostname ...
+ User ...
+ PKCS11Provider /absolute/path/to/pkcs11/shared/library
+</pre>
+		<p>The "PKCS#11 shared library" is typically provided by the vendor of the HSM; it provides the standard PKCS#11 API to the device. If the path contains blanks, quote it with double quotes.</p>
+		<p>HSMs may have multiple "slots" containing different tokens. JGit by default uses keys from the first slot/token. To select a different slot, use a config like</p>
+		<pre> # At the very top of the file: tell OpenSSH to ignore this option, which it doesn't know
+ IgnoreUnknown PKCS11SlotListIndex
+ ...
+ Host git.acme.com
+ Hostname ...
+ User ...
+ PKCS11Provider /absolute/path/to/pkcs11/shared/library
+ PKCS11SlotListIndex &lt;slot number&gt;
+</pre>
+		<p>Note that this is the slot 
+			<i>index</i>, not the slot ID. The index is just a number, the first slot has index 0, the next 1, and so on.
+		</p>
+		<p>Some slots may contain multiple certificates or keys. JGit just tries all keys from a slot in the order they are delivered by the <tt>SunPKCS11</tt> provider. To specify that a particular key should be used, export the public key to a file, say <tt>~/.ssh/my_hsm_key.pub</tt>, in SSH format.</p>
+		<dl>
+			<dd>
+				<dl>
+					<dd>(Please consult the documentation provided by the vendor of the HSM on how to export a public key. Once it exists as a PEM file, it can be converted to SSH format using <tt>ssh-keygen -f my_hsm_key.pem -m pkcs8 -i &gt; ~/.ssh/my_hsm_key.pub</tt>.)</dd>
+				</dl>
+			</dd>
+		</dl>
+		<p>Then use <tt>IdentityFile</tt>, plus <tt>IdentitiesOnly</tt> to specify that only the keys listed via <tt>IdentityFile</tt> shall be used:</p>
+		<pre> Host git.acme.com
+ Hostname ...
+ User ...
+ PKCS11Provider /absolute/path/to/pkcs11/shared/library
+ IdentityFile ~/.ssh/my_hsm_key
+ IdentitiesOnly yes
+</pre>
+		<p>Note that there is no "<tt>.pub</tt>" file extension for the <tt>IdentityFile</tt>, and this file without the <tt>.pub</tt> suffix need not (and usually will not) exist. But the corresponding <tt>~/.ssh/my_hsm_key.pub</tt> should exist!</p>
+		<h3 id="Other_Features">Other Features</h3>
+		<ul>
+			<li>JGit has learned to read the git config file <tt>$XDG_CONFIG_HOME/git/config</tt>, if it exists, in addition to the global git config file in the user's home directory.</li>
+		</ul>
+		<h2 id="Other_Changes">Other Changes</h2>
+		<p>The complete list of new features and bug fixes is available in the 
+			<a href="https://projects.eclipse.org/projects/technology.jgit/releases/6.7.0/" target="egit_external">release notes</a>.
+		</p><hr class="navigation-separator"/>
+		<table class="navigation" style="width: 100%;" border="0" summary="navigation">
+			<tr>
+				<td style="width: 20%" align="left"></td>
+				<td style="width: 60%" align="center"></td>
+				<td style="width: 20%" align="right">
+					<a href="Contributors.html" title="Contributors">
+						<img alt="Next" border="0" src="../../../images/next.gif"/>
+					</a>
+				</td>
+			</tr>
+			<tr>
+				<td style="width: 20%" align="left" valign="top"></td>
+				<td style="width: 60%" align="center"></td>
+				<td style="width: 20%" align="right" valign="top">Contributors</td>
+			</tr>
+		</table>
+	</body>
+</html>
