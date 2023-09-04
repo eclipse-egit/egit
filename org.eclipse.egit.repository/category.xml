@@ -36,9 +36,6 @@
    <feature url="features/org.eclipse.egit.gitflow.feature_0.0.0.qualifier.jar" id="org.eclipse.egit.gitflow.feature" version="0.0.0">
       <category name="EGit.additional"/>
    </feature>
-   <bundle id="assertj-core">
-      <category name="EGit.dependencies"/>
-   </bundle>
    <bundle id="org.apache.commons.commons-codec">
       <category name="EGit.dependencies"/>
    </bundle>
@@ -229,6 +226,15 @@
       <category name="EGit.dependencies"/>
    </bundle>
    <bundle id="org.apache.log4j.source">
+      <category name="EGit.dependencies"/>
+   </bundle>
+   <bundle id="org.eclipse.osgi">
+      <category name="EGit.dependencies"/>
+   </bundle>
+   <bundle id="org.osgi.service.cm">
+      <category name="EGit.dependencies"/>
+   </bundle>
+   <bundle id="org.osgi.service.cm.source">
       <category name="EGit.dependencies"/>
    </bundle>
    <category-def name="EGit" label="Git integration for Eclipse">
