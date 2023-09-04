@@ -18,6 +18,24 @@
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "3e88b029_f7729d03",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/staging/LazyCachedSupplier.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 304382
+      },
+      "writtenOn": "2023-09-04T06:27:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6aeeb7b8_0ef8e19b",
+      "revId": "ffbf85d4cc5543be2347ca016f2cf75ccecd7551",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "b8e26acf_3bcfab51",
@@ -31,6 +49,30 @@
       "writtenOn": "2023-09-01T21:19:27Z",
       "side": 1,
       "message": "we don\u0027t use final for local variables, see https://wiki.eclipse.org/EGit/Contributor_Guide#Use_of_the_.22final.22_modifier",
+      "range": {
+        "startLine": 1551,
+        "startChar": 3,
+        "endLine": 1551,
+        "endChar": 8
+      },
+      "revId": "ffbf85d4cc5543be2347ca016f2cf75ccecd7551",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "bfd8a138_7e898970",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/staging/StagingView.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1551,
+      "author": {
+        "id": 304382
+      },
+      "writtenOn": "2023-09-04T06:27:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b8e26acf_3bcfab51",
       "range": {
         "startLine": 1551,
         "startChar": 3,
@@ -66,6 +108,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "f1feb4fe_028c34d4",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/staging/StagingView.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 4922,
+      "author": {
+        "id": 304382
+      },
+      "writtenOn": "2023-09-04T06:27:20Z",
+      "side": 1,
+      "message": "That was the original intention. but we also need stateSupplier.getRepository() here - or more parameters.",
+      "parentUuid": "6b75d174_b7d138a4",
+      "range": {
+        "startLine": 4922,
+        "startChar": 34,
+        "endLine": 4922,
+        "endChar": 53
+      },
+      "revId": "ffbf85d4cc5543be2347ca016f2cf75ccecd7551",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "ffb3c8e4_85760f3d",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/staging/StagingView.java",
         "patchSetId": 1
@@ -77,6 +143,30 @@
       "writtenOn": "2023-09-01T21:19:27Z",
       "side": 1,
       "message": "declare this as `Supplier\u003cRepositoryState\u003e` ?",
+      "range": {
+        "startLine": 5212,
+        "startChar": 33,
+        "endLine": 5212,
+        "endChar": 52
+      },
+      "revId": "ffbf85d4cc5543be2347ca016f2cf75ccecd7551",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "7ad4d34c_179ef088",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/staging/StagingView.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 5212,
+      "author": {
+        "id": 304382
+      },
+      "writtenOn": "2023-09-04T06:27:20Z",
+      "side": 1,
+      "message": "That was the original intention. but we also need stateSupplier.getRepository() here - or more parameters.",
+      "parentUuid": "ffb3c8e4_85760f3d",
       "range": {
         "startLine": 5212,
         "startChar": 33,
