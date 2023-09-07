@@ -262,7 +262,16 @@ public class CommitHelper {
 		if (repository == null) {
 			return false;
 		}
-		RepositoryState state = repository.getRepositoryState();
+		return isCommitWithoutFilesAllowed(repository.getRepositoryState());
+	}
+
+	/**
+	 * @param state
+	 *            RepositoryState to check
+	 * @return true if an empty commit without files is allowed in the current
+	 *         state
+	 */
+	public static boolean isCommitWithoutFilesAllowed(RepositoryState state) {
 		return state == RepositoryState.MERGING_RESOLVED;
 	}
 

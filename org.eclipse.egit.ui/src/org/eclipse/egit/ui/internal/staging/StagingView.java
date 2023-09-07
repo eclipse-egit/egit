@@ -687,7 +687,7 @@ public class StagingView extends ViewPart
 			if (!RepositoryUtil.PREFS_DIRECTORIES_REL.equals(event.getKey())) {
 				return;
 			}
-			final Repository repo = currentRepository;
+			Repository repo = currentRepository;
 			if (repo == null || RepositoryUtil.INSTANCE.contains(repo)) {
 				return;
 			}
@@ -1238,7 +1238,7 @@ public class StagingView extends ViewPart
 		commitAndPushButton.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
-				if (canPushHeadOnly()) {
+				if (canPushHeadOnly(new LazyRepositoryState(currentRepository))) {
 					pushHead(currentRepository);
 				} else {
 					commit(true);
@@ -1548,17 +1548,17 @@ public class StagingView extends ViewPart
 		boolean indexDiffAvailable = indexDiffAvailable(indexDiff);
 		boolean noConflicts = noConflicts(indexDiff);
 		UnitOfWork.execute(currentRepository, () -> {
-
+			Repository repo = currentRepository;
+			LazyRepositoryState stateCache = new LazyRepositoryState(repo);
 			boolean commitEnabled = noConflicts && indexDiffAvailable
-					&& isCommitPossible() && !isCommitBlocked();
+					&& isCommitPossible(stateCache) && !isCommitBlocked();
 			commitButton.setEnabled(commitEnabled);
 
-			final Repository repo = currentRepository;
-			pushesHeadOnly = canPushHeadOnly();
+			pushesHeadOnly = canPushHeadOnly(stateCache);
 			commitAndPushButton
 					.setEnabled(
 							repo != null && (commitEnabled || pushesHeadOnly)
-							&& !repo.getRepositoryState().isRebasing());
+							&& !stateCache.get().isRebasing());
 			updateCommitAndPush(repo);
 		});
 	}
@@ -4286,18 +4286,18 @@ public class StagingView extends ViewPart
 			unstagedViewer.setSelection(unstagedViewer.getSelection());
 			refreshAction.setEnabled(true);
 
-			updateRebaseButtonVisibility(
-					repository.getRepositoryState().isRebasing());
+			RepositoryState repositoryState = repository.getRepositoryState();
+			updateRebaseButtonVisibility(repositoryState.isRebasing());
 
 			updateIgnoreErrorsButtonVisibility();
 
 			boolean rebaseContinueEnabled = indexDiffAvailable
-					&& repository.getRepositoryState().isRebasing()
+					&& repositoryState.isRebasing()
 					&& noConflicts;
 			rebaseContinueButton.setEnabled(rebaseContinueEnabled);
 
 			isUnbornHead = false;
-			if (repository.getRepositoryState() == RepositoryState.SAFE) {
+			if (repositoryState == RepositoryState.SAFE) {
 				try {
 					Ref head = repository.exactRef(Constants.HEAD);
 					if (head != null && head.isSymbolic()
@@ -4806,7 +4806,7 @@ public class StagingView extends ViewPart
 	 * @return whether a job was scheduled
 	 */
 	private boolean internalCommit(boolean pushUpstream, Runnable afterJob) {
-		if (!isCommitPossible()) {
+		if (!isCommitPossible(new LazyRepositoryState(currentRepository))) {
 			MessageDialog md = new MessageDialog(getSite().getShell(),
 					UIText.StagingView_committingNotPossible, null,
 					UIText.StagingView_noStagedFiles, MessageDialog.ERROR,
@@ -4919,10 +4919,11 @@ public class StagingView extends ViewPart
 			job.schedule();
 	}
 
-	private boolean isCommitPossible() {
-		return stagedViewer.getTree().getItemCount() > 0
+	private boolean isCommitPossible(LazyRepositoryState stateSupplier) {
+		return stateSupplier.getRepository() != null
+				&& stagedViewer.getTree().getItemCount() > 0
 				|| amendPreviousCommitAction.isChecked()
-				|| CommitHelper.isCommitWithoutFilesAllowed(currentRepository);
+				|| CommitHelper.isCommitWithoutFilesAllowed(stateSupplier.get());
 	}
 
 	@Override
@@ -5208,11 +5209,11 @@ public class StagingView extends ViewPart
 		}
 	}
 
-	private boolean canPushHeadOnly() {
-		Repository repo = currentRepository;
+	private boolean canPushHeadOnly(LazyRepositoryState stateSupplier) {
+		Repository repo = stateSupplier.getRepository();
 		try {
 			return repo != null && repo.resolve(Constants.HEAD) != null
-					&& !isCommitPossible();
+					&& !isCommitPossible(stateSupplier);
 		} catch (IOException e) {
 			return false;
 		}

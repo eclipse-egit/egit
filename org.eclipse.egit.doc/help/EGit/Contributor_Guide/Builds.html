@@ -41,7 +41,13 @@
 		</ul>
 		<p>Prerequisites for the Maven build are</p>
 		<ul>
-			<li>since 6.0 Java 11, older versions need Java 8 </li>
+			<li>since 6.7 
+				<a href="https://git.eclipse.org/r/c/jgit/jgit/+/201773" target="egit_external">(#201773)</a> Java 17, still compiled for Java 11, required by Tycho 4.0 used to build OSGi artefacts
+				<ul>
+					<li>since 6.0 Java 11</li>
+					<li>older versions need Java 8 </li>
+				</ul>
+			</li>
 			<li>
 				<a href="https://maven.apache.org/download.html" target="egit_external">at least Maven 3.5.2</a>
 			</li>
@@ -55,7 +61,7 @@
 		<h2 id="JGit_2">JGit</h2>
 		<ul>
 			<li>JGit can be built using Maven or Bazel</li>
-			<li>use Java 11 to run the JGit build</li>
+			<li>use Java 17 to run the JGit build, it's compiled for Java 11 but Tycho 4.0 used to build OSGi artefacts requires Java 17</li>
 			<li>JGit packaging projects (Eclipse features and p2 repository) are built using Maven and Tycho.</li>
 		</ul>
 		<h2 id="EGit_2">EGit</h2>

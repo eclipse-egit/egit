@@ -2,13 +2,13 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 	<head>
 		<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
-		<title>EGit 6.6 New and Noteworthy</title>
+		<title>EGit 6.7 New and Noteworthy</title>
 		<link type="text/css" rel="stylesheet" href="../../../book.css"/>
 	</head>
 	<body>
 		<table class="navigation" style="width: 100%;" border="0" summary="navigation">
 			<tr>
-				<th style="width: 100%" align="center" colspan="3">EGit 6.6 New and Noteworthy</th>
+				<th style="width: 100%" align="center" colspan="3">EGit 6.7 New and Noteworthy</th>
 			</tr>
 			<tr>
 				<td style="width: 20%" align="left"></td>
@@ -26,8 +26,17 @@
 			</tr>
 		</table><hr class="navigation-separator"/>
 		<h1 id="EGit">EGit</h1>
+		<h2 id="Features">Features</h2>
+		<h3 id="Git_Config_Files">Git Config Files</h3>
+		<p>JGit has learned to handle the git config file <tt>$XDG_CONFIG_HOME/git/config</tt>, if it exists. EGit shows this extra git config file in the preferences dialog in section "Version Control (Team)&rarr;Git&rarr;Configuration", and also in the properties view of a repository.</p>
+		<h3 id="SSH_Connections_support_PKCS.2311_Hardware_Security_Modules">SSH Connections support PKCS#11 Hardware Security Modules</h3>
+		<p>JGit 6.7.0 has added support for using PKCS#11 Hardware Security Modules for SSH public-key authentication. EGit transparently inherits this feature. All configuration is via the <tt>~/.ssh/config</tt> SSH configuration file; there is no UI. Please see the 
+			<a href="../../../JGit/New_and_Noteworthy/6.7/6.7.html#SSH_Connections_support_PKCS.2311_Hardware_Security_Modules" title="JGit/New_and_Noteworthy/6.7#SSH_Connections_support_PKCS.2311_Hardware_Security_Modules">new features in JGit</a> for hints on how to configure this.
+		</p>
+		<p>EGit will prompt for the HSM token's PIN upon first use, and subsequently only when required by the HSM, as long as the application using EGit runs. After a restart of the application, or when the HSM device is removed or re-inserted, it may prompt again.</p>
+		<h2 id="Other_Changes">Other Changes</h2>
 		<p>The complete list of new features and bug fixes is available in the 
-			<a href="https://projects.eclipse.org/projects/technology.egit/releases/6.6.0/" target="egit_external">release notes</a>.
+			<a href="https://projects.eclipse.org/projects/technology.egit/releases/6.7.0/" target="egit_external">release notes</a>.
 		</p><hr class="navigation-separator"/>
 		<table class="navigation" style="width: 100%;" border="0" summary="navigation">
 			<tr>
