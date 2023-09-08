@@ -6,6 +6,7 @@
  * Copyright (C) 2008, Shawn O. Pearce <spearce@spearce.org>
  * Copyright (C) 2010, Stefan Lay <stefan.lay@sap.com>
  * Copyright (C) 2011, Jens Baumgart <jens.baumgart@sap.com>
+ * Copyright (C) 2023, Thomas Wolf <twolf@apache.org> and others
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License 2.0
@@ -43,19 +44,19 @@ public class CommitHelper {
 
 	final private Repository repository;
 
-	boolean canCommit;
+	private boolean canCommit;
 
-	String cannotCommitMessage;
+	private String cannotCommitMessage;
 
 	private RevCommit previousCommit;
 
-	String author;
+	private String author;
 
-	String committer;
+	private String committer;
 
-	boolean isMergedResolved;
+	private boolean isMergedResolved;
 
-	boolean isCherryPickResolved;
+	private boolean isCherryPickResolved;
 
 	private String commitMessage;
 
@@ -72,7 +73,6 @@ public class CommitHelper {
 	}
 
 	private void calculateCommitInfo() {
-		Repository mergeRepository = null;
 		commentChar = '\0';
 		isMergedResolved = false;
 		isCherryPickResolved = false;
@@ -83,12 +83,16 @@ public class CommitHelper {
 					state.getDescription());
 			return;
 		}
-		if (state.equals(RepositoryState.MERGING_RESOLVED)) {
+		switch (state) {
+		case MERGING_RESOLVED:
+		case REVERTING_RESOLVED:
 			isMergedResolved = true;
-			mergeRepository = repository;
-		} else if (state.equals(RepositoryState.CHERRY_PICKING_RESOLVED)) {
+			break;
+		case CHERRY_PICKING_RESOLVED:
 			isCherryPickResolved = true;
-			mergeRepository = repository;
+			break;
+		default:
+			break;
 		}
 		previousCommit = getHeadCommit(repository);
 		final UserConfig config = repository.getConfig().get(UserConfig.KEY);
@@ -101,14 +105,13 @@ public class CommitHelper {
 		committer = committer + " <" + committerEmail + ">"; //$NON-NLS-1$ //$NON-NLS-2$
 
 		if (isMergedResolved || isCherryPickResolved) {
-			commitMessage = getMergeResolveMessage(mergeRepository);
+			commitMessage = getMergeResolveMessage(repository);
 			commentChar = Utils.commentCharFromMergeMessage(commitMessage);
 		}
 
 		if (isCherryPickResolved) {
-			author = getCherryPickOriginalAuthor(mergeRepository);
+			author = getCherryPickOriginalAuthor(repository);
 		}
-
 	}
 
 	/**
