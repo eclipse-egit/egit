@@ -7,7 +7,7 @@
  * Copyright (C) 2010, Stefan Lay <stefan.lay@sap.com>
  * Copyright (C) 2011, Jens Baumgart <jens.baumgart@sap.com>
  * Copyright (C) 2012, Robin Stocker <robin@nibor.org>
- * Copyright (C) 2016, Thomas Wolf <thomas.wolf@paranor.ch>
+ * Copyright (C) 2016, 2023 Thomas Wolf <thomas.wolf@paranor.ch>
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License 2.0
@@ -185,7 +185,8 @@ public class CommitUI  {
 		commitDialog.setPreselectAll(preselectAll);
 		commitDialog.setAuthor(commitHelper.getAuthor());
 		commitDialog.setCommitter(commitHelper.getCommitter());
-		commitDialog.setAllowToChangeSelection(!commitHelper.isMergedResolved && !commitHelper.isCherryPickResolved);
+		commitDialog.setAllowToChangeSelection(!commitHelper.isMergedResolved()
+				&& !commitHelper.isCherryPickResolved());
 		String initialMessage;
 		char commentChar;
 		if (commitHelper.shouldUseCommitTemplate()) {
@@ -221,8 +222,8 @@ public class CommitUI  {
 		commitOperation.setSign(commitDialog.isSignCommit());
 
 		commitOperation.setComputeChangeId(commitDialog.getCreateChangeId());
-		commitOperation.setCommitAll(commitHelper.isMergedResolved);
-		if (commitHelper.isMergedResolved)
+		commitOperation.setCommitAll(commitHelper.isMergedResolved());
+		if (commitHelper.isMergedResolved())
 			commitOperation.setRepository(repo);
 		Job commitJob = new CommitJob(repo, commitOperation)
 				.setPushUpstream(commitDialog.getPushMode())
