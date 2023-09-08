@@ -126,16 +126,10 @@
     <choice
         value="egit-4.28"
         label="EGit 2023-06 (4.28) target"/>
+    <choice
+        value="egit-4.29"
+        label="EGit 2023-09 (4.29) target"/>
     <description>Default target platform for EGit development.</description>
-  </setupTask>
-  <setupTask
-      xsi:type="pde:APIBaselineTask"
-      name="EGit"
-      activate="false"
-      version="6.4.0"
-      location="${workspace.location/../api.baseline/6.4.0}"
-      remoteURI="https://download.eclipse.org/egit/updates-6.4/org.eclipse.egit.repository-6.4.0.202211300538-r.zip">
-    <description>EGit 6.4.0 API baseline; to be used with branch stable-6.5</description>
   </setupTask>
   <setupTask
       xsi:type="pde:APIBaselineTask"
@@ -149,10 +143,19 @@
   <setupTask
       xsi:type="pde:APIBaselineTask"
       name="EGit"
+      activate="false"
       version="6.6.0"
       location="${workspace.location/../api.baseline/6.6.0}"
       remoteURI="https://download.eclipse.org/egit/updates-6.6/org.eclipse.egit.repository-6.6.0.202305301015-r.zip">
-    <description>EGit 6.6.0 API baseline; to be used with branch master</description>
+    <description>EGit 6.6.0 API baseline; to be used with branch stable-6.7</description>
+  </setupTask>
+  <setupTask
+      xsi:type="pde:APIBaselineTask"
+      name="EGit"
+      version="6.7.0"
+      location="${workspace.location/../api.baseline/6.7.0}"
+      remoteURI="https://download.eclipse.org/egit/updates-6.7/org.eclipse.egit.repository-6.7.0.202309050840-r.zip">
+    <description>EGit 6.7.0 API baseline; to be used with branch master</description>
   </setupTask>
   <stream name="master"
       label="Workspace setup for branch master">
