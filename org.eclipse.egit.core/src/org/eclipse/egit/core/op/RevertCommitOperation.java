@@ -26,6 +26,7 @@ import org.eclipse.core.runtime.SubMonitor;
 import org.eclipse.core.runtime.jobs.ISchedulingRule;
 import org.eclipse.egit.core.internal.CoreText;
 import org.eclipse.egit.core.internal.MergeStrategies;
+import org.eclipse.egit.core.internal.gerrit.GerritUtil;
 import org.eclipse.egit.core.internal.job.RuleUtil;
 import org.eclipse.egit.core.internal.util.ProjectUtil;
 import org.eclipse.jgit.api.Git;
@@ -91,6 +92,8 @@ public class RevertCommitOperation implements IEGitOperation {
 						Integer.valueOf(commits.size())));
 				try (Git git = new Git(repo)) {
 					RevertCommand command = git.revert();
+					command.setInsertChangeId(
+							GerritUtil.getCreateChangeId(repo.getConfig()));
 					MergeStrategy strategy = MergeStrategies
 							.getPreferredMergeStrategy();
 					if (strategy != null) {
