@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "721c2aeb_58a5803f",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2023-09-11T08:26:50Z",
+      "side": 1,
+      "message": "\u003e Build Successful \n\u003e \n\u003e https://ci.eclipse.org/egit/job/egit.gerrit/2919/ : SUCCESS\n\nThe problem was that JGit had two builds scheduled shortly after one another:\n\n* https://ci.eclipse.org/jgit/job/jgit.java11/407/\n* https://ci.eclipse.org/jgit/job/jgit.java11/408/\n\n408 was the \"top\" one, including the JGit change this EGit change needed. But it ran faster and deployed first, and then 407 deployed later. So the deployed repo was the one from 407, and did not contain the change.\n\nRetriggering 408 helped: https://ci.eclipse.org/jgit/job/jgit.java11/410/ . That deployed afresh, and then this change here could build.\n\nWe could guard against this in the Jenkins builds. Two possibilities: if a newer product build is scheduled, abandon earlier ones, or double-check in the deploy step that the upstream HEAD hasn\u0027t changed and skip deployment if it has. (If it has, there should be another job building the new HEAD, and that one will deploy eventually.)\n",
+      "revId": "dfdd1573b7a7512e54e7aa60e4265e7cec548d75",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31"
+    }
+  ]
+}
