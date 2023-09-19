@@ -98,9 +98,8 @@ public class GitResourceVariantTreeSubscriber extends
 	 * @param monitor
 	 */
 	public void init(IProgressMonitor monitor) {
-		monitor.beginTask(
-				CoreText.GitResourceVariantTreeSubscriber_fetchTaskName,
-				gsds.size());
+		monitor.setTaskName(
+				CoreText.GitResourceVariantTreeSubscriber_fetchTaskName);
 		try {
 			cache = GitSyncCache.getAllData(gsds, monitor);
 		} finally {
