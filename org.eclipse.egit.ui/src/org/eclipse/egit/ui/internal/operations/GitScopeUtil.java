@@ -144,15 +144,9 @@ public class GitScopeUtil {
 			@Override
 			public void run(IProgressMonitor monitor)
 					throws InvocationTargetException, InterruptedException {
-				try {
-					monitor.beginTask(
-							UIText.CommitActionHandler_lookingForChanges, 100);
-					List<IResource> collectedResources = collectRelatedChanges(
-							selectedResources, part, monitor);
-					relatedChanges.addAll(collectedResources);
-				} finally {
-					monitor.done();
-				}
+				List<IResource> collectedResources = collectRelatedChanges(
+						selectedResources, part, monitor);
+				relatedChanges.addAll(collectedResources);
 			}
 
 		};
@@ -169,15 +163,20 @@ public class GitScopeUtil {
 			IProgressMonitor monitor) throws InterruptedException,
 			InvocationTargetException {
 
-		SubMonitor progress = SubMonitor.convert(monitor, 2);
-		SubscriberScopeManager manager = GitScopeUtil.createScopeManager(
-				selectedResources, progress.newChild(1));
-		GitScopeOperation buildScopeOperation = GitScopeOperationFactory
-				.getFactory().createGitScopeOperation(part, manager);
+		try {
+			SubMonitor progress = SubMonitor.convert(monitor,
+					UIText.CommitActionHandler_lookingForChanges, 2);
+			SubscriberScopeManager manager = GitScopeUtil.createScopeManager(
+					selectedResources, progress.newChild(1));
+			GitScopeOperation buildScopeOperation = GitScopeOperationFactory
+					.getFactory().createGitScopeOperation(part, manager);
 
-		buildScopeOperation.run(progress.newChild(1));
+			buildScopeOperation.run(progress.newChild(1));
 
-		return buildScopeOperation.getRelevantResources();
+			return buildScopeOperation.getRelevantResources();
+		} finally {
+			monitor.done();
+		}
 	}
 
 }
