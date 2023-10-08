@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (C) 2010, 2016 Mathias Kinzler <mathias.kinzler@sap.com>
+ * Copyright (C) 2010, 2023 Mathias Kinzler <mathias.kinzler@sap.com> and others
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License 2.0
@@ -15,8 +15,9 @@ package org.eclipse.egit.core.op;
 import static java.util.Arrays.asList;
 
 import java.util.HashSet;
-import java.util.Iterator;
+import java.util.List;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 import org.eclipse.core.resources.IWorkspace;
 import org.eclipse.core.resources.IWorkspaceRunnable;
@@ -27,6 +28,7 @@ import org.eclipse.core.runtime.OperationCanceledException;
 import org.eclipse.core.runtime.SubMonitor;
 import org.eclipse.core.runtime.jobs.ISchedulingRule;
 import org.eclipse.egit.core.Activator;
+import org.eclipse.egit.core.EclipseGitProgressTransformer;
 import org.eclipse.egit.core.internal.CoreText;
 import org.eclipse.egit.core.internal.job.RuleUtil;
 import org.eclipse.jgit.api.Git;
@@ -39,7 +41,7 @@ import org.eclipse.jgit.lib.Repository;
 import org.eclipse.osgi.util.NLS;
 
 /**
- * This class implements deletion of a branch
+ * This class implements deletion of a branch.
  */
 public class DeleteBranchOperation implements IEGitOperation {
 	/** Operation was performed */
@@ -100,46 +102,42 @@ public class DeleteBranchOperation implements IEGitOperation {
 	@Override
 	public void execute(IProgressMonitor monitor) throws CoreException {
 		IWorkspaceRunnable action = new IWorkspaceRunnable() {
+
 			@Override
 			public void run(IProgressMonitor actMonitor) throws CoreException {
-
 				String taskName;
-				if (branches.size() == 1)
+				List<String> branchNames = branches.stream().map(Ref::getName)
+						.collect(Collectors.toList());
+				if (branchNames.size() == 1) {
 					taskName = NLS.bind(
-							CoreText.DeleteBranchOperation_TaskName, branches
-									.iterator().next().getName());
-				else {
-					StringBuilder names = new StringBuilder();
-					for (Iterator<Ref> it = branches.iterator(); it.hasNext(); ) {
-						Ref ref = it.next();
-						names.append(ref.getName());
-						if (it.hasNext())
-							names.append(", "); //$NON-NLS-1$
-					}
+							CoreText.DeleteBranchOperation_TaskName,
+							branchNames.get(0));
+				} else {
+					String names = branchNames.stream()
+							.collect(Collectors.joining(", ")); //$NON-NLS-1$
 					taskName = NLS.bind(
 							CoreText.DeleteBranchOperation_TaskName, names);
 				}
 				SubMonitor progress = SubMonitor.convert(actMonitor, taskName,
 						branches.size());
-				for (Ref branch : branches) {
-					if (progress.isCanceled()) {
-						throw new OperationCanceledException(
-								CoreText.DeleteBranchOperation_Canceled);
-					}
-					try (Git git = new Git(repository)) {
-						git.branchDelete().setBranchNames(
-								branch.getName()).setForce(force).call();
-						status = OK;
-					} catch (NotMergedException e) {
-						status = REJECTED_UNMERGED;
-						break;
-					} catch (CannotDeleteCurrentBranchException e) {
-						status = REJECTED_CURRENT;
-						break;
-					} catch (JGitInternalException | GitAPIException e) {
-						throw new CoreException(Activator.error(e.getMessage(), e));
-					}
-					progress.worked(1);
+				try (Git git = new Git(repository)) {
+					git.branchDelete()
+							.setBranchNames(branchNames)
+							.setForce(force)
+							.setProgressMonitor(
+									new EclipseGitProgressTransformer(progress))
+							.call();
+					status = OK;
+				} catch (NotMergedException e) {
+					status = REJECTED_UNMERGED;
+				} catch (CannotDeleteCurrentBranchException e) {
+					status = REJECTED_CURRENT;
+				} catch (JGitInternalException | GitAPIException e) {
+					throw new CoreException(Activator.error(e.getMessage(), e));
+				}
+				if (progress.isCanceled()) {
+					throw new OperationCanceledException(
+							CoreText.DeleteBranchOperation_Canceled);
 				}
 			}
 		};
