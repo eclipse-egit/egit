@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "dad144b0_c34ce620",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2023-10-11T20:59:50Z",
+      "side": 1,
+      "message": "Damn. The test fails because GitRepositoriesViewTest *removes* the SmartImportWizard. Pfff. So I\u0027ll have to come up with something that works with either wizard. Or create the project manually, not via any wizard.",
+      "revId": "eb920db4daf7130511911119a55b8ca47960a47b",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31"
+    }
+  ]
+}
