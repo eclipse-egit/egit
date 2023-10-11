@@ -2803,6 +2803,9 @@ public class UIText extends NLS {
 	public static String CompareUtils_errorHiddenResourceDelete;
 
 	/** */
+	public static String CompareUtils_errorNotShared;
+
+	/** */
 	public static String CompareUtils_errorRenameDetection;
 
 	/** */

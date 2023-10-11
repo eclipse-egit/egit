@@ -102,9 +102,11 @@ public class DefaultGitSynchronizer implements GitSynchronizer {
 				if (mapping == null) {
 					Activator.error(
 							NLS.bind(UIText.GitHistoryPage_errorLookingUpPath,
-									file.getLocation(),
-									repository),
-							null);
+									file.getLocation(), repository),
+							new IOException(NLS.bind(
+									UIText.CompareUtils_errorNotShared,
+									file.getFullPath(),
+									file.getProject().getName())));
 					return;
 				}
 				final String gitPath = mapping.getRepoRelativePath(file);
