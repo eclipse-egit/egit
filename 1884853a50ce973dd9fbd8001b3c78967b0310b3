@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "9c3424c2_fa7da676",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/repository/RepositorySearchDialog.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 621,
+      "author": {
+        "id": 1093
+      },
+      "writtenOn": "2023-11-01T07:50:15Z",
+      "side": 1,
+      "message": "instead of newChild, split could be used which does also a cancelation check.",
+      "revId": "1884853a50ce973dd9fbd8001b3c78967b0310b3",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e37f1bce_0b0a37e3",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/repository/RepositorySearchDialog.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 630,
+      "author": {
+        "id": 1093
+      },
+      "writtenOn": "2023-11-01T07:50:15Z",
+      "side": 1,
+      "message": "done calls is not required, so you could remove the try catch block on the done call.",
+      "revId": "1884853a50ce973dd9fbd8001b3c78967b0310b3",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31"
+    }
+  ]
+}
