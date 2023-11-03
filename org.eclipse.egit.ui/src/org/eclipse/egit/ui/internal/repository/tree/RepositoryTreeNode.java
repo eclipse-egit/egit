@@ -37,9 +37,12 @@ public abstract class RepositoryTreeNode<T> extends PlatformObject
 
 	private T myObject;
 
+	private int hashCode;
+
 	private final RepositoryTreeNodeType myType;
 
 	private final RepositoryTreeNode myParent;
+
 
 	/**
 	 * Constructs a node
@@ -111,6 +114,7 @@ public abstract class RepositoryTreeNode<T> extends PlatformObject
 	public void clear() {
 		myRepository = null;
 		myObject = null;
+		hashCode = 0;
 	}
 
 	/**
@@ -170,6 +174,9 @@ public abstract class RepositoryTreeNode<T> extends PlatformObject
 
 	@Override
 	public int hashCode() {
+		if (this.hashCode != 0) {
+			return hashCode;
+		}
 		final int prime = 31;
 		int result = 1;
 		switch (myType) {
@@ -224,6 +231,7 @@ public abstract class RepositoryTreeNode<T> extends PlatformObject
 				+ ((myRepository == null) ? 0 : myRepository.getDirectory()
 						.hashCode());
 		result = prime * result + myType.hashCode();
+		this.hashCode = 0;
 		return result;
 	}
 
