@@ -34,6 +34,24 @@
       "parentUuid": "19dd0622_18518c5f",
       "revId": "0ab59f7d467036f6b99e4045e43d410971473e99",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "ccb4d024_ff6930da",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/repository/tree/RepositoryTreeNode.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 233,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2023-11-03T14:11:15Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "19dd0622_18518c5f",
+      "revId": "0ab59f7d467036f6b99e4045e43d410971473e99",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31"
     }
   ]
 }
