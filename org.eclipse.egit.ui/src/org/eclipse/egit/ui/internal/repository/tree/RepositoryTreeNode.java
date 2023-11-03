@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2010, 2019 SAP AG and others.
+ * Copyright (c) 2010, 2023 SAP AG and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License 2.0
  * which accompanies this distribution, and is available at
@@ -36,6 +36,8 @@ public abstract class RepositoryTreeNode<T> extends PlatformObject
 	private Repository myRepository;
 
 	private T myObject;
+
+	private int hashCode;
 
 	private final RepositoryTreeNodeType myType;
 
@@ -111,6 +113,7 @@ public abstract class RepositoryTreeNode<T> extends PlatformObject
 	public void clear() {
 		myRepository = null;
 		myObject = null;
+		hashCode = 0;
 	}
 
 	/**
@@ -170,6 +173,9 @@ public abstract class RepositoryTreeNode<T> extends PlatformObject
 
 	@Override
 	public int hashCode() {
+		if (this.hashCode != 0) {
+			return hashCode;
+		}
 		final int prime = 31;
 		int result = 1;
 		switch (myType) {
@@ -224,6 +230,7 @@ public abstract class RepositoryTreeNode<T> extends PlatformObject
 				+ ((myRepository == null) ? 0 : myRepository.getDirectory()
 						.hashCode());
 		result = prime * result + myType.hashCode();
+		this.hashCode = 0;
 		return result;
 	}
 
