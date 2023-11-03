@@ -16,6 +16,24 @@
       "message": "looks like this prevents the newly created hashcode from being cached, shouldn\u0027t this read\n\n```\nthis.hashCode \u003d result;\n```",
       "revId": "0ab59f7d467036f6b99e4045e43d410971473e99",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "8b604742_e8a6bae7",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/repository/tree/RepositoryTreeNode.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 233,
+      "author": {
+        "id": 304382
+      },
+      "writtenOn": "2023-11-03T11:58:32Z",
+      "side": 1,
+      "message": "yes!",
+      "parentUuid": "19dd0622_18518c5f",
+      "revId": "0ab59f7d467036f6b99e4045e43d410971473e99",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31"
     }
   ]
 }
