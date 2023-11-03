@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "db63fae3_3f10050a",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 304382
+      },
+      "writtenOn": "2023-11-03T12:02:39Z",
+      "side": 1,
+      "message": "The build failed on IndexDiffCacheTest.testAddAndRemoveFileToIgnoredDir, Localy that tests fails too - with and without my patch",
+      "revId": "981b7278c232903ff22cf66d81552907bee86609",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31"
+    }
+  ]
+}
