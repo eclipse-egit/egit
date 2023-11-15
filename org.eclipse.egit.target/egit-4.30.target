@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <?pde?>
 <!-- generated with https://github.com/eclipse-cbi/targetplatform-dsl -->
-<target name="egit-4.30" sequenceNumber="1697197802">
+<target name="egit-4.30" sequenceNumber="1700063280">
   <locations>
     <location includeMode="slicer" includeAllPlatforms="false" includeSource="true" includeConfigurePhase="true" type="InstallableUnit">
       <unit id="org.eclipse.license.feature.group" version="0.0.0"/>
@@ -30,8 +30,6 @@
       <unit id="net.i2p.crypto.eddsa.source" version="0.3.0"/>
       <unit id="org.apache.ant" version="1.10.14.v20230922-1200"/>
       <unit id="org.apache.ant.source" version="1.10.14.v20230922-1200"/>
-      <unit id="org.apache.commons.commons-io" version="2.14.0"/>
-      <unit id="org.apache.commons.commons-io.source" version="2.14.0"/>
       <unit id="org.apache.commons.logging" version="1.2.0"/>
       <unit id="org.apache.commons.logging.source" version="1.2.0"/>
       <unit id="org.apache.httpcomponents.httpclient" version="4.5.14"/>
@@ -52,14 +50,14 @@
       <unit id="org.mortbay.jasper.apache-jsp" version="9.0.52"/>
       <unit id="org.objenesis" version="3.3.0"/>
       <unit id="org.objenesis.source" version="3.3.0"/>
-      <unit id="org.objectweb.asm" version="9.5.0"/>
-      <unit id="org.objectweb.asm.source" version="9.5.0"/>
-      <unit id="org.objectweb.asm.tree" version="9.5.0"/>
-      <unit id="org.objectweb.asm.tree.source" version="9.5.0"/>
-      <unit id="org.objectweb.asm.tree.analysis" version="9.5.0"/>
-      <unit id="org.objectweb.asm.tree.analysis.source" version="9.5.0"/>
-      <unit id="org.objectweb.asm.util" version="9.5.0"/>
-      <unit id="org.objectweb.asm.util.source" version="9.5.0"/>
+      <unit id="org.objectweb.asm" version="9.6.0"/>
+      <unit id="org.objectweb.asm.source" version="9.6.0"/>
+      <unit id="org.objectweb.asm.tree" version="9.6.0"/>
+      <unit id="org.objectweb.asm.tree.source" version="9.6.0"/>
+      <unit id="org.objectweb.asm.tree.analysis" version="9.6.0"/>
+      <unit id="org.objectweb.asm.tree.analysis.source" version="9.6.0"/>
+      <unit id="org.objectweb.asm.util" version="9.6.0"/>
+      <unit id="org.objectweb.asm.util.source" version="9.6.0"/>
       <unit id="org.osgi.service.cm" version="1.6.1.202109301733"/>
       <unit id="org.osgi.service.cm.source" version="1.6.1.202109301733"/>
       <repository location="https://download.eclipse.org/tools/orbit/simrel/orbit-aggregation/milestone/latest"/>
@@ -160,7 +158,7 @@
     	<dependency>
     		<groupId>org.mockito</groupId>
     		<artifactId>mockito-core</artifactId>
-    		<version>5.5.0</version>
+    		<version>5.7.0</version>
     		<type>jar</type>
     	</dependency>
     </dependencies>
@@ -258,13 +256,13 @@
     	<dependency>
     		<groupId>net.bytebuddy</groupId>
     		<artifactId>byte-buddy</artifactId>
-    		<version>1.14.7</version>
+    		<version>1.14.9</version>
     		<type>jar</type>
     	</dependency>
     	<dependency>
     		<groupId>net.bytebuddy</groupId>
     		<artifactId>byte-buddy-agent</artifactId>
-    		<version>1.14.7</version>
+    		<version>1.14.9</version>
     		<type>jar</type>
     	</dependency>
     </dependencies>
@@ -329,6 +327,12 @@
     		<groupId>org.apache.commons</groupId>
     		<artifactId>commons-compress</artifactId>
     		<version>1.23.0</version>
+    		<type>jar</type>
+    	</dependency>
+    	<dependency>
+    		<groupId>commons-io</groupId>
+    		<artifactId>commons-io</artifactId>
+    		<version>2.15.0</version>
     		<type>jar</type>
     	</dependency>
     </dependencies>
