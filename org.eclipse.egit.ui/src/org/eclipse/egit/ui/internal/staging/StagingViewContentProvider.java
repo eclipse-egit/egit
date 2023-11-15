@@ -39,10 +39,10 @@ import java.util.stream.Stream;
 import org.eclipse.core.resources.IContainer;
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IResource;
-import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.Path;
 import org.eclipse.egit.core.internal.indexdiff.IndexDiffData;
+import org.eclipse.egit.core.internal.util.ResourceUtil;
 import org.eclipse.egit.ui.internal.staging.StagingView.Presentation;
 import org.eclipse.egit.ui.internal.staging.StagingView.StagingViewUpdate;
 import org.eclipse.jface.viewers.Viewer;
@@ -130,8 +130,8 @@ public class StagingViewContentProvider extends WorkbenchContentProvider {
 				if (repo != null) {
 					IPath path = new Path(
 							repository.getWorkTree().getAbsolutePath());
-					rootContainer = ResourcesPlugin.getWorkspace().getRoot()
-							.getContainerForLocation(path);
+					rootContainer = ResourceUtil.getContainerForLocation(path,
+							false);
 					if (rootContainer != null
 							&& rootContainer.getType() == IResource.ROOT) {
 						// Files in the workspace root can't be accessed as

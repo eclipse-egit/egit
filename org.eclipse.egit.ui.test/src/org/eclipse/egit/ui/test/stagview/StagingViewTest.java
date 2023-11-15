@@ -14,15 +14,29 @@ import static org.hamcrest.CoreMatchers.startsWith;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
+import java.io.ByteArrayInputStream;
+import java.io.File;
+import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
+import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 import org.eclipse.core.resources.IFile;
+import org.eclipse.core.resources.IProject;
+import org.eclipse.core.resources.IProjectDescription;
+import org.eclipse.core.resources.IWorkspaceRunnable;
 import org.eclipse.core.resources.ResourcesPlugin;
+import org.eclipse.core.runtime.Path;
+import org.eclipse.core.runtime.SubMonitor;
+import org.eclipse.egit.core.GitProvider;
 import org.eclipse.egit.core.JobFamilies;
+import org.eclipse.egit.core.RepositoryUtil;
 import org.eclipse.egit.core.internal.indexdiff.IndexDiffCache;
+import org.eclipse.egit.core.op.DisconnectProviderOperation;
 import org.eclipse.egit.ui.common.CompareEditorTester;
 import org.eclipse.egit.ui.common.StagingViewTester;
 import org.eclipse.egit.ui.internal.UIText;
@@ -36,6 +50,7 @@ import org.eclipse.jgit.api.Git;
 import org.eclipse.jgit.lib.ConfigConstants;
 import org.eclipse.jgit.lib.ObjectId;
 import org.eclipse.jgit.lib.PersonIdent;
+import org.eclipse.jgit.lib.Repository;
 import org.eclipse.jgit.lib.RepositoryState;
 import org.eclipse.jgit.lib.StoredConfig;
 import org.eclipse.jgit.revwalk.RevCommit;
@@ -46,6 +61,7 @@ import org.eclipse.swtbot.swt.finder.finders.UIThreadRunnable;
 import org.eclipse.swtbot.swt.finder.waits.DefaultCondition;
 import org.eclipse.swtbot.swt.finder.widgets.SWTBotTree;
 import org.eclipse.swtbot.swt.finder.widgets.SWTBotTreeItem;
+import org.eclipse.team.core.RepositoryProvider;
 import org.junit.Test;
 
 public class StagingViewTest extends AbstractStagingViewTestCase {
@@ -401,6 +417,130 @@ public class StagingViewTest extends AbstractStagingViewTestCase {
 
 		assertEquals(expectedMessage,
 				TestUtil.getHeadCommit(repository).getShortMessage());
+	}
+
+	private void openComparison(boolean shared) throws Exception {
+		setContent("I have changed this");
+
+		if (!shared) {
+			IProject project = ResourcesPlugin.getWorkspace().getRoot()
+					.getProject(PROJ1);
+			new DisconnectProviderOperation(List.of(project)).execute(null);
+			assertNull(RepositoryProvider.getProvider(project, GitProvider.ID));
+		}
+
+		StagingViewTester stagingView = StagingViewTester.openStagingView();
+		SWTBotView view = stagingView.getView();
+		SWTBot viewBot = view.bot();
+		SWTBotTree unstagedTree = viewBot.tree(0);
+		TestUtil.waitUntilTreeHasNodeContainsText(viewBot, unstagedTree,
+				FILE1_PATH, 10000);
+		SWTBotTreeItem item = TestUtil.getNode(unstagedTree.getAllItems(),
+				FILE1_PATH);
+		item.select();
+		ContextMenuHelper.clickContextMenu(unstagedTree,
+				UIText.StagingView_CompareWithIndexMenuLabel);
+
+		CompareEditorTester compareEditor = CompareEditorTester
+				.forTitleContaining("Compare " + FILE1);
+		String leftText = compareEditor.getLeftEditor().getText();
+		assertEquals("I have changed this", leftText);
+	}
+
+	/**
+	 * Tests that a comparison between an unstaged file and the index works.
+	 *
+	 * @throws Exception
+	 *             on errors
+	 */
+	@Test
+	public void testCompare() throws Exception {
+		openComparison(true);
+	}
+
+	/**
+	 * Tests that a comparison between an unstaged file and the index works if
+	 * the file is in an Eclipse project that is not managed by EGit.
+	 *
+	 * @throws Exception
+	 *             on errors
+	 */
+	@Test
+	public void testCompareNonShared() throws Exception {
+		openComparison(false);
+	}
+
+	/**
+	 * Tests that a comparison between an unstaged file and the index works if
+	 * the file is in an Eclipse project that is not managed by EGit, and is at
+	 * the repository root.
+	 *
+	 * @throws Exception
+	 *             on errors
+	 */
+	@Test
+	public void testCompareNonSharedAtRoot() throws Exception {
+		Repository rootRepo = createLocalTestRepository("RootRepository");
+		File workingTree = rootRepo.getWorkTree();
+		try (Git git = new Git(rootRepo)) {
+			File testFile = new File(workingTree, FILE1);
+			Files.write(testFile.toPath(),
+					"Content".getBytes(StandardCharsets.UTF_8));
+			git.add().addFilepattern(".").call();
+			git.commit().setMessage("Initial commit").call();
+		}
+		File gitDir = rootRepo.getDirectory();
+		rootRepo.close();
+		// Import this repository into Eclipse
+		RepositoryUtil.INSTANCE.addConfiguredRepository(gitDir);
+		rootRepo = lookupRepository(gitDir);
+		IProject project = ResourcesPlugin.getWorkspace().getRoot()
+				.getProject("unsharedProject");
+		assertFalse(project.exists());
+		// Import the project
+		IWorkspaceRunnable importProject = monitor -> {
+			SubMonitor progress = SubMonitor.convert(monitor, 2);
+			IProjectDescription desc = ResourcesPlugin.getWorkspace()
+					.newProjectDescription("unsharedProject");
+			desc.setLocation(new Path(workingTree.getPath()));
+			project.create(desc, progress.newChild(1));
+			project.open(progress.newChild(1));
+		};
+		ResourcesPlugin.getWorkspace().run(importProject, null);
+		assertTrue(project.exists());
+		assertTrue(project.isAccessible());
+		assertNull(RepositoryProvider.getProvider(project, GitProvider.ID));
+		// Modify the file
+		IFile file = project.getFile(new Path(FILE1));
+		file.refreshLocal(0, null);
+		file.setContents(
+				new ByteArrayInputStream(
+						"Changed".getBytes(project.getDefaultCharset())),
+				0, null);
+
+		IndexDiffCache.INSTANCE.getIndexDiffCacheEntry(rootRepo).refresh();
+
+		// Open the git repositories view, select this repository
+		SWTBotTree repoTree = getOrOpenView().bot().tree();
+		SWTBotTreeItem repoItem = myRepoViewUtil.getRootItem(repoTree, gitDir);
+		repoItem.select();
+		// Open the staging view, compare
+		StagingViewTester stagingView = StagingViewTester.openStagingView();
+		SWTBotView view = stagingView.getView();
+		SWTBot viewBot = view.bot();
+		SWTBotTree unstagedTree = viewBot.tree(0);
+		TestUtil.waitUntilTreeHasNodeContainsText(viewBot, unstagedTree, FILE1,
+				10000);
+		SWTBotTreeItem item = TestUtil.getNode(unstagedTree.getAllItems(),
+				FILE1);
+		item.select();
+		ContextMenuHelper.clickContextMenu(unstagedTree,
+				UIText.StagingView_CompareWithIndexMenuLabel);
+
+		CompareEditorTester compareEditor = CompareEditorTester
+				.forTitleContaining("Compare " + FILE1);
+		String leftText = compareEditor.getLeftEditor().getText();
+		assertEquals("Changed", leftText);
 	}
 
 	/**

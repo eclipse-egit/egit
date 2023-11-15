@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <?pde?>
 <!-- generated with https://github.com/eclipse-cbi/targetplatform-dsl -->
-<target name="egit-4.28" sequenceNumber="1693818749">
+<target name="egit-4.28" sequenceNumber="1700064479">
   <locations>
     <location includeMode="slicer" includeAllPlatforms="false" includeSource="true" includeConfigurePhase="true" type="InstallableUnit">
       <unit id="org.eclipse.license.feature.group" version="0.0.0"/>
@@ -160,7 +160,7 @@
     	<dependency>
     		<groupId>org.mockito</groupId>
     		<artifactId>mockito-core</artifactId>
-    		<version>5.5.0</version>
+    		<version>5.7.0</version>
     		<type>jar</type>
     	</dependency>
     </dependencies>
@@ -258,13 +258,13 @@
     	<dependency>
     		<groupId>net.bytebuddy</groupId>
     		<artifactId>byte-buddy</artifactId>
-    		<version>1.14.7</version>
+    		<version>1.14.9</version>
     		<type>jar</type>
     	</dependency>
     	<dependency>
     		<groupId>net.bytebuddy</groupId>
     		<artifactId>byte-buddy-agent</artifactId>
-    		<version>1.14.7</version>
+    		<version>1.14.9</version>
     		<type>jar</type>
     	</dependency>
     </dependencies>
@@ -329,6 +329,12 @@
     		<groupId>org.apache.commons</groupId>
     		<artifactId>commons-compress</artifactId>
     		<version>1.23.0</version>
+    		<type>jar</type>
+    	</dependency>
+    	<dependency>
+    		<groupId>commons-io</groupId>
+    		<artifactId>commons-io</artifactId>
+    		<version>2.15.0</version>
     		<type>jar</type>
     	</dependency>
     </dependencies>

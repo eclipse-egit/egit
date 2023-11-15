@@ -16,6 +16,11 @@ maven apache
 		artifactId = "commons-compress"
 		version = "1.23.0"
 	}
+	dependency {
+		groupId = "commons-io"
+		artifactId = "commons-io"
+		version = "2.15.0"
+	}
 }
 
 maven args4j
@@ -81,12 +86,12 @@ maven bytebuddy
 	dependency {
 		groupId = "net.bytebuddy"
 		artifactId = "byte-buddy"
-		version = "1.14.7"
+		version = "1.14.9"
 	}
 	dependency {
 		groupId = "net.bytebuddy"
 		artifactId = "byte-buddy-agent"
-		version = "1.14.7"
+		version = "1.14.9"
 	}
 }
 
@@ -191,7 +196,7 @@ maven mockito
 	dependency {
 		groupId = "org.mockito"
 		artifactId = "mockito-core"
-		version = "5.5.0"
+		version = "5.7.0"
 	}
 }
 

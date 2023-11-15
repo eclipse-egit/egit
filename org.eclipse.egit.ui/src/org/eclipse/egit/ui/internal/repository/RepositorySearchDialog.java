@@ -36,8 +36,8 @@ import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.SubMonitor;
 import org.eclipse.core.runtime.preferences.IEclipsePreferences;
 import org.eclipse.core.runtime.preferences.InstanceScope;
-import org.eclipse.egit.core.Activator;
 import org.eclipse.egit.core.RepositoryUtil;
+import org.eclipse.egit.ui.Activator;
 import org.eclipse.egit.ui.UIUtils;
 import org.eclipse.egit.ui.internal.CommonUtils;
 import org.eclipse.egit.ui.internal.UIIcons;
@@ -612,17 +612,22 @@ public class RepositorySearchDialog extends WizardPage {
 			@Override
 			public void run(IProgressMonitor monitor)
 					throws InvocationTargetException, InterruptedException {
-				monitor.beginTask(
-						UIText.RepositorySearchDialog_ScanningForRepositories_message,
-						IProgressMonitor.UNKNOWN);
 				try {
-					summary[0] = findGitDirsRecursive(file, directories, monitor,
-							lookForNested, skipHidden);
-				} catch (Exception ex) {
-					throw new InvocationTargetException(ex);
-				}
-				if (monitor.isCanceled()) {
-					throw new InterruptedException();
+					SubMonitor progress = SubMonitor.convert(monitor,
+							UIText.RepositorySearchDialog_ScanningForRepositories_message,
+							1);
+					try {
+						summary[0] = findGitDirsRecursive(file, directories,
+								progress.newChild(1), lookForNested,
+								skipHidden);
+					} catch (Exception ex) {
+						throw new InvocationTargetException(ex);
+					}
+					if (progress.isCanceled()) {
+						throw new InterruptedException();
+					}
+				} finally {
+					monitor.done();
 				}
 			}
 		};
