@@ -16,6 +16,23 @@
       "message": "waiting for license approval",
       "revId": "2ba7175a79d26fc22916b10ea6358a9188d1a83c",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "4f72fc0f_361c6d79",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2023-11-15T21:56:10Z",
+      "side": 1,
+      "message": "https://gitlab.eclipse.org/eclipsefdn/emo-team/iplab/-/issues/11593",
+      "revId": "2ba7175a79d26fc22916b10ea6358a9188d1a83c",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31"
     }
   ]
 }
