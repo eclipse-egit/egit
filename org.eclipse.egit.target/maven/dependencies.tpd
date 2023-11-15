@@ -9,12 +9,12 @@ maven apache
 	dependency {
 		groupId = "commons-codec"
 		artifactId = "commons-codec"
-		version = "1.15"
+		version = "1.16"
 	}
 	dependency {
 		groupId = "org.apache.commons"
 		artifactId = "commons-compress"
-		version = "1.23.0"
+		version = "1.24.0"
 	}
 	dependency {
 		groupId = "commons-io"
@@ -130,37 +130,37 @@ maven jetty
 	dependency {
 		groupId = "org.eclipse.jetty"
 		artifactId = "jetty-http"
-		version = "10.0.15"
+		version = "10.0.18"
 	}
 	dependency {
 		groupId = "org.eclipse.jetty"
 		artifactId = "jetty-io"
-		version = "10.0.15"
+		version = "10.0.18"
 	}
 	dependency {
 		groupId = "org.eclipse.jetty"
 		artifactId = "jetty-security"
-		version = "10.0.15"
+		version = "10.0.18"
 	}
 	dependency {
 		groupId = "org.eclipse.jetty"
 		artifactId = "jetty-server"
-		version = "10.0.15"
+		version = "10.0.18"
 	}
 	dependency {
 		groupId = "org.eclipse.jetty"
 		artifactId = "jetty-servlet"
-		version = "10.0.15"
+		version = "10.0.18"
 	}
 	dependency {
 		groupId = "org.eclipse.jetty"
 		artifactId = "jetty-util"
-		version = "10.0.15"
+		version = "10.0.18"
 	}
 	dependency {
 		groupId = "org.eclipse.jetty"
 		artifactId = "jetty-util-ajax"
-		version = "10.0.15"
+		version = "10.0.18"
 	}
 	dependency {
 		groupId = "jakarta.servlet"
