@@ -21,7 +21,7 @@ import org.eclipse.jgit.annotations.NonNull;
  * {@link IDialogSettings}. To be accessed only in the UI thread.
  */
 public final class KnownHosts {
-
+        /* comment 2 */
 	private static final String KNOWN_HOSTS_KEY = "EGit.KnownHosts"; //$NON-NLS-1$
 
 	private static final String[] DEFAULT_HOSTS = { "git.eclipse.org", //$NON-NLS-1$
