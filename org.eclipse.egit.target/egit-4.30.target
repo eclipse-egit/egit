@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <?pde?>
 <!-- generated with https://github.com/eclipse-cbi/targetplatform-dsl -->
-<target name="egit-4.30" sequenceNumber="1700179938">
+<target name="egit-4.30" sequenceNumber="1701214008">
   <locations>
     <location includeMode="slicer" includeAllPlatforms="false" includeSource="true" includeConfigurePhase="true" type="InstallableUnit">
       <unit id="org.eclipse.license.feature.group" version="0.0.0"/>
@@ -60,7 +60,7 @@
       <unit id="org.objectweb.asm.util.source" version="9.6.0"/>
       <unit id="org.osgi.service.cm" version="1.6.1.202109301733"/>
       <unit id="org.osgi.service.cm.source" version="1.6.1.202109301733"/>
-      <repository location="https://download.eclipse.org/tools/orbit/simrel/orbit-aggregation/milestone/latest"/>
+      <repository location="https://download.eclipse.org/tools/orbit/simrel/orbit-aggregation/2023-12"/>
     </location>
     <location includeMode="slicer" includeAllPlatforms="false" includeSource="true" includeConfigurePhase="true" type="InstallableUnit">
       <unit id="biz.aQute.bnd.util" version="0.0.0"/>
