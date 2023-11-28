@@ -222,12 +222,6 @@
    <bundle id="org.kohsuke.args4j.source">
       <category name="EGit.dependencies"/>
    </bundle>
-   <bundle id="org.apache.log4j">
-      <category name="EGit.dependencies"/>
-   </bundle>
-   <bundle id="org.apache.log4j.source">
-      <category name="EGit.dependencies"/>
-   </bundle>
    <bundle id="org.eclipse.osgi">
       <category name="EGit.dependencies"/>
    </bundle>
@@ -254,5 +248,5 @@
    </category-def>
    <category-def name="EGit.dependencies" label="Git integration for Eclipse - dependencies"/>
    <repository-reference location="https://download.eclipse.org/e4/snapshots/org.eclipse.e4.ui" enabled="true" />
-   <repository-reference location="https://download.eclipse.org/tools/orbit/simrel/orbit-aggregation/release/4.29.0" enabled="true" />
+   <repository-reference location="https://download.eclipse.org/tools/orbit/simrel/orbit-aggregation/release/4.30.0" enabled="true" />
 </site>
