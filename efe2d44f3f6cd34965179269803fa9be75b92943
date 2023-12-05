@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "2a1c7a3f_05f4d31c",
+        "filename": ".github/ISSUE_TEMPLATE/bug_report.yml",
+        "patchSetId": 1
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1000671
+      },
+      "writtenOn": "2023-12-05T23:59:33Z",
+      "side": 1,
+      "message": "I think that\u0027s called MacOS since 10.12, see https://support.apple.com/en-us/HT201260",
+      "revId": "efe2d44f3f6cd34965179269803fa9be75b92943",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735"
+    }
+  ]
+}
