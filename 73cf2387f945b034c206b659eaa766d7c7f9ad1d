@@ -16,6 +16,24 @@
       "message": "I thought the JGit change https://eclipse.gerrithub.io/c/eclipse-jgit/jgit/+/1173044 was merged. But I cannot find any product build, and there is no 6.9.0-SNAPSHOT at [1]. What gives?\n\n[1] https://repo.eclipse.org/content/unzip/snapshots.unzip/org/eclipse/jgit/org.eclipse.jgit.repository/",
       "revId": "73cf2387f945b034c206b659eaa766d7c7f9ad1d",
       "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "9375627b_e76b4ce3",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000671
+      },
+      "writtenOn": "2023-12-05T23:46:43Z",
+      "side": 1,
+      "message": "I missed to reconfigure the jgit.java11 job hence it was still listening on events from git.eclipse.org. Fixed that and triggered the build manually to unblock this change.",
+      "parentUuid": "bdcd3c55_109e788c",
+      "revId": "73cf2387f945b034c206b659eaa766d7c7f9ad1d",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735"
     }
   ]
 }
