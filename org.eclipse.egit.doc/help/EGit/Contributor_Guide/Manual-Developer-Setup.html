@@ -31,10 +31,15 @@
 		</table><hr class="navigation-separator"/>
 		<h1 id="Manual_Developer_Setup">Manual Developer Setup</h1>
 		<h2 id="Obtaining_Sources">Obtaining Sources</h2>
-		<p>EGit and JGit are self hosted in Git. You can browse the repositories on the web: 
+		<p>EGit and JGit are self hosted in 
+			<a href="https://eclipse.gerrithub.io/" target="egit_external">Gerrit</a>. We use GerritHub which combines Gerrit for code review and GitHub for authentication, browsing and issue tracking. You can browse the repositories on their GitHub mirrors: 
 
-			<a href="https://git.eclipse.org/c/egit/" target="egit_external">EGit</a>, 
-			<a href="https://git.eclipse.org/c/jgit/" target="egit_external">JGit</a>
+			<a href="https://github.com/eclipse-egit/egit" target="egit_external">EGit</a>, 
+			<a href="https://github.com/eclipse-jgit/jgit" target="egit_external">JGit</a>
+			or using the Gerrit gitiles plugin:
+
+			<a href="https://eclipse.gerrithub.io/plugins/gitiles/eclipse-egit/egit/" target="egit_external">EGit</a>, 
+			<a href="https://eclipse.gerrithub.io/plugins/gitiles/eclipse-jgit/jgit/" target="egit_external">JGit</a>.
 		</p>
 		<p>The first section below describes how to clone a repository and can be skipped if you have done this before.
 			The next section lists the repositories and their URLs.</p>
@@ -66,17 +71,17 @@ git clone &lt;enter URL&gt;
 		<p>To develop EGit, the EGit and JGit repositories are needed, the others are optional. To develop JGit, only JGit is needed. </p>
 		<h4 id="EGit">EGit</h4>
 		<p>URL: 
-			<a href="https://git.eclipse.org/r/egit/egit.git" target="egit_external">https://git.eclipse.org/r/egit/egit.git</a>
+			<a href="https://eclipse.gerrithub.io/eclipse-egit/egit.git" target="egit_external">https://eclipse.gerrithub.io/eclipse-egit/egit.git</a>
 		</p>
 		<p>This is the main repository, where the standard EGit feature is developed. It contains the code for the UI and Eclipse integration.</p>
 		<h4 id="JGit">JGit</h4>
 		<p>URL: 
-			<a href="https://git.eclipse.org/r/jgit/jgit.git" target="egit_external">https://git.eclipse.org/r/jgit/jgit.git</a>
+			<a href="https://eclipse.gerrithub.io/eclipse-jgit/jgit.git" target="egit_external">https://eclipse.gerrithub.io/eclipse-jgit/jgit.git</a>
 		</p>
 		<p>This is the Java implementation of Git used by EGit, for working with Git repositories.</p>
 		<h4 id="EGit_GitHub_Integration">EGit GitHub Integration</h4>
 		<p>URL: 
-			<a href="https://git.eclipse.org/r/egit/egit-github.git" target="egit_external">https://git.eclipse.org/r/egit/egit-github.git</a>
+			<a href="https://eclipse.gerrithub.io/eclipse-egit/egit-github.git" target="egit_external">https://eclipse.gerrithub.io/eclipse-egit/egit-github.git</a>
 		</p>
 		<p>
 			<b>Moved to Mylyn:</b>
@@ -91,7 +96,7 @@ git clone &lt;enter URL&gt;
 		</p>
 		<h3 id="Tools">Tools</h3>
 		<p>To install all the necessary tools to work on EGit/JGit, there is a 
-			<a href="https://git.eclipse.org/c/egit/egit.git/plain/tools/egit-developer-tools.p2f" target="egit_external">egit-developer-tools.p2f</a> file which you can use as follows:
+			<a href="https://github.com/eclipse-egit/egit/blob/refs/heads/master/tools/egit-developer-tools.p2f" target="egit_external">egit-developer-tools.p2f</a> file which you can use as follows:
 		</p>
 		<ul>
 			<li>File &gt; Import &gt; Install &gt; Install Software Items from File</li>
@@ -114,8 +119,8 @@ git clone &lt;enter URL&gt;
 		</p>
 		<p>We are using 
 			<i>API Tools Environment Descriptions</i> (see changes for 
-			<a href="https://git.eclipse.org/r/#/c/4785/" target="egit_external">JGit</a> and 
-			<a href="https://git.eclipse.org/r/#/c/4365/" target="egit_external">EGit</a>) to facilitate detecting code which isn't working on Java 11. If you followed the instructions in the 
+			<a href="https://eclipse.gerrithub.io/c/eclipse-jgit/jgit/+/4785" target="egit_external">JGit</a> and 
+			<a href="https://eclipse.gerrithub.io/c/eclipse-egit/egit/+/4365" target="egit_external">EGit</a>) to facilitate detecting code which isn't working on Java 11. If you followed the instructions in the 
 			<i>Tools</i> section above, the necessary descriptions should already be installed. Otherwise install 
 			<i>API Tools Environment Descriptions</i> from the release train repository, see 
 			<a href="https://wiki.eclipse.org/Execution_Environments#Installing_Execution_Environment_Descriptions" title="Execution_Environments#Installing_Execution_Environment_Descriptions" target="egit_external">Installing Execution Environment Descriptions</a>.

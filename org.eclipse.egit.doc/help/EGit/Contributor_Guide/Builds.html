@@ -42,7 +42,7 @@
 		<p>Prerequisites for the Maven build are</p>
 		<ul>
 			<li>since 6.7 
-				<a href="https://git.eclipse.org/r/c/jgit/jgit/+/201773" target="egit_external">(#201773)</a> Java 17, still compiled for Java 11, required by Tycho 4.0 used to build OSGi artefacts
+				<a href="https://eclipse.gerrithub.io/c/eclipse-jgit/jgit/+/201773" target="egit_external">(#201773)</a> Java 17, still compiled for Java 11, required by Tycho 4.0 used to build OSGi artefacts
 				<ul>
 					<li>since 6.0 Java 11</li>
 					<li>older versions need Java 8 </li>
@@ -181,10 +181,10 @@
 		<p>On the master branch with the following changes the maven build is now running the license-check automatically</p>
 		<ul>
 			<li>
-				<a href="https://git.eclipse.org/r/c/jgit/jgit/+/196333" target="egit_external">jgit</a>
+				<a href="https://eclipse.gerrithub.io/c/eclipse-jgit/jgit/+/196333" target="egit_external">jgit</a>
 			</li>
 			<li>
-				<a href="https://git.eclipse.org/r/c/egit/egit/+/196335" target="egit_external">egit</a>
+				<a href="https://eclipse.gerrithub.io/c/eclipse-egit/egit/+/196335" target="egit_external">egit</a>
 			</li>
 		</ul>
 		<p>A summary of the check results is written to the 
@@ -338,9 +338,9 @@ latest stable branch:  /home/data/httpd/download.eclipse.org/egit/updates-stable
 				<a href="https://git-scm.com/book/en/v2/Git-Tools-Signing-Your-Work" target="egit_external">Git Tools - Signing Your Work</a> to set this up on your computer before creating the first release.
 			</li>
 			<li>We create all milestones and releases on a dedicated stable branch to avoid interference with ongoing development on master. E.g. use the stable-6.1 branch for releasing 6.1.0 and subsequent patch releases like 6.1.1.</li>
-			<li>push the locally created release commit to git.eclipse.org for review</li>
+			<li>push the locally created release commit to eclipse.gerrithub.io for review</li>
 			<li>wait for the verification build to succeed and vote +1 on verified</li>
-			<li>review and submit the release change, then push the release tag to git.eclipse.org</li>
+			<li>review and submit the release change, then push the release tag to eclipse.gerrithub.io</li>
 			<li>the CI job will build the release version and deploy it to the Eclipse Maven repo at repo.eclipse.org</li>
 		</ul>
 		<h3 id="Release_Notes">Release Notes</h3>
@@ -369,7 +369,7 @@ latest stable branch:  /home/data/httpd/download.eclipse.org/egit/updates-stable
 			<a href="https://wiki.eclipse.org/Category:SimRel-2022-09" target="egit_external">schedule</a>.
 		</p>
 		<p>The release train contribution for JGit and EGit is maintained in the git repository </p>
-		<pre>ssh://git.eclipse.org/gitroot/simrel/org.eclipse.simrel.build.git
+		<pre>https://github.com/eclipse-simrel/simrel.build.git
 </pre>
 		<p>in the files</p>
 		<pre>

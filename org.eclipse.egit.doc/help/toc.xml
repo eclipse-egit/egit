@@ -447,28 +447,26 @@
 		</topic>
 		<topic href="help/JGit/User_Guide/Updating-This-Document.html" label="Updating This Document"></topic>
 	</topic>
-	<topic href="help/EGit/New_and_Noteworthy/6.7/6.7.html" label="EGit 6.7 New and Noteworthy">
-		<topic href="help/EGit/New_and_Noteworthy/6.7/6.7.html" label="EGit">
-			<topic href="help/EGit/New_and_Noteworthy/6.7/6.7.html#Features" label="Features">
-				<topic href="help/EGit/New_and_Noteworthy/6.7/6.7.html#Git_Config_Files" label="Git Config Files"></topic>
-				<topic href="help/EGit/New_and_Noteworthy/6.7/6.7.html#SSH_Connections_support_PKCS.2311_Hardware_Security_Modules" label="SSH Connections support PKCS#11 Hardware Security Modules"></topic>
+	<topic href="help/EGit/New_and_Noteworthy/6.8/6.8.html" label="EGit 6.8 New and Noteworthy">
+		<topic href="help/EGit/New_and_Noteworthy/6.8/6.8.html" label="EGit">
+			<topic href="help/EGit/New_and_Noteworthy/6.8/6.8.html#Features" label="Features">
+				<topic href="help/EGit/New_and_Noteworthy/6.8/6.8.html#Build_and_Release_Engineering" label="Build and Release Engineering"></topic>
 			</topic>
-			<topic href="help/EGit/New_and_Noteworthy/6.7/6.7.html#Other_Changes" label="Other Changes"></topic>
+			<topic href="help/EGit/New_and_Noteworthy/6.8/6.8.html#Other_Changes" label="Other Changes"></topic>
 		</topic>
-		<topic href="help/EGit/New_and_Noteworthy/6.7/Contributors.html" label="Contributors"></topic>
-		<topic href="help/EGit/New_and_Noteworthy/6.7/See-Also.html" label="See Also"></topic>
-		<topic href="help/EGit/New_and_Noteworthy/6.7/Updating-This-Document.html" label="Updating This Document"></topic>
+		<topic href="help/EGit/New_and_Noteworthy/6.8/Contributors.html" label="Contributors"></topic>
+		<topic href="help/EGit/New_and_Noteworthy/6.8/See-Also.html" label="See Also"></topic>
+		<topic href="help/EGit/New_and_Noteworthy/6.8/Updating-This-Document.html" label="Updating This Document"></topic>
 	</topic>
-	<topic href="help/JGit/New_and_Noteworthy/6.7/6.7.html" label="JGit 6.7 New and Noteworthy">
-		<topic href="help/JGit/New_and_Noteworthy/6.7/6.7.html" label="JGit">
-			<topic href="help/JGit/New_and_Noteworthy/6.7/6.7.html#Features" label="Features">
-				<topic href="help/JGit/New_and_Noteworthy/6.7/6.7.html#SSH_Connections_support_PKCS.2311_Hardware_Security_Modules" label="SSH Connections support PKCS#11 Hardware Security Modules"></topic>
-				<topic href="help/JGit/New_and_Noteworthy/6.7/6.7.html#Other_Features" label="Other Features"></topic>
+	<topic href="help/JGit/New_and_Noteworthy/6.8/6.8.html" label="JGit 6.8 New and Noteworthy">
+		<topic href="help/JGit/New_and_Noteworthy/6.8/6.8.html" label="JGit">
+			<topic href="help/JGit/New_and_Noteworthy/6.8/6.8.html#Features" label="Features">
+				<topic href="help/JGit/New_and_Noteworthy/6.8/6.8.html#Build_and_Release_Engineering" label="Build and Release Engineering"></topic>
 			</topic>
-			<topic href="help/JGit/New_and_Noteworthy/6.7/6.7.html#Other_Changes" label="Other Changes"></topic>
+			<topic href="help/JGit/New_and_Noteworthy/6.8/6.8.html#Other_Changes" label="Other Changes"></topic>
 		</topic>
-		<topic href="help/JGit/New_and_Noteworthy/6.7/Contributors.html" label="Contributors"></topic>
-		<topic href="help/JGit/New_and_Noteworthy/6.7/Updating-This-Document.html" label="Updating This Document"></topic>
+		<topic href="help/JGit/New_and_Noteworthy/6.8/Contributors.html" label="Contributors"></topic>
+		<topic href="help/JGit/New_and_Noteworthy/6.8/Updating-This-Document.html" label="Updating This Document"></topic>
 	</topic>
 	<topic href="help/EGit/Git_For_Eclipse_Users/Git-For-Eclipse-Users.html" label="Git for Eclipse Users">
 		<topic href="help/EGit/Git_For_Eclipse_Users/Git-For-Eclipse-Users.html" label="Centralised version control systems"></topic>
@@ -549,15 +547,11 @@
 		</topic>
 		<topic href="help/EGit/Contributor_Guide/Website.html" label="Website"></topic>
 		<topic href="help/EGit/Contributor_Guide/Contributing-Patches.html" label="Contributing Patches">
-			<topic href="help/EGit/Contributor_Guide/Contributing-Patches.html#Using_Gerrit_at_Eclipse" label="Using Gerrit at Eclipse">
+			<topic href="help/EGit/Contributor_Guide/Contributing-Patches.html#Using_Gerrit" label="Using Gerrit">
 				<topic href="help/EGit/Contributor_Guide/Contributing-Patches.html#User_Account" label="User Account"></topic>
-				<topic href="help/EGit/Contributor_Guide/Contributing-Patches.html#Legal_Paperwork" label="Legal Paperwork"></topic>
-				<topic href="help/EGit/Contributor_Guide/Contributing-Patches.html#Logon" label="Logon">
-					<topic href="help/EGit/Contributor_Guide/Contributing-Patches.html#Gerrit_Web_UI" label="Gerrit Web UI"></topic>
-					<topic href="help/EGit/Contributor_Guide/Contributing-Patches.html#Git_over_SSH" label="Git over SSH"></topic>
-					<topic href="help/EGit/Contributor_Guide/Contributing-Patches.html#Git_over_HTTPS" label="Git over HTTPS"></topic>
-				</topic>
+				<topic href="help/EGit/Contributor_Guide/Contributing-Patches.html#Login_to_GerritHub_and_OAuth_access_to_GitHub" label="Login to GerritHub and OAuth access to GitHub"></topic>
 				<topic href="help/EGit/Contributor_Guide/Contributing-Patches.html#SSH_Keys" label="SSH Keys"></topic>
+				<topic href="help/EGit/Contributor_Guide/Contributing-Patches.html#Legal_Paperwork" label="Legal Paperwork"></topic>
 				<topic href="help/EGit/Contributor_Guide/Contributing-Patches.html#Doing_Code_Reviews_with_Gerrit" label="Doing Code Reviews with Gerrit"></topic>
 				<topic href="help/EGit/Contributor_Guide/Contributing-Patches.html#Using_Gerrit_with_git_command_line:" label="Using Gerrit with git command line:">
 					<topic href="help/EGit/Contributor_Guide/Contributing-Patches.html#Adding_a_dedicated_remote" label="Adding a dedicated remote"></topic>

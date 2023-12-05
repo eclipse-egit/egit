@@ -19,7 +19,7 @@
 
   <groupId>org.eclipse.egit</groupId>
   <artifactId>egit-parent</artifactId>
-  <version>6.8.0-SNAPSHOT</version>
+  <version>6.8.1-SNAPSHOT</version>
   <packaging>pom</packaging>
 
   <name>EGit Parent</name>
@@ -62,7 +62,7 @@
 
   <properties>
     <maven-version-minimum>3.6.3</maven-version-minimum>
-    <egit-version>6.8.0-SNAPSHOT</egit-version>
+    <egit-version>6.8.1-SNAPSHOT</egit-version>
     <tycho-version>4.0.2</tycho-version>
     <java-version>11</java-version>
     <ecj-version>3.33.0</ecj-version>
@@ -288,6 +288,35 @@
         <configuration>
           <excludeScope>test</excludeScope>
         </configuration>
+      </plugin>
+      <plugin>
+        <groupId>org.cyclonedx</groupId>
+        <artifactId>cyclonedx-maven-plugin</artifactId>
+        <version>2.7.9</version>
+        <configuration>
+          <projectType>library</projectType>
+          <schemaVersion>1.4</schemaVersion>
+          <includeBomSerialNumber>false</includeBomSerialNumber>
+          <includeCompileScope>true</includeCompileScope>
+          <includeProvidedScope>true</includeProvidedScope>
+          <includeRuntimeScope>true</includeRuntimeScope>
+          <includeSystemScope>true</includeSystemScope>
+          <includeTestScope>false</includeTestScope>
+          <includeLicenseText>false</includeLicenseText>
+          <outputReactorProjects>true</outputReactorProjects>
+          <outputFormat>json</outputFormat>
+          <outputName>cyclonedx</outputName>
+          <outputDirectory>${project.build.directory}</outputDirectory>
+          <verbose>false</verbose>
+        </configuration>
+        <executions>
+          <execution>
+            <phase>package</phase>
+            <goals>
+              <goal>makeAggregateBom</goal>
+            </goals>
+          </execution>
+        </executions>
       </plugin>
     </plugins>
     <pluginManagement>
