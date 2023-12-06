@@ -51,6 +51,23 @@
       "message": "OK, thanks. I retriggered the EGit job, and it passed successfully: [1]. However, the GeritHub integration apparently isn\u0027t quite correct yet; it appears that either Jenkins did not report back to this Gerrit, or this Gerrit ignored the message.\n\n[1] https://ci.eclipse.org/egit/job/egit.gerrit/2961/",
       "revId": "73cf2387f945b034c206b659eaa766d7c7f9ad1d",
       "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "a093a4ac_64d4bbff",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1021966
+      },
+      "writtenOn": "2023-12-06T10:00:40Z",
+      "side": 1,
+      "message": "Additionally, I tried to retrigger the build for [1] via a comment \"trigger build\". That did not trigger any build on Jenkins.\n\nSomething is still not quite right with the Jenkins-GerritHub integration. I do notice that the Jenkins jobs are all set to run with \"Any Server\". In a local Gerrit/Jenkins setup at work we ran into problems with that; we had to choose the right server in the job configuration for jobs to be triggered. Perhaps the GerritTrigger plug-in has a problem? Or the Jenkins needs a restart?\n\n[1] https://eclipse.gerrithub.io/c/eclipse-egit/egit/+/1173179",
+      "revId": "73cf2387f945b034c206b659eaa766d7c7f9ad1d",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735"
     }
   ]
 }
