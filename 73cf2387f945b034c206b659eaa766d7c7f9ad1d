@@ -103,6 +103,24 @@
       "parentUuid": "bb1aceaf_915aa1cd",
       "revId": "73cf2387f945b034c206b659eaa766d7c7f9ad1d",
       "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "54f42fef_90cb4b68",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000671
+      },
+      "writtenOn": "2023-12-06T14:02:09Z",
+      "side": 1,
+      "message": "I tried to trigger a build manually and that failed with an error, see https://gitlab.eclipse.org/eclipsefdn/helpdesk/-/issues/4041",
+      "parentUuid": "7eb54cbb_2f055a20",
+      "revId": "73cf2387f945b034c206b659eaa766d7c7f9ad1d",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735"
     }
   ]
 }
