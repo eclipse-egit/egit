@@ -85,6 +85,24 @@
       "message": "And finally, pushing a new changeset onto [1] also did not trigger a new build.\n\nClearly something isn\u0027t right yet.\n\n[1] https://eclipse.gerrithub.io/c/eclipse-egit/egit/+/1173180",
       "revId": "73cf2387f945b034c206b659eaa766d7c7f9ad1d",
       "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "7eb54cbb_2f055a20",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000671
+      },
+      "writtenOn": "2023-12-06T13:51:25Z",
+      "side": 1,
+      "message": "I configured the build jobs now to listen to eclipse.gerrithub.io, let\u0027s see if that helps. If that doesn\u0027t help we can file a ticket for a build engineer to check if the trigger plugin is healthy and maybe restart Jenkins.",
+      "parentUuid": "bb1aceaf_915aa1cd",
+      "revId": "73cf2387f945b034c206b659eaa766d7c7f9ad1d",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735"
     }
   ]
 }
