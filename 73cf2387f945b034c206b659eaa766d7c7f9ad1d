@@ -34,6 +34,23 @@
       "parentUuid": "bdcd3c55_109e788c",
       "revId": "73cf2387f945b034c206b659eaa766d7c7f9ad1d",
       "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "81b8056a_60e1b4bd",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1021966
+      },
+      "writtenOn": "2023-12-06T09:48:22Z",
+      "side": 1,
+      "message": "OK, thanks. I retriggered the EGit job, and it passed successfully: [1]. However, the GeritHub integration apparently isn\u0027t quite correct yet; it appears that either Jenkins did not report back to this Gerrit, or this Gerrit ignored the message.\n\n[1] https://ci.eclipse.org/egit/job/egit.gerrit/2961/",
+      "revId": "73cf2387f945b034c206b659eaa766d7c7f9ad1d",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735"
     }
   ]
 }
