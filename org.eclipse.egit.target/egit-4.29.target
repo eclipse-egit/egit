@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <?pde?>
 <!-- generated with https://github.com/eclipse-cbi/targetplatform-dsl -->
-<target name="egit-4.29" sequenceNumber="1701217866">
+<target name="egit-4.29" sequenceNumber="1702222390">
   <locations>
     <location includeMode="slicer" includeAllPlatforms="false" includeSource="true" includeConfigurePhase="true" type="InstallableUnit">
       <unit id="org.eclipse.license.feature.group" version="0.0.0"/>
@@ -42,7 +42,7 @@
       <unit id="org.apache.httpcomponents.httpcore" version="4.4.16"/>
       <unit id="org.apache.httpcomponents.httpcore.source" version="4.4.16"/>
       <unit id="org.eclipse.jetty.servlet-api" version="4.0.6"/>
-      <unit id="org.eclipse.orbit.maven.lucene.feature.group" version="4.30.0.v20230929-1030"/>
+      <unit id="org.eclipse.orbit.maven.lucene.feature.group" version="4.31.0.v20231205-0807"/>
       <unit id="org.eclipse.orbit.xml-apis-ext" version="1.0.0.v20230923-0644"/>
       <unit id="org.hamcrest" version="2.2.0"/>
       <unit id="org.hamcrest.source" version="2.2.0"/>
@@ -65,7 +65,7 @@
       <unit id="org.objectweb.asm.util.source" version="9.6.0"/>
       <unit id="org.osgi.service.cm" version="1.6.1.202109301733"/>
       <unit id="org.osgi.service.cm.source" version="1.6.1.202109301733"/>
-      <repository location="https://download.eclipse.org/tools/orbit/simrel/orbit-aggregation/2023-12"/>
+      <repository location="https://download.eclipse.org/tools/orbit/simrel/orbit-aggregation/2024-03"/>
     </location>
     <location includeMode="slicer" includeAllPlatforms="false" includeSource="true" includeConfigurePhase="true" type="InstallableUnit">
       <unit id="biz.aQute.bnd.util" version="0.0.0"/>

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <?pde?>
 <!-- generated with https://github.com/eclipse-cbi/targetplatform-dsl -->
-<target name="egit-4.26" sequenceNumber="1702222390">
+<target name="egit-4.31" sequenceNumber="1702222379">
   <locations>
     <location includeMode="slicer" includeAllPlatforms="false" includeSource="true" includeConfigurePhase="true" type="InstallableUnit">
       <unit id="org.eclipse.license.feature.group" version="0.0.0"/>
@@ -68,6 +68,9 @@
       <repository location="https://download.eclipse.org/tools/orbit/simrel/orbit-aggregation/2024-03"/>
     </location>
     <location includeMode="slicer" includeAllPlatforms="false" includeSource="true" includeConfigurePhase="true" type="InstallableUnit">
+      <unit id="biz.aQute.bnd.util" version="0.0.0"/>
+      <unit id="biz.aQute.bndlib" version="0.0.0"/>
+      <unit id="org.apache.commons.jxpath" version="0.0.0"/>
       <unit id="org.eclipse.sdk.ide" version="0.0.0"/>
       <unit id="org.eclipse.ecf.core.feature.feature.group" version="0.0.0"/>
       <unit id="org.eclipse.ecf.filetransfer.feature.feature.group" version="0.0.0"/>
@@ -78,10 +81,12 @@
       <unit id="org.eclipse.e4.tools.services" version="0.0.0"/>
       <unit id="org.eclipse.e4.ui.progress" version="0.0.0"/>
       <unit id="org.eclipse.e4.ui.workbench" version="0.0.0"/>
+      <unit id="org.eclipse.search.core" version="0.0.0"/>
+      <unit id="org.osgi.service.repository" version="0.0.0"/>
       <unit id="org.sat4j.core" version="0.0.0"/>
       <unit id="org.sat4j.pb" version="0.0.0"/>
       <unit id="org.eclipse.tools.layout.spy" version="0.0.0"/>
-      <repository location="https://download.eclipse.org/releases/2022-12/"/>
+      <repository location="https://download.eclipse.org/staging/2024-03"/>
     </location>
     <location includeDependencyDepth="none" includeDependencyScopes="compile" includeSource="true" missingManifest="error" type="Maven" label="osgi">
     <dependencies>
