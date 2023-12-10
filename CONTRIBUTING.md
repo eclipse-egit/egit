@@ -1,14 +1,14 @@
 # Contributing
 
-Please refer to the [contributor guide](https://wiki.eclipse.org/EGit/Contributor_Guide) for all the details.
+Please refer to the [contributor guide](https://github.com/eclipse-egit/egit/wiki/Contributor-Guide) for all the details.
 Contributions require that you sign the [Eclipse Contributor Agreement](https://www.eclipse.org/legal/ECA.php).
 
 ## Reporting bugs
 
 For anything other than small changes, it's a good idea to open a bug
 report for it (in case one doesn't already exist). This gives others the
-chance to give input and is useful for tracking. 
-[Create EGit bugs here](https://bugs.eclipse.org/bugs/enter_bug.cgi?product=EGit).
+chance to give input and is useful for tracking.
+[Create EGit bugs here](https://github.com/eclipse-egit/egit/issues/new/choose).
 
 ## Submitting changes
 
