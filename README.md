@@ -39,7 +39,7 @@ This package is composed of the following major components.
 ### Packaging
 
 - __org.eclipse.egit.doc__: Documentation bundle packaging EGit documentation.
-    Raw documentation is written in the [wiki](https://wiki.eclipse.org/EGit/User_Guide).
+    Raw documentation is written in the [wiki](https://github.com/eclipse-egit/egit/wiki/User-Guide).
 - __org.eclipse.egit-feature__: Eclipse feature for installing the core
     implementation bundles
 - __org.eclipse.egit.gitflow-feature__: Eclipse feature for installing the
@@ -53,9 +53,9 @@ This package is composed of the following major components.
 ## Compatibility
 
 - In general, EGit supports at least the latest two Eclipse releases.
-  For details, please see https://wiki.eclipse.org/EGit/FAQ
+  For details, please see [the FAQ](https://github.com/eclipse-egit/egit/wiki/FAQ).
 - JGit and EGit releases are versioned according to
-  [OSGi semantic versioning](https://www.osgi.org/wp-content/uploads/SemanticVersioning.pdf)
+  [OSGi semantic versioning](https://www.osgi.org/wp-content/uploads/SemanticVersioning.pdf).
 - Newer version of EGit may implement new functionality, remove
   existing functions and change others without other notice than what
   is written in the release notes, commit log and source files themselves.
@@ -96,8 +96,7 @@ features:
 ## Missing Features
 
 - signing support is incomplete
-  - verifying signed objects
-  - signing tags
+  - verifying signed tags
   - signing pushes
 
 ## Support
@@ -108,7 +107,7 @@ to post.
 
 ## Contributing
 
-See the [EGit Contributor Guide](https://wiki.eclipse.org/EGit/Contributor_Guide).
+See the [EGit Contributor Guide](https://github.com/eclipse-egit/egit/wiki/Contributor-Guide).
 
 ## About Git
 
