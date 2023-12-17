@@ -54,7 +54,9 @@ public class RuleUtil {
 	public static ISchedulingRule getRule(Repository repository) {
 		IProject[] projects = getProjects(repository);
 		if (projects.length == 0)
-			return null;
+			// if no project is linked to the repository create a rule which
+			// works on the repository's location
+			return new RepositoryRule(repository);
 		return new MultiRule(projects);
 	}
 
