@@ -26,6 +26,7 @@ import org.eclipse.egit.ui.test.JobJoiner;
 import org.eclipse.egit.ui.test.TestUtil;
 import org.eclipse.swtbot.eclipse.finder.widgets.SWTBotView;
 import org.eclipse.swtbot.swt.finder.widgets.SWTBotStyledText;
+import org.eclipse.swtbot.swt.finder.widgets.SWTBotToolbarButton;
 import org.eclipse.swtbot.swt.finder.widgets.SWTBotToolbarToggleButton;
 import org.eclipse.swtbot.swt.finder.widgets.SWTBotTree;
 
@@ -105,6 +106,28 @@ public class StagingViewTester {
 				UIText.StagingView_StageItemMenuLabel);
 
 		jobJoiner.join();
+	}
+
+	public boolean stageAllFiles(String path) {
+		SWTBotTree unstagedTree = stagingView.bot().tree(0);
+		TestUtil.waitUntilTreeHasNodeContainsText(stagingView.bot(),
+				unstagedTree, path, 10000);
+
+		JobJoiner jobJoiner = JobJoiner.startListening(
+				org.eclipse.egit.core.JobFamilies.INDEX_DIFF_CACHE_UPDATE, 30,
+				TimeUnit.SECONDS);
+
+		stagingView.bot().toolbarButtonWithTooltip(
+				UIText.StagingView_StageAllItemTooltip).click();
+
+		jobJoiner.join();
+
+		TestUtil.waitUntilTreeHasNodeContainsText(stagingView.bot(),
+				stagingView.bot().tree(1), path, 10000);
+		if (stagingView.bot().tree(0).getAllItems().length == 0) {
+			return true;
+		}
+		return false;
 	}
 
 	public void unStageFile(String path) {
@@ -209,5 +232,20 @@ public class StagingViewTester {
 		Integer pos = syncExec(() -> Integer
 				.valueOf(commitMessageArea.widget.getCaretOffset()));
 		return pos == null ? -1 : pos.intValue();
+	}
+
+	/**
+	 * Click the refresh button in the staging view
+	 */
+	public void clickRefreshButton() {
+		for (SWTBotToolbarButton x : stagingView.getToolbarButtons())
+				{
+					if (x.getToolTipText().contains("(F5)")) {
+						x.click();
+						break;
+					}
+
+				}
+
 	}
 }
