@@ -66,6 +66,76 @@ import org.junit.Test;
 
 public class StagingViewTest extends AbstractStagingViewTestCase {
 
+	private void commonCommitManyFiles(Repository myRepository,
+			StagingViewTester stagingViewTester) throws Exception {
+
+		File workDir = myRepository.getWorkTree();
+		// step 1 create and add many files in one step to index and commit
+		createManyEmptyFiles(workDir, "many1", 30);
+		stagingViewTester.refreshIndex(myRepository);
+		assertTrue("Not all files were staged.",
+				stagingViewTester.stageAllFiles("many129.txt"));
+
+		stagingViewTester.setCommitMessage("The 1st commit");
+		stagingViewTester.commit();
+		TestUtil.checkHeadCommit(myRepository, TestUtil.TESTCOMMITTER,
+				TestUtil.TESTCOMMITTER, "The 1st commit");
+		assertFalse("Commit Button should be disabled",
+				stagingViewTester.isCommitEnabled());
+		// step 2 delete some of the previously created files and remove them
+		// from the index in one step and commit
+		removeManyEmptyFiles(workDir, "many1", 0, 15);
+		stagingViewTester.refreshIndex(myRepository);
+		assertTrue("Not all files were staged.",
+				stagingViewTester.stageAllFiles("many114.txt"));
+
+		stagingViewTester.setCommitMessage("The 2nd commit");
+		stagingViewTester.commit();
+		TestUtil.checkHeadCommit(myRepository, TestUtil.TESTCOMMITTER,
+				TestUtil.TESTCOMMITTER, "The 2nd commit");
+		assertFalse("Commit Button should be disabled",
+				stagingViewTester.isCommitEnabled());
+
+		// step 3 delete some of the previously created files and remove them
+		// from the index in the same step add some new files to the index
+		// and commit
+		removeManyEmptyFiles(workDir, "many1", 18, 24);
+		createManyEmptyFiles(workDir, "many1", 14);
+		stagingViewTester.refreshIndex(myRepository);
+		assertTrue("Not all files were staged.",
+				stagingViewTester.stageAllFiles("many123.txt"));
+
+		stagingViewTester.setCommitMessage("The 3rd commit");
+		stagingViewTester.commit();
+		TestUtil.checkHeadCommit(myRepository, TestUtil.TESTCOMMITTER,
+				TestUtil.TESTCOMMITTER, "The 3rd commit");
+		assertFalse("Commit Button should be disabled",
+				stagingViewTester.isCommitEnabled());
+	}
+
+	@Test
+	public void testCommitManyFilesNoProject() throws Exception {
+		StagingViewTester stagingViewTester = StagingViewTester
+				.openStagingView();
+
+		RepositoryUtil.INSTANCE.removeDir(repositoryFile);
+		// create and select a git repository without a associated Eclipse
+		// project
+		Repository myRepository = createLocalTestRepository("testmany");
+		selectRepositoryNode(myRepository.getDirectory());
+
+		commonCommitManyFiles(myRepository, stagingViewTester);
+		RepositoryUtil.INSTANCE.removeDir(myRepository.getDirectory());
+	}
+
+	@Test
+	public void testCommitManyFiles() throws Exception {
+		StagingViewTester stagingViewTester = StagingViewTester
+				.openStagingView();
+		commonCommitManyFiles(repository, stagingViewTester);
+	}
+
+
 	@Test
 	public void testCommitSingleFile() throws Exception {
 		setContent("I have changed this");
@@ -124,8 +194,11 @@ public class StagingViewTest extends AbstractStagingViewTestCase {
 		}
 		assertEquals(RepositoryState.MERGING, repository.getRepositoryState());
 
-		IndexDiffCache.INSTANCE.getIndexDiffCacheEntry(repository)
-				.refresh();
+		JobJoiner jobJoiner = JobJoiner.startListening(
+				org.eclipse.egit.core.JobFamilies.INDEX_DIFF_CACHE_UPDATE, 30,
+				TimeUnit.SECONDS);
+		IndexDiffCache.INSTANCE.getIndexDiffCacheEntry(repository).refresh();
+		jobJoiner.join();
 
 		StagingViewTester stagingView = StagingViewTester
 				.openStagingView();
@@ -159,8 +232,11 @@ public class StagingViewTest extends AbstractStagingViewTestCase {
 		}
 		assertEquals(RepositoryState.MERGING, repository.getRepositoryState());
 
-		IndexDiffCache.INSTANCE.getIndexDiffCacheEntry(repository)
-				.refresh();
+		JobJoiner jobJoiner1 = JobJoiner.startListening(
+				org.eclipse.egit.core.JobFamilies.INDEX_DIFF_CACHE_UPDATE, 30,
+				TimeUnit.SECONDS);
+		IndexDiffCache.INSTANCE.getIndexDiffCacheEntry(repository).refresh();
+		jobJoiner1.join();
 
 		StagingViewTester stagingView = StagingViewTester.openStagingView();
 		assertEquals("", stagingView.getCommitMessage());
@@ -518,7 +594,11 @@ public class StagingViewTest extends AbstractStagingViewTestCase {
 						"Changed".getBytes(project.getDefaultCharset())),
 				0, null);
 
+		JobJoiner jobJoiner = JobJoiner.startListening(
+				org.eclipse.egit.core.JobFamilies.INDEX_DIFF_CACHE_UPDATE, 30,
+				TimeUnit.SECONDS);
 		IndexDiffCache.INSTANCE.getIndexDiffCacheEntry(rootRepo).refresh();
+		jobJoiner.join();
 
 		// Open the git repositories view, select this repository
 		SWTBotTree repoTree = getOrOpenView().bot().tree();

@@ -58,4 +58,14 @@ public abstract class AbstractStagingViewTestCase
 		repoNode.select();
 	}
 
+	protected void selectRepositoryNode(File repositoryFile1) throws Exception {
+		Repository repository1 = lookupRepository(repositoryFile1);
+		TestUtil.configureTestCommitterAsUser(repository1);
+		RepositoryUtil.INSTANCE.addConfiguredRepository(repositoryFile1);
+		SWTBotTree tree = getOrOpenView().bot().tree();
+
+		SWTBotTreeItem repoNode = myRepoViewUtil.getRootItem(tree,
+				repositoryFile1);
+		repoNode.select();
+	}
 }
