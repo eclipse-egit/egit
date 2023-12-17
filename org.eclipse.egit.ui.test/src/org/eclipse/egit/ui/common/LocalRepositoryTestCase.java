@@ -830,4 +830,24 @@ public abstract class LocalRepositoryTestCase extends EGitTestCase {
 		listRemoteOp.run(null);
 		return listRemoteOp.getRemoteRefs();
 	}
+
+	protected static void createManyEmptyFiles(File directory, String filePath,
+			int num) throws Exception {
+		for (int i = 0; i < num; i++) {
+			String filePath1 = filePath + i + ".txt";
+			File a = new File(directory.getCanonicalPath(), filePath1);
+			a.createNewFile();
+		}
+		TestUtil.joinJobs(JobFamilies.INDEX_DIFF_CACHE_UPDATE);
+	}
+
+	protected static void removeManyEmptyFiles(File directory, String filePath,
+			int begin, int end) throws Exception {
+		for (int i = begin; i < end; i++) {
+			String filePath1 = filePath + i + ".txt";
+			File a = new File(directory.getCanonicalPath(), filePath1);
+			a.delete();
+			TestUtil.joinJobs(JobFamilies.INDEX_DIFF_CACHE_UPDATE);
+		}
+	}
 }

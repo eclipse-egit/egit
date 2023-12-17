@@ -16,6 +16,7 @@ import static org.junit.Assert.assertTrue;
 
 import java.util.concurrent.TimeUnit;
 
+import org.eclipse.egit.core.internal.indexdiff.IndexDiffCache;
 import org.eclipse.egit.ui.Activator;
 import org.eclipse.egit.ui.JobFamilies;
 import org.eclipse.egit.ui.UIPreferences;
@@ -24,6 +25,7 @@ import org.eclipse.egit.ui.internal.staging.StagingView;
 import org.eclipse.egit.ui.test.ContextMenuHelper;
 import org.eclipse.egit.ui.test.JobJoiner;
 import org.eclipse.egit.ui.test.TestUtil;
+import org.eclipse.jgit.lib.Repository;
 import org.eclipse.swtbot.eclipse.finder.widgets.SWTBotView;
 import org.eclipse.swtbot.swt.finder.widgets.SWTBotStyledText;
 import org.eclipse.swtbot.swt.finder.widgets.SWTBotToolbarToggleButton;
@@ -105,6 +107,28 @@ public class StagingViewTester {
 				UIText.StagingView_StageItemMenuLabel);
 
 		jobJoiner.join();
+	}
+
+	public boolean stageAllFiles(String path) {
+		SWTBotTree unstagedTree = stagingView.bot().tree(0);
+		TestUtil.waitUntilTreeHasNodeContainsText(stagingView.bot(),
+				unstagedTree, path, 10000);
+
+		JobJoiner jobJoiner = JobJoiner.startListening(
+				org.eclipse.egit.core.JobFamilies.INDEX_DIFF_CACHE_UPDATE, 30,
+				TimeUnit.SECONDS);
+
+		stagingView.bot().toolbarButtonWithTooltip(
+				UIText.StagingView_StageAllItemTooltip).click();
+
+		jobJoiner.join();
+
+		TestUtil.waitUntilTreeHasNodeContainsText(stagingView.bot(),
+				stagingView.bot().tree(1), path, 10000);
+		if (stagingView.bot().tree(0).getAllItems().length == 0) {
+			return true;
+		}
+		return false;
 	}
 
 	public void unStageFile(String path) {
@@ -209,5 +233,20 @@ public class StagingViewTester {
 		Integer pos = syncExec(() -> Integer
 				.valueOf(commitMessageArea.widget.getCaretOffset()));
 		return pos == null ? -1 : pos.intValue();
+	}
+
+	/**
+	 * Trigger a explicit index refresh for {@code myRepository} and wait until
+	 * the refresh is finished.
+	 *
+	 * @param myRepository
+	 *            Git repository to refresh
+	 */
+	public void refreshIndex(Repository myRepository) {
+		JobJoiner jobJoiner = JobJoiner.startListening(
+				org.eclipse.egit.core.JobFamilies.INDEX_DIFF_CACHE_UPDATE, 30,
+				TimeUnit.SECONDS);
+		IndexDiffCache.INSTANCE.getIndexDiffCacheEntry(myRepository).refresh();
+		jobJoiner.join();
 	}
 }
