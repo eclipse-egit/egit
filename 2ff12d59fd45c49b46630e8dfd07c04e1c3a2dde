@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "d3b76979_88c6ac90",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1021966
+      },
+      "writtenOn": "2023-12-18T07:36:18Z",
+      "side": 1,
+      "message": "Is this a good way to categorize issues? In Apache MINA sshd, I use a different approach: I manually tag things once I\u0027ve taken a look at the issue. Some issues are simply invalid, not bugs; some bugs are actually feature requests. This avoids having things tagged \"bug\" that aren\u0027t.\n\nManual intervention is required anyway. If we tag automatically, we have to double-check and remove labels if inappropriate. But I kind of prefer the labels to mean that an issue is a \"confirmed bug\".\n\nIn the end I don\u0027t really care; I suppose either way will work.",
+      "revId": "2ff12d59fd45c49b46630e8dfd07c04e1c3a2dde",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735"
+    }
+  ]
+}
