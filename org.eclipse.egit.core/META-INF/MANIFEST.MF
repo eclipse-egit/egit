@@ -13,8 +13,7 @@ Require-Bundle: org.eclipse.core.runtime;bundle-version="[3.26.100,4.0.0)",
  org.eclipse.core.filesystem;bundle-version="[1.9.500,2.0.0)",
  org.eclipse.equinox.security;bundle-version="[1.3.1000,2.0.0)",
  org.eclipse.core.variables;bundle-version="[3.5.100,4.0.0)",
- org.eclipse.core.filebuffers;bundle-version="[3.7.200,4.0.0)",
- org.eclipse.osgi.services;bundle-version="[3.11.100,4.0.0)"
+ org.eclipse.core.filebuffers;bundle-version="[3.7.200,4.0.0)"
 Export-Package: org.eclipse.egit.core;version="6.9.0";
   x-friends:="org.eclipse.egit.ui,
    org.eclipse.egit.ui.test,
