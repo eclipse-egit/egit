@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "fbcc916e_218abe83",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1022032
+      },
+      "writtenOn": "2023-12-19T14:05:22Z",
+      "side": 1,
+      "message": "I\u0027ve not been able to test this yet, as I would need a second account to fork my own repo. However, reviewers might be able to test by creating a PR against my fork at https://github.com/Bananeweizen/egit, where the template has already been added on the master branch.\n\nIf this works okayish, then it needs to either be copied into all repositories, or into the organizations template repository.",
+      "revId": "4951a0e14a83008d2193eef3de0f304d57bd265c",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735"
+    }
+  ]
+}
