@@ -1,9 +1,10 @@
 # Eclipse Git Plugin
 
-_EGit_ is a set of Eclipse plugins for working with Git repositories. It is
-based on the _JGit_ library, which is a Git implementation in pure Java. This
-package is licensed under the _EPL 2.0_. Please refer to the `LICENSE` file
-for the complete license.
+_EGit_ is a set of Eclipse plugins for working with Git repositories.
+It is based on the [_JGit_ library](https://github.com/eclipse-jgit/jgit),
+which is a Git implementation in pure Java.
+This package is licensed under the _EPL 2.0_.
+Please refer to the `LICENSE` file for the complete license.
 
 ## Components
 
@@ -25,15 +26,12 @@ This package is composed of the following major components.
     workspace.
 - __org.eclipse.egit.ui__: An Eclipse plugin providing the user interface on
     top of org.eclipse.egit.core.
-- __org.eclipse.egit.ui.importer__: An Eclipse plugin integrating the Eclipse
-    smart import wizard to improve importing projects from Git repositories.
 
 ### Tests
 
-- __org.eclipse.egit.core.junit__: Reusable classes used by _EGit_ tests
+- __org.eclipse.egit.core.junit__: Reusable classes used by _EGit_ tests.
 - __org.eclipse.egit.core.test__: Unit tests for org.eclipse.egit.core.
 - __org.eclipse.egit.gitflow.test__: Unit tests for org.eclipse.egit.gitflow.
-- __org.eclipse.egit.ui.importer.test__: UI tests for org.eclipse.egit.ui.smartimport.
 - __org.eclipse.egit.ui.test__: UI tests for org.eclipse.egit.ui.
 
 ### Packaging
