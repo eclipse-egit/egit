@@ -1,6 +1,23 @@
 {
   "comments": [
     {
+      "unresolved": true,
+      "key": {
+        "uuid": "fd11e393_97a9520d",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1000671
+      },
+      "writtenOn": "2023-12-20T12:55:12Z",
+      "side": 1,
+      "message": "link the issue you created by adding this commit message trailer:\n\nBug: egit-10",
+      "revId": "59937cadd55b1a599351a28f88135ca5a9639718",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735"
+    },
+    {
       "unresolved": false,
       "key": {
         "uuid": "4857370d_c616a02f",
@@ -31,6 +48,92 @@
       "writtenOn": "2023-12-20T11:12:23Z",
       "side": 1,
       "message": "since both methods contain identical code, I\u0027d probably extract both contents into a new method like \"isSameRepositoryRule(rule)\" to avoid the duplication.",
+      "revId": "59937cadd55b1a599351a28f88135ca5a9639718",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "2f03e336_9267ff36",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/internal/job/RepositoryRule.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1000671
+      },
+      "writtenOn": "2023-12-20T12:55:12Z",
+      "side": 1,
+      "message": "nit: missing braces around single line block",
+      "parentUuid": "61016aa3_49f155a2",
+      "revId": "59937cadd55b1a599351a28f88135ca5a9639718",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f5441619_f8acafbb",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/internal/job/RuleUtil.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1000671
+      },
+      "writtenOn": "2023-12-20T12:55:12Z",
+      "side": 1,
+      "message": "I think this comment is unnecessary",
+      "revId": "59937cadd55b1a599351a28f88135ca5a9639718",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d28e54a8_60a0ad55",
+        "filename": "org.eclipse.egit.ui.test/src/org/eclipse/egit/ui/test/stagview/StagingViewTest.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 197,
+      "author": {
+        "id": 1000671
+      },
+      "writtenOn": "2023-12-20T12:55:12Z",
+      "side": 1,
+      "message": "don\u0027t comment out code but remove it",
+      "revId": "59937cadd55b1a599351a28f88135ca5a9639718",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "9e4d4bf3_6c914ddb",
+        "filename": "org.eclipse.egit.ui.test/src/org/eclipse/egit/ui/test/stagview/StagingViewTest.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 236,
+      "author": {
+        "id": 1000671
+      },
+      "writtenOn": "2023-12-20T12:55:12Z",
+      "side": 1,
+      "message": "don\u0027t comment out code but remove it",
+      "revId": "59937cadd55b1a599351a28f88135ca5a9639718",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "8833c8da_ba1dec76",
+        "filename": "org.eclipse.egit.ui.test/src/org/eclipse/egit/ui/test/stagview/StagingViewTest.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 599,
+      "author": {
+        "id": 1000671
+      },
+      "writtenOn": "2023-12-20T12:55:12Z",
+      "side": 1,
+      "message": "don\u0027t comment out code but remove it",
       "revId": "59937cadd55b1a599351a28f88135ca5a9639718",
       "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735"
     }
