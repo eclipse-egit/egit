@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "4857370d_c616a02f",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1022032
+      },
+      "writtenOn": "2023-12-20T11:12:23Z",
+      "side": 1,
+      "message": "looks generally okay to me. but I have too little knowledge of what is involved in the locking, therefore someone like Matthias or Tomas should rather give their expert opinion.",
+      "revId": "59937cadd55b1a599351a28f88135ca5a9639718",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "61016aa3_49f155a2",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/internal/job/RepositoryRule.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1022032
+      },
+      "writtenOn": "2023-12-20T11:12:23Z",
+      "side": 1,
+      "message": "since both methods contain identical code, I\u0027d probably extract both contents into a new method like \"isSameRepositoryRule(rule)\" to avoid the duplication.",
+      "revId": "59937cadd55b1a599351a28f88135ca5a9639718",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735"
+    }
+  ]
+}
