@@ -16,6 +16,24 @@
       "message": "Still open: My new tests are unstable. They run fine locally, but in the Jenkins build one fails all the time. It seems somehow refreshing the staging window does not work. I\u0027m open to any suggestions how to make the tests stable.",
       "revId": "0a2f06df8d02fa93f0b71b9286b15aa6c504ca0b",
       "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "20190d57_7dbe392e",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1037602
+      },
+      "writtenOn": "2023-12-20T16:25:29Z",
+      "side": 1,
+      "message": "I can reproduce the failing test locally now. The test passes if started form the Eclipse GUI as SWTBot Test, but fails if run from Maven",
+      "parentUuid": "f14292ea_56c8819e",
+      "revId": "0a2f06df8d02fa93f0b71b9286b15aa6c504ca0b",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735"
     }
   ]
 }
