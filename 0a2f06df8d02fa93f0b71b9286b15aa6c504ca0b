@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f14292ea_56c8819e",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1037602
+      },
+      "writtenOn": "2023-12-20T15:06:36Z",
+      "side": 1,
+      "message": "Still open: My new tests are unstable. They run fine locally, but in the Jenkins build one fails all the time. It seems somehow refreshing the staging window does not work. I\u0027m open to any suggestions how to make the tests stable.",
+      "revId": "0a2f06df8d02fa93f0b71b9286b15aa6c504ca0b",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735"
+    }
+  ]
+}

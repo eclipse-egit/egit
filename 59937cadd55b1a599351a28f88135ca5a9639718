@@ -20,6 +20,24 @@
     {
       "unresolved": false,
       "key": {
+        "uuid": "d27e43af_cdb2c57e",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1037602
+      },
+      "writtenOn": "2023-12-20T15:06:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fd11e393_97a9520d",
+      "revId": "59937cadd55b1a599351a28f88135ca5a9639718",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735"
+    },
+    {
+      "unresolved": false,
+      "key": {
         "uuid": "4857370d_c616a02f",
         "filename": "/PATCHSET_LEVEL",
         "patchSetId": 3
@@ -72,6 +90,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "12a1bc0c_c9201db4",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/internal/job/RepositoryRule.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1037602
+      },
+      "writtenOn": "2023-12-20T15:06:36Z",
+      "side": 1,
+      "message": "simplified the code, but missed adding the braces, will be done with the next patchset",
+      "parentUuid": "2f03e336_9267ff36",
+      "revId": "59937cadd55b1a599351a28f88135ca5a9639718",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "f5441619_f8acafbb",
         "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/internal/job/RuleUtil.java",
         "patchSetId": 3
@@ -83,6 +119,24 @@
       "writtenOn": "2023-12-20T12:55:12Z",
       "side": 1,
       "message": "I think this comment is unnecessary",
+      "revId": "59937cadd55b1a599351a28f88135ca5a9639718",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "b2225ae5_f862dc33",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/internal/job/RuleUtil.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1037602
+      },
+      "writtenOn": "2023-12-20T15:06:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f5441619_f8acafbb",
       "revId": "59937cadd55b1a599351a28f88135ca5a9639718",
       "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735"
     },
@@ -104,6 +158,24 @@
       "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "a6b3f793_b9189083",
+        "filename": "org.eclipse.egit.ui.test/src/org/eclipse/egit/ui/test/stagview/StagingViewTest.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 197,
+      "author": {
+        "id": 1037602
+      },
+      "writtenOn": "2023-12-20T15:06:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d28e54a8_60a0ad55",
+      "revId": "59937cadd55b1a599351a28f88135ca5a9639718",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "9e4d4bf3_6c914ddb",
@@ -121,6 +193,24 @@
       "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "a34a915c_e562ddf0",
+        "filename": "org.eclipse.egit.ui.test/src/org/eclipse/egit/ui/test/stagview/StagingViewTest.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 236,
+      "author": {
+        "id": 1037602
+      },
+      "writtenOn": "2023-12-20T15:06:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9e4d4bf3_6c914ddb",
+      "revId": "59937cadd55b1a599351a28f88135ca5a9639718",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "8833c8da_ba1dec76",
@@ -134,6 +224,24 @@
       "writtenOn": "2023-12-20T12:55:12Z",
       "side": 1,
       "message": "don\u0027t comment out code but remove it",
+      "revId": "59937cadd55b1a599351a28f88135ca5a9639718",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "b7477a5b_423b7b44",
+        "filename": "org.eclipse.egit.ui.test/src/org/eclipse/egit/ui/test/stagview/StagingViewTest.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 599,
+      "author": {
+        "id": 1037602
+      },
+      "writtenOn": "2023-12-20T15:06:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8833c8da_ba1dec76",
       "revId": "59937cadd55b1a599351a28f88135ca5a9639718",
       "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735"
     }
