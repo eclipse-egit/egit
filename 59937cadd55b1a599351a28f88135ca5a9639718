@@ -106,6 +106,24 @@
       "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "4013dba3_1d1fd800",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/internal/job/RepositoryRule.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1037602
+      },
+      "writtenOn": "2023-12-21T11:20:16Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "12a1bc0c_c9201db4",
+      "revId": "59937cadd55b1a599351a28f88135ca5a9639718",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "f5441619_f8acafbb",
