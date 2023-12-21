@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "79407f97_c1a69d52",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1037608
+      },
+      "writtenOn": "2023-12-21T07:47:29Z",
+      "side": 1,
+      "message": "Thank you Michael for creating this for me.\nCould you also review this?\n\nRegarding your question from the GitHub PR:\n\u003e I guess that change is backwards compatible with older Eclipse versions, right?\n\nYes, this will work on all Eclipse versions that have a bundle installed that export org.osgi.service.event in version 1.4 (which was released 2018) or later. If you are sure 1.3 is also sufficient I can widen the range as well.",
+      "revId": "4ce7225476507de295c2f9cabda37b928467bcfa",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735"
+    }
+  ]
+}
