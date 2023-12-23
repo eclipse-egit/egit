@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "386a285a_ebcee5fb",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000671
+      },
+      "writtenOn": "2023-12-23T14:58:52Z",
+      "side": 1,
+      "message": "license approval for com.ibm.icu:icu4j:74.2.0 is pending\nhttps://gitlab.eclipse.org/eclipsefdn/emo-team/iplab/-/issues/11936",
+      "revId": "84c41989b5cb306eb21b34407e8636c1b717f4d5",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735"
+    }
+  ]
+}
