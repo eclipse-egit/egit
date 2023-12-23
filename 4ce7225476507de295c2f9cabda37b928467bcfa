@@ -33,6 +33,24 @@
       "message": "rebased and added missing ChangeId trailer here\nhttps://eclipse.gerrithub.io/c/eclipse-egit/egit/+/1174048",
       "revId": "4ce7225476507de295c2f9cabda37b928467bcfa",
       "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "9a172f0d_6e7a6975",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1022032
+      },
+      "writtenOn": "2023-12-23T18:24:31Z",
+      "side": 1,
+      "message": "@matthias.sohn@sap.com Does that mean the import of GitHub PRs will generally not work correctly, when there is no default change id? Or did I miss some option when running the import?",
+      "parentUuid": "50111edc_6622c6e4",
+      "revId": "4ce7225476507de295c2f9cabda37b928467bcfa",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735"
     }
   ],
   "submitRequirementResults": []
