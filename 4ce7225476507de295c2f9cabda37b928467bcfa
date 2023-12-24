@@ -69,6 +69,24 @@
       "parentUuid": "9a172f0d_6e7a6975",
       "revId": "4ce7225476507de295c2f9cabda37b928467bcfa",
       "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "4cfa4bf7_7ad51773",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000671
+      },
+      "writtenOn": "2023-12-24T13:57:47Z",
+      "side": 1,
+      "message": "Apparently the import from GitHub doesn\u0027t modify the commit, hence if it doesn\u0027t contain a changeid and someone downloads the change and amends it to add the changeid Gerrit doesn\u0027t know how to associate it to the imported change. See https://gerrit-review.googlesource.com/Documentation/user-changeid.html",
+      "parentUuid": "93d53ab0_7e654584",
+      "revId": "4ce7225476507de295c2f9cabda37b928467bcfa",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735"
     }
   ],
   "submitRequirementResults": []
