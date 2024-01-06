@@ -18,7 +18,7 @@
       source="http://www.eclipse.org/oomph/setup/BrandingInfo">
     <detail
         key="imageURI">
-      <value>https://git.eclipse.org/c/egit/egit.git/plain/org.eclipse.egit/egit.png</value>
+      <value>https://raw.githubusercontent.com/eclipse-egit/egit/master/org.eclipse.egit/egit.png</value>
     </detail>
     <detail
         key="siteURI">
@@ -57,7 +57,7 @@
         name="AnyEditTools.feature.group"
         optional="true"/>
     <requirement
-        name="org.eclipse.cbi.targetplatform-feature.feature.group"
+        name="org.eclipse.cbi.targetplatform.feature.feature.group"
         optional="true"/>
     <requirement
         name="com.github.spotbugs.plugin.eclipse.feature.group"
@@ -83,7 +83,7 @@
   <setupTask
       xsi:type="setup:EclipseIniTask"
       option="-Doomph.redirection.egit="
-      value="https://git.eclipse.org/c/egit/egit.git/plain/tools/oomph/EGit.setup->${git.clone.egit.location|uri}/tools/oomph/EGit.setup"
+      value="https://raw.githubusercontent.com/eclipse-egit/egit/master/tools/oomph/EGit.setup->${git.clone.egit.location|uri}/tools/oomph/EGit.setup"
       vm="true"/>
   <setupTask
       xsi:type="setup:ResourceCreationTask"
@@ -160,18 +160,110 @@
       remoteURI="https://download.eclipse.org/egit/updates-6.8/org.eclipse.egit.repository-6.8.0.202311291450-r.zip">
     <description>EGit 6.8.0 API baseline; to be used with branch master</description>
   </setupTask>
+  <setupTask
+      xsi:type="setup:CompoundTask"
+      name="GerritHub">
+    <setupTask
+        xsi:type="setup:VariableTask"
+        name="gerrithub.user.id"
+        label="GerritHub user ID">
+      <description>The GerritHub user ID</description>
+    </setupTask>
+    <setupTask
+        xsi:type="setup:VariableTask"
+        name="gerrithub.author.name"
+        label="GerritHub author name"/>
+    <setupTask
+        xsi:type="setup:VariableTask"
+        name="gerrithub.author.email"
+        label="GerritHub author email"/>
+    <setupTask
+        xsi:type="setup:VariableTask"
+        name="gerrithub.git.authentication.style"
+        label="GerritHub Git Authentication Style">
+      <annotation
+          source="http://www.eclipse.org/oomph/setup/GlobalVariable"/>
+      <choice
+          value="anonymous"
+          label="Anonymous Authentication"/>
+      <choice
+          value="ssh"
+          label="SSH Authentication"/>
+      <choice
+          value="credentials"
+          label="Credentials Authentication"/>
+      <description>Choose the style of authentication used to access GerritHub Git clones</description>
+    </setupTask>
+    <setupTask
+        xsi:type="setup:CompoundTask"
+        filter="(&amp;(!(gerrithub.git.authentication.style=ssh))(!(gerrithub.git.authentication.style=credentials)))"
+        name="Anonymous Git Authentication">
+      <setupTask
+          xsi:type="setup:VariableTask"
+          name="gerrithub.remoteURIs"
+          label="GerritHub repository">
+        <choice
+            value="https://eclipse.gerrithub.io/@{remoteURI}"
+            label="HTTPS (read-only, anonymous)">
+          <annotation
+              source="http://www.eclipse.org/oomph/setup/MatchChoice"/>
+        </choice>
+        <description>Choose from the available Github URIs</description>
+      </setupTask>
+    </setupTask>
+    <setupTask
+        xsi:type="setup:CompoundTask"
+        filter="(gerrithub.git.authentication.style=ssh)"
+        name="SSH Authentication">
+      <setupTask
+          xsi:type="setup:VariableTask"
+          name="gerrithub.remoteURIs"
+          label="GerritHub repository">
+        <choice
+            value="ssh://${gerrithub.user.id|username}@eclipse.gerrithub.io:29418/@{remoteURI}"
+            label="SSH (read-write)">
+          <annotation
+              source="http://www.eclipse.org/oomph/setup/MatchChoice"/>
+        </choice>
+        <choice
+            value="https://eclipse.gerrithub.io/@{remoteURI}"
+            label="HTTPS (read-only, anonymous)"/>
+        <description>Choose from the available Github URIs</description>
+      </setupTask>
+    </setupTask>
+    <setupTask
+        xsi:type="setup:CompoundTask"
+        filter="(gerrithub.git.authentication.style=credentials)"
+        name="Credentials Authentication">
+      <setupTask
+          xsi:type="setup:VariableTask"
+          name="gerrithub.remoteURIs"
+          label="Github repository">
+        <choice
+            value="https://${gerrithub.user.id|username}@eclipse.gerrithub.io/@{remoteURI}"
+            label="HTTPS (read-write)">
+          <annotation
+              source="http://www.eclipse.org/oomph/setup/MatchChoice"/>
+        </choice>
+        <choice
+            value="https://eclipse.gerrithub.io/@{remoteURI}"
+            label="HTTPS (read-only, anonymous)"/>
+        <description>Choose from the available Github URIs</description>
+      </setupTask>
+    </setupTask>
+  </setupTask>
   <stream name="master"
       label="Workspace setup for branch master">
     <setupTask
         xsi:type="git:GitCloneTask"
         id="git.clone.jgit"
-        remoteURI="jgit/jgit"
+        remoteURI="eclipse-jgit/jgit"
         checkoutBranch="master">
       <annotation
           source="http://www.eclipse.org/oomph/setup/InducedChoices">
         <detail
             key="inherit">
-          <value>eclipse.git.gerrit.remoteURIs</value>
+          <value>gerrithub.remoteURIs</value>
         </detail>
         <detail
             key="label">
@@ -193,13 +285,13 @@
     <setupTask
         xsi:type="git:GitCloneTask"
         id="git.clone.egit"
-        remoteURI="egit/egit"
+        remoteURI="eclipse-egit/egit"
         checkoutBranch="master">
       <annotation
           source="http://www.eclipse.org/oomph/setup/InducedChoices">
         <detail
             key="inherit">
-          <value>eclipse.git.gerrit.remoteURIs</value>
+          <value>gerrithub.remoteURIs</value>
         </detail>
         <detail
             key="label">
