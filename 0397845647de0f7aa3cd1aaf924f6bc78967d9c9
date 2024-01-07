@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "e8c40515_146d7377",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1021966
+      },
+      "writtenOn": "2024-01-07T12:24:19Z",
+      "side": 1,
+      "message": "Could you please double-check that this is correct? Works fine for me (using SSH).",
+      "revId": "0397845647de0f7aa3cd1aaf924f6bc78967d9c9",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735"
+    }
+  ]
+}
