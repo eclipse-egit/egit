@@ -16,6 +16,57 @@
       "message": "Could you please double-check that this is correct? Works fine for me (using SSH).",
       "revId": "0397845647de0f7aa3cd1aaf924f6bc78967d9c9",
       "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "4d000885_0f807c41",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1022032
+      },
+      "writtenOn": "2024-01-09T14:41:38Z",
+      "side": 1,
+      "message": "Looks generally okay to me. I\u0027ve tested the credentials variant.",
+      "revId": "0397845647de0f7aa3cd1aaf924f6bc78967d9c9",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "16046ec8_08f7958f",
+        "filename": "tools/oomph/EGit.setup",
+        "patchSetId": 1
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1022032
+      },
+      "writtenOn": "2024-01-09T14:41:38Z",
+      "side": 1,
+      "message": "Recent JVMs have better memory defaults, can\u0027t we remove this setting? AFAIK the default is now 25% of available RAM, which should be the better choice on any recent machine.",
+      "revId": "0397845647de0f7aa3cd1aaf924f6bc78967d9c9",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d35fb712_f48f8541",
+        "filename": "tools/oomph/EGit.setup",
+        "patchSetId": 1
+      },
+      "lineNbr": 170,
+      "author": {
+        "id": 1022032
+      },
+      "writtenOn": "2024-01-09T14:41:38Z",
+      "side": 1,
+      "message": "This one is unclear for me right now. Do you really want the numerical ID (first line in account settings), or the user name (4th line in account settings)?\n\nI have tested the credentials choice, but I\u0027ve used my user name. If that was also what you meant, then we may want to change the string to avoid confusion.",
+      "revId": "0397845647de0f7aa3cd1aaf924f6bc78967d9c9",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735"
     }
   ]
 }
