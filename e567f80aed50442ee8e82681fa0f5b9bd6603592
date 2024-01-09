@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "df526ba9_e8d6ee5c",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1022032
+      },
+      "writtenOn": "2024-01-09T19:19:39Z",
+      "side": 1,
+      "message": "(I guess the \"Acknowledged\" thingy is like an agreement, a thumbs up emoji in github or similar. I\u0027ve just run into that the first time :) )",
+      "revId": "e567f80aed50442ee8e82681fa0f5b9bd6603592",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735"
+    }
+  ]
+}
