@@ -86,12 +86,12 @@ maven bytebuddy
 	dependency {
 		groupId = "net.bytebuddy"
 		artifactId = "byte-buddy"
-		version = "1.14.9"
+		version = "1.14.10"
 	}
 	dependency {
 		groupId = "net.bytebuddy"
 		artifactId = "byte-buddy-agent"
-		version = "1.14.9"
+		version = "1.14.10"
 	}
 }
 
@@ -196,7 +196,7 @@ maven mockito
 	dependency {
 		groupId = "org.mockito"
 		artifactId = "mockito-core"
-		version = "5.7.0"
+		version = "5.8.0"
 	}
 }
 
