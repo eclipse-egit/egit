@@ -178,6 +178,9 @@ public class CoreText extends NLS {
 	public static String ExternalGpgSigner_noSignature;
 
 	/** */
+	public static String ExternalGpgSigner_noSignatureWithMessage;
+
+	/** */
 	public static String ExternalGpgSigner_processFailed;
 
 	/** */
