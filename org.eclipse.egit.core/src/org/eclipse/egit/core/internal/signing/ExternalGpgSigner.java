@@ -299,6 +299,7 @@ public class ExternalGpgSigner extends GpgSigner implements GpgObjectSigner {
 				GpgSignatureVerifierFactory factory = GpgSignatureVerifierFactory
 						.getDefault();
 				boolean isValid = false;
+				String message = null;
 				if (factory == null) {
 					byte[] fromGpg = b.toByteArray(SIGNATURE_START.length);
 					isValid = Arrays.equals(fromGpg, SIGNATURE_START);
@@ -311,8 +312,10 @@ public class ExternalGpgSigner extends GpgSigner implements GpgObjectSigner {
 					try {
 						GpgSignatureVerifier.SignatureVerification verification = verifier
 								.verify(data, fromGpg);
-						isValid = verification != null
-								&& verification.getVerified();
+						if (verification != null) {
+							isValid = verification.getVerified();
+							message = verification.getMessage();
+						}
 						if (isValid) {
 							result.rawData = fromGpg;
 						}
@@ -323,9 +326,15 @@ public class ExternalGpgSigner extends GpgSigner implements GpgObjectSigner {
 					}
 				}
 				if (!isValid) {
-					throw new IOException(MessageFormat.format(
-							CoreText.ExternalGpgSigner_noSignature,
-							toString(b)));
+					if (StringUtils.isEmptyOrNull(message)) {
+						throw new IOException(MessageFormat.format(
+								CoreText.ExternalGpgSigner_noSignature,
+								toString(b)));
+					} else {
+						throw new IOException(MessageFormat.format(
+								CoreText.ExternalGpgSigner_noSignatureWithMessage,
+								message, toString(b)));
+					}
 				}
 			}, e -> {
 				// Error handling: parse stderr to figure out whether we have a
