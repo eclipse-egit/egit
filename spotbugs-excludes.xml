@@ -7,4 +7,9 @@
     <!-- Excluded because of https://github.com/spotbugs/spotbugs/issues/1601 -->
     <Bug pattern="EI_EXPOSE_REP,EI_EXPOSE_REP2,MS_EXPOSE_REP" />
   </Match>
+  <Match>
+    <!-- cannot use java.home here, really need to check HOME -->
+    <Bug pattern="ENV_USE_PROPERTY_INSTEAD_OF_ENV" />
+    <Class name="ConfigurationChecker" />
+  </Match>
 </FindBugsFilter>
