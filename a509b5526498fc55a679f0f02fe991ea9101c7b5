@@ -16,6 +16,24 @@
       "message": "Actually I don\u0027t know how PRs work with GerritHub. http://gerrithub.io/ (yes, HTTP, not HTTPS!) says it synchronized PRs -- whatever that means.\n\nAssuming that PRs indeed cannot be used, the text is fine by me, as is having such a template.",
       "revId": "a509b5526498fc55a679f0f02fe991ea9101c7b5",
       "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "142775d3_755434bd",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1022032
+      },
+      "writtenOn": "2024-01-13T16:48:05Z",
+      "side": 1,
+      "message": "From the top menu GitHub \u003e Pull Requests you can import PRs to Gerrithub as changes. However, they have no change id, which in turn makes them hard to edit here. That\u0027s why Matthias recreated a change where we had tried that workflow: https://gerrithub.io/c/eclipse-egit/egit/+/1173902\n\nGiven that most PRs would not contain a change request line, the import seems not so helpful.\n\nI\u0027ll merge the template. I guess there will be further things to improve but it\u0027s all hard to test. :)",
+      "parentUuid": "968c46c0_28038c57",
+      "revId": "a509b5526498fc55a679f0f02fe991ea9101c7b5",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735"
     }
   ]
 }
