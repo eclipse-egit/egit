@@ -167,8 +167,6 @@
   </profiles>
 
   <modules>
-    <module>org.eclipse.egit.target</module>
-
     <module>org.eclipse.egit</module>
     <module>org.eclipse.egit.core</module>
     <module>org.eclipse.egit.ui</module>
