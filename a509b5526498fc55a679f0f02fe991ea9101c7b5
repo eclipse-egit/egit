@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "968c46c0_28038c57",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1021966
+      },
+      "writtenOn": "2024-01-13T15:13:41Z",
+      "side": 1,
+      "message": "Actually I don\u0027t know how PRs work with GerritHub. http://gerrithub.io/ (yes, HTTP, not HTTPS!) says it synchronized PRs -- whatever that means.\n\nAssuming that PRs indeed cannot be used, the text is fine by me, as is having such a template.",
+      "revId": "a509b5526498fc55a679f0f02fe991ea9101c7b5",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735"
+    }
+  ]
+}
