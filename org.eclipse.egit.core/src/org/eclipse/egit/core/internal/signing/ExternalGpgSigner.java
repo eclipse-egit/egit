@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2021 Thomas Wolf <thomas.wolf@paranor.ch> and others.
+ * Copyright (c) 2021, 2024 Thomas Wolf <twolf@apache.org> and others.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License 2.0
@@ -12,35 +12,32 @@ package org.eclipse.egit.core.internal.signing;
 
 import java.io.BufferedReader;
 import java.io.ByteArrayInputStream;
-import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.nio.charset.StandardCharsets;
 import java.text.MessageFormat;
-import java.util.Arrays;
 import java.util.Map;
-import java.util.stream.Collectors;
 
+import org.bouncycastle.openpgp.PGPCompressedData;
+import org.bouncycastle.openpgp.PGPException;
+import org.bouncycastle.openpgp.PGPSignature;
+import org.bouncycastle.openpgp.PGPSignatureList;
+import org.bouncycastle.openpgp.PGPUtil;
+import org.bouncycastle.openpgp.jcajce.JcaPGPObjectFactory;
 import org.eclipse.egit.core.Activator;
 import org.eclipse.egit.core.internal.CoreText;
-import org.eclipse.egit.core.internal.trace.GitTraceLocation;
 import org.eclipse.jgit.api.errors.CanceledException;
 import org.eclipse.jgit.api.errors.JGitInternalException;
 import org.eclipse.jgit.lib.CommitBuilder;
 import org.eclipse.jgit.lib.GpgConfig;
 import org.eclipse.jgit.lib.GpgObjectSigner;
 import org.eclipse.jgit.lib.GpgSignature;
-import org.eclipse.jgit.lib.GpgSignatureVerifier;
-import org.eclipse.jgit.lib.GpgSignatureVerifierFactory;
 import org.eclipse.jgit.lib.GpgSigner;
 import org.eclipse.jgit.lib.ObjectBuilder;
 import org.eclipse.jgit.lib.PersonIdent;
 import org.eclipse.jgit.transport.CredentialsProvider;
-import org.eclipse.jgit.util.FS;
-import org.eclipse.jgit.util.FS.ExecutionResult;
 import org.eclipse.jgit.util.StringUtils;
-import org.eclipse.jgit.util.SystemReader;
 import org.eclipse.jgit.util.TemporaryBuffer;
 
 /**
@@ -57,115 +54,6 @@ public class ExternalGpgSigner extends GpgSigner implements GpgObjectSigner {
 	// Another GPG environment variable name. We remove this environment
 	// variable when calling gpg.
 	private static final String GPG_TTY = "GPG_TTY"; //$NON-NLS-1$
-
-	// For sanity checking the returned signature.
-	private static final byte[] SIGNATURE_START = "-----BEGIN PGP SIGNATURE-----" //$NON-NLS-1$
-			.getBytes(StandardCharsets.US_ASCII);
-
-	private static final PathScanner FROM_PATH = new PathScanner();
-
-	private interface ResultHandler {
-		void accept(TemporaryBuffer b) throws IOException, CanceledException;
-	}
-
-	private static void runProcess(ProcessBuilder process, InputStream in,
-			ResultHandler stdout, ResultHandler stderr)
-			throws IOException, CanceledException {
-		String command = process.command().stream()
-				.collect(Collectors.joining(" ")); //$NON-NLS-1$
-		ExecutionResult result = null;
-		int code = 0;
-		try {
-			if (GitTraceLocation.GPG.isActive()) {
-				GitTraceLocation.getTrace().trace(
-						GitTraceLocation.GPG.getLocation(),
-						"Spawning process: " + command); //$NON-NLS-1$
-				GitTraceLocation.getTrace().trace(
-						GitTraceLocation.GPG.getLocation(),
-						"Environment: " + process.environment()); //$NON-NLS-1$
-			}
-			result = FS.DETECTED.execute(process, in);
-			code = result.getRc();
-			if (GitTraceLocation.GPG.isActive()) {
-				GitTraceLocation.getTrace().trace(
-						GitTraceLocation.GPG.getLocation(),
-						"stderr:\n" + toString(result.getStderr())); //$NON-NLS-1$
-				GitTraceLocation.getTrace().trace(
-						GitTraceLocation.GPG.getLocation(),
-						"stdout:\n" + toString(result.getStdout())); //$NON-NLS-1$
-				GitTraceLocation.getTrace().trace(
-						GitTraceLocation.GPG.getLocation(),
-						"Spawned process exited with exit code " + code); //$NON-NLS-1$
-			}
-			if (code != 0) {
-				if (stderr != null) {
-					stderr.accept(result.getStderr());
-				}
-				throw new IOException(
-						MessageFormat.format(
-								CoreText.ExternalGpgSigner_processFailed,
-								command, Integer.toString(code) + ": " //$NON-NLS-1$
-										+ toString(result.getStderr())));
-			}
-			stdout.accept(result.getStdout());
-		} catch (InterruptedException e) {
-			Thread.currentThread().interrupt();
-			throw new IOException(MessageFormat
-					.format(CoreText.ExternalGpgSigner_processInterrupted,
-							command),
-					e);
-		} catch (IOException e) {
-			if (GitTraceLocation.GPG.isActive()) {
-				if (result != null) {
-					GitTraceLocation.getTrace().trace(
-							GitTraceLocation.GPG.getLocation(),
-							"stderr:\n" + toString(result.getStderr())); //$NON-NLS-1$
-					GitTraceLocation.getTrace().trace(
-							GitTraceLocation.GPG.getLocation(),
-							"stdout:\n" + toString(result.getStdout())); //$NON-NLS-1$
-				}
-				GitTraceLocation.getTrace().trace(
-						GitTraceLocation.GPG.getLocation(),
-						"Spawned process failed: " + command, e); //$NON-NLS-1$
-			}
-			if (code != 0) {
-				throw e;
-			}
-			if (result != null) {
-				throw new IOException(
-						MessageFormat.format(
-								CoreText.ExternalGpgSigner_processFailed,
-								command, toString(result.getStderr())),
-						e);
-			}
-			throw new IOException(
-					MessageFormat.format(
-							CoreText.ExternalGpgSigner_processFailed,
-							command, e.getLocalizedMessage()),
-					e);
-		} finally {
-			if (result != null) {
-				if (result.getStderr() != null) {
-					result.getStderr().destroy();
-				}
-				if (result.getStdout() != null) {
-					result.getStdout().destroy();
-				}
-			}
-		}
-	}
-
-	private static String toString(TemporaryBuffer b) {
-		if (b != null) {
-			try {
-				return new String(b.toByteArray(4000),
-						SystemReader.getInstance().getDefaultCharset());
-			} catch (IOException e) {
-				Activator.logWarning(CoreText.ExternalGpgSigner_bufferError, e);
-			}
-		}
-		return ""; //$NON-NLS-1$
-	}
 
 	@Override
 	public void sign(CommitBuilder commit, String gpgSigningKey,
@@ -184,9 +72,8 @@ public class ExternalGpgSigner extends GpgSigner implements GpgObjectSigner {
 			if (StringUtils.isEmptyOrNull(gpgSigningKey)) {
 				keySpec = '<' + committer.getEmailAddress() + '>';
 			}
-			String program = config != null ? config.getProgram() : null;
 			object.setGpgSignature(new GpgSignature(
-					signWithGpg(object.build(), keySpec, program)));
+					signWithGpg(object.build(), keySpec, config)));
 		} catch (IOException e) {
 			throw new JGitInternalException(e.getMessage(), e);
 		}
@@ -206,7 +93,7 @@ public class ExternalGpgSigner extends GpgSigner implements GpgObjectSigner {
 		// Ignore the CredentialsProvider. We let GPG handle all this.
 		String program = config != null ? config.getProgram() : null;
 		if (StringUtils.isEmptyOrNull(program)) {
-			program = FROM_PATH.getGpg();
+			program = ExternalGpg.getGpg();
 			if (StringUtils.isEmptyOrNull(program)) {
 				return false;
 			}
@@ -226,7 +113,7 @@ public class ExternalGpgSigner extends GpgSigner implements GpgObjectSigner {
 		gpgEnvironment(process);
 		try {
 			boolean[] result = { false };
-			runProcess(process, null, b -> {
+			ExternalProcessRunner.run(process, null, b -> {
 				try (BufferedReader r = new BufferedReader(
 						new InputStreamReader(b.openInputStream(),
 								StandardCharsets.UTF_8))) {
@@ -262,14 +149,14 @@ public class ExternalGpgSigner extends GpgSigner implements GpgObjectSigner {
 		}
 	}
 
-	private byte[] signWithGpg(byte[] data, String keySpec, String gpgProgram)
+	private byte[] signWithGpg(byte[] data, String keySpec, GpgConfig config)
 			throws IOException, CanceledException {
 		// Sign an object with an external GPG executable. GPG handles
 		// passphrase entry, including gpg-agent and native keychain
 		// integration.
-		String program = gpgProgram;
+		String program = config != null ? config.getProgram() : null;
 		if (StringUtils.isEmptyOrNull(program)) {
-			program = FROM_PATH.getGpg();
+			program = ExternalGpg.getGpg();
 			if (StringUtils.isEmptyOrNull(program)) {
 				throw new IOException(CoreText.ExternalGpgSigner_gpgNotFound);
 			}
@@ -294,48 +181,21 @@ public class ExternalGpgSigner extends GpgSigner implements GpgObjectSigner {
 				byte[] rawData;
 			}
 			Holder result = new Holder();
-			runProcess(process, dataIn, b -> {
+			ExternalProcessRunner.run(process, dataIn, b -> {
 				// Sanity check: do we have a signature?
-				GpgSignatureVerifierFactory factory = GpgSignatureVerifierFactory
-						.getDefault();
 				boolean isValid = false;
-				String message = null;
-				if (factory == null) {
-					byte[] fromGpg = b.toByteArray(SIGNATURE_START.length);
-					isValid = Arrays.equals(fromGpg, SIGNATURE_START);
-					if (isValid) {
-						result.rawData = b.toByteArray();
-					}
-				} else {
-					byte[] fromGpg = b.toByteArray();
-					GpgSignatureVerifier verifier = factory.getVerifier();
-					try {
-						GpgSignatureVerifier.SignatureVerification verification = verifier
-								.verify(data, fromGpg);
-						if (verification != null) {
-							isValid = verification.getVerified();
-							message = verification.getMessage();
-						}
-						if (isValid) {
-							result.rawData = fromGpg;
-						}
-					} catch (JGitInternalException e) {
-						throw new IOException(e.getLocalizedMessage(), e);
-					} finally {
-						verifier.clear();
-					}
+				Throwable error = null;
+				try {
+					isValid = isValidSignature(b);
+				} catch (IOException | PGPException e) {
+					error = e;
 				}
 				if (!isValid) {
-					if (StringUtils.isEmptyOrNull(message)) {
-						throw new IOException(MessageFormat.format(
-								CoreText.ExternalGpgSigner_noSignature,
-								toString(b)));
-					} else {
-						throw new IOException(MessageFormat.format(
-								CoreText.ExternalGpgSigner_noSignatureWithMessage,
-								message, toString(b)));
-					}
+					throw new IOException(MessageFormat.format(
+							CoreText.ExternalGpgSigner_noSignature,
+							ExternalProcessRunner.toString(b)), error);
 				}
+				result.rawData = b.toByteArray();
 			}, e -> {
 				// Error handling: parse stderr to figure out whether we have a
 				// cancellation. Unfortunately, GPG does record cancellation not
@@ -372,6 +232,31 @@ public class ExternalGpgSigner extends GpgSigner implements GpgObjectSigner {
 				}
 			});
 			return result.rawData;
+		}
+	}
+
+	private PGPSignature parseSignature(InputStream in)
+			throws IOException, PGPException {
+		try (InputStream sigIn = PGPUtil.getDecoderStream(in)) {
+			JcaPGPObjectFactory pgpFactory = new JcaPGPObjectFactory(sigIn);
+			Object obj = pgpFactory.nextObject();
+			if (obj instanceof PGPCompressedData) {
+				obj = new JcaPGPObjectFactory(
+						((PGPCompressedData) obj).getDataStream()).nextObject();
+			}
+			if (obj instanceof PGPSignatureList) {
+				return ((PGPSignatureList) obj).get(0);
+			} else if (obj instanceof PGPSignature) {
+				return (PGPSignature) obj;
+			}
+			return null;
+		}
+	}
+
+	private boolean isValidSignature(TemporaryBuffer b)
+			throws IOException, PGPException {
+		try (InputStream data = b.openInputStream()) {
+			return parseSignature(data) != null;
 		}
 	}
 
@@ -435,73 +320,6 @@ public class ExternalGpgSigner extends GpgSigner implements GpgObjectSigner {
 				throw new GpgConfigurationException(MessageFormat.format(
 						CoreText.ExternalGpgSigner_ttyInput, gpgTraceLine));
 			}
-		}
-	}
-
-	private static class PathScanner {
-
-		private String gpg;
-
-		synchronized String getGpg() {
-			if (gpg == null) {
-				gpg = findGpg();
-			}
-			return gpg.isEmpty() ? null : gpg;
-		}
-
-		private static String findGpg() {
-			SystemReader system = SystemReader.getInstance();
-			String path = system.getenv("PATH"); //$NON-NLS-1$
-			String exe = null;
-			if (system.isMacOS()) {
-				// On Mac, $PATH is typically much shorter in programs launched
-				// from the graphical UI than in the shell. Use the shell $PATH
-				// first.
-				String bash = searchPath(path, "bash"); //$NON-NLS-1$
-				if (bash != null) {
-					ProcessBuilder process = new ProcessBuilder();
-					process.command(bash, "--login", "-c", "which gpg"); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
-					process.directory(FS.DETECTED.userHome());
-					String[] result = { null };
-					try {
-						runProcess(process, null, b -> {
-							try (BufferedReader r = new BufferedReader(
-									new InputStreamReader(b.openInputStream(),
-											SystemReader.getInstance()
-													.getDefaultCharset()))) {
-								result[0] = r.readLine();
-							}
-						}, null);
-					} catch (IOException | CanceledException e) {
-						Activator.logWarning(
-								CoreText.ExternalGpgSigner_cannotSearch, e);
-					}
-					exe = result[0];
-				}
-			}
-			if (exe == null) {
-				exe = searchPath(path, system.isWindows() ? "gpg.exe" : "gpg"); //$NON-NLS-1$ //$NON-NLS-2$
-			}
-			return exe == null ? "" : exe; //$NON-NLS-1$
-		}
-
-		private static String searchPath(String path, String name) {
-			if (StringUtils.isEmptyOrNull(path)) {
-				return null;
-			}
-			for (String p : path.split(File.pathSeparator)) {
-				File exe = new File(p, name);
-				try {
-					if (exe.isFile() && exe.canExecute()) {
-						return exe.getAbsolutePath();
-					}
-				} catch (SecurityException e) {
-					Activator.logWarning(MessageFormat.format(
-							CoreText.ExternalGpgSigner_skipNotAccessiblePath,
-							exe.getPath()), e);
-				}
-			}
-			return null;
 		}
 	}
 }

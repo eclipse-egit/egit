@@ -178,9 +178,6 @@ public class CoreText extends NLS {
 	public static String ExternalGpgSigner_noSignature;
 
 	/** */
-	public static String ExternalGpgSigner_noSignatureWithMessage;
-
-	/** */
 	public static String ExternalGpgSigner_processFailed;
 
 	/** */
@@ -194,6 +191,27 @@ public class CoreText extends NLS {
 
 	/** */
 	public static String ExternalGpgSigner_ttyInput;
+
+	/** */
+	public static String ExternalGpgVerifier_badSignature;
+
+	/** */
+	public static String ExternalGpgVerifier_erroneousSignature;
+
+	/** */
+	public static String ExternalGpgVerifier_expiredKeySignature;
+
+	/** */
+	public static String ExternalGpgVerifier_expiredSignature;
+
+	/** */
+	public static String ExternalGpgVerifier_failure;
+
+	/** */
+	public static String ExternalGpgVerifier_multipleSignatures;
+
+	/** */
+	public static String ExternalGpgVerifier_revokedKeySignature;
 
 	/** */
 	public static String GitHosts_invalidPreference;
