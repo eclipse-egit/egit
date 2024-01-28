@@ -178,12 +178,12 @@ maven jna
 	dependency {
 		groupId = "net.java.dev.jna"
 		artifactId = "jna"
-		version = "5.13.0"
+		version = "5.14.0"
 	}
 	dependency {
 		groupId = "net.java.dev.jna"
 		artifactId = "jna-platform"
-		version = "5.13.0"
+		version = "5.14.0"
 	}
 }
 
@@ -209,12 +209,12 @@ maven sshd
 	dependency {
 		groupId = "org.apache.sshd"
 		artifactId = "sshd-osgi"
-		version = "2.11.0"
+		version = "2.12.0"
 	}
 	dependency {
 		groupId = "org.apache.sshd"
 		artifactId = "sshd-sftp"
-		version = "2.11.0"
+		version = "2.12.0"
 	}
 }
 
