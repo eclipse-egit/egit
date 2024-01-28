@@ -16,6 +16,23 @@
       "message": "Something is wrong. Why did this not trigger a Jenkins build?",
       "revId": "4e21de21da38c4d53dfda5fe7c093ec2b256fa69",
       "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "746dd939_bc1aed34",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000671
+      },
+      "writtenOn": "2024-01-28T22:39:21Z",
+      "side": 1,
+      "message": "The CI is currently broken, see https://gitlab.eclipse.org/eclipsefdn/helpdesk/-/issues/4220\n\nValidated manually",
+      "revId": "4e21de21da38c4d53dfda5fe7c093ec2b256fa69",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735"
     }
   ]
 }
