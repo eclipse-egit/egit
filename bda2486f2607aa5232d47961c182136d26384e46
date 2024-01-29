@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "a880d86f_4e32f8f5",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000671
+      },
+      "writtenOn": "2024-01-29T09:25:48Z",
+      "side": 1,
+      "message": "Where do you see this raising a warning ?\n\nCouldn\u0027t find it in maven build log, also tried with latest spotbugs Eclipse plugin 4.8.4.202401281939-929cd1c",
+      "revId": "bda2486f2607aa5232d47961c182136d26384e46",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735"
+    }
+  ]
+}
