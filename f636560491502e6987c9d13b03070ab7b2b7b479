@@ -67,6 +67,24 @@
       "message": "build fails with\n\n```\nFailed to resolve target definition file:/home/jenkins/agent/workspace/egit.gerrit/repo/org.eclipse.egit/../org.eclipse.egit.target/egit-4.26.target: Could not find \"org.eclipse.orbit.maven.lucene.feature.group/4.31.0.v20231217-0900\" in the repositories of the current location\n```\r\n\nlooks like we need to update IDE platform dependencies",
       "revId": "f636560491502e6987c9d13b03070ab7b2b7b479",
       "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "d1422007_edf248f0",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000671
+      },
+      "writtenOn": "2024-02-20T10:01:59Z",
+      "side": 1,
+      "message": "I guess it\u0027s one of the dependencies needed to start EGit in a debug IDE",
+      "parentUuid": "e84dc074_81be6e66",
+      "revId": "f636560491502e6987c9d13b03070ab7b2b7b479",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735"
     }
   ]
 }
