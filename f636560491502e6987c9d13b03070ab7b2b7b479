@@ -16,6 +16,23 @@
       "message": "trigger build, testing fixed ssh authentication of https://ci.eclipse.org/egit",
       "revId": "f636560491502e6987c9d13b03070ab7b2b7b479",
       "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "33d45a57_bc214141",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1021966
+      },
+      "writtenOn": "2024-02-20T09:47:59Z",
+      "side": 1,
+      "message": "trigger build",
+      "revId": "f636560491502e6987c9d13b03070ab7b2b7b479",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735"
     }
   ]
 }
