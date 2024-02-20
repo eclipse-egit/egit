@@ -63,7 +63,7 @@
   <properties>
     <maven-version-minimum>3.9.0</maven-version-minimum>
     <egit-version>6.9.0-SNAPSHOT</egit-version>
-    <tycho-version>4.0.4</tycho-version>
+    <tycho-version>4.0.6</tycho-version>
     <java-version>11</java-version>
     <ecj-version>3.33.0</ecj-version>
     <spotbugs-maven-plugin-version>4.8.2.0</spotbugs-maven-plugin-version>
