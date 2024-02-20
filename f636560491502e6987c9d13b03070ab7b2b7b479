@@ -33,6 +33,23 @@
       "message": "trigger build",
       "revId": "f636560491502e6987c9d13b03070ab7b2b7b479",
       "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "766446d1_6270b14f",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1021966
+      },
+      "writtenOn": "2024-02-20T09:59:06Z",
+      "side": 1,
+      "message": "Build fails because tycho is looking for\n```\norg.eclipse.orbit.maven.lucene.feature.group/4.31.0.v20231217-0900\n```\nin the egit-4.26 target and cannot find it. Where the heck is that dependency coming from?",
+      "revId": "f636560491502e6987c9d13b03070ab7b2b7b479",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735"
     }
   ]
 }
