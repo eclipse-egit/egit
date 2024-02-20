@@ -85,6 +85,24 @@
       "parentUuid": "e84dc074_81be6e66",
       "revId": "f636560491502e6987c9d13b03070ab7b2b7b479",
       "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "3bff5e2c_d33372a7",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000671
+      },
+      "writtenOn": "2024-02-20T10:09:35Z",
+      "side": 1,
+      "message": "I found the new version and will push an update for orbit dependencies shortly",
+      "parentUuid": "e84dc074_81be6e66",
+      "revId": "f636560491502e6987c9d13b03070ab7b2b7b479",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735"
     }
   ]
 }
