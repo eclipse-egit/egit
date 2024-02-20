@@ -34,6 +34,24 @@
       "parentUuid": "93453c94_92e41c8e",
       "revId": "4e21de21da38c4d53dfda5fe7c093ec2b256fa69",
       "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "d53e6c12_4d74c83c",
+        "filename": "org.eclipse.egit.target/egit-4.26.target",
+        "patchSetId": 1
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1000671
+      },
+      "writtenOn": "2024-02-20T12:01:30Z",
+      "side": 0,
+      "message": "fixed",
+      "parentUuid": "2869a391_e6e418b5",
+      "revId": "4e21de21da38c4d53dfda5fe7c093ec2b256fa69",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735"
     }
   ]
 }
