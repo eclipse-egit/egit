@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "93453c94_92e41c8e",
+        "filename": "org.eclipse.egit.target/egit-4.26.target",
+        "patchSetId": 1
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1021966
+      },
+      "writtenOn": "2024-02-20T10:23:19Z",
+      "side": 0,
+      "message": "That doesn\u0027t look good...",
+      "revId": "4e21de21da38c4d53dfda5fe7c093ec2b256fa69",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735"
+    }
+  ]
+}
