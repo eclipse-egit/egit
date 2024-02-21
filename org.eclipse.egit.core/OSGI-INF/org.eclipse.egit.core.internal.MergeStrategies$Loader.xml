@@ -1,6 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<scr:component xmlns:scr="http://www.osgi.org/xmlns/scr/v1.1.0" activate="start" deactivate="shutDown" name="org.eclipse.egit.core.internal.MergeStrategies$Loader">
-   <reference bind="setExtensionRegistry" interface="org.eclipse.core.runtime.IExtensionRegistry" name="ExtensionRegistry"/>
-   <reference bind="setWorkspace" interface="org.eclipse.core.resources.IWorkspace" name="Workspace"/>
-   <implementation class="org.eclipse.egit.core.internal.MergeStrategies$Loader"/>
-</scr:component>

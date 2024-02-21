@@ -1,6 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<scr:component xmlns:scr="http://www.osgi.org/xmlns/scr/v1.1.0" activate="start" deactivate="shutDown" name="org.eclipse.egit.core.RepositoryInitializer">
-   <reference bind="setPreferencesService" interface="org.eclipse.core.runtime.preferences.IPreferencesService" name="PreferencesService"/>
-   <reference bind="setWorkspace" interface="org.eclipse.core.resources.IWorkspace" name="Workspace"/>
-   <implementation class="org.eclipse.egit.core.RepositoryInitializer"/>
-</scr:component>
