@@ -1,4 +1,22 @@
 {
-  "comments": [],
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "3f57f9ff_6333f6c2",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1021966
+      },
+      "writtenOn": "2024-02-22T21:16:09Z",
+      "side": 1,
+      "message": "I cannot run EGit anymore: org.apache.httpcomponents.httpclient 4.5.14 has an \"Import-Package: org.apache.commons.logging; version\u003d\"[1.1.0,1.3.0)\".\n\n```\n!ENTRY org.eclipse.egit.core 4 0 2024-02-22 22:03:19.139\n!MESSAGE FrameworkEvent ERROR\n!STACK 0\norg.osgi.framework.BundleException: Could not resolve module: org.eclipse.egit.core [103]\n  Unresolved requirement: Import-Package: org.eclipse.jgit.transport.http.apache; version\u003d\"[6.9.0,6.10.0)\"\n    -\u003e Export-Package: org.eclipse.jgit.transport.http.apache; bundle-symbolic-name\u003d\"org.eclipse.jgit.http.apache\"; bundle-version\u003d\"6.9.0.qualifier\"; version\u003d\"6.9.0\"; uses:\u003d\"org.apache.http.client,  org.eclipse.jgit.transport.http,  org.apache.http.entity,  org.apache.http.client.methods,  javax.net.ssl,  org.eclipse.jgit.util,  org.apache.http\"\n       org.eclipse.jgit.http.apache [239]\n         Unresolved requirement: Import-Package: org.apache.http.client.config; version\u003d\"[4.4.0,5.0.0)\"\n           -\u003e Export-Package: org.apache.http.client.config; bundle-symbolic-name\u003d\"org.apache.httpcomponents.httpclient\"; bundle-version\u003d\"4.5.14\"; version\u003d\"4.5.14\"; uses:\u003d\"org.apache.http\"\n              org.apache.httpcomponents.httpclient [40]\n                Unresolved requirement: Import-Package: org.apache.commons.logging; version\u003d\"[1.1.0,1.3.0)\"\n         Unresolved requirement: Import-Package: org.apache.http.client; version\u003d\"[4.4.0,5.0.0)\"\n           -\u003e Export-Package: org.apache.http.client; bundle-symbolic-name\u003d\"org.apache.httpcomponents.httpclient\"; bundle-version\u003d\"4.5.14\"; version\u003d\"4.5.14\"; uses:\u003d\"org.apache.http,org.apache.http.auth,org.apache.http.client.methods,org.apache.http.conn,org.apache.http.conn.routing,org.apache.http.cookie,org.apache.http.params,org.apache.http.protocol\"\n\n\tat org.eclipse.osgi.container.Module.start(Module.java:463)\n\tat org.eclipse.osgi.container.ModuleContainer$ContainerStartLevel$2.run(ModuleContainer.java:1852)\n\tat org.eclipse.osgi.internal.framework.EquinoxContainerAdaptor$1$1.execute(EquinoxContainerAdaptor.java:136)\n\tat org.eclipse.osgi.container.ModuleContainer$ContainerStartLevel.incStartLevel(ModuleContainer.java:1845)\n\tat org.eclipse.osgi.container.ModuleContainer$ContainerStartLevel.incStartLevel(ModuleContainer.java:1786)\n\tat org.eclipse.osgi.container.ModuleContainer$ContainerStartLevel.doContainerStartLevel(ModuleContainer.java:1750)\n\tat org.eclipse.osgi.container.ModuleContainer$ContainerStartLevel.dispatchEvent(ModuleContainer.java:1672)\n\tat org.eclipse.osgi.container.ModuleContainer$ContainerStartLevel.dispatchEvent(ModuleContainer.java:1)\n\tat org.eclipse.osgi.framework.eventmgr.EventManager.dispatchEvent(EventManager.java:234)\n\tat org.eclipse.osgi.framework.eventmgr.EventManager$EventThread.run(EventManager.java:345)\n```",
+      "revId": "a309b1eb850aa843d53f11741ba71a3e22f987fb",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735"
+    }
+  ],
   "submitRequirementResults": []
 }
