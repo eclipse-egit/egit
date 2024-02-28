@@ -33,6 +33,24 @@
       "message": "Apart from that, one would also have to include org.apache.xmlgraphics 2.9.0. 2.7.0 also does not work with commons-logging 1.3.0. But the httpcomponents are a showstopper as there is no newer 4.x version.",
       "revId": "a309b1eb850aa843d53f11741ba71a3e22f987fb",
       "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "46850560_11135348",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000671
+      },
+      "writtenOn": "2024-02-28T13:43:24Z",
+      "side": 1,
+      "message": "ok, looks like we have to revert this update of org.apache.commons.commons-logging for now ?",
+      "parentUuid": "1ae63f79_4ff4f897",
+      "revId": "a309b1eb850aa843d53f11741ba71a3e22f987fb",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735"
     }
   ],
   "submitRequirementResults": []
