@@ -87,6 +87,24 @@
       "parentUuid": "f6afb7c9_2fb678dd",
       "revId": "a309b1eb850aa843d53f11741ba71a3e22f987fb",
       "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "fb7d2a47_ce52f05c",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1021966
+      },
+      "writtenOn": "2024-02-28T19:04:42Z",
+      "side": 1,
+      "message": "Thanks for double checking. So it isn\u0027t just a misconfiguration on my side.\n\nI still don\u0027t get why the CI build succeeded. Perhaps tycho resolves differently than PDE?",
+      "parentUuid": "5a44f8b9_bae825c6",
+      "revId": "a309b1eb850aa843d53f11741ba71a3e22f987fb",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735"
     }
   ],
   "submitRequirementResults": []
