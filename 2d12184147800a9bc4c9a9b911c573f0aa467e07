@@ -16,6 +16,24 @@
       "message": "Content look OK. Build fails because again that lucene bundle needs a version bump. Perhaps we should not use the \"latest\" Orbit repo but a specific version to get less surprises?",
       "revId": "2d12184147800a9bc4c9a9b911c573f0aa467e07",
       "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "64d89b77_c47595af",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000671
+      },
+      "writtenOn": "2024-02-28T13:13:16Z",
+      "side": 1,
+      "message": "Last time this was caused by an overlap between me trying to get M3 out and Ed preparing RC1 in the same orbit version. That\u0027s a mess.",
+      "parentUuid": "5cb3cfba_409d7772",
+      "revId": "2d12184147800a9bc4c9a9b911c573f0aa467e07",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735"
     }
   ]
 }
