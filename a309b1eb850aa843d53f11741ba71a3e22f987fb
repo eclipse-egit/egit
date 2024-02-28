@@ -69,6 +69,24 @@
       "parentUuid": "46850560_11135348",
       "revId": "a309b1eb850aa843d53f11741ba71a3e22f987fb",
       "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "5a44f8b9_bae825c6",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000671
+      },
+      "writtenOn": "2024-02-28T15:00:57Z",
+      "side": 1,
+      "message": "I see httpclient 5 in orbit, maybe platform upgraded to that version ?\n\nI tried and found reverting the update of org.apache.commons.commons-logging [1] fixes the problem. With the revert I can start EGit in debug IDE, with the version 1.3.0 it doesn\u0027t load.\n\n[1] https://eclipse.gerrithub.io/c/eclipse-egit/egit/+/1177355",
+      "parentUuid": "f6afb7c9_2fb678dd",
+      "revId": "a309b1eb850aa843d53f11741ba71a3e22f987fb",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735"
     }
   ],
   "submitRequirementResults": []
