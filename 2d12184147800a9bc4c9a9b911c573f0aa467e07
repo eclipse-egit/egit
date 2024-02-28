@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "5cb3cfba_409d7772",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1021966
+      },
+      "writtenOn": "2024-02-28T13:11:15Z",
+      "side": 1,
+      "message": "Content look OK. Build fails because again that lucene bundle needs a version bump. Perhaps we should not use the \"latest\" Orbit repo but a specific version to get less surprises?",
+      "revId": "2d12184147800a9bc4c9a9b911c573f0aa467e07",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735"
+    }
+  ]
+}
