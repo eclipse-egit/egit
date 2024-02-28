@@ -51,6 +51,24 @@
       "parentUuid": "1ae63f79_4ff4f897",
       "revId": "a309b1eb850aa843d53f11741ba71a3e22f987fb",
       "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f6afb7c9_2fb678dd",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1021966
+      },
+      "writtenOn": "2024-02-28T13:52:08Z",
+      "side": 1,
+      "message": "Well... I don\u0027t quite understand why the Jenkins build behaves differently. I would have expected it to fail equally.\n\nI also don\u0027t quite get why nobody else is shouting on the mailing lists. Are we the only ones hitting the problem with httpcomponents 4.5.14? I would have expected this to crop up with Eclipse platform milestones, too.\n\nSo I\u0027m not 100% sure it\u0027s not some mis-configuration on my part somewhere...",
+      "parentUuid": "46850560_11135348",
+      "revId": "a309b1eb850aa843d53f11741ba71a3e22f987fb",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735"
     }
   ],
   "submitRequirementResults": []
