@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "65915334_1d23bd7f",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1021966
+      },
+      "writtenOn": "2024-03-08T08:03:05Z",
+      "side": 1,
+      "message": "That build failure is strange. Especially since this commit does not touch any code. What happens in Jenkins?\n\nUnrelated: I also still see\n```\n17:51:59  Exception in thread \"Thread-5\" java.lang.NoClassDefFoundError: org/eclipse/jgit/internal/JGitText\n17:51:59  \tat org.eclipse.jgit.internal.util.ShutdownHook.cleanup(ShutdownHook.java:85)\n17:51:59  \tat java.base/java.lang.Thread.run(Thread.java:840)\n17:51:59  Caused by: java.lang.ClassNotFoundException: org.eclipse.jgit.internal.JGitText\n17:51:59  \t... 2 more\n```\nin the log. I thought that was fixed in https://eclipse.gerrithub.io/c/eclipse-jgit/jgit/+/1176056 on 2024-02-06?",
+      "revId": "856a0dc37ad7abb0cd285a80612f418869cf3f35",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735"
+    }
+  ]
+}
