@@ -2773,6 +2773,9 @@ public class UIText extends NLS {
 	public static String CommitMessageViewer_parent;
 
 	/** */
+	public static String CommitMessageViewer_signatureVerificationFailed;
+
+	/** */
 	public static String CompareWithIndexAction_errorOnAddToIndex;
 
 	/** */

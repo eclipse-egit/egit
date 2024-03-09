@@ -141,6 +141,9 @@ public class CommitInfoBuilder {
 				} catch (IOException | JGitInternalException e) {
 					Activator.logError("Cannot verify signature on commit " //$NON-NLS-1$
 							+ commit.name(), e);
+					d.append(verifier.getName()).append(": ") //$NON-NLS-1$
+							.append(UIText.CommitMessageViewer_signatureVerificationFailed)
+							.append(LF);
 				}
 			}
 		}
