@@ -21,10 +21,11 @@ import java.util.Map;
 
 import org.bouncycastle.openpgp.PGPCompressedData;
 import org.bouncycastle.openpgp.PGPException;
+import org.bouncycastle.openpgp.PGPObjectFactory;
 import org.bouncycastle.openpgp.PGPSignature;
 import org.bouncycastle.openpgp.PGPSignatureList;
 import org.bouncycastle.openpgp.PGPUtil;
-import org.bouncycastle.openpgp.jcajce.JcaPGPObjectFactory;
+import org.bouncycastle.openpgp.bc.BcPGPObjectFactory;
 import org.eclipse.egit.core.Activator;
 import org.eclipse.egit.core.internal.CoreText;
 import org.eclipse.jgit.api.errors.CanceledException;
@@ -238,10 +239,10 @@ public class ExternalGpgSigner extends GpgSigner implements GpgObjectSigner {
 	private PGPSignature parseSignature(InputStream in)
 			throws IOException, PGPException {
 		try (InputStream sigIn = PGPUtil.getDecoderStream(in)) {
-			JcaPGPObjectFactory pgpFactory = new JcaPGPObjectFactory(sigIn);
+			PGPObjectFactory pgpFactory = new BcPGPObjectFactory(sigIn);
 			Object obj = pgpFactory.nextObject();
 			if (obj instanceof PGPCompressedData) {
-				obj = new JcaPGPObjectFactory(
+				obj = new BcPGPObjectFactory(
 						((PGPCompressedData) obj).getDataStream()).nextObject();
 			}
 			if (obj instanceof PGPSignatureList) {
