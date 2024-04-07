@@ -82,6 +82,7 @@ import org.eclipse.egit.ui.internal.repository.tree.RepositoryNode;
 import org.eclipse.egit.ui.internal.repository.tree.RepositoryTreeNode;
 import org.eclipse.egit.ui.internal.repository.tree.RepositoryTreeNodeType;
 import org.eclipse.egit.ui.internal.repository.tree.TagNode;
+import org.eclipse.egit.ui.internal.selection.MultiViewerSelectionProvider;
 import org.eclipse.egit.ui.internal.selection.RepositorySelectionProvider;
 import org.eclipse.egit.ui.internal.selection.SelectionUtils;
 import org.eclipse.egit.ui.internal.trace.GitTraceLocation;
@@ -111,7 +112,6 @@ import org.eclipse.jface.util.IPropertyChangeListener;
 import org.eclipse.jface.util.PropertyChangeEvent;
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.ISelectionChangedListener;
-import org.eclipse.jface.viewers.ISelectionProvider;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.viewers.SelectionChangedEvent;
 import org.eclipse.jface.viewers.StructuredSelection;
@@ -1493,11 +1493,17 @@ public class GitHistoryPage extends HistoryPage implements RefsChangedListener,
 		initActions();
 
 		getSite().setSelectionProvider(
-				new RepositorySelectionProvider(graph.getTableView(), () -> {
-					HistoryPageInput myInput = getInputInternal();
-					return myInput != null ? myInput.getRepository() : null;
-				}));
+				new RepositorySelectionProvider(
+						new MultiViewerSelectionProvider(graph.getTableView(),
+								fileViewer),
+						() -> {
+							HistoryPageInput myInput = getInputInternal();
+							return myInput != null ? myInput.getRepository()
+									: null;
+						}));
 		getSite().registerContextMenu(POPUP_ID, popupMgr, graph.getTableView());
+		getSite().registerContextMenu(CommitFileDiffViewer.POPUP_ID,
+				fileViewer.getMenuManager(), fileViewer);
 		// Track which of our controls has the focus, so that we can focus the
 		// last focused one in setFocus().
 		focusTracker = new FocusTracker();
@@ -1865,13 +1871,6 @@ public class GitHistoryPage extends HistoryPage implements RefsChangedListener,
 	 */
 	public void setCompareMode(boolean compareMode) {
 		store.setValue(UIPreferences.RESOURCEHISTORY_COMPARE_MODE, compareMode);
-	}
-
-	/**
-	 * @return the selection provider
-	 */
-	public ISelectionProvider getSelectionProvider() {
-		return graph.getTableView();
 	}
 
 	private RevCommit selectedCommit() {

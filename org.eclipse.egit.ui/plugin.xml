@@ -2352,8 +2352,8 @@
          </activeWhen>
       </handler>
       <handler
-            class="org.eclipse.egit.ui.internal.actions.ShowBlameActionHandler"
-            commandId="org.eclipse.egit.ui.team.ShowBlame">
+            commandId="org.eclipse.egit.ui.team.ShowBlame"
+            class="org.eclipse.egit.ui.internal.actions.ShowBlameActionHandler">
          <activeWhen>
             <or>
                <and>
@@ -2379,6 +2379,27 @@
                   </with>
                </with>
             </or>
+         </activeWhen>
+      </handler>
+      <handler
+            commandId="org.eclipse.egit.ui.team.ShowBlame"
+            class="org.eclipse.egit.ui.internal.history.command.ShowBlameHandler">
+         <activeWhen>
+            <reference definitionId="org.eclipse.egit.ui.singleFileCommit" />
+         </activeWhen>
+      </handler>
+      <handler
+            commandId="org.eclipse.egit.ui.team.ShowBlame"
+            class="org.eclipse.egit.ui.internal.history.command.FileDiffBlameHandler">
+         <activeWhen>
+            <and>
+               <count value="1" />
+               <iterate>
+                  <adapt type="org.eclipse.egit.ui.internal.history.FileDiff">
+                     <test property="FileDiff.isSubmodule" value="false" />
+                  </adapt>
+               </iterate>
+            </and>
          </activeWhen>
       </handler>
       <handler
@@ -2444,6 +2465,23 @@
             <and>
                <count value="1" />
                <test property="org.eclipse.egit.ui.resources.ResourceState.hasTrackedResources" />
+            </and>
+         </activeWhen>
+      </handler>
+      <handler
+            commandId="org.eclipse.egit.ui.team.CompareWithPrevious"
+            class="org.eclipse.egit.ui.internal.history.command.CompareWithPreviousHandler">
+         <activeWhen>
+            <and>
+               <count value="1" />
+               <iterate>
+                  <adapt type="org.eclipse.egit.ui.internal.history.FileDiff" >
+                     <and>
+                        <test property="FileDiff.isSubmodule" value="false" />
+                        <test property="FileDiff.isChange" args="ADD,DELETE" value="false" />
+                     </and>
+                  </adapt>
+               </iterate>
             </and>
          </activeWhen>
       </handler>
@@ -3090,6 +3128,39 @@
          </activeWhen>
       </handler>
       <handler
+            commandId="org.eclipse.egit.ui.history.CompareWithWorkingTree">
+         <class
+               class="org.eclipse.egit.ui.internal.history.command.FileDiffCompareWorkingTreeHandler">
+         </class>
+         <activeWhen>
+            <!-- If we have only one item selected, check that it is not a submodule -->
+            <or>
+               <and>
+                  <count value="1" />
+                  <iterate>
+                     <adapt type="org.eclipse.egit.ui.internal.history.FileDiff">
+                        <adapt type="org.eclipse.jgit.lib.Repository">
+                           <test property="Git.isBare" value="false" />
+                        </adapt>
+                        <test property="FileDiff.isSubmodule" value="false" />
+                        <test property="FileDiff.existsInWorktree" />
+                     </adapt>
+                  </iterate>
+               </and>
+               <and>
+                  <count value="(1-" /><!-- > 1, i.e., >= 2 -->
+                  <iterate>
+                     <adapt type="org.eclipse.egit.ui.internal.history.FileDiff">
+                        <adapt type="org.eclipse.egit.core.internal.IRepositoryCommit">
+                           <test property="Git.isBare" value="false" />
+                        </adapt>
+                     </adapt>
+                  </iterate>
+               </and>
+            </or>
+         </activeWhen>
+      </handler>
+      <handler
             commandId="org.eclipse.egit.ui.history.ShowVersions">
          <class
                class="org.eclipse.egit.ui.internal.history.command.ShowVersionsHandler">
@@ -3101,15 +3172,6 @@
                   <instanceof value="org.eclipse.egit.ui.internal.history.SWTCommit" />
                </iterate>
             </and>
-         </activeWhen>
-      </handler>
-      <handler
-            commandId="org.eclipse.egit.ui.history.ShowBlame">
-         <class
-               class="org.eclipse.egit.ui.internal.history.command.ShowBlameHandler">
-         </class>
-         <activeWhen>
-            <reference definitionId="org.eclipse.egit.ui.singleFileCommit" />
          </activeWhen>
       </handler>
       <handler
@@ -3778,6 +3840,21 @@
    <extension
          point="org.eclipse.ui.menus">
       <menuContribution
+            locationURI="popup:org.eclipse.egit.ui.fileDiffContributions?after=fileDiff.group">
+         <command
+              commandId="org.eclipse.egit.ui.team.CompareWithPrevious"
+              label="%FileDiffCompareWithPrevious.label"
+              style="push" />
+         <command
+              commandId="org.eclipse.egit.ui.history.CompareWithWorkingTree"
+              label="%FileDiffCompareWithWorkingTree.label"
+              style="push" />
+         <command
+              commandId="org.eclipse.egit.ui.team.ShowBlame"
+              label="%FileDiffBlame.label"
+              style="push" />
+      </menuContribution>
+      <menuContribution
             locationURI="popup:org.eclipse.egit.ui.historyPageContributions?after=history.group">
          <command
               commandId="org.eclipse.egit.ui.history.CompareWithWorkingTree"
@@ -3798,7 +3875,7 @@
             <visibleWhen checkEnabled="true" />
          </command>
          <command
-              commandId="org.eclipse.egit.ui.history.ShowBlame"
+              commandId="org.eclipse.egit.ui.team.ShowBlame"
               label="%HistoryShowBlame.label"
               style="push">
             <visibleWhen checkEnabled="true" />
@@ -6304,6 +6381,8 @@
                         <or>
                            <equals value="#AbstractTextEditorRulerContext" />
                            <equals value="#OverviewRulerContext" />
+                           <equals value="org.eclipse.egit.ui.historyPageContributions" />
+                           <equals value="org.eclipse.egit.ui.fileDiffContributions" />
                         </or>
                      </iterate>
                   </not>
@@ -6506,6 +6585,8 @@
                         <or>
                            <equals value="#AbstractTextEditorRulerContext" />
                            <equals value="#OverviewRulerContext" />
+                           <equals value="org.eclipse.egit.ui.historyPageContributions" />
+                           <equals value="org.eclipse.egit.ui.fileDiffContributions" />
                         </or>
                      </iterate>
                   </not>
@@ -7044,10 +7125,6 @@
             icon="icons/obj16/stash-create.png">
       </image>
       <image
-            commandId="org.eclipse.egit.ui.history.ShowBlame"
-            icon="icons/etool16/annotate.png">
-      </image>
-      <image
             commandId="org.eclipse.egit.ui.team.ShowBlame"
             icon="icons/etool16/annotate.png">
       </image>
@@ -7169,6 +7246,13 @@
             namespace="GitHistory"
             properties="isSingleFileHistory"
             type="org.eclipse.team.ui.history.IHistoryView">
+      </propertyTester>
+      <propertyTester
+            class="org.eclipse.egit.ui.internal.history.FileDiffPropertyTester"
+            id="org.eclipse.egit.ui.FileDiffTester"
+            namespace="FileDiff"
+            properties="isSubmodule,isChange,existsInWorktree"
+            type="org.eclipse.egit.ui.internal.history.FileDiff">
       </propertyTester>
       <propertyTester
             class="org.eclipse.egit.ui.internal.expressions.BundlePropertyTester"
@@ -7498,6 +7582,7 @@
             name="%CompareInTreeCommand.name">
       </command>
       <command
+            categoryId="org.eclipse.egit.ui.commandCategory"
             id="org.eclipse.egit.ui.history.CompareWithWorkingTree"
             name="%CompareWithWorkTreeCommand.name">
       </command>
@@ -7599,14 +7684,6 @@
       <command
             id="org.eclipse.egit.ui.commit.UnifiedDiffCommand"
             name="%ShowUnifiedDiffCommand.name">
-      </command>
-   </extension>
-   <extension
-         name="%CommitViewerCommands.extension.name"
-         point="org.eclipse.ui.commands">
-      <command
-            id="org.eclipse.egit.ui.history.ShowBlame"
-            name="%ShowBlameCommand.name">
       </command>
    </extension>
    <extension

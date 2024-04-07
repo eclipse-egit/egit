@@ -107,4 +107,35 @@ public class MultiViewerSelectionProvider extends AbstractSelectionProvider {
 			currentViewer.setSelection(selection);
 		}
 	}
+
+	/**
+	 * A builder to construct a {@link MultiViewerSelectionProvider}.
+	 */
+	public static class Builder {
+
+		List<Viewer> viewers = new ArrayList<>();
+
+		/**
+		 * Adds the given {@link Viewer} to this builder.
+		 *
+		 * @param viewer
+		 *            {@link Viewer} to add
+		 * @return {@code this}
+		 */
+		public Builder add(Viewer viewer) {
+			viewers.add(viewer);
+			return this;
+		}
+
+		/**
+		 * Constructs a {@link MultiViewerSelectionProvider} for all the viewers
+		 * in this builder.
+		 *
+		 * @return a {@link MultiViewerSelectionProvider}
+		 */
+		public MultiViewerSelectionProvider build() {
+			return new MultiViewerSelectionProvider(
+					viewers.toArray(new Viewer[0]));
+		}
+	}
 }

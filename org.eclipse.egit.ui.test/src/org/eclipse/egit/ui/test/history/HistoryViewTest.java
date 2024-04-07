@@ -72,6 +72,7 @@ import org.eclipse.swtbot.swt.finder.SWTBot;
 import org.eclipse.swtbot.swt.finder.junit.SWTBotJunit4ClassRunner;
 import org.eclipse.swtbot.swt.finder.waits.DefaultCondition;
 import org.eclipse.swtbot.swt.finder.widgets.SWTBotMenu;
+import org.eclipse.swtbot.swt.finder.widgets.SWTBotRootMenu;
 import org.eclipse.swtbot.swt.finder.widgets.SWTBotShell;
 import org.eclipse.swtbot.swt.finder.widgets.SWTBotTable;
 import org.eclipse.swtbot.swt.finder.widgets.SWTBotTableItem;
@@ -830,10 +831,17 @@ public class HistoryViewTest extends GitRepositoriesViewTestBase {
 
 		String itemLabelRegex = NLS.bind(org.eclipse.egit.gitflow.ui.internal.
 						UIText.DynamicHistoryMenu_startGitflowReleaseFrom, ".*");
-		SWTBotMenu startReleaseMenu = table.contextMenu().menu(withRegex(itemLabelRegex),
-				true, 0);
-
-		assertTrue(startReleaseMenu.isEnabled());
+		SWTBotRootMenu ctxMenu = table.contextMenu();
+		boolean isEnabled = false;
+		try {
+			SWTBotMenu startReleaseMenu = ctxMenu
+					.menu(withRegex(itemLabelRegex), true, 0);
+			isEnabled = startReleaseMenu.isEnabled();
+			startReleaseMenu.hide();
+		} finally {
+			ctxMenu.hide();
+		}
+		assertTrue(isEnabled);
 	}
 
 	@Test

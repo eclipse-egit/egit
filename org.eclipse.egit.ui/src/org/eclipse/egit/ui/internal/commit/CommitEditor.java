@@ -489,9 +489,18 @@ public class CommitEditor extends SharedHeaderFormEditor implements
 				if (object instanceof IPropertySource) {
 					return (IPropertySource) object;
 				}
-				if (object instanceof IRepositoryCommit) {
-					return new CommitPropertySource(
-							((IRepositoryCommit) object).getRevCommit(), page);
+				RevCommit revCommit = Adapters.adapt(object, RevCommit.class);
+				if (revCommit != null) {
+					return new CommitPropertySource(revCommit, page);
+				}
+				IRepositoryCommit repoCommit = Adapters.adapt(object,
+						IRepositoryCommit.class);
+				if (repoCommit == null) {
+					repoCommit = Adapters.adapt(object, RepositoryCommit.class);
+				}
+				if (repoCommit != null) {
+					return new CommitPropertySource(repoCommit.getRevCommit(),
+							page);
 				}
 				return null;
 			});
