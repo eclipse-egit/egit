@@ -5207,9 +5207,6 @@ public class UIText extends NLS {
 	public static String CommitFileDiffViewer_OpenPreviousInEditorMenuWithCommitLabel;
 
 	/** */
-	public static String CommitFileDiffViewer_ShowAnnotationsMenuLabel;
-
-	/** */
 	public static String CommitFileDiffViewer_ShowInHistoryLabel;
 
 	/** */
