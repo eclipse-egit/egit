@@ -24,7 +24,6 @@ import org.eclipse.core.runtime.Adapters;
 import org.eclipse.egit.core.RepositoryCache;
 import org.eclipse.egit.ui.JobFamilies;
 import org.eclipse.egit.ui.common.LocalRepositoryTestCase;
-import org.eclipse.egit.ui.internal.UIText;
 import org.eclipse.egit.ui.internal.commit.CommitEditor;
 import org.eclipse.egit.ui.internal.commit.RepositoryCommit;
 import org.eclipse.egit.ui.test.ContextMenuHelper;
@@ -46,6 +45,8 @@ import org.junit.Test;
  * Unit tests of {@link CommitEditor}
  */
 public class CommitEditorTest extends LocalRepositoryTestCase {
+
+	private static final TestUtil testUtil = new TestUtil();
 
 	private Repository repository;
 
@@ -115,7 +116,7 @@ public class CommitEditorTest extends LocalRepositoryTestCase {
 		assertTrue(table.rowCount() > 0);
 		table.select(0);
 		ContextMenuHelper.clickContextMenuSync(table,
-				UIText.CommitFileDiffViewer_ShowAnnotationsMenuLabel);
+				testUtil.getPluginLocalizedValue("FileDiffBlame.label"));
 		TestUtil.joinJobs(JobFamilies.BLAME);
 		assertFalse(commitEditor.getReference().equals(
 				bot.activeEditor().getReference()));

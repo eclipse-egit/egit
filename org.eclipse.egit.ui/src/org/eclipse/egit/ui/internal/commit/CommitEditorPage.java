@@ -46,6 +46,7 @@ import org.eclipse.egit.ui.internal.UIText;
 import org.eclipse.egit.ui.internal.dialogs.SpellcheckableMessageArea;
 import org.eclipse.egit.ui.internal.history.CommitFileDiffViewer;
 import org.eclipse.egit.ui.internal.history.FileDiff;
+import org.eclipse.egit.ui.internal.selection.MultiViewerSelectionProvider;
 import org.eclipse.jface.layout.GridDataFactory;
 import org.eclipse.jface.layout.GridLayoutFactory;
 import org.eclipse.jface.resource.ImageDescriptor;
@@ -443,8 +444,8 @@ public class CommitEditorPage extends FormPage
 		}
 	}
 
-	private void createMessageArea(Composite parent, FormToolkit toolkit,
-			int span) {
+	private void createMessageArea(MultiViewerSelectionProvider.Builder builder,
+			Composite parent, FormToolkit toolkit, int span) {
 		Section messageSection = createSection(parent, toolkit,
 				UIText.CommitEditorPage_SectionMessage, span,
 				ExpandableComposite.TITLE_BAR | ExpandableComposite.TWISTIE
@@ -475,6 +476,7 @@ public class CommitEditorPage extends FormPage
 
 		};
 
+		builder.add(textContent.getViewer());
 		if ((toolkit.getBorderStyle() & SWT.BORDER) == 0)
 			textContent.setData(FormToolkit.KEY_DRAW_BORDER,
 					FormToolkit.TEXT_BORDER);
@@ -490,8 +492,9 @@ public class CommitEditorPage extends FormPage
 		updateSectionClient(messageSection, messageArea, toolkit);
 	}
 
-	private void createBranchesArea(Composite parent, FormToolkit toolkit,
-			int span) {
+	private void createBranchesArea(
+			MultiViewerSelectionProvider.Builder builder, Composite parent,
+			FormToolkit toolkit, int span) {
 		branchSection = createSection(parent, toolkit,
 				UIText.CommitEditorPage_SectionBranchesEmpty, span,
 				ExpandableComposite.TITLE_BAR | ExpandableComposite.TWISTIE);
@@ -521,6 +524,7 @@ public class CommitEditorPage extends FormPage
 
 		});
 		branchViewer.setContentProvider(ArrayContentProvider.getInstance());
+		builder.add(branchViewer);
 		updateSectionClient(branchSection, branchesArea, toolkit);
 	}
 
@@ -533,7 +537,8 @@ public class CommitEditorPage extends FormPage
 		}
 	}
 
-	void createDiffArea(Composite parent, FormToolkit toolkit, int span) {
+	void createDiffArea(MultiViewerSelectionProvider.Builder builder,
+			Composite parent, FormToolkit toolkit, int span) {
 		diffSection = createSection(parent, toolkit,
 				UIText.CommitEditorPage_SectionFilesEmpty, span,
 				ExpandableComposite.TITLE_BAR | ExpandableComposite.TWISTIE
@@ -543,6 +548,7 @@ public class CommitEditorPage extends FormPage
 		diffViewer = new CommitFileDiffViewer(filesArea, getSite(), SWT.MULTI
 				| SWT.H_SCROLL | SWT.V_SCROLL | SWT.VIRTUAL | SWT.FULL_SELECTION
 				| toolkit.getBorderStyle());
+		builder.add(diffViewer);
 		Control control = diffViewer.getControl();
 		control.setData(FormToolkit.KEY_DRAW_BORDER, FormToolkit.TREE_BORDER);
 		GridDataFactory.fillDefaults().hint(SWT.DEFAULT, 50).minSize(1, 50)
@@ -593,16 +599,26 @@ public class CommitEditorPage extends FormPage
 		toolkit.adapt(displayArea);
 		GridLayoutFactory.fillDefaults().numColumns(2).applyTo(displayArea);
 
+		MultiViewerSelectionProvider.Builder builder = new MultiViewerSelectionProvider.Builder();
 		createHeaderArea(displayArea, toolkit, 2);
-		createMessageArea(displayArea, toolkit, 2);
-		createChangesArea(displayArea, toolkit);
+		createMessageArea(builder, displayArea, toolkit, 2);
+		createChangesArea(builder, displayArea, toolkit);
+
+		getSite().setSelectionProvider(builder.build());
+		registerContextMenus();
 
 		loadSections();
 	}
 
-	void createChangesArea(Composite displayArea, FormToolkit toolkit) {
-		createBranchesArea(displayArea, toolkit, 2);
-		createDiffArea(displayArea, toolkit, 2);
+	void registerContextMenus() {
+		getSite().registerContextMenu(CommitFileDiffViewer.POPUP_ID,
+				diffViewer.getMenuManager(), diffViewer);
+	}
+
+	void createChangesArea(MultiViewerSelectionProvider.Builder builder,
+			Composite displayArea, FormToolkit toolkit) {
+		createBranchesArea(builder, displayArea, toolkit, 2);
+		createDiffArea(builder, displayArea, toolkit, 2);
 	}
 
 	private List<Ref> loadTags() {
