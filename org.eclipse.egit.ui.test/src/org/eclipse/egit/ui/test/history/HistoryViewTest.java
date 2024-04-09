@@ -810,9 +810,11 @@ public class HistoryViewTest extends GitRepositoriesViewTestBase {
 
 		fileDiffTable.select(0);
 		assertFalse(fileDiffTable.contextMenu(
-				UIText.CommitFileDiffViewer_OpenInEditorMenuLabel).isEnabled());
+				myUtil.getPluginLocalizedValue("FileDiffOpenThisVersion.label"))
+				.isEnabled());
 		fileDiffTable.contextMenu(
-				UIText.CommitFileDiffViewer_OpenPreviousInEditorMenuLabel)
+				myUtil.getPluginLocalizedValue(
+						"FileDiffOpenPreviousVersion.label"))
 				.click();
 
 		// Editor for old file version should be opened

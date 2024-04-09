@@ -25,7 +25,6 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
-import java.util.function.Consumer;
 import java.util.function.Supplier;
 import java.util.stream.Collectors;
 
@@ -70,7 +69,6 @@ import org.eclipse.jface.viewers.ViewerComparator;
 import org.eclipse.jgit.diff.DiffEntry;
 import org.eclipse.jgit.diff.DiffEntry.ChangeType;
 import org.eclipse.jgit.lib.Repository;
-import org.eclipse.jgit.lib.RepositoryState;
 import org.eclipse.jgit.revwalk.RevCommit;
 import org.eclipse.jgit.treewalk.TreeWalk;
 import org.eclipse.jgit.treewalk.filter.PathFilterGroup;
@@ -123,14 +121,6 @@ public class CommitFileDiffViewer extends TableViewer {
 	private IAction copy;
 
 	private IAction copyAll;
-
-	private IAction checkOutThisVersion;
-
-	private IAction openThisVersion;
-
-	private IAction openPreviousVersion;
-
-	private IAction openWorkingTreeVersion;
 
 	private IAction showInHistory;
 
@@ -223,41 +213,6 @@ public class CommitFileDiffViewer extends TableViewer {
 		final MenuManager mgr = new MenuManager();
 		rawTable.setMenu(mgr.createContextMenu(rawTable));
 
-		checkOutThisVersion = new CheckoutAction(this::getStructuredSelection);
-
-		openThisVersion = new Action(
-				UIText.CommitFileDiffViewer_OpenInEditorMenuLabel) {
-			@Override
-			public void run() {
-				withSelection(
-						CommitFileDiffViewer.this::openThisVersionInEditor);
-			}
-		};
-
-		openPreviousVersion = new Action(
-				UIText.CommitFileDiffViewer_OpenPreviousInEditorMenuLabel) {
-			@Override
-			public void run() {
-				withSelection(
-						CommitFileDiffViewer.this::openPreviousVersionInEditor);
-			}
-		};
-
-		openWorkingTreeVersion = new Action(
-				UIText.CommitFileDiffViewer_OpenWorkingTreeVersionInEditorMenuLabel) {
-			@Override
-			public void run() {
-				withSelection(d -> {
-					String relativePath = d.getPath();
-					File file = new Path(
-							d.getRepository().getWorkTree()
-									.getAbsolutePath())
-									.append(relativePath).toFile();
-					DiffViewer.openFileInEditor(file, -1);
-				});
-			}
-		};
-
 		showInHistory = new Action(
 				UIText.CommitFileDiffViewer_ShowInHistoryLabel,
 				UIIcons.HISTORY) {
@@ -311,11 +266,6 @@ public class CommitFileDiffViewer extends TableViewer {
 		mgr.addMenuListener(manager -> {
 			getControl().setFocus();
 			updateActionEnablement(getStructuredSelection());
-			mgr.add(openWorkingTreeVersion);
-			mgr.add(openThisVersion);
-			mgr.add(openPreviousVersion);
-			mgr.add(new Separator());
-			mgr.add(checkOutThisVersion);
 			mgr.add(new Separator(GROUP_ID));
 
 			mgr.add(new Separator());
@@ -344,19 +294,6 @@ public class CommitFileDiffViewer extends TableViewer {
 		return menuManager;
 	}
 
-	private void withSelection(Consumer<FileDiff> consumer) {
-		IStructuredSelection selection = getStructuredSelection();
-		if (selection == null || selection.isEmpty()) {
-			return;
-		}
-		Iterator<?> items = selection.iterator();
-		items.forEachRemaining(o -> {
-			if (o instanceof FileDiff) {
-				consumer.accept((FileDiff) o);
-			}
-		});
-	}
-
 	@Override
 	protected void inputChanged(Object input, Object oldInput) {
 		super.inputChanged(input, oldInput);
@@ -365,64 +302,15 @@ public class CommitFileDiffViewer extends TableViewer {
 						&& doGetItemCount() > 0);
 	}
 
-	private void updateActionEnablement(ISelection selection) {
-		if (!(selection instanceof IStructuredSelection))
-			return;
-		IStructuredSelection sel = (IStructuredSelection) selection;
-		boolean allSelected = !sel.isEmpty()
-				&& sel.size() == getTable().getItemCount();
-		boolean submoduleSelected = false;
-		boolean addSelected = false;
-		boolean deleteSelected = false;
-		Repository repository = null;
-		for (Object item : sel.toList()) {
-			FileDiff fileDiff = (FileDiff) item;
-			if (repository == null) {
-				repository = fileDiff.getRepository();
-			}
-			if (fileDiff.isSubmodule()) {
-				submoduleSelected = true;
-			}
-			if (fileDiff.getChange() == ChangeType.ADD) {
-				addSelected = true;
-			} else if (fileDiff.getChange() == ChangeType.DELETE) {
-				deleteSelected = true;
-			}
-		}
+	private void updateActionEnablement(IStructuredSelection selection) {
+		boolean allSelected = !selection.isEmpty()
+				&& selection.size() == getTable().getItemCount();
 
-		boolean isBare = repository == null || repository.isBare();
 		if (selectAll != null) {
 			selectAll.setEnabled(!allSelected);
 		}
-		copy.setEnabled(!sel.isEmpty());
-		showInHistory.setEnabled(!sel.isEmpty());
-
-		if (!submoduleSelected) {
-			boolean oneOrMoreSelected = !sel.isEmpty();
-			checkOutThisVersion.setEnabled(
-					oneOrMoreSelected && repository != null && repository
-							.getRepositoryState().equals(RepositoryState.SAFE));
-			openThisVersion.setEnabled(oneOrMoreSelected && !deleteSelected);
-			openPreviousVersion.setEnabled(oneOrMoreSelected && !addSelected);
-			if (sel.size() == 1) {
-				FileDiff diff = (FileDiff) sel.getFirstElement();
-				boolean workTreeFileExists = false;
-				if (!isBare && repository != null) {
-					String path = new Path(
-							repository.getWorkTree().getAbsolutePath())
-							.append(diff.getPath()).toOSString();
-					workTreeFileExists = new File(path).exists();
-				}
-				openWorkingTreeVersion.setEnabled(workTreeFileExists);
-			} else {
-				openWorkingTreeVersion.setEnabled(oneOrMoreSelected && !isBare);
-			}
-		} else {
-			checkOutThisVersion.setEnabled(false);
-			openThisVersion.setEnabled(false);
-			openPreviousVersion.setEnabled(false);
-			openWorkingTreeVersion.setEnabled(false);
-		}
+		copy.setEnabled(!selection.isEmpty());
+		showInHistory.setEnabled(!selection.isEmpty());
 	}
 
 	@Override
@@ -545,7 +433,7 @@ public class CommitFileDiffViewer extends TableViewer {
 		DiffViewer.openInEditor(d, DiffEntry.Side.OLD, -1);
 	}
 
-	void showTwoWayFileDiff(final FileDiff d) {
+	private void showTwoWayFileDiff(final FileDiff d) {
 		DiffViewer.showTwoWayFileDiff(d);
 	}
 
