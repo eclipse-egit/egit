@@ -5191,17 +5191,11 @@ public class UIText extends NLS {
 	/** */
 	public static String CommitFileDiffViewer_OpenBaseInEditorMenuWithCommitLabel;
 
-	/** */
-	public static String CommitFileDiffViewer_OpenInEditorMenuLabel;
-
-	/** */
+	/** */ // TODO: non-functional?
 	public static String CommitFileDiffViewer_OpenInEditorMenuTooltip;
 
 	/** */
 	public static String CommitFileDiffViewer_OpenInEditorMenuWithCommitLabel;
-
-	/** */
-	public static String CommitFileDiffViewer_OpenPreviousInEditorMenuLabel;
 
 	/** */
 	public static String CommitFileDiffViewer_OpenPreviousInEditorMenuWithCommitLabel;
