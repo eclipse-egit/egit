@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "d035f441_6c74cb66",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000671
+      },
+      "writtenOn": "2024-04-09T22:15:04Z",
+      "side": 1,
+      "message": "build failed due to ClearlyDefined having a (probably transient) issue:\n`Error response from ClearlyDefined 524`",
+      "revId": "6ffa0a19592c716c5b78cd8dc3512348f39fe0fc",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735"
+    }
+  ]
+}
