@@ -8,52 +8,33 @@
  *
  *  SPDX-License-Identifier: EPL-2.0
  *****************************************************************************/
-package org.eclipse.egit.ui.internal.history.command;
+package org.eclipse.egit.ui.internal.filediff;
 
-import java.io.File;
-import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 
 import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.commands.ExecutionException;
-import org.eclipse.core.runtime.Adapters;
-import org.eclipse.core.runtime.Path;
 import org.eclipse.egit.ui.internal.commit.DiffViewer;
 import org.eclipse.egit.ui.internal.history.FileDiff;
 import org.eclipse.jface.viewers.IStructuredSelection;
+import org.eclipse.jgit.diff.DiffEntry;
 
 /**
  * Opens the "new" version of a {@link FileDiff}.
  */
-public class FileDiffOpenWorkingTreeHandler extends AbstractHistoryCommandHandler {
+public class FileDiffOpenPreviousHandler extends AbstractFileDiffHandler {
 
 	@Override
 	public Object execute(ExecutionEvent event) throws ExecutionException {
 		IStructuredSelection selection = getSelection(event);
-		List<FileDiff> diffs = getDiffs(selection);
+		List<FileDiff> diffs = getDiffs(selection, d -> !d.isSubmodule()
+				&& !DiffEntry.ChangeType.ADD.equals(d.getChange()));
 		if (!diffs.isEmpty()) {
 			for (FileDiff diff : diffs) {
-				String relativePath = diff.getPath();
-				File file = new Path(
-						diff.getRepository().getWorkTree().getAbsolutePath())
-								.append(relativePath).toFile();
-				DiffViewer.openFileInEditor(file, -1);
+				DiffViewer.openInEditor(diff, DiffEntry.Side.OLD, -1);
 			}
 		}
 		return null;
-	}
-
-	private List<FileDiff> getDiffs(IStructuredSelection selection) {
-		List<FileDiff> result = new ArrayList<>();
-		Iterator<?> items = selection.iterator();
-		while (items.hasNext()) {
-			FileDiff diff = Adapters.adapt(items.next(), FileDiff.class);
-			if (diff != null && !diff.isSubmodule()) {
-				result.add(diff);
-			}
-		}
-		return result;
 	}
 
 }

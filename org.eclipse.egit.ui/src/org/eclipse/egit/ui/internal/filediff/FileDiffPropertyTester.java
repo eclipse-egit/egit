@@ -8,12 +8,13 @@
  *
  *  SPDX-License-Identifier: EPL-2.0
  *****************************************************************************/
-package org.eclipse.egit.ui.internal.history;
+package org.eclipse.egit.ui.internal.filediff;
 
 import java.io.File;
 
 import org.eclipse.core.runtime.Path;
 import org.eclipse.egit.ui.internal.expressions.AbstractPropertyTester;
+import org.eclipse.egit.ui.internal.history.FileDiff;
 import org.eclipse.jgit.lib.Repository;
 
 /**
