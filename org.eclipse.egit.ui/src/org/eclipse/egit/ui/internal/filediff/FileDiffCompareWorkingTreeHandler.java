@@ -8,20 +8,18 @@
  *
  *  SPDX-License-Identifier: EPL-2.0
  *****************************************************************************/
-package org.eclipse.egit.ui.internal.history.command;
+package org.eclipse.egit.ui.internal.filediff;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
+import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
 import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.commands.ExecutionException;
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IResource;
-import org.eclipse.core.runtime.Adapters;
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.Path;
 import org.eclipse.egit.core.internal.util.ResourceUtil;
@@ -36,20 +34,22 @@ import org.eclipse.jgit.lib.Repository;
 import org.eclipse.jgit.revwalk.RevCommit;
 import org.eclipse.ui.IWorkbenchPage;
 import org.eclipse.ui.IWorkbenchPart;
+import org.eclipse.ui.handlers.HandlerUtil;
 
 /**
  * Compare one or several {@link FileDiff}s against the working tree file
  * versions.
  */
 public class FileDiffCompareWorkingTreeHandler
-		extends AbstractHistoryCommandHandler {
+		extends AbstractFileDiffHandler {
 
 	@Override
 	public Object execute(ExecutionEvent event) throws ExecutionException {
 		IStructuredSelection selection = getSelection(event);
-		List<FileDiff> diffs = getDiffs(selection);
+		IWorkbenchPart part = HandlerUtil.getActivePartChecked(event);
+		List<FileDiff> diffs = getDiffs(selection,
+				Predicate.not(FileDiff::isSubmodule));
 		if (!diffs.isEmpty()) {
-			IWorkbenchPart part = getPart(event);
 			if (diffs.size() == 1) {
 				showWorkingDirectoryFileDiff(part, diffs.get(0));
 			} else {
@@ -98,18 +98,6 @@ public class FileDiffCompareWorkingTreeHandler
 		} catch (IOException e) {
 			Activator.handleError(UIText.GitHistoryPage_openFailed, e, true);
 		}
-	}
-
-	private List<FileDiff> getDiffs(IStructuredSelection selection) {
-		List<FileDiff> result = new ArrayList<>();
-		Iterator<?> items = selection.iterator();
-		while (items.hasNext()) {
-			FileDiff diff = Adapters.adapt(items.next(), FileDiff.class);
-			if (diff != null) {
-				result.add(diff);
-			}
-		}
-		return result;
 	}
 
 }

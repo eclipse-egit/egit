@@ -8,11 +8,10 @@
  *
  * SPDX-License-Identifier: EPL-2.0
  *******************************************************************************/
-package org.eclipse.egit.ui.internal.history.command;
+package org.eclipse.egit.ui.internal.filediff;
 
 import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.commands.ExecutionException;
-import org.eclipse.core.runtime.Adapters;
 import org.eclipse.egit.ui.internal.commit.DiffViewer;
 import org.eclipse.egit.ui.internal.history.FileDiff;
 import org.eclipse.jface.viewers.IStructuredSelection;
@@ -21,7 +20,8 @@ import org.eclipse.jface.viewers.IStructuredSelection;
  * Handler for showing a two-way comparison between the current commit and the
  * base commit for a {@link FileDiff}.
  */
-public class CompareWithPreviousHandler extends AbstractHistoryCommandHandler {
+public class FileDiffCompareWithPreviousHandler
+		extends AbstractFileDiffHandler {
 
 	@Override
 	public Object execute(ExecutionEvent event) throws ExecutionException {
@@ -29,13 +29,6 @@ public class CompareWithPreviousHandler extends AbstractHistoryCommandHandler {
 		FileDiff diff = getDiff(selection);
 		if (diff != null) {
 			DiffViewer.showTwoWayFileDiff(diff);
-		}
-		return null;
-	}
-
-	private FileDiff getDiff(IStructuredSelection selection) {
-		if (selection.size() == 1) {
-			return Adapters.adapt(selection.getFirstElement(), FileDiff.class);
 		}
 		return null;
 	}

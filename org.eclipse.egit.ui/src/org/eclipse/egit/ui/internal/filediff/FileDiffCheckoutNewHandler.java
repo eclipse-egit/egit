@@ -8,16 +8,13 @@
  *
  *  SPDX-License-Identifier: EPL-2.0
  *****************************************************************************/
-package org.eclipse.egit.ui.internal.history.command;
+package org.eclipse.egit.ui.internal.filediff;
 
-import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 import java.util.stream.Collectors;
 
 import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.commands.ExecutionException;
-import org.eclipse.core.runtime.Adapters;
 import org.eclipse.egit.core.internal.job.JobUtil;
 import org.eclipse.egit.core.op.DiscardChangesOperation;
 import org.eclipse.egit.ui.JobFamilies;
@@ -25,7 +22,7 @@ import org.eclipse.egit.ui.internal.UIText;
 import org.eclipse.egit.ui.internal.dialogs.CommandConfirmation;
 import org.eclipse.egit.ui.internal.history.FileDiff;
 import org.eclipse.jface.viewers.IStructuredSelection;
-import org.eclipse.jgit.diff.DiffEntry.ChangeType;
+import org.eclipse.jgit.diff.DiffEntry;
 import org.eclipse.jgit.lib.Repository;
 import org.eclipse.ui.handlers.HandlerUtil;
 
@@ -33,12 +30,13 @@ import org.eclipse.ui.handlers.HandlerUtil;
  * Checks out the "new" version of selected {@link FileDiff}s, which are assumed
  * to be all from the same repository.
  */
-public class FileDiffCheckoutNewHandler extends AbstractHistoryCommandHandler {
+public class FileDiffCheckoutNewHandler extends AbstractFileDiffHandler {
 
 	@Override
 	public Object execute(ExecutionEvent event) throws ExecutionException {
 		IStructuredSelection selection = getSelection(event);
-		List<FileDiff> diffs = getDiffs(selection);
+		List<FileDiff> diffs = getDiffs(selection, d -> !d.isSubmodule()
+				&& !DiffEntry.ChangeType.DELETE.equals(d.getChange()));
 		if (!diffs.isEmpty()) {
 			FileDiff first = diffs.get(0);
 			Repository repository = first.getRepository();
@@ -57,19 +55,6 @@ public class FileDiffCheckoutNewHandler extends AbstractHistoryCommandHandler {
 			}
 		}
 		return null;
-	}
-
-	private List<FileDiff> getDiffs(IStructuredSelection selection) {
-		List<FileDiff> result = new ArrayList<>();
-		Iterator<?> items = selection.iterator();
-		while (items.hasNext()) {
-			FileDiff diff = Adapters.adapt(items.next(), FileDiff.class);
-			if (diff != null && !diff.isSubmodule()
-					&& !ChangeType.DELETE.equals(diff.getChange())) {
-				result.add(diff);
-			}
-		}
-		return result;
 	}
 
 }

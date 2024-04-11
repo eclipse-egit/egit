@@ -2390,7 +2390,7 @@
       </handler>
       <handler
             commandId="org.eclipse.egit.ui.team.ShowBlame"
-            class="org.eclipse.egit.ui.internal.history.command.FileDiffBlameHandler">
+            class="org.eclipse.egit.ui.internal.filediff.FileDiffBlameHandler">
          <activeWhen>
             <and>
                <count value="1" />
@@ -2470,7 +2470,7 @@
       </handler>
       <handler
             commandId="org.eclipse.egit.ui.team.CompareWithPrevious"
-            class="org.eclipse.egit.ui.internal.history.command.CompareWithPreviousHandler">
+            class="org.eclipse.egit.ui.internal.filediff.FileDiffCompareWithPreviousHandler">
          <activeWhen>
             <and>
                <count value="1" />
@@ -3130,7 +3130,7 @@
       <handler
             commandId="org.eclipse.egit.ui.history.CompareWithWorkingTree">
          <class
-               class="org.eclipse.egit.ui.internal.history.command.FileDiffCompareWorkingTreeHandler">
+               class="org.eclipse.egit.ui.internal.filediff.FileDiffCompareWorkingTreeHandler">
          </class>
          <activeWhen>
             <!-- If we have only one item selected, check that it is not a submodule -->
@@ -3162,7 +3162,7 @@
       </handler>
       <handler
             commandId="org.eclipse.egit.ui.filediff.OpenWorkingTree"
-            class="org.eclipse.egit.ui.internal.history.command.FileDiffOpenWorkingTreeHandler">
+            class="org.eclipse.egit.ui.internal.filediff.FileDiffOpenWorkingTreeHandler">
          <activeWhen>
             <!-- If we have only one item selected, check that it is not a submodule -->
             <or>
@@ -3193,7 +3193,7 @@
       </handler>
       <handler
             commandId="org.eclipse.egit.ui.filediff.CheckoutNew"
-            class="org.eclipse.egit.ui.internal.history.command.FileDiffCheckoutNewHandler">
+            class="org.eclipse.egit.ui.internal.filediff.FileDiffCheckoutNewHandler">
          <activeWhen>
             <and>
                <count value="+" />
@@ -3226,7 +3226,7 @@
       <handler
             commandId="org.eclipse.egit.ui.history.ShowVersions">
          <class
-               class="org.eclipse.egit.ui.internal.history.command.FileDiffOpenThisHandler">
+               class="org.eclipse.egit.ui.internal.filediff.FileDiffOpenThisHandler">
          </class>
          <activeWhen>
             <and>
@@ -3243,7 +3243,7 @@
       <handler
             commandId="org.eclipse.egit.ui.filediff.OpenPrevious">
          <class
-               class="org.eclipse.egit.ui.internal.history.command.FileDiffOpenPreviousHandler">
+               class="org.eclipse.egit.ui.internal.filediff.FileDiffOpenPreviousHandler">
          </class>
          <activeWhen>
             <and>
@@ -7349,7 +7349,7 @@
             type="org.eclipse.team.ui.history.IHistoryView">
       </propertyTester>
       <propertyTester
-            class="org.eclipse.egit.ui.internal.history.FileDiffPropertyTester"
+            class="org.eclipse.egit.ui.internal.filediff.FileDiffPropertyTester"
             id="org.eclipse.egit.ui.FileDiffTester"
             namespace="FileDiff"
             properties="isSubmodule,isChange,existsInWorktree"
