@@ -8,13 +8,12 @@
  *
  *  SPDX-License-Identifier: EPL-2.0
  *****************************************************************************/
-package org.eclipse.egit.ui.internal.history.command;
+package org.eclipse.egit.ui.internal.filediff;
 
 import java.io.IOException;
 
 import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.commands.ExecutionException;
-import org.eclipse.core.runtime.Adapters;
 import org.eclipse.egit.core.internal.job.JobUtil;
 import org.eclipse.egit.core.internal.storage.CommitFileRevision;
 import org.eclipse.egit.ui.Activator;
@@ -35,7 +34,7 @@ import org.eclipse.ui.PlatformUI;
 /**
  * Handler to blame a {@link FileDiff}.
  */
-public class FileDiffBlameHandler extends AbstractHistoryCommandHandler {
+public class FileDiffBlameHandler extends AbstractFileDiffHandler {
 
 	@Override
 	public Object execute(ExecutionEvent event) throws ExecutionException {
@@ -43,13 +42,6 @@ public class FileDiffBlameHandler extends AbstractHistoryCommandHandler {
 		FileDiff diff = getDiff(selection);
 		if (diff != null) {
 			showBlame(diff);
-		}
-		return null;
-	}
-
-	private FileDiff getDiff(IStructuredSelection selection) {
-		if (selection.size() == 1) {
-			return Adapters.adapt(selection.getFirstElement(), FileDiff.class);
 		}
 		return null;
 	}
