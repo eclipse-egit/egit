@@ -5165,15 +5165,6 @@ public class UIText extends NLS {
 	public static String CommitFileDiffViewer_CanNotOpenCompareEditorTitle;
 
 	/** */
-	public static String CommitFileDiffViewer_CheckoutThisVersionMenuLabel;
-
-	/** */
-	public static String CommitFileDiffViewer_CompareMenuLabel;
-
-	/** */
-	public static String CommitFileDiffViewer_CompareSideBySideMenuLabel;
-
-	/** */
 	public static String CommitFileDiffViewer_CompareWorkingDirectoryMenuLabel;
 
 	/** */
@@ -5184,21 +5175,6 @@ public class UIText extends NLS {
 
 	/** */
 	public static String CommitFileDiffViewer_MergeCommitMultiAncestorMessage;
-
-	/** */
-	public static String CommitFileDiffViewer_OpenBaseInEditorMenuLabel;
-
-	/** */
-	public static String CommitFileDiffViewer_OpenBaseInEditorMenuWithCommitLabel;
-
-	/** */ // TODO: non-functional?
-	public static String CommitFileDiffViewer_OpenInEditorMenuTooltip;
-
-	/** */
-	public static String CommitFileDiffViewer_OpenInEditorMenuWithCommitLabel;
-
-	/** */
-	public static String CommitFileDiffViewer_OpenPreviousInEditorMenuWithCommitLabel;
 
 	/** */
 	public static String CommitFileDiffViewer_ShowInHistoryLabel;

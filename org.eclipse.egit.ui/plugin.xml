@@ -3923,6 +3923,39 @@
    <extension
          point="org.eclipse.ui.menus">
       <menuContribution
+            locationURI="popup:org.eclipse.egit.ui.commit.OutlineContributions?after=fileDiff.group">
+         <command
+              commandId="org.eclipse.egit.ui.filediff.OpenWorkingTree"
+              label="%FileDiffOpenWorkingTree.label"
+              style="push" />
+         <command
+              commandId="org.eclipse.egit.ui.history.ShowVersions"
+              label="%FileDiffOpenThisVersion.label"
+              style="push" />
+         <command
+              commandId="org.eclipse.egit.ui.filediff.OpenPrevious"
+              label="%FileDiffOpenPreviousVersion.label"
+              style="push" />
+         <separator name="##Checkout" visible="true" />
+         <command
+              commandId="org.eclipse.egit.ui.filediff.CheckoutNew"
+              label="%FileDiffCheckoutNew.label"
+              style="push" />
+         <separator name="##Compare" visible="true" />
+         <command
+              commandId="org.eclipse.egit.ui.team.CompareWithPrevious"
+              label="%FileDiffCompareWithPrevious.label"
+              style="push" />
+         <command
+              commandId="org.eclipse.egit.ui.history.CompareWithWorkingTree"
+              label="%FileDiffCompareWithWorkingTree.label"
+              style="push" />
+         <command
+              commandId="org.eclipse.egit.ui.team.ShowBlame"
+              label="%FileDiffBlame.label"
+              style="push" />
+      </menuContribution>
+      <menuContribution
             locationURI="popup:org.eclipse.egit.ui.fileDiffContributions?after=fileDiff.group">
          <command
               commandId="org.eclipse.egit.ui.filediff.OpenWorkingTree"
