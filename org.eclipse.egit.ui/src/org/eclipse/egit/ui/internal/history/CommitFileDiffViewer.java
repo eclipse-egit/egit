@@ -23,13 +23,9 @@ import java.util.Arrays;
 import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
-import java.util.Map;
 import java.util.Objects;
-import java.util.function.Supplier;
-import java.util.stream.Collectors;
 
 import org.eclipse.core.resources.IFile;
-import org.eclipse.core.runtime.Adapters;
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
@@ -39,9 +35,7 @@ import org.eclipse.core.runtime.jobs.IJobChangeEvent;
 import org.eclipse.core.runtime.jobs.ISchedulingRule;
 import org.eclipse.core.runtime.jobs.Job;
 import org.eclipse.core.runtime.jobs.JobChangeAdapter;
-import org.eclipse.egit.core.internal.job.JobUtil;
 import org.eclipse.egit.core.internal.util.ResourceUtil;
-import org.eclipse.egit.core.op.DiscardChangesOperation;
 import org.eclipse.egit.ui.Activator;
 import org.eclipse.egit.ui.JobFamilies;
 import org.eclipse.egit.ui.UIPreferences;
@@ -50,7 +44,6 @@ import org.eclipse.egit.ui.internal.ActionUtils;
 import org.eclipse.egit.ui.internal.UIIcons;
 import org.eclipse.egit.ui.internal.UIText;
 import org.eclipse.egit.ui.internal.commit.DiffViewer;
-import org.eclipse.egit.ui.internal.dialogs.CommandConfirmation;
 import org.eclipse.jface.action.Action;
 import org.eclipse.jface.action.IAction;
 import org.eclipse.jface.action.MenuManager;
@@ -653,70 +646,5 @@ public class CommitFileDiffViewer extends TableViewer {
 			return contains(rule);
 		}
 
-	}
-
-	/**
-	 * An action to check out selected {@link FileDiff}s from the commit.
-	 */
-	public static class CheckoutAction extends Action {
-
-		private final Supplier<IStructuredSelection> selectionProvider;
-
-		/**
-		 * Creates a new {@link CheckoutAction}.
-		 *
-		 * @param selectionProvider
-		 *            to get the selection from
-		 */
-		public CheckoutAction(
-				Supplier<IStructuredSelection> selectionProvider) {
-			super(UIText.CommitFileDiffViewer_CheckoutThisVersionMenuLabel);
-			this.selectionProvider = selectionProvider;
-		}
-
-		@Override
-		public void run() {
-			DiscardChangesOperation operation = createOperation();
-			if (operation == null) {
-				return;
-			}
-			Map<Repository, Collection<String>> paths = operation
-					.getPathsPerRepository();
-			if (!CommandConfirmation.confirmCheckout(null, paths, true)) {
-				return;
-			}
-			JobUtil.scheduleUserWorkspaceJob(operation,
-					UIText.DiscardChangesAction_discardChanges,
-					JobFamilies.DISCARD_CHANGES);
-		}
-
-		private DiscardChangesOperation createOperation() {
-			Collection<FileDiff> diffs = getFileDiffs(selectionProvider.get());
-			if (diffs.isEmpty()) {
-				return null;
-			}
-			FileDiff first = diffs.iterator().next();
-			Repository repository = first.getRepository();
-			String revision = first.getCommit().getName();
-			List<String> paths = diffs.stream().map(FileDiff::getNewPath)
-					.collect(Collectors.toList());
-			DiscardChangesOperation operation = new DiscardChangesOperation(
-					repository, paths);
-			operation.setRevision(revision);
-			return operation;
-		}
-
-		private Collection<FileDiff> getFileDiffs(
-				IStructuredSelection selection) {
-			List<FileDiff> result = new ArrayList<>();
-			for (Object obj : selection.toList()) {
-				FileDiff diff = Adapters.adapt(obj, FileDiff.class);
-				if (diff != null && diff.getChange() != ChangeType.DELETE
-						&& !diff.isSubmodule()) {
-					result.add(diff);
-				}
-			}
-			return result;
-		}
 	}
 }

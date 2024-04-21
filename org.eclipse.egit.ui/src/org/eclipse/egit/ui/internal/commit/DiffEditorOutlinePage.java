@@ -10,27 +10,21 @@
  *******************************************************************************/
 package org.eclipse.egit.ui.internal.commit;
 
-import java.io.File;
-import java.text.MessageFormat;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Comparator;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.CopyOnWriteArrayList;
-import java.util.stream.Collectors;
 
-import org.eclipse.core.runtime.Path;
-import org.eclipse.egit.core.internal.Utils;
 import org.eclipse.egit.ui.Activator;
 import org.eclipse.egit.ui.UIPreferences;
 import org.eclipse.egit.ui.UIUtils;
 import org.eclipse.egit.ui.internal.UIIcons;
 import org.eclipse.egit.ui.internal.UIText;
 import org.eclipse.egit.ui.internal.commit.DiffRegionFormatter.FileDiffRegion;
-import org.eclipse.egit.ui.internal.history.CommitFileDiffViewer.CheckoutAction;
+import org.eclipse.egit.ui.internal.history.CommitFileDiffViewer;
 import org.eclipse.egit.ui.internal.history.FileDiff;
 import org.eclipse.jface.action.Action;
 import org.eclipse.jface.action.IAction;
@@ -65,9 +59,6 @@ import org.eclipse.jface.viewers.TreeViewer;
 import org.eclipse.jface.viewers.Viewer;
 import org.eclipse.jface.viewers.ViewerComparator;
 import org.eclipse.jface.viewers.ViewerFilter;
-import org.eclipse.jgit.diff.DiffEntry;
-import org.eclipse.jgit.lib.RepositoryState;
-import org.eclipse.jgit.revwalk.RevCommit;
 import org.eclipse.jgit.util.StringUtils;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.KeyAdapter;
@@ -86,6 +77,7 @@ import org.eclipse.swt.widgets.TreeItem;
 import org.eclipse.ui.IActionBars;
 import org.eclipse.ui.IEditorPart;
 import org.eclipse.ui.ISharedImages;
+import org.eclipse.ui.IWorkbenchActionConstants;
 import org.eclipse.ui.IWorkbenchCommandConstants;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.dialogs.SearchPattern;
@@ -97,6 +89,8 @@ import org.eclipse.ui.views.contentoutline.ContentOutlinePage;
  * for {@link DiffDocument}s.
  */
 public class DiffEditorOutlinePage extends ContentOutlinePage {
+
+	private static final String POPUP_ID = "org.eclipse.egit.ui.commit.OutlineContributions"; //$NON-NLS-1$
 
 	static final Comparator<String> CMP = (left, right) -> {
 		String l = left.startsWith("/") ? left.substring(1) : left; //$NON-NLS-1$
@@ -235,161 +229,13 @@ public class DiffEditorOutlinePage extends ContentOutlinePage {
 		contextMenu.setRemoveAllWhenShown(true);
 		contextMenu.addMenuListener(menuManager -> {
 			setFocus();
-			Collection<FileDiffRegion> selected = getSelectedFileDiffs();
-			if (selected.isEmpty()) {
-				return;
-			}
-			List<FileDiffRegion> haveNew = selected.stream()
-					.filter(diff -> !diff.getDiff().getChange()
-							.equals(DiffEntry.ChangeType.DELETE))
-					.collect(Collectors.toList());
-			List<FileDiffRegion> haveOld = selected.stream()
-					.filter(diff -> !diff.getDiff().getChange()
-							.equals(DiffEntry.ChangeType.ADD))
-					.collect(Collectors.toList());
-			List<FileDiffRegion> existing = haveNew.stream()
-					.filter(diff -> new Path(diff.getDiff().getRepository()
-							.getWorkTree().getAbsolutePath())
-									.append(diff.getDiff().getNewPath())
-									.toFile().exists())
-					.collect(Collectors.toList());
-			if (!existing.isEmpty()) {
-				menuManager.add(new Action(
-						UIText.CommitFileDiffViewer_OpenWorkingTreeVersionInEditorMenuLabel) {
-
-					@Override
-					public void run() {
-						for (FileDiffRegion fileDiff : existing) {
-							File file = new Path(
-									fileDiff.getDiff().getRepository()
-											.getWorkTree().getAbsolutePath())
-													.append(fileDiff.getDiff()
-															.getNewPath())
-													.toFile();
-							DiffViewer.openFileInEditor(file, -1);
-						}
-					}
-				});
-			}
-			if (!haveNew.isEmpty()) {
-				RevCommit commit = haveNew.get(0).getDiff().getCommit();
-				String title = MessageFormat.format(
-						UIText.CommitFileDiffViewer_OpenInEditorMenuWithCommitLabel,
-						Utils.getShortObjectId(commit));
-				String tooltip = MessageFormat.format(
-						UIText.CommitFileDiffViewer_OpenInEditorMenuTooltip,
-						UIUtils.menuText(commit.getShortMessage(), 80));
-				IAction action = new Action(title) {
-
-					@Override
-					public void run() {
-						for (FileDiffRegion fileDiff : haveNew) {
-							DiffViewer.openInEditor(fileDiff.getDiff(),
-									DiffEntry.Side.NEW, -1);
-						}
-					}
-				};
-				if (tooltip != null) {
-					action.setToolTipText(tooltip);
-				}
-				menuManager.add(action);
-			}
-			if (!haveOld.isEmpty()) {
-				FileDiff diff = haveOld.get(0).getDiff();
-				RevCommit commit = diff.getCommit();
-				RevCommit base = diff.getBase();
-				String msg;
-				if (base == null || base.equals(commit.getParent(0))) {
-					msg = UIText.CommitFileDiffViewer_OpenPreviousInEditorMenuWithCommitLabel;
-					if (base == null) {
-						base = commit.getParent(0);
-					}
-				} else {
-					msg = UIText.CommitFileDiffViewer_OpenBaseInEditorMenuWithCommitLabel;
-				}
-
-				String title = MessageFormat.format(msg,
-						Utils.getShortObjectId(base));
-				String tooltip = MessageFormat.format(
-						UIText.CommitFileDiffViewer_OpenInEditorMenuTooltip,
-						UIUtils.menuText(base.getShortMessage(), 80));
-				IAction action = new Action(title) {
-
-					@Override
-					public void run() {
-						for (FileDiffRegion fileDiff : haveOld) {
-							DiffViewer.openInEditor(fileDiff.getDiff(),
-									DiffEntry.Side.OLD, -1);
-						}
-					}
-				};
-				if (tooltip != null) {
-					action.setToolTipText(tooltip);
-				}
-				menuManager.add(action);
-			}
-			if (!haveNew.isEmpty()) {
-				boolean hasFiles = haveNew.stream()
-						.anyMatch(d -> !d.getDiff().isSubmodule());
-				if (hasFiles) {
-					menuManager.add(new Separator());
-					CheckoutAction action = new CheckoutAction(
-							this::getStructuredSelection);
-					menuManager.add(action);
-					action.setEnabled(haveNew.iterator().next().getDiff()
-							.getRepository().getRepositoryState()
-							.equals(RepositoryState.SAFE));
-				}
-			}
-			if (selected.size() == 1 && !haveNew.isEmpty()
-					&& !haveOld.isEmpty()) {
-				// "Compare with previous" makes only sense if there are
-				// both a new and a previous version.
-				FileDiff diff = haveNew.get(0).getDiff();
-				RevCommit base = diff.getBase();
-				String title;
-				if (base == null
-						|| base.equals(diff.getCommit().getParent(0))) {
-					title = UIText.CommitFileDiffViewer_CompareMenuLabel;
-				} else {
-					title = UIText.CommitFileDiffViewer_CompareSideBySideMenuLabel;
-				}
-				menuManager.add(new Separator());
-				menuManager.add(new Action(title) {
-
-					@Override
-					public void run() {
-						FileDiffRegion fileDiff = selected.iterator().next();
-						DiffViewer.showTwoWayFileDiff(fileDiff.getDiff());
-					}
-				});
-			}
+			contextMenu.add(new Separator(CommitFileDiffViewer.GROUP_ID));
+			contextMenu
+					.add(new Separator(IWorkbenchActionConstants.MB_ADDITIONS));
 		});
 		Menu menu = contextMenu.createContextMenu(viewer.getTree());
 		viewer.getTree().setMenu(menu);
-	}
-
-	private IStructuredSelection getStructuredSelection() {
-		ISelection currentSelection = getSelection();
-		if (currentSelection instanceof IStructuredSelection) {
-			return (IStructuredSelection) currentSelection;
-		}
-		return StructuredSelection.EMPTY;
-	}
-
-	private Collection<FileDiffRegion> getSelectedFileDiffs() {
-		IStructuredSelection currentSelection = getStructuredSelection();
-		List<FileDiffRegion> result = new ArrayList<>();
-		if (!currentSelection.isEmpty()) {
-			for (Object selected : ((StructuredSelection) currentSelection).toList()) {
-				if (selected instanceof FileDiffRegion
-						&& !((FileDiffRegion) selected).getDiff()
-								.isSubmodule()) {
-					result.add((FileDiffRegion) selected);
-				}
-			}
-		}
-		return result;
+		getSite().registerContextMenu(POPUP_ID, contextMenu, viewer);
 	}
 
 	@Override
