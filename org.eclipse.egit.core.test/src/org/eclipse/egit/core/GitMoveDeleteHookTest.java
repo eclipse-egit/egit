@@ -82,6 +82,7 @@ public class GitMoveDeleteHookTest {
 
 	@Before
 	public void setUp() throws Exception {
+		FS.FileStoreAttributes.setBackground(false);
 		RepositoryCache.INSTANCE.clear();
 		MockSystemReader mockSystemReader = new MockSystemReader();
 		SystemReader.setInstance(mockSystemReader);
@@ -94,7 +95,8 @@ public class GitMoveDeleteHookTest {
 	}
 
 	@After
-	public void tearDown() throws IOException, CoreException {
+	public void tearDown() throws Exception {
+		TestUtils.waitForJobs(500, 10000, JobFamilies.INDEX_DIFF_CACHE_UPDATE);
 		ResourcesPlugin.getWorkspace().getRoot().delete(IResource.FORCE, null);
 		if (testRepository != null)
 			testRepository.dispose();
