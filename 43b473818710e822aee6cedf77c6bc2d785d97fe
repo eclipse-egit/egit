@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "46c39872_51ee67b6",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1021966
+      },
+      "writtenOn": "2024-05-14T22:11:59Z",
+      "side": 1,
+      "message": "The build failures now are due to clearlydefined returning error code 524 (timeout).",
+      "revId": "43b473818710e822aee6cedf77c6bc2d785d97fe",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735"
+    }
+  ]
+}
