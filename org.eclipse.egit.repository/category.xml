@@ -231,6 +231,9 @@
    <bundle id="org.osgi.service.cm.source">
       <category name="EGit.dependencies"/>
    </bundle>
+   <bundle id="org.apache.commons.commons-logging">
+      <category name="EGit.dependencies"/>
+   </bundle>
    <category-def name="EGit" label="Git integration for Eclipse">
       <description>
          Versioning with Git and integration with Gerrit Code Review
@@ -247,5 +250,5 @@
       </description>
    </category-def>
    <category-def name="EGit.dependencies" label="Git integration for Eclipse - dependencies"/>
-   <repository-reference location="https://download.eclipse.org/tools/orbit/simrel/orbit-aggregation/release/4.30.0" enabled="true" />
+   <repository-reference location="https://download.eclipse.org/tools/orbit/simrel/orbit-aggregation/release/4.30.0" name="" enabled="true" />
 </site>
