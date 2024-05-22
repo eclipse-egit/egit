@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "7869f86f_2f72c011",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1038043
+      },
+      "writtenOn": "2024-05-22T06:40:57Z",
+      "side": 1,
+      "message": "I\u0027ve asked this before so I will ask again.   When I generate the *.target with the latest installed tools, the whitespace of the generated target is different from what\u0027s committed. Is there something special you guys are doing to generate with tabs or are you maybe using an older version of TDP?",
+      "revId": "81e2322a943bd510def8dc3fc8e5586d392e7b22",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735"
+    }
+  ]
+}
