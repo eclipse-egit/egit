@@ -16,6 +16,41 @@
       "message": "FYI, I have these errors in my workspace.  Perhaps some problem in the latest JDT, but it\u0027s a barrier to contribution... \n\n\nAPI analysis aborted for \u0027org.eclipse.egit.core\u0027 since its build path is incomplete\torg.eclipse.egit.core\t\tline 0\tFatal Problem\nThe project was not built since its build path is incomplete. Cannot find the class file for org.slf4j.Logger. Fix the build path then try building this project\torg.eclipse.egit.core\t\tUnknown\tJava Problem\nThe type org.slf4j.Logger cannot be resolved. It is indirectly referenced from required type org.eclipse.jgit.internal.storage.file.FileRepository\tCachingRepository.java\t/org.eclipse.egit.core/src/org/eclipse/egit/core\tline 1\tJava Problem",
       "revId": "8b1ad6a00eec8c06b30cd3152bd92c0d1f39bd90",
       "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "0109485c_1d76709b",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1038043
+      },
+      "writtenOn": "2024-05-27T13:13:20Z",
+      "side": 1,
+      "message": "I\u0027m not sure if a reviewer needs to be added to move an issue forward...",
+      "revId": "8b1ad6a00eec8c06b30cd3152bd92c0d1f39bd90",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "fd53afff_aef11e02",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1038043
+      },
+      "writtenOn": "2024-05-27T13:13:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ac09258a_6a05a954",
+      "revId": "8b1ad6a00eec8c06b30cd3152bd92c0d1f39bd90",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735"
     }
   ]
 }
