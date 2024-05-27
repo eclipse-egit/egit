@@ -66,7 +66,7 @@
     <tycho-version>4.0.8</tycho-version>
     <java-version>11</java-version>
     <ecj-version>3.33.0</ecj-version>
-    <spotbugs-maven-plugin-version>4.8.2.0</spotbugs-maven-plugin-version>
+    <spotbugs-maven-plugin-version>4.8.5.0</spotbugs-maven-plugin-version>
     <jgit-site>file:/${basedir}/../../jgit/org.eclipse.jgit.packaging/org.eclipse.jgit.repository/target/repository</jgit-site>
     <license-site>https://download.eclipse.org/cbi/updates/license</license-site>
     <signer-input-directory>/home/data/httpd/download-staging.priv/egit</signer-input-directory>
