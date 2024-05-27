@@ -51,6 +51,23 @@
       "parentUuid": "ac09258a_6a05a954",
       "revId": "8b1ad6a00eec8c06b30cd3152bd92c0d1f39bd90",
       "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "20d65c64_43524272",
+        "filename": "tools/oomph/EGit.setup",
+        "patchSetId": 1
+      },
+      "lineNbr": 117,
+      "author": {
+        "id": 1000671
+      },
+      "writtenOn": "2024-05-27T21:09:23Z",
+      "side": 1,
+      "message": "we build by default against the oldest supported platform version to ensure we don\u0027t use API not available in that version",
+      "revId": "8b1ad6a00eec8c06b30cd3152bd92c0d1f39bd90",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735"
     }
   ]
 }
