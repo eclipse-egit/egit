@@ -14,7 +14,7 @@ maven apache
 	dependency {
 		groupId = "org.apache.commons"
 		artifactId = "commons-compress"
-		version = "1.26.1"
+		version = "1.26.2"
 	}
 	dependency {
 		groupId = "commons-io"
@@ -50,7 +50,7 @@ maven assertj
 	dependency {
 		groupId = "org.assertj"
 		artifactId = "assertj-core"
-		version = "3.25.3"
+		version = "3.26.0"
 	}
 }
 
@@ -91,12 +91,12 @@ maven bytebuddy
 	dependency {
 		groupId = "net.bytebuddy"
 		artifactId = "byte-buddy"
-		version = "1.14.15"
+		version = "1.14.16"
 	}
 	dependency {
 		groupId = "net.bytebuddy"
 		artifactId = "byte-buddy-agent"
-		version = "1.14.15"
+		version = "1.14.16"
 	}
 }
 
@@ -109,7 +109,7 @@ maven gson
 	dependency {
 		groupId = "com.google.code.gson"
 		artifactId = "gson"
-		version = "2.10.1"
+		version = "2.11.0"
 	}
 }
 

@@ -54,6 +54,7 @@ import org.eclipse.jface.text.MarginPainter;
 import org.eclipse.jface.text.Position;
 import org.eclipse.jface.text.TextAttribute;
 import org.eclipse.jface.text.TextUtilities;
+import org.eclipse.jface.text.TextViewer;
 import org.eclipse.jface.text.contentassist.ICompletionProposal;
 import org.eclipse.jface.text.contentassist.IContentAssistant;
 import org.eclipse.jface.text.presentation.IPresentationReconciler;
@@ -807,6 +808,15 @@ public class SpellcheckableMessageArea extends Composite {
 	 */
 	public String getText() {
 		return getDocument().get();
+	}
+
+	/**
+	 * Retrieves the text viewer of this component.
+	 *
+	 * @return the {@link TextViewer}
+	 */
+	public TextViewer getViewer() {
+		return sourceViewer;
 	}
 
 	/**

@@ -103,6 +103,7 @@ Export-Package: org.eclipse.egit.ui;version="6.10.0";x-friends:="org.eclipse.egi
  org.eclipse.egit.ui.internal.expressions;version="6.10.0";x-friends:="org.eclipse.egit.gitflow.ui",
  org.eclipse.egit.ui.internal.factories;version="6.10.0";x-internal:=true,
  org.eclipse.egit.ui.internal.fetch;version="6.10.0";x-internal:=true,
+ org.eclipse.egit.ui.internal.filediff;version="6.10.0";x-internal:=true,
  org.eclipse.egit.ui.internal.gerrit;version="6.10.0";x-internal:=true,
  org.eclipse.egit.ui.internal.groups;version="6.10.0";x-internal:=true,
  org.eclipse.egit.ui.internal.handler;version="6.10.0";x-internal:=true,

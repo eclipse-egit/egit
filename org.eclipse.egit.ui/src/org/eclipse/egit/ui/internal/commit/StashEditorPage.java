@@ -24,6 +24,7 @@ import org.eclipse.egit.ui.UIUtils;
 import org.eclipse.egit.ui.internal.UIText;
 import org.eclipse.egit.ui.internal.history.CommitFileDiffViewer;
 import org.eclipse.egit.ui.internal.history.FileDiff;
+import org.eclipse.egit.ui.internal.selection.MultiViewerSelectionProvider;
 import org.eclipse.jface.layout.GridDataFactory;
 import org.eclipse.jgit.revwalk.RevCommit;
 import org.eclipse.swt.SWT;
@@ -85,13 +86,14 @@ public class StashEditorPage extends CommitEditorPage {
 	}
 
 	@Override
-	void createChangesArea(Composite displayArea, FormToolkit toolkit) {
-		createDiffArea(displayArea, toolkit, 2);
-		createIndexArea(displayArea, toolkit, 2);
+	void createChangesArea(MultiViewerSelectionProvider.Builder builder,
+			Composite displayArea, FormToolkit toolkit) {
+		createDiffArea(builder, displayArea, toolkit, 2);
+		createIndexArea(builder, displayArea, toolkit, 2);
 	}
 
-	private void createIndexArea(Composite parent,
-			FormToolkit toolkit, int span) {
+	private void createIndexArea(MultiViewerSelectionProvider.Builder builder,
+			Composite parent, FormToolkit toolkit, int span) {
 		String sectionTitle = MessageFormat.format(
 				UIText.StashEditorPage_StagedChanges, Integer.valueOf(0));
 		stagedDiffSection = createSection(parent, toolkit, sectionTitle, span,
@@ -103,11 +105,19 @@ public class StashEditorPage extends CommitEditorPage {
 		stagedDiffViewer = new CommitFileDiffViewer(unstagedChangesArea,
 				getSite(), SWT.MULTI | SWT.H_SCROLL | SWT.V_SCROLL | SWT.VIRTUAL
 						| SWT.FULL_SELECTION | toolkit.getBorderStyle());
+		builder.add(stagedDiffViewer);
 		Control control = stagedDiffViewer.getControl();
 		control.setData(FormToolkit.KEY_DRAW_BORDER, FormToolkit.TREE_BORDER);
 		GridDataFactory.fillDefaults().grab(true, true).applyTo(control);
 		addToFocusTracking(control);
 		updateSectionClient(stagedDiffSection, unstagedChangesArea, toolkit);
+	}
+
+	@Override
+	void registerContextMenus() {
+		super.registerContextMenus();
+		getSite().registerContextMenu(CommitFileDiffViewer.POPUP_ID,
+				stagedDiffViewer.getMenuManager(), stagedDiffViewer);
 	}
 
 	@Override

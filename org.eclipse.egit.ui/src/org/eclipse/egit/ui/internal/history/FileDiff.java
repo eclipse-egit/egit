@@ -22,6 +22,7 @@ import java.util.LinkedList;
 import java.util.List;
 
 import org.eclipse.core.resources.IResource;
+import org.eclipse.core.runtime.IAdaptable;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.SubMonitor;
 import org.eclipse.egit.core.EclipseGitProgressTransformer;
@@ -61,7 +62,7 @@ import org.eclipse.jgit.util.LfsFactory;
  * A class with information about the changes to a file introduced in a
  * commit.
  */
-public class FileDiff implements GitInfo {
+public class FileDiff implements IAdaptable, GitInfo {
 
 	/**
 	 * Comparator for sorting FileDiffs based on getPath(). Compares first the
@@ -607,5 +608,15 @@ public class FileDiff implements GitInfo {
 			return base.getId();
 		}
 		return commit.getId();
+	}
+
+	@Override
+	public <T> T getAdapter(Class<T> adapter) {
+		if (Repository.class == adapter) {
+			return adapter.cast(getRepository());
+		} else if (RevCommit.class == adapter) {
+			return adapter.cast(getCommit());
+		}
+		return null;
 	}
 }
