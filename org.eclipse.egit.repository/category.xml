@@ -234,6 +234,12 @@
    <bundle id="org.apache.commons.commons-logging">
       <category name="EGit.dependencies"/>
    </bundle>
+   <bundle id="org.eclipse.jetty.ee10.servlet">
+      <category name="EGit.dependencies"/>
+   </bundle>
+   <bundle id="org.eclipse.jetty.ee10.servlet.source">
+      <category name="EGit.dependencies"/>
+   </bundle>
    <category-def name="EGit" label="Git integration for Eclipse">
       <description>
          Versioning with Git and integration with Gerrit Code Review
