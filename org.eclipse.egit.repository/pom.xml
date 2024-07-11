@@ -48,7 +48,7 @@
           </goals>
           <phase>package</phase>
           <configuration>
-           <executionEnvironment>JavaSE-11</executionEnvironment>
+           <executionEnvironment>JavaSE-17</executionEnvironment>
            <appArgLine>-application org.eclipse.wtp.releng.tools.addRepoProperties</appArgLine>
            <!-- See <http://wiki.eclipse.org/Equinox/p2/p2.mirrorsURL>. -->
            <!-- See <http://wiki.eclipse.org/Equinox_p2_download_stats>. -->

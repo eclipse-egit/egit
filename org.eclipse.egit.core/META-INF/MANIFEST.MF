@@ -61,7 +61,7 @@ Export-Package: org.eclipse.egit.core;version="7.0.0";
  org.eclipse.egit.core.synchronize.dto;version="7.0.0";x-friends:="org.eclipse.egit.ui",
  org.eclipse.egit.core.util;version="7.0.0"
 Bundle-ActivationPolicy: lazy
-Bundle-RequiredExecutionEnvironment: JavaSE-11
+Bundle-RequiredExecutionEnvironment: JavaSE-17
 Import-Package: org.bouncycastle.openpgp;version="[1.77,2)",
  org.bouncycastle.openpgp.bc;version="[1.77,2)",
  org.bouncycastle.pkcs;version="[1.77,2)",
