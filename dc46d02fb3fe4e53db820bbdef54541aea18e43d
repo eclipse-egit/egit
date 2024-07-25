@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e9a4c73e_8e6db871",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1038175
+      },
+      "writtenOn": "2024-07-25T06:33:09Z",
+      "side": 1,
+      "message": "First ever commit here on an Eclipse project and using Gerrit, so hoping I\u0027m doing everything according to how it should\n\nThis patchset fixes one thing, but I have another change that build upon this that enabled better decoration for folders that contain a submodule in the Git Repositories View.\n\nI\u0027m wondering if I should include that \u0027better decoration\u0027 change in this patchset or not (and if yes, how would I do so? Just commit to my local branch and they push?)",
+      "revId": "dc46d02fb3fe4e53db820bbdef54541aea18e43d",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735"
+    }
+  ]
+}
