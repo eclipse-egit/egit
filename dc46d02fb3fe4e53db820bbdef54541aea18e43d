@@ -3,6 +3,40 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "42351bbf_5306b867",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1000671
+      },
+      "writtenOn": "2024-07-30T23:52:28Z",
+      "side": 1,
+      "message": "nit: first line of the commit should be shorter than 50 characters, at most 72, otherwise it doesn\u0027t render properly when using `git log --oneline`",
+      "revId": "dc46d02fb3fe4e53db820bbdef54541aea18e43d",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "9e1c602f_e05df0a8",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1000671
+      },
+      "writtenOn": "2024-07-30T23:52:28Z",
+      "side": 1,
+      "message": "Did you raise a bug for this problem ?\nLink it in a commit message trailer (last paragraph, above Change-Id:) like this:\n\nBug: jgit-\u003cissue number\u003e",
+      "revId": "dc46d02fb3fe4e53db820bbdef54541aea18e43d",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "e9a4c73e_8e6db871",
         "filename": "/PATCHSET_LEVEL",
         "patchSetId": 2
@@ -14,6 +48,58 @@
       "writtenOn": "2024-07-25T06:33:09Z",
       "side": 1,
       "message": "First ever commit here on an Eclipse project and using Gerrit, so hoping I\u0027m doing everything according to how it should\n\nThis patchset fixes one thing, but I have another change that build upon this that enabled better decoration for folders that contain a submodule in the Git Repositories View.\n\nI\u0027m wondering if I should include that \u0027better decoration\u0027 change in this patchset or not (and if yes, how would I do so? Just commit to my local branch and they push?)",
+      "revId": "dc46d02fb3fe4e53db820bbdef54541aea18e43d",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "935ba361_24205626",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000671
+      },
+      "writtenOn": "2024-07-30T23:52:28Z",
+      "side": 1,
+      "message": "looks pretty good for a first change :-)\n\nIf you have another change which depends on this one, then simply create another commit on top of this one and push again, this will create another change in review depending on this change. I.e. the second change can only be submitted when the first one was submitted (or is submitted together in one step).\n\nIf it\u0027s not depending on this change then create another local branch from the tip of the master branch and commit the other change on that other branch and push it for review. Then these two changes can be submitted independently.",
+      "parentUuid": "e9a4c73e_8e6db871",
+      "revId": "dc46d02fb3fe4e53db820bbdef54541aea18e43d",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "7ffc2fd2_1f6ceeaa",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/repository/RepositoriesViewContentProvider.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 469,
+      "author": {
+        "id": 1000671
+      },
+      "writtenOn": "2024-07-30T23:52:28Z",
+      "side": 1,
+      "message": "this method is used to traverse the working tree (see getChildren(Object) calling this method), though the submodules git repository is located under the superproject\u0027s .git folder, if the super project foo has a submodule bar mounted under path quox/bar/ in it\u0027s working tree then we have the following filesystem layout:\n\n```\nfoo/\n   .git/\n        (contains git repo of super project foo)\n        modules/     (contains submodules of the super project foo)\n                bar/ (contains git repo of submodule bar,\n                      note that there isn\u0027t another .git folder below bar/\n                      since it\u0027s a submodule which is located under the super \n                      project\u0027s .git/modules folder)\n   (working tree of super project foo)\n   quox/\n       bar/\n           (working tree of submodule bar)\n```",
+      "revId": "dc46d02fb3fe4e53db820bbdef54541aea18e43d",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e8e55e76_32a6e5a3",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/repository/RepositoriesViewContentProvider.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 486,
+      "author": {
+        "id": 1000671
+      },
+      "writtenOn": "2024-07-30T23:52:28Z",
+      "side": 1,
+      "message": "I think this isn\u0027t correct since this method is traversing the working tree, see above",
       "revId": "dc46d02fb3fe4e53db820bbdef54541aea18e43d",
       "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735"
     }
