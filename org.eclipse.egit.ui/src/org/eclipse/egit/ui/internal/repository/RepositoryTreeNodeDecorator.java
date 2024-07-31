@@ -44,7 +44,9 @@ import org.eclipse.egit.ui.internal.repository.tree.RepositoryTreeNode;
 import org.eclipse.egit.ui.internal.repository.tree.RepositoryTreeNodeType;
 import org.eclipse.egit.ui.internal.repository.tree.StashedCommitNode;
 import org.eclipse.egit.ui.internal.repository.tree.TagNode;
+import org.eclipse.jface.viewers.DecorationContext;
 import org.eclipse.jface.viewers.IDecoration;
+import org.eclipse.jface.viewers.IDecorationContext;
 import org.eclipse.jgit.annotations.NonNull;
 import org.eclipse.jgit.lib.Constants;
 import org.eclipse.jgit.lib.ObjectId;
@@ -255,6 +257,14 @@ public class RepositoryTreeNodeDecorator extends GitDecorator
 		case REPO:
 			decorateRepository(node, repository, decoration);
 			break;
+		case FOLDER:
+			// Making sure folders containing submodules are decorated
+			// as a Repository in the Git Repositories view
+			if (node.getParent().getRepository() != node
+						.getRepository()) {
+				decorateRepository(node, repository, decoration);
+			}
+			break;
 		case ADDITIONALREF:
 			decorateAdditionalRef((AdditionalRefNode) node,
 					decoration);
@@ -321,8 +331,9 @@ public class RepositoryTreeNodeDecorator extends GitDecorator
 
 	private void decorateRepository(RepositoryTreeNode<?> node,
 			@NonNull Repository repository, IDecoration decoration) {
-		boolean isSubModule = node.getParent() != null && node.getParent()
-				.getType() == RepositoryTreeNodeType.SUBMODULES;
+
+		boolean isSubModule = node.getParent() != null
+				&& node.getParent().getRepository() != node.getRepository();
 		if (RepositoryUtil.hasChanges(repository)) {
 			decoration.addPrefix(HAS_CHANGES_PREFIX);
 		}
@@ -348,6 +359,17 @@ public class RepositoryTreeNodeDecorator extends GitDecorator
 					suffix.append(' ').append(commit.getShortMessage());
 				}
 			}
+
+			// Make sure the entire Icon of the TreeNode can be replaced
+			IDecorationContext context = decoration.getDecorationContext();
+			if (context instanceof DecorationContext) {
+				((DecorationContext) context)
+						.putProperty(IDecoration.ENABLE_REPLACE, Boolean.TRUE);
+			}
+
+			// Give folders containing a submodule the submodule icon
+			decoration.addOverlay(RepositoryTreeNodeType.REPO.getIcon(),
+					IDecoration.REPLACE);
 		} else {
 			// Not a submodule
 			String branch = DecoratorRepositoryStateCache.INSTANCE
