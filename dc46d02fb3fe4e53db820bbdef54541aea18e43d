@@ -126,6 +126,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "2e1d63ea_301962b9",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1038175
+      },
+      "writtenOn": "2024-07-31T07:34:44Z",
+      "side": 1,
+      "message": "Seems like I need to figure this later question out straight away, as I seem to have missed an import... :-/\n\nI tried by adding another commit on my local branch using the same Change-Id relating to this change, but that doesn\u0027t seem to work... Am I correct in that I now have to amend my 1st commit (this change) and rebase the 2nd commit (the other change)?",
+      "parentUuid": "56fd519f_da0013a8",
+      "revId": "dc46d02fb3fe4e53db820bbdef54541aea18e43d",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "7ffc2fd2_1f6ceeaa",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/repository/RepositoriesViewContentProvider.java",
         "patchSetId": 2
