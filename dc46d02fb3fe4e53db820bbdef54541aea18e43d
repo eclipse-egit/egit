@@ -37,6 +37,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "15201081_c9a5ee6a",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1038175
+      },
+      "writtenOn": "2024-07-31T06:23:52Z",
+      "side": 1,
+      "message": "I have not, should I? And where to raise them these days, the jgit repo on github or?",
+      "parentUuid": "9e1c602f_e05df0a8",
+      "revId": "dc46d02fb3fe4e53db820bbdef54541aea18e43d",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "e9a4c73e_8e6db871",
         "filename": "/PATCHSET_LEVEL",
         "patchSetId": 2
@@ -89,6 +107,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "5a5bde26_8bd12fb2",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/repository/RepositoriesViewContentProvider.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 469,
+      "author": {
+        "id": 1038175
+      },
+      "writtenOn": "2024-07-31T06:23:52Z",
+      "side": 1,
+      "message": "When I wrote this change, I was wondering what the best approach would be and I settled on this one, as the submodule worktree would also have a .git file afaik\n\nThe upside of this approach is that it would pick up any subfolder containing a worktree of another repo, even if not explicitly registered in the super projects\u0027 git repo as submodule, the downside being that it might give a false positive (a rogue .git file somewhere) and would not pick up empty subfolders linked to a non-initialized/updated submodule.\n\nSo I see 2 ways forward:\n- replace the current logic based on `Files.exists(file.resolve(Constants.DOT_GIT))` entirely and replace with a check based on registered submodules in the superprojects\u0027.git /modules/ folder entirely\n- leave the `Files.exists(file.resolve(Constants.DOT_GIT))` logic, but add an || that checked the superprojects\u0027 .git folder to see if the subfolder is registered to contain a submodule, so it catches the scenario of a subfolder that is for a submodule which hasn\u0027t been updated yet to contain the submodule worktree\n\nI prefer the later option, as I think it covers a wider use-case (from what I read putting a .git file in a subfolder to point to another repo is used in some scenarios), but will also recognize subfolders as being for a submodule even when the submodule worktree isn\u0027t there yet.\n\nThe later part isn\u0027t needed to solve the bug at hand, but will aid in the follow-up steps I have in mind (better decoration of submodules in the Git Repository Explorer)\n\nThoughts? \n\nAs for implementing any check against the registered submodules in the superprojects\u0027 .git directory: Does E/JGit offer any utilities to get a list of all registered submodules? Browse the sourcecode, but didn\u0027t find anything that seemed useful for this",
+      "parentUuid": "7ffc2fd2_1f6ceeaa",
+      "revId": "dc46d02fb3fe4e53db820bbdef54541aea18e43d",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "e8e55e76_32a6e5a3",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/repository/RepositoriesViewContentProvider.java",
         "patchSetId": 2
@@ -100,6 +136,24 @@
       "writtenOn": "2024-07-30T23:52:28Z",
       "side": 1,
       "message": "I think this isn\u0027t correct since this method is traversing the working tree, see above",
+      "revId": "dc46d02fb3fe4e53db820bbdef54541aea18e43d",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "6d6fa77b_a77fe684",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/repository/RepositoriesViewContentProvider.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 486,
+      "author": {
+        "id": 1038175
+      },
+      "writtenOn": "2024-07-31T06:23:52Z",
+      "side": 1,
+      "message": "See https://eclipse.gerrithub.io/c/eclipse-egit/egit/+/1197547/comment/7ffc2fd2_1f6ceeaa/",
+      "parentUuid": "e8e55e76_32a6e5a3",
       "revId": "dc46d02fb3fe4e53db820bbdef54541aea18e43d",
       "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735"
     }
