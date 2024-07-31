@@ -464,4 +464,9 @@ class RepositoryHandle extends Repository {
 	public void autoGC(ProgressMonitor monitor) {
 		delegate.autoGC(monitor);
 	}
+
+	@Override
+	public File getCommonDirectory() {
+		return delegate.getCommonDirectory();
+	}
 }
