@@ -480,7 +480,17 @@ public class RepositoriesViewContentProvider implements ITreeContentProvider {
 								java.nio.file.Path file,
 								BasicFileAttributes attrs) throws IOException {
 							if (attrs.isDirectory()) {
-								children.add(new FolderNode(parentNode, repo,
+								Repository r = repo;
+								// Supply the correct repo for submodule folders
+								if (Files.exists(
+										file.resolve(Constants.DOT_GIT))) {
+									RepositoryMapping mapping = RepositoryMapping.getMapping(new Path(file.toString()));
+
+									if (mapping != null) {
+										r = mapping.getRepository();
+									}
+								}
+								children.add(new FolderNode(parentNode, r,
 										file.toFile()));
 							} else {
 								children.add(new FileNode(parentNode, repo,
