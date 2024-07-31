@@ -108,6 +108,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "56fd519f_da0013a8",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1038175
+      },
+      "writtenOn": "2024-07-31T07:07:26Z",
+      "side": 1,
+      "message": "Pushed the 2nd change, decorating subfolders representing other git repo\u0027s as such in the Git Repositories View\n\nAm very curious how I would now add to this \u0027change\u0027, as locally I have now a branch with 2 commits, the 1st for this change, the second for https://eclipse.gerrithub.io/c/eclipse-egit/egit/+/1198655/1",
+      "parentUuid": "935ba361_24205626",
+      "revId": "dc46d02fb3fe4e53db820bbdef54541aea18e43d",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "7ffc2fd2_1f6ceeaa",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/repository/RepositoriesViewContentProvider.java",
         "patchSetId": 2
