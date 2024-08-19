@@ -22,26 +22,19 @@ import java.time.Instant;
 import java.util.Date;
 
 import org.eclipse.egit.core.internal.CoreText;
-import org.eclipse.jgit.annotations.NonNull;
 import org.eclipse.jgit.api.errors.CanceledException;
-import org.eclipse.jgit.lib.AbstractGpgSignatureVerifier;
 import org.eclipse.jgit.lib.GpgConfig;
-import org.eclipse.jgit.lib.GpgSignatureVerifier;
+import org.eclipse.jgit.lib.Repository;
+import org.eclipse.jgit.lib.SignatureVerificationResult;
+import org.eclipse.jgit.lib.SignatureVerifier;
 import org.eclipse.jgit.util.StringUtils;
 import org.eclipse.jgit.util.TemporaryBuffer;
 
 /**
- * A {@link GpgSignatureVerifier} that calls an external GPG executable for
+ * A {@link SignatureVerifier} that calls an external GPG executable for
  * signature verification.
  */
-public class ExternalGpgSignatureVerifier extends AbstractGpgSignatureVerifier {
-
-	@Override
-	public SignatureVerification verify(byte[] data, byte[] signatureData)
-			throws IOException {
-		throw new UnsupportedOperationException(
-				"Call verify(GpgConfig, byte[], byte[]) instead."); //$NON-NLS-1$
-	}
+public class ExternalGpgSignatureVerifier implements SignatureVerifier {
 
 	/**
 	 * Verifies a given signature for given data.
@@ -53,14 +46,14 @@ public class ExternalGpgSignatureVerifier extends AbstractGpgSignatureVerifier {
 	 * @param signatureData
 	 *            the ASCII-armored signature
 	 * @return a
-	 *         {@link org.eclipse.jgit.lib.GpgSignatureVerifier.SignatureVerification}
+	 *         {@link org.eclipse.jgit.lib.SignatureVerifier.SignatureVerification}
 	 *         describing the outcome
 	 * @throws IOException
 	 *             if the signature cannot be verified
 	 */
 	@Override
-	public SignatureVerification verify(@NonNull GpgConfig config, byte[] data,
-			byte[] signatureData) throws IOException {
+	public SignatureVerification verify(Repository repository, GpgConfig config,
+			byte[] data, byte[] signatureData) throws IOException {
 		String program = config.getProgram();
 		if (StringUtils.isEmptyOrNull(program)) {
 			program = ExternalGpg.getGpg();
@@ -204,12 +197,14 @@ public class ExternalGpgSignatureVerifier extends AbstractGpgSignatureVerifier {
 			if (StringUtils.isEmptyOrNull(fingerprint)) {
 				fingerprint = keyId;
 			}
-			return new VerificationResult(createdAt, userId, fingerprint,
+			return new SignatureVerificationResult(getName(), createdAt, userId,
+					fingerprint,
 					userId, validates, expired, trust, message);
 		} catch (IOException e) {
 			message = MessageFormat.format(CoreText.ExternalGpgVerifier_failure,
 					e.getLocalizedMessage());
-			return new VerificationResult(createdAt, userId, fingerprint,
+			return new SignatureVerificationResult(getName(), createdAt, userId,
+					fingerprint,
 					userId, false, expired, trust, message);
 		}
 	}
@@ -227,78 +222,4 @@ public class ExternalGpgSignatureVerifier extends AbstractGpgSignatureVerifier {
 		// Gpg4Win does; it runs a keyboxd daemon that maintains an in-memory
 		// cache of loaded public keys.
 	}
-
-	private static class VerificationResult implements SignatureVerification {
-
-		private final Date creationDate;
-
-		private final String signer;
-
-		private final String keyUser;
-
-		private final String fingerprint;
-
-		private final boolean verified;
-
-		private final boolean expired;
-
-		private final @NonNull TrustLevel trustLevel;
-
-		private final String message;
-
-		public VerificationResult(Date creationDate, String signer,
-				String fingerprint, String user, boolean verified,
-				boolean expired, @NonNull TrustLevel trust,
-				String message) {
-			this.creationDate = creationDate;
-			this.signer = signer;
-			this.fingerprint = fingerprint;
-			this.keyUser = user;
-			this.verified = verified;
-			this.expired = expired;
-			this.trustLevel = trust;
-			this.message = message;
-		}
-
-		@Override
-		public Date getCreationDate() {
-			return creationDate;
-		}
-
-		@Override
-		public String getSigner() {
-			return signer;
-		}
-
-		@Override
-		public String getKeyUser() {
-			return keyUser;
-		}
-
-		@Override
-		public String getKeyFingerprint() {
-			return fingerprint;
-		}
-
-		@Override
-		public boolean isExpired() {
-			return expired;
-		}
-
-		@Override
-		public TrustLevel getTrustLevel() {
-			return trustLevel;
-		}
-
-		@Override
-		public String getMessage() {
-			return message;
-		}
-
-		@Override
-		public boolean getVerified() {
-			return verified;
-		}
-	}
-
 }

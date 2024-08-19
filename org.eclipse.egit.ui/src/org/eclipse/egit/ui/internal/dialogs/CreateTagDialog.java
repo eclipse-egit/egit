@@ -26,7 +26,6 @@ import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.core.runtime.jobs.Job;
-import org.eclipse.egit.core.internal.signing.GpgSetup;
 import org.eclipse.egit.core.settings.GitSettings;
 import org.eclipse.egit.ui.Activator;
 import org.eclipse.egit.ui.JobFamilies;
@@ -63,12 +62,12 @@ import org.eclipse.jgit.lib.CommitConfig;
 import org.eclipse.jgit.lib.CommitConfig.CleanupMode;
 import org.eclipse.jgit.lib.Constants;
 import org.eclipse.jgit.lib.GpgConfig;
-import org.eclipse.jgit.lib.GpgObjectSigner;
-import org.eclipse.jgit.lib.GpgSigner;
 import org.eclipse.jgit.lib.ObjectId;
 import org.eclipse.jgit.lib.PersonIdent;
 import org.eclipse.jgit.lib.Ref;
 import org.eclipse.jgit.lib.Repository;
+import org.eclipse.jgit.lib.Signer;
+import org.eclipse.jgit.lib.Signers;
 import org.eclipse.jgit.revwalk.RevCommit;
 import org.eclipse.jgit.revwalk.RevObject;
 import org.eclipse.jgit.revwalk.RevSort;
@@ -591,27 +590,28 @@ public class CreateTagDialog extends TitleAreaDialog {
 			}
 		});
 
-		GpgSigner signer = GpgSetup.getDefault();
-		if (signer instanceof GpgObjectSigner) {
-			PersonIdent tagger = new PersonIdent(repo);
-			// Ensure the Eclipse preference, if set, overrides the git config
-			File gpg = GitSettings.getGpgExecutable();
-			GpgConfig gpgConfig = new GpgConfig(repo.getConfig()) {
+		// Ensure the Eclipse preference, if set, overrides the git config
+		Repository db = repo;
+		File gpg = GitSettings.getGpgExecutable();
+		GpgConfig gpgConfig = new GpgConfig(db.getConfig()) {
 
-				@Override
-				public String getProgram() {
-					return gpg != null ? gpg.getAbsolutePath()
-							: super.getProgram();
-				}
-			};
-			if (SignatureUtils.checkSigningKey(signer, gpgConfig, tagger)) {
+			@Override
+			public String getProgram() {
+				return gpg != null ? gpg.getAbsolutePath()
+						: super.getProgram();
+			}
+		};
+		Signer signer = Signers.get(gpgConfig.getKeyFormat());
+		if (signer != null) {
+			PersonIdent tagger = new PersonIdent(db);
+			if (SignatureUtils.checkSigningKey(db, signer, gpgConfig,
+					tagger)) {
 				// We can sign at all.
 				signAll = gpgConfig.isSignAllTags();
 				signAnnotated = gpgConfig.isSignAnnotated();
 				signButton = new Button(left, SWT.CHECK);
 				signButton.setText(UIText.CreateTagDialog_signTag);
-				signButton
-						.setToolTipText(UIText.CreateTagDialog_signTagToolTip);
+				signButton.setToolTipText(UIText.CreateTagDialog_signTagToolTip);
 				signButton.setSelection(signAll);
 				signButton.addSelectionListener(new SelectionAdapter() {
 

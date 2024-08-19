@@ -33,7 +33,6 @@ import org.eclipse.egit.core.internal.CoreText;
 import org.eclipse.egit.core.internal.Utils;
 import org.eclipse.egit.core.internal.job.RuleUtil;
 import org.eclipse.egit.core.internal.signing.GpgConfigurationException;
-import org.eclipse.egit.core.internal.signing.GpgSetup;
 import org.eclipse.egit.core.settings.GitSettings;
 import org.eclipse.jgit.api.errors.CanceledException;
 import org.eclipse.jgit.api.errors.JGitInternalException;
@@ -42,14 +41,14 @@ import org.eclipse.jgit.dircache.DirCache;
 import org.eclipse.jgit.lib.CommitBuilder;
 import org.eclipse.jgit.lib.Constants;
 import org.eclipse.jgit.lib.GpgConfig;
-import org.eclipse.jgit.lib.GpgObjectSigner;
-import org.eclipse.jgit.lib.GpgSigner;
 import org.eclipse.jgit.lib.ObjectId;
 import org.eclipse.jgit.lib.ObjectInserter;
 import org.eclipse.jgit.lib.PersonIdent;
 import org.eclipse.jgit.lib.Ref;
 import org.eclipse.jgit.lib.RefUpdate;
 import org.eclipse.jgit.lib.Repository;
+import org.eclipse.jgit.lib.Signer;
+import org.eclipse.jgit.lib.Signers;
 import org.eclipse.jgit.revwalk.RevCommit;
 import org.eclipse.jgit.revwalk.RevSort;
 import org.eclipse.jgit.revwalk.RevWalk;
@@ -176,10 +175,10 @@ public class RewordCommitOperation implements IEGitOperation {
 			}
 		};
 		boolean signAllCommits = gpgConfig.isSignCommits();
-		GpgSigner gpgSigner = GpgSetup.getDefault();
-		if (gpgSigner != null
+		Signer signer = Signers.get(gpgConfig.getKeyFormat());
+		if (signer != null
 				&& (signAllCommits || commit.getRawGpgSignature() != null)) {
-			gpgSigner = sign(builder, gpgSigner, gpgConfig, committer, commit);
+			signer = sign(builder, signer, gpgConfig, committer, commit);
 		}
 		Map<ObjectId, ObjectId> rewritten = new HashMap<>();
 		String newCommitId = null;
@@ -206,10 +205,9 @@ public class RewordCommitOperation implements IEGitOperation {
 				}
 				committer = new PersonIdent(committer); // Update when
 				builder = copy(c, newParents, committer, c.getFullMessage());
-				if (gpgSigner != null
+				if (signer != null
 						&& (signAllCommits || c.getRawGpgSignature() != null)) {
-					gpgSigner = sign(builder, gpgSigner, gpgConfig, committer,
-							c);
+					signer = sign(builder, signer, gpgConfig, committer, c);
 				}
 				rewritten.put(c.getId(), inserter.insert(builder));
 				progress.worked(1);
@@ -275,32 +273,29 @@ public class RewordCommitOperation implements IEGitOperation {
 		return builder;
 	}
 
-	private GpgSigner sign(CommitBuilder builder, GpgSigner signer,
-			GpgConfig config, PersonIdent committer, RevCommit original)
-			throws JGitInternalException {
+	private Signer sign(CommitBuilder builder, Signer signer, GpgConfig config,
+			PersonIdent committer, RevCommit original)
+			throws IOException, JGitInternalException {
 		PersonIdent oldCommitter = original.getCommitterIdent();
 		if (committer.getName().equals(oldCommitter.getName()) && committer
 				.getEmailAddress().equals(oldCommitter.getEmailAddress())) {
 			// We don't sign commits that were committed by someone else. If
 			// they were signed, the signature will be dropped.
 			try {
-				if (signer instanceof GpgObjectSigner) {
-					((GpgObjectSigner) signer).signObject(builder,
-							config.getSigningKey(), committer,
-							CredentialsProvider.getDefault(), config);
-				} else {
-					signer.sign(builder, config.getSigningKey(), committer,
-							CredentialsProvider.getDefault());
-				}
+				signer.signObject(repository, config, builder, oldCommitter,
+						config.getSigningKey(),
+						CredentialsProvider.getDefault());
 			} catch (CanceledException e) {
 				// User cancelled signing: don't sign and assume he doesn't want
 				// to sign any other commit.
 				return null;
-			} catch (JGitInternalException
+			} catch (JGitInternalException | IOException
 					| UnsupportedSigningFormatException e) {
 				if (config.isSignCommits()) {
 					if (e instanceof JGitInternalException) {
 						throw (JGitInternalException) e;
+					} else if (e instanceof IOException) {
+						throw (IOException) e;
 					} else {
 						throw new JGitInternalException(e.getMessage(), e);
 					}

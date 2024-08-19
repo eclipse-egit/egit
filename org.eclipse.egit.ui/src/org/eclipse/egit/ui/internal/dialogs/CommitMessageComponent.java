@@ -53,12 +53,13 @@ import org.eclipse.jgit.lib.CommitConfig;
 import org.eclipse.jgit.lib.CommitConfig.CleanupMode;
 import org.eclipse.jgit.lib.Constants;
 import org.eclipse.jgit.lib.GpgConfig;
-import org.eclipse.jgit.lib.GpgConfig.GpgFormat;
 import org.eclipse.jgit.lib.ObjectId;
 import org.eclipse.jgit.lib.PersonIdent;
 import org.eclipse.jgit.lib.Ref;
 import org.eclipse.jgit.lib.Repository;
 import org.eclipse.jgit.lib.RepositoryState;
+import org.eclipse.jgit.lib.Signer;
+import org.eclipse.jgit.lib.Signers;
 import org.eclipse.jgit.revwalk.RevCommit;
 import org.eclipse.jgit.util.ChangeIdUtil;
 import org.eclipse.jgit.util.RawParseUtils;
@@ -657,25 +658,22 @@ public class CommitMessageComponent {
 			return false;
 		}
 
-		if (signCommit) {
+		Repository repo = repository;
+		if (signCommit && repo != null) {
 			// Ensure the Eclipse preference, if set, overrides the git config
 			File gpg = GitSettings.getGpgExecutable();
-			GpgConfig gpgConfig;
-			if (repository != null) {
-				gpgConfig = new GpgConfig(repository.getConfig()) {
+			GpgConfig gpgConfig = new GpgConfig(repo.getConfig()) {
 
-					@Override
-					public String getProgram() {
-						return gpg != null ? gpg.getAbsolutePath()
-								: super.getProgram();
-					}
-				};
-			} else {
-				gpgConfig = new GpgConfig(null, GpgFormat.OPENPGP,
-						gpg != null ? gpg.getAbsolutePath() : null);
-			}
+				@Override
+				public String getProgram() {
+					return gpg != null ? gpg.getAbsolutePath()
+							: super.getProgram();
+				}
+			};
+			Signer signer = Signers.get(gpgConfig.getKeyFormat());
 			boolean signingKeyAvailable = SignatureUtils
-					.checkSigningKey(gpgConfig, committerPersonIdent);
+					.checkSigningKey(repo, signer, gpgConfig,
+							committerPersonIdent);
 			if (!signingKeyAvailable) {
 				String signingKey = gpgConfig.getSigningKey();
 				if (StringUtils.isEmptyOrNull(signingKey)) {

@@ -38,7 +38,6 @@ import org.eclipse.core.runtime.jobs.IJobChangeEvent;
 import org.eclipse.core.runtime.jobs.JobChangeAdapter;
 import org.eclipse.egit.core.RepositoryUtil;
 import org.eclipse.egit.core.internal.gerrit.GerritUtil;
-import org.eclipse.egit.core.internal.signing.GpgSetup;
 import org.eclipse.egit.core.internal.util.ResourceUtil;
 import org.eclipse.egit.ui.Activator;
 import org.eclipse.egit.ui.UIPreferences;
@@ -1255,12 +1254,8 @@ public class CommitDialog extends TitleAreaDialog {
 			}
 		});
 
-		boolean canSign = GpgSetup.getDefault() != null;
-		signCommitItem.setEnabled(canSign);
-		if (!canSign) {
-			signCommitItem
-					.setToolTipText(UIText.CommitDialog_Sign_Not_Available);
-		}
+		signCommitItem.setEnabled(true);
+		// TODO UIText.CommitDialog_Sign_Not_Available
 		signCommitItem.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
