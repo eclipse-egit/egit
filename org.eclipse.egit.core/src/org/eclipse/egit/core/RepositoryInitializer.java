@@ -72,7 +72,7 @@ public class RepositoryInitializer {
 		// Make sure the correct GpgSigner is set early, otherwise it may be
 		// possible that a git operation is run before it is set, which then
 		// might use the wrong signer.
-		GpgSetup.getDefault();
+		GpgSetup.update();
 		updateTextBufferSize();
 		prefsListener = event -> {
 			if (GitCorePreferences.core_gitServers.equals(event.getKey())) {
