@@ -76,7 +76,6 @@ import org.eclipse.egit.core.internal.indexdiff.IndexDiffChangedListener;
 import org.eclipse.egit.core.internal.indexdiff.IndexDiffData;
 import org.eclipse.egit.core.internal.job.JobUtil;
 import org.eclipse.egit.core.internal.job.RuleUtil;
-import org.eclipse.egit.core.internal.signing.GpgSetup;
 import org.eclipse.egit.core.internal.storage.GitFileRevision;
 import org.eclipse.egit.core.op.AssumeUnchangedOperation;
 import org.eclipse.egit.core.op.CommitOperation;
@@ -1065,12 +1064,8 @@ public class StagingView extends ViewPart
 		};
 		signCommitAction.setImageDescriptor(UIIcons.SIGN_COMMIT);
 		commitMessageToolBarManager.add(signCommitAction);
-		boolean canSign = GpgSetup.getDefault() != null;
-		signCommitAction.setEnabled(canSign);
-		if (!canSign) {
-			signCommitAction
-					.setToolTipText(UIText.StagingView_Sign_Not_Available);
-		}
+		signCommitAction.setEnabled(true);
+		// TODO: UIText.StagingView_Sign_Not_Available
 
 		addChangeIdAction = new Action(UIText.StagingView_Add_Change_ID,
 				IAction.AS_CHECK_BOX) {
@@ -1999,7 +1994,7 @@ public class StagingView extends ViewPart
 		enableAuthorText(enabled);
 		amendPreviousCommitAction.setEnabled(enabled);
 		signedOffByAction.setEnabled(enabled);
-		signCommitAction.setEnabled(enabled && GpgSetup.getDefault() != null);
+		signCommitAction.setEnabled(enabled);
 		addChangeIdAction.setEnabled(enabled);
 		if (enabled) {
 			updateCommitButtons();
