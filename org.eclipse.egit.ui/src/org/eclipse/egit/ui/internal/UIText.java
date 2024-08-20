@@ -21,6 +21,7 @@
  * Copyright (C) 2019, Alexander Nittka <alex@nittka.de> bug 545123
  * Copyright (C) 2019, Simon Muschel <smuschel@gmx.de> - Bug 451087, 451817
  * Copyright (C) 2020, Andre Bossert <andre.bossert@siemens.com>
+ * Copyright (C) 2024, Olivier Prouvost <olivier.prouvost@opcoach.com>
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License 2.0
@@ -6465,6 +6466,12 @@ public class UIText extends NLS {
 
 	/** */
 	public static String EditableRevision_CannotSave;
+
+	/** */
+	public static String PerspectiveSwitchDialog_Title;
+
+	/** */
+	public static String PerspectiveSwitchDialog_Message;
 
 	static {
 		initializeMessages(BUNDLE_NAME, UIText.class);
