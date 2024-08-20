@@ -12,6 +12,7 @@
  *    Mathias Kinzler (SAP AG) - initial implementation
  *    Matthias Sohn (SAP AG) - imply .git if parent folder is given
  *    Sascha Vogt (SEEBURGER AG) - strip "git clone" from pasted URL
+ *    Olivier Prouvost (OPCoach) - manage git paste from any view
  *******************************************************************************/
 package org.eclipse.egit.ui.internal.repository.tree.command;
 
@@ -53,13 +54,13 @@ import org.eclipse.swt.dnd.TextTransfer;
  * system. The "Directory" field of the dialog should be pre-filled with the
  * directory from the clip-board.
  */
-public class PasteCommand extends
-		RepositoriesViewCommandHandler<RepositoryTreeNode> {
+public class PasteCommand
+		extends RepositoriesViewCommandHandler<RepositoryTreeNode> {
 
 	@Override
 	public Object execute(ExecutionEvent event) throws ExecutionException {
 		RepositoriesView view = getView(event);
-		if (view.pasteInEditor()) {
+		if (view != null && view.pasteInEditor()) {
 			return null;
 		}
 		// we check if the pasted content is a directory
@@ -68,8 +69,8 @@ public class PasteCommand extends
 
 		Clipboard clip = new Clipboard(getShell(event).getDisplay());
 		try {
-			String content = (String) clip.getContents(TextTransfer
-					.getInstance());
+			String content = (String) clip
+					.getContents(TextTransfer.getInstance());
 			if (content == null) {
 				errorMessage = UIText.RepositoriesView_NothingToPasteMessage;
 				return null;
@@ -93,10 +94,11 @@ public class PasteCommand extends
 			if (!RepositoryCache.FileKey.isGitRepository(file, FS.DETECTED)) {
 				// try if .git folder is one level below
 				file = new File(file, Constants.DOT_GIT);
-				if (!RepositoryCache.FileKey.isGitRepository(file, FS.DETECTED)) {
-					errorMessage = NLS
-							.bind(UIText.RepositoriesView_ClipboardContentNoGitRepoMessage,
-									content);
+				if (!RepositoryCache.FileKey.isGitRepository(file,
+						FS.DETECTED)) {
+					errorMessage = NLS.bind(
+							UIText.RepositoriesView_ClipboardContentNoGitRepoMessage,
+							content);
 					return null;
 				}
 			}
@@ -107,7 +109,9 @@ public class PasteCommand extends
 				if (group != null) {
 					RepositoryGroups.INSTANCE.addRepositoriesToGroup(group,
 							Collections.singletonList(file));
-					view.expandNodeForGroup(group);
+					if (view != null) {
+						view.expandNodeForGroup(group);
+					}
 				}
 				// let's do the auto-refresh the rest
 			} else {
@@ -123,6 +127,7 @@ public class PasteCommand extends
 			}
 		}
 	}
+
 
 	private URIish getCloneURI(String content) {
 		String sanitized = GitUrlChecker.sanitizeAsGitUrl(content);
