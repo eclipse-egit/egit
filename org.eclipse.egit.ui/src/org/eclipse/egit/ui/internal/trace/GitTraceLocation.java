@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2010, 2021 SAP AG and others.
+ * Copyright (c) 2010, 2021, 2024 SAP AG and others.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License 2.0
@@ -10,6 +10,7 @@
  *
  * Contributors:
  *    Mathias Kinzler (SAP AG) - initial implementation
+ *    Olivier Prouvost (OPCoach) - Add clipboard trace
  *******************************************************************************/
 package org.eclipse.egit.ui.internal.trace;
 
@@ -37,7 +38,9 @@ public enum GitTraceLocation implements ITraceLocation {
 	/** Properties testers */
 	PROPERTIESTESTER("/debug/ui/propertiestesters"), //$NON-NLS-1$
 	/** Selection handling */
-	SELECTION("/debug/ui/selection"); //$NON-NLS-1$
+	SELECTION("/debug/ui/selection"), //$NON-NLS-1$
+	/** Clipboard handling */
+	CLIPBOARD("/debug/ui/clipboard"); //$NON-NLS-1$
 
 	/**
 	 * Initialize the locations

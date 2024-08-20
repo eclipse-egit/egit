@@ -2108,9 +2108,25 @@
                class="org.eclipse.egit.ui.internal.repository.tree.command.PasteCommand">
          </class>
          <activeWhen>
-            <with variable="activePart">
-               <instanceof value="org.eclipse.egit.ui.internal.repository.RepositoriesView" />
-            </with>
+            <and>
+               <test
+                     property="Clipboard.containsGitURL"
+                     value="true">
+               </test>
+               <with
+                     variable="activePart">
+                  <and>
+                     <not>
+                        <instanceof
+                              value="org.eclipse.egit.ui.internal.staging.StagingView">
+                        </instanceof>
+                     </not>
+                     <instanceof
+                           value="org.eclipse.ui.IViewPart">
+                     </instanceof>
+                  </and>
+               </with>
+            </and>
          </activeWhen>
       </handler>
       <handler
@@ -7402,6 +7418,13 @@
             properties="canShowRevisions"
             type="org.eclipse.ui.IEditorPart">
          <!-- Type cannot be restricted to text editors because of multi-page editors. -->
+      </propertyTester>
+      <propertyTester
+            class="org.eclipse.egit.ui.internal.clipboard.ClipboardPropertyTester"
+            id="org.eclipse.egit.ui.ClipboardTester"
+            namespace="Clipboard"
+            properties="containsGitURL"
+            type="java.lang.Object">
       </propertyTester>
    </extension>
    <extension
