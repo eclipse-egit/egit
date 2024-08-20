@@ -6466,6 +6466,12 @@ public class UIText extends NLS {
 	/** */
 	public static String EditableRevision_CannotSave;
 
+	/** */
+	public static String PerspectiveSwitchDialog_Title;
+
+	/** */
+	public static String PerspectiveSwitchDialog_Message;
+
 	static {
 		initializeMessages(BUNDLE_NAME, UIText.class);
 	}

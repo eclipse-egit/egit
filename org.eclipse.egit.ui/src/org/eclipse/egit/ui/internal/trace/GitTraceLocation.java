@@ -37,7 +37,9 @@ public enum GitTraceLocation implements ITraceLocation {
 	/** Properties testers */
 	PROPERTIESTESTER("/debug/ui/propertiestesters"), //$NON-NLS-1$
 	/** Selection handling */
-	SELECTION("/debug/ui/selection"); //$NON-NLS-1$
+	SELECTION("/debug/ui/selection"), //$NON-NLS-1$
+	/** Clipboard handling */
+	CLIPBOARD("/debug/ui/clipboard"); //$NON-NLS-1$
 
 	/**
 	 * Initialize the locations

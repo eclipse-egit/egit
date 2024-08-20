@@ -22,12 +22,14 @@ import java.util.Collections;
 import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.commands.ExecutionException;
 import org.eclipse.egit.core.RepositoryUtil;
+import org.eclipse.egit.ui.GitRepositoriesPerspectiveFactory;
 import org.eclipse.egit.ui.internal.UIText;
 import org.eclipse.egit.ui.internal.clone.GitUrlChecker;
 import org.eclipse.egit.ui.internal.groups.RepositoryGroup;
 import org.eclipse.egit.ui.internal.groups.RepositoryGroups;
 import org.eclipse.egit.ui.internal.repository.RepositoriesView;
 import org.eclipse.egit.ui.internal.repository.tree.RepositoryTreeNode;
+import org.eclipse.jface.dialogs.IDialogConstants;
 import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jgit.lib.Constants;
 import org.eclipse.jgit.lib.RepositoryCache;
@@ -37,6 +39,11 @@ import org.eclipse.jgit.util.FileUtils;
 import org.eclipse.osgi.util.NLS;
 import org.eclipse.swt.dnd.Clipboard;
 import org.eclipse.swt.dnd.TextTransfer;
+import org.eclipse.ui.IPerspectiveDescriptor;
+import org.eclipse.ui.IWorkbenchPage;
+import org.eclipse.ui.IWorkbenchWindow;
+import org.eclipse.ui.PlatformUI;
+import org.eclipse.ui.WorkbenchException;
 
 /**
  * "Adds" a Repository upon pasting the clip-board contents if it contains a
@@ -59,7 +66,7 @@ public class PasteCommand extends
 	@Override
 	public Object execute(ExecutionEvent event) throws ExecutionException {
 		RepositoriesView view = getView(event);
-		if (view.pasteInEditor()) {
+		if (view != null && view.pasteInEditor()) {
 			return null;
 		}
 		// we check if the pasted content is a directory
@@ -86,6 +93,7 @@ public class PasteCommand extends
 					// start clone wizard
 					CloneCommand cmd = new CloneCommand(cloneURI.toString());
 					cmd.execute(event);
+					askToSwitchToGitPerspective();
 					return null;
 				}
 			}
@@ -107,7 +115,9 @@ public class PasteCommand extends
 				if (group != null) {
 					RepositoryGroups.INSTANCE.addRepositoriesToGroup(group,
 							Collections.singletonList(file));
-					view.expandNodeForGroup(group);
+					if (view != null) {
+						view.expandNodeForGroup(group);
+					}
 				}
 				// let's do the auto-refresh the rest
 			} else {
@@ -122,6 +132,38 @@ public class PasteCommand extends
 						UIText.RepositoriesView_CannotPaste, errorMessage);
 			}
 		}
+	}
+
+	private void askToSwitchToGitPerspective()
+	{
+		IWorkbenchWindow window = PlatformUI.getWorkbench()
+				.getActiveWorkbenchWindow();
+		IWorkbenchPage activePage = window.getActivePage();
+		IPerspectiveDescriptor perspective = activePage.getPerspective();
+
+		if (!perspective.getId()
+				.equals(GitRepositoriesPerspectiveFactory.PERSPECTIVE_ID)) {
+			MessageDialog dialog = new MessageDialog(window.getShell(),
+					UIText.PerspectiveSwitchDialog_Title, null,
+					UIText.PerspectiveSwitchDialog_Message,
+					MessageDialog.CONFIRM,
+					new String[] { IDialogConstants.YES_LABEL,
+							IDialogConstants.NO_LABEL },
+					0);
+
+			if (dialog.open() == 0) {
+				{
+					try {
+						PlatformUI.getWorkbench().showPerspective(
+								GitRepositoriesPerspectiveFactory.PERSPECTIVE_ID,
+								window);
+					} catch (WorkbenchException e) {
+						e.printStackTrace();
+					}
+				}
+			}
+		}
+
 	}
 
 	private URIish getCloneURI(String content) {

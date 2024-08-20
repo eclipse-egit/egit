@@ -27,6 +27,9 @@ import org.eclipse.ui.IPerspectiveFactory;
  */
 public class GitRepositoriesPerspectiveFactory implements IPerspectiveFactory {
 
+	/** Perspective id */
+	public static final String PERSPECTIVE_ID = "org.eclipse.egit.ui.GitRepositoryExploring"; //$NON-NLS-1$
+
 	@Override
 	public void createInitialLayout(IPageLayout layout) {
 
