@@ -16,7 +16,6 @@
 
 package org.eclipse.egit.ui.internal.history;
 
-import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -28,7 +27,7 @@ import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.OperationCanceledException;
 import org.eclipse.core.runtime.SubMonitor;
 import org.eclipse.egit.core.EclipseGitProgressTransformer;
-import org.eclipse.egit.core.settings.GitSettings;
+import org.eclipse.egit.core.op.EGitGpgConfig;
 import org.eclipse.egit.ui.Activator;
 import org.eclipse.egit.ui.UIPreferences;
 import org.eclipse.egit.ui.internal.CommonUtils;
@@ -120,16 +119,7 @@ public class CommitInfoBuilder {
 		RevCommit c = commit;
 		if (preferences.getBoolean(UIPreferences.HISTORY_VERIFY_SIGNATURES)
 				&& c.getRawGpgSignature() != null) {
-			// Ensure the Eclipse preference, if set, overrides the git config
-			File gpg = GitSettings.getGpgExecutable();
-			GpgConfig cfg = new GpgConfig(db.getConfig()) {
-
-				@Override
-				public String getProgram() {
-					return gpg != null ? gpg.getAbsolutePath()
-							: super.getProgram();
-				}
-			};
+			GpgConfig cfg = new EGitGpgConfig(db.getConfig());
 
 			try {
 				Repository repo = db;

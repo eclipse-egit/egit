@@ -17,6 +17,7 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.nio.charset.StandardCharsets;
 import java.text.MessageFormat;
+import java.util.Arrays;
 import java.util.Map;
 
 import org.bouncycastle.openpgp.PGPCompressedData;
@@ -30,6 +31,7 @@ import org.eclipse.egit.core.Activator;
 import org.eclipse.egit.core.internal.CoreText;
 import org.eclipse.jgit.api.errors.CanceledException;
 import org.eclipse.jgit.api.errors.UnsupportedSigningFormatException;
+import org.eclipse.jgit.lib.Constants;
 import org.eclipse.jgit.lib.GpgConfig;
 import org.eclipse.jgit.lib.GpgSignature;
 import org.eclipse.jgit.lib.PersonIdent;
@@ -53,6 +55,26 @@ public class ExternalGpgSigner implements Signer {
 	// variable when calling gpg.
 	private static final String GPG_TTY = "GPG_TTY"; //$NON-NLS-1$
 
+	private final boolean x509;
+
+	/**
+	 * Creates an instance using "gpg" as the program to execute.
+	 */
+	public ExternalGpgSigner() {
+		this(false);
+	}
+
+	/**
+	 * Creates an instance using either "gpg" or "gpgsm" as the program to
+	 * execute.
+	 *
+	 * @param x509
+	 *            {@code true} to use "gpgsm"; {@code false} to use "gpg"
+	 */
+	public ExternalGpgSigner(boolean x509) {
+		this.x509 = x509;
+	}
+
 	@Override
 	public boolean canLocateSigningKey(Repository repository, GpgConfig config,
 			PersonIdent committer, String signingKey,
@@ -60,7 +82,7 @@ public class ExternalGpgSigner implements Signer {
 		// Ignore the CredentialsProvider. We let GPG handle all this.
 		String program = config.getProgram();
 		if (StringUtils.isEmptyOrNull(program)) {
-			program = ExternalGpg.getGpg();
+			program = x509 ? ExternalGpg.getGpgSm() : ExternalGpg.getGpg();
 			if (StringUtils.isEmptyOrNull(program)) {
 				return false;
 			}
@@ -75,16 +97,23 @@ public class ExternalGpgSigner implements Signer {
 		ProcessBuilder process = new ProcessBuilder();
 		// For the output format, see
 		// https://github.com/gpg/gnupg/blob/master/doc/DETAILS
-		//
-		// --no-auto-key-locate prevents GPG from asking external sources (like
-		// key servers). See
-		// https://www.gnupg.org/documentation/manuals/gnupg/GPG-Configuration-Options.html#index-auto_002dkey_002dlocate
-		process.command(program, "--locate-keys", //$NON-NLS-1$
-				"--no-auto-key-locate", //$NON-NLS-1$
-				"--with-colons", //$NON-NLS-1$
-				"--batch", //$NON-NLS-1$
-				"--no-tty", //$NON-NLS-1$
-				keySpec);
+		if (x509) {
+			process.command(program, "--list-secret-keys", //$NON-NLS-1$
+					"--with-colons", //$NON-NLS-1$
+					"--batch", //$NON-NLS-1$
+					"--no-tty", //$NON-NLS-1$
+					keySpec);
+		} else {
+			// --no-auto-key-locate prevents GPG from asking external sources
+			// (like key servers). See
+			// https://www.gnupg.org/documentation/manuals/gnupg/GPG-Configuration-Options.html#index-auto_002dkey_002dlocate
+			process.command(program, "--locate-keys", //$NON-NLS-1$
+					"--no-auto-key-locate", //$NON-NLS-1$
+					"--with-colons", //$NON-NLS-1$
+					"--batch", //$NON-NLS-1$
+					"--no-tty", //$NON-NLS-1$
+					keySpec);
+		}
 		gpgEnvironment(process);
 		try {
 			boolean[] result = { false };
@@ -96,8 +125,7 @@ public class ExternalGpgSigner implements Signer {
 					boolean keyFound = false;
 					String line;
 					while ((line = r.readLine()) != null) {
-						if (line.startsWith("pub:") //$NON-NLS-1$
-								|| line.startsWith("sub:")) { //$NON-NLS-1$
+						if (isKeyLine(line)) {
 							String[] fields = line.split(":"); //$NON-NLS-1$
 							if (fields.length > 11
 									&& fields[11].indexOf('s') >= 0) {
@@ -124,6 +152,13 @@ public class ExternalGpgSigner implements Signer {
 		}
 	}
 
+	private boolean isKeyLine(String line) {
+		if (x509) {
+			return line.startsWith("crs:"); //$NON-NLS-1$
+		}
+		return line.startsWith("pub:") || line.startsWith("sub:"); //$NON-NLS-1$ //$NON-NLS-2$
+	}
+
 	@Override
 	public GpgSignature sign(Repository repository, GpgConfig config,
 			byte[] data, PersonIdent committer, String signingKey,
@@ -134,7 +169,7 @@ public class ExternalGpgSigner implements Signer {
 		// integration.
 		String program = config.getProgram();
 		if (StringUtils.isEmptyOrNull(program)) {
-			program = ExternalGpg.getGpg();
+			program = x509 ? ExternalGpg.getGpgSm() : ExternalGpg.getGpg();
 			if (StringUtils.isEmptyOrNull(program)) {
 				throw new IOException(CoreText.ExternalGpgSigner_gpgNotFound);
 			}
@@ -216,8 +251,20 @@ public class ExternalGpgSigner implements Signer {
 					// Swallow it here; runProcess will raise one anyway.
 				}
 			});
-			return new GpgSignature(result.rawData);
+			return new GpgSignature(stripCrs(result.rawData));
 		}
+	}
+
+	private byte[] stripCrs(byte[] data) {
+		byte[] result = new byte[data.length];
+		int i = 0;
+		for (int j = 0; j < data.length; j++) {
+			byte b = data[j];
+			if (b != '\r') {
+				result[i++] = b;
+			}
+		}
+		return i == data.length ? data : Arrays.copyOf(result, i);
 	}
 
 	private PGPSignature parseSignature(InputStream in)
@@ -238,10 +285,35 @@ public class ExternalGpgSigner implements Signer {
 		}
 	}
 
+	private boolean isValidX509Signature(InputStream in) throws IOException {
+		BufferedReader r = new BufferedReader(
+				new InputStreamReader(in, StandardCharsets.US_ASCII));
+		boolean first = true;
+		String last = null;
+		for (;;) {
+			String line = r.readLine();
+			if (line == null) {
+				break;
+			}
+			if (first) {
+				if (!line.equals(Constants.CMS_SIGNATURE_PREFIX)) {
+					return false;
+				}
+				first = false;
+			}
+			last = line;
+		}
+		return last != null && last.equals("-----END SIGNED MESSAGE-----"); //$NON-NLS-1$
+	}
+
 	private boolean isValidSignature(TemporaryBuffer b)
 			throws IOException, PGPException {
 		try (InputStream data = b.openInputStream()) {
-			return parseSignature(data) != null;
+			if (x509) {
+				return isValidX509Signature(data);
+			} else {
+				return parseSignature(data) != null;
+			}
 		}
 	}
 

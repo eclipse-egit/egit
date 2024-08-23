@@ -50,11 +50,16 @@ public final class GpgSetup {
 				case BC:
 					Signers.set(GpgFormat.OPENPGP, null);
 					SignatureVerifiers.set(GpgFormat.OPENPGP, null);
+					Signers.set(GpgFormat.X509, null);
+					SignatureVerifiers.set(GpgFormat.X509, null);
 					break;
 				case GPG:
 					Signers.set(GpgFormat.OPENPGP, new ExternalGpgSigner());
 					SignatureVerifiers.set(GpgFormat.OPENPGP,
 							new ExternalGpgSignatureVerifier());
+					Signers.set(GpgFormat.X509, new ExternalGpgSigner(true));
+					SignatureVerifiers.set(GpgFormat.X509,
+							new ExternalGpgSignatureVerifier(true));
 					break;
 				default:
 					// Internal error, no translation

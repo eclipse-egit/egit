@@ -19,7 +19,14 @@ import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.text.MessageFormat;
 import java.time.Instant;
+import java.time.LocalDateTime;
+import java.time.ZoneOffset;
+import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeFormatterBuilder;
+import java.time.format.DateTimeParseException;
+import java.time.temporal.ChronoField;
 import java.util.Date;
+import java.util.Locale;
 
 import org.eclipse.egit.core.internal.CoreText;
 import org.eclipse.jgit.api.errors.CanceledException;
@@ -34,6 +41,36 @@ import org.eclipse.jgit.util.TemporaryBuffer;
  * signature verification.
  */
 public class ExternalGpgSignatureVerifier implements SignatureVerifier {
+
+	private static final DateTimeFormatter GPGSM_DATE_FORMAT = new DateTimeFormatterBuilder()
+			.appendValue(ChronoField.YEAR, 4)
+			.appendValue(ChronoField.MONTH_OF_YEAR, 2)
+			.appendValue(ChronoField.DAY_OF_MONTH, 2)
+			.appendLiteral('T')
+			.appendValue(ChronoField.HOUR_OF_DAY, 2)
+			.appendValue(ChronoField.MINUTE_OF_HOUR, 2)
+			.appendValue(ChronoField.SECOND_OF_MINUTE, 2)
+			.toFormatter(Locale.ROOT);
+
+	private final boolean x509;
+
+	/**
+	 * Creates a verifier for OpenPGP signatures.
+	 */
+	public ExternalGpgSignatureVerifier() {
+		this(false);
+	}
+
+	/**
+	 * Creates a verifier for OpenPGP or x.509 signatures.
+	 *
+	 * @param x509
+	 *            {@code true} to verify x.509 signatures, {@code false} for
+	 *            OpenPGP
+	 */
+	public ExternalGpgSignatureVerifier(boolean x509) {
+		this.x509 = x509;
+	}
 
 	/**
 	 * Verifies a given signature for given data.
@@ -55,7 +92,7 @@ public class ExternalGpgSignatureVerifier implements SignatureVerifier {
 			byte[] data, byte[] signatureData) throws IOException {
 		String program = config.getProgram();
 		if (StringUtils.isEmptyOrNull(program)) {
-			program = ExternalGpg.getGpg();
+			program = x509 ? ExternalGpg.getGpgSm() : ExternalGpg.getGpg();
 			if (StringUtils.isEmptyOrNull(program)) {
 				throw new IOException(CoreText.ExternalGpgSigner_gpgNotFound);
 			}
@@ -90,6 +127,7 @@ public class ExternalGpgSignatureVerifier implements SignatureVerifier {
 
 	private SignatureVerification fromGpg(TemporaryBuffer buffer) {
 		Date createdAt = Date.from(Instant.EPOCH);
+		boolean haveDate = false;
 		TrustLevel trust = TrustLevel.UNKNOWN;
 		String fingerprint = null;
 		boolean validates = false;
@@ -112,19 +150,25 @@ public class ExternalGpgSignatureVerifier implements SignatureVerifier {
 						i = line.length();
 					}
 					String level = line.substring(6, i);
-					try {
-						trust = TrustLevel.valueOf(level);
-					} catch (IllegalArgumentException e) {
-						// Ignore -- unknown trust level
+					// FULL or FULLY?? gpgsm prints the latter.
+					if ("FULLY".equals(level)) { //$NON-NLS-1$
+						trust = TrustLevel.FULL;
+					} else {
+						try {
+							trust = TrustLevel.valueOf(level);
+						} catch (IllegalArgumentException e) {
+							// Ignore -- unknown trust level
+						}
 					}
 				} else if (line.startsWith("SIG_ID")) { //$NON-NLS-1$
-					// SIG_ID sig YYYY-MM-DD unixtimestamp
+					// SIG_ID sig YYYY-MM-DD unixtimestamp. gpgsm doesn't print this.
 					String[] parts = line.split(" "); //$NON-NLS-1$
 					if (parts.length > 3) {
 						// Unix timestamp of creation of signature
 						try {
 							createdAt = Date.from(Instant.ofEpochSecond(
 									Long.parseLong(parts[3].trim())));
+							haveDate = true;
 						} catch (NumberFormatException e) {
 							// Ignore.
 						}
@@ -139,6 +183,36 @@ public class ExternalGpgSignatureVerifier implements SignatureVerifier {
 					}
 					if (j > i) {
 						fingerprint = line.substring(i + 1, j);
+					}
+					// If we don't have createdAt yet, parse the time. gpg
+					// writes a unix timestamp, but gpgsm prints UTC
+					// yyyyMMDDTHHmmss.
+					if (!haveDate) {
+						i = line.indexOf(' ', j + 1);
+						if (i > j) {
+							j = line.indexOf(' ', i + 1);
+							String dateTime = line.substring(i+1, j);
+							if (dateTime.indexOf('T') > 0) {
+								try {
+									createdAt = Date.from(GPGSM_DATE_FORMAT
+											.parse(dateTime,
+													LocalDateTime::from)
+											.atOffset(ZoneOffset.UTC)
+											.toInstant());
+									haveDate = true;
+								} catch (DateTimeParseException e) {
+									// Ignore
+								}
+							} else {
+								try {
+									createdAt = Date.from(Instant.ofEpochSecond(
+											Long.parseLong(dateTime)));
+									haveDate = true;
+								} catch (NumberFormatException e) {
+									// Ignore.
+								}
+							}
+						}
 					}
 				} else {
 					int i = line.indexOf(' ');
@@ -208,7 +282,7 @@ public class ExternalGpgSignatureVerifier implements SignatureVerifier {
 
 	@Override
 	public String getName() {
-		return "gpg"; //$NON-NLS-1$
+		return x509 ? "gpgsm" : "gpg"; //$NON-NLS-1$ //$NON-NLS-2$
 	}
 
 	@Override
