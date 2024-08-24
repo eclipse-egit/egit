@@ -114,7 +114,7 @@
   <setupTask
       xsi:type="setup:VariableTask"
       name="egit.target.platform"
-      defaultValue="egit-4.26"
+      defaultValue="egit-4.28"
       storageURI="scope://Workspace"
       label="EGit Target Platform">
     <choice
