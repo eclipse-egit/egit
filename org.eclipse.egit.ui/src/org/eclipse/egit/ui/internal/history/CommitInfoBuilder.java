@@ -27,6 +27,7 @@ import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.OperationCanceledException;
 import org.eclipse.core.runtime.SubMonitor;
 import org.eclipse.egit.core.EclipseGitProgressTransformer;
+import org.eclipse.egit.core.op.EGitGpgConfig;
 import org.eclipse.egit.ui.Activator;
 import org.eclipse.egit.ui.UIPreferences;
 import org.eclipse.egit.ui.internal.CommonUtils;
@@ -41,13 +42,12 @@ import org.eclipse.jgit.errors.IncorrectObjectTypeException;
 import org.eclipse.jgit.errors.MissingObjectException;
 import org.eclipse.jgit.lib.Constants;
 import org.eclipse.jgit.lib.GpgConfig;
-import org.eclipse.jgit.lib.GpgSignatureVerifier;
-import org.eclipse.jgit.lib.GpgSignatureVerifier.SignatureVerification;
-import org.eclipse.jgit.lib.GpgSignatureVerifierFactory;
 import org.eclipse.jgit.lib.ObjectId;
 import org.eclipse.jgit.lib.PersonIdent;
 import org.eclipse.jgit.lib.Ref;
 import org.eclipse.jgit.lib.Repository;
+import org.eclipse.jgit.lib.SignatureVerifier.SignatureVerification;
+import org.eclipse.jgit.lib.SignatureVerifiers;
 import org.eclipse.jgit.revplot.PlotCommit;
 import org.eclipse.jgit.revwalk.RevCommit;
 import org.eclipse.jgit.revwalk.RevObject;
@@ -119,32 +119,28 @@ public class CommitInfoBuilder {
 		RevCommit c = commit;
 		if (preferences.getBoolean(UIPreferences.HISTORY_VERIFY_SIGNATURES)
 				&& c.getRawGpgSignature() != null) {
-			GpgSignatureVerifierFactory factory = GpgSignatureVerifierFactory
-					.getDefault();
-			if (factory != null) {
-				GpgSignatureVerifier verifier = factory.getVerifier();
-				GpgConfig config = new GpgConfig(db.getConfig());
-				try {
-					SignatureVerification verification = verifier
-							.verifySignature(c, config);
-					if (verification != null) {
-						String[] text = SignatureUtils
-								.toString(verification, committer,
-										dateFormatter)
-								.split(LF);
-						String prefix = verifier.getName();
-						for (String line : text) {
-							d.append(prefix).append(": ").append(line) //$NON-NLS-1$
-									.append(LF);
-						}
+			GpgConfig cfg = new EGitGpgConfig(db.getConfig());
+
+			try {
+				Repository repo = db;
+				assert repo != null;
+				SignatureVerification verification = SignatureVerifiers
+						.verify(repo, cfg, c);
+				if (verification != null) {
+					String[] text = SignatureUtils
+							.toString(verification, committer, dateFormatter)
+							.split(LF);
+					String prefix = verification.verifierName();
+					for (String line : text) {
+						d.append(prefix).append(": ").append(line) //$NON-NLS-1$
+								.append(LF);
 					}
-				} catch (IOException | JGitInternalException e) {
-					Activator.logError("Cannot verify signature on commit " //$NON-NLS-1$
-							+ commit.name(), e);
-					d.append(verifier.getName()).append(": ") //$NON-NLS-1$
-							.append(UIText.CommitMessageViewer_signatureVerificationFailed)
-							.append(LF);
 				}
+			} catch (IOException | JGitInternalException e) {
+				Activator.logError("Cannot verify signature on commit " //$NON-NLS-1$
+						+ commit.name(), e);
+				d.append(UIText.CommitMessageViewer_signatureVerificationFailed)
+						.append(LF);
 			}
 		}
 		addPersonIdent(d, author, UIText.CommitMessageViewer_author);

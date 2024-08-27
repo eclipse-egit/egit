@@ -30,14 +30,23 @@ class ExternalGpg {
 
 	private static String gpg;
 
+	private static String gpgsm;
+
 	static synchronized String getGpg() {
 		if (gpg == null) {
-			gpg = findGpg();
+			gpg = findProgram("gpg"); //$NON-NLS-1$
 		}
 		return gpg.isEmpty() ? null : gpg;
 	}
 
-	private static String findGpg() {
+	static synchronized String getGpgSm() {
+		if (gpgsm == null) {
+			gpgsm = findProgram("gpgsm"); //$NON-NLS-1$
+		}
+		return gpgsm.isEmpty() ? null : gpgsm;
+	}
+
+	private static String findProgram(String program) {
 		SystemReader system = SystemReader.getInstance();
 		String path = system.getenv("PATH"); //$NON-NLS-1$
 		String exe = null;
@@ -48,7 +57,7 @@ class ExternalGpg {
 			String bash = searchPath(path, "bash"); //$NON-NLS-1$
 			if (bash != null) {
 				ProcessBuilder process = new ProcessBuilder();
-				process.command(bash, "--login", "-c", "which gpg"); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+				process.command(bash, "--login", "-c", "which " + program); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
 				process.directory(FS.DETECTED.userHome());
 				String[] result = { null };
 				try {
@@ -68,7 +77,8 @@ class ExternalGpg {
 			}
 		}
 		if (exe == null) {
-			exe = searchPath(path, system.isWindows() ? "gpg.exe" : "gpg"); //$NON-NLS-1$ //$NON-NLS-2$
+			exe = searchPath(path,
+					system.isWindows() ? program + ".exe" : program); //$NON-NLS-1$
 		}
 		return exe == null ? "" : exe; //$NON-NLS-1$
 	}

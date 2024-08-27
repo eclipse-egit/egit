@@ -16,9 +16,9 @@ import org.eclipse.core.runtime.Platform;
 import org.eclipse.egit.core.Activator;
 import org.eclipse.egit.core.GitCorePreferences;
 import org.eclipse.egit.core.internal.CoreText;
-import org.eclipse.jgit.gpg.bc.BouncyCastleGpgSignerFactory;
-import org.eclipse.jgit.lib.GpgSignatureVerifierFactory;
-import org.eclipse.jgit.lib.GpgSigner;
+import org.eclipse.jgit.lib.GpgConfig.GpgFormat;
+import org.eclipse.jgit.lib.SignatureVerifiers;
+import org.eclipse.jgit.lib.Signers;
 
 /**
  * Utility class to set up the selected GpgSigner.
@@ -37,22 +37,8 @@ public final class GpgSetup {
 
 	private static Signer current;
 
-	private static GpgSignatureVerifierFactory defaultFactory = GpgSignatureVerifierFactory
-			.getDefault();
-
 	/**
-	 * Ensures that the default {@link GpgSigner} is the one set from the
-	 * preferences.
-	 *
-	 * @return the {@link GpgSigner}
-	 */
-	public static GpgSigner getDefault() {
-		update();
-		return GpgSigner.getDefault();
-	}
-
-	/**
-	 * Updates GPG settings to use the signer and signature verifier defined in
+	 * Updates JGit settings to use the signer and signature verifier defined in
 	 * the preferences.
 	 */
 	public static void update() {
@@ -62,13 +48,18 @@ public final class GpgSetup {
 				current = signer;
 				switch (signer) {
 				case BC:
-					GpgSigner.setDefault(BouncyCastleGpgSignerFactory.create());
-					GpgSignatureVerifierFactory.setDefault(defaultFactory);
+					Signers.set(GpgFormat.OPENPGP, null);
+					SignatureVerifiers.set(GpgFormat.OPENPGP, null);
+					Signers.set(GpgFormat.X509, null);
+					SignatureVerifiers.set(GpgFormat.X509, null);
 					break;
 				case GPG:
-					GpgSigner.setDefault(new ExternalGpgSigner());
-					GpgSignatureVerifierFactory.setDefault(
-							new ExternalGpgSignatureVerifierFactory());
+					Signers.set(GpgFormat.OPENPGP, new ExternalGpgSigner());
+					SignatureVerifiers.set(GpgFormat.OPENPGP,
+							new ExternalGpgSignatureVerifier());
+					Signers.set(GpgFormat.X509, new ExternalGpgSigner(true));
+					SignatureVerifiers.set(GpgFormat.X509,
+							new ExternalGpgSignatureVerifier(true));
 					break;
 				default:
 					// Internal error, no translation
