@@ -16,6 +16,24 @@
       "message": "Ed had suggested using release/latest in https://github.com/eclipse-egit/egit/issues/32#issuecomment-2104740623. Should we give that a try?",
       "revId": "af817aeecffa6da2f8a88ead9178388b271bc406",
       "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "58073298_015eea3d",
+        "filename": "org.eclipse.egit.repository/category.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 259,
+      "author": {
+        "id": 1000671
+      },
+      "writtenOn": "2024-08-29T14:27:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "251ebad6_0c8a6251",
+      "revId": "af817aeecffa6da2f8a88ead9178388b271bc406",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735"
     }
   ]
 }
