@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d0cfe290_b8bb0602",
+        "filename": "org.eclipse.egit.repository/category.xml",
+        "patchSetId": 2
+      },
+      "lineNbr": 259,
+      "author": {
+        "id": 1021966
+      },
+      "writtenOn": "2024-08-29T17:48:32Z",
+      "side": 1,
+      "message": "Hmmm. Latest will change over time. Newer versions will be included, older versions will disappear. At some point, latest will not have the versions that the EGit/JGit bundles in the repo require.\n\nWe either stick with 4.33, or we are super diligent about making sure we always have the transitive dependencies from Orbit in the repository itself, and we drop this link altogether.",
+      "revId": "8a738d768e2eb8291f91b93e9bc228ace5d51ba0",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735"
+    }
+  ]
+}
