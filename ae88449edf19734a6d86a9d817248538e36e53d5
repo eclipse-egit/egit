@@ -37,6 +37,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "26a22a47_efa00efe",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/clipboard/ClipboardPropertyTester.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1000671
+      },
+      "writtenOn": "2024-08-29T22:15:43Z",
+      "side": 1,
+      "message": "see https://github.com/eclipse-egit/egit/wiki/Contributor-Guide#license-header",
+      "parentUuid": "9e629e13_686a6252",
+      "revId": "ae88449edf19734a6d86a9d817248538e36e53d5",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "a9fc272b_92f0f60c",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/repository/tree/command/PasteCommand.java",
         "patchSetId": 1
@@ -48,6 +66,24 @@
       "writtenOn": "2024-08-29T22:12:05Z",
       "side": 1,
       "message": "nit: this brace should go on the end of the previous line, we use the Eclipse IDE formatter",
+      "revId": "ae88449edf19734a6d86a9d817248538e36e53d5",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "fe558de2_658f6ac4",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/repository/tree/command/PasteCommand.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 138,
+      "author": {
+        "id": 1000671
+      },
+      "writtenOn": "2024-08-29T22:15:43Z",
+      "side": 1,
+      "message": "see https://github.com/eclipse-egit/egit/wiki/Contributor-Guide#coding-standards",
+      "parentUuid": "a9fc272b_92f0f60c",
       "revId": "ae88449edf19734a6d86a9d817248538e36e53d5",
       "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735"
     },
