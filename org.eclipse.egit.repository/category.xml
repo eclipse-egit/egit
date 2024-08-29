@@ -256,5 +256,5 @@
       </description>
    </category-def>
    <category-def name="EGit.dependencies" label="Git integration for Eclipse - dependencies"/>
-   <repository-reference location="https://download.eclipse.org/tools/orbit/simrel/orbit-aggregation/release/4.30.0" name="" enabled="true" />
+   <repository-reference location="https://download.eclipse.org/tools/orbit/simrel/orbit-aggregation/release/4.33.0" name="" enabled="true" />
 </site>
