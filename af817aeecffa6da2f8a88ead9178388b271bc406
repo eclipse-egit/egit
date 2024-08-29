@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "251ebad6_0c8a6251",
+        "filename": "org.eclipse.egit.repository/category.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 259,
+      "author": {
+        "id": 1022032
+      },
+      "writtenOn": "2024-08-29T13:25:07Z",
+      "side": 1,
+      "message": "Ed had suggested using release/latest in https://github.com/eclipse-egit/egit/issues/32#issuecomment-2104740623. Should we give that a try?",
+      "revId": "af817aeecffa6da2f8a88ead9178388b271bc406",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735"
+    }
+  ]
+}
