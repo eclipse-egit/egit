@@ -13,6 +13,9 @@
  *******************************************************************************/
 package org.eclipse.egit.core;
 
+import java.security.Security;
+
+import org.bouncycastle.jce.provider.BouncyCastleProvider;
 import org.eclipse.core.resources.IWorkspace;
 import org.eclipse.core.runtime.Platform;
 import org.eclipse.core.runtime.preferences.IEclipsePreferences;
@@ -69,6 +72,12 @@ public class RepositoryInitializer {
 		gitCorePreferences = InstanceScope.INSTANCE
 				.getNode(Activator.PLUGIN_ID);
 		GitHosts.loadFromPreferences(gitCorePreferences);
+		// Ensure Bouncy Castle is registered, otherwise we may not have
+		// AES/OCB support needed for some passphrase-protected encrypted
+		// GPG keys.
+		if (Security.getProvider(BouncyCastleProvider.PROVIDER_NAME) == null) {
+			Security.addProvider(new BouncyCastleProvider());
+		}
 		// Make sure the correct GpgSigner is set early, otherwise it may be
 		// possible that a git operation is run before it is set, which then
 		// might use the wrong signer.
