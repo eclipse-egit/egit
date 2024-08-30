@@ -41,6 +41,23 @@
       "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "d98ff476_31dbf3ad",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1021966
+      },
+      "writtenOn": "2024-08-30T15:01:46Z",
+      "side": 1,
+      "message": "I disagree. This breaks the paste command platform-wide.\n\nWith a git URL in the clipboard, I **cannot**:\n\n* paste the URL in a normal text editor. (Works only via the context menu, not via Ctrl-V.)\n* paste the git URL into the commit message editor in the git staging view. (Ditto.)\n* paste into the search box in the git history view\u0027s toolbar. (Ditto.)\n* paste into the cell-editor opened for in-line renaming in the Project Explorer (select a normal text file, choose \"Rename...\" from the context menu, then paste). (Ditto.)\n\nPasting into an editable text field in a dialog throws an exception:\n\n```\norg.eclipse.core.commands.ExecutionException: No activePart found while executing org.eclipse.ui.edit.paste\n\tat org.eclipse.ui.handlers.HandlerUtil.noVariableFound(HandlerUtil.java:47)\n\tat org.eclipse.ui.handlers.HandlerUtil.getVariableChecked(HandlerUtil.java:87)\n\tat org.eclipse.ui.handlers.HandlerUtil.getActivePartChecked(HandlerUtil.java:310)\n\tat org.eclipse.egit.ui.internal.repository.tree.command.RepositoriesViewCommandHandler.getView(RepositoriesViewCommandHandler.java:55)\n```\n\nAll of these should work with or without a git URL in the clipboard, and without logging exceptions. Interestingly I do not see handler conflicts being reported...",
+      "revId": "8340981df2956e0cd7045b8f637b93301756b256",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "a983bcd0_95459605",
