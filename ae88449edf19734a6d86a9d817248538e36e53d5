@@ -336,6 +336,24 @@
       "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "ed794f8d_dd85e36c",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/repository/tree/command/PasteCommand.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 155,
+      "author": {
+        "id": 1038267
+      },
+      "writtenOn": "2024-08-30T12:47:16Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "19934512_df1a898b",
+      "revId": "ae88449edf19734a6d86a9d817248538e36e53d5",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "a33bd5ef_55b17775",

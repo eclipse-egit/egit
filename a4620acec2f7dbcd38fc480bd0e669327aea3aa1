@@ -36,6 +36,23 @@
       "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "ee89b29d_a11bb5af",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1038267
+      },
+      "writtenOn": "2024-08-30T12:47:16Z",
+      "side": 1,
+      "message": "Ok I will remove it (and all other impacted files) and push the patch again 😊",
+      "revId": "a4620acec2f7dbcd38fc480bd0e669327aea3aa1",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "4a2c80a5_1c3f5edb",

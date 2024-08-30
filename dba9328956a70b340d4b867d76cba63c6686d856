@@ -16,6 +16,24 @@
       "message": "Forget the log for the switch perspective... will add it ... :/",
       "revId": "dba9328956a70b340d4b867d76cba63c6686d856",
       "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "423e1b35_bd8fdabc",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1038267
+      },
+      "writtenOn": "2024-08-30T12:47:16Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f5c70f93_b8db55aa",
+      "revId": "dba9328956a70b340d4b867d76cba63c6686d856",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735"
     }
   ]
 }
