@@ -38,6 +38,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "4149b231_8438ec51",
+        "filename": "org.eclipse.egit.ui/META-INF/MANIFEST.MF",
+        "patchSetId": 1
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1038267
+      },
+      "writtenOn": "2024-08-30T09:16:41Z",
+      "side": 1,
+      "message": "With the default installer, I chose the egit-4.32 target platform. I believed it was the latest one and the organize import put this version. Actually which version should I use (4.19 to 4.33 ? )... when I am fixing a bug in the default installer ? Build was ok in my eclipse with if of course, but failed here if this is not the same target ...\n\nMay be I should rebase my fix over \u0027origin/stable-7.0\u0027 ?\n\nAnyway this dependency is no more used. I will remove it",
+      "parentUuid": "cd723dbc_b4101368",
+      "revId": "ae88449edf19734a6d86a9d817248538e36e53d5",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "9e629e13_686a6252",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/clipboard/ClipboardPropertyTester.java",
         "patchSetId": 1
@@ -67,6 +85,24 @@
       "side": 1,
       "message": "see https://github.com/eclipse-egit/egit/wiki/Contributor-Guide#license-header",
       "parentUuid": "9e629e13_686a6252",
+      "revId": "ae88449edf19734a6d86a9d817248538e36e53d5",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f9c95024_3ef1e330",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/clipboard/ClipboardPropertyTester.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1038267
+      },
+      "writtenOn": "2024-08-30T09:16:41Z",
+      "side": 1,
+      "message": "This is what I mentioned as \u0027file header\u0027 in my question :) I will add it",
+      "parentUuid": "26a22a47_efa00efe",
       "revId": "ae88449edf19734a6d86a9d817248538e36e53d5",
       "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735"
     },
@@ -153,6 +189,24 @@
       "side": 1,
       "message": "see https://github.com/eclipse-egit/egit/wiki/Contributor-Guide#coding-standards",
       "parentUuid": "a9fc272b_92f0f60c",
+      "revId": "ae88449edf19734a6d86a9d817248538e36e53d5",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "8490bac4_3384480d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/repository/tree/command/PasteCommand.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 138,
+      "author": {
+        "id": 1038267
+      },
+      "writtenOn": "2024-08-30T09:16:41Z",
+      "side": 1,
+      "message": "I will fix it",
+      "parentUuid": "fe558de2_658f6ac4",
       "revId": "ae88449edf19734a6d86a9d817248538e36e53d5",
       "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735"
     },
