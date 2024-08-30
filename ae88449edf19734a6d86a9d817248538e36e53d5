@@ -54,6 +54,24 @@
       "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "3597b96d_77b9435a",
+        "filename": "org.eclipse.egit.ui/META-INF/MANIFEST.MF",
+        "patchSetId": 1
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1038267
+      },
+      "writtenOn": "2024-08-30T10:43:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4149b231_8438ec51",
+      "revId": "ae88449edf19734a6d86a9d817248538e36e53d5",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "9e629e13_686a6252",
@@ -107,6 +125,24 @@
       "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "9226df18_cb01a9f8",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/clipboard/ClipboardPropertyTester.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1038267
+      },
+      "writtenOn": "2024-08-30T10:43:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f9c95024_3ef1e330",
+      "revId": "ae88449edf19734a6d86a9d817248538e36e53d5",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "c4177e0b_796b2099",
@@ -120,6 +156,24 @@
       "writtenOn": "2024-08-30T08:53:57Z",
       "side": 1,
       "message": "Unnecessary extra parentheses.",
+      "revId": "ae88449edf19734a6d86a9d817248538e36e53d5",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "f9545e27_6122d347",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/clipboard/ClipboardPropertyTester.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1038267
+      },
+      "writtenOn": "2024-08-30T10:43:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c4177e0b_796b2099",
       "revId": "ae88449edf19734a6d86a9d817248538e36e53d5",
       "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735"
     },
@@ -143,6 +197,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "e92e5d21_463c931f",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/clipboard/ClipboardPropertyTester.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1038267
+      },
+      "writtenOn": "2024-08-30T10:43:28Z",
+      "side": 1,
+      "message": "This property tester is only used in the menu configuration to check if the handler is active or not... I guess it is computed in the UI thread. If not, do you thing we should protect it in a asyncExec ? \nIt is necessary to have this to be sure that the git paste handler is active whereever the view we are. \nIf you have another idea I am interesting in",
+      "parentUuid": "068044ca_7883491f",
+      "revId": "ae88449edf19734a6d86a9d817248538e36e53d5",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "120d84aa_e8e8cf0d",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/repository/tree/command/PasteCommand.java",
         "patchSetId": 1
@@ -154,6 +226,24 @@
       "writtenOn": "2024-08-30T08:53:57Z",
       "side": 1,
       "message": "Why that? Personally I\u0027d find it annoying to be asked about a perspective switch. (I never use the git perspective. I have the git repositories view, the git staging view, and the git history in my normal Java perspective, and that\u0027s all I need.)\n\nIf you want that make it a toggle inside the clone dialog somewhere, off by default. No reason to throw another dialog at the user.\n\nAlso: if view !\u003d null, the user already has the git repositories view open, so there is absolutely no point asking about switching perspectives.",
+      "revId": "ae88449edf19734a6d86a9d817248538e36e53d5",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "70d6bb2c_2e0dded6",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/repository/tree/command/PasteCommand.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1038267
+      },
+      "writtenOn": "2024-08-30T10:43:28Z",
+      "side": 1,
+      "message": "This is why I isolated this question to the user in a private method to remote it easily ... \nActually I found handy to ask it if the paste is done from the package explorer view and to lead the developper to the git perspective because he will probably have to import the projects \n\nIf you find it is annoying, I can remove it.",
+      "parentUuid": "120d84aa_e8e8cf0d",
       "revId": "ae88449edf19734a6d86a9d817248538e36e53d5",
       "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735"
     },
@@ -207,6 +297,24 @@
       "side": 1,
       "message": "I will fix it",
       "parentUuid": "fe558de2_658f6ac4",
+      "revId": "ae88449edf19734a6d86a9d817248538e36e53d5",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "b9175750_d088f169",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/repository/tree/command/PasteCommand.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 138,
+      "author": {
+        "id": 1038267
+      },
+      "writtenOn": "2024-08-30T10:43:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8490bac4_3384480d",
       "revId": "ae88449edf19734a6d86a9d817248538e36e53d5",
       "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735"
     },

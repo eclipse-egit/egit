@@ -3,6 +3,23 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "26603dbf_67186e85",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1038267
+      },
+      "writtenOn": "2024-08-30T10:43:28Z",
+      "side": 1,
+      "message": "@matthias.sohn@sap.com what do you think about the dialog to switch to the GIT perspective ? \nIt is displayed only if we paste from another perspective. \nIf I remove it definitively, my next patch will not be the same. \nNote that if the perspective is displayed the dialog will not appear, and if the repository view is displayed (whatever the perspective), we can see directly the new repository in the view.",
+      "revId": "a4620acec2f7dbcd38fc480bd0e669327aea3aa1",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "4a2c80a5_1c3f5edb",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/repository/tree/command/PasteCommand.java",
         "patchSetId": 3
