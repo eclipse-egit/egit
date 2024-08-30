@@ -1,0 +1,112 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f45fca29_3a5bbab5",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1000671
+      },
+      "writtenOn": "2024-08-30T13:13:56Z",
+      "side": 1,
+      "message": "egit-48",
+      "range": {
+        "startLine": 9,
+        "startChar": 5,
+        "endLine": 9,
+        "endChar": 13
+      },
+      "revId": "8340981df2956e0cd7045b8f637b93301756b256",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "d2d2eb76_b63b7a76",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000671
+      },
+      "writtenOn": "2024-08-30T13:13:56Z",
+      "side": 1,
+      "message": "tried it, and it works nicely, thanks\n\njust a few minor nits left to be fixed",
+      "revId": "8340981df2956e0cd7045b8f637b93301756b256",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a983bcd0_95459605",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/clipboard/ClipboardPropertyTester.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1000671
+      },
+      "writtenOn": "2024-08-30T13:13:56Z",
+      "side": 1,
+      "message": "nit: remove this blank line ?",
+      "revId": "8340981df2956e0cd7045b8f637b93301756b256",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e7a5c6ba_132db97c",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/clipboard/ClipboardPropertyTester.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1000671
+      },
+      "writtenOn": "2024-08-30T13:13:56Z",
+      "side": 1,
+      "message": "sentence is incomplete",
+      "revId": "8340981df2956e0cd7045b8f637b93301756b256",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "8e0d71dc_b2d154bb",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/clipboard/ClipboardPropertyTester.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1000671
+      },
+      "writtenOn": "2024-08-30T13:13:56Z",
+      "side": 1,
+      "message": "annotate return value with @Nullable using `org.eclipse.jgit.annotations.Nullable`:\n\n```suggestion\n\tprivate @Nullable String getClipboardTextContent() {\n```",
+      "revId": "8340981df2956e0cd7045b8f637b93301756b256",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "bccebeb4_7253bb6d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/repository/tree/command/PasteCommand.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 131,
+      "author": {
+        "id": 1000671
+      },
+      "writtenOn": "2024-08-30T13:13:56Z",
+      "side": 1,
+      "message": "nit: remove this spurious extra blank line",
+      "revId": "8340981df2956e0cd7045b8f637b93301756b256",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735"
+    }
+  ]
+}
