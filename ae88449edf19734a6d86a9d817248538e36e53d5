@@ -20,6 +20,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "190d3a67_5a7e0dc0",
+        "filename": "org.eclipse.egit.ui/META-INF/MANIFEST.MF",
+        "patchSetId": 1
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1021966
+      },
+      "writtenOn": "2024-08-30T08:53:57Z",
+      "side": 1,
+      "message": "What is this require-bundle needed for anyway?",
+      "parentUuid": "cd723dbc_b4101368",
+      "revId": "ae88449edf19734a6d86a9d817248538e36e53d5",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "9e629e13_686a6252",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/clipboard/ClipboardPropertyTester.java",
         "patchSetId": 1
@@ -49,6 +67,57 @@
       "side": 1,
       "message": "see https://github.com/eclipse-egit/egit/wiki/Contributor-Guide#license-header",
       "parentUuid": "9e629e13_686a6252",
+      "revId": "ae88449edf19734a6d86a9d817248538e36e53d5",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c4177e0b_796b2099",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/clipboard/ClipboardPropertyTester.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1021966
+      },
+      "writtenOn": "2024-08-30T08:53:57Z",
+      "side": 1,
+      "message": "Unnecessary extra parentheses.",
+      "revId": "ae88449edf19734a6d86a9d817248538e36e53d5",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "068044ca_7883491f",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/clipboard/ClipboardPropertyTester.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1021966
+      },
+      "writtenOn": "2024-08-30T08:53:57Z",
+      "side": 1,
+      "message": "A property tester can run on any thread. But creating a Clipboard must execute on the UI thread.\n\nI don\u0027t think it\u0027s a good idea to have a property tester that must run on the UI thread.",
+      "revId": "ae88449edf19734a6d86a9d817248538e36e53d5",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "120d84aa_e8e8cf0d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/repository/tree/command/PasteCommand.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1021966
+      },
+      "writtenOn": "2024-08-30T08:53:57Z",
+      "side": 1,
+      "message": "Why that? Personally I\u0027d find it annoying to be asked about a perspective switch. (I never use the git perspective. I have the git repositories view, the git staging view, and the git history in my normal Java perspective, and that\u0027s all I need.)\n\nIf you want that make it a toggle inside the clone dialog somewhere, off by default. No reason to throw another dialog at the user.\n\nAlso: if view !\u003d null, the user already has the git repositories view open, so there is absolutely no point asking about switching perspectives.",
       "revId": "ae88449edf19734a6d86a9d817248538e36e53d5",
       "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735"
     },
