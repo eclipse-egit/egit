@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "1c385df0_68cd4556",
+        "filename": "org.eclipse.egit.ui/plugin.xml",
+        "patchSetId": 5
+      },
+      "lineNbr": 2123,
+      "author": {
+        "id": 1021966
+      },
+      "writtenOn": "2024-09-02T15:42:14Z",
+      "side": 1,
+      "message": "This is a dangerous route. There may be other views with editable texts. Cell editors in property views? (For instance, all EMF editors; you could try with the Oomph setup.) The console may also accept input and need Ctrl-V to work there. The expressions view from the debugger also may have editable cell editors. Plus we have no idea whatsoever what views contributed by other plug-ins might do or contain.\n\nI don\u0027t know if this can be resolved at all. A wild idea: can we check whether the currently active focus control in the currently active shell is anything that accepts text? (Don\u0027t know if that\u0027s possible, and I don\u0027t know if there is something that makes doing so in a property tester a bad idea -- other than requiring it to run in the UI thread.) And then disable the handler in that case?",
+      "revId": "241fb8294f582d52491865e0d3903b71980f1970",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735"
+    }
+  ]
+}
