@@ -26,6 +26,30 @@
     {
       "unresolved": false,
       "key": {
+        "uuid": "449a877d_33e8e585",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1038267
+      },
+      "writtenOn": "2024-09-03T16:36:01Z",
+      "side": 1,
+      "message": "OUch , didn\u0027t see that ...\n\nResolved in patch 7",
+      "parentUuid": "f45fca29_3a5bbab5",
+      "range": {
+        "startLine": 9,
+        "startChar": 5,
+        "endLine": 9,
+        "endChar": 13
+      },
+      "revId": "8340981df2956e0cd7045b8f637b93301756b256",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735"
+    },
+    {
+      "unresolved": false,
+      "key": {
         "uuid": "d2d2eb76_b63b7a76",
         "filename": "/PATCHSET_LEVEL",
         "patchSetId": 4
@@ -58,6 +82,24 @@
       "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "f1b33be5_c79a2d3b",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1038267
+      },
+      "writtenOn": "2024-09-03T16:36:01Z",
+      "side": 1,
+      "message": "Ok I will check it next week.\n\nI added the test to ensure to be in a IViewPart, but for the specific staging view, this is weird,  the test does not work !?  I had to add a test on the specific Staging View to be sure we are not in ... (see in plugin.xml)\n\nI tested all the cases you mentioned and it works well and I had no exception so far...  \n\nA remark regarding the tooling.... All my eclipse git install failed at compilation since I updated the code, and I found that I had to make a git pull in the jgit repository (probably my egit move forward and had to be compliant with the new jgit version...). Nevertheless I still have compilation error regarding the @since 7.0.0 javadoc tag in the RepoProject.java file (Invalid @since 6.10 tag on getUpstream(); expecting @since 7.0). \n\nThe difficulty in the tooling is to ensure that both jgit and egit are compliant together and also against the target platform...",
+      "parentUuid": "d98ff476_31dbf3ad",
+      "revId": "8340981df2956e0cd7045b8f637b93301756b256",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "a983bcd0_95459605",
@@ -71,6 +113,24 @@
       "writtenOn": "2024-08-30T13:13:56Z",
       "side": 1,
       "message": "nit: remove this blank line ?",
+      "revId": "8340981df2956e0cd7045b8f637b93301756b256",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "9497afee_a91605f2",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/clipboard/ClipboardPropertyTester.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1038267
+      },
+      "writtenOn": "2024-09-03T16:36:01Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "a983bcd0_95459605",
       "revId": "8340981df2956e0cd7045b8f637b93301756b256",
       "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735"
     },
@@ -92,6 +152,24 @@
       "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "81e4c9f7_6b1d32e7",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/clipboard/ClipboardPropertyTester.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1038267
+      },
+      "writtenOn": "2024-09-03T16:36:01Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "e7a5c6ba_132db97c",
+      "revId": "8340981df2956e0cd7045b8f637b93301756b256",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "8e0d71dc_b2d154bb",
@@ -109,6 +187,24 @@
       "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "f17e91d1_bb56189a",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/clipboard/ClipboardPropertyTester.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1038267
+      },
+      "writtenOn": "2024-09-03T16:36:01Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "8e0d71dc_b2d154bb",
+      "revId": "8340981df2956e0cd7045b8f637b93301756b256",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "bccebeb4_7253bb6d",
@@ -122,6 +218,24 @@
       "writtenOn": "2024-08-30T13:13:56Z",
       "side": 1,
       "message": "nit: remove this spurious extra blank line",
+      "revId": "8340981df2956e0cd7045b8f637b93301756b256",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "68845dbe_a6e0aa60",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/repository/tree/command/PasteCommand.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 131,
+      "author": {
+        "id": 1038267
+      },
+      "writtenOn": "2024-09-03T16:36:01Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "bccebeb4_7253bb6d",
       "revId": "8340981df2956e0cd7045b8f637b93301756b256",
       "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735"
     }

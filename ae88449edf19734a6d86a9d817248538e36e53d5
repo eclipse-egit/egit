@@ -266,6 +266,24 @@
       "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "cffd99fa_da9a17e3",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/repository/tree/command/PasteCommand.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1038267
+      },
+      "writtenOn": "2024-09-03T16:36:01Z",
+      "side": 1,
+      "message": "I removed the dialog",
+      "parentUuid": "70d6bb2c_2e0dded6",
+      "revId": "ae88449edf19734a6d86a9d817248538e36e53d5",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "a9fc272b_92f0f60c",
@@ -402,6 +420,24 @@
       "writtenOn": "2024-08-30T13:13:56Z",
       "side": 1,
       "message": "dialog was removed",
+      "parentUuid": "a33bd5ef_55b17775",
+      "revId": "ae88449edf19734a6d86a9d817248538e36e53d5",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "14dbdcbf_0880bd1e",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/repository/tree/command/PasteCommand.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 161,
+      "author": {
+        "id": 1038267
+      },
+      "writtenOn": "2024-09-03T16:36:01Z",
+      "side": 1,
+      "message": "I removed the dialog",
       "parentUuid": "a33bd5ef_55b17775",
       "revId": "ae88449edf19734a6d86a9d817248538e36e53d5",
       "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735"

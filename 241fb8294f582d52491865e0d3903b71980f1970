@@ -16,6 +16,24 @@
       "message": "This is a dangerous route. There may be other views with editable texts. Cell editors in property views? (For instance, all EMF editors; you could try with the Oomph setup.) The console may also accept input and need Ctrl-V to work there. The expressions view from the debugger also may have editable cell editors. Plus we have no idea whatsoever what views contributed by other plug-ins might do or contain.\n\nI don\u0027t know if this can be resolved at all. A wild idea: can we check whether the currently active focus control in the currently active shell is anything that accepts text? (Don\u0027t know if that\u0027s possible, and I don\u0027t know if there is something that makes doing so in a property tester a bad idea -- other than requiring it to run in the UI thread.) And then disable the handler in that case?",
       "revId": "241fb8294f582d52491865e0d3903b71980f1970",
       "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "5672c7ff_309c3f0d",
+        "filename": "org.eclipse.egit.ui/plugin.xml",
+        "patchSetId": 5
+      },
+      "lineNbr": 2123,
+      "author": {
+        "id": 1038267
+      },
+      "writtenOn": "2024-09-03T16:36:01Z",
+      "side": 1,
+      "message": "Yes I know, it was more to check that it was possible than a last \u0027final\u0027 solution. It seems that the current active part is not set when a cell editor is focused ... may be the problem comes from here ... I am not sure that we should need another specific expression to check the current focused control... I don\u0027t know where these kind of editors are used, but I will try to find a workaround.. even if this is a rare case...\n\nActually in org.eclipse.ui.ISources there is may be the right identifier : \n\n/**\n\t * The variable name for the active focus Control, when provided by the\n\t * IFocusService.\n\t *\n\t * @since 3.3\n\t */\n\tString ACTIVE_FOCUS_CONTROL_NAME \u003d \"activeFocusControl\"; //$NON-NLS-1$\n\t\n\t\nBut, the CellEditor is a jface object containing the text editor control.. may be if I exclude Text controls from any view that could be ok ...\n\nUpdate for patch 6. : I could not use the activeFocusControl, the value seems to be not initialized.. I tried several times but was not successful (with a reference, directly with a test on instanceof StyledText or Text..) ... So I added a test on the control focused directly in the clipboard property tester... Not so much time to create another property tester for that. \n\nI tested it inside editor, outside editor, in the staging view, in a preference page expecting text, in the search dialogs, and it works as expected...",
+      "parentUuid": "1c385df0_68cd4556",
+      "revId": "241fb8294f582d52491865e0d3903b71980f1970",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735"
     }
   ]
 }

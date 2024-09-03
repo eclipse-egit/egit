@@ -53,6 +53,24 @@
       "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "cd45073d_4fb7c9aa",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1038267
+      },
+      "writtenOn": "2024-09-03T16:36:01Z",
+      "side": 1,
+      "message": "I removed the dialog",
+      "parentUuid": "025f1f4b_eca5ccf7",
+      "revId": "a4620acec2f7dbcd38fc480bd0e669327aea3aa1",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "4a2c80a5_1c3f5edb",
@@ -83,6 +101,24 @@
       "writtenOn": "2024-08-30T13:13:56Z",
       "side": 1,
       "message": "dialog was removed",
+      "parentUuid": "4a2c80a5_1c3f5edb",
+      "revId": "a4620acec2f7dbcd38fc480bd0e669327aea3aa1",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "2f34c720_d4a372f2",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/repository/tree/command/PasteCommand.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1038267
+      },
+      "writtenOn": "2024-09-03T16:36:01Z",
+      "side": 1,
+      "message": "As I removed the dialog this line has disappeared",
       "parentUuid": "4a2c80a5_1c3f5edb",
       "revId": "a4620acec2f7dbcd38fc480bd0e669327aea3aa1",
       "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735"
@@ -135,6 +171,30 @@
       "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "6de49412_cd29c033",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/repository/tree/command/PasteCommand.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 151,
+      "author": {
+        "id": 1038267
+      },
+      "writtenOn": "2024-09-03T16:36:01Z",
+      "side": 1,
+      "message": "I removed the dialog",
+      "parentUuid": "b48db3de_7857c7ee",
+      "range": {
+        "startLine": 151,
+        "startChar": 44,
+        "endLine": 151,
+        "endChar": 61
+      },
+      "revId": "a4620acec2f7dbcd38fc480bd0e669327aea3aa1",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "f0edf1ef_9356fc47",
@@ -170,6 +230,24 @@
       "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "3d1eabb3_96d50e6a",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/repository/tree/command/PasteCommand.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 166,
+      "author": {
+        "id": 1038267
+      },
+      "writtenOn": "2024-09-03T16:36:01Z",
+      "side": 1,
+      "message": "I removed the dialog",
+      "parentUuid": "f0edf1ef_9356fc47",
+      "revId": "a4620acec2f7dbcd38fc480bd0e669327aea3aa1",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "22b5dd83_4ee500a6",
@@ -183,6 +261,24 @@
       "writtenOn": "2024-08-30T09:52:14Z",
       "side": 1,
       "message": "Apart from the fact that I don\u0027t think we should ask at all: grammar issues.\n\n* Space before question mark is French grammar. In English, there is no such space.\n* \"Can not\" should be \"Cannot\"",
+      "revId": "a4620acec2f7dbcd38fc480bd0e669327aea3aa1",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "0452678c_8d5228cb",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/uitext.properties",
+        "patchSetId": 3
+      },
+      "lineNbr": 2291,
+      "author": {
+        "id": 1038267
+      },
+      "writtenOn": "2024-09-03T16:36:01Z",
+      "side": 1,
+      "message": "I removed the dialog, so I removed this strings",
+      "parentUuid": "22b5dd83_4ee500a6",
       "revId": "a4620acec2f7dbcd38fc480bd0e669327aea3aa1",
       "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735"
     }

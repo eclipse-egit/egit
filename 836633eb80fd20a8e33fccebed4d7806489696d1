@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "7feed263_7725af50",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 7
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1038267
+      },
+      "writtenOn": "2024-09-03T16:36:01Z",
+      "side": 1,
+      "message": "Patch 7 includes the Thomas\u0027s remarks ...",
+      "revId": "836633eb80fd20a8e33fccebed4d7806489696d1",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735"
+    }
+  ]
+}
