@@ -146,8 +146,8 @@ public abstract class AbstractGitCompareEditorInput extends CompareEditorInput {
 				FolderNode folder = (FolderNode) node;
 				IContainer container = folder.getContainer();
 				if (container != null) {
-					return adapter.cast(new ShowInContext(this,
-							new StructuredSelection(container)));
+					return adapter.cast(getShowInSource(new ShowInContext(this,
+							new StructuredSelection(container))));
 				}
 				IPath path = folder.getPath();
 				if (path != null) {
