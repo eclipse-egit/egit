@@ -16,6 +16,23 @@
       "message": "Patch 7 includes the Thomas\u0027s remarks ...",
       "revId": "836633eb80fd20a8e33fccebed4d7806489696d1",
       "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "4bc8d245_cfc48319",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 7
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1038267
+      },
+      "writtenOn": "2024-09-11T13:43:19Z",
+      "side": 1,
+      "message": "Hi, is there something missing to close this change ?",
+      "revId": "836633eb80fd20a8e33fccebed4d7806489696d1",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735"
     }
   ]
 }
