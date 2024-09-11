@@ -33,6 +33,24 @@
       "message": "Hi, is there something missing to close this change ?",
       "revId": "836633eb80fd20a8e33fccebed4d7806489696d1",
       "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "eaea0dac_1820e494",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 7
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1021966
+      },
+      "writtenOn": "2024-09-11T19:18:06Z",
+      "side": 1,
+      "message": "I need to find time to test it thoroughly. Also in some graphical editor, for instance in Papyrus.",
+      "parentUuid": "4bc8d245_cfc48319",
+      "revId": "836633eb80fd20a8e33fccebed4d7806489696d1",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735"
     }
   ]
 }
