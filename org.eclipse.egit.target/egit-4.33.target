@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <?pde?>
 <!-- generated with https://github.com/eclipse-cbi/targetplatform-dsl -->
-<target name="egit-4.33" sequenceNumber="1724851711">
+<target name="egit-4.33" sequenceNumber="1726124911">
   <locations>
     <location includeMode="slicer" includeAllPlatforms="false" includeSource="true" includeConfigurePhase="true" type="InstallableUnit">
       <unit id="org.eclipse.license.feature.group" version="0.0.0"/>
@@ -86,7 +86,7 @@
       <unit id="org.sat4j.core" version="0.0.0"/>
       <unit id="org.sat4j.pb" version="0.0.0"/>
       <unit id="org.eclipse.tools.layout.spy" version="0.0.0"/>
-      <repository location="https://download.eclipse.org/staging/2024-09"/>
+      <repository location="https://download.eclipse.org/releases/2024-09"/>
     </location>
     <location includeDependencyDepth="none" includeDependencyScopes="compile" includeSource="true" missingManifest="error" type="Maven" label="osgi">
       <dependencies>
