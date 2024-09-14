@@ -51,6 +51,114 @@
       "parentUuid": "4bc8d245_cfc48319",
       "revId": "836633eb80fd20a8e33fccebed4d7806489696d1",
       "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "5857be38_abf62eed",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 7
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1021966
+      },
+      "writtenOn": "2024-09-14T13:19:58Z",
+      "side": 1,
+      "message": "Works well. Didn\u0027t manage to test in Papyrus due to technical problems.",
+      "revId": "836633eb80fd20a8e33fccebed4d7806489696d1",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "3cabd286_d263eaf2",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/clipboard/ClipboardPropertyTester.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 1021966
+      },
+      "writtenOn": "2024-09-14T13:19:58Z",
+      "side": 1,
+      "message": "Please use our standard format: capital C in \"(C)\", and no square brackets.",
+      "revId": "836633eb80fd20a8e33fccebed4d7806489696d1",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "66283ae4_cab4140c",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/clipboard/ClipboardPropertyTester.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1021966
+      },
+      "writtenOn": "2024-09-14T13:19:58Z",
+      "side": 1,
+      "message": "This is a new package. Export it in MANIFEST.MF with x-internal `true`.",
+      "revId": "836633eb80fd20a8e33fccebed4d7806489696d1",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "789af1a2_f42b62b5",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/clipboard/ClipboardPropertyTester.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1021966
+      },
+      "writtenOn": "2024-09-14T13:19:58Z",
+      "side": 1,
+      "message": "No need to store in local variable \"trace\".",
+      "revId": "836633eb80fd20a8e33fccebed4d7806489696d1",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "5fba460e_8a873467",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/clipboard/ClipboardPropertyTester.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1021966
+      },
+      "writtenOn": "2024-09-14T13:19:58Z",
+      "side": 1,
+      "message": "The return value is String, so use `String content \u003d ...`",
+      "revId": "836633eb80fd20a8e33fccebed4d7806489696d1",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "641801ee_5725124f",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/clipboard/ClipboardPropertyTester.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1021966
+      },
+      "writtenOn": "2024-09-14T13:19:58Z",
+      "side": 1,
+      "message": "This is then not needed.",
+      "range": {
+        "startLine": 64,
+        "startChar": 31,
+        "endLine": 64,
+        "endChar": 42
+      },
+      "revId": "836633eb80fd20a8e33fccebed4d7806489696d1",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735"
     }
   ]
 }
