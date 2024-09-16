@@ -209,10 +209,11 @@ public enum RepositoryCache {
 			return super.setGitDir(normalizedGitDir);
 		}
 
+		@SuppressWarnings("restriction")
 		public CachingRepository createRepository() throws IOException {
 			CachingRepository repo = new CachingRepository(this);
 			if (isMustExist()) {
-				if (!((Repository) repo).getObjectDatabase().exists()) {
+				if (!repo.getObjectDatabase().exists()) {
 					throw new RepositoryNotFoundException(getGitDir());
 				}
 			}
