@@ -87,6 +87,24 @@
       "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "2e7ed589_8386092b",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/clipboard/ClipboardPropertyTester.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 1038267
+      },
+      "writtenOn": "2024-09-24T09:22:45Z",
+      "side": 1,
+      "message": "That was a copy for another file (a lot of files have (c))..\nThis is fixed in the next patch.",
+      "parentUuid": "3cabd286_d263eaf2",
+      "revId": "836633eb80fd20a8e33fccebed4d7806489696d1",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "66283ae4_cab4140c",
@@ -100,6 +118,24 @@
       "writtenOn": "2024-09-14T13:19:58Z",
       "side": 1,
       "message": "This is a new package. Export it in MANIFEST.MF with x-internal `true`.",
+      "revId": "836633eb80fd20a8e33fccebed4d7806489696d1",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "4831aeef_53065798",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/clipboard/ClipboardPropertyTester.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1038267
+      },
+      "writtenOn": "2024-09-24T09:22:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "66283ae4_cab4140c",
       "revId": "836633eb80fd20a8e33fccebed4d7806489696d1",
       "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735"
     },
@@ -121,6 +157,24 @@
       "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "ac2186d1_aa7b05f6",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/clipboard/ClipboardPropertyTester.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1038267
+      },
+      "writtenOn": "2024-09-24T09:22:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "789af1a2_f42b62b5",
+      "revId": "836633eb80fd20a8e33fccebed4d7806489696d1",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "5fba460e_8a873467",
@@ -138,6 +192,24 @@
       "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "6fa5c430_92394f52",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/clipboard/ClipboardPropertyTester.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1038267
+      },
+      "writtenOn": "2024-09-24T09:22:45Z",
+      "side": 1,
+      "message": "Well done ! I used before getClipboardContent before switching to TextContent.",
+      "parentUuid": "5fba460e_8a873467",
+      "revId": "836633eb80fd20a8e33fccebed4d7806489696d1",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "641801ee_5725124f",
@@ -151,6 +223,30 @@
       "writtenOn": "2024-09-14T13:19:58Z",
       "side": 1,
       "message": "This is then not needed.",
+      "range": {
+        "startLine": 64,
+        "startChar": 31,
+        "endLine": 64,
+        "endChar": 42
+      },
+      "revId": "836633eb80fd20a8e33fccebed4d7806489696d1",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "594a2de5_efd3ec08",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/clipboard/ClipboardPropertyTester.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1038267
+      },
+      "writtenOn": "2024-09-24T09:22:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "641801ee_5725124f",
       "range": {
         "startLine": 64,
         "startChar": 31,
