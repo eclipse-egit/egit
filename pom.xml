@@ -19,7 +19,7 @@
 
   <groupId>org.eclipse.egit</groupId>
   <artifactId>egit-parent</artifactId>
-  <version>7.1.0-SNAPSHOT</version>
+  <version>7.1.0.202410012040-m1</version>
   <packaging>pom</packaging>
 
   <name>EGit Parent</name>
@@ -62,7 +62,7 @@
 
   <properties>
     <maven-version-minimum>3.9.0</maven-version-minimum>
-    <egit-version>7.1.0-SNAPSHOT</egit-version>
+    <egit-version>7.1.0.202410012040-m1</egit-version>
     <tycho-version>4.0.6</tycho-version>
     <java-version>17</java-version>
     <ecj-version>3.33.0</ecj-version>
