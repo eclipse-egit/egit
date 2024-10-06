@@ -23,11 +23,13 @@ import org.eclipse.core.runtime.preferences.IEclipsePreferences.IPreferenceChang
 import org.eclipse.core.runtime.preferences.IPreferencesService;
 import org.eclipse.core.runtime.preferences.InstanceScope;
 import org.eclipse.egit.core.internal.CoreText;
+import org.eclipse.egit.core.internal.EGitFilePasswordProvider;
 import org.eclipse.egit.core.internal.hosts.GitHosts;
 import org.eclipse.egit.core.internal.indexdiff.IndexDiffCache;
-import org.eclipse.egit.core.internal.signing.GpgSetup;
+import org.eclipse.egit.core.internal.signing.SigningSetup;
 import org.eclipse.jgit.diff.RawText;
 import org.eclipse.jgit.storage.file.WindowCacheConfig;
+import org.eclipse.jgit.transport.sshd.KeyPasswordProviderFactory;
 import org.eclipse.jgit.util.SystemReader;
 import org.osgi.framework.FrameworkUtil;
 import org.osgi.framework.ServiceRegistration;
@@ -81,7 +83,10 @@ public class RepositoryInitializer {
 		// Make sure the correct GpgSigner is set early, otherwise it may be
 		// possible that a git operation is run before it is set, which then
 		// might use the wrong signer.
-		GpgSetup.update();
+		SigningSetup.update();
+		SigningSetup.setSshSigning();
+		// Use our own password provider that integrates with the secure store.
+		KeyPasswordProviderFactory.setInstance(EGitFilePasswordProvider::new);
 		updateTextBufferSize();
 		prefsListener = event -> {
 			if (GitCorePreferences.core_gitServers.equals(event.getKey())) {
@@ -108,6 +113,7 @@ public class RepositoryInitializer {
 			}
 			gitCorePreferences = null;
 		}
+		KeyPasswordProviderFactory.setInstance(null);
 		RepositoryUtil.INSTANCE.clear();
 		IndexDiffCache.INSTANCE.dispose();
 		RepositoryCache.INSTANCE.clear();

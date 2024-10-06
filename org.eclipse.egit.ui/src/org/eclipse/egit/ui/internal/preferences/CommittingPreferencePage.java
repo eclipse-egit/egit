@@ -18,7 +18,7 @@ import java.nio.file.Paths;
 
 import org.eclipse.core.runtime.preferences.InstanceScope;
 import org.eclipse.egit.core.GitCorePreferences;
-import org.eclipse.egit.core.internal.signing.GpgSetup;
+import org.eclipse.egit.core.internal.signing.SigningSetup;
 import org.eclipse.egit.ui.Activator;
 import org.eclipse.egit.ui.PluginPreferenceInitializer;
 import org.eclipse.egit.ui.UIPreferences;
@@ -101,7 +101,7 @@ public class CommittingPreferencePage extends DoublePreferencesPreferencePage
 				org.eclipse.egit.core.Activator.PLUGIN_ID);
 		result.addPropertyChangeListener(event -> {
 			if (GitCorePreferences.core_gpgSigner.equals(event.getProperty())) {
-				GpgSetup.update();
+				SigningSetup.update();
 			}
 		});
 		return result;

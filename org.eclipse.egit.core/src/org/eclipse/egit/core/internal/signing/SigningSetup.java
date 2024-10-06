@@ -19,13 +19,15 @@ import org.eclipse.egit.core.internal.CoreText;
 import org.eclipse.jgit.lib.GpgConfig.GpgFormat;
 import org.eclipse.jgit.lib.SignatureVerifiers;
 import org.eclipse.jgit.lib.Signers;
+import org.eclipse.jgit.signing.ssh.SshSignatureVerifierFactory;
+import org.eclipse.jgit.signing.ssh.SshSignerFactory;
 
 /**
  * Utility class to set up the selected GpgSigner.
  */
-public final class GpgSetup {
+public final class SigningSetup {
 
-	private GpgSetup() {
+	private SigningSetup() {
 		// No instantiation
 	}
 
@@ -36,6 +38,18 @@ public final class GpgSetup {
 	private static final Object LOCK = new Object();
 
 	private static Signer current;
+
+	/**
+	 * Ensures that SSH signing and signature verification is available.
+	 */
+	public static void setSshSigning() {
+		// JGit may not find the SSH signer and signature verifier through its
+		// ServiceLoader in an environment with separated classloaders, like
+		// OSGi. Set it explicitly.
+		Signers.set(GpgFormat.SSH, new SshSignerFactory().create());
+		SignatureVerifiers.set(GpgFormat.SSH,
+				new SshSignatureVerifierFactory().create());
+	}
 
 	/**
 	 * Updates JGit settings to use the signer and signature verifier defined in
