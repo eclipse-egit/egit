@@ -213,6 +213,24 @@
       "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "3ce3e2c0_6e2c33e9",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/clipboard/ClipboardPropertyTester.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1021966
+      },
+      "writtenOn": "2024-10-07T20:11:03Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "e92e5d21_463c931f",
+      "revId": "ae88449edf19734a6d86a9d817248538e36e53d5",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "120d84aa_e8e8cf0d",

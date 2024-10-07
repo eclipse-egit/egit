@@ -16,6 +16,23 @@
       "message": "It is ok for me",
       "revId": "934bca192c6737747774a312e92a9ddf7c8aee6f",
       "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "24cd908b_2fac71ea",
+        "filename": "org.eclipse.egit.ui/plugin.xml",
+        "patchSetId": 8
+      },
+      "lineNbr": 2111,
+      "author": {
+        "id": 1021966
+      },
+      "writtenOn": "2024-10-07T20:11:03Z",
+      "side": 1,
+      "message": "The PasteCommand also accepts a clipboard that contains a path to a directory, and if so and if the directory is a git repository, it will include the repository in EGit and in the repositories view.\n\nThis doesn\u0027t work anymore since a file path is not a git URL.\n\nI suggest leaving the enablement for the repositories view as it was and add the new condition as an \"or\":\n```\nactiveWhen\n  or\n    activePart instanceof RepositoriesView\n    and\n      Clipboard.containsGitURL\n      activePart instanceof IViewPart\n```",
+      "revId": "934bca192c6737747774a312e92a9ddf7c8aee6f",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735"
     }
   ]
 }
