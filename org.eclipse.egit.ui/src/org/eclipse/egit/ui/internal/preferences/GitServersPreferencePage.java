@@ -403,7 +403,7 @@ public class GitServersPreferencePage extends PreferencePage
 				try {
 					Pattern.compile(object.toString());
 				} catch (PatternSyntaxException e) {
-					return e.getLocalizedMessage();
+					return Utils.firstLine(e.getLocalizedMessage());
 				}
 				return ""; //$NON-NLS-1$
 			});
