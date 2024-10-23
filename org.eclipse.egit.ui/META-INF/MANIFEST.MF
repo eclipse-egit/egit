@@ -91,6 +91,7 @@ Export-Package: org.eclipse.egit.ui;version="7.1.0";x-friends:="org.eclipse.egit
  org.eclipse.egit.ui.internal.blame;version="7.1.0";x-internal:=true,
  org.eclipse.egit.ui.internal.branch;version="7.1.0";x-friends:="org.eclipse.egit.gitflow.ui",
  org.eclipse.egit.ui.internal.clean;version="7.1.0";x-internal:=true,
+ org.eclipse.egit.ui.internal.clipboard;version="7.1.0";x-internal:=true,
  org.eclipse.egit.ui.internal.clone;version="7.1.0";x-internal:=true,
  org.eclipse.egit.ui.internal.commands;version="7.1.0";x-internal:=true,
  org.eclipse.egit.ui.internal.commands.shared;version="7.1.0";x-internal:=true,
