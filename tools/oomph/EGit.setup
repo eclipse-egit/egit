@@ -164,7 +164,7 @@
   <setupTask
       xsi:type="pde:APIBaselineTask"
       name="EGit"
-      version="6.10.0"
+      version="7.0.0"
       location="${workspace.location/../api.baseline/7.0.0}"
       remoteURI="https://download.eclipse.org/egit/updates-7.0/org.eclipse.egit.repository-7.0.0.202409031743-r.zip">
     <description>EGit 7.0.0 API baseline; to be used with branch master</description>
