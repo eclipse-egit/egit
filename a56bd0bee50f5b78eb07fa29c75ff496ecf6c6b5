@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "4bc568e8_96233017",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1021966
+      },
+      "writtenOn": "2024-11-11T16:25:59Z",
+      "side": 1,
+      "message": "https://eclipse.gerrithub.io/c/eclipse-egit/egit/+/1203801",
+      "revId": "a56bd0bee50f5b78eb07fa29c75ff496ecf6c6b5",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735"
+    }
+  ]
+}
