@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "3bef8a21_bc68e6d0",
+        "filename": "org.eclipse.egit.core/OSGI-INF/org.eclipse.egit.core.internal.MergeStrategies$Loader.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 1021966
+      },
+      "writtenOn": "2024-11-11T16:30:06Z",
+      "side": 1,
+      "message": "Is the removal of the package correct?",
+      "revId": "85a6490bd09000e64f2865630328063a79c92b1d",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "09f458b6_13be8f3d",
+        "filename": "org.eclipse.egit.ui/OSGI-INF/org.eclipse.egit.ui.internal.ApplicationActiveListener.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 1021966
+      },
+      "writtenOn": "2024-11-11T16:30:06Z",
+      "side": 1,
+      "message": "What happened here? Why are the events removed?",
+      "revId": "85a6490bd09000e64f2865630328063a79c92b1d",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735"
+    }
+  ]
+}
