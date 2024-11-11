@@ -11,6 +11,8 @@
 package org.eclipse.egit.core.internal;
 
 import java.io.IOException;
+import java.time.Instant;
+import java.time.ZoneOffset;
 
 import org.eclipse.jgit.annotations.NonNull;
 import org.eclipse.jgit.errors.ConfigInvalidException;
@@ -116,5 +118,15 @@ public class EclipseSystemReader extends SystemReader {
 	public StoredConfig getSystemConfig()
 			throws IOException, ConfigInvalidException {
 		return delegate.getSystemConfig();
+	}
+
+	@Override
+	public Instant now() {
+		return delegate.now();
+	}
+
+	@Override
+	public ZoneOffset getTimeZoneAt(Instant when) {
+		return delegate.getTimeZoneAt(when);
 	}
 }
