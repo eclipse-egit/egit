@@ -18,6 +18,24 @@
       "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "4370e544_307a9803",
+        "filename": "org.eclipse.egit.core/OSGI-INF/org.eclipse.egit.core.internal.MergeStrategies$Loader.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 1000671
+      },
+      "writtenOn": "2024-11-11T20:18:05Z",
+      "side": 1,
+      "message": "no, this wasn\u0027t intended, sometimes Eclipse just deletes them, and here I missed to revert the changes Eclipse did automatically",
+      "parentUuid": "3bef8a21_bc68e6d0",
+      "revId": "85a6490bd09000e64f2865630328063a79c92b1d",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "09f458b6_13be8f3d",
@@ -31,6 +49,24 @@
       "writtenOn": "2024-11-11T16:30:06Z",
       "side": 1,
       "message": "What happened here? Why are the events removed?",
+      "revId": "85a6490bd09000e64f2865630328063a79c92b1d",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "137fd312_8099b69d",
+        "filename": "org.eclipse.egit.ui/OSGI-INF/org.eclipse.egit.ui.internal.ApplicationActiveListener.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 1000671
+      },
+      "writtenOn": "2024-11-11T20:18:05Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "09f458b6_13be8f3d",
       "revId": "85a6490bd09000e64f2865630328063a79c92b1d",
       "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735"
     }
