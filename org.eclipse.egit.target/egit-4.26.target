@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <?pde?>
 <!-- generated with https://github.com/eclipse-cbi/targetplatform-dsl -->
-<target name="egit-4.26" sequenceNumber="1728510053">
+<target name="egit-4.26" sequenceNumber="1731055575">
   <locations>
     <location includeMode="slicer" includeAllPlatforms="false" includeSource="true" includeConfigurePhase="true" type="InstallableUnit">
       <unit id="org.eclipse.license.feature.group" version="0.0.0"/>
@@ -158,7 +158,7 @@
         <dependency>
           <groupId>org.mockito</groupId>
           <artifactId>mockito-core</artifactId>
-          <version>5.14.1</version>
+          <version>5.14.2</version>
           <type>jar</type>
         </dependency>
       </dependencies>
@@ -262,13 +262,13 @@
         <dependency>
           <groupId>net.bytebuddy</groupId>
           <artifactId>byte-buddy</artifactId>
-          <version>1.15.3</version>
+          <version>1.15.10</version>
           <type>jar</type>
         </dependency>
         <dependency>
           <groupId>net.bytebuddy</groupId>
           <artifactId>byte-buddy-agent</artifactId>
-          <version>1.15.3</version>
+          <version>1.15.10</version>
           <type>jar</type>
         </dependency>
       </dependencies>
@@ -278,25 +278,25 @@
         <dependency>
           <groupId>org.bouncycastle</groupId>
           <artifactId>bcpg-jdk18on</artifactId>
-          <version>1.78.1</version>
+          <version>1.79</version>
           <type>jar</type>
         </dependency>
         <dependency>
           <groupId>org.bouncycastle</groupId>
           <artifactId>bcprov-jdk18on</artifactId>
-          <version>1.78.1</version>
+          <version>1.79</version>
           <type>jar</type>
         </dependency>
         <dependency>
           <groupId>org.bouncycastle</groupId>
           <artifactId>bcpkix-jdk18on</artifactId>
-          <version>1.78.1</version>
+          <version>1.79</version>
           <type>jar</type>
         </dependency>
         <dependency>
           <groupId>org.bouncycastle</groupId>
           <artifactId>bcutil-jdk18on</artifactId>
-          <version>1.78.1</version>
+          <version>1.79</version>
           <type>jar</type>
         </dependency>
       </dependencies>
