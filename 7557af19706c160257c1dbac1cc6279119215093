@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "d122fda7_be0b3f7f",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000671
+      },
+      "writtenOn": "2024-11-27T12:46:02Z",
+      "side": 1,
+      "message": "tried installing 2024-12 RC1 IDE with this setup successfully",
+      "revId": "7557af19706c160257c1dbac1cc6279119215093",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735"
+    }
+  ]
+}
