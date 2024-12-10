@@ -41,8 +41,8 @@
   </mailingLists>
 
   <issueManagement>
-    <url>https://bugs.eclipse.org/bugs/buglist.cgi?query_format=advanced;product=EGit;classification=Technology</url>
-    <system>Bugzilla</system>
+    <url>https://github.com/eclipse-egit/egit/issues</url>
+    <system>GitHub Issues</system>
   </issueManagement>
 
   <licenses>
