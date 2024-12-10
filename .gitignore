@@ -7,3 +7,6 @@ target/
 
 # SWTBot screenshots
 */screenshots/
+
+# develocity local state files (configuration files are in /.mvn only)
+/.mvn/.develocity/

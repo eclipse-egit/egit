@@ -22,7 +22,7 @@
   <version>7.2.0-SNAPSHOT</version>
   <packaging>pom</packaging>
 
-  <name>EGit Parent</name>
+  <name>EGit</name>
 
   <mailingLists>
     <mailingList>

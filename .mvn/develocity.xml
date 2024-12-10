@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
+<develocity
+    xmlns="https://www.gradle.com/develocity-maven" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="https://www.gradle.com/develocity-maven https://www.gradle.com/schema/develocity-maven.xsd">
+  <server>
+    <url>https://develocity-staging.eclipse.org</url>
+  </server>
+  <projectId>egit</projectId>
+  <buildScan>
+    <obfuscation>
+	  <username>#{isTrue(env['CI']) ? 'egit-bot' : 'Local developer (redacted)'}</username>
+      <ipAddresses>0.0.0.0</ipAddresses>
+	  <hostname>#{isTrue(env['CI']) ? 'CI agent' : 'Local machine (redacted)'}</hostname>
+    </obfuscation>
+    <publishing>
+      <onlyIf>
+        <![CDATA[authenticated]]>
+      </onlyIf>
+    </publishing>
+    <backgroundBuildScanUpload>#{isFalse(env['CI'])}</backgroundBuildScanUpload>
+  </buildScan>
+  <buildCache>
+    <local>
+      <enabled>#{isFalse(env['CI'])}</enabled>
+    </local>
+    <remote>
+      <enabled>true</enabled>
+      <storeEnabled>true</storeEnabled>
+    </remote>
+  </buildCache>
+</develocity>
