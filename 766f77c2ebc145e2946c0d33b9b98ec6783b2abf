@@ -1,6 +1,23 @@
 {
   "comments": [
     {
+      "unresolved": true,
+      "key": {
+        "uuid": "23dcaf03_2bf86c01",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1000671
+      },
+      "writtenOn": "2024-12-11T12:27:07Z",
+      "side": 1,
+      "message": "I had a look at some of the scans uploaded there and found it\u0027s also uploading the build log which contains file system paths of the local machine. See e.g. https://develocity-staging.eclipse.org/s/5ndl66vwli6ro/console-log?page\u003d1\n\nThat\u0027s ok for build machines but I don\u0027t feel comfortable disclosing local file system paths from developer machines to the public since they may contain confidential information (in my case my corporate userid).",
+      "revId": "766f77c2ebc145e2946c0d33b9b98ec6783b2abf",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735"
+    },
+    {
       "unresolved": false,
       "key": {
         "uuid": "ef6679f4_e363ac30",
