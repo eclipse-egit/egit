@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "ef6679f4_e363ac30",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1022032
+      },
+      "writtenOn": "2024-12-11T06:22:50Z",
+      "side": 1,
+      "message": "This does not yet include the configuration for the CI system (as that needs to go into the Jenkinsfile), but should be fine for use by developers locally. An example build scan created with this config is https://develocity-staging.eclipse.org/s/5ndl66vwli6ro",
+      "revId": "766f77c2ebc145e2946c0d33b9b98ec6783b2abf",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735"
+    }
+  ]
+}
