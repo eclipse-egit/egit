@@ -51,6 +51,23 @@
       "message": "This does not yet include the configuration for the CI system (as that needs to go into the Jenkinsfile), but should be fine for use by developers locally. An example build scan created with this config is https://develocity-staging.eclipse.org/s/5ndl66vwli6ro",
       "revId": "766f77c2ebc145e2946c0d33b9b98ec6783b2abf",
       "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "c723fde1_aac84a64",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1022032
+      },
+      "writtenOn": "2024-12-12T07:44:42Z",
+      "side": 1,
+      "message": "I forgot to mention that I\u0027m also fine with letting this change go unmerged for a while and to have other committers or other projects experiment with develocity settings on their own first.\nI seem to have forgotten how to mark a gerrit change as \"work in progress\" though. :(",
+      "revId": "766f77c2ebc145e2946c0d33b9b98ec6783b2abf",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735"
     }
   ]
 }
