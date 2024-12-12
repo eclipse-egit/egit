@@ -887,9 +887,7 @@ public class GitRepositoriesViewTest extends GitRepositoriesViewTestBase {
 			throws Exception {
 		assertEquals("Expected " + expectedSize + " children", expectedSize,
 				children.length);
-		if (decorations != null && decorations.length > 0) {
-			TestUtil.waitForDecorations();
-		}
+		TestUtil.waitForDecorations();
 		int[] indices = new int[expectedSize];
 		int[] expectedIndices = new int[expectedSize];
 		for (int i = 0; i < indices.length; i++) {
@@ -909,7 +907,7 @@ public class GitRepositoriesViewTest extends GitRepositoriesViewTestBase {
 		for (int i = 0; i < children.length; i++) {
 			String text = children[i].getText();
 			assertTrue("Stash " + i + " has wrong label: " + text,
-					text.startsWith("stash@{" + i + "}"));
+					text.contains("stash@{" + i + "}"));
 			if (decorations != null && i < decorations.length) {
 				String deco = decorations[i];
 				if (deco != null) {

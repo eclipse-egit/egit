@@ -421,12 +421,11 @@ public class RepositoryTreeNodeDecorator extends GitDecorator
 		}
 	}
 
-	private void decorateStash(StashedCommitNode node,
-			IDecoration decoration) {
+	private void decorateStash(StashedCommitNode node, IDecoration decoration) {
 		RevCommit commit = node.getObject();
-		decoration.addSuffix(
-				OPEN_BRACKET + abbreviate(commit) + "] " //$NON-NLS-1$
-				+ commit.getShortMessage());
+		decoration.addSuffix(MessageFormat.format(" {0}@'{'{1}'}' {2}", //$NON-NLS-1$
+				Constants.STASH, Integer.valueOf(node.getIndex()),
+				abbreviate(commit)));
 	}
 
 	private void decorateSubmodules(@NonNull Repository repository,
