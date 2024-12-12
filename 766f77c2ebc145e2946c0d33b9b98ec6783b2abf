@@ -68,6 +68,24 @@
       "message": "I forgot to mention that I\u0027m also fine with letting this change go unmerged for a while and to have other committers or other projects experiment with develocity settings on their own first.\nI seem to have forgotten how to mark a gerrit change as \"work in progress\" though. :(",
       "revId": "766f77c2ebc145e2946c0d33b9b98ec6783b2abf",
       "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "7e5e9770_edf990af",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000671
+      },
+      "writtenOn": "2024-12-12T11:47:58Z",
+      "side": 1,
+      "message": "at the top right corner of this window there\u0027s a button with 3 dots, under that you find an action to mark this change as WIP",
+      "parentUuid": "c723fde1_aac84a64",
+      "revId": "766f77c2ebc145e2946c0d33b9b98ec6783b2abf",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735"
     }
   ]
 }
