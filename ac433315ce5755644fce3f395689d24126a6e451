@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "0618a73e_fb820144",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/repository/RepositoryTreeNodeWorkbenchAdapter.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 137,
+      "author": {
+        "id": 1021966
+      },
+      "writtenOn": "2024-12-12T16:09:10Z",
+      "side": 1,
+      "message": "I\u0027m not at my development machine and cannot check the following myself currently:\n\n1. Is performance a problem here? Getting the message now happens synchronously on the UI thread. In the decorator it\u0027s asynchronous. How does that perform if one has 20 or 30 stashes (which I do in some repos :-))?\n2. Stash messages are completely optional, so we may end up with nodes with empty labels (plus then a decoration).\n3. How are stashes ordered now? If still in numeric order, it\u0027s not any simpler than before to find a particular stash. If alphabetically, the numeric order would be mangled, which I\u0027d find most strange. (I find numeric order not bad actually since it keeps the newest stashes at the top.)",
+      "revId": "ac433315ce5755644fce3f395689d24126a6e451",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735"
+    }
+  ]
+}
