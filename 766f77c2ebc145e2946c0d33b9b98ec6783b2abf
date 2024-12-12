@@ -36,6 +36,24 @@
       "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735"
     },
     {
+      "unresolved": true,
+      "key": {
+        "uuid": "baa8686a_9b3d4ea3",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1000671
+      },
+      "writtenOn": "2024-12-12T11:50:27Z",
+      "side": 1,
+      "message": "I would prefer to participate in using develocity, but excluding the private data unless the user sets an env var which switches on sending also the private data",
+      "parentUuid": "74483630_63c9535d",
+      "revId": "766f77c2ebc145e2946c0d33b9b98ec6783b2abf",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735"
+    },
+    {
       "unresolved": false,
       "key": {
         "uuid": "ef6679f4_e363ac30",
