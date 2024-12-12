@@ -25,9 +25,9 @@ import org.eclipse.egit.ui.internal.repository.tree.RepositoryTreeNodeType;
 import org.eclipse.egit.ui.internal.repository.tree.StashedCommitNode;
 import org.eclipse.egit.ui.internal.repository.tree.TagNode;
 import org.eclipse.jface.resource.ImageDescriptor;
-import org.eclipse.jgit.lib.Constants;
 import org.eclipse.jgit.lib.Ref;
 import org.eclipse.jgit.lib.Repository;
+import org.eclipse.jgit.revwalk.RevCommit;
 import org.eclipse.jgit.util.StringUtils;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.model.WorkbenchAdapter;
@@ -132,9 +132,9 @@ public class RepositoryTreeNodeWorkbenchAdapter extends WorkbenchAdapter {
 		case STASH:
 			return UIText.RepositoriesViewLabelProvider_StashNodeText;
 		case STASHED_COMMIT:
-			return MessageFormat.format("{0}@'{'{1}'}'", //$NON-NLS-1$
-					Constants.STASH,
-					Integer.valueOf(((StashedCommitNode) node).getIndex()));
+			StashedCommitNode n = (StashedCommitNode) node;
+			RevCommit commit = n.getObject();
+			return commit.getShortMessage();
 		case REF:
 		case TAG: {
 			Ref ref = (Ref) node.getObject();
