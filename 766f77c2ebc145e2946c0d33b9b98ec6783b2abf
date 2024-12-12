@@ -18,6 +18,24 @@
       "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735"
     },
     {
+      "unresolved": true,
+      "key": {
+        "uuid": "74483630_63c9535d",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1022032
+      },
+      "writtenOn": "2024-12-12T07:36:04Z",
+      "side": 1,
+      "message": "That\u0027s a reasonable wish and that\u0027s why I started the experiments with my private machine that will be scrapped soon. :)\nAs long as you never authenticate a device for develocity via an explicit invocation of the authentication mojo or via your user settings in the develocity web page, you don\u0027t upload any data at all, see the \"authenticated\" condition in develocity.xml. I\u0027ve just verified by renaming my keys.properties file and running another build, which has neither the console log statement for uploading nor does it appear on the web page.\nAfter enabling develocity on our Jenkins, we would probably change the condition to something like \"authenticated or env[someEnvSpecificToJenkinsOrEclipseFoundation]\" which would still have the same default being disabled for every human.\nHowever, if you want to participate with private builds in the scan and still not have the build log information in there, it could be removed by adding yet another condition, see https://docs.gradle.com/develocity/maven-extension/current/#how_to_disable_2. In that case, we would probably also want the same condition for the resource usage (the machine info at the very end of the scan), see https://docs.gradle.com/develocity/maven-extension/current/#capturing_resource_usage. We could have these 2 conditions depend on something like env[DEVELOCITY_INCLUDE_PRIVATE_BUILD_DATA], and then every developer could actively set that environment variable to include this for a personal machine.\n\nWhat\u0027s your preferred way? Just knowing the authenticated condition doesn\u0027t include you or adding the other conditions to exclude the private data unless the env var exists? (obfuscation isn\u0027t available for the log or the resource usage, it\u0027s only available for user name, host name and IP).",
+      "parentUuid": "23dcaf03_2bf86c01",
+      "revId": "766f77c2ebc145e2946c0d33b9b98ec6783b2abf",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735"
+    },
+    {
       "unresolved": false,
       "key": {
         "uuid": "ef6679f4_e363ac30",
