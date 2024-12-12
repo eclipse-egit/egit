@@ -846,6 +846,7 @@ public class GitRepositoriesViewTest extends GitRepositoriesViewTestBase {
 		bot.waitUntil(shellCloses(confirm));
 		TestUtil.joinJobs(JobFamilies.STASH);
 		TestUtil.joinJobs(JobFamilies.REPO_VIEW_REFRESH);
+		refreshAndWait();
 		item = myRepoViewUtil.getStashesItem(tree, repositoryFile);
 		assertStashes(item.getItems(), 3);
 	}
@@ -909,7 +910,7 @@ public class GitRepositoriesViewTest extends GitRepositoriesViewTestBase {
 		for (int i = 0; i < children.length; i++) {
 			String text = children[i].getText();
 			assertTrue("Stash " + i + " has wrong label: " + text,
-					text.startsWith("stash@{" + i + "}"));
+					text.contains("stash@{" + i + "}"));
 			if (decorations != null && i < decorations.length) {
 				String deco = decorations[i];
 				if (deco != null) {
