@@ -3,6 +3,23 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "0d0f119f_4b03e8b3",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/repository/RepositoryTreeNodeDecorator.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 428,
+      "author": {
+        "id": 1021966
+      },
+      "writtenOn": "2024-12-13T10:13:35Z",
+      "side": 1,
+      "message": "With `MessageFormat.format`, why not use the pattern `\" {0}@\u0027{\u0027{1}\u0027}\u0027 [{2}]\"` and pass `abbreviate(commit)` as third parameter? In fact; do we need the square brackets around the commit ID still? Now that the commit ID is \"all alone\" at the end of the decoration, I think we could do without.",
+      "revId": "ac433315ce5755644fce3f395689d24126a6e451",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "0618a73e_fb820144",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/repository/RepositoryTreeNodeWorkbenchAdapter.java",
         "patchSetId": 1
@@ -32,6 +49,24 @@
       "side": 1,
       "message": "1. I have 45 stashes in my JGit clone, opening the list of stashed commits after restarting the IDE shows no noticeable lag (on MacOS)\n2. If the user doesn\u0027t provide a stash message git shows \"WIP on \u003cbranchname\u003e: \u003ccommit id and subject of the commit the stash is based on\u003e\", EGit does the same\n3. Ordering is unchanged and in stack order (newest stash on top). I think showing the message first improves usability since the message provides a better clue about what\u0027s in the stash than the stash index.",
       "parentUuid": "0618a73e_fb820144",
+      "revId": "ac433315ce5755644fce3f395689d24126a6e451",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "a68df42a_cb044f5d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/repository/RepositoryTreeNodeWorkbenchAdapter.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 137,
+      "author": {
+        "id": 1021966
+      },
+      "writtenOn": "2024-12-13T10:13:35Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "51908608_d816093b",
       "revId": "ac433315ce5755644fce3f395689d24126a6e451",
       "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735"
     }
