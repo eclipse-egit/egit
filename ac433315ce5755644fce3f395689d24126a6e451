@@ -16,6 +16,24 @@
       "message": "I\u0027m not at my development machine and cannot check the following myself currently:\n\n1. Is performance a problem here? Getting the message now happens synchronously on the UI thread. In the decorator it\u0027s asynchronous. How does that perform if one has 20 or 30 stashes (which I do in some repos :-))?\n2. Stash messages are completely optional, so we may end up with nodes with empty labels (plus then a decoration).\n3. How are stashes ordered now? If still in numeric order, it\u0027s not any simpler than before to find a particular stash. If alphabetically, the numeric order would be mangled, which I\u0027d find most strange. (I find numeric order not bad actually since it keeps the newest stashes at the top.)",
       "revId": "ac433315ce5755644fce3f395689d24126a6e451",
       "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "51908608_d816093b",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/repository/RepositoryTreeNodeWorkbenchAdapter.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 137,
+      "author": {
+        "id": 1000671
+      },
+      "writtenOn": "2024-12-13T00:17:24Z",
+      "side": 1,
+      "message": "1. I have 45 stashes in my JGit clone, opening the list of stashed commits after restarting the IDE shows no noticeable lag (on MacOS)\n2. If the user doesn\u0027t provide a stash message git shows \"WIP on \u003cbranchname\u003e: \u003ccommit id and subject of the commit the stash is based on\u003e\", EGit does the same\n3. Ordering is unchanged and in stack order (newest stash on top). I think showing the message first improves usability since the message provides a better clue about what\u0027s in the stash than the stash index.",
+      "parentUuid": "0618a73e_fb820144",
+      "revId": "ac433315ce5755644fce3f395689d24126a6e451",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735"
     }
   ]
 }
