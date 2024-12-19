@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "4e6e1adf_5c1e1391",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 5
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1021966
+      },
+      "writtenOn": "2024-12-19T07:42:49Z",
+      "side": 1,
+      "message": "Fine by me; one suggestion in the inline comment.",
+      "revId": "d5fa102836b01e8850eab37d3be13acf15b7a271",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "7d5b5561_8bd7a63d",
+        "filename": "org.eclipse.egit.ui.test/src/org/eclipse/egit/ui/view/repositories/GitRepositoriesViewTest.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 849,
+      "author": {
+        "id": 1021966
+      },
+      "writtenOn": "2024-12-19T07:42:49Z",
+      "side": 1,
+      "message": "It\u0027s OK, but actually I would have removed the if in line 891. (There, also the parameter name \"decorations\" is misleading now, since it\u0027s not decorations anymore.)",
+      "revId": "d5fa102836b01e8850eab37d3be13acf15b7a271",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735"
+    }
+  ]
+}
