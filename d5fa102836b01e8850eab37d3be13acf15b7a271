@@ -33,6 +33,24 @@
       "message": "It\u0027s OK, but actually I would have removed the if in line 891. (There, also the parameter name \"decorations\" is misleading now, since it\u0027s not decorations anymore.)",
       "revId": "d5fa102836b01e8850eab37d3be13acf15b7a271",
       "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "c8c4ebf1_5f67f369",
+        "filename": "org.eclipse.egit.ui.test/src/org/eclipse/egit/ui/view/repositories/GitRepositoriesViewTest.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 849,
+      "author": {
+        "id": 1000671
+      },
+      "writtenOn": "2024-12-19T20:41:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7d5b5561_8bd7a63d",
+      "revId": "d5fa102836b01e8850eab37d3be13acf15b7a271",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735"
     }
   ]
 }
