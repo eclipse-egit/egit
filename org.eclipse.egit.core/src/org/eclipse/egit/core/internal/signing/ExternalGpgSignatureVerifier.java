@@ -23,7 +23,6 @@ import java.time.LocalDateTime;
 import java.time.ZoneOffset;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeFormatterBuilder;
-import java.time.format.DateTimeParseException;
 import java.time.temporal.ChronoField;
 import java.util.Date;
 import java.util.Locale;
@@ -42,7 +41,7 @@ import org.eclipse.jgit.util.TemporaryBuffer;
  */
 public class ExternalGpgSignatureVerifier implements SignatureVerifier {
 
-	private static final DateTimeFormatter GPGSM_DATE_FORMAT = new DateTimeFormatterBuilder()
+	private static final DateTimeFormatter GPG_DATE_FORMAT = new DateTimeFormatterBuilder()
 			.appendValue(ChronoField.YEAR, 4)
 			.appendValue(ChronoField.MONTH_OF_YEAR, 2)
 			.appendValue(ChronoField.DAY_OF_MONTH, 2)
@@ -99,6 +98,7 @@ public class ExternalGpgSignatureVerifier implements SignatureVerifier {
 		}
 		File signatureFile = null;
 		SignatureVerification[] verification = { null };
+		String[] name = { null };
 		try {
 			signatureFile = File.createTempFile("egit", ".sig"); //$NON-NLS-1$ //$NON-NLS-2$
 			Files.write(signatureFile.toPath(), signatureData);
@@ -109,11 +109,13 @@ public class ExternalGpgSignatureVerifier implements SignatureVerifier {
 					"1", //$NON-NLS-1$
 					"--verify", //$NON-NLS-1$
 					signatureFile.getAbsolutePath(), //
-					"-"); //$NON-NLS-1$
+					"-"); //$NON-NLS-1$ // Read from stdin
 			try (ByteArrayInputStream dataIn = new ByteArrayInputStream(data)) {
 				ExternalProcessRunner.run(process, dataIn, b -> {
 					verification[0] = fromGpg(b);
-				}, null);
+				}, b -> {
+					name[0] = extractProgramName(b);
+				});
 			} catch (CanceledException e) {
 				// Ignored; user cannot cancel
 			}
@@ -122,12 +124,33 @@ public class ExternalGpgSignatureVerifier implements SignatureVerifier {
 				signatureFile.deleteOnExit();
 			}
 		}
-		return verification[0];
+		SignatureVerification v = verification[0];
+		if (v != null && name[0] != null && !name[0].equals(v.verifierName())) {
+			return new SignatureVerification(name[0], v.creationDate(),
+					v.signer(), v.keyFingerprint(), v.keyUser(), v.verified(),
+					v.expired(), v.trustLevel(), v.message());
+		}
+		return v;
+	}
+
+	private String extractProgramName(TemporaryBuffer buffer) {
+		try (BufferedReader r = new BufferedReader(new InputStreamReader(
+				buffer.openInputStream(), StandardCharsets.UTF_8))) {
+			String line = r.readLine();
+			if (line != null) {
+				int i = line.indexOf(": "); //$NON-NLS-1$
+				if (i > 0) {
+					return line.substring(0, i);
+				}
+			}
+		} catch (IOException e) {
+			// Ignore
+		}
+		return null;
 	}
 
 	private SignatureVerification fromGpg(TemporaryBuffer buffer) {
-		Date createdAt = Date.from(Instant.EPOCH);
-		boolean haveDate = false;
+		Instant createdAt = null;
 		TrustLevel trust = TrustLevel.UNKNOWN;
 		String fingerprint = null;
 		boolean validates = false;
@@ -161,20 +184,19 @@ public class ExternalGpgSignatureVerifier implements SignatureVerifier {
 						}
 					}
 				} else if (line.startsWith("SIG_ID")) { //$NON-NLS-1$
-					// SIG_ID sig YYYY-MM-DD unixtimestamp. gpgsm doesn't print this.
+					// SIG_ID sig YYYY-MM-DD timestamp. gpgsm doesn't print
+					// this.
 					String[] parts = line.split(" "); //$NON-NLS-1$
 					if (parts.length > 3) {
-						// Unix timestamp of creation of signature
+						// Timestamp of creation of signature
 						try {
-							createdAt = Date.from(Instant.ofEpochSecond(
-									Long.parseLong(parts[3].trim())));
-							haveDate = true;
-						} catch (NumberFormatException e) {
+							createdAt = parseDate(parts[3].trim());
+						} catch (RuntimeException e) {
 							// Ignore.
 						}
 					}
 				} else if (line.startsWith("VALIDSIG")) { //$NON-NLS-1$
-					// VALIDSIG fingerprint YYYY-MM-DD unixtimestamp ...
+					// VALIDSIG fingerprint YYYY-MM-DD timestamp ...
 					// Extract the fingerprint.
 					int i = line.indexOf(' ');
 					int j = -1;
@@ -187,30 +209,15 @@ public class ExternalGpgSignatureVerifier implements SignatureVerifier {
 					// If we don't have createdAt yet, parse the time. gpg
 					// writes a unix timestamp, but gpgsm prints UTC
 					// yyyyMMDDTHHmmss.
-					if (!haveDate) {
+					if (createdAt == null) {
 						i = line.indexOf(' ', j + 1);
 						if (i > j) {
 							j = line.indexOf(' ', i + 1);
 							String dateTime = line.substring(i+1, j);
-							if (dateTime.indexOf('T') > 0) {
-								try {
-									createdAt = Date.from(GPGSM_DATE_FORMAT
-											.parse(dateTime,
-													LocalDateTime::from)
-											.atOffset(ZoneOffset.UTC)
-											.toInstant());
-									haveDate = true;
-								} catch (DateTimeParseException e) {
-									// Ignore
-								}
-							} else {
-								try {
-									createdAt = Date.from(Instant.ofEpochSecond(
-											Long.parseLong(dateTime)));
-									haveDate = true;
-								} catch (NumberFormatException e) {
-									// Ignore.
-								}
+							try {
+								createdAt = parseDate(dateTime);
+							} catch (RuntimeException e) {
+								// Ignore
 							}
 						}
 					}
@@ -270,14 +277,25 @@ public class ExternalGpgSignatureVerifier implements SignatureVerifier {
 			if (StringUtils.isEmptyOrNull(fingerprint)) {
 				fingerprint = keyId;
 			}
-			return new SignatureVerification(getName(), createdAt, userId,
-					fingerprint, userId, validates, expired, trust, message);
 		} catch (IOException e) {
 			message = MessageFormat.format(CoreText.ExternalGpgVerifier_failure,
 					e.getLocalizedMessage());
-			return new SignatureVerification(getName(), createdAt, userId,
-					fingerprint, userId, false, expired, trust, message);
+			validates = false;
 		}
+		return new SignatureVerification(getName(),
+				createdAt != null ? Date.from(createdAt) : null,
+				userId, fingerprint, userId, validates, expired, trust,
+				message);
+	}
+
+	private Instant parseDate(String dateTime) {
+		// GPG timestamps are sometimes unix timestamps and sometimes in the
+		// format yyyyMMDDTHHmmss (in UTC).
+		if (dateTime.indexOf('T') > 0) {
+			return GPG_DATE_FORMAT.parse(dateTime, LocalDateTime::from)
+					.atOffset(ZoneOffset.UTC).toInstant();
+		}
+		return Instant.ofEpochSecond(Long.parseLong(dateTime));
 	}
 
 	@Override
