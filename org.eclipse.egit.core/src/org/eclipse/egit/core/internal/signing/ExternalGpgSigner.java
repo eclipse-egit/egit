@@ -79,14 +79,29 @@ public class ExternalGpgSigner implements Signer {
 	public boolean canLocateSigningKey(Repository repository, GpgConfig config,
 			PersonIdent committer, String signingKey,
 			CredentialsProvider credentialsProvider) throws CanceledException {
-		// Ignore the CredentialsProvider. We let GPG handle all this.
-		String program = config.getProgram();
-		if (StringUtils.isEmptyOrNull(program)) {
-			program = x509 ? ExternalGpg.getGpgSm() : ExternalGpg.getGpg();
-			if (StringUtils.isEmptyOrNull(program)) {
-				return false;
-			}
+		// This method mainly exists to determine whether signing is available
+		// at all so that the UI can enable components appropriately. In
+		// particular it is needed for pgp signing when gpg.program is not
+		// defined.
+		//
+		// For x509 signing, this is not needed at all, since the user has at
+		// least configured gpg.format = x509. If there is no key available,
+		// it's then a configuration error: either the user needs to specify
+		// user.signingKey, or not set gpg.format.
+		if (x509) {
+			return true;
 		}
+		String program = config.getProgram();
+		if (!StringUtils.isEmptyOrNull(program)) {
+			// The user has explicitly configured gpg.program or gpg.pgp.progam.
+			// Same case as above: assume signing is possible.
+			return true;
+		}
+		program = ExternalGpg.getGpg();
+		if (StringUtils.isEmptyOrNull(program)) {
+			return false;
+		}
+		// Ignore the CredentialsProvider. We let GPG handle all this.
 		String keySpec = signingKey;
 		if (keySpec == null) {
 			keySpec = config.getSigningKey();
@@ -97,23 +112,15 @@ public class ExternalGpgSigner implements Signer {
 		ProcessBuilder process = new ProcessBuilder();
 		// For the output format, see
 		// https://github.com/gpg/gnupg/blob/master/doc/DETAILS
-		if (x509) {
-			process.command(program, "--list-secret-keys", //$NON-NLS-1$
-					"--with-colons", //$NON-NLS-1$
-					"--batch", //$NON-NLS-1$
-					"--no-tty", //$NON-NLS-1$
-					keySpec);
-		} else {
-			// --no-auto-key-locate prevents GPG from asking external sources
-			// (like key servers). See
-			// https://www.gnupg.org/documentation/manuals/gnupg/GPG-Configuration-Options.html#index-auto_002dkey_002dlocate
-			process.command(program, "--locate-keys", //$NON-NLS-1$
-					"--no-auto-key-locate", //$NON-NLS-1$
-					"--with-colons", //$NON-NLS-1$
-					"--batch", //$NON-NLS-1$
-					"--no-tty", //$NON-NLS-1$
-					keySpec);
-		}
+		// --no-auto-key-locate prevents GPG from asking external sources
+		// (like key servers). See
+		// https://www.gnupg.org/documentation/manuals/gnupg/GPG-Configuration-Options.html#index-auto_002dkey_002dlocate
+		process.command(program, "--locate-keys", //$NON-NLS-1$
+				"--no-auto-key-locate", //$NON-NLS-1$
+				"--with-colons", //$NON-NLS-1$
+				"--batch", //$NON-NLS-1$
+				"--no-tty", //$NON-NLS-1$
+				keySpec);
 		gpgEnvironment(process);
 		try {
 			boolean[] result = { false };
@@ -186,15 +193,9 @@ public class ExternalGpgSigner implements Signer {
 				// Detached signature, sign, armor, user
 				"-bsau", //$NON-NLS-1$
 				keySpec,
-				// No extra output
-				"--batch", //$NON-NLS-1$
-				"--no-tty", //$NON-NLS-1$
 				// Write extra status messages to stderr
 				"--status-fd", //$NON-NLS-1$
-				"2", //$NON-NLS-1$
-				// Force output of the signature to stdout
-				"--output", //$NON-NLS-1$
-				"-"); //$NON-NLS-1$
+				"2"); //$NON-NLS-1$
 		gpgEnvironment(process);
 		try (ByteArrayInputStream dataIn = new ByteArrayInputStream(data)) {
 			class Holder {
