@@ -180,6 +180,8 @@ public class ExternalGpgSigner implements Signer {
 			if (StringUtils.isEmptyOrNull(program)) {
 				throw new IOException(CoreText.ExternalGpgSigner_gpgNotFound);
 			}
+		} else {
+			program = ExternalGpg.findExecutable(program);
 		}
 		String keySpec = signingKey;
 		if (keySpec == null) {
