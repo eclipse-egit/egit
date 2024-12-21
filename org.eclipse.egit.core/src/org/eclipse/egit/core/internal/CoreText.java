@@ -160,6 +160,9 @@ public class CoreText extends NLS {
 	public static String DisconnectProviderOperation_disconnecting;
 
 	/** */
+	public static String ExternalGpg_invalidPath;
+
+	/** */
 	public static String ExternalGpgSigner_bufferError;
 
 	/** */
