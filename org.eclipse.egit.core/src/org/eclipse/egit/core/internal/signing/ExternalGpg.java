@@ -14,7 +14,12 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.nio.file.InvalidPathException;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.text.MessageFormat;
+import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 
 import org.eclipse.egit.core.Activator;
 import org.eclipse.egit.core.internal.CoreText;
@@ -28,22 +33,41 @@ import org.eclipse.jgit.util.SystemReader;
  */
 class ExternalGpg {
 
-	private static String gpg;
+	private static final Map<String, String> EXECUTABLES = new ConcurrentHashMap<>();
 
-	private static String gpgsm;
-
-	static synchronized String getGpg() {
-		if (gpg == null) {
-			gpg = findProgram("gpg"); //$NON-NLS-1$
-		}
-		return gpg.isEmpty() ? null : gpg;
+	static String getGpg() {
+		return get("gpg"); //$NON-NLS-1$
 	}
 
-	static synchronized String getGpgSm() {
-		if (gpgsm == null) {
-			gpgsm = findProgram("gpgsm"); //$NON-NLS-1$
+	static String getGpgSm() {
+		return get("gpgsm"); //$NON-NLS-1$
+	}
+
+	static String findExecutable(String program) {
+		try {
+			Path exe = Paths.get(program);
+			if (exe.isAbsolute()) {
+				return program;
+			}
+			if (exe.getNameCount() == 1) {
+				String resolved = get(program);
+				if (resolved != null) {
+					return resolved;
+				}
+			}
+		} catch (InvalidPathException e) {
+			Activator.logWarning(
+					MessageFormat.format(CoreText.ExternalGpg_invalidPath,
+							program),
+					e);
 		}
-		return gpgsm.isEmpty() ? null : gpgsm;
+		return program;
+	}
+
+	private static String get(String program) {
+		String resolved = EXECUTABLES.computeIfAbsent(program,
+				ExternalGpg::findProgram);
+		return resolved.isEmpty() ? null : resolved;
 	}
 
 	private static String findProgram(String program) {

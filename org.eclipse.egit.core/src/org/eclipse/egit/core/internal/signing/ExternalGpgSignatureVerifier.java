@@ -95,6 +95,8 @@ public class ExternalGpgSignatureVerifier implements SignatureVerifier {
 			if (StringUtils.isEmptyOrNull(program)) {
 				throw new IOException(CoreText.ExternalGpgSigner_gpgNotFound);
 			}
+		} else {
+			program = ExternalGpg.findExecutable(program);
 		}
 		File signatureFile = null;
 		SignatureVerification[] verification = { null };
