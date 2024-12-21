@@ -14,7 +14,12 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.nio.file.InvalidPathException;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.text.MessageFormat;
+import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 
 import org.eclipse.egit.core.Activator;
 import org.eclipse.egit.core.internal.CoreText;
@@ -28,25 +33,42 @@ import org.eclipse.jgit.util.SystemReader;
  */
 class ExternalGpg {
 
-	private static String gpg;
+	private static final Map<String, String> EXECUTABLES = new ConcurrentHashMap<>();
 
-	private static String gpgsm;
-
-	static synchronized String getGpg() {
-		if (gpg == null) {
-			gpg = findProgram("gpg"); //$NON-NLS-1$
-		}
-		return gpg.isEmpty() ? null : gpg;
+	static String getGpg() {
+		return get("gpg"); //$NON-NLS-1$
 	}
 
-	static synchronized String getGpgSm() {
-		if (gpgsm == null) {
-			gpgsm = findProgram("gpgsm"); //$NON-NLS-1$
+	static String getGpgSm() {
+		return get("gpgsm"); //$NON-NLS-1$
+	}
+
+	static String findExecutable(String program) {
+		try {
+			Path exe = Paths.get(program);
+			if (!exe.isAbsolute() && exe.getNameCount() == 1) {
+				String resolved = get(program);
+				if (resolved != null) {
+					return resolved;
+				}
+			}
+		} catch (InvalidPathException e) {
+			Activator.logWarning(
+					MessageFormat.format(CoreText.ExternalGpg_invalidPath,
+							program),
+					e);
 		}
-		return gpgsm.isEmpty() ? null : gpgsm;
+		return program;
+	}
+
+	private static String get(String program) {
+		String resolved = EXECUTABLES.computeIfAbsent(program,
+				ExternalGpg::findProgram);
+		return resolved.isEmpty() ? null : resolved;
 	}
 
 	private static String findProgram(String program) {
+		// Called only for simple names.
 		SystemReader system = SystemReader.getInstance();
 		String path = system.getenv("PATH"); //$NON-NLS-1$
 		String exe = null;
@@ -64,8 +86,7 @@ class ExternalGpg {
 					ExternalProcessRunner.run(process, null, b -> {
 						try (BufferedReader r = new BufferedReader(
 								new InputStreamReader(b.openInputStream(),
-										SystemReader.getInstance()
-												.getDefaultCharset()))) {
+										system.getDefaultCharset()))) {
 							result[0] = r.readLine();
 						}
 					}, null);
@@ -78,9 +99,26 @@ class ExternalGpg {
 		}
 		if (exe == null) {
 			exe = searchPath(path,
-					system.isWindows() ? program + ".exe" : program); //$NON-NLS-1$
+					system.isWindows() ? completeWindowsPath(program)
+							: program);
 		}
 		return exe == null ? "" : exe; //$NON-NLS-1$
+	}
+
+	private static String completeWindowsPath(String program) {
+		// On Windows, Java Process follows the CreateProcess function, which
+		// appends ".exe" if the program name has no extension and does not end
+		// in a period, unless it includes a path.
+		//
+		// See
+		// https://learn.microsoft.com/en-us/windows/win32/api/processthreadsapi/nf-processthreadsapi-createprocessa
+		// and
+		// https://github.com/openjdk/jdk/blob/43b7e9f54/src/java.base/windows/classes/java/lang/ProcessImpl.java#L338
+		String name = new File(program).getName();
+		if (name.equals(program) && name.indexOf('.') < 0) {
+			return program + ".exe"; //$NON-NLS-1$
+		}
+		return program;
 	}
 
 	private static String searchPath(String path, String name) {
