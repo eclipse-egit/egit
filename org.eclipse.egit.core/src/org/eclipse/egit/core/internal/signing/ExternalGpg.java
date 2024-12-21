@@ -14,6 +14,9 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.nio.file.InvalidPathException;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.text.MessageFormat;
 
 import org.eclipse.egit.core.Activator;
@@ -44,6 +47,24 @@ class ExternalGpg {
 			gpgsm = findProgram("gpgsm"); //$NON-NLS-1$
 		}
 		return gpgsm.isEmpty() ? null : gpgsm;
+	}
+
+	static String findExecutable(String program) {
+		try {
+			Path exe = Paths.get(program);
+			if (exe.isAbsolute()) {
+				return program;
+			}
+			if (exe.getNameCount() == 1) {
+				return findProgram(program);
+			}
+		} catch (InvalidPathException e) {
+			Activator.logWarning(
+					MessageFormat.format(CoreText.ExternalGpg_invalidPath,
+							program),
+					e);
+		}
+		return program;
 	}
 
 	private static String findProgram(String program) {
