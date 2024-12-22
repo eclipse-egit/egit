@@ -372,6 +372,13 @@
               <version>${tycho-version}</version>
             </dependency>
           </dependencies>
+          <executions>
+            <execution>
+              <id>default-update-consumer-pom</id>
+              <!-- no consumer poms needed -->
+              <phase/>
+            </execution>
+          </executions>
         </plugin>
         <plugin>
           <groupId>org.eclipse.tycho</groupId>
@@ -411,6 +418,30 @@
           <groupId>org.eclipse.tycho</groupId>
           <artifactId>tycho-gpg-plugin</artifactId>
           <version>${tycho-version}</version>
+        </plugin>
+        <plugin>
+          <groupId>org.eclipse.tycho</groupId>
+          <artifactId>tycho-ds-plugin</artifactId>
+          <version>${tycho-version}</version>
+          <executions>
+            <execution>
+              <id>default-declarative-services</id>
+              <!-- we have our services checked in, no need for regenerating anything -->
+              <phase/>
+            </execution>
+          </executions>
+        </plugin>
+        <plugin>
+          <groupId>org.eclipse.tycho</groupId>
+          <artifactId>tycho-bnd-plugin</artifactId>
+          <version>${tycho-version}</version>
+          <executions>
+            <execution>
+              <id>default-process</id>
+              <!-- no BND instructions used -->
+              <phase/>
+            </execution>
+          </executions>
         </plugin>
         <!-- other plugins -->
         <plugin>
