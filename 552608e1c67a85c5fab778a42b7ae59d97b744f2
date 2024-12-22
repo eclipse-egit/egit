@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "c3519047_bf6336bf",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1021966
+      },
+      "writtenOn": "2024-12-22T14:43:50Z",
+      "side": 1,
+      "message": "@msohn: Somehow there is a problem with the connection between Jenkins and this Gerrit. Jenkins does not trigger jobs, and it doesn\u0027t report back the job results. Maybe recent updates by the EF team on Jenkins have broken something in the Gerrit Trigger configuration.",
+      "revId": "552608e1c67a85c5fab778a42b7ae59d97b744f2",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735"
+    }
+  ]
+}
