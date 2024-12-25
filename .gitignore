@@ -7,3 +7,8 @@ target/
 
 # SWTBot screenshots
 */screenshots/
+
+# Tycho generated temporary files
+.tycho-consumer-pom.xml
+.polyglot.*
+pom.tycho
