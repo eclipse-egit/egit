@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e1d73f6b_694e98e0",
+        "filename": "pom.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 296,
+      "author": {
+        "id": 1000671
+      },
+      "writtenOn": "2024-12-25T19:55:54Z",
+      "side": 1,
+      "message": "With this change we don\u0027t create cyclondx SBOMs for each individual artefact anymore, does the aggregate for egit-parent contain all details for all the egit artefacts ?",
+      "revId": "692251b03ac0257916366cbab33db150b6858470",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735"
+    }
+  ]
+}
