@@ -55,7 +55,7 @@ maven assertj
 	dependency {
 		groupId = "org.assertj"
 		artifactId = "assertj-core"
-		version = "3.27.0"
+		version = "3.27.1"
 	}
 }
 
@@ -193,12 +193,12 @@ maven jna
 	dependency {
 		groupId = "net.java.dev.jna"
 		artifactId = "jna"
-		version = "5.15.0"
+		version = "5.16.0"
 	}
 	dependency {
 		groupId = "net.java.dev.jna"
 		artifactId = "jna-platform"
-		version = "5.15.0"
+		version = "5.16.0"
 	}
 }
 
@@ -211,7 +211,7 @@ maven mockito
 	dependency {
 		groupId = "org.mockito"
 		artifactId = "mockito-core"
-		version = "5.14.2"
+		version = "5.15.2"
 	}
 }
 

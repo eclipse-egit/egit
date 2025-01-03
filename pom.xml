@@ -311,6 +311,7 @@
           <execution>
             <phase>package</phase>
             <goals>
+              <goal>makeBom</goal>
               <goal>makeAggregateBom</goal>
             </goals>
           </execution>
