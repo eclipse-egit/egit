@@ -12,6 +12,7 @@
  *******************************************************************************/
 package org.eclipse.egit.ui.test.commit;
 
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 
@@ -65,12 +66,20 @@ public class DiffRegionFormatterTest extends LocalRepositoryTestCase {
 			regions = formatter.getRegions();
 		}
 		assertNotNull(regions);
-		assertTrue(regions.length > 0);
+		assertEquals(5, regions.length);
+		DiffRegion.Type[] expectedTypes = {
+				DiffRegion.Type.HEADLINE,
+				DiffRegion.Type.HEADER,
+				DiffRegion.Type.HUNK,
+				DiffRegion.Type.REMOVE,
+				DiffRegion.Type.ADD };
+		int i = 0;
 		for (DiffRegion region : regions) {
 			assertNotNull(region);
 			assertTrue(region.getOffset() >= 0);
 			assertTrue(region.getLength() >= 0);
 			assertTrue(region.getOffset() < document.getLength());
+			assertEquals(expectedTypes[i++], region.getType());
 		}
 	}
 
