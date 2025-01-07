@@ -12,6 +12,7 @@ package org.eclipse.egit.core.op;
 
 import java.io.File;
 
+import org.eclipse.egit.core.internal.signing.SigningSetup;
 import org.eclipse.egit.core.settings.GitSettings;
 import org.eclipse.jgit.lib.Config;
 import org.eclipse.jgit.lib.GpgConfig;
@@ -19,7 +20,7 @@ import org.eclipse.jgit.util.StringUtils;
 
 /**
  * An EGit-specific {@link GpgConfig} that ensures that the executable defined
- * in Eclipse is taken if the git config doesn't specify one.
+ * in Eclipse is taken if one is specified.
  */
 public class EGitGpgConfig extends GpgConfig {
 
@@ -37,10 +38,9 @@ public class EGitGpgConfig extends GpgConfig {
 
 	@Override
 	public String getProgram() {
-		String fromConfig = super.getProgram();
-		if (!StringUtils.isEmptyOrNull(fromConfig)) {
-			return fromConfig;
-		}
+		// The EGit setting is an override in case whatever is defined in the
+		// git config doesn't work in Eclipse. (Or the user, for whatever
+		// reason, prefers to use different programs in C git and in EGit.)
 		GpgFormat format = getKeyFormat();
 		switch (format) {
 		case OPENPGP:
@@ -55,20 +55,27 @@ public class EGitGpgConfig extends GpgConfig {
 		default:
 			break;
 		}
+		// No EGit setting: just use whatever is configured in the git config.
+		String fromConfig = super.getProgram();
+		if (!StringUtils.isEmptyOrNull(fromConfig)) {
+			return fromConfig;
+		}
 		return null;
 	}
 
 	private String determineProgram(boolean x509) {
-		File f = GitSettings.getGpgExecutable();
-		if (f != null) {
-			if (!x509) {
-				return f.getAbsolutePath();
-			}
-			File parent = f.getParentFile();
-			String name = f.getName().replace("gpg", "gpgsm"); //$NON-NLS-1$ //$NON-NLS-2$
-			File gpgsm = new File(parent, name);
-			if (gpgsm.isFile() && gpgsm.canExecute()) {
-				return gpgsm.getAbsolutePath();
+		if (SigningSetup.Signer.GPG.equals(SigningSetup.getSigner())) {
+			File f = GitSettings.getGpgExecutable();
+			if (f != null) {
+				if (!x509) {
+					return f.getAbsolutePath();
+				}
+				File parent = f.getParentFile();
+				String name = f.getName().replace("gpg", "gpgsm"); //$NON-NLS-1$ //$NON-NLS-2$
+				File gpgsm = new File(parent, name);
+				if (gpgsm.isFile() && gpgsm.canExecute()) {
+					return gpgsm.getAbsolutePath();
+				}
 			}
 		}
 		return ""; //$NON-NLS-1$
