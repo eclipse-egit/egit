@@ -28,6 +28,7 @@ import org.eclipse.jface.text.BadLocationException;
 import org.eclipse.jface.text.IDocument;
 import org.eclipse.jface.text.Region;
 import org.eclipse.jgit.annotations.NonNull;
+import org.eclipse.jgit.diff.DiffDriver;
 import org.eclipse.jgit.diff.DiffEntry;
 import org.eclipse.jgit.diff.DiffEntry.ChangeType;
 import org.eclipse.jgit.diff.DiffFormatter;
@@ -405,7 +406,7 @@ public class DiffRegionFormatter extends DiffFormatter {
 
 	@Override
 	protected void writeHunkHeader(int aStartLine, int aEndLine,
-			int bStartLine, int bEndLine) throws IOException {
+			int bStartLine, int bEndLine, String funcName) throws IOException {
 		int start = stream.offset;
 		if (!regions.isEmpty()) {
 			DiffRegion last = regions.get(regions.size() - 1);
@@ -414,7 +415,8 @@ public class DiffRegionFormatter extends DiffFormatter {
 				addRegion(Type.HEADER, lastEnd, start);
 			}
 		}
-		super.writeHunkHeader(aStartLine, aEndLine, bStartLine, bEndLine);
+		super.writeHunkHeader(aStartLine, aEndLine, bStartLine, bEndLine,
+				funcName);
 		stream.flushLine();
 		addRegion(Type.HUNK, start, stream.offset);
 		lastNewLine = bStartLine - 1;
@@ -469,10 +471,10 @@ public class DiffRegionFormatter extends DiffFormatter {
 	}
 
 	@Override
-	public void format(final EditList edits, final RawText a, final RawText b)
-			throws IOException {
+	public void format(final EditList edits, final RawText a, final RawText b,
+			DiffDriver driver) throws IOException {
 		// Flush header before formatting of edits begin
 		stream.flushLine();
-		super.format(edits, a, b);
+		super.format(edits, a, b, driver);
 	}
 }
