@@ -31,8 +31,15 @@ public final class SigningSetup {
 		// No instantiation
 	}
 
-	private enum Signer {
-		BC, GPG
+	/**
+	 * Available signers (for OpenPGP or X.509 signatures).
+	 */
+	public enum Signer {
+		/** The default signer provided by JGit, using Bouncy Castle. */
+		BC,
+
+		/** The EGit signer, using an external gpg-compatible program. */
+		GPG
 	}
 
 	private static final Object LOCK = new Object();
@@ -83,7 +90,12 @@ public final class SigningSetup {
 		}
 	}
 
-	private static Signer getSigner() {
+	/**
+	 * Retrieves the currently configured signer.
+	 *
+	 * @return the {@link Signer}, never {@code null}
+	 */
+	public static Signer getSigner() {
 		String pref = Platform.getPreferencesService().getString(
 				Activator.PLUGIN_ID, GitCorePreferences.core_gpgSigner, null,
 				null);
