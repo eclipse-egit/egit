@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "08377569_e956b32b",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1022032
+      },
+      "writtenOn": "2025-01-08T07:35:24Z",
+      "side": 1,
+      "message": "I have no clue of the changed code, but the test change looks reasonable to assert the fix does really fix the issue.",
+      "revId": "db4e68ea6c65cf4f9012e1f73be440e2d368d2d4",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735"
+    }
+  ]
+}
