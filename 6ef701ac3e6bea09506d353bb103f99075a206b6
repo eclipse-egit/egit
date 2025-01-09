@@ -16,6 +16,24 @@
       "message": "mark this @NonNull ?",
       "revId": "6ef701ac3e6bea09506d353bb103f99075a206b6",
       "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "ac608a2e_24e36bb3",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/internal/signing/SigningSetup.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 1021966
+      },
+      "writtenOn": "2025-01-09T14:24:23Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "123523a1_7909f517",
+      "revId": "6ef701ac3e6bea09506d353bb103f99075a206b6",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735"
     }
   ]
 }
