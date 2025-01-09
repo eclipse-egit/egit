@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "123523a1_7909f517",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/internal/signing/SigningSetup.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 1000671
+      },
+      "writtenOn": "2025-01-09T13:38:44Z",
+      "side": 1,
+      "message": "mark this @NonNull ?",
+      "revId": "6ef701ac3e6bea09506d353bb103f99075a206b6",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735"
+    }
+  ]
+}
