@@ -55,7 +55,7 @@ maven assertj
 	dependency {
 		groupId = "org.assertj"
 		artifactId = "assertj-core"
-		version = "3.27.2"
+		version = "3.27.3"
 	}
 }
 
@@ -96,12 +96,12 @@ maven bytebuddy
 	dependency {
 		groupId = "net.bytebuddy"
 		artifactId = "byte-buddy"
-		version = "1.15.11"
+		version = "1.16.1"
 	}
 	dependency {
 		groupId = "net.bytebuddy"
 		artifactId = "byte-buddy-agent"
-		version = "1.15.11"
+		version = "1.16.1"
 	}
 }
 
