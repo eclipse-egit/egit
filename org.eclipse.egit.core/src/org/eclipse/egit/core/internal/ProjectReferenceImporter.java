@@ -14,6 +14,7 @@ import java.io.File;
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 import java.net.URISyntaxException;
+import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
@@ -40,11 +41,14 @@ import org.eclipse.egit.core.RepositoryUtil;
 import org.eclipse.egit.core.op.BranchOperation;
 import org.eclipse.egit.core.op.CloneOperation;
 import org.eclipse.egit.core.op.ConnectProviderOperation;
+import org.eclipse.egit.core.op.CreateLocalBranchOperation;
 import org.eclipse.egit.core.project.RepositoryMapping;
 import org.eclipse.egit.core.settings.GitSettings;
+import org.eclipse.jgit.lib.BranchConfig.BranchRebaseMode;
 import org.eclipse.jgit.lib.Config;
 import org.eclipse.jgit.lib.ConfigConstants;
 import org.eclipse.jgit.lib.Constants;
+import org.eclipse.jgit.lib.Ref;
 import org.eclipse.jgit.lib.Repository;
 import org.eclipse.jgit.storage.file.FileRepositoryBuilder;
 import org.eclipse.jgit.transport.URIish;
@@ -130,6 +134,7 @@ public class ProjectReferenceImporter {
 	/**
 	 * Check whether current branch is the same as configured in project
 	 * reference. Checkout configured branch if current branch is different.
+	 * Create new local branch if required.
 	 *
 	 * @param projectReference
 	 *            the project reference to be checked
@@ -160,17 +165,44 @@ public class ProjectReferenceImporter {
 					currentBranch = RepositoryUtil.INSTANCE
 							.mapCommitToRef(repository, currentBranch, false);
 				}
-
+				// Check for local changes
+				if (RepositoryUtil.hasChanges(repository)) {
+					throw new TeamException(MessageFormat.format(
+							"Repository at folder {0} has uncommitted changes.", //$NON-NLS-1$
+							repository.getWorkTree()));
+				}
 				// compare with current branch
 				String configuredBranch = projectReference.getBranch();
 				if (!configuredBranch.equals(currentBranch)) {
 					// Checkout configured branch
-					final BranchOperation branchOperation = new BranchOperation(
-							repository, configuredBranch);
+					final String branchName = projectReference.getBranch();
+					// check whether ref is in reference database
+					Ref ref = null;
 					try {
-						branchOperation.execute(monitor);
-					} catch (CoreException e) {
+						ref = mapping.getRepository().getRefDatabase()
+								.findRef(branchName);
+					} catch (IOException e) {
 						throw new TeamException(e.getMessage());
+					}
+					if (ref == null) {
+						// create new local branch
+						final CreateLocalBranchOperation createLocalBranchOperation = new CreateLocalBranchOperation(
+								mapping.getRepository(), branchName, ref,
+								BranchRebaseMode.NONE);
+						try {
+							createLocalBranchOperation.execute(monitor);
+						} catch (CoreException e) {
+							throw new TeamException(e.getMessage());
+						}
+					} else {
+						// Checkout configured branch
+						final BranchOperation branchOperation = new BranchOperation(
+								repository, configuredBranch);
+						try {
+							branchOperation.execute(monitor);
+						} catch (CoreException e) {
+							throw new TeamException(e.getMessage());
+						}
 					}
 				}
 			}
