@@ -137,7 +137,7 @@ public class RebaseTargetSelectionDialog extends AbstractBranchSelectionDialog {
 			return;
 		}
 		Config cfg = repo.getConfig();
-		BranchRebaseMode rebase = cfg.getEnum(BranchRebaseMode.values(),
+		BranchRebaseMode rebase = cfg.getEnum(
 				ConfigConstants.CONFIG_BRANCH_SECTION, branchName,
 				ConfigConstants.CONFIG_KEY_REBASE, BranchRebaseMode.NONE);
 		if (rebase != null) {
