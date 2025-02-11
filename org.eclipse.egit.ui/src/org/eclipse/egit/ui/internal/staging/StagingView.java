@@ -24,8 +24,6 @@ import static org.eclipse.egit.ui.internal.CommonUtils.runCommand;
 import java.io.File;
 import java.io.IOException;
 import java.net.URISyntaxException;
-import java.nio.file.Files;
-import java.nio.file.LinkOption;
 import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -177,7 +175,6 @@ import org.eclipse.jgit.annotations.Nullable;
 import org.eclipse.jgit.api.AddCommand;
 import org.eclipse.jgit.api.Git;
 import org.eclipse.jgit.api.ResetCommand;
-import org.eclipse.jgit.api.RmCommand;
 import org.eclipse.jgit.api.errors.GitAPIException;
 import org.eclipse.jgit.api.errors.JGitInternalException;
 import org.eclipse.jgit.api.errors.NoFilepatternException;
@@ -3821,20 +3818,18 @@ public class StagingView extends ViewPart
 		final Repository repository = currentRepository;
 		Iterator iterator = selectedEntries.iterator();
 		final Set<String> addPaths = new HashSet<>();
-		final Set<String> rmPaths = new HashSet<>();
 		resetPathsToExpand();
 		while (iterator.hasNext()) {
 			Object element = iterator.next();
 			if (element instanceof StagingEntry) {
 				StagingEntry entry = (StagingEntry) element;
-				selectEntryForStaging(entry, addPaths, rmPaths);
+				selectEntryForStaging(entry, addPaths);
 				addPathAndParentPaths(entry.getParentPath(), pathsToExpandInStaged);
 			} else if (element instanceof StagingFolderEntry) {
 				StagingFolderEntry folder = (StagingFolderEntry) element;
 				List<StagingEntry> entries = contentProvider
 						.getStagingEntriesFiltered(folder);
-				for (StagingEntry entry : entries)
-					selectEntryForStaging(entry, addPaths, rmPaths);
+				entries.forEach(e -> selectEntryForStaging(e, addPaths));
 				addExpandedPathsBelowFolder(folder, unstagedViewer,
 						pathsToExpandInStaged);
 			} else {
@@ -3855,45 +3850,16 @@ public class StagingView extends ViewPart
 			}
 		}
 
-		// start long running operations
 		if (!addPaths.isEmpty()) {
 			Job addJob = new Job(UIText.StagingView_AddJob) {
 				@Override
 				protected IStatus run(IProgressMonitor monitor) {
 					try (Git git = new Git(repository)) {
 						AddCommand add = git.add();
-						for (String addPath : addPaths)
+						for (String addPath : addPaths) {
 							add.addFilepattern(addPath);
+						}
 						add.call();
-					} catch (NoFilepatternException e1) {
-						// cannot happen
-					} catch (JGitInternalException e1) {
-						Activator.handleError(e1.getCause().getMessage(),
-								e1.getCause(), true);
-					} catch (Exception e1) {
-						Activator.handleError(e1.getMessage(), e1, true);
-					}
-					return Status.OK_STATUS;
-				}
-
-				@Override
-				public boolean belongsTo(Object family) {
-					return family == JobFamilies.ADD_TO_INDEX;
-				}
-			};
-
-			schedule(addJob, true);
-		}
-
-		if (!rmPaths.isEmpty()) {
-			Job removeJob = new Job(UIText.StagingView_RemoveJob) {
-				@Override
-				protected IStatus run(IProgressMonitor monitor) {
-					try (Git git = new Git(repository)) {
-						RmCommand rm = git.rm().setCached(true);
-						for (String rmPath : rmPaths)
-							rm.addFilepattern(rmPath);
-						rm.call();
 					} catch (NoFilepatternException e) {
 						// cannot happen
 					} catch (JGitInternalException e) {
@@ -3907,44 +3873,24 @@ public class StagingView extends ViewPart
 
 				@Override
 				public boolean belongsTo(Object family) {
-					return family == JobFamilies.REMOVE_FROM_INDEX;
+					return family == JobFamilies.ADD_TO_INDEX;
 				}
 			};
 
-			schedule(removeJob, true);
+			schedule(addJob, true);
 		}
 	}
 
 	private void selectEntryForStaging(StagingEntry entry,
-			Collection<String> addPaths, Collection<String> rmPaths) {
+			Collection<String> addPaths) {
 		switch (entry.getState()) {
 		case ADDED:
 		case CHANGED:
 		case REMOVED:
 			// already staged
 			break;
-		case CONFLICTING: {
-			// In a delete-modify conflict, we do have the file in the working
-			// tree. If it has been deleted, the user resolved the conflict in
-			// favour of the deletion. In other conflicts, if the user removes
-			// the file, we also should remove it from the index.
-			if (!Files.exists(entry.getLocation().toFile().toPath(),
-					LinkOption.NOFOLLOW_LINKS)) {
-				rmPaths.add(entry.getPath());
-			} else {
-				addPaths.add(entry.getPath());
-			}
-			break;
-		}
-		case MODIFIED:
-		case MODIFIED_AND_CHANGED:
-		case MODIFIED_AND_ADDED:
-		case UNTRACKED:
+		default:
 			addPaths.add(entry.getPath());
-			break;
-		case MISSING:
-		case MISSING_AND_CHANGED:
-			rmPaths.add(entry.getPath());
 			break;
 		}
 	}
