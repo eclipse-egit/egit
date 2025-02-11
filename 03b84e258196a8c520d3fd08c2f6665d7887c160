@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "dacaefa6_ff1f54f6",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1021966
+      },
+      "writtenOn": "2025-02-11T20:46:40Z",
+      "side": 1,
+      "message": "I see no general way to detect this situation. For instance, one cannot\njust check whether after cleaning the first line looks like a footer\nline. There are many commit subjects that have the footer format, for\ninstance the subject of _this_ commit message. One cannot defer message\nclean-up; comment lines would make an \"is the message non-empty\" check\nwrongly succeed. One cannot _not_ remove leading empty lines when\ncleaning the message as it would be inconsistent with C git.\n\nA full solution might be to change the whole logic for Change-Ids: let\nthe user toggle the button as s/he sees fit, but do not modify the\nmessage text at all. If the button is selected when committing, add the\nplaceholder after all other checks, just before doing the commit. The\nbutton state would need to be saved in CommitMessageComponentState, and\nbe restored from there.\n\nHowever, such an approach would be rather invasive, requiring changes\nin CommitMessageDialog, CommitDialog, and StagingView, and also in the\nCommiMesssageComponentState management, including maintaining backwards\ncompatibility with state written before the change.",
+      "revId": "03b84e258196a8c520d3fd08c2f6665d7887c160",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735"
+    }
+  ]
+}
