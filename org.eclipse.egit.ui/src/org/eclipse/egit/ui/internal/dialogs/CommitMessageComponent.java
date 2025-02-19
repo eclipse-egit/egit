@@ -20,7 +20,6 @@
  *******************************************************************************/
 package org.eclipse.egit.ui.internal.dialogs;
 
-import java.io.File;
 import java.io.IOException;
 import java.text.MessageFormat;
 import java.util.ArrayList;
@@ -29,7 +28,7 @@ import java.util.regex.Pattern;
 
 import org.eclipse.egit.core.internal.Utils;
 import org.eclipse.egit.core.internal.gerrit.GerritUtil;
-import org.eclipse.egit.core.settings.GitSettings;
+import org.eclipse.egit.core.op.EGitGpgConfig;
 import org.eclipse.egit.core.util.RevCommitUtils;
 import org.eclipse.egit.ui.Activator;
 import org.eclipse.egit.ui.CommitMessageWithCaretPosition;
@@ -88,9 +87,8 @@ import org.eclipse.ui.PlatformUI;
  */
 public class CommitMessageComponent {
 
-	private static final Pattern ANY_NON_WHITESPACE = Pattern
-			.compile("[^\\h\\v]"); //$NON-NLS-1$
-
+	private static final Pattern EMPTY_GERRIT_MESSAGE = Pattern
+			.compile("^(?:\\h*\\n)*Change-Id: I[0-9a-fA-F]{40}\\h*(?:\\n|$)"); //$NON-NLS-1$
 	/**
 	 * Status provider for whether a commit operation should be enabled or not
 	 */
@@ -625,33 +623,40 @@ public class CommitMessageComponent {
 	public boolean checkCommitInfo() {
 		updateStateFromUI();
 
-		String text = getCommitMessage();
-		// Strip footers
-		int footer = CommonUtils.getFooterOffset(text);
-		if (footer >= 0) {
-			text = text.substring(0, footer);
+		String rawText = commitText.getText();
+		rawText = Utils.normalizeLineEndings(rawText);
+		boolean isEmpty = false;
+		if (EMPTY_GERRIT_MESSAGE.matcher(rawText).matches()) {
+			isEmpty = true;
+		} else {
+			// Get the fully cleaned commit message
+			String text = getCommitMessage();
+			// Strip footers
+			int footer = CommonUtils.getFooterOffset(text);
+			if (footer >= 0) {
+				text = text.substring(0, footer);
+			}
+			isEmpty = text.isBlank();
 		}
-		if (!ANY_NON_WHITESPACE.matcher(text).find()) {
+		if (isEmpty) {
 			MessageDialog.openWarning(getShell(),
 					UIText.CommitDialog_ErrorNoMessage,
 					UIText.CommitDialog_ErrorMustEnterCommitMessage);
 			return false;
 		}
 
-		boolean authorValid = false;
-		if (author.length() > 0)
-			authorValid = RawParseUtils.parsePersonIdent(author) != null;
-		if (!authorValid) {
+		PersonIdent ident = author.isBlank() ? null
+				: RawParseUtils.parsePersonIdent(author);
+		if (ident == null) {
 			MessageDialog.openWarning(getShell(),
 					UIText.CommitDialog_ErrorInvalidAuthor,
 					UIText.CommitDialog_ErrorInvalidAuthorSpecified);
 			return false;
 		}
 
-		PersonIdent committerPersonIdent = committer.length() > 0
-				? RawParseUtils.parsePersonIdent(committer)
-				: null;
-		if (committerPersonIdent == null) {
+		ident = committer.isBlank() ? null
+				: RawParseUtils.parsePersonIdent(committer);
+		if (ident == null) {
 			MessageDialog.openWarning(getShell(),
 					UIText.CommitDialog_ErrorInvalidAuthor,
 					UIText.CommitDialog_ErrorInvalidCommitterSpecified);
@@ -661,23 +666,14 @@ public class CommitMessageComponent {
 		Repository repo = repository;
 		if (signCommit && repo != null) {
 			// Ensure the Eclipse preference, if set, overrides the git config
-			File gpg = GitSettings.getGpgExecutable();
-			GpgConfig gpgConfig = new GpgConfig(repo.getConfig()) {
-
-				@Override
-				public String getProgram() {
-					return gpg != null ? gpg.getAbsolutePath()
-							: super.getProgram();
-				}
-			};
+			GpgConfig gpgConfig = new EGitGpgConfig(repo.getConfig());
 			Signer signer = Signers.get(gpgConfig.getKeyFormat());
 			boolean signingKeyAvailable = SignatureUtils
-					.checkSigningKey(repo, signer, gpgConfig,
-							committerPersonIdent);
+					.checkSigningKey(repo, signer, gpgConfig, ident);
 			if (!signingKeyAvailable) {
 				String signingKey = gpgConfig.getSigningKey();
 				if (StringUtils.isEmptyOrNull(signingKey)) {
-					signingKey = committerPersonIdent.getEmailAddress();
+					signingKey = ident.getEmailAddress();
 				}
 				MessageDialog.openWarning(getShell(),
 						UIText.CommitMessageComponent_ErrorMissingSigningKey,

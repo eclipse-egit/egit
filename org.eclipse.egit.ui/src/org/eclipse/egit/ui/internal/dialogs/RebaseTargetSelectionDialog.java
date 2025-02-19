@@ -137,20 +137,22 @@ public class RebaseTargetSelectionDialog extends AbstractBranchSelectionDialog {
 			return;
 		}
 		Config cfg = repo.getConfig();
-		BranchRebaseMode rebase = cfg.getEnum(BranchRebaseMode.values(),
+		BranchRebaseMode rebase = cfg.getEnum(
 				ConfigConstants.CONFIG_BRANCH_SECTION, branchName,
 				ConfigConstants.CONFIG_KEY_REBASE, BranchRebaseMode.NONE);
-		switch (rebase) {
-		case MERGES:
-			preserveMergesButton.setSelection(true);
-			preserveMerges = true;
-			break;
-		case INTERACTIVE:
-			interactiveButton.setSelection(true);
-			interactive = true;
-			break;
-		default:
-			break;
+		if (rebase != null) {
+			switch (rebase) {
+			case MERGES:
+				preserveMergesButton.setSelection(true);
+				preserveMerges = true;
+				break;
+			case INTERACTIVE:
+				interactiveButton.setSelection(true);
+				interactive = true;
+				break;
+			default:
+				break;
+			}
 		}
 	}
 
