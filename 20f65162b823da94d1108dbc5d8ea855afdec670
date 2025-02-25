@@ -16,6 +16,24 @@
       "message": "Latest is 4.0.12 :-)",
       "revId": "20f65162b823da94d1108dbc5d8ea855afdec670",
       "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a77266bb_f5b6b43d",
+        "filename": "pom.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1000671
+      },
+      "writtenOn": "2025-02-25T17:23:23Z",
+      "side": 1,
+      "message": ":-) this release was released today",
+      "parentUuid": "35cccecb_1104f531",
+      "revId": "20f65162b823da94d1108dbc5d8ea855afdec670",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735"
     }
   ]
 }
