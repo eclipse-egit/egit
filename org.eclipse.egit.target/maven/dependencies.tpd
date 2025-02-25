@@ -9,7 +9,7 @@ maven apache
 	dependency {
 		groupId = "commons-codec"
 		artifactId = "commons-codec"
-		version = "1.17.2"
+		version = "1.18.0"
 	}
 	dependency {
 		groupId = "org.apache.commons"
@@ -29,7 +29,7 @@ maven apache
 	dependency {
 		groupId = "commons-logging"
 		artifactId = "commons-logging"
-		version = "1.3.4"
+		version = "1.3.5"
 	}
 }
 
@@ -96,12 +96,12 @@ maven bytebuddy
 	dependency {
 		groupId = "net.bytebuddy"
 		artifactId = "byte-buddy"
-		version = "1.16.1"
+		version = "1.17.1"
 	}
 	dependency {
 		groupId = "net.bytebuddy"
 		artifactId = "byte-buddy-agent"
-		version = "1.16.1"
+		version = "1.17.1"
 	}
 }
 
@@ -114,7 +114,7 @@ maven gson
 	dependency {
 		groupId = "com.google.code.gson"
 		artifactId = "gson"
-		version = "2.11.0"
+		version = "2.12.1"
 	}
 }
 
@@ -224,12 +224,12 @@ maven sshd
 	dependency {
 		groupId = "org.apache.sshd"
 		artifactId = "sshd-osgi"
-		version = "2.14.0"
+		version = "2.15.0"
 	}
 	dependency {
 		groupId = "org.apache.sshd"
 		artifactId = "sshd-sftp"
-		version = "2.14.0"
+		version = "2.15.0"
 	}
 }
 
