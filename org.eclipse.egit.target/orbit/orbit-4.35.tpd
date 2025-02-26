@@ -16,8 +16,6 @@ location "https://download.eclipse.org/tools/orbit/simrel/orbit-aggregation/2025
 	jakarta.inject.jakarta.inject-api.source [2.0.1,2.0.1]
 	jakarta.xml.bind-api [2.3.3,2.3.3]
 	jakarta.xml.bind-api.source [2.3.3,2.3.3]
-	net.i2p.crypto.eddsa [0.3.0,0.3.0]
-	net.i2p.crypto.eddsa.source [0.3.0,0.3.0]
 	org.apache.ant [1.10.15.v20240901-1000,1.10.15.v20240901-1000]
 	org.apache.ant.source [1.10.15.v20240901-1000,1.10.15.v20240901-1000]
 	org.apache.batik.constants [1.18.0.v20241009-1200,1.18.0.v20241009-1200]
