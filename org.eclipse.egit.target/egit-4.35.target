@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <?pde?>
 <!-- generated with https://github.com/eclipse-cbi/targetplatform-dsl -->
-<target name="egit-4.35" sequenceNumber="1740500471">
+<target name="egit-4.35" sequenceNumber="1740594872">
   <locations>
     <location includeMode="slicer" includeAllPlatforms="false" includeSource="true" includeConfigurePhase="true" type="InstallableUnit">
       <unit id="org.eclipse.license.feature.group" version="0.0.0"/>
@@ -27,8 +27,6 @@
       <unit id="jakarta.inject.jakarta.inject-api.source" version="2.0.1"/>
       <unit id="jakarta.xml.bind-api" version="2.3.3"/>
       <unit id="jakarta.xml.bind-api.source" version="2.3.3"/>
-      <unit id="net.i2p.crypto.eddsa" version="0.3.0"/>
-      <unit id="net.i2p.crypto.eddsa.source" version="0.3.0"/>
       <unit id="org.apache.ant" version="1.10.15.v20240901-1000"/>
       <unit id="org.apache.ant.source" version="1.10.15.v20240901-1000"/>
       <unit id="org.apache.batik.constants" version="1.18.0.v20241009-1200"/>
