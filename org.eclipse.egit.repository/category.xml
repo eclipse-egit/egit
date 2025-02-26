@@ -42,12 +42,6 @@
    <bundle id="org.apache.commons.commons-codec.source">
       <category name="EGit.dependencies"/>
    </bundle>
-   <bundle id="net.i2p.crypto.eddsa">
-      <category name="EGit.dependencies"/>
-   </bundle>
-   <bundle id="net.i2p.crypto.eddsa.source">
-      <category name="EGit.dependencies"/>
-   </bundle>
    <bundle id="org.apache.ant">
       <category name="EGit.dependencies"/>
    </bundle>
