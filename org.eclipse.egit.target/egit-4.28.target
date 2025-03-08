@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <?pde?>
 <!-- generated with https://github.com/eclipse-cbi/targetplatform-dsl -->
-<target name="egit-4.28" sequenceNumber="1740595267">
+<target name="egit-4.28" sequenceNumber="1741471148">
   <locations>
     <location includeMode="slicer" includeAllPlatforms="false" includeSource="true" includeConfigurePhase="true" type="InstallableUnit">
       <unit id="org.eclipse.license.feature.group" version="0.0.0"/>
@@ -160,7 +160,7 @@
         <dependency>
           <groupId>org.mockito</groupId>
           <artifactId>mockito-core</artifactId>
-          <version>5.15.2</version>
+          <version>5.16.0</version>
           <type>jar</type>
         </dependency>
       </dependencies>
@@ -186,49 +186,49 @@
         <dependency>
           <groupId>org.eclipse.jetty.ee10</groupId>
           <artifactId>jetty-ee10-servlet</artifactId>
-          <version>12.0.16</version>
+          <version>12.0.17</version>
           <type>jar</type>
         </dependency>
         <dependency>
           <groupId>org.eclipse.jetty</groupId>
           <artifactId>jetty-http</artifactId>
-          <version>12.0.16</version>
+          <version>12.0.17</version>
           <type>jar</type>
         </dependency>
         <dependency>
           <groupId>org.eclipse.jetty</groupId>
           <artifactId>jetty-io</artifactId>
-          <version>12.0.16</version>
+          <version>12.0.17</version>
           <type>jar</type>
         </dependency>
         <dependency>
           <groupId>org.eclipse.jetty</groupId>
           <artifactId>jetty-security</artifactId>
-          <version>12.0.16</version>
+          <version>12.0.17</version>
           <type>jar</type>
         </dependency>
         <dependency>
           <groupId>org.eclipse.jetty</groupId>
           <artifactId>jetty-server</artifactId>
-          <version>12.0.16</version>
+          <version>12.0.17</version>
           <type>jar</type>
         </dependency>
         <dependency>
           <groupId>org.eclipse.jetty</groupId>
           <artifactId>jetty-session</artifactId>
-          <version>12.0.16</version>
+          <version>12.0.17</version>
           <type>jar</type>
         </dependency>
         <dependency>
           <groupId>org.eclipse.jetty</groupId>
           <artifactId>jetty-util</artifactId>
-          <version>12.0.16</version>
+          <version>12.0.17</version>
           <type>jar</type>
         </dependency>
         <dependency>
           <groupId>org.eclipse.jetty</groupId>
           <artifactId>jetty-util-ajax</artifactId>
-          <version>12.0.16</version>
+          <version>12.0.17</version>
           <type>jar</type>
         </dependency>
         <dependency>
@@ -264,13 +264,13 @@
         <dependency>
           <groupId>net.bytebuddy</groupId>
           <artifactId>byte-buddy</artifactId>
-          <version>1.17.1</version>
+          <version>1.17.2</version>
           <type>jar</type>
         </dependency>
         <dependency>
           <groupId>net.bytebuddy</groupId>
           <artifactId>byte-buddy-agent</artifactId>
-          <version>1.17.1</version>
+          <version>1.17.2</version>
           <type>jar</type>
         </dependency>
       </dependencies>
