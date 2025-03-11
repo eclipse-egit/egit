@@ -2113,10 +2113,10 @@
                   <instanceof value="org.eclipse.egit.ui.internal.repository.RepositoriesView" />
                </with>
                <and>
-                  <test property="Clipboard.containsGitURL" value="true" />
                   <with variable="activePart">
                      <instanceof value="org.eclipse.ui.IViewPart" />
                   </with>
+                  <test property="Clipboard.containsGitURL" value="true" />
                </and>
             </or>
          </activeWhen>

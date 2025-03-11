@@ -814,6 +814,12 @@ public class UIText extends NLS {
 	public static String GitPreferenceRoot_lfsSupportSuccessMessage;
 
 	/** */
+	public static String GitPreferenceRoot_clipboardHeader;
+
+	/** */
+	public static String GitPreferenceRoot_clipboardLabel;
+
+	/** */
 	public static String GitPreferenceRoot_lfsSupportSuccessTitle;
 
 	/** */

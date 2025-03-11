@@ -13,6 +13,9 @@
  *******************************************************************************/
 package org.eclipse.egit.ui.internal.clipboard;
 
+import org.eclipse.core.runtime.Platform;
+import org.eclipse.egit.ui.Activator;
+import org.eclipse.egit.ui.UIPreferences;
 import org.eclipse.egit.ui.internal.clone.GitUrlChecker;
 import org.eclipse.egit.ui.internal.expressions.AbstractPropertyTester;
 import org.eclipse.egit.ui.internal.trace.GitTraceLocation;
@@ -55,25 +58,37 @@ public class ClipboardPropertyTester extends AbstractPropertyTester {
 	}
 
 	private boolean internalTest(String property) {
-		if (property.equals("containsGitURL")) { //$NON-NLS-1$
-			String content = getClipboardTextContent();
-			if (content != null) {
+		if (!"containsGitURL".equals(property)) { //$NON-NLS-1$
+			return false;
+		}
+		if (!isClipboarMonitoringEnabled()) {
+			return false;
+		}
+		String content = getClipboardTextContent();
+		if (content != null) {
 
-				String sanitized = GitUrlChecker
-						.sanitizeAsGitUrl(content);
+			String sanitized = GitUrlChecker.sanitizeAsGitUrl(content);
 
-				if (GitUrlChecker.isValidGitUrl(sanitized)) {
-					// The clipboard is valid for GIT paste only if the current
-					// swt control is not a Text or a StyledText (ie : in a
-					// CellEditor)
-					Control c = getFocusedControl();
-					return (c != null) && !(c instanceof StyledText)
-							&& !(c instanceof Text);
-				}
+			if (GitUrlChecker.isValidGitUrl(sanitized)) {
+				// The clipboard is valid for GIT paste only if the current
+				// swt control is not a Text or a StyledText (ie : in a
+				// CellEditor)
+				Control c = getFocusedControl();
+				return (c != null) && !(c instanceof StyledText)
+						&& !(c instanceof Text);
 			}
 		}
-
 		return false;
+	}
+
+	/**
+	 * Tells whether "Monitor clipboard for repository url" is currently enabled
+	 *
+	 * @return {@code true} if monitoring is enabled, {@code false} otherwise.
+	 */
+	public static boolean isClipboarMonitoringEnabled() {
+		return Platform.getPreferencesService().getBoolean(Activator.PLUGIN_ID,
+				UIPreferences.ENABLE_CLIPBOARD_MONITORING, false, null);
 	}
 
 	/**
