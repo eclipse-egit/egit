@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "3913da00_c4cda35a",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1021966
+      },
+      "writtenOn": "2025-03-12T07:39:20Z",
+      "side": 1,
+      "message": "LGTM, just a minor nit.\n\nI\u0027m not a fan of the whole feature. First, the property testser must run on the UI thread, and while that is the case currently I don\u0027t know if the platform guarantees that. Second, I believe the property tester may be evaluated multiple times, which may exacerbate any performance problems it may have. For me, simply reverting the commit that introduced this would also be an option.",
+      "revId": "02df5872dba2c889af1bee3c8362501b5dd4811c",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "7aecdadd_d394f8e3",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/uitext.properties",
+        "patchSetId": 1
+      },
+      "lineNbr": 298,
+      "author": {
+        "id": 1021966
+      },
+      "writtenOn": "2025-03-12T07:39:20Z",
+      "side": 1,
+      "message": "No apostrophe, and if it had one, it would need to be doubled.",
+      "range": {
+        "startLine": 298,
+        "startChar": 95,
+        "endLine": 298,
+        "endChar": 96
+      },
+      "revId": "02df5872dba2c889af1bee3c8362501b5dd4811c",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735"
+    }
+  ]
+}
