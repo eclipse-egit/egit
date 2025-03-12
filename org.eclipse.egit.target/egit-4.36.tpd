@@ -1,0 +1,7 @@
+target "egit-4.36" with source configurePhase
+
+include "projects/license.tpd"
+include "projects/swtbot-snapshot.tpd"
+include "orbit/orbit-4.36.tpd"
+include "maven/dependencies.tpd"
+include "releasetrain/4.36-2025-06.tpd"
