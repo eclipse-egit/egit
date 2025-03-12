@@ -33,13 +33,48 @@ import org.eclipse.ui.actions.ActionFactory.IWorkbenchAction;
  * {@link #runWithEvent(Event)} or {@link #run()}.
  */
 public abstract class DropDownMenuAction extends Action
-		implements IWorkbenchAction, IMenuCreator {
+		implements IWorkbenchAction {
 
-	private Menu controlMenu;
+	private class MenuCreator implements IMenuCreator {
 
-	private Menu subMenu;
+		private Menu controlMenu;
+
+		private Menu subMenu;
+
+		private Menu dispose(Menu m) {
+			if (m != null) {
+				if (!m.isDisposed()) {
+					m.dispose();
+				}
+			}
+			return null;
+		}
+
+		@Override
+		public Menu getMenu(Menu parent) {
+			subMenu = dispose(subMenu);
+			subMenu = fillMenu(new Menu(parent));
+			return subMenu;
+		}
+
+		@Override
+		public Menu getMenu(Control parent) {
+			controlMenu = dispose(controlMenu);
+			controlMenu = fillMenu(new Menu(parent));
+			return controlMenu;
+		}
+
+		@Override
+		public void dispose() {
+			controlMenu = dispose(controlMenu);
+			subMenu = dispose(subMenu);
+		}
+
+	}
 
 	private boolean showMenu;
+
+	private IMenuCreator menuCreator = new MenuCreator();
 
 	/**
 	 * Creates a new {@link DropDownMenuAction}.
@@ -78,7 +113,7 @@ public abstract class DropDownMenuAction extends Action
 
 	@Override
 	public IMenuCreator getMenuCreator() {
-		return this;
+		return menuCreator;
 	}
 
 	private Menu fillMenu(Menu m) {
@@ -86,29 +121,6 @@ public abstract class DropDownMenuAction extends Action
 			item.fill(m, -1);
 		}
 		return m;
-	}
-
-	private Menu dispose(Menu m) {
-		if (m != null) {
-			if (!m.isDisposed()) {
-				m.dispose();
-			}
-		}
-		return null;
-	}
-
-	@Override
-	public Menu getMenu(Menu parent) {
-		subMenu = dispose(subMenu);
-		subMenu = fillMenu(new Menu(parent));
-		return subMenu;
-	}
-
-	@Override
-	public Menu getMenu(Control parent) {
-		controlMenu = dispose(controlMenu);
-		controlMenu = fillMenu(new Menu(parent));
-		return controlMenu;
 	}
 
 	/**
@@ -121,8 +133,7 @@ public abstract class DropDownMenuAction extends Action
 
 	@Override
 	public void dispose() {
-		controlMenu = dispose(controlMenu);
-		subMenu = dispose(subMenu);
+		menuCreator.dispose();
 	}
 
 }
