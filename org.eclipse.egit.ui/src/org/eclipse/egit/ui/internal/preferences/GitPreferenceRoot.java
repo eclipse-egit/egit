@@ -392,6 +392,15 @@ public class GitPreferenceRoot extends DoublePreferencesPreferencePage
 			}
 		});
 		updateMargins(lfsGroup);
+
+		Group clipboardGroup = new Group(main, SWT.SHADOW_ETCHED_IN);
+		GridDataFactory.fillDefaults().grab(true, false).span(GROUP_SPAN, 1)
+				.applyTo(clipboardGroup);
+		clipboardGroup.setText(UIText.GitPreferenceRoot_clipboardHeader);
+		addField(new BooleanFieldEditor(
+				UIPreferences.ENABLE_CLIPBOARD_MONITORING,
+				UIText.GitPreferenceRoot_clipboardLabel, clipboardGroup));
+		updateMargins(clipboardGroup);
 	}
 
 	@Override
