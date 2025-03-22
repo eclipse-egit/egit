@@ -3,7 +3,7 @@ target "orbit-4.36" with source configurePhase
 
 // when updating the Orbit URL don't forget to update org.eclipse.egit.repository/category.xml
 location "https://download.eclipse.org/tools/orbit/simrel/orbit-aggregation/2025-06" {
-	com.ibm.icu [76.1.0,76.1.0]
+	com.ibm.icu [77.1.0,77.1.0]
 	com.jcraft.jsch [0.1.55.v20230916-1400,0.1.55.v20230916-1400]
 	com.jcraft.jsch.source [0.1.55.v20230916-1400,0.1.55.v20230916-1400]
 	com.jcraft.jzlib [1.1.3.v20230916-1400,1.1.3.v20230916-1400]
