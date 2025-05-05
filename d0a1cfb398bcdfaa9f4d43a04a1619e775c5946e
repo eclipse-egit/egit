@@ -16,6 +16,24 @@
       "message": "Matthias, FYI: build fails because repo.eclipse.org doesn\u0027t have jgit artifacts after storage downtime.\n\n[ERROR] Internal error: java.lang.RuntimeException: Failed to load p2 repository with ID \u0027jgit\u0027 from location https://repo.eclipse.org/content/unzip/snapshots.unzip/org/eclipse/jgit/org.eclipse.jgit.repository/7.3.0-SNAPSHOT/org.eclipse.jgit.repository-7.3.0-SNAPSHOT.zip-unzip/: No repository found at https://repo.eclipse.org/content/unzip/snapshots.unzip/org/eclipse/jgit/org.eclipse.jgit.repository/7.3.0-SNAPSHOT/org.eclipse.jgit.repository-7.3.0-SNAPSHOT.zip-unzip",
       "revId": "d0a1cfb398bcdfaa9f4d43a04a1619e775c5946e",
       "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "0c9e94e0_3f9b418d",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000671
+      },
+      "writtenOn": "2025-05-05T21:15:56Z",
+      "side": 1,
+      "message": "I rebuilt jgit 7.3.0-SNAPSHOT and retriggered the validation job",
+      "parentUuid": "9ec00bd4_0b8518e0",
+      "revId": "d0a1cfb398bcdfaa9f4d43a04a1619e775c5946e",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735"
     }
   ]
 }
