@@ -34,6 +34,24 @@
       "parentUuid": "9ec00bd4_0b8518e0",
       "revId": "d0a1cfb398bcdfaa9f4d43a04a1619e775c5946e",
       "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "14d009a7_50c61da4",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1037131
+      },
+      "writtenOn": "2025-05-05T21:47:11Z",
+      "side": 1,
+      "message": "Thanks! Build is fine, ready to merge?",
+      "parentUuid": "0c9e94e0_3f9b418d",
+      "revId": "d0a1cfb398bcdfaa9f4d43a04a1619e775c5946e",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735"
     }
   ]
 }
