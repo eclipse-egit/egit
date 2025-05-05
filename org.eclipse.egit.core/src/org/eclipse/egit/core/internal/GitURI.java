@@ -61,7 +61,7 @@ public class GitURI {
 				if (indexOfSemicolon < 0) {
 					throw new IllegalArgumentException(
 							NLS.bind(CoreText.GitURI_InvalidSCMURL,
-									new String[] { uri.toString() }));
+									new Object[] { uri.toString() }));
 				}
 				if (ssp.startsWith(SCHEME_GIT)) {
 					URIish r = new URIish(ssp.substring(
@@ -90,11 +90,11 @@ public class GitURI {
 			}
 			throw new IllegalArgumentException(NLS.bind(
 					CoreText.GitURI_InvalidSCMURL,
-					new String[] { uri.toString() }));
+					new Object[] { uri.toString() }));
 		} catch (URISyntaxException e) {
 			Activator.logError(e.getMessage(), e);
 			throw new IllegalArgumentException(NLS.bind(
-					CoreText.GitURI_InvalidURI, new String[] { uri.toString(),
+					CoreText.GitURI_InvalidURI, new Object[] { uri.toString(),
 							e.getMessage() }));
 		}
 	}

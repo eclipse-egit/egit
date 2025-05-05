@@ -444,7 +444,7 @@ public class CompareTreeView extends ViewPart implements IMenuListener, IShowInS
 			else
 				setContentDescription(NLS.bind(
 						UIText.CompareTreeView_ComparingTwoVersionDescription,
-						new String[] { name,
+						new Object[] { name,
 								CompareUtils.truncatedRevision(baseVersion),
 								getCompareVersionText() }));
 		}
