@@ -30,7 +30,7 @@ location "https://download.eclipse.org/tools/orbit/simrel/orbit-aggregation/2025
 	org.apache.httpcomponents.httpcore.source [4.4.16,4.4.16]
 	org.apache.xmlgraphics [2.10.0.v20241009-1200,2.10.0.v20241009-1200]
 	org.eclipse.jetty.servlet-api [4.0.6,4.0.6]
-	org.eclipse.orbit.maven.lucene-10.feature.jar [4.36.0,4.36.0]
+	org.eclipse.orbit.maven.lucene-10.feature.jar [4.36.0.v20250410-1000,4.36.0.v20250410-1000]
 	org.eclipse.orbit.xml-apis-ext [1.0.0.v20240917-0534,1.0.0.v20240917-0534]
 	org.hamcrest [2.2.0,2.2.0]
 	org.hamcrest.core [1.3.0.v20230809-1000,1.3.0.v20230809-1000]
