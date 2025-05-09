@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (C) 2011, 2015 Robin Stocker <robin@nibor.org>
+ * Copyright (C) 2011, 2025 Robin Stocker <robin@nibor.org>
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License 2.0
@@ -140,9 +140,10 @@ public class ProjectReferenceImporter {
 	private static void checkoutBranchIfNecessary(
 			ProjectReference projectReference, IProgressMonitor monitor)
 			throws TeamException {
-
+		String projectName = IPath
+				.fromOSString(projectReference.getProjectDir()).lastSegment();
 		IProject projectInWorkspace = ResourcesPlugin.getWorkspace().getRoot()
-				.getProject(projectReference.getProjectDir());
+				.getProject(projectName);
 
 		if (projectInWorkspace != null) {
 			RepositoryMapping mapping = RepositoryMapping
