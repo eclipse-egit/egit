@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "6c355e3d_4a1a6009",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000671
+      },
+      "writtenOn": "2025-05-29T19:46:37Z",
+      "side": 1,
+      "message": "Can you confirm this fixes the issue on Windows with monitor specific scaling active ?\n\nI have no access to a Windows machine.\nI verified that it doesn\u0027t break the grid layout on MacOS.",
+      "revId": "bd9874c94f98b0a7438f741cd3682c123140b2be",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735"
+    }
+  ]
+}
