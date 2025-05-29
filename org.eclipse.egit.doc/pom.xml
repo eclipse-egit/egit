@@ -18,7 +18,7 @@
   <parent>
     <groupId>org.eclipse.egit</groupId>
     <artifactId>egit-parent</artifactId>
-    <version>7.3.0.202505281347-rc1</version>
+    <version>7.3.0-SNAPSHOT</version>
   </parent>
 
   <artifactId>org.eclipse.egit.doc</artifactId>
