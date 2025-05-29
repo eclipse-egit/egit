@@ -26,6 +26,7 @@ location "https://download.eclipse.org/releases/2025-06" {
 	org.eclipse.jetty.ee8.servlet lazy
 	org.eclipse.sdk.ide lazy
 	org.eclipse.search.core lazy
+	org.eclipse.swt.tools.base lazy
 	org.osgi.service.http.whiteboard lazy
 	org.osgi.service.repository lazy
 	org.sat4j.core lazy

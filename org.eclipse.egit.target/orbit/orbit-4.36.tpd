@@ -8,6 +8,8 @@ location "https://download.eclipse.org/tools/orbit/simrel/orbit-aggregation/2025
 	com.jcraft.jsch.source [0.1.55.v20230916-1400,0.1.55.v20230916-1400]
 	com.jcraft.jzlib [1.1.3.v20230916-1400,1.1.3.v20230916-1400]
 	com.jcraft.jzlib.source [1.1.3.v20230916-1400,1.1.3.v20230916-1400]
+	com.github.weisj.jsvg [1.7.2,1.7.2]
+	com.github.weisj.jsvg.source [1.7.2,1.7.2]
 	jakarta.activation-api [2.1.3,2.1.3]
 	jakarta.activation-api.source [2.1.3,2.1.3]
 	jakarta.annotation-api [2.1.1,2.1.1]
