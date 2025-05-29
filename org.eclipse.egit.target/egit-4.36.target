@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <?pde?>
 <!-- generated with https://github.com/eclipse-cbi/targetplatform-dsl -->
-<target name="egit-4.36" sequenceNumber="1747860342">
+<target name="egit-4.36" sequenceNumber="1748547576">
   <locations>
     <location includeMode="slicer" includeAllPlatforms="false" includeSource="true" includeConfigurePhase="true" type="InstallableUnit">
       <unit id="org.eclipse.license.feature.group" version="0.0.0"/>
@@ -14,19 +14,33 @@
       <repository id="swtbot-snapshot" location="https://download.eclipse.org/technology/swtbot/snapshots/"/>
     </location>
     <location includeMode="slicer" includeAllPlatforms="false" includeSource="true" includeConfigurePhase="true" type="InstallableUnit">
+      <unit id="aQute.libg" version="7.1.0.202411251545"/>
+      <unit id="bndtools.api" version="7.1.0.202411251545"/>
       <unit id="com.ibm.icu" version="77.1.0"/>
       <unit id="com.jcraft.jsch" version="0.1.55.v20230916-1400"/>
       <unit id="com.jcraft.jsch.source" version="0.1.55.v20230916-1400"/>
       <unit id="com.jcraft.jzlib" version="1.1.3.v20230916-1400"/>
       <unit id="com.jcraft.jzlib.source" version="1.1.3.v20230916-1400"/>
+      <unit id="com.github.weisj.jsvg" version="1.7.2"/>
       <unit id="jakarta.activation-api" version="2.1.3"/>
-      <unit id="jakarta.activation-api.source" version="2.1.3"/>
+      <unit id="jakarta.annotation-api" version="1.3.5"/>
       <unit id="jakarta.annotation-api" version="2.1.1"/>
-      <unit id="jakarta.annotation-api.source" version="2.1.1"/>
+      <unit id="jakarta.inject.jakarta.inject-api" version="1.0.5"/>
       <unit id="jakarta.inject.jakarta.inject-api" version="2.0.1"/>
-      <unit id="jakarta.inject.jakarta.inject-api.source" version="2.0.1"/>
       <unit id="jakarta.xml.bind-api" version="2.3.3"/>
-      <unit id="jakarta.xml.bind-api.source" version="2.3.3"/>
+      <unit id="jakarta.xml.bind-api" version="4.0.2"/>
+      <unit id="junit-jupiter-api" version="5.12.2"/>
+      <unit id="junit-jupiter-engine" version="5.12.2"/>
+      <unit id="junit-jupiter-migrationsupport" version="5.12.2"/>
+      <unit id="junit-jupiter-params" version="5.12.2"/>
+      <unit id="junit-platform-commons" version="1.12.2"/>
+      <unit id="junit-platform-engine" version="1.12.2"/>
+      <unit id="junit-platform-launcher" version="1.12.2"/>
+      <unit id="junit-platform-runner" version="1.12.2"/>
+      <unit id="junit-platform-suite-api" version="1.12.2"/>
+      <unit id="junit-platform-suite-commons" version="1.12.2"/>
+      <unit id="junit-platform-suite-engine" version="1.12.2"/>
+      <unit id="junit-vintage-engine" version="5.12.2"/>
       <unit id="org.apache.ant" version="1.10.15.v20240901-1000"/>
       <unit id="org.apache.ant.source" version="1.10.15.v20240901-1000"/>
       <unit id="org.apache.batik.constants" version="1.19.0.v20250506-1400"/>
@@ -39,9 +53,16 @@
       <unit id="org.apache.httpcomponents.httpclient.source" version="4.5.14"/>
       <unit id="org.apache.httpcomponents.httpcore" version="4.4.16"/>
       <unit id="org.apache.httpcomponents.httpcore.source" version="4.4.16"/>
+      <unit id="org.apiguardian.api" version="1.1.2"/>
+      <unit id="org.bndtools.headless.build.manager" version="7.1.0.202411251545"/>
+      <unit id="org.bndtools.templating" version="7.1.0.202411251545"/>
+      <unit id="org.bndtools.versioncontrol.ignores.manager" version="7.1.0.202411251545"/>
+      <unit id="org.mortbay.jasper.apache-el" version="9.0.102"/>
       <unit id="org.apache.xmlgraphics" version="2.11.0.v20250506-1400"/>
       <unit id="org.eclipse.jetty.servlet-api" version="4.0.6"/>
-      <unit id="org.eclipse.orbit.maven.lucene-10.feature.jar" version="4.36.0.v20250501-1000"/>
+      <unit id="org.apache.lucene.analysis-common" version="10.2.1.v20250501-1000"/>
+      <unit id="org.apache.lucene.analysis-smartcn" version="10.2.1.v20250501-1000"/>
+      <unit id="org.apache.lucene.core" version="10.2.1.v20250501-1000"/>
       <unit id="org.eclipse.orbit.xml-apis-ext" version="1.0.0.v20240917-0534"/>
       <unit id="org.hamcrest" version="2.2.0"/>
       <unit id="org.hamcrest.core" version="1.3.0.v20230809-1000"/>
@@ -59,6 +80,10 @@
       <unit id="org.objectweb.asm.util" version="9.8.0"/>
       <unit id="org.objenesis" version="3.4.0"/>
       <unit id="org.objenesis.source" version="3.4.0"/>
+      <unit id="org.opentest4j" version="1.3.0"/>
+      <unit id="org.osgi.namespace.contract" version="1.0.0.201505202024"/>
+      <unit id="org.osgi.namespace.extender" version="1.0.1.201505202024"/>
+      <unit id="org.osgi.namespace.service" version="1.0.0.201505202024"/>
       <unit id="org.osgi.service.cm" version="1.6.1.202109301733"/>
       <unit id="org.osgi.service.cm.source" version="1.6.1.202109301733"/>
       <repository location="https://download.eclipse.org/tools/orbit/simrel/orbit-aggregation/2025-06"/>
@@ -88,6 +113,7 @@
       <unit id="org.eclipse.jetty.ee8.servlet" version="0.0.0"/>
       <unit id="org.eclipse.sdk.ide" version="0.0.0"/>
       <unit id="org.eclipse.search.core" version="0.0.0"/>
+      <unit id="org.eclipse.swt.tools.base" version="0.0.0"/>
       <unit id="org.osgi.service.http.whiteboard" version="0.0.0"/>
       <unit id="org.osgi.service.repository" version="0.0.0"/>
       <unit id="org.sat4j.core" version="0.0.0"/>
