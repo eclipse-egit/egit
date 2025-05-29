@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "083a2c37_78748116",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000671
+      },
+      "writtenOn": "2025-05-29T16:34:20Z",
+      "side": 1,
+      "message": "- works nicely with a single footer below empty lines\n- if there are multiple footers the CommitMessageComponent shows a warning \"Second line should be empty to separate commit message header from body\", even if the first 3 lines are empty, this seems odd\n- maybe we could show a warning that there is no message body but only footers to make clear what\u0027s wrong\n- add some tests ?",
+      "revId": "b2a03a4cbd08e4a95a67d2d9a42de203b394a350",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735"
+    }
+  ]
+}
