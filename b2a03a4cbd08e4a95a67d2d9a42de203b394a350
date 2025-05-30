@@ -16,6 +16,24 @@
       "message": "- works nicely with a single footer below empty lines\n- if there are multiple footers the CommitMessageComponent shows a warning \"Second line should be empty to separate commit message header from body\", even if the first 3 lines are empty, this seems odd\n- maybe we could show a warning that there is no message body but only footers to make clear what\u0027s wrong\n- add some tests ?",
       "revId": "b2a03a4cbd08e4a95a67d2d9a42de203b394a350",
       "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "9d3ed875_9b4d18f6",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1021966
+      },
+      "writtenOn": "2025-05-30T11:53:39Z",
+      "side": 1,
+      "message": "\u003e - if there are multiple footers the CommitMessageComponent shows a warning \"Second line should be empty to separate commit message header from body\", even if the first 3 lines are empty, this seems odd\n\u003e - maybe we could show a warning that there is no message body but only footers to make clear what\u0027s wrong\n\nI had noticed that, too. It\u0027s unrelated to this change; also occurred before. Try adding the Gerrit change ID and a sign-off footer while having the message empty. Yes, it\u0027s something more to improve, but maybe not in this change.\n\n\u003e - add some tests ?\n\nYeah. Would have to look if this can be tested without having to do a UI test, and if not, what would need to be refactored.\n\nI\u0027ll be away for two weeks now; so this is something for for a later release then.",
+      "parentUuid": "083a2c37_78748116",
+      "revId": "b2a03a4cbd08e4a95a67d2d9a42de203b394a350",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735"
     }
   ]
 }
