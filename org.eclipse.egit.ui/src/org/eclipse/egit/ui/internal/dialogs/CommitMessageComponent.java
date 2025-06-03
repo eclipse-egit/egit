@@ -1,6 +1,5 @@
 /*******************************************************************************
  * Copyright (C) 2007, Dave Watson <dwatson@mimvista.com>
- * Copyright (C) 2007, Robin Rosenberg <me@lathund.dewire.com.dewire.com>
  * Copyright (C) 2007, Robin Rosenberg <me@lathund.dewire.com>
  * Copyright (C) 2008, Robin Rosenberg <robin.rosenberg@dewire.com>
  * Copyright (C) 2007, Shawn O. Pearce <spearce@spearce.org>
@@ -10,6 +9,7 @@
  * Copyright (C) 2012, 2013 Robin Stocker <robin@nibor.org>
  * Copyright (C) 2014 IBM Corporation (Daniel Megert <daniel_megert@ch.ibm.com>)
  * Copyright (C) 2015 SAP SE (Christian Georgi <christian.georgi@sap.com>)
+ * Copyright (C) 2025 Thomas Wolf <twolf@apache.org> and others.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License 2.0
@@ -24,7 +24,6 @@ import java.io.IOException;
 import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.regex.Pattern;
 
 import org.eclipse.egit.core.internal.Utils;
 import org.eclipse.egit.core.internal.gerrit.GerritUtil;
@@ -87,8 +86,6 @@ import org.eclipse.ui.PlatformUI;
  */
 public class CommitMessageComponent {
 
-	private static final Pattern EMPTY_GERRIT_MESSAGE = Pattern
-			.compile("^(?:\\h*\\n)*Change-Id: I[0-9a-fA-F]{40}\\h*(?:\\n|$)"); //$NON-NLS-1$
 	/**
 	 * Status provider for whether a commit operation should be enabled or not
 	 */
@@ -623,16 +620,52 @@ public class CommitMessageComponent {
 	public boolean checkCommitInfo() {
 		updateStateFromUI();
 
-		String rawText = commitText.getText();
-		rawText = Utils.normalizeLineEndings(rawText);
+		String rawText = Utils.normalizeLineEndings(commitText.getText());
+		int rawFooterOffset = CommonUtils.getFooterOffset(rawText);
+		String firstFooterLine = null;
+		if (rawFooterOffset > 0) {
+			int rawFooterLineEnd = rawText.indexOf('\n', rawFooterOffset + 1);
+			if (rawFooterLineEnd < 0) {
+				rawFooterLineEnd = rawText.length();
+			}
+			firstFooterLine = rawText.substring(rawFooterOffset,
+					rawFooterLineEnd).stripTrailing();
+			if (rawText.startsWith(firstFooterLine)) {
+				// Commit message title looks like the existing first footer
+				// line: the message definitely is not empty, so we don't have
+				// to check against this footer later on.
+				firstFooterLine = null;
+			} else {
+				int firstLineEnd = rawText.indexOf('\n');
+				if (firstLineEnd > 0) {
+					String firstLine = rawText.substring(0, firstLineEnd)
+							.stripTrailing();
+					if (!firstLine.isEmpty()
+							&& firstFooterLine.startsWith(firstLine)) {
+						// Same reasoning as above.
+						firstFooterLine = null;
+					}
+				}
+			}
+		}
+		// Get the fully cleaned commit message
+		String text = getCommitMessage();
 		boolean isEmpty = false;
-		if (EMPTY_GERRIT_MESSAGE.matcher(rawText).matches()) {
-			isEmpty = true;
+		int footer = CommonUtils.getFooterOffset(text);
+		if (firstFooterLine != null && footer < 0) {
+			// If we had only comments and empty lines above the footers, the
+			// first footer is now at the start of the message.
+			// That's an empty message!
+			int firstLineEnd = text.indexOf('\n');
+			if (firstLineEnd < 0) {
+				firstLineEnd = text.length();
+			}
+			if (firstLineEnd <= firstFooterLine.length()) {
+				isEmpty = firstFooterLine
+						.startsWith(text.substring(0, firstLineEnd));
+			}
 		} else {
-			// Get the fully cleaned commit message
-			String text = getCommitMessage();
 			// Strip footers
-			int footer = CommonUtils.getFooterOffset(text);
 			if (footer >= 0) {
 				text = text.substring(0, footer);
 			}

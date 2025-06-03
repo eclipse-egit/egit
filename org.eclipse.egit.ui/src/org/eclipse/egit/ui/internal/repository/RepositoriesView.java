@@ -333,8 +333,8 @@ public class RepositoriesView extends CommonNavigator implements IShowInSource, 
 		Composite optionsArea = new Composite(infoArea, SWT.NONE);
 		optionsArea.setMenu(menu);
 		GridLayoutFactory.swtDefaults().numColumns(2).applyTo(optionsArea);
-		GridDataFactory.swtDefaults().indent(5, 0).grab(true, true)
-				.applyTo(optionsArea);
+		GridDataFactory.swtDefaults().indent(5, 0).align(SWT.FILL, SWT.CENTER)
+				.grab(true, true).applyTo(optionsArea);
 
 		final FormToolkit toolkit = new FormToolkit(emptyArea.getDisplay());
 		emptyArea.addDisposeListener(new DisposeListener() {
