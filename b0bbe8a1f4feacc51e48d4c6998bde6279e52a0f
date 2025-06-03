@@ -16,6 +16,23 @@
       "message": "Works as expected. When can we have it?",
       "revId": "b0bbe8a1f4feacc51e48d4c6998bde6279e52a0f",
       "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "ea94649f_842bb439",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000671
+      },
+      "writtenOn": "2025-06-03T09:22:17Z",
+      "side": 1,
+      "message": "thanks for the nice improvement :-)",
+      "revId": "b0bbe8a1f4feacc51e48d4c6998bde6279e52a0f",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735"
     }
   ],
   "submitRequirementResults": []
