@@ -86,6 +86,10 @@ public final class GitProjectSetCapability extends ProjectSetCapability {
 		} else {
 			remote = config.getString(ConfigConstants.CONFIG_BRANCH_SECTION,
 					branch, ConfigConstants.CONFIG_KEY_REMOTE);
+			// Use default remote if not configured
+			if (remote == null) {
+				remote = Constants.DEFAULT_REMOTE_NAME;
+			}
 		}
 
 		String url = config.getString(ConfigConstants.CONFIG_REMOTE_SECTION,
