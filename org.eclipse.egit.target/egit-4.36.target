@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <?pde?>
 <!-- generated with https://github.com/eclipse-cbi/targetplatform-dsl -->
-<target name="egit-4.36" sequenceNumber="1748547576">
+<target name="egit-4.36" sequenceNumber="1749070610">
   <locations>
     <location includeMode="slicer" includeAllPlatforms="false" includeSource="true" includeConfigurePhase="true" type="InstallableUnit">
       <unit id="org.eclipse.license.feature.group" version="0.0.0"/>
@@ -59,7 +59,6 @@
       <unit id="org.bndtools.versioncontrol.ignores.manager" version="7.1.0.202411251545"/>
       <unit id="org.mortbay.jasper.apache-el" version="9.0.102"/>
       <unit id="org.apache.xmlgraphics" version="2.11.0.v20250506-1400"/>
-      <unit id="org.eclipse.jetty.servlet-api" version="4.0.6"/>
       <unit id="org.apache.lucene.analysis-common" version="10.2.1.v20250501-1000"/>
       <unit id="org.apache.lucene.analysis-smartcn" version="10.2.1.v20250501-1000"/>
       <unit id="org.apache.lucene.core" version="10.2.1.v20250501-1000"/>

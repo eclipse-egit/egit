@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <?pde?>
 <!-- generated with https://github.com/eclipse-cbi/targetplatform-dsl -->
-<target name="egit-4.35" sequenceNumber="1747859603">
+<target name="egit-4.35" sequenceNumber="1749070608">
   <locations>
     <location includeMode="slicer" includeAllPlatforms="false" includeSource="true" includeConfigurePhase="true" type="InstallableUnit">
       <unit id="org.eclipse.license.feature.group" version="0.0.0"/>
@@ -40,7 +40,6 @@
       <unit id="org.apache.httpcomponents.httpcore" version="4.4.16"/>
       <unit id="org.apache.httpcomponents.httpcore.source" version="4.4.16"/>
       <unit id="org.apache.xmlgraphics" version="2.10.0.v20241009-1200"/>
-      <unit id="org.eclipse.jetty.servlet-api" version="4.0.6"/>
       <unit id="org.eclipse.orbit.maven.lucene-10.feature.jar" version="4.35.0.v20241221-1000"/>
       <unit id="org.eclipse.orbit.xml-apis-ext" version="1.0.0.v20240917-0534"/>
       <unit id="org.hamcrest" version="2.2.0"/>

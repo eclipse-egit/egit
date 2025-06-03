@@ -28,7 +28,6 @@ location "https://download.eclipse.org/tools/orbit/simrel/orbit-aggregation/2024
 	org.apache.httpcomponents.httpclient.source [4.5.14,4.5.14]
 	org.apache.httpcomponents.httpcore [4.4.16,4.4.16]
 	org.apache.httpcomponents.httpcore.source [4.4.16,4.4.16]
-	org.eclipse.jetty.servlet-api [4.0.6,4.0.6]
 	org.eclipse.orbit.maven.lucene.feature.group [4.32.0,4.32.0]
 	org.eclipse.orbit.xml-apis-ext [1.0.0.v20230923-0644,1.0.0.v20230923-0644]
 	org.hamcrest [2.2.0,2.2.0]

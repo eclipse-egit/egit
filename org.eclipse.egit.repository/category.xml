@@ -186,12 +186,6 @@
    <bundle id="org.eclipse.jetty.server.source">
       <category name="EGit.dependencies"/>
    </bundle>
-   <bundle id="org.eclipse.jetty.servlet">
-      <category name="EGit.dependencies"/>
-   </bundle>
-   <bundle id="org.eclipse.jetty.servlet.source">
-      <category name="EGit.dependencies"/>
-   </bundle>
    <bundle id="org.eclipse.jetty.util">
       <category name="EGit.dependencies"/>
    </bundle>

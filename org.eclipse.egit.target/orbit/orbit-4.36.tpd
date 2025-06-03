@@ -48,7 +48,6 @@ location "https://download.eclipse.org/tools/orbit/simrel/orbit-aggregation/2025
 	org.bndtools.versioncontrol.ignores.manager [7.1.0.202411251545,7.1.0.202411251545]
 	org.mortbay.jasper.apache-el [9.0.102,9.0.102]
 	org.apache.xmlgraphics [2.11.0.v20250506-1400,2.11.0.v20250506-1400]
-	org.eclipse.jetty.servlet-api [4.0.6,4.0.6]
 	org.apache.lucene.analysis-common [10.2.1.v20250501-1000,10.2.1.v20250501-1000]
 	org.apache.lucene.analysis-smartcn [10.2.1.v20250501-1000,10.2.1.v20250501-1000]
 	org.apache.lucene.core [10.2.1.v20250501-1000,10.2.1.v20250501-1000]

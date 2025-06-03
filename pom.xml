@@ -71,7 +71,7 @@
     <license-site>https://download.eclipse.org/cbi/updates/license</license-site>
     <signer-input-directory>/home/data/httpd/download-staging.priv/egit</signer-input-directory>
     <download-publish-path>/home/data/httpd/download.eclipse.org/egit/updates-nightly</download-publish-path>
-    <target-platform>egit-4.26</target-platform>
+    <target-platform>egit-4.30</target-platform>
     <tycho.scmUrl>scm:git:https://git.eclipse.org/r/egit/egit.git</tycho.scmUrl>
     <egit.test.tmpdir></egit.test.tmpdir>
     <test.vmparams></test.vmparams>
