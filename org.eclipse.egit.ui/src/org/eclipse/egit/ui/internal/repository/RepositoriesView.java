@@ -178,6 +178,7 @@ import org.eclipse.ui.part.MultiPageEditorPart;
 import org.eclipse.ui.part.ShowInContext;
 import org.eclipse.ui.progress.IWorkbenchSiteProgressService;
 import org.eclipse.ui.progress.WorkbenchJob;
+import org.eclipse.ui.views.WorkbenchViewerSetup;
 import org.eclipse.ui.views.properties.IPropertySheetPage;
 import org.eclipse.ui.views.properties.PropertySheet;
 import org.eclipse.ui.views.properties.PropertySheetPage;
@@ -436,8 +437,10 @@ public class RepositoriesView extends CommonNavigator implements IShowInSource, 
 
 	@Override
 	protected CommonViewer createCommonViewerObject(Composite aParent) {
-		return new RepositoriesCommonViewer(getViewSite().getId(), aParent,
+		RepositoriesCommonViewer repositoriesCommonViewer = new RepositoriesCommonViewer(getViewSite().getId(), aParent,
 				SWT.MULTI | SWT.H_SCROLL | SWT.V_SCROLL);
+		WorkbenchViewerSetup.setupViewer(repositoriesCommonViewer);
+		return repositoriesCommonViewer;
 	}
 
 	private void setTopControl(CommonViewer viewer) {
