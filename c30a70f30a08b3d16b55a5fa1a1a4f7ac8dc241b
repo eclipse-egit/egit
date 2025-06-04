@@ -16,6 +16,23 @@
       "message": "Looks like target platform is too old\n\n09:42:00  07:42:00 [ERROR] /home/jenkins/agent/workspace/egit.gerrit/repo/org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/repository/RepositoriesView.java:[181] \n09:42:00  07:42:00 [ERROR] \timport org.eclipse.ui.views.WorkbenchViewerSetup;\n09:42:00  07:42:00 [ERROR] \t       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n09:42:00  07:42:00 [ERROR] The import org.eclipse.ui.views.WorkbenchViewerSetup cannot be resolved\n09:42:00  07:42:00 [ERROR] /home/jenkins/agent/workspace/egit.gerrit/repo/org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/repository/RepositoriesView.java:[442] \n09:42:00  07:42:00 [ERROR] \tWorkbenchViewerSetup.setupViewer(repositoriesCommonViewer);\n09:42:00  07:42:00 [ERROR] \t^^^^^^^^^^^^^^^^^^^^\n09:42:00  07:42:00 [ERROR] WorkbenchViewerSetup cannot be resolved\n09:42:00  07:42:00 [ERROR] 2 problems (2 errors)",
       "revId": "c30a70f30a08b3d16b55a5fa1a1a4f7ac8dc241b",
       "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "202b467b_70093198",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1038873
+      },
+      "writtenOn": "2025-06-04T08:11:17Z",
+      "side": 1,
+      "message": "@matthias.sohn@sap.com I tested the changes locally they are working fine. I am using the latest Integration build for development. And i checked the dependency on org.eclipse.egit.ui plugin manifest org.eclipse.ui.workbench;bundle-version\u003d\"[3.127.0,4.0.0)\" It says I can use latest version of \u0027org.eclipse.ui.workbench\u0027. The class which is not resolved is introduced in 4.30 release onwards. Is the target platform is older than this ? How can I get this change into egit ?",
+      "revId": "c30a70f30a08b3d16b55a5fa1a1a4f7ac8dc241b",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735"
     }
   ]
 }
