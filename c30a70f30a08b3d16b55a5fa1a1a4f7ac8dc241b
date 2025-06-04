@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "627c167a_a26db695",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1037131
+      },
+      "writtenOn": "2025-06-04T07:48:50Z",
+      "side": 1,
+      "message": "Looks like target platform is too old\n\n09:42:00  07:42:00 [ERROR] /home/jenkins/agent/workspace/egit.gerrit/repo/org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/repository/RepositoriesView.java:[181] \n09:42:00  07:42:00 [ERROR] \timport org.eclipse.ui.views.WorkbenchViewerSetup;\n09:42:00  07:42:00 [ERROR] \t       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n09:42:00  07:42:00 [ERROR] The import org.eclipse.ui.views.WorkbenchViewerSetup cannot be resolved\n09:42:00  07:42:00 [ERROR] /home/jenkins/agent/workspace/egit.gerrit/repo/org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/repository/RepositoriesView.java:[442] \n09:42:00  07:42:00 [ERROR] \tWorkbenchViewerSetup.setupViewer(repositoriesCommonViewer);\n09:42:00  07:42:00 [ERROR] \t^^^^^^^^^^^^^^^^^^^^\n09:42:00  07:42:00 [ERROR] WorkbenchViewerSetup cannot be resolved\n09:42:00  07:42:00 [ERROR] 2 problems (2 errors)",
+      "revId": "c30a70f30a08b3d16b55a5fa1a1a4f7ac8dc241b",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735"
+    }
+  ]
+}
