@@ -14,7 +14,6 @@ import java.io.File;
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 import java.net.URISyntaxException;
-import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
@@ -168,42 +167,61 @@ public class ProjectReferenceImporter {
 				}
 				// Check for local changes
 				if (RepositoryUtil.hasChanges(repository)) {
-					throw new TeamException(MessageFormat.format(
-							"Repository at folder {0} has uncommitted changes.", //$NON-NLS-1$
+					throw new TeamException(NLS.bind(
+							CoreText.GitProjectSetCapability_RepositoryIsDirty,
 							repository.getWorkTree()));
 				}
 				// compare with current branch
-				String configuredBranch = projectReference.getBranch();
+				final String configuredBranch = projectReference.getBranch();
 				if (!configuredBranch.equals(currentBranch)) {
-					// Checkout configured branch
-					final String branchName = projectReference.getBranch();
-					// check whether ref is in reference database
+					// prepare to checkout configured branch
 					Ref ref = null;
 					try {
-						ref = mapping.getRepository().getRefDatabase()
-								.findRef(branchName);
+						ref = repository.findRef(configuredBranch);
 					} catch (IOException e) {
 						throw new TeamException(e.getMessage());
 					}
 					if (ref == null) {
+						// if branch does not exist locally, find corresponding
+						// remote branch
+						try {
+							// go through remotes to find branch
+							Set<String> remoteNames = repository
+									.getRemoteNames();
+							for (String remote : remoteNames) {
+								ref = repository.findRef(
+										Constants.R_REMOTES + remote + "/" //$NON-NLS-1$
+												+ configuredBranch);
+								if (ref != null) {
+									break; // remote branch found
+								}
+							}
+							if (ref == null) {
+								throw new TeamException(NLS.bind(
+										CoreText.GitProjectSetCapability_RemoteBranchNotFound,
+										configuredBranch,
+										repository.getIdentifier()));
+							}
+						} catch (IOException e) {
+							throw new TeamException(e.getMessage());
+						}
 						// create new local branch
 						final CreateLocalBranchOperation createLocalBranchOperation = new CreateLocalBranchOperation(
-								mapping.getRepository(), branchName, ref,
+								repository, configuredBranch, ref,
 								BranchRebaseMode.NONE);
 						try {
 							createLocalBranchOperation.execute(monitor);
 						} catch (CoreException e) {
 							throw new TeamException(e.getMessage());
 						}
-					} else {
-						// Checkout configured branch
-						final BranchOperation branchOperation = new BranchOperation(
-								repository, configuredBranch);
-						try {
-							branchOperation.execute(monitor);
-						} catch (CoreException e) {
-							throw new TeamException(e.getMessage());
-						}
+					}
+					// Checkout configured branch
+					final BranchOperation branchOperation = new BranchOperation(
+							repository, configuredBranch);
+					try {
+						branchOperation.execute(monitor);
+					} catch (CoreException e) {
+						throw new TeamException(e.getMessage());
 					}
 				}
 			}

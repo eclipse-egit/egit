@@ -541,6 +541,12 @@ public class CoreText extends NLS {
 	public static String GitProjectSetCapability_ExportNoRemote;
 
 	/** */
+	public static String GitProjectSetCapability_RemoteBranchNotFound;
+
+	/** */
+	public static String GitProjectSetCapability_RepositoryIsDirty;
+
+	/** */
 	public static String IgnoreOperation_error;
 
 	/** */
