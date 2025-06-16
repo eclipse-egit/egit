@@ -33,6 +33,24 @@
       "message": "I am not able to get this maven build running locally.\nI have tried everything some or other issue.\nI am using maven 3.9 and java-17.\nLatest error i have is the below, bfore getting here many issues were there.\n\n[ERROR] Internal error: java.lang.RuntimeException: Failed to load p2 repository with ID \u0027jgit\u0027 from location file://data/gerrit-git-clonetest/egit/org.eclipse.egit/../../jgit/org.eclipse.jgit.packaging/org.eclipse.jgit.repository/target/repository: URI has an authority component -\u003e [Help 1]\norg.apache.maven.InternalErrorException: Internal error: java.lang.RuntimeException: Failed to load p2 repository with ID \u0027jgit\u0027 from location file://data/gerrit-git-clonetest/egit/org.eclipse.egit/../../jgit/org.eclipse.jgit.packaging/org.eclipse.jgit.repository/target/repository\n    at org.apache.maven.DefaultMaven.execute (DefaultMaven.java:109)\n    at org.apache.maven.cli.MavenCli.execute (MavenCli.java:906)\n    at org.apache.maven.cli.MavenCli.doMain (MavenCli.java:283)\n    at org.apache.maven.cli.MavenCli.main (MavenCli.java:206)\n    at jdk.internal.reflect.NativeMethodAccessorImpl.invoke0 (Native Method)\n    at jdk.internal.reflect.NativeMethodAccessorImpl.invoke (NativeMethodAccessorImpl.java:77)\n    at jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke (DelegatingMethodAccessorImpl.java:43)\n    at java.lang.reflect.Method.invoke (Method.java:568)\n    at org.codehaus.plexus.classworlds.launcher.Launcher.launchEnhanced (Launcher.java:255)\n    at org.codehaus.plexus.classworlds.launcher.Launcher.launch (Launcher.java:201)\n    at org.codehaus.plexus.classworlds.launcher.Launcher.mainWithExitCode (Launcher.java:361)\n    at org.codehaus.plexus.classworlds.launcher.Launcher.main (Launcher.java:314)\n \n I quit trying to run this maven build locally.\n @matthias.sohn@sap.com please check why test bundle was not found. I don\u0027t know why it is missing.",
       "revId": "688026ec215a88393cf713facddb9692ea4c29b0",
       "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "2be29ad7_f60f2c84",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000671
+      },
+      "writtenOn": "2025-06-16T15:54:43Z",
+      "side": 1,
+      "message": "You need to clone the jgit and egit repos in sibling directories under a common parent directory. Follow complete build sequence described in https://github.com/eclipse-egit/egit/wiki/Contributor-Guide#maven-build",
+      "parentUuid": "d2f34301_972121f3",
+      "revId": "688026ec215a88393cf713facddb9692ea4c29b0",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735"
     }
   ]
 }
