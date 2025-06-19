@@ -28,6 +28,7 @@ import org.eclipse.jgit.events.ConfigChangedEvent;
 import org.eclipse.jgit.events.ConfigChangedListener;
 import org.eclipse.jgit.events.ListenerHandle;
 import org.eclipse.jgit.lib.Repository;
+import org.eclipse.swt.widgets.Display;
 import org.eclipse.ui.PlatformUI;
 
 /**
@@ -85,8 +86,11 @@ public abstract class GitDecorator extends LabelProvider
 	protected void fireLabelEvent() {
 		LabelProviderChangedEvent event = new LabelProviderChangedEvent(this);
 		// Re-trigger decoration process (in UI thread)
-		PlatformUI.getWorkbench().getDisplay()
-				.asyncExec(() -> fireLabelProviderChanged(event));
+		Display display = PlatformUI.getWorkbench().getDisplay();
+		if (display == null || display.isDisposed()) {
+			return;
+		}
+		display.asyncExec(() -> fireLabelProviderChanged(event));
 	}
 
 	@Override
