@@ -6,8 +6,15 @@ location "https://download.eclipse.org/releases/2025-06" {
 	biz.aQute.bndlib lazy
 	biz.aQute.repository
 	biz.aQute.resolve lazy
+	bndtools.jareditor lazy
 	com.sun.el.javax.el lazy
 	javax.activation lazy
+	org.bndtools.headless.build.manager lazy
+	org.bndtools.headless.build.plugin.gradle lazy
+	org.bndtools.templates.template lazy
+	org.bndtools.templating lazy
+	org.bndtools.versioncontrol.ignores.manager lazy
+	org.bndtools.versioncontrol.ignores.plugin.git lazy
 	org.commonmark lazy
 	org.commonmark-gfm-tables lazy
 	org.eclipse.e4.tools.emf.ui lazy
@@ -21,9 +28,13 @@ location "https://download.eclipse.org/releases/2025-06" {
 	org.eclipse.equinox.http.servlet lazy
 	org.eclipse.equinox.p2.director lazy
 	org.eclipse.equinox.sdk.feature.group lazy
+	org.eclipse.jdt.core.manipulation lazy
+	org.eclipse.jdt.ui lazy
 	org.eclipse.jetty.ee8.security lazy
 	org.eclipse.jetty.ee8.server lazy
 	org.eclipse.jetty.ee8.servlet lazy
+	org.eclipse.pde.bnd.ui lazy
+	org.eclipse.pde.core lazy
 	org.eclipse.sdk.ide lazy
 	org.eclipse.search.core lazy
 	org.eclipse.swt.tools.base lazy

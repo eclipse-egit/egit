@@ -1,7 +1,0 @@
-target "egit-4.30" with source configurePhase
-
-include "projects/license.tpd"
-include "projects/swtbot-snapshot.tpd"
-include "orbit/orbit-4.31.tpd"
-include "maven/dependencies.tpd"
-include "releasetrain/4.30-2023-12.tpd"

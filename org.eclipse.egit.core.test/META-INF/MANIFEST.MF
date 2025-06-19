@@ -30,4 +30,4 @@ Import-Package: net.bytebuddy;version="[1.7.9,2.0.0)",
  org.mockito;version="[5.4.0,6.0.0)",
  org.mockito.junit;version="[5.4.0,6.0.0)",
  org.mockito.stubbing;version="[5.4.0,6.0.0)"
-Bundle-RequiredExecutionEnvironment: JavaSE-17
+Bundle-RequiredExecutionEnvironment: JavaSE-21
