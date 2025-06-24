@@ -16,6 +16,23 @@
       "message": "Thank you @matthias.sohn@sap.com",
       "revId": "42fa76d6ee70c8de38d3bacbf9011ec8b4949921",
       "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "249cfd7a_4e21ec84",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000671
+      },
+      "writtenOn": "2025-06-24T14:27:29Z",
+      "side": 1,
+      "message": "thanks for contributing :-)",
+      "revId": "42fa76d6ee70c8de38d3bacbf9011ec8b4949921",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735"
     }
   ],
   "submitRequirementResults": []
