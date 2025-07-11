@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "ebf889a6_422161d6",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1021966
+      },
+      "writtenOn": "2025-07-11T18:15:52Z",
+      "side": 1,
+      "message": "repo.eclipse.org returns a 403. What\u0027s going on?",
+      "revId": "19dd90103c0d0cae2f0a38311fa0a70557eb2389",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735"
+    }
+  ]
+}
