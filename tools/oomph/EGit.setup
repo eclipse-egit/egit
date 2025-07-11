@@ -114,52 +114,17 @@
   <setupTask
       xsi:type="setup:VariableTask"
       name="egit.target.platform"
-      defaultValue="egit-4.26"
+      defaultValue="egit-4.36"
       storageURI="scope://Workspace"
       label="EGit Target Platform">
     <choice
-        value="egit-4.26"
-        label="EGit 2022-12 (4.26) target"/>
-    <choice
-        value="egit-4.27"
-        label="EGit 2023-03 (4.27) target"/>
-    <choice
-        value="egit-4.28"
-        label="EGit 2023-06 (4.28) target"/>
-    <choice
-        value="egit-4.29"
-        label="EGit 2023-09 (4.29) target"/>
-    <choice
-        value="egit-4.30"
-        label="EGit 2023-12 (4.30) target"/>
-    <choice
-        value="egit-4.31"
-        label="EGit 2024-03 (4.31) target"/>
-    <choice
-        value="egit-4.32"
-        label="EGit 2024-06 (4.32) target"/>
-    <choice
-        value="egit-4.33"
-        label="EGit 2024-09 (4.33) target"/>
-    <choice
-        value="egit-4.34"
-        label="EGit 2024-12 (4.34) target"/>
-    <choice
-        value="egit-4.35"
-        label="EGit 2024-12 (4.35) target"/>
-    <choice
         value="egit-4.36"
-        label="EGit 2024-12 (4.36) target"/>
+        label="EGit 2025-06 (4.36) target"/>
+    <choice
+        value="egit-4.37"
+        label="EGit 2025-09 (4.37) target"/>
     <description>Default target platform for EGit development.</description>
   </setupTask>
-  <setupTask
-      xsi:type="pde:APIBaselineTask"
-      name="EGit"
-      activate="false"
-      version="7.0.0"
-      location="${workspace.location/../api.baseline/7.0.0}"
-      remoteURI="https://download.eclipse.org/egit/updates-7.0/org.eclipse.egit.repository-7.0.0.202409031743-r.zip">
-    <description>EGit 7.0.0 API baseline; to be used with branch stable-7.1</description>
   </setupTask>
   <setupTask
       xsi:type="pde:APIBaselineTask"
@@ -173,10 +138,19 @@
   <setupTask
       xsi:type="pde:APIBaselineTask"
       name="EGit"
+      activate="false"
       version="7.2.0"
       location="${workspace.location/../api.baseline/7.2.0}"
       remoteURI="https://download.eclipse.org/egit/updates-7.2/org.eclipse.egit.repository-7.2.0.202503040940-r.zip">
-    <description>EGit 7.2.0 API baseline; to be used with branch master</description>
+    <description>EGit 7.2.0 API baseline; to be used with branch stable-7.3</description>
+  </setupTask>
+  <setupTask
+      xsi:type="pde:APIBaselineTask"
+      name="EGit"
+      version="7.3.0"
+      location="${workspace.location/../api.baseline/7.3.0}"
+      remoteURI="https://download.eclipse.org/egit/updates-7.3/org.eclipse.egit.repository-7.3.0.202506031305-r.zip">
+    <description>EGit 7.3.0 API baseline; to be used with branch master</description>
   </setupTask>
   <setupTask
       xsi:type="setup:CompoundTask"
