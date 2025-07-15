@@ -42,6 +42,7 @@ import org.eclipse.egit.core.internal.util.ResourceUtil;
 import org.eclipse.egit.ui.Activator;
 import org.eclipse.egit.ui.UIPreferences;
 import org.eclipse.egit.ui.UIUtils;
+import org.eclipse.egit.ui.commit.CommitContext;
 import org.eclipse.egit.ui.internal.CompareUtils;
 import org.eclipse.egit.ui.internal.GitLabels;
 import org.eclipse.egit.ui.internal.UIIcons;
@@ -63,6 +64,8 @@ import org.eclipse.jface.action.IAction;
 import org.eclipse.jface.action.IMenuListener;
 import org.eclipse.jface.action.IMenuManager;
 import org.eclipse.jface.action.MenuManager;
+import org.eclipse.jface.action.Separator;
+import org.eclipse.jface.action.ToolBarManager;
 import org.eclipse.jface.dialogs.IDialogConstants;
 import org.eclipse.jface.dialogs.IDialogSettings;
 import org.eclipse.jface.dialogs.IMessageProvider;
@@ -115,6 +118,7 @@ import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.graphics.Rectangle;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
+import org.eclipse.swt.layout.RowLayout;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
@@ -128,6 +132,7 @@ import org.eclipse.swt.widgets.ToolItem;
 import org.eclipse.swt.widgets.Tree;
 import org.eclipse.swt.widgets.TreeColumn;
 import org.eclipse.ui.ISharedImages;
+import org.eclipse.ui.IWorkbenchActionConstants;
 import org.eclipse.ui.IWorkbenchPage;
 import org.eclipse.ui.IWorkbenchWindow;
 import org.eclipse.ui.PartInitException;
@@ -138,6 +143,7 @@ import org.eclipse.ui.forms.IFormColors;
 import org.eclipse.ui.forms.widgets.ExpandableComposite;
 import org.eclipse.ui.forms.widgets.FormToolkit;
 import org.eclipse.ui.forms.widgets.Section;
+import org.eclipse.ui.menus.IMenuService;
 import org.eclipse.ui.model.BaseWorkbenchContentProvider;
 import org.eclipse.ui.progress.WorkbenchJob;
 
@@ -195,7 +201,7 @@ public class CommitDialog extends TitleAreaDialog {
 				if (name != null) {
 					ImageDescriptor descriptor = PlatformUI.getWorkbench()
 							.getEditorRegistry().getImageDescriptor(name);
-					image = (Image) this.resourceManager.get(descriptor);
+					image = this.resourceManager.get(descriptor);
 				}
 				return image;
 			} else
@@ -205,7 +211,7 @@ public class CommitDialog extends TitleAreaDialog {
 		private Image getDecoratedImage(Image base, ImageDescriptor decorator) {
 			DecorationOverlayIcon decorated = new DecorationOverlayIcon(base,
 					decorator, IDecoration.BOTTOM_RIGHT);
-			return (Image) this.resourceManager.get(decorated);
+			return this.resourceManager.get(decorated);
 		}
 
 		@Override
@@ -364,13 +370,13 @@ public class CommitDialog extends TitleAreaDialog {
 
 	Text committerText;
 
-	ToolItem amendingItem;
+	private Action signedOffByAction;
 
-	ToolItem signedOffItem;
+	private Action addChangeIdAction;
 
-	ToolItem signCommitItem;
+	private Action amendPreviousCommitAction;
 
-	ToolItem changeIdItem;
+	private Action signCommitAction;
 
 	ToolItem showUntrackedItem;
 
@@ -1027,8 +1033,8 @@ public class CommitDialog extends TitleAreaDialog {
 		});
 
 		if (!allowToChangeSelection) {
-			amendingItem.setSelection(false);
-			amendingItem.setEnabled(false);
+			amendPreviousCommitAction.setChecked(false);
+			amendPreviousCommitAction.setEnabled(false);
 			showUntrackedItem.setSelection(false);
 			showUntrackedItem.setEnabled(false);
 			checkAllItem.setEnabled(false);
@@ -1067,6 +1073,32 @@ public class CommitDialog extends TitleAreaDialog {
 		commitButton.setEnabled(enable);
 	}
 
+	private static RowLayout createRowLayoutWithoutMargin() {
+		RowLayout layout = new RowLayout();
+		layout.marginHeight = 0;
+		layout.marginWidth = 0;
+		layout.marginTop = 0;
+		layout.marginBottom = 0;
+		layout.marginLeft = 0;
+		layout.marginRight = 0;
+		return layout;
+	}
+
+	private void addContributions(ToolBarManager toolBarManager,
+			Composite container) {
+		IMenuService menuService = PlatformUI.getWorkbench()
+				.getActiveWorkbenchWindow().getService(IMenuService.class);
+		if (menuService != null) {
+			String toolbarUri = "toolbar:" //$NON-NLS-1$
+					+ CommitContext.COMMIT_MSG_TOOLBAR_ID;
+			menuService.populateContributionManager(toolBarManager, toolbarUri);
+			container.addDisposeListener(event -> {
+				menuService.releaseContributions(toolBarManager);
+				toolBarManager.dispose();
+			});
+		}
+	}
+
 	private Composite createMessageAndPersonArea(Composite container) {
 
 		Composite messageAndPersonArea = toolkit.createComposite(container);
@@ -1090,10 +1122,13 @@ public class CommitDialog extends TitleAreaDialog {
 		GridLayoutFactory.fillDefaults().spacing(0, 0).numColumns(2)
 				.applyTo(headerArea);
 
-		ToolBar messageToolbar = new ToolBar(headerArea, SWT.FLAT
-				| SWT.HORIZONTAL);
+		Composite toolbarContainer = new Composite(headerArea, SWT.NONE);
+		toolbarContainer.setBackground(null);
+		toolbarContainer.setLayout(createRowLayoutWithoutMargin());
 		GridDataFactory.fillDefaults().align(SWT.END, SWT.FILL)
-				.grab(true, false).applyTo(messageToolbar);
+				.grab(true, false).applyTo(toolbarContainer);
+		ToolBarManager messageToolbar = new ToolBarManager(SWT.FLAT
+				| SWT.HORIZONTAL);
 
 		addMessageDropDown(headerArea);
 
@@ -1158,48 +1193,76 @@ public class CommitDialog extends TitleAreaDialog {
 		if (committer != null)
 			committerText.setText(committer);
 
-		amendingItem = new ToolItem(messageToolbar, SWT.CHECK);
-		amendingItem.setSelection(amending);
-		if (amending)
-			amendingItem.setEnabled(false); // if already set, don't allow any
-											// changes
-		else if (!amendAllowed)
-			amendingItem.setEnabled(false);
-		amendingItem.setToolTipText(UIText.CommitDialog_AmendPreviousCommit);
-		Image amendImage = UIIcons.AMEND_COMMIT.createImage();
-		UIUtils.hookDisposal(amendingItem, amendImage);
-		amendingItem.setImage(amendImage);
+		messageToolbar
+				.add(new Separator(IWorkbenchActionConstants.MB_ADDITIONS));
+		amendPreviousCommitAction = new Action(
+				UIText.CommitDialog_AmendPreviousCommit, IAction.AS_CHECK_BOX) {
 
-		signedOffItem = new ToolItem(messageToolbar, SWT.CHECK);
+			@Override
+			public void run() {
+				commitMessageComponent.setAmendingButtonSelection(isChecked());
+				updateMessage();
+			}
+		};
+		amendPreviousCommitAction.setImageDescriptor(UIIcons.AMEND_COMMIT);
+		amendPreviousCommitAction.setChecked(amending);
+		if (amending) {
+			// If already set don't allow any changes
+			amendPreviousCommitAction.setEnabled(false);
+		} else if (!amendAllowed) {
+			amendPreviousCommitAction.setEnabled(false);
+		}
+		messageToolbar.add(amendPreviousCommitAction);
 
-		signedOffItem.setToolTipText(UIText.CommitDialog_AddSOB);
-		Image signedOffImage = UIIcons.SIGNED_OFF.createImage();
-		UIUtils.hookDisposal(signedOffItem, signedOffImage);
-		signedOffItem.setImage(signedOffImage);
+		signedOffByAction = new Action(UIText.CommitDialog_AddSOB,
+				IAction.AS_CHECK_BOX) {
 
-		signCommitItem = new ToolItem(messageToolbar, SWT.CHECK);
+			@Override
+			public void run() {
+				commitMessageComponent.setSignedOffButtonSelection(isChecked());
+			}
+		};
+		signedOffByAction.setImageDescriptor(UIIcons.SIGNED_OFF);
+		messageToolbar.add(signedOffByAction);
 
-		signCommitItem.setToolTipText(UIText.CommitDialog_SignCommit);
-		Image signCommitImage = UIIcons.SIGN_COMMIT.createImage();
-		UIUtils.hookDisposal(signCommitItem, signCommitImage);
-		signCommitItem.setImage(signCommitImage);
+		signCommitAction = new Action(UIText.CommitDialog_SignCommit,
+				IAction.AS_CHECK_BOX) {
 
-		changeIdItem = new ToolItem(messageToolbar, SWT.CHECK);
-		Image changeIdImage = UIIcons.GERRIT.createImage();
-		UIUtils.hookDisposal(changeIdItem, changeIdImage);
-		changeIdItem.setImage(changeIdImage);
-		changeIdItem.setToolTipText(UIText.CommitDialog_AddChangeIdLabel);
+			@Override
+			public void run() {
+				commitMessageComponent
+						.setSignCommitButtonSelection(isChecked());
+			}
+		};
+		signCommitAction.setImageDescriptor(UIIcons.SIGN_COMMIT);
+		messageToolbar.add(signCommitAction);
+		signCommitAction.setEnabled(true);
+
+		addChangeIdAction = new Action(UIText.CommitDialog_AddChangeIdLabel,
+				IAction.AS_CHECK_BOX) {
+
+			@Override
+			public void run() {
+				commitMessageComponent.setChangeIdButtonSelection(isChecked());
+			}
+		};
+		addChangeIdAction.setImageDescriptor(UIIcons.GERRIT);
+		messageToolbar.add(addChangeIdAction);
+
+		addContributions(messageToolbar, toolbarContainer);
+
+		messageToolbar.createControl(toolbarContainer);
 
 		final ICommitMessageComponentNotifications listener = new ICommitMessageComponentNotifications() {
 
 			@Override
 			public void updateSignedOffToggleSelection(boolean selection) {
-				signedOffItem.setSelection(selection);
+				signedOffByAction.setChecked(selection);
 			}
 
 			@Override
 			public void updateChangeIdToggleSelection(boolean selection) {
-				changeIdItem.setSelection(selection);
+				addChangeIdAction.setChecked(selection);
 				if (isGerritRepo) {
 					pushSettings.setVisible(!selection);
 					pushSettings.getControl().getParent().requestLayout();
@@ -1208,7 +1271,7 @@ public class CommitDialog extends TitleAreaDialog {
 
 			@Override
 			public void updateSignCommitToggleSelection(boolean selection) {
-				signCommitItem.setSelection(selection);
+				signCommitAction.setChecked(selection);
 			}
 
 			@Override
@@ -1229,43 +1292,16 @@ public class CommitDialog extends TitleAreaDialog {
 		commitMessageComponent.setAmending(amending);
 		commitMessageComponent.setFilesToCommit(getFileList());
 
-		amendingItem.addSelectionListener(new SelectionAdapter() {
-			@Override
-			public void widgetSelected(SelectionEvent arg0) {
-				commitMessageComponent.setAmendingButtonSelection(amendingItem
-						.getSelection());
-			}
-		});
-
-		changeIdItem.addSelectionListener(new SelectionAdapter() {
-			@Override
-			public void widgetSelected(SelectionEvent arg0) {
-				commitMessageComponent.setChangeIdButtonSelection(changeIdItem
-						.getSelection());
-			}
-		});
-
-		signedOffItem.addSelectionListener(new SelectionAdapter() {
-			@Override
-			public void widgetSelected(SelectionEvent arg0) {
-				commitMessageComponent
-						.setSignedOffButtonSelection(signedOffItem
-								.getSelection());
-			}
-		});
-
-		signCommitItem.setEnabled(true);
-		// TODO UIText.CommitDialog_Sign_Not_Available
-		signCommitItem.addSelectionListener(new SelectionAdapter() {
-			@Override
-			public void widgetSelected(SelectionEvent e) {
-				commitMessageComponent.setSignCommitButtonSelection(
-						signCommitItem.getSelection());
-			}
-		});
-
 		commitMessageComponent.updateUI();
 		commitMessageComponent.enableListeners(true);
+
+		container.getShell().setData(CommitContext.class.getCanonicalName(),
+				new DefaultCommitContext(commitText) {
+					@Override
+					public Repository getRepository() {
+						return repository;
+					}
+				});
 
 		return messageAndPersonArea;
 	}
@@ -1330,12 +1366,12 @@ public class CommitDialog extends TitleAreaDialog {
 	}
 
 	private boolean isCommitWithoutFilesAllowed() {
-		if (filesViewer.getCheckedElements().length > 0)
+		if (filesViewer.getCheckedElements().length > 0) {
 			return true;
-
-		if (amendingItem.getSelection())
+		}
+		if (amendPreviousCommitAction.isChecked()) {
 			return true;
-
+		}
 		return CommitHelper.isCommitWithoutFilesAllowed(repository);
 	}
 
@@ -1522,7 +1558,7 @@ public class CommitDialog extends TitleAreaDialog {
 		commitMessage = commitMessageComponent.getCommitMessage();
 		author = commitMessageComponent.getAuthor();
 		committer = commitMessageComponent.getCommitter();
-		createChangeId = changeIdItem.getSelection();
+		createChangeId = addChangeIdAction.isChecked();
 		signCommit = commitMessageComponent.isSignCommit();
 
 		IDialogSettings settings = org.eclipse.egit.ui.Activator

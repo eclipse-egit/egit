@@ -95,6 +95,7 @@ import org.eclipse.swt.graphics.Rectangle;
 import org.eclipse.swt.layout.FillLayout;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Layout;
+import org.eclipse.swt.widgets.Text;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.editors.text.EditorsUI;
 import org.eclipse.ui.editors.text.TextSourceViewerConfiguration;
@@ -261,7 +262,12 @@ public class SpellcheckableMessageArea extends Composite {
 
 		final SourceViewerDecorationSupport support = configureAnnotationPreferences();
 
-		Document document = new Document(initialText);
+		String normalized = Utils.normalizeLineEndings(initialText);
+		normalized = normalized.replaceAll("\n", Text.DELIMITER); //$NON-NLS-1$
+
+		Document document = new Document();
+		document.setInitialLineDelimiter(Text.DELIMITER);
+		document.set(normalized);
 
 		configuration = new HyperlinkSourceViewer.Configuration(
 				EditorsUI.getPreferenceStore()) {
@@ -831,7 +837,9 @@ public class SpellcheckableMessageArea extends Composite {
 	 */
 	public void setText(String text) {
 		if (text != null) {
-			getDocument().set(text);
+			String normalized = Utils.normalizeLineEndings(text);
+			normalized = normalized.replaceAll("\n", Text.DELIMITER); //$NON-NLS-1$
+			getDocument().set(normalized);
 		}
 	}
 

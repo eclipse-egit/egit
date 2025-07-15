@@ -84,6 +84,7 @@ import org.eclipse.egit.ui.Activator;
 import org.eclipse.egit.ui.JobFamilies;
 import org.eclipse.egit.ui.UIPreferences;
 import org.eclipse.egit.ui.UIUtils;
+import org.eclipse.egit.ui.commit.CommitContext;
 import org.eclipse.egit.ui.internal.ActionUtils;
 import org.eclipse.egit.ui.internal.CommonUtils;
 import org.eclipse.egit.ui.internal.CompareUtils;
@@ -110,6 +111,7 @@ import org.eclipse.egit.ui.internal.dialogs.CommitMessageArea;
 import org.eclipse.egit.ui.internal.dialogs.CommitMessageComponent;
 import org.eclipse.egit.ui.internal.dialogs.CommitMessageComponentState;
 import org.eclipse.egit.ui.internal.dialogs.CommitMessageComponentStateManager;
+import org.eclipse.egit.ui.internal.dialogs.DefaultCommitContext;
 import org.eclipse.egit.ui.internal.dialogs.ICommitMessageComponentNotifications;
 import org.eclipse.egit.ui.internal.dialogs.SpellcheckableMessageArea;
 import org.eclipse.egit.ui.internal.operations.DeletePathsOperationUI;
@@ -145,6 +147,8 @@ import org.eclipse.jface.preference.IPreferenceStore;
 import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.jface.resource.JFaceResources;
 import org.eclipse.jface.resource.LocalResourceManager;
+import org.eclipse.jface.text.DocumentEvent;
+import org.eclipse.jface.text.IDocumentListener;
 import org.eclipse.jface.util.IPropertyChangeListener;
 import org.eclipse.jface.util.LocalSelectionTransfer;
 import org.eclipse.jface.util.PropertyChangeEvent;
@@ -235,6 +239,7 @@ import org.eclipse.ui.IFileEditorInput;
 import org.eclipse.ui.IPartService;
 import org.eclipse.ui.ISelectionListener;
 import org.eclipse.ui.ISelectionService;
+import org.eclipse.ui.IWorkbenchActionConstants;
 import org.eclipse.ui.IWorkbenchCommandConstants;
 import org.eclipse.ui.IWorkbenchPart;
 import org.eclipse.ui.IWorkbenchPartReference;
@@ -249,6 +254,7 @@ import org.eclipse.ui.forms.widgets.Form;
 import org.eclipse.ui.forms.widgets.FormToolkit;
 import org.eclipse.ui.forms.widgets.Section;
 import org.eclipse.ui.handlers.IHandlerService;
+import org.eclipse.ui.menus.IMenuService;
 import org.eclipse.ui.operations.UndoRedoActionGroup;
 import org.eclipse.ui.part.IShowInSource;
 import org.eclipse.ui.part.IShowInTarget;
@@ -767,8 +773,18 @@ public class StagingView extends ViewPart
 
 	private boolean disposed;
 
+	private CommitContext commitContext;
+
+	@Override
+	public <T> T getAdapter(Class<T> adapter) {
+		if (adapter == CommitContext.class) {
+			return adapter.cast(commitContext);
+		}
+		return super.getAdapter(adapter);
+	}
+
 	private Image getImage(ImageDescriptor descriptor) {
-		return (Image) this.resources.get(descriptor);
+		return this.resources.get(descriptor);
 	}
 
 	private void createPersonLabel(Composite parent, ImageDescriptor image,
@@ -996,6 +1012,19 @@ public class StagingView extends ViewPart
 		ToolBarManager commitMessageToolBarManager = new ToolBarManager(
 				SWT.FLAT | SWT.HORIZONTAL);
 
+		IDocumentListener updatePreview = new IDocumentListener() {
+
+			@Override
+			public void documentChanged(DocumentEvent event) {
+				previewer.setText(commitMessageComponent.getRepository(),
+						commitMessageComponent.getCommitMessage());
+			}
+
+			@Override
+			public void documentAboutToBeChanged(DocumentEvent event) {
+				// Nothing
+			}
+		};
 		previewAction = new Action(UIText.StagingView_Preview_Commit_Message,
 				IAction.AS_CHECK_BOX) {
 
@@ -1009,7 +1038,11 @@ public class StagingView extends ViewPart
 					previewer
 							.setText(commitMessageComponent.getRepository(),
 									commitMessageComponent.getCommitMessage());
+					commitMessageText.getDocument()
+							.addDocumentListener(updatePreview);
 				} else {
+					commitMessageText.getDocument()
+							.removeDocumentListener(updatePreview);
 					previewLayout.topControl = commitMessageText;
 					commitMessageSection
 							.setText(UIText.StagingView_CommitMessage);
@@ -1024,7 +1057,8 @@ public class StagingView extends ViewPart
 		};
 		previewAction.setImageDescriptor(UIIcons.ELCL16_PREVIEW);
 		commitMessageToolBarManager.add(previewAction);
-		commitMessageToolBarManager.add(new Separator());
+		commitMessageToolBarManager
+				.add(new Separator(IWorkbenchActionConstants.MB_ADDITIONS));
 
 		amendPreviousCommitAction = new Action(
 				UIText.StagingView_Ammend_Previous_Commit, IAction.AS_CHECK_BOX) {
@@ -1074,6 +1108,9 @@ public class StagingView extends ViewPart
 		};
 		addChangeIdAction.setImageDescriptor(UIIcons.GERRIT);
 		commitMessageToolBarManager.add(addChangeIdAction);
+
+		addContributions(commitMessageToolBarManager,
+				commitMessageToolbarComposite);
 
 		commitMessageToolBarManager
 				.createControl(commitMessageToolbarComposite);
@@ -1137,6 +1174,13 @@ public class StagingView extends ViewPart
 		UIUtils.addBulbDecorator(
 				commitMessageText.getTextWidget(),
 				UIText.CommitDialog_ContentAssist);
+
+		commitContext = new DefaultCommitContext(commitMessageText) {
+			@Override
+			public Repository getRepository() {
+				return getCurrentRepository();
+			}
+		};
 
 		commitMessagePreview = new Composite(commitMessageTextComposite,
 				SWT.NONE);
@@ -1451,6 +1495,20 @@ public class StagingView extends ViewPart
 			// that the view is busy (e.g. reload() will trigger this job in
 			// background!).
 			service.showBusyForFamily(org.eclipse.egit.core.JobFamilies.INDEX_DIFF_CACHE_UPDATE);
+	}
+
+	private void addContributions(ToolBarManager toolBarManager,
+			Composite container) {
+		IMenuService menuService = getSite().getService(IMenuService.class);
+		if (menuService != null) {
+			String toolbarUri = "toolbar:" //$NON-NLS-1$
+					+ CommitContext.COMMIT_MSG_TOOLBAR_ID;
+			menuService.populateContributionManager(toolBarManager, toolbarUri);
+			container.addDisposeListener(event -> {
+				menuService.releaseContributions(toolBarManager);
+				toolBarManager.dispose();
+			});
+		}
 	}
 
 	private void updateTitle(boolean force) {
@@ -2405,7 +2463,7 @@ public class StagingView extends ViewPart
 			Tree tree = viewer.getTree();
 			// Paint an indicator at the end of the column.
 			tree.addListener(SWT.MeasureItem, event -> {
-				Object obj = ((TreeItem) event.item).getData();
+				Object obj = event.item.getData();
 				if (obj instanceof StagingEntry) {
 					StagingEntry entry = (StagingEntry) obj;
 					String text = getConflictText(entry);
@@ -2429,7 +2487,7 @@ public class StagingView extends ViewPart
 					// middle of the label text in the hover.
 					return;
 				}
-				Object obj = ((TreeItem) event.item).getData();
+				Object obj = event.item.getData();
 				if (obj instanceof StagingEntry) {
 					StagingEntry entry = (StagingEntry) obj;
 					String text = getConflictText(entry);
