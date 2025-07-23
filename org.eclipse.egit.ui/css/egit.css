@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2018 Thomas Wolf <thomas.wolf@paranor.ch>
+ * Copyright (c) 2018, 2025 Thomas Wolf <twolf@apache.org> and others
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License 2.0
@@ -11,4 +11,23 @@
 
 Text.org-eclipse-egit-ui-FindToolbar-noResults {
 	background-color: #FF9696;
+}
+
+/*
+ * Restore the background of the staged and unstaged items viewers. The light gray
+ * background indicates an inactive view, but if it is active, we want these viewers
+ * show "active". With gray, it looks particularly jarring in the staging view because
+ * the commit message StyledText follows the editor background, which is normally
+ * white in the light theme.
+ */
+.MPartStack.active .MPart Form Composite Section Tree.org-eclipse-egit-ui-StagingView {
+	background-color: #FFFFFF;
+}
+
+/*
+ * Restore contrast in the CommitAndDiffComponent. The new light gray background
+ * doesn't go well with the gray commit message headers.
+ */
+.MPart ScrolledComposite StyledText.org-eclipse-egit-ui-CommitAndDiffComponent {
+	background-color: #FFFFFF;
 }
