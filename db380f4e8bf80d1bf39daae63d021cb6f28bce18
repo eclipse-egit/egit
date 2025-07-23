@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "31d9882e_42c6a2ce",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1021966
+      },
+      "writtenOn": "2025-07-23T21:33:20Z",
+      "side": 1,
+      "message": "We _could_ theoretically use 4.34 as baseline, but I don\u0027t want to use something as baseline that I cannot build against or debug.\n\nSo this would only be an option if someone put together a 4.34 target platform, and it was used in CI, and it worked for running a runtime Eclipse on MacOS.\n\nI won\u0027t do so; I always struggle with these target platforms anyway.",
+      "revId": "db380f4e8bf80d1bf39daae63d021cb6f28bce18",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735"
+    }
+  ]
+}
