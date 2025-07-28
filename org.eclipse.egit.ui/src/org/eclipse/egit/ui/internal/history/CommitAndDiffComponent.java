@@ -97,7 +97,8 @@ public class CommitAndDiffComponent {
 				SWT.NONE);
 		commentAndDiffScrolledComposite.setContent(commentAndDiffComposite);
 		commentAndDiffComposite
-				.setLayout(GridLayoutFactory.fillDefaults().create());
+				.setLayout(GridLayoutFactory.fillDefaults().spacing(0, 0)
+						.create());
 
 		commentViewer = new CommitMessageViewer(commentAndDiffComposite, site);
 		commentViewer.getControl().setLayoutData(
