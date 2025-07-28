@@ -72,7 +72,7 @@
     <signer-input-directory>/home/data/httpd/download-staging.priv/egit</signer-input-directory>
     <download-publish-path>/home/data/httpd/download.eclipse.org/egit/updates-nightly</download-publish-path>
     <target-platform>egit-4.36</target-platform>
-    <tycho.scmUrl>scm:git:https://git.eclipse.org/r/egit/egit.git</tycho.scmUrl>
+    <tycho.scmUrl>scm:git:https://github.com/eclipse-egit/egit</tycho.scmUrl>
     <egit.test.tmpdir></egit.test.tmpdir>
     <test.vmparams></test.vmparams>
     <coretest.vmparams>-Degit.test.tmpdir=${egit.test.tmpdir}</coretest.vmparams>

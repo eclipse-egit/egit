@@ -16,7 +16,7 @@
       </enablement>
    </extension>
    <!-- ================================================================================ -->
-   <!-- Repository provider for the GitImportWizardTest											 -->
+   <!-- Repository provider for the GitImportWizardTest									 -->
    <!-- ================================================================================ -->
    <extension
          point="org.eclipse.egit.ui.cloneSourceProvider">
@@ -66,6 +66,9 @@
          </and>
       </enablement>
    </extension>
+   <!-- ================================================================================ -->
+   <!-- CommitMessageProvider for CommitMessageProvidersTest							 -->
+   <!-- ================================================================================ -->
    <extension
          point="org.eclipse.egit.ui.commitMessageProvider">
       <commitMessageProvider
@@ -75,5 +78,42 @@
             class="org.eclipse.egit.ui.test.stagview.TestCommitMessageProviderExtensionFactory">
       </commitMessageProvider>
    </extension>
-
+   <!-- ================================================================================ -->
+   <!-- Toolbar contribution for CommitToolbarTest										 -->
+   <!-- ================================================================================ -->
+   <extension
+         point="org.eclipse.ui.commands">
+      <command
+            categoryId="org.eclipse.egit.ui.commandCategory"
+            id="org.eclipse.egit.ui.test.commit.ShowCommitMessage"
+            name="Test Commit Message Contribution">
+      </command>
+   </extension>
+   <extension
+         point="org.eclipse.ui.commandImages">
+      <!-- Special case where using an image from another bundle is OK: it's our fragment host. -->
+      <image
+            commandId="org.eclipse.egit.ui.test.commit.ShowCommitMessage"
+            icon="platform:/plugin/org.eclipse.egit.ui/icons/etool16/annotate.png">
+      </image>
+   </extension>
+   <extension
+        point="org.eclipse.ui.handlers">
+      <handler
+            commandId="org.eclipse.egit.ui.test.commit.ShowCommitMessage">
+         <class
+               class="org.eclipse.egit.ui.test.commit.ShowCommitMessageHandler">
+         </class>
+      </handler>
+   </extension>
+   <extension
+         point="org.eclipse.ui.menus">
+      <menuContribution
+            locationURI="toolbar:org.eclipse.egit.ui.commitMsgToolBar?after=additions">
+         <command
+              commandId="org.eclipse.egit.ui.test.commit.ShowCommitMessage"
+              label="Test Commit Message Contribution"
+              style="push" />
+      </menuContribution>
+   </extension>
 </fragment>
