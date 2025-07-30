@@ -125,7 +125,6 @@
         label="EGit 2025-09 (4.37) target"/>
     <description>Default target platform for EGit development.</description>
   </setupTask>
-  </setupTask>
   <setupTask
       xsi:type="pde:APIBaselineTask"
       name="EGit"
