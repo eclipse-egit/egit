@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "6f1b27a0_fea16354",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1021966
+      },
+      "writtenOn": "2025-10-18T10:55:11Z",
+      "side": 1,
+      "message": "Please also update the Bouncy Castle dependency to 1.82 as in JGit.\n\n10:19:20  08:19:20 [WARNING] Problems resolving provisioning plan.:\n10:19:20     Unable to satisfy dependency from org.eclipse.equinox.http.service.api 1.2.102.v20250520-0629 to java.package; javax.servlet [2.1.0,5.0.0).\n10:19:20     Unable to satisfy dependency from org.eclipse.equinox.http.service.api 1.2.102.v20250520-0629 to java.package; javax.servlet.http [2.1.0,5.0.0).\n10:19:20     Unable to satisfy dependency from org.osgi.service.http.whiteboard 1.1.1.202109301733 to java.package; javax.servlet 0.0.0.\n10:19:20     Unable to satisfy dependency from org.osgi.service.http.whiteboard 1.1.1.202109301733 to java.package; javax.servlet.http 0.0.0.\n[...]\n10:19:55  08:19:55 [INFO] Resolving dependencies of MavenProject: org.eclipse.egit:org.eclipse.egit.repository:7.5.0-SNAPSHOT @ /home/jenkins/agent/workspace/egit.gerrit/repo/org.eclipse.egit.repository/pom.xml\n10:19:58  08:19:58 [INFO] {osgi.os\u003dlinux, osgi.ws\u003dgtk, org.eclipse.update.install.features\u003dtrue, osgi.arch\u003dx86_64, org.eclipse.update.install.sources\u003dtrue}\n10:19:58  08:19:58 [ERROR] Cannot resolve project dependencies:\n10:19:58  08:19:58 [ERROR]   Software being installed: org.eclipse.egit.ui.test 7.5.0.qualifier\n10:19:58  08:19:58 [ERROR]   Missing requirement: org.eclipse.swtbot.eclipse.finder 4.3.0.202510091338 requires \u0027osgi.bundle; org.hamcrest 3.0.0\u0027 but it could not be found\n\nSo hamcrest needs to be bumped, too. Don\u0027t know if the javax.servlet dependencies are a problem.",
+      "revId": "737a4162e350d73ea992f8262632b25eda96f3e0",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735"
+    }
+  ]
+}
