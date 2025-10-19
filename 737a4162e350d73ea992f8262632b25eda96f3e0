@@ -34,6 +34,24 @@
       "parentUuid": "6f1b27a0_fea16354",
       "revId": "737a4162e350d73ea992f8262632b25eda96f3e0",
       "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "8940f3c4_ea7b9b11",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1021966
+      },
+      "writtenOn": "2025-10-19T10:27:21Z",
+      "side": 1,
+      "message": "\u003e AFAICS bouncycastle was already on 1.82\n\nRight; my local master wasn\u0027t at origin/master...",
+      "parentUuid": "54aed737_c984ba41",
+      "revId": "737a4162e350d73ea992f8262632b25eda96f3e0",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735"
     }
   ]
 }
