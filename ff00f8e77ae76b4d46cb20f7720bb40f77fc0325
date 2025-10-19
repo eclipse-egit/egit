@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "6deb1f07_9535e8cc",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1021966
+      },
+      "writtenOn": "2025-10-19T21:21:14Z",
+      "side": 1,
+      "message": "Our UI tests have bundle requirements for org.hamcrest.core and org.hamcrest.library [1.3.0,2.0.0). Should these now be org.hamcrest [3.0,0,4.0.0)?",
+      "revId": "ff00f8e77ae76b4d46cb20f7720bb40f77fc0325",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735"
+    }
+  ]
+}
