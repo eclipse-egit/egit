@@ -16,6 +16,24 @@
       "message": "Huh? What happened here?",
       "revId": "f99bea6cb9395e8777de4741fb7be9aeccb5c732",
       "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "bcc7bc9b_3d30ba51",
+        "filename": "org.eclipse.egit.target/maven/dependencies.tpd",
+        "patchSetId": 2
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1000671
+      },
+      "writtenOn": "2025-10-19T11:02:16Z",
+      "side": 1,
+      "message": "Oops",
+      "parentUuid": "07383c04_37210f71",
+      "revId": "f99bea6cb9395e8777de4741fb7be9aeccb5c732",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735"
     }
   ]
 }
