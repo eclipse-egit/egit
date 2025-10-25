@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <?pde?>
 <!-- generated with https://github.com/eclipse-cbi/targetplatform-dsl -->
-<target name="egit-4.37" sequenceNumber="1761207601">
+<target name="egit-4.37" sequenceNumber="1761430423">
   <locations>
     <location includeMode="slicer" includeAllPlatforms="false" includeSource="true" includeConfigurePhase="true" type="InstallableUnit">
       <unit id="org.eclipse.license.feature.group" version="0.0.0"/>
@@ -63,10 +63,6 @@
       <unit id="org.commonmark.ext-gfm-tables" version="0.25.1"/>
       <unit id="org.eclipse.orbit.xml-apis-ext" version="1.0.0.v20240917-0534"/>
       <unit id="org.hamcrest" version="3.0.0"/>
-      <unit id="org.hamcrest.core" version="1.3.0.v20230809-1000"/>
-      <unit id="org.hamcrest.core.source" version="1.3.0.v20230809-1000"/>
-      <unit id="org.hamcrest.library" version="1.3.0.v20230809-1000"/>
-      <unit id="org.hamcrest.library.source" version="1.3.0.v20230809-1000"/>
       <unit id="org.hamcrest.source" version="3.0.0"/>
       <unit id="org.junit" version="4.13.2.v20240929-1000"/>
       <unit id="org.junit.source" version="4.13.2.v20240929-1000"/>
