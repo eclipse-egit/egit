@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "40dc0c7b_5f241361",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1021966
+      },
+      "writtenOn": "2025-10-26T21:41:45Z",
+      "side": 1,
+      "message": "egit.ui.test has `org.slf4j;version\u003d\"[1.7.0,2.0.0)\"` as package import. Added in \nIac6a88eed9bb7928abddb08da4e568ea849bc63f. Why did the tests succeed? Does something else still pull slf4j 1.7.x into the target platform? Is that extra slf4j import still needed?",
+      "revId": "b512758ffb49ed57aa2d7a4bedf655f5f36c3a99",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735"
+    }
+  ]
+}
