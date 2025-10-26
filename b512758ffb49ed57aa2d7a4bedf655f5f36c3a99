@@ -16,6 +16,41 @@
       "message": "egit.ui.test has `org.slf4j;version\u003d\"[1.7.0,2.0.0)\"` as package import. Added in \nIac6a88eed9bb7928abddb08da4e568ea849bc63f. Why did the tests succeed? Does something else still pull slf4j 1.7.x into the target platform? Is that extra slf4j import still needed?",
       "revId": "b512758ffb49ed57aa2d7a4bedf655f5f36c3a99",
       "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a7986eab_44491b3e",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1021966
+      },
+      "writtenOn": "2025-10-26T22:01:37Z",
+      "side": 1,
+      "message": "All right: the build succeeded because the JGit change isn\u0027t merged yet. The JGit 7.5.0-SNAPSHOT p2 repo still contains org.slf4j 1.7.36, so the build was able to satisfy the above constraint that way.\n\n\nThe bounds of the import should be changed to [1.7.0,3.0.0), and this change must be held back until the JGit change https://eclipse.gerrithub.io/c/eclipse-jgit/jgit/+/1225024 has been merged and the post-merge build is done. Then this change needs to be retriggered.",
+      "parentUuid": "40dc0c7b_5f241361",
+      "revId": "b512758ffb49ed57aa2d7a4bedf655f5f36c3a99",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "e344f215_c561ab50",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1021966
+      },
+      "writtenOn": "2025-10-26T22:01:37Z",
+      "side": 1,
+      "message": "Retrigger once the JGit change has gone through. Currently the build still finds an org.slf4j 1.7.36 available.",
+      "revId": "b512758ffb49ed57aa2d7a4bedf655f5f36c3a99",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735"
     }
   ]
 }
