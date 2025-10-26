@@ -54,4 +54,4 @@ Import-Package: net.bytebuddy;version="[1.7.9,2.0.0)",
  org.mockito.junit;version="[5.4.0,6.0.0)",
  org.mockito.stubbing;version="[5.4.0,6.0.0)",
  org.osgi.framework;version="[1.4.0,2.0.0)",
- org.slf4j;version="[1.7.0,2.0.0)"
+ org.slf4j;version="[1.7.0,3.0.0)"
