@@ -51,6 +51,23 @@
       "message": "Retrigger once the JGit change has gone through. Currently the build still finds an org.slf4j 1.7.36 available.",
       "revId": "b512758ffb49ed57aa2d7a4bedf655f5f36c3a99",
       "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "d4a33be6_6dc27877",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1038043
+      },
+      "writtenOn": "2025-10-27T06:25:43Z",
+      "side": 1,
+      "message": "Looks good. Thanks!",
+      "revId": "b512758ffb49ed57aa2d7a4bedf655f5f36c3a99",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735"
     }
   ]
 }
