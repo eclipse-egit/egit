@@ -234,6 +234,24 @@
    <bundle id="org.eclipse.jetty.ee10.servlet.source">
       <category name="EGit.dependencies"/>
    </bundle>
+   <bundle id="org.apache.aries.spifly.dynamic.bundle">
+      <category name="EGit.dependencies"/>
+   </bundle>
+   <bundle id="org.objectweb.asm">
+      <category name="EGit.dependencies"/>
+   </bundle>
+   <bundle id="org.objectweb.asm.commons">
+      <category name="EGit.dependencies"/>
+   </bundle>
+   <bundle id="org.objectweb.asm.tree">
+      <category name="EGit.dependencies"/>
+   </bundle>
+   <bundle id="org.objectweb.asm.tree.analysis">
+      <category name="EGit.dependencies"/>
+   </bundle>
+   <bundle id="org.objectweb.asm.util">
+      <category name="EGit.dependencies"/>
+   </bundle>
    <category-def name="EGit" label="Git integration for Eclipse">
       <description>
          Versioning with Git and integration with Gerrit Code Review
