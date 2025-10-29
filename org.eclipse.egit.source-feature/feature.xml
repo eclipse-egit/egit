@@ -2,7 +2,7 @@
 <feature
       id="org.eclipse.egit.source"
       label="%featureName"
-      version="7.5.0.202510290248-m"
+      version="7.5.0.202510290248-m2"
       provider-name="%providerName"
       plugin="org.eclipse.egit"
       license-feature="org.eclipse.license"
