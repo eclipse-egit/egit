@@ -4,7 +4,7 @@ Bundle-Name: %Bundle-Name
 Bundle-Vendor: %Bundle-Vendor
 Automatic-Module-Name: org.eclipse.egit.core.junit
 Bundle-SymbolicName: org.eclipse.egit.core.junit
-Bundle-Version: 7.5.0.202510290248-m2
+Bundle-Version: 7.5.0.qualifier
 Require-Bundle: org.eclipse.core.runtime;bundle-version="[3.33.100,4.0.0)",
  org.eclipse.core.filesystem;bundle-version="[1.11.200,2.0.0)",
  org.eclipse.core.resources;bundle-version="[3.22.200,4.0.0)",
