@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "30ee7c19_31825f12",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1000671
+      },
+      "writtenOn": "2025-11-03T19:39:11Z",
+      "side": 1,
+      "message": "git commit trailers are only in the last paragraph, hence removed extra blank line so that issue reference is in the last paragraph",
+      "revId": "c9115b0af3bb5cfecb47b210b8492bc1308d9b9b",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d4a120a7_98110de1",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/branch/BranchOperationUI.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 282,
+      "author": {
+        "id": 1000671
+      },
+      "writtenOn": "2025-11-03T19:39:11Z",
+      "side": 1,
+      "message": "Don\u0027t we need to clear the cache for all selected repositories ?",
+      "revId": "c9115b0af3bb5cfecb47b210b8492bc1308d9b9b",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735"
+    }
+  ]
+}
