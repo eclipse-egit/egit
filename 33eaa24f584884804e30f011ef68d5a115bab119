@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ebf9507b_8e5bb1de",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1021966
+      },
+      "writtenOn": "2025-11-03T22:55:16Z",
+      "side": 1,
+      "message": "What exactly is being fixed by this change? Is there any description of the problem this solves anywhere?",
+      "revId": "33eaa24f584884804e30f011ef68d5a115bab119",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "04c20efb_fd625663",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/history/FindToolbar.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 499,
+      "author": {
+        "id": 1021966
+      },
+      "writtenOn": "2025-11-03T22:55:16Z",
+      "side": 1,
+      "message": "Please use `break` instead of `return`. Yes, it\u0027ll be equivalent, but `break`is more idiomatic.",
+      "revId": "33eaa24f584884804e30f011ef68d5a115bab119",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735"
+    }
+  ]
+}
