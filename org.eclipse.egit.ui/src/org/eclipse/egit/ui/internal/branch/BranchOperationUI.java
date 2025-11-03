@@ -40,6 +40,7 @@ import org.eclipse.egit.ui.JobFamilies;
 import org.eclipse.egit.ui.UIPreferences;
 import org.eclipse.egit.ui.internal.UIRepositoryUtils;
 import org.eclipse.egit.ui.internal.UIText;
+import org.eclipse.egit.ui.internal.decorators.DecoratorRepositoryStateCache;
 import org.eclipse.egit.ui.internal.decorators.GitLightweightDecorator;
 import org.eclipse.egit.ui.internal.dialogs.NonDeletedFilesDialog;
 import org.eclipse.egit.ui.internal.repository.CreateBranchWizard;
@@ -278,6 +279,8 @@ public class BranchOperationUI {
 				return Activator
 						.createErrorStatus(UIText.BranchAction_branchFailed, e);
 			} finally {
+				Arrays.stream(repositories)
+						.forEach(DecoratorRepositoryStateCache.INSTANCE::clear);
 				GitLightweightDecorator.refresh();
 				monitor.done();
 			}
