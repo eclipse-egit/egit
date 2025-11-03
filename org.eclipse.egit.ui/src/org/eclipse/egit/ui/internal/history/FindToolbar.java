@@ -488,12 +488,30 @@ public class FindToolbar extends Composite {
 
 	@Override
 	public void addListener(int evtType, Listener mouseListener) {
-		patternField.addListener(evtType, mouseListener);
+		switch (evtType) {
+		case SWT.FocusIn, SWT.FocusOut:
+		case SWT.MouseDown, SWT.MouseUp:
+		case SWT.Modify:
+			patternField.addListener(evtType, mouseListener);
+			return;
+		default:
+			super.addListener(evtType, mouseListener);
+			return;
+		}
 	}
 
 	@Override
 	public void removeListener(int evtType, Listener mouseListener) {
-		patternField.removeListener(evtType, mouseListener);
+		switch (evtType) {
+		case SWT.FocusIn, SWT.FocusOut:
+		case SWT.MouseDown, SWT.MouseUp:
+		case SWT.Modify:
+			patternField.removeListener(evtType, mouseListener);
+			return;
+		default:
+			super.removeListener(evtType, mouseListener);
+			return;
+		}
 	}
 
 	@Override
