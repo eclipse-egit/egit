@@ -33,6 +33,24 @@
       "message": "Don\u0027t we need to clear the cache for all selected repositories ?",
       "revId": "c9115b0af3bb5cfecb47b210b8492bc1308d9b9b",
       "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "8447482b_216e5bf6",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/branch/BranchOperationUI.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 282,
+      "author": {
+        "id": 1039063
+      },
+      "writtenOn": "2025-11-04T08:18:47Z",
+      "side": 1,
+      "message": "You\u0027re right, thank you!\nI changed it.",
+      "parentUuid": "d4a120a7_98110de1",
+      "revId": "c9115b0af3bb5cfecb47b210b8492bc1308d9b9b",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735"
     }
   ]
 }
