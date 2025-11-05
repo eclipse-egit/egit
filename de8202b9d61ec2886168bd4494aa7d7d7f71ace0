@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "8528b026_a74ee2e3",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1021966
+      },
+      "writtenOn": "2025-11-05T09:54:36Z",
+      "side": 1,
+      "message": "I believe this should be fixed in SWT. See https://github.com/eclipse-platform/eclipse.platform.swt/issues/2733 .",
+      "revId": "de8202b9d61ec2886168bd4494aa7d7d7f71ace0",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735"
+    }
+  ]
+}
