@@ -16,6 +16,24 @@
       "message": "I believe this should be fixed in SWT. See https://github.com/eclipse-platform/eclipse.platform.swt/issues/2733 .",
       "revId": "de8202b9d61ec2886168bd4494aa7d7d7f71ace0",
       "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "a23a0a87_5f2ac975",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1021966
+      },
+      "writtenOn": "2025-11-06T08:55:48Z",
+      "side": 1,
+      "message": "This was fixed in SWT. Currently Eclipse Platform is having problems with their build jobs,[1] but once they have succeeded producing another I-build, this should be re-tried. (Install EGit into the I-Build SDK, check that the find toolbar appears.)\n\n\n[1] https://gitlab.eclipse.org/eclipsefdn/helpdesk/-/issues/6744",
+      "parentUuid": "8528b026_a74ee2e3",
+      "revId": "de8202b9d61ec2886168bd4494aa7d7d7f71ace0",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735"
     }
   ]
 }
