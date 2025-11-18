@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <?pde?>
 <!-- generated with https://github.com/eclipse-cbi/targetplatform-dsl -->
-<target name="egit-4.38" sequenceNumber="1762787022">
+<target name="egit-4.38" sequenceNumber="1763479347">
   <locations>
     <location includeMode="slicer" includeAllPlatforms="false" includeSource="true" includeConfigurePhase="true" type="InstallableUnit">
       <unit id="org.eclipse.license.feature.group" version="0.0.0"/>
@@ -17,7 +17,7 @@
     <location includeMode="slicer" includeAllPlatforms="false" includeSource="true" includeConfigurePhase="true" type="InstallableUnit">
       <unit id="aQute.libg" version="7.1.0.202411251545"/>
       <unit id="bndtools.api" version="7.1.0.202411251545"/>
-      <unit id="com.ibm.icu" version="77.1.0"/>
+      <unit id="com.ibm.icu" version="78.1.0"/>
       <unit id="com.jcraft.jsch" version="0.1.55.v20230916-1400"/>
       <unit id="com.jcraft.jsch.source" version="0.1.55.v20230916-1400"/>
       <unit id="com.jcraft.jzlib" version="1.1.3.v20230916-1400"/>
@@ -31,18 +31,18 @@
       <unit id="jakarta.xml.bind-api" version="2.3.3"/>
       <unit id="jakarta.xml.bind-api" version="4.0.4"/>
       <unit id="javax.servlet-api" version="3.1.0"/>
-      <unit id="junit-jupiter-api" version="5.14.0"/>
-      <unit id="junit-jupiter-engine" version="5.14.0"/>
-      <unit id="junit-jupiter-migrationsupport" version="5.14.0"/>
-      <unit id="junit-jupiter-params" version="5.14.0"/>
-      <unit id="junit-platform-commons" version="1.14.0"/>
-      <unit id="junit-platform-engine" version="1.14.0"/>
-      <unit id="junit-platform-launcher" version="1.14.0"/>
-      <unit id="junit-platform-runner" version="1.14.0"/>
-      <unit id="junit-platform-suite-api" version="1.14.0"/>
-      <unit id="junit-platform-suite-commons" version="1.14.0"/>
-      <unit id="junit-platform-suite-engine" version="1.14.0"/>
-      <unit id="junit-vintage-engine" version="5.14.0"/>
+      <unit id="junit-jupiter-api" version="5.14.1"/>
+      <unit id="junit-jupiter-engine" version="5.14.1"/>
+      <unit id="junit-jupiter-migrationsupport" version="5.14.1"/>
+      <unit id="junit-jupiter-params" version="5.14.1"/>
+      <unit id="junit-platform-commons" version="1.14.1"/>
+      <unit id="junit-platform-engine" version="1.14.1"/>
+      <unit id="junit-platform-launcher" version="1.14.1"/>
+      <unit id="junit-platform-runner" version="1.14.1"/>
+      <unit id="junit-platform-suite-api" version="1.14.1"/>
+      <unit id="junit-platform-suite-commons" version="1.14.1"/>
+      <unit id="junit-platform-suite-engine" version="1.14.1"/>
+      <unit id="junit-vintage-engine" version="5.14.1"/>
       <unit id="org.apache.ant" version="1.10.15.v20240901-1000"/>
       <unit id="org.apache.ant.source" version="1.10.15.v20240901-1000"/>
       <unit id="org.apache.aries.spifly.dynamic.bundle" version="1.3.7"/>
