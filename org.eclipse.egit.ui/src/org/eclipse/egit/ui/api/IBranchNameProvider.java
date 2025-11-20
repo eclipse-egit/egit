@@ -9,10 +9,12 @@
  *
  * SPDX-License-Identifier: EPL-2.0
  *******************************************************************************/
-package org.eclipse.egit.ui;
+package org.eclipse.egit.ui.api;
 
 /**
  * A branch name provider suggests a branch name based on current context.
+ *
+ * @since 7.5
  */
 public interface IBranchNameProvider {
 

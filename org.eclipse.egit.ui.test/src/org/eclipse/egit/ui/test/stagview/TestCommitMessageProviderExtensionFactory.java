@@ -17,7 +17,7 @@ import java.util.Queue;
 import org.eclipse.core.resources.IResource;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IExecutableExtensionFactory;
-import org.eclipse.egit.ui.ICommitMessageProvider;
+import org.eclipse.egit.ui.api.ICommitMessageProvider;
 
 public class TestCommitMessageProviderExtensionFactory
 		implements IExecutableExtensionFactory {

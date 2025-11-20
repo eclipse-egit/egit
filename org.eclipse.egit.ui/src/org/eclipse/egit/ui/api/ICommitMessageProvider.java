@@ -9,7 +9,7 @@
  *
  * SPDX-License-Identifier: EPL-2.0
  *******************************************************************************/
-package org.eclipse.egit.ui;
+package org.eclipse.egit.ui.api;
 
 import org.eclipse.core.resources.IResource;
 import org.eclipse.egit.ui.internal.dialogs.CommitDialog;
@@ -17,9 +17,11 @@ import org.eclipse.egit.ui.internal.dialogs.CommitDialog;
 /**
  * This interface must be implemented to be a commit message provider. A commit
  * message provider provides the complete or a fragment of a commit message.
- * This message will be added to the text field in the {@link CommitDialog}. <br/>
+ * This message will be added to the text field in the {@link CommitDialog}.
+ * <br/>
  *
  * @see CommitDialog
+ * @since 7.5
  */
 public interface ICommitMessageProvider {
 
