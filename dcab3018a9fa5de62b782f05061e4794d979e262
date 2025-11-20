@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "11a88a22_e0a1bd9d",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 5
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1039063
+      },
+      "writtenOn": "2025-11-20T11:45:50Z",
+      "side": 1,
+      "message": "It seems like the refactoring missed a spot and there was a compilation error. I fixed it in the Patchset 5",
+      "revId": "dcab3018a9fa5de62b782f05061e4794d979e262",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735"
+    }
+  ]
+}
