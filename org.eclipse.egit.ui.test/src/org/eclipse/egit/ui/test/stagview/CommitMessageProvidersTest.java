@@ -13,9 +13,9 @@ package org.eclipse.egit.ui.test.stagview;
 import static org.junit.Assert.assertEquals;
 
 import org.eclipse.core.resources.IResource;
-import org.eclipse.egit.ui.CommitMessageWithCaretPosition;
-import org.eclipse.egit.ui.ICommitMessageProvider;
-import org.eclipse.egit.ui.ICommitMessageProvider2;
+import org.eclipse.egit.ui.api.CommitMessageWithCaretPosition;
+import org.eclipse.egit.ui.api.ICommitMessageProvider;
+import org.eclipse.egit.ui.api.ICommitMessageProvider2;
 import org.eclipse.egit.ui.common.StagingViewTester;
 import org.junit.After;
 import org.junit.Test;

@@ -57,10 +57,10 @@
          <attribute name="class" type="string" use="required">
             <annotation>
                <documentation>
-                  Points to the implementation class of the org.eclipse.egit.ui.ICommitMessageProvider.
+                  Points to the implementation class of the org.eclipse.egit.ui.api.ICommitMessageProvider.
                </documentation>
                <appInfo>
-                  <meta.attribute kind="java" basedOn=":org.eclipse.egit.ui.ICommitMessageProvider"/>
+                  <meta.attribute kind="java" basedOn=":org.eclipse.egit.ui.api.ICommitMessageProvider"/>
                </appInfo>
             </annotation>
          </attribute>
@@ -82,8 +82,8 @@
          <meta.section type="apiinfo"/>
       </appInfo>
       <documentation>
-         There is an interface org.eclipse.egit.ui.ICommitMessageProvider, which you must implement to use the extension point.
-There is an interface org.eclipse.egit.ui.ICommitMessageProvider2, which extends ICommitMessageProvider. Implement this interface, if you want to provide a commit message and a caret position.
+         There is an interface org.eclipse.egit.ui.api.ICommitMessageProvider, which you must implement to use the extension point.
+There is an interface org.eclipse.egit.ui.api.ICommitMessageProvider2, which extends ICommitMessageProvider. Implement this interface, if you want to provide a commit message and a caret position.
       </documentation>
    </annotation>
 
