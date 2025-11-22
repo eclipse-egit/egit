@@ -104,7 +104,7 @@ class CommitMessageBuilder {
 		if (messageWithPosition == null) {
 			return ""; //$NON-NLS-1$
 		} else {
-			return append(messageWithPosition.getMessage());
+			return append(messageWithPosition.message());
 		}
 	}
 
@@ -126,12 +126,12 @@ class CommitMessageBuilder {
 			ICommitMessageProvider2 provider) {
 		int pos = currentCaretPosition;
 		if (currentCaretPosition == CommitMessageWithCaretPosition.NO_POSITION) {
-			String providedMessage = messageWithPosition.getMessage();
+			String providedMessage = messageWithPosition.message();
 			if (providedMessage == null || providedMessage.trim().isEmpty()) {
 				return pos;
 			}
 			int providedCaretPosition = messageWithPosition
-					.getDesiredCaretPosition();
+					.caretPosition();
 			if (providedCaretPosition == CommitMessageWithCaretPosition.NO_POSITION) {
 				return pos;
 			}

@@ -912,7 +912,7 @@ public class CommitMessageComponent {
 		if (amending)
 			return previousCommitMessage;
 
-		return messageWithCaretPosition.getMessage();
+		return messageWithCaretPosition.message();
 	}
 
 	private int calculateCaretPosition(
@@ -925,7 +925,7 @@ public class CommitMessageComponent {
 		if (amending)
 			return previousCaretPosition;
 
-		return messageWithCaretPosition.getDesiredCaretPosition();
+		return messageWithCaretPosition.caretPosition();
 	}
 
 	private void saveOriginalChangeId() {

@@ -58,7 +58,7 @@ public class CommitMessageBuilderTest extends GitTestCase {
 		CommitMessageWithCaretPosition commitMessageWithPosition = commitMessageBuilder
 				.build();
 
-		assertEquals("", commitMessageWithPosition.getMessage());
+		assertEquals("", commitMessageWithPosition.message());
 	}
 
 	@Test
@@ -71,7 +71,7 @@ public class CommitMessageBuilderTest extends GitTestCase {
 		CommitMessageWithCaretPosition commitMessageWithPosition = commitMessageBuilder
 				.build();
 
-		assertEquals(message, commitMessageWithPosition.getMessage());
+		assertEquals(message, commitMessageWithPosition.message());
 	}
 
 	@Test
@@ -86,7 +86,7 @@ public class CommitMessageBuilderTest extends GitTestCase {
 				.build();
 
 		assertEquals(message1 + "\n\n" + message2,
-				commitMessageWithPosition.getMessage());
+				commitMessageWithPosition.message());
 	}
 
 	@Test
@@ -98,7 +98,7 @@ public class CommitMessageBuilderTest extends GitTestCase {
 		CommitMessageWithCaretPosition commitMessageWithPosition = commitMessageBuilder
 				.build();
 
-		assertEquals("", commitMessageWithPosition.getMessage());
+		assertEquals("", commitMessageWithPosition.message());
 	}
 
 	@Test
@@ -111,9 +111,9 @@ public class CommitMessageBuilderTest extends GitTestCase {
 		CommitMessageWithCaretPosition commitMessageWithPosition = commitMessageBuilder
 				.build();
 
-		assertEquals("", commitMessageWithPosition.getMessage());
+		assertEquals("", commitMessageWithPosition.message());
 		assertEquals(CommitMessageComponentState.CARET_DEFAULT_POSITION,
-				commitMessageWithPosition.getDesiredCaretPosition());
+				commitMessageWithPosition.caretPosition());
 	}
 
 	@Test
@@ -129,7 +129,7 @@ public class CommitMessageBuilderTest extends GitTestCase {
 		CommitMessageWithCaretPosition commitMessageWithPosition = commitMessageBuilder
 				.build();
 
-		assertEquals(message, commitMessageWithPosition.getMessage());
+		assertEquals(message, commitMessageWithPosition.message());
 	}
 
 	@Test
@@ -145,7 +145,7 @@ public class CommitMessageBuilderTest extends GitTestCase {
 		CommitMessageWithCaretPosition commitMessageWithPosition = commitMessageBuilder
 				.build();
 
-		assertEquals(message, commitMessageWithPosition.getMessage());
+		assertEquals(message, commitMessageWithPosition.message());
 	}
 
 	@Test
@@ -165,7 +165,7 @@ public class CommitMessageBuilderTest extends GitTestCase {
 				.build();
 
 		assertEquals(multiLineMessage + "\n\n" + message1,
-				commitMessageWithPosition.getMessage());
+				commitMessageWithPosition.message());
 	}
 
 	@Test
@@ -176,7 +176,7 @@ public class CommitMessageBuilderTest extends GitTestCase {
 				message, caretPosition);
 
 		assertEquals(caretPosition,
-				commitMessageWithPosition.getDesiredCaretPosition());
+				commitMessageWithPosition.caretPosition());
 	}
 
 	@Test
@@ -187,7 +187,7 @@ public class CommitMessageBuilderTest extends GitTestCase {
 				message, caretPosition);
 
 		assertEquals(caretPosition,
-				commitMessageWithPosition.getDesiredCaretPosition());
+				commitMessageWithPosition.caretPosition());
 	}
 
 	@Test
@@ -197,7 +197,7 @@ public class CommitMessageBuilderTest extends GitTestCase {
 				message, -42);
 
 		assertEquals(0,
-				commitMessageWithPosition.getDesiredCaretPosition());
+				commitMessageWithPosition.caretPosition());
 	}
 
 	@Test
@@ -206,7 +206,7 @@ public class CommitMessageBuilderTest extends GitTestCase {
 		CommitMessageWithCaretPosition commitMessageWithPosition = getCommitMessageWithCaretPosition(
 				message, message.length() + 1);
 
-		assertEquals(0, commitMessageWithPosition.getDesiredCaretPosition());
+		assertEquals(0, commitMessageWithPosition.caretPosition());
 	}
 
 	private CommitMessageWithCaretPosition getCommitMessageWithCaretPosition(
@@ -242,7 +242,7 @@ public class CommitMessageBuilderTest extends GitTestCase {
 				.build();
 
 		assertEquals(caretPositionInSingleLineMessage,
-				commitMessageWithPosition.getDesiredCaretPosition());
+				commitMessageWithPosition.caretPosition());
 	}
 
 	@Test
@@ -266,7 +266,7 @@ public class CommitMessageBuilderTest extends GitTestCase {
 		assertEquals(
 				singleLineMessage.length() + "\n\n".length()
 				+ caretPositionInMultiLineMessage,
-				commitMessageWithPosition.getDesiredCaretPosition());
+				commitMessageWithPosition.caretPosition());
 	}
 
 	@Test
@@ -290,7 +290,7 @@ public class CommitMessageBuilderTest extends GitTestCase {
 		assertEquals(
 				singleLineMessage.length() + "\n\n".length()
 						+ caretPositionInMultiLineMessage,
-				commitMessageWithPosition.getDesiredCaretPosition());
+				commitMessageWithPosition.caretPosition());
 	}
 
 	@Test
@@ -312,7 +312,7 @@ public class CommitMessageBuilderTest extends GitTestCase {
 				.build();
 
 		assertEquals(CommitMessageComponentState.CARET_DEFAULT_POSITION,
-				commitMessageWithPosition.getDesiredCaretPosition());
+				commitMessageWithPosition.caretPosition());
 	}
 
 	@Test
@@ -337,7 +337,7 @@ public class CommitMessageBuilderTest extends GitTestCase {
 				.build();
 
 		assertEquals(caretPositionInSingleLineMessage,
-				commitMessageWithPosition.getDesiredCaretPosition());
+				commitMessageWithPosition.caretPosition());
 	}
 
 	@Test
@@ -364,7 +364,7 @@ public class CommitMessageBuilderTest extends GitTestCase {
 		assertEquals(
 				singleLineMessage.length() + "\n\n".length()
 						+ caretPositionInMultiLineMessage,
-				commitMessageWithPosition.getDesiredCaretPosition());
+				commitMessageWithPosition.caretPosition());
 	}
 
 	@Test
@@ -389,7 +389,7 @@ public class CommitMessageBuilderTest extends GitTestCase {
 				.build();
 
 		assertEquals(caretPositionInSingleLineMessage,
-				commitMessageWithPosition.getDesiredCaretPosition());
+				commitMessageWithPosition.caretPosition());
 	}
 
 	@Test
@@ -414,7 +414,7 @@ public class CommitMessageBuilderTest extends GitTestCase {
 				.build();
 
 		assertEquals(multiLineMessage + "\n\n" + singleLineMessage,
-				commitMessageWithPosition.getMessage());
+				commitMessageWithPosition.message());
 	}
 
 	private CommitMessageBuilder newCommitMessageBuilder(
@@ -482,7 +482,7 @@ public class CommitMessageBuilderTest extends GitTestCase {
 
 		@Override
 		public String getMessage(IResource[] resources) {
-			return "getMessage() is not supposed to be called.";
+			return "message() is not supposed to be called.";
 		}
 
 		@Override
