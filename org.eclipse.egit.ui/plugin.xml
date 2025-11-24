@@ -6038,6 +6038,18 @@
             <menu
                   id="egit.menu.remote"
                   label="%RemoteSubMenu.label">
+               <separator
+                     name="##SimpleFetch"
+                     visible="true">
+               </separator>
+               <dynamic
+                     id="org.eclipse.egit.ui.team.SimpleFetchRemotes"
+                     class="org.eclipse.egit.ui.internal.actions.SimpleFetchRemotesContributionItem">
+               </dynamic>
+               <separator
+                     name="##PushFetch"
+                     visible="true">
+               </separator>
                <command
                      commandId="org.eclipse.egit.ui.team.Push"
                      label="%PushAction_label"
