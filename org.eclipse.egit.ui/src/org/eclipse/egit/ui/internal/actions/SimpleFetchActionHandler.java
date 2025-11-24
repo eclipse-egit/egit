@@ -28,6 +28,12 @@ import org.eclipse.ui.menus.UIElement;
  */
 public class SimpleFetchActionHandler extends RepositoryActionHandler
 		implements IElementUpdater {
+
+	static boolean canSimpleFetch(RemoteConfig config) {
+		return (!config.getURIs().isEmpty()
+				&& !config.getFetchRefSpecs().isEmpty());
+	}
+
 	@Override
 	public Object execute(ExecutionEvent event) throws ExecutionException {
 		final Repository repository = getRepository(true, event);
@@ -51,9 +57,12 @@ public class SimpleFetchActionHandler extends RepositoryActionHandler
 	@Override
 	public boolean isEnabled() {
 		final Repository repository = getRepository();
-		return repository != null
-				&& SimpleConfigureFetchDialog
-						.getConfiguredRemoteCached(repository) != null;
+		if (repository == null) {
+			return false;
+		}
+		RemoteConfig config = SimpleConfigureFetchDialog
+				.getConfiguredRemoteCached(repository);
+		return (config != null && canSimpleFetch(config));
 	}
 
 	@Override
