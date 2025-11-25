@@ -9,7 +9,7 @@
  *
  * SPDX-License-Identifier: EPL-2.0
  *******************************************************************************/
-package org.eclipse.egit.ui;
+package org.eclipse.egit.ui.api;
 
 import org.eclipse.core.resources.IResource;
 import org.eclipse.egit.ui.internal.dialogs.CommitDialog;
@@ -22,6 +22,7 @@ import org.eclipse.egit.ui.internal.dialogs.CommitDialog;
  *
  * @see ICommitMessageProvider
  * @see CommitDialog
+ * @since 7.5
  */
 public interface ICommitMessageProvider2 extends ICommitMessageProvider {
 

@@ -30,10 +30,10 @@ import org.eclipse.egit.core.internal.gerrit.GerritUtil;
 import org.eclipse.egit.core.op.EGitGpgConfig;
 import org.eclipse.egit.core.util.RevCommitUtils;
 import org.eclipse.egit.ui.Activator;
-import org.eclipse.egit.ui.CommitMessageWithCaretPosition;
 import org.eclipse.egit.ui.UIPreferences;
 import org.eclipse.egit.ui.UIUtils;
 import org.eclipse.egit.ui.UIUtils.IPreviousValueProposalHandler;
+import org.eclipse.egit.ui.api.CommitMessageWithCaretPosition;
 import org.eclipse.egit.ui.internal.CommonUtils;
 import org.eclipse.egit.ui.internal.UIText;
 import org.eclipse.egit.ui.internal.commit.CommitHelper;
@@ -912,7 +912,7 @@ public class CommitMessageComponent {
 		if (amending)
 			return previousCommitMessage;
 
-		return messageWithCaretPosition.getMessage();
+		return messageWithCaretPosition.message();
 	}
 
 	private int calculateCaretPosition(
@@ -925,7 +925,7 @@ public class CommitMessageComponent {
 		if (amending)
 			return previousCaretPosition;
 
-		return messageWithCaretPosition.getDesiredCaretPosition();
+		return messageWithCaretPosition.caretPosition();
 	}
 
 	private void saveOriginalChangeId() {

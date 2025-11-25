@@ -27,9 +27,9 @@ import org.eclipse.core.runtime.Platform;
 import org.eclipse.egit.core.internal.util.ProjectUtil;
 import org.eclipse.egit.core.internal.util.ResourceUtil;
 import org.eclipse.egit.ui.Activator;
-import org.eclipse.egit.ui.CommitMessageWithCaretPosition;
-import org.eclipse.egit.ui.ICommitMessageProvider;
-import org.eclipse.egit.ui.ICommitMessageProvider2;
+import org.eclipse.egit.ui.api.CommitMessageWithCaretPosition;
+import org.eclipse.egit.ui.api.ICommitMessageProvider;
+import org.eclipse.egit.ui.api.ICommitMessageProvider2;
 import org.eclipse.egit.ui.internal.UIText;
 import org.eclipse.jgit.lib.Repository;
 
@@ -104,7 +104,7 @@ class CommitMessageBuilder {
 		if (messageWithPosition == null) {
 			return ""; //$NON-NLS-1$
 		} else {
-			return append(messageWithPosition.getMessage());
+			return append(messageWithPosition.message());
 		}
 	}
 
@@ -126,12 +126,12 @@ class CommitMessageBuilder {
 			ICommitMessageProvider2 provider) {
 		int pos = currentCaretPosition;
 		if (currentCaretPosition == CommitMessageWithCaretPosition.NO_POSITION) {
-			String providedMessage = messageWithPosition.getMessage();
+			String providedMessage = messageWithPosition.message();
 			if (providedMessage == null || providedMessage.trim().isEmpty()) {
 				return pos;
 			}
 			int providedCaretPosition = messageWithPosition
-					.getDesiredCaretPosition();
+					.caretPosition();
 			if (providedCaretPosition == CommitMessageWithCaretPosition.NO_POSITION) {
 				return pos;
 			}

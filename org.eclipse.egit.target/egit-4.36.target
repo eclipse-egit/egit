@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <?pde?>
 <!-- generated with https://github.com/eclipse-cbi/targetplatform-dsl -->
-<target name="egit-4.36" sequenceNumber="1763480356">
+<target name="egit-4.36" sequenceNumber="1763725834">
   <locations>
     <location includeMode="slicer" includeAllPlatforms="false" includeSource="true" includeConfigurePhase="true" type="InstallableUnit">
       <unit id="org.eclipse.license.feature.group" version="0.0.0"/>
@@ -160,7 +160,7 @@
         <dependency>
           <groupId>org.tukaani</groupId>
           <artifactId>xz</artifactId>
-          <version>1.10</version>
+          <version>1.11</version>
           <type>jar</type>
         </dependency>
       </dependencies>
