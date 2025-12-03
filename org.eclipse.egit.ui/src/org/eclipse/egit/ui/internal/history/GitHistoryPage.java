@@ -2548,12 +2548,13 @@ public class GitHistoryPage extends HistoryPage implements RefsChangedListener,
 						|| settingsChanged) {
 					releaseGenerateHistoryJob();
 
-					if (repoChanged) {
+					if (repoChanged || pathsChanged) {
 						// Clear all viewers. Otherwise it may be possible that
 						// the user invokes a context menu command and due to to
 						// the highly asynchronous loading we end up with
 						// inconsistent diff computations trying to find the
-						// diff for a commit in the wrong repository.
+						// diff for a commit in the wrong repository or path
+						// (file/folder/project).
 						clearViewers();
 					}
 
