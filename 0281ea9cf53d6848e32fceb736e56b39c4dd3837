@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "afd69967_d18c47cd",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000671
+      },
+      "writtenOn": "2025-12-19T08:51:53Z",
+      "side": 1,
+      "message": "Thomas thinks this should be fixed in SWT instead of this workaround",
+      "revId": "0281ea9cf53d6848e32fceb736e56b39c4dd3837",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735"
+    }
+  ]
+}
