@@ -1,6 +1,6 @@
 target "4.38-2025-12" with source configurePhase
 
-location "https://download.eclipse.org/staging/2025-12" {
+location "https://download.eclipse.org/releases/2025-12" {
 	// Eclipse platform
 	biz.aQute.bnd.util lazy
 	biz.aQute.bndlib lazy
