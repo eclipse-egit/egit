@@ -22,6 +22,7 @@ import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicBoolean;
+import java.util.function.Supplier;
 
 import org.eclipse.core.net.proxy.IProxyData;
 import org.eclipse.core.net.proxy.IProxyService;
@@ -49,9 +50,9 @@ public class EGitSshdSessionFactory extends SshdSessionFactory {
 	 * and a proxy database based on the {@link IProxyService}.
 	 *
 	 * @param service
-	 *            the {@link IProxyService} to use
+	 *            a {@link Supplier} supplying the {@link IProxyService} to use
 	 */
-	public EGitSshdSessionFactory(IProxyService service) {
+	public EGitSshdSessionFactory(Supplier<IProxyService> service) {
 		super(null, new EGitProxyDataFactory(service));
 		SshPreferencesMirror.INSTANCE.start();
 	}
@@ -110,21 +111,24 @@ public class EGitSshdSessionFactory extends SshdSessionFactory {
 
 	private static class EGitProxyDataFactory implements ProxyDataFactory {
 
-		private final IProxyService proxyService;
+		private final Supplier<IProxyService> proxyService;
 
-		public EGitProxyDataFactory(IProxyService service) {
+		EGitProxyDataFactory(Supplier<IProxyService> service) {
 			proxyService = service;
 		}
 
 		@Override
 		public ProxyData get(InetSocketAddress remoteAddress) {
+			IProxyService srv = proxyService.get();
+			if (srv == null) {
+				return null;
+			}
 			try {
-				IProxyData[] data = proxyService
+				IProxyData[] data = srv
 						.select(new URI(IProxyData.SOCKS_PROXY_TYPE,
-						"//" + remoteAddress.getHostString(), null)); //$NON-NLS-1$
+								"//" + remoteAddress.getHostString(), null)); //$NON-NLS-1$
 				if (data == null || data.length == 0) {
-					data = proxyService.select(new URI(
-							IProxyData.HTTP_PROXY_TYPE,
+					data = srv.select(new URI(IProxyData.HTTP_PROXY_TYPE,
 							"//" + remoteAddress.getHostString(), null)); //$NON-NLS-1$
 					if (data == null || data.length == 0) {
 						return null;
