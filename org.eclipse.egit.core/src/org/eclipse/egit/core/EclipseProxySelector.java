@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (C) 2008, Shawn O. Pearce <spearce@spearce.org>
+ * Copyright (C) 2008, 2026 Shawn O. Pearce <spearce@spearce.org> and others
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License 2.0
@@ -21,14 +21,16 @@ import java.net.URISyntaxException;
 import java.net.UnknownHostException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.function.Supplier;
 
 import org.eclipse.core.net.proxy.IProxyData;
 import org.eclipse.core.net.proxy.IProxyService;
 
 class EclipseProxySelector extends ProxySelector {
-	private final IProxyService service;
 
-	EclipseProxySelector(final IProxyService s) {
+	private final Supplier<IProxyService> service;
+
+	EclipseProxySelector(Supplier<IProxyService> s) {
 		service = s;
 	}
 
@@ -37,7 +39,8 @@ class EclipseProxySelector extends ProxySelector {
 		final ArrayList<Proxy> r = new ArrayList<>();
 		final String host = uri.getHost();
 
-		if (host != null) {
+		IProxyService srv = service.get();
+		if (srv != null && host != null) {
 			String type = IProxyData.SOCKS_PROXY_TYPE;
 			if ("http".equals(uri.getScheme())) //$NON-NLS-1$
 				type = IProxyData.HTTP_PROXY_TYPE;
@@ -47,7 +50,7 @@ class EclipseProxySelector extends ProxySelector {
 				type = IProxyData.HTTPS_PROXY_TYPE;
 			try {
 				URI queryUri = new URI(type, "//" + host, null); //$NON-NLS-1$
-				final IProxyData[] dataArray = service.select(queryUri);
+				final IProxyData[] dataArray = srv.select(queryUri);
 				for (IProxyData data : dataArray) {
 					if (IProxyData.HTTP_PROXY_TYPE.equals(data.getType()))
 						addProxy(r, Proxy.Type.HTTP, data);

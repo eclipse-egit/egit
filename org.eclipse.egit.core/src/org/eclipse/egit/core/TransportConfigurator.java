@@ -17,7 +17,6 @@ import java.net.Authenticator;
 import java.net.ProxySelector;
 import java.text.MessageFormat;
 
-import org.eclipse.core.net.proxy.IProxyService;
 import org.eclipse.core.resources.IWorkspace;
 import org.eclipse.core.runtime.preferences.IEclipsePreferences.IPreferenceChangeListener;
 import org.eclipse.core.runtime.preferences.IPreferencesService;
@@ -46,18 +45,11 @@ public class TransportConfigurator {
 
 	private IPreferencesService preferencesService;
 
-	private IProxyService proxyService;
-
 	private IPreferenceChangeListener preferenceChangeListener;
 
 	@Reference
 	void setPreferencesService(IPreferencesService service) {
 		this.preferencesService = service;
-	}
-
-	@Reference
-	void setProxyService(IProxyService service) {
-		this.proxyService = service;
 	}
 
 	@Reference
@@ -75,10 +67,13 @@ public class TransportConfigurator {
 		};
 		InstanceScope.INSTANCE.getNode(Activator.PLUGIN_ID)
 				.addPreferenceChangeListener(preferenceChangeListener);
-		SshSessionFactory.setInstance(new EGitSshdSessionFactory(proxyService));
+		SshSessionFactory.setInstance(new EGitSshdSessionFactory(
+				Activator.getDefault()::getProxyService));
 
-		ProxySelector.setDefault(new EclipseProxySelector(proxyService));
-		Authenticator.setDefault(new EclipseAuthenticator(proxyService));
+		ProxySelector.setDefault(new EclipseProxySelector(
+				Activator.getDefault()::getProxyService));
+		Authenticator.setDefault(new EclipseAuthenticator(
+				Activator.getDefault()::getProxyService));
 	}
 
 	@Deactivate

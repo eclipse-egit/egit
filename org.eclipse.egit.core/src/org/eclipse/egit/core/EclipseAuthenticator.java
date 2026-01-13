@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (C) 2008, Shawn O. Pearce <spearce@spearce.org>
+ * Copyright (C) 2008, 2026 Shawn O. Pearce <spearce@spearce.org> and others
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License 2.0
@@ -14,27 +14,34 @@ import java.net.Authenticator;
 import java.net.InetAddress;
 import java.net.PasswordAuthentication;
 import java.net.UnknownHostException;
+import java.util.function.Supplier;
 
 import org.eclipse.core.net.proxy.IProxyData;
 import org.eclipse.core.net.proxy.IProxyService;
 
 class EclipseAuthenticator extends Authenticator {
-	private final IProxyService service;
+	private final Supplier<IProxyService> service;
 
-	EclipseAuthenticator(final IProxyService s) {
+	EclipseAuthenticator(Supplier<IProxyService> s) {
 		service = s;
 	}
 
 	@Override
 	protected PasswordAuthentication getPasswordAuthentication() {
-		final IProxyData[] data = service.getProxyData();
-		if (data == null)
+		IProxyService srv = service.get();
+		if (srv == null) {
 			return null;
-		for (final IProxyData d : data) {
-			if (d.getUserId() == null || d.getHost() == null)
-				continue;
-			if (d.getPort() == getRequestingPort() && hostMatches(d))
-				return auth(d);
+		}
+		IProxyData[] data = srv.getProxyData();
+		if (data != null) {
+			for (IProxyData d : data) {
+				if (d.getUserId() == null || d.getHost() == null) {
+					continue;
+				}
+				if (d.getPort() == getRequestingPort() && hostMatches(d)) {
+					return auth(d);
+				}
+			}
 		}
 		return null;
 	}
