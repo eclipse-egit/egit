@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <?pde?>
 <!-- generated with https://github.com/eclipse-cbi/targetplatform-dsl -->
-<target name="egit-4.39" sequenceNumber="1769377609">
+<target name="egit-4.39" sequenceNumber="1769377769">
   <locations>
     <location includeMode="slicer" includeAllPlatforms="false" includeSource="true" includeConfigurePhase="true" type="InstallableUnit">
       <unit id="org.eclipse.license.feature.group" version="0.0.0"/>
@@ -306,13 +306,13 @@
         <dependency>
           <groupId>net.bytebuddy</groupId>
           <artifactId>byte-buddy</artifactId>
-          <version>1.18.2</version>
+          <version>1.18.4</version>
           <type>jar</type>
         </dependency>
         <dependency>
           <groupId>net.bytebuddy</groupId>
           <artifactId>byte-buddy-agent</artifactId>
-          <version>1.18.2</version>
+          <version>1.18.4</version>
           <type>jar</type>
         </dependency>
       </dependencies>
@@ -350,7 +350,7 @@
         <dependency>
           <groupId>org.assertj</groupId>
           <artifactId>assertj-core</artifactId>
-          <version>3.27.6</version>
+          <version>3.27.7</version>
           <type>jar</type>
         </dependency>
       </dependencies>
