@@ -88,13 +88,9 @@ import org.eclipse.swt.events.DisposeEvent;
 import org.eclipse.swt.events.DisposeListener;
 import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.graphics.Font;
-import org.eclipse.swt.graphics.GC;
 import org.eclipse.swt.graphics.Image;
-import org.eclipse.swt.graphics.Point;
-import org.eclipse.swt.graphics.Rectangle;
 import org.eclipse.swt.layout.FillLayout;
 import org.eclipse.swt.widgets.Composite;
-import org.eclipse.swt.widgets.Layout;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.editors.text.EditorsUI;
 import org.eclipse.ui.editors.text.TextSourceViewerConfiguration;
@@ -125,9 +121,6 @@ public class SpellcheckableMessageArea extends Composite {
 	private TextSourceViewerConfiguration configuration;
 
 	private BidiSegmentListener hardWrapSegmentListener;
-
-	// XXX: workaround for https://bugs.eclipse.org/400727
-	private int brokenBidiPlatformTextWidth;
 
 	private IAction contentAssistAction;
 
@@ -195,15 +188,6 @@ public class SpellcheckableMessageArea extends Composite {
 		getTextWidget().setAlwaysShowScrollBars(false);
 		getTextWidget().setFont(UIUtils
 				.getFont(UIPreferences.THEME_CommitMessageEditorFont));
-		sourceViewer.setDocument(new Document());
-		int endSpacing = 2;
-		int textWidth = (int) (getCharWidth() * MAX_LINE_WIDTH + endSpacing);
-		int textHeight = getLineHeight() * 7;
-		Point size = getTextWidget().computeSize(textWidth, textHeight);
-		getTextWidget().setSize(size);
-
-		computeBrokenBidiPlatformTextWidth(size.x);
-
 		getTextWidget().setEditable(!readOnly);
 
 		createMarginPainter();
@@ -216,9 +200,6 @@ public class SpellcheckableMessageArea extends Composite {
 				getDisplay().asyncExec(() -> {
 					if (!isDisposed()) {
 						configureHardWrap();
-						if (brokenBidiPlatformTextWidth != -1) {
-							layout();
-						}
 					}
 				});
 			}
@@ -369,25 +350,6 @@ public class SpellcheckableMessageArea extends Composite {
 		return SWT.V_SCROLL | SWT.WRAP;
 	}
 
-	private void computeBrokenBidiPlatformTextWidth(int textWidth) {
-		class BidiSegmentListenerTester implements BidiSegmentListener {
-			boolean called;
-
-			@Override
-			public void lineGetSegments(BidiSegmentEvent event) {
-				called = true;
-			}
-		}
-		BidiSegmentListenerTester tester = new BidiSegmentListenerTester();
-		StyledText textWidget = getTextWidget();
-		textWidget.addBidiSegmentListener(tester);
-		textWidget.setText(" "); //$NON-NLS-1$
-		textWidget.computeSize(SWT.DEFAULT, SWT.DEFAULT);
-		textWidget.removeBidiSegmentListener(tester);
-
-		brokenBidiPlatformTextWidth = tester.called ? -1 : textWidth;
-	}
-
 	private boolean isEditable(ISourceViewer viewer) {
 		return viewer != null && viewer.isEditable();
 	}
@@ -421,44 +383,11 @@ public class SpellcheckableMessageArea extends Composite {
 					}
 				};
 				textWidget.addBidiSegmentListener(hardWrapSegmentListener);
-				textWidget.setText(textWidget.getText()); // XXX: workaround for https://bugs.eclipse.org/384886
-
-				if (brokenBidiPlatformTextWidth != -1) {
-					Layout restrictedWidthLayout = new Layout() {
-						@Override
-						protected Point computeSize(Composite composite,
-								int wHint, int hHint, boolean flushCache) {
-							Point size = SpellcheckableMessageArea.this
-									.getSize();
-							Rectangle trim = SpellcheckableMessageArea.this
-									.computeTrim(0, 0, 0, 0);
-							size.x -= trim.width;
-							size.y -= trim.height;
-							if (size.x > brokenBidiPlatformTextWidth)
-								size.x = brokenBidiPlatformTextWidth;
-							return size;
-						}
-
-						@Override
-						protected void layout(Composite composite,
-								boolean flushCache) {
-							Point size = computeSize(composite, SWT.DEFAULT,
-									SWT.DEFAULT, flushCache);
-							textWidget.setBounds(0, 0, size.x, size.y);
-						}
-					};
-					setLayout(restrictedWidthLayout);
-				}
 			}
-
 		} else if (hardWrapSegmentListener != null) {
 			StyledText textWidget = getTextWidget();
 			textWidget.removeBidiSegmentListener(hardWrapSegmentListener);
-			textWidget.setText(textWidget.getText()); // XXX: workaround for https://bugs.eclipse.org/384886
 			hardWrapSegmentListener = null;
-
-			if (brokenBidiPlatformTextWidth != -1)
-				setLayout(new FillLayout());
 		}
 	}
 
@@ -614,17 +543,6 @@ public class SpellcheckableMessageArea extends Composite {
 		marginPainter.setMarginRulerColor(PlatformUI.getWorkbench().getDisplay().getSystemColor(
 				SWT.COLOR_GRAY));
 		sourceViewer.addPainter(marginPainter);
-	}
-
-	private double getCharWidth() {
-		GC gc = new GC(getTextWidget());
-		double charWidth = gc.getFontMetrics().getAverageCharacterWidth();
-		gc.dispose();
-		return charWidth;
-	}
-
-	private int getLineHeight() {
-		return getTextWidget().getLineHeight();
 	}
 
 	/**

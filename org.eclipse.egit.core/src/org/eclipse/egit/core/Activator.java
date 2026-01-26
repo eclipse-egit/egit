@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (C) 2008, 2021 Shawn O. Pearce <spearce@spearce.org> and others.
+ * Copyright (C) 2008, 2026 Shawn O. Pearce <spearce@spearce.org> and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License 2.0
  * which accompanies this distribution, and is available at
@@ -9,6 +9,7 @@
  *******************************************************************************/
 package org.eclipse.egit.core;
 
+import org.eclipse.core.net.proxy.IProxyService;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Platform;
 import org.eclipse.core.runtime.Plugin;
@@ -38,6 +39,8 @@ public class Activator extends Plugin {
 	private static Activator plugin;
 
 	private ServiceTracker<CredentialsStore, CredentialsStore> credentialsStore;
+
+	private ServiceTracker<IProxyService, IProxyService> proxyService;
 
 	/**
 	 * @return the singleton {@link Activator}
@@ -141,6 +144,10 @@ public class Activator extends Plugin {
 		credentialsStore.open();
 		CredentialsProvider.setDefault(new EGitCredentialsProvider());
 
+		proxyService = new ServiceTracker<>(context, IProxyService.class,
+				null);
+		proxyService.open();
+
 		// Set an initial window cache config to suppress loading the JMX bean
 		try {
 			WindowCacheConfig c = new WindowCacheConfig();
@@ -160,9 +167,19 @@ public class Activator extends Plugin {
 		return credentialsStore.getService();
 	}
 
+	/**
+	 * Obtains the {@link IProxyService}.
+	 *
+	 * @return the {@link IProxyService} or {@code null} if none is available.
+	 */
+	public IProxyService getProxyService() {
+		return proxyService.getService();
+	}
+
 	@Override
 	public void stop(final BundleContext context) throws Exception {
 		credentialsStore.close();
+		proxyService.close();
 		Config.setTypedConfigGetter(null);
 		SystemReader.setInstance(null);
 		super.stop(context);

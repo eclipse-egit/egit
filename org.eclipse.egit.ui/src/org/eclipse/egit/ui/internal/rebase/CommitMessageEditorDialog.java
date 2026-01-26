@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2013, 2022 SAP AG and others.
+ * Copyright (c) 2013, 2026 SAP AG and others.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License 2.0
@@ -43,17 +43,15 @@ import org.eclipse.jgit.lib.Repository;
 import org.eclipse.jgit.lib.UserConfig;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.StackLayout;
-import org.eclipse.swt.graphics.Point;
+import org.eclipse.swt.events.PaintListener;
 import org.eclipse.swt.layout.FillLayout;
 import org.eclipse.swt.layout.GridLayout;
-import org.eclipse.swt.layout.RowLayout;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Text;
 import org.eclipse.swt.widgets.ToolBar;
-import org.eclipse.ui.forms.widgets.FormToolkit;
 
 /**
  * Dialog for editing a commit message
@@ -79,6 +77,9 @@ public class CommitMessageEditorDialog extends TitleAreaDialog {
 	private Composite commitMessageSection;
 
 	private StackLayout previewLayout;
+
+	// XXX: Work-around for https://github.com/eclipse-egit/egit/issues/54
+	private PaintListener layoutBugWorkaround;
 
 	private IAction addChangeIdAction;
 
@@ -201,17 +202,6 @@ public class CommitMessageEditorDialog extends TitleAreaDialog {
 		GridDataFactory.fillDefaults().align(SWT.BEGINNING, SWT.CENTER)
 				.applyTo(areaTitle);
 
-		Composite commitMessageToolbarComposite = new Composite(titleBar,
-				SWT.NONE);
-		GridDataFactory.fillDefaults().grab(true, false)
-				.align(SWT.END, SWT.CENTER)
-				.applyTo(commitMessageToolbarComposite);
-		RowLayout layout = new RowLayout();
-		layout.marginTop = 0;
-		layout.marginBottom = 0;
-		layout.marginLeft = 0;
-		layout.marginRight = 0;
-		commitMessageToolbarComposite.setLayout(layout);
 		ToolBarManager commitMessageToolBarManager = new ToolBarManager(
 				SWT.FLAT | SWT.HORIZONTAL);
 
@@ -268,9 +258,10 @@ public class CommitMessageEditorDialog extends TitleAreaDialog {
 				hasChangeId || GerritUtil.getCreateChangeId(config));
 		commitMessageToolBarManager.add(addChangeIdAction);
 
-		ToolBar tb = commitMessageToolBarManager
-				.createControl(commitMessageToolbarComposite);
+		ToolBar tb = commitMessageToolBarManager.createControl(titleBar);
 		tb.setBackground(null);
+		GridDataFactory.fillDefaults().grab(true, false)
+				.align(SWT.END, SWT.CENTER).applyTo(tb);
 
 		Composite commitMessageTextComposite = new Composite(
 				commitMessageSection, SWT.BORDER);
@@ -282,8 +273,6 @@ public class CommitMessageEditorDialog extends TitleAreaDialog {
 
 		messageArea = new SpellcheckableMessageArea(commitMessageTextComposite,
 				"", SWT.NONE); //$NON-NLS-1$
-		messageArea.setData(FormToolkit.KEY_DRAW_BORDER,
-				FormToolkit.TEXT_BORDER);
 		CleanupMode cleanup = mode;
 		if (cleanup == null || CleanupMode.DEFAULT.equals(cleanup)) {
 			cleanup = CleanupMode.STRIP;
@@ -294,22 +283,26 @@ public class CommitMessageEditorDialog extends TitleAreaDialog {
 		String msg = Utils.normalizeLineEndings(commitMessage).replaceAll("\n", //$NON-NLS-1$
 				Text.DELIMITER);
 		messageArea.setText(msg);
-		Point size = messageArea.getTextWidget().getSize();
-		int minHeight = messageArea.getTextWidget().getLineHeight() * 3;
-		GridDataFactory.fillDefaults().grab(true, true)
-				.hint(size).minSize(size.x, minHeight)
-				.align(SWT.FILL, SWT.FILL).applyTo(messageArea);
 
 		previewArea = new Composite(commitMessageTextComposite, SWT.NONE);
-		GridDataFactory.fillDefaults().grab(true, true).applyTo(previewArea);
 		previewArea.setLayout(new FillLayout());
-		previewArea.setData(FormToolkit.KEY_DRAW_BORDER,
-				FormToolkit.TEXT_BORDER);
 		previewer = new CommitMessagePreviewer();
 		previewer.createControl(previewArea);
 
 		previewLayout.topControl = messageArea;
 		messageArea.setFocus();
+
+		// Somehow the SpellCheckableMessageArea gets a negative y-coordinate on
+		// MacOS on the very first layout if the commit message has only a
+		// single line. When this happens the commit message is not visible at
+		// all. Fix this by forcing a re-layout when the message area is to be
+		// painted for the first time.
+		layoutBugWorkaround = event -> {
+			messageArea.removePaintListener(layoutBugWorkaround);
+			layoutBugWorkaround = null;
+			commitMessageTextComposite.requestLayout();
+		};
+		messageArea.addPaintListener(layoutBugWorkaround);
 
 		// Create two hidden text fields for author and committer, set to the
 		// current user, so that we can use the CommitMessageComponent. The
