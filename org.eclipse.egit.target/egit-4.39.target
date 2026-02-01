@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <?pde?>
 <!-- generated with https://github.com/eclipse-cbi/targetplatform-dsl -->
-<target name="egit-4.39" sequenceNumber="1769377769">
+<target name="egit-4.39" sequenceNumber="1769958099">
   <locations>
     <location includeMode="slicer" includeAllPlatforms="false" includeSource="true" includeConfigurePhase="true" type="InstallableUnit">
       <unit id="org.eclipse.license.feature.group" version="0.0.0"/>
@@ -87,7 +87,7 @@
     <location includeMode="slicer" includeAllPlatforms="false" includeSource="true" includeConfigurePhase="true" type="InstallableUnit">
       <unit id="biz.aQute.bnd.util" version="0.0.0"/>
       <unit id="biz.aQute.bndlib" version="0.0.0"/>
-      <unit id="biz.aQute.repository" version="7.1.0.202411251545"/>
+      <unit id="biz.aQute.repository" version="7.2.1.202601121903"/>
       <unit id="biz.aQute.resolve" version="0.0.0"/>
       <unit id="bndtools.jareditor" version="0.0.0"/>
       <unit id="com.sun.el.javax.el" version="0.0.0"/>
@@ -186,13 +186,13 @@
         <dependency>
           <groupId>org.apache.sshd</groupId>
           <artifactId>sshd-osgi</artifactId>
-          <version>2.16.0</version>
+          <version>2.17.1</version>
           <type>jar</type>
         </dependency>
         <dependency>
           <groupId>org.apache.sshd</groupId>
           <artifactId>sshd-sftp</artifactId>
-          <version>2.16.0</version>
+          <version>2.17.1</version>
           <type>jar</type>
         </dependency>
       </dependencies>
