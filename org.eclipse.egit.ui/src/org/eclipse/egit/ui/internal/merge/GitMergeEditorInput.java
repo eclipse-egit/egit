@@ -484,8 +484,7 @@ public class GitMergeEditorInput extends AbstractGitCompareEditorInput {
 									ConfigConstants.CONFIG_KEY_CONFLICTSTYLE,
 									ConflictStyle.MERGE);
 						}
-						boolean useDiff3Style = ConflictStyle.DIFF3
-								.equals(style);
+						boolean useDiff3Style = !ConflictStyle.MERGE.equals(style);
 						String filter = (useDiff3Style ? 'O' : 'o')
 								+ Integer.toString(conflictMarkerSize);
 						URI uri = EgitFileSystem.createURI(repository, gitPath,
