@@ -800,7 +800,11 @@
    <extension point="org.eclipse.ui.themes">
       <themeElementCategory
             id="org.eclipse.egit.ui.GitTheme"
-            label="%Theme_label"/>
+            label="%Theme_label">
+         <description>
+            %Theme_Eclipse_Git_UI_description
+         </description>
+      </themeElementCategory>
       <fontDefinition
             id="org.eclipse.egit.ui.CommitGraphNormalFont"
             categoryId="org.eclipse.egit.ui.GitTheme"
