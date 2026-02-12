@@ -375,6 +375,8 @@ public class StagingView extends ViewPart
 
 	private IAction compareModeAction;
 
+	private IWorkbenchAction reuseCompareEditorAction;
+
 	private IWorkbenchAction switchRepositoriesAction;
 
 	/** The currently set repository, even if it is bare. */
@@ -2312,6 +2314,8 @@ public class StagingView extends ViewPart
 		dropdownMenu.add(columnLayoutAction);
 		dropdownMenu.add(fileNameModeAction);
 		dropdownMenu.add(compareModeAction);
+		reuseCompareEditorAction = new CompareUtils.ReuseCompareEditorAction();
+		dropdownMenu.add(reuseCompareEditorAction);
 
 		actionBars.setGlobalActionHandler(ActionFactory.DELETE.getId(), new GlobalDeleteActionHandler());
 
@@ -4974,6 +4978,10 @@ public class StagingView extends ViewPart
 		if (presentationAction != null) {
 			presentationAction.dispose();
 			presentationAction = null;
+		}
+		if (reuseCompareEditorAction != null) {
+			reuseCompareEditorAction.dispose();
+			reuseCompareEditorAction = null;
 		}
 
 		getPreferenceStore().removePropertyChangeListener(uiPrefsListener);
