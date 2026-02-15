@@ -45,7 +45,8 @@ import org.eclipse.ui.commands.ICommandService;
 import org.eclipse.ui.handlers.IHandlerService;
 
 /**
- * Class containing all common utils
+ * Class containing all common utility methods
+ * for EGit UI operations
  */
 public class CommonUtils {
 

@@ -19,7 +19,8 @@ import org.eclipse.swt.dnd.Transfer;
 import org.eclipse.swt.widgets.Shell;
 
 /**
- * Utility for copying to the system clipboard.
+ * Utility class for copying text and data to the system clipboard.
+ * Provides error handling for clipboard operations.
  */
 public class ClipboardUtils {
 	private ClipboardUtils() {

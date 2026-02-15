@@ -34,7 +34,8 @@ import org.eclipse.ui.handlers.IHandlerService;
 import org.eclipse.ui.texteditor.IUpdate;
 
 /**
- * Action-related utilities.
+ * Utility class for action-related helper methods.
+ * Contains methods for creating and managing UI actions.
  */
 public final class ActionUtils {
 
