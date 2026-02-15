@@ -384,4 +384,26 @@ public final class UIPreferences {
 		}
 		return s.toString();
 	}
+
+	// Bitbucket Data Center preferences
+	/** Bitbucket server URL */
+	public static final String BITBUCKET_SERVER_URL = "bitbucket_server_url"; //$NON-NLS-1$
+
+	/** Bitbucket project key */
+	public static final String BITBUCKET_PROJECT_KEY = "bitbucket_project_key"; //$NON-NLS-1$
+
+	/** Bitbucket repository slug */
+	public static final String BITBUCKET_REPO_SLUG = "bitbucket_repo_slug"; //$NON-NLS-1$
+
+	/** Bitbucket personal access token */
+	public static final String BITBUCKET_ACCESS_TOKEN = "bitbucket_access_token"; //$NON-NLS-1$
+
+	/** Bitbucket username (for filtering pull requests) */
+	public static final String BITBUCKET_USERNAME = "bitbucket_username"; //$NON-NLS-1$
+
+	/** Pull Request changes view sash weights */
+	public static final String PULLREQUEST_CHANGES_SASH_WEIGHTS = "pullrequest_changes_sash_weights"; //$NON-NLS-1$
+
+	/** Whether to show inline comments in pull request compare editors */
+	public static final String PULLREQUEST_SHOW_INLINE_COMMENTS = "pullrequest_show_inline_comments"; //$NON-NLS-1$
 }

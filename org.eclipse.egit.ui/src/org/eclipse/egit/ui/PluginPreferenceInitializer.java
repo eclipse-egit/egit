@@ -173,6 +173,9 @@ public class PluginPreferenceInitializer extends AbstractPreferenceInitializer {
 		store.setDefault(UIPreferences.HISTORY_COLUMN_COMMITTER_DATE, true);
 
 		store.setDefault(UIPreferences.HISTORY_VERIFY_SIGNATURES, false);
+
+		store.setDefault(UIPreferences.PULLREQUEST_SHOW_INLINE_COMMENTS,
+				false);
 	}
 
 }

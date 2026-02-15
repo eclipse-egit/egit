@@ -31,6 +31,7 @@ import org.eclipse.jface.viewers.IDecoration;
 import org.eclipse.jface.viewers.LabelProviderChangedEvent;
 import org.eclipse.jgit.annotations.Nullable;
 import org.eclipse.swt.graphics.Image;
+import org.eclipse.swt.graphics.ImageData;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.TreeItem;
 import org.eclipse.ui.ISharedImages;
@@ -57,6 +58,9 @@ public class StagingViewLabelProvider extends ColumnLabelProvider {
 	private final ChangeTrackingColorsAndFonts colorsAndFonts;
 
 	private boolean fileNameMode = false;
+
+	// Icon size in pixels (reduced from default 16x16)
+	private static final int ICON_SIZE = 12;
 
 	/**
 	 * @param stagingView
@@ -97,9 +101,28 @@ public class StagingViewLabelProvider extends ColumnLabelProvider {
 		});
 	}
 
+	/**
+	 * Scale an image to the desired icon size
+	 *
+	 * @param original the original image
+	 * @return scaled image managed by the resource manager
+	 */
+	private Image scaleImage(Image original) {
+		if (original == null) {
+			return original;
+		}
+		ImageData data = original.getImageData();
+		if (data.width == ICON_SIZE && data.height == ICON_SIZE) {
+			return original; // Already the right size
+		}
+		ImageData scaled = data.scaledTo(ICON_SIZE, ICON_SIZE);
+		ImageDescriptor descriptor = ImageDescriptor.createFromImageData(scaled);
+		return (Image) resourceManager.get(descriptor);
+	}
+
 	private Image getEditorImage(StagingEntry diff) {
 		if (diff.isSubmodule()) {
-			return (Image) resourceManager.get(UIIcons.REPOSITORY);
+			return scaleImage((Image) resourceManager.get(UIIcons.REPOSITORY));
 		}
 
 		Image image;
@@ -109,9 +132,10 @@ public class StagingViewLabelProvider extends ColumnLabelProvider {
 		} else {
 			image = (Image) resourceManager.get(UIUtils.DEFAULT_FILE_IMG);
 		}
+		image = scaleImage(image);
 		if (diff.isSymlink()) {
 			if (diff.getLocation().toFile().isDirectory()) {
-				image = FOLDER;
+				image = scaleImage(FOLDER);
 			}
 			image = addSymlinkDecorationToImage(image);
 		}

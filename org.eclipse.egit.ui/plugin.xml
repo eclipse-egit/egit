@@ -245,6 +245,13 @@
          <adapter type="org.eclipse.core.runtime.IPath" />
          <adapter type="org.eclipse.jgit.lib.Repository" />
       </factory>
+      <factory
+            adaptableType="org.eclipse.egit.ui.internal.pullrequest.PullRequestChangedFile"
+            class="org.eclipse.egit.ui.internal.pullrequest.PullRequestChangedFileAdapterFactory">
+         <adapter type="org.eclipse.core.resources.IResource" />
+         <adapter type="org.eclipse.core.resources.IFile" />
+         <adapter type="org.eclipse.core.runtime.IPath" />
+      </factory>
    </extension>
 
    <extension
@@ -651,6 +658,15 @@
             name="%GitServersPreferencePage.name">
          <keywordReference
                id="org.eclipse.egit.ui.internal.preferences.GitServersPreferencePage">
+         </keywordReference>
+      </page>
+      <page
+            category="org.eclipse.egit.ui.GitPreferences"
+            class="org.eclipse.egit.ui.internal.preferences.BitbucketPreferencePage"
+            id="org.eclipse.egit.ui.internal.preferences.BitbucketPreferencePage"
+            name="%BitbucketPreferencePage.name">
+         <keywordReference
+               id="org.eclipse.egit.ui.internal.preferences.BitbucketPreferencePage">
          </keywordReference>
       </page>
       <page
@@ -3686,6 +3702,30 @@
             id="org.eclipse.egit.ui.ReflogView"
             name="%ReflogView">
       </view>
+      <view
+            allowMultiple="false"
+            category="org.eclipse.egit.ui.GitCategory"
+            class="org.eclipse.egit.ui.internal.pullrequest.PullRequestListView"
+            icon="icons/obj16/gitrepository.png"
+            id="org.eclipse.egit.ui.PullRequestListView"
+            name="%PullRequestListView">
+      </view>
+      <view
+            allowMultiple="false"
+            category="org.eclipse.egit.ui.GitCategory"
+            class="org.eclipse.egit.ui.internal.pullrequest.PullRequestChangedFilesView"
+            icon="icons/obj16/gitrepository.png"
+            id="org.eclipse.egit.ui.PullRequestChangedFilesView"
+            name="%PullRequestChangedFilesView">
+      </view>
+      <view
+            allowMultiple="false"
+            category="org.eclipse.egit.ui.GitCategory"
+            class="org.eclipse.egit.ui.internal.pullrequest.PullRequestCommentsView"
+            icon="icons/obj16/gitrepository.png"
+            id="org.eclipse.egit.ui.PullRequestCommentsView"
+            name="%PullRequestCommentsView">
+      </view>
    </extension>
    <extension
          point="org.eclipse.ui.perspectives">
@@ -3694,10 +3734,19 @@
             icon="icons/obj16/gitrepository.png"
             id="org.eclipse.egit.ui.GitRepositoryExploring"
             name="%GitRepositoryPerspective_name">
-         <description>
-            %GitRepositoryPerspective_description
-         </description>
-      </perspective>
+          <description>
+             %GitRepositoryPerspective_description
+          </description>
+       </perspective>
+       <perspective
+             class="org.eclipse.egit.ui.internal.pullrequest.PullRequestPerspectiveFactory"
+             icon="icons/obj16/gitrepository.png"
+             id="org.eclipse.egit.ui.PullRequestReviewPerspective"
+             name="%PullRequestReviewPerspective_name">
+          <description>
+             %PullRequestReviewPerspective_description
+          </description>
+       </perspective>
    </extension>
    <extension
          point="org.eclipse.ui.perspectiveExtensions">
