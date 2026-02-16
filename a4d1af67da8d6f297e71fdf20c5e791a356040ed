@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f55c1c54_5852d5ec",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1037131
+      },
+      "writtenOn": "2026-02-16T08:31:21Z",
+      "side": 1,
+      "message": "Could you please follow the project guidelines for commit messages (just check the history) and provide a short first line with the commit title, followed by a new line and the commit descriptions? Thanks",
+      "revId": "a4d1af67da8d6f297e71fdf20c5e791a356040ed",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735"
+    }
+  ]
+}
