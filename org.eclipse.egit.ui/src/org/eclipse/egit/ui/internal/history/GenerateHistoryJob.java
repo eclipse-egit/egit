@@ -103,7 +103,7 @@ class GenerateHistoryJob extends Job {
 					.getInt(UIPreferences.HISTORY_MAX_NUM_COMMITS);
 		int chunk = maxCommits;
 		boolean incomplete = false;
-		boolean commitNotFound = false;
+		boolean commitFound = true;
 		try {
 			if (trace)
 				GitTraceLocation.getTrace().traceEntry(
@@ -127,11 +127,10 @@ class GenerateHistoryJob extends Job {
 						}
 						loadedCommits.fillTo(commitToLoad, maxCommits);
 						commitToShow = commitToLoad;
-						boolean commitFound = wantedIndex >= 0;
+						commitFound = wantedIndex >= 0;
 						if (commitFound) {
 							commitToLoad = null;
 						}
-						commitNotFound = !commitFound;
 					} else {
 						loadedCommits.fillTo(oldsz + BATCH_SIZE - 1);
 						if (oldsz == loadedCommits.size()) {
@@ -143,7 +142,7 @@ class GenerateHistoryJob extends Job {
 						return Status.CANCEL_STATUS;
 					}
 					if (loadedCommits.size() > itemToLoad + (BATCH_SIZE / 2) + 1
-							&& loadIncrementally && !commitNotFound) {
+							&& loadIncrementally && commitFound) {
 						break;
 					}
 					if (maxCommits > 0 && loadedCommits.size() > maxCommits) {
@@ -177,7 +176,7 @@ class GenerateHistoryJob extends Job {
 				GitTraceLocation.getTrace().trace(
 						GitTraceLocation.HISTORYVIEW.getLocation(),
 						"Loaded " + loadedCommits.size() + " commits"); //$NON-NLS-1$ //$NON-NLS-2$
-			if (commitNotFound && !loadedCommits.isEmpty()) {
+			if (!commitFound && !loadedCommits.isEmpty()) {
 				if (forcedRedrawsAfterListIsCompleted < 1
 						&& !loadIncrementally && hasMore) {
 					page.setWarningTextInUIThread(this);
