@@ -358,9 +358,6 @@ class CommitGraphTable {
 					copy.setEnabled(false);
 					return;
 				}
-				final IStructuredSelection iss = (IStructuredSelection) s;
-				commitToShow = (PlotCommit<?>) iss.getFirstElement();
-
 				copy.setEnabled(canDoCopy());
 			}
 		});
@@ -548,6 +545,7 @@ class CommitGraphTable {
 				if (keepPosition && topIndex >= 0) {
 					t.setTopIndex(topIndex);
 					positionSet = true;
+					commitToShow = null;
 				}
 				if (commitToShow != null && commitsMap != null && commitsMap
 						.containsKey(commitToShow.getId().name())) {
