@@ -158,6 +158,8 @@ class GenerateHistoryJob extends Job {
 					monitor.setTaskName(MessageFormat.format(
 							UIText.GenerateHistoryJob_taskFoundCommits,
 							Integer.valueOf(loadedCommits.size())));
+
+					updateUI(incomplete);
 				} while (commitToLoad != null && !commitFound()
 						&& loadedCommits.isPending());
 			} catch (IOException e) {
