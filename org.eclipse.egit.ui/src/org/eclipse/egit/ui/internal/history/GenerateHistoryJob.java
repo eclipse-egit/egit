@@ -256,6 +256,9 @@ class GenerateHistoryJob extends Job {
 
 	void setLoadHint(final RevCommit c) {
 		commitToLoad = c;
+		if (c == null) {
+			wantedIndex = -1;
+		}
 	}
 
 	void setShowHint(final RevCommit c) {
