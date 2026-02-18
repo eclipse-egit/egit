@@ -86,6 +86,8 @@ class GenerateHistoryJob extends Job {
 				if (wantedIndex < 0 && commitToLoad != null
 						&& currCommit.getId().equals(commitToLoad.getId())) {
 					wantedIndex = index;
+					commitToShow = commitToLoad;
+					commitToLoad = null;
 				}
 			}
 		};
@@ -101,7 +103,6 @@ class GenerateHistoryJob extends Job {
 		IStatus status = Status.OK_STATUS;
 		int maxCommits = Activator.getDefault().getPreferenceStore()
 					.getInt(UIPreferences.HISTORY_MAX_NUM_COMMITS);
-		int chunk = maxCommits;
 		boolean incomplete = false;
 		try {
 			if (trace)
@@ -118,20 +119,10 @@ class GenerateHistoryJob extends Job {
 								GitTraceLocation.HISTORYVIEW.getLocation(),
 								"Filling commit list"); //$NON-NLS-1$
 					if (commitToLoad != null) {
-						if (maxCommits > 0
-								&& loadedCommits.size() >= maxCommits) {
-							// We're still looking for a commit
-							maxCommits = loadedCommits.size() + Math
-									.min(Math.max(chunk, 1000), 10000);
-						}
-						loadedCommits.fillTo(commitToLoad, maxCommits);
-						commitToShow = commitToLoad;
-						if (commitFound()) {
-							commitToLoad = null;
-						}
+						loadedCommits.fillTo(commitToLoad,
+								getNextMaximumCommitsCount());
 					} else {
-						loadedCommits
-								.fillTo(loadedCommits.size() + BATCH_SIZE - 1);
+						loadedCommits.fillTo(getNextMaximumCommitsCount());
 						if (!loadedCommits.isPending()) {
 							forcedRedrawsAfterListIsCompleted++;
 							break;
@@ -195,6 +186,10 @@ class GenerateHistoryJob extends Job {
 						GitTraceLocation.HISTORYVIEW.getLocation());
 		}
 		return status;
+	}
+
+	private int getNextMaximumCommitsCount() {
+		return loadedCommits.size() + BATCH_SIZE - 1;
 	}
 
 	private boolean commitFound() {
