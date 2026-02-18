@@ -108,7 +108,10 @@ class GenerateHistoryJob extends Job {
 			if (trace)
 				GitTraceLocation.getTrace().traceEntry(
 						GitTraceLocation.HISTORYVIEW.getLocation());
-			final boolean loadIncrementally = !Activator.getDefault()
+
+			// When the search toolbar is displayed, the user might be searching
+			// for a commit that is yet to be fetched
+			final boolean findToolbarIsShown = !Activator.getDefault()
 					.getPreferenceStore()
 					.getBoolean(UIPreferences.RESOURCEHISTORY_SHOW_FINDTOOLBAR);
 			int initialSize = loadedCommits.size();
@@ -132,11 +135,11 @@ class GenerateHistoryJob extends Job {
 						return Status.CANCEL_STATUS;
 					}
 					if (loadedCommits.size() > itemToLoad + (BATCH_SIZE / 2) + 1
-							&& loadIncrementally && commitFound()) {
+							&& findToolbarIsShown && commitFound()) {
 						break;
 					}
 					if (maxCommits > 0 && loadedCommits.size() > maxCommits) {
-						if (!loadIncrementally) {
+						if (!findToolbarIsShown) {
 							incomplete = true;
 						}
 						if (commitToLoad == null) {
@@ -170,7 +173,7 @@ class GenerateHistoryJob extends Job {
 						"Loaded " + loadedCommits.size() + " commits"); //$NON-NLS-1$ //$NON-NLS-2$
 			if (!commitFound() && !loadedCommits.isEmpty()) {
 				if (forcedRedrawsAfterListIsCompleted < 1
-						&& !loadIncrementally && hasMore) {
+						&& !findToolbarIsShown && hasMore) {
 					page.setWarningTextInUIThread(this);
 				}
 				if (initialSize != loadedCommits.size()) {
