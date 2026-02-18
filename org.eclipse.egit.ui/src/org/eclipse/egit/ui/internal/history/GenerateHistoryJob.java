@@ -103,7 +103,7 @@ class GenerateHistoryJob extends Job {
 					.getInt(UIPreferences.HISTORY_MAX_NUM_COMMITS);
 		int chunk = maxCommits;
 		boolean incomplete = false;
-		boolean commitFound = true;
+		boolean commitFound = false;
 		try {
 			if (trace)
 				GitTraceLocation.getTrace().traceEntry(
@@ -113,7 +113,7 @@ class GenerateHistoryJob extends Job {
 					.getBoolean(UIPreferences.RESOURCEHISTORY_SHOW_FINDTOOLBAR);
 			int initialSize = loadedCommits.size();
 			try {
-				for (int oldsz = initialSize;;) {
+				do {
 					if (trace)
 						GitTraceLocation.getTrace().trace(
 								GitTraceLocation.HISTORYVIEW.getLocation(),
@@ -132,8 +132,9 @@ class GenerateHistoryJob extends Job {
 							commitToLoad = null;
 						}
 					} else {
-						loadedCommits.fillTo(oldsz + BATCH_SIZE - 1);
-						if (oldsz == loadedCommits.size()) {
+						loadedCommits
+								.fillTo(loadedCommits.size() + BATCH_SIZE - 1);
+						if (!loadedCommits.isPending()) {
 							forcedRedrawsAfterListIsCompleted++;
 							break;
 						}
@@ -153,14 +154,13 @@ class GenerateHistoryJob extends Job {
 							break;
 						}
 					}
-					if (oldsz == loadedCommits.size()) {
+					if (!loadedCommits.isPending()) {
 						break;
 					}
-					oldsz = loadedCommits.size();
 					monitor.setTaskName(MessageFormat.format(
 							UIText.GenerateHistoryJob_taskFoundCommits,
-							Integer.valueOf(oldsz)));
-				}
+							Integer.valueOf(loadedCommits.size())));
+				} while (commitToLoad != null && !commitFound);
 			} catch (IOException e) {
 				status = new Status(IStatus.ERROR, Activator.PLUGIN_ID,
 						UIText.GenerateHistoryJob_errorComputingHistory, e);
