@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c25cbe40_c8e9e2eb",
+        "filename": "org.eclipse.egit.ui.test/src/org/eclipse/egit/ui/wizards/share/SharingWizardNestedProjectTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 112,
+      "author": {
+        "id": 1037131
+      },
+      "writtenOn": "2026-02-18T16:08:19Z",
+      "side": 1,
+      "message": "Build complains about some unused variables, please check https://ci.eclipse.org/egit/job/egit.gerrit/3433/console",
+      "revId": "182382d1f6c7fea7a7fdb936df3bb0e40c10d0c0",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735"
+    }
+  ]
+}
