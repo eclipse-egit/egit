@@ -103,7 +103,6 @@ class GenerateHistoryJob extends Job {
 					.getInt(UIPreferences.HISTORY_MAX_NUM_COMMITS);
 		int chunk = maxCommits;
 		boolean incomplete = false;
-		boolean commitFound = false;
 		try {
 			if (trace)
 				GitTraceLocation.getTrace().traceEntry(
@@ -127,8 +126,7 @@ class GenerateHistoryJob extends Job {
 						}
 						loadedCommits.fillTo(commitToLoad, maxCommits);
 						commitToShow = commitToLoad;
-						commitFound = wantedIndex >= 0;
-						if (commitFound) {
+						if (commitFound()) {
 							commitToLoad = null;
 						}
 					} else {
@@ -143,7 +141,7 @@ class GenerateHistoryJob extends Job {
 						return Status.CANCEL_STATUS;
 					}
 					if (loadedCommits.size() > itemToLoad + (BATCH_SIZE / 2) + 1
-							&& loadIncrementally && commitFound) {
+							&& loadIncrementally && commitFound()) {
 						break;
 					}
 					if (maxCommits > 0 && loadedCommits.size() > maxCommits) {
@@ -160,7 +158,8 @@ class GenerateHistoryJob extends Job {
 					monitor.setTaskName(MessageFormat.format(
 							UIText.GenerateHistoryJob_taskFoundCommits,
 							Integer.valueOf(loadedCommits.size())));
-				} while (commitToLoad != null && !commitFound);
+				} while (commitToLoad != null && !commitFound()
+						&& loadedCommits.isPending());
 			} catch (IOException e) {
 				status = new Status(IStatus.ERROR, Activator.PLUGIN_ID,
 						UIText.GenerateHistoryJob_errorComputingHistory, e);
@@ -176,7 +175,7 @@ class GenerateHistoryJob extends Job {
 				GitTraceLocation.getTrace().trace(
 						GitTraceLocation.HISTORYVIEW.getLocation(),
 						"Loaded " + loadedCommits.size() + " commits"); //$NON-NLS-1$ //$NON-NLS-2$
-			if (!commitFound && !loadedCommits.isEmpty()) {
+			if (!commitFound() && !loadedCommits.isEmpty()) {
 				if (forcedRedrawsAfterListIsCompleted < 1
 						&& !loadIncrementally && hasMore) {
 					page.setWarningTextInUIThread(this);
@@ -194,6 +193,10 @@ class GenerateHistoryJob extends Job {
 						GitTraceLocation.HISTORYVIEW.getLocation());
 		}
 		return status;
+	}
+
+	private boolean commitFound() {
+		return wantedIndex >= 0;
 	}
 
 	private void updateUI(boolean incomplete) {
