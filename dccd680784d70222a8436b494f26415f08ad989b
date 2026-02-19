@@ -16,6 +16,23 @@
       "message": "Done",
       "revId": "dccd680784d70222a8436b494f26415f08ad989b",
       "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "43e1f63e_e30c04da",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1012795
+      },
+      "writtenOn": "2026-02-19T11:08:58Z",
+      "side": 1,
+      "message": "Working on the new error: \n\n11:54:11  10:54:11 [ERROR] \tRepository targetRepo \u003d lookupRepository(new File(repoFolder, Constants.DOT_GIT));\n11:54:11  10:54:11 [ERROR] \t           ^^^^^^^^^^\n11:54:11  10:54:11 [ERROR] The value of the local variable targetRepo is not used\n11:54:11  10:54:11 [ERROR] 1 problem (1 error)\n11:54:11  10:54:11 [ERROR] -\u003e [Help 1]",
+      "revId": "dccd680784d70222a8436b494f26415f08ad989b",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735"
     }
   ]
 }
