@@ -1,0 +1,61 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f9d79fcc_f50a7e4e",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/history/GenerateHistoryJob.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 1039063
+      },
+      "writtenOn": "2026-02-20T08:15:00Z",
+      "side": 0,
+      "message": "This `chunk` was previously only used in 1 branch of the `if` statement below (`if (commitToLoad !\u003d null)`). I removed it and used the new private method `getNextMaximumCommitsCount()` instead so that both branches of the `if` load the same amount of commits into `loadedCommits`. This decision, together with the fact that now `updateUI(...)` is called inside the `for`-loop, make it possible to show commits to the user in chunks of 256 commits each. For this to work as expected, the underlying `RevWalk` inside `loadedCommits` must be able to deliver chunks of commits (this already happens). In an ideal situation, the `RevWalk` would also only _calculate_ the amount of commits that it needs (256), but `TopoGenerator` currently calculates all of the commits it needs before returning the 1st commit so there is no performance improvement in there. We are working on it though.",
+      "revId": "37cbe07c83cd79fcfef9846866064db02d2e722c",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "db126a0f_0e7c2641",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/history/GenerateHistoryJob.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 1039063
+      },
+      "writtenOn": "2026-02-20T08:15:00Z",
+      "side": 0,
+      "message": "This one was replaced with the new private method `commitFound()`",
+      "revId": "37cbe07c83cd79fcfef9846866064db02d2e722c",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "2ca343e4_5add61f3",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/history/GenerateHistoryJob.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 133,
+      "author": {
+        "id": 1039063
+      },
+      "writtenOn": "2026-02-20T08:15:00Z",
+      "side": 0,
+      "message": "I moved this logic to the anonymous subclass of `SWTCommitList` in the constructor (see the `enter(...)` method) with one behavioral change: `commitToShow \u003d commitToLoad` now only happens if the commit is actually found.",
+      "range": {
+        "startLine": 129,
+        "startChar": 6,
+        "endLine": 133,
+        "endChar": 7
+      },
+      "revId": "37cbe07c83cd79fcfef9846866064db02d2e722c",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735"
+    }
+  ]
+}

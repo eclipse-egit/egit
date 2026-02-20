@@ -16,6 +16,63 @@
       "message": "The purpose of these changes is to prepare for another change that we are working on namely: to enable TopoSortGenerator to deliver commits incrementally. \n\nTopoSortGenerator not being able to deliver commits in chunks is the biggest source of delay we have in our DEV team right now, it takes 8-12 seconds to display the history of any given resource (we filter by selected resource). I noticed some small issues with the GenerateHistoryJob class so I decided to provide some changes to improve the readability/maintainability of the class and to pave the way for upcoming changes in the TopoSortGenerator.\n\nThese changes do not provide any major functionality changes right now. The biggest improvement will be noticed once TopoSortGenerator is changed (which we are working on right now and we plan to deliver in a separate Gerrit Change).\n\nAs always, improvements and comments are welcome.",
       "revId": "0472c5d1fe617157761622ae5c7175946e922b46",
       "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "4a22339f_6c6a98ab",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1039063
+      },
+      "writtenOn": "2026-02-20T08:15:00Z",
+      "side": 1,
+      "message": "I added some comments to explain my changes.\n\nTo test this, simply use the _History View_ normally and try different configurations (filters and so on)",
+      "revId": "0472c5d1fe617157761622ae5c7175946e922b46",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "52be615e_1cc6eed7",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/history/GenerateHistoryJob.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 156,
+      "author": {
+        "id": 1039063
+      },
+      "writtenOn": "2026-02-20T08:15:00Z",
+      "side": 1,
+      "message": "This is the most important change: this now updates the UI inside the for-loop i.e. while the chunks of commits are being retrieved.",
+      "revId": "0472c5d1fe617157761622ae5c7175946e922b46",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "38ea7671_d5bd1b2d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/history/GenerateHistoryJob.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 261,
+      "author": {
+        "id": 1039063
+      },
+      "writtenOn": "2026-02-20T08:15:00Z",
+      "side": 1,
+      "message": "This change mirrors the logic in setLoadHint(int), which is: if there is no commit to load then it shouldn\u0027t be searched for using the \"wantedIndex\" either.",
+      "range": {
+        "startLine": 259,
+        "startChar": 2,
+        "endLine": 261,
+        "endChar": 3
+      },
+      "revId": "0472c5d1fe617157761622ae5c7175946e922b46",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735"
     }
   ]
 }
