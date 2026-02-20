@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ec440b55_05b66cdf",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1039063
+      },
+      "writtenOn": "2026-02-20T05:35:08Z",
+      "side": 1,
+      "message": "The purpose of these changes is to prepare for another change that we are working on namely: to enable TopoSortGenerator to deliver commits incrementally. \n\nTopoSortGenerator not being able to deliver commits in chunks is the biggest source of delay we have in our DEV team right now, it takes 8-12 seconds to display the history of any given resource (we filter by selected resource). I noticed some small issues with the GenerateHistoryJob class so I decided to provide some changes to improve the readability/maintainability of the class and to pave the way for upcoming changes in the TopoSortGenerator.\n\nThese changes do not provide any major functionality changes right now. The biggest improvement will be noticed once TopoSortGenerator is changed (which we are working on right now and we plan to deliver in a separate Gerrit Change).\n\nAs always, improvements and comments are welcome.",
+      "revId": "0472c5d1fe617157761622ae5c7175946e922b46",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735"
+    }
+  ]
+}
