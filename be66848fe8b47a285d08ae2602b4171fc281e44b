@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "50eb1367_2f94f2fa",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1039063
+      },
+      "writtenOn": "2026-02-23T10:04:49Z",
+      "side": 1,
+      "message": "@matthias.sohn@sap.com the exact same as for JGit (see https://eclipse.gerrithub.io/c/eclipse-jgit/jgit/+/1231920)",
+      "revId": "be66848fe8b47a285d08ae2602b4171fc281e44b",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f98c631a_2bd056ef",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1039063
+      },
+      "writtenOn": "2026-02-23T10:04:49Z",
+      "side": 1,
+      "message": "@matthias.sohn@sap.com the exact same as for JGit (see https://eclipse.gerrithub.io/c/eclipse-jgit/jgit/+/1231920)",
+      "revId": "be66848fe8b47a285d08ae2602b4171fc281e44b",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735"
+    }
+  ]
+}
