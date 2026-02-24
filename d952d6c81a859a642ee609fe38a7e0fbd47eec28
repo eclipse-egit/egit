@@ -18,6 +18,24 @@
       "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "8464fec3_5af707eb",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1000671
+      },
+      "writtenOn": "2026-02-24T11:12:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1aeb408a_be8ca975",
+      "revId": "d952d6c81a859a642ee609fe38a7e0fbd47eec28",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "26450d1e_be32a686",
@@ -31,6 +49,24 @@
       "writtenOn": "2026-02-23T23:06:42Z",
       "side": 1,
       "message": "this short form is linkified by Gerrit automatically\n```suggestion\nBug: egit-137\n```",
+      "revId": "d952d6c81a859a642ee609fe38a7e0fbd47eec28",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "82dcaf5d_141644df",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1000671
+      },
+      "writtenOn": "2026-02-24T11:12:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "26450d1e_be32a686",
       "revId": "d952d6c81a859a642ee609fe38a7e0fbd47eec28",
       "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735"
     }
