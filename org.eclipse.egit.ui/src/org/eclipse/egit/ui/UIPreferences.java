@@ -228,6 +228,8 @@ public final class UIPreferences {
 	/** */
 	public static final String SHOW_PUSH_POPUP_SUCCESS = "show_push_success_dialog"; //$NON-NLS-1$
 	/** */
+	public static final String FETCH_SHOW_NOTIFICATION = "fetch_show_notification"; //$NON-NLS-1$
+	/** */
 	public static final String SHOW_HOME_DIR_WARNING = "show_home_drive_warning"; //$NON-NLS-1$
 	/** */
 	public static final String LFS_AUTO_CONFIGURATION = "auto_lfs_config"; //$NON-NLS-1$

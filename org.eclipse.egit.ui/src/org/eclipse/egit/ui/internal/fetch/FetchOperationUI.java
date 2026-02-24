@@ -184,9 +184,15 @@ public class FetchOperationUI {
 		protected void showResult(@NonNull Repository repository) {
 			Shell shell = PlatformUI.getWorkbench().getActiveWorkbenchWindow()
 					.getShell();
-			FetchResultDialog dialog = new FetchResultDialog(shell, repository,
-					result, source);
-			dialog.open();
+			if (Activator.getDefault().getPreferenceStore()
+					.getBoolean(UIPreferences.FETCH_SHOW_NOTIFICATION)) {
+				new FetchResultNotification(shell, repository, result, source)
+						.open();
+			} else {
+				FetchResultDialog dialog = new FetchResultDialog(shell,
+						repository, result, source);
+				dialog.open();
+			}
 		}
 	}
 

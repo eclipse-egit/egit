@@ -367,9 +367,6 @@ public class UIText extends NLS {
 	public static String ExistingOrNewPage_InternalModeCheckbox;
 
 	/** */
-	public static String ExistingOrNewPage_NestedProjectErrorMessage;
-
-	/** */
 	public static String ExistingOrNewPage_NewLocationTargetHeader;
 
 	/** */
@@ -3313,6 +3310,18 @@ public class UIText extends NLS {
 	public static String FetchResultDialog_CloseButton;
 
 	/** */
+	public static String FetchResultNotification_Title;
+
+	/** */
+	public static String FetchResultNotification_UpToDate;
+
+	/** */
+	public static String FetchResultNotification_RefsUpdated;
+
+	/** */
+	public static String FetchResultNotification_Details;
+
+	/** */
 	public static String FetchResultTable_addingChildren;
 
 	/** */
@@ -4222,6 +4231,9 @@ public class UIText extends NLS {
 
 	/** */
 	public static String DialogsPreferencePage_ShowFetchInfoDialog;
+
+	/** */
+	public static String DialogsPreferencePage_FetchShowNotification;
 
 	/** */
 	public static String DialogsPreferencePage_ShowPushInfoDialog;
