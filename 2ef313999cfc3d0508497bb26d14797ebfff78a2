@@ -34,6 +34,23 @@
       "parentUuid": "3bc4c935_65f9ddee",
       "revId": "2ef313999cfc3d0508497bb26d14797ebfff78a2",
       "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "71e6a264_4ff02b06",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1012795
+      },
+      "writtenOn": "2026-02-24T11:17:38Z",
+      "side": 1,
+      "message": "https://ci.eclipse.org/egit/job/egit.gerrit/3453/console#:~:text\u003derror%0A12%3A13%3A06%20%20Apache%20Maven%203.9.11%20(3e54c93a704957b63ee3494413a2b544fd3d825b)-,12%3A13%3A06%20%20Maven%20home%3A%20/opt/tools/apache%2Dmaven/latest%0A12,read%20artifact%20descriptor%20for%20org.eclipse.tycho%3Atycho%2Dbndlib%3Ajar%3A4.0.13,-12%3A13%3A19%20%20%20%40%20%0A12%3A13%3A19%20%20%0A12",
+      "revId": "2ef313999cfc3d0508497bb26d14797ebfff78a2",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735"
     }
   ]
 }
