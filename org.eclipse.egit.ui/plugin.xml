@@ -12,7 +12,7 @@
       <category name="%Git_clone_category"
 	    id="org.eclipse.egit.ui.internal.clone.gitclonecategory"/>
       <wizard name="%Git_clone_wizard"
-	    icon="icons/obj16/import_obj.png"
+	    icon="icons/obj16/import_obj.svg"
 	    class="org.eclipse.egit.ui.internal.clone.GitImportWizard"
 	    id="org.eclipse.egit.ui.internal.clone.GitCloneWizard"
 	    category="org.eclipse.egit.ui.internal.clone.gitclonecategory">
@@ -20,7 +20,7 @@
       </wizard>
       <wizard
             category="org.eclipse.egit.ui.internal.clone.gitclonecategory"
-            icon="icons/obj16/import_prj.png"
+            icon="icons/obj16/import_prj.svg"
             class="org.eclipse.egit.ui.internal.clone.SmartImportGitWizard"
             id="org.eclipse.egit.ui.internal.clone.SmartImportGitWizard"
             name="%SmartImportGitWizard_label">
@@ -30,7 +30,7 @@
 
    <extension point="org.eclipse.team.ui.configurationWizards">
       <wizard name="%SharingWizard_name"
-	    icon="icons/etool16/newconnect_wiz.png"
+	    icon="icons/etool16/newconnect_wiz.svg"
             class="org.eclipse.egit.ui.internal.sharing.SharingWizard"
             id="org.eclipse.egit.ui.internal.sharing.SharingWizard">
       </wizard>
@@ -46,7 +46,7 @@
          <action
                class="org.eclipse.egit.ui.internal.actions.SynchronizeWorkspaceAction"
                id="org.eclipse.egit.ui.internal.actions.SynchronizeWorkspace"
-               icon="$nl$/icons/obj16/synchronize.png"
+               icon="$nl$/icons/obj16/synchronize.svg"
                label="%SynchronizeWorkspace_label"
                menubarPath="team.main/group3"/>
      </objectContribution>
@@ -69,7 +69,7 @@
          <action
                class="org.eclipse.egit.ui.internal.actions.MergeToolAction"
                definitionId="org.eclipse.egit.ui.team.MergeTool"
-               icon="icons/obj16/mergetool.png"
+               icon="icons/obj16/mergetool.svg"
                id="org.eclipse.egit.ui.internal.actions.MergeTool"
                label="%MergeToolAction.label"
                menubarPath="team.main/group4">
@@ -1019,7 +1019,7 @@
          <action
            class="org.eclipse.egit.ui.internal.actions.PullFromUpstreamConfigAction"
            definitionId="org.eclipse.egit.ui.team.Pull"
-           icon="icons/obj16/pull.png"
+           icon="icons/obj16/pull.svg"
            id="org.eclipse.egit.ui.actionpull"
            label="%PullIntoCurrentBranchMenuLabel"
            menubarPath="org.eclipse.egit.ui.gitmenu/repo"
@@ -1030,7 +1030,7 @@
          <action
            class="org.eclipse.egit.ui.internal.actions.PullWithOptionsAction"
            definitionId="org.eclipse.egit.ui.team.PullWithOptions"
-           icon="icons/obj16/pull_with_options.png"
+           icon="icons/obj16/pull_with_options.svg"
            id="org.eclipse.egit.ui.actionpullwithoptions"
            label="%PullWithOptions.name"
            menubarPath="org.eclipse.egit.ui.gitmenu/repo"
@@ -1041,7 +1041,7 @@
 		 <action
            class="org.eclipse.egit.ui.internal.actions.SimpleFetchAction"
            definitionId="org.eclipse.egit.ui.team.SimpleFetch"
-           icon="icons/obj16/fetch.png"
+           icon="icons/obj16/fetch.svg"
            id="org.eclipse.egit.ui.actionfetch"
            label="%FetchFromUpstreamAction.label"
            menubarPath="org.eclipse.egit.ui.gitmenu/repo"
@@ -1052,7 +1052,7 @@
 		 <action
            class="org.eclipse.egit.ui.internal.actions.PushUpstreamOrBranchAction"
            definitionId="org.eclipse.egit.ui.team.SimplePush"
-           icon="icons/obj16/push.png"
+           icon="icons/obj16/push.svg"
            id="org.eclipse.egit.ui.actionpush"
            label="%PushToUpstreamAction.label"
            menubarPath="org.eclipse.egit.ui.gitmenu/repo"
@@ -1063,7 +1063,7 @@
 		 <action
            class="org.eclipse.egit.ui.internal.actions.ResetAction"
            definitionId="org.eclipse.egit.ui.team.Reset"
-           icon="icons/obj16/reset.png"
+           icon="icons/obj16/reset.svg"
            id="org.eclipse.egit.ui.actionreset"
            label="%ResetAction_label"
            menubarPath="org.eclipse.egit.ui.gitmenu/repositoryGroup"
@@ -1074,7 +1074,7 @@
 		 <action
            class="org.eclipse.egit.ui.internal.actions.MergeAction"
            definitionId="org.eclipse.egit.ui.team.Merge"
-           icon="icons/obj16/merge.png"
+           icon="icons/obj16/merge.svg"
            id="org.eclipse.egit.ui.actionmerge"
            label="%MergeAction_label"
            menubarPath="org.eclipse.egit.ui.gitmenu/repositoryGroup"
@@ -1085,7 +1085,7 @@
 		 <action
            class="org.eclipse.egit.ui.internal.actions.RebaseAction"
            definitionId="org.eclipse.egit.ui.team.Rebase"
-           icon="icons/obj16/rebase.png"
+           icon="icons/obj16/rebase.svg"
            id="org.eclipse.egit.ui.actionrebase"
            label="%RebaseAction_label"
            style="pulldown"
@@ -1095,7 +1095,7 @@
          <action
            class="org.eclipse.egit.ui.internal.actions.BranchAction"
            definitionId="org.eclipse.egit.ui.team.Branch"
-           icon="icons/obj16/branch_obj.png"
+           icon="icons/obj16/branch_obj.svg"
            id="org.eclipse.egit.ui.actionbranch"
            label="%BranchAction_label"
            menubarPath="org.eclipse.egit.ui.gitmenu/repositoryGroup"
@@ -1106,7 +1106,7 @@
          <action
            class="org.eclipse.egit.ui.internal.actions.StashToolbarAction"
            definitionId="org.eclipse.egit.ui.team.stash.create"
-           icon="icons/obj16/stash.png"
+           icon="icons/obj16/stash.svg"
            id="org.eclipse.egit.ui.actionstash"
            label="%StashToolbarAction_label"
            style="pulldown"
@@ -1116,7 +1116,7 @@
          <action
            class="org.eclipse.egit.ui.internal.actions.CommitAction"
            definitionId="org.eclipse.egit.ui.team.Commit"
-           icon="icons/obj16/commit.png"
+           icon="icons/obj16/commit.svg"
            id="org.eclipse.egit.ui.actioncommit"
            label="%CommitAction_label"
            menubarPath="org.eclipse.egit.ui.gitmenu/repositoryGroup"
@@ -1127,7 +1127,7 @@
          <action
            class="org.eclipse.egit.ui.internal.actions.AddToIndexAction"
            definitionId="org.eclipse.egit.ui.team.AddToIndex"
-           icon="icons/obj16/add.png"
+           icon="icons/obj16/add.svg"
            id="org.eclipse.egit.ui.actionadd"
            label="%AddToIndexAction_label"
            menubarPath="org.eclipse.egit.ui.gitmenu/repositoryGroup"
@@ -3651,7 +3651,7 @@
       <view
             category="org.eclipse.egit.ui.GitCategory"
             class="org.eclipse.egit.ui.internal.repository.RepositoriesView"
-            icon="icons/eview16/repo_rep.png"
+            icon="icons/eview16/repo_rep.svg"
             id="org.eclipse.egit.ui.RepositoriesView"
             name="%GitRepositoriesView_name"
             restorable="true">
@@ -3659,14 +3659,14 @@
       <view
             category="org.eclipse.egit.ui.GitCategory"
             class="org.eclipse.egit.ui.internal.staging.StagingView"
-            icon="icons/eview16/staging.png"
+            icon="icons/eview16/staging.svg"
             id="org.eclipse.egit.ui.StagingView"
             name="%GitStagingView_name">
       </view>
       <view
             category="org.eclipse.egit.ui.GitCategory"
             class="org.eclipse.egit.ui.internal.rebase.RebaseInteractiveView"
-            icon="icons/eview16/rebase_interactive.png"
+            icon="icons/eview16/rebase_interactive.svg"
             id="org.eclipse.egit.ui.InteractiveRebaseView"
             name="%GitInteractiveRebaseView_name">
       </view>
@@ -3677,7 +3677,7 @@
       <view
             category="org.eclipse.egit.ui.GitCategory"
             class="org.eclipse.egit.ui.internal.dialogs.CompareTreeView"
-            icon="icons/obj16/gitrepository.png"
+            icon="icons/obj16/gitrepository.svg"
             id="org.eclipse.egit.ui.CompareTreeView"
             name="%TreeCompareView.name"
             restorable="false">
@@ -3686,7 +3686,7 @@
             allowMultiple="false"
             category="org.eclipse.egit.ui.GitCategory"
             class="org.eclipse.egit.ui.internal.reflog.ReflogView"
-            icon="icons/eview16/reflog.png"
+            icon="icons/eview16/reflog.svg"
             id="org.eclipse.egit.ui.ReflogView"
             name="%ReflogView">
       </view>
@@ -3695,7 +3695,7 @@
          point="org.eclipse.ui.perspectives">
       <perspective
             class="org.eclipse.egit.ui.GitRepositoriesPerspectiveFactory"
-            icon="icons/obj16/gitrepository.png"
+            icon="icons/obj16/gitrepository.svg"
             id="org.eclipse.egit.ui.GitRepositoryExploring"
             name="%GitRepositoryPerspective_name">
          <description>
@@ -3750,7 +3750,7 @@
          point="org.eclipse.ui.navigator.navigatorContent">
       <navigatorContent
             contentProvider="org.eclipse.egit.ui.internal.repository.RepositoriesViewExtensionFactory:org.eclipse.egit.ui.internal.repository.RepositoriesViewContentProvider"
-            icon="icons/obj16/repository_rep.png"
+            icon="icons/obj16/repository_rep.svg"
             id="org.eclipse.egit.ui.RepositoriesViewContent"
             labelProvider="org.eclipse.egit.ui.internal.repository.RepositoryTreeNodeLabelProvider"
             name="%GitRepositoriesContentName">
@@ -4103,7 +4103,7 @@
          </command>
          <command
                commandId="org.eclipse.ui.edit.rename"
-               icon="icons/obj16/editconfig.png"
+               icon="icons/obj16/editconfig.svg"
                label="%HistoryRenameBranch.label"
                style="push">
             <visibleWhen checkEnabled="true" />
@@ -4154,7 +4154,7 @@
          <separator name="##Reset" visible="true" />
          <!-- Reset submenu -->
          <menu
-               icon="icons/obj16/reset.png"
+               icon="icons/obj16/reset.svg"
                id="org.eclipse.egit.ui.history.resetMenu"
                label="%HistoryResetMenu.label">
             <visibleWhen>
@@ -4261,7 +4261,7 @@
             locationURI="popup:org.eclipse.egit.ui.historyPageContributions?after=additions">
             <command
                commandId="org.eclipse.egit.ui.ImportChangedProjectsCommandId"
-               icon="icons/obj16/import_prj.png"
+               icon="icons/obj16/import_prj.svg"
                label="%ImportChangedProjects.label"
                style="push">
             <visibleWhen checkEnabled="true" />
@@ -4313,7 +4313,7 @@
          </command>
          <!-- Reset submenu -->
          <menu
-               icon="icons/obj16/reset.png"
+               icon="icons/obj16/reset.svg"
                id="org.eclipse.egit.ui.reflog.resetMenu"
                label="%ReflogResetMenu.label">
             <command
@@ -4349,7 +4349,7 @@
          </command>
          <command
                commandId="org.eclipse.egit.ui.team.Push"
-               icon="icons/obj16/push.png"
+               icon="icons/obj16/push.svg"
                label="%RepoViewPushBranch.label"
                style="push">
             <visibleWhen
@@ -4368,7 +4368,7 @@
          </command>
          <command
                commandId="org.eclipse.egit.ui.team.Push"
-               icon="icons/obj16/push.png"
+               icon="icons/obj16/push.svg"
                label="%RepoViewPushTag.label"
                style="push">
             <visibleWhen
@@ -4393,7 +4393,7 @@
          </command>
          <command
                commandId="org.eclipse.ui.edit.rename"
-               icon="icons/obj16/editconfig.png"
+               icon="icons/obj16/editconfig.svg"
                label="%RepoViewRenameBranch.label"
                style="push">
             <visibleWhen>
@@ -4459,7 +4459,7 @@
          </command>
          <command
                commandId="org.eclipse.egit.ui.team.Synchronize"
-               icon="icons/obj16/synchronize.png"
+               icon="icons/obj16/synchronize.svg"
                label="%RepoViewSynchronize.label"
                style="push">
             <visibleWhen
@@ -4486,7 +4486,7 @@
          </command>
          <command
                commandId="org.eclipse.egit.ui.team.Synchronize"
-               icon="icons/obj16/synchronize.png"
+               icon="icons/obj16/synchronize.svg"
                label="%RepoViewSynchronizeEachOther.label"
                style="push">
             <visibleWhen
@@ -4540,7 +4540,7 @@
          </command>
          <command
                commandId="org.eclipse.egit.ui.team.SimplePush"
-               icon="icons/obj16/push.png"
+               icon="icons/obj16/push.svg"
                label="%RepoViewPushSimpleLabel"
                style="push">
             <visibleWhen
@@ -4566,7 +4566,7 @@
          </command>
          <command
                commandId="org.eclipse.egit.ui.team.SimpleFetch"
-               icon="icons/obj16/fetch.png"
+               icon="icons/obj16/fetch.svg"
                label="%RepoViewFetchSimple.label"
                style="push">
             <visibleWhen
@@ -4622,7 +4622,7 @@
          <command
                commandId="org.eclipse.ui.edit.findReplace"
                label="%RepoViewFilterTagCommand.label"
-               icon="icons/elcl16/find.png"
+               icon="icons/elcl16/find.svg"
                tooltip="%RepoViewFilterTagCommand.tooltip"
                style="push">
             <visibleWhen checkEnabled="true" />
@@ -4632,14 +4632,14 @@
             locationURI="popup:org.eclipse.egit.ui.RepositoriesView?after=remote">
          <command
                commandId="org.eclipse.egit.ui.RepositoriesViewConfigureFetch"
-               icon="icons/obj16/editconfig.png"
+               icon="icons/obj16/editconfig.svg"
                label="%RepoViewConfigureFetch.label"
                style="push">
             <visibleWhen checkEnabled="true" />
          </command>
          <command
                commandId="org.eclipse.egit.ui.RepositoriesViewConfigurePush"
-               icon="icons/obj16/editconfig.png"
+               icon="icons/obj16/editconfig.svg"
                label="%RepoViewConfigurePush.label"
                style="push">
             <visibleWhen checkEnabled="true" />
@@ -4780,7 +4780,7 @@
             </visibleWhen>
          </command>
          <menu
-               icon="icons/obj16/branches_obj.png"
+               icon="icons/obj16/branches_obj.svg"
                label="%SwitchToMenuMultiple.label">
             <dynamic
                   class="org.eclipse.egit.ui.internal.actions.SwitchToMenu"
@@ -4817,7 +4817,7 @@
             </visibleWhen>
          </menu>
          <menu
-               icon="icons/obj16/branches_obj.png"
+               icon="icons/obj16/branches_obj.svg"
                label="%SwitchToMenu.label">
             <dynamic
                   class="org.eclipse.egit.ui.internal.actions.SwitchToMenu"
@@ -4861,7 +4861,7 @@
             locationURI="popup:org.eclipse.egit.ui.RepositoriesView?after=repo-1">
          <command
                commandId="org.eclipse.egit.ui.team.Commit"
-               icon="icons/obj16/commit.png"
+               icon="icons/obj16/commit.svg"
                label="%RepoViewCommit.label"
                style="push">
             <visibleWhen
@@ -4885,7 +4885,7 @@
          </command>
          <menu
                label="%StashesMenu.label"
-               icon="icons/obj16/stash.png">
+               icon="icons/obj16/stash.svg">
             <dynamic
                   class="org.eclipse.egit.ui.internal.actions.StashesMenu"
                   id="org.eclipse.egit.ui.stashedChanges">
@@ -4961,7 +4961,7 @@
             locationURI="popup:org.eclipse.egit.ui.RepositoriesView?after=repo-commit">
          <command
                commandId="org.eclipse.egit.ui.team.SimplePush"
-               icon="icons/obj16/push.png"
+               icon="icons/obj16/push.svg"
                label="%PushToUpstreamCommand.label"
                style="push">
             <visibleWhen
@@ -4982,7 +4982,7 @@
          </command>
          <command
                commandId="org.eclipse.egit.ui.team.SimpleFetch"
-               icon="icons/obj16/fetch.png"
+               icon="icons/obj16/fetch.svg"
                label="%FetchFromUpstreamCommand.label"
                style="push">
             <visibleWhen
@@ -5137,7 +5137,7 @@
          </dynamic>
          <command
                commandId="org.eclipse.egit.ui.team.Pull"
-               icon="icons/obj16/pull.png"
+               icon="icons/obj16/pull.svg"
                label="%RepoViewPullMenu.label"
                style="push">
             <visibleWhen
@@ -5164,7 +5164,7 @@
          </command>
          <command
                commandId="org.eclipse.egit.ui.team.PullWithOptions"
-               icon="icons/obj16/pull.png"
+               icon="icons/obj16/pull.svg"
                label="%PullWithOptions.name"
                style="push">
             <visibleWhen
@@ -5190,7 +5190,7 @@
                label="%RemoteSubMenu.label">
             <command
                   commandId="org.eclipse.egit.ui.team.Push"
-                  icon="icons/obj16/push.png"
+                  icon="icons/obj16/push.svg"
                   label="%RepoViewPush.label"
                   style="push">
                <visibleWhen
@@ -5227,7 +5227,7 @@
             </command>
             <command
                   commandId="org.eclipse.egit.ui.team.Fetch"
-                  icon="icons/obj16/fetch.png"
+                  icon="icons/obj16/fetch.svg"
                   label="%RepoViewFetch.label"
                   style="push">
                <visibleWhen
@@ -5296,7 +5296,7 @@
          </command>
          <command
                commandId="org.eclipse.egit.ui.team.Merge"
-               icon="icons/obj16/merge.png"
+               icon="icons/obj16/merge.svg"
                label="%RepoViewMergeSimple.label"
                style="push">
             <visibleWhen
@@ -5324,7 +5324,7 @@
          </command>
          <command
                commandId="org.eclipse.egit.ui.team.Merge"
-               icon="icons/obj16/merge.png"
+               icon="icons/obj16/merge.svg"
                label="%RepoViewMerge.label"
                style="push">
             <visibleWhen
@@ -5429,7 +5429,7 @@
             </visibleWhen>
          </command>
          <menu
-               icon="icons/obj16/rebase.png"
+               icon="icons/obj16/rebase.svg"
                label="%RebaseMenu.label">
             <command
                   commandId="org.eclipse.egit.ui.AbortRebase"
@@ -5452,7 +5452,7 @@
          </menu>
          <command
                commandId="org.eclipse.egit.ui.team.Reset"
-               icon="icons/obj16/reset.png"
+               icon="icons/obj16/reset.svg"
                label="%RepoViewReset.label"
                style="push">
             <visibleWhen
@@ -5487,7 +5487,7 @@
             locationURI="popup:org.eclipse.egit.ui.RepositoriesView?after=repo-3">
          <command
                commandId="org.eclipse.egit.ui.team.AddToIndex"
-               icon="/icons/obj16/add.png"
+               icon="/icons/obj16/add.svg"
                label="%RepoViewAddToIndex.label"
                style="push">
             <visibleWhen
@@ -5541,7 +5541,7 @@
          </command>
          <command
                commandId="org.eclipse.egit.ui.RepositoriesViewImportProjects"
-               icon="icons/obj16/import_prj.png"
+               icon="icons/obj16/import_prj.svg"
                label="%RepoViewImportProjects.label"
                style="push">
             <visibleWhen checkEnabled="true" />
@@ -5617,7 +5617,7 @@
          <command
                commandId="org.eclipse.egit.ui.team.GarbageCollect"
                label="%GarbageCollectCommand.label"
-               icon="icons/elcl16/trash_flat.png"
+               icon="icons/elcl16/trash_flat.svg"
                style="push">
             <visibleWhen
                   checkEnabled="false">
@@ -5793,8 +5793,8 @@
          </separator>
          <command
                commandId="org.eclipse.ui.file.refresh"
-               icon="icons/obj16/refresh.png"
-               disabledIcon="icons/obj16/refresh.png"
+               icon="icons/obj16/refresh.svg"
+               disabledIcon="icons/obj16/refresh.svg"
                style="push">
          </command>
          <command
@@ -5854,7 +5854,7 @@
          </separator>
          <command
                commandId="org.eclipse.ui.file.refresh"
-               icon="icons/obj16/refresh.png"
+               icon="icons/obj16/refresh.svg"
                style="push">
          </command>
          <command
@@ -5900,7 +5900,7 @@
             <menu
                   id="egit.menu.stashes"
                   label="%StashesMenu.label"
-                  icon="icons/obj16/stash.png">
+                  icon="icons/obj16/stash.svg">
                <dynamic
                      class="org.eclipse.egit.ui.internal.actions.StashesMenu"
                      id="org.eclipse.egit.ui.stashedChanges">
@@ -6080,7 +6080,7 @@
             <menu
                   id="egit.menu.switch"
                   label="%SwitchToMenu.label"
-                  icon="icons/obj16/branches_obj.png">
+                  icon="icons/obj16/branches_obj.svg">
                <dynamic
                      class="org.eclipse.egit.ui.internal.actions.SwitchToMenu"
                      id="org.eclipse.egit.ui.switchToMenu">
@@ -6095,7 +6095,7 @@
             <menu
                   id="egit.menu.switchMultiple"
                   label="%SwitchToMenuMultiple.label"
-                  icon="icons/obj16/branches_obj.png">
+                  icon="icons/obj16/branches_obj.svg">
                <dynamic
                      class="org.eclipse.egit.ui.internal.actions.SwitchToMenu"
                      id="org.eclipse.egit.ui.switchToMenuMultiple">
@@ -6204,7 +6204,7 @@
                <menu
                      id="egit.menu.repo.switchto"
                      label="%SwitchToMenu.label"
-                     icon="icons/obj16/branches_obj.png">
+                     icon="icons/obj16/branches_obj.svg">
                   <dynamic
                         class="org.eclipse.egit.ui.internal.actions.SwitchToMenu"
                         id="org.eclipse.egit.ui.switchToMenu">
@@ -6242,7 +6242,7 @@
                <menu
                   id="egit.menu.synchronize"
                   label="%SynchronizeWith_label"
-                  icon="$nl$/icons/obj16/synchronize.png">
+                  icon="$nl$/icons/obj16/synchronize.svg">
                   <dynamic
                      class="org.eclipse.egit.ui.internal.actions.SynchronizeWithMenu"
                      id="org.eclipse.egit.ui.synchronize">
@@ -6363,7 +6363,7 @@
                </visibleWhen>
             </command>
             <menu
-                  icon="icons/obj16/rebase.png"
+                  icon="icons/obj16/rebase.svg"
                   id="egit.menu.rebase"
                   label="%RebaseMenu.label">
                <command
@@ -6992,347 +6992,347 @@
          point="org.eclipse.ui.commandImages">
       <image
             commandId="org.eclipse.egit.ui.RepositoriesViewAddRepository"
-            icon="icons/etool16/newlocation_wiz.png">
+            icon="icons/etool16/newlocation_wiz.svg">
       </image>
       <image
             commandId="org.eclipse.egit.ui.RepositoriesViewClone"
-            icon="icons/obj16/cloneGit.png">
+            icon="icons/obj16/cloneGit.svg">
       </image>
       <image
             commandId="org.eclipse.egit.ui.RepositoriesLinkWithSelection"
-            icon="icons/elcl16/synced.png">
+            icon="icons/elcl16/synced.svg">
       </image>
       <image
             commandId="org.eclipse.egit.ui.team.ShowRepositoriesView"
-            icon="icons/eview16/repo_rep.png">
+            icon="icons/eview16/repo_rep.svg">
       </image>
       <image
             commandId="org.eclipse.egit.ui.team.ShowHistory"
-            icon="icons/obj16/history.png">
+            icon="icons/obj16/history.svg">
       </image>
       <image
             commandId="org.eclipse.egit.ui.team.CherryPick"
-            icon="icons/obj16/cherry-pick.png">
+            icon="icons/obj16/cherry-pick.svg">
       </image>
       <image
             commandId="org.eclipse.egit.ui.team.stash.apply"
-            icon="icons/obj16/stash-apply.png">
+            icon="icons/obj16/stash-apply.svg">
       </image>
       <image
             commandId="org.eclipse.egit.ui.team.stash.drop"
-            icon="icons/obj16/delete_obj.png">
+            icon="icons/obj16/delete_obj.svg">
       </image>
       <image
             commandId="org.eclipse.egit.ui.history.Squash"
-            icon="icons/obj16/squash-down.png">
+            icon="icons/obj16/squash-down.svg">
       </image>
       <image
             commandId="org.eclipse.egit.ui.commit.Squash"
-            icon="icons/obj16/squash-down.png">
+            icon="icons/obj16/squash-down.svg">
       </image>
       <image
             commandId="org.eclipse.egit.ui.history.Reword"
-            icon="icons/obj16/reword.png">
+            icon="icons/obj16/reword.svg">
       </image>
       <image
             commandId="org.eclipse.egit.ui.commit.Reword"
-            icon="icons/obj16/reword.png">
+            icon="icons/obj16/reword.svg">
       </image>
       <image
             commandId="org.eclipse.egit.ui.history.Edit"
-            icon="icons/obj16/editconfig.png">
+            icon="icons/obj16/editconfig.svg">
       </image>
       <image
             commandId="org.eclipse.egit.ui.commit.Edit"
-            icon="icons/obj16/editconfig.png">
+            icon="icons/obj16/editconfig.svg">
       </image>
       <image
             commandId="org.eclipse.egit.ui.CheckoutCommand"
-            icon="icons/obj16/checkout.png">
+            icon="icons/obj16/checkout.svg">
       </image>
       <image
             commandId="org.eclipse.egit.ui.RepositoriesViewCreateBranch"
-            icon="icons/obj16/new_branch_obj.png">
+            icon="icons/obj16/new_branch_obj.svg">
       </image>
       <image
             commandId="org.eclipse.egit.ui.RepositoriesViewNewRemote"
-            icon="icons/obj16/synchronize.png">
+            icon="icons/obj16/synchronize.svg">
       </image>
       <image
             commandId="org.eclipse.egit.ui.history.PushCommit"
-            icon="icons/obj16/push.png">
+            icon="icons/obj16/push.svg">
       </image>
       <image
             commandId="org.eclipse.egit.ui.ImportChangedProjectsCommandId"
-            icon="icons/obj16/import_prj.png">
+            icon="icons/obj16/import_prj.svg">
       </image>
       <image
             commandId="org.eclipse.egit.ui.RepositoriesViewImportProjects"
-            icon="icons/obj16/import_prj.png">
+            icon="icons/obj16/import_prj.svg">
       </image>
       <image
             commandId="org.eclipse.egit.ui.RepositoriesViewCreateRepository"
-            icon="icons/etool16/createRepository.png">
+            icon="icons/etool16/createRepository.svg">
       </image>
       <image
             commandId="org.eclipse.egit.ui.RepositoriesToggleBranchHierarchy"
-            icon="icons/elcl16/hierarchicalLayout.png">
+            icon="icons/elcl16/hierarchicalLayout.svg">
       </image>
        <image
             commandId="org.eclipse.egit.ui.RepositoriesToggleBranchCommit"
-            icon="icons/obj16/changelog_obj.png">
+            icon="icons/obj16/changelog_obj.svg">
       </image>
       <image
             commandId="org.eclipse.egit.ui.RepositoriesViewDelete"
-            icon="icons/obj16/delete_obj.png">
+            icon="icons/obj16/delete_obj.svg">
       </image>
       <image
             commandId="org.eclipse.egit.ui.RepositoriesViewRemove"
-            icon="icons/obj16/clear.png">
+            icon="icons/obj16/clear.svg">
       </image>
       <image
             commandId="org.eclipse.egit.ui.AbortRebase"
-            icon="icons/elcl16/progress_stop.png">
+            icon="icons/elcl16/progress_stop.svg">
       </image>
       <image
             commandId="org.eclipse.egit.ui.ContinueRebase"
-            icon="icons/elcl16/continue.png">
+            icon="icons/elcl16/continue.svg">
       </image>
       <image
             commandId="org.eclipse.egit.ui.SkipRebase"
-            icon="icons/elcl16/skip.png">
+            icon="icons/elcl16/skip.svg">
       </image>
       <image
             commandId="org.eclipse.egit.ui.history.Merge"
-            icon="icons/obj16/merge.png">
+            icon="icons/obj16/merge.svg">
       </image>
       <image
             commandId="org.eclipse.egit.ui.RebaseCurrent"
-            icon="icons/obj16/rebase.png">
+            icon="icons/obj16/rebase.svg">
       </image>
       <image
             commandId="org.eclipse.egit.ui.team.Fetch"
-            icon="icons/obj16/fetch.png">
+            icon="icons/obj16/fetch.svg">
       </image>
       <image
             commandId="org.eclipse.egit.ui.team.ConfigureFetch"
-            icon="icons/obj16/fetch.png">
+            icon="icons/obj16/fetch.svg">
       </image>
       <image
             commandId="org.eclipse.egit.ui.team.ConfigurePush"
-            icon="icons/obj16/push.png">
+            icon="icons/obj16/push.svg">
       </image>
       <image
             commandId="org.eclipse.egit.ui.team.Push"
-            icon="icons/obj16/push.png">
+            icon="icons/obj16/push.svg">
       </image>
       <image
             commandId="org.eclipse.egit.ui.team.PushBranch"
-            icon="icons/obj16/push.png">
+            icon="icons/obj16/push.svg">
       </image>
       <image
             commandId="org.eclipse.egit.ui.team.PushTags"
-            icon="icons/obj16/push.png">
+            icon="icons/obj16/push.svg">
       </image>
       <image
             commandId="org.eclipse.egit.ui.FetchGerritChange"
-            icon="icons/obj16/gerrit_fetch.png">
+            icon="icons/obj16/gerrit_fetch.svg">
       </image>
       <image
             commandId="org.eclipse.egit.ui.FetchGitHubPR"
-            icon="icons/obj16/fetch.png">
+            icon="icons/obj16/fetch.svg">
       </image>
       <image
             commandId="org.eclipse.egit.ui.FetchGitLabMergeRequest"
-            icon="icons/obj16/fetch.png">
+            icon="icons/obj16/fetch.svg">
       </image>
       <image
             commandId="org.eclipse.egit.ui.FetchGiteaPullRequest"
-            icon="icons/obj16/fetch.png">
+            icon="icons/obj16/fetch.svg">
       </image>
       <image
             commandId="org.eclipse.egit.ui.team.AddToIndex"
-            icon="icons/obj16/add.png">
+            icon="icons/obj16/add.svg">
       </image>
       <image
             commandId="org.eclipse.egit.ui.team.RemoveFromIndex"
-            icon="icons/obj16/unstage.png">
+            icon="icons/obj16/unstage.svg">
       </image>
       <image
             commandId="org.eclipse.egit.ui.team.Branch"
-            icon="icons/obj16/branch_obj.png">
+            icon="icons/obj16/branch_obj.svg">
       </image>
       <image
             commandId="org.eclipse.egit.ui.team.Commit"
-            icon="icons/obj16/commit.png">
+            icon="icons/obj16/commit.svg">
       </image>
       <image
             commandId="org.eclipse.egit.ui.team.SimpleFetch"
-            icon="icons/obj16/fetch.png">
+            icon="icons/obj16/fetch.svg">
       </image>
       <image
             commandId="org.eclipse.egit.ui.team.SimplePush"
-            icon="icons/obj16/push.png">
+            icon="icons/obj16/push.svg">
       </image>
       <image
             commandId="org.eclipse.egit.ui.team.Ignore"
-            icon="icons/obj16/ignore.png">
+            icon="icons/obj16/ignore.svg">
       </image>
       <image
             commandId="org.eclipse.egit.ui.team.Merge"
-            icon="icons/obj16/merge.png">
+            icon="icons/obj16/merge.svg">
       </image>
       <image
             commandId="org.eclipse.egit.ui.team.MergeTool"
-            icon="icons/obj16/mergetool.png">
+            icon="icons/obj16/mergetool.svg">
       </image>
       <image
             commandId="org.eclipse.egit.ui.team.Rebase"
-            icon="icons/obj16/rebase.png">
+            icon="icons/obj16/rebase.svg">
       </image>
       <image
             commandId="org.eclipse.egit.ui.team.Pull"
-            icon="icons/obj16/pull.png">
+            icon="icons/obj16/pull.svg">
       </image>
       <image
             commandId="org.eclipse.egit.ui.team.PullWithOptions"
-            icon="icons/obj16/pull_with_options.png">
+            icon="icons/obj16/pull_with_options.svg">
       </image>
       <image
             commandId="org.eclipse.egit.ui.team.Reset"
-            icon="icons/obj16/reset.png">
+            icon="icons/obj16/reset.svg">
       </image>
       <image
             commandId="org.eclipse.egit.ui.team.Synchronize"
-            icon="icons/obj16/synchronize.png">
+            icon="icons/obj16/synchronize.svg">
       </image>
       <image
             commandId="org.eclipse.egit.ui.team.Tag"
-            icon="icons/obj16/new_tag_obj.png">
+            icon="icons/obj16/new_tag_obj.svg">
       </image>
       <image
             commandId="org.eclipse.egit.ui.team.AssumeUnchanged"
-            icon="icons/obj16/assume_unchanged.png">
+            icon="icons/obj16/assume_unchanged.svg">
       </image>
       <image
             commandId="org.eclipse.egit.ui.team.NoAssumeUnchanged"
-            icon="icons/obj16/no_assume_unchanged.png">
+            icon="icons/obj16/no_assume_unchanged.svg">
       </image>
       <image
             commandId="org.eclipse.egit.ui.team.DeleteBranch"
-            icon="icons/obj16/delete_obj.png">
+            icon="icons/obj16/delete_obj.svg">
       </image>
       <image
             commandId="org.eclipse.egit.ui.team.RenameBranch"
-            icon="icons/obj16/editconfig.png">
+            icon="icons/obj16/editconfig.svg">
       </image>
       <image
             commandId="org.eclipse.ui.edit.rename"
-            icon="icons/obj16/editconfig.png">
+            icon="icons/obj16/editconfig.svg">
       </image>
       <image
             commandId="org.eclipse.egit.ui.history.DeleteBranch"
-            icon="icons/obj16/delete_obj.png">
+            icon="icons/obj16/delete_obj.svg">
       </image>
       <image
             commandId="org.eclipse.egit.ui.history.DeleteTag"
-            icon="icons/obj16/delete_obj.png">
+            icon="icons/obj16/delete_obj.svg">
       </image>
       <image
             commandId="org.eclipse.egit.ui.internal.reflog.CopyCommand"
-            icon="icons/elcl16/sha1.png">
+            icon="icons/elcl16/sha1.svg">
       </image>
       <image
             commandId="org.eclipse.egit.ui.RebaseInteractiveCurrent"
-            icon="icons/obj16/rebase_interactive.png">
+            icon="icons/obj16/rebase_interactive.svg">
       </image>
       <image
             commandId="org.eclipse.egit.ui.history.OpenInCommitViewerCommand"
-            icon="icons/obj16/open-commit.png">
+            icon="icons/obj16/open-commit.svg">
       </image>
       <image
             commandId="org.eclipse.egit.ui.history.CompareVersions"
-            icon="icons/elcl16/compare_view.png">
+            icon="icons/elcl16/compare_view.svg">
       </image>
       <image
             commandId="org.eclipse.egit.ui.history.CompareVersionsInTree"
-            icon="icons/elcl16/compare_view.png">
+            icon="icons/elcl16/compare_view.svg">
       </image>
       <image
             commandId="org.eclipse.egit.ui.team.Revert"
-            icon="icons/obj16/revert.png">
+            icon="icons/obj16/revert.svg">
       </image>
       <image
             commandId="org.eclipse.egit.ui.team.clean"
-            icon="icons/obj16/clean_obj.png">
+            icon="icons/obj16/clean_obj.svg">
       </image>
       <image
             commandId="org.eclipse.egit.ui.team.stash.create"
-            icon="icons/obj16/stash-create.png">
+            icon="icons/obj16/stash-create.svg">
       </image>
       <image
             commandId="org.eclipse.egit.ui.team.ShowBlame"
-            icon="icons/etool16/annotate.png">
+            icon="icons/etool16/annotate.svg">
       </image>
       <image
             commandId="org.eclipse.egit.ui.PushHeadToGerrit"
-            icon="icons/obj16/gerrit_push.png">
+            icon="icons/obj16/gerrit_push.svg">
       </image>
       <image
             commandId="org.eclipse.egit.ui.RepositoriesViewConfigureGerritRemote"
-            icon="icons/obj16/gerrit_obj.png">
+            icon="icons/obj16/gerrit_obj.svg">
       </image>
       <image
             commandId="org.eclipse.egit.ui.team.GarbageCollect"
-            icon="icons/elcl16/trash_flat.png">
+            icon="icons/elcl16/trash_flat.svg">
       </image>
       <image
             commandId="org.eclipse.egit.ui.team.Disconnect"
-            icon="icons/obj16/disconnect_co.png">
+            icon="icons/obj16/disconnect_co.svg">
       </image>
       <image
             commandId="org.eclipse.egit.ui.RepositoriesViewRemoveRemote"
-            icon="icons/obj16/delete_obj.png">
+            icon="icons/obj16/delete_obj.svg">
       </image>
       <image
             commandId="org.eclipse.egit.ui.team.Untrack"
-            icon="icons/obj16/untrack.png">
+            icon="icons/obj16/untrack.svg">
       </image>
       <image
             commandId="org.eclipse.egit.ui.team.OpenCommit"
-            icon="icons/obj16/open-commit.png">
+            icon="icons/obj16/open-commit.svg">
       </image>
       <image
             commandId="org.eclipse.egit.ui.RepositoriesViewOpenInEditor"
-            icon="icons/elcl16/goto_input.png">
+            icon="icons/elcl16/goto_input.svg">
       </image>
       <image
             commandId="org.eclipse.egit.ui.team.CompareWithCommit"
-            icon="icons/obj16/changelog_obj.png">
+            icon="icons/obj16/changelog_obj.svg">
       </image>
       <image
             commandId="org.eclipse.egit.ui.team.ReplaceWithCommit"
-            icon="icons/obj16/changelog_obj.png">
+            icon="icons/obj16/changelog_obj.svg">
       </image>
       <image
             commandId="org.eclipse.egit.ui.team.submodule.add"
-            icon="icons/obj16/submodules.png">
+            icon="icons/obj16/submodules.svg">
       </image>
       <image
             commandId="org.eclipse.egit.ui.team.ReplaceWithRef"
-            icon="icons/obj16/branches_obj.png">
+            icon="icons/obj16/branches_obj.svg">
       </image>
       <image
             commandId="org.eclipse.egit.ui.team.CompareWithRef"
-            icon="icons/obj16/branches_obj.png">
+            icon="icons/obj16/branches_obj.svg">
       </image>
       <image
             commandId="org.eclipse.egit.ui.RepositoriesCreateGroup"
-            icon="icons/etool16/newgroup_wiz.png">
+            icon="icons/etool16/newgroup_wiz.svg">
       </image>
       <image
             commandId="org.eclipse.egit.ui.commit.UnifiedDiffCommand"
-            icon="icons/obj16/changelog_obj.png">
+            icon="icons/obj16/changelog_obj.svg">
       </image>
    </extension>
    <extension
@@ -7440,7 +7440,7 @@
       <wizard
             class="org.eclipse.egit.ui.internal.synchronize.GitSynchronizeWizard"
             description="%gitsyncwizard.description"
-            icon="icons/obj16/gitrepository.png"
+            icon="icons/obj16/gitrepository.svg"
             id="org.eclipse.egit.ui.wizard1"
             name="%Synchronize_Name">
       </wizard>
@@ -7451,7 +7451,7 @@
             class="org.eclipse.egit.ui.internal.synchronize.GitModelSynchronizeParticipant"
             id="org.eclipse.egit.ui.modelCompareParticipant"
             name="%Synchronize_Name"
-            icon="icons/obj16/gitrepository.png"
+            icon="icons/obj16/gitrepository.svg"
             persistent="true"/>
    </extension>
    <extension
@@ -7459,7 +7459,7 @@
       <navigatorContent
             activeByDefault="false"
             contentProvider="org.eclipse.egit.ui.internal.synchronize.mapping.GitChangeSetContentProvider"
-            icon="$nl$/icons/obj16/changelog_obj.png"
+            icon="$nl$/icons/obj16/changelog_obj.svg"
             id="org.eclipse.egit.ui.changeSetContent"
             labelProvider="org.eclipse.egit.ui.internal.synchronize.mapping.GitChangeSetLabelProvider"
             name="%Synchronize_ChangeSet"
@@ -7486,7 +7486,7 @@
          point="org.eclipse.team.ui.teamContentProviders">
       <teamContentProvider
             contentExtensionId="org.eclipse.egit.ui.changeSetContent"
-            icon="$nl$/icons/obj16/changelog_obj.png"
+            icon="$nl$/icons/obj16/changelog_obj.svg"
             modelProviderId="org.eclipse.egit.ui.changeSetModel"/>
    </extension>
    <extension point="org.eclipse.ui.navigator.viewer">
@@ -7871,7 +7871,7 @@
             category="org.eclipse.egit.ui.wizardCategory"
             class="org.eclipse.egit.ui.internal.repository.NewRepositoryWizard"
             hasPages="true"
-            icon="icons/etool16/createRepository.png"
+            icon="icons/etool16/createRepository.svg"
             id="org.eclipse.egit.ui.CreateRepositoryWizard"
             name="%CreateRepositoryWizard.name">
          <description>
@@ -7912,7 +7912,7 @@
             class="org.eclipse.egit.ui.internal.commit.CommitEditor"
             contributorClass="org.eclipse.egit.ui.internal.commit.CommitEditorActionBarContributor"
             default="false"
-            icon="icons/obj16/changelog_obj.png"
+            icon="icons/obj16/changelog_obj.svg"
             id="org.eclipse.egit.ui.commitEditor"
             name="%CommitEditor.name">
       </editor>
@@ -7920,7 +7920,7 @@
             class="org.eclipse.egit.ui.internal.commit.DiffEditor"
             contributorClass="org.eclipse.ui.texteditor.BasicTextEditorActionContributor"
             default="false"
-            icon="icons/obj16/changelog_obj.png"
+            icon="icons/obj16/changelog_obj.svg"
             id="org.eclipse.egit.ui.diffEditor"
             name="%DiffEditor.name">
       </editor>
@@ -8017,7 +8017,7 @@
     <extension point="org.eclipse.search.searchPages">
       <page
             class="org.eclipse.egit.ui.internal.search.CommitSearchPage"
-            icon="icons/obj16/search-commit.png"
+            icon="icons/obj16/search-commit.svg"
             id="org.eclipse.egit.ui.commitSearchPage"
             label="%CommitSearchPage.label">
       </page>
@@ -8026,7 +8026,7 @@
          point="org.eclipse.search.searchResultViewPages">
       <viewPage
             class="org.eclipse.egit.ui.internal.search.CommitSearchResultsPage"
-            icon="icons/obj16/search-commit.png"
+            icon="icons/obj16/search-commit.svg"
             id="org.eclipse.egit.ui.commitSearchResultsPage"
             label="%CommitSearchResults.label"
             searchResultClass="org.eclipse.egit.ui.internal.search.CommitSearchResult">
@@ -8042,7 +8042,7 @@
         <action
                class="org.eclipse.egit.ui.internal.commit.OpenCommitAction"
                definitionId="org.eclipse.egit.ui.team.OpenCommit"
-               icon="icons/obj16/open-commit.png"
+               icon="icons/obj16/open-commit.svg"
                id="org.eclipse.egit.ui.commit.OpenCommitAction"
                label="%OpenCommitAction.label"
                menubarPath="navigate/open.ext3"
@@ -8073,7 +8073,7 @@
          </menu>
          <action
                label="%OpenCommitSearchPageAction.label"
-               icon="icons/obj16/search-commit.png"
+               icon="icons/obj16/search-commit.svg"
                class="org.eclipse.egit.ui.internal.search.OpenCommitSearchPageAction"
                menubarPath="org.eclipse.search.menu/dialogGroup"
                id="org.eclipse.egit.ui.actions.OpenCommitSearchPage">
@@ -8188,7 +8188,7 @@
         point="org.eclipse.egit.ui.cloneSourceProvider">
      <source
            hasFixLocation="true"
-           icon="/icons/obj16/editconfig.png"
+           icon="/icons/obj16/editconfig.svg"
            label="%CloneUri.label">
      </source>
      <repositorySearchPage
