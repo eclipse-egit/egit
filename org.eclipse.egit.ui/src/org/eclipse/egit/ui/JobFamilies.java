@@ -243,4 +243,9 @@ public class JobFamilies {
 	 */
 	public static final Object STAGING_VIEW_RELOAD = new JobFamily();
 
+	/**
+	 * Auto fetch job
+	 */
+	public final static Object AUTO_FETCH = new JobFamily();
+
 }
