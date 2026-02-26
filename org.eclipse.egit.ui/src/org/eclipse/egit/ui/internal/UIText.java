@@ -43,6 +43,9 @@ public class UIText extends NLS {
 	public static String WizardProjectsImportPage_filterText;
 
 	/** */
+	public static String AutoFetchJob_Name;
+
+	/** */
 	public static String AbortRebaseCommand_CancelDialogMessage;
 
 	/** */
@@ -764,6 +767,18 @@ public class UIText extends NLS {
 
 	/** */
 	public static String GitPreferenceRoot_RepoChangeScannerGroupHeader;
+
+	/** */
+	public static String GitPreferenceRoot_AutoFetchGroupHeader;
+
+	/** */
+	public static String GitPreferenceRoot_AutoFetchLabel;
+
+	/** */
+	public static String GitPreferenceRoot_AutoFetchIntervalLabel;
+
+	/** */
+	public static String GitPreferenceRoot_AutoFetchIntervalTooltip;
 
 	/** */
 	public static String GitPreferenceRoot_SecureStoreGroupLabel;

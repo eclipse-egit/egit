@@ -116,6 +116,9 @@ public class PluginPreferenceInitializer extends AbstractPreferenceInitializer {
 		store.setDefault(UIPreferences.REFRESH_INDEX_INTERVAL, 5 * 60);
 		store.setDefault(UIPreferences.REFRESH_ONLY_WHEN_ACTIVE, true);
 
+		store.setDefault(UIPreferences.AUTO_FETCH, false);
+		store.setDefault(UIPreferences.AUTO_FETCH_INTERVAL, 3 * 60);
+
 		store.setDefault(UIPreferences.SHOW_REBASE_CONFIRM, false);
 		store.setDefault(UIPreferences.SHOW_INITIAL_CONFIG_DIALOG, true);
 		store.setDefault(UIPreferences.SHOW_FETCH_POPUP_SUCCESS, true);

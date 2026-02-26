@@ -332,6 +332,27 @@ public class GitPreferenceRoot extends DoublePreferencesPreferencePage
 		});
 		updateMargins(repoChangeScannerGroup);
 
+		Group autoFetchGroup = new Group(main, SWT.SHADOW_ETCHED_IN);
+		GridDataFactory.fillDefaults().grab(true, false).span(GROUP_SPAN, 1)
+				.applyTo(autoFetchGroup);
+		autoFetchGroup.setText(UIText.GitPreferenceRoot_AutoFetchGroupHeader);
+		addField(new BooleanFieldEditor(UIPreferences.AUTO_FETCH,
+				UIText.GitPreferenceRoot_AutoFetchLabel, autoFetchGroup) {
+			@Override
+			public int getNumberOfControls() {
+				return 2;
+			}
+		});
+		IntegerFieldEditor autoFetchIntervalField = new IntegerFieldEditor(
+				UIPreferences.AUTO_FETCH_INTERVAL,
+				UIText.GitPreferenceRoot_AutoFetchIntervalLabel,
+				autoFetchGroup);
+		autoFetchIntervalField.getLabelControl(autoFetchGroup)
+				.setToolTipText(
+						UIText.GitPreferenceRoot_AutoFetchIntervalTooltip);
+		addField(autoFetchIntervalField);
+		updateMargins(autoFetchGroup);
+
 		Group blameGroup = new Group(main, SWT.SHADOW_ETCHED_IN);
 		GridDataFactory.fillDefaults().grab(true, false).span(GROUP_SPAN, 1)
 				.applyTo(blameGroup);
