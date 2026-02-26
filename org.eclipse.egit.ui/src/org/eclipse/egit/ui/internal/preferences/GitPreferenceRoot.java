@@ -63,6 +63,8 @@ public class GitPreferenceRoot extends DoublePreferencesPreferencePage
 
 	private final static String[][] HTTP_CLIENT_NAMES_AND_VALUES = new String[2][2];
 
+	private final static String[][] AUTO_FETCH_NAMES_AND_VALUES = new String[3][2];
+
 	private final static boolean HAS_DEBUG_UI = hasDebugUiBundle();
 
 	static {
@@ -70,6 +72,12 @@ public class GitPreferenceRoot extends DoublePreferencesPreferencePage
 		HTTP_CLIENT_NAMES_AND_VALUES[0][1] = "jdk"; //$NON-NLS-1$
 		HTTP_CLIENT_NAMES_AND_VALUES[1][0] = UIText.GitPreferenceRoot_HttpClient_Apache_Label;
 		HTTP_CLIENT_NAMES_AND_VALUES[1][1] = "apache"; //$NON-NLS-1$
+		AUTO_FETCH_NAMES_AND_VALUES[0][0] = UIText.GitPreferenceRoot_AutoFetchDisabled;
+		AUTO_FETCH_NAMES_AND_VALUES[0][1] = UIPreferences.AUTO_FETCH_DISABLED;
+		AUTO_FETCH_NAMES_AND_VALUES[1][0] = UIText.GitPreferenceRoot_AutoFetchDefaultRemote;
+		AUTO_FETCH_NAMES_AND_VALUES[1][1] = UIPreferences.AUTO_FETCH_DEFAULT_REMOTE;
+		AUTO_FETCH_NAMES_AND_VALUES[2][0] = UIText.GitPreferenceRoot_AutoFetchAllRemotes;
+		AUTO_FETCH_NAMES_AND_VALUES[2][1] = UIPreferences.AUTO_FETCH_ALL_REMOTES;
 	}
 
 	private Group remoteConnectionsGroup;
@@ -331,6 +339,24 @@ public class GitPreferenceRoot extends DoublePreferencesPreferencePage
 			}
 		});
 		updateMargins(repoChangeScannerGroup);
+
+		Group autoFetchGroup = new Group(main, SWT.SHADOW_ETCHED_IN);
+		GridDataFactory.fillDefaults().grab(true, false).span(GROUP_SPAN, 1)
+				.applyTo(autoFetchGroup);
+		autoFetchGroup.setText(UIText.GitPreferenceRoot_AutoFetchGroupHeader);
+		addField(new ComboFieldEditor(UIPreferences.AUTO_FETCH,
+				UIText.GitPreferenceRoot_AutoFetchLabel,
+				AUTO_FETCH_NAMES_AND_VALUES, autoFetchGroup));
+		IntegerFieldEditor autoFetchIntervalField = new IntegerFieldEditor(
+				UIPreferences.AUTO_FETCH_INTERVAL,
+				UIText.GitPreferenceRoot_AutoFetchIntervalLabel,
+				autoFetchGroup);
+		autoFetchIntervalField.setValidRange(60, Integer.MAX_VALUE);
+		autoFetchIntervalField.getLabelControl(autoFetchGroup)
+				.setToolTipText(
+						UIText.GitPreferenceRoot_AutoFetchIntervalTooltip);
+		addField(autoFetchIntervalField);
+		updateMargins(autoFetchGroup);
 
 		Group blameGroup = new Group(main, SWT.SHADOW_ETCHED_IN);
 		GridDataFactory.fillDefaults().grab(true, false).span(GROUP_SPAN, 1)
