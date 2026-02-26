@@ -20,6 +20,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "e72929d0_ae9c0be6",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1012795
+      },
+      "writtenOn": "2026-02-26T16:11:35Z",
+      "side": 1,
+      "message": "I think once this is merged, we could remove the icons folder. I did not include that in this commit but that is what we did in the platform.",
+      "parentUuid": "9a3bfd1a_3cf102b5",
+      "revId": "34187e629c8a625ac9a1e9e1ebe1dd99c30cb26c",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "c93df9b0_758d523f",
         "filename": "/COMMIT_MSG",
         "patchSetId": 1
@@ -31,6 +49,30 @@
       "writtenOn": "2026-02-26T15:54:26Z",
       "side": 1,
       "message": "What happens if we don\u0027t keep the PNG files ?\nDo we need to keep them forever ?",
+      "range": {
+        "startLine": 15,
+        "startChar": 28,
+        "endLine": 18,
+        "endChar": 13
+      },
+      "revId": "34187e629c8a625ac9a1e9e1ebe1dd99c30cb26c",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c3e5b742_3e8e7d0e",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1012795
+      },
+      "writtenOn": "2026-02-26T16:11:35Z",
+      "side": 1,
+      "message": "PLatform keeped its GIFS for 2 or 3 years and after that deleted them. We still have our PNG files in the code base, most likely we delete them in 1-2 years.\n\nIf you remove the png files, every user which had the views already open would see the \"Missing icon\" icon (red square). This can be fixed by starting Eclipse with -clearPersistedState but that would reset the UI to its defaults.",
+      "parentUuid": "c93df9b0_758d523f",
       "range": {
         "startLine": 15,
         "startChar": 28,
