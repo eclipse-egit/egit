@@ -191,6 +191,25 @@ public final class UIPreferences {
 	/** */
 	public static final String REFRESH_ONLY_WHEN_ACTIVE = "refesh_only_when_active"; //$NON-NLS-1$
 
+	/**
+	 * Controls automatic fetch from remotes. Possible values:
+	 * {@link #AUTO_FETCH_DISABLED}, {@link #AUTO_FETCH_DEFAULT_REMOTE},
+	 * {@link #AUTO_FETCH_ALL_REMOTES}.
+	 */
+	public static final String AUTO_FETCH = "auto_fetch"; //$NON-NLS-1$
+
+	/** Value for {@link #AUTO_FETCH}: do not auto-fetch. */
+	public static final String AUTO_FETCH_DISABLED = "false"; //$NON-NLS-1$
+
+	/** Value for {@link #AUTO_FETCH}: fetch only the default remote. */
+	public static final String AUTO_FETCH_DEFAULT_REMOTE = "true"; //$NON-NLS-1$
+
+	/** Value for {@link #AUTO_FETCH}: fetch all remotes. */
+	public static final String AUTO_FETCH_ALL_REMOTES = "all"; //$NON-NLS-1$
+
+	/** Interval in seconds for automatic fetch */
+	public static final String AUTO_FETCH_INTERVAL = "auto_fetch_interval"; //$NON-NLS-1$
+
 	/** Holds true if the logical model should be used. */
 	public static final String USE_LOGICAL_MODEL = "enable_logical_model"; //$NON-NLS-1$
 
