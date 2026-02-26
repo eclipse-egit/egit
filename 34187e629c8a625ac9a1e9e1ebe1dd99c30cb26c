@@ -1,6 +1,46 @@
 {
   "comments": [
     {
+      "unresolved": true,
+      "key": {
+        "uuid": "9a3bfd1a_3cf102b5",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1000671
+      },
+      "writtenOn": "2026-02-26T15:54:26Z",
+      "side": 1,
+      "message": "could we avoid the duplication and symlink the icons from `icons/` ?",
+      "revId": "34187e629c8a625ac9a1e9e1ebe1dd99c30cb26c",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c93df9b0_758d523f",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1000671
+      },
+      "writtenOn": "2026-02-26T15:54:26Z",
+      "side": 1,
+      "message": "What happens if we don\u0027t keep the PNG files ?\nDo we need to keep them forever ?",
+      "range": {
+        "startLine": 15,
+        "startChar": 28,
+        "endLine": 18,
+        "endChar": 13
+      },
+      "revId": "34187e629c8a625ac9a1e9e1ebe1dd99c30cb26c",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735"
+    },
+    {
       "unresolved": false,
       "key": {
         "uuid": "ed2efc51_8b2c3b00",
