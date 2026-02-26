@@ -16,6 +16,23 @@
       "message": "Testing the change on my two monitor setup revealed a problem, this change uses the current shell for positioning the fetch notification.",
       "revId": "efb1244fff2bb8bb60d70e294dd30fc1177f6721",
       "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "9dad84d3_43093570",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1012795
+      },
+      "writtenOn": "2026-02-26T10:22:15Z",
+      "side": 1,
+      "message": "https://github.com/eclipse-platform/eclipse.platform.ui/issues/3746 this makes it impossible for me to check this change with different windows sizes at runtime",
+      "revId": "efb1244fff2bb8bb60d70e294dd30fc1177f6721",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735"
     }
   ]
 }
