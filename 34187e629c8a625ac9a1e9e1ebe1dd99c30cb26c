@@ -36,6 +36,24 @@
       "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "63614766_77d8a484",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1000671
+      },
+      "writtenOn": "2026-02-28T12:05:49Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "e72929d0_ae9c0be6",
+      "revId": "34187e629c8a625ac9a1e9e1ebe1dd99c30cb26c",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "c93df9b0_758d523f",
@@ -73,6 +91,30 @@
       "side": 1,
       "message": "PLatform keeped its GIFS for 2 or 3 years and after that deleted them. We still have our PNG files in the code base, most likely we delete them in 1-2 years.\n\nIf you remove the png files, every user which had the views already open would see the \"Missing icon\" icon (red square). This can be fixed by starting Eclipse with -clearPersistedState but that would reset the UI to its defaults.",
       "parentUuid": "c93df9b0_758d523f",
+      "range": {
+        "startLine": 15,
+        "startChar": 28,
+        "endLine": 18,
+        "endChar": 13
+      },
+      "revId": "34187e629c8a625ac9a1e9e1ebe1dd99c30cb26c",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "9f36c545_4aa5f5a3",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1000671
+      },
+      "writtenOn": "2026-02-28T12:05:49Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "c3e5b742_3e8e7d0e",
       "range": {
         "startLine": 15,
         "startChar": 28,
