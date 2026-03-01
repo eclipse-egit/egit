@@ -48,7 +48,7 @@
 		<menuContribution
 				locationURI="popup:org.eclipse.egit.ui.RepositoriesView?after=group.gitflow">
 			<menu
-					icon="icons/obj16/gitflow.png"
+					icon="icons/obj16/gitflow.svg"
 					label="%TeamGitFlowMenu.name">
 				<visibleWhen
 						checkEnabled="false">
@@ -580,7 +580,7 @@
 		<menuContribution
 				locationURI="popup:team.main?after=group11">
 			<menu
-					icon="icons/obj16/gitflow.png"
+					icon="icons/obj16/gitflow.svg"
 					label="%TeamGitFlowMenu.name">
 				<visibleWhen
 						checkEnabled="false">
@@ -702,7 +702,7 @@
 				allPopups="false"
 				locationURI="popup:org.eclipse.egit.ui.historyPageContributions?after=additions">
 			<menu
-					icon="icons/obj16/gitflow.png"
+					icon="icons/obj16/gitflow.svg"
 					label="%TeamGitFlowMenu.name">
 				<dynamic
 						class="org.eclipse.egit.gitflow.ui.internal.menu.DynamicHistoryMenu"
@@ -875,27 +875,27 @@
 	<extension point="org.eclipse.ui.commandImages">
 		<image
 				commandId="org.eclipse.egit.gitflow.ui.command.init"
-				icon="icons/obj16/gitflow.png">
+				icon="icons/obj16/gitflow.svg">
 		</image>
 		<image
 				commandId="org.eclipse.egit.gitflow.ui.command.replaceWithDevelop"
-				icon="icons/obj16/gitflow.png">
+				icon="icons/obj16/gitflow.svg">
 		</image>
 		<image
 				commandId="org.eclipse.egit.gitflow.ui.command.compareWithDevelop"
-				icon="icons/obj16/gitflow.png">
+				icon="icons/obj16/gitflow.svg">
 		</image>
 		<image
 				commandId="org.eclipse.egit.gitflow.ui.command.developCheckout"
-				icon="platform:/plugin/org.eclipse.egit.ui/icons/obj16/checkout.png">
+				icon="platform:/plugin/org.eclipse.egit.ui/icons/obj16/checkout.svg">
 		</image>
 		<image
 				commandId="org.eclipse.egit.gitflow.ui.command.featureCheckout"
-				icon="platform:/plugin/org.eclipse.egit.ui/icons/obj16/checkout.png">
+				icon="platform:/plugin/org.eclipse.egit.ui/icons/obj16/checkout.svg">
 		</image>
 		<image
 				commandId="org.eclipse.egit.gitflow.ui.command.featureRebase"
-				icon="platform:/plugin/org.eclipse.egit.ui/icons/obj16/rebase.png">
+				icon="platform:/plugin/org.eclipse.egit.ui/icons/obj16/rebase.svg">
 		</image>
 	</extension>
 </plugin>
