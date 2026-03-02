@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "41fa5e90_20f472f3",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/PluginPreferenceInitializer.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 120,
+      "author": {
+        "id": 1000671
+      },
+      "writtenOn": "2026-03-02T13:14:57Z",
+      "side": 1,
+      "message": "This is a pretty aggressive auto-fetch interval. The shortest interval supported by \"git maintenance\" is hourly. If this feature is used by many developers it can potentially generate a lot of traffic for git servers. The values supported by `git maintenance` tasks are `hourly, daily, weekly`. Maybe the interval should be made configurable.\n\nI think this auto-fetch should also honour the git option \"remote.\u003cname\u003e.skipFetchAll\" which is used by `git maintenance prefetch`.\nSee https://git-scm.com/docs/git-maintenance#Documentation/git-maintenance.txt-prefetch.\nThis would provide a way to disable auto-fetch for selected remotes.\nThis enhancement can be implemented in another change.",
+      "revId": "8a734e16478c6baf7d7f03ae11105d9fe03778c7",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735"
+    }
+  ]
+}
