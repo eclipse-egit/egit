@@ -332,11 +332,13 @@ public abstract class RepositoryTreeNode<T> extends PlatformObject
 			// ok for positive indexes < ~2 billion
 			return ((StashedCommitNode) this).getIndex()
 					- ((StashedCommitNode) otherNode).getIndex();
-		case TAG:
 		case ADDITIONALREF:
 		case REF:
 			return CommonUtils.REF_ASCENDING_COMPARATOR.compare((Ref) myObject,
 					(Ref) otherNode.getObject());
+		case TAG:
+			return CommonUtils.REF_ASCENDING_COMPARATOR.reversed()
+					.compare((Ref) myObject, (Ref) otherNode.getObject());
 		case REPO:
 			int nameCompare = CommonUtils.STRING_ASCENDING_COMPARATOR.compare(
 					getDirectoryContainingRepo((Repository) myObject).getName(),

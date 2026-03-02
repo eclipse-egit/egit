@@ -16,12 +16,10 @@ import org.eclipse.jface.layout.GridLayoutFactory;
 import org.eclipse.jface.notifications.AbstractNotificationPopup;
 import org.eclipse.osgi.util.NLS;
 import org.eclipse.swt.SWT;
-import org.eclipse.swt.graphics.Rectangle;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Link;
 import org.eclipse.swt.widgets.Shell;
-import org.eclipse.ui.IWorkbenchWindow;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.jgit.lib.Repository;
 import org.eclipse.jgit.transport.FetchResult;
@@ -54,24 +52,12 @@ public class FetchResultNotification extends AbstractNotificationPopup {
 	public FetchResultNotification(Shell parent, Repository repository,
 			FetchResult result, String source) {
 		super(parent.getDisplay());
+		setParentShell(parent);
 		this.repository = repository;
 		this.result = result;
 		this.source = source;
 		setDelayClose(DELAY_CLOSE_MS);
 		setFadingEnabled(true);
-	}
-
-	@Override
-	protected void initializeBounds() {
-		super.initializeBounds(); // computes and applies the correct size
-		IWorkbenchWindow window = PlatformUI.getWorkbench()
-				.getActiveWorkbenchWindow();
-		if (window != null) {
-			Rectangle wb = window.getShell().getBounds();
-			Rectangle nb = getShell().getBounds();
-			getShell().setLocation(wb.x + wb.width - nb.width,
-					wb.y + wb.height - nb.height);
-		}
 	}
 
 	@Override
