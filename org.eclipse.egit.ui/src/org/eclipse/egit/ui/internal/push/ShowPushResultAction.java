@@ -11,6 +11,8 @@
 package org.eclipse.egit.ui.internal.push;
 
 import org.eclipse.egit.core.op.PushOperationResult;
+import org.eclipse.egit.ui.Activator;
+import org.eclipse.egit.ui.UIPreferences;
 import org.eclipse.egit.ui.internal.UIText;
 import org.eclipse.egit.ui.internal.jobs.RepositoryJobResultAction;
 import org.eclipse.jgit.annotations.NonNull;
@@ -67,9 +69,15 @@ public class ShowPushResultAction extends RepositoryJobResultAction {
 	protected void showResult(@NonNull Repository repository) {
 		Shell shell = PlatformUI.getWorkbench().getModalDialogShellProvider()
 				.getShell();
-		PushResultDialog dialog = new PushResultDialog(shell, repository,
-				operationResult, destination, isModal(shell), pushMode);
-		dialog.showConfigureButton(showConfigure);
-		dialog.open();
+		if (Activator.getDefault().getPreferenceStore()
+				.getBoolean(UIPreferences.PUSH_SHOW_NOTIFICATION)) {
+			new PushResultNotification(shell, repository, operationResult,
+					destination, showConfigure, pushMode).open();
+		} else {
+			PushResultDialog dialog = new PushResultDialog(shell, repository,
+					operationResult, destination, isModal(shell), pushMode);
+			dialog.showConfigureButton(showConfigure);
+			dialog.open();
+		}
 	}
 }
