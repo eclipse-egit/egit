@@ -16,6 +16,23 @@
       "message": "Duplicate of https://review.gerrithub.io/c/eclipse-egit/egit/+/1232718",
       "revId": "c62f1e71f65cf5fa436bff48ae16b7ae3aa241ff",
       "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "ac846c41_6537089c",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000671
+      },
+      "writtenOn": "2026-03-04T22:53:24Z",
+      "side": 1,
+      "message": "this change looks like a duplicate of https://eclipse.gerrithub.io/c/eclipse-egit/egit/+/1232718, don\u0027t know how this happened",
+      "revId": "c62f1e71f65cf5fa436bff48ae16b7ae3aa241ff",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735"
     }
   ]
 }
