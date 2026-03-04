@@ -62,7 +62,7 @@ public class PluginPreferenceInitializer extends AbstractPreferenceInitializer {
 		store.setDefault(UIPreferences.RESOURCEHISTORY_SHOW_REV_COMMENT, true);
 		store.setDefault(UIPreferences.RESOURCEHISTORY_SHOW_TOOLTIPS, false);
 		store.setDefault(UIPreferences.RESOURCEHISTORY_SHOW_ALL_BRANCHES,
-				false);
+				true);
 		store.setDefault(UIPreferences.RESOURCEHISTORY_SELECTED_REF_FILTERS,
 				"HEAD"); //$NON-NLS-1$
 		store.setDefault(
