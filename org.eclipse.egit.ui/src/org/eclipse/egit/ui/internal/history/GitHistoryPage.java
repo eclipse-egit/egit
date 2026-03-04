@@ -1668,7 +1668,7 @@ public class GitHistoryPage extends HistoryPage implements RefsChangedListener,
 			showAllFilter = ShowFilter.valueOf(Activator.getDefault()
 					.getPreferenceStore().getString(PREF_SHOWALLFILTER));
 		} catch (IllegalArgumentException e) {
-			showAllFilter = ShowFilter.SHOWALLRESOURCE;
+			showAllFilter = ShowFilter.SHOWALLREPO;
 		}
 
 		actions = new GitHistoryPageActions(this);
