@@ -3022,6 +3022,19 @@ public class UIText extends NLS {
 	public static String PushResultDialog_title;
 
 	/** */
+	public static String PushResultNotification_Title;
+
+	/** */
+	public static String PushResultNotification_UpToDate;
+
+	/** */
+	public static String PushResultNotification_RefsUpdated;
+	/** */
+	public static String PushResultNotification_PushRejected;
+	/** */
+	public static String PushResultNotification_Details;
+
+	/** */
 	public static String PushResultTable_MessageText;
 
 	/** */
@@ -4252,6 +4265,9 @@ public class UIText extends NLS {
 
 	/** */
 	public static String DialogsPreferencePage_ShowPushInfoDialog;
+
+	/** */
+	public static String DialogsPreferencePage_PushShowNotification;
 
 	/** */
 	public static String DialogsPreferencePage_ShowTooltip;
