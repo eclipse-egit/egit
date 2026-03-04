@@ -40,7 +40,9 @@ import org.eclipse.core.runtime.Adapters;
 import org.eclipse.core.runtime.jobs.Job;
 import org.eclipse.egit.core.RepositoryUtil;
 import org.eclipse.egit.gitflow.op.InitOperation;
+import org.eclipse.egit.ui.Activator;
 import org.eclipse.egit.ui.JobFamilies;
+import org.eclipse.egit.ui.UIPreferences;
 import org.eclipse.egit.ui.internal.UIText;
 import org.eclipse.egit.ui.internal.history.RefFilterHelper;
 import org.eclipse.egit.ui.internal.history.RefFilterHelper.RefFilter;
@@ -125,11 +127,18 @@ public class HistoryViewTest extends GitRepositoriesViewTestBase {
 
 		RepositoryUtil.INSTANCE.addConfiguredRepository(repoFile);
 
+		// Reset to ensure reproducible state regardless of defaults
+		Activator.getDefault().getPreferenceStore().setValue(
+				UIPreferences.RESOURCEHISTORY_SHOW_ALL_BRANCHES, false);
+
 		Repository repo = myRepoViewUtil.lookupRepository(repoFile);
 
 		refFilterHelper = new RefFilterHelper(repo);
 		refFilterHelper.setRefFilters(refFilterHelper.getDefaults());
 		refFilterHelper.resetLastSelectionStateToDefault();
+
+		// Reset resource filter to SHOWALLRESOURCE for test isolation
+		initFilter(0);
 	}
 
 	private void checkout(Git git, String ref, boolean create)
