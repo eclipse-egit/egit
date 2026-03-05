@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <?pde?>
 <!-- generated with https://github.com/eclipse-cbi/targetplatform-dsl -->
-<target name="egit-4.39" sequenceNumber="1772352845">
+<target name="egit-4.39" sequenceNumber="1772701664">
   <locations>
     <location includeMode="slicer" includeAllPlatforms="false" includeSource="true" includeConfigurePhase="true" type="InstallableUnit">
       <unit id="org.eclipse.license.feature.group" version="0.0.0"/>
@@ -120,7 +120,9 @@
       <unit id="org.eclipse.sdk.ide" version="0.0.0"/>
       <unit id="org.eclipse.search.core" version="0.0.0"/>
       <unit id="org.eclipse.swt.tools.base" version="0.0.0"/>
+      <unit id="org.osgi.service.event" version="0.0.0"/>
       <unit id="org.osgi.service.http.whiteboard" version="0.0.0"/>
+      <unit id="org.osgi.service.prefs" version="0.0.0"/>
       <unit id="org.osgi.service.repository" version="0.0.0"/>
       <unit id="org.sat4j.core" version="0.0.0"/>
       <unit id="org.sat4j.pb" version="0.0.0"/>
