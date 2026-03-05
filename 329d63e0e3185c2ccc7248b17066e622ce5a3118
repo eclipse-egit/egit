@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "6e52250d_af7ea275",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1012795
+      },
+      "writtenOn": "2026-03-05T09:33:52Z",
+      "side": 1,
+      "message": "Not sure what this problem is:\n\n10:15:50  09:15:50 [INFO] Adding repository https://repo.eclipse.org/content/unzip/snapshots.unzip/org/eclipse/jgit/org.eclipse.jgit.repository/7.6.0-SNAPSHOT/org.eclipse.jgit.repository-7.6.0-SNAPSHOT.zip-unzip\n10:15:51  09:15:51 [INFO] Adding repository https://download.eclipse.org/cbi/updates/license\n10:15:51  09:15:51 [INFO] {osgi.os\u003dlinux, osgi.ws\u003dgtk, org.eclipse.update.install.features\u003dtrue, osgi.arch\u003dx86_64, org.eclipse.update.install.sources\u003dtrue}\n10:15:51  09:15:51 [ERROR] Cannot resolve project dependencies:\n10:15:51  09:15:51 [ERROR]   Software being installed: org.eclipse.egit.core 7.6.1.qualifier\n10:15:51  09:15:51 [ERROR]   Missing requirement: org.eclipse.egit.core 7.6.1.qualifier requires \u0027java.package; org.eclipse.jgit.annotations [7.6.1,7.7.0)\u0027 but it could not be found\n10:15:51  09:15:51 [ERROR] \n10:15:51  09:15:51 [ERROR] See https://wiki.eclipse.org/Tycho/Dependency_Resolution_Troubleshooting for help.\n10:15:51  09:15:51 [ERROR] Cannot resolve dependencies of MavenProject: org.eclipse.egit:org.eclipse.egit.core:7.6.1-SNAPSHOT @ /home/jenkins/agent/workspace/egit-stable.gerrit/repo/org.eclipse.egit.core/pom.xml: See log for details -\u003e [Help 1]",
+      "revId": "329d63e0e3185c2ccc7248b17066e622ce5a3118",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735"
+    }
+  ]
+}
