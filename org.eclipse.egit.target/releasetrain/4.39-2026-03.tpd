@@ -37,7 +37,9 @@ location "https://download.eclipse.org/staging/2026-03" {
 	org.eclipse.sdk.ide lazy
 	org.eclipse.search.core lazy
 	org.eclipse.swt.tools.base lazy
+	org.osgi.service.event lazy
 	org.osgi.service.http.whiteboard lazy
+	org.osgi.service.prefs lazy
 	org.osgi.service.repository lazy
 	org.sat4j.core lazy
 	org.sat4j.pb lazy
