@@ -35,6 +35,41 @@
       "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "62c79ff9_855f5ce4",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1039063
+      },
+      "writtenOn": "2026-03-09T12:26:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ec440b55_05b66cdf",
+      "revId": "0472c5d1fe617157761622ae5c7175946e922b46",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "d43557f3_66396257",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1039063
+      },
+      "writtenOn": "2026-03-09T12:26:20Z",
+      "side": 1,
+      "message": "I resolved my own comments since they do not represent open tasks, they were merely comments to help the reviewer.",
+      "revId": "0472c5d1fe617157761622ae5c7175946e922b46",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "52be615e_1cc6eed7",
@@ -52,6 +87,24 @@
       "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "2ef6925d_bce8b53b",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/history/GenerateHistoryJob.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 156,
+      "author": {
+        "id": 1039063
+      },
+      "writtenOn": "2026-03-09T12:26:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "52be615e_1cc6eed7",
+      "revId": "0472c5d1fe617157761622ae5c7175946e922b46",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "38ea7671_d5bd1b2d",
@@ -65,6 +118,30 @@
       "writtenOn": "2026-02-20T08:15:00Z",
       "side": 1,
       "message": "This change mirrors the logic in setLoadHint(int), which is: if there is no commit to load then it shouldn\u0027t be searched for using the \"wantedIndex\" either.",
+      "range": {
+        "startLine": 259,
+        "startChar": 2,
+        "endLine": 261,
+        "endChar": 3
+      },
+      "revId": "0472c5d1fe617157761622ae5c7175946e922b46",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "a83af5af_b4d94df1",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/history/GenerateHistoryJob.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 261,
+      "author": {
+        "id": 1039063
+      },
+      "writtenOn": "2026-03-09T12:26:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "38ea7671_d5bd1b2d",
       "range": {
         "startLine": 259,
         "startChar": 2,

@@ -18,6 +18,24 @@
       "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "2b22e401_cda96ebb",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/history/GenerateHistoryJob.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 1039063
+      },
+      "writtenOn": "2026-03-09T12:26:20Z",
+      "side": 0,
+      "message": "Done",
+      "parentUuid": "f9d79fcc_f50a7e4e",
+      "revId": "37cbe07c83cd79fcfef9846866064db02d2e722c",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "db126a0f_0e7c2641",
@@ -35,6 +53,24 @@
       "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "f1d90dc5_70a43fce",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/history/GenerateHistoryJob.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 1039063
+      },
+      "writtenOn": "2026-03-09T12:26:20Z",
+      "side": 0,
+      "message": "Done",
+      "parentUuid": "db126a0f_0e7c2641",
+      "revId": "37cbe07c83cd79fcfef9846866064db02d2e722c",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "2ca343e4_5add61f3",
@@ -48,6 +84,30 @@
       "writtenOn": "2026-02-20T08:15:00Z",
       "side": 0,
       "message": "I moved this logic to the anonymous subclass of `SWTCommitList` in the constructor (see the `enter(...)` method) with one behavioral change: `commitToShow \u003d commitToLoad` now only happens if the commit is actually found.",
+      "range": {
+        "startLine": 129,
+        "startChar": 6,
+        "endLine": 133,
+        "endChar": 7
+      },
+      "revId": "37cbe07c83cd79fcfef9846866064db02d2e722c",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "5782c830_cde9cc96",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/history/GenerateHistoryJob.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 133,
+      "author": {
+        "id": 1039063
+      },
+      "writtenOn": "2026-03-09T12:26:20Z",
+      "side": 0,
+      "message": "Done",
+      "parentUuid": "2ca343e4_5add61f3",
       "range": {
         "startLine": 129,
         "startChar": 6,
