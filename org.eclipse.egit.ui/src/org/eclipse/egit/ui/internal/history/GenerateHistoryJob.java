@@ -37,7 +37,7 @@ import org.eclipse.jgit.revwalk.RevWalk;
 import org.eclipse.osgi.util.NLS;
 
 class GenerateHistoryJob extends Job {
-	private static final int BATCH_SIZE = 256;
+	private static final int MAX_BATCH_SIZE = 256;
 
 	private final Object lock = new Object();
 
@@ -71,6 +71,8 @@ class GenerateHistoryJob extends Job {
 
 	// Guarded by 'lock'
 	private int nextLoadHint = -1;
+
+	private int currentBatchSize = 1;
 
 	GenerateHistoryJob(final GitHistoryPage ghp, @NonNull RevWalk walk,
 			ResourceManager resources) {
@@ -137,8 +139,8 @@ class GenerateHistoryJob extends Job {
 					if (monitor.isCanceled()) {
 						return Status.CANCEL_STATUS;
 					}
-					if (loadedCommits.size() > itemToLoad + (BATCH_SIZE / 2) + 1
-							&& findToolbarIsHidden && commitFound()) {
+					if (loadedCommits.size() > itemToLoad + (MAX_BATCH_SIZE / 2)
+							+ 1 && findToolbarIsHidden && commitFound()) {
 						break;
 					}
 					if (maxCommits > 0 && loadedCommits.size() > maxCommits) {
@@ -206,7 +208,10 @@ class GenerateHistoryJob extends Job {
 	}
 
 	private int getNextMaximumCommitsCount() {
-		return loadedCommits.size() + BATCH_SIZE - 1;
+		int count = loadedCommits.size() + currentBatchSize;
+		currentBatchSize = (int) Math.min(Math.ceil(currentBatchSize * 1.5),
+				MAX_BATCH_SIZE);
+		return count;
 	}
 
 	private boolean commitFound() {
@@ -281,7 +286,7 @@ class GenerateHistoryJob extends Job {
 
 	boolean loadNextBatch(int currentIndex) {
 		synchronized (lock) {
-			if (hasMore && currentIndex + (BATCH_SIZE / 2) > size
+			if (hasMore && currentIndex + (MAX_BATCH_SIZE / 2) > size
 					&& currentIndex > nextLoadHint) {
 				nextLoadHint = currentIndex;
 				return true;
