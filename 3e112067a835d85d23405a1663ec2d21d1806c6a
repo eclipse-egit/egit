@@ -16,6 +16,23 @@
       "message": "Not sure if that build error is related: ERROR: No artifacts found that match the file pattern \"org.eclipse.egit.repository/target/repository/**,*/target/screenshots/*,*/target/work/data/.metadata/*log\". Configuration error?\nFinished: FAILURE",
       "revId": "3e112067a835d85d23405a1663ec2d21d1806c6a",
       "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "b225c6d5_615b802e",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1012795
+      },
+      "writtenOn": "2026-03-15T12:33:19Z",
+      "side": 1,
+      "message": "Matthias, please review",
+      "revId": "3e112067a835d85d23405a1663ec2d21d1806c6a",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735"
     }
   ]
 }
