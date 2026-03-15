@@ -16,6 +16,23 @@
       "message": "Looks like the egit build is broken by the EF\u0027s Nexus update. https://repo.eclipse.org/content/unzip is gone.\n\nThe build used that to figure out the highest patch version of JGit for the EGit version being built, and to set -Djgit-site to the JGit p2 repo of that version. The first can be solved easily enough, but where would the build find a p2 update for JGit? It could find the zipped p2 update site in the org.jgit.repository bundle published to maven, but unzipped? In the worst case the build will have to download the zipped repo and then unzip it locally...\n\nDoes anyone have a better idea?",
       "revId": "df0bf29c0ab944a0ae18e78bd345edfeba5bd40e",
       "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "d8399dac_8f12a6bc",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1021966
+      },
+      "writtenOn": "2026-03-15T10:26:36Z",
+      "side": 1,
+      "message": "EGit builds are fixed.",
+      "revId": "df0bf29c0ab944a0ae18e78bd345edfeba5bd40e",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735"
     }
   ]
 }
