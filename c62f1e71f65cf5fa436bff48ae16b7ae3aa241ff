@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "32659e68_aad3a3d9",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1012795
+      },
+      "writtenOn": "2026-03-15T12:34:12Z",
+      "side": 1,
+      "message": "Matthias, this is the same change for the push dialog as the merged one for the fetch dialog. Please review",
+      "revId": "c62f1e71f65cf5fa436bff48ae16b7ae3aa241ff",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735"
+    }
+  ]
+}
