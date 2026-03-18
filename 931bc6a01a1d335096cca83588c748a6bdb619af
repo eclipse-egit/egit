@@ -18,6 +18,24 @@
       "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735"
     },
     {
+      "unresolved": true,
+      "key": {
+        "uuid": "de5b3182_8ef81968",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1012795
+      },
+      "writtenOn": "2026-03-18T13:21:00Z",
+      "side": 1,
+      "message": "https://github.com/eclipse-platform/eclipse.platform.ui/issues/3793",
+      "parentUuid": "f5804737_544ae712",
+      "revId": "931bc6a01a1d335096cca83588c748a6bdb619af",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735"
+    },
+    {
       "unresolved": false,
       "key": {
         "uuid": "25ab1633_49225e42",
@@ -48,6 +66,24 @@
       "writtenOn": "2026-03-18T13:00:13Z",
       "side": 1,
       "message": "This is _not_ the icon that you highlighted in the Github issue[1]. You highlighted the \"magnifying glass\" icon that shows/hides the find component. The icon you change here is the search commits icon show inside that component. That one should not be changed:\n1. It is consistent with the view icon of the \"Search\" view, and with icons in the top-level \"Search\" menu and in the tabs in the global \"Search...\" dialog.\n2. We\u0027d end up with two different magnifying glasses in the history page\u0027s toolbar.\n\nThe action highlighted in [1] actually uses **elcl16/find.svg**.\n\nFinally: why is that new SVG so big? As far as I see it\u0027s just a circle and line, both gray. That should give a super-small SVG and not need 515 lines.\n\n[1] https://github.com/eclipse-egit/egit/issues/149",
+      "revId": "931bc6a01a1d335096cca83588c748a6bdb619af",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "8c306d36_7ccee9dd",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1012795
+      },
+      "writtenOn": "2026-03-18T13:21:00Z",
+      "side": 1,
+      "message": "The new icon is just a copy of the platform one, IIRC I copied it originally from the Android icons",
+      "parentUuid": "d9cd664f_04ef34f6",
       "revId": "931bc6a01a1d335096cca83588c748a6bdb619af",
       "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735"
     }
