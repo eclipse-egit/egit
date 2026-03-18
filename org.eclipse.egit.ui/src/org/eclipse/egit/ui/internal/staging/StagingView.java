@@ -321,6 +321,8 @@ public class StagingView extends ViewPart
 
 	private Text filterText;
 
+	private ControlContribution filterContribution;
+
 	/** Remember compiled pattern of the current filter string for performance. */
 	private Pattern filterPattern;
 
@@ -2150,7 +2152,7 @@ public class StagingView extends ViewPart
 
 	private void updateToolbar() {
 
-		ControlContribution controlContribution = new ControlContribution(
+		filterContribution = new ControlContribution(
 				"StagingView.searchText") { //$NON-NLS-1$
 
 			@Override
@@ -2180,11 +2182,58 @@ public class StagingView extends ViewPart
 				return toolbarComposite;
 			}
 		};
+		boolean showFilter = getPreferenceStore()
+				.getBoolean(UIPreferences.STAGING_VIEW_SHOW_FILTER);
+		filterContribution.setVisible(showFilter);
 
 		IActionBars actionBars = getViewSite().getActionBars();
 		IToolBarManager toolbar = actionBars.getToolBarManager();
+		IMenuManager dropdownMenu = actionBars.getMenuManager();
 
-		toolbar.add(controlContribution);
+		toolbar.removeAll();
+		dropdownMenu.removeAll();
+
+		toolbar.add(filterContribution);
+
+		Action showFilterAction = new Action(UIText.StagingView_Find,
+				IAction.AS_CHECK_BOX) {
+
+			@Override
+			public void run() {
+				boolean checked = isChecked();
+				getPreferenceStore().setValue(
+						UIPreferences.STAGING_VIEW_SHOW_FILTER, checked);
+				filterContribution.setVisible(checked);
+				if (!checked && filterText != null
+						&& !filterText.isDisposed()
+						&& !filterText.getText().isEmpty()) {
+					filterText.setText(""); //$NON-NLS-1$
+				}
+				toolbar.update(true);
+				if (checked && filterText != null && !filterText.isDisposed()) {
+					filterText.setFocus();
+				}
+			}
+
+			@Override
+			public void setChecked(boolean checked) {
+				super.setChecked(checked);
+				if (checked) {
+					setToolTipText(
+							UIText.StagingView_HideFilterTooltip);
+				} else {
+					setToolTipText(
+							UIText.StagingView_ShowFilterTooltip);
+				}
+			}
+		};
+		showFilterAction.setActionDefinitionId(
+				IWorkbenchCommandConstants.EDIT_FIND_AND_REPLACE);
+		showFilterAction.setImageDescriptor(UIIcons.ELCL16_FIND);
+		showFilterAction.setChecked(showFilter);
+		toolbar.add(showFilterAction);
+		actionBars.setGlobalActionHandler(ActionFactory.FIND.getId(),
+				showFilterAction);
 
 		refreshAction = new Action(UIText.StagingView_Refresh, IAction.AS_PUSH_BUTTON) {
 			@Override
@@ -2307,7 +2356,6 @@ public class StagingView extends ViewPart
 		fileNameModeAction.setChecked(getPreferenceStore().getBoolean(
 				UIPreferences.STAGING_VIEW_FILENAME_MODE));
 
-		IMenuManager dropdownMenu = actionBars.getMenuManager();
 		dropdownMenu.add(presentationAction);
 		dropdownMenu.add(new Separator());
 		dropdownMenu.add(openNewCommitsAction);
