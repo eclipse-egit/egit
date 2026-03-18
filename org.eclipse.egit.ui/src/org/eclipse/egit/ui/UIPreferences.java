@@ -289,6 +289,8 @@ public final class UIPreferences {
 	/**	 */
 	public static final String STAGING_VIEW_COMPARE_MODE = "StagingView_CompareMode"; //$NON-NLS-1$
 	/** */
+	public static final String STAGING_VIEW_SHOW_FILTER = "StagingView_ShowFilter"; //$NON-NLS-1$
+	/** */
 	public static final String STAGING_VIEW_FILENAME_MODE = "StagingView_FileNameMode"; //$NON-NLS-1$
 	/** */
 	public static final String STAGING_VIEW_PRESENTATION = "StagingView_Presentation"; //$NON-NLS-1$
