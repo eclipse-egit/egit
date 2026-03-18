@@ -933,6 +933,7 @@ public class StagingView extends ViewPart
 
 		unstagedSection = toolkit.createSection(stagingSashForm,
 				ExpandableComposite.SHORT_TITLE_BAR);
+		unstagedSection.setFont(stagingSashForm.getFont());
 		unstagedSection.clientVerticalSpacing = 0;
 
 		unstagedSection.setLayoutData(
@@ -962,6 +963,7 @@ public class StagingView extends ViewPart
 
 		rebaseSection = toolkit.createSection(rebaseAndCommitComposite,
 				ExpandableComposite.SHORT_TITLE_BAR);
+		rebaseSection.setFont(rebaseAndCommitComposite.getFont());
 		rebaseSection.clientVerticalSpacing = 0;
 		rebaseSection.setText(UIText.StagingView_RebaseLabel);
 
@@ -1012,6 +1014,7 @@ public class StagingView extends ViewPart
 
 		commitMessageSection = toolkit.createSection(rebaseAndCommitComposite,
 				ExpandableComposite.SHORT_TITLE_BAR);
+		commitMessageSection.setFont(rebaseAndCommitComposite.getFont());
 		commitMessageSection.clientVerticalSpacing = 0;
 		commitMessageSection.setText(UIText.StagingView_CommitMessage);
 		commitMessageSection.setLayoutData(GridDataFactory.fillDefaults()
@@ -1333,6 +1336,7 @@ public class StagingView extends ViewPart
 
 		stagedSection = toolkit.createSection(stagingSashForm,
 				ExpandableComposite.SHORT_TITLE_BAR);
+		stagedSection.setFont(stagingSashForm.getFont());
 		stagedSection.clientVerticalSpacing = 0;
 
 		createStagedToolBarComposite();
