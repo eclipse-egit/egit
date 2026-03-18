@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "25ab1633_49225e42",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1012795
+      },
+      "writtenOn": "2026-03-18T11:12:40Z",
+      "side": 1,
+      "message": "To see the new svg icon, close the history view and re-open it (old bug in platform, we cache the image URl of the icons)",
+      "revId": "931bc6a01a1d335096cca83588c748a6bdb619af",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735"
+    }
+  ]
+}
