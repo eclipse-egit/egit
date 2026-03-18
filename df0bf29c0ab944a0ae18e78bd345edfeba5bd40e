@@ -33,6 +33,23 @@
       "message": "EGit builds are fixed.",
       "revId": "df0bf29c0ab944a0ae18e78bd345edfeba5bd40e",
       "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "42894e43_d056e97d",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1012795
+      },
+      "writtenOn": "2026-03-18T11:05:58Z",
+      "side": 1,
+      "message": "Thanks, looks good to me",
+      "revId": "df0bf29c0ab944a0ae18e78bd345edfeba5bd40e",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735"
     }
   ]
 }
