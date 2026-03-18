@@ -86,6 +86,7 @@ import org.eclipse.egit.ui.UIPreferences;
 import org.eclipse.egit.ui.UIUtils;
 import org.eclipse.egit.ui.commit.CommitContext;
 import org.eclipse.egit.ui.internal.ActionUtils;
+import org.eclipse.egit.ui.internal.GitLabels;
 import org.eclipse.egit.ui.internal.CommonUtils;
 import org.eclipse.egit.ui.internal.CompareUtils;
 import org.eclipse.egit.ui.internal.UIIcons;
@@ -183,6 +184,7 @@ import org.eclipse.jgit.api.errors.GitAPIException;
 import org.eclipse.jgit.api.errors.JGitInternalException;
 import org.eclipse.jgit.api.errors.NoFilepatternException;
 import org.eclipse.jgit.events.ListenerHandle;
+import org.eclipse.jgit.lib.BranchTrackingStatus;
 import org.eclipse.jgit.lib.CommitConfig;
 import org.eclipse.jgit.lib.CommitConfig.CleanupMode;
 import org.eclipse.jgit.lib.Constants;
@@ -195,6 +197,7 @@ import org.eclipse.jgit.revwalk.RevCommit;
 import org.eclipse.jgit.transport.RemoteConfig;
 import org.eclipse.jgit.util.StringUtils;
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.custom.CLabel;
 import org.eclipse.swt.custom.SashForm;
 import org.eclipse.swt.custom.StackLayout;
 import org.eclipse.swt.custom.VerifyKeyListener;
@@ -298,6 +301,8 @@ public class StagingView extends ViewPart
 	private FormToolkit toolkit;
 
 	private Form form;
+
+	private CLabel repoLabel;
 
 	private RepositoryNode titleNode;
 
@@ -810,7 +815,8 @@ public class StagingView extends ViewPart
 				new RepositoryTreeNodeLabelProvider(),
 				PlatformUI.getWorkbench().getDecoratorManager());
 		titleLabelProvider.addListener(e -> {
-			if (titleNode != null && form != null && !form.isDisposed()) {
+			if (titleNode != null && repoLabel != null
+					&& !repoLabel.isDisposed()) {
 				updateTitle(false);
 			}
 		});
@@ -854,11 +860,14 @@ public class StagingView extends ViewPart
 				// ignore
 			}
 		});
-		form.setImage(getImage(UIIcons.REPOSITORY));
-		form.setText(UIText.StagingView_NoSelectionTitle);
 		GridDataFactory.fillDefaults().grab(true, true).applyTo(form);
-		toolkit.decorateFormHeading(form);
 		GridLayoutFactory.swtDefaults().applyTo(form.getBody());
+
+		repoLabel = new CLabel(form.getBody(), SWT.NONE);
+		repoLabel.setImage(getImage(UIIcons.REPOSITORY));
+		repoLabel.setText(UIText.StagingView_NoSelectionTitle);
+		GridDataFactory.fillDefaults().grab(true, false)
+				.applyTo(repoLabel);
 
 		mainSashForm = new SashForm(form.getBody(), getMainSashFormOrientation());
 		saveSashFormOrientationOnDisposal(mainSashForm, MAIN_SASH_FORM_ORIENTATION_VERTICAL);
@@ -1520,20 +1529,66 @@ public class StagingView extends ViewPart
 				titleNode.getRepository().getDirectory(),
 				r -> new ViewerLabel(null, null));
 		if (force) {
-			if (label.getImage() != null) {
-				form.setImage(label.getImage());
-			}
 			if (!StringUtils.isEmptyOrNull(label.getText())) {
-				form.setText(label.getText());
+				updateRepoLabel(label.getText(),
+						label.getImage() != null ? label.getImage()
+								: getImage(UIIcons.REPOSITORY));
 			}
 		}
 		titleLabelProvider.updateLabel(label, titleNode);
-		if (label.hasNewImage()) {
-			form.setImage(label.getImage());
+		if (label.hasNewText() || label.hasNewImage()) {
+			updateRepoLabel(label.getText(),
+					label.getImage() != null ? label.getImage()
+							: getImage(UIIcons.REPOSITORY));
 		}
-		if (label.hasNewText()) {
-			form.setText(label.getText());
+	}
+
+	private void updateRepoLabel(String text, Image image) {
+		if (repoLabel != null && !repoLabel.isDisposed()) {
+			repoLabel.setText(text);
+			repoLabel.setImage(image);
+			repoLabel.setToolTipText(buildRepoTooltip());
+			repoLabel.requestLayout();
 		}
+	}
+
+	private String buildRepoTooltip() {
+		if (titleNode == null) {
+			return null;
+		}
+		Repository repository = titleNode.getRepository();
+		StringBuilder sb = new StringBuilder();
+		sb.append(UIText.StagingView_RepoTooltipRepository).append(": ") //$NON-NLS-1$
+				.append(RepositoryUtil.INSTANCE
+						.getRepositoryName(repository));
+		sb.append('\n');
+		sb.append(UIText.StagingView_RepoTooltipPath).append(": ") //$NON-NLS-1$
+				.append(repository.getDirectory().getAbsolutePath());
+		try {
+			String branch = RepositoryUtil.INSTANCE
+					.getShortBranch(repository);
+			if (branch != null) {
+				sb.append('\n');
+				sb.append(UIText.StagingView_RepoTooltipBranch)
+						.append(": ") //$NON-NLS-1$
+						.append(branch);
+				BranchTrackingStatus trackingStatus = BranchTrackingStatus
+						.of(repository, branch);
+				if (trackingStatus != null) {
+					int ahead = trackingStatus.getAheadCount();
+					int behind = trackingStatus.getBehindCount();
+					if (ahead != 0 || behind != 0) {
+						sb.append('\n');
+						sb.append(GitLabels
+								.formatBranchTrackingStatus(
+										trackingStatus));
+					}
+				}
+			}
+		} catch (IOException e) {
+			// ignore
+		}
+		return sb.toString();
 	}
 
 	private void setCommentCharTooltip() {
@@ -4175,11 +4230,12 @@ public class StagingView extends ViewPart
 		refreshAction.setEnabled(false);
 		updateSectionText();
 		titleNode = null;
-		form.setImage(getImage(UIIcons.REPOSITORY));
 		if (repository != null && repository.isBare()) {
-			form.setText(UIText.StagingView_BareRepoSelection);
+			updateRepoLabel(UIText.StagingView_BareRepoSelection,
+					getImage(UIIcons.REPOSITORY));
 		} else {
-			form.setText(UIText.StagingView_NoSelectionTitle);
+			updateRepoLabel(UIText.StagingView_NoSelectionTitle,
+					getImage(UIIcons.REPOSITORY));
 		}
 		updateIgnoreErrorsButtonVisibility();
 		updateRebaseButtonVisibility(false);

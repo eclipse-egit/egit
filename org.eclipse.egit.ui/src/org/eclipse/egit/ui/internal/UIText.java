@@ -6110,6 +6110,15 @@ public class UIText extends NLS {
 	public static String StagingView_NoSelectionTitle;
 
 	/** */
+	public static String StagingView_RepoTooltipRepository;
+
+	/** */
+	public static String StagingView_RepoTooltipPath;
+
+	/** */
+	public static String StagingView_RepoTooltipBranch;
+
+	/** */
 	public static String StagingView_CompareMode;
 
 	/** */
