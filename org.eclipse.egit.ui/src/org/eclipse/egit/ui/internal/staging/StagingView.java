@@ -253,7 +253,6 @@ import org.eclipse.ui.actions.ActionFactory;
 import org.eclipse.ui.actions.ActionFactory.IWorkbenchAction;
 import org.eclipse.ui.forms.IFormColors;
 import org.eclipse.ui.forms.widgets.ExpandableComposite;
-import org.eclipse.ui.forms.widgets.Form;
 import org.eclipse.ui.forms.widgets.FormToolkit;
 import org.eclipse.ui.forms.widgets.Section;
 import org.eclipse.ui.handlers.IHandlerService;
@@ -300,7 +299,7 @@ public class StagingView extends ViewPart
 
 	private FormToolkit toolkit;
 
-	private Form form;
+	private Composite form;
 
 	private CLabel repoLabel;
 
@@ -835,7 +834,7 @@ public class StagingView extends ViewPart
 			}
 		});
 
-		form = toolkit.createForm(parent);
+		form = new Composite(parent, SWT.NONE);
 		parent.addControlListener(new ControlListener() {
 
 			private int[] defaultWeights = { 1, 1 };
@@ -861,15 +860,15 @@ public class StagingView extends ViewPart
 			}
 		});
 		GridDataFactory.fillDefaults().grab(true, true).applyTo(form);
-		GridLayoutFactory.swtDefaults().applyTo(form.getBody());
+		GridLayoutFactory.swtDefaults().applyTo(form);
 
-		repoLabel = new CLabel(form.getBody(), SWT.NONE);
+		repoLabel = new CLabel(form, SWT.NONE);
 		repoLabel.setImage(getImage(UIIcons.REPOSITORY));
 		repoLabel.setText(UIText.StagingView_NoSelectionTitle);
 		GridDataFactory.fillDefaults().grab(true, false)
 				.applyTo(repoLabel);
 
-		mainSashForm = new SashForm(form.getBody(), getMainSashFormOrientation());
+		mainSashForm = new SashForm(form, getMainSashFormOrientation());
 		saveSashFormOrientationOnDisposal(mainSashForm, MAIN_SASH_FORM_ORIENTATION_VERTICAL);
 		saveSashFormWeightsOnDisposal(mainSashForm,
 				HORIZONTAL_SASH_FORM_WEIGHT);
