@@ -147,6 +147,7 @@ public class PluginPreferenceInitializer extends AbstractPreferenceInitializer {
 				StagingView.Presentation.LIST.name());
 		store.setDefault(UIPreferences.STAGING_VIEW_FILENAME_MODE, true);
 		store.setDefault(UIPreferences.STAGING_VIEW_COMPARE_MODE, true);
+		store.setDefault(UIPreferences.STAGING_VIEW_SHOW_FILTER, false);
 		store.setDefault(UIPreferences.STAGING_VIEW_MAX_LIMIT_LIST_MODE, 10000);
 		store.setDefault(UIPreferences.STAGING_VIEW_PRESENTATION_CHANGED,
 				false);

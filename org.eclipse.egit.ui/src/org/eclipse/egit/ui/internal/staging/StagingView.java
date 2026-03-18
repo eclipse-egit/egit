@@ -321,6 +321,8 @@ public class StagingView extends ViewPart
 
 	private Text filterText;
 
+	private ControlContribution filterContribution;
+
 	/** Remember compiled pattern of the current filter string for performance. */
 	private Pattern filterPattern;
 
@@ -2150,7 +2152,7 @@ public class StagingView extends ViewPart
 
 	private void updateToolbar() {
 
-		ControlContribution controlContribution = new ControlContribution(
+		filterContribution = new ControlContribution(
 				"StagingView.searchText") { //$NON-NLS-1$
 
 			@Override
@@ -2180,11 +2182,45 @@ public class StagingView extends ViewPart
 				return toolbarComposite;
 			}
 		};
+		boolean showFilter = getPreferenceStore()
+				.getBoolean(UIPreferences.STAGING_VIEW_SHOW_FILTER);
+		filterContribution.setVisible(showFilter);
 
 		IActionBars actionBars = getViewSite().getActionBars();
 		IToolBarManager toolbar = actionBars.getToolBarManager();
 
-		toolbar.add(controlContribution);
+		toolbar.add(filterContribution);
+
+		Action showFilterAction = new Action(UIText.StagingView_Find,
+				IAction.AS_CHECK_BOX) {
+
+			@Override
+			public void run() {
+				getPreferenceStore().setValue(
+						UIPreferences.STAGING_VIEW_SHOW_FILTER, isChecked());
+				filterContribution.setVisible(isChecked());
+				if (!isChecked() && filterText != null
+						&& !filterText.isDisposed()) {
+					filterText.setText(""); //$NON-NLS-1$
+				}
+				toolbar.update(true);
+			}
+
+			@Override
+			public void setChecked(boolean checked) {
+				super.setChecked(checked);
+				if (checked) {
+					setToolTipText(
+							UIText.StagingView_HideFilterTooltip);
+				} else {
+					setToolTipText(
+							UIText.StagingView_ShowFilterTooltip);
+				}
+			}
+		};
+		showFilterAction.setImageDescriptor(UIIcons.ELCL16_FIND);
+		showFilterAction.setChecked(showFilter);
+		toolbar.add(showFilterAction);
 
 		refreshAction = new Action(UIText.StagingView_Refresh, IAction.AS_PUSH_BUTTON) {
 			@Override

@@ -6206,6 +6206,12 @@ public class UIText extends NLS {
 	public static String StagingView_Find;
 
 	/** */
+	public static String StagingView_ShowFilterTooltip;
+
+	/** */
+	public static String StagingView_HideFilterTooltip;
+
+	/** */
 	public static String StagingView_MergeTool;
 
 	/** */
