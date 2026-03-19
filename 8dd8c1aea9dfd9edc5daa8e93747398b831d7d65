@@ -16,6 +16,24 @@
       "message": "toggling the button via keyboard shortcut Cmd+F (that\u0027s the shortcut shown in the tooltip) on macos doesn\u0027t work for me",
       "revId": "8dd8c1aea9dfd9edc5daa8e93747398b831d7d65",
       "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "99c089d3_eeea420e",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1012795
+      },
+      "writtenOn": "2026-03-19T15:22:33Z",
+      "side": 1,
+      "message": "I forgot to ammend the commit and added another one, I now squashed it into the other one. Works for me, I hope no extra logic is needed for Mac, AFACS it is the same as in the history view.",
+      "parentUuid": "55e6c14f_a54da461",
+      "revId": "8dd8c1aea9dfd9edc5daa8e93747398b831d7d65",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735"
     }
   ]
 }
