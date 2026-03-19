@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "55e6c14f_a54da461",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000671
+      },
+      "writtenOn": "2026-03-19T10:28:33Z",
+      "side": 1,
+      "message": "toggling the button via keyboard shortcut Cmd+F (that\u0027s the shortcut shown in the tooltip) on macos doesn\u0027t work for me",
+      "revId": "8dd8c1aea9dfd9edc5daa8e93747398b831d7d65",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735"
+    }
+  ]
+}
