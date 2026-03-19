@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "fa2b444e_07ee069b",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1012795
+      },
+      "writtenOn": "2026-03-19T09:04:24Z",
+      "side": 1,
+      "message": "History also has CTRL+F as shortcut (never noticed that). Will add this here as well.",
+      "revId": "77fd92cf66e3df0ad40e565d2562f35b5efb7f91",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735"
+    }
+  ]
+}
