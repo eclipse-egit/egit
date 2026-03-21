@@ -16,6 +16,24 @@
       "message": "with this change on MacOS the fonts seem larger than without this change",
       "revId": "afe2f0cf8e28cc85990f33db03eb3f73a17aadc0",
       "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "b48e958d_b2766ea0",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1012795
+      },
+      "writtenOn": "2026-03-21T15:01:19Z",
+      "side": 1,
+      "message": "Larger? Is that good? Could you post a before and after screenshot into https://github.com/eclipse-egit/egit/issues/151 just to satisfy my curiosity?",
+      "parentUuid": "540125c1_d249f0a1",
+      "revId": "afe2f0cf8e28cc85990f33db03eb3f73a17aadc0",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735"
     }
   ],
   "submitRequirementResults": []
