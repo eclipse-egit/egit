@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "f042ba5e_c7176698",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1012795
+      },
+      "writtenOn": "2026-03-21T15:01:03Z",
+      "side": 1,
+      "message": "Build failure seems unrelated: \n\n12:10:49  11:10:40 [ERROR] Failed to execute goal org.eclipse.dash:license-tool-plugin:1.1.0:license-check (license-check) on project egit-parent: Execution license-check of goal org.eclipse.dash:license-tool-plugin:1.1.0:license-check failed: Received an error response from the Eclipse Foundation. -\u003e [Help 1]\n12:10:49  org.apache.maven.lifecycle.LifecycleExecutionException: Failed to execute goal org.eclipse.dash:license-tool-plugin:1.1.0:license-check (license-check) on project egit-parent: Execution license-check of goal org.eclipse.dash:license-tool-plugin:1.1.0:license-check failed: Received an error response from the Eclipse Foundation.",
+      "revId": "b34810bb43ba25764bea588030d2b87efb57f666",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735"
+    }
+  ]
+}
