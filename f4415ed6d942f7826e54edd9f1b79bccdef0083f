@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "61a49a9f_6f7bc7c7",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000671
+      },
+      "writtenOn": "2026-03-24T23:02:26Z",
+      "side": 1,
+      "message": "I am using MacOS hence I can\u0027t verify",
+      "revId": "f4415ed6d942f7826e54edd9f1b79bccdef0083f",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735"
+    }
+  ]
+}
