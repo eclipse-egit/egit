@@ -34,6 +34,24 @@
       "parentUuid": "61a49a9f_6f7bc7c7",
       "revId": "f4415ed6d942f7826e54edd9f1b79bccdef0083f",
       "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "762660e4_04a7e56f",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1039063
+      },
+      "writtenOn": "2026-03-25T07:30:31Z",
+      "side": 1,
+      "message": "I mean, the issue is hardly reproducible. Both the reporter, @michael.keppler@gmx.de, and my colleagues mentioned that. I tried to reproduce it too, without success.\n\nBut this change should be safe and introduce no regressions while breaking the loop that was reported in the issue. The check: \n\n```java\nif (resizeLayoutPending) {\n\treturn;\n}\n```\n\n... is the one that breaks the loop.\n\nWDYT?",
+      "parentUuid": "76dceac1_e6563af3",
+      "revId": "f4415ed6d942f7826e54edd9f1b79bccdef0083f",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735"
     }
   ]
 }
