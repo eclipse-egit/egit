@@ -93,6 +93,7 @@ import org.eclipse.jgit.revwalk.RevWalk;
 import org.eclipse.jgit.util.GitDateFormatter;
 import org.eclipse.jgit.util.GitDateFormatter.Format;
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.custom.CLabel;
 import org.eclipse.swt.dnd.DND;
 import org.eclipse.swt.dnd.Transfer;
 import org.eclipse.swt.events.DisposeEvent;
@@ -105,6 +106,7 @@ import org.eclipse.swt.graphics.Font;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
+import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Menu;
 import org.eclipse.swt.widgets.ToolBar;
 import org.eclipse.swt.widgets.ToolItem;
@@ -123,7 +125,6 @@ import org.eclipse.ui.IWorkbenchPartSite;
 import org.eclipse.ui.PartInitException;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.actions.ActionFactory.IWorkbenchAction;
-import org.eclipse.ui.forms.widgets.Form;
 import org.eclipse.ui.forms.widgets.FormToolkit;
 import org.eclipse.ui.part.ViewPart;
 
@@ -166,7 +167,9 @@ public class RebaseInteractiveView extends ViewPart implements
 
 	private boolean dndEnabled = false;
 
-	private Form form;
+	private Composite composite;
+
+	private CLabel repoLabel;
 
 	private LocalResourceManager resources = new LocalResourceManager(
 			JFaceResources.getResources());
@@ -281,15 +284,41 @@ public class RebaseInteractiveView extends ViewPart implements
 				toolkit.dispose();
 			}
 		});
-		form = createForm(parent, toolkit);
-		createCommandToolBar(form, toolkit);
-		planTreeViewer = createPlanTreeViewer(form.getBody(), toolkit);
+
+		composite = new Composite(parent, SWT.NONE);
+		GridDataFactory.fillDefaults().grab(true, true).applyTo(composite);
+		GridLayoutFactory.fillDefaults().margins(0, 0).spacing(0, 0)
+				.applyTo(composite);
+
+		repoLabel = new CLabel(composite, SWT.NONE);
+		repoLabel.setImage(UIIcons.getImage(resources, UIIcons.REPOSITORY));
+		repoLabel.setText(UIText.RebaseInteractiveView_NoSelection);
+		GridDataFactory.fillDefaults().grab(true, false).indent(5, 5)
+				.applyTo(repoLabel);
+
+		Label repoSeparator = new Label(composite, SWT.SEPARATOR
+				| SWT.HORIZONTAL);
+		GridDataFactory.fillDefaults().grab(true, false).applyTo(repoSeparator);
+
+		headComposite = new Composite(composite, SWT.NONE);
+		GridLayoutFactory.fillDefaults().numColumns(2).equalWidth(false)
+				.margins(5, 2).applyTo(headComposite);
+		GridDataFactory.fillDefaults().grab(true, false).applyTo(headComposite);
+
+		createCommandToolBar(headComposite, toolkit);
+		createStepActionToolBar(toolkit);
+
+		Label headerSeparator = new Label(composite, SWT.SEPARATOR
+				| SWT.HORIZONTAL);
+		GridDataFactory.fillDefaults().grab(true, false).applyTo(headerSeparator);
+
+		planTreeViewer = createPlanTreeViewer(composite, toolkit);
 
 		planLayout = new PlanLayout();
 		planTreeViewer.getTree().getParent().setLayout(planLayout);
 
 		createColumns(planLayout);
-		createStepActionToolBar(toolkit);
+
 		createPopupMenu(planTreeViewer);
 
 		setupListeners();
@@ -409,12 +438,8 @@ public class RebaseInteractiveView extends ViewPart implements
 				planTreeViewer, () -> currentRepository));
 	}
 
-	private void createCommandToolBar(Form theForm, FormToolkit toolkit) {
-		headComposite = new Composite(theForm.getHead(), SWT.NONE);
-		theForm.setHeadClient(headComposite);
-		GridLayoutFactory.fillDefaults().numColumns(2).equalWidth(false)
-				.margins(0, 0).applyTo(headComposite);
-		ToolBar toolBar = new ToolBar(headComposite, SWT.FLAT);
+	private void createCommandToolBar(Composite parent, FormToolkit toolkit) {
+		ToolBar toolBar = new ToolBar(parent, SWT.FLAT);
 		GridDataFactory.fillDefaults().grab(false, false).applyTo(toolBar);
 		toolkit.adapt(toolBar);
 		toolkit.paintBordersFor(toolBar);
@@ -477,7 +502,7 @@ public class RebaseInteractiveView extends ViewPart implements
 		toolkit.paintBordersFor(rebasePlanTableComposite);
 		GridDataFactory.fillDefaults().grab(true, true)
 				.applyTo(rebasePlanTableComposite);
-		GridLayoutFactory.fillDefaults().extendedMargins(2, 2, 2, 2)
+		GridLayoutFactory.fillDefaults().extendedMargins(5, 5, 5, 5)
 				.applyTo(rebasePlanTableComposite);
 
 		final Tree planTree = toolkit.createTree(rebasePlanTableComposite,
@@ -493,20 +518,6 @@ public class RebaseInteractiveView extends ViewPart implements
 				FormToolkit.TREE_BORDER);
 		viewer.setContentProvider(RebaseInteractivePlanContentProvider.INSTANCE);
 		return viewer;
-	}
-
-	private Form createForm(Composite parent, final FormToolkit toolkit) {
-		Form newForm = toolkit.createForm(parent);
-
-		Image repoImage = UIIcons.REPOSITORY.createImage();
-		UIUtils.hookDisposal(newForm, repoImage);
-		newForm.setImage(repoImage);
-		newForm.setText(UIText.RebaseInteractiveView_NoSelection);
-		GridDataFactory.fillDefaults().grab(true, true).applyTo(newForm);
-		toolkit.decorateFormHeading(newForm);
-		GridLayoutFactory.swtDefaults().applyTo(newForm.getBody());
-
-		return newForm;
 	}
 
 	private void setupListeners() {
@@ -890,7 +901,7 @@ public class RebaseInteractiveView extends ViewPart implements
 	}
 
 	private void showRepository(final Repository repository) {
-		if (form.isDisposed())
+		if (composite.isDisposed())
 			return;
 
 		if (currentPlan != null)
@@ -899,7 +910,7 @@ public class RebaseInteractiveView extends ViewPart implements
 		if (isValidRepo(repository)) {
 			currentPlan = RebaseInteractivePlan.getPlan(repository);
 			currentPlan.addRebaseInteractivePlanChangeListener(this);
-			form.setText(getRepositoryName(repository));
+			repoLabel.setText(getRepositoryName(repository));
 		} else {
 			currentPlan = null;
 		}
@@ -975,9 +986,9 @@ public class RebaseInteractiveView extends ViewPart implements
 		if (currentPlan == null || repo == null
 				|| !repo.getRepositoryState().isRebasing()) {
 			if (repo == null)
-				form.setText(UIText.RebaseInteractiveView_NoSelection);
+				repoLabel.setText(UIText.RebaseInteractiveView_NoSelection);
 			else
-				form.setText(getRepositoryName(repo));
+				repoLabel.setText(getRepositoryName(repo));
 			return;
 		}
 		IndexDiffCacheEntry entry = IndexDiffCache.INSTANCE
