@@ -16,6 +16,24 @@
       "message": "I am using MacOS hence I can\u0027t verify",
       "revId": "f4415ed6d942f7826e54edd9f1b79bccdef0083f",
       "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "76dceac1_e6563af3",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1039063
+      },
+      "writtenOn": "2026-03-25T07:25:01Z",
+      "side": 1,
+      "message": "👍\n\nMaybe @twolf@apache.org could take a look since he also participated in the issue https://github.com/eclipse-egit/egit/issues/69 ?",
+      "parentUuid": "61a49a9f_6f7bc7c7",
+      "revId": "f4415ed6d942f7826e54edd9f1b79bccdef0083f",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735"
     }
   ]
 }
