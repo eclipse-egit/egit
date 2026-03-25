@@ -1207,23 +1207,23 @@ public class StagingView extends ViewPart
 
 		previewLayout.topControl = commitMessageText;
 
-		Composite composite = toolkit.createComposite(commitMessageComposite);
-		toolkit.paintBordersFor(composite);
-		GridDataFactory.fillDefaults().grab(true, false).applyTo(composite);
+		Composite personComposite = toolkit.createComposite(commitMessageComposite);
+		toolkit.paintBordersFor(personComposite);
+		GridDataFactory.fillDefaults().grab(true, false).applyTo(personComposite);
 		GridLayoutFactory.swtDefaults().margins(1, 2).numColumns(3)
-				.spacing(1, LayoutConstants.getSpacing().y).applyTo(composite);
+				.spacing(1, LayoutConstants.getSpacing().y).applyTo(personComposite);
 
-		createPersonLabel(composite, UIIcons.ELCL16_AUTHOR,
+		createPersonLabel(personComposite, UIIcons.ELCL16_AUTHOR,
 				UIText.StagingView_Author);
-		authorText = toolkit.createText(composite, null);
+		authorText = toolkit.createText(personComposite, null);
 		authorText.setData(FormToolkit.KEY_DRAW_BORDER,
 				FormToolkit.TEXT_BORDER);
 		authorText.setLayoutData(GridDataFactory.fillDefaults().indent(5, 0)
 				.grab(true, false).align(SWT.FILL, SWT.CENTER).create());
 
-		createPersonLabel(composite, UIIcons.ELCL16_COMMITTER,
+		createPersonLabel(personComposite, UIIcons.ELCL16_COMMITTER,
 				UIText.StagingView_Committer);
-		committerText = toolkit.createText(composite, null);
+		committerText = toolkit.createText(personComposite, null);
 		committerText.setData(FormToolkit.KEY_DRAW_BORDER,
 				FormToolkit.TEXT_BORDER);
 		committerText.setLayoutData(GridDataFactory.fillDefaults().indent(5, 0)
@@ -2491,8 +2491,8 @@ public class StagingView extends ViewPart
 		return contentProvider.getCount() <= getMaxLimitForListMode();
 	}
 
-	private TreeViewer createTree(Composite composite) {
-		Tree tree = toolkit.createTree(composite, SWT.FULL_SELECTION
+	private TreeViewer createTree(Composite parent) {
+		Tree tree = toolkit.createTree(parent, SWT.FULL_SELECTION
 				| SWT.MULTI);
 		TreeViewer treeViewer = new TreeViewer(tree);
 		treeViewer.setUseHashlookup(true);
