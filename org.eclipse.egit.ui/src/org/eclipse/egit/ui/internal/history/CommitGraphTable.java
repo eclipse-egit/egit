@@ -190,6 +190,8 @@ class CommitGraphTable {
 
 	private boolean enableAntialias = true;
 
+	private boolean resizeLayoutPending;
+
 	/**
 	 * Creates a new {@link CommitGraphTable} using the given
 	 * {@link TableLoader} and {@link ResourceManager} with the given style.
@@ -304,7 +306,7 @@ class CommitGraphTable {
 			rawTable.addDisposeListener(
 					event -> store.removePropertyChangeListener(prefsChanged));
 		}
-		rawTable.addListener(SWT.Resize, event -> layout(rawTable));
+		rawTable.addListener(SWT.Resize, event -> scheduleResizeLayout(rawTable));
 
 		table = new TableViewer(rawTable) {
 			@Override
@@ -697,6 +699,22 @@ class CommitGraphTable {
 	 */
 	public TableViewer getTableView() {
 		return table;
+	}
+
+	private void scheduleResizeLayout(Table rawTable) {
+		if (resizeLayoutPending) {
+			return;
+		}
+		resizeLayoutPending = true;
+		rawTable.getDisplay().asyncExec(() -> {
+			try {
+				if (!rawTable.isDisposed()) {
+					layout(rawTable);
+				}
+			} finally {
+				resizeLayoutPending = false;
+			}
+		});
 	}
 
 	private void layout(Table rawTable) {
