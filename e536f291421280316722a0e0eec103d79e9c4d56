@@ -16,6 +16,29 @@
       "message": "I don\u0027t think the failing test is related, but if that is incorrect, let me know so that I can check in detail.",
       "revId": "e536f291421280316722a0e0eec103d79e9c4d56",
       "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "3514ddf2_c0118714",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/rebase/RebaseInteractiveView.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 991,
+      "author": {
+        "id": 1000671
+      },
+      "writtenOn": "2026-03-26T21:02:04Z",
+      "side": 1,
+      "message": "we use a different font now, with that the separator \u0027|\u0027 used in getRepositoryName() looks weird since it doesn\u0027t really separate repository name and the state description. Hence I would add a blank before and after the \u0027|\u0027.\n\nSee the label marked in red in https://imgur.com/a/8BgFmsk",
+      "range": {
+        "startLine": 991,
+        "startChar": 22,
+        "endLine": 991,
+        "endChar": 45
+      },
+      "revId": "e536f291421280316722a0e0eec103d79e9c4d56",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735"
     }
   ]
 }
