@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "3903ab9e_85efdadc",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1039311
+      },
+      "writtenOn": "2026-03-26T13:44:07Z",
+      "side": 1,
+      "message": "This is a result of the question regarding the large size of find.svg raised here:\nhttps://review.gerrithub.io/c/eclipse-egit/egit/+/1233367/comments/d9cd664f_04ef34f6\n\nIt was shared in the Platform UI repository from where the icon was reused: https://github.com/eclipse-platform/eclipse.platform.ui/issues/3793\n\nThis resulted in a general cleanup of SVG files, as done here for EGit.",
+      "revId": "226a19a42df4eb9af8bf831b932f2cc3a5abf3bd",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735"
+    }
+  ]
+}
