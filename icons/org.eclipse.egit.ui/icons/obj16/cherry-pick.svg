@@ -6,10 +6,6 @@
    height="16"
    id="svg2"
    version="1.1"
-   inkscape:version="1.4.3 (0d15f750, 2025-12-25)"
-   sodipodi:docname="cherrypick.svg"
-   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
-   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
    xmlns:xlink="http://www.w3.org/1999/xlink"
    xmlns="http://www.w3.org/2000/svg"
    xmlns:svg="http://www.w3.org/2000/svg"
@@ -30,7 +26,6 @@
          id="stop3813" />
     </linearGradient>
     <linearGradient
-       inkscape:collect="always"
        xlink:href="#linearGradient3809"
        id="linearGradient4781"
        gradientUnits="userSpaceOnUse"
@@ -40,7 +35,6 @@
        x2="-16"
        y2="3" />
     <linearGradient
-       inkscape:collect="always"
        xlink:href="#linearGradient3809"
        id="linearGradient4784"
        gradientUnits="userSpaceOnUse"
@@ -50,39 +44,6 @@
        x2="-16"
        y2="3" />
   </defs>
-  <sodipodi:namedview
-     id="base"
-     pagecolor="#ffffff"
-     bordercolor="#666666"
-     borderopacity="1.0"
-     inkscape:pageopacity="0.0"
-     inkscape:pageshadow="2"
-     inkscape:zoom="32"
-     inkscape:cx="0.0625"
-     inkscape:cy="4.390625"
-     inkscape:document-units="px"
-     inkscape:current-layer="g6616"
-     showgrid="true"
-     inkscape:window-width="2042"
-     inkscape:window-height="1236"
-     inkscape:window-x="387"
-     inkscape:window-y="25"
-     inkscape:window-maximized="0"
-     showguides="true"
-     inkscape:guide-bbox="true"
-     inkscape:snap-global="true"
-     inkscape:showpageshadow="2"
-     inkscape:pagecheckerboard="0"
-     inkscape:deskcolor="#d1d1d1">
-    <inkscape:grid
-       type="xygrid"
-       id="grid4000"
-       originx="0"
-       originy="0"
-       spacingy="1"
-       spacingx="1"
-       units="px" />
-  </sodipodi:namedview>
   <metadata
      id="metadata7">
     <rdf:RDF>
@@ -96,8 +57,6 @@
     </rdf:RDF>
   </metadata>
   <g
-     inkscape:label="Layer 1"
-     inkscape:groupmode="layer"
      id="layer1"
      style="display:inline"
      transform="translate(0,-1036.3622)">
@@ -120,14 +79,10 @@
          d="m 10.961911,1049.9718 -1.9049442,-3.2301 0.02692,-0.016 v 0"
          id="path1-3-3-7-4-1" />
       <path
-         sodipodi:nodetypes="ccccccccccccc"
-         inkscape:connector-curvature="0"
          id="path3133"
          d="M 6.5,1040.8622 H 4 c -1.5,0 -2.5,1.5 -2.5,3 v 0 c 0,1.5 1,3 2.5,3 h 2.5 v -2 h -2 c -0.5,0 -1,-0.5 -1,-1 v 0 c 0,-0.5 0.5,-1 1,-1 h 2 z"
          style="display:inline;fill:url(#linearGradient4784);fill-opacity:1;stroke:#555555;stroke-width:1;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
       <path
-         sodipodi:nodetypes="ccccccccccccc"
-         inkscape:connector-curvature="0"
          id="path3133-7"
          d="M 8.5,1040.8622 H 11 c 1.5,0 2.5,1.5 2.5,3 v 0 c 0,1.5 -1,3 -2.5,3 H 8.5 v -2 h 2 c 0.5,0 1,-0.5 1,-1 v 0 c 0,-0.5 -0.5,-1 -1,-1 h -2 z"
          style="display:inline;fill:url(#linearGradient4781);fill-opacity:1;stroke:#555555;stroke-width:1;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />

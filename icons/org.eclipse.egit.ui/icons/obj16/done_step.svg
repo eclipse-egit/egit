@@ -2,21 +2,16 @@
 <!-- Created with Inkscape (http://www.inkscape.org/) -->
 
 <svg
-   xmlns:osb="http://www.openswatchbook.org/uri/2009/osb"
-   xmlns:dc="http://purl.org/dc/elements/1.1/"
-   xmlns:cc="http://creativecommons.org/ns#"
-   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
-   xmlns:svg="http://www.w3.org/2000/svg"
-   xmlns="http://www.w3.org/2000/svg"
-   xmlns:xlink="http://www.w3.org/1999/xlink"
-   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
-   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
    width="16"
    height="16"
    id="svg2"
    version="1.1"
-   inkscape:version="0.48.2 r9819"
-   sodipodi:docname="done_step.svg">
+   xmlns:xlink="http://www.w3.org/1999/xlink"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:dc="http://purl.org/dc/elements/1.1/">
   <defs
      id="defs4">
     <linearGradient
@@ -35,24 +30,12 @@
          id="stop4029" />
     </linearGradient>
     <linearGradient
-       id="linearGradient4019"
-       osb:paint="solid">
+       id="linearGradient4019">
       <stop
          style="stop-color:#4a9045;stop-opacity:1;"
          offset="0"
          id="stop4021" />
     </linearGradient>
-    <linearGradient
-       inkscape:collect="always"
-       xlink:href="#linearGradient4025"
-       id="linearGradient4031"
-       x1="10"
-       y1="1042.3622"
-       x2="12"
-       y2="1044.3622"
-       gradientUnits="userSpaceOnUse"
-       spreadMethod="reflect"
-       gradientTransform="matrix(0.69876951,-0.71534689,0.71534689,0.69876951,-756.03173,317.44783)" />
     <linearGradient
        id="linearGradient4025-7">
       <stop
@@ -69,7 +52,6 @@
          id="stop4029-2" />
     </linearGradient>
     <linearGradient
-       inkscape:collect="always"
        xlink:href="#linearGradient4025"
        id="linearGradient4245"
        gradientUnits="userSpaceOnUse"
@@ -80,7 +62,6 @@
        x2="8"
        y2="9.166667" />
     <linearGradient
-       inkscape:collect="always"
        xlink:href="#linearGradient4025-7"
        id="linearGradient4247"
        gradientUnits="userSpaceOnUse"
@@ -91,31 +72,6 @@
        x2="8"
        y2="9.166667" />
   </defs>
-  <sodipodi:namedview
-     id="base"
-     pagecolor="#ffffff"
-     bordercolor="#666666"
-     borderopacity="1.0"
-     inkscape:pageopacity="0.0"
-     inkscape:pageshadow="2"
-     inkscape:zoom="32"
-     inkscape:cx="13.535335"
-     inkscape:cy="7.5724126"
-     inkscape:document-units="px"
-     inkscape:current-layer="layer1"
-     showgrid="true"
-     inkscape:window-width="2111"
-     inkscape:window-height="1123"
-     inkscape:window-x="361"
-     inkscape:window-y="93"
-     inkscape:window-maximized="0"
-     showguides="true"
-     inkscape:guide-bbox="true"
-     inkscape:snap-global="true">
-    <inkscape:grid
-       type="xygrid"
-       id="grid3999" />
-  </sodipodi:namedview>
   <metadata
      id="metadata7">
     <rdf:RDF>
@@ -124,13 +80,11 @@
         <dc:format>image/svg+xml</dc:format>
         <dc:type
            rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
-        <dc:title></dc:title>
+        <dc:title />
       </cc:Work>
     </rdf:RDF>
   </metadata>
   <g
-     inkscape:label="Layer 1"
-     inkscape:groupmode="layer"
      id="layer1"
      style="display:inline"
      transform="translate(0,-1036.3622)">
@@ -138,14 +92,10 @@
        id="g4241"
        transform="matrix(0.70710678,0.70710678,-0.70710678,0.70710678,738.69742,301.29041)">
       <path
-         sodipodi:nodetypes="cccccc"
-         inkscape:connector-curvature="0"
          id="path4037"
          d="m 5,1043.3622 3,0 3,0 0,3 -6,0 z"
          style="fill:url(#linearGradient4245);fill-opacity:1;stroke:none" />
       <path
-         sodipodi:nodetypes="ccccc"
-         inkscape:connector-curvature="0"
          id="path4037-5"
          d="m 8,1036.3622 0,7 3,3 0,-10 z"
          style="fill:url(#linearGradient4247);fill-opacity:1;stroke:none;display:inline" />
