@@ -39,6 +39,30 @@
       },
       "revId": "e536f291421280316722a0e0eec103d79e9c4d56",
       "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "e807c58d_056bee07",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/rebase/RebaseInteractiveView.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 991,
+      "author": {
+        "id": 1000671
+      },
+      "writtenOn": "2026-03-27T08:35:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3514ddf2_c0118714",
+      "range": {
+        "startLine": 991,
+        "startChar": 22,
+        "endLine": 991,
+        "endChar": 45
+      },
+      "revId": "e536f291421280316722a0e0eec103d79e9c4d56",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735"
     }
   ]
 }
