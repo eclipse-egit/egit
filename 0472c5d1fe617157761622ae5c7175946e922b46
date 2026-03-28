@@ -70,6 +70,23 @@
       "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "2e6e721b_aa9d2655",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1021966
+      },
+      "writtenOn": "2026-03-28T18:40:29Z",
+      "side": 1,
+      "message": "I\u0027m seeing strange behavior with scrolling. If I scroll down and the commit at the bottom of the scrollbar is not the first (oldest) one in the history, the view jumps back up to the selected commit. It _does_ load the next chunk. To get the next chunk, I have to scroll all the way down again. (Find toolbar is shown, no text entered.)\n\nI also frequently get the \"This list is incomplete\" warning.",
+      "revId": "0472c5d1fe617157761622ae5c7175946e922b46",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "52be615e_1cc6eed7",
