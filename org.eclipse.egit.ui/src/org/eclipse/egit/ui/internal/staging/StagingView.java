@@ -2226,7 +2226,7 @@ public class StagingView extends ViewPart
 
 				filterText = new Text(toolbarComposite, SWT.SEARCH
 						| SWT.ICON_CANCEL | SWT.ICON_SEARCH);
-				filterText.setMessage(UIText.StagingView_Find);
+				filterText.setMessage(UIText.StagingView_Filter);
 				GridData data = new GridData(SWT.LEFT, SWT.TOP, true, false);
 				data.minimumWidth = 150;
 				filterText.setLayoutData(data);
@@ -2253,7 +2253,8 @@ public class StagingView extends ViewPart
 
 		toolbar.add(filterContribution);
 
-		Action showFilterAction = new Action(UIText.StagingView_Find,
+		Action showFilterAction = new Action(
+				UIText.StagingView_Filter_actionLabel,
 				IAction.AS_CHECK_BOX) {
 
 			@Override

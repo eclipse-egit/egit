@@ -6212,7 +6212,10 @@ public class UIText extends NLS {
 	public static String StagingView_CompactTree;
 
 	/** */
-	public static String StagingView_Find;
+	public static String StagingView_Filter;
+
+	/** */
+	public static String StagingView_Filter_actionLabel;
 
 	/** */
 	public static String StagingView_ShowFilterTooltip;
