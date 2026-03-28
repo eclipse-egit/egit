@@ -86,9 +86,9 @@ import org.eclipse.egit.ui.UIPreferences;
 import org.eclipse.egit.ui.UIUtils;
 import org.eclipse.egit.ui.commit.CommitContext;
 import org.eclipse.egit.ui.internal.ActionUtils;
-import org.eclipse.egit.ui.internal.GitLabels;
 import org.eclipse.egit.ui.internal.CommonUtils;
 import org.eclipse.egit.ui.internal.CompareUtils;
+import org.eclipse.egit.ui.internal.GitLabels;
 import org.eclipse.egit.ui.internal.UIIcons;
 import org.eclipse.egit.ui.internal.UIText;
 import org.eclipse.egit.ui.internal.actions.ActionCommands;
@@ -2213,6 +2213,10 @@ public class StagingView extends ViewPart
 		filterContribution = new ControlContribution(
 				"StagingView.searchText") { //$NON-NLS-1$
 
+			private String lastFilter;
+
+			private Point lastFilterSelection;
+
 			@Override
 			protected Control createControl(Composite parent) {
 				Composite toolbarComposite = new Composite(parent,
@@ -2237,7 +2241,29 @@ public class StagingView extends ViewPart
 					filterText.getDisplay().timerExec(200,
 							searchThread::start);
 				});
+				if (lastFilter != null && !lastFilter.isEmpty()) {
+					filterText.setText(lastFilter);
+					lastFilter = null;
+					if (lastFilterSelection != null) {
+						filterText.setSelection(lastFilterSelection);
+						lastFilterSelection = null;
+					}
+				}
 				return toolbarComposite;
+			}
+
+			@Override
+			public void setVisible(boolean visible) {
+				boolean change = visible != isVisible();
+				if (filterText != null && change && !visible) {
+					String current = filterText.getText();
+					lastFilterSelection = filterText.getSelection();
+					lastFilter = current;
+					if (current != null && !current.isEmpty()) {
+						filterText.setText(""); //$NON-NLS-1$
+					}
+				}
+				super.setVisible(visible);
 			}
 		};
 		boolean showFilter = getPreferenceStore()
@@ -2262,11 +2288,6 @@ public class StagingView extends ViewPart
 				getPreferenceStore().setValue(
 						UIPreferences.STAGING_VIEW_SHOW_FILTER, checked);
 				filterContribution.setVisible(checked);
-				if (!checked && filterText != null
-						&& !filterText.isDisposed()
-						&& !filterText.getText().isEmpty()) {
-					filterText.setText(""); //$NON-NLS-1$
-				}
 				toolbar.update(true);
 				if (checked && filterText != null && !filterText.isDisposed()) {
 					filterText.setFocus();
