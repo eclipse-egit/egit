@@ -2228,8 +2228,8 @@ public class StagingView extends ViewPart
 				headLayout.marginWidth = 0;
 				toolbarComposite.setLayout(headLayout);
 
-				filterText = new Text(toolbarComposite, SWT.SEARCH
-						| SWT.ICON_CANCEL | SWT.ICON_SEARCH);
+				filterText = new Text(toolbarComposite,
+						SWT.SEARCH | SWT.ICON_CANCEL);
 				filterText.setMessage(UIText.StagingView_Filter);
 				GridData data = new GridData(SWT.LEFT, SWT.TOP, true, false);
 				data.minimumWidth = 150;
@@ -2309,7 +2309,7 @@ public class StagingView extends ViewPart
 		};
 		showFilterAction.setActionDefinitionId(
 				IWorkbenchCommandConstants.EDIT_FIND_AND_REPLACE);
-		showFilterAction.setImageDescriptor(UIIcons.ELCL16_FIND);
+		showFilterAction.setImageDescriptor(UIIcons.ELCL16_FILTER);
 		showFilterAction.setChecked(showFilter);
 		toolbar.add(showFilterAction);
 		actionBars.setGlobalActionHandler(ActionFactory.FIND.getId(),
