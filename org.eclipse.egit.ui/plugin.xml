@@ -7938,6 +7938,19 @@
       </actionSetPartAssociation>
    </extension>
    <extension
+         point="org.eclipse.ui.editors.stickyLinesProviders">
+      <stickyLinesProvider
+            id="org.eclipse.egit.ui.internal.stickyLinesProvider.diffEditor"
+            class="org.eclipse.egit.ui.internal.commit.DiffEditorStickyLinesProvider">
+         <enabledWhen>
+            <with variable="editor">
+               <instanceof
+                     value="org.eclipse.egit.ui.internal.commit.DiffEditor"/>
+            </with>
+         </enabledWhen>
+      </stickyLinesProvider>
+   </extension>
+   <extension
          point="org.eclipse.ui.editors.annotationTypes">
       <type name="org.eclipse.egit.ui.commitEditor.diffAdded" />
       <type name="org.eclipse.egit.ui.commitEditor.diffRemoved" />
