@@ -318,6 +318,10 @@ public class DiffViewer extends HyperlinkSourceViewer {
 				col.get(THEME_DiffRemoveBackgroundColor));
 	}
 
+	Color getBackgroundColor(String contentType) {
+		return backgroundColors.get(contentType);
+	}
+
 	private void initListeners(IContextService ctx) {
 		PlatformUI.getWorkbench().getThemeManager()
 				.addPropertyChangeListener(this.themeListener);
