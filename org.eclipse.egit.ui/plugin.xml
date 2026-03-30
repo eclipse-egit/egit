@@ -4622,7 +4622,7 @@
          <command
                commandId="org.eclipse.ui.edit.findReplace"
                label="%RepoViewFilterTagCommand.label"
-               icon="icons/elcl16/find.svg"
+               icon="icons/elcl16/filter_none_funnel.svg"
                tooltip="%RepoViewFilterTagCommand.tooltip"
                style="push">
             <visibleWhen checkEnabled="true" />
