@@ -87,6 +87,24 @@
       "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "168c150d_696c2565",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1039063
+      },
+      "writtenOn": "2026-04-02T11:04:56Z",
+      "side": 1,
+      "message": "Thank you for testing and sorry for the late reply!\n\nThe behavior you describe was a pre-existing bug but my change only made it more visible. In any case, I proposed a fix in the patchset 3 (I changed `CommitGraphTable`).\n\nI\u0027m not sure how you usually work with comments but I took the liberty of closing this comment as \"resolved\". Feel free to reopen if you want (and to comment in how you usually work with comments)",
+      "parentUuid": "2e6e721b_aa9d2655",
+      "revId": "0472c5d1fe617157761622ae5c7175946e922b46",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "52be615e_1cc6eed7",
