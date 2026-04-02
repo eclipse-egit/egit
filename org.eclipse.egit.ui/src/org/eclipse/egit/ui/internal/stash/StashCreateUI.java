@@ -19,6 +19,8 @@ import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.core.runtime.jobs.Job;
+import org.eclipse.egit.core.RepositoryUtil;
+import org.eclipse.egit.core.internal.Utils;
 import org.eclipse.egit.core.op.StashCreateOperation;
 import org.eclipse.egit.ui.Activator;
 import org.eclipse.egit.ui.JobFamilies;
@@ -28,8 +30,12 @@ import org.eclipse.egit.ui.internal.UIText;
 import org.eclipse.jface.dialogs.Dialog;
 import org.eclipse.jface.dialogs.IDialogConstants;
 import org.eclipse.jface.dialogs.MessageDialog;
+import org.eclipse.jface.layout.GridDataFactory;
+import org.eclipse.jface.layout.GridLayoutFactory;
+import org.eclipse.jface.notifications.NotificationPopup;
 import org.eclipse.jface.preference.IPreferenceStore;
 import org.eclipse.jface.window.Window;
+import org.eclipse.osgi.util.NLS;
 import org.eclipse.jgit.lib.Repository;
 import org.eclipse.jgit.revwalk.RevCommit;
 import org.eclipse.swt.SWT;
@@ -83,6 +89,32 @@ public class StashCreateUI {
 					RevCommit commit = op.getCommit();
 					if (commit == null) {
 						showNoChangesToStash();
+					} else if (Activator.getDefault().getPreferenceStore()
+							.getBoolean(UIPreferences.STASH_APPLY_SHOW_NOTIFICATION)) {
+						PlatformUI.getWorkbench().getDisplay().asyncExec(() -> {
+							Shell activeShell = PlatformUI.getWorkbench()
+									.getActiveWorkbenchWindow().getShell();
+							NotificationPopup.forShell(activeShell)
+									.title(UIText.StashCreateResultNotification_Title,
+											true)
+									.content(parent -> {
+										GridLayoutFactory.fillDefaults()
+												.margins(4, 0).applyTo(parent);
+										Label body = new Label(parent, SWT.WRAP);
+										body.setText(NLS.bind(
+												UIText.StashCreateResultNotification_Message,
+												Utils.getShortObjectId(commit),
+												RepositoryUtil.INSTANCE
+														.getRepositoryName(
+																repo)));
+										GridDataFactory.fillDefaults()
+												.grab(true, false)
+												.hint(280, SWT.DEFAULT)
+												.applyTo(body);
+										return parent;
+									})
+									.open();
+						});
 					}
 				} catch (CoreException e) {
 					Activator

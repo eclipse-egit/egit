@@ -109,6 +109,8 @@ public class DialogsPreferencePage extends FieldEditorPreferencePage implements
 				.setToolTipText(UIText.DialogsPreferencePage_ShowTooltip);
 		addField(new BooleanFieldEditor(UIPreferences.FETCH_SHOW_NOTIFICATION,
 				UIText.DialogsPreferencePage_FetchShowNotification, infoGroup));
+		addField(new BooleanFieldEditor(UIPreferences.STASH_APPLY_SHOW_NOTIFICATION,
+				UIText.DialogsPreferencePage_StashApplyShowNotification, infoGroup));
 		editor = new BooleanFieldEditor(UIPreferences.SHOW_PUSH_POPUP_SUCCESS,
 				UIText.DialogsPreferencePage_ShowPushInfoDialog, infoGroup);
 		addField(editor);
