@@ -3322,6 +3322,18 @@ public class UIText extends NLS {
 	public static String FetchResultNotification_Details;
 
 	/** */
+	public static String StashApplyResultNotification_Title;
+
+	/** */
+	public static String StashApplyResultNotification_Message;
+
+	/** */
+	public static String StashCreateResultNotification_Title;
+
+	/** */
+	public static String StashCreateResultNotification_Message;
+
+	/** */
 	public static String FetchResultTable_addingChildren;
 
 	/** */
@@ -4236,7 +4248,10 @@ public class UIText extends NLS {
 	public static String DialogsPreferencePage_FetchShowNotification;
 
 	/** */
-	public static String DialogsPreferencePage_ShowPushInfoDialog;
+	public static String DialogsPreferencePage_StashApplyShowNotification;
+
+	/** */
+	public static String DialogsPreferencePage_ShowFetchInfoDialog;
 
 	/** */
 	public static String DialogsPreferencePage_ShowTooltip;

@@ -230,6 +230,8 @@ public final class UIPreferences {
 	/** */
 	public static final String FETCH_SHOW_NOTIFICATION = "fetch_show_notification"; //$NON-NLS-1$
 	/** */
+	public static final String STASH_APPLY_SHOW_NOTIFICATION = "stash_apply_show_notification"; //$NON-NLS-1$
+	/** */
 	public static final String SHOW_HOME_DIR_WARNING = "show_home_drive_warning"; //$NON-NLS-1$
 	/** */
 	public static final String LFS_AUTO_CONFIGURATION = "auto_lfs_config"; //$NON-NLS-1$

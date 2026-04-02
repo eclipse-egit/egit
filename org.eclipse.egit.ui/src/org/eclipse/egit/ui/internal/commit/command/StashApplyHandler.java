@@ -24,8 +24,12 @@ import org.eclipse.egit.core.internal.Utils;
 import org.eclipse.egit.core.op.StashApplyOperation;
 import org.eclipse.egit.ui.Activator;
 import org.eclipse.egit.ui.JobFamilies;
+import org.eclipse.egit.ui.UIPreferences;
 import org.eclipse.egit.ui.internal.UIText;
 import org.eclipse.egit.ui.internal.handler.SelectionHandler;
+import org.eclipse.egit.ui.internal.stash.StashApplyResultNotification;
+import org.eclipse.swt.widgets.Shell;
+import org.eclipse.ui.PlatformUI;
 import org.eclipse.jgit.lib.Repository;
 import org.eclipse.jgit.revwalk.RevCommit;
 
@@ -59,6 +63,14 @@ public class StashApplyHandler extends SelectionHandler {
 									UIText.StashApplyCommand_applyFailed,
 									Utils.getShortObjectId(commit),
 									e.getLocalizedMessage()), e);
+				}
+				if (Activator.getDefault().getPreferenceStore()
+						.getBoolean(UIPreferences.STASH_APPLY_SHOW_NOTIFICATION)) {
+					PlatformUI.getWorkbench().getDisplay().asyncExec(() -> {
+						Shell shell = PlatformUI.getWorkbench()
+								.getActiveWorkbenchWindow().getShell();
+						StashApplyResultNotification.open(shell, repo, commit);
+					});
 				}
 				return Status.OK_STATUS;
 			}
