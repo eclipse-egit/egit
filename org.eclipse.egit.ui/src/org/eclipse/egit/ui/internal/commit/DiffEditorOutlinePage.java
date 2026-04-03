@@ -33,7 +33,6 @@ import org.eclipse.jface.action.MenuManager;
 import org.eclipse.jface.action.Separator;
 import org.eclipse.jface.commands.ActionHandler;
 import org.eclipse.jface.dialogs.Dialog;
-import org.eclipse.jface.dialogs.IDialogSettings;
 import org.eclipse.jface.dialogs.PopupDialog;
 import org.eclipse.jface.layout.GridDataFactory;
 import org.eclipse.jface.preference.IPreferenceStore;
@@ -563,7 +562,7 @@ public class DiffEditorOutlinePage extends ContentOutlinePage {
 
 		public QuickOutlinePopup(Shell parent, IDocument document,
 				ISelectionProvider selectionProvider) {
-			super(parent, SWT.RESIZE, true, false, true, true, true,
+			super(parent, SWT.RESIZE, true, false, false, true, false,
 					UIText.DiffEditor_QuickOutlineAction,
 					UIText.DiffEditor_QuickOutlineFilterDescription);
 			delegate = new DiffEditorOutlinePage();
@@ -719,20 +718,6 @@ public class DiffEditorOutlinePage extends ContentOutlinePage {
 		public boolean close() {
 			delegate.dispose();
 			return super.close();
-		}
-
-		@Override
-		protected IDialogSettings getDialogSettings() {
-			String sectionName = "diffEditor.quickoutline"; //$NON-NLS-1$
-
-			IDialogSettings settings = Activator.getDefault()
-					.getDialogSettings().getSection(sectionName);
-			if (settings == null) {
-				settings = Activator.getDefault().getDialogSettings()
-						.addNewSection(sectionName);
-			}
-
-			return settings;
 		}
 
 		@Override
