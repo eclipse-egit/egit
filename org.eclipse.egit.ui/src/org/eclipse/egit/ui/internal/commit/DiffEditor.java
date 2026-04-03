@@ -1,5 +1,5 @@
 /*******************************************************************************
- *  Copyright (c) 2011, 2020 GitHub Inc. and others.
+ *  Copyright (c) 2011, 2026 GitHub Inc. and others.
  *  All rights reserved. This program and the accompanying materials
  *  are made available under the terms of the Eclipse Public License 2.0
  *  which accompanies this distribution, and is available at
@@ -9,7 +9,7 @@
  *
  *  Contributors:
  *    Kevin Sawicki (GitHub Inc.) - initial API and implementation
- *    Thomas Wolf <thomas.wolf@paranor.ch> - turn it into a real text editor
+ *    Thomas Wolf <twolf@apache.org> - turn it into a real text editor
  *******************************************************************************/
 package org.eclipse.egit.ui.internal.commit;
 
@@ -71,6 +71,7 @@ import org.eclipse.jface.text.source.projection.ProjectionAnnotation;
 import org.eclipse.jface.text.source.projection.ProjectionSupport;
 import org.eclipse.jface.text.source.projection.ProjectionViewer;
 import org.eclipse.jface.util.IPropertyChangeListener;
+import org.eclipse.jface.util.PropertyChangeEvent;
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.StructuredSelection;
 import org.eclipse.jface.window.Window;
@@ -258,8 +259,21 @@ public class DiffEditor extends TextEditor
 		DiffViewer viewer = new DiffViewer(parent, ruler, getOverviewRuler(),
 				isOverviewRulerVisible(), styles,
 				getSite().getService(IContextService.class)) {
+
 			@Override
 			protected void setFont(Font font) {
+				// Don't do anything; AbstractTextEditor handles this.
+			}
+
+			@Override
+			protected void handleEditorPreferencesChange(
+					PropertyChangeEvent event) {
+				// Don't do anything; AbstractTextEditor handles this.
+			}
+
+			@Override
+			protected void handleJFacePreferencesChange(
+					PropertyChangeEvent event) {
 				// Don't do anything; AbstractTextEditor handles this.
 			}
 		};
