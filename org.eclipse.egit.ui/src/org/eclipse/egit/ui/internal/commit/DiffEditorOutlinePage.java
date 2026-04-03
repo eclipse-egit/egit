@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (C) 2016, Thomas Wolf <thomas.wolf@paranor.ch>
+ * Copyright (C) 2016, 2026 Thomas Wolf <twolf@apache.org>
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License 2.0
@@ -225,6 +225,10 @@ public class DiffEditorOutlinePage extends ContentOutlinePage {
 	}
 
 	private void createContextMenu(TreeViewer viewer) {
+		if (getSite() == null) {
+			// We've been opened via the QuickOutlinePopup: no context menu.
+			return;
+		}
 		MenuManager contextMenu = new MenuManager();
 		contextMenu.setRemoveAllWhenShown(true);
 		contextMenu.addMenuListener(menuManager -> {
@@ -700,7 +704,6 @@ public class DiffEditorOutlinePage extends ContentOutlinePage {
 					}
 				}
 			});
-			tree.setMenu(null);
 			return delegate.getTreeViewer().getControl();
 		}
 

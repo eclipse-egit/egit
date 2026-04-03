@@ -1,5 +1,5 @@
 /******************************************************************************
- *  Copyright (c) 2011, 2013 GitHub Inc and others.
+ *  Copyright (c) 2011, 2026 GitHub Inc and others.
  *  All rights reserved. This program and the accompanying materials
  *  are made available under the terms of the Eclipse Public License 2.0
  *  which accompanies this distribution, and is available at
@@ -12,6 +12,7 @@
  *****************************************************************************/
 package org.eclipse.egit.ui.test.commit;
 
+import static org.eclipse.swtbot.swt.finder.matchers.WidgetMatcherFactory.widgetOfType;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
@@ -24,6 +25,7 @@ import org.eclipse.core.runtime.Adapters;
 import org.eclipse.egit.core.RepositoryCache;
 import org.eclipse.egit.ui.JobFamilies;
 import org.eclipse.egit.ui.common.LocalRepositoryTestCase;
+import org.eclipse.egit.ui.internal.UIText;
 import org.eclipse.egit.ui.internal.commit.CommitEditor;
 import org.eclipse.egit.ui.internal.commit.RepositoryCommit;
 import org.eclipse.egit.ui.test.ContextMenuHelper;
@@ -32,8 +34,11 @@ import org.eclipse.jgit.lib.Constants;
 import org.eclipse.jgit.lib.Repository;
 import org.eclipse.jgit.revwalk.RevCommit;
 import org.eclipse.jgit.revwalk.RevWalk;
+import org.eclipse.swt.custom.StyledText;
 import org.eclipse.swtbot.eclipse.finder.widgets.SWTBotEditor;
 import org.eclipse.swtbot.eclipse.finder.widgets.SWTBotMultiPageEditor;
+import org.eclipse.swtbot.swt.finder.widgets.SWTBotShell;
+import org.eclipse.swtbot.swt.finder.widgets.SWTBotStyledText;
 import org.eclipse.swtbot.swt.finder.widgets.SWTBotTable;
 import org.eclipse.ui.IEditorInput;
 import org.eclipse.ui.IEditorPart;
@@ -95,6 +100,39 @@ public class CommitEditorTest extends LocalRepositoryTestCase {
 		assertTrue(botEditor.getPageCount() > 1);
 		for (String name : botEditor.getPagesTitles())
 			botEditor.activatePage(name);
+		botEditor.close();
+	}
+
+	@Test
+	public void quickOutlineShows() throws Exception {
+		final AtomicReference<IEditorPart> editorRef = new AtomicReference<>();
+		PlatformUI.getWorkbench().getDisplay().syncExec(new Runnable() {
+
+			@Override
+			public void run() {
+				RepositoryCommit repoCommit = new RepositoryCommit(repository,
+						commit);
+				editorRef.set(CommitEditor.openQuiet(repoCommit));
+			}
+		});
+		assertNotNull(editorRef.get());
+		IEditorPart editor = editorRef.get();
+		assertTrue(editor instanceof CommitEditor);
+		IEditorInput input = editor.getEditorInput();
+		assertNotNull(input);
+		SWTBotMultiPageEditor botEditor = bot
+				.multipageEditorByTitle(input.getName());
+		assertNotNull(botEditor);
+		assertTrue(botEditor.getPageCount() > 1);
+		botEditor.activatePage(UIText.DiffEditor_Title);
+		SWTBotStyledText botText = new SWTBotStyledText(
+				botEditor.bot().widget(widgetOfType(StyledText.class), 1));
+		ContextMenuHelper.clickContextMenu(botText,
+				UIText.DiffEditor_QuickOutlineAction);
+		SWTBotShell botShell = bot.activeShell();
+		assertNotNull(botShell.bot()
+				.label(UIText.DiffEditor_QuickOutlineFilterDescription));
+		botShell.close();
 		botEditor.close();
 	}
 
