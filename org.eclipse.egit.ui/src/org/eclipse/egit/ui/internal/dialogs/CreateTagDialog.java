@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (C) 2010, 2013 Dariusz Luksza <dariusz@luksza.org> and others.
+ * Copyright (C) 2010, 2026 Dariusz Luksza <dariusz@luksza.org> and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License 2.0
  * which accompanies this distribution, and is available at
@@ -82,6 +82,7 @@ import org.eclipse.swt.events.KeyAdapter;
 import org.eclipse.swt.events.KeyEvent;
 import org.eclipse.swt.events.ModifyEvent;
 import org.eclipse.swt.events.ModifyListener;
+import org.eclipse.swt.events.PaintListener;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.graphics.Image;
@@ -143,6 +144,9 @@ public class CreateTagDialog extends TitleAreaDialog {
 	private Text tagNameText;
 
 	private SpellcheckableMessageArea tagMessageText;
+
+	// XXX: Work-around for https://github.com/eclipse-egit/egit/issues/162
+	private PaintListener layoutBugWorkaround;
 
 	private Button overwriteButton;
 
@@ -577,6 +581,13 @@ public class CreateTagDialog extends TitleAreaDialog {
 				}
 			}
 		});
+
+		layoutBugWorkaround = event -> {
+			tagMessageText.removePaintListener(layoutBugWorkaround);
+			layoutBugWorkaround = null;
+			left.layout(true, true);
+		};
+		tagMessageText.addPaintListener(layoutBugWorkaround);
 
 		overwriteButton = new Button(left, SWT.CHECK);
 		overwriteButton.setEnabled(false);
