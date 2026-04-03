@@ -181,7 +181,7 @@ public class DiffEditorOutlinePage extends ContentOutlinePage {
 	 * if an identical listener is already registered.
 	 *
 	 * @param listener
-	 *            to add to the page'sviewer
+	 *            to add to the page's viewer
 	 */
 	public void addOpenListener(IOpenListener listener) {
 		openListeners.addIfAbsent(listener);
@@ -192,7 +192,7 @@ public class DiffEditorOutlinePage extends ContentOutlinePage {
 	 * the listener is not registered.
 	 *
 	 * @param listener
-	 *            to remove from this page's viewer.
+	 *            to remove from this page's viewer
 	 */
 	public void removeOpenListener(IOpenListener listener) {
 		openListeners.remove(listener);
@@ -527,7 +527,7 @@ public class DiffEditorOutlinePage extends ContentOutlinePage {
 	}
 
 	/**
-	 * Opens a quick outline analgous to the outline page with tree filter
+	 * Opens a quick outline analogous to the outline page with tree filter
 	 * capability.
 	 *
 	 * @param document
