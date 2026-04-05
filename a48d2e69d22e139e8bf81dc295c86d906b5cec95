@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "b218c8e2_f178f301",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1012795
+      },
+      "writtenOn": "2026-04-05T18:27:52Z",
+      "side": 1,
+      "message": "a48d2e69d22e139e8bf81dc295c86d906b5cec95 compiles fine for me locally. \n\n@matthias.sohn@sap.com please retrigger the build",
+      "revId": "a48d2e69d22e139e8bf81dc295c86d906b5cec95",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735"
+    }
+  ]
+}
