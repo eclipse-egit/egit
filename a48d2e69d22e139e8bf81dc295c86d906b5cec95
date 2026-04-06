@@ -16,6 +16,23 @@
       "message": "a48d2e69d22e139e8bf81dc295c86d906b5cec95 compiles fine for me locally. \n\n@matthias.sohn@sap.com please retrigger the build",
       "revId": "a48d2e69d22e139e8bf81dc295c86d906b5cec95",
       "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "73f6016c_cc201482",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1012795
+      },
+      "writtenOn": "2026-04-06T08:56:37Z",
+      "side": 1,
+      "message": "Failure: 10:24:46  Caused by: java.io.IOException: Server returned HTTP code: 502 for URL https://download.eclipse.org/technology/swtbot/snapshots/content.jar\n10:24:46      at org.eclipse.tycho.p2maven.transport.Headers.checkResponseCode (Headers.java:54)",
+      "revId": "a48d2e69d22e139e8bf81dc295c86d906b5cec95",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735"
     }
   ]
 }
