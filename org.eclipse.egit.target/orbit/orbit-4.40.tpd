@@ -3,9 +3,9 @@ target "orbit-4.40" with source configurePhase
 
 // when updating the Orbit URL don't forget to update org.eclipse.egit.repository/category.xml
 location "https://download.eclipse.org/tools/orbit/simrel/orbit-aggregation/2026-06" {
-	aQute.libg [7.2.1.202601121903,7.2.1.202601121903]
-	bndtools.api [7.2.1.202601121903,7.2.1.202601121903]
-	com.ibm.icu [78.2.0,78.2.0]
+	aQute.libg [7.2.3.202603250810,7.2.3.202603250810]
+	bndtools.api [7.2.3.202603250810,7.2.3.202603250810]
+	com.ibm.icu [78.3.0,78.3.0]
 	com.jcraft.jsch [0.1.55.v20230916-1400,0.1.55.v20230916-1400]
 	com.jcraft.jsch.source [0.1.55.v20230916-1400,0.1.55.v20230916-1400]
 	com.jcraft.jzlib [1.1.3.v20230916-1400,1.1.3.v20230916-1400]
@@ -52,8 +52,8 @@ location "https://download.eclipse.org/tools/orbit/simrel/orbit-aggregation/2026
 	org.apache.lucene.analysis-common [10.4.0.v20260226-1000,10.4.0.v20260226-1000]
 	org.apache.lucene.analysis-smartcn [10.4.0.v20260226-1000,10.4.0.v20260226-1000]
 	org.apache.lucene.core [10.4.0.v20260226-1000,10.4.0.v20260226-1000]
-	org.commonmark [0.27.1,0.27.1]
-	org.commonmark.ext-gfm-tables [0.27.1,0.27.1]
+	org.commonmark [0.28.0,0.28.0]
+	org.commonmark.ext-gfm-tables [0.28.0,0.28.0]
 	org.eclipse.orbit.xml-apis-ext [1.0.0.v20240917-0534,1.0.0.v20240917-0534]
 	org.hamcrest [3.0.0,3.0.0]
 	org.hamcrest.source [3.0.0,3.0.0]
