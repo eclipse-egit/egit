@@ -33,6 +33,23 @@
       "message": "I tried a scenario where a push fails since it\u0027s not a fast-forward and hence rejected by the server. \n\n- the modal push dialog shows \"Pushed to \u003cURL\u003e. master -\u003e master [rejected - non-fast-forward]\"\n- push notification shows \"Pushed to \u003cURL\u003e. Everything up to date.\"\n\nThe push notification should show that the push was rejected by the server.",
       "revId": "c62f1e71f65cf5fa436bff48ae16b7ae3aa241ff",
       "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "c1907f14_1694f4b2",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1012795
+      },
+      "writtenOn": "2026-04-06T10:03:44Z",
+      "side": 1,
+      "message": "Not possible to update as another change exists with the same change-id. Will create a new one",
+      "revId": "c62f1e71f65cf5fa436bff48ae16b7ae3aa241ff",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735"
     }
   ]
 }
