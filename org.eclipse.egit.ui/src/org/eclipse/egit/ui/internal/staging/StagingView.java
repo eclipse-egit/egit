@@ -820,6 +820,8 @@ public class StagingView extends ViewPart
 			}
 		});
 		toolkit = new FormToolkit(parent.getDisplay());
+		toolkit.getColors().createColor(IFormColors.TB_BG,
+				parent.getBackground().getRGB());
 		parent.addDisposeListener(new DisposeListener() {
 
 			@Override
