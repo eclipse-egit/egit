@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a450bd6a_bb82d547",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1039063
+      },
+      "writtenOn": "2026-04-08T11:12:46Z",
+      "side": 1,
+      "message": "@twolf@apache.org did you have a chance to test the latest change? 🙂\n\nAre you still able to reproduce the problem with the warning? I was trying to but couldn\u0027t, neither with the previous patchset (2) nor with the newest one (3). Can you provide more details about how to reproduce it?",
+      "revId": "ec02f2bd6abfdaebef0e708ffc4b0cc676d09fd9",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735"
+    }
+  ]
+}
