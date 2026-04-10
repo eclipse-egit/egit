@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "8f06a2cd_1bcd8010",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/push/PushResultNotification.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 148,
+      "author": {
+        "id": 1000671
+      },
+      "writtenOn": "2026-04-10T08:12:40Z",
+      "side": 1,
+      "message": "this constructor was deprecated in Java 20, use `URI.create(url).toURL()` instead",
+      "range": {
+        "startLine": 148,
+        "startChar": 16,
+        "endLine": 148,
+        "endChar": 28
+      },
+      "revId": "d6d94918d276096d6a805cf3ea13b690e5fcba3c",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "4e3e4949_89401c3c",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/push/PushResultNotification.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 202,
+      "author": {
+        "id": 1000671
+      },
+      "writtenOn": "2026-04-10T08:12:40Z",
+      "side": 1,
+      "message": "don\u0027t use deprecated URL constructor\n```suggestion\n\t\t\tURI.create(url).toURL();\n```",
+      "revId": "d6d94918d276096d6a805cf3ea13b690e5fcba3c",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735"
+    }
+  ]
+}
