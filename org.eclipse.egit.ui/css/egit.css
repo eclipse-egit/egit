@@ -20,7 +20,7 @@ Text.org-eclipse-egit-ui-FindToolbar-noResults {
  * the commit message StyledText follows the editor background, which is normally
  * white in the light theme.
  */
-.MPartStack.active .MPart Form Composite Section Tree.org-eclipse-egit-ui-StagingView {
+#org-eclipse-egit-ui-StagingView.active Tree {
 	background-color: #FFFFFF;
 }
 

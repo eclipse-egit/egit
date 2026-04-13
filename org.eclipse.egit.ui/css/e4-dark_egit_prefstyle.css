@@ -47,7 +47,18 @@ IEclipsePreferences#org-eclipse-ui-workbench:org-eclipse-egit-ui {
 	background-color: inherit;
 }
 
-/* Same for the staged/unstaged tree viewers in the staging view. */
-.MPartStack.active .MPart Form Composite Section Composite Tree.org-eclipse-egit-ui-StagingView {
+/* Fix staged/unstaged tree viewers and their containers in the staging view. */
+
+#org-eclipse-egit-ui-StagingView Composite Section Composite, #org-eclipse-egit-ui-StagingView Composite Composite Section Composite Tree {
 	background-color: inherit;
 }
+
+/* If staging view becomes active highlight the trees with a lighter color */
+#org-eclipse-egit-ui-StagingView.active Composite Section Composite Tree {
+	background-color: #383a3b;
+}
+
+
+
+
+
