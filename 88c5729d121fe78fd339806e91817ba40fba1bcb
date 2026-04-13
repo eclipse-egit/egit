@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "80872a41_e16a5795",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1012795
+      },
+      "writtenOn": "2026-04-13T10:19:02Z",
+      "side": 1,
+      "message": "The left container is using the the full space again. So +1 for the fix from me.\n\n\nSide-note: I must admit that after looking into this based on the bug report the layout (correctly restored to its original behavior with this commit) now looks wasteful to me, even buggy / broken.",
+      "revId": "88c5729d121fe78fd339806e91817ba40fba1bcb",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735"
+    }
+  ]
+}
