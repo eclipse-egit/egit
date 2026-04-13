@@ -16,6 +16,24 @@
       "message": "The left container is using the the full space again. So +1 for the fix from me.\n\n\nSide-note: I must admit that after looking into this based on the bug report the layout (correctly restored to its original behavior with this commit) now looks wasteful to me, even buggy / broken.",
       "revId": "88c5729d121fe78fd339806e91817ba40fba1bcb",
       "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "22777153_3d932fe1",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1021966
+      },
+      "writtenOn": "2026-04-13T10:25:06Z",
+      "side": 1,
+      "message": "Not to me. Note that it\u0027s unusual to have such a wide right sash as in my screenshot. Besides, having some empty space is quite fine, just as having silence in music is. Please leave this space to the left of the buttons as is.",
+      "parentUuid": "80872a41_e16a5795",
+      "revId": "88c5729d121fe78fd339806e91817ba40fba1bcb",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735"
     }
   ]
 }
