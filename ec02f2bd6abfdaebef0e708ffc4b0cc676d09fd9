@@ -16,6 +16,24 @@
       "message": "@twolf@apache.org did you have a chance to test the latest change? 🙂\n\nAre you still able to reproduce the problem with the warning? I was trying to but couldn\u0027t, neither with the previous patchset (2) nor with the newest one (3). Can you provide more details about how to reproduce it?",
       "revId": "ec02f2bd6abfdaebef0e708ffc4b0cc676d09fd9",
       "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e8f24896_d09f4324",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1021966
+      },
+      "writtenOn": "2026-04-13T08:35:41Z",
+      "side": 1,
+      "message": "I\u0027ve created issue https://github.com/eclipse-egit/egit/issues/167 and used it to upload a screen recording that shows what I get. Please take a look.",
+      "parentUuid": "a450bd6a_bb82d547",
+      "revId": "ec02f2bd6abfdaebef0e708ffc4b0cc676d09fd9",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735"
     }
   ]
 }
