@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "cd6e68b8_9ec35b5d",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1021966
+      },
+      "writtenOn": "2026-04-13T17:50:21Z",
+      "side": 1,
+      "message": "Works well in light \u0026 dark mode. Unclear to me where the new color #383a3b in dark mode comes from (is it used elsewhere in the platform UI?), but I defer to your judgement here. I don\u0027t use dark mode.",
+      "revId": "471146329b723f57395da2af0732c188394c8225",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735"
+    }
+  ]
+}
