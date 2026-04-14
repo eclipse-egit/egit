@@ -944,7 +944,8 @@ public class StagingView extends ViewPart
 		Composite unstagedComposite = toolkit.createComposite(unstagedSection);
 		toolkit.paintBordersFor(unstagedComposite);
 		unstagedSection.setClient(unstagedComposite);
-		GridLayoutFactory.fillDefaults().applyTo(unstagedComposite);
+		GridLayoutFactory.fillDefaults().margins(1, 1)
+				.applyTo(unstagedComposite);
 
 		unstagedViewer = createViewer(unstagedComposite, true,
 				selection -> unstage(selection.toList()), stageAction);
@@ -1344,7 +1345,7 @@ public class StagingView extends ViewPart
 		Composite stagedComposite = toolkit.createComposite(stagedSection);
 		toolkit.paintBordersFor(stagedComposite);
 		stagedSection.setClient(stagedComposite);
-		GridLayoutFactory.fillDefaults().applyTo(stagedComposite);
+		GridLayoutFactory.fillDefaults().margins(1, 1).applyTo(stagedComposite);
 
 		stagedViewer = createViewer(stagedComposite, false,
 				selection -> stage(selection.toList()), unstageAction);
