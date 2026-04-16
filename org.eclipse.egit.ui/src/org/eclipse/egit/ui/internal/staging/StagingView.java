@@ -1699,7 +1699,9 @@ public class StagingView extends ViewPart
 				: canPushWithoutConfirmation(pushMode)
 						? UIText.StagingView_CommitAndPush
 						: UIText.StagingView_CommitAndPushWithEllipsis);
-		commitAndPushButton.getParent().requestLayout();
+		// Full cache flush on the enclosing row: without it, the new text is
+		// measured against stale column widths and overlaps the icon.
+		commitAndPushButton.getParent().getParent().layout(true, true);
 	}
 
 	private void saveSashFormWeightsOnDisposal(final SashForm sashForm,
