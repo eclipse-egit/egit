@@ -16,6 +16,23 @@
       "message": "needs to wait for approval by Eclipse IP team:\n- https://gitlab.eclipse.org/eclipsefdn/emo-team/iplab/-/issues/27144\n- https://gitlab.eclipse.org/eclipsefdn/emo-team/iplab/-/issues/27142",
       "revId": "bb6b9f905cf433953783912b020df9eec2dad7be",
       "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "705878fd_4d85c5eb",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1021966
+      },
+      "writtenOn": "2026-04-16T13:47:59Z",
+      "side": 1,
+      "message": "When updating the BC dependency, please also update the manifests. Otherwise we get issue jgit-249 again. See also Ie4514e69dd9576a720a89b671c81f7fc094241c1.",
+      "revId": "bb6b9f905cf433953783912b020df9eec2dad7be",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735"
     }
   ]
 }
