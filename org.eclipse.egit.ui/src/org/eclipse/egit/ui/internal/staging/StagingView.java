@@ -3621,7 +3621,8 @@ public class StagingView extends ViewPart
 				+ "\\E";//$NON-NLS-1$
 		// remove potentially empty quotes at begin or end
 		regex = regex.replaceAll(Pattern.quote("\\Q\\E"), ""); //$NON-NLS-1$ //$NON-NLS-2$
-		return Pattern.compile(regex, Pattern.CASE_INSENSITIVE);
+		return Pattern.compile(regex,
+				Pattern.CASE_INSENSITIVE | Pattern.UNICODE_CASE);
 	}
 
 	/**
