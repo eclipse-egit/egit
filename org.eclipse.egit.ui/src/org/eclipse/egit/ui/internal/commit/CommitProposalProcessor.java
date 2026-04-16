@@ -158,7 +158,7 @@ public abstract class CommitProposalProcessor implements IContentAssistProcessor
 				}
 			}
 			for (String message : messages) {
-				if (message.startsWith(prefix)) {
+				if (matchesPrefix(message, prefix)) {
 					proposals.add(new CompletionProposal(message,
 							replacementOffset, replacementLength, message
 									.length(), (Image) resourceManager
@@ -184,6 +184,28 @@ public abstract class CommitProposalProcessor implements IContentAssistProcessor
 			}
 		}
 		return proposals.toArray(new ICompletionProposal[0]);
+	}
+
+	/**
+	 * Case-insensitive prefix match used by commit message content assist.
+	 *
+	 * @param candidate
+	 *            the candidate value to test
+	 * @param lowerCasePrefix
+	 *            the prefix that the caller already lower-cased with
+	 *            {@link Locale#US}
+	 * @return {@code true} when {@code candidate} starts with the given prefix,
+	 *         ignoring case using {@link Locale#US}
+	 */
+	static boolean matchesPrefix(String candidate, String lowerCasePrefix) {
+		if (candidate == null || lowerCasePrefix == null)
+			return false;
+		if (lowerCasePrefix.isEmpty())
+			return true;
+		if (candidate.length() < lowerCasePrefix.length())
+			return false;
+		return candidate.substring(0, lowerCasePrefix.length())
+				.toLowerCase(Locale.US).equals(lowerCasePrefix);
 	}
 
 	/**
