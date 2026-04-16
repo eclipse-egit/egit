@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "87bc8a6b_cc6ce2b9",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/commit/CommitProposalProcessor.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 202,
+      "author": {
+        "id": 1000671
+      },
+      "writtenOn": "2026-04-16T23:11:05Z",
+      "side": 1,
+      "message": "missing braces around single line block, also below",
+      "revId": "d18b33ce9524929f67c744496c851c594673f1e6",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "9741641c_6f08865c",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/commit/CommitProposalProcessor.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 207,
+      "author": {
+        "id": 1000671
+      },
+      "writtenOn": "2026-04-16T23:11:05Z",
+      "side": 1,
+      "message": "you can avoid creating new all lowercase string objects using \n```\nboolean String.regionMatches(\n    boolean ignoreCase,\n    int toffset,\n    String other,\n    int ooffset,\n    int len)\n```\nwith `ignoreCase \u003d true`\n\nSee https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html#regionMatches(boolean,int,java.lang.String,int,int)",
+      "revId": "d18b33ce9524929f67c744496c851c594673f1e6",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735"
+    }
+  ]
+}
