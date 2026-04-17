@@ -22,9 +22,11 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import java.util.Set;
 
 import org.eclipse.egit.core.internal.Utils;
+import org.eclipse.egit.core.internal.hosts.RemoteBranchInput;
 import org.eclipse.egit.core.op.CreateLocalBranchOperation;
 import org.eclipse.egit.ui.Activator;
 import org.eclipse.egit.ui.UIUtils;
@@ -111,6 +113,10 @@ public class PushBranchPage extends WizardPage {
 	private Set<Resource> disposables = new HashSet<>();
 
 	private Map<String, AsynchronousBranchList> refs = new HashMap<>();
+
+	private boolean normalizingBranchInput;
+
+	private String previousBranchText = ""; //$NON-NLS-1$
 
 	/**
 	 * Create the page.
@@ -299,6 +305,7 @@ public class PushBranchPage extends WizardPage {
 		GridDataFactory.fillDefaults().grab(true, false).span(2, 1)
 				.applyTo(remoteBranchNameText);
 		remoteBranchNameText.setText(getSuggestedBranchName());
+		previousBranchText = remoteBranchNameText.getText();
 		AsynchronousRefProposalProvider candidateProvider = new AsynchronousRefProposalProvider(
 				getContainer(), remoteBranchNameText, () -> {
 					RemoteConfig config = remoteSelectionCombo
@@ -373,6 +380,7 @@ public class PushBranchPage extends WizardPage {
 		remoteBranchNameText.addModifyListener(new ModifyListener() {
 			@Override
 			public void modifyText(ModifyEvent e) {
+				normalizePastedBranchInput();
 				checkPage();
 			}
 		});
@@ -431,6 +439,45 @@ public class PushBranchPage extends WizardPage {
 			String remoteName = wizard.getRemoteName();
 			addRemotePage = wizard.getAddRemotePage();
 			setSelectedRemote(remoteName, uri);
+		}
+	}
+
+	private void normalizePastedBranchInput() {
+		if (normalizingBranchInput) {
+			return;
+		}
+		String current = remoteBranchNameText.getText();
+		String previous = previousBranchText;
+		previousBranchText = current;
+		// Only normalize on paste-like events: either the text grew by more
+		// than one character in one go, or it obviously contains a URL.
+		boolean looksPasted = current.length() - previous.length() > 1
+				|| current.contains("://"); //$NON-NLS-1$
+		if (!looksPasted) {
+			return;
+		}
+		RemoteBranchInput parsed = RemoteBranchInput.parse(current);
+		if (parsed == null || parsed.getOwner() == null) {
+			return;
+		}
+		String normalized = parsed.getBranchName();
+		normalizingBranchInput = true;
+		try {
+			if (!normalized.equals(current)) {
+				remoteBranchNameText.setText(normalized);
+				remoteBranchNameText
+						.setSelection(remoteBranchNameText.getText().length());
+				previousBranchText = normalized;
+			}
+			Optional<RemoteConfig> match = RemoteBranchInput
+					.findRemoteByOwner(remoteConfigs, parsed.getOwner());
+			if (match.isPresent() && !match.get().equals(remoteConfig)) {
+				remoteConfig = match.get();
+				remoteSelectionCombo.setSelectedRemote(remoteConfig);
+				setRefAssist(remoteConfig);
+			}
+		} finally {
+			normalizingBranchInput = false;
 		}
 	}
 

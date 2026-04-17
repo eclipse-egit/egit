@@ -15,6 +15,7 @@ import java.text.MessageFormat;
 import java.util.Collection;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.function.BiConsumer;
@@ -70,6 +71,39 @@ public final class GitHosts {
 	}
 
 	/**
+	 * A reference to a branch on a git host: an {@code owner} (user, group, or
+	 * nested group path) and a branch name.
+	 */
+	public static final class BranchRef {
+
+		private final String owner;
+
+		private final String branchName;
+
+		/**
+		 * @param owner
+		 *            user, group or nested group path; must not be {@code null}
+		 * @param branchName
+		 *            branch name without any host prefix; must not be
+		 *            {@code null}
+		 */
+		public BranchRef(String owner, String branchName) {
+			this.owner = owner;
+			this.branchName = branchName;
+		}
+
+		/** @return the owner (user, group, or nested group path) */
+		public String getOwner() {
+			return owner;
+		}
+
+		/** @return the branch name */
+		public String getBranchName() {
+			return branchName;
+		}
+	}
+
+	/**
 	 * A {@link ServerType} encapsulates some characteristics of certain git
 	 * server types.
 	 */
@@ -77,15 +111,21 @@ public final class GitHosts {
 
 		/** A {@link ServerType} describing GitHub git servers. */
 		GITHUB(GITHUB_ID, "refs/pull/", "/head", //$NON-NLS-1$ //$NON-NLS-2$
-				"https?://.*/pull/(\\d+)(?:[/?#].*)?"), //$NON-NLS-1$
+				"https?://.*/pull/(\\d+)(?:[/?#].*)?", //$NON-NLS-1$
+				"https?://[^/]+/(?<owner>[^/]+)/[^/]+/tree/(?<branch>[^?#]+?)/?(?:[?#].*)?", //$NON-NLS-1$
+				"(?<owner>[A-Za-z0-9][A-Za-z0-9._-]*):(?<branch>\\S+)"), //$NON-NLS-1$
 
 		/** A {@link ServerType} describing GitLab git servers. */
 		GITLAB(GITLAB_ID, "refs/merge-requests/", "/head", //$NON-NLS-1$ //$NON-NLS-2$
-				"https?://.*/merge_requests/(\\d+)(?:[/?#].*)?"), //$NON-NLS-1$
+				"https?://.*/merge_requests/(\\d+)(?:[/?#].*)?", //$NON-NLS-1$
+				"https?://[^/]+/(?<owner>.+?)/[^/]+/-/tree/(?<branch>[^?#]+?)/?(?:[?#].*)?", //$NON-NLS-1$
+				"(?<owner>[A-Za-z0-9][A-Za-z0-9._/-]*?)/[A-Za-z0-9][A-Za-z0-9._-]*:(?<branch>\\S+)"), //$NON-NLS-1$
 
 		/** A {@link ServerType} describing self-hosted Gitea git servers. */
 		GITEA(GITEA_ID, "refs/pull/", "/head", //$NON-NLS-1$ //$NON-NLS-2$
-				"https?://.*/pulls/(\\d+)(?:[/?#].*)?"); //$NON-NLS-1$
+				"https?://.*/pulls/(\\d+)(?:[/?#].*)?", //$NON-NLS-1$
+				"https?://[^/]+/(?<owner>[^/]+)/[^/]+/src/branch/(?<branch>[^?#]+?)/?(?:[?#].*)?", //$NON-NLS-1$
+				"(?<owner>[A-Za-z0-9][A-Za-z0-9._-]*):(?<branch>\\S+)"); //$NON-NLS-1$
 
 		/** Constant indicating "no change ID". */
 		public static final long NO_CHANGE_ID = -1;
@@ -102,8 +142,12 @@ public final class GitHosts {
 
 		private final Pattern inputPattern;
 
+		private final Pattern branchUrlPattern;
+
+		private final Pattern branchTextPattern;
+
 		private ServerType(String id, String refPrefix, String refSuffix,
-				String webUrl) {
+				String webUrl, String branchUrl, String branchText) {
 			this.id = id;
 			this.refPrefix = refPrefix;
 			this.refSuffix = refSuffix;
@@ -115,6 +159,10 @@ public final class GitHosts {
 							.compile(refPrefix + "(\\d+)(?:" + refSuffix + ")?") //$NON-NLS-1$ //$NON-NLS-2$
 					: refPattern;
 			urlPattern = Pattern.compile(webUrl);
+			branchUrlPattern = branchUrl == null ? null
+					: Pattern.compile(branchUrl);
+			branchTextPattern = branchText == null ? null
+					: Pattern.compile(branchText);
 		}
 
 		/**
@@ -223,6 +271,48 @@ public final class GitHosts {
 		 */
 		public String getRefPrefix() {
 			return refPrefix;
+		}
+
+		/**
+		 * Tries to parse a web URL that refers to a branch on a host of this
+		 * {@link ServerType}.
+		 *
+		 * @param input
+		 *            text to parse; may be {@code null}
+		 * @return a {@link BranchRef} with the owner and branch extracted from
+		 *         the URL, or {@link Optional#empty()} if {@code input} is not
+		 *         a branch URL for this server type
+		 */
+		public Optional<BranchRef> parseBranchUrl(String input) {
+			return matchBranch(branchUrlPattern, input);
+		}
+
+		/**
+		 * Tries to parse a shorthand textual reference to a branch on a host of
+		 * this {@link ServerType} (for example "{@code owner:branch}" on
+		 * GitHub, or "{@code group/repo:branch}" on GitLab).
+		 *
+		 * @param input
+		 *            text to parse; may be {@code null}
+		 * @return a {@link BranchRef} with the owner and branch extracted from
+		 *         the text, or {@link Optional#empty()} if {@code input} is not
+		 *         a shorthand for this server type
+		 */
+		public Optional<BranchRef> parseBranchText(String input) {
+			return matchBranch(branchTextPattern, input);
+		}
+
+		private static Optional<BranchRef> matchBranch(Pattern pattern,
+				String input) {
+			if (pattern == null || input == null) {
+				return Optional.empty();
+			}
+			Matcher m = pattern.matcher(input);
+			if (m.matches()) {
+				return Optional.of(new BranchRef(m.group("owner"), //$NON-NLS-1$
+						m.group("branch"))); //$NON-NLS-1$
+			}
+			return Optional.empty();
 		}
 	}
 
