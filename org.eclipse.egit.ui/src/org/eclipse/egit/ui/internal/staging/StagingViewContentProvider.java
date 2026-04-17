@@ -503,6 +503,11 @@ public class StagingViewContentProvider extends WorkbenchContentProvider {
 				if (o2 instanceof StagingEntry) {
 					StagingEntry e1 = (StagingEntry) o1;
 					StagingEntry e2 = (StagingEntry) o2;
+					// Submodule entries cluster at the top within their
+					// parent (flat mode: at the top of the section).
+					if (e1.isSubmodule() != e2.isSubmodule()) {
+						return e1.isSubmodule() ? -1 : 1;
+					}
 					if (fileNameMode) {
 						int result = String.CASE_INSENSITIVE_ORDER
 								.compare(e1.getName(), e2.getName());
@@ -516,8 +521,9 @@ public class StagingViewContentProvider extends WorkbenchContentProvider {
 					return String.CASE_INSENSITIVE_ORDER.compare(e1.getPath(),
 							e2.getPath());
 				} else {
-					// Files should come after folders
-					return 1;
+					// Submodule entries come before folders, regular files
+					// come after.
+					return ((StagingEntry) o1).isSubmodule() ? -1 : 1;
 				}
 			} else if (o1 instanceof StagingFolderEntry) {
 				if (o2 instanceof StagingFolderEntry) {
@@ -526,8 +532,9 @@ public class StagingViewContentProvider extends WorkbenchContentProvider {
 					return f1.getPath().toString()
 							.compareTo(f2.getPath().toString());
 				} else {
-					// Folders should come before files
-					return -1;
+					// Folders come before regular files but after submodule
+					// entries.
+					return ((StagingEntry) o2).isSubmodule() ? 1 : -1;
 				}
 			} else {
 				return 0;
