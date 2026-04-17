@@ -18,6 +18,24 @@
       "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "e7ab26cf_28c83f7a",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/PluginPreferenceInitializer.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 120,
+      "author": {
+        "id": 1012795
+      },
+      "writtenOn": "2026-04-17T04:09:10Z",
+      "side": 1,
+      "message": "The default fetch time is the same as in VSCode which has a much higher number of users and the default is off. Also the intervall is already configurable via the preferences.",
+      "parentUuid": "41fa5e90_20f472f3",
+      "revId": "8a734e16478c6baf7d7f03ae11105d9fe03778c7",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "8cffc741_fe50553d",
@@ -31,6 +49,24 @@
       "writtenOn": "2026-03-09T16:22:49Z",
       "side": 1,
       "message": "It appears that VS Code actually has three possible values for its `git.autoFetch` setting[1]:\n* false - disabled\n* true - fetch the default remote: probably the one configured for the current HEAD branch, if any, or \"origin\" otherwise\n* all - fetch all remotes\n\nPerhaps implement the same here. Going through all repos and all remotes may be too much. This feature is potentially network-heavy for both client and server. With my typical workspaces having many git repos, some of which have even many (more than three) remotes I\u0027d probably never dare enable it.\n\n[1] https://github.com/microsoft/vscode/issues/110811",
+      "revId": "8a734e16478c6baf7d7f03ae11105d9fe03778c7",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "2c4d646a_57db3384",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/AutoFetchComponent.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 160,
+      "author": {
+        "id": 1012795
+      },
+      "writtenOn": "2026-04-17T04:09:10Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "8cffc741_fe50553d",
       "revId": "8a734e16478c6baf7d7f03ae11105d9fe03778c7",
       "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735"
     },
@@ -65,6 +101,24 @@
       "writtenOn": "2026-03-24T23:29:05Z",
       "side": 1,
       "message": "I would rather use a default of 1h and don\u0027t allow intervals shorter than 5 min. Our git servers are used by thousands of developers, if 5000 developers start fetching every 3 minutes this causes 30 requests/sec on the server.",
+      "parentUuid": "c8ae95cc_2be4c7a2",
+      "revId": "8a734e16478c6baf7d7f03ae11105d9fe03778c7",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "1dd4b47d_76f464a6",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/preferences/GitPreferenceRoot.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 349,
+      "author": {
+        "id": 1012795
+      },
+      "writtenOn": "2026-04-17T04:09:10Z",
+      "side": 1,
+      "message": "Acknowledged",
       "parentUuid": "c8ae95cc_2be4c7a2",
       "revId": "8a734e16478c6baf7d7f03ae11105d9fe03778c7",
       "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735"
