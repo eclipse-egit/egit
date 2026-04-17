@@ -185,7 +185,25 @@ public class StagingViewContentProvider extends WorkbenchContentProvider {
 		Set<IPath> folderPaths = new HashSet<>();
 		Map<IPath, String> childSegments = new HashMap<>();
 
+		IPath workingDirectory = new Path(repository.getWorkTree()
+				.getAbsolutePath());
+
+		// Group submodule entries in their own synthetic top-level node so
+		// they appear as a contiguous block at the top of the section. Their
+		// full relative path is preserved (the normal project/folder grouping
+		// is intentionally bypassed for submodules).
+		SubmodulesFolderEntry submodulesRoot = null;
+		List<Object> submoduleChildren = new ArrayList<>();
+
 		for (StagingEntry file : content) {
+			if (file.isSubmodule()) {
+				if (submodulesRoot == null) {
+					submodulesRoot = new SubmodulesFolderEntry(workingDirectory);
+				}
+				file.setParent(submodulesRoot);
+				submoduleChildren.add(file);
+				continue;
+			}
 			IPath folderPath = file.getParentPath();
 			if (folderPath.segmentCount() == 0) {
 				// No folders need to be created, this is a root file
@@ -215,9 +233,6 @@ public class StagingViewContentProvider extends WorkbenchContentProvider {
 				p = parent;
 			}
 		}
-
-		IPath workingDirectory = new Path(repository.getWorkTree()
-				.getAbsolutePath());
 
 		List<StagingFolderEntry> folderEntries = new ArrayList<>();
 		for (IPath folderPath : folderPaths) {
@@ -256,6 +271,14 @@ public class StagingViewContentProvider extends WorkbenchContentProvider {
 		}
 
 		Collections.sort(roots, comparator);
+
+		if (submodulesRoot != null) {
+			Collections.sort(submoduleChildren, comparator);
+			submodulesRoot.setChildren(submoduleChildren.toArray());
+			// Prepend as first root so submodules are a contiguous block at
+			// the very top of the section.
+			roots.add(0, submodulesRoot);
+		}
 		return roots.toArray();
 	}
 
@@ -503,6 +526,10 @@ public class StagingViewContentProvider extends WorkbenchContentProvider {
 				if (o2 instanceof StagingEntry) {
 					StagingEntry e1 = (StagingEntry) o1;
 					StagingEntry e2 = (StagingEntry) o2;
+					// Submodule entries cluster at the top in flat mode.
+					if (e1.isSubmodule() != e2.isSubmodule()) {
+						return e1.isSubmodule() ? -1 : 1;
+					}
 					if (fileNameMode) {
 						int result = String.CASE_INSENSITIVE_ORDER
 								.compare(e1.getName(), e2.getName());

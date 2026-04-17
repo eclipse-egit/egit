@@ -5225,11 +5225,19 @@ public class StagingView extends ViewPart
 
 		@Override
 		public int category(Object element) {
-			if (!isAlphabeticSort()) {
-				StagingEntry stagingEntry = getStagingEntry(element);
-				if (stagingEntry != null) {
-					return getState(stagingEntry);
-				}
+			// Submodules always form a contiguous block at the top of the
+			// section, regardless of sort mode: the synthetic "Submodules"
+			// group node in tree mode, and individual submodule entries in
+			// flat (list) mode.
+			if (element instanceof SubmodulesFolderEntry) {
+				return Integer.MIN_VALUE;
+			}
+			StagingEntry stagingEntry = getStagingEntry(element);
+			if (stagingEntry != null && stagingEntry.isSubmodule()) {
+				return Integer.MIN_VALUE;
+			}
+			if (!isAlphabeticSort() && stagingEntry != null) {
+				return getState(stagingEntry);
 			}
 			return super.category(element);
 		}
