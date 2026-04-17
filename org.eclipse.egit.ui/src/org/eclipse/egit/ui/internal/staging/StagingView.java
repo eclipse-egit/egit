@@ -5236,6 +5236,20 @@ public class StagingView extends ViewPart
 
 		@Override
 		public int compare(Viewer viewer, Object e1, Object e2) {
+			// Submodule entries always cluster at the top of the section,
+			// above regular file entries and (in tree mode) above folder
+			// entries at the root level, regardless of state-vs-alphabetic
+			// sort mode. Within the block, the usual category/name
+			// comparison below keeps them ordered by name when alphabetic
+			// sort is enabled and by state otherwise.
+			StagingEntry se1 = getStagingEntry(e1);
+			StagingEntry se2 = getStagingEntry(e2);
+			boolean sub1 = se1 != null && se1.isSubmodule();
+			boolean sub2 = se2 != null && se2.isSubmodule();
+			if (sub1 != sub2) {
+				return sub1 ? -1 : 1;
+			}
+
 			int cat1 = category(e1);
 			int cat2 = category(e2);
 

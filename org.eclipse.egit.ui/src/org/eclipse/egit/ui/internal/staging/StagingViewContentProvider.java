@@ -185,7 +185,22 @@ public class StagingViewContentProvider extends WorkbenchContentProvider {
 		Set<IPath> folderPaths = new HashSet<>();
 		Map<IPath, String> childSegments = new HashMap<>();
 
+		IPath workingDirectory = new Path(repository.getWorkTree()
+				.getAbsolutePath());
+
+		// Submodule entries are hoisted out of the regular folder tree so
+		// they appear as a contiguous block at the top of the section,
+		// regardless of where they reside in the working tree. Their full
+		// repo-relative path remains visible as label so the path context
+		// (e.g. libs/foo, third_party/baz/qux) is not lost. No synthetic
+		// wrapper node is inserted.
+		List<StagingEntry> submoduleRoots = new ArrayList<>();
+
 		for (StagingEntry file : content) {
+			if (file.isSubmodule()) {
+				submoduleRoots.add(file);
+				continue;
+			}
 			IPath folderPath = file.getParentPath();
 			if (folderPath.segmentCount() == 0) {
 				// No folders need to be created, this is a root file
@@ -215,9 +230,6 @@ public class StagingViewContentProvider extends WorkbenchContentProvider {
 				p = parent;
 			}
 		}
-
-		IPath workingDirectory = new Path(repository.getWorkTree()
-				.getAbsolutePath());
 
 		List<StagingFolderEntry> folderEntries = new ArrayList<>();
 		for (IPath folderPath : folderPaths) {
@@ -256,6 +268,13 @@ public class StagingViewContentProvider extends WorkbenchContentProvider {
 		}
 
 		Collections.sort(roots, comparator);
+
+		if (!submoduleRoots.isEmpty()) {
+			Collections.sort(submoduleRoots, comparator);
+			// Prepend so submodules form a contiguous block at the very top
+			// of the section, above folder and file entries.
+			roots.addAll(0, submoduleRoots);
+		}
 		return roots.toArray();
 	}
 
@@ -503,6 +522,10 @@ public class StagingViewContentProvider extends WorkbenchContentProvider {
 				if (o2 instanceof StagingEntry) {
 					StagingEntry e1 = (StagingEntry) o1;
 					StagingEntry e2 = (StagingEntry) o2;
+					// Submodule entries cluster at the top in flat mode.
+					if (e1.isSubmodule() != e2.isSubmodule()) {
+						return e1.isSubmodule() ? -1 : 1;
+					}
 					if (fileNameMode) {
 						int result = String.CASE_INSENSITIVE_ORDER
 								.compare(e1.getName(), e2.getName());
