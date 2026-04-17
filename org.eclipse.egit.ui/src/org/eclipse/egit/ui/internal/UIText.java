@@ -6237,6 +6237,9 @@ public class UIText extends NLS {
 	public static String StagingView_Presentation;
 
 	/** */
+	public static String StagingView_SubmodulesNodeLabel;
+
+	/** */
 	public static String StagingView_List;
 
 	/** */

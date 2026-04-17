@@ -184,6 +184,11 @@ public class StagingViewLabelProvider extends ColumnLabelProvider {
 				}
 			}
 			label.append(stagingEntry.getPath());
+		} else if (stagingEntry.getParent() instanceof SubmodulesFolderEntry) {
+			// Submodule entries live under the synthetic "Submodules" group
+			// in tree mode; keep their full repo-relative path visible so
+			// the path context (e.g. libs/foo) is not lost.
+			label.append(stagingEntry.getPath());
 		} else {
 			label.append(stagingEntry.getName());
 		}

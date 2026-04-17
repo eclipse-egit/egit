@@ -5236,6 +5236,18 @@ public class StagingView extends ViewPart
 
 		@Override
 		public int compare(Viewer viewer, Object e1, Object e2) {
+			// In flat (list) mode, cluster submodule entries at the top of
+			// the section so they form a contiguous block above regular
+			// file entries. In tree mode they already live under the
+			// synthetic "Submodules" top-level node, so this check is a
+			// no-op for tree siblings.
+			StagingEntry se1 = getStagingEntry(e1);
+			StagingEntry se2 = getStagingEntry(e2);
+			if (se1 != null && se2 != null
+					&& se1.isSubmodule() != se2.isSubmodule()) {
+				return se1.isSubmodule() ? -1 : 1;
+			}
+
 			int cat1 = category(e1);
 			int cat2 = category(e2);
 
