@@ -25,9 +25,11 @@ import java.util.Map;
 import java.util.Set;
 
 import org.eclipse.egit.core.internal.Utils;
+import org.eclipse.egit.core.internal.hosts.RemoteBranchInput;
 import org.eclipse.egit.core.op.CreateLocalBranchOperation;
 import org.eclipse.egit.ui.Activator;
 import org.eclipse.egit.ui.UIUtils;
+import org.eclipse.egit.ui.internal.ActionUtils;
 import org.eclipse.egit.ui.internal.UIIcons;
 import org.eclipse.egit.ui.internal.UIText;
 import org.eclipse.egit.ui.internal.components.AsynchronousBranchList;
@@ -57,6 +59,9 @@ import org.eclipse.jgit.revwalk.RevWalk;
 import org.eclipse.jgit.transport.RemoteConfig;
 import org.eclipse.jgit.transport.URIish;
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.dnd.Clipboard;
+import org.eclipse.swt.dnd.TextTransfer;
+import org.eclipse.swt.dnd.Transfer;
 import org.eclipse.swt.events.ModifyEvent;
 import org.eclipse.swt.events.ModifyListener;
 import org.eclipse.swt.events.SelectionAdapter;
@@ -72,6 +77,9 @@ import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Link;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Text;
+import org.eclipse.ui.PlatformUI;
+import org.eclipse.ui.actions.ActionFactory;
+import org.eclipse.ui.handlers.IHandlerService;
 
 /**
  * Page that is part of the "Push Branch..." wizard, where the user selects the
@@ -299,6 +307,11 @@ public class PushBranchPage extends WizardPage {
 		GridDataFactory.fillDefaults().grab(true, false).span(2, 1)
 				.applyTo(remoteBranchNameText);
 		remoteBranchNameText.setText(getSuggestedBranchName());
+		ActionUtils.setGlobalActions(remoteBranchNameText,
+				List.of(ActionUtils.createGlobalAction(ActionFactory.PASTE,
+						() -> handleBranchInputPaste())),
+				PlatformUI.getWorkbench().getService(IHandlerService.class),
+				true);
 		AsynchronousRefProposalProvider candidateProvider = new AsynchronousRefProposalProvider(
 				getContainer(), remoteBranchNameText, () -> {
 					RemoteConfig config = remoteSelectionCombo
@@ -431,6 +444,47 @@ public class PushBranchPage extends WizardPage {
 			String remoteName = wizard.getRemoteName();
 			addRemotePage = wizard.getAddRemotePage();
 			setSelectedRemote(remoteName, uri);
+		}
+	}
+
+	/**
+	 * Handles a paste into {@link #remoteBranchNameText}. When the clipboard
+	 * contents parse as a branch reference from a known git host (for example
+	 * a GitHub tree URL or a GitLab {@code owner/repo:branch} shorthand), the
+	 * field is set to the bare branch name and a matching remote is selected.
+	 * Otherwise the default paste behavior of the {@link Text} widget is used.
+	 */
+	private void handleBranchInputPaste() {
+		Clipboard clipboard = new Clipboard(remoteBranchNameText.getDisplay());
+		try {
+			String clipText = (String) clipboard
+					.getContents(TextTransfer.getInstance());
+			if (clipText == null) {
+				return;
+			}
+			RemoteBranchInput parsed = RemoteBranchInput.parse(clipText);
+			if (parsed == null || parsed.getOwner() == null) {
+				remoteBranchNameText.paste();
+				return;
+			}
+			String normalized = parsed.getBranchName();
+			clipboard.setContents(new Object[] { normalized },
+					new Transfer[] { TextTransfer.getInstance() });
+			try {
+				remoteBranchNameText.selectAll();
+				remoteBranchNameText.paste();
+			} finally {
+				clipboard.setContents(new Object[] { clipText },
+						new Transfer[] { TextTransfer.getInstance() });
+			}
+			RemoteConfig match = parsed.findMatchingRemote(remoteConfigs);
+			if (match != null && !match.equals(remoteConfig)) {
+				remoteConfig = match;
+				remoteSelectionCombo.setSelectedRemote(remoteConfig);
+				setRefAssist(remoteConfig);
+			}
+		} finally {
+			clipboard.dispose();
 		}
 	}
 
