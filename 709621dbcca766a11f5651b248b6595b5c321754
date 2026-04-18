@@ -16,6 +16,23 @@
       "message": "I do not see the problem this is supposed to fix. It works with requestLayout() just fine in EGit 7.6.0, and it works in the latest EGit nightly on Mac.\n\nI have seen the problem you describe only in the \"broken layout\" versions (from commit b5299b86, which broke the layout, until before commit 88c5729d, which fixed it again).\n\nSo -1 for now; I\u0027ll double-check on Monday what happens on Linux.",
       "revId": "709621dbcca766a11f5651b248b6595b5c321754",
       "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "60c646ff_0bfe6e4d",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1012795
+      },
+      "writtenOn": "2026-04-18T05:14:44Z",
+      "side": 1,
+      "message": "Let me check first again. It might be that I was working on an outdated base commit, I currently juggling with lots of local branches",
+      "revId": "709621dbcca766a11f5651b248b6595b5c321754",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735"
     }
   ]
 }
