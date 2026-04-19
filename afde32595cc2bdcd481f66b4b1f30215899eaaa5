@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "dbe4e0f7_4979f40b",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/internal/hosts/RemoteBranchInput.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 1021966
+      },
+      "writtenOn": "2026-04-19T20:22:08Z",
+      "side": 1,
+      "message": "So this simply tries all server types. Presumably there should be a check somewhere that the remote that is then chosen later (based on the owner) actually refers to such a server? Otherwise we may have parsed a Gitlab URL and then we might be going to use a Github remote?",
+      "revId": "afde32595cc2bdcd481f66b4b1f30215899eaaa5",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "445302c3_b9b89e83",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/push/PushBranchPage.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 458,
+      "author": {
+        "id": 1021966
+      },
+      "writtenOn": "2026-04-19T20:22:08Z",
+      "side": 1,
+      "message": "This feels a bit hacky. Why this kind of strange way to decide if it was a paste? In the `AbstractFetchFromHostPage` we define a paste action and transform the clipboard there on paste only. Which would have the advantage that this `normalizingBranchInput` flag would not be needed.",
+      "revId": "afde32595cc2bdcd481f66b4b1f30215899eaaa5",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735"
+    }
+  ]
+}
