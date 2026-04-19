@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f7cd8f77_10d7640b",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/staging/StagingView.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 5227,
+      "author": {
+        "id": 1021966
+      },
+      "writtenOn": "2026-04-19T20:00:58Z",
+      "side": 1,
+      "message": "Use the category to get the submodule node to the top in tree view. Currently it does not appear at the top if there are changed files with names that come lexicographically earlier.\n\nAnd of course you\u0027ll have to decide here what to do when \"sort by state\" (i.e., `!isAlphabeticSort()`) is on.",
+      "revId": "37d5a48575b036756532517be5371dbe24d734b7",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735"
+    }
+  ]
+}
