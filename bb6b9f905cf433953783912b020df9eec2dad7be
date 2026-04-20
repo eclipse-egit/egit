@@ -33,6 +33,23 @@
       "message": "When updating the BC dependency, please also update the manifests. Otherwise we get issue jgit-249 again. See also Ie4514e69dd9576a720a89b671c81f7fc094241c1.",
       "revId": "bb6b9f905cf433953783912b020df9eec2dad7be",
       "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "fb14f240_62b04a40",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000671
+      },
+      "writtenOn": "2026-04-20T08:36:46Z",
+      "side": 1,
+      "message": "new bc versions were approved by the ip team",
+      "revId": "bb6b9f905cf433953783912b020df9eec2dad7be",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735"
     }
   ]
 }
