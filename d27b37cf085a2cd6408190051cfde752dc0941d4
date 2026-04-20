@@ -33,6 +33,29 @@
       "message": "I tried this with your change on the gerrit repository which has submodules in the modules and plugins folders, the latter also contains regular files.\n\nI think the result looks messy, see the comments I posted on the issue egit-171",
       "revId": "d27b37cf085a2cd6408190051cfde752dc0941d4",
       "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "eb8d75b3_aabc6d03",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/staging/StagingView.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 5233,
+      "author": {
+        "id": 1021966
+      },
+      "writtenOn": "2026-04-20T16:55:40Z",
+      "side": 1,
+      "message": "This is wrong. (Also in line 5237.) It cause integer overflow in line 5251, and then the sorting is broken. Just return -1.",
+      "range": {
+        "startLine": 5233,
+        "startChar": 11,
+        "endLine": 5233,
+        "endChar": 28
+      },
+      "revId": "d27b37cf085a2cd6408190051cfde752dc0941d4",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735"
     }
   ]
 }
