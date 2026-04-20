@@ -16,6 +16,23 @@
       "message": "Any further comments? Otherwise I plan to merge today",
       "revId": "0afc4aa1fcfa1fca47b38564bc0f9dcb87b2b615",
       "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "54403b87_838c134b",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1012795
+      },
+      "writtenOn": "2026-04-20T09:48:41Z",
+      "side": 1,
+      "message": "Thanks @masohn",
+      "revId": "0afc4aa1fcfa1fca47b38564bc0f9dcb87b2b615",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735"
     }
   ],
   "submitRequirementResults": []
