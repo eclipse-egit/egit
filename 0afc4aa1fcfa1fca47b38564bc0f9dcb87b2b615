@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "d7c17abf_113248b1",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1012795
+      },
+      "writtenOn": "2026-04-20T07:10:39Z",
+      "side": 1,
+      "message": "Any further comments? Otherwise I plan to merge today",
+      "revId": "0afc4aa1fcfa1fca47b38564bc0f9dcb87b2b615",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735"
+    }
+  ]
+}
