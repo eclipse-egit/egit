@@ -16,6 +16,23 @@
       "message": "Build failure seems a server issue from the foundation",
       "revId": "d27b37cf085a2cd6408190051cfde752dc0941d4",
       "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "f8991b7e_c33b324b",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000671
+      },
+      "writtenOn": "2026-04-20T15:49:42Z",
+      "side": 1,
+      "message": "I tried this with your change on the gerrit repository which has submodules in the modules and plugins folders, the latter also contains regular files.\n\nI think the result looks messy, see the comments I posted on the issue egit-171",
+      "revId": "d27b37cf085a2cd6408190051cfde752dc0941d4",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735"
     }
   ]
 }
