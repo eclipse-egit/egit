@@ -22,8 +22,10 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Iterator;
+import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Objects;
+import java.util.Set;
 
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.runtime.IPath;
@@ -48,6 +50,7 @@ import org.eclipse.jface.action.Action;
 import org.eclipse.jface.action.IAction;
 import org.eclipse.jface.action.MenuManager;
 import org.eclipse.jface.action.Separator;
+import org.eclipse.jface.util.LocalSelectionTransfer;
 import org.eclipse.jface.viewers.ArrayContentProvider;
 import org.eclipse.jface.viewers.ColumnViewerToolTipSupport;
 import org.eclipse.jface.viewers.IOpenListener;
@@ -69,6 +72,9 @@ import org.eclipse.jgit.treewalk.filter.TreeFilter;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.dnd.Clipboard;
 import org.eclipse.swt.dnd.DND;
+import org.eclipse.swt.dnd.DragSourceAdapter;
+import org.eclipse.swt.dnd.DragSourceEvent;
+import org.eclipse.swt.dnd.FileTransfer;
 import org.eclipse.swt.dnd.TextTransfer;
 import org.eclipse.swt.dnd.Transfer;
 import org.eclipse.swt.events.DisposeEvent;
@@ -194,6 +200,11 @@ public class CommitFileDiffViewer extends TableViewer {
 				}
 			}
 		});
+
+		addDragSupport(DND.DROP_COPY | DND.DROP_LINK,
+				new Transfer[] { LocalSelectionTransfer.getTransfer(),
+						FileTransfer.getInstance() },
+				new FileDiffDragListener(this));
 
 		clipboard = new Clipboard(rawTable.getDisplay());
 		rawTable.addDisposeListener(new DisposeListener() {
@@ -504,6 +515,102 @@ public class CommitFileDiffViewer extends TableViewer {
 			loader = null;
 		}
 		Job.getJobManager().cancel(JobFamilies.HISTORY_FILE_DIFF);
+	}
+
+	private static class FileDiffDragListener extends DragSourceAdapter {
+
+		private final CommitFileDiffViewer viewer;
+
+		FileDiffDragListener(CommitFileDiffViewer viewer) {
+			this.viewer = viewer;
+		}
+
+		@Override
+		public void dragStart(DragSourceEvent event) {
+			event.doit = !viewer.getStructuredSelection().isEmpty()
+					&& hasWorkingTreeFile(viewer.getStructuredSelection());
+		}
+
+		@Override
+		public void dragFinished(DragSourceEvent event) {
+			if (LocalSelectionTransfer.getTransfer()
+					.isSupportedType(event.dataType)) {
+				LocalSelectionTransfer.getTransfer().setSelection(null);
+			}
+		}
+
+		@Override
+		public void dragSetData(DragSourceEvent event) {
+			IStructuredSelection selection = viewer.getStructuredSelection();
+			if (selection.isEmpty()) {
+				return;
+			}
+			if (LocalSelectionTransfer.getTransfer()
+					.isSupportedType(event.dataType)) {
+				List<Object> elements = new ArrayList<>();
+				for (Object selected : selection.toList()) {
+					if (!(selected instanceof FileDiff)) {
+						continue;
+					}
+					FileDiff diff = (FileDiff) selected;
+					IPath path = workingTreePath(diff);
+					if (path == null) {
+						continue;
+					}
+					IFile file = ResourceUtil.getFileForLocation(path, false);
+					if (file != null) {
+						elements.add(file);
+					} else {
+						elements.add(path);
+					}
+				}
+				LocalSelectionTransfer.getTransfer()
+						.setSelection(new StructuredSelection(elements));
+				return;
+			}
+			if (FileTransfer.getInstance().isSupportedType(event.dataType)) {
+				Set<String> files = new LinkedHashSet<>();
+				for (Object selected : selection.toList()) {
+					if (!(selected instanceof FileDiff)) {
+						continue;
+					}
+					IPath path = workingTreePath((FileDiff) selected);
+					if (path == null) {
+						continue;
+					}
+					File file = path.toFile();
+					if (file.exists()) {
+						files.add(file.getAbsolutePath());
+					}
+				}
+				if (!files.isEmpty()) {
+					event.data = files.toArray(new String[0]);
+				}
+			}
+		}
+
+		private static boolean hasWorkingTreeFile(
+				IStructuredSelection selection) {
+			for (Object selected : selection.toList()) {
+				if (selected instanceof FileDiff
+						&& workingTreePath((FileDiff) selected) != null) {
+					return true;
+				}
+			}
+			return false;
+		}
+
+		private static IPath workingTreePath(FileDiff diff) {
+			if (diff.getChange() == ChangeType.DELETE) {
+				return null;
+			}
+			Repository repo = diff.getRepository();
+			if (repo == null || repo.isBare()) {
+				return null;
+			}
+			IPath workTree = new Path(repo.getWorkTree().getAbsolutePath());
+			return workTree.append(diff.getPath());
+		}
 	}
 
 	private static class FileDiffLoader extends Job {
