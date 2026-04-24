@@ -24,6 +24,7 @@ import static org.eclipse.egit.ui.internal.actions.ActionCommands.IGNORE_ACTION;
 import static org.eclipse.egit.ui.internal.actions.ActionCommands.MERGE_TOOL_ACTION;
 import static org.eclipse.egit.ui.internal.actions.ActionCommands.PUSH_ACTION;
 import static org.eclipse.egit.ui.internal.actions.ActionCommands.REMOVE_FROM_INDEX;
+import static org.eclipse.egit.ui.internal.actions.ActionCommands.REPLACE_WITH_HEAD_ACTION;
 import static org.eclipse.egit.ui.internal.synchronize.model.SupportedContextActionsHelper.canPush;
 import static org.eclipse.team.internal.ui.synchronize.SynchronizePageConfiguration.P_OPEN_ACTION;
 import static org.eclipse.team.ui.synchronize.ISynchronizePageConfiguration.NAVIGATE_GROUP;
@@ -91,6 +92,10 @@ class GitActionContributor extends SynchronizePageActionGroup {
 			}
 			if (!state.isIgnored()) {
 				menu.appendToGroup(GIT_ACTIONS, createItem(IGNORE_ACTION));
+			}
+			if (state.isTracked()) {
+				menu.appendToGroup(GIT_ACTIONS,
+						createItem(REPLACE_WITH_HEAD_ACTION));
 			}
 			menu.appendToGroup(GIT_ACTIONS, createItem(MERGE_TOOL_ACTION));
 			menu.appendToGroup(GIT_ACTIONS, createItem(CREATE_PATCH));
