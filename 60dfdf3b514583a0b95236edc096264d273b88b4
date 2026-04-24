@@ -34,6 +34,23 @@
       "parentUuid": "9e10bdf9_e4aa7fe1",
       "revId": "60dfdf3b514583a0b95236edc096264d273b88b4",
       "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "bbb0c9ec_0a449c30",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1021966
+      },
+      "writtenOn": "2026-04-24T21:55:13Z",
+      "side": 1,
+      "message": "Works fine initially, but somehow works only once. (Tested on MacOS.)\n\nInitial paste is OK; URL in clipboard gets parsed and on paste only the branch name is inserted; remote combo gets changed. Now change the combo to some other remote, select the text, paste again. The URL gets inserted.\n\nNo idea why, and while this would not be a typical use case it\u0027s super-strange behavior. The fetch PR page doesn\u0027t have that problem.",
+      "revId": "60dfdf3b514583a0b95236edc096264d273b88b4",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735"
     }
   ]
 }
