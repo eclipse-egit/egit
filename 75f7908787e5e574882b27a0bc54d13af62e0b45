@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "fbe25acb_801479c7",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000671
+      },
+      "writtenOn": "2026-04-24T20:32:28Z",
+      "side": 1,
+      "message": "see my latest comment in egit-171, I think submodules should be shown at the top of their respective parent folder.",
+      "revId": "75f7908787e5e574882b27a0bc54d13af62e0b45",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735"
+    }
+  ]
+}
