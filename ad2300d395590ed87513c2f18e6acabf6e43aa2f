@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "37c5d55d_37346aa2",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1012795
+      },
+      "writtenOn": "2026-04-24T12:22:58Z",
+      "side": 1,
+      "message": "Planning to merge beginning of next week, feedback has been adressed a while ago and this is not active per default, so no immediate risk of breaking something.\n\nLet me know if you need more changes.",
+      "revId": "ad2300d395590ed87513c2f18e6acabf6e43aa2f",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735"
+    }
+  ]
+}
