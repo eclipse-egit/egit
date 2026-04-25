@@ -227,7 +227,29 @@ public class CommitJob extends Job {
 				throw new IOException(e.getLocalizedMessage(), e);
 			}
 		}
-		if (showDialog || pushTo == PushMode.GERRIT || config == null
+		if (!showDialog && pushTo == PushMode.UPSTREAM && config != null
+				&& currentBranch != null
+				&& PushOperationUI.isForkUpstreamPush(config, repository)) {
+			final Display display = PlatformUI.getWorkbench().getDisplay();
+			final RemoteConfig forkRemoteConfig = config;
+			final String branchToPush = currentBranch;
+			display.asyncExec(() -> {
+				try {
+					if (!PushOperationUI.showForkFallbackDialog(
+							display.getActiveShell(), repository,
+							forkRemoteConfig, forcePush)) {
+						PushOperationUI op = new PushOperationUI(repository,
+								branchToPush, forkRemoteConfig, false);
+						op.setForce(forcePush);
+						op.start();
+					}
+				} catch (IOException e) {
+					Activator.handleError(
+							NLS.bind(UIText.CommitUI_pushFailedMessage, e), e,
+							true);
+				}
+			});
+		} else if (showDialog || pushTo == PushMode.GERRIT || config == null
 				|| currentBranch == null) {
 			final Display display = PlatformUI.getWorkbench().getDisplay();
 			display.asyncExec(() -> {

@@ -14,9 +14,15 @@
  *******************************************************************************/
 package org.eclipse.egit.ui.internal.pull;
 
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.List;
+
 import org.eclipse.egit.core.RepositoryUtil;
 import org.eclipse.egit.ui.UIUtils;
 import org.eclipse.egit.ui.internal.UIText;
+import org.eclipse.egit.ui.internal.fetch.FetchResultEntry;
 import org.eclipse.egit.ui.internal.fetch.FetchResultTable;
 import org.eclipse.egit.ui.internal.merge.MergeResultDialog;
 import org.eclipse.egit.ui.internal.rebase.RebaseResultDialog;
@@ -53,6 +59,8 @@ public class PullResultDialog extends Dialog {
 
 	private final PullResult result;
 
+	private final Collection<FetchResultEntry> additionalFetchResults;
+
 	private boolean persistSize;
 
 	/**
@@ -61,18 +69,73 @@ public class PullResultDialog extends Dialog {
 	 * @param result
 	 */
 	public PullResultDialog(Shell shell, Repository repo, PullResult result) {
+		this(shell, repo, result, Collections.emptyList());
+	}
+
+	/**
+	 * @param shell
+	 * @param repo
+	 * @param result
+	 * @param additionalFetchResults
+	 *            fetch results produced before the pull, for example by "fetch
+	 *            all"
+	 */
+	public PullResultDialog(Shell shell, Repository repo, PullResult result,
+			Collection<FetchResultEntry> additionalFetchResults) {
 		super(shell);
 		setShellStyle(getShellStyle() & ~SWT.APPLICATION_MODAL | SWT.SHELL_TRIM);
 		setBlockOnOpen(false);
 		this.repo = repo;
 		this.result = result;
-		persistSize = hasFetchResults() || hasMergeResults();
+		this.additionalFetchResults = additionalFetchResults != null
+				? additionalFetchResults : Collections.emptyList();
+		persistSize = hasDetailedFetchResults() || hasMergeResults();
 	}
 
 	private boolean hasFetchResults() {
+		return !getFetchResults().isEmpty();
+	}
+
+	private boolean hasDetailedFetchResults() {
+		for (FetchResultEntry entry : getFetchResults()) {
+			if (!entry.getResult().getTrackingRefUpdates().isEmpty()) {
+				return true;
+			}
+		}
+		return false;
+	}
+
+	private List<FetchResultEntry> getFetchResults() {
+		List<FetchResultEntry> fetchResults = new ArrayList<>();
+		for (FetchResultEntry fetchResult : additionalFetchResults) {
+			fetchResults.add(fetchResult);
+		}
 		final FetchResult fetchResult = result.getFetchResult();
-		return fetchResult != null
-				&& !fetchResult.getTrackingRefUpdates().isEmpty();
+		if (fetchResult != null) {
+			addOrReplacePullFetchResult(fetchResults, fetchResult);
+		}
+		return fetchResults;
+	}
+
+	private void addOrReplacePullFetchResult(
+			List<FetchResultEntry> fetchResults, FetchResult fetchResult) {
+		String fetchedFrom = result.getFetchedFrom();
+		for (int i = 0; i < fetchResults.size(); i++) {
+			FetchResultEntry entry = fetchResults.get(i);
+			if (isSameSource(entry.getSourceString(), fetchedFrom)) {
+				fetchResults.set(i,
+						new FetchResultEntry(fetchResult,
+								entry.getSourceString()));
+				return;
+			}
+		}
+		fetchResults.add(new FetchResultEntry(fetchResult, fetchedFrom));
+	}
+
+	private boolean isSameSource(String source, String fetchedFrom) {
+		return source != null && fetchedFrom != null
+				&& (source.equals(fetchedFrom) || source.endsWith(" - " //$NON-NLS-1$
+						+ fetchedFrom));
 	}
 
 	private boolean hasMergeResults() {
@@ -90,22 +153,40 @@ public class PullResultDialog extends Dialog {
 	@Override
 	protected Control createDialogArea(Composite parent) {
 		Composite main = new Composite(parent, SWT.NONE);
-		GridLayoutFactory.swtDefaults().applyTo(main);
+		GridLayoutFactory.swtDefaults().spacing(0, 8).applyTo(main);
 		GridDataFactory.fillDefaults().indent(0, 0).grab(true, true).applyTo(
 				main);
 		Group fetchResultGroup = new Group(main, SWT.SHADOW_ETCHED_IN);
 		fetchResultGroup
 				.setText(UIText.PullResultDialog_FetchResultGroupHeader);
-		GridLayoutFactory.fillDefaults().applyTo(fetchResultGroup);
-		GridDataFactory.fillDefaults().grab(true, true).applyTo(
-				fetchResultGroup);
+		boolean hasDetailedFetchResults = hasDetailedFetchResults();
+		GridLayoutFactory.swtDefaults().margins(6, 8).spacing(0, 6)
+				.applyTo(fetchResultGroup);
+		GridDataFactory.fillDefaults().grab(true, hasDetailedFetchResults)
+				.applyTo(fetchResultGroup);
 		if (hasFetchResults()) {
-			FetchResultTable table = new FetchResultTable(fetchResultGroup);
-			GridDataFactory.fillDefaults().grab(true, true)
-					.hint(600, 130).applyTo(table.getControl());
-			table.setData(repo, result.getFetchResult());
+			List<FetchResultEntry> fetchResults = getFetchResults();
+			for (FetchResultEntry entry : fetchResults) {
+				FetchResult fetchResult = entry.getResult();
+				if (fetchResult.getTrackingRefUpdates().isEmpty()) {
+					Label source = new Label(fetchResultGroup, SWT.NONE);
+					source.setText(NLS.bind(
+							UIText.FetchResultDialog_labelEmptyResult,
+							entry.getSourceString()));
+					continue;
+				}
+				if (fetchResults.size() > 1) {
+					Label source = new Label(fetchResultGroup, SWT.NONE);
+					source.setText(NLS.bind(
+							UIText.FetchResultDialog_labelNonEmptyResult,
+							entry.getSourceString()));
+				}
+				FetchResultTable table = new FetchResultTable(fetchResultGroup);
+				GridDataFactory.fillDefaults().grab(true, true).hint(600, 130)
+						.applyTo(table.getControl());
+				table.setData(repo, fetchResult);
+			}
 		} else {
-			GridLayoutFactory.swtDefaults().applyTo(fetchResultGroup);
 			Label noResult = new Label(fetchResultGroup, SWT.NONE);
 			if (BranchConfig.LOCAL_REPOSITORY.equals(result.getFetchedFrom()))
 				noResult
@@ -122,11 +203,14 @@ public class PullResultDialog extends Dialog {
 		if (hasMergeResults()) {
 			GridDataFactory.fillDefaults().grab(true, true).applyTo(
 					mergeResultGroup);
-			GridLayoutFactory.fillDefaults().applyTo(mergeResultGroup);
+			GridLayoutFactory.swtDefaults().margins(6, 8).spacing(0, 6)
+					.applyTo(mergeResultGroup);
 			MergeResultDialog dlg = new MergeResultDialog(getParentShell(),
 					repo, result.getMergeResult());
 			dlg.createDialogArea(mergeResultGroup);
 		} else if (hasRebaseResults()) {
+			GridLayoutFactory.swtDefaults().margins(6, 8).spacing(0, 6)
+					.applyTo(mergeResultGroup);
 			RebaseResultDialog.createFailedOrConflictsParts(mergeResultGroup,
 					result.getRebaseResult());
 			GridDataFactory.fillDefaults().grab(true, false).applyTo(
@@ -134,7 +218,8 @@ public class PullResultDialog extends Dialog {
 		} else {
 			GridDataFactory.fillDefaults().grab(true, false).applyTo(
 					mergeResultGroup);
-			GridLayoutFactory.swtDefaults().applyTo(mergeResultGroup);
+			GridLayoutFactory.swtDefaults().margins(6, 8).spacing(0, 6)
+					.applyTo(mergeResultGroup);
 			Label noResult = new Label(mergeResultGroup, SWT.NONE);
 			noResult
 					.setText(UIText.PullResultDialog_MergeAlreadyUpToDateMessage);

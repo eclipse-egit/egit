@@ -19,23 +19,29 @@ import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.stream.Collectors;
 
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.jobs.Job;
+import org.eclipse.core.runtime.preferences.IEclipsePreferences;
 import org.eclipse.egit.core.RepositoryUtil;
 import org.eclipse.egit.core.internal.credentials.EGitCredentialsProvider;
+import org.eclipse.egit.core.op.ConfigureUpstreamRemoteAfterCloneTask;
 import org.eclipse.egit.core.op.PushOperation;
 import org.eclipse.egit.core.op.PushOperationResult;
 import org.eclipse.egit.core.op.PushOperationSpecification;
 import org.eclipse.egit.core.settings.GitSettings;
 import org.eclipse.egit.ui.Activator;
+import org.eclipse.egit.ui.UIPreferences;
 import org.eclipse.egit.ui.internal.UIIcons;
 import org.eclipse.egit.ui.internal.UIText;
 import org.eclipse.jface.dialogs.IDialogConstants;
 import org.eclipse.jface.dialogs.MessageDialog;
+import org.eclipse.jface.dialogs.MessageDialogWithToggle;
+import org.eclipse.jface.preference.IPreferenceStore;
 import org.eclipse.jface.resource.JFaceResources;
 import org.eclipse.jface.resource.LocalResourceManager;
 import org.eclipse.jface.resource.ResourceManager;
@@ -49,6 +55,7 @@ import org.eclipse.jgit.lib.BranchConfig;
 import org.eclipse.jgit.lib.Config;
 import org.eclipse.jgit.lib.Constants;
 import org.eclipse.jgit.lib.ObjectId;
+import org.eclipse.jgit.lib.Ref;
 import org.eclipse.jgit.lib.Repository;
 import org.eclipse.jgit.transport.CredentialsProvider;
 import org.eclipse.jgit.transport.PushConfig;
@@ -62,11 +69,21 @@ import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Shell;
+import org.osgi.service.prefs.BackingStoreException;
 
 /**
  * UI Wrapper for {@link PushOperation}
  */
 public class PushOperationUI {
+
+	private static final String FORK_UPSTREAM_PUSH_MODE_ORIGIN = "origin"; //$NON-NLS-1$
+
+	private static final String FORK_UPSTREAM_PUSH_MODE_UPSTREAM = "upstream"; //$NON-NLS-1$
+
+	private enum ForkFallbackChoice {
+		PUSH_ORIGIN, PUSH_UPSTREAM, CANCEL
+	}
+
 	private final Repository repository;
 
 	private final boolean dryRun;
@@ -386,6 +403,9 @@ public class PushOperationUI {
 		}
 		List<RefSpec> refSpecs = remoteCfg.getPushRefSpecs();
 		if (!refSpecs.isEmpty()) {
+			if (showForkFallbackDialog(parent, repository, remoteCfg)) {
+				return null;
+			}
 			RefSpec match = refSpecs.stream().filter(RefSpec::isMatching)
 					.findAny().orElse(null);
 			if (match != null) {
@@ -423,9 +443,15 @@ public class PushOperationUI {
 					.getPushDefault();
 			switch (pushDefault) {
 			case CURRENT:
+				if (showForkFallbackDialog(parent, repository, remoteCfg)) {
+					return null;
+				}
 				return new PushOperationUI(repository, remoteCfg.getName(),
 						false);
 			case MATCHING:
+				if (showForkFallbackDialog(parent, repository, remoteCfg)) {
+					return null;
+				}
 				int numberOfBranches = repository.getRefDatabase()
 						.getRefsByPrefix(Constants.R_HEADS).size();
 				if (numberOfBranches == 0) {
@@ -449,6 +475,9 @@ public class PushOperationUI {
 				return null;
 			case SIMPLE:
 			case UPSTREAM:
+				if (showForkFallbackDialog(parent, repository, remoteCfg)) {
+					return null;
+				}
 				BranchConfig branchCfg = new BranchConfig(config, shortBranch);
 				String upstreamBranch = branchCfg.getMerge();
 				if (upstreamBranch == null) {
@@ -497,6 +526,185 @@ public class PushOperationUI {
 		if (wizard != null) {
 			PushWizardDialog dialog = new PushWizardDialog(shell, wizard);
 			dialog.open();
+		}
+	}
+
+	/**
+	 * Returns true when the push would target the {@code upstream} remote in a
+	 * fork/upstream scenario where {@code origin} is also available.
+	 *
+	 * @param remoteCfg
+	 *            configured push remote
+	 * @param repository
+	 *            repository to push from
+	 * @return {@code true} if the user likely wants to push to their fork
+	 *         instead of the parent repository
+	 */
+	public static boolean isForkUpstreamPush(RemoteConfig remoteCfg,
+			Repository repository) {
+		if (remoteCfg == null || repository == null) {
+			return false;
+		}
+		if (!ConfigureUpstreamRemoteAfterCloneTask.UPSTREAM_REMOTE_NAME
+				.equals(remoteCfg.getName())) {
+			return false;
+		}
+		// Only redirect when fork detection marked this repository. A plain
+		// origin/upstream triangular setup may intentionally push upstream.
+		boolean detected = RepositoryUtil.INSTANCE.getPreferences().getBoolean(
+				RepositoryUtil.INSTANCE.getRepositorySpecificPreferenceKey(
+						repository,
+						ConfigureUpstreamRemoteAfterCloneTask.FORK_SCENARIO_PREF_KEY),
+				false);
+		return detected && repository.getConfig().getSubsections("remote") //$NON-NLS-1$
+				.contains(Constants.DEFAULT_REMOTE_NAME);
+	}
+
+	/**
+	 * Opens the fork/upstream fallback dialog if the given remote targets
+	 * {@code upstream} while {@code origin} is available as the fork.
+	 *
+	 * @param shell
+	 *            parent shell
+	 * @param repo
+	 *            repository to push from
+	 * @param remoteCfg
+	 *            configured push remote
+	 * @return {@code true} if the push was handled by the fallback flow;
+	 *         {@code false} if the caller should continue the original push
+	 * @throws IOException
+	 *             if repository state cannot be read
+	 */
+	public static boolean showForkFallbackDialog(Shell shell,
+			@NonNull Repository repo, RemoteConfig remoteCfg)
+			throws IOException {
+		return showForkFallbackDialog(shell, repo, remoteCfg, false);
+	}
+
+	/**
+	 * Opens the fork/upstream fallback dialog if the given remote targets
+	 * {@code upstream} while {@code origin} is available as the fork.
+	 *
+	 * @param shell
+	 *            parent shell
+	 * @param repo
+	 *            repository to push from
+	 * @param remoteCfg
+	 *            configured push remote
+	 * @param force
+	 *            whether to pre-select force push in the fallback wizard
+	 * @return {@code true} if the push was handled by the fallback flow;
+	 *         {@code false} if the caller should continue the original push
+	 * @throws IOException
+	 *             if repository state cannot be read
+	 */
+	public static boolean showForkFallbackDialog(Shell shell,
+			@NonNull Repository repo, RemoteConfig remoteCfg, boolean force)
+			throws IOException {
+		if (!isForkUpstreamPush(remoteCfg, repo)) {
+			return false;
+		}
+		String fullBranch = repo.getFullBranch();
+		if (fullBranch == null || ObjectId.isId(fullBranch)
+				|| !fullBranch.startsWith(Constants.R_HEADS)) {
+			return false;
+		}
+		return forkFallbackDialog(shell, repo, fullBranch,
+				Repository.shortenRefName(fullBranch), force);
+	}
+
+	private static boolean forkFallbackDialog(Shell shell,
+			@NonNull Repository repo, String fullBranch, String shortBranch,
+			boolean force) throws IOException {
+		ForkFallbackChoice choice = getForkFallbackChoice(shell, repo);
+		if (choice == ForkFallbackChoice.PUSH_UPSTREAM) {
+			return false;
+		}
+		if (choice == ForkFallbackChoice.CANCEL) {
+			return true;
+		}
+		Ref ref = repo.findRef(fullBranch);
+		PushBranchWizard wizard;
+		if (ref != null) {
+			wizard = new PushBranchWizard(repo, ref);
+		} else {
+			ObjectId headId = repo.resolve(Constants.HEAD);
+			if (headId == null) {
+				return false;
+			}
+			wizard = new PushBranchWizard(repo, headId);
+		}
+		wizard.setInitialConfiguration(Constants.DEFAULT_REMOTE_NAME,
+				shortBranch);
+		wizard.setForce(force);
+		PushWizardDialog dialog = new PushWizardDialog(shell, wizard);
+		dialog.open();
+		return true;
+	}
+
+	private static ForkFallbackChoice getForkFallbackChoice(Shell shell,
+			@NonNull Repository repo) {
+		String mode = getForkUpstreamPushMode(repo);
+		if (FORK_UPSTREAM_PUSH_MODE_ORIGIN.equals(mode)) {
+			return ForkFallbackChoice.PUSH_ORIGIN;
+		}
+		if (FORK_UPSTREAM_PUSH_MODE_UPSTREAM.equals(mode)) {
+			return ForkFallbackChoice.PUSH_UPSTREAM;
+		}
+		IPreferenceStore store = Activator.getDefault().getPreferenceStore();
+		if (!store.getBoolean(
+				UIPreferences.SHOW_FORK_UPSTREAM_PUSH_CONFIRMATION)) {
+			return ForkFallbackChoice.PUSH_ORIGIN;
+		}
+		MessageDialogWithToggle dialog = new MessageDialogWithToggle(shell,
+				UIText.PushOperationUI_ForkFallbackTitle, null,
+				UIText.PushOperationUI_ForkFallbackMessage,
+				MessageDialog.QUESTION, forkFallbackButtonLabels(),
+				0, UIText.PushOperationUI_ForkFallbackDontAskAgain, false);
+		int result = dialog.open();
+		boolean confirm = result == IDialogConstants.YES_ID;
+		boolean explicitChoice = confirm || result == IDialogConstants.NO_ID;
+		if (dialog.getToggleState() && explicitChoice) {
+			setForkUpstreamPushMode(repo,
+					confirm ? FORK_UPSTREAM_PUSH_MODE_ORIGIN
+							: FORK_UPSTREAM_PUSH_MODE_UPSTREAM);
+		}
+		if (!explicitChoice) {
+			return ForkFallbackChoice.CANCEL;
+		}
+		return confirm ? ForkFallbackChoice.PUSH_ORIGIN
+				: ForkFallbackChoice.PUSH_UPSTREAM;
+	}
+
+	private static LinkedHashMap<String, Integer> forkFallbackButtonLabels() {
+		LinkedHashMap<String, Integer> labels = new LinkedHashMap<>();
+		labels.put(IDialogConstants.YES_LABEL,
+				Integer.valueOf(IDialogConstants.YES_ID));
+		labels.put(IDialogConstants.NO_LABEL,
+				Integer.valueOf(IDialogConstants.NO_ID));
+		return labels;
+	}
+
+	private static String getForkUpstreamPushMode(Repository repository) {
+		return RepositoryUtil.INSTANCE.getPreferences().get(
+				RepositoryUtil.INSTANCE.getRepositorySpecificPreferenceKey(
+						repository,
+						ConfigureUpstreamRemoteAfterCloneTask.FORK_UPSTREAM_PUSH_MODE_PREF_KEY),
+				null);
+	}
+
+	private static void setForkUpstreamPushMode(Repository repository,
+			String mode) {
+		IEclipsePreferences prefs = RepositoryUtil.INSTANCE.getPreferences();
+		prefs.put(RepositoryUtil.INSTANCE.getRepositorySpecificPreferenceKey(
+				repository,
+				ConfigureUpstreamRemoteAfterCloneTask.FORK_UPSTREAM_PUSH_MODE_PREF_KEY),
+				mode);
+		try {
+			prefs.flush();
+		} catch (BackingStoreException e) {
+			Activator.logError(
+					"Failed to persist fork/upstream push preference", e); //$NON-NLS-1$
 		}
 	}
 

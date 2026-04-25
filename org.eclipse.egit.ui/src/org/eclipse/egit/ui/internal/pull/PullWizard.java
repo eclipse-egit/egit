@@ -11,14 +11,24 @@ package org.eclipse.egit.ui.internal.pull;
 
 import java.io.IOException;
 import java.net.URISyntaxException;
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import org.eclipse.core.runtime.IStatus;
+import org.eclipse.core.runtime.jobs.IJobChangeEvent;
+import org.eclipse.core.runtime.jobs.Job;
+import org.eclipse.core.runtime.jobs.JobChangeAdapter;
 import org.eclipse.egit.core.op.PullOperation.PullReferenceConfig;
 import org.eclipse.egit.ui.Activator;
 import org.eclipse.egit.ui.internal.SecureStoreUtils;
 import org.eclipse.egit.ui.internal.UIText;
+import org.eclipse.egit.ui.internal.actions.FetchAllActionHandler;
+import org.eclipse.egit.ui.internal.fetch.FetchAllResultDialog;
+import org.eclipse.egit.ui.internal.fetch.FetchResultEntry;
 import org.eclipse.egit.ui.internal.push.AddRemotePage;
 import org.eclipse.jface.wizard.Wizard;
 import org.eclipse.jgit.lib.BranchConfig.BranchRebaseMode;
@@ -29,6 +39,7 @@ import org.eclipse.jgit.lib.StoredConfig;
 import org.eclipse.jgit.transport.RefSpec;
 import org.eclipse.jgit.transport.RemoteConfig;
 import org.eclipse.jgit.transport.URIish;
+import org.eclipse.ui.PlatformUI;
 
 /**
  * A wizard to allow to specify a pull operation with options
@@ -137,8 +148,59 @@ public class PullWizard extends Wizard {
 				this.page.getFullRemoteReference(),
 				this.page.getUpstreamConfig());
 		repos.put(this.repository, config);
-		PullOperationUI pullOperationUI = new PullOperationUI(repos);
-		pullOperationUI.start();
+		if (this.page.isFetchAll()) {
+			fetchAllThenPull(repos);
+		} else {
+			new PullOperationUI(repos).start();
+		}
+	}
+
+	private void fetchAllThenPull(Map<Repository, PullReferenceConfig> repos) {
+		List<RemoteConfig> allRemotes;
+		try {
+			allRemotes = RemoteConfig
+					.getAllRemoteConfigs(repository.getConfig());
+		} catch (URISyntaxException e) {
+			Activator.logError(e.getMessage(), e);
+			new PullOperationUI(repos).start();
+			return;
+		}
+		List<FetchResultEntry> fetchAllResults = Collections
+				.synchronizedList(new ArrayList<>());
+		List<String> fetchAllErrors = Collections
+				.synchronizedList(new ArrayList<>());
+		Job fetchAllJob = FetchAllActionHandler.createFetchAllJobWithEntries(
+				repository, allRemotes, fetchAllResults, fetchAllErrors);
+		fetchAllJob.addJobChangeListener(new JobChangeAdapter() {
+			@Override
+			public void done(IJobChangeEvent event) {
+				IStatus result = event.getResult();
+				if (result != null
+						&& result.getSeverity() == IStatus.CANCEL) {
+					return;
+				}
+				if (result != null && !result.isOK()) {
+					Activator.handleStatus(result, true);
+					new PullOperationUI(repos, fetchAllResults).start();
+					return;
+				}
+				if (!fetchAllErrors.isEmpty()) {
+					showFetchAllResult(fetchAllResults, fetchAllErrors);
+				}
+				new PullOperationUI(repos, fetchAllResults).start();
+			}
+		});
+		fetchAllJob.schedule();
+	}
+
+	private void showFetchAllResult(List<FetchResultEntry> fetchAllResults,
+			List<String> fetchAllErrors) {
+		PlatformUI.getWorkbench().getDisplay().asyncExec(() -> {
+			new FetchAllResultDialog(PlatformUI.getWorkbench()
+					.getModalDialogShellProvider().getShell(), repository,
+					new ArrayList<>(fetchAllResults),
+					new ArrayList<>(fetchAllErrors)).open();
+		});
 	}
 
 }
