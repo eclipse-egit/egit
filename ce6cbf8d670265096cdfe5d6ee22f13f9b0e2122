@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "51fc8199_9db500ab",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1021966
+      },
+      "writtenOn": "2026-04-25T18:49:10Z",
+      "side": 1,
+      "message": "Delete this. The commit message should not tell about differences between patch sets because that will be meaningless once the final version is merged. Earlier patch sets will not be in the git history of a clone, so people won\u0027t understand what it is about.\n\nIf you want to explain inter-patchset differences, reply to review comments.\n\nAnd BTW, \"Acknowledge\" means \"I agree, but the code is unchanged; I\u0027ll consider it for a future change\". If you do implement a review suggestion, use \"Done\".",
+      "range": {
+        "startLine": 36,
+        "startChar": 28,
+        "endLine": 39,
+        "endChar": 12
+      },
+      "revId": "ce6cbf8d670265096cdfe5d6ee22f13f9b0e2122",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "acc0041a_322ea9a0",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1021966
+      },
+      "writtenOn": "2026-04-25T18:49:10Z",
+      "side": 1,
+      "message": "Unfortunately the behavior is still unchanged. (Still on MacOS; I can test on Windows probably Tuesday.) I\u0027m starting to suspect some problem with focus events on Mac. Haven\u0027t debugged yet but it feels as if the paste handler is not always active when it should be.",
+      "revId": "ce6cbf8d670265096cdfe5d6ee22f13f9b0e2122",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735"
+    }
+  ]
+}
