@@ -45,6 +45,7 @@ import org.eclipse.egit.core.op.CloneOperation.PostCloneTask;
 import org.eclipse.egit.core.op.ConfigureFetchAfterCloneTask;
 import org.eclipse.egit.core.op.ConfigureGerritAfterCloneTask;
 import org.eclipse.egit.core.op.ConfigurePushAfterCloneTask;
+import org.eclipse.egit.core.op.ConfigureUpstreamRemoteAfterCloneTask;
 import org.eclipse.egit.core.op.SetRepositoryConfigPropertyTask;
 import org.eclipse.egit.core.settings.GitSettings;
 import org.eclipse.egit.ui.Activator;
@@ -277,6 +278,8 @@ public abstract class AbstractGitCloneWizard extends Wizard {
 		configureRepositoryConfig(op, gitRepositoryInfo);
 		configureGerrit(op, gitRepositoryInfo, credentialsProvider, remoteName,
 				timeout);
+		op.addPostCloneTask(new ConfigureUpstreamRemoteAfterCloneTask(uri,
+				credentials));
 
 		if (cloneDestination.isImportProjects()) {
 			final IWorkingSet[] sets = cloneDestination.getWorkingSets();

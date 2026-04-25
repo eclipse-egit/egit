@@ -27,15 +27,19 @@ import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.jobs.Job;
 import org.eclipse.egit.core.RepositoryUtil;
 import org.eclipse.egit.core.internal.credentials.EGitCredentialsProvider;
+import org.eclipse.egit.core.op.ConfigureUpstreamRemoteAfterCloneTask;
 import org.eclipse.egit.core.op.PushOperation;
 import org.eclipse.egit.core.op.PushOperationResult;
 import org.eclipse.egit.core.op.PushOperationSpecification;
 import org.eclipse.egit.core.settings.GitSettings;
 import org.eclipse.egit.ui.Activator;
+import org.eclipse.egit.ui.UIPreferences;
 import org.eclipse.egit.ui.internal.UIIcons;
 import org.eclipse.egit.ui.internal.UIText;
 import org.eclipse.jface.dialogs.IDialogConstants;
 import org.eclipse.jface.dialogs.MessageDialog;
+import org.eclipse.jface.dialogs.MessageDialogWithToggle;
+import org.eclipse.jface.preference.IPreferenceStore;
 import org.eclipse.jface.resource.JFaceResources;
 import org.eclipse.jface.resource.LocalResourceManager;
 import org.eclipse.jface.resource.ResourceManager;
@@ -49,6 +53,7 @@ import org.eclipse.jgit.lib.BranchConfig;
 import org.eclipse.jgit.lib.Config;
 import org.eclipse.jgit.lib.Constants;
 import org.eclipse.jgit.lib.ObjectId;
+import org.eclipse.jgit.lib.Ref;
 import org.eclipse.jgit.lib.Repository;
 import org.eclipse.jgit.transport.CredentialsProvider;
 import org.eclipse.jgit.transport.PushConfig;
@@ -386,6 +391,9 @@ public class PushOperationUI {
 		}
 		List<RefSpec> refSpecs = remoteCfg.getPushRefSpecs();
 		if (!refSpecs.isEmpty()) {
+			if (showForkFallbackDialog(parent, repository, remoteCfg)) {
+				return null;
+			}
 			RefSpec match = refSpecs.stream().filter(RefSpec::isMatching)
 					.findAny().orElse(null);
 			if (match != null) {
@@ -423,9 +431,15 @@ public class PushOperationUI {
 					.getPushDefault();
 			switch (pushDefault) {
 			case CURRENT:
+				if (showForkFallbackDialog(parent, repository, remoteCfg)) {
+					return null;
+				}
 				return new PushOperationUI(repository, remoteCfg.getName(),
 						false);
 			case MATCHING:
+				if (showForkFallbackDialog(parent, repository, remoteCfg)) {
+					return null;
+				}
 				int numberOfBranches = repository.getRefDatabase()
 						.getRefsByPrefix(Constants.R_HEADS).size();
 				if (numberOfBranches == 0) {
@@ -449,6 +463,9 @@ public class PushOperationUI {
 				return null;
 			case SIMPLE:
 			case UPSTREAM:
+				if (showForkFallbackDialog(parent, repository, remoteCfg)) {
+					return null;
+				}
 				BranchConfig branchCfg = new BranchConfig(config, shortBranch);
 				String upstreamBranch = branchCfg.getMerge();
 				if (upstreamBranch == null) {
@@ -498,6 +515,139 @@ public class PushOperationUI {
 			PushWizardDialog dialog = new PushWizardDialog(shell, wizard);
 			dialog.open();
 		}
+	}
+
+	/**
+	 * Returns true when the push would target the {@code upstream} remote in a
+	 * fork/upstream scenario where {@code origin} is also available.
+	 *
+	 * @param remoteCfg
+	 *            configured push remote
+	 * @param repository
+	 *            repository to push from
+	 * @return {@code true} if the user likely wants to push to their fork
+	 *         instead of the parent repository
+	 */
+	public static boolean isForkUpstreamPush(RemoteConfig remoteCfg,
+			Repository repository) {
+		if (remoteCfg == null || repository == null) {
+			return false;
+		}
+		if (!ConfigureUpstreamRemoteAfterCloneTask.UPSTREAM_REMOTE_NAME
+				.equals(remoteCfg.getName())) {
+			return false;
+		}
+		// Only redirect when fork detection marked this repository. A plain
+		// origin/upstream triangular setup may intentionally push upstream.
+		boolean detected = RepositoryUtil.INSTANCE.getPreferences().getBoolean(
+				RepositoryUtil.INSTANCE.getRepositorySpecificPreferenceKey(
+						repository,
+						ConfigureUpstreamRemoteAfterCloneTask.FORK_SCENARIO_PREF_KEY),
+				false);
+		return detected && repository.getConfig().getSubsections("remote") //$NON-NLS-1$
+				.contains(Constants.DEFAULT_REMOTE_NAME);
+	}
+
+	/**
+	 * Opens the fork/upstream fallback dialog if the given remote targets
+	 * {@code upstream} while {@code origin} is available as the fork.
+	 *
+	 * @param shell
+	 *            parent shell
+	 * @param repo
+	 *            repository to push from
+	 * @param remoteCfg
+	 *            configured push remote
+	 * @return {@code true} if the push was handled by the fallback flow;
+	 *         {@code false} if the caller should continue the original push
+	 * @throws IOException
+	 *             if repository state cannot be read
+	 */
+	public static boolean showForkFallbackDialog(Shell shell,
+			@NonNull Repository repo, RemoteConfig remoteCfg)
+			throws IOException {
+		return showForkFallbackDialog(shell, repo, remoteCfg, false);
+	}
+
+	/**
+	 * Opens the fork/upstream fallback dialog if the given remote targets
+	 * {@code upstream} while {@code origin} is available as the fork.
+	 *
+	 * @param shell
+	 *            parent shell
+	 * @param repo
+	 *            repository to push from
+	 * @param remoteCfg
+	 *            configured push remote
+	 * @param force
+	 *            whether to pre-select force push in the fallback wizard
+	 * @return {@code true} if the push was handled by the fallback flow;
+	 *         {@code false} if the caller should continue the original push
+	 * @throws IOException
+	 *             if repository state cannot be read
+	 */
+	public static boolean showForkFallbackDialog(Shell shell,
+			@NonNull Repository repo, RemoteConfig remoteCfg, boolean force)
+			throws IOException {
+		if (!isForkUpstreamPush(remoteCfg, repo)) {
+			return false;
+		}
+		String fullBranch = repo.getFullBranch();
+		if (fullBranch == null || ObjectId.isId(fullBranch)
+				|| !fullBranch.startsWith(Constants.R_HEADS)) {
+			return false;
+		}
+		return forkFallbackDialog(shell, repo, fullBranch,
+				Repository.shortenRefName(fullBranch), force);
+	}
+
+	private static boolean forkFallbackDialog(Shell shell,
+			@NonNull Repository repo, String fullBranch, String shortBranch,
+			boolean force) throws IOException {
+		if (!confirmForkFallback(shell)) {
+			return false;
+		}
+		Ref ref = repo.findRef(fullBranch);
+		PushBranchWizard wizard;
+		if (ref != null) {
+			wizard = new PushBranchWizard(repo, ref);
+		} else {
+			ObjectId headId = repo.resolve(Constants.HEAD);
+			if (headId == null) {
+				return false;
+			}
+			wizard = new PushBranchWizard(repo, headId);
+		}
+		wizard.setInitialConfiguration(Constants.DEFAULT_REMOTE_NAME,
+				shortBranch);
+		wizard.setForce(force);
+		PushWizardDialog dialog = new PushWizardDialog(shell, wizard);
+		dialog.open();
+		return true;
+	}
+
+	private static boolean confirmForkFallback(Shell shell) {
+		IPreferenceStore store = Activator.getDefault().getPreferenceStore();
+		if (!store.getBoolean(
+				UIPreferences.SHOW_FORK_UPSTREAM_PUSH_CONFIRMATION)) {
+			return true;
+		}
+		MessageDialogWithToggle dialog = new MessageDialogWithToggle(shell,
+				UIText.PushOperationUI_ForkFallbackTitle, null,
+				UIText.PushOperationUI_ForkFallbackMessage,
+				MessageDialog.QUESTION,
+				new String[] { IDialogConstants.YES_LABEL,
+						IDialogConstants.NO_LABEL },
+				0, UIText.PushOperationUI_ForkFallbackDontAskAgain, false);
+		int result = dialog.open();
+		boolean confirm = result == Window.OK
+				|| result == IDialogConstants.INTERNAL_ID
+				|| result == IDialogConstants.YES_ID;
+		if (confirm && dialog.getToggleState()) {
+			store.setValue(UIPreferences.SHOW_FORK_UPSTREAM_PUSH_CONFIRMATION,
+					false);
+		}
+		return confirm;
 	}
 
 	private static boolean warnMatching(Shell shell, String repository,

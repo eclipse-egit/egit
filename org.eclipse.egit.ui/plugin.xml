@@ -1050,6 +1050,15 @@
            tooltip="%FetchAction_tooltip">
 		 </action>
 		 <action
+           class="org.eclipse.egit.ui.internal.actions.FetchAllAction"
+           definitionId="org.eclipse.egit.ui.team.FetchAll"
+           icon="icons/obj16/fetch.svg"
+           id="org.eclipse.egit.ui.actionfetchall"
+           label="%FetchAllCommand.label"
+           menubarPath="org.eclipse.egit.ui.gitmenu/repo"
+           style="push">
+		 </action>
+		 <action
            class="org.eclipse.egit.ui.internal.actions.PushUpstreamOrBranchAction"
            definitionId="org.eclipse.egit.ui.team.SimplePush"
            icon="icons/obj16/push.svg"
@@ -1195,6 +1204,11 @@
             categoryId="org.eclipse.egit.ui.commandCategory"
             id="org.eclipse.egit.ui.team.SimpleFetch"
             name="%FetchUpstreamCommand.name">
+      </command>
+      <command
+            categoryId="org.eclipse.egit.ui.commandCategory"
+            id="org.eclipse.egit.ui.team.FetchAll"
+            name="%FetchAllCommand.name">
       </command>
       <command
             categoryId="org.eclipse.egit.ui.commandCategory"
@@ -1412,9 +1426,40 @@
          </activeWhen>
       </handler>
       <handler
+            commandId="org.eclipse.egit.ui.team.FetchAll">
+         <class
+               class="org.eclipse.egit.ui.internal.actions.FetchAllActionHandler">
+         </class>
+         <activeWhen>
+            <and>
+               <count
+                     value="1">
+               </count>
+               <iterate
+                     ifEmpty="false"
+                     operator="and">
+                  <instanceof
+                        value="org.eclipse.egit.ui.internal.repository.tree.RepositoryNode">
+                  </instanceof>
+               </iterate>
+            </and>
+         </activeWhen>
+      </handler>
+      <handler
             commandId="org.eclipse.egit.ui.team.SimpleFetch">
          <class
                class="org.eclipse.egit.ui.internal.actions.SimpleFetchActionHandler">
+         </class>
+         <activeWhen>
+            <test
+                  property="GitSelection.resourcesSingleRepository">
+            </test>
+         </activeWhen>
+      </handler>
+      <handler
+            commandId="org.eclipse.egit.ui.team.FetchAll">
+         <class
+               class="org.eclipse.egit.ui.internal.actions.FetchAllActionHandler">
          </class>
          <activeWhen>
             <test
@@ -5002,6 +5047,27 @@
             </visibleWhen>
          </command>
          <command
+               commandId="org.eclipse.egit.ui.team.FetchAll"
+               icon="icons/obj16/fetch.svg"
+               label="%FetchAllCommand.label"
+               style="push">
+            <visibleWhen
+                  checkEnabled="false">
+               <and>
+                  <count
+                        value="1">
+                  </count>
+                  <iterate
+                        ifEmpty="false"
+                        operator="and">
+                     <instanceof
+                           value="org.eclipse.egit.ui.internal.repository.tree.RepositoryNode">
+                     </instanceof>
+                  </iterate>
+               </and>
+            </visibleWhen>
+         </command>
+         <command
                commandId="org.eclipse.egit.ui.PushHeadToGerrit"
                label="%PushToGerritMenu.label"
                style="push">
@@ -5931,6 +5997,17 @@
                   commandId="org.eclipse.egit.ui.team.SimpleFetch"
                   label="%FetchFromUpstreamAction.label"
                   mnemonic="f"
+                  style="push">
+               <visibleWhen
+                     checkEnabled="false">
+                  <test
+                        property="GitSelection.projectsSingleRepository">
+                  </test>
+               </visibleWhen>
+            </command>
+            <command
+                  commandId="org.eclipse.egit.ui.team.FetchAll"
+                  label="%FetchAllCommand.label"
                   style="push">
                <visibleWhen
                      checkEnabled="false">
@@ -7148,6 +7225,10 @@
       </image>
       <image
             commandId="org.eclipse.egit.ui.FetchGiteaPullRequest"
+            icon="icons/obj16/fetch.svg">
+      </image>
+      <image
+            commandId="org.eclipse.egit.ui.team.FetchAll"
             icon="icons/obj16/fetch.svg">
       </image>
       <image

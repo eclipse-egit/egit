@@ -127,6 +127,22 @@ public class PushBranchWizard extends Wizard {
 		pushBranchPage.setForceUpdate(force);
 	}
 
+	/**
+	 * Configures the push page to pre-select a specific remote and remote
+	 * branch name, overriding defaults derived from the branch's tracking
+	 * configuration. Used in fork/upstream scenarios to redirect the push to
+	 * origin.
+	 *
+	 * @param remoteName
+	 *            name of the remote to pre-select
+	 * @param remoteBranchName
+	 *            short remote branch name to pre-fill
+	 */
+	public void setInitialConfiguration(String remoteName,
+			String remoteBranchName) {
+		pushBranchPage.setInitialConfiguration(remoteName, remoteBranchName);
+	}
+
 	@Override
 	public void addPages() {
 		if (addRemotePage != null)

@@ -12,6 +12,7 @@ package org.eclipse.egit.ui.internal.push;
 
 import java.io.IOException;
 
+import org.eclipse.egit.core.op.PushOperation;
 import org.eclipse.jface.wizard.Wizard;
 import org.eclipse.jgit.annotations.NonNull;
 import org.eclipse.jgit.lib.Constants;
@@ -19,6 +20,7 @@ import org.eclipse.jgit.lib.ObjectId;
 import org.eclipse.jgit.lib.Ref;
 import org.eclipse.jgit.lib.Repository;
 import org.eclipse.jgit.revwalk.RevCommit;
+import org.eclipse.jgit.transport.RemoteConfig;
 
 /**
  * Push mode: either push to upstream, or push to Gerrit.
@@ -45,6 +47,17 @@ public enum PushMode {
 				}
 			}
 			if (result != null) {
+				if (fullBranch != null
+						&& fullBranch.startsWith(Constants.R_HEADS)) {
+					String shortBranch = Repository.shortenRefName(fullBranch);
+					RemoteConfig remoteCfg = PushOperation.getRemote(
+							shortBranch, repository.getConfig());
+					if (remoteCfg != null && PushOperationUI
+							.isForkUpstreamPush(remoteCfg, repository)) {
+						result.setInitialConfiguration(
+								Constants.DEFAULT_REMOTE_NAME, shortBranch);
+					}
+				}
 				result.setForce(force);
 			}
 			return result;

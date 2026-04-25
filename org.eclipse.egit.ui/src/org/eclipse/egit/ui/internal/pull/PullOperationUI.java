@@ -16,6 +16,7 @@ package org.eclipse.egit.ui.internal.pull;
 import java.io.IOException;
 import java.text.MessageFormat;
 import java.util.Arrays;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -43,6 +44,7 @@ import org.eclipse.egit.ui.JobFamilies;
 import org.eclipse.egit.ui.internal.UIRepositoryUtils;
 import org.eclipse.egit.ui.internal.UIText;
 import org.eclipse.egit.ui.internal.branch.LaunchFinder;
+import org.eclipse.egit.ui.internal.fetch.FetchResultEntry;
 import org.eclipse.jface.dialogs.ErrorDialog;
 import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jgit.api.PullResult;
@@ -75,6 +77,9 @@ public class PullOperationUI extends JobChangeAdapter {
 
 	private final PullOperation pullOperation;
 
+	private Collection<FetchResultEntry> additionalFetchResults = Collections
+			.emptyList();
+
 	private boolean checkForLaunches = true;
 
 	/**
@@ -101,6 +106,19 @@ public class PullOperationUI extends JobChangeAdapter {
 		for (Repository repository : repositories) {
 			results.put(repository, NOT_TRIED_STATUS);
 		}
+	}
+
+	/**
+	 * @param configs
+	 * @param additionalFetchResults
+	 *            fetch results produced before the pull, for example by "fetch
+	 *            all"
+	 */
+	public PullOperationUI(Map<Repository, PullReferenceConfig> configs,
+			Collection<FetchResultEntry> additionalFetchResults) {
+		this(configs);
+		this.additionalFetchResults = additionalFetchResults != null
+				? additionalFetchResults : Collections.emptyList();
 	}
 
 	/**
@@ -278,7 +296,7 @@ public class PullOperationUI extends JobChangeAdapter {
 					.iterator().next();
 			if (entry.getValue() instanceof PullResult)
 				new PullResultDialog(shell, entry.getKey(), (PullResult) entry
-						.getValue()).open();
+						.getValue(), additionalFetchResults).open();
 			else {
 				IStatus status = (IStatus) entry.getValue();
 				if (status == NOT_TRIED_STATUS) {

@@ -228,6 +228,8 @@ public final class UIPreferences {
 	/** */
 	public static final String SHOW_PUSH_POPUP_SUCCESS = "show_push_success_dialog"; //$NON-NLS-1$
 	/** */
+	public static final String SHOW_FORK_UPSTREAM_PUSH_CONFIRMATION = "show_fork_upstream_push_confirmation"; //$NON-NLS-1$
+	/** */
 	public static final String FETCH_SHOW_NOTIFICATION = "fetch_show_notification"; //$NON-NLS-1$
 	/** */
 	public static final String STASH_APPLY_SHOW_NOTIFICATION = "stash_apply_show_notification"; //$NON-NLS-1$

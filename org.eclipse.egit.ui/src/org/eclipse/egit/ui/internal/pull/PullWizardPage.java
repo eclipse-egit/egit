@@ -21,6 +21,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.eclipse.egit.core.RepositoryUtil;
+import org.eclipse.egit.core.op.ConfigureUpstreamRemoteAfterCloneTask;
 import org.eclipse.egit.core.op.CreateLocalBranchOperation;
 import org.eclipse.egit.ui.Activator;
 import org.eclipse.egit.ui.UIUtils;
@@ -95,6 +97,10 @@ public class PullWizardPage extends WizardPage {
 
 	private boolean configureUpstream;
 
+	private Button fetchAllButton;
+
+	private boolean fetchAll;
+
 	private Map<String, AsynchronousBranchList> refs = new HashMap<>();
 
 	/**
@@ -114,6 +120,12 @@ public class PullWizardPage extends WizardPage {
 		} catch (IOException ex) {
 			Activator.logError(ex.getMessage(), ex);
 		}
+		// Default "Fetch all" to true when a fork/upstream scenario was detected
+		this.fetchAll = RepositoryUtil.INSTANCE.getPreferences().getBoolean(
+				RepositoryUtil.INSTANCE.getRepositorySpecificPreferenceKey(
+						repository,
+						ConfigureUpstreamRemoteAfterCloneTask.FORK_SCENARIO_PREF_KEY),
+				false);
 	}
 
 	@Override
@@ -226,6 +238,24 @@ public class PullWizardPage extends WizardPage {
 						}
 					});
 		}
+
+		this.fetchAllButton = new Button(res, SWT.CHECK);
+		GridData fetchAllLayoutData = new GridData(SWT.BEGINNING, SWT.CENTER,
+				false, false, 3, 1);
+		if (this.rememberConfigForBranch == null) {
+			fetchAllLayoutData.verticalIndent = 20;
+		}
+		this.fetchAllButton.setText(UIText.PullWizardPage_FetchAllCheck);
+		this.fetchAllButton
+				.setToolTipText(UIText.PullWizardPage_FetchAllTooltip);
+		this.fetchAllButton.setLayoutData(fetchAllLayoutData);
+		this.fetchAllButton.setSelection(this.fetchAll);
+		this.fetchAllButton.addSelectionListener(new SelectionAdapter() {
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				fetchAll = fetchAllButton.getSelection();
+			}
+		});
 
 		setPageComplete(isPageComplete());
 		setControl(res);
@@ -379,6 +409,10 @@ public class PullWizardPage extends WizardPage {
 			}
 		}
 		return ""; //$NON-NLS-1$
+	}
+
+	boolean isFetchAll() {
+		return this.fetchAll;
 	}
 
 	boolean overrideUpstreamConfiguration() {

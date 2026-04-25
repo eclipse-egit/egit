@@ -90,6 +90,14 @@ features:
     using eclipse built-in compare editor.
   - Clone, push, pull, fetch
   - Merge, rebase, cherry-pick
+  - [Fork/upstream workflow](docs/Fork-Upstream-Workflow.md) support:
+    - Automatic detection of GitHub, GitLab, and Bitbucket forks at
+      clone time; an `upstream` remote is added automatically.
+    - Push redirect: pushing a branch tracked to `upstream` offers to
+      redirect to `origin` via the Push Branch wizard.
+    - "Fetch All" team menu item to fetch from all configured remotes.
+    - "Fetch All" checkbox in the Pull dialog (auto-enabled when a fork
+      was detected) to fetch all remotes before pulling.
 
 ## Missing Features
 

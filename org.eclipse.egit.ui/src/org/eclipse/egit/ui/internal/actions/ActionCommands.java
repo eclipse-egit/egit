@@ -112,6 +112,9 @@ public class ActionCommands {
 	/** "Simple Fetch" action command id */
 	public static final String SIMPLE_FETCH_ACTION = "org.eclipse.egit.ui.team.SimpleFetch"; //$NON-NLS-1$
 
+	/** "Fetch All" action command id */
+	public static final String FETCH_ALL_ACTION = "org.eclipse.egit.ui.team.FetchAll"; //$NON-NLS-1$
+
 	/** "Reset" action command id */
 	public static final String RESET_ACTION = "org.eclipse.egit.ui.team.Reset"; //$NON-NLS-1$
 
