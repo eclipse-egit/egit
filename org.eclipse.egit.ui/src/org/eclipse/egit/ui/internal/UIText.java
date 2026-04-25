@@ -2242,6 +2242,12 @@ public class UIText extends NLS {
 	public static String HistoryColumnsPreferencePage_title;
 
 	/** */
+	public static String PullWizardPage_FetchAllCheck;
+
+	/** */
+	public static String PullWizardPage_FetchAllTooltip;
+
+	/** */
 	public static String PullWizardPage_PageName;
 
 	/** */
@@ -2279,6 +2285,9 @@ public class UIText extends NLS {
 
 	/** */
 	public static String PullOperationUI_PullOperationCanceledMessage;
+
+	/** */
+	public static String PullWizard_FetchAllJobName;
 
 	/** */
 	public static String PullResultDialog_DialogTitle;
@@ -2393,6 +2402,15 @@ public class UIText extends NLS {
 
 	/** */
 	public static String PushOperationUI_UnknownPushDefault;
+
+	/** */
+	public static String PushOperationUI_ForkFallbackTitle;
+
+	/** */
+	public static String PushOperationUI_ForkFallbackMessage;
+
+	/** */
+	public static String PushOperationUI_ForkFallbackDontAskAgain;
 
 	/** */
 	public static String RepositoryJob_NullStatus;
@@ -3144,6 +3162,18 @@ public class UIText extends NLS {
 
 	/** */
 	public static String FetchAction_wrongURIMessage;
+
+	/** */
+	public static String FetchAllActionHandler_FetchAllJobName;
+
+	/** */
+	public static String FetchAllActionHandler_FetchFailed;
+
+	/** */
+	public static String FetchAllActionHandler_NothingToFetchTitle;
+
+	/** */
+	public static String FetchAllActionHandler_NothingToFetchMessage;
 
 	/** */
 	public static String FetchOperationUI_FetchJobName;
@@ -4292,6 +4322,9 @@ public class UIText extends NLS {
 
 	/** */
 	public static String DialogsPreferencePage_ShowCheckoutConfirmation;
+
+	/** */
+	public static String DialogsPreferencePage_ShowForkUpstreamPushConfirmation;
 
 	/** */
 	public static String DialogsPreferencePage_ShowCloneFailedDialog;

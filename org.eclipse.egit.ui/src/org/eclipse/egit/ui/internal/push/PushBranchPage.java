@@ -97,6 +97,12 @@ public class PushBranchPage extends WizardPage {
 
 	private Text remoteBranchNameText;
 
+	/** When non-null, overrides the remote pre-selected by branch config. */
+	private String overrideRemoteName;
+
+	/** When non-null, overrides the suggested remote branch name. */
+	private String overrideRemoteBranchName;
+
 	private BranchRebaseMode upstreamConfig;
 
 	private UpstreamConfigComponent upstreamConfigComponent;
@@ -128,6 +134,25 @@ public class PushBranchPage extends WizardPage {
 		this.repository = repository;
 		this.commitToPush = commitToPush;
 		this.ref = ref;
+	}
+
+	/**
+	 * Pre-selects a specific remote and remote branch name, overriding the
+	 * defaults derived from the branch's tracking configuration. Useful in
+	 * fork/upstream scenarios where the push should target a different remote
+	 * than the one used for fetching.
+	 *
+	 * @param remoteName
+	 *            name of the remote to pre-select, or {@code null} to keep the
+	 *            default
+	 * @param remoteBranchName
+	 *            short name to pre-fill in the remote branch field, or
+	 *            {@code null} to keep the default
+	 */
+	public void setInitialConfiguration(String remoteName,
+			String remoteBranchName) {
+		this.overrideRemoteName = remoteName;
+		this.overrideRemoteBranchName = remoteBranchName;
 	}
 
 	/**
@@ -298,7 +323,9 @@ public class PushBranchPage extends WizardPage {
 		remoteBranchNameText = new Text(remoteGroup, SWT.BORDER);
 		GridDataFactory.fillDefaults().grab(true, false).span(2, 1)
 				.applyTo(remoteBranchNameText);
-		remoteBranchNameText.setText(getSuggestedBranchName());
+		remoteBranchNameText.setText(overrideRemoteBranchName != null
+				? overrideRemoteBranchName
+				: getSuggestedBranchName());
 		AsynchronousRefProposalProvider candidateProvider = new AsynchronousRefProposalProvider(
 				getContainer(), remoteBranchNameText, () -> {
 					RemoteConfig config = remoteSelectionCombo
@@ -385,15 +412,18 @@ public class PushBranchPage extends WizardPage {
 
 	private void setRemoteConfigs() {
 		remoteSelectionCombo.setItems(remoteConfigs);
-		if (this.ref != null) {
+		String targetRemoteName = overrideRemoteName;
+		if (targetRemoteName == null && this.ref != null) {
 			String branchName = Repository.shortenRefName(this.ref.getName());
 			BranchConfig branchConfig = new BranchConfig(
 					repository.getConfig(), branchName);
-			String remoteName = branchConfig.getRemote();
-			if (remoteName != null) {
-				for (RemoteConfig rc : remoteConfigs) {
-					if (remoteName.equals(rc.getName()))
-						remoteSelectionCombo.setSelectedRemote(rc);
+			targetRemoteName = branchConfig.getRemote();
+		}
+		if (targetRemoteName != null) {
+			for (RemoteConfig rc : remoteConfigs) {
+				if (targetRemoteName.equals(rc.getName())) {
+					remoteSelectionCombo.setSelectedRemote(rc);
+					break;
 				}
 			}
 		}

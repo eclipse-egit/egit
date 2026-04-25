@@ -62,6 +62,7 @@ public class GitRepositoriesPerspectiveFactory implements IPerspectiveFactory {
 				"org.eclipse.team.ui.TeamSynchronizingPerspective"); //$NON-NLS-1$
 
 		// Window->Perspective->Customize
+		layout.addActionSet("org.eclipse.egit.ui.gitaction"); //$NON-NLS-1$
 		layout.addActionSet("org.eclipse.egit.ui.navigation"); //$NON-NLS-1$
 		layout.addActionSet("org.eclipse.egit.ui.SearchActionSet"); //$NON-NLS-1$
 

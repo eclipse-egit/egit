@@ -21,6 +21,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.eclipse.core.runtime.preferences.IEclipsePreferences;
+import org.eclipse.egit.core.RepositoryUtil;
+import org.eclipse.egit.core.op.ConfigureUpstreamRemoteAfterCloneTask;
 import org.eclipse.egit.core.op.CreateLocalBranchOperation;
 import org.eclipse.egit.ui.Activator;
 import org.eclipse.egit.ui.UIUtils;
@@ -62,6 +65,7 @@ import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Text;
+import org.osgi.service.prefs.BackingStoreException;
 
 /**
  * This Wizard Page allows to configure a Push operation (remote, reference,
@@ -71,6 +75,8 @@ import org.eclipse.swt.widgets.Text;
  * of code could be factorized.
  */
 public class PullWizardPage extends WizardPage {
+
+	static final String FETCH_ALL_REMOTES_PREF_KEY = "fetchAllRemotesBeforePull"; //$NON-NLS-1$
 
 	private RemoteSelectionCombo remoteSelectionCombo;
 
@@ -95,6 +101,10 @@ public class PullWizardPage extends WizardPage {
 
 	private boolean configureUpstream;
 
+	private Button fetchAllButton;
+
+	private boolean fetchAll;
+
 	private Map<String, AsynchronousBranchList> refs = new HashMap<>();
 
 	/**
@@ -114,6 +124,7 @@ public class PullWizardPage extends WizardPage {
 		} catch (IOException ex) {
 			Activator.logError(ex.getMessage(), ex);
 		}
+		this.fetchAll = getFetchAllPreference(repository);
 	}
 
 	@Override
@@ -226,6 +237,25 @@ public class PullWizardPage extends WizardPage {
 						}
 					});
 		}
+
+		this.fetchAllButton = new Button(res, SWT.CHECK);
+		GridData fetchAllLayoutData = new GridData(SWT.BEGINNING, SWT.CENTER,
+				false, false, 3, 1);
+		if (this.rememberConfigForBranch == null) {
+			fetchAllLayoutData.verticalIndent = 20;
+		}
+		this.fetchAllButton.setText(UIText.PullWizardPage_FetchAllCheck);
+		this.fetchAllButton
+				.setToolTipText(UIText.PullWizardPage_FetchAllTooltip);
+		this.fetchAllButton.setLayoutData(fetchAllLayoutData);
+		this.fetchAllButton.setSelection(this.fetchAll);
+		this.fetchAllButton.addSelectionListener(new SelectionAdapter() {
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				fetchAll = fetchAllButton.getSelection();
+				setFetchAllPreference(fetchAll);
+			}
+		});
 
 		setPageComplete(isPageComplete());
 		setControl(res);
@@ -379,6 +409,38 @@ public class PullWizardPage extends WizardPage {
 			}
 		}
 		return ""; //$NON-NLS-1$
+	}
+
+	boolean isFetchAll() {
+		return this.fetchAll;
+	}
+
+	static boolean getFetchAllPreference(Repository repository) {
+		IEclipsePreferences prefs = RepositoryUtil.INSTANCE.getPreferences();
+		String value = prefs.get(RepositoryUtil.INSTANCE
+				.getRepositorySpecificPreferenceKey(repository,
+						FETCH_ALL_REMOTES_PREF_KEY),
+				null);
+		if (value != null) {
+			return Boolean.parseBoolean(value);
+		}
+		return prefs.getBoolean(RepositoryUtil.INSTANCE
+				.getRepositorySpecificPreferenceKey(repository,
+						ConfigureUpstreamRemoteAfterCloneTask.FORK_SCENARIO_PREF_KEY),
+				false);
+	}
+
+	private void setFetchAllPreference(boolean value) {
+		IEclipsePreferences prefs = RepositoryUtil.INSTANCE.getPreferences();
+		prefs.putBoolean(RepositoryUtil.INSTANCE
+				.getRepositorySpecificPreferenceKey(repository,
+						FETCH_ALL_REMOTES_PREF_KEY),
+				value);
+		try {
+			prefs.flush();
+		} catch (BackingStoreException e) {
+			Activator.logError("Failed to persist fetch all preference", e); //$NON-NLS-1$
+		}
 	}
 
 	boolean overrideUpstreamConfiguration() {
