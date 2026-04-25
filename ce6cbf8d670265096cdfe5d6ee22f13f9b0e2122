@@ -39,6 +39,23 @@
       "message": "Unfortunately the behavior is still unchanged. (Still on MacOS; I can test on Windows probably Tuesday.) I\u0027m starting to suspect some problem with focus events on Mac. Haven\u0027t debugged yet but it feels as if the paste handler is not always active when it should be.",
       "revId": "ce6cbf8d670265096cdfe5d6ee22f13f9b0e2122",
       "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "0aa7ecce_28355d19",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1012795
+      },
+      "writtenOn": "2026-04-25T19:53:43Z",
+      "side": 1,
+      "message": "I think when I wrote ack the new ps was not yet pushed so it fits your description",
+      "revId": "ce6cbf8d670265096cdfe5d6ee22f13f9b0e2122",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735"
     }
   ]
 }
