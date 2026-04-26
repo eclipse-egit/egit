@@ -18,6 +18,24 @@
       "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "554b2d92_75c56ab0",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/internal/hosts/RemoteBranchInput.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 1021966
+      },
+      "writtenOn": "2026-04-26T11:45:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "dbe4e0f7_4979f40b",
+      "revId": "afde32595cc2bdcd481f66b4b1f30215899eaaa5",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "445302c3_b9b89e83",
@@ -31,6 +49,24 @@
       "writtenOn": "2026-04-19T20:22:08Z",
       "side": 1,
       "message": "This feels a bit hacky. Why this kind of strange way to decide if it was a paste? In the `AbstractFetchFromHostPage` we define a paste action and transform the clipboard there on paste only. Which would have the advantage that this `normalizingBranchInput` flag would not be needed.",
+      "revId": "afde32595cc2bdcd481f66b4b1f30215899eaaa5",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "b878ff22_530697dd",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/push/PushBranchPage.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 458,
+      "author": {
+        "id": 1021966
+      },
+      "writtenOn": "2026-04-26T11:45:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "445302c3_b9b89e83",
       "revId": "afde32595cc2bdcd481f66b4b1f30215899eaaa5",
       "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735"
     }
