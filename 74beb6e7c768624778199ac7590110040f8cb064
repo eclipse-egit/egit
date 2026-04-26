@@ -1,0 +1,78 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ac10f984_bb42a226",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/internal/hosts/RemoteBranchInput.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1021966
+      },
+      "writtenOn": "2026-04-26T11:00:47Z",
+      "side": 1,
+      "message": "What returns something? This is a class-level comment: a class doesn\u0027t return anything.",
+      "range": {
+        "startLine": 32,
+        "startChar": 3,
+        "endLine": 32,
+        "endChar": 17
+      },
+      "revId": "74beb6e7c768624778199ac7590110040f8cb064",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a2ce8d37_e2604d85",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/internal/hosts/RemoteBranchInput.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 1021966
+      },
+      "writtenOn": "2026-04-26T11:00:47Z",
+      "side": 1,
+      "message": "Please get rid of this `Optional`. It doesn\u0027t bring any advantage over simply returning `null` from `parseBranchUrl` when there\u0027s no match.",
+      "revId": "74beb6e7c768624778199ac7590110040f8cb064",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "da35c6ff_0d731de7",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/internal/hosts/RemoteBranchInput.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 1021966
+      },
+      "writtenOn": "2026-04-26T11:00:47Z",
+      "side": 1,
+      "message": "Please get rid of this `Optional`. It doesn\u0027t bring any advantage over simply returning `null` from `parseBranchText` when there\u0027s no match.",
+      "revId": "74beb6e7c768624778199ac7590110040f8cb064",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c3e45e27_23b33b58",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/push/PushBranchPage.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 483,
+      "author": {
+        "id": 1021966
+      },
+      "writtenOn": "2026-04-26T11:00:47Z",
+      "side": 1,
+      "message": "Please get rid of this `Optional`. This doesn\u0027t serve any purpose and just complicates things. It\u0027s not any simpler and not better in any other way that just\n```\nRemoteConfig match \u003d parsed.findMatchingRemote(remoteConfigs);\nif (match !\u003d null \u0026\u0026 !match.equals(remoteConfig)) {\n```\n\n(And in fact since `findMatchingRemote` is not `@NonNull`, we should check here, strictly speaking, `match !\u003d null` even with the `Optional`.)",
+      "revId": "74beb6e7c768624778199ac7590110040f8cb064",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735"
+    }
+  ]
+}

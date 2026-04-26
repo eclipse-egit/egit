@@ -26,6 +26,30 @@
     {
       "unresolved": false,
       "key": {
+        "uuid": "d43d9b2f_65a616fa",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1021966
+      },
+      "writtenOn": "2026-04-26T11:00:47Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "51fc8199_9db500ab",
+      "range": {
+        "startLine": 36,
+        "startChar": 28,
+        "endLine": 39,
+        "endChar": 12
+      },
+      "revId": "ce6cbf8d670265096cdfe5d6ee22f13f9b0e2122",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735"
+    },
+    {
+      "unresolved": false,
+      "key": {
         "uuid": "acc0041a_322ea9a0",
         "filename": "/PATCHSET_LEVEL",
         "patchSetId": 3
@@ -72,6 +96,24 @@
       "side": 1,
       "message": "\u003e suspect some problem with focus events on Mac\n\nThis is caused by an asymmetry in ActionUtils.createGlobalAction() introduced in Ic0a7ed7bc4fe46e5ca4b68a9ed476c6e7cddf8fe to fix bug 536645 [1]. We remove the action on SWT.Deactivate, SWT.FocusOut, and SWT.Dispose, but we add it only on SWT.FocusIn.\n\nApparently SWT.Deactivate is needed to avoid the handler conflicts from bug 536645, and SWT.Activate must not re-enable the handler already because the previously active handlers maybe are not yet removed. (Apparently sometime activate of a new control could come before the deactivate for the previously active control.)\n\nBut here in this dialog this causes trouble, because when the combo pop-up opens, the focus stays on the Text input, it just gets a deactivate event and then an activate event. Since the activate event does not re-add the action, the paste is direct through the native paste of the native widget, not through our paste action.\n\nMaking the handling symmetric by not removing the action on SWT.Deactivate would fix the problem in this dialog, but we might get the handler conflicts of bug 536645 again in other places.\n\nI\u0027ll have to think about this. It\u0027s not obvious how to fix this without introducing regressions.\n\n[1] https://bugs.eclipse.org/bugs/show_bug.cgi?id\u003d536645",
       "parentUuid": "acc0041a_322ea9a0",
+      "revId": "ce6cbf8d670265096cdfe5d6ee22f13f9b0e2122",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "75811082_da75df93",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1021966
+      },
+      "writtenOn": "2026-04-26T11:00:47Z",
+      "side": 1,
+      "message": "Found a solution.",
+      "parentUuid": "3b14f7f8_0e1187e1",
       "revId": "ce6cbf8d670265096cdfe5d6ee22f13f9b0e2122",
       "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735"
     }
