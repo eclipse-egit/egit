@@ -36,6 +36,24 @@
       "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735"
     },
     {
+      "unresolved": true,
+      "key": {
+        "uuid": "65eed204_9ecbb136",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1021966
+      },
+      "writtenOn": "2026-04-26T20:40:35Z",
+      "side": 1,
+      "message": "Amend your commit, then push to Gerrit again. It\u0027ll show up as a new \"patch set\" on this change.",
+      "parentUuid": "a8255989_44363ce5",
+      "revId": "1169df54d2a25966427627aa20d22881b3298e4e",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735"
+    },
+    {
       "unresolved": false,
       "key": {
         "uuid": "22dd10cd_26f14d99",
@@ -90,6 +108,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "a8912898_ca6e7aaf",
+        "filename": "docs/Fork-Upstream-Workflow.md",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1021966
+      },
+      "writtenOn": "2026-04-26T20:40:35Z",
+      "side": 1,
+      "message": "Yes, it is. No need to \"sync\". We can review it here in this change, then before merging remove it from this change and I or another committer moves it to the wiki.",
+      "parentUuid": "584914a3_bc256869",
+      "revId": "1169df54d2a25966427627aa20d22881b3298e4e",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "6e41a3b1_86188772",
         "filename": "docs/Fork-Upstream-Workflow.md",
         "patchSetId": 1
@@ -119,6 +155,24 @@
       "side": 1,
       "message": "API is selected by hostname. Can we do better ? try each API in sequence ?",
       "parentUuid": "6e41a3b1_86188772",
+      "revId": "1169df54d2a25966427627aa20d22881b3298e4e",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "11ede121_6f6bfb27",
+        "filename": "docs/Fork-Upstream-Workflow.md",
+        "patchSetId": 1
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1021966
+      },
+      "writtenOn": "2026-04-26T20:40:35Z",
+      "side": 1,
+      "message": "The API should be chosen by ServerType (see class GitHosts). Which ServerType it is would be determined by pattern matching on the clone URI. Even a self-hosted Github instance knows about forks. Don\u0027t know if for self-hosted instances (say, github.mycompany.com) someone might decide to run the API not at api.mycompany.com but at some other host name? But we could simply assume it\u0027s always \"api\".\n\nBut a more general problem may occur if the clone URI is SSH: if the HTTP server runs at a different hostname or at the same hostname but under some context path (i.e., not at / but at, say, /repos/) we won\u0027t know about that context path. But we can also ignore that -- at worst the REST API request will fail, and we\u0027d not do the fork setup.\n\nAlso: if SSH is used to clone, the SSH credentials won\u0027t work for making API calls over HTTPS. If the API requires authentication, we\u0027d also be stuck.\n\nStill, assuming the API server is at api.myexample.com would likely work for most self-hosted setups.",
+      "parentUuid": "50ddcc47_7ac40074",
       "revId": "1169df54d2a25966427627aa20d22881b3298e4e",
       "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735"
     },
