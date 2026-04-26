@@ -1,0 +1,123 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "3d5f50b2_c8f53505",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1021966
+      },
+      "writtenOn": "2026-04-26T18:22:19Z",
+      "side": 1,
+      "message": "Needs a much more descriptive commit message.",
+      "revId": "1169df54d2a25966427627aa20d22881b3298e4e",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "22dd10cd_26f14d99",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1021966
+      },
+      "writtenOn": "2026-04-26T18:22:19Z",
+      "side": 1,
+      "message": "Haven\u0027t tried this yet, but sounds like a nice idea. Looks like you put a lot of work into this. I will not have much time in April to give this the attention it deserves, but will try in May. For now, just a few quick comments after a first glance. (I may have missed a lot...)",
+      "revId": "1169df54d2a25966427627aa20d22881b3298e4e",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f27e4267_6939e69a",
+        "filename": "docs/Fork-Upstream-Workflow.md",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1021966
+      },
+      "writtenOn": "2026-04-26T18:22:19Z",
+      "side": 1,
+      "message": "This should go into the user\u0027s guide on the Github wiki. It\u0027s nice that you document this here so that reviewers can get some context, but it shouldn\u0027t be in the final commit that would be merged.",
+      "revId": "1169df54d2a25966427627aa20d22881b3298e4e",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "6e41a3b1_86188772",
+        "filename": "docs/Fork-Upstream-Workflow.md",
+        "patchSetId": 1
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1021966
+      },
+      "writtenOn": "2026-04-26T18:22:19Z",
+      "side": 1,
+      "message": "Why wouldn\u0027t it work with self-hosted instances? Because the API could be at a different host name?",
+      "revId": "1169df54d2a25966427627aa20d22881b3298e4e",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "7d63dfc5_ea3995e9",
+        "filename": "docs/Fork-Upstream-Workflow.md",
+        "patchSetId": 1
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1021966
+      },
+      "writtenOn": "2026-04-26T18:22:19Z",
+      "side": 1,
+      "message": "And that\u0027s guarded by a preference that I can set globally or per repo? I actually _do_ have forks where I also have write access at the upstream, and I merge PRs quite frequently by pushing directly to upstream.",
+      "revId": "1169df54d2a25966427627aa20d22881b3298e4e",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d5527e6c_4e0ffb92",
+        "filename": "docs/Fork-Upstream-Workflow.md",
+        "patchSetId": 1
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1021966
+      },
+      "writtenOn": "2026-04-26T18:22:19Z",
+      "side": 1,
+      "message": "If toggled, the setting should be remembered.",
+      "revId": "1169df54d2a25966427627aa20d22881b3298e4e",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "7cdef2d7_79cf4c81",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/op/ConfigureUpstreamRemoteAfterCloneTask.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 134,
+      "author": {
+        "id": 1021966
+      },
+      "writtenOn": "2026-04-26T18:22:19Z",
+      "side": 1,
+      "message": "We have a GitHosts abstraction for such things. This should be integrated there if possible.",
+      "revId": "1169df54d2a25966427627aa20d22881b3298e4e",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735"
+    }
+  ]
+}
