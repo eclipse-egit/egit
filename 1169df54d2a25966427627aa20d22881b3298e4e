@@ -18,6 +18,24 @@
       "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735"
     },
     {
+      "unresolved": true,
+      "key": {
+        "uuid": "a8255989_44363ce5",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1039415
+      },
+      "writtenOn": "2026-04-26T20:00:53Z",
+      "side": 1,
+      "message": "I\u0027m new to this Gerrit workflow. How should I send my changes ? Create a new commit, squash it with this one with a new message, and re-push the resulting commit to Gerrit ?",
+      "parentUuid": "3d5f50b2_c8f53505",
+      "revId": "1169df54d2a25966427627aa20d22881b3298e4e",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735"
+    },
+    {
       "unresolved": false,
       "key": {
         "uuid": "22dd10cd_26f14d99",
@@ -54,6 +72,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "584914a3_bc256869",
+        "filename": "docs/Fork-Upstream-Workflow.md",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1039415
+      },
+      "writtenOn": "2026-04-26T20:00:53Z",
+      "side": 1,
+      "message": "It\u0027s a different repo for the wiki, right ? we would have to sync 2 separate Gerrits ?",
+      "parentUuid": "f27e4267_6939e69a",
+      "revId": "1169df54d2a25966427627aa20d22881b3298e4e",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "6e41a3b1_86188772",
         "filename": "docs/Fork-Upstream-Workflow.md",
         "patchSetId": 1
@@ -65,6 +101,24 @@
       "writtenOn": "2026-04-26T18:22:19Z",
       "side": 1,
       "message": "Why wouldn\u0027t it work with self-hosted instances? Because the API could be at a different host name?",
+      "revId": "1169df54d2a25966427627aa20d22881b3298e4e",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "50ddcc47_7ac40074",
+        "filename": "docs/Fork-Upstream-Workflow.md",
+        "patchSetId": 1
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1039415
+      },
+      "writtenOn": "2026-04-26T20:00:53Z",
+      "side": 1,
+      "message": "API is selected by hostname. Can we do better ? try each API in sequence ?",
+      "parentUuid": "6e41a3b1_86188772",
       "revId": "1169df54d2a25966427627aa20d22881b3298e4e",
       "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735"
     },
@@ -88,6 +142,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "ae21a2cf_03fa589b",
+        "filename": "docs/Fork-Upstream-Workflow.md",
+        "patchSetId": 1
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1039415
+      },
+      "writtenOn": "2026-04-26T20:00:53Z",
+      "side": 1,
+      "message": "Yes. Yes/No/Never ask again scenario. (but I think the \"No\" side is not remembered - need to fix)",
+      "parentUuid": "7d63dfc5_ea3995e9",
+      "revId": "1169df54d2a25966427627aa20d22881b3298e4e",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "d5527e6c_4e0ffb92",
         "filename": "docs/Fork-Upstream-Workflow.md",
         "patchSetId": 1
@@ -105,6 +177,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "d630d2b6_ba5ae21d",
+        "filename": "docs/Fork-Upstream-Workflow.md",
+        "patchSetId": 1
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1039415
+      },
+      "writtenOn": "2026-04-26T20:00:53Z",
+      "side": 1,
+      "message": "Yes, it needs its separate setting.",
+      "parentUuid": "d5527e6c_4e0ffb92",
+      "revId": "1169df54d2a25966427627aa20d22881b3298e4e",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "7cdef2d7_79cf4c81",
         "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/op/ConfigureUpstreamRemoteAfterCloneTask.java",
         "patchSetId": 1
@@ -116,6 +206,24 @@
       "writtenOn": "2026-04-26T18:22:19Z",
       "side": 1,
       "message": "We have a GitHosts abstraction for such things. This should be integrated there if possible.",
+      "revId": "1169df54d2a25966427627aa20d22881b3298e4e",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "512cb9e3_06f507ff",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/op/ConfigureUpstreamRemoteAfterCloneTask.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 134,
+      "author": {
+        "id": 1039415
+      },
+      "writtenOn": "2026-04-26T20:00:53Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "7cdef2d7_79cf4c81",
       "revId": "1169df54d2a25966427627aa20d22881b3298e4e",
       "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735"
     }
