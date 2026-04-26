@@ -116,6 +116,24 @@
       "parentUuid": "3b14f7f8_0e1187e1",
       "revId": "ce6cbf8d670265096cdfe5d6ee22f13f9b0e2122",
       "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "8ee289fb_990039d0",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1021966
+      },
+      "writtenOn": "2026-04-26T11:45:01Z",
+      "side": 1,
+      "message": "Maybe I didn\u0027t express myself well. When I wrote\n\n\u003e \"Acknowledge\" means \"I agree, but the code is unchanged; I\u0027ll consider it for a future change\"\n\nI meant \"in a future, completely different or follow-up Gerrit change\". Not \"in a future patch set I\u0027m going to push onto this\".\n\n\"Acknowledge\" can also mean \"I hear you, but I\u0027m not going to do anything about it\" or \"I agree, but there\u0027s nothing to do about it here.\"\n\nWe resolve comments that we are going to address in code once we have pushed a commit addressing the comment, not before.\n\nAnd the \"Reply\" function helps keep related discussions together.",
+      "parentUuid": "0aa7ecce_28355d19",
+      "revId": "ce6cbf8d670265096cdfe5d6ee22f13f9b0e2122",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735"
     }
   ]
 }
