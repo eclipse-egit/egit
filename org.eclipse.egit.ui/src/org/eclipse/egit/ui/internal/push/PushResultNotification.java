@@ -10,13 +10,21 @@
  *******************************************************************************/
 package org.eclipse.egit.ui.internal.push;
 
+import java.net.MalformedURLException;
+import java.net.URI;
+import java.net.URL;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 import org.eclipse.egit.core.op.PushOperationResult;
+import org.eclipse.egit.ui.Activator;
 import org.eclipse.egit.ui.internal.UIText;
 import org.eclipse.jface.layout.GridDataFactory;
 import org.eclipse.jface.layout.GridLayoutFactory;
 import org.eclipse.jface.notifications.AbstractNotificationPopup;
 import org.eclipse.jgit.annotations.NonNull;
 import org.eclipse.jgit.lib.Repository;
+import org.eclipse.jgit.transport.PushResult;
 import org.eclipse.jgit.transport.RemoteRefUpdate;
 import org.eclipse.jgit.transport.RemoteRefUpdate.Status;
 import org.eclipse.jgit.transport.URIish;
@@ -37,6 +45,9 @@ import org.eclipse.ui.PlatformUI;
 public class PushResultNotification extends AbstractNotificationPopup {
 
 	private static final long DELAY_CLOSE_MS = 5000;
+
+	private static final Pattern URL_PATTERN = Pattern
+			.compile("(https?://\\S+)"); //$NON-NLS-1$
 
 	private final Repository repository;
 
@@ -124,6 +135,25 @@ public class PushResultNotification extends AbstractNotificationPopup {
 		GridDataFactory.fillDefaults().grab(true, false).hint(280, SWT.DEFAULT)
 				.applyTo(body);
 
+		String pullRequestUrl = extractPullRequestUrl();
+		if (pullRequestUrl != null) {
+			Link prLink = new Link(parent, SWT.NONE);
+			prLink.setText("<a>" //$NON-NLS-1$
+					+ UIText.PushResultNotification_CreatePullRequest
+					+ "</a>"); //$NON-NLS-1$
+			prLink.addListener(SWT.Selection, e -> {
+				try {
+					URL url = URI.create(pullRequestUrl).toURL();
+					PlatformUI.getWorkbench().getBrowserSupport()
+							.getExternalBrowser()
+							.openURL(url);
+				} catch (Exception ex) {
+					Activator.logError(ex.getMessage(), ex);
+				}
+			});
+			GridDataFactory.fillDefaults().applyTo(prLink);
+		}
+
 		Link details = new Link(parent, SWT.NONE);
 		details.setText(
 				"<a>" + UIText.PushResultNotification_Details + "</a>"); //$NON-NLS-1$ //$NON-NLS-2$
@@ -137,6 +167,48 @@ public class PushResultNotification extends AbstractNotificationPopup {
 			dialog.open();
 		});
 		GridDataFactory.fillDefaults().applyTo(details);
+	}
+
+	/**
+	 * Extracts a pull/merge request creation URL from the push result
+	 * messages. Remote servers like GitHub, GitLab, and Bitbucket include
+	 * such URLs in the push response when a new branch is pushed.
+	 *
+	 * @return the URL string, or {@code null} if none was found
+	 */
+	private String extractPullRequestUrl() {
+		for (URIish uri : result.getURIs()) {
+			PushResult pushResult = result.getPushResult(uri);
+			if (pushResult == null) {
+				continue;
+			}
+			String messages = pushResult.getMessages();
+			if (messages == null || messages.isEmpty()) {
+				continue;
+			}
+			// Look for URLs that indicate PR/MR creation
+			Matcher matcher = URL_PATTERN.matcher(messages);
+			while (matcher.find()) {
+				String url = matcher.group(1);
+				if (isPullRequestUrl(url)) {
+					return url;
+				}
+			}
+		}
+		return null;
+	}
+
+	private boolean isPullRequestUrl(String url) {
+		try {
+			URI.create(url).toURL();
+		} catch (MalformedURLException e) {
+			return false;
+		}
+		String lower = url.toLowerCase();
+		return lower.contains("/pull/new/") //$NON-NLS-1$
+				|| lower.contains("/merge_requests/new") //$NON-NLS-1$
+				|| lower.contains("/pull-requests/create") //$NON-NLS-1$
+				|| lower.contains("/-/merge_requests/create"); //$NON-NLS-1$
 	}
 
 	private boolean isRejected(Status status) {

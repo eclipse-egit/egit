@@ -299,7 +299,7 @@ public class StagingView extends ViewPart
 
 	private FormToolkit toolkit;
 
-	private Composite composite;
+	private Composite mainComposite;
 
 	private CLabel repoLabel;
 
@@ -834,7 +834,7 @@ public class StagingView extends ViewPart
 			}
 		});
 
-		composite = new Composite(parent, SWT.NONE);
+		mainComposite = new Composite(parent, SWT.NONE);
 		parent.addControlListener(new ControlListener() {
 
 			private int[] defaultWeights = { 1, 1 };
@@ -859,16 +859,17 @@ public class StagingView extends ViewPart
 				// ignore
 			}
 		});
-		GridDataFactory.fillDefaults().grab(true, true).applyTo(composite);
-		GridLayoutFactory.swtDefaults().applyTo(composite);
+		GridDataFactory.fillDefaults().grab(true, true).applyTo(mainComposite);
+		GridLayoutFactory.swtDefaults().applyTo(mainComposite);
 
-		repoLabel = new CLabel(composite, SWT.NONE);
+		repoLabel = new CLabel(mainComposite, SWT.NONE);
 		repoLabel.setImage(getImage(UIIcons.REPOSITORY));
 		repoLabel.setText(UIText.StagingView_NoSelectionTitle);
 		GridDataFactory.fillDefaults().grab(true, false)
 				.applyTo(repoLabel);
 
-		mainSashForm = new SashForm(composite, getMainSashFormOrientation());
+		mainSashForm = new SashForm(mainComposite,
+				getMainSashFormOrientation());
 		saveSashFormOrientationOnDisposal(mainSashForm, MAIN_SASH_FORM_ORIENTATION_VERTICAL);
 		saveSashFormWeightsOnDisposal(mainSashForm,
 				HORIZONTAL_SASH_FORM_WEIGHT);
@@ -943,7 +944,8 @@ public class StagingView extends ViewPart
 		Composite unstagedComposite = toolkit.createComposite(unstagedSection);
 		toolkit.paintBordersFor(unstagedComposite);
 		unstagedSection.setClient(unstagedComposite);
-		GridLayoutFactory.fillDefaults().applyTo(unstagedComposite);
+		GridLayoutFactory.fillDefaults().margins(1, 1)
+				.applyTo(unstagedComposite);
 
 		unstagedViewer = createViewer(unstagedComposite, true,
 				selection -> unstage(selection.toList()), stageAction);
@@ -1229,7 +1231,7 @@ public class StagingView extends ViewPart
 		committerText.setLayoutData(GridDataFactory.fillDefaults().indent(5, 0)
 				.grab(true, false).align(SWT.FILL, SWT.CENTER).create());
 
-		Composite buttonsContainer = toolkit.createComposite(composite);
+		Composite buttonsContainer = toolkit.createComposite(personComposite);
 		GridDataFactory.fillDefaults().grab(true, false).span(3, 1)
 				.indent(0, 3).applyTo(buttonsContainer);
 		GridLayoutFactory.fillDefaults().numColumns(2)
@@ -1343,7 +1345,7 @@ public class StagingView extends ViewPart
 		Composite stagedComposite = toolkit.createComposite(stagedSection);
 		toolkit.paintBordersFor(stagedComposite);
 		stagedSection.setClient(stagedComposite);
-		GridLayoutFactory.fillDefaults().applyTo(stagedComposite);
+		GridLayoutFactory.fillDefaults().margins(1, 1).applyTo(stagedComposite);
 
 		stagedViewer = createViewer(stagedComposite, false,
 				selection -> stage(selection.toList()), unstageAction);
@@ -3619,7 +3621,8 @@ public class StagingView extends ViewPart
 				+ "\\E";//$NON-NLS-1$
 		// remove potentially empty quotes at begin or end
 		regex = regex.replaceAll(Pattern.quote("\\Q\\E"), ""); //$NON-NLS-1$ //$NON-NLS-2$
-		return Pattern.compile(regex, Pattern.CASE_INSENSITIVE);
+		return Pattern.compile(regex,
+				Pattern.CASE_INSENSITIVE | Pattern.UNICODE_CASE);
 	}
 
 	/**
@@ -3729,7 +3732,8 @@ public class StagingView extends ViewPart
 			if (files.isEmpty()) {
 				return;
 			}
-			if (!CommandConfirmation.confirmCheckout(composite.getShell(), repo)) {
+			if (!CommandConfirmation.confirmCheckout(mainComposite.getShell(),
+					repo)) {
 				return;
 			}
 			DiscardChangesOperation operation = new DiscardChangesOperation(

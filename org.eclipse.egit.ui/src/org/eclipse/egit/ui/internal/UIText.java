@@ -3035,6 +3035,9 @@ public class UIText extends NLS {
 	public static String PushResultNotification_Details;
 
 	/** */
+	public static String PushResultNotification_CreatePullRequest;
+
+	/** */
 	public static String PushResultTable_MessageText;
 
 	/** */
