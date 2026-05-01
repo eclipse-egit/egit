@@ -134,6 +134,24 @@
       "parentUuid": "0aa7ecce_28355d19",
       "revId": "ce6cbf8d670265096cdfe5d6ee22f13f9b0e2122",
       "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "15460a41_f52346a7",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1012795
+      },
+      "writtenOn": "2026-05-01T10:52:41Z",
+      "side": 1,
+      "message": "Thanks for clarification Thomas.",
+      "parentUuid": "8ee289fb_990039d0",
+      "revId": "ce6cbf8d670265096cdfe5d6ee22f13f9b0e2122",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735"
     }
   ]
 }
