@@ -1,6 +1,52 @@
 {
   "comments": [
     {
+      "unresolved": true,
+      "key": {
+        "uuid": "42e98c33_f1bd046e",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1000671
+      },
+      "writtenOn": "2026-05-03T21:52:09Z",
+      "side": 1,
+      "message": "I can\u0027t find this option in Eclipse settings",
+      "range": {
+        "startLine": 21,
+        "startChar": 19,
+        "endLine": 21,
+        "endChar": 58
+      },
+      "revId": "ad2300d395590ed87513c2f18e6acabf6e43aa2f",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "5bd791f4_645c7274",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1000671
+      },
+      "writtenOn": "2026-05-03T21:52:09Z",
+      "side": 1,
+      "message": "In PluginPreferenceInitializer I see this:\n```\r\nstore.setDefault(UIPreferences.AUTO_FETCH_INTERVAL, 60 * 60);\n```",
+      "range": {
+        "startLine": 23,
+        "startChar": 45,
+        "endLine": 23,
+        "endChar": 49
+      },
+      "revId": "ad2300d395590ed87513c2f18e6acabf6e43aa2f",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735"
+    },
+    {
       "unresolved": false,
       "key": {
         "uuid": "37c5d55d_37346aa2",
@@ -32,6 +78,23 @@
       "side": 1,
       "message": "@Matthias Sohn OK for you?",
       "parentUuid": "37c5d55d_37346aa2",
+      "revId": "ad2300d395590ed87513c2f18e6acabf6e43aa2f",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "36dfeeea_160dbc65",
+        "filename": "CLAUDE.md",
+        "patchSetId": 4
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1000671
+      },
+      "writtenOn": "2026-05-03T21:52:09Z",
+      "side": 1,
+      "message": "this file is unrelated to this change, move it to another change",
       "revId": "ad2300d395590ed87513c2f18e6acabf6e43aa2f",
       "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735"
     }
