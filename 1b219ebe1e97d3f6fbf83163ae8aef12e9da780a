@@ -1,6 +1,29 @@
 {
   "comments": [
     {
+      "unresolved": true,
+      "key": {
+        "uuid": "1f394efa_97fdb3d6",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 7
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1000671
+      },
+      "writtenOn": "2026-05-04T20:49:28Z",
+      "side": 1,
+      "message": "wrong bug link, the correct one is egit-140",
+      "range": {
+        "startLine": 36,
+        "startChar": 5,
+        "endLine": 36,
+        "endChar": 13
+      },
+      "revId": "1b219ebe1e97d3f6fbf83163ae8aef12e9da780a",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735"
+    },
+    {
       "unresolved": false,
       "key": {
         "uuid": "c55d6b00_add6d830",
