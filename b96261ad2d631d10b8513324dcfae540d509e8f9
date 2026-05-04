@@ -16,6 +16,24 @@
       "message": "I think the fetch interval should be specified in minutes instead of seconds.\nLooks good otherwise :-)",
       "revId": "b96261ad2d631d10b8513324dcfae540d509e8f9",
       "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "a1a61dc8_02988cec",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 5
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1012795
+      },
+      "writtenOn": "2026-05-04T10:07:34Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4bcefb8a_f786d741",
+      "revId": "b96261ad2d631d10b8513324dcfae540d509e8f9",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735"
     }
   ]
 }
