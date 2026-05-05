@@ -67,6 +67,24 @@
       "message": "I cannot submit, \"insufficient permissions\". AFAIK I have become a Egit committer and the foundation told me the setup is completed.",
       "revId": "52382f2ee66b62fd5d97b0f16bf4b97f42d882af",
       "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "d595c2c6_1f6fce41",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 5
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1021966
+      },
+      "writtenOn": "2026-05-05T07:56:35Z",
+      "side": 1,
+      "message": "I thought so, too... maybe Gerrit needs some refresh (it has a cache of user data), or you need to log out of Gerrit (clear all cookies etc.) and then log in again, choosing \"project committer\" on the Gerrithub log-in page? Can you try the latter? If it then still doesn\u0027t work, I can rebase and merge this.",
+      "parentUuid": "c71ae9cc_7f5c9087",
+      "revId": "52382f2ee66b62fd5d97b0f16bf4b97f42d882af",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735"
     }
   ]
 }
