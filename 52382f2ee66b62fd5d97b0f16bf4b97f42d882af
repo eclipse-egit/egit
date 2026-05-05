@@ -85,6 +85,23 @@
       "parentUuid": "c71ae9cc_7f5c9087",
       "revId": "52382f2ee66b62fd5d97b0f16bf4b97f42d882af",
       "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "b9427c81_4e8ecccc",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 5
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1012795
+      },
+      "writtenOn": "2026-05-05T10:31:58Z",
+      "side": 1,
+      "message": "THanks THomas, cookies deletion did the trick",
+      "revId": "52382f2ee66b62fd5d97b0f16bf4b97f42d882af",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735"
     }
   ],
   "submitRequirementResults": []
