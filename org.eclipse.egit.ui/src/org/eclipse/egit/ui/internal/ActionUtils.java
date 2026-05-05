@@ -206,6 +206,15 @@ public final class ActionUtils {
 	 * registered with the given {@link IHandlerService} while the control has
 	 * the focus. Ensures that actions are properly de-registered when the
 	 * control is disposed.
+	 * <p>
+	 * If {@code focusOnly} is {@code false}, the actions will also be
+	 * de-registered when the control receives a deactivation event
+	 * ({@link SWT#Deactivate}). However, the actions will <em>not</em> be
+	 * re-registered on {@code SWT.Activate} to avoid handler conflicts that can
+	 * occur in some cases. See
+	 * <a href="https://bugs.eclipse.org/bugs/show_bug.cgi?id=536645">bug
+	 * 536645</a>.
+	 * </p>
 	 *
 	 * @param control
 	 *            to hook up
@@ -214,9 +223,12 @@ public final class ActionUtils {
 	 *            items are skipped.
 	 * @param service
 	 *            to register the actions with
+	 * @param focusOnly
+	 *            whether to handle only focus events
 	 */
 	public static void setGlobalActions(Control control,
-			Collection<? extends IAction> actions, IHandlerService service) {
+			Collection<? extends IAction> actions, IHandlerService service,
+			boolean focusOnly) {
 		ActiveShellExpression expression = new ActiveShellExpression(
 				control.getShell());
 		class ActivationListener implements Listener {
@@ -257,10 +269,31 @@ public final class ActionUtils {
 			}
 		}
 		ActivationListener activationListener = new ActivationListener();
-		control.addListener(SWT.Deactivate, activationListener);
+		if (!focusOnly) {
+			control.addListener(SWT.Deactivate, activationListener);
+		}
 		control.addListener(SWT.FocusOut, activationListener);
 		control.addListener(SWT.FocusIn, activationListener);
 		control.addListener(SWT.Dispose, activationListener);
+	}
+
+	/**
+	 * Hooks up the {@link Control} such that the given {@link IAction}s are
+	 * registered with the given {@link IHandlerService} while the control has
+	 * the focus. Ensures that actions are properly de-registered when the
+	 * control is disposed.
+	 *
+	 * @param control
+	 *            to hook up
+	 * @param actions
+	 *            to be registered while the control has the focus; {@code null}
+	 *            items are skipped.
+	 * @param service
+	 *            to register the actions with
+	 */
+	public static void setGlobalActions(Control control,
+			Collection<? extends IAction> actions, IHandlerService service) {
+		setGlobalActions(control, actions, service, false);
 	}
 
 	/**
