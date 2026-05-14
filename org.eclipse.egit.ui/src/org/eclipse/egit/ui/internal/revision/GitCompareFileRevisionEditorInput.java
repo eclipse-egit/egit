@@ -17,6 +17,7 @@ package org.eclipse.egit.ui.internal.revision;
 
 import java.io.File;
 import java.lang.reflect.InvocationTargetException;
+import java.util.Date;
 
 import org.eclipse.compare.CompareConfiguration;
 import org.eclipse.compare.CompareEditorInput;
@@ -36,10 +37,12 @@ import org.eclipse.core.runtime.Assert;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.egit.core.Activator;
+import org.eclipse.egit.core.internal.storage.CommitFileRevision;
 import org.eclipse.egit.core.internal.storage.IndexFileRevision;
 import org.eclipse.egit.core.internal.storage.OpenWorkspaceVersionEnabled;
 import org.eclipse.egit.ui.internal.CompareUtils;
 import org.eclipse.egit.ui.internal.EgitUiEditorUtils;
+import org.eclipse.egit.ui.internal.PreferenceBasedDateFormatter;
 import org.eclipse.egit.ui.internal.UIText;
 import org.eclipse.egit.ui.internal.synchronize.compare.LocalNonWorkspaceTypedElement;
 import org.eclipse.jface.action.Action;
@@ -75,6 +78,9 @@ public class GitCompareFileRevisionEditorInput extends SaveableCompareEditorInpu
 	private ITypedElement left;
 	private ITypedElement right;
 	private ITypedElement ancestor;
+
+	private final PreferenceBasedDateFormatter formatter = PreferenceBasedDateFormatter
+			.create();
 
 	/**
 	 * Creates a new CompareFileRevisionEditorInput.
@@ -324,7 +330,7 @@ public class GitCompareFileRevisionEditorInput extends SaveableCompareEditorInpu
 	}
 
 	private String getFileRevisionLabel(FileRevisionTypedElement element) {
-		Object fileObject = element.getFileRevision();
+		IFileRevision fileObject = element.getFileRevision();
 		if (fileObject instanceof IndexFileRevision) {
 			if (isEditable(element))
 				return NLS.bind(
@@ -335,8 +341,14 @@ public class GitCompareFileRevisionEditorInput extends SaveableCompareEditorInpu
 						UIText.GitCompareFileRevisionEditorInput_IndexLabel,
 						element.getName());
 		} else {
+			String id = CompareUtils
+					.truncatedRevision(element.getContentIdentifier());
+			if (fileObject instanceof CommitFileRevision commitRevision) {
+				id += ' ' + formatter
+						.formatDate(new Date(commitRevision.getTimestamp()));
+			}
 			return NLS.bind(UIText.GitCompareFileRevisionEditorInput_RevisionLabel, new Object[]{element.getName(),
-					CompareUtils.truncatedRevision(element.getContentIdentifier()), element.getAuthor()});
+					id, element.getAuthor() });
 		}
 	}
 
