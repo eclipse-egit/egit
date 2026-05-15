@@ -34,6 +34,24 @@
       "parentUuid": "9c017e16_a64472a5",
       "revId": "09d403b07732f4214fd8c791ba8d6d1515e407a2",
       "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "4ecf63b7_35bc90eb",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1000671
+      },
+      "writtenOn": "2026-05-15T09:47:37Z",
+      "side": 1,
+      "message": "yes, I think this would be more consistent",
+      "parentUuid": "3159011a_6c856143",
+      "revId": "09d403b07732f4214fd8c791ba8d6d1515e407a2",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735"
     }
   ]
 }
