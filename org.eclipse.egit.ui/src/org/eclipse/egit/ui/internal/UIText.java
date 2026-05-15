@@ -6560,6 +6560,12 @@ public class UIText extends NLS {
 	/** */
 	public static String EditableRevision_CannotSave;
 
+	/** */
+	public static String CloseAllProjectsCommand_jobTitle;
+
+	/** */
+	public static String OpenAllProjectsCommand_jobTitle;
+
 	static {
 		initializeMessages(BUNDLE_NAME, UIText.class);
 	}
