@@ -2658,6 +2658,44 @@
          </activeWhen>
       </handler>
       <handler
+            commandId="org.eclipse.egit.ui.RepositoriesViewCloseAllProjects">
+         <class
+               class="org.eclipse.egit.ui.internal.repository.tree.command.CloseAllProjectsCommand">
+         </class>
+         <activeWhen>
+            <and>
+               <count
+                     value="1">
+               </count>
+               <iterate>
+                  <instanceof
+                        value="org.eclipse.egit.ui.internal.repository.tree.RepositoryNode">
+                  </instanceof>
+                  <test property="GitRepository.isBare" value="false" />
+               </iterate>
+            </and>
+         </activeWhen>
+      </handler>
+      <handler
+            commandId="org.eclipse.egit.ui.RepositoriesViewOpenAllProjects">
+         <class
+               class="org.eclipse.egit.ui.internal.repository.tree.command.OpenAllProjectsCommand">
+         </class>
+         <activeWhen>
+            <and>
+               <count
+                     value="1">
+               </count>
+               <iterate>
+                  <instanceof
+                        value="org.eclipse.egit.ui.internal.repository.tree.RepositoryNode">
+                  </instanceof>
+                  <test property="GitRepository.isBare" value="false" />
+               </iterate>
+            </and>
+         </activeWhen>
+      </handler>
+      <handler
             commandId="org.eclipse.egit.ui.RepositoriesViewCreateBranch">
          <class
                class="org.eclipse.egit.ui.internal.repository.tree.command.CreateBranchCommand">
@@ -5539,13 +5577,60 @@
                </and>
             </visibleWhen>
          </command>
-         <command
-               commandId="org.eclipse.egit.ui.RepositoriesViewImportProjects"
-               icon="icons/obj16/import_prj.svg"
-               label="%RepoViewImportProjects.label"
-               style="push">
-            <visibleWhen checkEnabled="true" />
-         </command>
+         <menu
+               label="%RepoViewProjectsMenu.label">
+            <visibleWhen
+                  checkEnabled="false">
+               <or>
+                  <and>
+                     <count
+                           value="1">
+                     </count>
+                     <iterate>
+                        <or>
+                           <instanceof
+                                 value="org.eclipse.egit.ui.internal.repository.tree.RepositoryNode">
+                           </instanceof>
+                           <instanceof
+                                 value="org.eclipse.egit.ui.internal.repository.tree.WorkingDirNode">
+                           </instanceof>
+                        </or>
+                        <test property="GitRepository.isBare" value="false" />
+                     </iterate>
+                  </and>
+                  <and>
+                     <count
+                           value="+">
+                     </count>
+                     <iterate>
+                        <instanceof
+                              value="org.eclipse.egit.ui.internal.repository.tree.FolderNode">
+                        </instanceof>
+                        <test property="GitRepository.isBare" value="false" />
+                     </iterate>
+                  </and>
+               </or>
+            </visibleWhen>
+            <command
+                  commandId="org.eclipse.egit.ui.RepositoriesViewImportProjects"
+                  icon="icons/obj16/import_prj.svg"
+                  label="%RepoViewImportProjects.label"
+                  style="push">
+               <visibleWhen checkEnabled="true" />
+            </command>
+            <command
+                  commandId="org.eclipse.egit.ui.RepositoriesViewCloseAllProjects"
+                  label="%RepoViewCloseAllProjects.label"
+                  style="push">
+               <visibleWhen checkEnabled="true" />
+            </command>
+            <command
+                  commandId="org.eclipse.egit.ui.RepositoriesViewOpenAllProjects"
+                  label="%RepoViewOpenAllProjects.label"
+                  style="push">
+               <visibleWhen checkEnabled="true" />
+            </command>
+         </menu>
          <command
                commandId="org.eclipse.egit.ui.team.RenameBranch"
                label="%RepoViewRenameBranch.label"
@@ -6817,6 +6902,18 @@
             name="%ImportProjectsCommand"
             description="%ImportProjectsCommand_description"
             >
+      </command>
+      <command
+            categoryId="org.eclipse.egit.ui.commandCategory"
+            id="org.eclipse.egit.ui.RepositoriesViewCloseAllProjects"
+            name="%CloseAllProjectsCommand"
+            description="%CloseAllProjectsCommand_description">
+      </command>
+      <command
+            categoryId="org.eclipse.egit.ui.commandCategory"
+            id="org.eclipse.egit.ui.RepositoriesViewOpenAllProjects"
+            name="%OpenAllProjectsCommand"
+            description="%OpenAllProjectsCommand_description">
       </command>
       <command
             categoryId="org.eclipse.egit.ui.commandCategory"
