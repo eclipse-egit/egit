@@ -11,6 +11,7 @@
 package org.eclipse.egit.ui.internal.merge;
 
 import java.text.MessageFormat;
+import java.util.Date;
 
 import org.eclipse.compare.ICompareInputLabelProvider;
 import org.eclipse.compare.IEditableContent;
@@ -18,19 +19,25 @@ import org.eclipse.compare.IResourceProvider;
 import org.eclipse.compare.ITypedElement;
 import org.eclipse.compare.structuremergeviewer.DiffNode;
 import org.eclipse.core.resources.IResource;
+import org.eclipse.egit.core.internal.storage.CommitFileRevision;
 import org.eclipse.egit.core.internal.storage.IndexFileRevision;
 import org.eclipse.egit.ui.internal.CompareUtils;
+import org.eclipse.egit.ui.internal.PreferenceBasedDateFormatter;
 import org.eclipse.egit.ui.internal.UIText;
 import org.eclipse.egit.ui.internal.revision.FileRevisionTypedElement;
 import org.eclipse.jface.viewers.BaseLabelProvider;
 import org.eclipse.jface.viewers.LabelProviderChangedEvent;
 import org.eclipse.swt.graphics.Image;
+import org.eclipse.team.core.history.IFileRevision;
 
 /**
  * A label provider for {@link DiffNode}s as created by EGit.
  */
 public class GitCompareLabelProvider extends BaseLabelProvider
 		implements ICompareInputLabelProvider {
+
+	private final PreferenceBasedDateFormatter formatter = PreferenceBasedDateFormatter
+			.create();
 
 	private boolean isEditable(Object object) {
 		if (object instanceof IEditableContent) {
@@ -43,7 +50,7 @@ public class GitCompareLabelProvider extends BaseLabelProvider
 		if (element == null) {
 			return null;
 		}
-		Object fileObject = element.getFileRevision();
+		IFileRevision fileObject = element.getFileRevision();
 		if (fileObject instanceof IndexFileRevision) {
 			if (isEditable(element)) {
 				return MessageFormat.format(
@@ -55,12 +62,15 @@ public class GitCompareLabelProvider extends BaseLabelProvider
 						element.getName());
 			}
 		} else {
+			String id = CompareUtils
+					.truncatedRevision(element.getContentIdentifier());
+			if (fileObject instanceof CommitFileRevision commitRevision) {
+				id += ' ' + formatter
+						.formatDate(new Date(commitRevision.getTimestamp()));
+			}
 			return MessageFormat.format(
 					UIText.GitCompareFileRevisionEditorInput_RevisionLabel,
-					element.getName(),
-					CompareUtils
-							.truncatedRevision(element.getContentIdentifier()),
-					element.getAuthor());
+					element.getName(), id, element.getAuthor());
 		}
 	}
 

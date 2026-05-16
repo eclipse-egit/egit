@@ -105,7 +105,7 @@ public class HistoryTest extends GitTestCase {
 		IFileHistory fileHistory = fileHistoryProvider.getFileHistoryFor(project.getProject().getWorkspace().getRoot().findMember("Project-1/A.txt"), IFileHistoryProvider.SINGLE_LINE_OF_DESCENT, new NullProgressMonitor());
 		IFileRevision fileRevision = fileHistory.getFileRevision("60f0d7917fe2aed5c92b5bc35dfb55b9b8ada359");
 		assertEquals("60f0d7917fe2aed5c92b5bc35dfb55b9b8ada359", fileRevision.getContentIdentifier());
-		assertEquals("J. Author",fileRevision.getAuthor());
+		assertEquals("J. Committer", fileRevision.getAuthor());
 	}
 
 	@Test
@@ -126,7 +126,7 @@ public class HistoryTest extends GitTestCase {
 		IFileHistory fileHistory = fileHistoryProvider.getFileHistoryFor(project.getProject().getWorkspace().getRoot().findMember("Project-1/B.txt"), IFileHistoryProvider.SINGLE_LINE_OF_DESCENT, new NullProgressMonitor());
 		IFileRevision fileRevision = fileHistory.getFileRevision("fd5a571c8a3a4a152e4c413d09d3ecb7d41e1e5f");
 		assertEquals("fd5a571c8a3a4a152e4c413d09d3ecb7d41e1e5f", fileRevision.getContentIdentifier());
-		assertEquals("J. Author",fileRevision.getAuthor());
+		assertEquals("J. Committer", fileRevision.getAuthor());
 	}
 
 	@Test
@@ -163,7 +163,7 @@ public class HistoryTest extends GitTestCase {
 		IFileRevision[] fileRevisions = fileHistory.getFileRevisions();
 		assertEquals(1, fileRevisions.length);
 		assertEquals("60f0d7917fe2aed5c92b5bc35dfb55b9b8ada359", fileRevisions[0].getContentIdentifier());
-		assertEquals("J. Author",fileRevisions[0].getAuthor());
+		assertEquals("J. Committer", fileRevisions[0].getAuthor());
 	}
 
 	@Test
@@ -175,7 +175,7 @@ public class HistoryTest extends GitTestCase {
 		IFileRevision[] fileRevisions = fileHistory.getFileRevisions();
 		assertEquals(1, fileRevisions.length);
 		assertEquals("60f0d7917fe2aed5c92b5bc35dfb55b9b8ada359", fileRevisions[0].getContentIdentifier());
-		assertEquals("J. Author",fileRevisions[0].getAuthor());
+		assertEquals("J. Committer", fileRevisions[0].getAuthor());
 	}
 
 	@Test
@@ -187,8 +187,8 @@ public class HistoryTest extends GitTestCase {
 		IFileRevision[] fileRevisions = fileHistory.getFileRevisions();
 		assertEquals(2, fileRevisions.length);
 		assertEquals("fd5a571c8a3a4a152e4c413d09d3ecb7d41e1e5f", fileRevisions[0].getContentIdentifier());
-		assertEquals("J. Author",fileRevisions[0].getAuthor());
+		assertEquals("J. Committer", fileRevisions[0].getAuthor());
 		assertEquals("60f0d7917fe2aed5c92b5bc35dfb55b9b8ada359", fileRevisions[1].getContentIdentifier());
-		assertEquals("J. Author",fileRevisions[0].getAuthor());
+		assertEquals("J. Committer", fileRevisions[0].getAuthor());
 	}
 }
