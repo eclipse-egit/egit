@@ -11,6 +11,8 @@
 package org.eclipse.egit.ui.internal.decorators;
 
 import java.text.MessageFormat;
+import java.util.LinkedHashSet;
+import java.util.Set;
 
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
@@ -39,6 +41,12 @@ import org.eclipse.ui.PlatformUI;
 public abstract class GitDecorator extends LabelProvider
 		implements ILightweightLabelDecorator, IndexDiffChangedListener,
 		ConfigChangedListener {
+
+	private static final Object UI_EVENT_LOCK = new Object();
+
+	private static final Set<GitDecorator> UI_EVENT_QUEUE = new LinkedHashSet<>();
+
+	private static boolean uiEventQueued;
 
 	private Object lock = new Object();
 
@@ -84,13 +92,22 @@ public abstract class GitDecorator extends LabelProvider
 	 * Posts a {@link LabelProviderChangedEvent} invalidating all labels.
 	 */
 	protected void fireLabelEvent() {
-		LabelProviderChangedEvent event = new LabelProviderChangedEvent(this);
 		// Re-trigger decoration process (in UI thread)
 		Display display = PlatformUI.getWorkbench().getDisplay();
 		if (display == null || display.isDisposed()) {
 			return;
 		}
-		display.asyncExec(() -> fireLabelProviderChanged(event));
+		boolean scheduleUiRun = false;
+		synchronized (UI_EVENT_LOCK) {
+			UI_EVENT_QUEUE.add(this);
+			if (!uiEventQueued) {
+				uiEventQueued = true;
+				scheduleUiRun = true;
+			}
+		}
+		if (scheduleUiRun) {//
+			display.asyncExec(GitDecorator::firePendingLabelEvents);
+		}
 	}
 
 	@Override
@@ -122,6 +139,25 @@ public abstract class GitDecorator extends LabelProvider
 	 * @return a human-readable name for this decorator
 	 */
 	protected abstract String getName();
+
+	private static void firePendingLabelEvents() {
+		Set<GitDecorator> decorators;
+		synchronized (UI_EVENT_LOCK) {
+			uiEventQueued = false;
+			if (UI_EVENT_QUEUE.isEmpty()) {
+				return;
+			}
+			decorators = new LinkedHashSet<>(UI_EVENT_QUEUE);
+			UI_EVENT_QUEUE.clear();
+		}
+		for (GitDecorator decorator : decorators) {
+			// Check that the decorator hasn't been disposed already.
+			if (decorator.configListener != null) {
+				decorator.fireLabelProviderChanged(
+						new LabelProviderChangedEvent(decorator));
+			}
+		}
+	}
 
 	/**
 	 * Job reducing label events to prevent unnecessary (i.e. redundant) event
