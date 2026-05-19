@@ -16,6 +16,24 @@
       "message": "This set is mutable hence its name should use camel case\n```suggestion\n\tprivate static final Set\u003cGitDecorator\u003e uiEventQueue \u003d new LinkedHashSet\u003c\u003e();\n```",
       "revId": "55ff61101f2590561916f9f93d002fae95a5d7a7",
       "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "1da54336_a413991f",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/decorators/GitDecorator.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1039063
+      },
+      "writtenOn": "2026-05-19T09:51:22Z",
+      "side": 1,
+      "message": "Done in Patchset 3",
+      "parentUuid": "92e6f0f5_d572e768",
+      "revId": "55ff61101f2590561916f9f93d002fae95a5d7a7",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735"
     }
   ]
 }
