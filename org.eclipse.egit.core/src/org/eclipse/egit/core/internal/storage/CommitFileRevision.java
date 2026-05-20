@@ -48,7 +48,7 @@ public class CommitFileRevision extends GitFileRevision implements
 
 	private final RevCommit commit;
 
-	private final PersonIdent author;
+	private final PersonIdent committer;
 
 	private ObjectId blobId;
 
@@ -63,7 +63,7 @@ public class CommitFileRevision extends GitFileRevision implements
 			final String path, final ObjectId blob, CheckoutMetadata metadata) {
 		super(repo, path);
 		commit = rc;
-		author = rc.getAuthorIdent();
+		committer = rc.getCommitterIdent();
 		blobId = blob;
 		this.metadata = metadata;
 	}
@@ -80,7 +80,7 @@ public class CommitFileRevision extends GitFileRevision implements
 
 	@Override
 	public long getTimestamp() {
-		return author != null ? author.getWhen().getTime() : 0;
+		return committer != null ? committer.getWhen().getTime() : 0;
 	}
 
 	@Override
@@ -90,7 +90,7 @@ public class CommitFileRevision extends GitFileRevision implements
 
 	@Override
 	public String getAuthor() {
-		return author != null ? author.getName() : null;
+		return committer != null ? committer.getName() : null;
 	}
 
 	@Override
