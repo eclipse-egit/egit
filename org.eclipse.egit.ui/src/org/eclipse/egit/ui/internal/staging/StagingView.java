@@ -200,6 +200,7 @@ import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.CLabel;
 import org.eclipse.swt.custom.SashForm;
 import org.eclipse.swt.custom.StackLayout;
+import org.eclipse.swt.custom.StyledText;
 import org.eclipse.swt.custom.VerifyKeyListener;
 import org.eclipse.swt.dnd.Clipboard;
 import org.eclipse.swt.dnd.DND;
@@ -230,6 +231,7 @@ import org.eclipse.swt.layout.RowLayout;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
+import org.eclipse.swt.widgets.Event;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.ScrollBar;
 import org.eclipse.swt.widgets.Text;
@@ -581,6 +583,32 @@ public class StagingView extends ViewPart
 					// selection
 					reactOnSelection(lastSelection);
 					lastSelection = null;
+				}
+				// On some platforms (notably Windows) a perspective switch
+				// deactivates the global handlers registered by ActionUtils
+				// (via SWT.Deactivate) but does not emit a matching SWT.FocusIn
+				// when the perspective is re-activated, because the commit
+				// message widget is still SWT's focus control. The handlers
+				// stay deregistered and content assist (and the other text
+				// actions) remain unresponsive (see bug 536645).
+				//
+				// When partActivated runs the focus has not necessarily been
+				// restored to the widget yet, so isFocusControl() may still be
+				// false here. Re-fire SWT.FocusIn asynchronously, once focus has
+				// settled, if the widget is the focus control; ActionUtils then
+				// re-registers the handlers.
+				if (commitMessageText != null
+						&& !commitMessageText.isDisposed()) {
+					StyledText textWidget = commitMessageText.getTextWidget();
+					if (textWidget != null && !textWidget.isDisposed()) {
+						textWidget.getDisplay().asyncExec(() -> {
+							if (!textWidget.isDisposed()
+									&& textWidget.isFocusControl()) {
+								textWidget.notifyListeners(SWT.FocusIn,
+										new Event());
+							}
+						});
+					}
 				}
 				return;
 			}
