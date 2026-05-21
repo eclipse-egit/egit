@@ -200,6 +200,7 @@ import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.CLabel;
 import org.eclipse.swt.custom.SashForm;
 import org.eclipse.swt.custom.StackLayout;
+import org.eclipse.swt.custom.StyledText;
 import org.eclipse.swt.custom.VerifyKeyListener;
 import org.eclipse.swt.dnd.Clipboard;
 import org.eclipse.swt.dnd.DND;
@@ -230,6 +231,7 @@ import org.eclipse.swt.layout.RowLayout;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
+import org.eclipse.swt.widgets.Event;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.ScrollBar;
 import org.eclipse.swt.widgets.Text;
@@ -581,6 +583,21 @@ public class StagingView extends ViewPart
 					// selection
 					reactOnSelection(lastSelection);
 					lastSelection = null;
+				}
+				// On some platforms (notably Windows) a perspective switch
+				// deactivates the global handlers registered by ActionUtils
+				// via SWT.Deactivate without a matching SWT.FocusIn on the
+				// commit message widget when the perspective is re-activated.
+				// That leaves content assist (and other text actions)
+				// unresponsive until the user clicks into the widget again.
+				// Re-fire FocusIn so the handlers get registered again.
+				if (commitMessageText != null
+						&& !commitMessageText.isDisposed()) {
+					StyledText textWidget = commitMessageText.getTextWidget();
+					if (textWidget != null && !textWidget.isDisposed()
+							&& textWidget.isFocusControl()) {
+						textWidget.notifyListeners(SWT.FocusIn, new Event());
+					}
 				}
 				return;
 			}
