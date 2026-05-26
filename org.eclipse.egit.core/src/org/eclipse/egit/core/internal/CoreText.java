@@ -70,6 +70,9 @@ public class CoreText extends NLS {
 	public static String CherryPickOperation_cherryPicking;
 
 	/** */
+	public static String CherryPickOperation_cherryPickingMultipleCommits;
+
+	/** */
 	public static String CommitFileRevision_errorLookingUpPath;
 
 	/** */

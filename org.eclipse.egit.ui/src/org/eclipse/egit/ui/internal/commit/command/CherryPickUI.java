@@ -17,12 +17,11 @@ package org.eclipse.egit.ui.internal.commit.command;
 import java.io.IOException;
 import java.text.MessageFormat;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
-import java.util.concurrent.atomic.AtomicBoolean;
+import java.util.Optional;
 
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IProgressMonitor;
@@ -48,6 +47,7 @@ import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.layout.GridDataFactory;
 import org.eclipse.jface.viewers.DelegatingStyledCellLabelProvider;
 import org.eclipse.jface.viewers.TreeViewer;
+import org.eclipse.jface.widgets.ButtonFactory;
 import org.eclipse.jface.window.Window;
 import org.eclipse.jgit.annotations.NonNull;
 import org.eclipse.jgit.api.CherryPickResult;
@@ -57,7 +57,10 @@ import org.eclipse.jgit.merge.ResolveMerger.MergeFailureReason;
 import org.eclipse.jgit.revwalk.RevCommit;
 import org.eclipse.osgi.util.NLS;
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.events.SelectionListener;
 import org.eclipse.swt.layout.FillLayout;
+import org.eclipse.swt.layout.GridLayout;
+import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Shell;
@@ -66,7 +69,7 @@ import org.eclipse.ui.model.WorkbenchContentProvider;
 import org.eclipse.ui.model.WorkbenchLabelProvider;
 
 /**
- * UI to cherry-pick a commit onto HEAD.
+ * UI to cherry-pick commits onto HEAD.
  */
 public class CherryPickUI {
 
@@ -90,18 +93,79 @@ public class CherryPickUI {
 	 * @throws CoreException
 	 *             if an error occurs
 	 */
-	public void run(@NonNull Repository repository, @NonNull RevCommit commit,
-			boolean confirm) throws CoreException {
+	public void run(@NonNull
+	Repository repository, @NonNull
+	RevCommit commit, boolean confirm) throws CoreException {
+		@SuppressWarnings("null")
+		@NonNull
+		List<RevCommit> commits = List.of(commit);
+		doRun(repository, commits, confirm);
+	}
+
+	/**
+	 * UI for doing a cherry-pick. Will prompt for confirmation if
+	 * {@code confirm} is {@code true} or the {@code commit} is a merge commit,
+	 * in which case the user will also be given the opportunity to choose the
+	 * parent commit to define the changes to be applied. The commits will
+	 * initially be selected in the given order, but can be reorder by the user
+	 * if {@code confirm} is {@code true}. Always will inform the user about
+	 * running launch configurations that might be affected by the working tree
+	 * changes.
+	 * <p>
+	 * Must be called in the UI thread.
+	 * </p>
+	 *
+	 * @param repository
+	 *            to work on
+	 * @param commits
+	 *            to cherry-pick
+	 * @param confirm
+	 *            whether to ask for confirmation before doing the operation.
+	 *            Allows reordering of commits is {@code true}
+	 * @throws CoreException
+	 *             if an error occurs
+	 */
+	public void run(@NonNull
+	Repository repository, @NonNull
+	List<RevCommit> commits, boolean confirm) throws CoreException {
+		doRun(repository, commits, confirm);
+	}
+
+	private static void doRun(@NonNull
+	Repository repository, @NonNull
+	List<RevCommit> commits, boolean confirm) throws CoreException {
 		final Shell shell = PlatformUI.getWorkbench()
 				.getModalDialogShellProvider().getShell();
 
+		RevCommit mergeCommit = null;
+		for (RevCommit commit : commits) {
+			if (commit.getParentCount() > 1) {
+				if (mergeCommit == null) {
+					mergeCommit = commit;
+				} else {
+					// Although cherry-picking multiple merge commits is allowed
+					// by Git, all of those commits must select the same
+					// mainline parent number. This could lead to unexpected
+					// behaviour if picked silently and there's no good way to
+					// prompt the user for this information, so multiple merge
+					// commits are not supported here.
+					MessageDialog.openInformation(
+							PlatformUI.getWorkbench()
+									.getModalDialogShellProvider().getShell(),
+							UIText.CherryPickHandler_CherryPickingMultipleMergeCommitsNotSupportedTitle,
+							UIText.CherryPickHandler_CherryPickingMultipleMergeCommitsNotSupportedMessage);
+					return;
+				}
+			}
+		}
+
 		int parentIndex = -1;
-		if (commit.getParentCount() > 1) {
+		if (mergeCommit != null) {
 			// Merge commit: select parent
 			List<RevCommit> parents = new ArrayList<>();
 			String branch = null;
 			try {
-				for (RevCommit parent : commit.getParents()) {
+				for (RevCommit parent : mergeCommit.getParents()) {
 					parents.add(repository.parseCommit(parent));
 				}
 				branch = repository.getBranch();
@@ -114,38 +178,46 @@ public class CherryPickUI {
 			selectCommit.setTitle(UIText.CommitSelectDialog_ChooseParentTitle);
 			selectCommit.setMessage(MessageFormat.format(
 					UIText.CherryPickHandler_CherryPickMergeMessage,
-					Utils.getShortObjectId(commit), branch));
+					Utils.getShortObjectId(mergeCommit), branch));
 			if (selectCommit.open() != Window.OK) {
 				return;
 			}
 			parentIndex = parents.indexOf(selectCommit.getSelectedCommit());
-		} else if (confirm) {
-			if (!confirmCherryPick(shell, repository, commit)) {
+		}
+
+		List<RevCommit> reorderedCommits = commits;
+		if (confirm) {
+			Optional<List<RevCommit>> result = confirmCherryPick(shell,
+					repository, commits);
+			if (result.isEmpty()) {
 				return;
 			}
+			reorderedCommits = result.get();
 		} else if (LaunchFinder.shouldCancelBecauseOfRunningLaunches(repository,
 				null)) {
 			return;
 		}
 
-		doCherryPick(repository, commit, parentIndex, true);
+		doCherryPick(repository, reorderedCommits, parentIndex, true);
 	}
 
-	private void doCherryPick(@NonNull Repository repo, RevCommit commit,
-			int parentIndex, boolean withCleanup) {
-		CherryPickOperation op = new CherryPickOperation(repo, commit);
-		op.setMainlineIndex(parentIndex);
+	private static void doCherryPick(@NonNull
+	Repository repo, List<RevCommit> commits, int parentIndex,
+			boolean withCleanup) {
+		CherryPickOperation operation = new CherryPickOperation(repo, commits);
+		operation.setMainlineIndex(parentIndex);
 
 		Job job = new RepositoryJob(MessageFormat.format(
-				UIText.CherryPickHandler_JobName, Integer.valueOf(1)), null) {
+				UIText.CherryPickHandler_JobName,
+				Integer.valueOf(commits.size())), null) {
 
 			private CherryPickResult result;
 
 			@Override
 			protected IStatus performJob(IProgressMonitor monitor) {
 				try {
-					op.execute(monitor);
-					result = op.getResult();
+					operation.execute(monitor);
+					result = operation.getResult();
 					if (!withCleanup
 							&& result.getStatus() == CherryPickStatus.FAILED) {
 						return getErrorList(result.getFailingPaths());
@@ -183,7 +255,7 @@ public class CherryPickUI {
 						}
 						return new CleanupAction(repo,
 								UIText.CherryPickHandler_UncommittedFilesTitle,
-								result, () -> doCherryPick(repo, commit,
+								result, () -> doCherryPick(repo, commits,
 										parentIndex, false));
 					case OK:
 						return null;
@@ -206,30 +278,28 @@ public class CherryPickUI {
 
 		};
 		job.setUser(true);
-		job.setRule(op.getSchedulingRule());
+		job.setRule(operation.getSchedulingRule());
 		job.schedule();
 	}
 
-	private String getLaunchMessage(Repository repository) {
-		String launch = LaunchFinder
-				.getRunningLaunchConfiguration(
-						Collections.singleton(repository), null);
+	private static String getLaunchMessage(Repository repository) {
+		String launch = LaunchFinder.getRunningLaunchConfiguration(
+				Collections.singleton(repository), null);
 		if (launch != null) {
-			return MessageFormat.format(
-					UIText.LaunchFinder_RunningLaunchMessage, launch);
+			return MessageFormat
+					.format(UIText.LaunchFinder_RunningLaunchMessage, launch);
 		}
 		return null;
 	}
 
-	private boolean confirmCherryPick(final Shell shell,
-			final Repository repository, final RevCommit commit)
-			throws CoreException {
-		final AtomicBoolean confirmed = new AtomicBoolean(false);
+	private static Optional<List<RevCommit>> confirmCherryPick(
+			final Shell shell, final Repository repository,
+			final List<RevCommit> commits) throws CoreException {
 		String message;
 		try {
 			message = MessageFormat.format(
-					UIText.CherryPickHandler_ConfirmMessage, Integer.valueOf(1),
-					repository.getBranch());
+					UIText.CherryPickHandler_ConfirmMessage,
+					Integer.valueOf(commits.size()), repository.getBranch());
 		} catch (IOException e) {
 			throw new CoreException(Activator.createErrorStatus(
 					"Exception obtaining current repository branch", e)); //$NON-NLS-1$
@@ -240,29 +310,56 @@ public class CherryPickUI {
 			message += "\n\n" + launchMessage; //$NON-NLS-1$
 		}
 		final String question = message;
+		List<RevCommit> reorderedCommits = new ArrayList<>();
 		shell.getDisplay().syncExec(new Runnable() {
-
 			@Override
 			public void run() {
 				ConfirmCherryPickDialog dialog = new ConfirmCherryPickDialog(
-						shell, question, repository, Arrays.asList(commit));
-				int result = dialog.open();
-				confirmed.set(result == Window.OK);
+						shell, question, repository, commits);
+				if (dialog.open() == Window.OK) {
+					for (RepositoryCommit commit : dialog.getCommits()) {
+						reorderedCommits.add(commit.getRevCommit());
+					}
+				}
 			}
 		});
-		return confirmed.get();
+		return reorderedCommits.isEmpty() ? Optional.empty()
+				: Optional.of(reorderedCommits);
 	}
 
 	private static class ConfirmCherryPickDialog extends MessageDialog {
 
 		private RepositoryCommit[] commits;
 
-		public ConfirmCherryPickDialog(Shell parentShell,
-				String message, Repository repository, List<RevCommit> revCommits) {
-			super(parentShell, UIText.CherryPickHandler_ConfirmTitle, null,
-					message, MessageDialog.CONFIRM, new String[] {
+		private TreeViewer treeViewer;
+
+		private Button upButton;
+
+		private Button downButton;
+
+		private final SelectionListener buttonListener = SelectionListener
+				.widgetSelectedAdapter(e -> {
+					int index = getSelectedCommitIndex();
+					if (index == -1) {
+						return;
+					}
+					Object source = e.getSource();
+					int newIndex = source == upButton ? index - 1 : index + 1;
+					swapCommits(index, newIndex);
+					updateButtonEnablement(newIndex);
+					treeViewer.refresh();
+				});
+
+		public ConfirmCherryPickDialog(Shell parentShell, String message,
+				Repository repository, List<RevCommit> revCommits) {
+			super(parentShell,
+					MessageFormat.format(UIText.CherryPickHandler_ConfirmTitle,
+							Integer.valueOf(revCommits.size())),
+					null, message, MessageDialog.CONFIRM,
+					new String[] {
 							UIText.CherryPickHandler_cherryPickButtonLabel,
-							IDialogConstants.CANCEL_LABEL }, 0);
+							IDialogConstants.CANCEL_LABEL },
+					0);
 			setShellStyle(getShellStyle() | SWT.RESIZE);
 
 			List<RepositoryCommit> repoCommits = new ArrayList<>();
@@ -271,20 +368,85 @@ public class CherryPickUI {
 			this.commits = repoCommits.toArray(new RepositoryCommit[0]);
 		}
 
+		public RepositoryCommit[] getCommits() {
+			return commits;
+		}
+
 		@Override
 		protected Control createCustomArea(Composite parent) {
-			Composite area = new Composite(parent, SWT.NONE);
-			area.setLayoutData(GridDataFactory.fillDefaults().grab(true, true)
-					.create());
-			area.setLayout(new FillLayout());
+			final boolean showReorderButtons = commits.length > 1;
 
-			TreeViewer treeViewer = new TreeViewer(area);
+			Composite area = new Composite(parent, SWT.NONE);
+			area.setLayoutData(
+					GridDataFactory.fillDefaults().grab(true, true).create());
+			area.setLayout(new GridLayout(showReorderButtons ? 2 : 1, false));
+
+			Composite viewerComposite = new Composite(area, SWT.NONE);
+			viewerComposite.setLayoutData(
+					GridDataFactory.fillDefaults().grab(true, true).create());
+			viewerComposite.setLayout(new FillLayout());
+
+			treeViewer = new TreeViewer(viewerComposite);
 			treeViewer.setContentProvider(new ContentProvider());
 			treeViewer.setLabelProvider(new DelegatingStyledCellLabelProvider(
 					new WorkbenchLabelProvider()));
-			treeViewer.setInput(commits);
+			treeViewer.setInput(getCommits());
+
+			if (showReorderButtons) {
+				Composite buttonComposite = new Composite(area, SWT.NONE);
+				buttonComposite.setLayoutData(GridDataFactory.fillDefaults()
+						.hint(80, SWT.DEFAULT).grab(false, true)
+						.align(SWT.BEGINNING, SWT.BEGINNING).create());
+				buttonComposite.setLayout(new FillLayout(SWT.VERTICAL));
+
+				upButton = ButtonFactory.newButton(SWT.PUSH)
+						.text(UIText.CherryPickHandler_upButtonLabel)
+						.create(buttonComposite);
+				upButton.setEnabled(false);
+				upButton.addSelectionListener(buttonListener);
+
+				downButton = ButtonFactory.newButton(SWT.PUSH)
+						.text(UIText.CherryPickHandler_downButtonLabel)
+						.create(buttonComposite);
+				downButton.setEnabled(false);
+				downButton.addSelectionListener(buttonListener);
+
+				treeViewer.addSelectionChangedListener(selection -> {
+					int index = getSelectedCommitIndex();
+					if (index == -1) {
+						upButton.setEnabled(false);
+						downButton.setEnabled(false);
+						return;
+					}
+					updateButtonEnablement(index);
+				});
+			}
 
 			return area;
+		}
+
+		private int getSelectedCommitIndex() {
+			Object selected = treeViewer.getStructuredSelection()
+					.getFirstElement();
+			if (selected instanceof RepositoryCommit commit) {
+				for (int i = 0; i < commits.length; i++) {
+					if (commit == commits[i]) {
+						return i;
+					}
+				}
+			}
+			return -1;
+		}
+
+		private void updateButtonEnablement(int selectedIndex) {
+			upButton.setEnabled(selectedIndex > 0);
+			downButton.setEnabled(selectedIndex < commits.length - 1);
+		}
+
+		private void swapCommits(int firstIndex, int secondIndex) {
+			RepositoryCommit temp = commits[firstIndex];
+			commits[firstIndex] = commits[secondIndex];
+			commits[secondIndex] = temp;
 		}
 
 		private static class ContentProvider extends WorkbenchContentProvider {
@@ -307,7 +469,8 @@ public class CherryPickUI {
 			Map<String, MergeFailureReason> failingPaths) {
 		MultiStatus result = new MultiStatus(Activator.PLUGIN_ID, IStatus.ERROR,
 				UIText.CherryPickHandler_CherryPickFailedMessage, null);
-		for (Entry<String, MergeFailureReason> entry : failingPaths.entrySet()) {
+		for (Entry<String, MergeFailureReason> entry : failingPaths
+				.entrySet()) {
 			String path = entry.getKey();
 			String reason = getReason(entry.getValue());
 			String errorMessage = NLS.bind(
@@ -364,8 +527,9 @@ public class CherryPickUI {
 
 		private final Runnable retry;
 
-		public CleanupAction(@NonNull Repository repo, String title,
-				CherryPickResult result, Runnable retry) {
+		public CleanupAction(@NonNull
+		Repository repo, String title, CherryPickResult result,
+				Runnable retry) {
 			super(repo, title);
 			this.result = result;
 			this.retry = retry;

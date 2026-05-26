@@ -15,6 +15,7 @@
 package org.eclipse.egit.core.op;
 
 import java.text.MessageFormat;
+import java.util.List;
 
 import org.eclipse.core.resources.IWorkspace;
 import org.eclipse.core.resources.IWorkspaceRunnable;
@@ -27,6 +28,7 @@ import org.eclipse.egit.core.internal.CoreText;
 import org.eclipse.egit.core.internal.MergeStrategies;
 import org.eclipse.egit.core.internal.job.RuleUtil;
 import org.eclipse.egit.core.internal.util.ProjectUtil;
+import org.eclipse.jgit.annotations.NonNull;
 import org.eclipse.jgit.api.CherryPickCommand;
 import org.eclipse.jgit.api.CherryPickResult;
 import org.eclipse.jgit.api.Git;
@@ -43,32 +45,49 @@ public class CherryPickOperation implements IEGitOperation {
 
 	private final Repository repo;
 
-	private final RevCommit commit;
+	private final RevCommit[] commits;
 
 	private int parentIndex = -1;
 
 	private CherryPickResult result;
 
 	/**
-	 * Create cherry pick operation
+	 * Creates a cherry-pick operation.
 	 *
 	 * @param repository
+	 *            the repository
 	 * @param commit
+	 *            the commit to cherry-pick
 	 */
-	public CherryPickOperation(Repository repository, RevCommit commit) {
-		this.repo = repository;
-		this.commit = commit;
+	public CherryPickOperation(@NonNull
+	Repository repository, @NonNull
+	RevCommit commit) {
+		this(repository, List.of(commit));
 	}
 
 	/**
-	 * Defines the parent to diff against if the commit is a merge commit.
-	 * Ignored if the commit has only one parent.
+	 * Creates a cherry-pick operation.
+	 *
+	 * @param repository
+	 *            the repository
+	 * @param commits
+	 *            the commits to cherry-pick
+	 */
+	public CherryPickOperation(@NonNull
+	Repository repository, List<RevCommit> commits) {
+		this.repo = repository;
+		this.commits = commits.toArray(new RevCommit[commits.size()]);
+	}
+
+	/**
+	 * Defines the parent to diff against if the commits contain merge commits.
+	 * Ignored if all commits have one or less parents.
 	 *
 	 * @param parentIndex
 	 *            defining the diff, zero-based
 	 */
 	public void setMainlineIndex(int parentIndex) {
-		if (parentIndex >= 0 && parentIndex < commit.getParentCount()) {
+		if (parentIndex >= 0) {
 			this.parentIndex = parentIndex;
 		}
 	}
@@ -87,20 +106,26 @@ public class CherryPickOperation implements IEGitOperation {
 			@Override
 			public void run(IProgressMonitor pm) throws CoreException {
 				SubMonitor progress = SubMonitor.convert(pm, 2);
+				if (commits.length == 1) {
+					progress.subTask(MessageFormat.format(
+							CoreText.CherryPickOperation_cherryPicking,
+							commits[0].name()));
+				} else {
+					progress.subTask(
+							CoreText.CherryPickOperation_cherryPickingMultipleCommits);
+				}
 
-				progress.subTask(MessageFormat.format(
-						CoreText.CherryPickOperation_cherryPicking,
-						commit.name()));
 				try (Git git = new Git(repo)) {
-					CherryPickCommand command = git.cherryPick()
-							.include(commit.getId());
+					CherryPickCommand command = git.cherryPick();
+					for (RevCommit commit : commits) {
+						command.include(commit.getId());
+					}
 					MergeStrategy strategy = MergeStrategies
 							.getPreferredMergeStrategy();
 					if (strategy != null) {
 						command.setStrategy(strategy);
 					}
-					if (parentIndex >= 0
-							&& parentIndex < commit.getParentCount()) {
+					if (parentIndex >= 0) {
 						command.setMainlineParentNumber(parentIndex + 1);
 					}
 					result = command.call();
