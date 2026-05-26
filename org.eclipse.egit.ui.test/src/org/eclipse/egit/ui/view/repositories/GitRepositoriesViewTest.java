@@ -276,13 +276,13 @@ public class GitRepositoriesViewTest extends GitRepositoriesViewTestBase {
 		SWTBotTree tree = getOrOpenView().bot().tree();
 		SWTBotTreeItem item = myRepoViewUtil.getRootItem(tree, repositoryFile);
 		item.select();
+		assertClickOpens(tree, UIText.CommitDialog_CommitChanges,
+				myUtil.getPluginLocalizedValue("RepoViewCommit.label"));
 		assertClickOpens(tree,
-				myUtil.getPluginLocalizedValue("RepoViewCommit.label"),
-				UIText.CommitDialog_CommitChanges);
-		assertClickOpens(tree,
-				myUtil.getPluginLocalizedValue("RepoViewImportProjects.label"),
 				NLS.bind(UIText.GitCreateProjectViaWizardWizard_WizardTitle,
-						repositoryFile));
+						repositoryFile),
+				myUtil.getPluginLocalizedValue("RepoViewProjectsMenu.label"),
+				myUtil.getPluginLocalizedValue("RepoViewImportProjects.label"));
 		Activator.getDefault().getPreferenceStore()
 				.setValue(UIPreferences.ALWAYS_USE_STAGING_VIEW, true);
 	}
@@ -322,6 +322,7 @@ public class GitRepositoriesViewTest extends GitRepositoriesViewTestBase {
 		// start wizard from root item
 		item.select();
 		ContextMenuHelper.clickContextMenu(tree,
+				myUtil.getPluginLocalizedValue("RepoViewProjectsMenu.label"),
 				myUtil.getPluginLocalizedValue("ImportProjectsCommand"));
 		SWTBotShell shell = bot.shell(wizardTitle);
 		bot.radio(UIText.GitSelectWizardPage_ImportExistingButton).click();
@@ -340,6 +341,7 @@ public class GitRepositoriesViewTest extends GitRepositoriesViewTestBase {
 				myRepoViewUtil.getWorkdirItem(tree, repositoryFile))
 				.getNode(Constants.DOT_GIT).select();
 		ContextMenuHelper.clickContextMenu(tree,
+				myUtil.getPluginLocalizedValue("RepoViewProjectsMenu.label"),
 				myUtil.getPluginLocalizedValue("ImportProjectsCommand"));
 		shell = bot.shell(wizardTitle);
 		selected = shell.bot().tree().selection();
@@ -411,6 +413,7 @@ public class GitRepositoriesViewTest extends GitRepositoriesViewTestBase {
 				myRepoViewUtil.getWorkdirItem(tree, repositoryFile))
 				.getNode(PROJ2).select();
 		ContextMenuHelper.clickContextMenu(tree,
+				myUtil.getPluginLocalizedValue("RepoViewProjectsMenu.label"),
 				myUtil.getPluginLocalizedValue("ImportProjectsCommand"));
 		SWTBotShell shell = bot.shell(wizardTitle);
 		shell = bot.shell(wizardTitle);
@@ -479,6 +482,7 @@ public class GitRepositoriesViewTest extends GitRepositoriesViewTestBase {
 				myRepoViewUtil.getWorkdirItem(tree, repositoryFile))
 				.getNode(PROJ1).select();
 		ContextMenuHelper.clickContextMenu(tree,
+				myUtil.getPluginLocalizedValue("RepoViewProjectsMenu.label"),
 				myUtil.getPluginLocalizedValue("ImportProjectsCommand"));
 		SWTBotShell shell = bot.shell(wizardTitle);
 		shell = bot.shell(wizardTitle);

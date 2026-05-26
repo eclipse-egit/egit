@@ -616,7 +616,8 @@ public abstract class LocalRepositoryTestCase extends EGitTestCase {
 		TestUtil.waitForJobs(50, 5000);
 	}
 
-	protected void assertClickOpens(SWTBotTree tree, String menu, String window) {
+	protected void assertClickOpens(SWTBotTree tree, String window,
+			String... menu) {
 		ContextMenuHelper.clickContextMenu(tree, menu);
 		SWTBotShell shell = bot.shell(window);
 		shell.activate();
