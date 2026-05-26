@@ -2895,15 +2895,19 @@
                class="org.eclipse.egit.ui.internal.commit.command.CherryPickHandler">
          </class>
          <activeWhen>
-            <and>
-               <count value="1" />
-               <iterate>
-                  <adapt type="org.eclipse.egit.core.internal.IRepositoryCommit">
-                     <test property="Git.isStash" value="false" />
-                     <test property="Git.isSafe" />
-                  </adapt>
-               </iterate>
-            </and>
+              <iterate
+                    ifEmpty="false">
+                 <adapt
+                       type="org.eclipse.egit.core.internal.IRepositoryCommit">
+                         <test
+                           property="Git.isStash"
+                           value="false">
+                     </test>
+                     <test
+                           property="Git.isSafe">
+                     </test>
+                 </adapt>
+              </iterate>
          </activeWhen>
       </handler>
       <handler

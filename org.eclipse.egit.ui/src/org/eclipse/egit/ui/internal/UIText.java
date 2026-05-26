@@ -1414,6 +1414,18 @@ public class UIText extends NLS {
 	public static String CherryPickHandler_cherryPickButtonLabel;
 
 	/** */
+	public static String CherryPickHandler_upButtonLabel;
+
+	/** */
+	public static String CherryPickHandler_downButtonLabel;
+
+	/** */
+	public static String CherryPickHandler_CherryPickingMultipleMergeCommitsNotSupportedTitle;
+
+	/** */
+	public static String CherryPickHandler_CherryPickingMultipleMergeCommitsNotSupportedMessage;
+
+	/** */
 	public static String CherryPickOperation_InternalError;
 
 	/** */
