@@ -15,7 +15,7 @@ import java.io.InputStream;
 import java.text.MessageFormat;
 import java.util.stream.Collectors;
 
-import org.eclipse.egit.core.Activator;
+import org.eclipse.core.runtime.ILog;
 import org.eclipse.egit.core.internal.CoreText;
 import org.eclipse.egit.core.internal.trace.GitTraceLocation;
 import org.eclipse.jgit.api.errors.CanceledException;
@@ -123,7 +123,8 @@ class ExternalProcessRunner {
 				return new String(b.toByteArray(4000),
 						SystemReader.getInstance().getDefaultCharset());
 			} catch (IOException e) {
-				Activator.logWarning(CoreText.ExternalGpgSigner_bufferError, e);
+				ILog.of(ExternalProcessRunner.class)
+						.warn(CoreText.ExternalGpgSigner_bufferError, e);
 			}
 		}
 		return ""; //$NON-NLS-1$

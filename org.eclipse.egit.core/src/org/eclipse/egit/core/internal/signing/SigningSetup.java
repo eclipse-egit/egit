@@ -12,6 +12,7 @@ package org.eclipse.egit.core.internal.signing;
 
 import java.text.MessageFormat;
 
+import org.eclipse.core.runtime.ILog;
 import org.eclipse.core.runtime.Platform;
 import org.eclipse.egit.core.Activator;
 import org.eclipse.egit.core.GitCorePreferences;
@@ -108,9 +109,8 @@ public final class SigningSetup {
 				}
 			}
 		}
-		Activator.logWarning(
-				MessageFormat.format(CoreText.GpgSetup_signerUnknown, pref),
-				null);
+		ILog.of(SigningSetup.class).warn(
+				MessageFormat.format(CoreText.GpgSetup_signerUnknown, pref));
 		return Signer.BC;
 	}
 }
