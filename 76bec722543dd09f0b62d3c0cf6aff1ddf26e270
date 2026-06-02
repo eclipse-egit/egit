@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "612780f9_8494f55a",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1021966
+      },
+      "writtenOn": "2026-06-02T13:09:59Z",
+      "side": 1,
+      "message": "Matthias is currently building the release. Let\u0027s wait until that\u0027s done and master branch builds a 7.8.0-SNAPSHOT, then rebase and finally merge this.",
+      "revId": "76bec722543dd09f0b62d3c0cf6aff1ddf26e270",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735"
+    }
+  ]
+}

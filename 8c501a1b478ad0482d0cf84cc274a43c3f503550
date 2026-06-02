@@ -50,6 +50,30 @@
     {
       "unresolved": false,
       "key": {
+        "uuid": "11e593b7_6d739328",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1021966
+      },
+      "writtenOn": "2026-06-02T13:09:59Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d69735fb_676a307a",
+      "range": {
+        "startLine": 12,
+        "startChar": 15,
+        "endLine": 13,
+        "endChar": 9
+      },
+      "revId": "8c501a1b478ad0482d0cf84cc274a43c3f503550",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735"
+    },
+    {
+      "unresolved": false,
+      "key": {
         "uuid": "ca4bcd63_9106265f",
         "filename": "/PATCHSET_LEVEL",
         "patchSetId": 1
@@ -131,6 +155,24 @@
       "side": 1,
       "message": "ok",
       "parentUuid": "2d795640_32c2895c",
+      "revId": "8c501a1b478ad0482d0cf84cc274a43c3f503550",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "9420eb69_d6e8af80",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/internal/signing/SigningSetup.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 114,
+      "author": {
+        "id": 1021966
+      },
+      "writtenOn": "2026-06-02T13:09:59Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4e739000_b8d236cc",
       "revId": "8c501a1b478ad0482d0cf84cc274a43c3f503550",
       "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735"
     }
