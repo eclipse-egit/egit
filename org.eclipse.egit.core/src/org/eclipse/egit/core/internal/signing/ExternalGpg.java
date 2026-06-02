@@ -21,7 +21,8 @@ import java.text.MessageFormat;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
-import org.eclipse.egit.core.Activator;
+import org.eclipse.core.runtime.ILog;
+import org.eclipse.core.runtime.Status;
 import org.eclipse.egit.core.internal.CoreText;
 import org.eclipse.jgit.api.errors.CanceledException;
 import org.eclipse.jgit.util.FS;
@@ -53,10 +54,10 @@ class ExternalGpg {
 				}
 			}
 		} catch (InvalidPathException e) {
-			Activator.logWarning(
+			ILog.of(ExternalGpg.class).log(Status.warning(
 					MessageFormat.format(CoreText.ExternalGpg_invalidPath,
 							program),
-					e);
+					e));
 		}
 		return program;
 	}
@@ -91,8 +92,8 @@ class ExternalGpg {
 						}
 					}, null);
 				} catch (IOException | CanceledException e) {
-					Activator.logWarning(
-							CoreText.ExternalGpgSigner_cannotSearch, e);
+					ILog.of(ExternalGpg.class).log(Status.warning(
+							CoreText.ExternalGpgSigner_cannotSearch, e));
 				}
 				exe = result[0];
 			}
@@ -132,9 +133,9 @@ class ExternalGpg {
 					return exe.getAbsolutePath();
 				}
 			} catch (SecurityException e) {
-				Activator.logWarning(MessageFormat.format(
+				ILog.of(ExternalGpg.class).log(Status.warning(MessageFormat.format(
 						CoreText.ExternalGpgSigner_skipNotAccessiblePath,
-						exe.getPath()), e);
+						exe.getPath()), e));
 			}
 		}
 		return null;
