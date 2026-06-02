@@ -24,6 +24,30 @@
       "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735"
     },
     {
+      "unresolved": true,
+      "key": {
+        "uuid": "d69735fb_676a307a",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1012795
+      },
+      "writtenOn": "2026-06-02T12:11:29Z",
+      "side": 1,
+      "message": "I removed the comment (I still plan to get rid of it... ;-))",
+      "parentUuid": "80831cee_c2f38eae",
+      "range": {
+        "startLine": 12,
+        "startChar": 15,
+        "endLine": 13,
+        "endChar": 9
+      },
+      "revId": "8c501a1b478ad0482d0cf84cc274a43c3f503550",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735"
+    },
+    {
       "unresolved": false,
       "key": {
         "uuid": "ca4bcd63_9106265f",
@@ -58,6 +82,24 @@
       "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "dcfd083c_dc501631",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1012795
+      },
+      "writtenOn": "2026-06-02T12:11:29Z",
+      "side": 1,
+      "message": "Yes, that is better, I updated the PR.",
+      "parentUuid": "e722d2b9_d58b966d",
+      "revId": "8c501a1b478ad0482d0cf84cc274a43c3f503550",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "2d795640_32c2895c",
@@ -71,6 +113,24 @@
       "writtenOn": "2026-06-02T11:56:13Z",
       "side": 1,
       "message": "Why not\n```\nILog.of(SigningSetup.class).warn(\n    MessageFormat.format(CoreText.GpgSetup_signerUnknown, pref));\n```\nand likewise for all the other changes?",
+      "revId": "8c501a1b478ad0482d0cf84cc274a43c3f503550",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "4e739000_b8d236cc",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/internal/signing/SigningSetup.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 114,
+      "author": {
+        "id": 1012795
+      },
+      "writtenOn": "2026-06-02T12:11:29Z",
+      "side": 1,
+      "message": "ok",
+      "parentUuid": "2d795640_32c2895c",
       "revId": "8c501a1b478ad0482d0cf84cc274a43c3f503550",
       "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735"
     }
