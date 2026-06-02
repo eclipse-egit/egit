@@ -27,7 +27,7 @@ import org.bouncycastle.openpgp.PGPSignature;
 import org.bouncycastle.openpgp.PGPSignatureList;
 import org.bouncycastle.openpgp.PGPUtil;
 import org.bouncycastle.openpgp.bc.BcPGPObjectFactory;
-import org.eclipse.egit.core.Activator;
+import org.eclipse.core.runtime.ILog;
 import org.eclipse.egit.core.internal.CoreText;
 import org.eclipse.jgit.api.errors.CanceledException;
 import org.eclipse.jgit.api.errors.UnsupportedSigningFormatException;
@@ -147,14 +147,14 @@ public class ExternalGpgSigner implements Signer {
 			}, null);
 			if (!result[0]) {
 				if (!StringUtils.isEmptyOrNull(signingKey)) {
-					Activator.logWarning(MessageFormat.format(
+					ILog.of(getClass()).warn(MessageFormat.format(
 							CoreText.ExternalGpgSigner_noKeyFound,
-							signingKey), null);
+							signingKey));
 				}
 			}
 			return result[0];
 		} catch (IOException e) {
-			Activator.logError(e.getLocalizedMessage(), e);
+			ILog.of(getClass()).error(e.getLocalizedMessage(), e);
 			return false;
 		}
 	}
@@ -362,8 +362,8 @@ public class ExternalGpgSigner implements Signer {
 			}
 		} catch (SecurityException | UnsupportedOperationException
 				| IllegalArgumentException e) {
-			Activator.logWarning(CoreText.ExternalGpgSigner_environmentError,
-					e);
+			ILog.of(getClass()).warn(
+					CoreText.ExternalGpgSigner_environmentError, e);
 		}
 	}
 
