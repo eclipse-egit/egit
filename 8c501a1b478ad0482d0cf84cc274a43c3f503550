@@ -1,6 +1,29 @@
 {
   "comments": [
     {
+      "unresolved": true,
+      "key": {
+        "uuid": "80831cee_c2f38eae",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1021966
+      },
+      "writtenOn": "2026-06-02T11:56:13Z",
+      "side": 1,
+      "message": "Be careful. The Activator does a few things that are absolutely necessary to do at bundle start. Most of the EGit startup has already been moved to declarative OSGi services long ago, but AFAIK what remains in Activator.start() needs to stay there.",
+      "range": {
+        "startLine": 12,
+        "startChar": 15,
+        "endLine": 13,
+        "endChar": 9
+      },
+      "revId": "8c501a1b478ad0482d0cf84cc274a43c3f503550",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735"
+    },
+    {
       "unresolved": false,
       "key": {
         "uuid": "ca4bcd63_9106265f",
@@ -14,6 +37,40 @@
       "writtenOn": "2026-06-02T11:29:14Z",
       "side": 1,
       "message": "Any concerns here? Otherwise I would do the rest of the log calls in one change.",
+      "revId": "8c501a1b478ad0482d0cf84cc274a43c3f503550",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "e722d2b9_d58b966d",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1021966
+      },
+      "writtenOn": "2026-06-02T11:56:13Z",
+      "side": 1,
+      "message": "No concern, but why create the `Status` instead of letting `ILog` do it?",
+      "revId": "8c501a1b478ad0482d0cf84cc274a43c3f503550",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "2d795640_32c2895c",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/internal/signing/SigningSetup.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 114,
+      "author": {
+        "id": 1021966
+      },
+      "writtenOn": "2026-06-02T11:56:13Z",
+      "side": 1,
+      "message": "Why not\n```\nILog.of(SigningSetup.class).warn(\n    MessageFormat.format(CoreText.GpgSetup_signerUnknown, pref));\n```\nand likewise for all the other changes?",
       "revId": "8c501a1b478ad0482d0cf84cc274a43c3f503550",
       "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735"
     }
