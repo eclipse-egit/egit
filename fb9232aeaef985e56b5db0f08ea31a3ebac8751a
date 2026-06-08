@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "1fb04dd8_e18c62ab",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1012795
+      },
+      "writtenOn": "2026-06-08T12:45:58Z",
+      "side": 1,
+      "message": "Thanks, looks promissing. Feedback:\n\nURISyntaxException \n} catch (URISyntaxException e) { //\n} silently drops the exception,better to use ILog to log (I\u0027m in process of migrating the egit.core to ILog.\n\nisDynamic() not overridden while PushMenu does override it, should this also.\n\nAlso, you do no filtering of fetch-incapable remotes, compare this with SimpleFetchActionHandler.",
+      "revId": "fb9232aeaef985e56b5db0f08ea31a3ebac8751a",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735"
+    }
+  ]
+}
