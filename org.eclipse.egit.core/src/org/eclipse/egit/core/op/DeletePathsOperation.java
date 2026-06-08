@@ -24,6 +24,7 @@ import org.eclipse.core.resources.IWorkspace;
 import org.eclipse.core.resources.IWorkspaceRunnable;
 import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.CoreException;
+import org.eclipse.core.runtime.ILog;
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
@@ -97,7 +98,7 @@ public class DeletePathsOperation implements IEGitOperation {
 						String message = MessageFormat
 								.format(CoreText.DeleteResourcesOperation_deleteFailed,
 										file.getPath());
-						Activator.logError(message, e);
+						ILog.of(getClass()).error(message, e);
 					}
 					refreshCachePaths.add(path);
 					// Selectively refreshing an IndexDiffCacheEntry only works for files,

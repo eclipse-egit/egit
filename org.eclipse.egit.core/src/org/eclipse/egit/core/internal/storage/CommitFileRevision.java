@@ -20,6 +20,7 @@ import java.util.Objects;
 
 import org.eclipse.core.resources.IStorage;
 import org.eclipse.core.runtime.CoreException;
+import org.eclipse.core.runtime.ILog;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.egit.core.Activator;
 import org.eclipse.egit.core.GitTag;
@@ -121,7 +122,7 @@ public class CommitFileRevision extends GitFileRevision implements
 				}
 			}
 		} catch (IOException e) {
-			Activator.logError(MessageFormat.format(
+			ILog.of(getClass()).error(MessageFormat.format(
 					CoreText.CommitFileRevision_errorLookingUpTags,
 					db.getDirectory().getAbsolutePath()), e);
 		}

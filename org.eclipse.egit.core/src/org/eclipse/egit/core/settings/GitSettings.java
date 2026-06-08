@@ -18,6 +18,7 @@ import java.util.Collection;
 import java.util.Objects;
 import java.util.stream.Collectors;
 
+import org.eclipse.core.runtime.ILog;
 import org.eclipse.core.runtime.Platform;
 import org.eclipse.egit.core.Activator;
 import org.eclipse.egit.core.GitCorePreferences;
@@ -75,14 +76,12 @@ public final class GitSettings {
 				if (exe.isFile() && exe.canExecute()) {
 					return exe.getAbsoluteFile();
 				} else {
-					Activator.logError(MessageFormat.format(
-							CoreText.GitSettings_gpgNotExecutable, result),
-							null);
+					ILog.of(GitSettings.class).error(MessageFormat.format(
+							CoreText.GitSettings_gpgNotExecutable, result));
 				}
 			} catch (Exception e) {
-				Activator.logError(MessageFormat.format(
-						CoreText.GitSettings_gpgInvalidExecutable, result),
-						e);
+				ILog.of(GitSettings.class).error(MessageFormat.format(
+						CoreText.GitSettings_gpgInvalidExecutable, result), e);
 			}
 		}
 		return null;

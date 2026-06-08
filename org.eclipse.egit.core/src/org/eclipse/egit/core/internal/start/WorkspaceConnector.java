@@ -32,6 +32,7 @@ import org.eclipse.core.resources.IResourceDelta;
 import org.eclipse.core.resources.IResourceDeltaVisitor;
 import org.eclipse.core.resources.IWorkspace;
 import org.eclipse.core.runtime.CoreException;
+import org.eclipse.core.runtime.ILog;
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
@@ -139,7 +140,7 @@ public class WorkspaceConnector {
 			try {
 				hiddenResourcesInitializer.join();
 			} catch (InterruptedException e) {
-				Activator.logError(e.getLocalizedMessage(), e);
+				ILog.of(getClass()).error(e.getLocalizedMessage(), e);
 			}
 			hiddenResourcesInitializer = null;
 		}
@@ -196,7 +197,8 @@ public class WorkspaceConnector {
 			} catch (OperationCanceledException e) {
 				// Ignore
 			} catch (InterruptedException e) {
-				Activator.logError(e.getLocalizedMessage(), e);
+				ILog.of(AutoShareProjects.class)
+						.error(e.getLocalizedMessage(), e);
 			}
 		}
 
@@ -218,7 +220,7 @@ public class WorkspaceConnector {
 					checkProjectsJob.addProjectsToCheck(projectCandidates);
 				}
 			} catch (CoreException e) {
-				Activator.logError(e.getMessage(), e);
+				ILog.of(AutoShareProjects.class).error(e.getMessage(), e);
 				return;
 			}
 		}
@@ -292,7 +294,8 @@ public class WorkspaceConnector {
 					try {
 						visitConnect(project, projects);
 					} catch (CoreException e) {
-						Activator.logError(e.getMessage(), e);
+						ILog.of(CheckProjectsToShare.class)
+								.error(e.getMessage(), e);
 					}
 				}
 			}
@@ -368,7 +371,8 @@ public class WorkspaceConnector {
 			try {
 				RepositoryUtil.INSTANCE.addConfiguredRepository(repositoryDir);
 			} catch (IllegalArgumentException e) {
-				Activator.logError(CoreText.Activator_AutoSharingFailed, e);
+				ILog.of(CheckProjectsToShare.class)
+						.error(CoreText.Activator_AutoSharingFailed, e);
 			}
 		}
 
@@ -417,7 +421,8 @@ public class WorkspaceConnector {
 			} catch (OperationCanceledException e) {
 				// Ignore
 			} catch (InterruptedException e) {
-				Activator.logError(e.getLocalizedMessage(), e);
+				ILog.of(IgnoreDerivedResources.class)
+						.error(e.getLocalizedMessage(), e);
 			}
 		}
 
@@ -461,9 +466,10 @@ public class WorkspaceConnector {
 									toBeIgnored.add(location);
 								}
 							} catch (IOException e) {
-								Activator.logError(MessageFormat.format(
-										CoreText.Activator_ignoreResourceFailed,
-										r.getFullPath()), e);
+								ILog.of(IgnoreDerivedResources.class)
+										.error(MessageFormat.format(
+												CoreText.Activator_ignoreResourceFailed,
+												r.getFullPath()), e);
 							}
 							return false;
 						}
@@ -475,7 +481,7 @@ public class WorkspaceConnector {
 							CoreText.Activator_autoIgnoreDerivedResources,
 							JobFamilies.AUTO_IGNORE);
 			} catch (CoreException e) {
-				Activator.logError(e.getMessage(), e);
+				ILog.of(IgnoreDerivedResources.class).error(e.getMessage(), e);
 				return;
 			}
 		}
@@ -540,7 +546,7 @@ public class WorkspaceConnector {
 			} catch (ClassNotFoundException | IllegalAccessException
 					| IllegalArgumentException | InvocationTargetException
 					| NoSuchMethodException | SecurityException e1) {
-				Activator.logWarning(
+				ILog.of(getClass()).warn(
 						CoreText.Activator_noBuiltinLfsSupportDetected, e1);
 			}
 		}

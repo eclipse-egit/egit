@@ -17,6 +17,7 @@ import java.security.Security;
 
 import org.bouncycastle.jce.provider.BouncyCastleProvider;
 import org.eclipse.core.resources.IWorkspace;
+import org.eclipse.core.runtime.ILog;
 import org.eclipse.core.runtime.Platform;
 import org.eclipse.core.runtime.preferences.IEclipsePreferences;
 import org.eclipse.core.runtime.preferences.IEclipsePreferences.IPreferenceChangeListener;
@@ -68,8 +69,8 @@ public class RepositoryInitializer {
 		try {
 			reconfigureWindowCache(preferencesService);
 		} catch (RuntimeException | ExceptionInInitializerError e) {
-			Activator.logError(CoreText.Activator_ReconfigureWindowCacheError,
-					e);
+			ILog.of(getClass()).error(
+					CoreText.Activator_ReconfigureWindowCacheError, e);
 		}
 		gitCorePreferences = InstanceScope.INSTANCE
 				.getNode(Activator.PLUGIN_ID);

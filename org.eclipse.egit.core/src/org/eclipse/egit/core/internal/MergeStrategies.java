@@ -26,6 +26,7 @@ import org.eclipse.core.runtime.IConfigurationElement;
 import org.eclipse.core.runtime.IExtension;
 import org.eclipse.core.runtime.IExtensionPoint;
 import org.eclipse.core.runtime.IExtensionRegistry;
+import org.eclipse.core.runtime.ILog;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IRegistryEventListener;
 import org.eclipse.core.runtime.IStatus;
@@ -93,9 +94,8 @@ public class MergeStrategies {
 				return result;
 			}
 			if (jobDone) {
-				Activator.logError(MessageFormat.format(
-						CoreText.Activator_invalidPreferredMergeStrategy, key),
-						null);
+				ILog.of(MergeStrategies.class).error(MessageFormat.format(
+						CoreText.Activator_invalidPreferredMergeStrategy, key));
 			}
 		}
 		return null;
@@ -259,8 +259,8 @@ public class MergeStrategies {
 									.remove(strategy.getName()) != null;
 						}
 					} catch (CoreException e) {
-						Activator.logError(CoreText.MergeStrategy_UnloadError,
-								e);
+						ILog.of(MergeStrategyRegistryListener.class)
+								.error(CoreText.MergeStrategy_UnloadError, e);
 					}
 				}
 			}
@@ -297,7 +297,8 @@ public class MergeStrategies {
 						}
 					}
 				} catch (CoreException e) {
-					Activator.logError(CoreText.MergeStrategy_LoadError, e);
+					ILog.of(MergeStrategyRegistryListener.class)
+							.error(CoreText.MergeStrategy_LoadError, e);
 				}
 			}
 			return changed;
@@ -322,26 +323,27 @@ public class MergeStrategies {
 			boolean result = true;
 			if (name == null || name.isEmpty()) {
 				// name is mandatory
-				Activator.logError(
+				ILog.of(MergeStrategyRegistryListener.class).error(
 						MessageFormat.format(CoreText.MergeStrategy_MissingName,
-								strategy.getClass()),
-						null);
+								strategy.getClass()));
 				result = false;
 			} else if (strategies.containsKey(name)) {
 				// Other strategy already registered for this name
-				Activator.logError(MessageFormat.format(
-						CoreText.MergeStrategy_DuplicateName, name,
-						strategies.get(name).getImplementedBy(),
-						strategy.getClass()), null);
+				ILog.of(MergeStrategyRegistryListener.class).error(
+						MessageFormat.format(
+								CoreText.MergeStrategy_DuplicateName, name,
+								strategies.get(name).getImplementedBy(),
+								strategy.getClass()));
 				result = false;
 			} else if (MergeStrategy.get(name) != null
 					&& MergeStrategy.get(name) != strategy) {
 				// The name is reserved by a core JGit strategy, and the
 				// provided instance is not that of JGit
-				Activator.logError(MessageFormat.format(
-						CoreText.MergeStrategy_ReservedName, name,
-						MergeStrategy.get(name).getClass(),
-						strategy.getClass()), null);
+				ILog.of(MergeStrategyRegistryListener.class).error(
+						MessageFormat.format(
+								CoreText.MergeStrategy_ReservedName, name,
+								MergeStrategy.get(name).getClass(),
+								strategy.getClass()));
 				result = false;
 			}
 			return result;

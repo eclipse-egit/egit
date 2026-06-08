@@ -28,10 +28,10 @@ import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.IResource;
 import org.eclipse.core.runtime.CoreException;
+import org.eclipse.core.runtime.ILog;
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.Path;
-import org.eclipse.egit.core.Activator;
 import org.eclipse.egit.core.internal.CoreText;
 import org.eclipse.egit.core.internal.storage.WorkspaceFileRevision;
 import org.eclipse.egit.core.project.RepositoryMapping;
@@ -408,7 +408,7 @@ public class GitResourceVariantTreeSubscriber extends
 				String error = NLS
 						.bind(CoreText.GitResourceVariantTreeSubscriber_CouldNotFindSourceVariant,
 								local.getName());
-				Activator.logError(error, e);
+				ILog.of(getClass()).error(error, e);
 				// fall back to the working tree version
 				return WorkspaceFileRevision.forFile(data.getRepository(),
 						local);

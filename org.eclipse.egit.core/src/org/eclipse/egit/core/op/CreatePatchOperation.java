@@ -36,11 +36,11 @@ import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.Assert;
 import org.eclipse.core.runtime.CoreException;
+import org.eclipse.core.runtime.ILog;
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.Path;
 import org.eclipse.core.runtime.jobs.ISchedulingRule;
-import org.eclipse.egit.core.Activator;
 import org.eclipse.egit.core.EclipseGitProgressTransformer;
 import org.eclipse.egit.core.internal.CompareCoreUtils;
 import org.eclipse.egit.core.internal.CoreText;
@@ -204,7 +204,7 @@ public class CreatePatchOperation implements IEGitOperation {
 			}
 			patchContent = sb.toString();
 		} catch (IOException e) {
-			Activator.logError(
+			ILog.of(getClass()).error(
 					CoreText.CreatePatchOperation_patchFileCouldNotBeWritten,
 					e);
 		}

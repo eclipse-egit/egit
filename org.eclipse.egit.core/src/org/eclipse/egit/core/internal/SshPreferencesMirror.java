@@ -22,11 +22,11 @@ import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
 
+import org.eclipse.core.runtime.ILog;
 import org.eclipse.core.runtime.Platform;
 import org.eclipse.core.runtime.preferences.IEclipsePreferences;
 import org.eclipse.core.runtime.preferences.IEclipsePreferences.IPreferenceChangeListener;
 import org.eclipse.core.runtime.preferences.InstanceScope;
-import org.eclipse.egit.core.Activator;
 import org.eclipse.jgit.annotations.NonNull;
 
 /**
@@ -105,10 +105,9 @@ public class SshPreferencesMirror {
 				sshDirectory = Paths.get(sshDir).toFile();
 				return;
 			} catch (InvalidPathException e) {
-				Activator.logWarning(
+				ILog.of(getClass()).warn(
 						format(CoreText.SshPreferencesMirror_invalidDirectory,
-								sshDir),
-						null);
+								sshDir));
 			}
 		}
 		sshDirectory = null;
@@ -129,10 +128,9 @@ public class SshPreferencesMirror {
 						Paths.get(s);
 						return s;
 					} catch (InvalidPathException e) {
-						Activator.logWarning(
+						ILog.of(getClass()).warn(
 								format(CoreText.SshPreferencesMirror_invalidKeyFile,
-										s),
-								null);
+										s));
 						return null;
 					}
 				}).filter(Objects::nonNull).collect(Collectors.toList());

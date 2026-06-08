@@ -26,6 +26,7 @@ import java.util.function.Supplier;
 
 import org.eclipse.core.net.proxy.IProxyData;
 import org.eclipse.core.net.proxy.IProxyService;
+import org.eclipse.core.runtime.ILog;
 import org.eclipse.core.runtime.Platform;
 import org.eclipse.egit.core.Activator;
 import org.eclipse.egit.core.GitCorePreferences;
@@ -192,9 +193,10 @@ public class EGitSshdSessionFactory extends SshdSessionFactory {
 					if (getSupportedConnectors().stream().anyMatch(d -> preference.equals(d.getIdentityAgent()))) {
 						agentConnection = preference;
 					} else if (!WARNED.getAndSet(true)) {
-						Activator.logWarning(MessageFormat.format(
-								CoreText.EGitSshdSessionFactory_sshUnknownAgentWarning,
-								preference), null);
+						ILog.of(WrappedSshAgentConnectorFactory.class)
+								.warn(MessageFormat.format(
+										CoreText.EGitSshdSessionFactory_sshUnknownAgentWarning,
+										preference));
 					}
 				}
 			}

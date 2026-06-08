@@ -43,6 +43,7 @@ import org.eclipse.core.resources.mapping.ResourceMapping;
 import org.eclipse.core.resources.mapping.ResourceMappingContext;
 import org.eclipse.core.resources.mapping.ResourceTraversal;
 import org.eclipse.core.runtime.CoreException;
+import org.eclipse.core.runtime.ILog;
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
@@ -648,7 +649,7 @@ public class ResourceUtil {
 					mappings.addAll(Arrays.asList(modelMappings));
 				}
 			} catch (CoreException e) {
-				Activator.logError(e.getMessage(), e);
+				ILog.of(ResourceUtil.class).error(e.getMessage(), e);
 			}
 		}
 		return mappings.toArray(new ResourceMapping[0]);
@@ -677,7 +678,7 @@ public class ResourceUtil {
 					} catch (CoreException e) {
 						// Ignore error. Failure to save local history must
 						// not interfere with the operation.
-						Activator.logError(MessageFormat.format(
+						ILog.of(ResourceUtil.class).error(MessageFormat.format(
 								CoreText.ResourceUtil_SaveLocalHistoryFailed,
 								changedResource), e);
 					}
@@ -774,7 +775,7 @@ public class ResourceUtil {
 		try {
 			traversals = mapping.getTraversals(null, null);
 		} catch (CoreException e) {
-			Activator.logError(e.getMessage(), e);
+			ILog.of(ResourceUtil.class).error(e.getMessage(), e);
 			return Collections.emptyList();
 		}
 		if (traversals.length == 0) {

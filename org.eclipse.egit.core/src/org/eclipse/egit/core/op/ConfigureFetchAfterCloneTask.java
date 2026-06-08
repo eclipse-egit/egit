@@ -11,6 +11,7 @@
 package org.eclipse.egit.core.op;
 
 import org.eclipse.core.runtime.CoreException;
+import org.eclipse.core.runtime.ILog;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.egit.core.Activator;
 import org.eclipse.egit.core.internal.CoreText;
@@ -57,7 +58,7 @@ public class ConfigureFetchAfterCloneTask implements PostCloneTask {
 			repository.getConfig().save();
 			git.fetch().setRemote(remoteName).call();
 		} catch (Exception e) {
-			Activator.logError(NLS.bind(
+			ILog.of(getClass()).error(NLS.bind(
 					CoreText.ConfigureFetchAfterCloneTask_couldNotFetch,
 					fetchRefSpec), e);
 			throw new CoreException(Activator.error(e.getMessage(), e));

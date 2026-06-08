@@ -32,6 +32,7 @@ import org.eclipse.core.resources.IWorkspace;
 import org.eclipse.core.resources.IWorkspaceRunnable;
 import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.CoreException;
+import org.eclipse.core.runtime.ILog;
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.SubMonitor;
@@ -170,7 +171,7 @@ public class BranchOperation implements IEGitOperation {
 								CoreText.BranchOperation_checkoutError,
 								target, repo.getDirectory());
 						if (logErrors) {
-							Activator.logError(msg, e);
+							ILog.of(BranchOperation.class).error(msg, e);
 						} else {
 							throw new CoreException(Activator.error(msg, e));
 						}

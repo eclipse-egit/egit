@@ -24,9 +24,9 @@ import java.text.MessageFormat;
 import java.util.Collection;
 import java.util.List;
 
+import org.eclipse.core.runtime.ILog;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.SubMonitor;
-import org.eclipse.egit.core.Activator;
 import org.eclipse.egit.core.EclipseGitProgressTransformer;
 import org.eclipse.egit.core.internal.CoreText;
 import org.eclipse.jgit.api.Git;
@@ -362,7 +362,7 @@ public class PushOperation {
 		String userMessageForUri = NLS.bind(
 				CoreText.PushOperation_ExceptionOccurredDuringPushOnUriMessage,
 				uriString, userMessage);
-		Activator.logError(userMessageForUri, e);
+		ILog.of(getClass()).error(userMessageForUri, e);
 	}
 
 	private URIish getPushURIForErrorHandling() {
@@ -373,7 +373,7 @@ public class PushOperation {
 					.getPushURIs().get(0);
 		} catch (URISyntaxException e) {
 			// should not happen
-			Activator.logError("Reading RemoteConfig failed", e); //$NON-NLS-1$
+			ILog.of(getClass()).error("Reading RemoteConfig failed", e); //$NON-NLS-1$
 			return null;
 		}
 	}

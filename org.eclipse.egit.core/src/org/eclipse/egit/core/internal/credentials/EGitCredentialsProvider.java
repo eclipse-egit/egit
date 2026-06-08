@@ -16,6 +16,7 @@ import java.io.IOException;
 import java.text.MessageFormat;
 import java.util.function.Function;
 
+import org.eclipse.core.runtime.ILog;
 import org.eclipse.egit.core.Activator;
 import org.eclipse.egit.core.credentials.CredentialsUI;
 import org.eclipse.egit.core.credentials.UserPasswordCredentials;
@@ -117,7 +118,7 @@ public class EGitCredentialsProvider extends CredentialsProvider {
 					credentials = Activator.getDefault().getCredentialsStore()
 							.getCredentials(uri);
 				} catch (StorageException e) {
-					Activator.logError(MessageFormat.format(
+					ILog.of(getClass()).error(MessageFormat.format(
 							CoreText.EGitCredentialsProvider_errorReadingCredentials,
 							uri), e);
 					clearCredentials(uri);
@@ -155,7 +156,7 @@ public class EGitCredentialsProvider extends CredentialsProvider {
 		try {
 			Activator.getDefault().getCredentialsStore().clearCredentials(uri);
 		} catch (IOException e) {
-			Activator.logError(MessageFormat.format(
+			ILog.of(getClass()).error(MessageFormat.format(
 					CoreText.EGitCredentialsProvider_errorClearingCredentials,
 					uri), e);
 		}
@@ -169,14 +170,13 @@ public class EGitCredentialsProvider extends CredentialsProvider {
 				.getServiceReference(CredentialsUI.class);
 		CredentialsUI ui = context.getService(reference);
 		if (ui == null) {
-			Activator.logError(
-					CoreText.EGitCredentialsProvider_noCredentialsProviderUI,
-					null);
+			ILog.of(getClass()).error(
+					CoreText.EGitCredentialsProvider_noCredentialsProviderUI);
 		} else {
 			try {
 				return getter.apply(ui);
 			} catch (Exception e) {
-				Activator.logError(MessageFormat.format(
+				ILog.of(getClass()).error(MessageFormat.format(
 						CoreText.EGitCredentialsProvider_credentialsProviderUIfailed,
 						ui.getClass().getName()), e);
 			} finally {

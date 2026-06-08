@@ -29,6 +29,7 @@ import org.eclipse.core.resources.team.IResourceTree;
 import org.eclipse.core.runtime.Assert;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IPath;
+import org.eclipse.core.runtime.ILog;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Path;
@@ -129,9 +130,9 @@ class GitMoveDeleteHook implements IMoveDeleteHook {
 			// will have to stage the deletion later on _if_ this was truly
 			// needed, which won't happen for calls triggered by merge
 			// operations from the merge strategies.
-			Activator.logWarning(MessageFormat.format(
+			ILog.of(getClass()).warn(MessageFormat.format(
 					CoreText.MoveDeleteHook_cannotAutoStageDeletion,
-					file.getLocation()), null);
+					file.getLocation()));
 			return FINISH_FOR_ME;
 		} catch (IOException e) {
 			tree.failed(new Status(IStatus.ERROR, Activator.PLUGIN_ID, 0,

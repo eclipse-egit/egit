@@ -22,8 +22,8 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
+import org.eclipse.core.runtime.ILog;
 import org.eclipse.core.runtime.preferences.IEclipsePreferences;
-import org.eclipse.egit.core.Activator;
 import org.eclipse.egit.core.GitCorePreferences;
 import org.eclipse.egit.core.internal.CoreText;
 import org.eclipse.jgit.lib.Config;
@@ -437,7 +437,7 @@ public final class GitHosts {
 				Pattern.compile(hostPattern);
 				consumer.accept(parts[0], hostPattern);
 			} catch (IllegalArgumentException e) {
-				Activator.logError(MessageFormat.format(
+				ILog.of(GitHosts.class).error(MessageFormat.format(
 						CoreText.GitHosts_invalidPreference,
 						GitCorePreferences.core_gitServers, line), e);
 			}

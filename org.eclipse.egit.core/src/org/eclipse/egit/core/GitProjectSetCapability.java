@@ -25,6 +25,7 @@ import org.eclipse.core.resources.IWorkspace;
 import org.eclipse.core.resources.IWorkspaceRunnable;
 import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.CoreException;
+import org.eclipse.core.runtime.ILog;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.egit.core.internal.CoreText;
 import org.eclipse.egit.core.internal.GitURI;
@@ -154,7 +155,7 @@ public final class GitProjectSetCapability extends ProjectSetCapability {
 			return asReference(gitURI.getRepository().toString(),
 					gitURI.getTag(), gitURI.getPath().toString());
 		} catch (IllegalArgumentException e) {
-			Activator.logError(e.getMessage(), e);
+			ILog.of(getClass()).error(e.getMessage(), e);
 			// we must not fail but return null on invalid or unknown URI's.
 			return null;
 		}

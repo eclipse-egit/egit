@@ -21,7 +21,7 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.eclipse.egit.core.Activator;
+import org.eclipse.core.runtime.ILog;
 import org.eclipse.egit.core.synchronize.GitCommitsModelCache.Change;
 import org.eclipse.jgit.dircache.DirCacheIterator;
 import org.eclipse.jgit.lib.AbbreviatedObjectId;
@@ -88,7 +88,7 @@ public class StagedChangeCache {
 
 			return result;
 		} catch (IOException e) {
-			Activator.logError(e.getMessage(), e);
+			ILog.of(StagedChangeCache.class).error(e.getMessage(), e);
 			return new HashMap<>(0);
 		}
 	}

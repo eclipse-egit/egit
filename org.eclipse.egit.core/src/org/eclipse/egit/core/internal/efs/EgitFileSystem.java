@@ -22,8 +22,8 @@ import java.util.regex.Pattern;
 import org.eclipse.core.filesystem.EFS;
 import org.eclipse.core.filesystem.IFileStore;
 import org.eclipse.core.filesystem.provider.FileSystem;
+import org.eclipse.core.runtime.ILog;
 import org.eclipse.core.runtime.IPath;
-import org.eclipse.egit.core.Activator;
 import org.eclipse.egit.core.RepositoryCache;
 import org.eclipse.jgit.lib.Repository;
 import org.eclipse.jgit.util.StringUtils;
@@ -106,7 +106,7 @@ public class EgitFileSystem extends FileSystem {
 									parsedUri.getKind()));
 				}
 			} catch (IOException | URISyntaxException e) {
-				Activator.logError(e.getLocalizedMessage(), e);
+				ILog.of(getClass()).error(e.getLocalizedMessage(), e);
 			}
 		}
 		return EFS.getNullFileSystem().getStore(uri);

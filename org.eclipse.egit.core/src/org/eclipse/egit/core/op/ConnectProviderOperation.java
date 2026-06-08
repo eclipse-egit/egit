@@ -33,6 +33,7 @@ import org.eclipse.core.resources.IResourceProxy;
 import org.eclipse.core.resources.IResourceProxyVisitor;
 import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.CoreException;
+import org.eclipse.core.runtime.ILog;
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.MultiStatus;
@@ -182,7 +183,7 @@ public class ConnectProviderOperation implements IEGitOperation {
 						cacheEntry.refresh();
 					}
 				} catch (IOException e) {
-					Activator.logError(e.getMessage(), e);
+					ILog.of(getClass()).error(e.getMessage(), e);
 				}
 			}
 		} else {
@@ -227,7 +228,7 @@ public class ConnectProviderOperation implements IEGitOperation {
 				}
 			}, IResource.NONE);
 		} catch (CoreException e) {
-			Activator.logError(e.getMessage(), e);
+			ILog.of(getClass()).error(e.getMessage(), e);
 		}
 		GitProjectData.update(gitDirs, progress.newChild(1));
 	}
@@ -276,7 +277,7 @@ public class ConnectProviderOperation implements IEGitOperation {
 						JobFamilies.AUTO_IGNORE);
 			}
 		} catch (IOException e) {
-			Activator.logError(e.getMessage(), e);
+			ILog.of(ConnectProviderOperation.class).error(e.getMessage(), e);
 		}
 	}
 
@@ -292,7 +293,7 @@ public class ConnectProviderOperation implements IEGitOperation {
 					ignoredPaths.add(metaData);
 				}
 			} catch (IOException e) {
-				Activator.logError(e.getMessage(), e);
+				ILog.of(ConnectProviderOperation.class).error(e.getMessage(), e);
 			}
 		}
 		return ignoredPaths;

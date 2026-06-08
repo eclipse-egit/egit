@@ -28,7 +28,7 @@ import java.util.concurrent.CopyOnWriteArrayList;
 
 import org.eclipse.core.runtime.Assert;
 import org.eclipse.core.runtime.IAdaptable;
-import org.eclipse.egit.core.Activator;
+import org.eclipse.core.runtime.ILog;
 import org.eclipse.egit.core.RepositoryCache;
 import org.eclipse.egit.core.internal.CoreText;
 import org.eclipse.egit.core.internal.IRepositoryCommit;
@@ -435,7 +435,8 @@ public class RebaseInteractivePlan implements IndexDiffChangedListener,
 		try {
 			repository.writeRebaseTodoFile(REBASE_TODO, todoLines, false);
 		} catch (IOException e) {
-			Activator.logError(CoreText.RebaseInteractivePlan_WriteRebaseTodoFailed, e);
+			ILog.of(getClass()).error(
+					CoreText.RebaseInteractivePlan_WriteRebaseTodoFailed, e);
 			throw new RuntimeException(e);
 		}
 		return true;
