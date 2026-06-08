@@ -18,7 +18,7 @@ import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.IResource;
 import org.eclipse.core.resources.mapping.RemoteResourceMappingContext;
 import org.eclipse.core.runtime.CoreException;
-import org.eclipse.egit.core.Activator;
+import org.eclipse.core.runtime.ILog;
 import org.eclipse.egit.core.internal.CoreText;
 import org.eclipse.egit.core.internal.util.ProjectUtil;
 import org.eclipse.egit.core.internal.util.ResourceUtil;
@@ -115,7 +115,7 @@ public class GitLazyResourceVariantTreeSubscriber
 			try {
 				return getSyncInfo(local, base, remote, gsd.getRepository());
 			} catch (TeamException e) {
-				Activator.logError(e.getMessage(), e);
+				ILog.of(getClass()).error(e.getMessage(), e);
 			}
 		}
 		return null;
@@ -135,7 +135,7 @@ public class GitLazyResourceVariantTreeSubscriber
 						.getValidOpenProjects(data.getRepository())));
 			}
 		} catch (CoreException e) {
-			Activator.logError(e.getMessage(), e);
+			ILog.of(getClass()).error(e.getMessage(), e);
 		}
 		return projects.toArray(new IResource[0]);
 	}

@@ -11,6 +11,7 @@
 package org.eclipse.egit.core.internal.start;
 
 import org.eclipse.core.resources.IWorkspace;
+import org.eclipse.core.runtime.ILog;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Status;
@@ -104,7 +105,7 @@ public class PreferencesMigrator extends Job {
 				corePrefs.flush();
 				uiPrefs.flush();
 			} catch (BackingStoreException e) {
-				Activator.logError(e.getMessage(), e);
+				ILog.of(getClass()).error(e.getMessage(), e);
 			}
 		}
 	}

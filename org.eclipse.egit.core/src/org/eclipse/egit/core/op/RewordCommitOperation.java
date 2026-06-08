@@ -25,10 +25,10 @@ import java.util.LinkedList;
 import java.util.Map;
 
 import org.eclipse.core.runtime.CoreException;
+import org.eclipse.core.runtime.ILog;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.SubMonitor;
 import org.eclipse.core.runtime.jobs.ISchedulingRule;
-import org.eclipse.egit.core.Activator;
 import org.eclipse.egit.core.internal.CoreText;
 import org.eclipse.egit.core.internal.Utils;
 import org.eclipse.egit.core.internal.job.RuleUtil;
@@ -300,7 +300,7 @@ public class RewordCommitOperation implements IEGitOperation {
 						throw new JGitInternalException(e.getMessage(), e);
 					}
 				}
-				Activator.logWarning(MessageFormat.format(
+				ILog.of(getClass()).warn(MessageFormat.format(
 						CoreText.RewordCommitOperation_cannotSign,
 						Utils.getShortObjectId(commit),
 						Utils.getShortObjectId(headId),

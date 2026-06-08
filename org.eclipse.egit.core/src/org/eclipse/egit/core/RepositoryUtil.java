@@ -28,6 +28,7 @@ import java.util.StringTokenizer;
 
 import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.CoreException;
+import org.eclipse.core.runtime.ILog;
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.Path;
 import org.eclipse.core.runtime.Platform;
@@ -211,7 +212,7 @@ public enum RepositoryUtil {
 			try {
 				return reflogReader.getReverseEntries();
 			} catch (RuntimeException e) {
-				Activator.logError(MessageFormat.format(
+				ILog.of(RepositoryUtil.class).error(MessageFormat.format(
 						CoreText.RepositoryUtil_ReflogCorrupted, refName,
 						repository.getDirectory()), e);
 			}
@@ -608,7 +609,7 @@ public enum RepositoryUtil {
 		try {
 			prefs.flush();
 		} catch (BackingStoreException e) {
-			Activator.logError(e.getMessage(), e);
+			ILog.of(getClass()).error(e.getMessage(), e);
 		}
 	}
 
@@ -866,7 +867,7 @@ public enum RepositoryUtil {
 		try {
 			return ObjectId.isId(repository.getFullBranch());
 		} catch (IOException e) {
-			Activator.logError(e.getMessage(), e);
+			ILog.of(RepositoryUtil.class).error(e.getMessage(), e);
 		}
 		return false;
 	}

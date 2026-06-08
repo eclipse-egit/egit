@@ -27,6 +27,7 @@ import org.eclipse.core.resources.IWorkspace;
 import org.eclipse.core.resources.IWorkspaceRunnable;
 import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.CoreException;
+import org.eclipse.core.runtime.ILog;
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
@@ -215,7 +216,7 @@ public class DiscardChangesOperation implements IEGitOperation {
 				discardChanges(repository, paths, progress.newChild(1));
 			} catch (GitAPIException e) {
 				errorOccurred = true;
-				Activator.logError(
+				ILog.of(getClass()).error(
 						CoreText.DiscardChangesOperation_discardFailed, e);
 			}
 
@@ -224,7 +225,7 @@ public class DiscardChangesOperation implements IEGitOperation {
 						progress.newChild(1));
 			} catch (CoreException e) {
 				errorOccurred = true;
-				Activator.logError(
+				ILog.of(getClass()).error(
 						CoreText.DiscardChangesOperation_refreshFailed, e);
 			}
 		}

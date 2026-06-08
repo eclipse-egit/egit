@@ -18,6 +18,7 @@ import java.net.ProxySelector;
 import java.text.MessageFormat;
 
 import org.eclipse.core.resources.IWorkspace;
+import org.eclipse.core.runtime.ILog;
 import org.eclipse.core.runtime.preferences.IEclipsePreferences.IPreferenceChangeListener;
 import org.eclipse.core.runtime.preferences.IPreferencesService;
 import org.eclipse.core.runtime.preferences.InstanceScope;
@@ -95,9 +96,8 @@ public class TransportConfigurator {
 					.setConnectionFactory(new HttpClientConnectionFactory());
 		} else {
 			if (!HttpClientType.JDK.name().equalsIgnoreCase(httpClient)) {
-				Activator.logWarning(MessageFormat.format(
-						CoreText.Activator_HttpClientUnknown, httpClient),
-						null);
+				ILog.of(getClass()).warn(MessageFormat.format(
+						CoreText.Activator_HttpClientUnknown, httpClient));
 			}
 			HttpTransport.setConnectionFactory(new JDKHttpConnectionFactory());
 		}

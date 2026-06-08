@@ -43,6 +43,7 @@ import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.Adapters;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IPath;
+import org.eclipse.core.runtime.ILog;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.QualifiedName;
@@ -90,7 +91,7 @@ public class GitProjectData {
 				try {
 					delete((IProject) event.getResource());
 				} catch (IOException e) {
-					Activator.logError(e.getMessage(), e);
+					ILog.of(GitProjectData.class).error(e.getMessage(), e);
 				}
 				break;
 			case IResourceChangeEvent.POST_CHANGE:
@@ -219,7 +220,8 @@ public class GitProjectData {
 			}
 			return d;
 		} catch (IOException err) {
-			Activator.logError(CoreText.GitProjectData_missing, err);
+			ILog.of(GitProjectData.class).error(CoreText.GitProjectData_missing,
+					err);
 			return null;
 		}
 	}
@@ -318,13 +320,13 @@ public class GitProjectData {
 				}
 			});
 		} catch (CoreException e) {
-			Activator.logError(e.getMessage(), e);
+			ILog.of(GitProjectData.class).error(e.getMessage(), e);
 		} finally {
 			for (GitProjectData data : modified) {
 				try {
 					data.store();
 				} catch (CoreException e) {
-					Activator.logError(e.getMessage(), e);
+					ILog.of(GitProjectData.class).error(e.getMessage(), e);
 				}
 			}
 		}
@@ -360,7 +362,7 @@ public class GitProjectData {
 				try {
 					data.store();
 				} catch (CoreException e) {
-					Activator.logError(e.getMessage(), e);
+					ILog.of(GitProjectData.class).error(e.getMessage(), e);
 				}
 			}
 		}
@@ -391,8 +393,9 @@ public class GitProjectData {
 		try {
 			m = (RepositoryMapping) parent.getSessionProperty(MAPPING_KEY);
 		} catch (CoreException err) {
-			Activator.logError(CoreText.GitProjectData_failedFindingRepoMapping,
-					err);
+			ILog.of(GitProjectData.class)
+					.error(CoreText.GitProjectData_failedFindingRepoMapping,
+							err);
 			return;
 		}
 		if (m != null) {
@@ -411,7 +414,7 @@ public class GitProjectData {
 				}
 			}
 		} catch (IOException e) {
-			Activator.logError(e.getMessage(), e);
+			ILog.of(GitProjectData.class).error(e.getMessage(), e);
 		}
 	}
 
@@ -444,7 +447,7 @@ public class GitProjectData {
 					// Team private members are re-set in
 					// DisconnectProviderOperation
 				} catch (CoreException e) {
-					Activator.logWarning(MessageFormat.format(
+					ILog.of(GitProjectData.class).warn(MessageFormat.format(
 							CoreText.GitProjectData_failedToUnmapRepoMapping,
 							c.getFullPath()), e);
 				}
@@ -570,7 +573,7 @@ public class GitProjectData {
 					return m;
 			}
 		} catch (CoreException err) {
-			Activator.logError(
+			ILog.of(getClass()).error(
 					CoreText.GitProjectData_failedFindingRepoMapping, err);
 		}
 		return null;
@@ -663,7 +666,8 @@ public class GitProjectData {
 				store();
 			} catch (CoreException e) {
 				IStatus status = e.getStatus();
-				Activator.logError(status.getMessage(), status.getException());
+				ILog.of(getClass()).error(status.getMessage(),
+						status.getException());
 			}
 		}
 		return this;
@@ -730,7 +734,7 @@ public class GitProjectData {
 		try {
 			c.setSessionProperty(MAPPING_KEY, m);
 		} catch (CoreException err) {
-			Activator.logError(
+			ILog.of(getClass()).error(
 					CoreText.GitProjectData_failedToCacheRepoMapping, err);
 		}
 
@@ -746,7 +750,7 @@ public class GitProjectData {
 
 	private void logAndUnmapGoneMappedResource(final RepositoryMapping m,
 			final IContainer c) {
-		Activator.logError(MessageFormat.format(
+		ILog.of(getClass()).error(MessageFormat.format(
 				CoreText.GitProjectData_mappedResourceGone, m.toString()),
 				new FileNotFoundException(m.getContainerPath().toString()));
 		m.clear();
@@ -757,7 +761,7 @@ public class GitProjectData {
 			try {
 				c.setSessionProperty(MAPPING_KEY, null);
 			} catch (CoreException e) {
-				Activator.logWarning(MessageFormat.format(
+				ILog.of(getClass()).warn(MessageFormat.format(
 						CoreText.GitProjectData_failedToUnmapRepoMapping,
 						c.getFullPath()), e);
 			}
@@ -769,7 +773,7 @@ public class GitProjectData {
 		try {
 			c.setTeamPrivateMember(true);
 		} catch (CoreException e) {
-			Activator.logError(MessageFormat.format(
+			ILog.of(getClass()).error(MessageFormat.format(
 					CoreText.GitProjectData_FailedToMarkTeamPrivate,
 					c.getFullPath()), e);
 		}

@@ -18,7 +18,7 @@ import java.util.List;
 import java.util.Locale;
 import java.util.concurrent.TimeUnit;
 
-import org.eclipse.egit.core.Activator;
+import org.eclipse.core.runtime.ILog;
 import org.eclipse.jgit.annotations.NonNull;
 import org.eclipse.jgit.lib.Config;
 import org.eclipse.jgit.lib.DefaultTypedConfigGetter;
@@ -152,7 +152,8 @@ public class ReportingTypedConfigGetter extends DefaultTypedConfigGetter {
 			File file = ((FileBasedConfig) config).getFile();
 			location = file.getAbsolutePath();
 		}
-		Activator.logWarning(msg(location, entry, defaultValue), cause);
+		ILog.of(ReportingTypedConfigGetter.class)
+				.warn(msg(location, entry, defaultValue), cause);
 	}
 
 	private static String msg(String location, String entry,

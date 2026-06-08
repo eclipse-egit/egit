@@ -12,9 +12,9 @@ package org.eclipse.egit.core.synchronize;
 
 import org.eclipse.core.resources.IStorage;
 import org.eclipse.core.runtime.CoreException;
+import org.eclipse.core.runtime.ILog;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.SubMonitor;
-import org.eclipse.egit.core.Activator;
 import org.eclipse.egit.core.internal.storage.CommitBlobStorage;
 import org.eclipse.jgit.dircache.DirCacheCheckout.CheckoutMetadata;
 import org.eclipse.jgit.lib.ObjectId;
@@ -44,7 +44,7 @@ class GitRemoteFile extends GitRemoteResource {
 		try {
 			setContents(content.getContents(), progress.newChild(1));
 		} catch (CoreException e) {
-			Activator.logError("", e); //$NON-NLS-1$
+			ILog.of(getClass()).error("", e); //$NON-NLS-1$
 		}
 	}
 

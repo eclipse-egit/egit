@@ -18,9 +18,9 @@ import static org.eclipse.team.core.ProjectSetCapability.SCHEME_SCM;
 import java.net.URI;
 import java.net.URISyntaxException;
 
+import org.eclipse.core.runtime.ILog;
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.Path;
-import org.eclipse.egit.core.Activator;
 import org.eclipse.jgit.lib.Constants;
 import org.eclipse.jgit.transport.URIish;
 import org.eclipse.osgi.util.NLS;
@@ -92,7 +92,7 @@ public class GitURI {
 					CoreText.GitURI_InvalidSCMURL,
 					new Object[] { uri.toString() }));
 		} catch (URISyntaxException e) {
-			Activator.logError(e.getMessage(), e);
+			ILog.of(getClass()).error(e.getMessage(), e);
 			throw new IllegalArgumentException(NLS.bind(
 					CoreText.GitURI_InvalidURI, new Object[] { uri.toString(),
 							e.getMessage() }));

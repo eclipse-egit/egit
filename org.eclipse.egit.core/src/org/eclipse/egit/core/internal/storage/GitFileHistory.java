@@ -21,8 +21,8 @@ import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.IResource;
 import org.eclipse.core.runtime.Adapters;
 import org.eclipse.core.runtime.IAdaptable;
+import org.eclipse.core.runtime.ILog;
 import org.eclipse.core.runtime.IProgressMonitor;
-import org.eclipse.egit.core.Activator;
 import org.eclipse.egit.core.internal.CoreText;
 import org.eclipse.egit.core.project.RepositoryMapping;
 import org.eclipse.egit.core.synchronize.GitRemoteResource;
@@ -71,8 +71,8 @@ class GitFileHistory extends FileHistory implements IAdaptable {
 		if (rm == null) {
 			IProject project = resource.getProject();
 			String projectName = project != null ? project.getName() : ""; //$NON-NLS-1$
-			Activator.logError(NLS.bind(CoreText.GitFileHistory_gitNotAttached,
-					projectName), null);
+			ILog.of(getClass()).error(NLS.bind(
+					CoreText.GitFileHistory_gitNotAttached, projectName));
 			db = null;
 			walk = null;
 		} else {
@@ -102,9 +102,9 @@ class GitFileHistory extends FileHistory implements IAdaptable {
 			if (headId == null) {
 				IProject project = resource.getProject();
 				String projectName = project != null? project.getName() : ""; //$NON-NLS-1$
-				Activator.logError(NLS.bind(
+				ILog.of(getClass()).error(NLS.bind(
 						CoreText.GitFileHistory_noHeadRevisionAvailable,
-						projectName), null);
+						projectName));
 				return NO_REVISIONS;
 			}
 
@@ -128,7 +128,7 @@ class GitFileHistory extends FileHistory implements IAdaptable {
 		} catch (IOException e) {
 			IProject project = resource.getProject();
 			String projectName = project != null? project.getName() : ""; //$NON-NLS-1$
-			Activator.logError(NLS.bind(
+			ILog.of(getClass()).error(NLS.bind(
 					CoreText.GitFileHistory_invalidHeadRevision, projectName), e);
 			return NO_REVISIONS;
 		}
@@ -145,7 +145,7 @@ class GitFileHistory extends FileHistory implements IAdaptable {
 					break;
 			}
 		} catch (IOException e) {
-			Activator.logError(NLS.bind(
+			ILog.of(getClass()).error(NLS.bind(
 					CoreText.GitFileHistory_errorParsingHistory, resource
 							.getFullPath()), e);
 			return NO_REVISIONS;
@@ -236,11 +236,10 @@ class GitFileHistory extends FileHistory implements IAdaptable {
 			try {
 				return walk.parseCommit(commit);
 			} catch (IOException e) {
-				Activator
-						.logError(
-								NLS.bind(CoreText.GitFileHistory_invalidCommit,
-										commit.getName(), resource.getName()),
-								e);
+				ILog.of(getClass()).error(
+						NLS.bind(CoreText.GitFileHistory_invalidCommit,
+								commit.getName(), resource.getName()),
+						e);
 			}
 		}
 

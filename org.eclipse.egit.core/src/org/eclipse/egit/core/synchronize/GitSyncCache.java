@@ -20,9 +20,9 @@ import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
 
+import org.eclipse.core.runtime.ILog;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.SubMonitor;
-import org.eclipse.egit.core.Activator;
 import org.eclipse.egit.core.synchronize.dto.GitSynchronizeData;
 import org.eclipse.egit.core.synchronize.dto.GitSynchronizeDataSet;
 import org.eclipse.jgit.dircache.DirCache;
@@ -153,7 +153,7 @@ class GitSyncCache {
 			for (ThreeWayDiffEntry diffEntry : diffEntrys)
 				repoCache.addMember(diffEntry);
 		} catch (Exception e) {
-			Activator.logError(e.getMessage(), e);
+			ILog.of(GitSyncCache.class).error(e.getMessage(), e);
 			return false;
 		}
 		return true;

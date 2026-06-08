@@ -23,8 +23,8 @@ import org.eclipse.core.resources.IContainer;
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IResource;
 import org.eclipse.core.runtime.CoreException;
+import org.eclipse.core.runtime.ILog;
 import org.eclipse.core.runtime.NullProgressMonitor;
-import org.eclipse.egit.core.Activator;
 import org.eclipse.egit.core.synchronize.dto.GitSynchronizeDataSet;
 import org.eclipse.team.core.TeamException;
 import org.eclipse.team.core.variants.IResourceVariant;
@@ -76,7 +76,7 @@ class GitResourceVariantComparator implements IResourceVariantComparator {
 					}
 				}
 			} catch (IOException | CoreException e) {
-				Activator.logError(e.getMessage(), e);
+				ILog.of(getClass()).error(e.getMessage(), e);
 				return false;
 			} finally {
 				closeStream(stream);
@@ -137,7 +137,7 @@ class GitResourceVariantComparator implements IResourceVariantComparator {
 			try {
 				stream.close();
 			} catch (IOException e) {
-				Activator.logError(e.getMessage(), e);
+				ILog.of(getClass()).error(e.getMessage(), e);
 			}
 		}
 	}

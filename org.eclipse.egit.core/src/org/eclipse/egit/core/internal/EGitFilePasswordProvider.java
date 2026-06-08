@@ -15,6 +15,7 @@ import java.security.GeneralSecurityException;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.eclipse.core.runtime.ILog;
 import org.eclipse.core.runtime.Platform;
 import org.eclipse.core.runtime.preferences.IEclipsePreferences;
 import org.eclipse.core.runtime.preferences.InstanceScope;
@@ -82,10 +83,10 @@ public class EGitFilePasswordProvider extends IdentityPasswordProvider {
 						useSecureStore = false;
 						savePrefs();
 					} else {
-						Activator.logError(e.getMessage(), e);
+						ILog.of(getClass()).error(e.getMessage(), e);
 					}
 				} catch (RuntimeException e) {
-					Activator.logError(e.getMessage(), e);
+					ILog.of(getClass()).error(e.getMessage(), e);
 				}
 			}
 		}
@@ -142,7 +143,7 @@ public class EGitFilePasswordProvider extends IdentityPasswordProvider {
 						Activator.getDefault().getCredentialsStore()
 								.clearCredentials(uri);
 					} catch (IOException | RuntimeException e) {
-						Activator.logError(e.getMessage(), e);
+						ILog.of(getClass()).error(e.getMessage(), e);
 					}
 					return true; // Re-try
 				}
@@ -163,10 +164,10 @@ public class EGitFilePasswordProvider extends IdentityPasswordProvider {
 							useSecureStore = false;
 							savePrefs();
 						} else {
-							Activator.logError(e.getMessage(), e);
+							ILog.of(getClass()).error(e.getMessage(), e);
 						}
 					} catch (RuntimeException e) {
-						Activator.logError(e.getMessage(), e);
+						ILog.of(getClass()).error(e.getMessage(), e);
 					}
 				}
 			}
@@ -183,7 +184,7 @@ public class EGitFilePasswordProvider extends IdentityPasswordProvider {
 		try {
 			prefs.flush();
 		} catch (BackingStoreException e) {
-			Activator.logError(
+			ILog.of(getClass()).error(
 					CoreText.EGitSshdSessionFactory_savingPreferencesFailed,
 					e);
 		}

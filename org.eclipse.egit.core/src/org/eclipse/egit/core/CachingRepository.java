@@ -16,6 +16,7 @@ import java.text.MessageFormat;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.eclipse.core.runtime.ILog;
 import org.eclipse.egit.core.internal.CoreText;
 import org.eclipse.jgit.internal.storage.file.FileRepository;
 import org.eclipse.jgit.lib.BaseRepositoryBuilder;
@@ -92,9 +93,9 @@ class CachingRepository extends FileRepository {
 					cache.remove(getDirectory());
 				}
 			} else {
-				Activator.logWarning(MessageFormat.format(
+				ILog.of(getClass()).warn(MessageFormat.format(
 						CoreText.CachingRepository_cacheLevelZero,
-						getDirectory()), null);
+						getDirectory()));
 			}
 		} else if (doCache) {
 			cfg.level++;

@@ -19,7 +19,7 @@ import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.eclipse.egit.core.Activator;
+import org.eclipse.core.runtime.ILog;
 import org.eclipse.egit.core.RepositoryCache;
 import org.eclipse.egit.core.internal.CoreText;
 import org.eclipse.jgit.annotations.NonNull;
@@ -239,7 +239,7 @@ public class GerritUtil {
 				try {
 					config.save();
 				} catch (IOException e) {
-					Activator.logError(
+					ILog.of(GerritUtil.class).error(
 							MessageFormat.format(
 									CoreText.GerritUtil_ConfigSaveError,
 									repository.getDirectory()),

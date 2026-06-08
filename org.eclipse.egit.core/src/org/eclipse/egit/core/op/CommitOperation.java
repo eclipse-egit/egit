@@ -31,6 +31,7 @@ import org.eclipse.core.resources.IWorkspace;
 import org.eclipse.core.resources.IWorkspaceRunnable;
 import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.CoreException;
+import org.eclipse.core.runtime.ILog;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.SubMonitor;
 import org.eclipse.core.runtime.jobs.ISchedulingRule;
@@ -337,7 +338,7 @@ public class CommitOperation implements IEGitOperation {
 				authorIdent = rw.parseCommit(cherryPickHead)
 						.getAuthorIdent();
 			} catch (IOException e) {
-				Activator.logError(
+				ILog.of(getClass()).error(
 						CoreText.CommitOperation_ParseCherryPickCommitFailed,
 						e);
 				throw new IllegalStateException(e);

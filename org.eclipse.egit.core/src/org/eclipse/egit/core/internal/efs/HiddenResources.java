@@ -31,6 +31,7 @@ import org.eclipse.core.resources.IWorkspace;
 import org.eclipse.core.resources.IWorkspaceRunnable;
 import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.CoreException;
+import org.eclipse.core.runtime.ILog;
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.Platform;
@@ -127,7 +128,8 @@ public enum HiddenResources {
 			IProject project = getHiddenProject(progress.newChild(1));
 			initialize(project, progress.newChild(1));
 		} catch (CoreException e) {
-			Activator.logWarning("Cannot clean up internal hidden project", e); //$NON-NLS-1$
+			ILog.of(getClass())
+					.warn("Cannot clean up internal hidden project", e); //$NON-NLS-1$
 		}
 	}
 
@@ -151,7 +153,7 @@ public enum HiddenResources {
 							try {
 								f.delete(true, sub.newChild(1));
 							} catch (CoreException e) {
-								Activator.logWarning(MessageFormat.format(
+								ILog.of(getClass()).warn(MessageFormat.format(
 										"Cannot clean up internal hidden resource {0}", //$NON-NLS-1$
 										f), e);
 							}
@@ -165,7 +167,7 @@ public enum HiddenResources {
 						try {
 							rsc.delete(true, null);
 						} catch (CoreException e) {
-							Activator.logWarning(MessageFormat.format(
+							ILog.of(getClass()).warn(MessageFormat.format(
 									"Cannot clean up internal hidden folder {0}", //$NON-NLS-1$
 									rsc), e);
 						}
@@ -182,7 +184,7 @@ public enum HiddenResources {
 			project.getWorkspace().run(clean, null, IWorkspace.AVOID_UPDATE,
 					monitor);
 		} catch (CoreException e) {
-			Activator.logWarning(MessageFormat.format(
+			ILog.of(getClass()).warn(MessageFormat.format(
 					"Cannot clean up internal hidden project {0}", project), e); //$NON-NLS-1$
 		}
 	}

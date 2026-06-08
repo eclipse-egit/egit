@@ -19,11 +19,11 @@ import java.util.Collection;
 import java.util.Map;
 
 import org.eclipse.core.runtime.CoreException;
+import org.eclipse.core.runtime.ILog;
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.core.runtime.jobs.ISchedulingRule;
-import org.eclipse.egit.core.Activator;
 import org.eclipse.egit.core.internal.CoreText;
 import org.eclipse.egit.core.internal.job.RuleUtil;
 import org.eclipse.egit.core.internal.util.ResourceUtil;
@@ -69,7 +69,7 @@ public class RemoveFromIndexOperation implements IEGitOperation {
 				command.call();
 				monitor.worked(1);
 			} catch (GitAPIException e) {
-				Activator.logError(e.getMessage(), e);
+				ILog.of(getClass()).error(e.getMessage(), e);
 			}
 		}
 

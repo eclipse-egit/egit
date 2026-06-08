@@ -20,9 +20,9 @@ import org.eclipse.core.resources.IResourceDelta;
 import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.resources.mapping.ResourceTraversal;
 import org.eclipse.core.runtime.CoreException;
+import org.eclipse.core.runtime.ILog;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.NullProgressMonitor;
-import org.eclipse.egit.core.Activator;
 import org.eclipse.egit.core.internal.CoreText;
 import org.eclipse.egit.core.internal.indexdiff.GitResourceDeltaVisitor;
 import org.eclipse.egit.core.internal.indexdiff.IndexDiffCache;
@@ -135,7 +135,7 @@ public class GitSubscriberMergeContext extends SubscriberMergeContext {
 		try {
 			subscriber.refresh(traversals, new NullProgressMonitor());
 		} catch (TeamException e) {
-			Activator.logError(
+			ILog.of(getClass()).error(
 					CoreText.GitSubscriberMergeContext_FailedRefreshSyncView, e);
 		}
 	}
@@ -167,7 +167,7 @@ public class GitSubscriberMergeContext extends SubscriberMergeContext {
 					refreshResources(files);
 			}
 		} catch (CoreException e) {
-			Activator.logError(e.getMessage(), e);
+			ILog.of(getClass()).error(e.getMessage(), e);
 		}
 	}
 
@@ -177,7 +177,7 @@ public class GitSubscriberMergeContext extends SubscriberMergeContext {
 			subscriber.refresh(files, IResource.DEPTH_ONE,
 					new NullProgressMonitor());
 		} catch (final CoreException e) {
-			Activator.logError(
+			ILog.of(getClass()).error(
 					CoreText.GitSubscriberMergeContext_FailedRefreshSyncView, e);
 		}
 	}
@@ -186,7 +186,7 @@ public class GitSubscriberMergeContext extends SubscriberMergeContext {
 		try {
 			gsd.updateRevs();
 		} catch (IOException e) {
-			Activator.logError(
+			ILog.of(getClass()).error(
 					CoreText.GitSubscriberMergeContext_FailedUpdateRevs, e);
 			return;
 		}

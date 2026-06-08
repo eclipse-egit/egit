@@ -37,6 +37,7 @@ import org.eclipse.core.resources.IWorkspace;
 import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.resources.WorkspaceJob;
 import org.eclipse.core.runtime.CoreException;
+import org.eclipse.core.runtime.ILog;
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
@@ -167,7 +168,7 @@ public class IndexDiffCacheEntry {
 				}
 			});
 		} catch (IOException ex) {
-			Activator.logError(MessageFormat.format(
+			ILog.of(getClass()).error(MessageFormat.format(
 					CoreText.IndexDiffCacheEntry_errorCalculatingIndexDelta,
 					repository), ex);
 		}
@@ -178,7 +179,7 @@ public class IndexDiffCacheEntry {
 				lastIndex = DirCache.read(repository.getIndexFile(),
 						repository.getFS());
 			} catch (IOException ex) {
-				Activator.logError(MessageFormat.format(
+				ILog.of(getClass()).error(MessageFormat.format(
 						CoreText.IndexDiffCacheEntry_errorCalculatingIndexDelta,
 						repository), ex);
 			}
@@ -252,7 +253,7 @@ public class IndexDiffCacheEntry {
 					}
 					if (Activator.getDefault().isDebugging()) {
 						final long refresh = System.currentTimeMillis();
-						Activator.logInfo("Resources refresh took " //$NON-NLS-1$
+						ILog.of(getClass()).info("Resources refresh took " //$NON-NLS-1$
 								+ (refresh - start) + " ms for " //$NON-NLS-1$
 								+ repositoryName);
 
@@ -274,7 +275,7 @@ public class IndexDiffCacheEntry {
 				}
 				if (Activator.getDefault().isDebugging()) {
 					final long refresh = System.currentTimeMillis();
-					Activator.logInfo("Diff took " + (refresh - start) //$NON-NLS-1$
+					ILog.of(getClass()).info("Diff took " + (refresh - start) //$NON-NLS-1$
 							+ " ms for " + repositoryName); //$NON-NLS-1$
 
 				}
@@ -344,7 +345,7 @@ public class IndexDiffCacheEntry {
 				refreshFiles(paths);
 
 		} catch (IOException ex) {
-			Activator.logError(MessageFormat.format(
+			ILog.of(getClass()).error(MessageFormat.format(
 					CoreText.IndexDiffCacheEntry_errorCalculatingIndexDelta,
 					repository), ex);
 			scheduleReloadJob("Exception while calculating index delta, doing full reload instead"); //$NON-NLS-1$
@@ -664,7 +665,7 @@ public class IndexDiffCacheEntry {
 							return;
 						}
 					} catch (CoreException e) {
-						Activator.logError(e.getMessage(), e);
+						ILog.of(getClass()).error(e.getMessage(), e);
 					}
 				}
 
@@ -700,7 +701,7 @@ public class IndexDiffCacheEntry {
 				try {
 					event.getDelta().accept(visitor);
 				} catch (CoreException e) {
-					Activator.logError(e.getMessage(), e);
+					ILog.of(getClass()).error(e.getMessage(), e);
 					return;
 				}
 				if (visitor.getGitIgnoreChanged()) {
