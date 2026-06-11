@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "2243afcd_2a57ff33",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1021966
+      },
+      "writtenOn": "2026-06-11T10:44:19Z",
+      "side": 1,
+      "message": "Is this compatible with C git? C git uses the sequencer (like rebase) and keeps state in files.\n\nCompare also the discussions in old issues [447115](https://bugs.eclipse.org/bugs/show_bug.cgi?id\u003d447115) and [495977](https://bugs.eclipse.org/bugs/show_bug.cgi?id\u003d495977) in the old Eclipse Bugzilla.\n\nNotwithstanding the above: two minor comments on issues that stood out on a brief quick glace at the code.",
+      "revId": "b4b058542b8a9f1135de8facdcc52dcef746556b",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "8e6d0859_a1188bad",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/commit/command/CherryPickUI.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 201,
+      "author": {
+        "id": 1021966
+      },
+      "writtenOn": "2026-06-11T10:44:19Z",
+      "side": 1,
+      "message": "Can reorderedCommits be empty here (if `!confirm`)?",
+      "revId": "b4b058542b8a9f1135de8facdcc52dcef746556b",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "cf246590_4ee7fc09",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/commit/command/CherryPickUI.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 327,
+      "author": {
+        "id": 1021966
+      },
+      "writtenOn": "2026-06-11T10:44:19Z",
+      "side": 1,
+      "message": "This Optional doesn\u0027t make sense. Just return the list (which may be empty).",
+      "revId": "b4b058542b8a9f1135de8facdcc52dcef746556b",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735"
+    }
+  ]
+}
