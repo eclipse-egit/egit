@@ -17,6 +17,9 @@ import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.notNullValue;
 import static org.junit.Assert.assertTrue;
 
+import java.io.ByteArrayInputStream;
+import java.io.File;
+
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IFolder;
 import org.eclipse.core.resources.IProject;
@@ -24,10 +27,14 @@ import org.eclipse.core.resources.IResource;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.NullProgressMonitor;
+import org.eclipse.egit.core.RepositoryCache;
 import org.eclipse.egit.core.op.ConnectProviderOperation;
+import org.eclipse.egit.core.project.RepositoryMapping;
 import org.eclipse.egit.core.test.GitTestCase;
 import org.eclipse.egit.core.test.TestProject;
+import org.eclipse.jgit.lib.ConfigConstants;
 import org.eclipse.jgit.lib.Repository;
+import org.eclipse.jgit.lib.StoredConfig;
 import org.eclipse.jgit.storage.file.FileRepositoryBuilder;
 import org.junit.After;
 import org.junit.Before;
@@ -50,8 +57,10 @@ public class ResourceUtilTest extends GitTestCase {
 	}
 
 	@After
-	public void after() {
+	public void after() throws Exception {
 		repository.close();
+		RepositoryCache.INSTANCE.clear();
+		testUtils.deleteTempDirs();
 	}
 
 	@Test
@@ -144,6 +153,56 @@ public class ResourceUtilTest extends GitTestCase {
 		assertThat(result, notNullValue());
 		assertTrue("Returned IFile should exist", result.exists());
 		assertThat(result.getProject(), is(nested.getProject()));
+	}
+
+	// A resource located inside a nested repository (e.g. a submodule) that is
+	// not connected as a separate project must resolve to that inner
+	// repository, not to the outer repository the containing project is mapped
+	// to.
+	@Test
+	public void getRepositoryReturnsInnermostNestedRepository()
+			throws Exception {
+		IFolder sub = project.getProject().getFolder("sub");
+		sub.create(true, true, null);
+		File nestedWorkTree = sub.getLocation().toFile();
+		// Use a git directory outside the working tree, so that no ".git"
+		// resource appears in the workspace which would auto-create a mapping
+		// for the nested repository (mimicking a submodule's gitlink that is
+		// not connected as a project).
+		File nestedGitDir = testUtils.createTempDir("nested.git");
+		try (Repository nested = new FileRepositoryBuilder()
+				.setGitDir(nestedGitDir).setWorkTree(nestedWorkTree).build()) {
+			nested.create();
+			StoredConfig config = nested.getConfig();
+			config.setString(ConfigConstants.CONFIG_CORE_SECTION, null,
+					ConfigConstants.CONFIG_KEY_WORKTREE,
+					nestedWorkTree.getAbsolutePath());
+			config.save();
+		}
+		RepositoryCache.INSTANCE.lookupRepository(nestedGitDir);
+
+		IFile innerFile = project.getProject().getFile("sub/inner.txt");
+		innerFile.create(new ByteArrayInputStream(new byte[] {}), true, null);
+		IFile outerFile = project.createFile("outer.txt", new byte[] {});
+
+		// Precondition: the project mapping resolves to the outer repository.
+		RepositoryMapping mapping = RepositoryMapping.getMapping(innerFile);
+		assertThat(mapping, notNullValue());
+		assertThat(mapping.getRepository().getDirectory().getCanonicalFile(),
+				is(gitDir.getCanonicalFile()));
+
+		// The resource really belongs to the inner repository.
+		Repository innerRepository = ResourceUtil.getRepository(innerFile);
+		assertThat(innerRepository, notNullValue());
+		assertThat(innerRepository.getDirectory().getCanonicalFile(),
+				is(nestedGitDir.getCanonicalFile()));
+
+		// A resource outside the nested working tree still resolves to the
+		// outer repository.
+		Repository outerRepository = ResourceUtil.getRepository(outerFile);
+		assertThat(outerRepository, notNullValue());
+		assertThat(outerRepository.getDirectory().getCanonicalFile(),
+				is(gitDir.getCanonicalFile()));
 	}
 
 	private void connect(IProject p) throws CoreException {

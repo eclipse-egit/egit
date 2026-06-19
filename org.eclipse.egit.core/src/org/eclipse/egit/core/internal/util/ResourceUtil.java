@@ -708,9 +708,39 @@ public class ResourceUtil {
 	public static Repository getRepository(@NonNull IResource resource) {
 		RepositoryMapping mapping = RepositoryMapping.getMapping(resource);
 		if (mapping != null) {
-			return mapping.getRepository();
+			Repository repository = mapping.getRepository();
+			if (repository != null) {
+				// The resource may be located inside a nested repository (for
+				// instance a submodule) that is not connected as a separate
+				// project. In that case the project mapping resolves to the
+				// outer repository, but the resource really belongs to the
+				// inner one. Prefer the innermost repository that actually
+				// contains the resource, consistent with getRepository(IPath).
+				IPath location = resource.getLocation();
+				if (location != null) {
+					Repository inner = RepositoryCache.INSTANCE
+							.getRepository(location);
+					if (inner != null && isInside(repository, inner)) {
+						return inner;
+					}
+				}
+			}
+			return repository;
 		}
 		return RepositoryCache.INSTANCE.getRepository(resource);
+	}
+
+	// Whether inner's working tree is strictly nested below outer's working
+	// tree.
+	private static boolean isInside(@NonNull Repository outer,
+			@NonNull Repository inner) {
+		if (outer == inner || outer.isBare() || inner.isBare()) {
+			return false;
+		}
+		IPath outerTree = new Path(outer.getWorkTree().getAbsolutePath());
+		IPath innerTree = new Path(inner.getWorkTree().getAbsolutePath());
+		return innerTree.segmentCount() > outerTree.segmentCount()
+				&& outerTree.isPrefixOf(innerTree);
 	}
 
 	/**
