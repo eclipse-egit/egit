@@ -61,7 +61,9 @@ import org.junit.runner.RunWith;
 public class GitRepositoriesViewRepoHandlingTest extends
 		GitRepositoriesViewTestBase {
 
-	private static final String REMOVE_REPOSITORY_CONTEXT_MENU_LABEL = "RepoViewRemove.label";
+	private static final String REMOVE_REPOSITORY_MENU_LABEL = "RemoveRepositoryMenu.label";
+
+	private static final String REMOVE_REPOSITORY_CONTEXT_MENU_LABEL = "RemoveRepositoryMenu.fromView.label";
 
 	private static final String PASTE_PATH_CONTEXT_MENU_LABEL = "RepoViewPastePath.label";
 
@@ -152,8 +154,10 @@ public class GitRepositoriesViewRepoHandlingTest extends
 		assertHasRepo(repositoryFile);
 		SWTBotTree tree = getOrOpenView().bot().tree();
 		tree.getAllItems()[0].select();
-		ContextMenuHelper.clickContextMenuSync(tree, myUtil
-				.getPluginLocalizedValue(REMOVE_REPOSITORY_CONTEXT_MENU_LABEL));
+		ContextMenuHelper.clickContextMenuSync(tree,
+				myUtil.getPluginLocalizedValue(REMOVE_REPOSITORY_MENU_LABEL),
+				myUtil.getPluginLocalizedValue(
+						REMOVE_REPOSITORY_CONTEXT_MENU_LABEL));
 		refreshAndWait();
 		assertEmpty();
 	}
@@ -170,8 +174,10 @@ public class GitRepositoriesViewRepoHandlingTest extends
 		assertHasRepo(repositoryFile);
 		SWTBotTree tree = getOrOpenView().bot().tree();
 		tree.getAllItems()[0].select();
-		ContextMenuHelper.clickContextMenu(tree, myUtil
-				.getPluginLocalizedValue(REMOVE_REPOSITORY_CONTEXT_MENU_LABEL));
+		ContextMenuHelper.clickContextMenu(tree,
+				myUtil.getPluginLocalizedValue(REMOVE_REPOSITORY_MENU_LABEL),
+				myUtil.getPluginLocalizedValue(
+						REMOVE_REPOSITORY_CONTEXT_MENU_LABEL));
 		SWTBotShell shell = bot
 				.shell(UIText.RepositoriesView_ConfirmProjectDeletion_WindowTitle);
 		shell.bot().button(IDialogConstants.YES_LABEL).click();
@@ -192,8 +198,10 @@ public class GitRepositoriesViewRepoHandlingTest extends
 		assertHasRepo(repositoryFile);
 		SWTBotTree tree = getOrOpenView().bot().tree();
 		tree.getAllItems()[0].select();
-		ContextMenuHelper.clickContextMenu(tree, myUtil
-				.getPluginLocalizedValue(REMOVE_REPOSITORY_CONTEXT_MENU_LABEL));
+		ContextMenuHelper.clickContextMenu(tree,
+				myUtil.getPluginLocalizedValue(REMOVE_REPOSITORY_MENU_LABEL),
+				myUtil.getPluginLocalizedValue(
+						REMOVE_REPOSITORY_CONTEXT_MENU_LABEL));
 		SWTBotShell shell = bot
 				.shell(UIText.RepositoriesView_ConfirmProjectDeletion_WindowTitle);
 		shell.bot().button(IDialogConstants.NO_LABEL).click();
@@ -214,8 +222,10 @@ public class GitRepositoriesViewRepoHandlingTest extends
 		assertHasRepo(repositoryFile);
 		SWTBotTree tree = getOrOpenView().bot().tree();
 		tree.getAllItems()[0].select();
-		ContextMenuHelper.clickContextMenu(tree, myUtil
-				.getPluginLocalizedValue(REMOVE_REPOSITORY_CONTEXT_MENU_LABEL));
+		ContextMenuHelper.clickContextMenu(tree,
+				myUtil.getPluginLocalizedValue(REMOVE_REPOSITORY_MENU_LABEL),
+				myUtil.getPluginLocalizedValue(
+						REMOVE_REPOSITORY_CONTEXT_MENU_LABEL));
 		SWTBotShell shell = bot
 				.shell(UIText.RepositoriesView_ConfirmProjectDeletion_WindowTitle);
 		shell.bot().button(IDialogConstants.CANCEL_LABEL).click();

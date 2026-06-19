@@ -5716,43 +5716,86 @@
       </menuContribution>
       <menuContribution
             locationURI="popup:org.eclipse.egit.ui.RepositoriesView?after=repo-4">
-         <command
-              commandId="org.eclipse.egit.ui.team.clean"
-              label="%CleanCommand.label"
-              style="push">
-            <visibleWhen checkEnabled="true" />
-         </command>
-         <command
-               commandId="org.eclipse.egit.ui.team.GarbageCollect"
-               label="%GarbageCollectCommand.label"
-               icon="icons/elcl16/trash_flat.svg"
-               style="push">
+         <menu
+               id="org.eclipse.egit.ui.repositoriesViewMaintenance"
+               label="%MaintenanceMenu.label">
+            <command
+                 commandId="org.eclipse.egit.ui.team.clean"
+                 label="%CleanCommand.label"
+                 style="push">
+               <visibleWhen checkEnabled="true" />
+            </command>
+            <command
+                  commandId="org.eclipse.egit.ui.team.GarbageCollect"
+                  label="%GarbageCollectCommand.label"
+                  icon="icons/elcl16/trash_flat.svg"
+                  style="push">
+               <visibleWhen
+                     checkEnabled="false">
+                  <and>
+                     <count
+                           value="+">
+                     </count>
+                     <iterate>
+                        <instanceof
+                              value="org.eclipse.egit.ui.internal.repository.tree.RepositoryNode">
+                        </instanceof>
+                     </iterate>
+                  </and>
+               </visibleWhen>
+            </command>
             <visibleWhen
                   checkEnabled="false">
                <and>
                   <count
                         value="+">
                   </count>
-                  <iterate>
+                  <iterate
+                        ifEmpty="false"
+                        operator="and">
+                     <or>
+                        <instanceof
+                              value="org.eclipse.egit.ui.internal.repository.tree.RepositoryNode">
+                        </instanceof>
+                        <instanceof
+                              value="org.eclipse.egit.ui.internal.repository.tree.WorkingDirNode">
+                        </instanceof>
+                     </or>
+                  </iterate>
+               </and>
+            </visibleWhen>
+         </menu>
+         <menu
+               id="org.eclipse.egit.ui.repositoriesViewRemoveRepository"
+               label="%RemoveRepositoryMenu.label">
+            <command
+                  commandId="org.eclipse.egit.ui.RepositoriesViewRemove"
+                  label="%RemoveRepositoryMenu.fromView.label"
+                  style="push">
+               <visibleWhen checkEnabled="true" />
+            </command>
+            <command
+                  commandId="org.eclipse.egit.ui.RepositoriesViewDelete"
+                  label="%RemoveRepositoryMenu.delete.label"
+                  style="push">
+               <visibleWhen checkEnabled="true" />
+            </command>
+            <visibleWhen
+                  checkEnabled="false">
+               <and>
+                  <count
+                        value="+">
+                  </count>
+                  <iterate
+                        ifEmpty="false"
+                        operator="and">
                      <instanceof
                            value="org.eclipse.egit.ui.internal.repository.tree.RepositoryNode">
                      </instanceof>
                   </iterate>
                </and>
             </visibleWhen>
-         </command>
-         <command
-               commandId="org.eclipse.egit.ui.RepositoriesViewRemove"
-               label="%RepoViewRemove.label"
-               style="push">
-            <visibleWhen checkEnabled="true" />
-         </command>
-         <command
-               commandId="org.eclipse.egit.ui.RepositoriesViewDelete"
-               label="%RepoViewDeleteRepository.label"
-               style="push">
-            <visibleWhen checkEnabled="true" />
-         </command>
+         </menu>
       </menuContribution>
       <menuContribution
             locationURI="popup:org.eclipse.egit.ui.RepositoriesView?after=repo-5">
