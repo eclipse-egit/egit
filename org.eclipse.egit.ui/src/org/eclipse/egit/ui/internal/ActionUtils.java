@@ -239,6 +239,16 @@ public final class ActionUtils {
 			public void handleEvent(Event event) {
 				switch (event.type) {
 				case SWT.Deactivate:
+					if (control.isFocusControl()) {
+						// e4 reparents a hidden part's controls onto an
+						// off-screen shell (e.g. on a perspective switch),
+						// firing SWT.Deactivate while the control still has the
+						// focus. Deregistering then would leave the handlers
+						// disabled with no SWT.FocusIn to restore them. Only
+						// react to a real deactivation. See bug 536645.
+						break;
+					}
+					//$FALL-THROUGH$
 				case SWT.FocusOut:
 				case SWT.Dispose:
 					if (!handlerActivations.isEmpty()) {
