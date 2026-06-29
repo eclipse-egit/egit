@@ -162,6 +162,8 @@ class GenerateHistoryJob extends Job {
 					monitor.setTaskName(MessageFormat.format(
 							UIText.GenerateHistoryJob_taskFoundCommits,
 							Integer.valueOf(oldsz)));
+
+					updateUI(incomplete);
 				}
 			} catch (IOException e) {
 				status = new Status(IStatus.ERROR, Activator.PLUGIN_ID,
@@ -187,8 +189,17 @@ class GenerateHistoryJob extends Job {
 					updateUI(incomplete);
 				}
 			}
-			else
+			else {
 				updateUI(incomplete);
+			}
+
+			if (forcedRedrawsAfterListIsCompleted < 1 && !loadIncrementally
+					&& hasMore) {
+				page.setWarningTextInUIThread(this);
+			} else {
+				page.clearWarningTextInUIThread(this);
+			}
+
 		} finally {
 			monitor.done();
 			if (trace)
@@ -211,7 +222,7 @@ class GenerateHistoryJob extends Job {
 				forcedRedrawsAfterListIsCompleted++;
 			final SWTCommit[] asArray = new SWTCommit[loadedCommits.size()];
 			loadedCommits.toArray(asArray);
-			page.showCommitList(this, loadedCommits, asArray, commitToShow, incomplete, highlightFlag);
+			page.showCommitList(this, loadedCommits, asArray, commitToShow, highlightFlag);
 			commitToShow = null;
 			lastUpdateCnt = loadedCommits.size();
 		} finally {
