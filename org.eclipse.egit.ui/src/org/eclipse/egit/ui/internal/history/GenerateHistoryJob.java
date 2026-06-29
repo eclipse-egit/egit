@@ -35,7 +35,7 @@ import org.eclipse.jgit.revwalk.RevWalk;
 import org.eclipse.osgi.util.NLS;
 
 class GenerateHistoryJob extends Job {
-	private static final int BATCH_SIZE = 256;
+	private static final int MAX_BATCH_SIZE = 256;
 
 	private final Object lock = new Object();
 
@@ -69,6 +69,8 @@ class GenerateHistoryJob extends Job {
 
 	// Guarded by 'lock'
 	private int nextLoadHint = -1;
+
+	private int currentBatchSize = 1;
 
 	GenerateHistoryJob(final GitHistoryPage ghp, @NonNull RevWalk walk,
 			ResourceManager resources) {
@@ -118,8 +120,10 @@ class GenerateHistoryJob extends Job {
 								GitTraceLocation.HISTORYVIEW.getLocation(),
 								"Filling commit list"); //$NON-NLS-1$
 					if (commitToLoad != null) {
+						currentBatchSize = Math.min(currentBatchSize * 2,
+								MAX_BATCH_SIZE);
 						loadedCommits.fillTo(commitToLoad,
-								oldsz + BATCH_SIZE - 1);
+								oldsz + currentBatchSize - 1);
 						commitToShow = commitToLoad;
 						boolean commitFound = wantedIndex >= 0;
 						if (commitFound) {
@@ -127,7 +131,9 @@ class GenerateHistoryJob extends Job {
 						}
 						commitNotFound = !commitFound;
 					} else {
-						loadedCommits.fillTo(oldsz + BATCH_SIZE - 1);
+						currentBatchSize = Math.min(currentBatchSize * 2,
+								MAX_BATCH_SIZE);
+						loadedCommits.fillTo(oldsz + currentBatchSize - 1);
 						if (oldsz == loadedCommits.size()) {
 							forcedRedrawsAfterListIsCompleted++;
 							break;
@@ -136,7 +142,8 @@ class GenerateHistoryJob extends Job {
 					if (monitor.isCanceled()) {
 						return Status.CANCEL_STATUS;
 					}
-					if (loadedCommits.size() > itemToLoad + (BATCH_SIZE / 2) + 1
+					if (loadedCommits.size() > itemToLoad
+							+ (currentBatchSize / 2) + 1
 							&& loadIncrementally && !commitNotFound) {
 						break;
 					}
@@ -256,7 +263,7 @@ class GenerateHistoryJob extends Job {
 
 	boolean loadNextBatch(int currentIndex) {
 		synchronized (lock) {
-			if (hasMore && currentIndex + (BATCH_SIZE / 2) > size
+			if (hasMore && currentIndex + (currentBatchSize / 2) > size
 					&& currentIndex > nextLoadHint) {
 				nextLoadHint = currentIndex;
 				return true;
