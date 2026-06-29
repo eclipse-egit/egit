@@ -101,7 +101,6 @@ class GenerateHistoryJob extends Job {
 		IStatus status = Status.OK_STATUS;
 		int maxCommits = Activator.getDefault().getPreferenceStore()
 					.getInt(UIPreferences.HISTORY_MAX_NUM_COMMITS);
-		int chunk = maxCommits;
 		boolean incomplete = false;
 		boolean commitNotFound = false;
 		try {
@@ -119,13 +118,8 @@ class GenerateHistoryJob extends Job {
 								GitTraceLocation.HISTORYVIEW.getLocation(),
 								"Filling commit list"); //$NON-NLS-1$
 					if (commitToLoad != null) {
-						if (maxCommits > 0
-								&& loadedCommits.size() >= maxCommits) {
-							// We're still looking for a commit
-							maxCommits = loadedCommits.size() + Math
-									.min(Math.max(chunk, 1000), 10000);
-						}
-						loadedCommits.fillTo(commitToLoad, maxCommits);
+						loadedCommits.fillTo(commitToLoad,
+								oldsz + BATCH_SIZE - 1);
 						commitToShow = commitToLoad;
 						boolean commitFound = wantedIndex >= 0;
 						if (commitFound) {
