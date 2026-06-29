@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "bf29fafa_8b1d5d26",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1037763
+      },
+      "writtenOn": "2026-06-29T19:34:57Z",
+      "side": 1,
+      "message": "Thanks a lot for the fix. However in my case the decoration was also missing if the submodule was also added as dedicated/separate project. Although the decoration is correct under the top level project it is incorrect in the nested view. That kind of contradicts your commit message:\n\n\u003e ... returned the outer repository for files that are\nphysically located inside a submodule but are not connected as a\nseparate project.",
+      "revId": "52d950d7c4f03db6e46cb85b593d0a07e1eb9ec4",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735"
+    }
+  ]
+}
