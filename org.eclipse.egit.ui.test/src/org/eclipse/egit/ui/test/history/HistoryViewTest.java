@@ -125,6 +125,8 @@ public class HistoryViewTest extends GitRepositoriesViewTestBase {
 
 		setupAdditionalCommits();
 
+		System.setProperty("initial_git_current_batch_size", "15");
+
 		RepositoryUtil.INSTANCE.addConfiguredRepository(repoFile);
 
 		// Reset to ensure reproducible state regardless of defaults
