@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "131efd00_d0a7adf4",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1039063
+      },
+      "writtenOn": "2026-06-30T09:10:20Z",
+      "side": 1,
+      "message": "I am struggling to let the tests run locally with SWT-Bot. I couldn\u0027t manage to make it work by following these 2 sets of instructions:\n- https://help.eclipse.org/latest/index.jsp?topic\u003d%2Forg.eclipse.egit.doc%2Fhelp%2FEGit%2FContributor_Guide%2FTests.html\n- https://wiki.eclipse.org/SWTBot/Automate_test_execution#Installing_your_SWTBot_test_plugin\n\nCan anyone help me? Maybe @twolf@apache.org ?",
+      "revId": "2638dad8eebeb13a3c73ea6101d5c4930e3462db",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735"
+    }
+  ]
+}
