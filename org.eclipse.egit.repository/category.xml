@@ -102,12 +102,6 @@
    <bundle id="org.tukaani.xz.source">
       <category name="EGit.dependencies"/>
    </bundle>
-   <bundle id="org.apache.commons.logging">
-      <category name="EGit.dependencies"/>
-   </bundle>
-   <bundle id="org.apache.commons.logging.source">
-      <category name="EGit.dependencies"/>
-   </bundle>
    <bundle id="com.googlecode.javaewah.JavaEWAH">
       <category name="EGit.dependencies"/>
    </bundle>
@@ -192,10 +186,10 @@
    <bundle id="org.eclipse.jetty.server.source">
       <category name="EGit.dependencies"/>
    </bundle>
-   <bundle id="org.eclipse.jetty.ee10.servlet">
+   <bundle id="org.eclipse.jetty.ee11.servlet">
       <category name="EGit.dependencies"/>
    </bundle>
-   <bundle id="org.eclipse.jetty.ee10.servlet.source">
+   <bundle id="org.eclipse.jetty.ee11.servlet.source">
       <category name="EGit.dependencies"/>
    </bundle>
    <bundle id="org.eclipse.jetty.util">
@@ -232,12 +226,6 @@
       <category name="EGit.dependencies"/>
    </bundle>
    <bundle id="org.apache.commons.commons-logging">
-      <category name="EGit.dependencies"/>
-   </bundle>
-   <bundle id="org.eclipse.jetty.ee10.servlet">
-      <category name="EGit.dependencies"/>
-   </bundle>
-   <bundle id="org.eclipse.jetty.ee10.servlet.source">
       <category name="EGit.dependencies"/>
    </bundle>
    <bundle id="org.apache.aries.spifly.dynamic.bundle">
