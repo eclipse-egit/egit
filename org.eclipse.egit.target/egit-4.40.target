@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <?pde?>
 <!-- generated with https://github.com/eclipse-cbi/targetplatform-dsl -->
-<target name="egit-4.40" sequenceNumber="1782204240">
+<target name="egit-4.40" sequenceNumber="1783461688">
   <locations>
     <location includeMode="slicer" includeAllPlatforms="false" includeSource="true" includeConfigurePhase="true" type="InstallableUnit">
       <unit id="org.eclipse.license.feature.group" version="0.0.0"/>
@@ -31,7 +31,6 @@
       <unit id="jakarta.inject.jakarta.inject-api" version="2.0.1"/>
       <unit id="jakarta.xml.bind-api" version="2.3.3"/>
       <unit id="jakarta.xml.bind-api" version="4.0.5"/>
-      <unit id="jakarta.servlet-api" version="4.0.0"/>
       <unit id="junit-jupiter-api" version="5.14.4"/>
       <unit id="junit-jupiter-engine" version="5.14.4"/>
       <unit id="junit-jupiter-migrationsupport" version="5.14.4"/>
@@ -51,8 +50,6 @@
       <unit id="org.apache.batik.css" version="1.19.0.v20250506-1400"/>
       <unit id="org.apache.batik.i18n" version="1.19.0.v20250506-1400"/>
       <unit id="org.apache.batik.util" version="1.19.0.v20250506-1400"/>
-      <unit id="org.apache.commons.logging" version="1.2.0"/>
-      <unit id="org.apache.commons.logging.source" version="1.2.0"/>
       <unit id="org.apache.felix.scr" version="2.2.18"/>
       <unit id="org.apache.felix.gogo.runtime" version="1.1.6"/>
       <unit id="org.apache.felix.gogo.shell" version="1.1.4"/>
@@ -252,8 +249,8 @@
     <location includeDependencyDepth="none" includeDependencyScopes="compile" includeSource="true" missingManifest="error" type="Maven" label="jetty">
       <dependencies>
         <dependency>
-          <groupId>org.eclipse.jetty.ee10</groupId>
-          <artifactId>jetty-ee10-servlet</artifactId>
+          <groupId>org.eclipse.jetty.ee11</groupId>
+          <artifactId>jetty-ee11-servlet</artifactId>
           <version>12.1.10</version>
           <type>jar</type>
         </dependency>
