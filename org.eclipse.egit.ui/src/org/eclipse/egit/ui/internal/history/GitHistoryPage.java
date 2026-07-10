@@ -2410,9 +2410,20 @@ public class GitHistoryPage extends HistoryPage implements RefsChangedListener,
 		});
 	}
 
+	void clearWarningTextInUIThread(final Job j) {
+		graph.getControl().getDisplay().asyncExec(new Runnable() {
+			@Override
+			public void run() {
+				if (!graph.getControl().isDisposed() && job == j) {
+					setWarningText(null);
+				}
+			}
+		});
+	}
+
 	@SuppressWarnings("boxing")
 	void showCommitList(final Job j, final SWTCommitList list,
-			final SWTCommit[] asArray, final RevCommit toSelect, final boolean incomplete, final RevFlag highlightFlag) {
+			final SWTCommit[] asArray, final RevCommit toSelect, final RevFlag highlightFlag) {
 		if (trace)
 			GitTraceLocation.getTrace().traceEntry(
 					GitTraceLocation.HISTORYVIEW.getLocation(),
@@ -2424,9 +2435,6 @@ public class GitHistoryPage extends HistoryPage implements RefsChangedListener,
 			@Override
 			public void run() {
 				if (!graph.getControl().isDisposed() && job == j) {
-					setWarningText(incomplete
-							? UIText.GitHistoryPage_ListIncompleteWarningMessage
-							: null);
 					setErrorMessage(null);
 					graph.setInput(highlightFlag, list, asArray, input, true);
 					if (toSelect != null)
