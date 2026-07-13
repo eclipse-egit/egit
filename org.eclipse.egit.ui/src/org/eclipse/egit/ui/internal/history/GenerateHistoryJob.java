@@ -20,6 +20,7 @@ import org.eclipse.core.runtime.Status;
 import org.eclipse.core.runtime.jobs.IJobChangeEvent;
 import org.eclipse.core.runtime.jobs.Job;
 import org.eclipse.core.runtime.jobs.JobChangeAdapter;
+import org.eclipse.egit.core.EclipseGitProgressTransformer;
 import org.eclipse.egit.core.RepositoryUtil;
 import org.eclipse.egit.ui.Activator;
 import org.eclipse.egit.ui.JobFamilies;
@@ -28,6 +29,7 @@ import org.eclipse.egit.ui.internal.UIText;
 import org.eclipse.egit.ui.internal.trace.GitTraceLocation;
 import org.eclipse.jface.resource.ResourceManager;
 import org.eclipse.jgit.annotations.NonNull;
+import org.eclipse.jgit.errors.CancelledException;
 import org.eclipse.jgit.revplot.PlotCommit;
 import org.eclipse.jgit.revwalk.RevCommit;
 import org.eclipse.jgit.revwalk.RevFlag;
@@ -104,6 +106,7 @@ class GenerateHistoryJob extends Job {
 		int chunk = maxCommits;
 		boolean incomplete = false;
 		boolean commitNotFound = false;
+		walk.setProgressMonitor(new EclipseGitProgressTransformer(monitor));
 		try {
 			if (trace)
 				GitTraceLocation.getTrace().traceEntry(
@@ -162,6 +165,8 @@ class GenerateHistoryJob extends Job {
 							UIText.GenerateHistoryJob_taskFoundCommits,
 							Integer.valueOf(oldsz)));
 				}
+			} catch (CancelledException e) {
+				return Status.CANCEL_STATUS;
 			} catch (IOException e) {
 				status = new Status(IStatus.ERROR, Activator.PLUGIN_ID,
 						UIText.GenerateHistoryJob_errorComputingHistory, e);
