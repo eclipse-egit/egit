@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <?pde?>
 <!-- generated with https://github.com/eclipse-cbi/targetplatform-dsl -->
-<target name="egit-4.41" sequenceNumber="1783730528">
+<target name="egit-4.41" sequenceNumber="1784069900">
   <locations>
     <location includeMode="slicer" includeAllPlatforms="false" includeSource="true" includeConfigurePhase="true" type="InstallableUnit">
       <unit id="org.eclipse.license.feature.group" version="0.0.0"/>
@@ -69,7 +69,7 @@
       <unit id="org.hamcrest.source" version="3.0.0"/>
       <unit id="org.junit" version="4.13.2.v20240929-1000"/>
       <unit id="org.junit.source" version="4.13.2.v20240929-1000"/>
-      <unit id="org.mortbay.jasper.mortbay-apache-jsp" version="9.0.118"/>
+      <unit id="org.mortbay.jasper.mortbay-apache-jsp" version="9.0.119"/>
       <unit id="org.objectweb.asm" version="9.10.1"/>
       <unit id="org.objectweb.asm.source" version="9.10.1"/>
       <unit id="org.objectweb.asm.commons" version="9.10.1"/>
@@ -345,25 +345,25 @@
         <dependency>
           <groupId>org.bouncycastle</groupId>
           <artifactId>bcpg-jdk18on</artifactId>
-          <version>1.84</version>
+          <version>1.85</version>
           <type>jar</type>
         </dependency>
         <dependency>
           <groupId>org.bouncycastle</groupId>
           <artifactId>bcprov-jdk18on</artifactId>
-          <version>1.84</version>
+          <version>1.85</version>
           <type>jar</type>
         </dependency>
         <dependency>
           <groupId>org.bouncycastle</groupId>
           <artifactId>bcpkix-jdk18on</artifactId>
-          <version>1.84</version>
+          <version>1.85</version>
           <type>jar</type>
         </dependency>
         <dependency>
           <groupId>org.bouncycastle</groupId>
           <artifactId>bcutil-jdk18on</artifactId>
-          <version>1.84</version>
+          <version>1.85</version>
           <type>jar</type>
         </dependency>
       </dependencies>
