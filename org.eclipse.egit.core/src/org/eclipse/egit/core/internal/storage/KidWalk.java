@@ -22,7 +22,7 @@ class KidWalk extends RevWalk {
 	}
 
 	@Override
-	protected RevCommit createCommit(final AnyObjectId id) {
-		return new KidCommit(id);
+	protected RevCommit createCommit(AnyObjectId id, int graphPos) {
+		return new KidCommit(id, graphPos);
 	}
 }

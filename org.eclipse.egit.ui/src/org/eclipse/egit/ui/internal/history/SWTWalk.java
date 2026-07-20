@@ -77,8 +77,8 @@ class SWTWalk extends PlotWalk {
 	}
 
 	@Override
-	protected RevCommit createCommit(final AnyObjectId id) {
-		return new SWTCommit(id, this);
+	protected RevCommit createCommit(AnyObjectId id, int graphPos) {
+		return new SWTCommit(id, this, graphPos);
 	}
 
 	private Ref determineHead() throws IOException {
