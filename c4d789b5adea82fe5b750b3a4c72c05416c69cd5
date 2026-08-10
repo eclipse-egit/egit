@@ -16,6 +16,23 @@
       "message": "This change is needed to allow EGits history view to load commits incrementally (Using the algorithm in Change I0a2115bfef7e73a299780a2c28ef5a01aa1d00e0).\n\nTo test incremental loading in EGit history view:\n - Recommended: Cherry pick Change I188a8f35553e00ce5b3866e254d114884dc30a68\n - Set the following git config options\n     git config core.commitgraph true\n     git config gc.writecommitgraph true\n     git config gc.writechangedpaths true\n     git config commitgraph.changedpaths true\n     git config -f ~/.config/jgit/config commitgraph.readchangedpaths true\n  - Generate a commit graph for a large repository (e.g. Linux Kernel)\n     git commit-graph write --changed-paths\n  - Set the RefFilter to \"Current Branch (Local and Remote)\"\n     - Including all tags and branches for large monorepos (like the Linux Kernel) still takes a long time to load the first batch of commits\n  - EGit History view should now immediately start listing commits\n     - Performance without a commit-graph on my machine was approximately 10 seconds loading time for the history view (using Linux Kernel Repository)",
       "revId": "c4d789b5adea82fe5b750b3a4c72c05416c69cd5",
       "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "cecb5450_4bc84c95",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1039063
+      },
+      "writtenOn": "2026-08-10T11:29:52Z",
+      "side": 1,
+      "message": "I only noticed one small inconsistency: `KidWalk` and `SWTWalk` drop the `final` modifier from the `id` parameter (`final AnyObjectId id` → `AnyObjectId id`), while `SWTCommit`\u0027s constructor keeps `final AnyObjectId id`.\n\nOther than that the change is sound, thank you @florian.schwabe@vector.com!\n\nNote for the reviewer: we have been using this commit in our patched version of EGit for the past month and it works as expected without producing any undesired effects.\n\nIt would be nice to get this one reviewed and merged so that we can get rid of the internal patch.",
+      "revId": "c4d789b5adea82fe5b750b3a4c72c05416c69cd5",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735"
     }
   ]
 }
