@@ -33,6 +33,24 @@
       "message": "I only noticed one small inconsistency: `KidWalk` and `SWTWalk` drop the `final` modifier from the `id` parameter (`final AnyObjectId id` → `AnyObjectId id`), while `SWTCommit`\u0027s constructor keeps `final AnyObjectId id`.\n\nOther than that the change is sound, thank you @florian.schwabe@vector.com!\n\nNote for the reviewer: we have been using this commit in our patched version of EGit for the past month and it works as expected without producing any undesired effects.\n\nIt would be nice to get this one reviewed and merged so that we can get rid of the internal patch.",
       "revId": "c4d789b5adea82fe5b750b3a4c72c05416c69cd5",
       "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "86eff695_a9ed709e",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1039306
+      },
+      "writtenOn": "2026-08-11T12:11:17Z",
+      "side": 1,
+      "message": "Done, removed the final modifier from the constructor parameters. Also rebased onto master",
+      "parentUuid": "cecb5450_4bc84c95",
+      "revId": "c4d789b5adea82fe5b750b3a4c72c05416c69cd5",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735"
     }
   ]
 }
