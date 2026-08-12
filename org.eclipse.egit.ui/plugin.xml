@@ -3776,10 +3776,8 @@
          </showInPart>
          <view
                id="org.eclipse.egit.ui.RepositoriesView"
-               minimized="false"
-               ratio="0.6"
-               relationship="bottom"
-               relative="org.eclipse.jdt.ui.PackageExplorer"
+               relationship="stack"
+               relative="org.eclipse.ui.views.ProblemView"
                visible="false">
          </view>
       </perspectiveExtension>
