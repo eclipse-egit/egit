@@ -34,6 +34,24 @@
       "parentUuid": "a450bd6a_bb82d547",
       "revId": "ec02f2bd6abfdaebef0e708ffc4b0cc676d09fd9",
       "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "83ad32ce_e2752b55",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1039063
+      },
+      "writtenOn": "2026-08-13T08:50:56Z",
+      "side": 1,
+      "message": "Hi Thomas,\nI just created another small changes in EGit (I7356ed4ec742510af00e1b90ed97497267a2a899) that works in the same class. Don\u0027t mind the conflict since the other change is really small and I can redo it once this change is merged.\n\nWould be nice if you could take a look at this change again though. That would make it easier for me to contribute future changes in the classes affected here (less conflicts to solve).\n\nYour comment about the table was addressed in `Patchset 4` and `Patchset 5` merely renames a variable, so it should be easy to resume your testing were you left it 🙂\n\nThank you in advance and have a nice day!",
+      "parentUuid": "e8f24896_d09f4324",
+      "revId": "ec02f2bd6abfdaebef0e708ffc4b0cc676d09fd9",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735"
     }
   ]
 }
