@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "4d10c2ea_0cf4e673",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1039063
+      },
+      "writtenOn": "2026-08-13T08:29:11Z",
+      "side": 1,
+      "message": "@matthias.sohn@sap.com the build fails because this change requires the new API that was introduced in https://eclipse.gerrithub.io/c/eclipse-jgit/jgit/+/1245170. The commit-text mentions this explicitly.",
+      "revId": "b03aa65edfd1bd2459462dd5485907f2a953ffab",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735"
+    }
+  ]
+}
