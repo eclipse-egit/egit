@@ -51,6 +51,24 @@
       "parentUuid": "cecb5450_4bc84c95",
       "revId": "c4d789b5adea82fe5b750b3a4c72c05416c69cd5",
       "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "f6e77b95_f99e5290",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1039063
+      },
+      "writtenOn": "2026-08-18T10:46:02Z",
+      "side": 1,
+      "message": "Great, thank you Florian!\n\nTo the reviewer (maybe @matthias.sohn@sap.com?), we\u0027ve been using this change for over a month inside our dev team and it works as expected without producing any regressions.",
+      "parentUuid": "86eff695_a9ed709e",
+      "revId": "c4d789b5adea82fe5b750b3a4c72c05416c69cd5",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735"
     }
   ]
 }
