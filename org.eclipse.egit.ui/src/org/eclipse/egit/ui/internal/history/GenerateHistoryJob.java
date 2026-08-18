@@ -20,6 +20,7 @@ import org.eclipse.core.runtime.Status;
 import org.eclipse.core.runtime.jobs.IJobChangeEvent;
 import org.eclipse.core.runtime.jobs.Job;
 import org.eclipse.core.runtime.jobs.JobChangeAdapter;
+import org.eclipse.egit.core.EclipseGitProgressTransformer;
 import org.eclipse.egit.core.RepositoryUtil;
 import org.eclipse.egit.ui.Activator;
 import org.eclipse.egit.ui.JobFamilies;
@@ -28,6 +29,7 @@ import org.eclipse.egit.ui.internal.UIText;
 import org.eclipse.egit.ui.internal.trace.GitTraceLocation;
 import org.eclipse.jface.resource.ResourceManager;
 import org.eclipse.jgit.annotations.NonNull;
+import org.eclipse.jgit.errors.CancelledException;
 import org.eclipse.jgit.revplot.PlotCommit;
 import org.eclipse.jgit.revwalk.RevCommit;
 import org.eclipse.jgit.revwalk.RevFlag;
@@ -86,6 +88,8 @@ class GenerateHistoryJob extends Job {
 				if (wantedIndex < 0 && commitToLoad != null
 						&& currCommit.getId().equals(commitToLoad.getId())) {
 					wantedIndex = index;
+					commitToShow = commitToLoad;
+					commitToLoad = null;
 				}
 			}
 		};
@@ -101,40 +105,31 @@ class GenerateHistoryJob extends Job {
 		IStatus status = Status.OK_STATUS;
 		int maxCommits = Activator.getDefault().getPreferenceStore()
 					.getInt(UIPreferences.HISTORY_MAX_NUM_COMMITS);
-		int chunk = maxCommits;
 		boolean incomplete = false;
-		boolean commitNotFound = false;
+		walk.setProgressMonitor(new EclipseGitProgressTransformer(monitor));
 		try {
 			if (trace)
 				GitTraceLocation.getTrace().traceEntry(
 						GitTraceLocation.HISTORYVIEW.getLocation());
-			final boolean loadIncrementally = !Activator.getDefault()
+
+			// When the search toolbar is displayed, the user might be searching
+			// for a commit that is yet to be fetched
+			final boolean findToolbarIsHidden = !Activator.getDefault()
 					.getPreferenceStore()
 					.getBoolean(UIPreferences.RESOURCEHISTORY_SHOW_FINDTOOLBAR);
 			int initialSize = loadedCommits.size();
 			try {
-				for (int oldsz = initialSize;;) {
+				do {
 					if (trace)
 						GitTraceLocation.getTrace().trace(
 								GitTraceLocation.HISTORYVIEW.getLocation(),
 								"Filling commit list"); //$NON-NLS-1$
 					if (commitToLoad != null) {
-						if (maxCommits > 0
-								&& loadedCommits.size() >= maxCommits) {
-							// We're still looking for a commit
-							maxCommits = loadedCommits.size() + Math
-									.min(Math.max(chunk, 1000), 10000);
-						}
-						loadedCommits.fillTo(commitToLoad, maxCommits);
-						commitToShow = commitToLoad;
-						boolean commitFound = wantedIndex >= 0;
-						if (commitFound) {
-							commitToLoad = null;
-						}
-						commitNotFound = !commitFound;
+						loadedCommits.fillTo(commitToLoad,
+								getNextMaximumCommitsCount());
 					} else {
-						loadedCommits.fillTo(oldsz + BATCH_SIZE - 1);
-						if (oldsz == loadedCommits.size()) {
+						loadedCommits.fillTo(getNextMaximumCommitsCount());
+						if (!loadedCommits.isPending()) {
 							forcedRedrawsAfterListIsCompleted++;
 							break;
 						}
@@ -143,25 +138,29 @@ class GenerateHistoryJob extends Job {
 						return Status.CANCEL_STATUS;
 					}
 					if (loadedCommits.size() > itemToLoad + (BATCH_SIZE / 2) + 1
-							&& loadIncrementally && !commitNotFound) {
+							&& findToolbarIsHidden && commitFound()) {
 						break;
 					}
 					if (maxCommits > 0 && loadedCommits.size() > maxCommits) {
-						if (!loadIncrementally) {
+						if (!findToolbarIsHidden) {
 							incomplete = true;
 						}
 						if (commitToLoad == null) {
 							break;
 						}
 					}
-					if (oldsz == loadedCommits.size()) {
+					if (!loadedCommits.isPending()) {
 						break;
 					}
-					oldsz = loadedCommits.size();
 					monitor.setTaskName(MessageFormat.format(
 							UIText.GenerateHistoryJob_taskFoundCommits,
-							Integer.valueOf(oldsz)));
-				}
+							Integer.valueOf(loadedCommits.size())));
+
+					updateUI(incomplete);
+				} while (commitToLoad != null && !commitFound()
+						&& loadedCommits.isPending());
+			} catch (CancelledException e) {
+				return Status.CANCEL_STATUS;
 			} catch (IOException e) {
 				status = new Status(IStatus.ERROR, Activator.PLUGIN_ID,
 						UIText.GenerateHistoryJob_errorComputingHistory, e);
@@ -177,17 +176,26 @@ class GenerateHistoryJob extends Job {
 				GitTraceLocation.getTrace().trace(
 						GitTraceLocation.HISTORYVIEW.getLocation(),
 						"Loaded " + loadedCommits.size() + " commits"); //$NON-NLS-1$ //$NON-NLS-2$
-			if (commitNotFound && !loadedCommits.isEmpty()) {
+			if (!commitFound() && !loadedCommits.isEmpty()) {
 				if (forcedRedrawsAfterListIsCompleted < 1
-						&& !loadIncrementally && hasMore) {
+						&& !findToolbarIsHidden && hasMore) {
 					page.setWarningTextInUIThread(this);
 				}
 				if (initialSize != loadedCommits.size()) {
 					updateUI(incomplete);
 				}
 			}
-			else
+			else {
 				updateUI(incomplete);
+			}
+
+			if (forcedRedrawsAfterListIsCompleted < 1 && !findToolbarIsHidden
+					&& hasMore) {
+				page.setWarningTextInUIThread(this);
+			} else {
+				page.clearWarningTextInUIThread(this);
+			}
+
 		} finally {
 			monitor.done();
 			if (trace)
@@ -195,6 +203,14 @@ class GenerateHistoryJob extends Job {
 						GitTraceLocation.HISTORYVIEW.getLocation());
 		}
 		return status;
+	}
+
+	private int getNextMaximumCommitsCount() {
+		return loadedCommits.size() + BATCH_SIZE - 1;
+	}
+
+	private boolean commitFound() {
+		return wantedIndex >= 0;
 	}
 
 	private void updateUI(boolean incomplete) {
@@ -210,7 +226,7 @@ class GenerateHistoryJob extends Job {
 				forcedRedrawsAfterListIsCompleted++;
 			final SWTCommit[] asArray = new SWTCommit[loadedCommits.size()];
 			loadedCommits.toArray(asArray);
-			page.showCommitList(this, loadedCommits, asArray, commitToShow, incomplete, highlightFlag);
+			page.showCommitList(this, loadedCommits, asArray, commitToShow, highlightFlag);
 			commitToShow = null;
 			lastUpdateCnt = loadedCommits.size();
 		} finally {
@@ -254,6 +270,9 @@ class GenerateHistoryJob extends Job {
 
 	void setLoadHint(final RevCommit c) {
 		commitToLoad = c;
+		if (c == null) {
+			wantedIndex = -1;
+		}
 	}
 
 	void setShowHint(final RevCommit c) {
