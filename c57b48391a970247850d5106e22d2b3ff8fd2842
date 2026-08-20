@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "0ee921ba_cff05f56",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1012795
+      },
+      "writtenOn": "2026-08-20T09:09:46Z",
+      "side": 1,
+      "message": "Using this change since a few weeks in a custom builds, works fine and significantly improve open / close with Git repository view (which is a frequent action for me).",
+      "revId": "c57b48391a970247850d5106e22d2b3ff8fd2842",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735"
+    }
+  ]
+}
