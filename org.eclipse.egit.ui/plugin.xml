@@ -2696,6 +2696,25 @@
          </activeWhen>
       </handler>
       <handler
+            commandId="org.eclipse.egit.ui.RepositoriesViewCloseProjectsOutsideRepository">
+         <class
+               class="org.eclipse.egit.ui.internal.repository.tree.command.CloseProjectsOutsideRepositoryCommand">
+         </class>
+         <activeWhen>
+            <and>
+               <count
+                     value="1">
+               </count>
+               <iterate>
+                  <instanceof
+                        value="org.eclipse.egit.ui.internal.repository.tree.RepositoryNode">
+                  </instanceof>
+                  <test property="GitRepository.isBare" value="false" />
+               </iterate>
+            </and>
+         </activeWhen>
+      </handler>
+      <handler
             commandId="org.eclipse.egit.ui.RepositoriesViewCreateBranch">
          <class
                class="org.eclipse.egit.ui.internal.repository.tree.command.CreateBranchCommand">
@@ -5628,6 +5647,12 @@
                   style="push">
                <visibleWhen checkEnabled="true" />
             </command>
+            <command
+                  commandId="org.eclipse.egit.ui.RepositoriesViewCloseProjectsOutsideRepository"
+                  label="%RepoViewCloseProjectsOutsideRepository.label"
+                  style="push">
+               <visibleWhen checkEnabled="true" />
+            </command>
          </menu>
          <command
                commandId="org.eclipse.egit.ui.team.RenameBranch"
@@ -6912,6 +6937,12 @@
             id="org.eclipse.egit.ui.RepositoriesViewOpenAllProjects"
             name="%OpenAllProjectsCommand"
             description="%OpenAllProjectsCommand_description">
+      </command>
+      <command
+            categoryId="org.eclipse.egit.ui.commandCategory"
+            id="org.eclipse.egit.ui.RepositoriesViewCloseProjectsOutsideRepository"
+            name="%CloseProjectsOutsideRepositoryCommand"
+            description="%CloseProjectsOutsideRepositoryCommand_description">
       </command>
       <command
             categoryId="org.eclipse.egit.ui.commandCategory"
