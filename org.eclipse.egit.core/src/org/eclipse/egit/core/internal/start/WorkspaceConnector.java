@@ -17,11 +17,10 @@ import java.io.File;
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 import java.text.MessageFormat;
-import java.util.HashMap;
+import java.util.ArrayList;
 import java.util.LinkedHashSet;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Map;
 import java.util.Set;
 
 import org.eclipse.core.resources.IProject;
@@ -285,14 +284,14 @@ public class WorkspaceConnector {
 				return Status.OK_STATUS;
 			}
 
-			final Map<IProject, File> projects = new HashMap<>();
+			final List<RepositoryMapping> mappings = new ArrayList<>();
 			for (IProject project : projectsToCheck) {
 				if (monitor.isCanceled()) {
 					return Status.CANCEL_STATUS;
 				}
 				if (project.isAccessible()) {
 					try {
-						visitConnect(project, projects);
+						visitConnect(project, mappings);
 					} catch (CoreException e) {
 						ILog.of(CheckProjectsToShare.class)
 								.error(e.getMessage(), e);
@@ -302,9 +301,9 @@ public class WorkspaceConnector {
 			if (monitor.isCanceled()) {
 				return Status.CANCEL_STATUS;
 			}
-			if (projects.size() > 0) {
+			if (!mappings.isEmpty()) {
 				ConnectProviderOperation op = new ConnectProviderOperation(
-						projects);
+						mappings);
 				op.setRefreshResources(false);
 				JobUtil.scheduleUserJob(op, CoreText.Activator_AutoShareJobName,
 						JobFamilies.AUTO_SHARE);
@@ -313,7 +312,7 @@ public class WorkspaceConnector {
 		}
 
 		private void visitConnect(IProject project,
-				final Map<IProject, File> projects) throws CoreException {
+				final List<RepositoryMapping> toConnect) throws CoreException {
 
 			if (RepositoryMapping.getMapping(project) != null) {
 				return;
@@ -340,7 +339,7 @@ public class WorkspaceConnector {
 
 			// connect
 			File repositoryDir = gitDirPath.toFile();
-			projects.put(project, repositoryDir);
+			toConnect.add(m);
 
 			Set<String> configured = RepositoryUtil.INSTANCE.getRepositories();
 			if (configured.contains(gitDirPath.toString())) {

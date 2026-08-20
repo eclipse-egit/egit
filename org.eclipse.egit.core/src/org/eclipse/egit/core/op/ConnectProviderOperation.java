@@ -69,6 +69,8 @@ import org.eclipse.team.core.RepositoryProvider;
 public class ConnectProviderOperation implements IEGitOperation {
 	private final Map<IProject, File> projects = new LinkedHashMap<>();
 
+	private final Map<IProject, RepositoryMapping> knownMappings = new LinkedHashMap<>();
+
 	private boolean refreshResources = true;
 
 	/**
@@ -106,6 +108,27 @@ public class ConnectProviderOperation implements IEGitOperation {
 		this.projects.putAll(projects);
 	}
 
+	/**
+	 * Create a new connection operation for projects whose repository mapping
+	 * is already known, so that it does not have to be determined again.
+	 *
+	 * @param mappings
+	 *            mappings of the projects to connect; mappings without a
+	 *            project or without an absolute git directory are ignored
+	 */
+	public ConnectProviderOperation(
+			final Collection<RepositoryMapping> mappings) {
+		for (RepositoryMapping mapping : mappings) {
+			IContainer container = mapping.getContainer();
+			IPath gitDir = mapping.getGitDirAbsolutePath();
+			if (container instanceof IProject && gitDir != null) {
+				IProject project = (IProject) container;
+				projects.put(project, gitDir.toFile());
+				knownMappings.put(project, mapping);
+			}
+		}
+	}
+
 	@Override
 	public void execute(IProgressMonitor m) throws CoreException {
 		SubMonitor progress = SubMonitor.convert(m,
@@ -134,24 +157,30 @@ public class ConnectProviderOperation implements IEGitOperation {
 					.trace(GitTraceLocation.CORE.getLocation(), taskName);
 		}
 
-		RepositoryFinder finder = new RepositoryFinder(project);
-		finder.setFindInChildren(false);
-		Collection<RepositoryMapping> repos = finder.find(subMon.newChild(50));
-		if (repos.isEmpty()) {
-			ms.add(Activator.error(NLS.bind(
-					CoreText.ConnectProviderOperation_NoRepositoriesError,
-					project.getName()), null));
-			return;
-		}
-		RepositoryMapping actualMapping = findActualRepository(repos,
-				entry.getValue());
+		RepositoryMapping actualMapping = knownMappings.get(project);
 		if (actualMapping == null) {
-			ms.add(Activator.error(NLS.bind(
-					CoreText.ConnectProviderOperation_UnexpectedRepositoryError,
-					new Object[] { project.getName(),
-							entry.getValue().toString(), repos.toString() }),
-					null));
-			return;
+			RepositoryFinder finder = new RepositoryFinder(project);
+			finder.setFindInChildren(false);
+			Collection<RepositoryMapping> repos = finder
+					.find(subMon.newChild(50));
+			if (repos.isEmpty()) {
+				ms.add(Activator.error(NLS.bind(
+						CoreText.ConnectProviderOperation_NoRepositoriesError,
+						project.getName()), null));
+				return;
+			}
+			actualMapping = findActualRepository(repos, entry.getValue());
+			if (actualMapping == null) {
+				ms.add(Activator.error(NLS.bind(
+						CoreText.ConnectProviderOperation_UnexpectedRepositoryError,
+						new Object[] { project.getName(),
+								entry.getValue().toString(),
+								repos.toString() }),
+						null));
+				return;
+			}
+		} else {
+			subMon.worked(50);
 		}
 		GitProjectData projectData = new GitProjectData(project);
 		try {
