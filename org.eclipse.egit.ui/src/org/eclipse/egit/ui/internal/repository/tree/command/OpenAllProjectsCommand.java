@@ -14,7 +14,9 @@ package org.eclipse.egit.ui.internal.repository.tree.command;
 
 import java.text.MessageFormat;
 import java.util.ArrayList;
+import java.util.LinkedHashSet;
 import java.util.List;
+import java.util.Set;
 
 import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.commands.ExecutionException;
@@ -32,34 +34,27 @@ import org.eclipse.core.runtime.SubMonitor;
 import org.eclipse.egit.core.internal.util.ProjectUtil;
 import org.eclipse.egit.ui.Activator;
 import org.eclipse.egit.ui.internal.UIText;
-import org.eclipse.egit.ui.internal.repository.tree.RepositoryNode;
 import org.eclipse.egit.ui.internal.repository.tree.RepositoryTreeNode;
 import org.eclipse.jgit.lib.Repository;
 
 /**
- * Opens all closed projects belonging to the selected repository.
+ * Opens all closed projects belonging to the selected repositories.
  */
 public class OpenAllProjectsCommand
 		extends RepositoriesViewCommandHandler<RepositoryTreeNode> {
 
 	@Override
 	public Object execute(ExecutionEvent event) throws ExecutionException {
-		List<RepositoryTreeNode> nodes = getSelectedNodes(event);
-		if (nodes.isEmpty()) {
+		List<Repository> repositories = getRepositoriesOfNodes(
+				getSelectedNodes(event));
+		if (repositories.isEmpty()) {
 			return null;
 		}
-		Repository repository = nodes.get(0).getRepository();
-		if (repository == null || repository.isBare()) {
-			return null;
-		}
-		List<IProject> closedProjects = getClosedProjectsInRepository(
-				repository);
+		List<IProject> closedProjects = getClosedProjects(repositories);
 		if (closedProjects.isEmpty()) {
 			return null;
 		}
-		WorkspaceJob job = new WorkspaceJob(MessageFormat.format(
-				UIText.OpenAllProjectsCommand_jobTitle,
-				repository.getWorkTree().getName())) {
+		WorkspaceJob job = new WorkspaceJob(getJobTitle(repositories)) {
 			@Override
 			public IStatus runInWorkspace(IProgressMonitor monitor)
 					throws CoreException {
@@ -89,32 +84,36 @@ public class OpenAllProjectsCommand
 
 	@Override
 	public boolean isEnabled() {
-		List<RepositoryTreeNode> nodes = getSelectedNodes();
-		if (nodes.size() != 1) {
-			return false;
-		}
-		RepositoryTreeNode node = nodes.get(0);
-		if (!(node instanceof RepositoryNode)) {
-			return false;
-		}
-		Repository repository = node.getRepository();
-		if (repository == null || repository.isBare()) {
-			return false;
-		}
-		return !getClosedProjectsInRepository(repository).isEmpty();
+		List<Repository> repositories = getRepositoriesOfNodes(
+				getSelectedNodes());
+		return !repositories.isEmpty()
+				&& !getClosedProjects(repositories).isEmpty();
 	}
 
-	private List<IProject> getClosedProjectsInRepository(
-			Repository repository) {
-		IPath repoPath = new Path(
-				repository.getWorkTree().getAbsolutePath());
-		IProject[] allInRepo = ProjectUtil.getProjectsUnderPath(repoPath);
-		List<IProject> closed = new ArrayList<>();
-		for (IProject project : allInRepo) {
-			if (!project.isOpen()) {
-				closed.add(project);
+	private static List<IProject> getClosedProjects(
+			List<Repository> repositories) {
+		// Nested repositories may report the same project more than once.
+		Set<IProject> closed = new LinkedHashSet<>();
+		for (Repository repository : repositories) {
+			IPath repoPath = new Path(
+					repository.getWorkTree().getAbsolutePath());
+			for (IProject project : ProjectUtil
+					.getProjectsUnderPath(repoPath)) {
+				if (!project.isOpen()) {
+					closed.add(project);
+				}
 			}
 		}
-		return closed;
+		return new ArrayList<>(closed);
+	}
+
+	private static String getJobTitle(List<Repository> repositories) {
+		if (repositories.size() == 1) {
+			return MessageFormat.format(UIText.OpenAllProjectsCommand_jobTitle,
+					repositories.get(0).getWorkTree().getName());
+		}
+		return MessageFormat.format(
+				UIText.OpenAllProjectsCommand_jobTitleMultiple,
+				Integer.valueOf(repositories.size()));
 	}
 }

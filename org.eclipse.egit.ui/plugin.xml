@@ -2665,7 +2665,7 @@
          <activeWhen>
             <and>
                <count
-                     value="1">
+                     value="+">
                </count>
                <iterate>
                   <instanceof
@@ -2684,7 +2684,7 @@
          <activeWhen>
             <and>
                <count
-                     value="1">
+                     value="+">
                </count>
                <iterate>
                   <instanceof
@@ -2703,7 +2703,7 @@
          <activeWhen>
             <and>
                <count
-                     value="1">
+                     value="+">
                </count>
                <iterate>
                   <instanceof
@@ -5622,6 +5622,17 @@
                      <iterate>
                         <instanceof
                               value="org.eclipse.egit.ui.internal.repository.tree.FolderNode">
+                        </instanceof>
+                        <test property="GitRepository.isBare" value="false" />
+                     </iterate>
+                  </and>
+                  <and>
+                     <count
+                           value="+">
+                     </count>
+                     <iterate>
+                        <instanceof
+                              value="org.eclipse.egit.ui.internal.repository.tree.RepositoryNode">
                         </instanceof>
                         <test property="GitRepository.isBare" value="false" />
                      </iterate>
