@@ -10,12 +10,11 @@
  *******************************************************************************/
 package org.eclipse.egit.ui.internal.clone;
 
-import java.io.File;
 import java.lang.reflect.InvocationTargetException;
 import java.text.MessageFormat;
+import java.util.ArrayList;
 import java.util.Collection;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.List;
 import java.util.Set;
 
 import org.eclipse.core.resources.IProject;
@@ -93,7 +92,7 @@ public class ProjectUtils {
 				if (actMonitor.isCanceled()) {
 					throw new OperationCanceledException();
 				}
-				Map<IProject, File> projectsToConnect = new HashMap<>();
+				List<RepositoryMapping> mappingsToConnect = new ArrayList<>();
 				SubMonitor progress = SubMonitor.convert(actMonitor,
 						projectsToCreate.size() * 2 + 1);
 				for (ProjectRecord projectRecord : projectsToCreate) {
@@ -112,12 +111,7 @@ public class ProjectUtils {
 					Collection<RepositoryMapping> mappings = finder
 							.find(progress.newChild(1));
 					if (!mappings.isEmpty()) {
-						RepositoryMapping mapping = mappings.iterator().next();
-						IPath absolutePath = mapping.getGitDirAbsolutePath();
-						if (absolutePath != null) {
-							projectsToConnect.put(project,
-									absolutePath.toFile());
-						}
+						mappingsToConnect.add(mappings.iterator().next());
 					}
 
 					if (selectedWorkingSets != null
@@ -127,9 +121,9 @@ public class ProjectUtils {
 					}
 				}
 
-				if (!projectsToConnect.isEmpty()) {
+				if (!mappingsToConnect.isEmpty()) {
 					ConnectProviderOperation connect = new ConnectProviderOperation(
-							projectsToConnect);
+							mappingsToConnect);
 					connect.execute(progress.newChild(1));
 				}
 			}
