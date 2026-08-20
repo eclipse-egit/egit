@@ -6564,16 +6564,28 @@ public class UIText extends NLS {
 	public static String CloseAllProjectsCommand_jobTitle;
 
 	/** */
+	public static String CloseAllProjectsCommand_jobTitleMultiple;
+
+	/** */
 	public static String OpenAllProjectsCommand_jobTitle;
 
 	/** */
+	public static String OpenAllProjectsCommand_jobTitleMultiple;
+
+	/** */
 	public static String CloseProjectsOutsideRepositoryCommand_jobTitle;
+
+	/** */
+	public static String CloseProjectsOutsideRepositoryCommand_jobTitleMultiple;
 
 	/** */
 	public static String CloseProjectsOutsideRepositoryCommand_confirmTitle;
 
 	/** */
 	public static String CloseProjectsOutsideRepositoryCommand_confirmMessage;
+
+	/** */
+	public static String CloseProjectsOutsideRepositoryCommand_confirmMessageMultiple;
 
 	static {
 		initializeMessages(BUNDLE_NAME, UIText.class);

@@ -32,6 +32,7 @@ import org.eclipse.egit.ui.internal.repository.RepositoriesView;
 import org.eclipse.egit.ui.internal.repository.tree.FileNode;
 import org.eclipse.egit.ui.internal.repository.tree.FolderNode;
 import org.eclipse.egit.ui.internal.repository.tree.RepositoryGroupNode;
+import org.eclipse.egit.ui.internal.repository.tree.RepositoryNode;
 import org.eclipse.egit.ui.internal.repository.tree.RepositoryTreeNode;
 import org.eclipse.egit.ui.internal.repository.tree.WorkingDirNode;
 import org.eclipse.egit.ui.internal.selection.SelectionRepositoryStateCache;
@@ -69,6 +70,32 @@ abstract class RepositoriesViewCommandHandler<T extends RepositoryTreeNode<?>>
 			this.evaluationContext = (IEvaluationContext) evaluationContext;
 		else
 			this.evaluationContext = null;
+	}
+
+	/**
+	 * Returns the non-bare repositories of the given nodes.
+	 *
+	 * @param nodes
+	 *            to get the repositories of
+	 * @return the repositories, or an empty list if the nodes are empty or
+	 *         contain anything but non-bare repository nodes
+	 */
+	protected static List<Repository> getRepositoriesOfNodes(List<?> nodes) {
+		if (nodes.isEmpty()) {
+			return Collections.emptyList();
+		}
+		List<Repository> repositories = new ArrayList<>(nodes.size());
+		for (Object node : nodes) {
+			if (!(node instanceof RepositoryNode)) {
+				return Collections.emptyList();
+			}
+			Repository repository = ((RepositoryNode) node).getRepository();
+			if (repository == null || repository.isBare()) {
+				return Collections.emptyList();
+			}
+			repositories.add(repository);
+		}
+		return repositories;
 	}
 
 	public RepositoryGroup getSelectedRepositoryGroup(ExecutionEvent event)
