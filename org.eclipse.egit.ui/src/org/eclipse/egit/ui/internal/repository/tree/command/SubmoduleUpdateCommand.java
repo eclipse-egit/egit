@@ -29,8 +29,10 @@ import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.core.runtime.SubMonitor;
 import org.eclipse.core.runtime.jobs.Job;
+import org.eclipse.core.runtime.jobs.MultiRule;
 import org.eclipse.egit.core.RepositoryCache;
 import org.eclipse.egit.core.RepositoryUtil;
+import org.eclipse.egit.core.internal.job.RuleUtil;
 import org.eclipse.egit.core.op.SubmoduleUpdateOperation;
 import org.eclipse.egit.ui.Activator;
 import org.eclipse.egit.ui.JobFamilies;
@@ -52,10 +54,10 @@ public class SubmoduleUpdateCommand extends
 	public Object execute(ExecutionEvent event) throws ExecutionException {
 		final Map<Repository, List<String>> repoPaths = getSubmodules(getSelectedNodes(event));
 		if (!repoPaths.isEmpty()) {
+			List<Repository> subRepos = new ArrayList<>();
 			// Check for uncommitted changes in submodules.
 			try {
 				boolean submodulesNodeSelected = false;
-				List<Repository> subRepos = new ArrayList<>();
 				// If Submodules node is selected, check all submodules.
 				for (RepositoryTreeNode<?> node : getSelectedNodes(event)) {
 					if (node.getType() == RepositoryTreeNodeType.SUBMODULES) {
@@ -130,7 +132,7 @@ public class SubmoduleUpdateCommand extends
 							op.execute(progress.newChild(1));
 						}
 					} catch (CoreException e) {
-						Activator.logError(
+						return Activator.createErrorStatus(
 								UIText.SubmoduleUpdateCommand_UpdateError, e);
 					}
 					return Status.OK_STATUS;
@@ -144,7 +146,12 @@ public class SubmoduleUpdateCommand extends
 				}
 			};
 			job.setUser(true);
-			job.setRule(ResourcesPlugin.getWorkspace().getRoot());
+			// Include the submodules so that this job cannot run concurrently
+			// with a discard or stash job that the cleanup dialog above may
+			// have scheduled on a submodule not present as workspace project.
+			job.setRule(MultiRule.combine(
+					ResourcesPlugin.getWorkspace().getRoot(),
+					RuleUtil.getRuleForRepositories(subRepos)));
 			job.schedule();
 		}
 		return null;
