@@ -19,12 +19,16 @@ import java.util.List;
 import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.commands.ExecutionException;
 import org.eclipse.core.resources.IProject;
+import org.eclipse.core.resources.IResourceRuleFactory;
+import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.resources.WorkspaceJob;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.core.runtime.SubMonitor;
+import org.eclipse.core.runtime.jobs.ISchedulingRule;
+import org.eclipse.core.runtime.jobs.MultiRule;
 import org.eclipse.egit.core.internal.util.ProjectUtil;
 import org.eclipse.egit.ui.Activator;
 import org.eclipse.egit.ui.internal.UIText;
@@ -58,6 +62,14 @@ public class CloseAllProjectsCommand
 		if (openProjects.isEmpty()) {
 			return null;
 		}
+		// Without a rule every close is a separate workspace operation that
+		// lets conflicting jobs interleave.
+		IResourceRuleFactory factory = ResourcesPlugin.getWorkspace()
+				.getRuleFactory();
+		ISchedulingRule rule = null;
+		for (IProject project : openProjects) {
+			rule = MultiRule.combine(rule, factory.modifyRule(project));
+		}
 		WorkspaceJob job = new WorkspaceJob(MessageFormat.format(
 				UIText.CloseAllProjectsCommand_jobTitle,
 				repository.getWorkTree().getName())) {
@@ -79,6 +91,7 @@ public class CloseAllProjectsCommand
 				return Status.OK_STATUS;
 			}
 		};
+		job.setRule(rule);
 		job.setUser(true);
 		job.schedule();
 		return null;
