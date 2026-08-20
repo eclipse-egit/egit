@@ -36,6 +36,7 @@ import org.eclipse.jgit.api.Git;
 import org.eclipse.jgit.api.SubmoduleInitCommand;
 import org.eclipse.jgit.api.SubmoduleUpdateCommand;
 import org.eclipse.jgit.api.errors.GitAPIException;
+import org.eclipse.jgit.api.errors.JGitInternalException;
 import org.eclipse.jgit.lib.AnyObjectId;
 import org.eclipse.jgit.lib.Repository;
 import org.eclipse.jgit.merge.MergeStrategy;
@@ -140,9 +141,9 @@ public class SubmoduleUpdateOperation implements IEGitOperation {
 							refreshMonitor.worked(1);
 						}
 					}
-				} catch (GitAPIException | IOException e) {
-					throw new TeamException(e.getLocalizedMessage(),
-							e.getCause());
+				} catch (GitAPIException | JGitInternalException
+						| IOException e) {
+					throw new TeamException(e.getLocalizedMessage(), e);
 				} finally {
 					if (updated != null && !updated.isEmpty()) {
 						repository.notifyIndexChanged(true);
