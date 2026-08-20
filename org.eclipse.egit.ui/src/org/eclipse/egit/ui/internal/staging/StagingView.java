@@ -64,6 +64,7 @@ import org.eclipse.core.runtime.preferences.IEclipsePreferences.IPreferenceChang
 import org.eclipse.core.runtime.preferences.IEclipsePreferences.PreferenceChangeEvent;
 import org.eclipse.core.runtime.preferences.InstanceScope;
 import org.eclipse.egit.core.AdapterUtils;
+import org.eclipse.egit.core.RepositoryCache;
 import org.eclipse.egit.core.RepositoryUtil;
 import org.eclipse.egit.core.UnitOfWork;
 import org.eclipse.egit.core.internal.Utils;
@@ -194,6 +195,7 @@ import org.eclipse.jgit.lib.Ref;
 import org.eclipse.jgit.lib.Repository;
 import org.eclipse.jgit.lib.RepositoryState;
 import org.eclipse.jgit.revwalk.RevCommit;
+import org.eclipse.jgit.submodule.SubmoduleWalk;
 import org.eclipse.jgit.transport.RemoteConfig;
 import org.eclipse.jgit.util.StringUtils;
 import org.eclipse.swt.SWT;
@@ -3302,8 +3304,10 @@ public class StagingView extends ViewPart
 				|| !(selection.getFirstElement() instanceof StagingEntry))
 			return;
 		StagingEntry stagingEntry = (StagingEntry) selection.getFirstElement();
-		if (stagingEntry.isSubmodule())
+		if (stagingEntry.isSubmodule()) {
+			showSubmodule(stagingEntry);
 			return;
+		}
 		switch (stagingEntry.getState()) {
 		case ADDED:
 		case CHANGED:
@@ -4001,6 +4005,52 @@ public class StagingView extends ViewPart
 			@Override
 			public boolean shouldRun() {
 				return shouldUpdateSelection();
+			}
+		};
+		job.setSystem(true);
+		schedule(job, false);
+	}
+
+	// Switches the view to the submodule's repository so that its changes can
+	// be staged and committed there.
+	private void showSubmodule(StagingEntry entry) {
+		Repository parent = entry.getRepository();
+		String path = entry.getPath();
+		if (parent == null || path == null) {
+			return;
+		}
+		Job.getJobManager().cancel(JobFamilies.UPDATE_SELECTION);
+		Job job = new Job(UIText.StagingView_GetRepo) {
+			@Override
+			protected IStatus run(IProgressMonitor monitor) {
+				if (monitor.isCanceled()) {
+					return Status.CANCEL_STATUS;
+				}
+				Repository submodule;
+				try (Repository opened = SubmoduleWalk
+						.getSubmoduleRepository(parent, path)) {
+					if (opened == null) {
+						// Not cloned or not initialized yet
+						return Status.OK_STATUS;
+					}
+					submodule = RepositoryCache.INSTANCE
+							.lookupRepository(opened.getDirectory());
+				} catch (IOException e) {
+					return Activator.createErrorStatus(e.getLocalizedMessage(),
+							e);
+				}
+				if (submodule != currentRepository) {
+					if (monitor.isCanceled()) {
+						return Status.CANCEL_STATUS;
+					}
+					reload(submodule);
+				}
+				return Status.OK_STATUS;
+			}
+
+			@Override
+			public boolean belongsTo(Object family) {
+				return JobFamilies.UPDATE_SELECTION == family;
 			}
 		};
 		job.setSystem(true);
