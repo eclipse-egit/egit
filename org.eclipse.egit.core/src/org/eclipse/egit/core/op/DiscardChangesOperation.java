@@ -42,6 +42,7 @@ import org.eclipse.egit.core.internal.util.ResourceUtil;
 import org.eclipse.jgit.api.CheckoutCommand;
 import org.eclipse.jgit.api.Git;
 import org.eclipse.jgit.api.errors.GitAPIException;
+import org.eclipse.jgit.api.errors.JGitInternalException;
 import org.eclipse.jgit.lib.Repository;
 
 /**
@@ -214,7 +215,7 @@ public class DiscardChangesOperation implements IEGitOperation {
 
 			try {
 				discardChanges(repository, paths, progress.newChild(1));
-			} catch (GitAPIException e) {
+			} catch (GitAPIException | JGitInternalException e) {
 				errorOccurred = true;
 				ILog.of(getClass()).error(
 						CoreText.DiscardChangesOperation_discardFailed, e);
