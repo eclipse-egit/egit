@@ -22,6 +22,7 @@ import org.eclipse.jface.action.Separator;
 import org.eclipse.jface.commands.ActionHandler;
 import org.eclipse.jface.text.ITextOperationTarget;
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Event;
 import org.eclipse.swt.widgets.Listener;
@@ -209,9 +210,12 @@ public final class ActionUtils {
 	 * <p>
 	 * If {@code focusOnly} is {@code false}, the actions will also be
 	 * de-registered when the control receives a deactivation event
-	 * ({@link SWT#Deactivate}). However, the actions will <em>not</em> be
-	 * re-registered on {@code SWT.Activate} to avoid handler conflicts that can
-	 * occur in some cases. See
+	 * ({@link SWT#Deactivate}), and re-registered on {@link SWT#Activate}, or
+	 * on {@link SWT#Show} of the control or one of its ancestors, if the
+	 * control still has the focus and was deactivated while focused. Handlers
+	 * are never left registered while the control does not have the focus;
+	 * otherwise several controls of the same part could contribute conflicting
+	 * handlers for the same command. See
 	 * <a href="https://bugs.eclipse.org/bugs/show_bug.cgi?id=536645">bug
 	 * 536645</a>.
 	 * </p>
@@ -235,52 +239,111 @@ public final class ActionUtils {
 
 			private Collection<IHandlerActivation> handlerActivations = new ArrayList<>();
 
+			/** Ancestors listened to for {@link SWT#Show}. */
+			private final Collection<Composite> ancestors = new ArrayList<>();
+
+			// Set when the control was deactivated while it still had the
+			// focus, i.e., when it may not get an SWT.FocusIn to restore the
+			// handlers.
+			private boolean deactivatedWhileFocused;
+
 			@Override
 			public void handleEvent(Event event) {
+				if (control.isDisposed()) {
+					return;
+				}
 				switch (event.type) {
 				case SWT.Deactivate:
-					if (control.isFocusControl()) {
-						// e4 reparents a hidden part's controls onto an
-						// off-screen shell (e.g. on a perspective switch),
-						// firing SWT.Deactivate while the control still has the
-						// focus. Deregistering then would leave the handlers
-						// disabled with no SWT.FocusIn to restore them. Only
-						// react to a real deactivation. See bug 536645.
+					// e4 parks a hidden part's controls on an off-screen shell
+					// (e.g., on a perspective switch), firing SWT.Deactivate
+					// while the control still has the focus. In that case no
+					// SWT.FocusIn arrives when the part comes back, so remember
+					// to re-register on SWT.Activate or SWT.Show.
+					deactivatedWhileFocused = control.isFocusControl();
+					deregister();
+					break;
+				case SWT.FocusOut:
+					deactivatedWhileFocused = false;
+					deregister();
+					break;
+				case SWT.Dispose:
+					deactivatedWhileFocused = false;
+					deregister();
+					unhookAncestors();
+					break;
+				case SWT.Activate:
+				case SWT.Show:
+					if (!deactivatedWhileFocused || !control.isFocusControl()) {
 						break;
 					}
 					//$FALL-THROUGH$
-				case SWT.FocusOut:
-				case SWT.Dispose:
-					if (!handlerActivations.isEmpty()) {
-						service.deactivateHandlers(handlerActivations);
-						handlerActivations.clear();
-					}
-					break;
 				case SWT.FocusIn:
-					if (!handlerActivations.isEmpty()) {
-						// Looks like sometimes we get two focusGained events.
-						return;
-					}
-					for (IAction action : actions) {
-						if (action != null) {
-							handlerActivations.add(service.activateHandler(
-									action.getActionDefinitionId(),
-									new ActionHandler(action), expression,
-									false));
-							if (action instanceof IUpdate) {
-								((IUpdate) action).update();
-							}
-						}
-					}
+					deactivatedWhileFocused = false;
+					register();
 					break;
 				default:
 					break;
+				}
+			}
+
+			/**
+			 * Listens for {@link SWT#Show} on the current ancestors: e4 parks a
+			 * hidden part by reparenting a composite above the control, which
+			 * gets no event of its own when the part is shown again. The chain
+			 * is re-determined whenever the handlers are registered; the part
+			 * may have been moved to another stack in the meantime.
+			 */
+			private void hookAncestors() {
+				unhookAncestors();
+				for (Composite parent = control
+						.getParent(); parent != null; parent = parent
+								.getParent()) {
+					parent.addListener(SWT.Show, this);
+					ancestors.add(parent);
+				}
+			}
+
+			private void unhookAncestors() {
+				for (Composite parent : ancestors) {
+					if (!parent.isDisposed()) {
+						parent.removeListener(SWT.Show, this);
+					}
+				}
+				ancestors.clear();
+			}
+
+			private void deregister() {
+				if (!handlerActivations.isEmpty()) {
+					service.deactivateHandlers(handlerActivations);
+					handlerActivations.clear();
+				}
+			}
+
+			private void register() {
+				if (!handlerActivations.isEmpty()) {
+					// Looks like sometimes we get two focusGained events.
+					return;
+				}
+				if (!focusOnly) {
+					hookAncestors();
+				}
+				for (IAction action : actions) {
+					if (action != null) {
+						handlerActivations.add(service.activateHandler(
+								action.getActionDefinitionId(),
+								new ActionHandler(action), expression, false));
+						if (action instanceof IUpdate) {
+							((IUpdate) action).update();
+						}
+					}
 				}
 			}
 		}
 		ActivationListener activationListener = new ActivationListener();
 		if (!focusOnly) {
 			control.addListener(SWT.Deactivate, activationListener);
+			control.addListener(SWT.Activate, activationListener);
+			control.addListener(SWT.Show, activationListener);
 		}
 		control.addListener(SWT.FocusOut, activationListener);
 		control.addListener(SWT.FocusIn, activationListener);
