@@ -1,4 +1,22 @@
 {
-  "comments": [],
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "065d7fae_8a6cf76c",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1012795
+      },
+      "writtenOn": "2026-08-21T16:47:39Z",
+      "side": 1,
+      "message": "Merged to avoid an Exception at runtime in Eclipse (testet under Linux).",
+      "revId": "2ffab127fb7d4934747b17664125a86eec7c3ab5",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735"
+    }
+  ],
   "submitRequirementResults": []
 }
