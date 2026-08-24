@@ -11,6 +11,7 @@
 package org.eclipse.egit.ui.internal.actions;
 
 import static org.eclipse.jgit.lib.Constants.HEAD;
+import static org.eclipse.jgit.lib.Constants.OBJ_COMMIT;
 import static org.eclipse.jgit.lib.Constants.R_REFS;
 import static org.eclipse.jgit.lib.Constants.R_TAGS;
 
@@ -38,12 +39,10 @@ import org.eclipse.jface.wizard.WizardDialog;
 import org.eclipse.jgit.annotations.Nullable;
 import org.eclipse.jgit.lib.Constants;
 import org.eclipse.jgit.lib.ObjectIdRef.PeeledTag;
+import org.eclipse.jgit.lib.ObjectReader;
 import org.eclipse.jgit.lib.Ref;
 import org.eclipse.jgit.lib.RefDatabase;
 import org.eclipse.jgit.lib.Repository;
-import org.eclipse.jgit.revwalk.RevCommit;
-import org.eclipse.jgit.revwalk.RevTag;
-import org.eclipse.jgit.revwalk.RevWalk;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
@@ -128,44 +127,47 @@ public class SynchronizeWithMenu extends ContributionItem implements
 		String oldName = null;
 		int refsLength = R_REFS.length();
 		int tagsLength = R_TAGS.substring(refsLength).length();
-		for (Ref ref : refs) {
-			final String name = ref.getName();
-			if (name.equals(Constants.HEAD) || name.equals(currentBranch) || excludeTag(ref, repo))
-				continue;
-			if (name.startsWith(R_REFS) && oldName != null
-					&& !oldName.regionMatches(refsLength, name, refsLength,
-							tagsLength))
-				new MenuItem(menu, SWT.SEPARATOR);
+		try (ObjectReader reader = repo.newObjectReader()) {
+			for (Ref ref : refs) {
+				final String name = ref.getName();
+				if (name.equals(Constants.HEAD) || name.equals(currentBranch)
+						|| excludeTag(ref, reader))
+					continue;
+				if (name.startsWith(R_REFS) && oldName != null
+						&& !oldName.regionMatches(refsLength, name, refsLength,
+								tagsLength))
+					new MenuItem(menu, SWT.SEPARATOR);
 
-			MenuItem item = new MenuItem(menu, SWT.PUSH);
-			item.setText(name);
-			if (name.startsWith(Constants.R_TAGS))
-				item.setImage(tagImage);
-			else if (name.startsWith(Constants.R_HEADS) || name.startsWith(Constants.R_REMOTES))
-				item.setImage(branchImage);
+				MenuItem item = new MenuItem(menu, SWT.PUSH);
+				item.setText(name);
+				if (name.startsWith(Constants.R_TAGS))
+					item.setImage(tagImage);
+				else if (name.startsWith(Constants.R_HEADS) || name.startsWith(Constants.R_REMOTES))
+					item.setImage(branchImage);
 
-			item.addSelectionListener(new SelectionAdapter() {
-				@Override
-				public void widgetSelected(SelectionEvent event) {
-					GitSynchronizeData data;
-					try {
-						data = new GitSynchronizeData(repo, HEAD, name, true);
-						if (!(selectedResource instanceof IProject)) {
-							HashSet<IResource> resources = new HashSet<>();
-							resources.add(selectedResource);
-							data.setIncludedResources(resources);
+				item.addSelectionListener(new SelectionAdapter() {
+					@Override
+					public void widgetSelected(SelectionEvent event) {
+						GitSynchronizeData data;
+						try {
+							data = new GitSynchronizeData(repo, HEAD, name, true);
+							if (!(selectedResource instanceof IProject)) {
+								HashSet<IResource> resources = new HashSet<>();
+								resources.add(selectedResource);
+								data.setIncludedResources(resources);
+							}
+
+							GitModelSynchronize.launch(data, new IResource[] { selectedResource });
+						} catch (IOException e) {
+							Activator.logError(e.getMessage(), e);
 						}
-
-						GitModelSynchronize.launch(data, new IResource[] { selectedResource });
-					} catch (IOException e) {
-						Activator.logError(e.getMessage(), e);
 					}
-				}
-			});
+				});
 
-			if (++count == MAX_NUM_MENU_ENTRIES)
-				break;
-			oldName = name;
+				if (++count == MAX_NUM_MENU_ENTRIES)
+					break;
+				oldName = name;
+			}
 		}
 
 		if (count > 1)
@@ -212,21 +214,15 @@ public class SynchronizeWithMenu extends ContributionItem implements
 		return AdapterUtils.adaptToAnyResource(selected);
 	}
 
-	private boolean excludeTag(Ref ref, Repository repo) {
-		if (ref instanceof PeeledTag) {
-			RevWalk rw = new RevWalk(repo);
-			try {
-				RevTag tag = rw.parseTag(ref.getObjectId());
-
-				return !(rw.parseAny(tag.getObject()) instanceof RevCommit);
-			} catch (IOException e) {
-				Activator.logError(e.getMessage(), e);
-			} finally {
-				rw.close();
-				rw.dispose();
-			}
+	private boolean excludeTag(Ref ref, ObjectReader reader) {
+		if (!(ref instanceof PeeledTag))
+			return false;
+		try {
+			return reader.open(((PeeledTag) ref).getPeeledObjectId())
+					.getType() != OBJ_COMMIT;
+		} catch (IOException e) {
+			Activator.logError(e.getMessage(), e);
 		}
-
 		return false;
 	}
 
