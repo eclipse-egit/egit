@@ -14,7 +14,10 @@ package org.eclipse.egit.ui.internal.repository.tree.command;
 
 import java.text.MessageFormat;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.commands.ExecutionException;
@@ -25,6 +28,7 @@ import org.eclipse.core.resources.WorkspaceJob;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
+import org.eclipse.core.runtime.Path;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.core.runtime.SubMonitor;
 import org.eclipse.core.runtime.jobs.ISchedulingRule;
@@ -34,12 +38,13 @@ import org.eclipse.egit.ui.Activator;
 import org.eclipse.egit.ui.internal.UIText;
 import org.eclipse.egit.ui.internal.repository.tree.RepositoryNode;
 import org.eclipse.egit.ui.internal.repository.tree.RepositoryTreeNode;
+import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jgit.lib.Repository;
 
 /**
- * Closes all open projects belonging to the selected repository.
+ * Closes all open projects that do not belong to the selected repository.
  */
-public class CloseAllProjectsCommand
+public class CloseProjectsOutsideRepositoryCommand
 		extends RepositoriesViewCommandHandler<RepositoryTreeNode> {
 
 	@Override
@@ -52,14 +57,17 @@ public class CloseAllProjectsCommand
 		if (repository == null || repository.isBare()) {
 			return null;
 		}
-		IProject[] projects = ProjectUtil.getProjects(repository);
-		List<IProject> openProjects = new ArrayList<>();
-		for (IProject project : projects) {
-			if (project.isOpen()) {
-				openProjects.add(project);
-			}
+		List<IProject> otherProjects = getOtherOpenProjects(repository);
+		if (otherProjects.isEmpty()) {
+			return null;
 		}
-		if (openProjects.isEmpty()) {
+		String repositoryName = repository.getWorkTree().getName();
+		if (!MessageDialog.openConfirm(getShell(event),
+				UIText.CloseProjectsOutsideRepositoryCommand_confirmTitle,
+				MessageFormat.format(
+						UIText.CloseProjectsOutsideRepositoryCommand_confirmMessage,
+						Integer.valueOf(otherProjects.size()),
+						repositoryName))) {
 			return null;
 		}
 		// Without a rule every close is a separate workspace operation that
@@ -67,18 +75,17 @@ public class CloseAllProjectsCommand
 		IResourceRuleFactory factory = ResourcesPlugin.getWorkspace()
 				.getRuleFactory();
 		ISchedulingRule rule = null;
-		for (IProject project : openProjects) {
+		for (IProject project : otherProjects) {
 			rule = MultiRule.combine(rule, factory.modifyRule(project));
 		}
 		WorkspaceJob job = new WorkspaceJob(MessageFormat.format(
-				UIText.CloseAllProjectsCommand_jobTitle,
-				repository.getWorkTree().getName())) {
+				UIText.CloseProjectsOutsideRepositoryCommand_jobTitle, repositoryName)) {
 			@Override
 			public IStatus runInWorkspace(IProgressMonitor monitor)
 					throws CoreException {
 				SubMonitor progress = SubMonitor.convert(monitor,
-						openProjects.size());
-				for (IProject project : openProjects) {
+						otherProjects.size());
+				for (IProject project : otherProjects) {
 					if (progress.isCanceled()) {
 						return Status.CANCEL_STATUS;
 					}
@@ -111,11 +118,20 @@ public class CloseAllProjectsCommand
 		if (repository == null || repository.isBare()) {
 			return false;
 		}
-		for (IProject project : ProjectUtil.getProjects(repository)) {
-			if (project.isOpen()) {
-				return true;
+		return !getOtherOpenProjects(repository).isEmpty();
+	}
+
+	private static List<IProject> getOtherOpenProjects(Repository repository) {
+		Set<IProject> inRepository = new HashSet<>(
+				Arrays.asList(ProjectUtil.getProjectsUnderPath(new Path(
+						repository.getWorkTree().getAbsolutePath()))));
+		List<IProject> result = new ArrayList<>();
+		for (IProject project : ResourcesPlugin.getWorkspace().getRoot()
+				.getProjects()) {
+			if (project.isOpen() && !inRepository.contains(project)) {
+				result.add(project);
 			}
 		}
-		return false;
+		return result;
 	}
 }
