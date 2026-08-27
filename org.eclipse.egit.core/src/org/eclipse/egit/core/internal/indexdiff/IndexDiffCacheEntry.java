@@ -91,7 +91,13 @@ public class IndexDiffCacheEntry {
 
 	private volatile IndexDiffData indexDiffData;
 
-	private IndexDiffReloadJob reloadJob;
+	private volatile IndexDiffReloadJob reloadJob;
+
+	/** Guards {@link #reloadJob} and {@link #reloadRequested}. */
+	private final Object reloadLock = new Object();
+
+	/** Set when changes arrive while a full re-computation is running. */
+	private boolean reloadRequested;
 
 	private IndexDiffUpdateJob updateJob;
 
@@ -368,20 +374,54 @@ public class IndexDiffCacheEntry {
 	 * @param trigger
 	 */
 	protected void scheduleReloadJob(final String trigger) {
-		if (reloadJob != null) {
-			if (reloadJob.isPending()) {
+		synchronized (reloadLock) {
+			if (reloadJob != null) {
+				if (reloadJob.isPending()) {
+					return;
+				}
+				if (reloadJob.getState() == Job.RUNNING) {
+					// Computing the full status is expensive. Let the running
+					// computation finish and repeat it once afterwards instead
+					// of cancelling it and starting all over again.
+					reloadRequested = true;
+					return;
+				}
+				reloadJob.cancel();
+			}
+			if (updateJob != null) {
+				updateJob.cleanupAndCancel();
+			}
+
+			if (getRepository() == null) {
 				return;
 			}
-			reloadJob.cancel();
+			reloadJob = createReloadJob(trigger);
+			reloadJob.setSystem(true);
+			reloadJob.schedule();
 		}
-		if (updateJob != null) {
-			updateJob.cleanupAndCancel();
-		}
+	}
 
-		if (getRepository() == null) {
-			return;
+	private void rerunIfRequested(IndexDiffReloadJob finishedJob) {
+		synchronized (reloadLock) {
+			if (reloadJob != finishedJob) {
+				// Disposed, or already replaced by a newer job
+				return;
+			}
+			// The job calling this is done, but is still in state RUNNING until
+			// it returns. Drop it, so that a trigger arriving in that window
+			// creates a new job instead of waiting for a re-run that nobody
+			// would do any more.
+			reloadJob = null;
+			if (reloadRequested) {
+				reloadRequested = false;
+				// Still under the lock, so that dispose() cannot slip in
+				scheduleReloadJob("Changes arrived while computing the status"); //$NON-NLS-1$
+			}
 		}
-		reloadJob = new IndexDiffReloadJob(getReloadJobName()) {
+	}
+
+	private IndexDiffReloadJob createReloadJob(final String trigger) {
+		return new IndexDiffReloadJob(getReloadJobName()) {
 
 			@Override
 			protected IStatus reload(IProgressMonitor monitor) {
@@ -437,6 +477,11 @@ public class IndexDiffCacheEntry {
 			}
 
 			@Override
+			protected void finished() {
+				rerunIfRequested(this);
+			}
+
+			@Override
 			public boolean belongsTo(Object family) {
 				if (JobFamilies.INDEX_DIFF_CACHE_UPDATE.equals(family)) {
 					return true;
@@ -445,8 +490,6 @@ public class IndexDiffCacheEntry {
 			}
 
 		};
-		reloadJob.setSystem(true);
-		reloadJob.schedule();
 	}
 
 	/**
@@ -460,7 +503,8 @@ public class IndexDiffCacheEntry {
 		if (getRepository() == null) {
 			return;
 		}
-		if (reloadJob != null && reloadJob.isPending()) {
+		IndexDiffReloadJob currentReloadJob = reloadJob;
+		if (currentReloadJob != null && currentReloadJob.isPending()) {
 			return;
 		}
 		if (shouldReload(filesToUpdate)) {
@@ -750,9 +794,12 @@ public class IndexDiffCacheEntry {
 			ResourcesPlugin.getWorkspace().removeResourceChangeListener(resourceChangeListener);
 		}
 		listeners.clear();
-		if (reloadJob != null) {
-			reloadJob.cancel();
-			reloadJob = null;
+		synchronized (reloadLock) {
+			reloadRequested = false;
+			if (reloadJob != null) {
+				reloadJob.cancel();
+				reloadJob = null;
+			}
 		}
 		if (updateJob != null) {
 			updateJob.cleanupAndCancel();
@@ -773,10 +820,17 @@ public class IndexDiffCacheEntry {
 		@Override
 		protected IStatus run(IProgressMonitor monitor) {
 			started = true;
-			return reload(monitor);
+			try {
+				return reload(monitor);
+			} finally {
+				finished();
+			}
 		}
 
 		protected abstract IStatus reload(IProgressMonitor monitor);
+
+		/** Called when {@link #reload(IProgressMonitor)} has returned. */
+		protected abstract void finished();
 
 		protected boolean isPending() {
 			return !started;
