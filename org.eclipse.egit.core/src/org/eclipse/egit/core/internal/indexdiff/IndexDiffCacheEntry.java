@@ -91,7 +91,19 @@ public class IndexDiffCacheEntry {
 
 	private volatile IndexDiffData indexDiffData;
 
-	private IndexDiffReloadJob reloadJob;
+	private volatile IndexDiffReloadJob reloadJob;
+
+	/**
+	 * Guards {@link #reloadJob} and {@link #reloadRequested}; never schedule or
+	 * cancel a job while holding it.
+	 */
+	private final Object reloadLock = new Object();
+
+	/** Job family of the reload jobs of this entry only. */
+	private final Object reloadFamily = new Object();
+
+	/** Set when changes arrive while a full re-computation is running. */
+	private boolean reloadRequested;
 
 	private IndexDiffUpdateJob updateJob;
 
@@ -265,13 +277,14 @@ public class IndexDiffCacheEntry {
 					repository = null;
 				}
 				refresh();
-				Job next = reloadJob;
-				if (next != null) {
-					try {
-						next.join();
-					} catch (InterruptedException e) {
-						return Status.CANCEL_STATUS;
-					}
+				try {
+					// Also waits for a re-run requested while a reload was running.
+					Job.getJobManager().join(reloadFamily, monitor);
+				} catch (InterruptedException e) {
+					Thread.currentThread().interrupt();
+					return Status.CANCEL_STATUS;
+				} catch (OperationCanceledException e) {
+					return Status.CANCEL_STATUS;
 				}
 				if (Activator.getDefault().isDebugging()) {
 					final long refresh = System.currentTimeMillis();
@@ -368,20 +381,68 @@ public class IndexDiffCacheEntry {
 	 * @param trigger
 	 */
 	protected void scheduleReloadJob(final String trigger) {
-		if (reloadJob != null) {
-			if (reloadJob.isPending()) {
-				return;
+		IndexDiffReloadJob toCancel = null;
+		IndexDiffReloadJob toSchedule = null;
+		synchronized (reloadLock) {
+			IndexDiffReloadJob current = reloadJob;
+			if (current != null) {
+				if (current.isPending()) {
+					return;
+				}
+				if (current.getState() == Job.RUNNING) {
+					// Computing the full status is expensive. Let the running
+					// computation finish and repeat it once afterwards instead
+					// of cancelling it and starting all over again.
+					reloadRequested = true;
+					return;
+				}
+				toCancel = current;
 			}
-			reloadJob.cancel();
+			if (getRepository() == null) {
+				reloadJob = null;
+			} else {
+				toSchedule = createReloadJob(trigger);
+				toSchedule.setSystem(true);
+				// Published before scheduling, so concurrent triggers see it
+				// as pending.
+				reloadJob = toSchedule;
+			}
+		}
+		if (toCancel != null) {
+			toCancel.cancel();
 		}
 		if (updateJob != null) {
 			updateJob.cleanupAndCancel();
 		}
-
-		if (getRepository() == null) {
-			return;
+		if (toSchedule != null) {
+			toSchedule.schedule();
 		}
-		reloadJob = new IndexDiffReloadJob(getReloadJobName()) {
+	}
+
+	private void rerunIfRequested(IndexDiffReloadJob finishedJob) {
+		boolean rerun;
+		synchronized (reloadLock) {
+			if (reloadJob != finishedJob) {
+				// Superseded or disposed; leave the successor alone.
+				return;
+			}
+			rerun = reloadRequested;
+			reloadRequested = false;
+			// The job calling this is done, but is still in state RUNNING until
+			// it returns. Drop it, so that a trigger arriving in that window
+			// creates a new job instead of waiting for a re-run that nobody
+			// would do any more.
+			reloadJob = null;
+		}
+		if (rerun) {
+			// Scheduled from within the finishing job, so the family never
+			// becomes empty in between.
+			scheduleReloadJob("Changes arrived while computing the status"); //$NON-NLS-1$
+		}
+	}
+
+	private IndexDiffReloadJob createReloadJob(final String trigger) {
+		return new IndexDiffReloadJob(getReloadJobName()) {
 
 			@Override
 			protected IStatus reload(IProgressMonitor monitor) {
@@ -437,16 +498,20 @@ public class IndexDiffCacheEntry {
 			}
 
 			@Override
+			protected void finished() {
+				rerunIfRequested(this);
+			}
+
+			@Override
 			public boolean belongsTo(Object family) {
-				if (JobFamilies.INDEX_DIFF_CACHE_UPDATE.equals(family)) {
+				if (JobFamilies.INDEX_DIFF_CACHE_UPDATE.equals(family)
+						|| reloadFamily == family) {
 					return true;
 				}
 				return super.belongsTo(family);
 			}
 
 		};
-		reloadJob.setSystem(true);
-		reloadJob.schedule();
 	}
 
 	/**
@@ -460,8 +525,12 @@ public class IndexDiffCacheEntry {
 		if (getRepository() == null) {
 			return;
 		}
-		if (reloadJob != null && reloadJob.isPending()) {
-			return;
+		synchronized (reloadLock) {
+			// A pending or requested full reload supersedes an incremental one.
+			if (reloadRequested
+					|| (reloadJob != null && reloadJob.isPending())) {
+				return;
+			}
 		}
 		if (shouldReload(filesToUpdate)) {
 			// Calculate new IndexDiff if too many resources changed
@@ -750,9 +819,12 @@ public class IndexDiffCacheEntry {
 			ResourcesPlugin.getWorkspace().removeResourceChangeListener(resourceChangeListener);
 		}
 		listeners.clear();
-		if (reloadJob != null) {
-			reloadJob.cancel();
-			reloadJob = null;
+		synchronized (reloadLock) {
+			reloadRequested = false;
+			if (reloadJob != null) {
+				reloadJob.cancel();
+				reloadJob = null;
+			}
 		}
 		if (updateJob != null) {
 			updateJob.cleanupAndCancel();
@@ -773,10 +845,17 @@ public class IndexDiffCacheEntry {
 		@Override
 		protected IStatus run(IProgressMonitor monitor) {
 			started = true;
-			return reload(monitor);
+			try {
+				return reload(monitor);
+			} finally {
+				finished();
+			}
 		}
 
 		protected abstract IStatus reload(IProgressMonitor monitor);
+
+		/** Called when {@link #reload(IProgressMonitor)} has returned. */
+		protected abstract void finished();
 
 		protected boolean isPending() {
 			return !started;
