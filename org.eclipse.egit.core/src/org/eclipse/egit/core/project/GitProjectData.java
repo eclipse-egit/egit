@@ -31,6 +31,8 @@ import java.util.Iterator;
 import java.util.Map;
 import java.util.Properties;
 import java.util.Set;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.CopyOnWriteArraySet;
 
 import org.eclipse.core.resources.IContainer;
 import org.eclipse.core.resources.IProject;
@@ -74,9 +76,9 @@ import org.eclipse.team.core.TeamException;
  */
 public class GitProjectData {
 
-	private static final Map<IProject, GitProjectData> projectDataCache = new HashMap<>();
+	private static final Map<IProject, GitProjectData> projectDataCache = new ConcurrentHashMap<>();
 
-	private static Set<RepositoryMappingChangeListener> repositoryChangeListeners = new HashSet<>();
+	private static final Set<RepositoryMappingChangeListener> repositoryChangeListeners = new CopyOnWriteArraySet<>();
 
 	private static final IResourceChangeListener rcl = new RCL();
 
@@ -136,7 +138,7 @@ public class GitProjectData {
 	 * @param objectThatCares
 	 *            the new listener to register. Must not be null.
 	 */
-	public static synchronized void addRepositoryChangeListener(
+	public static void addRepositoryChangeListener(
 			final RepositoryMappingChangeListener objectThatCares) {
 		if (objectThatCares == null)
 			throw new NullPointerException();
@@ -149,7 +151,7 @@ public class GitProjectData {
 	 * @param objectThatCares
 	 *            The listener to remove
 	 */
-	public static synchronized void removeRepositoryChangeListener(
+	public static void removeRepositoryChangeListener(
 			final RepositoryMappingChangeListener objectThatCares) {
 		repositoryChangeListeners.remove(objectThatCares);
 	}
@@ -199,7 +201,7 @@ public class GitProjectData {
 	 *
 	 * @return a copy of the current repository change listeners
 	 */
-	private static synchronized RepositoryMappingChangeListener[] getRepositoryChangeListeners() {
+	private static RepositoryMappingChangeListener[] getRepositoryChangeListeners() {
 		return repositoryChangeListeners
 				.toArray(new RepositoryMappingChangeListener[0]);
 	}
@@ -211,7 +213,19 @@ public class GitProjectData {
 	 *         occurred
 	 */
 	@Nullable
-	public synchronized static GitProjectData get(final @NonNull IProject p) {
+	public static GitProjectData get(final @NonNull IProject p) {
+		GitProjectData d = lookup(p);
+		if (d != null) {
+			return d;
+		}
+		return loadAndCache(p);
+	}
+
+	// Serialized so that a project is loaded only once; the much more frequent
+	// cache hits in get() don't have to wait for this I/O.
+	@Nullable
+	private synchronized static GitProjectData loadAndCache(
+			final @NonNull IProject p) {
 		try {
 			GitProjectData d = lookup(p);
 			if (d == null && ResourceUtil.isSharedWithGit(p)) {
@@ -426,12 +440,12 @@ public class GitProjectData {
 					"(GitProjectData) " + m); //$NON-NLS-1$
 	}
 
-	private synchronized static void cache(final IProject p,
+	private static void cache(final IProject p,
 			final GitProjectData d) {
 		projectDataCache.put(p, d);
 	}
 
-	private synchronized static void uncache(final IProject p) {
+	private static void uncache(final IProject p) {
 		if (projectDataCache.remove(p) != null) {
 			trace("uncacheDataFor(" //$NON-NLS-1$
 				+ p.getName() + ")"); //$NON-NLS-1$
@@ -455,7 +469,7 @@ public class GitProjectData {
 		}
 	}
 
-	private synchronized static GitProjectData lookup(final IProject p) {
+	private static GitProjectData lookup(final IProject p) {
 		return projectDataCache.get(p);
 	}
 
