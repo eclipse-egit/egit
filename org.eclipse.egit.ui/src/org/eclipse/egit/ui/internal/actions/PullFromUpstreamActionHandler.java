@@ -20,6 +20,7 @@ import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.commands.ExecutionException;
 import org.eclipse.egit.ui.internal.pull.PullOperationUI;
 import org.eclipse.egit.ui.internal.selection.SelectionRepositoryStateCache;
+import org.eclipse.egit.ui.internal.selection.SelectionUtils;
 import org.eclipse.jgit.lib.Constants;
 import org.eclipse.jgit.lib.Repository;
 
@@ -29,7 +30,8 @@ import org.eclipse.jgit.lib.Repository;
 public class PullFromUpstreamActionHandler extends RepositoryActionHandler {
 	@Override
 	public Object execute(ExecutionEvent event) throws ExecutionException {
-		Repository[] repos = getRepositories(event);
+		Repository[] repos = SelectionUtils
+				.getRepositoriesLenient(getSelection(event));
 		if (repos.length == 0)
 			return null;
 		Set<Repository> repositories = new LinkedHashSet<>(
@@ -42,7 +44,8 @@ public class PullFromUpstreamActionHandler extends RepositoryActionHandler {
 	public boolean isEnabled() {
 		// we don't do the full canMerge check here, but
 		// ensure that a branch is checked out
-		Repository[] repos = getRepositories();
+		Repository[] repos = SelectionUtils
+				.getRepositoriesLenient(getSelection());
 		for (Repository repo : repos) {
 			String fullBranch = SelectionRepositoryStateCache.INSTANCE
 					.getFullBranchName(repo);
