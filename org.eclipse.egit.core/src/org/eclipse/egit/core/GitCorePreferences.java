@@ -130,6 +130,12 @@ public final class GitCorePreferences {
 	public static final String core_gitServers = "core_git_servers"; //$NON-NLS-1$
 
 	/**
+	 * Whether to look up the source branch of a pull request via the git
+	 * host's REST API to name the local branch.
+	 */
+	public static final String core_gitServersBranchNameLookup = "core_git_servers_branch_name_lookup"; //$NON-NLS-1$
+
+	/**
 	 * The size of JGit's text buffer: the amount of bytes of a file or blob
 	 * that will be examined to determine whether it is text or binary, and if
 	 * text, whether it uses CR-LF line endings.

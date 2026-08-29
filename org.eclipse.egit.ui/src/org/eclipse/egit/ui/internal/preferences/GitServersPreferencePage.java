@@ -70,6 +70,8 @@ public class GitServersPreferencePage extends PreferencePage
 
 	private TableViewer table;
 
+	private Button lookupBranchName;
+
 	/**
 	 * Creates a new {@link GitServersPreferencePage}.
 	 */
@@ -197,6 +199,15 @@ public class GitServersPreferencePage extends PreferencePage
 		// ComboBoxCellEditor's drop-down arrow widget.
 		layout.setColumnData(serverColumn.getColumn(), new ColumnWeightData(0,
 				serverColumn.getColumn().getWidth() + 20, false));
+
+		lookupBranchName = new Button(main, SWT.CHECK);
+		lookupBranchName.setText(
+				UIText.GitServersPreferencePage_BranchNameLookupLabel);
+		lookupBranchName.setToolTipText(
+				UIText.GitServersPreferencePage_BranchNameLookupTooltip);
+		lookupBranchName.setSelection(getPreferenceStore().getBoolean(
+				GitCorePreferences.core_gitServersBranchNameLookup));
+		GridDataFactory.fillDefaults().span(2, 1).applyTo(lookupBranchName);
 		return main;
 	}
 
@@ -246,6 +257,9 @@ public class GitServersPreferencePage extends PreferencePage
 	public boolean performOk() {
 		table.applyEditorValue();
 		saveHosts();
+		getPreferenceStore().setValue(
+				GitCorePreferences.core_gitServersBranchNameLookup,
+				lookupBranchName.getSelection());
 		return super.performOk();
 	}
 
