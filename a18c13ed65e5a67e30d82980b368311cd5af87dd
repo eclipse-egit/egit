@@ -16,6 +16,23 @@
       "message": "Florian, thanks, looks funtionality wise. \n\nPlease enhance your commit message, you should describe why you doing the change not the change itself. I assume the target it here to hit the JGit commit-graph fast path. The commit message should describe that.",
       "revId": "a18c13ed65e5a67e30d82980b368311cd5af87dd",
       "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "d72aed6d_7831c463",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1012795
+      },
+      "writtenOn": "2026-08-29T11:06:33Z",
+      "side": 1,
+      "message": "Good to go, after an improved commit message.",
+      "revId": "a18c13ed65e5a67e30d82980b368311cd5af87dd",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735"
     }
   ]
 }
