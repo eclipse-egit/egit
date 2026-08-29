@@ -267,6 +267,7 @@ public abstract class AbstractFetchFromHostPage extends WizardPage {
 				changeRefs.put(uriText, list);
 				gettingRefs.put(uriText, new AtomicBoolean());
 				preFetch(list);
+				notifyChangeSelected();
 			}
 		});
 		new Label(main, SWT.NONE).setText(changeLabel);
@@ -482,6 +483,9 @@ public abstract class AbstractFetchFromHostPage extends WizardPage {
 				tagText.setText(suggestion);
 			}
 			checkPage();
+			if (change != null) {
+				changeSelected(uriCombo.getText(), change);
+			}
 		});
 		Change defaultChange = defaults == null ? null : defaults.getChange();
 		if (defaultChange != null) {
@@ -515,6 +519,7 @@ public abstract class AbstractFetchFromHostPage extends WizardPage {
 			gettingRefs.put(currentUri, new AtomicBoolean());
 		}
 		preFetch(list);
+		notifyChangeSelected();
 		refText.setFocus();
 		Dialog.applyDialogFont(main);
 		setControl(main);
@@ -1229,6 +1234,58 @@ public abstract class AbstractFetchFromHostPage extends WizardPage {
 		job.setUser(true);
 		job.schedule();
 		monitor.worked(1);
+	}
+
+	private void notifyChangeSelected() {
+		Change change = changeFromString(refText.getText());
+		if (change != null) {
+			changeSelected(uriCombo.getText(), change);
+		}
+	}
+
+	/**
+	 * Called when the change in the ref field or the selected URI changes.
+	 * Subclasses may start asynchronous work and later call
+	 * {@link #suggestBranchName(String, Change, String)}.
+	 *
+	 * @param uri
+	 *            currently selected URI, may be empty
+	 * @param change
+	 *            currently entered change
+	 */
+	protected void changeSelected(String uri, Change change) {
+		// Nothing by default
+	}
+
+	/**
+	 * Replaces the suggested branch and tag names, unless the user has edited
+	 * them, fetching has started, or the page no longer shows {@code change}
+	 * for {@code uri}.
+	 *
+	 * @param uri
+	 *            the suggestion was made for
+	 * @param change
+	 *            the suggestion was made for
+	 * @param suggestion
+	 *            the branch or tag name
+	 */
+	protected void suggestBranchName(String uri, Change change,
+			String suggestion) {
+		if (fetching || branchText.isDisposed()
+				|| !uri.equals(uriCombo.getText())) {
+			return;
+		}
+		Change current = changeFromString(refText.getText());
+		if (current == null || !current.equals(change)) {
+			return;
+		}
+		if (!branchTextEdited) {
+			branchText.setText(suggestion);
+		}
+		if (!tagTextEdited) {
+			tagText.setText(suggestion);
+		}
+		checkPage();
 	}
 
 	private void activateAdditionalRefs() {
