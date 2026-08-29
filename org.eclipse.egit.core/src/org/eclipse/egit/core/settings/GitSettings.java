@@ -49,6 +49,18 @@ public final class GitSettings {
 	}
 
 	/**
+	 * Tells whether the source branch of a pull request should be looked up
+	 * via the git host's REST API to name the local branch.
+	 *
+	 * @return {@code true} if the lookup is enabled
+	 */
+	public static boolean isGitServerBranchNameLookupEnabled() {
+		return Platform.getPreferencesService().getBoolean(Activator.PLUGIN_ID,
+				GitCorePreferences.core_gitServersBranchNameLookup, true,
+				null);
+	}
+
+	/**
 	 * Retrieves the {@link Path} of the default directory where to create new
 	 * clones.
 	 *

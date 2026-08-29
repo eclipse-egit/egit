@@ -15,9 +15,11 @@ import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.LinkedHashSet;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 import java.util.function.Function;
 import java.util.regex.Matcher;
@@ -25,10 +27,16 @@ import java.util.regex.Pattern;
 import java.util.regex.PatternSyntaxException;
 
 import org.eclipse.core.runtime.IProgressMonitor;
+import org.eclipse.core.runtime.IStatus;
+import org.eclipse.core.runtime.Status;
+import org.eclipse.core.runtime.jobs.Job;
 import org.eclipse.egit.core.internal.hosts.GitHosts;
 import org.eclipse.egit.core.internal.hosts.GitHosts.ServerType;
+import org.eclipse.egit.core.internal.hosts.PullRequestInfo;
+import org.eclipse.egit.core.settings.GitSettings;
 import org.eclipse.egit.ui.Activator;
 import org.eclipse.egit.ui.UIUtils;
+import org.eclipse.egit.ui.internal.UIText;
 import org.eclipse.egit.ui.internal.components.AsynchronousListOperation;
 import org.eclipse.egit.ui.internal.dialogs.CancelableFuture;
 import org.eclipse.jface.fieldassist.ContentProposal;
@@ -36,6 +44,7 @@ import org.eclipse.jface.fieldassist.IContentProposal;
 import org.eclipse.jgit.lib.Ref;
 import org.eclipse.jgit.lib.Repository;
 import org.eclipse.jgit.transport.URIish;
+import org.eclipse.swt.widgets.Control;
 
 /**
  * Fetch a change from a git server of a particular {@link ServerType}.
@@ -46,7 +55,16 @@ public class FetchChangeFromServerPage extends AbstractFetchFromHostPage {
 
 	private static final String WILDCARD = ".*"; //$NON-NLS-1$
 
+	private static final int LOOKUP_DELAY_MILLIS = 300;
+
 	private final GitServer server;
+
+	private final Repository repository;
+
+	/** Source branches by URI and change number; empty if unknown. */
+	private final Map<String, String> sourceBranches = new HashMap<>();
+
+	private Job lookupJob;
 
 	/**
 	 * Creates a new {@link FetchChangeFromServerPage}.
@@ -64,6 +82,87 @@ public class FetchChangeFromServerPage extends AbstractFetchFromHostPage {
 				server.getChangeNameSingular(), server.getChangeNamePlural(),
 				false);
 		this.server = server;
+		this.repository = repository;
+	}
+
+	@Override
+	public void dispose() {
+		cancelLookup();
+		super.dispose();
+	}
+
+	@Override
+	boolean doFetch() {
+		cancelLookup();
+		return super.doFetch();
+	}
+
+	@Override
+	protected void changeSelected(String uri, Change change) {
+		if (uri == null || uri.isEmpty()
+				|| !GitSettings.isGitServerBranchNameLookupEnabled()) {
+			return;
+		}
+		long number = change.getChangeNumber();
+		String key = uri + '\n' + number;
+		String known = sourceBranches.get(key);
+		if (known != null) {
+			if (!known.isEmpty()) {
+				suggestBranchName(uri, change, branchName(number, known));
+			}
+			return;
+		}
+		cancelLookup();
+		Job job = new Job(MessageFormat.format(
+				UIText.FetchChangeFromServerPage_BranchNameLookupJob,
+				server.getChangeNameSingular())) {
+
+			@Override
+			protected IStatus run(IProgressMonitor monitor) {
+				String branch = lookupSourceBranch(uri, number);
+				Control control = getControl();
+				if (monitor.isCanceled() || control == null
+						|| control.isDisposed()) {
+					return Status.CANCEL_STATUS;
+				}
+				control.getDisplay().asyncExec(() -> {
+					if (control.isDisposed()) {
+						return;
+					}
+					sourceBranches.put(key, branch);
+					if (!branch.isEmpty()) {
+						suggestBranchName(uri, change,
+								branchName(number, branch));
+					}
+				});
+				return Status.OK_STATUS;
+			}
+		};
+		job.setSystem(true);
+		lookupJob = job;
+		job.schedule(LOOKUP_DELAY_MILLIS);
+	}
+
+	private void cancelLookup() {
+		if (lookupJob != null) {
+			lookupJob.cancel();
+			lookupJob = null;
+		}
+	}
+
+	private String lookupSourceBranch(String uri, long number) {
+		try {
+			PullRequestInfo info = PullRequestInfo.lookup(repository,
+					server.getType(), new URIish(uri), number);
+			return info == null ? "" : info.getSourceBranch(); //$NON-NLS-1$
+		} catch (URISyntaxException e) {
+			return ""; //$NON-NLS-1$
+		}
+	}
+
+	private String branchName(long number, String sourceBranch) {
+		return MessageFormat.format(server.getBranchNameWithSource(),
+				Long.toString(number), sourceBranch);
 	}
 
 	@Override

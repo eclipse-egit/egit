@@ -48,6 +48,7 @@ public class GitCorePreferenceInitializer extends AbstractPreferenceInitializer 
 		p.putInt(GitCorePreferences.core_remoteConnectionTimeout, 30);
 		p.put(GitCorePreferences.core_gpgSigner, "bc"); //$NON-NLS-1$
 		p.putBoolean(GitCorePreferences.core_sshAgent, true);
+		p.putBoolean(GitCorePreferences.core_gitServersBranchNameLookup, true);
 	}
 
 }
