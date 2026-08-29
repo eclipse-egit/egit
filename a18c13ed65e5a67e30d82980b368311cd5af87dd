@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "3a9626b7_1098f232",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1012795
+      },
+      "writtenOn": "2026-08-29T11:05:51Z",
+      "side": 1,
+      "message": "Florian, thanks, looks funtionality wise. \n\nPlease enhance your commit message, you should describe why you doing the change not the change itself. I assume the target it here to hit the JGit commit-graph fast path. The commit message should describe that.",
+      "revId": "a18c13ed65e5a67e30d82980b368311cd5af87dd",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735"
+    }
+  ]
+}
