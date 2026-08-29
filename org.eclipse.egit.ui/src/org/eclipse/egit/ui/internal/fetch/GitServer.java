@@ -39,6 +39,11 @@ public enum GitServer {
 		}
 
 		@Override
+		public String getBranchNameWithSource() {
+			return UIText.GitServer_PullRequestBranchRefNameSuggestion;
+		}
+
+		@Override
 		public String getChangeLabel() {
 			return UIText.GitServer_PullRequestLabel;
 		}
@@ -80,6 +85,11 @@ public enum GitServer {
 		}
 
 		@Override
+		public String getBranchNameWithSource() {
+			return UIText.GitServer_MergeRequestBranchRefNameSuggestion;
+		}
+
+		@Override
 		public String getChangeLabel() {
 			return UIText.GitServer_MergeRequestLabel;
 		}
@@ -118,6 +128,11 @@ public enum GitServer {
 		@Override
 		public String getBranchName() {
 			return UIText.GitServer_PullRequestRefNameSuggestion;
+		}
+
+		@Override
+		public String getBranchNameWithSource() {
+			return UIText.GitServer_PullRequestBranchRefNameSuggestion;
 		}
 
 		@Override
@@ -179,6 +194,15 @@ public enum GitServer {
 	 * @return the message
 	 */
 	public abstract String getBranchName();
+
+	/**
+	 * Retrieves a message to construct a valid branch or tag name, with a "{0}"
+	 * placeholder for the change ID and a "{1}" placeholder for the source
+	 * branch of the change.
+	 *
+	 * @return the message
+	 */
+	public abstract String getBranchNameWithSource();
 
 	/**
 	 * Retrieves the label for the "change ID" field of the fetch wizard page.

@@ -43,6 +43,10 @@ public final class GitHosts {
 
 	private static final String GITEA_ID = "gitea"; //$NON-NLS-1$
 
+	private static final String GITHUB_HOST = "github.com"; //$NON-NLS-1$
+
+	private static final String GITHUB_API = "https://api.github.com"; //$NON-NLS-1$
+
 	private static final Pattern DIGITS = Pattern.compile("\\d+"); //$NON-NLS-1$
 
 	private static final Map<String, Collection<Pattern>> DEFAULT_URIS = new ConcurrentHashMap<>();
@@ -125,19 +129,64 @@ public final class GitHosts {
 		GITHUB(GITHUB_ID, "refs/pull/", "/head", //$NON-NLS-1$ //$NON-NLS-2$
 				"https?://.*/pull/(\\d+)(?:[/?#].*)?", //$NON-NLS-1$
 				"https?://[^/]+/(?<owner>[^/]+)/[^/]+/tree/(?<branch>[^?#]+?)/?(?:[?#].*)?", //$NON-NLS-1$
-				"(?<owner>[A-Za-z0-9][A-Za-z0-9._-]*):(?<branch>\\S+)"), //$NON-NLS-1$
+				"(?<owner>[A-Za-z0-9][A-Za-z0-9._-]*):(?<branch>\\S+)") { //$NON-NLS-1$
+
+			@Override
+			String apiUrl(String base, String host, String path, int segments,
+					long changeId) {
+				if (segments != 2) {
+					return null;
+				}
+				String api = host.equalsIgnoreCase(GITHUB_HOST) ? GITHUB_API
+						: base + "/api/v3"; //$NON-NLS-1$
+				return api + "/repos/" + path + "/pulls/" + changeId; //$NON-NLS-1$ //$NON-NLS-2$
+			}
+		},
 
 		/** A {@link ServerType} describing GitLab git servers. */
 		GITLAB(GITLAB_ID, "refs/merge-requests/", "/head", //$NON-NLS-1$ //$NON-NLS-2$
 				"https?://.*/merge_requests/(\\d+)(?:[/?#].*)?", //$NON-NLS-1$
 				"https?://[^/]+/(?<owner>.+?)/[^/]+/-/tree/(?<branch>[^?#]+?)/?(?:[?#].*)?", //$NON-NLS-1$
-				"(?<owner>[A-Za-z0-9][A-Za-z0-9._/-]*?)/[A-Za-z0-9][A-Za-z0-9._-]*:(?<branch>\\S+)"), //$NON-NLS-1$
+				"(?<owner>[A-Za-z0-9][A-Za-z0-9._/-]*?)/[A-Za-z0-9][A-Za-z0-9._-]*:(?<branch>\\S+)") { //$NON-NLS-1$
+
+			@Override
+			String apiUrl(String base, String host, String path, int segments,
+					long changeId) {
+				if (segments < 2) {
+					return null;
+				}
+				// The API takes the namespaced project path as one encoded
+				// segment; the other characters of the path need no encoding.
+				return base + "/api/v4/projects/" + path.replace("/", "%2F") //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+						+ "/merge_requests/" + changeId; //$NON-NLS-1$
+			}
+
+			@Override
+			String[] sourceBranchPath() {
+				return new String[] { "source_branch" }; //$NON-NLS-1$
+			}
+
+			@Override
+			boolean usesBearerToken() {
+				return true;
+			}
+		},
 
 		/** A {@link ServerType} describing self-hosted Gitea git servers. */
 		GITEA(GITEA_ID, "refs/pull/", "/head", //$NON-NLS-1$ //$NON-NLS-2$
 				"https?://.*/pulls/(\\d+)(?:[/?#].*)?", //$NON-NLS-1$
 				"https?://[^/]+/(?<owner>[^/]+)/[^/]+/src/branch/(?<branch>[^?#]+?)/?(?:[?#].*)?", //$NON-NLS-1$
-				"(?<owner>[A-Za-z0-9][A-Za-z0-9._-]*):(?<branch>\\S+)"); //$NON-NLS-1$
+				"(?<owner>[A-Za-z0-9][A-Za-z0-9._-]*):(?<branch>\\S+)") { //$NON-NLS-1$
+
+			@Override
+			String apiUrl(String base, String host, String path, int segments,
+					long changeId) {
+				if (segments != 2) {
+					return null;
+				}
+				return base + "/api/v1/repos/" + path + "/pulls/" + changeId; //$NON-NLS-1$ //$NON-NLS-2$
+			}
+		};
 
 		/** Constant indicating "no change ID". */
 		public static final long NO_CHANGE_ID = -1;
@@ -175,6 +224,46 @@ public final class GitHosts {
 					: Pattern.compile(branchUrl);
 			branchTextPattern = branchText == null ? null
 					: Pattern.compile(branchText);
+		}
+
+		/**
+		 * Builds the REST API URL of a change.
+		 *
+		 * @param base
+		 *            scheme, host and port of the server
+		 * @param host
+		 *            host of the server
+		 * @param path
+		 *            repository path without leading or trailing slash, made
+		 *            up of {@code segments} validated segments
+		 * @param segments
+		 *            number of segments in {@code path}
+		 * @param changeId
+		 *            number of the change
+		 * @return the URL, or {@code null} if {@code path} is not a repository
+		 *         path on a server of this type
+		 */
+		abstract String apiUrl(String base, String host, String path,
+				int segments, long changeId);
+
+		/**
+		 * Retrieves the keys leading to the source branch in the REST API
+		 * response for a change.
+		 *
+		 * @return the keys, outermost first
+		 */
+		String[] sourceBranchPath() {
+			return new String[] { "head", "ref" }; //$NON-NLS-1$ //$NON-NLS-2$
+		}
+
+		/**
+		 * Tells whether the REST API expects a token as bearer instead of
+		 * basic authorization.
+		 *
+		 * @return whether to send a bearer token
+		 */
+		boolean usesBearerToken() {
+			return false;
 		}
 
 		/**

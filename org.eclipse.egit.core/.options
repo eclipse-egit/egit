@@ -4,6 +4,8 @@ org.eclipse.egit.core/debug = false
 org.eclipse.egit.core/debug/core = false
 # Trace location for GPG signing
 org.eclipse.egit.core/debug/core/gpg = false
+# Trace location for git host REST API access
+org.eclipse.egit.core/debug/core/hosts = false
 # Trace location for the IndexDiffCache
 org.eclipse.egit.core/debug/core/indexdiffcache = false
 # Trace location for ResourceRefreshJob

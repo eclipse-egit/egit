@@ -838,6 +838,12 @@ public class UIText extends NLS {
 	public static String GitServersPreferencePage_AddLabel;
 
 	/** */
+	public static String GitServersPreferencePage_BranchNameLookupLabel;
+
+	/** */
+	public static String GitServersPreferencePage_BranchNameLookupTooltip;
+
+	/** */
 	public static String GitServersPreferencePage_Description;
 
 	/** */
@@ -3275,6 +3281,9 @@ public class UIText extends NLS {
 	public static String AbstractFetchFromHostPage_UriLabel;
 
 	/** */
+	public static String FetchChangeFromServerPage_BranchNameLookupJob;
+
+	/** */
 	public static String FetchGerritChangePage_ChangeLabel;
 
 	/** */
@@ -3293,6 +3302,9 @@ public class UIText extends NLS {
 	public static String FetchGerritChangeWizard_WizardTitle;
 
 	/** */
+	public static String GitServer_MergeRequestBranchRefNameSuggestion;
+
+	/** */
 	public static String GitServer_MergeRequestContentAssistLabel;
 
 	/** */
@@ -3306,6 +3318,9 @@ public class UIText extends NLS {
 
 	/** */
 	public static String GitServer_MergeRequestSingular;
+
+	/** */
+	public static String GitServer_PullRequestBranchRefNameSuggestion;
 
 	/** */
 	public static String GitServer_PullRequestContentAssistLabel;
