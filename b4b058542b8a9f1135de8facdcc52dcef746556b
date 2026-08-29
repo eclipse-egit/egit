@@ -35,6 +35,23 @@
       "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "dae5ce05_5df1e1e8",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1012795
+      },
+      "writtenOn": "2026-08-29T11:14:49Z",
+      "side": 1,
+      "message": "Robin, are you still interested in this? I would like to be able to cherry-pick multiple commits",
+      "revId": "b4b058542b8a9f1135de8facdcc52dcef746556b",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "8e6d0859_a1188bad",
