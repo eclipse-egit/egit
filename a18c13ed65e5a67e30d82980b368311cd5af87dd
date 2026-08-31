@@ -33,6 +33,24 @@
       "message": "Good to go, after an improved commit message.",
       "revId": "a18c13ed65e5a67e30d82980b368311cd5af87dd",
       "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "c8f3d12a_b4df041d",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1039306
+      },
+      "writtenOn": "2026-08-31T13:25:07Z",
+      "side": 1,
+      "message": "Thank you for the review, Lars.\n\nI updated the commit message, describing the potential improvements this change allows (Incremental loading, Use of bloom filters)",
+      "parentUuid": "d72aed6d_7831c463",
+      "revId": "a18c13ed65e5a67e30d82980b368311cd5af87dd",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735"
     }
   ]
 }
