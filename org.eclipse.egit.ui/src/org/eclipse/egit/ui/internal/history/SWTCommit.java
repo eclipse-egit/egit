@@ -32,8 +32,8 @@ class SWTCommit extends PlotCommit<SWTCommitList.SWTLane>
 
 	private SWTWalk walk;
 
-	SWTCommit(final AnyObjectId id, SWTWalk walk) {
-		super(id);
+	SWTCommit(AnyObjectId id, SWTWalk walk, int graphPos) {
+		super(id, graphPos);
 		this.walk = walk;
 	}
 
