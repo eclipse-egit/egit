@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2010, 2016 SAP AG and others.
+ * Copyright (c) 2010, 2026 SAP AG and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License 2.0
  * which accompanies this distribution, and is available at
@@ -14,6 +14,7 @@
 package org.eclipse.egit.ui.internal.branch;
 
 import java.io.File;
+import java.io.IOException;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
@@ -35,6 +36,7 @@ import org.eclipse.core.runtime.jobs.Job;
 import org.eclipse.core.runtime.jobs.JobChangeAdapter;
 import org.eclipse.egit.core.RepositoryUtil;
 import org.eclipse.egit.core.op.BranchOperation;
+import org.eclipse.egit.core.op.SubmoduleUpdateOperation;
 import org.eclipse.egit.ui.Activator;
 import org.eclipse.egit.ui.JobFamilies;
 import org.eclipse.egit.ui.UIPreferences;
@@ -54,6 +56,7 @@ import org.eclipse.jgit.api.CheckoutResult;
 import org.eclipse.jgit.lib.Constants;
 import org.eclipse.jgit.lib.Ref;
 import org.eclipse.jgit.lib.Repository;
+import org.eclipse.jgit.submodule.SubmoduleWalk;
 import org.eclipse.osgi.util.NLS;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.ui.PlatformUI;
@@ -187,7 +190,11 @@ public class BranchOperationUI {
 
 	private void doCheckout(BranchOperation bop, boolean restore,
 			IProgressMonitor monitor) throws CoreException {
-		SubMonitor progress = SubMonitor.convert(monitor, restore ? 10 : 1);
+		boolean updateSubmodules = Activator.getDefault().getPreferenceStore()
+				.getBoolean(UIPreferences.CHECKOUT_UPDATE_SUBMODULES);
+		SubMonitor progress = SubMonitor.convert(monitor,
+				(restore ? 10 : 1)
+						+ (updateSubmodules ? repositories.length : 0));
 		if (!restore) {
 			bop.execute(progress.newChild(1));
 		} else {
@@ -207,6 +214,45 @@ public class BranchOperationUI {
 			ResourcesPlugin.getWorkspace().run(action,
 					ResourcesPlugin.getWorkspace().getRoot(),
 					IWorkspace.AVOID_UPDATE, progress.newChild(3));
+		}
+		if (updateSubmodules) {
+			updateSubmodules(bop, progress);
+		}
+	}
+
+	/**
+	 * Tells whether the repository declares submodules in its work tree.
+	 *
+	 * @param repository
+	 *            to check
+	 * @return whether a .gitmodules file exists
+	 */
+	public static boolean hasSubmodules(Repository repository) {
+		try {
+			return SubmoduleWalk.containsGitModulesFile(repository);
+		} catch (IOException e) {
+			return false;
+		}
+	}
+
+	private void updateSubmodules(BranchOperation bop, SubMonitor progress) {
+		for (Repository repository : repositories) {
+			if (bop.getResult(repository)
+					.getStatus() != CheckoutResult.Status.OK
+					|| !hasSubmodules(repository)) {
+				progress.worked(1);
+				continue;
+			}
+			try {
+				new SubmoduleUpdateOperation(repository)
+						.execute(progress.newChild(1));
+			} catch (CoreException e) {
+				// A stale submodule must not fail the completed checkout
+				Activator.handleError(NLS.bind(
+						UIText.BranchOperationUI_SubmoduleUpdateError,
+						RepositoryUtil.INSTANCE.getRepositoryName(repository)),
+						e, true);
+			}
 		}
 	}
 

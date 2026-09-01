@@ -877,6 +877,9 @@ public class UIText extends NLS {
 	public static String ProjectsPreferencePage_RestoreBranchProjects;
 
 	/** */
+	public static String ProjectsPreferencePage_UpdateSubmodulesOnCheckout;
+
+	/** */
 	public static String ProjectsPreferencePage_AutoIgnoreDerivedResources;
 
 	/** */
@@ -1352,6 +1355,12 @@ public class UIText extends NLS {
 
 	/** */
 	public static String CheckoutDialog_OkCheckoutWithQuestion;
+
+	/** */
+	public static String CheckoutDialog_UpdateSubmodules;
+
+	/** */
+	public static String CheckoutDialog_UpdateSubmodulesTooltip;
 
 	/** */
 	public static String CheckoutDialog_Title;
@@ -3582,6 +3591,9 @@ public class UIText extends NLS {
 
 	/** */
 	public static String BranchOperationUI_Continue;
+
+	/** */
+	public static String BranchOperationUI_SubmoduleUpdateError;
 
 	/** */
 	public static String BranchOperationUI_DetachedHeadTitle;
