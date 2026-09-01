@@ -21,12 +21,15 @@ import java.io.ByteArrayInputStream;
 import java.util.concurrent.Callable;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.concurrent.atomic.AtomicReference;
+import java.util.function.Predicate;
 
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IWorkspace;
 import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.CoreException;
+import org.eclipse.core.runtime.jobs.Job;
 import org.eclipse.egit.core.Activator;
+import org.eclipse.egit.core.JobFamilies;
 import org.eclipse.egit.core.op.ConnectProviderOperation;
 import org.eclipse.egit.core.test.GitTestCase;
 import org.eclipse.egit.core.test.TestRepository;
@@ -87,23 +90,21 @@ public class IndexDiffCacheTest extends GitTestCase {
 				.createInitialCommit("testAddingAFile\n\nfirst commit\n");
 		waitForListenerCalled();
 		final String fileName = "aFile";
+		String path = project.project.getFile(fileName).getFullPath()
+				.toString().substring(1);
 		// This call should trigger an indexDiffChanged event (triggered via
 		// resource changed event)
 		project.createFile(fileName, "content".getBytes("UTF-8"));
-		IndexDiffData indexDiffData = waitForListenerCalled();
-		String path = project.project.getFile(fileName).getFullPath()
-				.toString().substring(1);
-		if (!indexDiffData.getUntracked().contains(path))
-			fail("IndexDiffData did not contain aFile as untracked");
+		waitForIndexDiff(data -> data.getUntracked().contains(path),
+				"IndexDiffData did not contain aFile as untracked");
 		// This call should trigger an indexDiffChanged event
 		try (Git git = new Git(repository)) {
 			git.add().addFilepattern(path).call();
 		}
-		IndexDiffData indexDiffData2 = waitForListenerCalled();
-		if (indexDiffData2.getUntracked().contains(path))
-			fail("IndexDiffData contains aFile as untracked");
-		if (!indexDiffData2.getAdded().contains(path))
-			fail("IndexDiffData does not contain aFile as added");
+		waitForIndexDiff(
+				data -> data.getAdded().contains(path)
+						&& !data.getUntracked().contains(path),
+				"IndexDiffData did not contain aFile as added");
 	}
 
 	@Test
@@ -126,12 +127,16 @@ public class IndexDiffCacheTest extends GitTestCase {
 			return null;
 		});
 
-		IndexDiffData data1 = waitForListenerCalled();
-		assertThat(data1.getUntrackedFolders(), hasItem("Project-1/folder/"));
+		waitForIndexDiff(
+				data -> data.getUntrackedFolders()
+						.contains("Project-1/folder/"),
+				"IndexDiffData did not contain folder as untracked");
 
 		testRepository.track(fileA[0].getLocation().toFile());
 
-		IndexDiffData data2 = waitForListenerCalled();
+		IndexDiffData data2 = waitForIndexDiff(
+				data -> data.getAdded().contains("Project-1/folder/a/file"),
+				"IndexDiffData did not contain folder/a/file as added");
 		assertThat(data2.getAdded(), hasItem("Project-1/folder/a/file"));
 		assertThat(data2.getUntrackedFolders(), not(hasItem("Project-1/folder/")));
 		assertThat(data2.getUntrackedFolders(), not(hasItem("Project-1/folder/a")));
@@ -154,12 +159,17 @@ public class IndexDiffCacheTest extends GitTestCase {
 		testRepository
 				.createInitialCommit("testAddIgnoredFolder\n\nfirst commit\n");
 
-		IndexDiffData data1 = waitForListenerCalled();
-		assertThat(data1.getIgnoredNotInIndex(), hasItem("Project-1/ignore"));
+		waitForIndexDiff(
+				data -> data.getIgnoredNotInIndex()
+						.contains("Project-1/ignore"),
+				"IndexDiffData did not contain ignore as ignored");
 
 		project.createFolder("sub/ignore");
 
-		IndexDiffData data2 = waitForListenerCalled();
+		IndexDiffData data2 = waitForIndexDiff(
+				data -> data.getIgnoredNotInIndex()
+						.contains("Project-1/sub/ignore"),
+				"IndexDiffData did not contain sub/ignore as ignored");
 		assertThat(data2.getIgnoredNotInIndex(), hasItem("Project-1/ignore"));
 		assertThat(data2.getIgnoredNotInIndex(), hasItem("Project-1/sub/ignore"));
 
@@ -167,7 +177,9 @@ public class IndexDiffCacheTest extends GitTestCase {
 		// it's not a prefix path of it)
 		project.createFile("sub/ignorenot", new byte[] {});
 
-		IndexDiffData data3 = waitForListenerCalled();
+		IndexDiffData data3 = waitForIndexDiff(
+				data -> data.getUntracked().contains("Project-1/sub/ignorenot"),
+				"IndexDiffData did not contain sub/ignorenot as untracked");
 		assertThat(data3.getUntracked(), hasItem("Project-1/sub/ignorenot"));
 		assertThat(data3.getIgnoredNotInIndex(), hasItem("Project-1/ignore"));
 		assertThat(data3.getIgnoredNotInIndex(), hasItem("Project-1/sub/ignore"));
@@ -188,21 +200,29 @@ public class IndexDiffCacheTest extends GitTestCase {
 		listenerCalled.set(0);
 		testRepository.createInitialCommit("testRemoveIgnoredFile\n\nfirst commit\n");
 
-		IndexDiffData data1 = waitForListenerCalled();
-		assertThat(data1.getIgnoredNotInIndex(), hasItem("Project-1/sub/ignore"));
+		waitForIndexDiff(
+				data -> data.getIgnoredNotInIndex()
+						.contains("Project-1/sub/ignore"),
+				"IndexDiffData did not contain sub/ignore as ignored");
 
 		// Must not change anything (ignored path starts with this string, but
 		// it's not a prefix path of it)
 		project.createFile("sub/ignorenot", new byte[] {});
 
-		IndexDiffData data2 = waitForListenerCalled();
+		IndexDiffData data2 = waitForIndexDiff(
+				data -> data.getUntracked().contains("Project-1/sub/ignorenot"),
+				"IndexDiffData did not contain sub/ignorenot as untracked");
 		assertThat(data2.getIgnoredNotInIndex(), hasItem("Project-1/sub/ignore"));
 
+		settle();
 		file[0].delete(false, null);
 
 		waitForListenerNotCalled();
 		entry.refresh(); // need explicit as ignored file shall not trigger.
-		IndexDiffData data3 = waitForListenerCalled();
+		IndexDiffData data3 = waitForIndexDiff(
+				data -> !data.getIgnoredNotInIndex()
+						.contains("Project-1/sub/ignore"),
+				"IndexDiffData still contained sub/ignore as ignored");
 		assertThat(data3.getIgnoredNotInIndex(), not(hasItem("Project-1/sub/ignore")));
 	}
 
@@ -222,26 +242,34 @@ public class IndexDiffCacheTest extends GitTestCase {
 				.createInitialCommit(
 						"testAddAndRemoveGitIgnoreFileToIgnoredDir\n\nfirst commit\n");
 
-		IndexDiffData data1 = waitForListenerCalled();
-		assertThat(data1.getIgnoredNotInIndex(),
-				hasItem("Project-1/sub/ignore"));
+		waitForIndexDiff(
+				data -> data.getIgnoredNotInIndex()
+						.contains("Project-1/sub/ignore"),
+				"IndexDiffData did not contain sub/ignore as ignored");
 
 		project.createFile("sub/ignored", "Ignored".getBytes("UTF-8"));
 
-		waitForListenerCalled();
+		waitForIndexDiff(
+				data -> data.getUntracked().contains("Project-1/sub/ignored"),
+				"IndexDiffData did not contain sub/ignored as untracked");
 
 		// adding this file will trigger a refresh, so no manual refresh must be
 		// required.
 		project.createFile("sub/.gitignore", "ignored\n".getBytes("UTF-8"));
 
-		IndexDiffData data2 = waitForListenerCalled();
+		IndexDiffData data2 = waitForIndexDiff(
+				data -> data.getIgnoredNotInIndex()
+						.contains("Project-1/sub/ignored"),
+				"IndexDiffData did not contain sub/ignored as ignored");
 		assertThat(data2.getIgnoredNotInIndex(),
 				hasItem("Project-1/sub/ignored"));
 
 		// removing must also trigger the listener
 		project.getProject().getFile("sub/.gitignore").delete(true, null);
 
-		IndexDiffData data3 = waitForListenerCalled();
+		IndexDiffData data3 = waitForIndexDiff(
+				data -> data.getUntracked().contains("Project-1/sub/ignored"),
+				"IndexDiffData did not contain sub/ignored as untracked");
 		assertThat(data3.getUntracked(), hasItem("Project-1/sub/ignored"));
 	}
 
@@ -261,14 +289,17 @@ public class IndexDiffCacheTest extends GitTestCase {
 				.createInitialCommit(
 						"testAddAndRemoveFileToIgnoredDir\n\nfirst commit\n");
 
-		IndexDiffData data1 = waitForListenerCalled();
-		assertThat(data1.getIgnoredNotInIndex(), hasItem("Project-1/sub"));
+		waitForIndexDiff(
+				data -> data.getIgnoredNotInIndex().contains("Project-1/sub"),
+				"IndexDiffData did not contain sub as ignored");
 
 		// creating a file in an ignored directory will not trigger the listener
+		settle();
 		project.createFile("sub/ignored", "Ignored".getBytes("UTF-8"));
 		waitForListenerNotCalled();
 
 		// removing must also not trigger the listener
+		settle();
 		project.getProject().getFile("sub/ignored").delete(true, null);
 		waitForListenerNotCalled();
 	}
@@ -289,10 +320,12 @@ public class IndexDiffCacheTest extends GitTestCase {
 				.createInitialCommit(
 						"testModifyFileInIgnoredDir\n\nfirst commit\n");
 
-		IndexDiffData data1 = waitForListenerCalled();
-		assertThat(data1.getIgnoredNotInIndex(),
-				hasItem("Project-1/sub/ignore"));
+		waitForIndexDiff(
+				data -> data.getIgnoredNotInIndex()
+						.contains("Project-1/sub/ignore"),
+				"IndexDiffData did not contain sub/ignore as ignored");
 
+		settle();
 		IFile file = project.getProject().getFile("sub/ignore");
 		file.setContents(
 				new ByteArrayInputStream("other contents".getBytes("UTF-8")), 0,
@@ -322,6 +355,33 @@ public class IndexDiffCacheTest extends GitTestCase {
 		IndexDiffCacheEntry cacheEntry = IndexDiffCache.INSTANCE
 				.getIndexDiffCacheEntry(repository);
 		return cacheEntry;
+	}
+
+	// Waits for the state instead of for the next notification: a notification
+	// triggered by an earlier step may still be in flight and would otherwise be
+	// mistaken for the expected one.
+	private IndexDiffData waitForIndexDiff(Predicate<IndexDiffData> expected,
+			String message) throws InterruptedException {
+		long time = 0;
+		while (time < 60000) {
+			IndexDiffData data = indexDiffDataResult.get();
+			if (data != null && expected.test(data)) {
+				listenerCalled.set(0);
+				return data;
+			}
+			Thread.sleep(100);
+			time += 100;
+		}
+		fail(message + " after " + time + " ms; last data: "
+				+ indexDiffDataResult.get());
+		return null;
+	}
+
+	// Waits for pending calculations, so that a subsequent
+	// waitForListenerNotCalled cannot see a notification of an earlier step.
+	private void settle() throws InterruptedException {
+		Job.getJobManager().join(JobFamilies.INDEX_DIFF_CACHE_UPDATE, null);
+		listenerCalled.set(0);
 	}
 
 	private IndexDiffData waitForListenerCalled() throws InterruptedException {

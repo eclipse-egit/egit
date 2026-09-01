@@ -120,6 +120,43 @@ public class SelectionUtils {
 	}
 
 	/**
+	 * Like {@link #getRepositories(IStructuredSelection)}, but ignores
+	 * selected resources and projects (also inside working sets) that are
+	 * closed or not shared with Git instead of rejecting the whole selection.
+	 * Selections without any such resource, for instance nodes of the Git
+	 * Repositories view, are resolved strictly.
+	 *
+	 * @param selection
+	 *            to resolve
+	 * @return the repositories of the shared selected resources; empty if
+	 *         there are none
+	 */
+	@NonNull
+	public static Repository[] getRepositoriesLenient(
+			@NonNull IStructuredSelection selection) {
+		Set<Repository> repos = new LinkedHashSet<>();
+		for (IResource resource : getSelectedAdaptables(selection,
+				IResource.class)) {
+			addRepositoryOf(resource, repos);
+		}
+		for (IProject project : extractProjectsFromMappings(selection)) {
+			addRepositoryOf(project, repos);
+		}
+		if (repos.isEmpty()) {
+			return getRepositories(selection);
+		}
+		return repos.toArray(new Repository[0]);
+	}
+
+	private static void addRepositoryOf(IResource resource,
+			Set<Repository> repos) {
+		RepositoryMapping mapping = RepositoryMapping.getMapping(resource);
+		if (mapping != null && mapping.getRepository() != null) {
+			repos.add(mapping.getRepository());
+		}
+	}
+
+	/**
 	 * Retrieves all the repositories associated with the current selection,
 	 * even if associated with a folder instead of a project. If no repository
 	 * can be determined for any object in the selection, returns an empty

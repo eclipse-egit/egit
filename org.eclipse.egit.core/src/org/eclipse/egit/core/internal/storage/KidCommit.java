@@ -18,8 +18,8 @@ class KidCommit extends RevCommit {
 
 	KidCommit[] children = NO_CHILDREN;
 
-	KidCommit(final AnyObjectId id) {
-		super(id);
+	KidCommit(AnyObjectId id, int graphPos) {
+		super(id, graphPos);
 	}
 
 	void addChild(final KidCommit c) {

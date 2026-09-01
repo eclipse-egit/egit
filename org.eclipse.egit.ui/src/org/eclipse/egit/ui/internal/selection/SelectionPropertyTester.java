@@ -18,6 +18,7 @@ import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.HashSet;
+import java.util.Objects;
 import java.util.Set;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -166,20 +167,35 @@ public class SelectionPropertyTester extends AbstractPropertyTester {
 
 			IResource[] resources = SelectionUtils
 					.getSelectedResources(selection);
-			Collection<Repository> repositories = getRepositories(resources);
-			if (repositories.isEmpty()) {
-				return false;
-			}
-			if (args != null && args.length > 0) {
-				for (Repository repository : repositories) {
-					if (!testRepositoryProperties(repository, args)) {
-						return false;
-					}
-				}
-			}
-			return true;
+			return testAllRepositoryProperties(getRepositories(resources),
+					args);
+
+		} else if ("resourcesAnyInRepository".equals(property)) { //$NON-NLS-1$
+			IStructuredSelection selection = getStructuredSelection(collection);
+
+			IResource[] resources = SelectionUtils
+					.getSelectedResources(selection);
+			Set<Repository> repositories = Stream.of(resources)
+					.map(SelectionPropertyTester::getRepositoryOfMapping)
+					.filter(Objects::nonNull).collect(Collectors.toSet());
+			return testAllRepositoryProperties(repositories, args);
 		}
 		return false;
+	}
+
+	private static boolean testAllRepositoryProperties(
+			Collection<Repository> repositories, Object[] args) {
+		if (repositories.isEmpty()) {
+			return false;
+		}
+		if (args != null && args.length > 0) {
+			for (Repository repository : repositories) {
+				if (!testRepositoryProperties(repository, args)) {
+					return false;
+				}
+			}
+		}
+		return true;
 	}
 
 	private boolean resourceSelectionContainsMoreThanOneRepository(

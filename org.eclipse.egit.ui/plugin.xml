@@ -1486,7 +1486,7 @@
          <activeWhen>
             <or>
                <test
-                     property="GitSelection.resourcesAllInRepository">
+                     property="GitSelection.resourcesAnyInRepository">
                </test>
                <iterate>
                   <instanceof
@@ -6146,6 +6146,18 @@
             <menu
                   id="egit.menu.remote"
                   label="%RemoteSubMenu.label">
+               <separator
+                     name="##SimpleFetch"
+                     visible="true">
+               </separator>
+               <dynamic
+                     id="org.eclipse.egit.ui.team.SimpleFetchRemotes"
+                     class="org.eclipse.egit.ui.internal.actions.SimpleFetchRemotesContributionItem">
+               </dynamic>
+               <separator
+                     name="##PushFetch"
+                     visible="true">
+               </separator>
                <command
                      commandId="org.eclipse.egit.ui.team.Push"
                      label="%PushAction_label"
@@ -7481,7 +7493,7 @@
             class="org.eclipse.egit.ui.internal.selection.SelectionPropertyTester"
             id="org.eclipse.egit.ui.SelectionTester"
             namespace="GitSelection"
-            properties="conflictsInSingleRepository,projectsSingleRepository,projectsWithRepositories,resourcesSingleRepository,resourcesMultipleRepositories,fileOrFolderInRepository,resourcesAllInRepository,selectionSingleRepository,selectionMultipleRepositories"
+            properties="conflictsInSingleRepository,projectsSingleRepository,projectsWithRepositories,resourcesSingleRepository,resourcesMultipleRepositories,fileOrFolderInRepository,resourcesAllInRepository,resourcesAnyInRepository,selectionSingleRepository,selectionMultipleRepositories"
             type="java.util.Collection">
       </propertyTester>
       <propertyTester
