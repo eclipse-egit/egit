@@ -59,6 +59,7 @@ import org.eclipse.egit.ui.internal.actions.ActionCommands;
 import org.eclipse.egit.ui.internal.branch.BranchOperationUI;
 import org.eclipse.egit.ui.internal.commands.ToggleCommand;
 import org.eclipse.egit.ui.internal.components.MessagePopupTextCellEditor;
+import org.eclipse.egit.ui.internal.dialogs.CheckoutConfirmationDialog;
 import org.eclipse.egit.ui.internal.groups.RepositoryGroup;
 import org.eclipse.egit.ui.internal.groups.RepositoryGroups;
 import org.eclipse.egit.ui.internal.history.HistoryPageInput;
@@ -86,9 +87,6 @@ import org.eclipse.jface.action.IMenuListener;
 import org.eclipse.jface.action.IMenuManager;
 import org.eclipse.jface.action.MenuManager;
 import org.eclipse.jface.bindings.keys.SWTKeySupport;
-import org.eclipse.jface.dialogs.IDialogConstants;
-import org.eclipse.jface.dialogs.MessageDialog;
-import org.eclipse.jface.dialogs.MessageDialogWithToggle;
 import org.eclipse.jface.layout.GridDataFactory;
 import org.eclipse.jface.layout.GridLayoutFactory;
 import org.eclipse.jface.preference.IPreferenceStore;
@@ -113,7 +111,6 @@ import org.eclipse.jface.viewers.TextCellEditor;
 import org.eclipse.jface.viewers.TreeSelection;
 import org.eclipse.jface.viewers.TreeViewerEditor;
 import org.eclipse.jface.viewers.ViewerCell;
-import org.eclipse.jface.window.Window;
 import org.eclipse.jgit.annotations.NonNull;
 import org.eclipse.jgit.events.ConfigChangedListener;
 import org.eclipse.jgit.events.IndexChangedListener;
@@ -861,34 +858,10 @@ public class RepositoriesView extends CommonNavigator implements IShowInSource, 
 			IPreferenceStore store = Activator.getDefault()
 					.getPreferenceStore();
 
-			if (store.getBoolean(UIPreferences.SHOW_CHECKOUT_CONFIRMATION)) {
-				MessageDialogWithToggle dialog = new MessageDialogWithToggle(
-						getViewSite().getShell(),
-						UIText.RepositoriesView_CheckoutConfirmationTitle, null,
-						MessageFormat.format(
-								UIText.RepositoriesView_CheckoutConfirmationMessage,
-								Repository.shortenRefName(refName)),
-						MessageDialog.QUESTION,
-						new String[] {
-								UIText.RepositoriesView_CheckoutConfirmationDefaultButtonLabel,
-								IDialogConstants.CANCEL_LABEL },
-						0,
-						UIText.RepositoriesView_CheckoutConfirmationToggleMessage,
-						false);
-				// Since we use a custom button here, we may get back the first
-				// internal ID instead of Window.OK.
-				int result = dialog.open();
-				if (result != Window.OK
-						&& result != IDialogConstants.INTERNAL_ID) {
-					return;
-				}
-				// And with custom buttons and internal IDs, the framework
-				// doesn't save the preference (even if we set the preference
-				// store and key).
-				if (dialog.getToggleState()) {
-					store.setValue(UIPreferences.SHOW_CHECKOUT_CONFIRMATION,
-							false);
-				}
+			if (store.getBoolean(UIPreferences.SHOW_CHECKOUT_CONFIRMATION)
+					&& !new CheckoutConfirmationDialog(getViewSite().getShell(),
+							element.getRepository(), refName).confirm()) {
+				return;
 			}
 		}
 		executeOpenCommand(element);
