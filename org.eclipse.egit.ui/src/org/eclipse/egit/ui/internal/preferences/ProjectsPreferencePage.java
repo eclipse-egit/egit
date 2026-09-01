@@ -67,6 +67,17 @@ public class ProjectsPreferencePage extends DoublePreferencesPreferencePage
 			}
 		});
 		addField(new BooleanFieldEditor(
+				UIPreferences.CHECKOUT_UPDATE_SUBMODULES,
+				UIText.ProjectsPreferencePage_UpdateSubmodulesOnCheckout,
+				getFieldEditorParent()) {
+
+			@Override
+			public void setPreferenceStore(IPreferenceStore store) {
+				super.setPreferenceStore(
+						store == null ? null : getSecondaryPreferenceStore());
+			}
+		});
+		addField(new BooleanFieldEditor(
 				GitCorePreferences.core_autoIgnoreDerivedResources,
 				UIText.ProjectsPreferencePage_AutoIgnoreDerivedResources,
 				getFieldEditorParent()));

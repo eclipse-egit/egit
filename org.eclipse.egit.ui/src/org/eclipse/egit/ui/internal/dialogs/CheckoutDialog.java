@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2011, 2013 SAP AG and others.
+ * Copyright (c) 2011, 2026 SAP AG and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License 2.0
  * which accompanies this distribution, and is available at
@@ -15,10 +15,15 @@ package org.eclipse.egit.ui.internal.dialogs;
 import java.text.MessageFormat;
 
 import org.eclipse.egit.core.RepositoryUtil;
+import org.eclipse.egit.ui.Activator;
+import org.eclipse.egit.ui.UIPreferences;
 import org.eclipse.egit.ui.internal.UIText;
 import org.eclipse.egit.ui.internal.branch.BranchOperationUI;
+import org.eclipse.jface.layout.GridDataFactory;
 import org.eclipse.jface.window.Window;
 import org.eclipse.jgit.lib.Repository;
+import org.eclipse.swt.SWT;
+import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Shell;
 
@@ -27,6 +32,8 @@ import org.eclipse.swt.widgets.Shell;
  *
  */
 public class CheckoutDialog extends BranchSelectionAndEditDialog {
+
+	private Button updateSubmodulesButton;
 
 	/**
 	 * @param parentShell
@@ -63,4 +70,29 @@ public class CheckoutDialog extends BranchSelectionAndEditDialog {
 		getButton(Window.OK).setText(UIText.CheckoutDialog_OkCheckout);
 	}
 
+	@Override
+	protected void createCustomArea(Composite parent) {
+		if (!BranchOperationUI.hasSubmodules(repo)) {
+			return;
+		}
+		updateSubmodulesButton = new Button(parent, SWT.CHECK);
+		updateSubmodulesButton.setText(UIText.CheckoutDialog_UpdateSubmodules);
+		updateSubmodulesButton
+				.setToolTipText(UIText.CheckoutDialog_UpdateSubmodulesTooltip);
+		updateSubmodulesButton.setSelection(Activator.getDefault()
+				.getPreferenceStore()
+				.getBoolean(UIPreferences.CHECKOUT_UPDATE_SUBMODULES));
+		GridDataFactory.fillDefaults().grab(true, false)
+				.applyTo(updateSubmodulesButton);
+	}
+
+	@Override
+	protected void okPressed() {
+		if (updateSubmodulesButton != null) {
+			Activator.getDefault().getPreferenceStore().setValue(
+					UIPreferences.CHECKOUT_UPDATE_SUBMODULES,
+					updateSubmodulesButton.getSelection());
+		}
+		super.okPressed();
+	}
 }
