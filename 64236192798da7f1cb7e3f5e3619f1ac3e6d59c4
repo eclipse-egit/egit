@@ -16,6 +16,24 @@
       "message": "This is part of the larger initiative to make the _History_ view load faster with big repositories.\n\nTo test it, I recommend a configuration that would usually need a lot of time to load e.g.:\n- Use a big repository with lots of commits\n- Filter: `All changes of resource`\n- Select a resource that doesn\u0027t change very often (typically configuration files)\n\nThe expected result is that the very first commit is shown pretty soon and the rest of the commits appear gradually in the history view (first 1 then 3 then 6, the formula is in `getNextMaximumCommitsCount()`).",
       "revId": "64236192798da7f1cb7e3f5e3619f1ac3e6d59c4",
       "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "e11a97f7_45f1962f",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1039063
+      },
+      "writtenOn": "2026-09-01T06:05:22Z",
+      "side": 1,
+      "message": "btw. we have also been using this change for the past few months and noticed no side-effects.",
+      "parentUuid": "9ee36520_647007b3",
+      "revId": "64236192798da7f1cb7e3f5e3619f1ac3e6d59c4",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735"
     }
   ]
 }
