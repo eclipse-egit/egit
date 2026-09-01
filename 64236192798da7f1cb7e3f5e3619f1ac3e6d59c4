@@ -34,6 +34,23 @@
       "parentUuid": "9ee36520_647007b3",
       "revId": "64236192798da7f1cb7e3f5e3619f1ac3e6d59c4",
       "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ac75aece_4264c593",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/history/GenerateHistoryJob.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1039306
+      },
+      "writtenOn": "2026-09-01T08:55:57Z",
+      "side": 1,
+      "message": "I\u0027m wondering if this field also needs to be guarded by `lock`, with synchronization in `getNextMaximumCommitsCount()`",
+      "revId": "64236192798da7f1cb7e3f5e3619f1ac3e6d59c4",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735"
     }
   ]
 }
