@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2010, 2016 SAP AG and others.
+ * Copyright (c) 2010, 2026 SAP AG and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License 2.0
  * which accompanies this distribution, and is available at
@@ -14,6 +14,8 @@
 package org.eclipse.egit.ui.internal.branch;
 
 import java.io.File;
+import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
@@ -33,8 +35,10 @@ import org.eclipse.core.runtime.SubMonitor;
 import org.eclipse.core.runtime.jobs.IJobChangeEvent;
 import org.eclipse.core.runtime.jobs.Job;
 import org.eclipse.core.runtime.jobs.JobChangeAdapter;
+import org.eclipse.egit.core.RepositoryCache;
 import org.eclipse.egit.core.RepositoryUtil;
 import org.eclipse.egit.core.op.BranchOperation;
+import org.eclipse.egit.core.op.SubmoduleUpdateOperation;
 import org.eclipse.egit.ui.Activator;
 import org.eclipse.egit.ui.JobFamilies;
 import org.eclipse.egit.ui.UIPreferences;
@@ -43,6 +47,7 @@ import org.eclipse.egit.ui.internal.UIText;
 import org.eclipse.egit.ui.internal.decorators.DecoratorRepositoryStateCache;
 import org.eclipse.egit.ui.internal.decorators.GitLightweightDecorator;
 import org.eclipse.egit.ui.internal.dialogs.NonDeletedFilesDialog;
+import org.eclipse.egit.ui.internal.dialogs.SubmoduleUpdateConflictDialog;
 import org.eclipse.egit.ui.internal.repository.CreateBranchWizard;
 import org.eclipse.jface.dialogs.IDialogConstants;
 import org.eclipse.jface.dialogs.MessageDialog;
@@ -51,9 +56,12 @@ import org.eclipse.jface.preference.IPreferenceStore;
 import org.eclipse.jface.wizard.WizardDialog;
 import org.eclipse.jgit.annotations.NonNull;
 import org.eclipse.jgit.api.CheckoutResult;
+import org.eclipse.jgit.api.errors.CheckoutConflictException;
 import org.eclipse.jgit.lib.Constants;
 import org.eclipse.jgit.lib.Ref;
 import org.eclipse.jgit.lib.Repository;
+import org.eclipse.jgit.submodule.SubmoduleWalk;
+import org.eclipse.jgit.util.FileUtils;
 import org.eclipse.osgi.util.NLS;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.ui.PlatformUI;
@@ -187,7 +195,11 @@ public class BranchOperationUI {
 
 	private void doCheckout(BranchOperation bop, boolean restore,
 			IProgressMonitor monitor) throws CoreException {
-		SubMonitor progress = SubMonitor.convert(monitor, restore ? 10 : 1);
+		boolean updateSubmodules = Activator.getDefault().getPreferenceStore()
+				.getBoolean(UIPreferences.CHECKOUT_UPDATE_SUBMODULES);
+		SubMonitor progress = SubMonitor.convert(monitor,
+				(restore ? 10 : 1)
+						+ (updateSubmodules ? repositories.length : 0));
 		if (!restore) {
 			bop.execute(progress.newChild(1));
 		} else {
@@ -208,6 +220,143 @@ public class BranchOperationUI {
 					ResourcesPlugin.getWorkspace().getRoot(),
 					IWorkspace.AVOID_UPDATE, progress.newChild(3));
 		}
+		if (updateSubmodules) {
+			updateSubmodules(bop, progress);
+		}
+	}
+
+	/**
+	 * Tells whether the repository declares submodules in its work tree.
+	 *
+	 * @param repository
+	 *            to check
+	 * @return whether a .gitmodules file exists
+	 */
+	public static boolean hasSubmodules(Repository repository) {
+		try {
+			return SubmoduleWalk.containsGitModulesFile(repository);
+		} catch (IOException e) {
+			return false;
+		}
+	}
+
+	private void updateSubmodules(BranchOperation bop, SubMonitor progress) {
+		for (Repository repository : repositories) {
+			if (bop.getResult(repository)
+					.getStatus() != CheckoutResult.Status.OK
+					|| !hasSubmodules(repository)) {
+				progress.worked(1);
+				continue;
+			}
+			List<String> paths = getSubmodulePaths(repository);
+			SubMonitor sub = progress.newChild(1)
+					.setWorkRemaining(paths.size());
+			for (String path : paths) {
+				updateSubmodule(repository, path, sub.newChild(1));
+			}
+		}
+	}
+
+	private static List<String> getSubmodulePaths(Repository repository) {
+		List<String> paths = new ArrayList<>();
+		try (SubmoduleWalk walk = SubmoduleWalk.forIndex(repository)) {
+			while (walk.next()) {
+				paths.add(walk.getPath());
+			}
+		} catch (IOException e) {
+			Activator.logError(e.getMessage(), e);
+		}
+		return paths;
+	}
+
+	// JGit refuses to overwrite untracked files in the submodule. Offer to
+	// delete them and retry once.
+	private static void updateSubmodule(Repository repository, String path,
+			SubMonitor progress) {
+		progress.setWorkRemaining(2);
+		try {
+			new SubmoduleUpdateOperation(repository).addPath(path)
+					.execute(progress.newChild(1));
+			return;
+		} catch (CoreException e) {
+			List<String> conflicts = getConflictingPaths(e);
+			if (conflicts.isEmpty()) {
+				reportSubmoduleError(repository, path, e);
+				return;
+			}
+			if (!overwriteUntrackedFiles(repository, path, conflicts)) {
+				return;
+			}
+		}
+		try {
+			new SubmoduleUpdateOperation(repository).addPath(path)
+					.execute(progress.newChild(1));
+		} catch (CoreException e) {
+			reportSubmoduleError(repository, path, e);
+		}
+	}
+
+	private static boolean overwriteUntrackedFiles(Repository repository,
+			String path, List<String> conflicts) {
+		Repository subRepo;
+		try (Repository walked = SubmoduleWalk.getSubmoduleRepository(repository,
+				path)) {
+			if (walked == null) {
+				return false;
+			}
+			subRepo = RepositoryCache.INSTANCE
+					.lookupRepository(walked.getDirectory());
+		} catch (IOException e) {
+			return false;
+		}
+		String message = NLS.bind(
+				UIText.SubmoduleUpdateConflictDialog_Message, path,
+				RepositoryUtil.INSTANCE.getRepositoryName(repository));
+		boolean[] overwrite = { false };
+		PlatformUI.getWorkbench().getDisplay().syncExec(() -> {
+			Shell shell = PlatformUI.getWorkbench().getActiveWorkbenchWindow()
+					.getShell();
+			SubmoduleUpdateConflictDialog dialog = new SubmoduleUpdateConflictDialog(
+					shell, subRepo, message, conflicts);
+			dialog.open();
+			overwrite[0] = dialog.shouldOverwrite();
+		});
+		if (!overwrite[0]) {
+			return false;
+		}
+		File workTree = subRepo.getWorkTree();
+		for (String conflict : conflicts) {
+			try {
+				FileUtils.delete(new File(workTree, conflict),
+						FileUtils.RECURSIVE | FileUtils.SKIP_MISSING);
+			} catch (IOException e) {
+				Activator.logError(e.getMessage(), e);
+				return false;
+			}
+		}
+		return true;
+	}
+
+	// JGit reports submodule checkout conflicts through either exception type
+	private static List<String> getConflictingPaths(Throwable e) {
+		for (Throwable t = e; t != null; t = t.getCause()) {
+			if (t instanceof CheckoutConflictException api) {
+				return api.getConflictingPaths();
+			}
+			if (t instanceof org.eclipse.jgit.errors.CheckoutConflictException internal) {
+				return Arrays.asList(internal.getConflictingFiles());
+			}
+		}
+		return List.of();
+	}
+
+	private static void reportSubmoduleError(Repository repository,
+			String path, CoreException e) {
+		// A stale submodule must not fail the completed checkout
+		Activator.handleError(
+				NLS.bind(UIText.BranchOperationUI_SubmoduleUpdateError, path,
+						RepositoryUtil.INSTANCE.getRepositoryName(repository)),
+				e, true);
 	}
 
 	/**
