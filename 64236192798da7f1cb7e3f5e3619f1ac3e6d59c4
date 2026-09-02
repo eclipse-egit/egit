@@ -51,6 +51,24 @@
       "message": "I\u0027m wondering if this field also needs to be guarded by `lock`, with synchronization in `getNextMaximumCommitsCount()`",
       "revId": "64236192798da7f1cb7e3f5e3619f1ac3e6d59c4",
       "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "efda61ba_a03a5321",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/history/GenerateHistoryJob.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1039063
+      },
+      "writtenOn": "2026-09-02T12:33:32Z",
+      "side": 1,
+      "message": "`hasMore`, `size`, `nextLoadHint` are written by the job\u0027s background thread inside `run()` but read/written by `loadNextBatch()`, which is invoked from the UI thread as the user scrolls the history table.\n\n`currentBatchSize` is only read/written inside `getNextMaximumCommitsCount()` which is only called from `run()`. Only 1 thread is involved here, it **doesn\u0027t** need to be guarded by `lock`.",
+      "parentUuid": "ac75aece_4264c593",
+      "revId": "64236192798da7f1cb7e3f5e3619f1ac3e6d59c4",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735"
     }
   ]
 }
