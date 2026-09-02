@@ -19,10 +19,12 @@ import java.util.List;
 import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.commands.ExecutionException;
 import org.eclipse.core.resources.IProject;
+import org.eclipse.core.resources.IProjectDescription;
 import org.eclipse.core.resources.IResource;
 import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.resources.WorkspaceJob;
 import org.eclipse.core.runtime.CoreException;
+import org.eclipse.core.runtime.ILog;
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
@@ -30,7 +32,6 @@ import org.eclipse.core.runtime.Path;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.core.runtime.SubMonitor;
 import org.eclipse.egit.core.internal.util.ProjectUtil;
-import org.eclipse.egit.ui.Activator;
 import org.eclipse.egit.ui.internal.UIText;
 import org.eclipse.egit.ui.internal.repository.tree.RepositoryNode;
 import org.eclipse.egit.ui.internal.repository.tree.RepositoryTreeNode;
@@ -52,8 +53,20 @@ public class OpenAllProjectsCommand
 		if (repository == null || repository.isBare()) {
 			return null;
 		}
-		List<IProject> closedProjects = getClosedProjectsInRepository(
-				repository);
+		List<IProject> closedProjects = new ArrayList<>();
+		List<String> withoutDescription = new ArrayList<>();
+		for (IProject project : getClosedProjectsInRepository(repository)) {
+			if (hasDescriptionFile(project)) {
+				closedProjects.add(project);
+			} else {
+				withoutDescription.add(project.getName());
+			}
+		}
+		if (!withoutDescription.isEmpty()) {
+			ILog.of(OpenAllProjectsCommand.class).warn(MessageFormat.format(
+					UIText.OpenAllProjectsCommand_skippedWithoutDescription,
+					String.join(", ", withoutDescription))); //$NON-NLS-1$
+		}
 		if (closedProjects.isEmpty()) {
 			return null;
 		}
@@ -73,7 +86,8 @@ public class OpenAllProjectsCommand
 						project.open(IResource.BACKGROUND_REFRESH,
 								progress.newChild(1));
 					} catch (CoreException e) {
-						Activator.logError(e.getMessage(), e);
+						ILog.of(OpenAllProjectsCommand.class)
+								.error(e.getMessage(), e);
 					}
 				}
 				return Status.OK_STATUS;
@@ -101,7 +115,8 @@ public class OpenAllProjectsCommand
 		if (repository == null || repository.isBare()) {
 			return false;
 		}
-		return !getClosedProjectsInRepository(repository).isEmpty();
+		return getClosedProjectsInRepository(repository).stream()
+				.anyMatch(OpenAllProjectsCommand::hasDescriptionFile);
 	}
 
 	private List<IProject> getClosedProjectsInRepository(
@@ -116,5 +131,13 @@ public class OpenAllProjectsCommand
 			}
 		}
 		return closed;
+	}
+
+	// A closed project whose .project file is gone from disk cannot be opened.
+	private static boolean hasDescriptionFile(IProject project) {
+		IPath location = project.getLocation();
+		return location != null && location
+				.append(IProjectDescription.DESCRIPTION_FILE_NAME).toFile()
+				.isFile();
 	}
 }
