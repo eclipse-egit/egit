@@ -6567,6 +6567,9 @@ public class UIText extends NLS {
 	public static String OpenAllProjectsCommand_jobTitle;
 
 	/** */
+	public static String OpenAllProjectsCommand_skippedWithoutDescription;
+
+	/** */
 	public static String CloseProjectsOutsideRepositoryCommand_jobTitle;
 
 	/** */
