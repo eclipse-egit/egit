@@ -190,6 +190,8 @@ public final class UIPreferences {
 	public static final String REFRESH_INDEX_INTERVAL = "refesh_index_interval"; //$NON-NLS-1$
 	/** */
 	public static final String REFRESH_ONLY_WHEN_ACTIVE = "refesh_only_when_active"; //$NON-NLS-1$
+	/** maintain a working set per Git repository with projects */
+	public static final String REPOSITORY_WORKING_SETS = "repository_working_sets"; //$NON-NLS-1$
 
 	/**
 	 * Controls automatic fetch from remotes. Possible values:

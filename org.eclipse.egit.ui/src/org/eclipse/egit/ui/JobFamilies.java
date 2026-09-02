@@ -248,4 +248,9 @@ public class JobFamilies {
 	 */
 	public final static Object AUTO_FETCH = new JobFamily();
 
+	/**
+	 * Update of the per-repository working sets
+	 */
+	public static final Object REPOSITORY_WORKING_SETS = new JobFamily();
+
 }

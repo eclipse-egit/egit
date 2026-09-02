@@ -769,6 +769,15 @@ public class UIText extends NLS {
 	public static String GitPreferenceRoot_RepoChangeScannerGroupHeader;
 
 	/** */
+	public static String GitPreferenceRoot_WorkingSetsGroupHeader;
+
+	/** */
+	public static String GitPreferenceRoot_RepositoryWorkingSetsLabel;
+
+	/** */
+	public static String GitRepositoryWorkingSets_jobName;
+
+	/** */
 	public static String GitPreferenceRoot_AutoFetchGroupHeader;
 
 	/** */

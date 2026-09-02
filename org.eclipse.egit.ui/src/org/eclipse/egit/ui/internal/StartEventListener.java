@@ -18,6 +18,7 @@ import org.eclipse.egit.core.JobFamilies;
 import org.eclipse.egit.ui.Activator;
 import org.eclipse.egit.ui.internal.selection.SelectionRepositoryStateCache;
 import org.eclipse.egit.ui.internal.variables.GitTemplateVariableResolver;
+import org.eclipse.egit.ui.internal.workingsets.GitRepositoryWorkingSets;
 import org.eclipse.jface.text.templates.TemplateContextType;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.text.templates.ContextTypeRegistry;
@@ -42,6 +43,7 @@ public class StartEventListener implements EventHandler {
 	private void startInternalComponents() {
 		if (started.compareAndSet(false, true)) {
 			SelectionRepositoryStateCache.INSTANCE.initialize();
+			GitRepositoryWorkingSets.getInstance().install();
 			registerCoreJobFamilyIcons();
 			registerTemplateVariableResolvers();
 		}
@@ -59,6 +61,7 @@ public class StartEventListener implements EventHandler {
 	void shutDown() {
 		if (started.get()) {
 			SelectionRepositoryStateCache.INSTANCE.dispose();
+			GitRepositoryWorkingSets.getInstance().uninstall();
 		}
 	}
 

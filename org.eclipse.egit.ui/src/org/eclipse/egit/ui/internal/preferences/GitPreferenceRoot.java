@@ -358,6 +358,16 @@ public class GitPreferenceRoot extends DoublePreferencesPreferencePage
 		addField(autoFetchIntervalField);
 		updateMargins(autoFetchGroup);
 
+		Group workingSetsGroup = new Group(main, SWT.SHADOW_ETCHED_IN);
+		GridDataFactory.fillDefaults().grab(true, false).span(GROUP_SPAN, 1)
+				.applyTo(workingSetsGroup);
+		workingSetsGroup
+				.setText(UIText.GitPreferenceRoot_WorkingSetsGroupHeader);
+		addField(new BooleanFieldEditor(UIPreferences.REPOSITORY_WORKING_SETS,
+				UIText.GitPreferenceRoot_RepositoryWorkingSetsLabel,
+				workingSetsGroup));
+		updateMargins(workingSetsGroup);
+
 		Group blameGroup = new Group(main, SWT.SHADOW_ETCHED_IN);
 		GridDataFactory.fillDefaults().grab(true, false).span(GROUP_SPAN, 1)
 				.applyTo(blameGroup);

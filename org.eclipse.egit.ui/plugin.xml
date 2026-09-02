@@ -8430,4 +8430,14 @@
         </variable>
      </sourceProvider>
   </extension>
+  <extension
+        point="org.eclipse.ui.workingSets">
+     <workingSet
+           description="%GitRepositoryWorkingSet.description"
+           icon="icons/obj16/repository_rep.svg"
+           id="org.eclipse.egit.ui.gitRepositoryWorkingSet"
+           name="%GitRepositoryWorkingSet.name"
+           updaterClass="org.eclipse.egit.ui.internal.workingsets.GitRepositoryWorkingSetUpdater">
+     </workingSet>
+  </extension>
 </plugin>
