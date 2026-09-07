@@ -54,6 +54,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "f72fb180_feadee7c",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1039515
+      },
+      "writtenOn": "2026-09-07T07:31:48Z",
+      "side": 1,
+      "message": "Hi Lars, yes, we are still very much interested in this change. But as discussed in the issue, this first needs some JGit changes to the CherryPickCommand in order to be implemented properly.\n\nI\u0027m looking to pick this up again in the coming weeks.",
+      "parentUuid": "dae5ce05_5df1e1e8",
+      "revId": "b4b058542b8a9f1135de8facdcc52dcef746556b",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "8e6d0859_a1188bad",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/commit/command/CherryPickUI.java",
         "patchSetId": 2
