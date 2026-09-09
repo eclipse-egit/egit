@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2010, 2019, 2020 SAP AG and others.
+ * Copyright (c) 2010, 2019, 2020, 2026 SAP AG and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License 2.0
  * which accompanies this distribution, and is available at
@@ -11,12 +11,14 @@
  *    Stefan Lay (SAP AG) - initial implementation
  *    Christian W. Damus - bug 544395
  *    Andre Bossert <andre.bossert@siemens.com> - external merge and diff tools
+ *    Florian Schwabe <florian.schwabe@vector.com> - Non-blocking tool call
  *******************************************************************************/
 
 package org.eclipse.egit.ui.internal.actions;
 
 import java.io.File;
 import java.io.IOException;
+import java.lang.reflect.InvocationTargetException;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Map;
@@ -35,13 +37,18 @@ import org.eclipse.core.commands.ExecutionException;
 import org.eclipse.core.resources.IResource;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IPath;
+import org.eclipse.core.runtime.IProgressMonitor;
+import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Path;
+import org.eclipse.core.runtime.Status;
+import org.eclipse.core.runtime.SubMonitor;
+import org.eclipse.core.runtime.jobs.ISchedulingRule;
+import org.eclipse.core.runtime.jobs.Job;
 import org.eclipse.egit.core.internal.indexdiff.IndexDiffCache;
 import org.eclipse.egit.core.internal.indexdiff.IndexDiffCacheEntry;
 import org.eclipse.egit.core.internal.util.ResourceUtil;
 import org.eclipse.egit.ui.Activator;
 import org.eclipse.egit.ui.UIPreferences;
-import org.eclipse.egit.ui.internal.DiffContainerJob;
 import org.eclipse.egit.ui.internal.ToolsUtils;
 import org.eclipse.egit.ui.internal.UIText;
 import org.eclipse.egit.ui.internal.diffmerge.DiffMergeSettings;
@@ -68,13 +75,26 @@ import org.eclipse.swt.SWT;
  */
 public class MergeToolActionHandler extends RepositoryActionHandler {
 
+	private static final ISchedulingRule RULE = new ISchedulingRule() {
+
+		@Override
+		public boolean isConflicting(ISchedulingRule rule) {
+			return this == rule;
+		}
+
+		@Override
+		public boolean contains(ISchedulingRule rule) {
+			return this == rule;
+		}
+	};
+
 	@Override
 	public Object execute(final ExecutionEvent event) throws ExecutionException {
 		int mergeMode = Activator.getDefault().getPreferenceStore().getInt(
 				UIPreferences.MERGE_MODE);
 		IPath[] locations = getSelectedLocations(event);
 		boolean useInternalMergeTool = DiffMergeSettings.useInternalMergeTool();
-		CompareEditorInput input;
+		GitMergeEditorInput input;
 		if (useInternalMergeTool) {
 			if (mergeMode == 0) {
 				MergeModeDialog dlg = new MergeModeDialog(getShell(event));
@@ -104,50 +124,74 @@ public class MergeToolActionHandler extends RepositoryActionHandler {
 		CompareUI.openCompareEditor(input);
 	}
 
-	private static void openMergeToolExternal(CompareEditorInput input)
-			throws ExecutionException {
-		final GitMergeEditorInput gitMergeInput = (GitMergeEditorInput) input;
-		DiffContainerJob job = new DiffContainerJob(
-				UIText.MergeToolActionHandler_openExternalMergeToolJobName,
-				gitMergeInput);
-		job.schedule();
-		try {
-			job.join();
-		} catch (InterruptedException e) {
-			Thread.interrupted();
-			throw new ExecutionException(
-					UIText.MergeToolActionHandler_openExternalMergeToolWaitInterrupted,
-					e);
-		}
-		IDiffContainer diffCont = job.getDiffContainer();
-		executeExternalToolForChildren(diffCont, job.getRepository());
+	private static void openMergeToolExternal(GitMergeEditorInput input) {
+		Job toolJob = new Job(
+				UIText.MergeToolActionHandler_runExternalMergeTool) {
+			@Override
+			protected IStatus run(IProgressMonitor monitor) {
+				SubMonitor subMonitor = SubMonitor.convert(monitor, 2);
+				IDiffContainer diffCont;
+
+				try {
+					SubMonitor split = subMonitor.split(1);
+					split.setTaskName(
+							UIText.MergeToolActionHandler_openExternalMergeToolJobName);
+					diffCont = input.getDiffContainer(split);
+				} catch (InvocationTargetException | InterruptedException e) {
+					String errorMessage = "Failed to retrieve diff contents."; //$NON-NLS-1$
+					IStatus error = new Status(IStatus.ERROR,
+							Activator.PLUGIN_ID, errorMessage, e);
+					return error;
+				}
+
+				return executeExternalToolForChildren(diffCont,
+						input.getRepository(), monitor);
+			}
+		};
+
+		toolJob.setUser(true);
+		toolJob.setRule(RULE);
+		toolJob.schedule();
 	}
 
-	private static void executeExternalToolForChildren(
-			IDiffContainer diffCont, Repository repo)
-			throws ExecutionException {
+	private static IStatus executeExternalToolForChildren(
+			IDiffContainer diffCont, Repository repo,
+			IProgressMonitor monitor) {
 		if (diffCont != null && diffCont.hasChildren()) {
 			IDiffElement[] difContChilds = diffCont.getChildren();
+			SubMonitor subMonitor = SubMonitor.convert(monitor,
+					difContChilds.length);
+
 			for (IDiffElement diffElement : difContChilds) {
 				int diffKind = diffElement.getKind();
 				if (diffKind == Differencer.NO_CHANGE) {
-					executeExternalToolForChildren(
-							(IDiffContainer) diffElement, repo);
+					IStatus status = executeExternalToolForChildren(
+							(IDiffContainer) diffElement,
+							repo, subMonitor.split(1));
+
+					if (!status.isOK()) {
+						return status;
+					}
 				} else if ((diffKind & Differencer.CONFLICTING) != 0) {
 					try {
-						mergeModified((DiffNode) diffElement, repo);
+						mergeModified((DiffNode) diffElement, repo,
+								subMonitor.split(1));
 					} catch (IOException | CoreException e) {
-						throw new ExecutionException(
+						return new Status(IStatus.ERROR, Activator.PLUGIN_ID,
 								UIText.MergeToolActionHandler_externalMergeToolRunFailed,
 								e);
 					}
 				}
 			}
+		} else {
+			monitor.done();
 		}
+
+		return Status.OK_STATUS;
 	}
 
-	private static void mergeModified(DiffNode node, Repository repo)
-			throws IOException, CoreException {
+	private static void mergeModified(DiffNode node, Repository repository,
+			IProgressMonitor monitor) throws IOException, CoreException {
 		// get the left resource and revisions
 		FileRevisionTypedElement leftRevision = (ResourceEditableRevision)node.getLeft();
 		IResource leftResource = ((ResourceEditableRevision)node.getLeft()).getResource();
@@ -155,7 +199,6 @@ public class MergeToolActionHandler extends RepositoryActionHandler {
 		FileRevisionTypedElement baseRevision = (FileRevisionTypedElement)node.getAncestor();
 		// get the relative project path from right revision here
 		String mergedFilePath = null;
-		Repository repository = repo;
 		if (leftResource != null) {
 			IPath relativePath = ResourceUtil.getRepositoryRelativePath(
 					leftResource.getRawLocation(), repository);
@@ -193,7 +236,9 @@ public class MergeToolActionHandler extends RepositoryActionHandler {
 					tempFilesParent, false);
 			FileElement base = createFileElement(baseRevision, mergedFilePath,
 					FileElement.Type.BASE, repository, tempFilesParent, false);
-			/* ExecutionResult executionResult = */
+			monitor.setTaskName(NLS.bind(
+					UIText.MergeToolActionHandler_runExternalMergeToolTaskName,
+					mergedFilePath));
 			mergeTools.merge(local, remote, merged, base, tempDir,
 					toolNameToUse, prompt, false, promptContinueHandler,
 					tools -> {
