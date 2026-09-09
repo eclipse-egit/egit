@@ -2866,9 +2866,6 @@ public class UIText extends NLS {
 	public static String MergeToolActionHandler_openExternalMergeToolJobName;
 
 	/** */
-	public static String MergeToolActionHandler_openExternalMergeToolWaitInterrupted;
-
-	/** */
 	public static String MergeToolActionHandler_externalMergeToolRunFailed;
 
 	/** */
@@ -2897,6 +2894,12 @@ public class UIText extends NLS {
 
 	/** */
 	public static String MergeToolActionHandler_mergeToolPromptDialogContent;
+
+	/** */
+	public static String MergeToolActionHandler_runExternalMergeTool;
+
+	/** */
+	public static String MergeToolActionHandler_runExternalMergeToolTaskName;
 
 	/** */
 	public static String ConfirmationPage_cantConnectToAnyTitle;
