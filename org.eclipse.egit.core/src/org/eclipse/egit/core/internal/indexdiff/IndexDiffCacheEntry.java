@@ -26,7 +26,6 @@ import java.util.Map;
 import java.util.Set;
 import java.util.TreeSet;
 import java.util.concurrent.CopyOnWriteArrayList;
-import java.util.concurrent.Semaphore;
 import java.util.concurrent.locks.ReentrantLock;
 
 import org.eclipse.core.resources.IProject;
@@ -45,6 +44,7 @@ import org.eclipse.core.runtime.OperationCanceledException;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.core.runtime.jobs.ISchedulingRule;
 import org.eclipse.core.runtime.jobs.Job;
+import org.eclipse.core.runtime.jobs.JobGroup;
 import org.eclipse.egit.core.Activator;
 import org.eclipse.egit.core.EclipseGitProgressTransformer;
 import org.eclipse.egit.core.IteratorService;
@@ -126,7 +126,17 @@ public class IndexDiffCacheEntry {
 
 	private IResourceChangeListener resourceChangeListener;
 
-	private static Semaphore parallelism = new Semaphore(2);
+	/**
+	 * Shared {@link JobGroup} used to cap the number of full index diff
+	 * reloads that run concurrently, across all repositories, at two. The
+	 * {@code Job} manager itself is aware of a {@link JobGroup}'s
+	 * {@code maxThreads}: a reload job that is scheduled while two others
+	 * belonging to this group are already running simply stays queued (in
+	 * {@link Job#WAITING} state) until a slot frees up. It never occupies a
+	 * worker thread only to immediately block or reschedule/retry itself.
+	 */
+	private static final JobGroup RELOAD_JOB_GROUP = new JobGroup(
+			"EGit index diff reload", 2, 0); //$NON-NLS-1$
 
 	/**
 	 * @param repository
@@ -390,7 +400,6 @@ public class IndexDiffCacheEntry {
 					if (monitor.isCanceled()) {
 						return Status.CANCEL_STATUS;
 					}
-					parallelism.acquire();
 					long startTime = System.currentTimeMillis();
 					Repository repository = getRepository();
 					if (repository == null) {
@@ -421,11 +430,8 @@ public class IndexDiffCacheEntry {
 								GitTraceLocation.INDEXDIFFCACHE.getLocation(),
 								"Calculating IndexDiff failed", e); //$NON-NLS-1$
 					return Status.OK_STATUS;
-				} catch (InterruptedException e) {
-					return Status.CANCEL_STATUS;
 				} finally {
 					lock.unlock();
-					parallelism.release();
 				}
 			}
 
@@ -446,6 +452,12 @@ public class IndexDiffCacheEntry {
 
 		};
 		reloadJob.setSystem(true);
+		// Cap full-reload concurrency across all repositories at two by
+		// putting every reload job into the same shared JobGroup. The Job
+		// manager itself enforces the group's maxThreads, so a job that
+		// can't run yet just waits in the queue instead of starting and
+		// then blocking a worker thread.
+		reloadJob.setJobGroup(RELOAD_JOB_GROUP);
 		reloadJob.schedule();
 	}
 
