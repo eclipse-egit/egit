@@ -3,8 +3,8 @@ target "orbit-4.41" with source configurePhase
 
 // when updating the Orbit URL don't forget to update org.eclipse.egit.repository/category.xml
 location "https://download.eclipse.org/tools/orbit/simrel/orbit-aggregation/2026-09" {
-	aQute.libg [7.3.0.202606021345,7.3.0.202606021345]
-	bndtools.api [7.3.0.202606021345,7.3.0.202606021345]
+	aQute.libg [7.4.0.202608180709,7.4.0.202608180709]
+	bndtools.api [7.4.0.202608180709,7.4.0.202608180709]
 	com.ibm.icu [78.3.0,78.3.0]
 	com.jcraft.jsch [0.1.55.v20230916-1400,0.1.55.v20230916-1400]
 	com.jcraft.jsch.source [0.1.55.v20230916-1400,0.1.55.v20230916-1400]

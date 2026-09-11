@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <?pde?>
 <!-- generated with https://github.com/eclipse-cbi/targetplatform-dsl -->
-<target name="egit-4.41" sequenceNumber="1787142035">
+<target name="egit-4.41" sequenceNumber="1789114743">
   <locations>
     <location includeMode="slicer" includeAllPlatforms="false" includeSource="true" includeConfigurePhase="true" type="InstallableUnit">
       <unit id="org.eclipse.license.feature.group" version="0.0.0"/>
@@ -15,8 +15,8 @@
       <repository id="swtbot-snapshot" location="https://download.eclipse.org/technology/swtbot/snapshots/"/>
     </location>
     <location includeMode="slicer" includeAllPlatforms="false" includeSource="true" includeConfigurePhase="true" type="InstallableUnit">
-      <unit id="aQute.libg" version="7.3.0.202606021345"/>
-      <unit id="bndtools.api" version="7.3.0.202606021345"/>
+      <unit id="aQute.libg" version="7.4.0.202608180709"/>
+      <unit id="bndtools.api" version="7.4.0.202608180709"/>
       <unit id="com.ibm.icu" version="78.3.0"/>
       <unit id="com.jcraft.jsch" version="0.1.55.v20230916-1400"/>
       <unit id="com.jcraft.jsch.source" version="0.1.55.v20230916-1400"/>
@@ -103,7 +103,7 @@
     <location includeMode="slicer" includeAllPlatforms="false" includeSource="true" includeConfigurePhase="true" type="InstallableUnit">
       <unit id="biz.aQute.bnd.util" version="0.0.0"/>
       <unit id="biz.aQute.bndlib" version="0.0.0"/>
-      <unit id="biz.aQute.repository" version="7.3.0.202606021345"/>
+      <unit id="biz.aQute.repository" version="7.4.0.202608180709"/>
       <unit id="biz.aQute.resolve" version="0.0.0"/>
       <unit id="bndtools.jareditor" version="0.0.0"/>
       <unit id="com.sun.el.javax.el" version="0.0.0"/>
