@@ -39,6 +39,8 @@ public class SshPreferencesMirrorTest {
 
 	private void set(String key, String value) throws Exception {
 		IEclipsePreferences preferences = InstanceScope.INSTANCE
+				// note this plugin is no longer installed in the IDE, see
+				// https://github.com/eclipse-platform/eclipse.platform/issues/958
 				.getNode("org.eclipse.jsch.core");
 		if (value == null) {
 			preferences.remove(key);

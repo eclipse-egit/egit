@@ -62,11 +62,6 @@
         <repository location='https://download.eclipse.org/tools/orbit/downloads/drops/R20150519210750/repository/'/>
       </repositories>
     </iu>
-    <iu id='com.jcraft.jsch' name='JSch' version='0.1.51.v201410302000'>
-      <repositories size='1'>
-        <repository location='https://download.eclipse.org/tools/orbit/downloads/drops/R20150519210750/repository/'/>
-      </repositories>
-    </iu>
     <iu id='org.junit' name='JUnit' version='4.11.0.v201303080030'>
       <repositories size='1'>
         <repository location='https://download.eclipse.org/tools/orbit/downloads/drops/R20150519210750/repository/'/>

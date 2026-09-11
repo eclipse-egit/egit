@@ -30,9 +30,6 @@
    <feature url="features/org.eclipse.jgit.ssh.apache_0.0.0.qualifier.jar" id="org.eclipse.jgit.ssh.apache" version="0.0.0">
       <category name="JGit"/>
    </feature>
-   <feature url="features/org.eclipse.jgit.ssh.jsch_0.0.0.qualifier.jar" id="org.eclipse.jgit.ssh.jsch" version="0.0.0">
-      <category name="JGit"/>
-   </feature>
    <feature url="features/org.eclipse.egit.gitflow.feature_0.0.0.qualifier.jar" id="org.eclipse.egit.gitflow.feature" version="0.0.0">
       <category name="EGit.additional"/>
    </feature>
@@ -70,12 +67,6 @@
       <category name="EGit.dependencies"/>
    </bundle>
    <bundle id="org.apache.sshd.sftp.source">
-      <category name="EGit.dependencies"/>
-   </bundle>
-   <bundle id="com.jcraft.jzlib">
-      <category name="EGit.dependencies"/>
-   </bundle>
-   <bundle id="com.jcraft.jzlib.source">
       <category name="EGit.dependencies"/>
    </bundle>
    <bundle id="slf4j.api">
@@ -136,12 +127,6 @@
       <category name="EGit.dependencies"/>
    </bundle>
    <bundle id="com.google.gson.source">
-      <category name="EGit.dependencies"/>
-   </bundle>
-   <bundle id="com.jcraft.jsch">
-      <category name="EGit.dependencies"/>
-   </bundle>
-   <bundle id="com.jcraft.jsch.source">
       <category name="EGit.dependencies"/>
    </bundle>
    <bundle id="com.sun.jna">
