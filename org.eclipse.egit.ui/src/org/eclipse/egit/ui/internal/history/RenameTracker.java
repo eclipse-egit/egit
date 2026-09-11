@@ -53,6 +53,11 @@ class RenameTracker {
 		public RevFilter clone() {
 			return null;
 		}
+
+		@Override
+		public boolean requiresCommitBody() {
+			return false;
+		}
 	};
 
 	private final RenameCallback callback = new RenameCallback() {
