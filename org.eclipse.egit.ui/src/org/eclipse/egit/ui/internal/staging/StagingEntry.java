@@ -106,7 +106,8 @@ public class StagingEntry extends PlatformObject
 		LAUNCH_MERGE_TOOL,
 		REPLACE_WITH_OURS_THEIRS_MENU,
 		ASSUME_UNCHANGED,
-		UNTRACK
+		UNTRACK,
+		UPDATE_SUBMODULE
 	}
 
 	private final Repository repository;
@@ -221,7 +222,27 @@ public class StagingEntry extends PlatformObject
 	}
 
 	Set<Action> getAvailableActions() {
-		return state.getAvailableActions();
+		if (!submodule) {
+			return state.getAvailableActions();
+		}
+		// JGit cannot check out a submodule path, so replacing always fails
+		Set<Action> actions = EnumSet.copyOf(state.getAvailableActions());
+		actions.removeAll(EnumSet.of(Action.REPLACE_WITH_FILE_IN_GIT_INDEX,
+				Action.REPLACE_WITH_HEAD_REVISION,
+				Action.REPLACE_WITH_OURS_THEIRS_MENU));
+		// Only where the work tree differs from the commit in the index
+		switch (state) {
+		case MISSING:
+		case MISSING_AND_CHANGED:
+		case MODIFIED:
+		case MODIFIED_AND_CHANGED:
+		case MODIFIED_AND_ADDED:
+			actions.add(Action.UPDATE_SUBMODULE);
+			break;
+		default:
+			break;
+		}
+		return actions;
 	}
 
 	int getExtraWidth() {
