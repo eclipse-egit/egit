@@ -87,14 +87,11 @@ public class GitProjectData {
 		public void resourceChanged(final IResourceChangeEvent event) {
 			switch (event.getType()) {
 			case IResourceChangeEvent.PRE_CLOSE:
-				uncache((IProject) event.getResource());
-				break;
 			case IResourceChangeEvent.PRE_DELETE:
-				try {
-					delete((IProject) event.getResource());
-				} catch (IOException e) {
-					ILog.of(GitProjectData.class).error(e.getMessage(), e);
-				}
+				// On delete the workspace removes the property file with the
+				// project's metadata area; deleting it here would break a
+				// concurrent load on the still accessible project.
+				uncache((IProject) event.getResource());
 				break;
 			case IResourceChangeEvent.POST_CHANGE:
 				update(event);
@@ -315,6 +312,11 @@ public class GitProjectData {
 					if (type == IResource.ROOT) {
 						return true;
 					} else if (type == IResource.PROJECT) {
+						if (delta.getKind() == IResourceDelta.REMOVED) {
+							// A load may have re-cached it after PRE_DELETE.
+							uncache((IProject) resource);
+							return false;
+						}
 						return (delta.getKind() & (IResourceDelta.ADDED
 								| IResourceDelta.CHANGED)) != 0
 								&& ResourceUtil.isSharedWithGit(resource);
