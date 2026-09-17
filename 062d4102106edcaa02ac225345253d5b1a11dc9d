@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b07c68a9_1cd9abd1",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1039306
+      },
+      "writtenOn": "2026-09-17T15:17:42Z",
+      "side": 1,
+      "message": "Looks like the build failed very early (\"Execution license-check of goal org.eclipse.dash:license-tool-plugin:1.1.0:license-check failed: Received an error response from the Eclipse Foundation\"). Can someone re-trigger the build?",
+      "revId": "062d4102106edcaa02ac225345253d5b1a11dc9d",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735"
+    }
+  ]
+}
