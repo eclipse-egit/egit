@@ -653,33 +653,6 @@ public class RebaseInteractivePlan implements IndexDiffChangedListener,
 		}
 
 		@Override
-		public boolean equals(Object obj) {
-			if (this == obj)
-				return true;
-			if (obj == null)
-				return false;
-			if (getClass() != obj.getClass())
-				return false;
-			PlanElement other = (PlanElement) obj;
-			if (other.line.getCommit() == null) {
-				if (this.line.getCommit() == null)
-					return true;
-				return false;
-			}
-			if (!other.line.getCommit().equals(this.line.getCommit()))
-				return false;
-			if (!other.getPlanElementAction().equals(
-					this.getPlanElementAction()))
-				return false;
-			return true;
-		}
-
-		@Override
-		public int hashCode() {
-			return super.hashCode();
-		}
-
-		@Override
 		public String toString() {
 			return line.toString();
 		}
