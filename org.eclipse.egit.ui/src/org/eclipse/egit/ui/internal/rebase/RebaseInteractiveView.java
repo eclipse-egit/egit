@@ -511,6 +511,7 @@ public class RebaseInteractiveView extends ViewPart implements
 		planTree.setLinesVisible(false);
 
 		TreeViewer viewer = new TreeViewer(planTree);
+		viewer.setUseHashlookup(true);
 		viewer.addSelectionChangedListener(new PlanViewerSelectionChangedListener());
 		GridDataFactory.fillDefaults().grab(true, true)
 				.applyTo(viewer.getControl());
