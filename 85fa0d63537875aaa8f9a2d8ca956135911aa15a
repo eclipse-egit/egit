@@ -52,6 +52,24 @@
       "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "a2f6c488_43cb3f9c",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/internal/indexdiff/IndexDiffCacheEntry.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 273,
+      "author": {
+        "id": 1012795
+      },
+      "writtenOn": "2026-09-21T19:23:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5a911517_4fb301b8",
+      "revId": "85fa0d63537875aaa8f9a2d8ca956135911aa15a",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "02d3299a_a11fb142",
@@ -65,6 +83,24 @@
       "writtenOn": "2026-09-16T08:59:02Z",
       "side": 1,
       "message": "I\u0027ve asked Copilot to analyze this code, there were few comments regarding holding lock for too long here and also comment above.\n\nProposed improvement for this patch is:\n\ndiff --git a/org.eclipse.egit.core/src/org/eclipse/egit/core/internal/indexdiff/IndexDiffCacheEntry.java b/org.eclipse.egit.core/src/org/eclipse/egit/core/internal/indexdiff/IndexDiffCacheEntry.java\nindex c02ca3e..0ad6d7b 100644\n--- a/org.eclipse.egit.core/src/org/eclipse/egit/core/internal/indexdiff/IndexDiffCacheEntry.java\n+++ b/org.eclipse.egit.core/src/org/eclipse/egit/core/internal/indexdiff/IndexDiffCacheEntry.java\n@@ -95,3 +95,8 @@ public class IndexDiffCacheEntry {\n \n-\t/** Guards {@link #reloadJob} and {@link #reloadRequested}. */\n+\t/**\n+\t * Guards {@link #reloadJob} and {@link #reloadRequested}. Note that\n+\t * {@link Job#schedule()} and {@link Job#cancel()} must not be called while\n+\t * holding this lock; otherwise a lock order {@code reloadLock} \u0026rarr; job\n+\t * manager lock would be established.\n+\t */\n \tprivate final Object reloadLock \u003d new Object();\n@@ -101,2 +106,8 @@ public class IndexDiffCacheEntry {\n \n+\t/**\n+\t * Job family of the reload jobs of \u003cem\u003ethis\u003c/em\u003e cache entry; used to wait\n+\t * for a full status computation including a possible re-run.\n+\t */\n+\tprivate final Object reloadFamily \u003d new Object();\n+\n \tprivate IndexDiffUpdateJob updateJob;\n@@ -273,9 +284,14 @@ public IStatus runInWorkspace(IProgressMonitor monitor) {\n \t\t\t\trefresh();\n-\t\t\t\tJob next \u003d reloadJob;\n-\t\t\t\tif (next !\u003d null) {\n-\t\t\t\t\ttry {\n-\t\t\t\t\t\tnext.join();\n-\t\t\t\t\t} catch (InterruptedException e) {\n-\t\t\t\t\t\treturn Status.CANCEL_STATUS;\n-\t\t\t\t\t}\n+\t\t\t\ttry {\n+\t\t\t\t\t// Wait for the full status computation, including a re-run\n+\t\t\t\t\t// that may be scheduled if a reload was already running\n+\t\t\t\t\t// when refresh() was called. Such a re-run is scheduled\n+\t\t\t\t\t// before the currently running job leaves the family, so\n+\t\t\t\t\t// joining the family is race-free.\n+\t\t\t\t\tJob.getJobManager().join(reloadFamily, monitor);\n+\t\t\t\t} catch (InterruptedException e) {\n+\t\t\t\t\tThread.currentThread().interrupt();\n+\t\t\t\t\treturn Status.CANCEL_STATUS;\n+\t\t\t\t} catch (OperationCanceledException e) {\n+\t\t\t\t\treturn Status.CANCEL_STATUS;\n \t\t\t\t}\n@@ -376,8 +392,11 @@ public IndexDiffData getIndexDiff() {\n \tprotected void scheduleReloadJob(final String trigger) {\n+\t\tIndexDiffReloadJob toCancel \u003d null;\n+\t\tIndexDiffReloadJob toSchedule \u003d null;\n \t\tsynchronized (reloadLock) {\n-\t\t\tif (reloadJob !\u003d null) {\n-\t\t\t\tif (reloadJob.isPending()) {\n+\t\t\tIndexDiffReloadJob current \u003d reloadJob;\n+\t\t\tif (current !\u003d null) {\n+\t\t\t\tif (current.isPending()) {\n \t\t\t\t\treturn;\n \t\t\t\t}\n-\t\t\t\tif (reloadJob.getState() \u003d\u003d Job.RUNNING) {\n+\t\t\t\tif (current.getState() \u003d\u003d Job.RUNNING) {\n \t\t\t\t\t// Computing the full status is expensive. Let the running\n@@ -388,14 +407,22 @@ protected void scheduleReloadJob(final String trigger) {\n \t\t\t\t}\n-\t\t\t\treloadJob.cancel();\n+\t\t\t\ttoCancel \u003d current;\n \t\t\t}\n-\t\t\tif (updateJob !\u003d null) {\n-\t\t\t\tupdateJob.cleanupAndCancel();\n-\t\t\t}\n-\n \t\t\tif (getRepository() \u003d\u003d null) {\n-\t\t\t\treturn;\n+\t\t\t\treloadJob \u003d null;\n+\t\t\t} else {\n+\t\t\t\ttoSchedule \u003d createReloadJob(trigger);\n+\t\t\t\ttoSchedule.setSystem(true);\n+\t\t\t\t// Publish the new job before scheduling it: concurrent\n+\t\t\t\t// triggers see it as pending and are dropped.\n+\t\t\t\treloadJob \u003d toSchedule;\n \t\t\t}\n-\t\t\treloadJob \u003d createReloadJob(trigger);\n-\t\t\treloadJob.setSystem(true);\n-\t\t\treloadJob.schedule();\n+\t\t}\n+\t\tif (toCancel !\u003d null) {\n+\t\t\ttoCancel.cancel();\n+\t\t}\n+\t\tif (updateJob !\u003d null) {\n+\t\t\tupdateJob.cleanupAndCancel();\n+\t\t}\n+\t\tif (toSchedule !\u003d null) {\n+\t\t\ttoSchedule.schedule();\n \t\t}\n@@ -403,5 +430,10 @@ protected void scheduleReloadJob(final String trigger) {\n \n-\tprivate void rerunIfRequested() {\n+\tprivate void rerunIfRequested(IndexDiffReloadJob finishedJob) {\n \t\tboolean rerun;\n \t\tsynchronized (reloadLock) {\n+\t\t\tif (reloadJob !\u003d finishedJob) {\n+\t\t\t\t// Superseded, or the entry was disposed while the job was\n+\t\t\t\t// running. Don\u0027t touch the state of the successor job.\n+\t\t\t\treturn;\n+\t\t\t}\n \t\t\trerun \u003d reloadRequested;\n@@ -415,2 +447,4 @@ private void rerunIfRequested() {\n \t\tif (rerun) {\n+\t\t\t// Still called from within the running job, so the new job is\n+\t\t\t// scheduled before this one leaves the reload job family.\n \t\t\tscheduleReloadJob(\"Changes arrived while computing the status\"); //$NON-NLS-1$\n@@ -477,3 +511,3 @@ private String getTraceMessage(long time) {\n \t\t\tprotected void finished() {\n-\t\t\t\trerunIfRequested();\n+\t\t\t\trerunIfRequested(this);\n \t\t\t}\n@@ -482,3 +516,4 @@ protected void finished() {\n \t\t\tpublic boolean belongsTo(Object family) {\n-\t\t\t\tif (JobFamilies.INDEX_DIFF_CACHE_UPDATE.equals(family)) {\n+\t\t\t\tif (JobFamilies.INDEX_DIFF_CACHE_UPDATE.equals(family)\n+\t\t\t\t\t\t|| reloadFamily \u003d\u003d family) {\n \t\t\t\t\treturn true;\n@@ -502,4 +537,10 @@ protected void scheduleUpdateJob(final Collection\u003cString\u003e filesToUpdate,\n \t\t}\n-\t\tif (reloadJob !\u003d null \u0026\u0026 reloadJob.isPending()) {\n-\t\t\treturn;\n+\t\tsynchronized (reloadLock) {\n+\t\t\t// A full reload is pending or will be re-run as soon as the\n+\t\t\t// currently running one is done; any incremental update computed\n+\t\t\t// in the meantime would be superseded anyway.\n+\t\t\tif (reloadRequested\n+\t\t\t\t\t|| (reloadJob !\u003d null \u0026\u0026 reloadJob.isPending())) {\n+\t\t\t\treturn;\n+\t\t\t}\n \t\t}",
+      "revId": "85fa0d63537875aaa8f9a2d8ca956135911aa15a",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "b3fb169c_9cd89968",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/internal/indexdiff/IndexDiffCacheEntry.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 377,
+      "author": {
+        "id": 1012795
+      },
+      "writtenOn": "2026-09-21T19:23:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "02d3299a_a11fb142",
       "revId": "85fa0d63537875aaa8f9a2d8ca956135911aa15a",
       "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735"
     }
