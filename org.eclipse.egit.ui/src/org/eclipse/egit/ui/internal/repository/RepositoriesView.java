@@ -1083,6 +1083,20 @@ public class RepositoriesView extends CommonNavigator implements IShowInSource, 
 		scheduleRefresh(0, null);
 	}
 
+	/**
+	 * Refreshes the view and then selects the node for the given path.
+	 *
+	 * @param path
+	 *            absolute file system path of a working tree file or folder
+	 */
+	public void refreshAndShow(IPath path) {
+		scheduleRefresh(0, () -> {
+			if (UIUtils.isUsable(getCommonViewer())) {
+				showPaths(Arrays.asList(path));
+			}
+		});
+	}
+
 	private void trace(String message) {
 		GitTraceLocation.getTrace().trace(
 				GitTraceLocation.REPOSITORIESVIEW.getLocation(), message);

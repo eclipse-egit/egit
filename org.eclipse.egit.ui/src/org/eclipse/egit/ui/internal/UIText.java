@@ -5445,6 +5445,30 @@ public class UIText extends NLS {
 	public static String LoginDialog_ButtonSave;
 
 	/** */
+	public static String NewPathCommand_AlreadyExists;
+
+	/** */
+	public static String NewPathCommand_CreateFailed;
+
+	/** */
+	public static String NewPathCommand_EmptyName;
+
+	/** */
+	public static String NewPathCommand_InvalidName;
+
+	/** */
+	public static String NewPathCommand_NewFileMessage;
+
+	/** */
+	public static String NewPathCommand_NewFileTitle;
+
+	/** */
+	public static String NewPathCommand_NewFolderMessage;
+
+	/** */
+	public static String NewPathCommand_NewFolderTitle;
+
+	/** */
 	public static String NewRemoteDialog_ConfigurationMessage;
 
 	/** */

@@ -3687,6 +3687,52 @@
             </with>
          </activeWhen>
       </handler>
+      <handler
+            commandId="org.eclipse.egit.ui.RepositoriesViewNewFile">
+         <class
+               class="org.eclipse.egit.ui.internal.repository.tree.command.NewFileCommand">
+         </class>
+         <activeWhen>
+            <and>
+               <count
+                     value="1">
+               </count>
+               <iterate>
+                  <or>
+                     <instanceof
+                           value="org.eclipse.egit.ui.internal.repository.tree.FolderNode">
+                     </instanceof>
+                     <instanceof
+                           value="org.eclipse.egit.ui.internal.repository.tree.WorkingDirNode">
+                     </instanceof>
+                  </or>
+               </iterate>
+            </and>
+         </activeWhen>
+      </handler>
+      <handler
+            commandId="org.eclipse.egit.ui.RepositoriesViewNewFolder">
+         <class
+               class="org.eclipse.egit.ui.internal.repository.tree.command.NewFolderCommand">
+         </class>
+         <activeWhen>
+            <and>
+               <count
+                     value="1">
+               </count>
+               <iterate>
+                  <or>
+                     <instanceof
+                           value="org.eclipse.egit.ui.internal.repository.tree.FolderNode">
+                     </instanceof>
+                     <instanceof
+                           value="org.eclipse.egit.ui.internal.repository.tree.WorkingDirNode">
+                     </instanceof>
+                  </or>
+               </iterate>
+            </and>
+         </activeWhen>
+      </handler>
        <handler
             commandId="org.eclipse.egit.ui.RepositoriesViewCollapseWorkingTree">
          <class
@@ -5540,6 +5586,37 @@
       </menuContribution>
       <menuContribution
             locationURI="popup:org.eclipse.egit.ui.RepositoriesView?after=repo-3">
+         <menu
+               label="%RepoViewNewMenu.label">
+            <visibleWhen
+                  checkEnabled="false">
+               <and>
+                  <count
+                        value="1">
+                  </count>
+                  <iterate>
+                     <or>
+                        <instanceof
+                              value="org.eclipse.egit.ui.internal.repository.tree.FolderNode">
+                        </instanceof>
+                        <instanceof
+                              value="org.eclipse.egit.ui.internal.repository.tree.WorkingDirNode">
+                        </instanceof>
+                     </or>
+                  </iterate>
+               </and>
+            </visibleWhen>
+            <command
+                  commandId="org.eclipse.egit.ui.RepositoriesViewNewFile"
+                  label="%RepoViewNewFile.label"
+                  style="push">
+            </command>
+            <command
+                  commandId="org.eclipse.egit.ui.RepositoriesViewNewFolder"
+                  label="%RepoViewNewFolder.label"
+                  style="push">
+            </command>
+         </menu>
          <command
                commandId="org.eclipse.egit.ui.team.AddToIndex"
                icon="/icons/obj16/add.svg"
@@ -7031,6 +7108,16 @@
             categoryId="org.eclipse.egit.ui.commandCategory"
             id="org.eclipse.egit.ui.RepositoriesViewDelete"
             name="%DeleteRepositoryCommand.name">
+      </command>
+      <command
+            categoryId="org.eclipse.egit.ui.commandCategory"
+            id="org.eclipse.egit.ui.RepositoriesViewNewFile"
+            name="%RepoViewNewFileCommand">
+      </command>
+      <command
+            categoryId="org.eclipse.egit.ui.commandCategory"
+            id="org.eclipse.egit.ui.RepositoriesViewNewFolder"
+            name="%RepoViewNewFolderCommand">
       </command>
        <command
             categoryId="org.eclipse.egit.ui.commandCategory"

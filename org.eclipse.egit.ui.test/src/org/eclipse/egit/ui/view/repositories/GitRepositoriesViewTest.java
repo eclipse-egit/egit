@@ -813,6 +813,57 @@ public class GitRepositoriesViewTest extends GitRepositoriesViewTestBase {
 	}
 
 	@Test
+	public void testNewFileInProjectFolder() throws Exception {
+		SWTBotTree tree = getOrOpenView().bot().tree();
+		refreshAndWait();
+
+		findWorkdirNode(tree, PROJ1, FOLDER).select();
+		ContextMenuHelper.clickContextMenu(tree,
+				myUtil.getPluginLocalizedValue("RepoViewNewMenu.label"),
+				myUtil.getPluginLocalizedValue("RepoViewNewFile.label"));
+
+		SWTBotShell dialog = bot.shell(UIText.NewPathCommand_NewFileTitle);
+		dialog.bot().text().setText(FILE1);
+		assertFalse(dialog.bot().button(IDialogConstants.OK_LABEL)
+				.isEnabled());
+		dialog.bot().text().setText("sub/new.txt");
+		dialog.bot().button(IDialogConstants.OK_LABEL).click();
+		bot.waitUntil(shellCloses(dialog));
+
+		IFile file = ResourcesPlugin.getWorkspace().getRoot().getProject(PROJ1)
+				.getFolder(FOLDER).getFile("sub/new.txt");
+		assertTrue(file.exists());
+		bot.editorByTitle("new.txt").close();
+		TestUtil.joinJobs(JobFamilies.REPO_VIEW_REFRESH);
+		assertThat(findWorkdirNode(tree, PROJ1, FOLDER, "sub").getNodes(),
+				hasItem("new.txt"));
+	}
+
+	@Test
+	public void testNewFolderInWorkingTree() throws Exception {
+		SWTBotTree tree = getOrOpenView().bot().tree();
+		refreshAndWait();
+
+		myRepoViewUtil.getWorkdirItem(tree, repositoryFile).select();
+		ContextMenuHelper.clickContextMenu(tree,
+				myUtil.getPluginLocalizedValue("RepoViewNewMenu.label"),
+				myUtil.getPluginLocalizedValue("RepoViewNewFolder.label"));
+
+		SWTBotShell dialog = bot.shell(UIText.NewPathCommand_NewFolderTitle);
+		dialog.bot().text().setText("../outside");
+		assertFalse(dialog.bot().button(IDialogConstants.OK_LABEL)
+				.isEnabled());
+		dialog.bot().text().setText("newFolder");
+		dialog.bot().button(IDialogConstants.OK_LABEL).click();
+		bot.waitUntil(shellCloses(dialog));
+
+		assertTrue(new File(repositoryFile.getParentFile(), "newFolder")
+				.isDirectory());
+		TestUtil.joinJobs(JobFamilies.REPO_VIEW_REFRESH);
+		assertThat(findWorkdirNode(tree).getNodes(), hasItem("newFolder"));
+	}
+
+	@Test
 	public void testStashDeleteCreate() throws Exception {
 		Repository repo = lookupRepository(repositoryFile);
 		IFile file = touch("Something");
