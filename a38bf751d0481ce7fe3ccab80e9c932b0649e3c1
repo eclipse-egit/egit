@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "13630638_39d0c004",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1012795
+      },
+      "writtenOn": "2026-09-22T12:31:12Z",
+      "side": 1,
+      "message": "Your change is holding the Job rule for the entire merge session. The likely reason for the rule is to stop two merge sessions from running at once. A job family or an \"already running\" check would do that without blocking the workspace.\n\nInstead of setUser(true) I suggest to use setSystem(false) without setUser(true)\n\nAlso instead of chaining two jobs, just use one.  The job could call input.getDiffContainer(monitor) and then loop over the files.",
+      "revId": "a38bf751d0481ce7fe3ccab80e9c932b0649e3c1",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735"
+    }
+  ]
+}
