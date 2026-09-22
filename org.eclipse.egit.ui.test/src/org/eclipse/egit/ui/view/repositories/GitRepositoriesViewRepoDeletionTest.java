@@ -60,9 +60,11 @@ import org.junit.runner.RunWith;
 public class GitRepositoriesViewRepoDeletionTest extends
 		GitRepositoriesViewTestBase {
 
-	private static final String DELETE_REPOSITORY_CONTEXT_MENU_LABEL = "RepoViewDeleteRepository.label";
+	private static final String REMOVE_REPOSITORY_MENU_LABEL = "RemoveRepositoryMenu.label";
 
-	private static final String REMOVE_REPOSITORY_FROM_VIEW_CONTEXT_MENU_LABEL = "RepoViewRemove.label";
+	private static final String DELETE_REPOSITORY_CONTEXT_MENU_LABEL = "RemoveRepositoryMenu.delete.label";
+
+	private static final String REMOVE_REPOSITORY_FROM_VIEW_CONTEXT_MENU_LABEL = "RemoveRepositoryMenu.fromView.label";
 
 	private File repositoryFile;
 
@@ -83,8 +85,10 @@ public class GitRepositoriesViewRepoDeletionTest extends
 		assertHasRepo(repositoryFile);
 		SWTBotTree tree = getOrOpenView().bot().tree();
 		tree.getAllItems()[0].select();
-		ContextMenuHelper.clickContextMenu(tree, myUtil
-				.getPluginLocalizedValue(DELETE_REPOSITORY_CONTEXT_MENU_LABEL));
+		ContextMenuHelper.clickContextMenu(tree,
+				myUtil.getPluginLocalizedValue(REMOVE_REPOSITORY_MENU_LABEL),
+				myUtil.getPluginLocalizedValue(
+						DELETE_REPOSITORY_CONTEXT_MENU_LABEL));
 		SWTBotShell shell = bot.shell(UIText.DeleteRepositoryConfirmDialog_DeleteRepositoryWindowTitle);
 		shell.activate();
 		shell.bot()
@@ -120,8 +124,10 @@ public class GitRepositoriesViewRepoDeletionTest extends
 		assertHasRepo(repositoryFile);
 		SWTBotTree tree = getOrOpenView().bot().tree();
 		tree.getAllItems()[0].select();
-		ContextMenuHelper.clickContextMenu(tree, myUtil
-				.getPluginLocalizedValue(DELETE_REPOSITORY_CONTEXT_MENU_LABEL));
+		ContextMenuHelper.clickContextMenu(tree,
+				myUtil.getPluginLocalizedValue(REMOVE_REPOSITORY_MENU_LABEL),
+				myUtil.getPluginLocalizedValue(
+						DELETE_REPOSITORY_CONTEXT_MENU_LABEL));
 		SWTBotShell shell = bot.shell(
 				UIText.DeleteRepositoryConfirmDialog_DeleteRepositoryWindowTitle);
 		shell.activate();
@@ -166,8 +172,9 @@ public class GitRepositoriesViewRepoDeletionTest extends
 		SWTBotTree tree = getOrOpenView().bot().tree();
 		tree.getAllItems()[0].select();
 		ContextMenuHelper.clickContextMenuSync(tree,
+				myUtil.getPluginLocalizedValue(REMOVE_REPOSITORY_MENU_LABEL),
 				myUtil.getPluginLocalizedValue(
-				REMOVE_REPOSITORY_FROM_VIEW_CONTEXT_MENU_LABEL));
+						REMOVE_REPOSITORY_FROM_VIEW_CONTEXT_MENU_LABEL));
 		TestUtil.joinJobs(JobFamilies.REPOSITORY_DELETE);
 		refreshAndWait();
 		assertEmpty();
@@ -309,8 +316,10 @@ public class GitRepositoriesViewRepoDeletionTest extends
 		item = TestUtil.expandAndWait(item.getNode(
 				UIText.RepositoriesViewLabelProvider_SubmodulesNodeText));
 		item.getItems()[0].select();
-		ContextMenuHelper.clickContextMenu(tree, myUtil
-				.getPluginLocalizedValue(DELETE_REPOSITORY_CONTEXT_MENU_LABEL));
+		ContextMenuHelper.clickContextMenu(tree,
+				myUtil.getPluginLocalizedValue(REMOVE_REPOSITORY_MENU_LABEL),
+				myUtil.getPluginLocalizedValue(
+						DELETE_REPOSITORY_CONTEXT_MENU_LABEL));
 		SWTBotShell shell = bot
 				.shell(UIText.DeleteRepositoryConfirmDialog_DeleteRepositoryWindowTitle);
 		shell.activate();
