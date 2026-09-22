@@ -26,7 +26,6 @@ import java.util.Map;
 import java.util.Set;
 import java.util.TreeSet;
 import java.util.concurrent.CopyOnWriteArrayList;
-import java.util.concurrent.Semaphore;
 import java.util.concurrent.locks.ReentrantLock;
 
 import org.eclipse.core.resources.IProject;
@@ -41,10 +40,13 @@ import org.eclipse.core.runtime.ILog;
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
+import org.eclipse.core.runtime.MultiStatus;
 import org.eclipse.core.runtime.OperationCanceledException;
 import org.eclipse.core.runtime.Status;
+import org.eclipse.core.runtime.jobs.IJobChangeListener;
 import org.eclipse.core.runtime.jobs.ISchedulingRule;
 import org.eclipse.core.runtime.jobs.Job;
+import org.eclipse.core.runtime.jobs.JobGroup;
 import org.eclipse.egit.core.Activator;
 import org.eclipse.egit.core.EclipseGitProgressTransformer;
 import org.eclipse.egit.core.IteratorService;
@@ -132,7 +134,31 @@ public class IndexDiffCacheEntry {
 
 	private IResourceChangeListener resourceChangeListener;
 
-	private static Semaphore parallelism = new Semaphore(2);
+	/**
+	 * Shared {@link JobGroup} used to cap the number of full index diff reloads
+	 * that run concurrently, across all repositories, at two. The {@code Job}
+	 * manager itself is aware of a {@link JobGroup}'s {@code maxThreads}: a
+	 * reload job that is scheduled while two others belonging to this group are
+	 * already running simply stays queued (in {@link Job#WAITING} state) until
+	 * a slot frees up.
+	 */
+	private static final JobGroup RELOAD_JOB_GROUP = new JobGroup(
+			"EGit index diff reload", 2, 0) { //$NON-NLS-1$
+
+		@Override
+		protected boolean shouldCancel(IStatus lastCompletedJobResult,
+				int numberOfFailedJobs, int numberOfCanceledJobs) {
+			// A failed/cancelled reload must not affect other reload jobs
+			return false;
+		}
+
+		@Override
+		protected MultiStatus computeGroupResult(List<IStatus> jobResults) {
+			// Don't accumulate results in this long-lived (static) group:
+			// reload jobs will log their errors themselves instead.
+			return new MultiStatus(Activator.PLUGIN_ID, 0, getName());
+		}
+	};
 
 	/**
 	 * @param repository
@@ -397,6 +423,16 @@ public class IndexDiffCacheEntry {
 			}
 			reloadJob = createReloadJob(trigger);
 			reloadJob.setSystem(true);
+			// Cap full-reload concurrency across all repositories at two by
+			// putting every reload job into the same shared JobGroup.
+			reloadJob.setJobGroup(RELOAD_JOB_GROUP);
+			reloadJob.addJobChangeListener(IJobChangeListener.onDone(event -> {
+				// The job manager defers logging of errors of jobs in a group
+				IStatus result = event.getResult();
+				if (result.matches(IStatus.ERROR)) {
+					ILog.of(IndexDiffCacheEntry.class).log(result);
+				}
+			}));
 			reloadJob.schedule();
 		}
 	}
@@ -430,7 +466,6 @@ public class IndexDiffCacheEntry {
 					if (monitor.isCanceled()) {
 						return Status.CANCEL_STATUS;
 					}
-					parallelism.acquire();
 					long startTime = System.currentTimeMillis();
 					Repository repository = getRepository();
 					if (repository == null) {
@@ -461,11 +496,8 @@ public class IndexDiffCacheEntry {
 								GitTraceLocation.INDEXDIFFCACHE.getLocation(),
 								"Calculating IndexDiff failed", e); //$NON-NLS-1$
 					return Status.OK_STATUS;
-				} catch (InterruptedException e) {
-					return Status.CANCEL_STATUS;
 				} finally {
 					lock.unlock();
-					parallelism.release();
 				}
 			}
 
@@ -833,7 +865,8 @@ public class IndexDiffCacheEntry {
 		protected abstract void finished();
 
 		protected boolean isPending() {
-			return !started;
+			// A job canceled before it started never runs
+			return !started && getState() != Job.NONE;
 		}
 	}
 }
