@@ -10,24 +10,38 @@
  *******************************************************************************/
 package org.eclipse.egit.core.internal.indexdiff;
 
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
+import java.io.File;
+import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.List;
+import java.util.concurrent.CopyOnWriteArrayList;
+import java.util.concurrent.Semaphore;
+import java.util.function.BooleanSupplier;
 
 import org.eclipse.core.resources.IResource;
 import org.eclipse.core.resources.IWorkspaceRunnable;
 import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IProgressMonitor;
+import org.eclipse.core.runtime.NullProgressMonitor;
+import org.eclipse.core.runtime.jobs.Job;
+import org.eclipse.core.runtime.jobs.JobGroup;
+import org.eclipse.core.runtime.jobs.ProgressProvider;
 import org.eclipse.egit.core.Activator;
 import org.eclipse.egit.core.JobFamilies;
 import org.eclipse.egit.core.test.GitTestCase;
 import org.eclipse.egit.core.test.TestRepository;
 import org.eclipse.egit.core.test.TestUtils;
+import org.eclipse.jgit.lib.Constants;
 import org.eclipse.jgit.lib.Repository;
+import org.eclipse.jgit.util.FileUtils;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -45,6 +59,10 @@ public class IndexDiffCacheEntryTest extends GitTestCase {
 	private Repository repository;
 
 	private IndexDiffCacheEntry2 entry;
+
+	private HoldingReloads reloads;
+
+	private final List<Cache> caches = new ArrayList<>();
 
 	@Test
 	public void basicTest() throws Exception {
@@ -190,6 +208,184 @@ public class IndexDiffCacheEntryTest extends GitTestCase {
 		cleanEntryFlags();
 	}
 
+	// The reload jobs share a job group that allows two of them at a time. In
+	// the following tests two reloads are held in the middle of their
+	// calculation while a third one waits for a slot. The tests differ in what
+	// happens next: which reload fails or is canceled, and by whom.
+
+	@Test
+	public void testFailedReloadDoesNotBlockOtherReloads() throws Exception {
+		Cache first = startReload("first");
+		Cache second = startReload("second");
+		Cache third = queueReload("third", true);
+		second.entry.refresh();
+
+		// The first reload ends, the third one takes its slot and fails
+		reloads.proceed(0);
+		assertTrue(reloads.awaitHeld(3));
+		reloads.proceed(2);
+		assertTrue(reloads.awaitDone(2));
+		reloads.proceedAll();
+
+		assertReloaded(first, 1);
+		assertReloaded(second, 2);
+		assertReloaded(third, 0);
+	}
+
+	@Test
+	public void testCanceledWaitingReloadDoesNotBlockItsEntry()
+			throws Exception {
+		Cache first = startReload("first");
+		Cache second = startReload("second");
+		Cache third = queueReload("third", false);
+
+		waitingReload().cancel();
+		reloads.proceedAll();
+
+		assertReloaded(first, 1);
+		assertReloaded(second, 1);
+		assertReloaded(third, 0);
+		third.entry.refresh();
+		assertReloaded(third, 1);
+	}
+
+	@Test
+	public void testCanceledRunningReloadDoesNotBlockOtherReloads()
+			throws Exception {
+		Cache first = startReload("first");
+		Cache second = startReload("second");
+		Cache third = queueReload("third", false);
+
+		// The third reload takes the slot of the canceled one
+		reloads.cancel(0);
+		assertTrue(reloads.awaitHeld(3));
+		reloads.proceedAll();
+
+		assertReloaded(first, 0);
+		assertReloaded(second, 1);
+		assertReloaded(third, 1);
+	}
+
+	@Test
+	public void testCanceledReloadsDoNotBlockLaterReloads() throws Exception {
+		Cache first = startReload("first");
+		Cache second = startReload("second");
+		Cache third = queueReload("third", false);
+
+		// As IndexDiffCache.dispose() does
+		Job.getJobManager().cancel(JobFamilies.INDEX_DIFF_CACHE_UPDATE);
+		reloads.proceedAll();
+
+		assertReloaded(first, 0);
+		assertReloaded(second, 0);
+		assertReloaded(third, 0);
+		for (Cache cache : Arrays.asList(first, second, third)) {
+			cache.entry.refresh();
+			assertReloaded(cache, 1);
+		}
+	}
+
+	@Test
+	public void testCanceledReloadGroupDoesNotBlockLaterReloads()
+			throws Exception {
+		Cache first = startReload("first");
+		Cache second = startReload("second");
+		Cache third = queueReload("third", false);
+
+		JobGroup group = waitingReload().getJobGroup();
+		group.cancel();
+		assertTrue(waitFor(() -> group.getState() == JobGroup.NONE));
+		reloads.proceedAll();
+
+		assertReloaded(first, 0);
+		assertReloaded(second, 0);
+		assertReloaded(third, 0);
+		for (Cache cache : Arrays.asList(first, second, third)) {
+			cache.entry.refresh();
+			assertReloaded(cache, 1);
+		}
+	}
+
+	private Cache startReload(String name) throws Exception {
+		if (reloads == null) {
+			reloads = new HoldingReloads();
+			Job.getJobManager().setProgressProvider(reloads);
+		}
+		int held = reloads.heldCount();
+		Cache cache = createCache(name, false);
+		assertTrue("Reload of " + name + " did not start",
+				reloads.awaitHeld(held + 1));
+		return cache;
+	}
+
+	private Cache queueReload(String name, boolean unreadableIndex)
+			throws Exception {
+		Cache cache = createCache(name, unreadableIndex);
+		assertTrue("Reload of " + name + " is not waiting",
+				waitForJobCount(Job.WAITING, 1));
+		return cache;
+	}
+
+	private Cache createCache(String name, boolean unreadableIndex)
+			throws IOException {
+		TestRepository testRepo = new TestRepository(
+				new File(testUtils.createTempDir(name), Constants.DOT_GIT));
+		if (unreadableIndex) {
+			// An index that is a directory cannot be read
+			FileUtils.mkdir(testRepo.getRepository().getIndexFile());
+		}
+		Semaphore notifications = new Semaphore(0);
+		IndexDiffCacheEntry cacheEntry = new IndexDiffCacheEntry(
+				testRepo.getRepository(),
+				(repo, data) -> notifications.release());
+		Cache cache = new Cache(name, testRepo, cacheEntry, notifications);
+		caches.add(cache);
+		return cache;
+	}
+
+	private void assertReloaded(Cache cache, int times) throws Exception {
+		TestUtils.waitForJobs(MAX_WAIT_TIME,
+				JobFamilies.INDEX_DIFF_CACHE_UPDATE);
+		assertEquals("Reloads of " + cache.name, times,
+				cache.notifications.availablePermits());
+	}
+
+	private static Job waitingReload() {
+		for (Job job : Job.getJobManager()
+				.find(JobFamilies.INDEX_DIFF_CACHE_UPDATE)) {
+			if (job.getState() == Job.WAITING) {
+				return job;
+			}
+		}
+		throw new AssertionError("No waiting reload");
+	}
+
+	private static boolean waitForJobCount(int state, int expected)
+			throws InterruptedException {
+		return waitFor(() -> {
+			int count = 0;
+			for (Job job : Job.getJobManager()
+					.find(JobFamilies.INDEX_DIFF_CACHE_UPDATE)) {
+				if (job.getState() == state) {
+					count++;
+				}
+			}
+			return count == expected;
+		});
+	}
+
+	private static boolean waitFor(BooleanSupplier condition)
+			throws InterruptedException {
+		long end = System.currentTimeMillis() + MAX_WAIT_TIME;
+		while (!condition.getAsBoolean()) {
+			if (System.currentTimeMillis() > end) {
+				return false;
+			}
+			Thread.sleep(50);
+		}
+		return true;
+	}
+
 	private void cleanEntryFlags() {
 		entry.reloadScheduled = false;
 		entry.updateScheduled = false;
@@ -227,10 +423,163 @@ public class IndexDiffCacheEntryTest extends GitTestCase {
 	@Override
 	@After
 	public void tearDown() throws Exception {
-		entry.dispose();
+		if (reloads != null) {
+			reloads.proceedAll();
+		}
+		for (Cache cache : caches) {
+			cache.entry.dispose();
+			cache.repository.dispose();
+		}
+		if (!caches.isEmpty()) {
+			testUtils.deleteTempDirs();
+		}
+		if (reloads != null) {
+			Job.getJobManager().setProgressProvider(null);
+		}
+		if (entry != null) {
+			entry.dispose();
+		}
 		testRepository.dispose();
 		repository = null;
 		super.tearDown();
+	}
+
+	private static class Cache {
+
+		final String name;
+
+		final TestRepository repository;
+
+		final IndexDiffCacheEntry entry;
+
+		// One permit per notification of the entry's listener
+		final Semaphore notifications;
+
+		Cache(String name, TestRepository repository, IndexDiffCacheEntry entry,
+				Semaphore notifications) {
+			this.name = name;
+			this.repository = repository;
+			this.entry = entry;
+			this.notifications = notifications;
+		}
+	}
+
+	/**
+	 * Holds each reload job at the beginning of its calculation until it is
+	 * told to proceed or is canceled. The jobs are numbered in the order in
+	 * which they start.
+	 */
+	private static class HoldingReloads extends ProgressProvider {
+
+		private final List<HeldReload> started = new CopyOnWriteArrayList<>();
+
+		private volatile boolean proceedAll;
+
+		@Override
+		public IProgressMonitor createMonitor(Job job) {
+			if (job.getJobGroup() == null
+					|| !job.belongsTo(JobFamilies.INDEX_DIFF_CACHE_UPDATE)) {
+				return null;
+			}
+			HeldReload reload = new HeldReload(job);
+			started.add(reload);
+			return reload;
+		}
+
+		/**
+		 * Counts the reloads that have been held so far.
+		 *
+		 * @return the number of reloads held so far
+		 */
+		int heldCount() {
+			int count = 0;
+			for (HeldReload reload : started) {
+				if (reload.held) {
+					count++;
+				}
+			}
+			return count;
+		}
+
+		/**
+		 * Waits until the given number of reloads have been held.
+		 *
+		 * @param count
+		 *            the number of reloads held so far to wait for
+		 * @return {@code false} if the wait timed out
+		 * @throws InterruptedException
+		 *             if interrupted while waiting
+		 */
+		boolean awaitHeld(int count) throws InterruptedException {
+			return waitFor(() -> heldCount() == count);
+		}
+
+		/**
+		 * Waits until a reload has ended.
+		 *
+		 * @param index
+		 *            number of the reload, in the order the reloads started
+		 * @return {@code false} if the wait timed out
+		 * @throws InterruptedException
+		 *             if interrupted while waiting
+		 */
+		boolean awaitDone(int index) throws InterruptedException {
+			return waitFor(() -> started.get(index).job.getState() == Job.NONE);
+		}
+
+		/**
+		 * Lets a held reload continue.
+		 *
+		 * @param index
+		 *            number of the reload, in the order the reloads started
+		 */
+		void proceed(int index) {
+			started.get(index).proceed = true;
+		}
+
+		/** Lets all held and all future reloads continue. */
+		void proceedAll() {
+			proceedAll = true;
+		}
+
+		/**
+		 * Cancels a reload.
+		 *
+		 * @param index
+		 *            number of the reload, in the order the reloads started
+		 */
+		void cancel(int index) {
+			started.get(index).job.cancel();
+		}
+
+		private class HeldReload extends NullProgressMonitor {
+
+			final Job job;
+
+			volatile boolean held;
+
+			volatile boolean proceed;
+
+			HeldReload(Job job) {
+				this.job = job;
+			}
+
+			@Override
+			public boolean isCanceled() {
+				if (!held && Job.getJobManager().currentJob() == job) {
+					held = true;
+					while (!proceed && !proceedAll && !super.isCanceled()) {
+						try {
+							Thread.sleep(10);
+						} catch (InterruptedException e) {
+							Thread.currentThread().interrupt();
+							break;
+						}
+					}
+				}
+				return super.isCanceled();
+			}
+		}
 	}
 
 	private static class IndexDiffCacheEntry2 extends IndexDiffCacheEntry {
@@ -241,6 +590,11 @@ public class IndexDiffCacheEntryTest extends GitTestCase {
 
 		public IndexDiffCacheEntry2(Repository repository) {
 			super(repository, null);
+		}
+
+		public IndexDiffCacheEntry2(Repository repository,
+				IndexDiffChangedListener listener) {
+			super(repository, listener);
 		}
 
 		@Override
