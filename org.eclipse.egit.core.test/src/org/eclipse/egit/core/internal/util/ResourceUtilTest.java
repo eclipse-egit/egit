@@ -17,6 +17,8 @@ import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.notNullValue;
 import static org.junit.Assert.assertTrue;
 
+import java.io.File;
+
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IFolder;
 import org.eclipse.core.resources.IProject;
@@ -24,9 +26,13 @@ import org.eclipse.core.resources.IResource;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.NullProgressMonitor;
+import org.eclipse.core.runtime.Path;
+import org.eclipse.egit.core.RepositoryCache;
+import org.eclipse.egit.core.internal.util.ResourceUtil.ContainerLocationResolver;
 import org.eclipse.egit.core.op.ConnectProviderOperation;
 import org.eclipse.egit.core.test.GitTestCase;
 import org.eclipse.egit.core.test.TestProject;
+import org.eclipse.jgit.lib.Constants;
 import org.eclipse.jgit.lib.Repository;
 import org.eclipse.jgit.storage.file.FileRepositoryBuilder;
 import org.junit.After;
@@ -144,6 +150,113 @@ public class ResourceUtilTest extends GitTestCase {
 		assertThat(result, notNullValue());
 		assertTrue("Returned IFile should exist", result.exists());
 		assertThat(result.getProject(), is(nested.getProject()));
+	}
+
+	@Test
+	public void containerLocationResolverShouldResolveLikeResourceUtil()
+			throws Exception {
+		project.createFolder("folder");
+		project.createFolder("folder/sub");
+		TestProject nested = new TestProject(true, "Project-1/Project-2");
+		TestProject closed = null;
+		try {
+			connect(nested.getProject());
+			nested.createFolder("inner");
+			closed = new TestProject(true, "Project-1/Project-2/Project-3");
+			connect(closed.getProject());
+			closed.createFolder("x");
+			closed.getProject().close(new NullProgressMonitor());
+
+			IPath base = project.getProject().getLocation();
+			ContainerLocationResolver resolver = new ContainerLocationResolver(
+					base);
+			IPath nestedLocation = nested.getProject().getLocation();
+			IPath closedLocation = closed.getProject().getLocation();
+			IPath[] locations = { base, base.append("folder"),
+					base.append("folder/sub"), base.append("inexistent"),
+					nestedLocation, nestedLocation.append("inner"),
+					closedLocation, closedLocation.append("x") };
+			for (IPath location : locations) {
+				assertThat(location.toString(), resolver.getContainer(location),
+						is(ResourceUtil.getContainerForLocation(location,
+								false)));
+			}
+			assertThat(resolver.getContainer(nestedLocation.append("inner")),
+					is(nested.getProject().getFolder("inner")));
+			assertThat(resolver.getContainer(base.append("folder/sub")),
+					is(project.getProject().getFolder("folder/sub")));
+		} finally {
+			// Connected projects must be gone before the repository is
+			// deleted, or they keep it open
+			if (closed != null) {
+				closed.dispose();
+			}
+			nested.dispose();
+		}
+	}
+
+	@Test
+	public void containerLocationResolverShouldResolveLikeResourceUtilOutsideOfWorkspace()
+			throws Exception {
+		File parent = testUtils.createTempDir("resolverRepo");
+		TestProject imported = new TestProject(true, "repo/Project-Outside",
+				false, parent);
+		Repository outsideRepo = FileRepositoryBuilder
+				.create(new File(parent, "repo/" + Constants.DOT_GIT));
+		try {
+			outsideRepo.create();
+			new ConnectProviderOperation(imported.getProject(),
+					outsideRepo.getDirectory()).execute(null);
+			imported.createFolder("inner");
+
+			IPath workTree = new Path(
+					outsideRepo.getWorkTree().getAbsolutePath());
+			IPath projectLocation = imported.getProject().getLocation();
+			ContainerLocationResolver resolver = new ContainerLocationResolver(
+					workTree);
+			// The working tree also contains locations outside of any project
+			IPath[] locations = { workTree, workTree.append("outside"),
+					projectLocation, projectLocation.append("inner") };
+			for (IPath location : locations) {
+				assertThat(location.toString(), resolver.getContainer(location),
+						is(ResourceUtil.getContainerForLocation(location,
+								false)));
+			}
+			assertThat(resolver.getContainer(workTree.append("outside")),
+					nullValue());
+			assertThat(resolver.getContainer(projectLocation.append("inner")),
+					is(imported.getProject().getFolder("inner")));
+		} finally {
+			// Connected projects must be gone before the repository is
+			// deleted, or they keep it open
+			imported.dispose();
+			outsideRepo.close();
+			RepositoryCache.INSTANCE.clear();
+			testUtils.deleteTempDirs();
+		}
+	}
+
+	@Test
+	public void containerLocationResolverShouldFindLinkedFolders()
+			throws Exception {
+		TestProject other = new TestProject(true, "Project-Linked");
+		try {
+			connect(other.getProject());
+			IPath base = project.getProject().getLocation();
+			// Missing below base, so only reachable through the linked folder
+			IPath target = base.append("missing");
+			IFolder link = other.getProject().getFolder("link");
+			link.createLink(target, IResource.ALLOW_MISSING_LOCAL, null);
+			assertTrue(link.exists());
+
+			ContainerLocationResolver resolver = new ContainerLocationResolver(
+					base);
+			assertThat(resolver.getContainer(target),
+					is(ResourceUtil.getContainerForLocation(target, false)));
+			assertThat(resolver.getContainer(target), is(link));
+		} finally {
+			other.dispose();
+		}
 	}
 
 	private void connect(IProject p) throws CoreException {
