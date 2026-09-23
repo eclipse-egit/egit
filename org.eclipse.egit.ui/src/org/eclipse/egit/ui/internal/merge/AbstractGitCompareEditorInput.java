@@ -678,7 +678,11 @@ public abstract class AbstractGitCompareEditorInput extends CompareEditorInput {
 		monitor.beginTask(UIText.GitMergeEditorInput_CheckingResourcesTaskName,
 				IProgressMonitor.UNKNOWN);
 		try {
-			initPaths();
+			try {
+				initPaths();
+			} catch (IllegalStateException e) {
+				throw new InvocationTargetException(e);
+			}
 			if (monitor.isCanceled()) {
 				throw new InterruptedException();
 			}
@@ -721,7 +725,13 @@ public abstract class AbstractGitCompareEditorInput extends CompareEditorInput {
 		// Nothing
 	}
 
-	private void initPaths() throws InvocationTargetException {
+	/**
+	 * Initializes the repository and git paths.
+	 *
+	 * @throws IllegalStateException
+	 *             on errors
+	 */
+	protected void initPaths() throws IllegalStateException {
 		if (initialized) {
 			return;
 		}
@@ -730,17 +740,16 @@ public abstract class AbstractGitCompareEditorInput extends CompareEditorInput {
 			Map<Repository, Collection<String>> pathsByRepository = ResourceUtil
 					.splitPathsByRepository(Arrays.asList(locations));
 			if (pathsByRepository.size() != 1) {
-				throw new InvocationTargetException(new IllegalStateException(
-						UIText.RepositoryAction_multiRepoSelection));
+				throw new IllegalStateException(
+						UIText.RepositoryAction_multiRepoSelection);
 			}
 			Entry<Repository, Collection<String>> entry = pathsByRepository
 					.entrySet().iterator().next();
 			Repository repo = entry.getKey();
 			if (repository != null
 					&& !repo.getDirectory().equals(repository.getDirectory())) {
-				throw new InvocationTargetException(
-						new IllegalStateException("Paths not in repo " //$NON-NLS-1$
-								+ repository.getDirectory()));
+				throw new IllegalStateException("Paths not in repo " //$NON-NLS-1$
+						+ repository.getDirectory());
 			}
 			if (repository == null) {
 				repository = repo;
