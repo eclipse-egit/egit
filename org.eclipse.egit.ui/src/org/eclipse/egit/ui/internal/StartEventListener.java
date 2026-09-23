@@ -98,8 +98,17 @@ public class StartEventListener implements EventHandler {
 		}
 		runAsync(() -> {
 			try {
-				ContextTypeRegistry codeTemplateContextRegistry = org.eclipse.jdt.internal.ui.JavaPlugin
-						.getDefault().getCodeTemplateContextRegistry();
+				Object javaPlugin = org.eclipse.jdt.internal.ui.JavaPlugin
+						.getDefault();
+				// Reflective, since the declared return type differs between
+				// JDT versions and a direct call breaks binary compatibility
+				Object registry = javaPlugin.getClass()
+						.getMethod("getCodeTemplateContextRegistry") //$NON-NLS-1$
+						.invoke(javaPlugin);
+				if (!(registry instanceof
+						ContextTypeRegistry codeTemplateContextRegistry)) {
+					return;
+				}
 				Iterator<TemplateContextType> ctIter = codeTemplateContextRegistry
 						.contextTypes();
 
