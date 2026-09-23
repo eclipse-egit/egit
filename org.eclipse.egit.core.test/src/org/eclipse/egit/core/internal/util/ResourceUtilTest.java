@@ -26,6 +26,7 @@ import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.egit.core.op.ConnectProviderOperation;
 import org.eclipse.egit.core.test.GitTestCase;
+import org.eclipse.egit.core.internal.util.ResourceUtil.ContainerLocationResolver;
 import org.eclipse.egit.core.test.TestProject;
 import org.eclipse.jgit.lib.Repository;
 import org.eclipse.jgit.storage.file.FileRepositoryBuilder;
@@ -144,6 +145,59 @@ public class ResourceUtilTest extends GitTestCase {
 		assertThat(result, notNullValue());
 		assertTrue("Returned IFile should exist", result.exists());
 		assertThat(result.getProject(), is(nested.getProject()));
+	}
+
+	@Test
+	public void containerLocationResolverShouldResolveLikeResourceUtil()
+			throws Exception {
+		project.createFolder("folder");
+		project.createFolder("folder/sub");
+		TestProject nested = new TestProject(true, "Project-1/Project-2");
+		TestProject closed = null;
+		try {
+			connect(nested.getProject());
+			nested.createFolder("inner");
+			closed = new TestProject(true, "Project-1/Project-2/Project-3");
+			connect(closed.getProject());
+			closed.createFolder("x");
+			closed.getProject().close(new NullProgressMonitor());
+
+			IPath base = project.getProject().getLocation();
+			ContainerLocationResolver resolver = new ContainerLocationResolver(
+					base);
+			IPath nestedLocation = nested.getProject().getLocation();
+			IPath closedLocation = closed.getProject().getLocation();
+			IPath[] locations = { base, base.append("folder"),
+					base.append("folder/sub"), base.append("inexistent"),
+					nestedLocation, nestedLocation.append("inner"),
+					closedLocation, closedLocation.append("x") };
+			for (IPath location : locations) {
+				assertThat(location.toString(), resolver.getContainer(location),
+						is(ResourceUtil.getContainerForLocation(location,
+								false)));
+			}
+			assertThat(resolver.getContainer(nestedLocation.append("inner")),
+					is(nested.getProject().getFolder("inner")));
+			assertThat(resolver.getContainer(base.append("folder/sub")),
+					notNullValue());
+		} finally {
+			// Disconnected projects must be gone before the repository is
+			// deleted, or they keep it open
+			if (closed != null) {
+				closed.dispose();
+			}
+			nested.dispose();
+		}
+	}
+
+	@Test
+	public void containerLocationResolverShouldReturnNullOutsideOfProjects()
+			throws Exception {
+		IPath base = project.getProject().getLocation().removeLastSegments(1)
+				.append("does-not-exist");
+		ContainerLocationResolver resolver = new ContainerLocationResolver(
+				base);
+		assertThat(resolver.getContainer(base.append("folder")), nullValue());
 	}
 
 	private void connect(IProject p) throws CoreException {

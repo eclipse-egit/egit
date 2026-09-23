@@ -23,6 +23,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.LinkedHashSet;
@@ -63,7 +64,6 @@ import org.eclipse.egit.core.project.RepositoryMapping;
 import org.eclipse.egit.core.synchronize.IgnoreInGitSynchronizations;
 import org.eclipse.jgit.annotations.NonNull;
 import org.eclipse.jgit.annotations.Nullable;
-import org.eclipse.jgit.lib.Repository;
 import org.eclipse.jgit.util.FS;
 import org.eclipse.team.core.RepositoryProvider;
 
@@ -788,5 +788,117 @@ public class ResourceUtil {
 			result.addAll(Arrays.asList(resources));
 		}
 		return result;
+	}
+
+	/**
+	 * Resolves many file system locations below a common base location to
+	 * workspace containers, giving the same results as
+	 * {@link ResourceUtil#getContainerForLocation(IPath, boolean)
+	 * ResourceUtil.getContainerForLocation(location, false)}.
+	 * <p>
+	 * {@link IWorkspaceRoot#getContainerForLocation(IPath)} iterates over
+	 * <em>all</em> projects of the workspace and queries the resource tree for
+	 * each project's location on every call. With many projects and many
+	 * locations to resolve (for instance all folders of the staging view after
+	 * a branch switch) this becomes very expensive. This resolver takes a
+	 * snapshot of the locations of the relevant projects once and then maps
+	 * locations to container handles purely in memory. Only if the container
+	 * found that way is not valid (not accessible, linked, or not shared with
+	 * Git) it falls back to
+	 * {@link ResourceUtil#getContainerForLocation(IPath, boolean)}.
+	 * </p>
+	 * <p>
+	 * The snapshot is not updated if projects are created, deleted or moved
+	 * afterwards. Instances are immutable and can be used from any thread.
+	 * </p>
+	 */
+	public static class ContainerLocationResolver {
+
+		private static class ProjectLocation {
+
+			final IProject project;
+
+			final IPath location;
+
+			ProjectLocation(IProject project, IPath location) {
+				this.project = project;
+				this.location = location;
+			}
+		}
+
+		private final IWorkspaceRoot root;
+
+		private final IPath rootLocation;
+
+		/** Sorted by number of location segments, most nested first. */
+		private final List<ProjectLocation> projects;
+
+		/**
+		 * Creates a new resolver for locations at or below {@code base}.
+		 *
+		 * @param base
+		 *            location all locations later passed to
+		 *            {@link #getContainer(IPath)} are at or below of, typically
+		 *            the working tree of a repository
+		 */
+		public ContainerLocationResolver(@NonNull IPath base) {
+			root = ResourcesPlugin.getWorkspace().getRoot();
+			rootLocation = root.getLocation();
+			projects = new ArrayList<>();
+			for (IProject project : root
+					.getProjects(IContainer.INCLUDE_HIDDEN)) {
+				IPath location = project.getLocation();
+				// A project can contain a location below base only if its
+				// location is a prefix of base or is itself inside base.
+				if (location != null && (location.isPrefixOf(base)
+						|| base.isPrefixOf(location))) {
+					projects.add(new ProjectLocation(project, location));
+				}
+			}
+			// Stable sort: for equal nesting depth, keep the workspace order,
+			// like IWorkspaceRoot.getContainerForLocation() does.
+			projects.sort(Comparator.comparingInt(
+					(ProjectLocation p) -> p.location.segmentCount())
+					.reversed());
+		}
+
+		/**
+		 * Determines the container for the given location, if it exists and is
+		 * shared with Git.
+		 *
+		 * @param location
+		 *            at or below the base location given in the constructor
+		 * @return the container, or {@code null}
+		 * @see ResourceUtil#getContainerForLocation(IPath, boolean)
+		 */
+		@Nullable
+		public IContainer getContainer(@NonNull IPath location) {
+			IContainer container = findContainer(location);
+			if (container == null) {
+				return null;
+			}
+			if (isValid(container)) {
+				return container;
+			}
+			return getContainerForLocation(location, false);
+		}
+
+		private IContainer findContainer(IPath location) {
+			if (rootLocation != null && rootLocation.equals(location)) {
+				return root;
+			}
+			for (ProjectLocation p : projects) {
+				if (p.location.isPrefixOf(location)) {
+					int segments = p.location.segmentCount();
+					if (segments == location.segmentCount()) {
+						return p.project;
+					}
+					return p.project
+							.getFolder(location.removeFirstSegments(segments)
+									.setDevice(null));
+				}
+			}
+			return null;
+		}
 	}
 }

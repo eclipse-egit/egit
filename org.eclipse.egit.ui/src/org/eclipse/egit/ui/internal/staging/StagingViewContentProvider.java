@@ -42,6 +42,7 @@ import org.eclipse.core.resources.IResource;
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.Path;
 import org.eclipse.egit.core.internal.indexdiff.IndexDiffData;
+import org.eclipse.egit.core.internal.util.ResourceUtil.ContainerLocationResolver;
 import org.eclipse.egit.core.internal.util.ResourceUtil;
 import org.eclipse.egit.ui.internal.staging.StagingView.Presentation;
 import org.eclipse.egit.ui.internal.staging.StagingView.StagingViewUpdate;
@@ -219,6 +220,10 @@ public class StagingViewContentProvider extends WorkbenchContentProvider {
 		IPath workingDirectory = new Path(repository.getWorkTree()
 				.getAbsolutePath());
 
+		// Share one snapshot of the project locations among all folder entries
+		// instead of scanning all workspace projects for each of them.
+		ContainerLocationResolver resolver = new ContainerLocationResolver(
+				workingDirectory);
 		List<StagingFolderEntry> folderEntries = new ArrayList<>();
 		for (IPath folderPath : folderPaths) {
 			IPath parent = folderPath.removeLastSegments(1);
@@ -228,14 +233,15 @@ public class StagingViewContentProvider extends WorkbenchContentProvider {
 			if (parent.segmentCount() == 0) {
 				// Parent is root
 				StagingFolderEntry folderEntry = new StagingFolderEntry(
-						workingDirectory, folderPath, folderPath.toString());
+						workingDirectory, folderPath, folderPath.toString(),
+						resolver);
 				folderEntries.add(folderEntry);
 				roots.add(folderEntry);
 			} else {
 				// Parent is existing node
 				String label = folderPath.makeRelativeTo(parent).toString();
 				StagingFolderEntry folderEntry = new StagingFolderEntry(
-						workingDirectory, folderPath, label);
+						workingDirectory, folderPath, label, resolver);
 				folderEntries.add(folderEntry);
 				addChild(childrenForPath, parent, folderEntry);
 			}
