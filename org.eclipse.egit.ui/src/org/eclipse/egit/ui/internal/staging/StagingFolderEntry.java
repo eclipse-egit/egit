@@ -16,7 +16,7 @@ import org.eclipse.core.resources.IResource;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IAdaptable;
 import org.eclipse.core.runtime.IPath;
-import org.eclipse.egit.core.internal.util.ResourceUtil;
+import org.eclipse.egit.core.internal.util.ResourceUtil.ContainerLocationResolver;
 import org.eclipse.egit.ui.internal.decorators.IProblemDecoratable;
 import org.eclipse.jgit.annotations.NonNull;
 
@@ -28,7 +28,12 @@ public class StagingFolderEntry implements IAdaptable, IProblemDecoratable {
 	private final IPath repoRelativePath;
 
 	private final String label;
-	private final IContainer container;
+
+	private final ContainerLocationResolver resolver;
+
+	private volatile boolean containerDetermined;
+
+	private volatile IContainer container;
 
 	private StagingFolderEntry parent;
 	private Object[] children;
@@ -38,31 +43,42 @@ public class StagingFolderEntry implements IAdaptable, IProblemDecoratable {
 	 * @param repoLocation
 	 * @param repoRelativePath
 	 * @param label
+	 * @param resolver
+	 *            to determine the container with, shared by all entries of a
+	 *            tree
 	 */
 	public StagingFolderEntry(IPath repoLocation, IPath repoRelativePath,
-			String label) {
+			String label, @NonNull ContainerLocationResolver resolver) {
 		this.repoLocation = repoLocation;
 		this.repoRelativePath = repoRelativePath;
 		this.label = label;
-		this.container = ResourceUtil.getContainerForLocation(getLocation(),
-				false);
+		this.resolver = resolver;
 	}
 
 	/**
+	 * Determines the container lazily: a tree may have many folder entries,
+	 * but typically only few of them are ever shown.
+	 *
 	 * @return the container corresponding to the entry, if it exists in the
 	 *         workspace, null otherwise.
 	 */
 	public IContainer getContainer() {
+		if (!containerDetermined) {
+			// Benign race: concurrent callers compute the same value.
+			container = resolver.getContainer(getLocation());
+			containerDetermined = true;
+		}
 		return container;
 	}
 
 	@Override
 	public int getProblemSeverity() {
-		if (container == null)
+		IContainer c = getContainer();
+		if (c == null)
 			return SEVERITY_NONE;
 
 		try {
-			return container.findMaxProblemSeverity(IMarker.PROBLEM, true,
+			return c.findMaxProblemSeverity(IMarker.PROBLEM, true,
 					IResource.DEPTH_INFINITE);
 		} catch (CoreException e) {
 			return SEVERITY_NONE;
