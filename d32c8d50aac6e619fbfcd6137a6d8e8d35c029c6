@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "571ab519_ef2c3157",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/internal/rebase/RebaseInteractivePlan.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 680,
+      "author": {
+        "id": 1039515
+      },
+      "writtenOn": "2026-09-23T12:31:15Z",
+      "side": 1,
+      "message": "The previous hashCode() implementation was incorrect in regards to the equals() implementation and would have caused the tree viewer hash lookup to malfunction",
+      "range": {
+        "startLine": 680,
+        "startChar": 10,
+        "endLine": 680,
+        "endChar": 17
+      },
+      "revId": "d32c8d50aac6e619fbfcd6137a6d8e8d35c029c6",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735"
+    }
+  ]
+}

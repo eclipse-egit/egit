@@ -16,6 +16,24 @@
       "message": "The change makes sense and it is the same fix you did already in https://github.com/eclipse-jdt/eclipse.jdt.ui/pull/3009, which had the same symptoms.\n\nHowever I am not completely sure the pre-conditions to use `setUseHashlookup(true)` (see [JavaDoc](https://github.com/eclipse-platform/eclipse.platform.ui/blob/16e4823269971757561ecc157e2df3368932c7a9/bundles/org.eclipse.jface/src/org/eclipse/jface/viewers/StructuredViewer.java#L1760-L1763)) are met:\n\n\u003e Note: enabling hash lookup requires from client code that elements managed by\n\u003e the viewer properly implement {@link #hashCode()} and {@link #equals(Object)}\n\u003e and that equal elements are not added to the same parent in the tree (each\n\u003e equal element should have a different parent chain).\n\nI see that the viewer ends up having `org.eclipse.egit.core.internal.rebase.RebaseInteractivePlan.PlanElement` inside, but that class only really implements `equals(...)`. `hashCode()` simply [delegates to `super`](https://github.com/eclipse-egit/egit/blob/6a6c76d62014d089edb83120bbb99c34cbc341fe/org.eclipse.egit.core/src/org/eclipse/egit/core/internal/rebase/RebaseInteractivePlan.java#L679)\n\n```java\n@Override\npublic int hashCode() {\n\treturn super.hashCode();\n}\n```\n\nWouldn\u0027t you have to provide a proper `hashCode` implementation for this fix to work as expected?",
       "revId": "1c0a6a1ebd8a8b4ab5b6398f341442fb58907387",
       "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "f9b434cd_ffb6abbd",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1039515
+      },
+      "writtenOn": "2026-09-23T12:31:15Z",
+      "side": 1,
+      "message": "Thank you for the review and for linking to a similar fix, which adds some additional context here.\n\nYou\u0027re right, the current hashCode() implementation of PlanElement is broken and could have caused the tree item lookup to malfunction. I\u0027ve fixed this in patch set 2. Thanks for the finding!",
+      "parentUuid": "1a08a096_eb799c78",
+      "revId": "1c0a6a1ebd8a8b4ab5b6398f341442fb58907387",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735"
     }
   ]
 }
