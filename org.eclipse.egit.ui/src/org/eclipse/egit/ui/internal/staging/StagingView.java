@@ -39,6 +39,7 @@ import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.function.BooleanSupplier;
 import java.util.function.Consumer;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -753,6 +754,9 @@ public class StagingView extends ViewPart
 			reload(repository);
 		}
 	};
+
+	private final StagingViewReloadJob reloadJob = new StagingViewReloadJob(
+			this::isDisposed);
 
 	private IndexDiffCacheEntry cacheEntry;
 
@@ -4374,23 +4378,24 @@ public class StagingView extends ViewPart
 			return;
 		}
 		if (repository == null) {
-			asyncUpdate(() -> clearRepository(null));
+			reloadJob.request(changed -> clearRepository(null), false);
 			return;
 		}
 
 		if (!isValidRepo(repository)) {
-			asyncUpdate(() -> clearRepository(repository));
+			reloadJob.request(changed -> clearRepository(repository), false);
 			return;
 		}
 
-		final boolean repositoryChanged = currentRepository != repository;
+		final boolean switchesRepository = currentRepository != repository;
 		realRepository = repository;
 		currentRepository = repository;
 
-		asyncUpdate(() -> {
+		reloadJob.request(switched -> {
 			if (isDisposed()) {
 				return;
 			}
+			final boolean repositoryChanged = switched.booleanValue();
 
 			final IndexDiffData indexDiff = doReload(repository);
 			boolean indexDiffAvailable = indexDiffAvailable(indexDiff);
@@ -4506,7 +4511,7 @@ public class StagingView extends ViewPart
 				hideUntrackedAction.setChecked(false);
 				updateUnstagedViewer();
 			}
-		});
+		}, switchesRepository);
 	}
 
 	private void removeRepositoryListeners() {
@@ -5180,6 +5185,7 @@ public class StagingView extends ViewPart
 		currentRepository = null;
 		lastSelection = null;
 		disposed = true;
+		reloadJob.cancel();
 	}
 
 	private boolean isDisposed() {
@@ -5200,41 +5206,104 @@ public class StagingView extends ViewPart
 		}
 	}
 
-	private void asyncUpdate(Runnable runnable) {
-		if (isDisposed()) {
-			return;
+	/**
+	 * A single, reusable UI job that coalesces reload requests of the
+	 * staging view.
+	 * <p>
+	 * Rebuilding the staging view is expensive in repositories with many
+	 * changed files. Operations like rebases or checkouts of many repositories
+	 * in a row produce bursts of index diff changes, and running one full
+	 * rebuild on the UI thread per change would freeze the UI much longer than
+	 * necessary, since only the last rebuild is visible anyway. Therefore only
+	 * the most recent request is kept: requests arriving while the job waits
+	 * for the UI thread, which is typically busy with the previous rebuild,
+	 * replace each other, and the job then runs once for all of them.
+	 * </p>
+	 * <p>
+	 * Whether the repository changed is accumulated over all coalesced
+	 * requests, so that dropping an intermediate request never loses the
+	 * information that the view must switch to a different repository.
+	 * </p>
+	 */
+	static class StagingViewReloadJob extends WorkbenchJob {
+
+		private final BooleanSupplier isDisposed;
+
+		private final Object lock = new Object();
+
+		// Guarded by lock
+		private Consumer<Boolean> pending;
+
+		// Guarded by lock
+		private boolean repositoryChanged;
+
+		/**
+		 * @param isDisposed
+		 *            tells whether the staging view is disposed; the job does
+		 *            not run anymore once it is
+		 */
+		StagingViewReloadJob(BooleanSupplier isDisposed) {
+			super(UIText.StagingView_LoadJob);
+			this.isDisposed = isDisposed;
+			setSystem(true);
 		}
-		Job update = new WorkbenchJob(UIText.StagingView_LoadJob) {
 
-			@Override
-			public IStatus runInUIThread(IProgressMonitor monitor) {
-				try {
-					runnable.run();
-					return Status.OK_STATUS;
-				} catch (Exception e) {
-					return Activator.createErrorStatus(e.getLocalizedMessage(),
-							e);
-				}
+		/**
+		 * Requests an update of the staging view, replacing any update that is
+		 * still pending.
+		 *
+		 * @param update
+		 *            to run in the UI thread; gets passed whether the
+		 *            repository changed in this or any request it replaced
+		 * @param changed
+		 *            whether this request switches the repository
+		 */
+		void request(Consumer<Boolean> update, boolean changed) {
+			synchronized (lock) {
+				pending = update;
+				repositoryChanged |= changed;
 			}
+			// No-op if the job is waiting; if it is running, it is rescheduled
+			// once it is done
+			schedule();
+		}
 
-			@Override
-			public boolean shouldSchedule() {
-				return super.shouldSchedule() && !isDisposed();
+		@Override
+		public IStatus runInUIThread(IProgressMonitor monitor) {
+			Consumer<Boolean> update;
+			boolean changed;
+			synchronized (lock) {
+				update = pending;
+				changed = repositoryChanged;
+				pending = null;
+				repositoryChanged = false;
 			}
+			if (update == null || isDisposed.getAsBoolean()) {
+				return Status.OK_STATUS;
+			}
+			try {
+				update.accept(Boolean.valueOf(changed));
+				return Status.OK_STATUS;
+			} catch (Exception e) {
+				return Activator.createErrorStatus(e.getLocalizedMessage(), e);
+			}
+		}
 
-			@Override
-			public boolean shouldRun() {
-				return super.shouldRun() && !isDisposed();
-			}
+		@Override
+		public boolean shouldSchedule() {
+			return super.shouldSchedule() && !isDisposed.getAsBoolean();
+		}
 
-			@Override
-			public boolean belongsTo(Object family) {
-				return family == JobFamilies.STAGING_VIEW_RELOAD
-						|| super.belongsTo(family);
-			}
-		};
-		update.setSystem(true);
-		update.schedule();
+		@Override
+		public boolean shouldRun() {
+			return super.shouldRun() && !isDisposed.getAsBoolean();
+		}
+
+		@Override
+		public boolean belongsTo(Object family) {
+			return family == JobFamilies.STAGING_VIEW_RELOAD
+					|| super.belongsTo(family);
+		}
 	}
 
 	/**
