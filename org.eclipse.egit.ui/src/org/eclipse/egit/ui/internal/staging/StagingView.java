@@ -19,11 +19,10 @@
  *******************************************************************************/
 package org.eclipse.egit.ui.internal.staging;
 
-import static org.eclipse.egit.ui.internal.CommonUtils.runCommand;
-
 import java.io.File;
 import java.io.IOException;
 import java.net.URISyntaxException;
+import java.sql.Ref;
 import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -39,6 +38,7 @@ import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.function.BooleanSupplier;
 import java.util.function.Consumer;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -124,8 +124,15 @@ import org.eclipse.egit.ui.internal.push.SimpleConfigurePushDialog;
 import org.eclipse.egit.ui.internal.repository.RepositoryTreeNodeLabelProvider;
 import org.eclipse.egit.ui.internal.repository.tree.RepositoryNode;
 import org.eclipse.egit.ui.internal.repository.tree.RepositoryTreeNode;
+import org.eclipse.egit.ui.internal.repository.tree.command.AddCommand;
+import org.eclipse.egit.ui.internal.repository.tree.command.ResetCommand;
 import org.eclipse.egit.ui.internal.selection.MultiViewerSelectionProvider;
 import org.eclipse.egit.ui.internal.selection.RepositorySelectionProvider;
+import org.eclipse.egit.ui.internal.staging.StagingView.Presentation;
+import org.eclipse.egit.ui.internal.staging.StagingView.StagingViewReloadJob;
+import org.eclipse.egit.ui.internal.staging.StagingView.StagingViewSearchThread;
+import org.eclipse.egit.ui.internal.staging.StagingView.StagingViewUpdate;
+import org.eclipse.jdt.internal.ui.refactoring.reorg.DeleteAction;
 import org.eclipse.jface.action.Action;
 import org.eclipse.jface.action.ActionContributionItem;
 import org.eclipse.jface.action.ControlContribution;
@@ -178,9 +185,7 @@ import org.eclipse.jface.viewers.ViewerLabel;
 import org.eclipse.jface.wizard.Wizard;
 import org.eclipse.jgit.annotations.NonNull;
 import org.eclipse.jgit.annotations.Nullable;
-import org.eclipse.jgit.api.AddCommand;
 import org.eclipse.jgit.api.Git;
-import org.eclipse.jgit.api.ResetCommand;
 import org.eclipse.jgit.api.errors.GitAPIException;
 import org.eclipse.jgit.api.errors.JGitInternalException;
 import org.eclipse.jgit.api.errors.NoFilepatternException;
@@ -188,16 +193,13 @@ import org.eclipse.jgit.events.ListenerHandle;
 import org.eclipse.jgit.lib.BranchTrackingStatus;
 import org.eclipse.jgit.lib.CommitConfig;
 import org.eclipse.jgit.lib.CommitConfig.CleanupMode;
-import org.eclipse.jgit.lib.Constants;
 import org.eclipse.jgit.lib.IndexDiff.StageState;
 import org.eclipse.jgit.lib.ObjectId;
-import org.eclipse.jgit.lib.Ref;
-import org.eclipse.jgit.lib.Repository;
 import org.eclipse.jgit.lib.RepositoryState;
 import org.eclipse.jgit.revwalk.RevCommit;
 import org.eclipse.jgit.submodule.SubmoduleWalk;
 import org.eclipse.jgit.transport.RemoteConfig;
-import org.eclipse.jgit.util.StringUtils;
+import org.eclipse.search.internal.ui.text.ReplaceAction;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.CLabel;
 import org.eclipse.swt.custom.SashForm;
@@ -266,6 +268,8 @@ import org.eclipse.ui.part.ShowInContext;
 import org.eclipse.ui.part.ViewPart;
 import org.eclipse.ui.progress.IWorkbenchSiteProgressService;
 import org.eclipse.ui.progress.WorkbenchJob;
+
+import com.sun.tools.javac.util.StringUtils;
 
 /**
  * A GitX style staging view with embedded commit dialog.
@@ -753,6 +757,9 @@ public class StagingView extends ViewPart
 			reload(repository);
 		}
 	};
+
+	private final StagingViewReloadJob reloadJob = new StagingViewReloadJob(
+			this::isDisposed);
 
 	private IndexDiffCacheEntry cacheEntry;
 
@@ -4374,23 +4381,24 @@ public class StagingView extends ViewPart
 			return;
 		}
 		if (repository == null) {
-			asyncUpdate(() -> clearRepository(null));
+			reloadJob.request(changed -> clearRepository(null), false);
 			return;
 		}
 
 		if (!isValidRepo(repository)) {
-			asyncUpdate(() -> clearRepository(repository));
+			reloadJob.request(changed -> clearRepository(repository), false);
 			return;
 		}
 
-		final boolean repositoryChanged = currentRepository != repository;
+		final boolean switchesRepository = currentRepository != repository;
 		realRepository = repository;
 		currentRepository = repository;
 
-		asyncUpdate(() -> {
+		reloadJob.request(switched -> {
 			if (isDisposed()) {
 				return;
 			}
+			final boolean repositoryChanged = switched.booleanValue();
 
 			final IndexDiffData indexDiff = doReload(repository);
 			boolean indexDiffAvailable = indexDiffAvailable(indexDiff);
@@ -4506,7 +4514,7 @@ public class StagingView extends ViewPart
 				hideUntrackedAction.setChecked(false);
 				updateUnstagedViewer();
 			}
-		});
+		}, switchesRepository);
 	}
 
 	private void removeRepositoryListeners() {
@@ -5180,6 +5188,7 @@ public class StagingView extends ViewPart
 		currentRepository = null;
 		lastSelection = null;
 		disposed = true;
+		reloadJob.cancel();
 	}
 
 	private boolean isDisposed() {
@@ -5200,41 +5209,93 @@ public class StagingView extends ViewPart
 		}
 	}
 
-	private void asyncUpdate(Runnable runnable) {
-		if (isDisposed()) {
-			return;
+	/**
+	 * A single, reusable UI job that coalesces reload requests of the staging
+	 * view.<br/>
+	 *
+	 * Whether the repository changed is accumulated over all coalesced
+	 * requests, so that dropping an intermediate request never loses the
+	 * information that the view must switch to a different repository.
+	 */
+	static class StagingViewReloadJob extends WorkbenchJob {
+
+		private final BooleanSupplier isDisposed;
+
+		private final Object lock = new Object();
+
+		// Guarded by lock
+		private Consumer<Boolean> pending;
+
+		// Guarded by lock
+		private boolean repositoryChanged;
+
+		/**
+		 * @param isDisposed
+		 *            tells whether the staging view is disposed; the job does
+		 *            not run anymore once it is
+		 */
+		StagingViewReloadJob(BooleanSupplier isDisposed) {
+			super(UIText.StagingView_LoadJob);
+			this.isDisposed = isDisposed;
+			setSystem(true);
 		}
-		Job update = new WorkbenchJob(UIText.StagingView_LoadJob) {
 
-			@Override
-			public IStatus runInUIThread(IProgressMonitor monitor) {
-				try {
-					runnable.run();
-					return Status.OK_STATUS;
-				} catch (Exception e) {
-					return Activator.createErrorStatus(e.getLocalizedMessage(),
-							e);
-				}
+		/**
+		 * Requests an update of the staging view, replacing any update that is
+		 * still pending.
+		 *
+		 * @param update
+		 *            to run in the UI thread; gets passed whether the
+		 *            repository changed in this or any request it replaced
+		 * @param changed
+		 *            whether this request switches the repository
+		 */
+		void request(Consumer<Boolean> update, boolean changed) {
+			synchronized (lock) {
+				pending = update;
+				repositoryChanged |= changed;
 			}
+			// No-op if the job is waiting; if it is running, it is rescheduled
+			// once it is done
+			schedule();
+		}
 
-			@Override
-			public boolean shouldSchedule() {
-				return super.shouldSchedule() && !isDisposed();
+		@Override
+		public IStatus runInUIThread(IProgressMonitor monitor) {
+			Consumer<Boolean> update;
+			boolean changed;
+			synchronized (lock) {
+				update = pending;
+				changed = repositoryChanged;
+				pending = null;
+				repositoryChanged = false;
 			}
+			if (update == null || isDisposed.getAsBoolean()) {
+				return Status.OK_STATUS;
+			}
+			try {
+				update.accept(Boolean.valueOf(changed));
+				return Status.OK_STATUS;
+			} catch (Exception e) {
+				return Activator.createErrorStatus(e.getLocalizedMessage(), e);
+			}
+		}
 
-			@Override
-			public boolean shouldRun() {
-				return super.shouldRun() && !isDisposed();
-			}
+		@Override
+		public boolean shouldSchedule() {
+			return super.shouldSchedule() && !isDisposed.getAsBoolean();
+		}
 
-			@Override
-			public boolean belongsTo(Object family) {
-				return family == JobFamilies.STAGING_VIEW_RELOAD
-						|| super.belongsTo(family);
-			}
-		};
-		update.setSystem(true);
-		update.schedule();
+		@Override
+		public boolean shouldRun() {
+			return super.shouldRun() && !isDisposed.getAsBoolean();
+		}
+
+		@Override
+		public boolean belongsTo(Object family) {
+			return family == JobFamilies.STAGING_VIEW_RELOAD
+					|| super.belongsTo(family);
+		}
 	}
 
 	/**
