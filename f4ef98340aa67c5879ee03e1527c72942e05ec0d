@@ -16,6 +16,40 @@
       "message": "Please check in general your PR to Egit to use concise Javadoc.",
       "revId": "f4ef98340aa67c5879ee03e1527c72942e05ec0d",
       "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "3def93da_40dcbf54",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1021966
+      },
+      "writtenOn": "2026-09-26T21:04:37Z",
+      "side": 1,
+      "message": "Nice idea.",
+      "revId": "f4ef98340aa67c5879ee03e1527c72942e05ec0d",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "342ad693_9baee03c",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/staging/StagingView.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 5221,
+      "author": {
+        "id": 1021966
+      },
+      "writtenOn": "2026-09-26T21:04:37Z",
+      "side": 1,
+      "message": "The paragraph above should not be here but in the commit message.",
+      "revId": "f4ef98340aa67c5879ee03e1527c72942e05ec0d",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735"
     }
   ]
 }
