@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "a98a259a_5698a686",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1012795
+      },
+      "writtenOn": "2026-09-26T06:22:29Z",
+      "side": 1,
+      "message": "- Import order: ResourceUtil.ContainerLocationResolver is imported before ResourceUtil in StagingViewContentProvider, and in ResourceUtilTest it\u0027s placed between the core.test imports. Either just import ResourceUtil, or make the resolver its own top-level class in core.internal.util. It\u0027s a sizeable class to nest inside a utility class.\n- Long Javadoc: the class Javadoc has two paragraphs explaining the implementation. One or two sentences would be enough, and the \"why\" can go in the commit message.\n- Weak second test: containerLocationResolverShouldReturnNullOutsideOfProjects only checks a path under a directory that doesn\u0027t exist. The first test, which compares the resolver with ResourceUtil across nested and closed projects, is the one that matters, and it\u0027s good.\n- Lookup timing: the lookup now runs on first use, which means inside the label provider and decorator on the UI thread. That\u0027s fine now that each lookup is cheap, but it\u0027s worth knowing.",
+      "revId": "c70d044750b8e6894cafc16471ac057fa5979b89",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735"
+    }
+  ]
+}
