@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "e9be1f5a_c68bcc11",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1012795
+      },
+      "writtenOn": "2026-09-28T12:46:41Z",
+      "side": 1,
+      "message": "Still long Javadoc",
+      "revId": "330f15130b3d4cfdd2d3c6d60dbe979ee97c9bc8",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735"
+    }
+  ]
+}
