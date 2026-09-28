@@ -34,6 +34,24 @@
       "parentUuid": "1a08a096_eb799c78",
       "revId": "1c0a6a1ebd8a8b4ab5b6398f341442fb58907387",
       "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "1808a6fd_9bcb3e7a",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1039063
+      },
+      "writtenOn": "2026-09-28T07:18:34Z",
+      "side": 1,
+      "message": "It looks better and also consistent with `equals(...)` ✅\n\nSome last thoughts regarding `getPlanElementAction()` though: \n\n1. It ends up relying directly and indirectly on `line.getAction()` (indirectly via `isSkip()` and `isComment()`). `RebaseTodoLine::getAction` may change its return value mid-fly, since `action` is **not** `final`, which may leave dangling entries in the hash map in `TreeViewer`. Have you checked what would it take for that scenario to happen?\n\n2. It may `throw new IllegalStateException();` in the future, if the logic changes. Right now I see all possible values of `ElementAction` are covered but that method looks brittle, because of the `default`. It\u0027s just a nit and it doesn\u0027t have to be addressed right now if it\u0027s too complex, but changing the method so that it considers all cases in the `switch` and removing the `default` case would enforce correctness at compile time, which is much better than letting the exception be thrown at run-time.",
+      "parentUuid": "f9b434cd_ffb6abbd",
+      "revId": "1c0a6a1ebd8a8b4ab5b6398f341442fb58907387",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735"
     }
   ]
 }
