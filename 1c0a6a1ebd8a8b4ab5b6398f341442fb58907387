@@ -52,6 +52,24 @@
       "parentUuid": "f9b434cd_ffb6abbd",
       "revId": "1c0a6a1ebd8a8b4ab5b6398f341442fb58907387",
       "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "186719d8_b319b9a1",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1039515
+      },
+      "writtenOn": "2026-09-28T14:54:13Z",
+      "side": 1,
+      "message": "Thanks for finding this! I\u0027ve realized the changes made in patchset 2 actually broke the viewer since the hashCode() implementation wasn\u0027t consistent so the viewer couldn\u0027t find the item anymore.\n\nI think the correct way forward here is removing the faulty hashCode()/equals() implementations altogether and thus ensure that the viewer\u0027s hashmap optimization works correctly. What I don\u0027t understand though is why PlanElement.hashCode()/equals() implementations existed in the first place? As far as I can tell, hashCode() for this type has never been called anywhere and equals() was only relevant for List.indexOf() but this would work equally well with identity equality. \n\n@matthias.sohn@sap.com Do you have more information on this? Was this relevant at some earlier point?",
+      "parentUuid": "1808a6fd_9bcb3e7a",
+      "revId": "1c0a6a1ebd8a8b4ab5b6398f341442fb58907387",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735"
     }
   ]
 }

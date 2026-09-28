@@ -36,6 +36,24 @@
       "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735"
     },
     {
+      "unresolved": true,
+      "key": {
+        "uuid": "5a76d6f3_b2ba94d1",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1039515
+      },
+      "writtenOn": "2026-09-28T14:54:13Z",
+      "side": 1,
+      "message": "org.eclipse.jface.viewers.TreeViewer can\u0027t enable this optimization by default, as it would break existing implementations with faulty hashCode()/equals() implementations. \n\nUsing an ILazyTreeContentProvider or an ILazyTreePathContentProvider however for the viewer forces this optimization to be enabled, so maybe you\u0027re confusing it with that?",
+      "parentUuid": "704680e0_99a80a86",
+      "revId": "d32c8d50aac6e619fbfcd6137a6d8e8d35c029c6",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735"
+    },
+    {
       "unresolved": false,
       "key": {
         "uuid": "571ab519_ef2c3157",
