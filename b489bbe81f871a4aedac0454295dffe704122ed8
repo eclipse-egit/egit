@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "c0614a7f_08c54fbb",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1012795
+      },
+      "writtenOn": "2026-09-28T12:11:31Z",
+      "side": 1,
+      "message": "According to the commit message it batches several requests together but from the code it looks to me that it wait for the running job before triggering a new one. \n\nAlso the word \"coalesce\" is AFAIK not commonly used and incorrect if my assumption from looking at the code is correct. Maybe better \"Avoid parallel reload requests\" if my read is correct.",
+      "revId": "b489bbe81f871a4aedac0454295dffe704122ed8",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735"
+    }
+  ]
+}
