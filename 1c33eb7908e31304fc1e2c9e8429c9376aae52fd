@@ -16,6 +16,69 @@
       "message": "Solved the conflicts",
       "revId": "1c33eb7908e31304fc1e2c9e8429c9376aae52fd",
       "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "3632458a_5bc74ae4",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1039515
+      },
+      "writtenOn": "2026-09-28T15:48:31Z",
+      "side": 1,
+      "message": "The change looks good to me, max reload concurrency is now limited to 2 without the risk of flooding the job queue. Just found some minor nitpickings for the javadoc",
+      "revId": "1c33eb7908e31304fc1e2c9e8429c9376aae52fd",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c703ae72_54919563",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/internal/indexdiff/IndexDiffCacheEntry.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 142,
+      "author": {
+        "id": 1039515
+      },
+      "writtenOn": "2026-09-28T15:48:31Z",
+      "side": 1,
+      "message": "Nitpicking: The last sentence refers to an implementation detail which isn\u0027t there anymore, so I think it should be removed",
+      "range": {
+        "startLine": 141,
+        "startChar": 54,
+        "endLine": 142,
+        "endChar": 71
+      },
+      "revId": "1c33eb7908e31304fc1e2c9e8429c9376aae52fd",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "575d6b80_73f92382",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/internal/indexdiff/IndexDiffCacheEntry.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 414,
+      "author": {
+        "id": 1039515
+      },
+      "writtenOn": "2026-09-28T15:48:31Z",
+      "side": 1,
+      "message": "Nitpicking: The last sentence refers to an implementation detail which isn\u0027t there anymore, so I think it should be removed",
+      "range": {
+        "startLine": 411,
+        "startChar": 62,
+        "endLine": 414,
+        "endChar": 36
+      },
+      "revId": "1c33eb7908e31304fc1e2c9e8429c9376aae52fd",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735"
     }
   ]
 }
