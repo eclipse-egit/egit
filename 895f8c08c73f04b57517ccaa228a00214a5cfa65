@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "7eefe912_06f3bd51",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1012795
+      },
+      "writtenOn": "2026-09-28T08:45:55Z",
+      "side": 1,
+      "message": "I still find the Javadoc hard to read, especially the Whether part.\n\n\t/**\n\t * A single, reusable UI job that coalesces reload requests of the staging\n\t * view.\u003cbr/\u003e\n\t *\n\t * Whether the repository changed is accumulated over all coalesced\n\t * requests, so that dropping an intermediate request never loses the\n\t * information that the view must switch to a different repository.\n\t */\n\t \n\t \nProblems with the PR description\n\n1. The first paragraph says the wrong thing. It says the job \"processes several requests together\". It doesn\u0027t. request() replaces pending, so only the newest update runs. \n2. The order is backwards. The mechanism comes first and the reason second. Gerrit convention is problem first, then the fix.\n3. It\u0027s still wordy. \"Which is typically busy with the previous rebuild\" and \"and the job then runs once for all of them\" can be cut.",
+      "revId": "895f8c08c73f04b57517ccaa228a00214a5cfa65",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735"
+    }
+  ]
+}
