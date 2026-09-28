@@ -35,6 +35,24 @@
       "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "e6f6d644_36e4fef8",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1039063
+      },
+      "writtenOn": "2026-09-28T07:58:23Z",
+      "side": 1,
+      "message": "Sure thing! I added this to my user-level `CLAUDE.md`:\n\n```\n# Global Instructions\n\n## Coding style\n\n- When writing new methods or classes, don\u0027t explain the whole issue \nand the inner workings of the solution in the JavaDocs. Keep JavaDocs \nconcise, explain what the method/class does and what one can expect \nwhen using it. If you absolutely need to explain a corner case or caveat \nthen refer to known issues.\n```\n\nAny further improvement suggestions are welcome 🙂\n\nI also moved some of the JavaDoc\u0027s content to the commit message, as requested by Thomas.",
+      "parentUuid": "7588dc34_ea8c4b42",
+      "revId": "f4ef98340aa67c5879ee03e1527c72942e05ec0d",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "342ad693_9baee03c",
@@ -48,6 +66,24 @@
       "writtenOn": "2026-09-26T21:04:37Z",
       "side": 1,
       "message": "The paragraph above should not be here but in the commit message.",
+      "revId": "f4ef98340aa67c5879ee03e1527c72942e05ec0d",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "cce23762_78312202",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/staging/StagingView.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 5221,
+      "author": {
+        "id": 1039063
+      },
+      "writtenOn": "2026-09-28T07:58:23Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "342ad693_9baee03c",
       "revId": "f4ef98340aa67c5879ee03e1527c72942e05ec0d",
       "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735"
     }
