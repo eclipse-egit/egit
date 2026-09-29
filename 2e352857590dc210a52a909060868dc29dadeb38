@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "3a211180_b3b67944",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1039063
+      },
+      "writtenOn": "2026-09-29T12:06:02Z",
+      "side": 1,
+      "message": "Thank you @robin.mennig@vector.com, it works as expected and solves the UI freeze: I started an interactive rebase with \u003e200 commits, selected all except the first and last one in the commit list and pressed the `Del` key and the view reacted instantly 🥇",
+      "revId": "2e352857590dc210a52a909060868dc29dadeb38",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735"
+    }
+  ]
+}
