@@ -58,6 +58,30 @@
       "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "01ba5cca_dcd54248",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/internal/indexdiff/IndexDiffCacheEntry.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 142,
+      "author": {
+        "id": 1039063
+      },
+      "writtenOn": "2026-09-29T12:09:57Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c703ae72_54919563",
+      "range": {
+        "startLine": 141,
+        "startChar": 54,
+        "endLine": 142,
+        "endChar": 71
+      },
+      "revId": "1c33eb7908e31304fc1e2c9e8429c9376aae52fd",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "575d6b80_73f92382",
@@ -71,6 +95,30 @@
       "writtenOn": "2026-09-28T15:48:31Z",
       "side": 1,
       "message": "Nitpicking: The last sentence refers to an implementation detail which isn\u0027t there anymore, so I think it should be removed",
+      "range": {
+        "startLine": 411,
+        "startChar": 62,
+        "endLine": 414,
+        "endChar": 36
+      },
+      "revId": "1c33eb7908e31304fc1e2c9e8429c9376aae52fd",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "30261816_07fe55dc",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/internal/indexdiff/IndexDiffCacheEntry.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 414,
+      "author": {
+        "id": 1039063
+      },
+      "writtenOn": "2026-09-29T12:09:57Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "575d6b80_73f92382",
       "range": {
         "startLine": 411,
         "startChar": 62,
