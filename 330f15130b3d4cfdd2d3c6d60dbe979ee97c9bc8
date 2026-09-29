@@ -16,6 +16,24 @@
       "message": "Still long Javadoc",
       "revId": "330f15130b3d4cfdd2d3c6d60dbe979ee97c9bc8",
       "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "0b9fc760_af0d4b6e",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1039063
+      },
+      "writtenOn": "2026-09-29T09:54:29Z",
+      "side": 1,
+      "message": "I changed the JavaDoc in `org.eclipse.egit.core.internal.util.ResourceUtil.ContainerLocationResolver`. Did you mean that one?",
+      "parentUuid": "e9be1f5a_c68bcc11",
+      "revId": "330f15130b3d4cfdd2d3c6d60dbe979ee97c9bc8",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735"
     }
   ]
 }
