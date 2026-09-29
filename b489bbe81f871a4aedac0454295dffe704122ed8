@@ -16,6 +16,24 @@
       "message": "According to the commit message it batches several requests together but from the code it looks to me that it wait for the running job before triggering a new one. \n\nAlso the word \"coalesce\" is AFAIK not commonly used and incorrect if my assumption from looking at the code is correct. Maybe better \"Avoid parallel reload requests\" if my read is correct.",
       "revId": "b489bbe81f871a4aedac0454295dffe704122ed8",
       "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "8a33582a_dce59c13",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1039063
+      },
+      "writtenOn": "2026-09-29T09:34:28Z",
+      "side": 1,
+      "message": "You\u0027re right that a running reload finishes before the job runs again. The requests that arrive meanwhile are also collapsed: request() replaces the pending callback with the latest one and retains the repository-changed flag. Eclipse schedules only one further run of a job when it is scheduled repeatedly while running. So if B, C, and D arrive while A is running then only D will run after A finishes running.\n\n“Batches several requests together” was misleading. I\u0027ve proposed “skip superseded reload requests” for the subject and described that behavior in the commit message.",
+      "parentUuid": "c0614a7f_08c54fbb",
+      "revId": "b489bbe81f871a4aedac0454295dffe704122ed8",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735"
     }
   ]
 }
