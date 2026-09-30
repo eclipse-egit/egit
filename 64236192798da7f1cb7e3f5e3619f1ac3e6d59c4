@@ -87,6 +87,24 @@
       "parentUuid": "efda61ba_a03a5321",
       "revId": "64236192798da7f1cb7e3f5e3619f1ac3e6d59c4",
       "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "2f39669b_afe5fc20",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/history/GenerateHistoryJob.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1039306
+      },
+      "writtenOn": "2026-09-30T08:06:31Z",
+      "side": 1,
+      "message": "Yes, this should be fine if `currentBatchSize` is only ever accessed from the Job thread",
+      "parentUuid": "47063dd9_33e02538",
+      "revId": "64236192798da7f1cb7e3f5e3619f1ac3e6d59c4",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735"
     }
   ]
 }
