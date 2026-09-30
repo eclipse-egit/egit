@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "ac46605d_7dc5257b",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1012795
+      },
+      "writtenOn": "2026-09-30T13:55:37Z",
+      "side": 1,
+      "message": "Issue and screenshots see https://github.com/eclipse-platform/eclipse.platform/issues/1326",
+      "revId": "0a329cb465c7912ae868d9d1f2a4397c75a5d785",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735"
+    }
+  ]
+}
