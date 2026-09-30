@@ -69,6 +69,24 @@
       "parentUuid": "ac75aece_4264c593",
       "revId": "64236192798da7f1cb7e3f5e3619f1ac3e6d59c4",
       "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "47063dd9_33e02538",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/history/GenerateHistoryJob.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1039063
+      },
+      "writtenOn": "2026-09-30T07:58:25Z",
+      "side": 1,
+      "message": "@florian.schwabe@vector.com would you kindly take a look at it again and approve/comment? Thank you.",
+      "parentUuid": "efda61ba_a03a5321",
+      "revId": "64236192798da7f1cb7e3f5e3619f1ac3e6d59c4",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735"
     }
   ]
 }
