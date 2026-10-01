@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "f2547d08_a4fd7026",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1039063
+      },
+      "writtenOn": "2026-10-01T11:38:23Z",
+      "side": 1,
+      "message": "@Lars.Vogel@vogella.com does it look ok now? I adapted the JavaDoc in ps4.",
+      "revId": "76da16f4ecf705a68f7dee070e1a63a3cc14c669",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735"
+    }
+  ]
+}
