@@ -56,6 +56,24 @@
     {
       "unresolved": false,
       "key": {
+        "uuid": "7c92c90f_187e4899",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000671
+      },
+      "writtenOn": "2026-10-01T12:27:19Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "5a76d6f3_b2ba94d1",
+      "revId": "d32c8d50aac6e619fbfcd6137a6d8e8d35c029c6",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735"
+    },
+    {
+      "unresolved": false,
+      "key": {
         "uuid": "571ab519_ef2c3157",
         "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/internal/rebase/RebaseInteractivePlan.java",
         "patchSetId": 2

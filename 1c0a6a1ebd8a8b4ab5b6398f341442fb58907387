@@ -70,6 +70,24 @@
       "parentUuid": "1808a6fd_9bcb3e7a",
       "revId": "1c0a6a1ebd8a8b4ab5b6398f341442fb58907387",
       "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "998f8257_c074fe01",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000671
+      },
+      "writtenOn": "2026-10-01T12:27:19Z",
+      "side": 1,
+      "message": "The faulty hashCode implementation was already in the initial implementation in https://eclipse.gerrithub.io/c/eclipse-egit/egit/+/16552\n\nApparently we missed to spot this in the review.",
+      "parentUuid": "186719d8_b319b9a1",
+      "revId": "1c0a6a1ebd8a8b4ab5b6398f341442fb58907387",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735"
     }
   ]
 }
