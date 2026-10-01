@@ -24,6 +24,30 @@
       "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "9c5f371b_787a9cb4",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/merge/AbstractGitCompareEditorInput.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 734,
+      "author": {
+        "id": 1039515
+      },
+      "writtenOn": "2026-10-01T09:21:56Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "cb2a075f_e58852b8",
+      "range": {
+        "startLine": 734,
+        "startChar": 16,
+        "endLine": 734,
+        "endChar": 25
+      },
+      "revId": "9ad2a573957248ae66baa1950c0327dc741ec270",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "c4911626_11b0e4d1",
@@ -37,6 +61,30 @@
       "writtenOn": "2026-09-29T13:29:30Z",
       "side": 1,
       "message": "The current HEAD is now used to differentiate two inputs containing the same files with the merge mode. This is needed to rebases which cause sequential merge conflicts to the same file(s)",
+      "range": {
+        "startLine": 137,
+        "startChar": 1,
+        "endLine": 149,
+        "endChar": 2
+      },
+      "revId": "9ad2a573957248ae66baa1950c0327dc741ec270",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "75996127_e2624209",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/merge/GitMergeEditorInput.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 149,
+      "author": {
+        "id": 1039515
+      },
+      "writtenOn": "2026-10-01T09:21:56Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "c4911626_11b0e4d1",
       "range": {
         "startLine": 137,
         "startChar": 1,
