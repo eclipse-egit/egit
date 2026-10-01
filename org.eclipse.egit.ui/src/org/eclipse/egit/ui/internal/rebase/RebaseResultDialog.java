@@ -573,16 +573,23 @@ public class RebaseResultDialog extends MessageDialog {
 				IPath[] locations = locationList.toArray(new IPath[0]);
 				int mergeMode = Activator.getDefault().getPreferenceStore()
 						.getInt(UIPreferences.MERGE_MODE);
-				CompareEditorInput input;
-				if (mergeMode == 0) {
-					MergeModeDialog dlg = new MergeModeDialog(getParentShell());
-					if (dlg.open() != Window.OK)
-						return;
-					input = new GitMergeEditorInput(dlg.getMergeMode(),
-							locations);
-				} else {
-					MergeInputMode mode = MergeInputMode.fromInteger(mergeMode);
-					input = new GitMergeEditorInput(mode, locations);
+				CompareEditorInput input = null;
+				try {
+					if (mergeMode == 0) {
+						MergeModeDialog dlg = new MergeModeDialog(
+								getParentShell());
+						if (dlg.open() != Window.OK)
+							return;
+						input = new GitMergeEditorInput(dlg.getMergeMode(),
+								locations);
+					} else {
+						MergeInputMode mode = MergeInputMode
+								.fromInteger(mergeMode);
+						input = new GitMergeEditorInput(mode, locations);
+					}
+				} catch (IllegalStateException e) {
+					Activator.logError(e.getMessage(), e);
+					return;
 				}
 				CompareUI.openCompareEditor(input);
 				return;

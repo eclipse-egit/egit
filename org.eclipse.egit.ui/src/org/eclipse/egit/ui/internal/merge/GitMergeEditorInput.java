@@ -72,6 +72,7 @@ import org.eclipse.jgit.dircache.DirCacheEditor;
 import org.eclipse.jgit.dircache.DirCacheEditor.PathEdit;
 import org.eclipse.jgit.dircache.DirCacheEntry;
 import org.eclipse.jgit.dircache.DirCacheIterator;
+import org.eclipse.jgit.errors.RevisionSyntaxException;
 import org.eclipse.jgit.lib.AnyObjectId;
 import org.eclipse.jgit.lib.ConfigConstants;
 import org.eclipse.jgit.lib.Constants;
@@ -103,6 +104,8 @@ public class GitMergeEditorInput extends AbstractGitCompareEditorInput {
 
 	private final boolean useOurs;
 
+	private final ObjectId head;
+
 	private CompareEditorInputViewerAction toggleCurrentChanges;
 
 	// This must be an identity map. If the built tree is post-processed and its
@@ -116,19 +119,38 @@ public class GitMergeEditorInput extends AbstractGitCompareEditorInput {
 	 *            defining what to use as input for the logical left side
 	 * @param locations
 	 *            as selected by the user
+	 * @throws IllegalStateException
+	 *             if the repository is in an invalid state
 	 */
-	public GitMergeEditorInput(MergeInputMode mode, IPath... locations) {
+	public GitMergeEditorInput(MergeInputMode mode, IPath... locations)
+			throws IllegalStateException {
 		super(null, locations);
 		this.useWorkspace = !MergeInputMode.STAGE_2.equals(mode);
 		this.useOurs = MergeInputMode.MERGED_OURS.equals(mode);
 		this.mode = mode;
 		CompareConfiguration config = getCompareConfiguration();
 		config.setLeftEditable(true);
+		initPaths(); // ensure repository is available
+		this.head = resolveHead();
+	}
+
+	private ObjectId resolveHead() throws IllegalStateException {
+		try {
+			ObjectId oid = getRepository().resolve(Constants.HEAD);
+			if (oid == null) {
+				throw new IllegalStateException(
+						NLS.bind(CoreText.ValidationUtils_CanNotResolveRefMessage,
+								Constants.HEAD));
+			}
+			return oid;
+		} catch (RevisionSyntaxException | IOException e) {
+			throw new IllegalStateException(e);
+		}
 	}
 
 	@Override
 	public int hashCode() {
-		return 31 * super.hashCode() + Objects.hash(mode);
+		return 31 * super.hashCode() + Objects.hash(mode, head);
 	}
 
 	@Override
@@ -137,7 +159,7 @@ public class GitMergeEditorInput extends AbstractGitCompareEditorInput {
 			return false;
 		}
 		GitMergeEditorInput other = (GitMergeEditorInput) obj;
-		return mode == other.mode;
+		return mode == other.mode && Objects.equals(head, other.head);
 	}
 
 	@Override
@@ -233,11 +255,6 @@ public class GitMergeEditorInput extends AbstractGitCompareEditorInput {
 			// ancestor
 			final RevCommit headCommit;
 			try {
-				ObjectId head = repo.resolve(Constants.HEAD);
-				if (head == null)
-					throw new IOException(NLS.bind(
-							CoreText.ValidationUtils_CanNotResolveRefMessage,
-							Constants.HEAD));
 				headCommit = rw.parseCommit(head);
 			} catch (IOException e) {
 				throw new InvocationTargetException(e);
