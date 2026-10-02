@@ -1,6 +1,23 @@
 {
   "comments": [
     {
+      "unresolved": true,
+      "key": {
+        "uuid": "320deaa2_7a60f9f0",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1000671
+      },
+      "writtenOn": "2026-10-02T07:54:56Z",
+      "side": 1,
+      "message": "Can you explain in the commit message why sharing one resolver per tree calculation is faster than the old approach ?\n\nCan other callers of `ResourceUtil.getContainerForLocation` also benefit from using the new resolver to improve performance ?",
+      "revId": "76da16f4ecf705a68f7dee070e1a63a3cc14c669",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735"
+    },
+    {
       "unresolved": false,
       "key": {
         "uuid": "f2547d08_a4fd7026",
@@ -14,6 +31,23 @@
       "writtenOn": "2026-10-01T11:38:23Z",
       "side": 1,
       "message": "@Lars.Vogel@vogella.com does it look ok now? I adapted the JavaDoc in ps4.",
+      "revId": "76da16f4ecf705a68f7dee070e1a63a3cc14c669",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "87367b34_da1e97b3",
+        "filename": "org.eclipse.egit.core.test/src/org/eclipse/egit/core/internal/util/ResourceUtilTest.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 184,
+      "author": {
+        "id": 1000671
+      },
+      "writtenOn": "2026-10-02T07:54:56Z",
+      "side": 1,
+      "message": "we recommend to store repositories, and their working tree, outside the Eclipse workspace, see https://github.com/eclipse-egit/egit/wiki/User-Guide#eclipse-workspace-and-repository-working-directory",
       "revId": "76da16f4ecf705a68f7dee070e1a63a3cc14c669",
       "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735"
     }
