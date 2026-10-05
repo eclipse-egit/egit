@@ -105,6 +105,29 @@
       "parentUuid": "47063dd9_33e02538",
       "revId": "64236192798da7f1cb7e3f5e3619f1ac3e6d59c4",
       "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "00f54f53_7073825a",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/history/GenerateHistoryJob.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 213,
+      "author": {
+        "id": 1039515
+      },
+      "writtenOn": "2026-10-05T16:13:21Z",
+      "side": 1,
+      "message": "Why is currentBatchSize multiplied by 1.5? Multiplying by 2 seems more natural and avoids the floating point conversion.\n\nStarting from a batch size of 1 also seems very small. Why was it chosen that way?",
+      "range": {
+        "startLine": 211,
+        "startChar": 2,
+        "endLine": 213,
+        "endChar": 20
+      },
+      "revId": "64236192798da7f1cb7e3f5e3619f1ac3e6d59c4",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735"
     }
   ]
 }
