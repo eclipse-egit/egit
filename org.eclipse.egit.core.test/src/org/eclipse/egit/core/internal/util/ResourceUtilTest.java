@@ -15,14 +15,19 @@ import static org.hamcrest.CoreMatchers.nullValue;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.notNullValue;
+import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
 import java.io.File;
 
+import org.eclipse.core.resources.FileInfoMatcherDescription;
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IFolder;
 import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.IResource;
+import org.eclipse.core.resources.IResourceFilterDescription;
+import org.eclipse.core.resources.IWorkspaceRoot;
+import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.NullProgressMonitor;
@@ -193,6 +198,87 @@ public class ResourceUtilTest extends GitTestCase {
 			}
 			nested.dispose();
 		}
+	}
+
+	@Test
+	public void containerLocationResolverShouldFindHandlesLikeWorkspaceRoot()
+			throws Exception {
+		project.createFolder("folder");
+		project.createFile("folder/a.txt", new byte[] {});
+		TestProject nested = new TestProject(true, "Project-1/Project-2");
+		TestProject closed = null;
+		try {
+			nested.createFile("b.txt", new byte[] {});
+			closed = new TestProject(true, "Project-1/Project-2/Project-3");
+			closed.createFile("c.txt", new byte[] {});
+			closed.getProject().close(new NullProgressMonitor());
+
+			IWorkspaceRoot root = ResourcesPlugin.getWorkspace().getRoot();
+			IPath base = project.getProject().getLocation();
+			ContainerLocationResolver resolver = new ContainerLocationResolver(
+					base);
+			IPath nestedLocation = nested.getProject().getLocation();
+			IPath closedLocation = closed.getProject().getLocation();
+			IPath[] locations = { base, base.append("folder"),
+					base.append("folder/"), base.append("folder/a.txt"),
+					base.append("inexistent"), base.append("inexistent/d.txt"),
+					nestedLocation, nestedLocation.append("b.txt"),
+					closedLocation, closedLocation.append("c.txt") };
+			for (IPath location : locations) {
+				assertThat(location.toString(),
+						resolver.findContainer(location),
+						is(root.getContainerForLocation(location)));
+				assertThat(location.toString(), resolver.findFile(location),
+						is(root.getFileForLocation(location)));
+			}
+			assertThat(resolver.findFile(nestedLocation.append("b.txt")),
+					is(nested.getProject().getFile("b.txt")));
+			assertThat(resolver.findFile(nestedLocation),
+					is(project.getProject().getFile("Project-2")));
+		} finally {
+			if (closed != null) {
+				closed.dispose();
+			}
+			nested.dispose();
+		}
+	}
+
+	@Test
+	public void containerLocationResolverShouldFindWorkspaceRoot()
+			throws Exception {
+		IWorkspaceRoot root = ResourcesPlugin.getWorkspace().getRoot();
+		IPath rootLocation = root.getLocation();
+		ContainerLocationResolver resolver = new ContainerLocationResolver(
+				rootLocation);
+		assertThat(resolver.findContainer(rootLocation),
+				is(root.getContainerForLocation(rootLocation)));
+		assertThat(resolver.findFile(rootLocation),
+				is(root.getFileForLocation(rootLocation)));
+	}
+
+	@Test
+	public void containerLocationResolverFindFileShouldReturnFilteredFile()
+			throws Exception {
+		project.createFolder("folder");
+		project.createFile("folder/ignored.txt", new byte[] {});
+		IProject eclipseProject = project.getProject();
+		eclipseProject.createFilter(
+				IResourceFilterDescription.EXCLUDE_ALL
+						| IResourceFilterDescription.FILES
+						| IResourceFilterDescription.INHERITABLE,
+				new FileInfoMatcherDescription("org.eclipse.ui.ide.multiFilter", //$NON-NLS-1$
+						"1.0-name-matches-false-false-ignored.txt"), //$NON-NLS-1$
+				0, new NullProgressMonitor());
+		eclipseProject.refreshLocal(IResource.DEPTH_INFINITE,
+				new NullProgressMonitor());
+		IPath location = eclipseProject.getLocation()
+				.append("folder/ignored.txt");
+		assertThat(ResourcesPlugin.getWorkspace().getRoot()
+				.getFileForLocation(location), nullValue());
+		IFile file = new ContainerLocationResolver(eclipseProject.getLocation())
+				.findFile(location);
+		assertThat(file, notNullValue());
+		assertFalse(file.exists());
 	}
 
 	@Test

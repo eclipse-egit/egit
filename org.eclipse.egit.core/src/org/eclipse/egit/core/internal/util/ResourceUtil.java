@@ -792,10 +792,12 @@ public class ResourceUtil {
 	}
 
 	/**
-	 * Resolves locations to workspace containers; a thread-safe and faster
-	 * alternative to
+	 * Resolves locations to workspace containers and files; a thread-safe and
+	 * faster alternative to
 	 * {@link ResourceUtil#getContainerForLocation(IPath, boolean)
-	 * ResourceUtil.getContainerForLocation(location, false)}.
+	 * ResourceUtil.getContainerForLocation(location, false)},
+	 * {@link IWorkspaceRoot#getContainerForLocation(IPath)} and
+	 * {@link IWorkspaceRoot#getFileForLocation(IPath)}.
 	 *
 	 * You should create a new resolver when projects are added, deleted or
 	 * moved in the workspace.
@@ -826,7 +828,8 @@ public class ResourceUtil {
 		 *
 		 * @param base
 		 *            location all locations later passed to
-		 *            {@link #getContainer(IPath)} are at or below of, typically
+		 *            {@link #getContainer(IPath)}, {@link #findContainer(IPath)}
+		 *            and {@link #findFile(IPath)} are at or below of, typically
 		 *            the working tree of a repository
 		 */
 		public ContainerLocationResolver(@NonNull IPath base) {
@@ -868,10 +871,22 @@ public class ResourceUtil {
 			if (isValid(container)) {
 				return container;
 			}
-			return getContainerForLocation(location, false);
+			return getContainerForLocationURI(root, URIUtil.toURI(location));
 		}
 
-		private IContainer findContainer(IPath location) {
+		/**
+		 * Determines the container handle for the given location like
+		 * {@link IWorkspaceRoot#getContainerForLocation(IPath)}, but without
+		 * taking resource filters into account.
+		 *
+		 * @param location
+		 *            at or below the base location given in the constructor
+		 * @return the container handle, which may not exist, or {@code null}
+		 */
+		@Nullable
+		public IContainer findContainer(
+				@NonNull
+				IPath location) {
 			if (rootLocation != null && rootLocation.equals(location)) {
 				return root;
 			}
@@ -884,6 +899,32 @@ public class ResourceUtil {
 					return p.project
 							.getFolder(location.removeFirstSegments(segments)
 									.setDevice(null));
+				}
+			}
+			return null;
+		}
+
+		/**
+		 * Determines the file handle for the given location like
+		 * {@link IWorkspaceRoot#getFileForLocation(IPath)}, but without taking
+		 * resource filters into account.
+		 *
+		 * @param location
+		 *            at or below the base location given in the constructor
+		 * @return the file handle, which may not exist, or {@code null}
+		 */
+		@Nullable
+		public IFile findFile(
+				@NonNull
+				IPath location) {
+			for (ProjectLocation p : projects) {
+				int segments = p.location.segmentCount();
+				// A project location cannot be a file of that project, but it
+				// can be one of an enclosing project
+				if (segments < location.segmentCount()
+						&& p.location.isPrefixOf(location)) {
+					return p.project.getFile(location
+							.removeFirstSegments(segments).setDevice(null));
 				}
 			}
 			return null;
