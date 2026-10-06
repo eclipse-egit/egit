@@ -288,9 +288,22 @@ public class IndexDiffCacheEntryTest extends GitTestCase {
 	@Test
 	public void testCanceledReloadGroupDoesNotBlockLaterReloads()
 			throws Exception {
+		cancelReloadGroup(false);
+	}
+
+	@Test
+	public void testCanceledReloadGroupWithRequestedReloadDoesNotBlockLaterReloads()
+			throws Exception {
+		cancelReloadGroup(true);
+	}
+
+	private void cancelReloadGroup(boolean reloadRequested) throws Exception {
 		Cache first = startReload("first");
 		Cache second = startReload("second");
 		Cache third = queueReload("third", false);
+		if (reloadRequested) {
+			second.entry.refresh();
+		}
 
 		JobGroup group = waitingReload().getJobGroup();
 		group.cancel();
