@@ -275,6 +275,9 @@ public abstract class LocalRepositoryTestCase extends EGitTestCase {
 		uiPrefs.setValue(UIPreferences.SHOW_INITIAL_CONFIG_DIALOG, false);
 		// suppress the detached head warning dialog
 		uiPrefs.setValue(UIPreferences.SHOW_DETACHED_HEAD_WARNING, false);
+		// tests check the fetch and push result dialogs
+		uiPrefs.setValue(UIPreferences.FETCH_SHOW_NOTIFICATION, false);
+		uiPrefs.setValue(UIPreferences.PUSH_SHOW_NOTIFICATION, false);
 		// suppress checking for external changes to git repositories
 		uiPrefs.setValue(UIPreferences.REFRESH_INDEX_INTERVAL, 0);
 		closeGitViews();
