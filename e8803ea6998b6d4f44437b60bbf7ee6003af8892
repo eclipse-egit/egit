@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "3f04b0db_fd834b54",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1039063
+      },
+      "writtenOn": "2026-10-06T09:55:19Z",
+      "side": 1,
+      "message": "The hanging tests were caused by sharing one `JobGroup` between all reload jobs while keeping its default policy. Any code that joins the `INDEX_DIFF_CACHE_UPDATE` family without a timeout then waits forever. `IndexDiffCacheTest`, `AutoShareTest`, `NestedProjectsRefreshTest` and `DeletePathsOperationTest` do that, which is why the CI run hung.\n\nI now added a proper cancellation policy to the group and added some tests to check the behavior and some corner cases like cancelling/failing jobs that are running/waiting and also that cancelling the whole job does not block later reload requests. \n\nThere is one special case regarding cancellation of the whole group, which is something that doesn\u0027t happen today in the code and can\u0027t be done via the UI. I added a separate commit for that (If2026a8488799ef7a38f7fe8eeecc8b7416eadd0), with tests and all. @matthias.sohn@sap.com if you think it is worth putting those changes in this same commit, let me know.",
+      "revId": "e8803ea6998b6d4f44437b60bbf7ee6003af8892",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735"
+    }
+  ]
+}
