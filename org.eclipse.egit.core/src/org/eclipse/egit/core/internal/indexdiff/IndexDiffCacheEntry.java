@@ -450,6 +450,12 @@ public class IndexDiffCacheEntry {
 			reloadJob = null;
 			if (reloadRequested) {
 				reloadRequested = false;
+				// Defensive: nothing cancels the group today. A job scheduled
+				// into a canceling group would never run and block the group
+				// for good.
+				if (RELOAD_JOB_GROUP.getState() == JobGroup.CANCELING) {
+					return;
+				}
 				// Still under the lock, so that dispose() cannot slip in
 				scheduleReloadJob("Changes arrived while computing the status"); //$NON-NLS-1$
 			}
