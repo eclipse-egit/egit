@@ -19,6 +19,7 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
 import java.io.File;
+import java.util.Locale;
 
 import org.eclipse.core.resources.FileInfoMatcherDescription;
 import org.eclipse.core.resources.IFile;
@@ -230,6 +231,16 @@ public class ResourceUtilTest extends GitTestCase {
 						is(root.getContainerForLocation(location)));
 				assertThat(location.toString(), resolver.findFile(location),
 						is(root.getFileForLocation(location)));
+				String device = location.getDevice();
+				if (device != null) {
+					// Devices are compared ignoring case
+					IPath other = location
+							.setDevice(device.toLowerCase(Locale.ROOT));
+					assertThat(other.toString(), resolver.findContainer(other),
+							is(root.getContainerForLocation(other)));
+					assertThat(other.toString(), resolver.findFile(other),
+							is(root.getFileForLocation(other)));
+				}
 			}
 			assertThat(resolver.findFile(nestedLocation.append("b.txt")),
 					is(nested.getProject().getFile("b.txt")));

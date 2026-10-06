@@ -228,6 +228,9 @@ public class ResourceRefreshHandler implements WorkingTreeModifiedListener {
 		// of scanning all workspace projects for each of them.
 		ContainerLocationResolver resolver = new ContainerLocationResolver(
 				workTree);
+		Set<IPath> rootKeys = new HashSet<>();
+		roots.keySet().forEach(
+				root -> rootKeys.add(ContainerLocationResolver.key(root)));
 		Stream.concat(modified.stream(), deleted.stream()).forEach(path -> {
 			if (progress.isCanceled()) {
 				throw new OperationCanceledException();
@@ -271,8 +274,7 @@ public class ResourceRefreshHandler implements WorkingTreeModifiedListener {
 							.findFirst().orElse(null);
 				}
 			}
-			if (eclipseFile == null || !roots.keySet().stream()
-					.anyMatch(root -> root.isPrefixOf(filePath))) {
+			if (eclipseFile == null || !isBelowAny(rootKeys, filePath)) {
 				// Not in workspace.
 				needRefresh.add(path);
 				progress.worked(1);
@@ -377,6 +379,19 @@ public class ResourceRefreshHandler implements WorkingTreeModifiedListener {
 		IContainer[] containers = root.findContainersForLocationURI(uri);
 		return Arrays.stream(containers).filter(ResourceRefreshHandler::isValid)
 				.findFirst().orElse(null);
+	}
+
+	private static boolean isBelowAny(Set<IPath> rootKeys, IPath location) {
+		IPath key = ContainerLocationResolver.key(location);
+		for (IPath prefix = key;; prefix = prefix.removeLastSegments(1)
+				.removeTrailingSeparator()) {
+			if (rootKeys.contains(prefix)) {
+				return true;
+			}
+			if (prefix.segmentCount() == 0) {
+				return false;
+			}
+		}
 	}
 
 	private static boolean mayBeFiltered(
