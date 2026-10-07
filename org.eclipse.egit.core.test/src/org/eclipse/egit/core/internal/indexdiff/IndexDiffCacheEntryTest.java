@@ -32,6 +32,7 @@ import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.core.runtime.jobs.Job;
+import org.eclipse.core.runtime.jobs.JobGroup;
 import org.eclipse.core.runtime.jobs.ProgressProvider;
 import org.eclipse.egit.core.Activator;
 import org.eclipse.egit.core.JobFamilies;
@@ -273,6 +274,40 @@ public class IndexDiffCacheEntryTest extends GitTestCase {
 
 		// As IndexDiffCache.dispose() does
 		Job.getJobManager().cancel(JobFamilies.INDEX_DIFF_CACHE_UPDATE);
+		reloads.proceedAll();
+
+		assertReloaded(first, 0);
+		assertReloaded(second, 0);
+		assertReloaded(third, 0);
+		for (Cache cache : Arrays.asList(first, second, third)) {
+			cache.entry.refresh();
+			assertReloaded(cache, 1);
+		}
+	}
+
+	@Test
+	public void testCanceledReloadGroupDoesNotBlockLaterReloads()
+			throws Exception {
+		cancelReloadGroup(false);
+	}
+
+	@Test
+	public void testCanceledReloadGroupWithRequestedReloadDoesNotBlockLaterReloads()
+			throws Exception {
+		cancelReloadGroup(true);
+	}
+
+	private void cancelReloadGroup(boolean reloadRequested) throws Exception {
+		Cache first = startReload("first");
+		Cache second = startReload("second");
+		Cache third = queueReload("third", false);
+		if (reloadRequested) {
+			second.entry.refresh();
+		}
+
+		JobGroup group = waitingReload().getJobGroup();
+		group.cancel();
+		assertTrue(waitFor(() -> group.getState() == JobGroup.NONE));
 		reloads.proceedAll();
 
 		assertReloaded(first, 0);
