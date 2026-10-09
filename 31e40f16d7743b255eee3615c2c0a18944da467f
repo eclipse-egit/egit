@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "43c54d2f_6be600d5",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1039063
+      },
+      "writtenOn": "2026-10-09T10:03:03Z",
+      "side": 1,
+      "message": "As requested by Matthias in [his comment](https://eclipse.gerrithub.io/c/eclipse-egit/egit/+/1251186/comment/320deaa2_7a60f9f0/)",
+      "revId": "31e40f16d7743b255eee3615c2c0a18944da467f",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735"
+    }
+  ]
+}
