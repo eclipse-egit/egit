@@ -272,7 +272,11 @@ public final class UIPreferences {
 	/** */
 	public static final String TREE_COMPARE_COMPARE_MODE = "CompareTreeView_compare_mode"; //$NON-NLS-1$
 
-	/** */
+	/**
+	 * @deprecated the number of commits shown in the history is not limited
+	 *             anymore
+	 */
+	@Deprecated
 	public static final String HISTORY_MAX_NUM_COMMITS = "HistoryView_MaxNumberOfCommmits"; //$NON-NLS-1$
 	/** */
 	public static final String HISTORY_MAX_TAG_LENGTH = "HistoryView_MaxTagLength"; //$NON-NLS-1$
