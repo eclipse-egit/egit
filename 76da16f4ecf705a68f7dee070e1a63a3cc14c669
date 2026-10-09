@@ -38,6 +38,24 @@
     {
       "unresolved": false,
       "key": {
+        "uuid": "0ef51b45_b612f4c8",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1039063
+      },
+      "writtenOn": "2026-10-09T10:01:11Z",
+      "side": 1,
+      "message": "@matthias.sohn@sap.com I finally found the time to look at this follow-ups, sorry for the delay!\n\nI\u0027ve proposed 2 further usages of the same approach\n- I94d75494b3f246ab05602e6f75d9c33f8254809e\n- I5561f29e3981e4dc2806f72b44bd004701f0b86a",
+      "parentUuid": "ab799293_84e8e636",
+      "revId": "76da16f4ecf705a68f7dee070e1a63a3cc14c669",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735"
+    },
+    {
+      "unresolved": false,
+      "key": {
         "uuid": "f2547d08_a4fd7026",
         "filename": "/PATCHSET_LEVEL",
         "patchSetId": 4
