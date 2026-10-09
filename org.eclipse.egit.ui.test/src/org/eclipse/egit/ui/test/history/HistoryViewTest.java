@@ -12,7 +12,10 @@
  *******************************************************************************/
 package org.eclipse.egit.ui.test.history;
 
+import static org.eclipse.swtbot.swt.finder.matchers.WidgetMatcherFactory.allOf;
+import static org.eclipse.swtbot.swt.finder.matchers.WidgetMatcherFactory.widgetOfType;
 import static org.eclipse.swtbot.swt.finder.matchers.WidgetMatcherFactory.withRegex;
+import static org.eclipse.swtbot.swt.finder.matchers.WidgetMatcherFactory.withText;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.arrayContainingInAnyOrder;
 import static org.hamcrest.Matchers.emptyArray;
@@ -28,9 +31,11 @@ import static org.junit.Assert.assertTrue;
 
 import java.io.ByteArrayInputStream;
 import java.io.File;
+import java.nio.file.Files;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
+import java.util.stream.StreamSupport;
 
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IFolder;
@@ -51,6 +56,7 @@ import org.eclipse.egit.ui.test.ContextMenuHelper;
 import org.eclipse.egit.ui.test.TestUtil;
 import org.eclipse.egit.ui.view.repositories.GitRepositoriesViewTestBase;
 import org.eclipse.jface.dialogs.IDialogConstants;
+import org.eclipse.jface.preference.IPreferenceStore;
 import org.eclipse.jgit.api.CheckoutCommand;
 import org.eclipse.jgit.api.CreateBranchCommand.SetupUpstreamMode;
 import org.eclipse.jgit.api.FetchCommand;
@@ -66,11 +72,16 @@ import org.eclipse.jgit.lib.Ref;
 import org.eclipse.jgit.lib.Repository;
 import org.eclipse.jgit.revwalk.RevCommit;
 import org.eclipse.osgi.util.NLS;
+import org.eclipse.swt.SWT;
+import org.eclipse.swt.custom.CLabel;
+import org.eclipse.swt.widgets.Event;
 import org.eclipse.swt.widgets.MenuItem;
 import org.eclipse.swt.widgets.Table;
 import org.eclipse.swt.widgets.TableItem;
+import org.eclipse.swt.widgets.Text;
 import org.eclipse.swtbot.eclipse.finder.widgets.SWTBotView;
 import org.eclipse.swtbot.swt.finder.SWTBot;
+import org.eclipse.swtbot.swt.finder.finders.UIThreadRunnable;
 import org.eclipse.swtbot.swt.finder.junit.SWTBotJunit4ClassRunner;
 import org.eclipse.swtbot.swt.finder.waits.DefaultCondition;
 import org.eclipse.swtbot.swt.finder.widgets.SWTBotMenu;
@@ -396,13 +407,224 @@ public class HistoryViewTest extends GitRepositoriesViewTestBase {
 				getHistoryViewTable(PROJ1).getTableItem(0).getText(1));
 	}
 
+	@Test
+	public void testHistoryStopsAtCommitLimit() throws Exception {
+		runWithHistoryPreferences(false, 300, () -> {
+			createCommits(600);
+			SWTBotTable table = getHistoryViewTable(PROJ1);
+			scrollToEnd(table);
+			assertEquals(300, table.rowCount());
+			assertTrue(isIncompleteWarningShown());
+		});
+	}
+
+	@Test
+	public void testHistoryLoadedIncrementallyWithoutSearch() throws Exception {
+		runWithHistoryPreferences(false, 100000, () -> {
+			createCommits(1000);
+			SWTBotTable table = getHistoryViewTable(PROJ1);
+			// Without search, only the first batches are loaded
+			assertTrue(table.rowCount() < 1000);
+			assertFalse(isIncompleteWarningShown());
+			scrollToEnd(table);
+			assertTrue(table.rowCount() > 1000);
+			assertFalse(isIncompleteWarningShown());
+		});
+	}
+
+	@Test
+	public void testSearchLoadsUpToCommitLimit() throws Exception {
+		runWithHistoryPreferences(true, 400, () -> {
+			createCommits(600);
+			SWTBotTable table = getHistoryViewTable(PROJ1);
+			assertEquals(400, table.rowCount());
+			assertTrue(isIncompleteWarningShown());
+		});
+	}
+
+	@Test
+	public void testSearchLoadsCompleteHistoryBelowCommitLimit()
+			throws Exception {
+		runWithHistoryPreferences(true, 100000, () -> {
+			createCommits(600);
+			SWTBotTable table = getHistoryViewTable(PROJ1);
+			assertTrue(table.rowCount() > 600);
+			assertFalse(isIncompleteWarningShown());
+		});
+	}
+
+	@Test
+	public void testNoIncompleteWarningWithEmptySearchAboveCommitCount()
+			throws Exception {
+		// Preferences must be set before creating the commits, which refreshes
+		// the open history
+		int newCommits = 600;
+		int commitCount = countProjectCommits() + newCommits;
+		runWithHistoryPreferences(true, commitCount + 1, () -> {
+			createCommits(newCommits);
+			SWTBotTable table = getHistoryViewTable(PROJ1);
+			assertEquals(commitCount, table.rowCount());
+			assertFalse(isIncompleteWarningShown());
+		});
+	}
+
+	@Test
+	public void testIncompleteWarningWithEmptySearchBelowCommitCount()
+			throws Exception {
+		// Preferences must be set before creating the commits, which refreshes
+		// the open history
+		int newCommits = 600;
+		int commitCount = countProjectCommits() + newCommits;
+		runWithHistoryPreferences(true, commitCount - 1, () -> {
+			createCommits(newCommits);
+			SWTBotTable table = getHistoryViewTable(PROJ1);
+			assertEquals(commitCount - 1, table.rowCount());
+			assertTrue(isIncompleteWarningShown());
+		});
+	}
+
+	@Test
+	public void testOpeningSearchLoadsUpToCommitLimit() throws Exception {
+		runWithHistoryPreferences(false, 600, () -> {
+			createCommits(1000);
+			SWTBotTable table = getHistoryViewTable(PROJ1);
+			// Without search, only the first batches are loaded
+			assertTrue(table.rowCount() < 600);
+			assertFalse(isIncompleteWarningShown());
+			toggleSearchWithMenu();
+			joinHistoryJob();
+			assertEquals(600, table.rowCount());
+			assertTrue(isIncompleteWarningShown());
+		});
+	}
+
+	@Test
+	public void testHidingSearchWithMenuResetsPreference() throws Exception {
+		runWithHistoryPreferences(false, 100000, () -> {
+			getHistoryViewTable(PROJ1);
+			toggleSearchWithMenu();
+			assertTrue(isFindToolbarPreferenceSet());
+			toggleSearchWithMenu();
+			assertFalse(isFindToolbarPreferenceSet());
+		});
+	}
+
+	@Test
+	public void testHidingSearchWithEscapeResetsPreference() throws Exception {
+		runWithHistoryPreferences(false, 100000, () -> {
+			getHistoryViewTable(PROJ1);
+			toggleSearchWithMenu();
+			assertTrue(isFindToolbarPreferenceSet());
+			Text findText = bot.textWithMessage(
+					UIText.HistoryPage_findbar_find_msg).widget;
+			UIThreadRunnable.syncExec(() -> {
+				Event escape = new Event();
+				escape.keyCode = SWT.ESC;
+				escape.character = SWT.ESC;
+				findText.notifyListeners(SWT.KeyDown, escape);
+			});
+			assertFalse(isFindToolbarPreferenceSet());
+		});
+	}
+
+	private void toggleSearchWithMenu() {
+		bot.viewById(IHistoryView.VIEW_ID)
+				.viewMenu(UIText.GitHistoryPage_ShowSubMenuLabel)
+				.menu(UIText.GitHistoryPage_FindMenuLabel).click();
+	}
+
+	private boolean isFindToolbarPreferenceSet() {
+		return Activator.getDefault().getPreferenceStore()
+				.getBoolean(UIPreferences.RESOURCEHISTORY_SHOW_FINDTOOLBAR);
+	}
+
+	private void runWithHistoryPreferences(boolean showFindToolbar,
+			int maxCommits, TestRunnable test) throws Exception {
+		IPreferenceStore store = Activator.getDefault().getPreferenceStore();
+		boolean oldShowFindToolbar = store
+				.getBoolean(UIPreferences.RESOURCEHISTORY_SHOW_FINDTOOLBAR);
+		int oldMaxCommits = store.getInt(UIPreferences.HISTORY_MAX_NUM_COMMITS);
+		try {
+			store.setValue(UIPreferences.RESOURCEHISTORY_SHOW_FINDTOOLBAR,
+					showFindToolbar);
+			store.setValue(UIPreferences.HISTORY_MAX_NUM_COMMITS, maxCommits);
+			test.run();
+		} finally {
+			store.setValue(UIPreferences.RESOURCEHISTORY_SHOW_FINDTOOLBAR,
+					oldShowFindToolbar);
+			store.setValue(UIPreferences.HISTORY_MAX_NUM_COMMITS,
+					oldMaxCommits);
+		}
+	}
+
+	private interface TestRunnable {
+		void run() throws Exception;
+	}
+
+	private void scrollToEnd(SWTBotTable table) throws Exception {
+		// Loading is triggered while the table is painted, so wait until the
+		// row count has been stable for a few rounds
+		int stableRounds = 0;
+		while (stableRounds < 3) {
+			int rows = table.rowCount();
+			table.select(rows - 1);
+			joinHistoryJob();
+			bot.sleep(100);
+			stableRounds = table.rowCount() > rows ? 0 : stableRounds + 1;
+		}
+	}
+
+	private boolean isIncompleteWarningShown() throws Exception {
+		SWTBot historyView = getHistoryViewBot();
+		return UIThreadRunnable.syncExec(() -> {
+			for (CLabel label : historyView.getFinder()
+					.findControls(allOf(widgetOfType(CLabel.class), withText(
+							UIText.GitHistoryPage_ListIncompleteWarningMessage)))) {
+				if (label.isVisible()) {
+					return Boolean.TRUE;
+				}
+			}
+			return Boolean.FALSE;
+		}).booleanValue();
+	}
+
+	private int countProjectCommits() throws Exception {
+		Repository repo = myRepoViewUtil.lookupRepository(repoFile);
+		try (Git git = Git.wrap(repo)) {
+			return (int) StreamSupport
+					.stream(git.log().addPath(PROJ1).call().spliterator(),
+							false)
+					.count();
+		}
+	}
+
+	private void createCommits(int count) throws Exception {
+		Repository repo = myRepoViewUtil.lookupRepository(repoFile);
+		File file = new File(ResourcesPlugin.getWorkspace().getRoot()
+				.getProject(PROJ1).getLocation().toFile(), "many.txt");
+		PersonIdent committer = new PersonIdent(TestUtil.TESTCOMMITTER_NAME,
+				TestUtil.TESTCOMMITTER_EMAIL);
+		try (Git git = Git.wrap(repo)) {
+			for (int i = 0; i < count; i++) {
+				Files.writeString(file.toPath(), "Content " + i);
+				git.add().addFilepattern(PROJ1 + '/' + file.getName()).call();
+				git.commit().setAuthor(committer).setCommitter(committer)
+						.setMessage("Commit " + i).call();
+			}
+		}
+	}
+
 	private SWTBotTable getHistoryViewTable() throws Exception {
 		SWTBot historyView = getHistoryViewBot();
+		joinHistoryJob();
+		return historyView.table();
+	}
+
+	private void joinHistoryJob() throws Exception {
 		Job.getJobManager().join(JobFamilies.GENERATE_HISTORY, null);
-		historyView.getDisplay().syncExec(() -> {
+		getHistoryViewBot().getDisplay().syncExec(() -> {
 			// Join UI update triggered by GenerateHistoryJob
 		});
-		return historyView.table();
 	}
 
 	/**

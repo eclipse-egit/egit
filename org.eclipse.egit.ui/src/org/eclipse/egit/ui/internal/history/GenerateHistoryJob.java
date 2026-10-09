@@ -72,6 +72,9 @@ class GenerateHistoryJob extends Job {
 	// Guarded by 'lock'
 	private int nextLoadHint = -1;
 
+	// Guarded by 'lock'
+	private int maxCommitsLimit;
+
 	GenerateHistoryJob(final GitHistoryPage ghp, @NonNull RevWalk walk,
 			ResourceManager resources) {
 		super(NLS.bind(UIText.HistoryPage_refreshJob,
@@ -99,12 +102,12 @@ class GenerateHistoryJob extends Job {
 
 	@Override
 	protected IStatus run(final IProgressMonitor monitor) {
+		int maxCommits = getMaxCommits();
 		synchronized (lock) {
 			nextLoadHint = -1;
+			maxCommitsLimit = maxCommits;
 		}
 		IStatus status = Status.OK_STATUS;
-		int maxCommits = Activator.getDefault().getPreferenceStore()
-					.getInt(UIPreferences.HISTORY_MAX_NUM_COMMITS);
 		boolean incomplete = false;
 		walk.setProgressMonitor(new EclipseGitProgressTransformer(monitor));
 		try {
@@ -112,11 +115,6 @@ class GenerateHistoryJob extends Job {
 				GitTraceLocation.getTrace().traceEntry(
 						GitTraceLocation.HISTORYVIEW.getLocation());
 
-			// When the search toolbar is displayed, the user might be searching
-			// for a commit that is yet to be fetched
-			final boolean findToolbarIsHidden = !Activator.getDefault()
-					.getPreferenceStore()
-					.getBoolean(UIPreferences.RESOURCEHISTORY_SHOW_FINDTOOLBAR);
 			int initialSize = loadedCommits.size();
 			try {
 				do {
@@ -128,7 +126,10 @@ class GenerateHistoryJob extends Job {
 						loadedCommits.fillTo(commitToLoad,
 								getNextMaximumCommitsCount());
 					} else {
-						loadedCommits.fillTo(getNextMaximumCommitsCount());
+						int next = getNextMaximumCommitsCount();
+						loadedCommits.fillTo(
+								maxCommits > 0 ? Math.min(next, maxCommits - 1)
+										: next);
 						if (!loadedCommits.isPending()) {
 							forcedRedrawsAfterListIsCompleted++;
 							break;
@@ -138,13 +139,11 @@ class GenerateHistoryJob extends Job {
 						return Status.CANCEL_STATUS;
 					}
 					if (loadedCommits.size() > itemToLoad + (BATCH_SIZE / 2) + 1
-							&& findToolbarIsHidden && commitFound()) {
+							&& isFindToolbarHidden() && commitFound()) {
 						break;
 					}
-					if (maxCommits > 0 && loadedCommits.size() > maxCommits) {
-						if (!findToolbarIsHidden) {
-							incomplete = true;
-						}
+					if (maxCommits > 0 && loadedCommits.size() >= maxCommits) {
+						incomplete = true;
 						if (commitToLoad == null) {
 							break;
 						}
@@ -157,8 +156,8 @@ class GenerateHistoryJob extends Job {
 							Integer.valueOf(loadedCommits.size())));
 
 					updateUI(incomplete);
-				} while (commitToLoad != null && !commitFound()
-						&& loadedCommits.isPending());
+				} while (!isFindToolbarHidden()
+						|| (commitToLoad != null && !commitFound()));
 			} catch (CancelledException e) {
 				return Status.CANCEL_STATUS;
 			} catch (IOException e) {
@@ -168,19 +167,13 @@ class GenerateHistoryJob extends Job {
 			synchronized (lock) {
 				hasMore = loadedCommits.isPending();
 				size = loadedCommits.size();
-				if (!hasMore) {
-					incomplete = false;
-				}
+				incomplete = hasMore && maxCommits > 0 && size >= maxCommits;
 			}
 			if (trace)
 				GitTraceLocation.getTrace().trace(
 						GitTraceLocation.HISTORYVIEW.getLocation(),
 						"Loaded " + loadedCommits.size() + " commits"); //$NON-NLS-1$ //$NON-NLS-2$
 			if (!commitFound() && !loadedCommits.isEmpty()) {
-				if (forcedRedrawsAfterListIsCompleted < 1
-						&& !findToolbarIsHidden && hasMore) {
-					page.setWarningTextInUIThread(this);
-				}
 				if (initialSize != loadedCommits.size()) {
 					updateUI(incomplete);
 				}
@@ -189,8 +182,7 @@ class GenerateHistoryJob extends Job {
 				updateUI(incomplete);
 			}
 
-			if (forcedRedrawsAfterListIsCompleted < 1 && !findToolbarIsHidden
-					&& hasMore) {
+			if (incomplete) {
 				page.setWarningTextInUIThread(this);
 			} else {
 				page.clearWarningTextInUIThread(this);
@@ -203,6 +195,18 @@ class GenerateHistoryJob extends Job {
 						GitTraceLocation.HISTORYVIEW.getLocation());
 		}
 		return status;
+	}
+
+	private static boolean isFindToolbarHidden() {
+		// While the find toolbar is displayed, all commits up to the limit are
+		// loaded so that the user can search through them
+		return !Activator.getDefault().getPreferenceStore()
+				.getBoolean(UIPreferences.RESOURCEHISTORY_SHOW_FINDTOOLBAR);
+	}
+
+	private static int getMaxCommits() {
+		return Activator.getDefault().getPreferenceStore()
+				.getInt(UIPreferences.HISTORY_MAX_NUM_COMMITS);
 	}
 
 	private int getNextMaximumCommitsCount() {
@@ -281,7 +285,8 @@ class GenerateHistoryJob extends Job {
 
 	boolean loadNextBatch(int currentIndex) {
 		synchronized (lock) {
-			if (hasMore && currentIndex + (BATCH_SIZE / 2) > size
+			if (hasMore && (maxCommitsLimit <= 0 || size < maxCommitsLimit)
+					&& currentIndex + (BATCH_SIZE / 2) > size
 					&& currentIndex > nextLoadHint) {
 				nextLoadHint = currentIndex;
 				return true;
