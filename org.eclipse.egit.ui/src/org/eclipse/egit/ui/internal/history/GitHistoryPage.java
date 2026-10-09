@@ -35,6 +35,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Objects;
 import java.util.Set;
+import java.util.function.Consumer;
 import java.util.stream.Collectors;
 
 import org.eclipse.core.resources.IResource;
@@ -1242,6 +1243,20 @@ public class GitHistoryPage extends HistoryPage implements RefsChangedListener,
 	/** Job that is updating our history view, if we are refreshing. */
 	private GenerateHistoryJob job;
 
+	/**
+	 * Whether the user is searching, in which case all commits are loaded so
+	 * that the search can find them.
+	 */
+	private volatile boolean searchActive;
+
+	/** The job that has told the search bar that commits are loading. */
+	private Job loadingJob;
+
+	private final Object pendingUpdateLock = new Object();
+
+	// Guarded by 'pendingUpdateLock'
+	private CommitListUpdate pendingUpdate;
+
 	private final ResourceManager resources = new LocalResourceManager(
 			JFaceResources.getResources());
 
@@ -1523,7 +1538,8 @@ public class GitHistoryPage extends HistoryPage implements RefsChangedListener,
 		IToolBarManager manager = getSite().getActionBars().getToolBarManager();
 		searchBar = new HistorySearchBar(
 				GitHistoryPage.class.getName() + ".searchBar", //$NON-NLS-1$
-				graph, actions.findAction, getSite().getActionBars());
+				graph, actions.findAction, getSite().getActionBars(),
+				this::searchTextChanged);
 		manager.prependToGroup("org.eclipse.team.ui.historyView", searchBar); //$NON-NLS-1$
 		getSite().getActionBars().updateActionBars();
 		if (trace)
@@ -2410,6 +2426,19 @@ public class GitHistoryPage extends HistoryPage implements RefsChangedListener,
 		});
 	}
 
+	void setLoadingInUIThread(Job j, boolean loading) {
+		graph.getControl().getDisplay().asyncExec(() -> {
+			if (graph.getControl().isDisposed()) {
+				return;
+			}
+			// A job that is no longer current may still end its loading
+			if (loading ? job == j : loadingJob == j) {
+				loadingJob = loading ? j : null;
+				searchBar.setLoading(loading);
+			}
+		});
+	}
+
 	void clearWarningTextInUIThread(final Job j) {
 		graph.getControl().getDisplay().asyncExec(new Runnable() {
 			@Override
@@ -2419,6 +2448,28 @@ public class GitHistoryPage extends HistoryPage implements RefsChangedListener,
 				}
 			}
 		});
+	}
+
+	private static final class CommitListUpdate {
+
+		final Job job;
+
+		final SWTCommitList list;
+
+		final SWTCommit[] asArray;
+
+		final RevCommit toSelect;
+
+		final RevFlag highlightFlag;
+
+		CommitListUpdate(Job job, SWTCommitList list, SWTCommit[] asArray,
+				RevCommit toSelect, RevFlag highlightFlag) {
+			this.job = job;
+			this.list = list;
+			this.asArray = asArray;
+			this.toSelect = toSelect;
+			this.highlightFlag = highlightFlag;
+		}
 	}
 
 	@SuppressWarnings("boxing")
@@ -2431,49 +2482,71 @@ public class GitHistoryPage extends HistoryPage implements RefsChangedListener,
 		if (job != j || graph.getControl().isDisposed())
 			return;
 
-		graph.getControl().getDisplay().asyncExec(new Runnable() {
+		boolean updatePending;
+		synchronized (pendingUpdateLock) {
+			updatePending = pendingUpdate != null;
+			RevCommit commitToSelect = toSelect;
+			if (updatePending && commitToSelect == null
+					&& pendingUpdate.job == j) {
+				commitToSelect = pendingUpdate.toSelect;
+			}
+			pendingUpdate = new CommitListUpdate(j, list, asArray,
+					commitToSelect, highlightFlag);
+		}
+		// Only the latest update is shown, so that the UI thread doesn't
+		// have to catch up with every intermediate state of the list
+		if (!updatePending) {
+			graph.getControl().getDisplay()
+					.asyncExec(this::showPendingCommitList);
+		}
+		if (trace)
+			GitTraceLocation.getTrace()
+					.traceExit(GitTraceLocation.HISTORYVIEW.getLocation());
+	}
+
+	private void showPendingCommitList() {
+		CommitListUpdate update;
+		synchronized (pendingUpdateLock) {
+			update = pendingUpdate;
+			pendingUpdate = null;
+		}
+		if (update == null || graph.getControl().isDisposed()
+				|| job != update.job) {
+			return;
+		}
+		setErrorMessage(null);
+		graph.setInput(update.highlightFlag, update.list, update.asArray, input,
+				true);
+		if (update.toSelect != null)
+			graph.selectCommitStored(update.toSelect);
+		if (getFollowRenames())
+			updateInterestingPathsOfFileViewer();
+		if (trace)
+			GitTraceLocation.getTrace().trace(
+					GitTraceLocation.HISTORYVIEW.getLocation(),
+					"Setting input to table"); //$NON-NLS-1$
+		final Object currentInput = GitHistoryPage.super.getInput();
+		searchBar.setInput(new ICommitsProvider() {
+
 			@Override
-			public void run() {
-				if (!graph.getControl().isDisposed() && job == j) {
-					setErrorMessage(null);
-					graph.setInput(highlightFlag, list, asArray, input, true);
-					if (toSelect != null)
-						graph.selectCommitStored(toSelect);
-					if (getFollowRenames())
-						updateInterestingPathsOfFileViewer();
-					if (trace)
-						GitTraceLocation.getTrace().trace(
-								GitTraceLocation.HISTORYVIEW.getLocation(),
-								"Setting input to table"); //$NON-NLS-1$
-					final Object currentInput = GitHistoryPage.super.getInput();
-					searchBar.setInput(new ICommitsProvider() {
+			public Object getSearchContext() {
+				return currentInput;
+			}
 
-						@Override
-						public Object getSearchContext() {
-							return currentInput;
-						}
+			@Override
+			public SWTCommit[] getCommits() {
+				return update.asArray;
+			}
 
-						@Override
-						public SWTCommit[] getCommits() {
-							return asArray;
-						}
-
-						@Override
-						public RevFlag getHighlight() {
-							return highlightFlag;
-						}
-					});
-					actions.findAction.setEnabled(true);
-					if (store.getBoolean(
-							UIPreferences.RESOURCEHISTORY_SHOW_FINDTOOLBAR)) {
-						searchBar.setVisible(true);
-					}
-				}
+			@Override
+			public RevFlag getHighlight() {
+				return update.highlightFlag;
 			}
 		});
-		if (trace)
-			GitTraceLocation.getTrace().traceExit(
-					GitTraceLocation.HISTORYVIEW.getLocation());
+		actions.findAction.setEnabled(true);
+		if (store.getBoolean(UIPreferences.RESOURCEHISTORY_SHOW_FINDTOOLBAR)) {
+			searchBar.setVisible(true);
+		}
 	}
 
 	private void updateInterestingPathsOfFileViewer() {
@@ -3020,6 +3093,34 @@ public class GitHistoryPage extends HistoryPage implements RefsChangedListener,
 		return true;
 	}
 
+	/**
+	 * Tells whether all commits should be loaded because the user is
+	 * searching.
+	 *
+	 * @return {@code true} if the search bar is shown and has a search text
+	 */
+	boolean isSearchActive() {
+		return searchActive;
+	}
+
+	/**
+	 * Loads all commits while the user has entered a search text, and pauses
+	 * loading while the search text is empty.
+	 *
+	 * @param text
+	 *            the search text, or {@code null} if the search bar was
+	 *            hidden
+	 */
+	private void searchTextChanged(String text) {
+		boolean active = text != null && !text.trim().isEmpty();
+		if (active != searchActive) {
+			searchActive = active;
+			if (active) {
+				loadHistory(0);
+			}
+		}
+	}
+
 	@Override
 	public void loadItem(int item) {
 		if (job != null && job.loadNextBatch(item)) {
@@ -3145,6 +3246,8 @@ public class GitHistoryPage extends HistoryPage implements RefsChangedListener,
 
 		private final IAction openCloseToggle;
 
+		private final Consumer<String> searchTextListener;
+
 		private boolean wasVisible = false;
 
 		/**
@@ -3157,7 +3260,8 @@ public class GitHistoryPage extends HistoryPage implements RefsChangedListener,
 			public void keyPressed(KeyEvent e) {
 				int key = SWTKeySupport.convertEventToUnmodifiedAccelerator(e);
 				if (key == SWT.ESC) {
-					setVisible(false);
+					openCloseToggle.setChecked(false);
+					openCloseToggle.run();
 					e.doit = false;
 				}
 			}
@@ -3207,10 +3311,12 @@ public class GitHistoryPage extends HistoryPage implements RefsChangedListener,
 		};
 
 		public HistorySearchBar(String id, CommitGraphTable graph,
-				IAction openCloseAction, IActionBars bars) {
+				IAction openCloseAction, IActionBars bars,
+				Consumer<String> searchTextListener) {
 			super(id, graph);
 			this.bars = bars;
 			this.openCloseToggle = openCloseAction;
+			this.searchTextListener = searchTextListener;
 			super.setVisible(false);
 		}
 
@@ -3228,6 +3334,10 @@ public class GitHistoryPage extends HistoryPage implements RefsChangedListener,
 			toolbar.addListener(SWT.FocusOut, mouseListener);
 			toolbar.addListener(SWT.MouseDown, mouseListener);
 			toolbar.addListener(SWT.MouseUp, mouseListener);
+			toolbar.addListener(SWT.Modify,
+					e -> searchTextListener.accept(toolbar.getText()));
+			// The text restored by super.createControl() didn't notify us
+			searchTextListener.accept(toolbar.getText());
 
 			if (wasVisible) {
 				return toolbar;
@@ -3253,6 +3363,7 @@ public class GitHistoryPage extends HistoryPage implements RefsChangedListener,
 			lastText = toolbar.getText();
 			lastSearchContext = searchContext;
 			showStatus(toolbar, ""); //$NON-NLS-1$
+			searchTextListener.accept(null);
 			// It will be disposed by the IToolBarManager
 			toolbar = null;
 			openCloseToggle.setChecked(false);
