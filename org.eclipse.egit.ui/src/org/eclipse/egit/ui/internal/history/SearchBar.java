@@ -44,6 +44,8 @@ abstract class SearchBar extends ControlContribution {
 
 	private ICommitsProvider provider;
 
+	private boolean loading;
+
 	protected final CommitGraphTable graph;
 
 	/**
@@ -91,6 +93,7 @@ abstract class SearchBar extends ControlContribution {
 			}
 			toolbar.setText(lastText, hasInput);
 		}
+		toolbar.setLoading(loading);
 		lastSearchContext = null;
 		lastObjectId = null;
 
@@ -111,6 +114,20 @@ abstract class SearchBar extends ControlContribution {
 			searchContext = provider.getSearchContext();
 			toolbar.setInput(provider.getHighlight(),
 					graph.getTableView().getTable(), provider.getCommits());
+		}
+	}
+
+	/**
+	 * Tells whether commits are still being loaded, so that the search can be
+	 * repeated once all commits are loaded.
+	 *
+	 * @param loading
+	 *            whether commits are being loaded
+	 */
+	public void setLoading(boolean loading) {
+		this.loading = loading;
+		if (toolbar != null) {
+			toolbar.setLoading(loading);
 		}
 	}
 
