@@ -101,7 +101,6 @@ import org.eclipse.jface.bindings.keys.SWTKeySupport;
 import org.eclipse.jface.layout.GridDataFactory;
 import org.eclipse.jface.preference.IPersistentPreferenceStore;
 import org.eclipse.jface.preference.IPreferenceStore;
-import org.eclipse.jface.preference.PreferenceDialog;
 import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.jface.resource.JFaceResources;
 import org.eclipse.jface.resource.LocalResourceManager;
@@ -143,7 +142,6 @@ import org.eclipse.jgit.treewalk.filter.PathFilterGroup;
 import org.eclipse.jgit.treewalk.filter.TreeFilter;
 import org.eclipse.osgi.util.NLS;
 import org.eclipse.swt.SWT;
-import org.eclipse.swt.custom.CLabel;
 import org.eclipse.swt.custom.SashForm;
 import org.eclipse.swt.custom.StackLayout;
 import org.eclipse.swt.custom.StyledText;
@@ -152,27 +150,20 @@ import org.eclipse.swt.events.DisposeListener;
 import org.eclipse.swt.events.KeyAdapter;
 import org.eclipse.swt.events.KeyEvent;
 import org.eclipse.swt.events.KeyListener;
-import org.eclipse.swt.events.SelectionAdapter;
-import org.eclipse.swt.events.SelectionEvent;
-import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Event;
-import org.eclipse.swt.widgets.Link;
 import org.eclipse.swt.widgets.Listener;
 import org.eclipse.swt.widgets.TableColumn;
 import org.eclipse.team.ui.history.HistoryPage;
 import org.eclipse.team.ui.history.IHistoryView;
 import org.eclipse.ui.IActionBars;
-import org.eclipse.ui.ISharedImages;
 import org.eclipse.ui.IWorkbenchCommandConstants;
 import org.eclipse.ui.IWorkbenchPart;
 import org.eclipse.ui.IWorkbenchPartSite;
-import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.actions.ActionFactory;
 import org.eclipse.ui.actions.ActionFactory.IWorkbenchAction;
-import org.eclipse.ui.dialogs.PreferencesUtil;
 import org.eclipse.ui.part.IShowInSource;
 import org.eclipse.ui.part.IShowInTargetList;
 import org.eclipse.ui.part.ShowInContext;
@@ -1233,12 +1224,6 @@ public class GitHistoryPage extends HistoryPage implements RefsChangedListener,
 	/** Viewer displaying file difference implied by {@link #graph}'s commit. */
 	private CommitFileDiffViewer fileViewer;
 
-	/** A label showing a warning icon */
-	private Composite warningComposite;
-
-	/** A label field to display a warning */
-	private CLabel warningLabel;
-
 	/** Our context menu manager for the entire page. */
 	private final MenuManager popupMgr = new MenuManager(null, POPUP_ID);
 
@@ -1429,32 +1414,6 @@ public class GitHistoryPage extends HistoryPage implements RefsChangedListener,
 		attachSelectionTracker();
 
 		historyControl = createMainPanel(parent);
-
-		// Initially hidden
-		warningComposite = new Composite(historyControl, SWT.NONE);
-		warningComposite.setLayout(new GridLayout(2, false));
-		GridDataFactory.fillDefaults().align(SWT.FILL, SWT.BEGINNING)
-				.grab(true, false).exclude(true).applyTo(warningComposite);
-		warningComposite.setVisible(false);
-
-		warningLabel = new CLabel(warningComposite, SWT.NONE);
-		warningLabel.setImage(PlatformUI.getWorkbench().getSharedImages()
-				.getImage(ISharedImages.IMG_OBJS_WARN_TSK));
-		warningLabel
-				.setToolTipText(UIText.GitHistoryPage_IncompleteListTooltip);
-
-		Link preferencesLink = new Link(warningComposite, SWT.NONE);
-		preferencesLink.setText(UIText.GitHistoryPage_PreferencesLink);
-		preferencesLink.addSelectionListener(new SelectionAdapter() {
-			@Override
-			public void widgetSelected(SelectionEvent e) {
-				String preferencePageId = "org.eclipse.egit.ui.internal.preferences.HistoryPreferencePage"; //$NON-NLS-1$
-				PreferenceDialog dialog = PreferencesUtil
-						.createPreferenceDialogOn(getSite().getShell(), preferencePageId,
-								new String[] { preferencePageId }, null);
-				dialog.open();
-			}
-		});
 
 		GridDataFactory.fillDefaults().grab(true, true).applyTo(historyControl);
 		graphDetailSplit = new SashForm(historyControl, SWT.VERTICAL);
@@ -2407,28 +2366,6 @@ public class GitHistoryPage extends HistoryPage implements RefsChangedListener,
 		}
 	}
 
-	void setWarningTextInUIThread(final Job j) {
-		graph.getControl().getDisplay().asyncExec(new Runnable() {
-			@Override
-			public void run() {
-				if (!graph.getControl().isDisposed() && job == j) {
-					setWarningText(UIText.GitHistoryPage_ListIncompleteWarningMessage);
-				}
-			}
-		});
-	}
-
-	void clearWarningTextInUIThread(final Job j) {
-		graph.getControl().getDisplay().asyncExec(new Runnable() {
-			@Override
-			public void run() {
-				if (!graph.getControl().isDisposed() && job == j) {
-					setWarningText(null);
-				}
-			}
-		});
-	}
-
 	private static final class CommitListUpdate {
 
 		final Job job;
@@ -2531,19 +2468,6 @@ public class GitHistoryPage extends HistoryPage implements RefsChangedListener,
 	private void updateInterestingPathsOfFileViewer() {
 		fileViewer.setInterestingPaths(fileViewerInterestingPaths);
 		fileViewer.refresh();
-	}
-
-	private void setWarningText(String warning) {
-		if (warningComposite == null || warningComposite.isDisposed())
-			return;
-		GridData gd = (GridData) warningComposite.getLayoutData();
-		gd.exclude = warning == null;
-		warningComposite.setVisible(!gd.exclude);
-		if (warning != null)
-			warningLabel.setText(warning);
-		else
-			warningLabel.setText(""); //$NON-NLS-1$
-		warningComposite.getParent().layout(true);
 	}
 
 	private void initAndStartRevWalk(boolean forceNewWalk) {
