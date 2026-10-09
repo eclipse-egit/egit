@@ -91,9 +91,6 @@ public class HistoryPreferencePage extends FieldEditorPreferencePage implements
 				showGroup));
 		addField(new BooleanFieldEditor(UIPreferences.HISTORY_CUT_AT_START,
 				UIText.HistoryPreferencePage_toggleShortenAtStart, showGroup));
-		addField(new IntegerFieldEditor(UIPreferences.HISTORY_MAX_NUM_COMMITS,
-				UIText.ResourceHistory_MaxNumCommitsInList,
-				showGroup));
 		addField(new IntegerFieldEditor(UIPreferences.HISTORY_MAX_TAG_LENGTH,
 				UIText.HistoryPreferencePage_MaxTagLength,
 				showGroup));

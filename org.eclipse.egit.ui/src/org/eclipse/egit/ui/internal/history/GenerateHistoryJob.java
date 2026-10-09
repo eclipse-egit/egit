@@ -13,6 +13,7 @@ package org.eclipse.egit.ui.internal.history;
 
 import java.io.IOException;
 import java.text.MessageFormat;
+import java.util.concurrent.TimeUnit;
 
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
@@ -38,6 +39,9 @@ import org.eclipse.osgi.util.NLS;
 
 class GenerateHistoryJob extends Job {
 	private static final int BATCH_SIZE = 256;
+
+	private static final long UI_UPDATE_INTERVAL_NANOS = TimeUnit.MILLISECONDS
+			.toNanos(500);
 
 	private final Object lock = new Object();
 
@@ -72,9 +76,6 @@ class GenerateHistoryJob extends Job {
 	// Guarded by 'lock'
 	private int nextLoadHint = -1;
 
-	// Guarded by 'lock'
-	private int maxCommitsLimit;
-
 	GenerateHistoryJob(final GitHistoryPage ghp, @NonNull RevWalk walk,
 			ResourceManager resources) {
 		super(NLS.bind(UIText.HistoryPage_refreshJob,
@@ -102,13 +103,10 @@ class GenerateHistoryJob extends Job {
 
 	@Override
 	protected IStatus run(final IProgressMonitor monitor) {
-		int maxCommits = getMaxCommits();
 		synchronized (lock) {
 			nextLoadHint = -1;
-			maxCommitsLimit = maxCommits;
 		}
 		IStatus status = Status.OK_STATUS;
-		boolean incomplete = false;
 		walk.setProgressMonitor(new EclipseGitProgressTransformer(monitor));
 		try {
 			if (trace)
@@ -116,6 +114,7 @@ class GenerateHistoryJob extends Job {
 						GitTraceLocation.HISTORYVIEW.getLocation());
 
 			int initialSize = loadedCommits.size();
+			long lastUiUpdate = System.nanoTime() - UI_UPDATE_INTERVAL_NANOS;
 			try {
 				do {
 					if (trace)
@@ -126,10 +125,7 @@ class GenerateHistoryJob extends Job {
 						loadedCommits.fillTo(commitToLoad,
 								getNextMaximumCommitsCount());
 					} else {
-						int next = getNextMaximumCommitsCount();
-						loadedCommits.fillTo(
-								maxCommits > 0 ? Math.min(next, maxCommits - 1)
-										: next);
+						loadedCommits.fillTo(getNextMaximumCommitsCount());
 						if (!loadedCommits.isPending()) {
 							forcedRedrawsAfterListIsCompleted++;
 							break;
@@ -142,12 +138,6 @@ class GenerateHistoryJob extends Job {
 							&& isFindToolbarHidden() && commitFound()) {
 						break;
 					}
-					if (maxCommits > 0 && loadedCommits.size() >= maxCommits) {
-						incomplete = true;
-						if (commitToLoad == null) {
-							break;
-						}
-					}
 					if (!loadedCommits.isPending()) {
 						break;
 					}
@@ -155,7 +145,13 @@ class GenerateHistoryJob extends Job {
 							UIText.GenerateHistoryJob_taskFoundCommits,
 							Integer.valueOf(loadedCommits.size())));
 
-					updateUI(incomplete);
+					// Copying the commits for every batch gets expensive for
+					// large histories
+					long now = System.nanoTime();
+					if (now - lastUiUpdate >= UI_UPDATE_INTERVAL_NANOS) {
+						updateUI();
+						lastUiUpdate = now;
+					}
 				} while (!isFindToolbarHidden()
 						|| (commitToLoad != null && !commitFound()));
 			} catch (CancelledException e) {
@@ -167,7 +163,6 @@ class GenerateHistoryJob extends Job {
 			synchronized (lock) {
 				hasMore = loadedCommits.isPending();
 				size = loadedCommits.size();
-				incomplete = hasMore && maxCommits > 0 && size >= maxCommits;
 			}
 			if (trace)
 				GitTraceLocation.getTrace().trace(
@@ -175,19 +170,12 @@ class GenerateHistoryJob extends Job {
 						"Loaded " + loadedCommits.size() + " commits"); //$NON-NLS-1$ //$NON-NLS-2$
 			if (!commitFound() && !loadedCommits.isEmpty()) {
 				if (initialSize != loadedCommits.size()) {
-					updateUI(incomplete);
+					updateUI();
 				}
 			}
 			else {
-				updateUI(incomplete);
+				updateUI();
 			}
-
-			if (incomplete) {
-				page.setWarningTextInUIThread(this);
-			} else {
-				page.clearWarningTextInUIThread(this);
-			}
-
 		} finally {
 			monitor.done();
 			if (trace)
@@ -198,15 +186,10 @@ class GenerateHistoryJob extends Job {
 	}
 
 	private static boolean isFindToolbarHidden() {
-		// While the find toolbar is displayed, all commits up to the limit are
-		// loaded so that the user can search through them
+		// While the find toolbar is displayed, all commits are loaded so that
+		// the user can search through them
 		return !Activator.getDefault().getPreferenceStore()
 				.getBoolean(UIPreferences.RESOURCEHISTORY_SHOW_FINDTOOLBAR);
-	}
-
-	private static int getMaxCommits() {
-		return Activator.getDefault().getPreferenceStore()
-				.getInt(UIPreferences.HISTORY_MAX_NUM_COMMITS);
 	}
 
 	private int getNextMaximumCommitsCount() {
@@ -217,12 +200,12 @@ class GenerateHistoryJob extends Job {
 		return wantedIndex >= 0;
 	}
 
-	private void updateUI(boolean incomplete) {
+	private void updateUI() {
 		if (trace)
 			GitTraceLocation.getTrace().traceEntry(
 					GitTraceLocation.HISTORYVIEW.getLocation());
 		try {
-			if (forcedRedrawsAfterListIsCompleted != 1 && !incomplete
+			if (forcedRedrawsAfterListIsCompleted != 1
 					&& loadedCommits.size() == lastUpdateCnt) {
 				return;
 			}
@@ -285,8 +268,7 @@ class GenerateHistoryJob extends Job {
 
 	boolean loadNextBatch(int currentIndex) {
 		synchronized (lock) {
-			if (hasMore && (maxCommitsLimit <= 0 || size < maxCommitsLimit)
-					&& currentIndex + (BATCH_SIZE / 2) > size
+			if (hasMore && currentIndex + (BATCH_SIZE / 2) > size
 					&& currentIndex > nextLoadHint) {
 				nextLoadHint = currentIndex;
 				return true;
