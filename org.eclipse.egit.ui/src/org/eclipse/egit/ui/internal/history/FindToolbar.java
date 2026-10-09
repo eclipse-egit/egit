@@ -181,6 +181,14 @@ public class FindToolbar extends Composite {
 	/** Whether the text field has the "no results" background. */
 	private boolean noResults = false;
 
+	private boolean loading;
+
+	/**
+	 * Whether the search still has to be repeated, or has to finish, to cover
+	 * all commits.
+	 */
+	private boolean resultsIncomplete;
+
 	/**
 	 * Creates the toolbar.
 	 *
@@ -708,6 +716,43 @@ public class FindToolbar extends Composite {
 		this.fileRevisions = commitArray;
 		this.historyTable = historyTable;
 		findResults.setHighlightFlag(hFlag);
+		if (resultsIncomplete && !loading) {
+			// The search over all commits was canceled
+			searchAllCommits();
+		}
+	}
+
+	/**
+	 * Tells whether commits are still being loaded, in which case the search
+	 * may not find all matching commits yet. Once loading is done, the search
+	 * is repeated so that it covers all commits.
+	 *
+	 * @param loading
+	 *            whether commits are being loaded
+	 */
+	void setLoading(boolean loading) {
+		if (this.loading == loading || isDisposed()) {
+			return;
+		}
+		this.loading = loading;
+		resultsIncomplete = true;
+		if (!loading) {
+			searchAllCommits();
+		}
+	}
+
+	private void searchAllCommits() {
+		if (fileRevisions == null || getSearchPattern().isEmpty()) {
+			resultsIncomplete = false;
+			return;
+		}
+		int selected = historyTable.getSelectionIndex();
+		if (selected >= 0 && selected < fileRevisions.length) {
+			preselect = fileRevisions[selected].getId();
+		}
+		FindToolbarJob finder = createFinder();
+		finder.setUser(false);
+		finder.schedule();
 	}
 
 	private void findCompletionUpdate(String pattern, boolean overflow) {
@@ -761,6 +806,9 @@ public class FindToolbar extends Composite {
 			display.beep();
 		}
 		notifyStatus(label);
+		if (!loading) {
+			resultsIncomplete = false;
+		}
 	}
 
 	/**
@@ -781,6 +829,10 @@ public class FindToolbar extends Composite {
 		}
 
 		findResults.clear();
+		if (resultsIncomplete && !loading) {
+			// The search over all commits was canceled
+			searchAllCommits();
+		}
 	}
 
 	private void notifyListeners(int index) {
