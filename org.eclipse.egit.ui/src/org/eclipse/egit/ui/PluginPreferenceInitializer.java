@@ -123,10 +123,10 @@ public class PluginPreferenceInitializer extends AbstractPreferenceInitializer {
 		store.setDefault(UIPreferences.SHOW_REBASE_CONFIRM, false);
 		store.setDefault(UIPreferences.SHOW_INITIAL_CONFIG_DIALOG, true);
 		store.setDefault(UIPreferences.SHOW_FETCH_POPUP_SUCCESS, true);
-		store.setDefault(UIPreferences.FETCH_SHOW_NOTIFICATION, false);
+		store.setDefault(UIPreferences.FETCH_SHOW_NOTIFICATION, true);
 		store.setDefault(UIPreferences.STASH_APPLY_SHOW_NOTIFICATION, true);
 		store.setDefault(UIPreferences.SHOW_PUSH_POPUP_SUCCESS, true);
-		store.setDefault(UIPreferences.PUSH_SHOW_NOTIFICATION, false);
+		store.setDefault(UIPreferences.PUSH_SHOW_NOTIFICATION, true);
 		store.setDefault(UIPreferences.SHOW_HOME_DIR_WARNING, true);
 		store.setDefault(UIPreferences.LFS_AUTO_CONFIGURATION, false);
 		store.setDefault(UIPreferences.SHOW_DETACHED_HEAD_WARNING, true);
