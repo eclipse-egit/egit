@@ -176,6 +176,30 @@
       },
       "revId": "64236192798da7f1cb7e3f5e3619f1ac3e6d59c4",
       "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "15ef551b_0f10edef",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/history/GenerateHistoryJob.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 213,
+      "author": {
+        "id": 1039515
+      },
+      "writtenOn": "2026-10-12T11:19:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "70620034_1be05420",
+      "range": {
+        "startLine": 211,
+        "startChar": 2,
+        "endLine": 213,
+        "endChar": 20
+      },
+      "revId": "64236192798da7f1cb7e3f5e3619f1ac3e6d59c4",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735"
     }
   ]
 }
