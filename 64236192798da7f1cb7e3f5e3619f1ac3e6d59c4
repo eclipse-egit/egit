@@ -152,6 +152,30 @@
       },
       "revId": "64236192798da7f1cb7e3f5e3619f1ac3e6d59c4",
       "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "70620034_1be05420",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/history/GenerateHistoryJob.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 213,
+      "author": {
+        "id": 1039515
+      },
+      "writtenOn": "2026-10-12T11:12:11Z",
+      "side": 1,
+      "message": "\u003e For resources that are changed very often, these values merely mean that the user will see the table filling up the first couple of commits.\n\nI\u0027ve wondered if this could lead to a history load time regression for simple repositories with a mostly linear history. In testing, however, I could not find any problems with this and \"simple\" repository histories load just as fast as before this change.\n\nThe other points you\u0027ve listed seems reasonable to me and should provide a good default especially for large repos with commits far apart.",
+      "parentUuid": "11265ca3_5d1e5a5a",
+      "range": {
+        "startLine": 211,
+        "startChar": 2,
+        "endLine": 213,
+        "endChar": 20
+      },
+      "revId": "64236192798da7f1cb7e3f5e3619f1ac3e6d59c4",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735"
     }
   ]
 }
