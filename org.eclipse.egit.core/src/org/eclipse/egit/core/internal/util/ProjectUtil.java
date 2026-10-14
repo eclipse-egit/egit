@@ -330,14 +330,23 @@ public class ProjectUtil {
 
 		IWorkspaceRoot root = ResourcesPlugin.getWorkspace().getRoot();
 		IProject[] projects = getProjectsForContainerMatch(root);
+		String[] absProjects = new String[projects.length];
+		for (int i = 0; i < projects.length; i++) {
+			IPath location = projects[i].getLocation();
+			absProjects[i] = location == null ? null : toAbsolutePath(location);
+		}
 
 		for (String member : fileList) {
 			File file = new File(workTree, member);
 
-			for (IProject prj : projects) {
-				if (checkContainerMatch(prj, file.getAbsolutePath())) {
-					result.add(prj);
-					break;
+			for (int i = 0; i < projects.length; i++) {
+				String absProject = absProjects[i];
+				if (absProject != null) {
+					if (checkContainerMatch(absProject,
+							file.getAbsolutePath())) {
+						result.add(projects[i]);
+						break;
+					}
 				}
 			}
 		}
@@ -361,11 +370,16 @@ public class ProjectUtil {
 		IWorkspaceRoot root = ResourcesPlugin.getWorkspace().getRoot();
 		IProject[] allProjects = getProjectsForContainerMatch(root);
 
-		for (IProject prj : allProjects)
-			if (checkContainerMatch(prj, absFile))
+		for (IProject prj : allProjects) {
+			IPath location = prj.getLocation();
+			if (location == null) {
+				continue;
+			}
+			if (checkContainerMatch(toAbsolutePath(location), absFile))
 				return prj;
+		}
 
-		if (checkContainerMatch(root, absFile))
+		if (checkContainerMatch(toAbsolutePath(root.getLocation()), absFile))
 			return root;
 
 		return null;
@@ -394,18 +408,14 @@ public class ProjectUtil {
 		return allProjects;
 	}
 
-	private static boolean checkContainerMatch(IContainer container,
-			String absFile) {
-		IPath location = container.getLocation();
-		if (location != null) {
-			String absPrj = location.toFile().getAbsolutePath();
-			if (absPrj.equals(absFile))
+	private static boolean checkContainerMatch(String absPrj, String absFile) {
+		if (absPrj.equals(absFile))
+			return true;
+		if (absPrj.length() < absFile.length()) {
+			char sepChar = absFile.charAt(absPrj.length());
+			if (sepChar == File.separatorChar
+					&& absFile.startsWith(absPrj))
 				return true;
-			if (absPrj.length() < absFile.length()) {
-				char sepChar = absFile.charAt(absPrj.length());
-				if (sepChar == File.separatorChar && absFile.startsWith(absPrj))
-					return true;
-			}
 		}
 		return false;
 	}
@@ -510,5 +520,9 @@ public class ProjectUtil {
 					pm);
 		}
 		return true;
+	}
+
+	private static final String toAbsolutePath(IPath path) {
+		return path.toFile().getAbsolutePath();
 	}
 }
