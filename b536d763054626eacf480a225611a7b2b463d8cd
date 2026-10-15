@@ -16,6 +16,23 @@
       "message": "I see that once the search bar is shown (even if it is empty), history starts to load. For our repo this takes a minute or so, fortunately nothing freezes but I see CPU/memory monitor showing lot of activity.\n\nI believe this is not nice. I mean, the text is empty, why should we load all commits? Should we simply wait till user really starts searching?",
       "revId": "b536d763054626eacf480a225611a7b2b463d8cd",
       "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "1d764d3b_987cb250",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1037131
+      },
+      "writtenOn": "2026-10-15T14:49:27Z",
+      "side": 1,
+      "message": "I *saw* UI freezes with empty search bar if switching between repositories in the git repo view and History view open. Unfortunately it seems that UI freeze monitor is switched off if debugging Eclipse from Eclipse.\n\nI had https://github.com/git/git, most of platform like https://github.com/eclipse-jdt/eclipse.jdt.core.git etc. \n\nUnfortunately I can\u0027t reproduce.",
+      "revId": "b536d763054626eacf480a225611a7b2b463d8cd",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735"
     }
   ]
 }
