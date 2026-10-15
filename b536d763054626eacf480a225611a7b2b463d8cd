@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "928d9571_8499bf08",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1037131
+      },
+      "writtenOn": "2026-10-15T14:42:36Z",
+      "side": 1,
+      "message": "I see that once the search bar is shown (even if it is empty), history starts to load. For our repo this takes a minute or so, fortunately nothing freezes but I see CPU/memory monitor showing lot of activity.\n\nI believe this is not nice. I mean, the text is empty, why should we load all commits? Should we simply wait till user really starts searching?",
+      "revId": "b536d763054626eacf480a225611a7b2b463d8cd",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735"
+    }
+  ]
+}
