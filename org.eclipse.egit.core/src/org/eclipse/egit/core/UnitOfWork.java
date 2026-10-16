@@ -77,7 +77,7 @@ public final class UnitOfWork {
 	 */
 	public static void run(Repository repository, Work work)
 			throws IOException {
-		try (ConfigScope scope = new ConfigScope(repository)) {
+		try (ConfigScope _ = new ConfigScope(repository)) {
 			work.run();
 		}
 	}
@@ -92,7 +92,7 @@ public final class UnitOfWork {
 	 *            to perform
 	 */
 	public static void execute(Repository repository, Runnable work) {
-		try (ConfigScope scope = new ConfigScope(repository)) {
+		try (ConfigScope _ = new ConfigScope(repository)) {
 			work.run();
 		}
 	}
@@ -111,7 +111,7 @@ public final class UnitOfWork {
 	 */
 	public static <T> T run(Repository repository,
 			WorkWithResult<? extends T> work) throws IOException {
-		try (ConfigScope scope = new ConfigScope(repository)) {
+		try (ConfigScope _ = new ConfigScope(repository)) {
 			return work.get();
 		}
 	}
@@ -128,7 +128,7 @@ public final class UnitOfWork {
 	 * @return the result of {@code work}
 	 */
 	public static <T> T get(Repository repository, Supplier<? extends T> work) {
-		try (ConfigScope scope = new ConfigScope(repository)) {
+		try (ConfigScope _ = new ConfigScope(repository)) {
 			return work.get();
 		}
 	}
@@ -142,7 +142,7 @@ public final class UnitOfWork {
 	 * </p>
 	 *
 	 * <pre>
-	 * try (ConfigScope scope = new ConfigScope(repository)) {
+	 * try (ConfigScope _ = new ConfigScope(repository)) {
 	 *   // ... do repository operations. The repository will check
 	 *   // its git config only once for having been modified and
 	 *   // subsequently always works with the cached config until

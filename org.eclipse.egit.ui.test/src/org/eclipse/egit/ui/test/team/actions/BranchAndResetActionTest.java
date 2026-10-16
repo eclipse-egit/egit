@@ -186,7 +186,7 @@ public class BranchAndResetActionTest extends LocalRepositoryTestCase {
 		test.create(new ByteArrayInputStream(new byte[0]), false, null);
 		File testFile = new File(test.getLocation().toString());
 		assertTrue(testFile.exists());
-		try (InputStream fis = Files.newInputStream(testFile.toPath())) {
+		try (InputStream _ = Files.newInputStream(testFile.toPath())) {
 			FileUtils.delete(testFile);
 			return;
 		} catch (IOException e) {
