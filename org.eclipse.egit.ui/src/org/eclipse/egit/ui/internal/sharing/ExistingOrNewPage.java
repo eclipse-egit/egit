@@ -398,7 +398,7 @@ class ExistingOrNewPage extends WizardPage {
 				File workingDir = new File(repositoryToCreate.getText());
 				File gitDir = new File(workingDir, Constants.DOT_GIT);
 				try {
-					try (Git git = Git.init().setDirectory(workingDir).call()) {
+					try (Git _ = Git.init().setDirectory(workingDir).call()) {
 						// And close it.
 					}
 					for (IProject project : getProjects(false).keySet()) {

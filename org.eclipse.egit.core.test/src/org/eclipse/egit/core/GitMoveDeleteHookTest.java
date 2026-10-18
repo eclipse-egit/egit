@@ -680,7 +680,6 @@ public class GitMoveDeleteHookTest {
 		if (gdRelativeSrcParent.startsWith(gitDir))
 			gdRelativeSrcParent = gdRelativeSrcParent
 					.substring(gitDir.length());
-		testDirs.add(new File(dstParent));
 		String gdRelativeDstParent = dstParent + dstProjecName + "/";
 		if (gdRelativeDstParent.startsWith(gitDir))
 			gdRelativeDstParent = gdRelativeDstParent
