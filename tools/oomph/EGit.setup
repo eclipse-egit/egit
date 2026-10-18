@@ -114,24 +114,9 @@
   <setupTask
       xsi:type="setup:VariableTask"
       name="egit.target.platform"
-      defaultValue="egit-4.36"
+      defaultValue="egit-4.41"
       storageURI="scope://Workspace"
       label="EGit Target Platform">
-    <choice
-        value="egit-4.36"
-        label="EGit 2025-06 (4.36) target"/>
-    <choice
-        value="egit-4.37"
-        label="EGit 2025-09 (4.37) target"/>
-    <choice
-        value="egit-4.38"
-        label="EGit 2025-12 (4.38) target"/>
-    <choice
-        value="egit-4.39"
-        label="EGit 2026-03 (4.39) target"/>
-    <choice
-        value="egit-4.40"
-        label="EGit 2026-06 (4.40) target"/>
     <choice
         value="egit-4.41"
         label="EGit 2026-09 (4.41) target"/>
@@ -139,15 +124,6 @@
         value="egit-4.42"
         label="EGit 2026-12 (4.42) target"/>
     <description>Default target platform for EGit development.</description>
-  </setupTask>
-  <setupTask
-      xsi:type="pde:APIBaselineTask"
-      name="EGit"
-      activate="false"
-      version="7.6.0"
-      location="${workspace.location/../api.baseline/7.6.0}"
-      remoteURI="https://download.eclipse.org/egit/updates-7.6/org.eclipse.egit.repository-7.6.0.202603022253-r.zip">
-    <description>EGit 7.6.0 API baseline; to be used with branch stable-7.7</description>
   </setupTask>
   <setupTask
       xsi:type="pde:APIBaselineTask"
@@ -161,10 +137,19 @@
   <setupTask
       xsi:type="pde:APIBaselineTask"
       name="EGit"
+      activate="false"
       version="7.8.0"
       location="${workspace.location/../api.baseline/7.8.0}"
       remoteURI="https://download.eclipse.org/egit/updates-7.8/org.eclipse.egit.repository-7.8.0.202609011348-r.zip">
-    <description>EGit 7.8.0 API baseline; to be used with branch master</description>
+    <description>EGit 7.8.0 API baseline; to be used with branch stable-7.9</description>
+  </setupTask>
+  <setupTask
+      xsi:type="pde:APIBaselineTask"
+      name="EGit"
+      version="7.8.0"
+      location="${workspace.location/../api.baseline/7.9.0-m1}"
+      remoteURI="https://repo.eclipse.org/repository/egit-maven2-releases/org/eclipse/egit/org.eclipse.egit.repository/7.9.0.202610071003-m1/org.eclipse.egit.repository-7.9.0.202610071003-m1.zip">
+    <description>EGit 7.9.0-M1 API baseline; to be used with branch master</description>
   </setupTask>
   <setupTask
       xsi:type="setup:CompoundTask"
