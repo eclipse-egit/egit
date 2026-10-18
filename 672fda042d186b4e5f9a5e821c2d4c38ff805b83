@@ -53,6 +53,24 @@
       "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "092835fe_2868203b",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1021966
+      },
+      "writtenOn": "2026-10-18T21:41:42Z",
+      "side": 1,
+      "message": "Actually, I just squashed this fix into this change. Seems using Java 25 for building doesn\u0027t work with 7.9.0. I\u0027ll have to find a fix for this -- we can configure the \"stable\" builds to use Java 21, as before, but master will need Java 25 with this change. And older spotbugs at least won\u0027t work with Java 25. Maybe bump spotbugs before doing this change here?",
+      "parentUuid": "c4f3bbde_942beba4",
+      "revId": "672fda042d186b4e5f9a5e821c2d4c38ff805b83",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "4331f45b_c4600de8",
