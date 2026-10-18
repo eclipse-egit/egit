@@ -35,6 +35,24 @@
       "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "c4f3bbde_942beba4",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1021966
+      },
+      "writtenOn": "2026-10-18T21:29:30Z",
+      "side": 1,
+      "message": "That\u0027s because of a (long-standing) bug in GitMoveDeleteHookTest; see parent commit Ief6cbbb9172b6a49fc2872bbb12a65f37ab04ca2.\n\nI have no idea why this doesn\u0027t happen when building earlier versions. I don\u0027t see a change in JGit\u0027s FileUtils.delete(), nor in EGit, that would explain this.\n\nBut anyway the EGit Core tests run after the p2 repository has been built.",
+      "parentUuid": "aebab745_4677a64a",
+      "revId": "672fda042d186b4e5f9a5e821c2d4c38ff805b83",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "4331f45b_c4600de8",
