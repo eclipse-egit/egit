@@ -263,6 +263,10 @@ public abstract class LocalRepositoryTestCase extends EGitTestCase {
 	@BeforeClass
 	public static void beforeClassBase() throws Exception {
 		FS.FileStoreAttributes.setBackground(false);
+		// Make sure the compare editor is not "swapped".
+		IEclipsePreferences comparePrefs = InstanceScope.INSTANCE
+				.getNode("org.eclipse.compare");
+		comparePrefs.putBoolean("org.eclipse.compare.Swapped", false);
 		// suppress auto-ignoring and auto-sharing to avoid interference
 		IEclipsePreferences corePrefs = InstanceScope.INSTANCE
 				.getNode(org.eclipse.egit.core.Activator.PLUGIN_ID);
