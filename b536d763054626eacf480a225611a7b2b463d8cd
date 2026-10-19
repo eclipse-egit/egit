@@ -33,6 +33,59 @@
       "message": "I *saw* UI freezes with empty search bar if switching between repositories in the git repo view and History view open. Unfortunately it seems that UI freeze monitor is switched off if debugging Eclipse from Eclipse.\n\nI had https://github.com/git/git, most of platform like https://github.com/eclipse-jdt/eclipse.jdt.core.git etc. \n\nUnfortunately I can\u0027t reproduce.",
       "revId": "b536d763054626eacf480a225611a7b2b463d8cd",
       "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "d54aed8f_21d4da14",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1039063
+      },
+      "writtenOn": "2026-10-19T13:00:28Z",
+      "side": 1,
+      "message": "Agreed, that was unnecessary. In the new patch set, showing the search bar doesn’t load anything. Loading all commits starts only when the search text contains more than whitespace. It pauses when the text is cleared or the search bar is closed, and resumes from where it stopped when you search again. Once all commits are loaded, the search runs again, so the results cover the whole history.",
+      "parentUuid": "928d9571_8499bf08",
+      "revId": "b536d763054626eacf480a225611a7b2b463d8cd",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "b920f777_41217661",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1039063
+      },
+      "writtenOn": "2026-10-19T13:00:28Z",
+      "side": 1,
+      "message": "I uploaded a new PS that only searches when the search bar has some non-empty content, as requested by @loskutov@gmx.de",
+      "revId": "b536d763054626eacf480a225611a7b2b463d8cd",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "161426c9_484035b4",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1039063
+      },
+      "writtenOn": "2026-10-19T13:00:28Z",
+      "side": 1,
+      "message": "I couldn’t produce any UI freeze either while testing the newest patch, so it\u0027s hard for me to look into it. If the freeze appears again, please send me more details.\n\nThe reason the UI freeze monitoring is not enabled during a debugging session is because `Platform.inDevelopmentMode() \u003d\u003d true` and therefore this `if` in `org.eclipse.ui.internal.monitoring.MonitoringStartup.handleEvent(Event)` fails:\n\n```java\nif (preferences.getBoolean(PreferenceConstants.MONITORING_ENABLED) \u0026\u0026 !Platform.inDevelopmentMode()) {\n\tmonitoringThread \u003d createAndStartMonitorThread();\n}\n```\n\nAll you have to do is:\n- Make sure the `org.eclipse.ui.monitoring` is included in your run configuration (it probably already is)\n- Once the application started, go to `Preferences \u003e General \u003e UI Freeze Monitoring` and (disable the monitoring and \u0027Apply\u0027 and then) enable the monitoring and `Apply and close`. You need to do this in every debug session, sadly.\n\nRegarding slow performance in general, I had to explicitly test with a repository in which I had **removed** all of the following performance configurations in order to try and reproduce the UI freeze (to no avail):\n\n- `core.commitGraph \u003d true` (Git config): Git and JGit read the commit-graph file, a compact list of commits with their parents and dates. History walks no longer have to unpack each commit. JGit\u0027s default is off. |\n- `gc.writeCommitGraph \u003d true` + `gc.writeChangedPaths \u003d true` (Git config): `gc` keeps the commit-graph up to date and adds bloom filters (which paths each commit changed). Running `git commit-graph write --reachable --changed-paths` once creates it right away. |\n- `commitGraph.readChangedPaths \u003d true` (**JGit** config `~/.config/jgit/config`): JGit uses those bloom filters, so the history of a file or folder skips most commits. This can only be set globally, not per repository. |\n- There was also a multi-pack index in the repository itself (`.git/objects/pack/multi-pack-index`). JGit uses it automatically whenever the file exists.\n\nIn the copy without these features, walking all commits with the git command line took 4.0 s instead of 0.4 s so I guess they aren\u0027t (all) active in your repo?",
+      "parentUuid": "1d764d3b_987cb250",
+      "revId": "b536d763054626eacf480a225611a7b2b463d8cd",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735"
     }
   ]
 }
