@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "02d0f39e_c24d8a49",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/actions/MergeToolActionHandler.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 160,
+      "author": {
+        "id": 1039515
+      },
+      "writtenOn": "2026-10-19T12:56:32Z",
+      "side": 1,
+      "message": "As far as I can tell, the current scheduling rule will prevent two external merges on independent files from running at the same time. I don\u0027t see why we would need to restrict this.",
+      "revId": "d53ae2f73c9be0e575d972758d8d2a02bbbd6e7b",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735"
+    }
+  ]
+}
