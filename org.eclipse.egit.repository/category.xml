@@ -6,16 +6,13 @@
    <feature url="features/org.eclipse.egit_0.0.0.qualifier.jar" id="org.eclipse.egit" version="0.0.0" patch="true">
       <category name="EGit"/>
    </feature>
-   <feature url="features/org.eclipse.egit.source_0.0.0.qualifier.jar" id="org.eclipse.egit.source" version="0.0.0" patch="true">
+   <feature url="features/org.eclipse.egit.gitflow.feature_0.0.0.qualifier.jar" id="org.eclipse.egit.gitflow.feature" version="0.0.0">
+      <category name="EGit.additional"/>
+   </feature>
+   <feature url="features/org.eclipse.egit.source.feature_0.0.0.qualifier.jar" id="org.eclipse.egit.source.feature" version="0.0.0" patch="true">
       <category name="EGit"/>
    </feature>
    <feature url="features/org.eclipse.jgit_0.0.0.qualifier.jar" id="org.eclipse.jgit" version="0.0.0" patch="true">
-      <category name="JGit"/>
-   </feature>
-   <feature url="features/org.eclipse.jgit.source_0.0.0.qualifier.jar" id="org.eclipse.jgit.source" version="0.0.0" patch="true">
-      <category name="JGit"/>
-   </feature>
-   <feature url="features/org.eclipse.jgit.pgm_0.0.0.qualifier.jar" id="org.eclipse.jgit.pgm" version="0.0.0" patch="true">
       <category name="JGit"/>
    </feature>
    <feature url="features/org.eclipse.jgit.gpg.bc_0.0.0.qualifier.jar" id="org.eclipse.jgit.gpg.bc" version="0.0.0">
@@ -27,193 +24,97 @@
    <feature url="features/org.eclipse.jgit.lfs_0.0.0.qualifier.jar" id="org.eclipse.jgit.lfs" version="0.0.0">
       <category name="JGit"/>
    </feature>
+   <feature url="features/org.eclipse.jgit.pgm_0.0.0.qualifier.jar" id="org.eclipse.jgit.pgm" version="0.0.0" patch="true">
+      <category name="JGit"/>
+   </feature>
+   <feature url="features/org.eclipse.jgit.source_0.0.0.qualifier.jar" id="org.eclipse.jgit.source" version="0.0.0" patch="true">
+      <category name="JGit"/>
+   </feature>
    <feature url="features/org.eclipse.jgit.ssh.apache_0.0.0.qualifier.jar" id="org.eclipse.jgit.ssh.apache" version="0.0.0">
       <category name="JGit"/>
    </feature>
-   <feature url="features/org.eclipse.egit.gitflow.feature_0.0.0.qualifier.jar" id="org.eclipse.egit.gitflow.feature" version="0.0.0">
-      <category name="EGit.additional"/>
-   </feature>
-   <bundle id="org.apache.commons.commons-codec">
-      <category name="EGit.dependencies"/>
-   </bundle>
-   <bundle id="org.apache.commons.commons-codec.source">
-      <category name="EGit.dependencies"/>
-   </bundle>
-   <bundle id="org.apache.ant">
-      <category name="EGit.dependencies"/>
-   </bundle>
-   <bundle id="org.apache.ant.source">
-      <category name="EGit.dependencies"/>
-   </bundle>
-   <bundle id="org.apache.httpcomponents.httpclient">
-      <category name="EGit.dependencies"/>
-   </bundle>
-   <bundle id="org.apache.httpcomponents.httpclient.source">
-      <category name="EGit.dependencies"/>
-   </bundle>
-   <bundle id="org.apache.httpcomponents.httpcore">
-      <category name="EGit.dependencies"/>
-   </bundle>
-   <bundle id="org.apache.httpcomponents.httpcore.source">
-      <category name="EGit.dependencies"/>
-   </bundle>
-   <bundle id="org.apache.sshd.osgi">
-      <category name="EGit.dependencies"/>
-   </bundle>
-   <bundle id="org.apache.sshd.osgi.source">
-      <category name="EGit.dependencies"/>
-   </bundle>
-   <bundle id="org.apache.sshd.sftp">
-      <category name="EGit.dependencies"/>
-   </bundle>
-   <bundle id="org.apache.sshd.sftp.source">
-      <category name="EGit.dependencies"/>
-   </bundle>
-   <bundle id="slf4j.api">
-      <category name="EGit.dependencies"/>
-   </bundle>
-   <bundle id="slf4j.api.source">
-      <category name="EGit.dependencies"/>
-   </bundle>
-   <bundle id="slf4j.simple">
-      <category name="EGit.dependencies"/>
-   </bundle>
-   <bundle id="slf4j.simple.source">
-      <category name="EGit.dependencies"/>
-   </bundle>
-   <bundle id="jcl.over.slf4j">
-      <category name="EGit.dependencies"/>
-   </bundle>
-   <bundle id="jcl.over.slf4j.source">
-      <category name="EGit.dependencies"/>
-   </bundle>
-   <bundle id="org.tukaani.xz">
-      <category name="EGit.dependencies"/>
-   </bundle>
-   <bundle id="org.tukaani.xz.source">
-      <category name="EGit.dependencies"/>
-   </bundle>
-   <bundle id="com.googlecode.javaewah.JavaEWAH">
-      <category name="EGit.dependencies"/>
-   </bundle>
-   <bundle id="com.googlecode.javaewah.JavaEWAH.source">
-      <category name="EGit.dependencies"/>
-   </bundle>
    <bundle id="bcpg">
-      <category name="EGit.dependencies"/>
-   </bundle>
-   <bundle id="bcpg.source">
       <category name="EGit.dependencies"/>
    </bundle>
    <bundle id="bcpkix">
       <category name="EGit.dependencies"/>
    </bundle>
-   <bundle id="bcpkix.source">
-      <category name="EGit.dependencies"/>
-   </bundle>
    <bundle id="bcprov">
-      <category name="EGit.dependencies"/>
-   </bundle>
-   <bundle id="bcprov.source">
       <category name="EGit.dependencies"/>
    </bundle>
    <bundle id="bcutil">
       <category name="EGit.dependencies"/>
    </bundle>
-   <bundle id="bcutil.source">
-      <category name="EGit.dependencies"/>
-   </bundle>
    <bundle id="com.google.gson">
       <category name="EGit.dependencies"/>
    </bundle>
-   <bundle id="com.google.gson.source">
+   <bundle id="com.googlecode.javaewah.JavaEWAH">
       <category name="EGit.dependencies"/>
    </bundle>
    <bundle id="com.sun.jna">
       <category name="EGit.dependencies"/>
    </bundle>
-   <bundle id="com.sun.jna.source">
-      <category name="EGit.dependencies"/>
-   </bundle>
    <bundle id="com.sun.jna.platform">
-      <category name="EGit.dependencies"/>
-   </bundle>
-   <bundle id="com.sun.jna.platform.source">
       <category name="EGit.dependencies"/>
    </bundle>
    <bundle id="jakarta.servlet-api">
       <category name="EGit.dependencies"/>
    </bundle>
-   <bundle id="jakarta.servlet-api.source">
+   <bundle id="jcl.over.slf4j">
       <category name="EGit.dependencies"/>
    </bundle>
-   <bundle id="org.eclipse.jetty.http">
+   <bundle id="org.apache.ant">
       <category name="EGit.dependencies"/>
    </bundle>
-   <bundle id="org.eclipse.jetty.http.source">
+   <bundle id="org.apache.aries.spifly.dynamic.bundle">
       <category name="EGit.dependencies"/>
    </bundle>
-   <bundle id="org.eclipse.jetty.io">
-      <category name="EGit.dependencies"/>
-   </bundle>
-   <bundle id="org.eclipse.jetty.io.source">
-      <category name="EGit.dependencies"/>
-   </bundle>
-   <bundle id="org.eclipse.jetty.security">
-      <category name="EGit.dependencies"/>
-   </bundle>
-   <bundle id="org.eclipse.jetty.security.source">
-      <category name="EGit.dependencies"/>
-   </bundle>
-   <bundle id="org.eclipse.jetty.server">
-      <category name="EGit.dependencies"/>
-   </bundle>
-   <bundle id="org.eclipse.jetty.server.source">
-      <category name="EGit.dependencies"/>
-   </bundle>
-   <bundle id="org.eclipse.jetty.ee11.servlet">
-      <category name="EGit.dependencies"/>
-   </bundle>
-   <bundle id="org.eclipse.jetty.ee11.servlet.source">
-      <category name="EGit.dependencies"/>
-   </bundle>
-   <bundle id="org.eclipse.jetty.util">
-      <category name="EGit.dependencies"/>
-   </bundle>
-   <bundle id="org.eclipse.jetty.util.source">
-      <category name="EGit.dependencies"/>
-   </bundle>
-   <bundle id="org.eclipse.jetty.util.ajax">
-      <category name="EGit.dependencies"/>
-   </bundle>
-   <bundle id="org.eclipse.jetty.util.ajax.source">
+   <bundle id="org.apache.commons.commons-codec">
       <category name="EGit.dependencies"/>
    </bundle>
    <bundle id="org.apache.commons.commons-compress">
       <category name="EGit.dependencies"/>
    </bundle>
-   <bundle id="org.apache.commons.commons-compress.source">
+   <bundle id="org.apache.commons.commons-logging">
       <category name="EGit.dependencies"/>
    </bundle>
-   <bundle id="org.kohsuke.args4j">
+   <bundle id="org.apache.httpcomponents.httpclient">
       <category name="EGit.dependencies"/>
    </bundle>
-   <bundle id="org.kohsuke.args4j.source">
+   <bundle id="org.apache.httpcomponents.httpcore">
+      <category name="EGit.dependencies"/>
+   </bundle>
+   <bundle id="org.apache.sshd.osgi">
+      <category name="EGit.dependencies"/>
+   </bundle>
+   <bundle id="org.apache.sshd.sftp">
+      <category name="EGit.dependencies"/>
+   </bundle>
+   <bundle id="org.eclipse.jetty.ee11.servlet">
+      <category name="EGit.dependencies"/>
+   </bundle>
+   <bundle id="org.eclipse.jetty.http">
+      <category name="EGit.dependencies"/>
+   </bundle>
+   <bundle id="org.eclipse.jetty.io">
+      <category name="EGit.dependencies"/>
+   </bundle>
+   <bundle id="org.eclipse.jetty.security">
+      <category name="EGit.dependencies"/>
+   </bundle>
+   <bundle id="org.eclipse.jetty.server">
+      <category name="EGit.dependencies"/>
+   </bundle>
+   <bundle id="org.eclipse.jetty.util">
+      <category name="EGit.dependencies"/>
+   </bundle>
+   <bundle id="org.eclipse.jetty.util.ajax">
       <category name="EGit.dependencies"/>
    </bundle>
    <bundle id="org.eclipse.osgi">
       <category name="EGit.dependencies"/>
    </bundle>
-   <bundle id="org.osgi.service.cm">
-      <category name="EGit.dependencies"/>
-   </bundle>
-   <bundle id="org.osgi.service.cm.source">
-      <category name="EGit.dependencies"/>
-   </bundle>
-   <bundle id="org.apache.commons.commons-logging">
-      <category name="EGit.dependencies"/>
-   </bundle>
-   <bundle id="org.apache.aries.spifly.dynamic.bundle">
+   <bundle id="org.kohsuke.args4j">
       <category name="EGit.dependencies"/>
    </bundle>
    <bundle id="org.objectweb.asm">
@@ -229,6 +130,18 @@
       <category name="EGit.dependencies"/>
    </bundle>
    <bundle id="org.objectweb.asm.util">
+      <category name="EGit.dependencies"/>
+   </bundle>
+   <bundle id="org.osgi.service.cm">
+      <category name="EGit.dependencies"/>
+   </bundle>
+   <bundle id="org.tukaani.xz">
+      <category name="EGit.dependencies"/>
+   </bundle>
+   <bundle id="slf4j.api">
+      <category name="EGit.dependencies"/>
+   </bundle>
+   <bundle id="slf4j.simple">
       <category name="EGit.dependencies"/>
    </bundle>
    <category-def name="EGit" label="Git integration for Eclipse">
