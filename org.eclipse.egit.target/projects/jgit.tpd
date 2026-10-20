@@ -1,0 +1,12 @@
+target "jgit" with source configurePhase
+
+location jgit "mvn:org.eclipse.jgit:org.eclipse.jgit.repository:8.0.0-SNAPSHOT:zip" {
+	org.eclipse.jgit.feature.group lazy
+	org.eclipse.jgit.gpg.bc.feature.group lazy
+	org.eclipse.jgit.http.apache.feature.group lazy
+	org.eclipse.jgit.junit.feature.group lazy
+	org.eclipse.jgit.lfs.feature.group lazy
+	org.eclipse.jgit.pgm.feature.group lazy
+	org.eclipse.jgit.source.feature.group lazy
+	org.eclipse.jgit.ssh.apache.feature.group lazy
+}

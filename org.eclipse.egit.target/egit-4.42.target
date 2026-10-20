@@ -1,8 +1,19 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <?pde?>
 <!-- generated with https://github.com/eclipse-cbi/targetplatform-dsl -->
-<target name="egit-4.42" sequenceNumber="1792701998">
+<target name="egit-4.42" sequenceNumber="1792702061">
   <locations>
+    <location includeMode="slicer" includeAllPlatforms="false" includeSource="true" includeConfigurePhase="true" type="InstallableUnit">
+      <unit id="org.eclipse.jgit.feature.group" version="0.0.0"/>
+      <unit id="org.eclipse.jgit.gpg.bc.feature.group" version="0.0.0"/>
+      <unit id="org.eclipse.jgit.http.apache.feature.group" version="0.0.0"/>
+      <unit id="org.eclipse.jgit.junit.feature.group" version="0.0.0"/>
+      <unit id="org.eclipse.jgit.lfs.feature.group" version="0.0.0"/>
+      <unit id="org.eclipse.jgit.pgm.feature.group" version="0.0.0"/>
+      <unit id="org.eclipse.jgit.source.feature.group" version="0.0.0"/>
+      <unit id="org.eclipse.jgit.ssh.apache.feature.group" version="0.0.0"/>
+      <repository id="jgit" location="mvn:org.eclipse.jgit:org.eclipse.jgit.repository:8.0.0-SNAPSHOT:zip"/>
+    </location>
     <location includeMode="slicer" includeAllPlatforms="false" includeSource="true" includeConfigurePhase="true" type="InstallableUnit">
       <unit id="org.eclipse.license.feature.group" version="0.0.0"/>
       <repository id="eclipse-public-license" location="https://download.eclipse.org/cbi/updates/license/2.0.2.v20181016-2210"/>

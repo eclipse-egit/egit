@@ -1,5 +1,6 @@
 target "egit-4.42" with source configurePhase
 
+include "projects/jgit.tpd"
 include "projects/license.tpd"
 include "projects/swtbot.tpd"
 include "orbit/orbit-4.42.tpd"
