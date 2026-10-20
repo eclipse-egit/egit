@@ -34,6 +34,24 @@
       "parentUuid": "66a85bba_45505b62",
       "revId": "b2c3b1af17e90dab1bc3f4b4d3f5e08bed93d747",
       "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "91bb6e22_3a36a7a6",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 5
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000671
+      },
+      "writtenOn": "2026-10-20T12:57:27Z",
+      "side": 1,
+      "message": "I don\u0027t intend to release a 7.9.0 with 2026-12 but replace that by 8.0 but didn\u0027t want to contribute an 8.0 M1 on the last day of 2026-12 M1. That\u0027s why I created a stable-7.9 branch.\n\nDoes that make sense ?",
+      "parentUuid": "1fc27aa8_650984d8",
+      "revId": "b2c3b1af17e90dab1bc3f4b4d3f5e08bed93d747",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735"
     }
   ]
 }
