@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (C) 2019 Thomas Wolf <thomas.wolf@paranor.ch>
+ * Copyright (C) 2019, 2026 Thomas Wolf <twolf@apache.org>
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License 2.0
@@ -77,7 +77,7 @@ public final class UnitOfWork {
 	 */
 	public static void run(Repository repository, Work work)
 			throws IOException {
-		try (ConfigScope scope = new ConfigScope(repository)) {
+		try (ConfigScope _ = new ConfigScope(repository)) {
 			work.run();
 		}
 	}
@@ -92,7 +92,7 @@ public final class UnitOfWork {
 	 *            to perform
 	 */
 	public static void execute(Repository repository, Runnable work) {
-		try (ConfigScope scope = new ConfigScope(repository)) {
+		try (ConfigScope _ = new ConfigScope(repository)) {
 			work.run();
 		}
 	}
@@ -111,7 +111,7 @@ public final class UnitOfWork {
 	 */
 	public static <T> T run(Repository repository,
 			WorkWithResult<? extends T> work) throws IOException {
-		try (ConfigScope scope = new ConfigScope(repository)) {
+		try (ConfigScope _ = new ConfigScope(repository)) {
 			return work.get();
 		}
 	}
@@ -128,7 +128,7 @@ public final class UnitOfWork {
 	 * @return the result of {@code work}
 	 */
 	public static <T> T get(Repository repository, Supplier<? extends T> work) {
-		try (ConfigScope scope = new ConfigScope(repository)) {
+		try (ConfigScope _ = new ConfigScope(repository)) {
 			return work.get();
 		}
 	}

@@ -19,7 +19,7 @@
 
   <groupId>org.eclipse.egit</groupId>
   <artifactId>egit-parent</artifactId>
-  <version>7.9.0-SNAPSHOT</version>
+  <version>8.0.0-SNAPSHOT</version>
   <packaging>pom</packaging>
 
   <name>EGit Parent</name>
@@ -62,9 +62,9 @@
 
   <properties>
     <maven-version-minimum>3.9.0</maven-version-minimum>
-    <egit-version>7.9.0-SNAPSHOT</egit-version>
+    <egit-version>8.0.0-SNAPSHOT</egit-version>
     <tycho-version>5.0.4</tycho-version>
-    <java-version>21</java-version>
+    <java-version>25</java-version>
     <ecj-version>3.46.100</ecj-version>
     <spotbugs-maven-plugin-version>4.9.8.5</spotbugs-maven-plugin-version>
     <jgit-site>file:/${basedir}/../../jgit/org.eclipse.jgit.packaging/org.eclipse.jgit.repository/target/repository</jgit-site>
