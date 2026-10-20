@@ -70,6 +70,24 @@
       "parentUuid": "91bb6e22_3a36a7a6",
       "revId": "b2c3b1af17e90dab1bc3f4b4d3f5e08bed93d747",
       "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "944172cc_d298aaf3",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 5
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1021966
+      },
+      "writtenOn": "2026-10-20T21:30:57Z",
+      "side": 1,
+      "message": "Still fails with the same reason: tycho doesn\u0027t find the egit source feature when it builds the p2 repo. I don\u0027t understand why building the JGit p2 repo with Java 25 instead of Java 21 would fix this, but let\u0027s see what happens when we retrigger this once the JGit change in in and the repo has been built.",
+      "parentUuid": "5d55a3ef_08d32ed8",
+      "revId": "b2c3b1af17e90dab1bc3f4b4d3f5e08bed93d747",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735"
     }
   ]
 }
