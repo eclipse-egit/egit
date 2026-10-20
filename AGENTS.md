@@ -4,7 +4,7 @@ EGit is the Eclipse Git integration: a set of OSGi bundles built with Maven and 
 
 ## Build
 
-Build with JDK 21 (the BREE is JavaSE-21); JGit's build fails on newer JDKs.
+Build with JDK 25 (the BREE is JavaSE-25); JGit's build fails on newer JDKs.
 
 EGit resolves JGit from a locally built p2 repository at `../../jgit/org.eclipse.jgit.packaging/org.eclipse.jgit.repository/target/repository` (the `jgit-site` property in `pom.xml`), so JGit has to be built first in a sibling checkout whose version matches the `Require-Bundle`/`Import-Package` range in EGit's manifests:
 

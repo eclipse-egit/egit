@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (C) 2009, 2013 Robin Rosenberg and others.
+ * Copyright (C) 2009, 2026 Robin Rosenberg and others.
  * Copyright (C) 2009, Mykola Nikishov <mn@mn.com.ua>
  * Copyright (C) 2011, Mathias Kinzler <mathias.kinzler@sap.com>
  *
@@ -398,7 +398,7 @@ class ExistingOrNewPage extends WizardPage {
 				File workingDir = new File(repositoryToCreate.getText());
 				File gitDir = new File(workingDir, Constants.DOT_GIT);
 				try {
-					try (Git git = Git.init().setDirectory(workingDir).call()) {
+					try (Git _ = Git.init().setDirectory(workingDir).call()) {
 						// And close it.
 					}
 					for (IProject project : getProjects(false).keySet()) {
