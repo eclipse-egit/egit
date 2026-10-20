@@ -16,6 +16,24 @@
       "message": "building this with https://eclipse.gerrithub.io/c/eclipse-jgit/jgit/+/1254282 works :-)",
       "revId": "b2c3b1af17e90dab1bc3f4b4d3f5e08bed93d747",
       "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "1fc27aa8_650984d8",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 5
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1021966
+      },
+      "writtenOn": "2026-10-20T12:27:07Z",
+      "side": 1,
+      "message": "I would have never guessed that. I\u0027m trying to take this apart, but it\u0027s slow going. Basically:\n\n  1. Ief6cbbb9172b6a49fc2872bbb12a65f37ab04ca2\n  2. I995912204cc8da89260ee876ba69401581d38a30\n  3. Just change BREE to Java 25 (should be possible even if JGit 7.9.0 is still Java 21)\n  4. Just the version bump to 8.0.0",
+      "parentUuid": "66a85bba_45505b62",
+      "revId": "b2c3b1af17e90dab1bc3f4b4d3f5e08bed93d747",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735"
     }
   ]
 }
