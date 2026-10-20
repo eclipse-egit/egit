@@ -52,6 +52,24 @@
       "parentUuid": "1fc27aa8_650984d8",
       "revId": "b2c3b1af17e90dab1bc3f4b4d3f5e08bed93d747",
       "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "5d55a3ef_08d32ed8",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 5
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1021966
+      },
+      "writtenOn": "2026-10-20T21:26:49Z",
+      "side": 1,
+      "message": "Fine by me. So the API baseline remains 7.8.0. There\u0027s a \"since 7.9\" annotation in org.eclipse.jgit.lib.ConfigConstants that will need to be bumped to \"since 8.0\" in that case.",
+      "parentUuid": "91bb6e22_3a36a7a6",
+      "revId": "b2c3b1af17e90dab1bc3f4b4d3f5e08bed93d747",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735"
     }
   ]
 }
