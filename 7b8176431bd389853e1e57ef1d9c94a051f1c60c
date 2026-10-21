@@ -18,6 +18,24 @@
       "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "ecc6629d_de83fbd1",
+        "filename": "org.eclipse.egit.ui.test/src/org/eclipse/egit/ui/test/history/HistoryViewTest.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 414,
+      "author": {
+        "id": 1039063
+      },
+      "writtenOn": "2026-10-21T12:52:31Z",
+      "side": 1,
+      "message": "Removed, it was a leftover from the previous commit.",
+      "parentUuid": "a4ff385e_723eccdc",
+      "revId": "7b8176431bd389853e1e57ef1d9c94a051f1c60c",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "3b6d8e50_47a9e132",
@@ -100,6 +118,24 @@
       "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "41f4850c_ffaf5845",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/history/GenerateHistoryJob.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 118,
+      "author": {
+        "id": 1039063
+      },
+      "writtenOn": "2026-10-21T12:52:31Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5771e048_c3d79a0f",
+      "revId": "7b8176431bd389853e1e57ef1d9c94a051f1c60c",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "20df567f_3ecd9375",
@@ -113,6 +149,30 @@
       "writtenOn": "2026-10-21T08:17:48Z",
       "side": 1,
       "message": "Nitpicking: I don\u0027t think copying the commit array is the bottleneck here, but visualizing the commits. So this comment seems a bit misleading (it also applies to the internal of updateUI(), not the code here)",
+      "range": {
+        "startLine": 151,
+        "startChar": 12,
+        "endLine": 152,
+        "endChar": 13
+      },
+      "revId": "7b8176431bd389853e1e57ef1d9c94a051f1c60c",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "19987ed6_16606793",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/history/GenerateHistoryJob.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 152,
+      "author": {
+        "id": 1039063
+      },
+      "writtenOn": "2026-10-21T12:52:31Z",
+      "side": 1,
+      "message": "Agreed, the bottleneck is having so many async-calls. I changed the comment",
+      "parentUuid": "20df567f_3ecd9375",
       "range": {
         "startLine": 151,
         "startChar": 12,
