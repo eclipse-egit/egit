@@ -88,6 +88,24 @@
       "parentUuid": "5d55a3ef_08d32ed8",
       "revId": "b2c3b1af17e90dab1bc3f4b4d3f5e08bed93d747",
       "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "51f2b6ff_7eaf0f41",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 5
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000671
+      },
+      "writtenOn": "2026-10-21T22:01:08Z",
+      "side": 1,
+      "message": "I think I found the root cause, see https://eclipse.gerrithub.io/c/eclipse-egit/egit/+/1255434\n\nNow builds are failing since the ip check service seems unhealthy. Maybe we should skip the ip checks on the CI by adding `-Ddash.skip`",
+      "parentUuid": "944172cc_d298aaf3",
+      "revId": "b2c3b1af17e90dab1bc3f4b4d3f5e08bed93d747",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735"
     }
   ]
 }
