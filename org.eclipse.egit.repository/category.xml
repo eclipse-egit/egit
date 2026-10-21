@@ -6,7 +6,7 @@
    <feature url="features/org.eclipse.egit_0.0.0.qualifier.jar" id="org.eclipse.egit" version="0.0.0" patch="true">
       <category name="EGit"/>
    </feature>
-   <feature url="features/org.eclipse.egit.sources_0.0.0.qualifier.jar" id="org.eclipse.egit.source" version="0.0.0" patch="true">
+   <feature url="features/org.eclipse.egit.source_0.0.0.qualifier.jar" id="org.eclipse.egit.source" version="0.0.0" patch="true">
       <category name="EGit"/>
    </feature>
    <feature url="features/org.eclipse.jgit_0.0.0.qualifier.jar" id="org.eclipse.jgit" version="0.0.0" patch="true">
