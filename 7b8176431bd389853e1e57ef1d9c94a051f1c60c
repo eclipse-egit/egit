@@ -1,0 +1,107 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a4ff385e_723eccdc",
+        "filename": "org.eclipse.egit.ui.test/src/org/eclipse/egit/ui/test/history/HistoryViewTest.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 414,
+      "author": {
+        "id": 1039515
+      },
+      "writtenOn": "2026-10-21T08:17:48Z",
+      "side": 1,
+      "message": "Nitpicking: Why count the commits if we know how many commits were created? This just seems to waste time",
+      "revId": "7b8176431bd389853e1e57ef1d9c94a051f1c60c",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "3b6d8e50_47a9e132",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/history/GenerateHistoryJob.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1039515
+      },
+      "writtenOn": "2026-10-21T08:17:48Z",
+      "side": 1,
+      "message": "Minor: Better use the java.time abstractions for time difference calculations. This is both easier to read and also less error-prone (This change is meant to be applied together with the other changes suggested in this file)\n\n```suggestion\nprivate static final Duration UI_UPDATE_INTERVAL_NANOS \u003d Duration\n\t\t\t.ofMillis(500);\n```",
+      "range": {
+        "startLine": 42,
+        "startChar": 3,
+        "endLine": 44,
+        "endChar": 0
+      },
+      "revId": "7b8176431bd389853e1e57ef1d9c94a051f1c60c",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "5d3eb83e_9b81919f",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/history/GenerateHistoryJob.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 118,
+      "author": {
+        "id": 1039515
+      },
+      "writtenOn": "2026-10-21T08:17:48Z",
+      "side": 1,
+      "message": "It\u0027s easier to just set lastUiUpdate to null for the initial batch to force an UI refresh.\n\n```suggestion\n\t\t\tInstant lastUiUpdate \u003d null;\n```",
+      "revId": "7b8176431bd389853e1e57ef1d9c94a051f1c60c",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "20df567f_3ecd9375",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/history/GenerateHistoryJob.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 152,
+      "author": {
+        "id": 1039515
+      },
+      "writtenOn": "2026-10-21T08:17:48Z",
+      "side": 1,
+      "message": "Nitpicking: I don\u0027t think copying the commit array is the bottleneck here, but visualizing the commits. So this comment seems a bit misleading (it also applies to the internal of updateUI(), not the code here)",
+      "range": {
+        "startLine": 151,
+        "startChar": 12,
+        "endLine": 152,
+        "endChar": 13
+      },
+      "revId": "7b8176431bd389853e1e57ef1d9c94a051f1c60c",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "6ff2dc9a_77516a29",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/history/GenerateHistoryJob.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 157,
+      "author": {
+        "id": 1039515
+      },
+      "writtenOn": "2026-10-21T08:17:48Z",
+      "side": 1,
+      "message": "```suggestion\n// Copying the commits for every batch gets expensive for\n\t\t\t\t\t// large histories\n\t\t\t\t\tInstant now \u003d Instant.now();\n\t\t\t\t\tif (lastUiUpdate \u003d\u003d null || now.isAfter(\n\t\t\t\t\t\t\tlastUiUpdate.plus(UI_UPDATE_INTERVAL_NANOS))) {\n\t\t\t\t\t\tupdateUI();\n\t\t\t\t\t\tlastUiUpdate \u003d now;\n\t\t\t\t\t}\n```",
+      "range": {
+        "startLine": 151,
+        "startChar": 6,
+        "endLine": 157,
+        "endChar": 6
+      },
+      "revId": "7b8176431bd389853e1e57ef1d9c94a051f1c60c",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735"
+    }
+  ]
+}
