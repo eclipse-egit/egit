@@ -63,6 +63,12 @@
    <bundle id="jcl.over.slf4j">
       <category name="EGit.dependencies"/>
    </bundle>
+   <bundle id="net.bytebuddy.byte-buddy">
+      <category name="EGit.dependencies"/>
+   </bundle>
+   <bundle id="net.bytebuddy.byte-buddy-agent">
+      <category name="EGit.dependencies"/>
+   </bundle>
    <bundle id="org.apache.ant">
       <category name="EGit.dependencies"/>
    </bundle>
@@ -75,7 +81,13 @@
    <bundle id="org.apache.commons.commons-compress">
       <category name="EGit.dependencies"/>
    </bundle>
+   <bundle id="org.apache.commons.commons-io">
+      <category name="EGit.dependencies"/>
+   </bundle>
    <bundle id="org.apache.commons.commons-logging">
+      <category name="EGit.dependencies"/>
+   </bundle>
+   <bundle id="org.apache.commons.lang3">
       <category name="EGit.dependencies"/>
    </bundle>
    <bundle id="org.apache.httpcomponents.httpclient">
