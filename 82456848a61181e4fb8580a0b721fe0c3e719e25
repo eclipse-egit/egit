@@ -16,6 +16,23 @@
       "message": "@loskutov@gmx.de since you already tested the previous change, I think it would be worth testing this one too: it delivers an even better UX since there is no limit to the amount of commits anymore, one can simply start looking and the whole history will be made available pretty fast (in under 5s for our repository). For notes about performance improvements, check [my comment in the other change](https://eclipse.gerrithub.io/c/eclipse-egit/egit/+/1253891/comments/1d764d3b_987cb250)",
       "revId": "82456848a61181e4fb8580a0b721fe0c3e719e25",
       "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "34301f15_bfb64adb",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 8
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1037131
+      },
+      "writtenOn": "2026-10-23T15:01:36Z",
+      "side": 1,
+      "message": "Two things: could you please fix 3 test failures (https://ci.eclipse.org/egit/job/egit.gerrit/3872/) \u0026 rebase on master?",
+      "revId": "82456848a61181e4fb8580a0b721fe0c3e719e25",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735"
     }
   ]
 }
