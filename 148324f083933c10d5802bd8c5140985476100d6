@@ -16,6 +16,24 @@
       "message": "@loskutov@gmx.de it would be nice if you could review this promptly and it could make it to the next release. I addressed your request about only searching when the user types in something and also added some hints regarding the possible performance issue that you mentioned so you may reproduce it and diagnose it (I wasn\u0027t able to reproduce any freeze even when deactivating our optimizations, but maybe there is something different in your environment).",
       "revId": "148324f083933c10d5802bd8c5140985476100d6",
       "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "6d62b48a_742541eb",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 5
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1037131
+      },
+      "writtenOn": "2026-10-23T08:30:57Z",
+      "side": 1,
+      "message": "Frederico, please rebase your patch on master. It is based on your \"Prepare 8.0.0-SNAPSHOT builds\" change but that is not needed anymore because Matthias already bumped versions on master.",
+      "parentUuid": "76358467_197d65ca",
+      "revId": "148324f083933c10d5802bd8c5140985476100d6",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735"
     }
   ]
 }
