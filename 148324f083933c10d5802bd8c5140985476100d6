@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "76358467_197d65ca",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 5
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1039063
+      },
+      "writtenOn": "2026-10-23T06:23:40Z",
+      "side": 1,
+      "message": "@loskutov@gmx.de it would be nice if you could review this promptly and it could make it to the next release. I addressed your request about only searching when the user types in something and also added some hints regarding the possible performance issue that you mentioned so you may reproduce it and diagnose it (I wasn\u0027t able to reproduce any freeze even when deactivating our optimizations, but maybe there is something different in your environment).",
+      "revId": "148324f083933c10d5802bd8c5140985476100d6",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735"
+    }
+  ]
+}
