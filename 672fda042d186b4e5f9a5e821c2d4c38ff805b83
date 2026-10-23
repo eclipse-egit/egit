@@ -116,6 +116,30 @@
       },
       "revId": "672fda042d186b4e5f9a5e821c2d4c38ff805b83",
       "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "92ac9103_476bff2a",
+        "filename": "org.eclipse.egit.target/egit-4.41.target",
+        "patchSetId": 2
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1000671
+      },
+      "writtenOn": "2026-10-23T06:30:51Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "5fcd46dd_cc6fa9ac",
+      "range": {
+        "startLine": 21,
+        "startChar": 0,
+        "endLine": 24,
+        "endChar": 73
+      },
+      "revId": "672fda042d186b4e5f9a5e821c2d4c38ff805b83",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735"
     }
   ]
 }
