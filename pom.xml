@@ -466,7 +466,7 @@
           <configuration>
             <includeAllDependencies>false</includeAllDependencies>
             <includeAllSources>true</includeAllSources>
-            <filterProvided>true</filterProvided>
+            <filterProvided>false</filterProvided>
             <repositoryName>Eclipse EGit</repositoryName>
           </configuration>
         </plugin>
