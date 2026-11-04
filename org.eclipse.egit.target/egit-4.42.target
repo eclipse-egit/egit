@@ -69,11 +69,11 @@
       <unit id="org.apache.httpcomponents.httpcore.source" version="4.4.16"/>
       <unit id="org.apiguardian.api" version="1.1.2"/>
       <unit id="org.apache.xmlgraphics" version="2.12.0.v20261020-1000"/>
-      <unit id="org.apache.lucene.analysis-common" version="10.5.2.v20261004-1000"/>
-      <unit id="org.apache.lucene.analysis-smartcn" version="10.5.2.v20261004-1000"/>
-      <unit id="org.apache.lucene.core" version="10.5.2.v20261004-1000"/>
-      <unit id="org.commonmark" version="0.31.0"/>
-      <unit id="org.commonmark.ext-gfm-tables" version="0.31.0"/>
+      <unit id="org.apache.lucene.analysis-common" version="10.6.0.v20261030-1000"/>
+      <unit id="org.apache.lucene.analysis-smartcn" version="10.6.0.v20261030-1000"/>
+      <unit id="org.apache.lucene.core" version="10.6.0.v20261030-1000"/>
+      <unit id="org.commonmark" version="0.32.0"/>
+      <unit id="org.commonmark.ext-gfm-tables" version="0.32.0"/>
       <unit id="org.eclipse.orbit.xml-apis-ext" version="1.0.0.v20240917-0534"/>
       <unit id="org.hamcrest" version="3.0.0"/>
       <unit id="org.hamcrest.source" version="3.0.0"/>
