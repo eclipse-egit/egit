@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "ae6ead6e_c3dce550",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 9
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1039063
+      },
+      "writtenOn": "2026-11-05T13:15:10Z",
+      "side": 1,
+      "message": "@loskutov@gmx.de sorry for the late reply, I just came back from my holidays. \n\nI fixed the tests and rebased on `master` as requested.\n\nI tested again by using the EGit and JGit repos and it works as expected:\n- Searching for only white-spaces does not load any commits\n- Searching for non white-spaces loads all commits gradually and very fast\n- I haven\u0027t experienced any UI freezes\n\nI looked for the content \"`      initial`\" in both EGit and JGit repos and:\n- While inserting white-spaces nothing happened\n- As soon as I inserted the first `i`, the rest of the commits got loaded\n- The matches were highlighted in **bold**\n- I could also navigate backward and forward to the previous and next matches\n- No UI freezes ever occurred\n\nI also tested with smaller repos (\u003c 100 commits). Nothing spectacular, the whole history is loaded instantly, no UI freezes either.\n\nIf possible, I would like to have this merged for the upcoming release, ideally before M3. Do you think you can find the time to test and approve?\n\nThank you!",
+      "revId": "9a1445e5702955dd9e8b98f73cc5790da6214e84",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735"
+    }
+  ]
+}

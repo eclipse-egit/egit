@@ -33,6 +33,24 @@
       "message": "Two things: could you please fix 3 test failures (https://ci.eclipse.org/egit/job/egit.gerrit/3872/) \u0026 rebase on master?",
       "revId": "82456848a61181e4fb8580a0b721fe0c3e719e25",
       "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "7f596deb_53588f79",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 8
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1039063
+      },
+      "writtenOn": "2026-11-05T13:15:10Z",
+      "side": 1,
+      "message": "I fixed the failing tests in PS9 and rebased on `master` too (Ifdf558238100844fec4e5daaf212b4a2e85a451e).",
+      "parentUuid": "34301f15_bfb64adb",
+      "revId": "82456848a61181e4fb8580a0b721fe0c3e719e25",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735"
     }
   ]
 }
