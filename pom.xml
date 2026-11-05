@@ -175,8 +175,8 @@
     <module>org.eclipse.egit-feature</module>
 
     <module>org.eclipse.egit.gitflow-feature</module>
-    <module>org.eclipse.egit.gitflow</module>
-    <module>org.eclipse.egit.gitflow.ui</module>
+	<module>org.eclipse.egit.gitflow</module>
+	<module>org.eclipse.egit.gitflow.ui</module>
     <module>org.eclipse.egit.gitflow.test</module>
 
     <module>org.eclipse.egit.source-feature</module>
