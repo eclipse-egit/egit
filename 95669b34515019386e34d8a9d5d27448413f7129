@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "d53e7b97_219b04e3",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 10
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000671
+      },
+      "writtenOn": "2026-11-06T08:36:48Z",
+      "side": 1,
+      "message": "maybe instead of deferring the removal to the next release we could inline the constant so that we can remove it immediately",
+      "revId": "95669b34515019386e34d8a9d5d27448413f7129",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735"
+    }
+  ]
+}
