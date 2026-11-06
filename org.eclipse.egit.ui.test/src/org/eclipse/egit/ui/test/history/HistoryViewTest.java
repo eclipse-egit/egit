@@ -548,25 +548,19 @@ public class HistoryViewTest extends GitRepositoriesViewTestBase {
 				.getBoolean(UIPreferences.RESOURCEHISTORY_SHOW_FINDTOOLBAR);
 	}
 
-	@SuppressWarnings("deprecation")
 	private void runWithFindToolbar(boolean showFindToolbar, TestRunnable test)
 			throws Exception {
 		IPreferenceStore store = Activator.getDefault().getPreferenceStore();
 		boolean oldShowFindToolbar = store
 				.getBoolean(UIPreferences.RESOURCEHISTORY_SHOW_FINDTOOLBAR);
-		int oldMaxCommits = store.getInt(UIPreferences.HISTORY_MAX_NUM_COMMITS);
 		try {
 			store.setValue(UIPreferences.RESOURCEHISTORY_SHOW_FINDTOOLBAR,
 					showFindToolbar);
-			// A limit left over in old workspaces must be ignored
-			store.setValue(UIPreferences.HISTORY_MAX_NUM_COMMITS, 100);
 			test.run();
 		} finally {
 			closeSearchBar();
 			store.setValue(UIPreferences.RESOURCEHISTORY_SHOW_FINDTOOLBAR,
 					oldShowFindToolbar);
-			store.setValue(UIPreferences.HISTORY_MAX_NUM_COMMITS,
-					oldMaxCommits);
 		}
 	}
 
