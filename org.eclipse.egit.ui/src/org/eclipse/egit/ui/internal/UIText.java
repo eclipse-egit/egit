@@ -589,9 +589,6 @@ public class UIText extends NLS {
 	public static String GitHistoryPage_OpenMenuLabel;
 
 	/** */
-	public static String GitHistoryPage_PreferencesLink;
-
-	/** */
 	public static String GitHistoryPage_ProjectType;
 
 	/** */
@@ -655,13 +652,7 @@ public class UIText extends NLS {
 	public static String GitHistoryPage_FilterTooltipCurrent;
 
 	/** */
-	public static String GitHistoryPage_IncompleteListTooltip;
-
-	/** */
 	public static String GitHistoryPage_InRevisionCommentSubMenuLabel;
-
-	/** */
-	public static String GitHistoryPage_ListIncompleteWarningMessage;
 
 	/** */
 	public static String GitHistoryPage_pushCommit;
@@ -2138,9 +2129,6 @@ public class UIText extends NLS {
 
 	/** */
 	public static String ResetTargetSelectionDialog_WindowTitle;
-
-	/** */
-	public static String ResourceHistory_MaxNumCommitsInList;
 
 	/** */
 	public static String ResourceHistory_ShowTagSequence;
