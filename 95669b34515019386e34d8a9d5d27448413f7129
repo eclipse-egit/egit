@@ -34,6 +34,24 @@
       "parentUuid": "d53e7b97_219b04e3",
       "revId": "95669b34515019386e34d8a9d5d27448413f7129",
       "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "9c48baac_12573708",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 10
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000671
+      },
+      "writtenOn": "2026-11-06T11:53:21Z",
+      "side": 1,
+      "message": "ok, then let\u0027s just use what you already pushed and defer the removal to a future release",
+      "parentUuid": "83fd0241_7261f909",
+      "revId": "95669b34515019386e34d8a9d5d27448413f7129",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735"
     }
   ]
 }
