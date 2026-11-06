@@ -16,6 +16,23 @@
       "message": "@loskutov@gmx.de sorry for the late reply, I just came back from my holidays. \n\nI fixed the tests and rebased on `master` as requested.\n\nI tested again by using the EGit and JGit repos and it works as expected:\n- Searching for only white-spaces does not load any commits\n- Searching for non white-spaces loads all commits gradually and very fast\n- I haven\u0027t experienced any UI freezes\n\nI looked for the content \"`      initial`\" in both EGit and JGit repos and:\n- While inserting white-spaces nothing happened\n- As soon as I inserted the first `i`, the rest of the commits got loaded\n- The matches were highlighted in **bold**\n- I could also navigate backward and forward to the previous and next matches\n- No UI freezes ever occurred\n\nI also tested with smaller repos (\u003c 100 commits). Nothing spectacular, the whole history is loaded instantly, no UI freezes either.\n\nIf possible, I would like to have this merged for the upcoming release, ideally before M3. Do you think you can find the time to test and approve?\n\nThank you!",
       "revId": "9a1445e5702955dd9e8b98f73cc5790da6214e84",
       "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "6e48e27f_a93ca9d3",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/UIPreferences.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 279,
+      "author": {
+        "id": 1000671
+      },
+      "writtenOn": "2026-11-06T00:39:53Z",
+      "side": 1,
+      "message": "I think we can remove this constant and the tests still using it in the next release\n```suggestion\n\t@Deprecated(since \u003d \"8.0\", forRemoval \u003d true)\n```",
+      "revId": "9a1445e5702955dd9e8b98f73cc5790da6214e84",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735"
     }
   ]
 }
