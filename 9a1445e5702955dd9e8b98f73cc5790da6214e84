@@ -33,6 +33,24 @@
       "message": "I think we can remove this constant and the tests still using it in the next release\n```suggestion\n\t@Deprecated(since \u003d \"8.0\", forRemoval \u003d true)\n```",
       "revId": "9a1445e5702955dd9e8b98f73cc5790da6214e84",
       "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "50aab108_75fd0369",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/UIPreferences.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 279,
+      "author": {
+        "id": 1039063
+      },
+      "writtenOn": "2026-11-06T08:28:33Z",
+      "side": 1,
+      "message": "Sounds good, it\u0027s done ✔️\n\nThe removal is in I92eded24439fcbc5a9ab71d19aa3ab1da4d274b4, currently marked as a WiP and to be set as _Active_ in the upcoming release.\n\nThank you for looking into it, Matthias!",
+      "parentUuid": "6e48e27f_a93ca9d3",
+      "revId": "9a1445e5702955dd9e8b98f73cc5790da6214e84",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735"
     }
   ]
 }
