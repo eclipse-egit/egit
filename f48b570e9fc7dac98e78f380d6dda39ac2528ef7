@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "3b71951d_11d9fbed",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1039063
+      },
+      "writtenOn": "2026-11-06T10:55:38Z",
+      "side": 1,
+      "message": "I rebased on `master` and solved the merge conflicts.\n\n## For the reviewer: How to test\n\nIntroduce a small delay in the last line of the `while`-loop in `org.eclipse.egit.ui.internal.history.GenerateHistoryJob.run(IProgressMonitor)` and you will see the table loading commits in small batches first and bigger batches later:\n\n```java\ntry {\n\tThread.sleep(300);\n} catch (InterruptedException e) {\n\te.printStackTrace();\n}\n```\n\n@matthias.sohn@sap.com maybe you would like to take a peek? We have been using this change for a few months and we had no problems with it. Also, Robin and Florian already reviewed it here and they approved it :-)",
+      "revId": "f48b570e9fc7dac98e78f380d6dda39ac2528ef7",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735"
+    }
+  ]
+}
