@@ -46,6 +46,7 @@ import org.eclipse.egit.core.internal.indexdiff.IndexDiffCache;
 import org.eclipse.egit.core.internal.indexdiff.IndexDiffCacheEntry;
 import org.eclipse.egit.core.internal.job.RuleUtil;
 import org.eclipse.egit.core.internal.trace.GitTraceLocation;
+import org.eclipse.egit.core.internal.util.ResourceUtil.ContainerLocationResolver;
 import org.eclipse.jgit.annotations.NonNull;
 import org.eclipse.jgit.events.WorkingTreeModifiedEvent;
 import org.eclipse.jgit.events.WorkingTreeModifiedListener;
@@ -223,6 +224,13 @@ public class ResourceRefreshHandler implements WorkingTreeModifiedListener {
 		Map<IResource, Boolean> result = new HashMap<>();
 		IWorkspaceRoot eclipseWorkspace = ResourcesPlugin.getWorkspace()
 				.getRoot();
+		// Share one snapshot of the project locations for all paths instead
+		// of scanning all workspace projects for each of them.
+		ContainerLocationResolver resolver = new ContainerLocationResolver(
+				workTree);
+		Set<IPath> rootKeys = new HashSet<>();
+		roots.keySet().forEach(
+				root -> rootKeys.add(ContainerLocationResolver.key(root)));
 		Stream.concat(modified.stream(), deleted.stream()).forEach(path -> {
 			if (progress.isCanceled()) {
 				throw new OperationCanceledException();
@@ -245,7 +253,13 @@ public class ResourceRefreshHandler implements WorkingTreeModifiedListener {
 				progress.worked(1);
 				return;
 			}
-			IFile eclipseFile = eclipseWorkspace.getFileForLocation(filePath);
+			IFile eclipseFile = resolver.findFile(filePath);
+			if (eclipseFile != null && mayBeFiltered(eclipseFile)) {
+				// The resolver ignores resource filters; the workspace root
+				// returns null for filtered files, which still need an index
+				// refresh.
+				eclipseFile = eclipseWorkspace.getFileForLocation(filePath);
+			}
 			// The file may not be in the Eclipse resource tree. But it may be
 			// in a closed project.
 			if (eclipseFile != null
@@ -260,8 +274,7 @@ public class ResourceRefreshHandler implements WorkingTreeModifiedListener {
 							.findFirst().orElse(null);
 				}
 			}
-			if (eclipseFile == null || !roots.keySet().stream()
-					.anyMatch(root -> root.isPrefixOf(filePath))) {
+			if (eclipseFile == null || !isBelowAny(rootKeys, filePath)) {
 				// Not in workspace.
 				needRefresh.add(path);
 				progress.worked(1);
@@ -280,7 +293,7 @@ public class ResourceRefreshHandler implements WorkingTreeModifiedListener {
 			if (!handled.containsKey(containerPath)) {
 				if (!isFile && containerPath != null) {
 					IContainer container = getContainerForLocation(
-							eclipseWorkspace, containerPath);
+							eclipseWorkspace, resolver, containerPath);
 					if (container != null) {
 						IFile file = handled.get(containerPath);
 						handled.put(containerPath, null);
@@ -296,7 +309,7 @@ public class ResourceRefreshHandler implements WorkingTreeModifiedListener {
 					while (containerPath != null
 							&& workTree.isPrefixOf(containerPath)) {
 						IContainer container = getContainerForLocation(
-								eclipseWorkspace, containerPath);
+								eclipseWorkspace, resolver, containerPath);
 						if (container == null) {
 							lastPart = containerPath.lastSegment();
 							containerPath = containerPath
@@ -352,8 +365,10 @@ public class ResourceRefreshHandler implements WorkingTreeModifiedListener {
 	}
 
 	private static IContainer getContainerForLocation(IWorkspaceRoot root,
-			@NonNull IPath location) {
-		IContainer dir = root.getContainerForLocation(location);
+			ContainerLocationResolver resolver,
+			@NonNull
+			IPath location) {
+		IContainer dir = resolver.findContainer(location);
 		if (dir == null) {
 			return null;
 		}
@@ -364,6 +379,38 @@ public class ResourceRefreshHandler implements WorkingTreeModifiedListener {
 		IContainer[] containers = root.findContainersForLocationURI(uri);
 		return Arrays.stream(containers).filter(ResourceRefreshHandler::isValid)
 				.findFirst().orElse(null);
+	}
+
+	private static boolean isBelowAny(Set<IPath> rootKeys, IPath location) {
+		IPath key = ContainerLocationResolver.key(location);
+		for (IPath prefix = key;; prefix = prefix.removeLastSegments(1)
+				.removeTrailingSeparator()) {
+			if (rootKeys.contains(prefix)) {
+				return true;
+			}
+			if (prefix.segmentCount() == 0) {
+				return false;
+			}
+		}
+	}
+
+	private static boolean mayBeFiltered(
+			@NonNull
+			IFile file) {
+		if (file.exists()) {
+			return false;
+		}
+		try {
+			for (IContainer c = file.getParent(); c != null
+					&& c.getType() != IResource.ROOT; c = c.getParent()) {
+				if (c.getFilters().length > 0) {
+					return true;
+				}
+			}
+		} catch (CoreException e) {
+			return true;
+		}
+		return false;
 	}
 
 	private static boolean isValid(@NonNull IResource resource) {
