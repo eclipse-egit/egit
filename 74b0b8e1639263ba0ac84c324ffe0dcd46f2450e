@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "0b9e5f17_174e0d42",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1039063
+      },
+      "writtenOn": "2026-11-06T08:30:17Z",
+      "side": 1,
+      "message": "Follow-up from https://review.gerrithub.io/c/eclipse-egit/egit/+/1253892/comment/6e48e27f_a93ca9d3/ / I09a8872a0928b359ab83b6265c884e1e0ca3761b.\n\nThis change is supposed to apply in the upcoming release so I marked it as a _WiP_ for now.",
+      "revId": "74b0b8e1639263ba0ac84c324ffe0dcd46f2450e",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735"
+    }
+  ]
+}
