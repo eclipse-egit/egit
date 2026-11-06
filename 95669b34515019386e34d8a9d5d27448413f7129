@@ -16,6 +16,24 @@
       "message": "maybe instead of deferring the removal to the next release we could inline the constant so that we can remove it immediately",
       "revId": "95669b34515019386e34d8a9d5d27448413f7129",
       "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "83fd0241_7261f909",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 10
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1039063
+      },
+      "writtenOn": "2026-11-06T11:50:35Z",
+      "side": 1,
+      "message": "I\u0027m not sure what the rules regarding breaking API changes are but this constant is public API and was introduced in Ie2823c3c24c2ee9a1a9baf1a6c314901bf8b4a12 (February 2011). \n\nIn Platform and other TLPs we would normally deprecate it for removal and remove it 2 years later. Since this is EGit, it\u0027s your call.\n\nI _could_ remove the usages in the tests right now though since I introduced them in this cycle (Ibecf519b4fa26a56cbfdf86a9212bcb8f723d5ef).\n\nLet me know how you want it and I\u0027ll do it.",
+      "parentUuid": "d53e7b97_219b04e3",
+      "revId": "95669b34515019386e34d8a9d5d27448413f7129",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735"
     }
   ]
 }
