@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <?pde?>
 <!-- generated with https://github.com/eclipse-cbi/targetplatform-dsl -->
-<target name="egit-4.42" sequenceNumber="1793961398">
+<target name="egit-4.42" sequenceNumber="1794442507">
   <locations>
     <location includeMode="slicer" includeAllPlatforms="false" includeSource="true" includeConfigurePhase="true" type="InstallableUnit">
       <unit id="org.eclipse.license.feature.group" version="0.0.0"/>
@@ -59,9 +59,9 @@
       <unit id="org.apache.batik.css" version="1.20.0.v20261020-1000"/>
       <unit id="org.apache.batik.i18n" version="1.20.0.v20261020-1000"/>
       <unit id="org.apache.batik.util" version="1.20.0.v20261020-1000"/>
-      <unit id="org.apache.felix.scr" version="2.2.18"/>
+      <unit id="org.apache.felix.scr" version="2.3.0"/>
       <unit id="org.apache.felix.gogo.command" version="1.1.2"/>
-      <unit id="org.apache.felix.gogo.runtime" version="1.1.6"/>
+      <unit id="org.apache.felix.gogo.runtime" version="1.2.0"/>
       <unit id="org.apache.felix.gogo.shell" version="1.1.4"/>
       <unit id="org.apache.httpcomponents.httpclient" version="4.5.14"/>
       <unit id="org.apache.httpcomponents.httpclient.source" version="4.5.14"/>
@@ -117,7 +117,6 @@
       <unit id="biz.aQute.resolve" version="0.0.0"/>
       <unit id="bndtools.jareditor" version="0.0.0"/>
       <unit id="com.sun.el.javax.el" version="0.0.0"/>
-      <unit id="javax.activation" version="0.0.0"/>
       <unit id="org.bndtools.headless.build.manager" version="0.0.0"/>
       <unit id="org.bndtools.headless.build.plugin.gradle" version="0.0.0"/>
       <unit id="org.bndtools.templates.template" version="0.0.0"/>
