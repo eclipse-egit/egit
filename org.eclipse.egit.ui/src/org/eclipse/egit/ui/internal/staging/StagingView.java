@@ -125,6 +125,7 @@ import org.eclipse.egit.ui.internal.push.SimpleConfigurePushDialog;
 import org.eclipse.egit.ui.internal.repository.RepositoryTreeNodeLabelProvider;
 import org.eclipse.egit.ui.internal.repository.tree.RepositoryNode;
 import org.eclipse.egit.ui.internal.repository.tree.RepositoryTreeNode;
+import org.eclipse.egit.ui.internal.repository.tree.command.SubmoduleUpdateCommand;
 import org.eclipse.egit.ui.internal.selection.MultiViewerSelectionProvider;
 import org.eclipse.egit.ui.internal.selection.RepositorySelectionProvider;
 import org.eclipse.jface.action.Action;
@@ -3498,6 +3499,15 @@ public class StagingView extends ViewPart
 								fileSelection));
 					}
 				}
+				if (availableActions
+						.contains(StagingEntry.Action.UPDATE_SUBMODULE)) {
+					menuMgr.add(new Action(UIText.StagingView_UpdateSubmodule) {
+						@Override
+						public void run() {
+							updateSubmodules(stagingEntryList);
+						}
+					});
+				}
 				if (addIgnore) {
 					if (!stagingFolderSet.isEmpty()) {
 						menuMgr.add(new IgnoreFoldersAction(stagingFolderSet));
@@ -4059,6 +4069,16 @@ public class StagingView extends ViewPart
 		};
 		job.setSystem(true);
 		schedule(job, false);
+	}
+
+	private void updateSubmodules(List<StagingEntry> entries) {
+		Map<Repository, List<String>> repoPaths = new HashMap<>();
+		for (StagingEntry entry : entries) {
+			repoPaths.computeIfAbsent(entry.getRepository(),
+					r -> new ArrayList<>()).add(entry.getPath());
+		}
+		SubmoduleUpdateCommand.updateSubmodules(repoPaths,
+				mainComposite.getShell());
 	}
 
 	private void stage(Collection<?> selectedEntries) {

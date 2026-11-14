@@ -6258,6 +6258,9 @@ public class UIText extends NLS {
 	public static String StagingView_Untrack;
 
 	/** */
+	public static String StagingView_UpdateSubmodule;
+
+	/** */
 	public static String StagingView_StageAllItemMenuLabel;
 
 	/** */
