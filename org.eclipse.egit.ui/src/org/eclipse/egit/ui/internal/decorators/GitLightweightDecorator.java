@@ -99,10 +99,7 @@ public class GitLightweightDecorator extends GitDecorator
 			UIText.Decorator_exceptionMessageCommon, Activator.PLUGIN_ID,
 			IStatus.ERROR, Activator.getDefault().getLog());
 
-	/** ID of the new symbolic font for trees and tables since Eclipse 4.17. */
-	private static final String TREE_TABLE_FONT = "org.eclipse.ui.workbench.TREE_TABLE_FONT"; //$NON-NLS-1$
-
-	private static final List<String> FONT_IDS = Arrays.asList(TREE_TABLE_FONT,
+	private static final List<String> FONT_IDS = Arrays.asList(
 			UIPreferences.THEME_UncommittedChangeFont,
 			UIPreferences.THEME_IgnoredResourceFont);
 
@@ -306,7 +303,6 @@ public class GitLightweightDecorator extends GitDecorator
 			}
 			switch (prop) {
 			case IThemeManager.CHANGE_CURRENT_THEME:
-			case TREE_TABLE_FONT:
 			case UIPreferences.THEME_UncommittedChangeBackgroundColor:
 			case UIPreferences.THEME_UncommittedChangeFont:
 			case UIPreferences.THEME_UncommittedChangeForegroundColor:
@@ -691,15 +687,9 @@ public class GitLightweightDecorator extends GitDecorator
 			if (fc != null) {
 				decoration.setForegroundColor(fc);
 			}
-			if (f == null
-					|| isSameFont(f, resources.getDefaultFont())) {
-				// Try the TREE_TABLE_FONT new in Eclipse 4.17
-				Font treeTableFont = resources.getFont(TREE_TABLE_FONT);
-				if (treeTableFont != null) {
-					f = treeTableFont;
-				}
-			}
-			if (f != null) {
+			// A font left at its default must not override the viewer's own
+			// font, which differs between views and dialogs
+			if (f != null && !isSameFont(f, resources.getDefaultFont())) {
 				decoration.setFont(f);
 			}
 		}
