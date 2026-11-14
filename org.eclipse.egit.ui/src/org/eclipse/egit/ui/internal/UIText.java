@@ -6411,6 +6411,18 @@ public class UIText extends NLS {
 	public static String SubmodulePathWizardPage_Title;
 
 	/** */
+	public static String FetchSubmodulesCommand_Title;
+
+	/** */
+	public static String FetchSubmodulesCommand_Error;
+
+	/** */
+	public static String PushSubmodulesCommand_Title;
+
+	/** */
+	public static String PushSubmodulesCommand_Error;
+
+	/** */
 	public static String SubmoduleSyncCommand_SyncError;
 
 	/** */
