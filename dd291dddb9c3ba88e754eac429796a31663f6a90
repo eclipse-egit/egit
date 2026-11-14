@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "5c745936_39cbc79a",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1021966
+      },
+      "writtenOn": "2026-11-14T14:46:44Z",
+      "side": 1,
+      "message": "Doesn\u0027t work for private repositories if the remote is ssh. In that case, perhaps retry on a 403 response after having asked the user for the credentials? (Not sure that\u0027s a good idea -- if the user doesn\u0027t want to set up a PAT (or maybe cannot), then he also shouldn\u0027t be asked repeatedly. So this would not only need to persist working credentials, but also whether the user cancelled.)\n\nShould the feature be settable per git server?",
+      "revId": "dd291dddb9c3ba88e754eac429796a31663f6a90",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e0bdeb5f_617a02a8",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/internal/hosts/PullRequestInfo.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 193,
+      "author": {
+        "id": 1021966
+      },
+      "writtenOn": "2026-11-14T14:46:44Z",
+      "side": 1,
+      "message": "I would have expected `GitHosts.ServerType` to encapsulate this, and have the different instances construct the URL differently, so that this switch wasn\u0027t needed at all.",
+      "revId": "dd291dddb9c3ba88e754eac429796a31663f6a90",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "36ae43a1_7abe18f5",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/internal/hosts/PullRequestInfo.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 209,
+      "author": {
+        "id": 1021966
+      },
+      "writtenOn": "2026-11-14T14:46:44Z",
+      "side": 1,
+      "message": "This will encode \"/\". For the other server types there is no such encoding. This should be consistent (either encoding is needed for all, or for none), and probably it\u0027s a good idea not to encode forward slashes.",
+      "revId": "dd291dddb9c3ba88e754eac429796a31663f6a90",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735"
+    }
+  ]
+}
