@@ -16,7 +16,6 @@ import static org.eclipse.swtbot.swt.finder.matchers.WidgetMatcherFactory.allOf;
 import static org.eclipse.swtbot.swt.finder.matchers.WidgetMatcherFactory.widgetOfType;
 import static org.eclipse.swtbot.swt.finder.matchers.WidgetMatcherFactory.withMessage;
 import static org.eclipse.swtbot.swt.finder.matchers.WidgetMatcherFactory.withRegex;
-import static org.eclipse.swtbot.swt.finder.matchers.WidgetMatcherFactory.withText;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.arrayContainingInAnyOrder;
 import static org.hamcrest.Matchers.emptyArray;
@@ -74,7 +73,6 @@ import org.eclipse.jgit.lib.Repository;
 import org.eclipse.jgit.revwalk.RevCommit;
 import org.eclipse.osgi.util.NLS;
 import org.eclipse.swt.SWT;
-import org.eclipse.swt.custom.CLabel;
 import org.eclipse.swt.widgets.Event;
 import org.eclipse.swt.widgets.MenuItem;
 import org.eclipse.swt.widgets.Table;
@@ -89,8 +87,8 @@ import org.eclipse.swtbot.swt.finder.widgets.SWTBotMenu;
 import org.eclipse.swtbot.swt.finder.widgets.SWTBotRootMenu;
 import org.eclipse.swtbot.swt.finder.widgets.SWTBotShell;
 import org.eclipse.swtbot.swt.finder.widgets.SWTBotTable;
-import org.eclipse.swtbot.swt.finder.widgets.SWTBotText;
 import org.eclipse.swtbot.swt.finder.widgets.SWTBotTableItem;
+import org.eclipse.swtbot.swt.finder.widgets.SWTBotText;
 import org.eclipse.swtbot.swt.finder.widgets.SWTBotToolbarDropDownButton;
 import org.eclipse.swtbot.swt.finder.widgets.SWTBotTree;
 import org.eclipse.swtbot.swt.finder.widgets.SWTBotTreeItem;
@@ -410,127 +408,48 @@ public class HistoryViewTest extends GitRepositoriesViewTestBase {
 	}
 
 	@Test
-	public void testHistoryStopsAtCommitLimit() throws Exception {
-		runWithHistoryPreferences(false, 300, () -> {
-			createCommits(600);
-			SWTBotTable table = getHistoryViewTable(PROJ1);
-			scrollToEnd(table);
-			assertEquals(300, table.rowCount());
-			assertTrue(isIncompleteWarningShown());
-		});
-	}
-
-	@Test
 	public void testHistoryLoadedIncrementallyWithoutSearch() throws Exception {
-		runWithHistoryPreferences(false, 100000, () -> {
+		runWithFindToolbar(false, () -> {
 			createCommits(1000);
+			int totalCommits = countProjectCommits();
 			SWTBotTable table = getHistoryViewTable(PROJ1);
 			// Without search, only the first batches are loaded
-			assertTrue(table.rowCount() < 1000);
-			assertFalse(isIncompleteWarningShown());
+			assertNotAllLoaded(table, totalCommits);
 			scrollToEnd(table);
-			assertTrue(table.rowCount() > 1000);
-			assertFalse(isIncompleteWarningShown());
+			assertEquals(totalCommits, table.rowCount());
 		});
 	}
 
+	/**
+	 * Tests both that opening the empty search bar doesn't load more commits
+	 * and that typing a search text then loads the complete history.
+	 *
+	 * @throws Exception
+	 *             if the test fails
+	 */
 	@Test
-	public void testSearchLoadsUpToCommitLimit() throws Exception {
-		runWithHistoryPreferences(true, 400, () -> {
-			createCommits(600);
-			SWTBotTable table = getHistoryViewTable(PROJ1);
-			searchFor("Commit");
-			assertEquals(400, table.rowCount());
-			assertTrue(isIncompleteWarningShown());
-		});
-	}
-
-	@Test
-	public void testSearchLoadsCompleteHistoryBelowCommitLimit()
-			throws Exception {
-		runWithHistoryPreferences(true, 100000, () -> {
-			createCommits(600);
-			SWTBotTable table = getHistoryViewTable(PROJ1);
-			searchFor("Commit");
-			assertTrue(table.rowCount() > 600);
-			assertFalse(isIncompleteWarningShown());
-		});
-	}
-
-	@Test
-	public void testNoIncompleteWarningWhenSearchingAboveCommitCount()
-			throws Exception {
-		// Preferences must be set before creating the commits, which refreshes
-		// the open history
-		int newCommits = 600;
-		int commitCount = countProjectCommits() + newCommits;
-		runWithHistoryPreferences(true, commitCount + 1, () -> {
-			createCommits(newCommits);
-			SWTBotTable table = getHistoryViewTable(PROJ1);
-			searchFor("Commit");
-			assertEquals(commitCount, table.rowCount());
-			assertFalse(isIncompleteWarningShown());
-		});
-	}
-
-	@Test
-	public void testIncompleteWarningWhenSearchingBelowCommitCount()
-			throws Exception {
-		// Preferences must be set before creating the commits, which refreshes
-		// the open history
-		int newCommits = 600;
-		int commitCount = countProjectCommits() + newCommits;
-		runWithHistoryPreferences(true, commitCount - 1, () -> {
-			createCommits(newCommits);
-			SWTBotTable table = getHistoryViewTable(PROJ1);
-			searchFor("Commit");
-			assertEquals(commitCount - 1, table.rowCount());
-			assertTrue(isIncompleteWarningShown());
-		});
-	}
-
-	@Test
-	public void testEmptySearchDoesNotLoadAllCommits() throws Exception {
-		runWithHistoryPreferences(true, 100000, () -> {
+	public void testTypingInSearchLoadsCompleteHistory() throws Exception {
+		runWithFindToolbar(false, () -> {
 			createCommits(1000);
-			int commitCount = countProjectCommits();
+			int totalCommits = countProjectCommits();
 			SWTBotTable table = getHistoryViewTable(PROJ1);
-			// Without a search text, only the first batches are loaded
-			assertTrue(table.rowCount() < commitCount);
-			searchFor("   ");
-			assertTrue(table.rowCount() < commitCount);
-		});
-	}
-
-	@Test
-	public void testTypingInSearchLoadsUpToCommitLimit() throws Exception {
-		runWithHistoryPreferences(false, 100000, () -> {
-			createCommits(1000);
-			SWTBotTable table = getHistoryViewTable(PROJ1);
-			// Without search, only the first batches are loaded. How many
-			// depends on how many rows the table requests, so derive the
-			// limit from it.
-			int rows = table.rowCount();
-			int limit = rows + 100;
-			assertTrue(limit < countProjectCommits());
-			assertFalse(isIncompleteWarningShown());
-			Activator.getDefault().getPreferenceStore()
-					.setValue(UIPreferences.HISTORY_MAX_NUM_COMMITS, limit);
+			// Without search, only the first batches are loaded
+			int rows = assertNotAllLoaded(table, totalCommits);
 			toggleSearchWithMenu();
 			joinHistoryJob();
 			// Opening the empty search bar doesn't load anything
 			assertEquals(rows, table.rowCount());
+			// Typing a search text loads the complete history
 			searchFor("Commit");
-			assertEquals(limit, table.rowCount());
-			assertTrue(isIncompleteWarningShown());
+			assertEquals(totalCommits, table.rowCount());
 		});
 	}
 
 	@Test
 	public void testClearingSearchPausesLoading() throws Exception {
-		runWithHistoryPreferences(true, 100000, () -> {
+		runWithFindToolbar(true, () -> {
 			createCommits(2000);
-			int commitCount = countProjectCommits();
+			int totalCommits = countProjectCommits();
 			SWTBotTable table = getHistoryViewTable(PROJ1);
 			SWTBotText findText = bot
 					.textWithMessage(UIText.HistoryPage_findbar_find_msg);
@@ -539,21 +458,19 @@ public class HistoryViewTest extends GitRepositoriesViewTestBase {
 				findText.widget.setText("Commit");
 				findText.widget.setText("");
 			});
-			joinHistoryJob();
-			int rows = table.rowCount();
-			assertTrue(rows < commitCount);
+			int rows = assertNotAllLoaded(table, totalCommits);
 			searchFor("   ");
 			assertEquals(rows, table.rowCount());
 			searchFor("Commit");
-			assertEquals(commitCount, table.rowCount());
+			assertEquals(totalCommits, table.rowCount());
 		});
 	}
 
 	@Test
-	public void testSearchFindsOldestCommitOnceAllAreLoaded()
-			throws Exception {
-		runWithHistoryPreferences(true, 100000, () -> {
-			createCommits(1000);
+	public void testSearchFindsOldestCommitOnceAllAreLoaded() throws Exception {
+		runWithFindToolbar(true, () -> {
+			int count = 1000;
+			createCommits(count);
 			SWTBotTable table = getHistoryViewTable(PROJ1);
 			// Matches only the oldest of the new commits, which is loaded last
 			searchFor("Commit 0");
@@ -575,7 +492,7 @@ public class HistoryViewTest extends GitRepositoriesViewTestBase {
 
 	@Test
 	public void testHidingSearchWithMenuResetsPreference() throws Exception {
-		runWithHistoryPreferences(false, 100000, () -> {
+		runWithFindToolbar(false, () -> {
 			getHistoryViewTable(PROJ1);
 			toggleSearchWithMenu();
 			assertTrue(isFindToolbarPreferenceSet());
@@ -586,7 +503,7 @@ public class HistoryViewTest extends GitRepositoriesViewTestBase {
 
 	@Test
 	public void testHidingSearchWithEscapeResetsPreference() throws Exception {
-		runWithHistoryPreferences(false, 100000, () -> {
+		runWithFindToolbar(false, () -> {
 			getHistoryViewTable(PROJ1);
 			toggleSearchWithMenu();
 			assertTrue(isFindToolbarPreferenceSet());
@@ -609,9 +526,9 @@ public class HistoryViewTest extends GitRepositoriesViewTestBase {
 	}
 
 	private void closeSearchBar() {
-		List<Text> fields = bot.getFinder().findControls(allOf(
-				widgetOfType(Text.class),
-				withMessage(UIText.HistoryPage_findbar_find_msg)));
+		List<Text> fields = bot.getFinder()
+				.findControls(allOf(widgetOfType(Text.class),
+						withMessage(UIText.HistoryPage_findbar_find_msg)));
 		UIThreadRunnable.syncExec(() -> fields.forEach(t -> {
 			// Don't restore the text when the search bar is shown again
 			t.setText("");
@@ -631,8 +548,9 @@ public class HistoryViewTest extends GitRepositoriesViewTestBase {
 				.getBoolean(UIPreferences.RESOURCEHISTORY_SHOW_FINDTOOLBAR);
 	}
 
-	private void runWithHistoryPreferences(boolean showFindToolbar,
-			int maxCommits, TestRunnable test) throws Exception {
+	@SuppressWarnings("deprecation")
+	private void runWithFindToolbar(boolean showFindToolbar, TestRunnable test)
+			throws Exception {
 		IPreferenceStore store = Activator.getDefault().getPreferenceStore();
 		boolean oldShowFindToolbar = store
 				.getBoolean(UIPreferences.RESOURCEHISTORY_SHOW_FINDTOOLBAR);
@@ -640,7 +558,8 @@ public class HistoryViewTest extends GitRepositoriesViewTestBase {
 		try {
 			store.setValue(UIPreferences.RESOURCEHISTORY_SHOW_FINDTOOLBAR,
 					showFindToolbar);
-			store.setValue(UIPreferences.HISTORY_MAX_NUM_COMMITS, maxCommits);
+			// A limit left over in old workspaces must be ignored
+			store.setValue(UIPreferences.HISTORY_MAX_NUM_COMMITS, 100);
 			test.run();
 		} finally {
 			closeSearchBar();
@@ -656,30 +575,54 @@ public class HistoryViewTest extends GitRepositoriesViewTestBase {
 	}
 
 	private void scrollToEnd(SWTBotTable table) throws Exception {
-		// Loading is triggered while the table is painted, so wait until the
-		// row count has been stable for a few rounds
+		waitUntilLoadingSettled(table, true);
+	}
+
+	/**
+	 * Waits until the row count of the table has been stable for a few rounds,
+	 * since loading is triggered while the table is painted.
+	 *
+	 * @param table
+	 *            the history table
+	 * @param selectLast
+	 *            whether to select the last row in each round, which scrolls to
+	 *            it and thus loads the next batch
+	 * @throws Exception
+	 *             if joining the history job fails
+	 */
+	private void waitUntilLoadingSettled(SWTBotTable table, boolean selectLast)
+			throws Exception {
 		int stableRounds = 0;
 		while (stableRounds < 3) {
 			int rows = table.rowCount();
-			table.select(rows - 1);
+			if (selectLast) {
+				table.select(rows - 1);
+			}
 			joinHistoryJob();
 			bot.sleep(100);
 			stableRounds = table.rowCount() > rows ? 0 : stableRounds + 1;
 		}
 	}
 
-	private boolean isIncompleteWarningShown() throws Exception {
-		SWTBot historyView = getHistoryViewBot();
-		return UIThreadRunnable.syncExec(() -> {
-			for (CLabel label : historyView.getFinder()
-					.findControls(allOf(widgetOfType(CLabel.class), withText(
-							UIText.GitHistoryPage_ListIncompleteWarningMessage)))) {
-				if (label.isVisible()) {
-					return Boolean.TRUE;
-				}
-			}
-			return Boolean.FALSE;
-		}).booleanValue();
+	/**
+	 * Asserts that, once loading has settled, the table doesn't show all
+	 * commits.
+	 *
+	 * @param table
+	 *            the history table
+	 * @param totalCommits
+	 *            the number of commits in the history
+	 * @return the number of rows shown
+	 * @throws Exception
+	 *             if joining the history job fails
+	 */
+	private int assertNotAllLoaded(SWTBotTable table, int totalCommits)
+			throws Exception {
+		waitUntilLoadingSettled(table, false);
+		int rows = table.rowCount();
+		assertTrue("Expected fewer rows than the " + totalCommits
+				+ " commits, but got " + rows, rows < totalCommits);
+		return rows;
 	}
 
 	private static String getSelectedMessage(SWTBotTable table) {

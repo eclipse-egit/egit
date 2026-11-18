@@ -23,11 +23,11 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
-import java.util.Comparator;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.LinkedHashSet;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 import java.util.Set;
 
@@ -792,47 +792,37 @@ public class ResourceUtil {
 	}
 
 	/**
-	 * Resolves locations to workspace containers; a thread-safe and faster
-	 * alternative to
+	 * Resolves locations to workspace containers and files; a thread-safe and
+	 * faster alternative to
 	 * {@link ResourceUtil#getContainerForLocation(IPath, boolean)
-	 * ResourceUtil.getContainerForLocation(location, false)}.
+	 * ResourceUtil.getContainerForLocation(location, false)},
+	 * {@link IWorkspaceRoot#getContainerForLocation(IPath)} and
+	 * {@link IWorkspaceRoot#getFileForLocation(IPath)}.
 	 *
 	 * You should create a new resolver when projects are added, deleted or
 	 * moved in the workspace.
 	 */
 	public static class ContainerLocationResolver {
 
-		private static class ProjectLocation {
-
-			final IProject project;
-
-			final IPath location;
-
-			ProjectLocation(IProject project, IPath location) {
-				this.project = project;
-				this.location = location;
-			}
-		}
-
 		private final IWorkspaceRoot root;
 
 		private final IPath rootLocation;
 
-		/** Sorted by number of location segments, most nested first. */
-		private final List<ProjectLocation> projects;
+		/** Projects by {@link #key(IPath) key} of their location. */
+		private final Map<IPath, IProject> projects = new HashMap<>();
 
 		/**
 		 * Creates a new resolver for locations at or below {@code base}.
 		 *
 		 * @param base
 		 *            location all locations later passed to
-		 *            {@link #getContainer(IPath)} are at or below of, typically
+		 *            {@link #getContainer(IPath)}, {@link #findContainer(IPath)}
+		 *            and {@link #findFile(IPath)} are at or below of, typically
 		 *            the working tree of a repository
 		 */
 		public ContainerLocationResolver(@NonNull IPath base) {
 			root = ResourcesPlugin.getWorkspace().getRoot();
 			rootLocation = root.getLocation();
-			projects = new ArrayList<>();
 			for (IProject project : root
 					.getProjects(IContainer.INCLUDE_HIDDEN)) {
 				IPath location = project.getLocation();
@@ -840,14 +830,12 @@ public class ResourceUtil {
 				// location is a prefix of base or is itself inside base.
 				if (location != null && (location.isPrefixOf(base)
 						|| base.isPrefixOf(location))) {
-					projects.add(new ProjectLocation(project, location));
+					// For equal locations, the first project in workspace
+					// order wins, like in
+					// IWorkspaceRoot.getContainerForLocation()
+					projects.putIfAbsent(key(location), project);
 				}
 			}
-			// Stable sort: for equal nesting depth, keep the workspace order,
-			// like IWorkspaceRoot.getContainerForLocation() does.
-			projects.sort(Comparator.comparingInt(
-					(ProjectLocation p) -> p.location.segmentCount())
-					.reversed());
 		}
 
 		/**
@@ -868,25 +856,96 @@ public class ResourceUtil {
 			if (isValid(container)) {
 				return container;
 			}
-			return getContainerForLocation(location, false);
+			return getContainerForLocationURI(root, URIUtil.toURI(location));
 		}
 
-		private IContainer findContainer(IPath location) {
+		/**
+		 * Determines the container handle for the given location like
+		 * {@link IWorkspaceRoot#getContainerForLocation(IPath)}, but without
+		 * taking resource filters into account.
+		 *
+		 * @param location
+		 *            at or below the base location given in the constructor
+		 * @return the container handle, which may not exist, or {@code null}
+		 */
+		@Nullable
+		public IContainer findContainer(
+				@NonNull
+				IPath location) {
 			if (rootLocation != null && rootLocation.equals(location)) {
 				return root;
 			}
-			for (ProjectLocation p : projects) {
-				if (p.location.isPrefixOf(location)) {
-					int segments = p.location.segmentCount();
-					if (segments == location.segmentCount()) {
-						return p.project;
+			IPath key = key(location);
+			for (IPath prefix = key;; prefix = prefix.removeLastSegments(1)
+					.removeTrailingSeparator()) {
+				IProject project = projects.get(prefix);
+				if (project != null) {
+					int segments = prefix.segmentCount();
+					if (segments == key.segmentCount()) {
+						return project;
 					}
-					return p.project
-							.getFolder(location.removeFirstSegments(segments)
-									.setDevice(null));
+					return project.getFolder(location
+							.removeFirstSegments(segments).setDevice(null));
+				}
+				if (prefix.segmentCount() == 0) {
+					return null;
 				}
 			}
-			return null;
+		}
+
+		/**
+		 * Determines the file handle for the given location like
+		 * {@link IWorkspaceRoot#getFileForLocation(IPath)}, but without taking
+		 * resource filters into account.
+		 *
+		 * @param location
+		 *            at or below the base location given in the constructor
+		 * @return the file handle, which may not exist, or {@code null}
+		 */
+		@Nullable
+		public IFile findFile(
+				@NonNull
+				IPath location) {
+			IPath key = key(location);
+			if (key.segmentCount() == 0) {
+				return null;
+			}
+			// A project location cannot be a file of that project, but it can
+			// be one of an enclosing project
+			for (IPath prefix = key.removeLastSegments(1)
+					.removeTrailingSeparator();; prefix = prefix
+							.removeLastSegments(1).removeTrailingSeparator()) {
+				IProject project = projects.get(prefix);
+				if (project != null) {
+					return project.getFile(
+							location.removeFirstSegments(prefix.segmentCount())
+									.setDevice(null));
+				}
+				if (prefix.segmentCount() == 0) {
+					return null;
+				}
+			}
+		}
+
+		/**
+		 * Normalizes a location for use as a hash key: {@code a.isPrefixOf(b)}
+		 * holds if and only if {@code key(a)} equals {@code key(b)} truncated
+		 * to the segment count of {@code a}.
+		 *
+		 * @param location
+		 *            to normalize
+		 * @return the key
+		 */
+		@NonNull
+		public static IPath key(
+				@NonNull
+				IPath location) {
+			IPath key = location.removeTrailingSeparator();
+			String device = key.getDevice();
+			if (device != null) {
+				key = key.setDevice(device.toUpperCase(Locale.ROOT));
+			}
+			return key;
 		}
 	}
 }

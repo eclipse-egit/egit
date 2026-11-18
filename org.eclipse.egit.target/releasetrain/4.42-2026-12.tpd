@@ -8,7 +8,6 @@ location "https://download.eclipse.org/staging/2026-12" {
 	biz.aQute.resolve lazy
 	bndtools.jareditor lazy
 	com.sun.el.javax.el lazy
-	javax.activation lazy
 	org.bndtools.headless.build.manager lazy
 	org.bndtools.headless.build.plugin.gradle lazy
 	org.bndtools.templates.template lazy

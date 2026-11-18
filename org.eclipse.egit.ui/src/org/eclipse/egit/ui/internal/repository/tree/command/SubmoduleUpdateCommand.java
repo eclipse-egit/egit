@@ -39,7 +39,6 @@ import org.eclipse.egit.ui.JobFamilies;
 import org.eclipse.egit.ui.internal.UIRepositoryUtils;
 import org.eclipse.egit.ui.internal.UIText;
 import org.eclipse.egit.ui.internal.repository.tree.RepositoryTreeNode;
-import org.eclipse.egit.ui.internal.repository.tree.RepositoryTreeNodeType;
 import org.eclipse.jgit.lib.Repository;
 import org.eclipse.jgit.submodule.SubmoduleWalk;
 import org.eclipse.swt.widgets.Shell;
@@ -52,119 +51,120 @@ public class SubmoduleUpdateCommand extends
 
 	@Override
 	public Object execute(ExecutionEvent event) throws ExecutionException {
-		final Map<Repository, List<String>> repoPaths = getSubmodules(getSelectedNodes(event));
+		Map<Repository, List<String>> repoPaths = getSubmodules(
+				getSelectedNodes(event));
 		if (!repoPaths.isEmpty()) {
-			List<Repository> subRepos = new ArrayList<>();
-			// Check for uncommitted changes in submodules.
-			try {
-				boolean submodulesNodeSelected = false;
-				// If Submodules node is selected, check all submodules.
-				for (RepositoryTreeNode<?> node : getSelectedNodes(event)) {
-					if (node.getType() == RepositoryTreeNodeType.SUBMODULES) {
-						submodulesNodeSelected = true;
-						try (SubmoduleWalk walk = SubmoduleWalk
-								.forIndex(node.getRepository())) {
-							while (walk.next()) {
-								Repository subRepo = getCached(
-										walk.getRepository());
-								if (subRepo != null) {
-									subRepos.add(subRepo);
-								}
-							}
-						}
-						break;
-					}
-				}
-				// If Submodule node is not selected, check the selected
-				// submodules.
-				if (!submodulesNodeSelected) {
-					for (Entry<Repository, List<String>> entry : repoPaths
-							.entrySet()) {
-						if (entry.getValue() != null) {
-							for (String path : entry.getValue()) {
-								Repository subRepo = getCached(
-										SubmoduleWalk.getSubmoduleRepository(
-												entry.getKey(), path));
-								if (subRepo != null) {
-									subRepos.add(subRepo);
-								}
-							}
-						}
-					}
-				}
-				Shell parent = getActiveShell(event);
-				for (Repository subRepo : subRepos) {
-					String repoName = RepositoryUtil.INSTANCE
-							.getRepositoryName(subRepo);
-					if (!UIRepositoryUtils.handleUncommittedFiles(subRepo,
-							parent,
-							MessageFormat.format(
-									UIText.SubmoduleUpdateCommand_UncommittedChanges,
-									repoName))) {
-						return null;
-					}
-				}
-			} catch (Exception e) {
-				Activator.handleError(UIText.SubmoduleUpdateCommand_UpdateError,
-						e, true);
-				return null;
-			}
-
-			Job job = new WorkspaceJob(UIText.SubmoduleUpdateCommand_Title) {
-
-				@Override
-				public IStatus runInWorkspace(IProgressMonitor monitor) {
-					SubMonitor progress = SubMonitor.convert(monitor,
-							repoPaths.size());
-					try {
-						for (Entry<Repository, List<String>> entry : repoPaths
-								.entrySet()) {
-							if (progress.isCanceled()) {
-								return Status.CANCEL_STATUS;
-							}
-							SubmoduleUpdateOperation op = new SubmoduleUpdateOperation(
-									entry.getKey());
-							if (entry.getValue() != null) {
-								for (String path : entry.getValue()) {
-									op.addPath(path);
-								}
-							}
-							op.execute(progress.newChild(1));
-						}
-					} catch (CoreException e) {
-						return Activator.createErrorStatus(
-								UIText.SubmoduleUpdateCommand_UpdateError, e);
-					}
-					return Status.OK_STATUS;
-				}
-
-				@Override
-				public boolean belongsTo(Object family) {
-					if (JobFamilies.SUBMODULE_UPDATE.equals(family))
-						return true;
-					return super.belongsTo(family);
-				}
-			};
-			job.setUser(true);
-			// Include the submodules so that this job cannot run concurrently
-			// with a discard or stash job that the cleanup dialog above may
-			// have scheduled on a submodule not present as workspace project.
-			job.setRule(MultiRule.combine(
-					ResourcesPlugin.getWorkspace().getRoot(),
-					RuleUtil.getRuleForRepositories(subRepos)));
-			job.schedule();
+			updateSubmodules(repoPaths, getActiveShell(event));
 		}
 		return null;
 	}
 
-	private Repository getCached(Repository repository)
-			throws IOException {
+	/**
+	 * Updates submodules after asking the user to clean up uncommitted changes
+	 * in them.
+	 *
+	 * @param repoPaths
+	 *            parent repositories mapped to submodule paths, a {@code null}
+	 *            value updates all submodules of that repository
+	 * @param shell
+	 *            parent for the cleanup dialogs
+	 */
+	public static void updateSubmodules(
+			Map<Repository, List<String>> repoPaths, Shell shell) {
+		if (repoPaths.isEmpty()) {
+			return;
+		}
+		List<Repository> subRepos = new ArrayList<>();
+		// Check for uncommitted changes in submodules.
+		try {
+			for (Entry<Repository, List<String>> entry : repoPaths
+					.entrySet()) {
+				if (entry.getValue() == null) {
+					try (SubmoduleWalk walk = SubmoduleWalk
+							.forIndex(entry.getKey())) {
+						while (walk.next()) {
+							addCached(subRepos, walk.getRepository());
+						}
+					}
+				} else {
+					for (String path : entry.getValue()) {
+						addCached(subRepos, SubmoduleWalk
+								.getSubmoduleRepository(entry.getKey(), path));
+					}
+				}
+			}
+			for (Repository subRepo : subRepos) {
+				String repoName = RepositoryUtil.INSTANCE
+						.getRepositoryName(subRepo);
+				if (!UIRepositoryUtils.handleUncommittedFiles(subRepo, shell,
+						MessageFormat.format(
+								UIText.SubmoduleUpdateCommand_UncommittedChanges,
+								repoName))) {
+					return;
+				}
+			}
+		} catch (Exception e) {
+			Activator.handleError(UIText.SubmoduleUpdateCommand_UpdateError, e,
+					true);
+			return;
+		}
+
+		Job job = new WorkspaceJob(UIText.SubmoduleUpdateCommand_Title) {
+
+			@Override
+			public IStatus runInWorkspace(IProgressMonitor monitor) {
+				SubMonitor progress = SubMonitor.convert(monitor,
+						repoPaths.size());
+				try {
+					for (Entry<Repository, List<String>> entry : repoPaths
+							.entrySet()) {
+						if (progress.isCanceled()) {
+							return Status.CANCEL_STATUS;
+						}
+						SubmoduleUpdateOperation op = new SubmoduleUpdateOperation(
+								entry.getKey());
+						if (entry.getValue() != null) {
+							for (String path : entry.getValue()) {
+								op.addPath(path);
+							}
+						}
+						op.execute(progress.newChild(1));
+					}
+				} catch (CoreException e) {
+					return Activator.createErrorStatus(
+							UIText.SubmoduleUpdateCommand_UpdateError, e);
+				}
+				return Status.OK_STATUS;
+			}
+
+			@Override
+			public boolean belongsTo(Object family) {
+				if (JobFamilies.SUBMODULE_UPDATE.equals(family))
+					return true;
+				return super.belongsTo(family);
+			}
+		};
+		job.setUser(true);
+		// Include the submodules so that this job cannot run concurrently
+		// with a discard or stash job that the cleanup dialog above may
+		// have scheduled on a submodule not present as workspace project.
+		job.setRule(MultiRule.combine(
+				ResourcesPlugin.getWorkspace().getRoot(),
+				RuleUtil.getRuleForRepositories(subRepos)));
+		job.schedule();
+	}
+
+	private static void addCached(List<Repository> repositories,
+			Repository repository) throws IOException {
 		if (repository == null) {
-			return null;
+			return;
 		}
 		try {
-			return RepositoryCache.INSTANCE
+			Repository cached = RepositoryCache.INSTANCE
 					.lookupRepository(repository.getDirectory());
+			if (cached != null) {
+				repositories.add(cached);
+			}
 		} finally {
 			repository.close();
 		}
