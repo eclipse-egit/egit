@@ -18,6 +18,24 @@
       "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "23464341_ec6ed706",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1012795
+      },
+      "writtenOn": "2026-11-20T12:15:37Z",
+      "side": 1,
+      "message": "Agreed, prompting isn\u0027t worth it. For ssh remotes the lookup stays anonymous, so private repositories keep the pr-N name. A per-server setting can follow if someone needs it.",
+      "parentUuid": "5c745936_39cbc79a",
+      "revId": "dd291dddb9c3ba88e754eac429796a31663f6a90",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "e0bdeb5f_617a02a8",
@@ -35,6 +53,24 @@
       "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "b263b254_bb2de84f",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/internal/hosts/PullRequestInfo.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 193,
+      "author": {
+        "id": 1012795
+      },
+      "writtenOn": "2026-11-20T12:15:37Z",
+      "side": 1,
+      "message": "Done. Each ServerType now builds its own API URL.",
+      "parentUuid": "e0bdeb5f_617a02a8",
+      "revId": "dd291dddb9c3ba88e754eac429796a31663f6a90",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "36ae43a1_7abe18f5",
@@ -48,6 +84,24 @@
       "writtenOn": "2026-11-14T14:46:44Z",
       "side": 1,
       "message": "This will encode \"/\". For the other server types there is no such encoding. This should be consistent (either encoding is needed for all, or for none), and probably it\u0027s a good idea not to encode forward slashes.",
+      "revId": "dd291dddb9c3ba88e754eac429796a31663f6a90",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "67a00d01_ca66e2a5",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/internal/hosts/PullRequestInfo.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 209,
+      "author": {
+        "id": 1012795
+      },
+      "writtenOn": "2026-11-20T12:15:37Z",
+      "side": 1,
+      "message": "GitLab needs it: its API takes the namespaced project path as a single URL-encoded id (`/projects/group%2Fsub%2Frepo/...`), and with plain slashes the request fails. GitHub and Gitea take owner and repo as separate path segments, so they must not be encoded. Since every segment is already restricted to `[A-Za-z0-9._-]`, the slash is the only character that ever needs encoding. I replaced URLEncoder with an explicit `/` to `%2F` replacement and a comment, so this is visible.",
+      "parentUuid": "36ae43a1_7abe18f5",
       "revId": "dd291dddb9c3ba88e754eac429796a31663f6a90",
       "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735"
     }
