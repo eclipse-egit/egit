@@ -288,6 +288,13 @@ public class CloneDestinationPage extends WizardPage {
 	}
 
 	/**
+	 * @return whether the page offers to import projects
+	 */
+	boolean isShowProjectImport() {
+		return showProjectImport;
+	}
+
+	/**
 	 * @return true to import projects, false otherwise
 	 */
 	public boolean isImportProjects() {

@@ -49,6 +49,7 @@ import org.eclipse.egit.core.op.SetRepositoryConfigPropertyTask;
 import org.eclipse.egit.core.settings.GitSettings;
 import org.eclipse.egit.ui.Activator;
 import org.eclipse.egit.ui.JobFamilies;
+import org.eclipse.egit.ui.UIPreferences;
 import org.eclipse.egit.ui.internal.KnownHosts;
 import org.eclipse.egit.ui.internal.SecureStoreUtils;
 import org.eclipse.egit.ui.internal.UIText;
@@ -68,10 +69,13 @@ import org.eclipse.jface.wizard.IWizardPage;
 import org.eclipse.jface.wizard.Wizard;
 import org.eclipse.jface.wizard.WizardPage;
 import org.eclipse.jgit.annotations.Nullable;
+import org.eclipse.jgit.lib.Constants;
 import org.eclipse.jgit.lib.Ref;
 import org.eclipse.jgit.lib.Repository;
 import org.eclipse.jgit.transport.CredentialsProvider;
+import org.eclipse.jgit.transport.TagOpt;
 import org.eclipse.jgit.transport.URIish;
+import org.eclipse.jgit.util.FileUtils;
 import org.eclipse.osgi.util.NLS;
 import org.eclipse.ui.IWorkingSet;
 import org.eclipse.ui.PlatformUI;
@@ -216,6 +220,13 @@ public abstract class AbstractGitCloneWizard extends Wizard {
 		return GitCloneSourceProviderExtension.getCloneSourceProvider();
 	}
 
+	// Values for the clone operation, from the wizard pages or defaulted
+	private record CloneSettings(boolean allSelected,
+			Collection<Ref> selectedBranches, TagOpt tagOption, File workdir,
+			String initialBranch, String remoteName, boolean cloneSubmodules,
+			boolean importProjects, IWorkingSet[] workingSets) {
+	}
+
 	/**
 	 * Do the clone using data which were collected on the pages
 	 * {@code validSource} and {@code cloneDestination}
@@ -225,9 +236,6 @@ public abstract class AbstractGitCloneWizard extends Wizard {
 	 * @throws URISyntaxException
 	 */
 	protected boolean performClone(GitRepositoryInfo gitRepositoryInfo) throws URISyntaxException {
-		URIish uri = new URIish(gitRepositoryInfo.getCloneUri());
-		UserPasswordCredentials credentials = gitRepositoryInfo.getCredentials();
-		setWindowTitle(NLS.bind(UIText.GitCloneWizard_jobName, uri.toString()));
 		final boolean allSelected;
 		final Collection<Ref> selectedBranches;
 		if (validSource.isSourceRepoEmpty()) {
@@ -238,9 +246,66 @@ public abstract class AbstractGitCloneWizard extends Wizard {
 			allSelected = validSource.isAllSelected();
 			selectedBranches = validSource.getSelectedBranches();
 		}
-		final File workdir = cloneDestination.getDestinationFile();
-		final Ref ref = cloneDestination.getInitialBranch();
-		final String remoteName = cloneDestination.getRemote();
+		Ref ref = cloneDestination.getInitialBranch();
+		return performClone(gitRepositoryInfo,
+				new CloneSettings(allSelected, selectedBranches,
+						validSource.getTagOption(),
+						cloneDestination.getDestinationFile(),
+						ref != null ? ref.getName() : null,
+						cloneDestination.getRemote(),
+						cloneDestination.isCloneSubmodules(),
+						cloneDestination.isImportProjects(),
+						cloneDestination.getWorkingSets()));
+	}
+
+	/**
+	 * Clones all branches into the default destination and checks out the
+	 * branch the remote HEAD points to, without using the branch and
+	 * destination pages.
+	 *
+	 * @param gitRepositoryInfo
+	 * @param workdir
+	 *            destination, usually from {@link #getDefaultDestination}
+	 * @return if clone was successful
+	 * @throws URISyntaxException
+	 */
+	protected boolean performCloneWithDefaults(
+			GitRepositoryInfo gitRepositoryInfo, File workdir)
+			throws URISyntaxException {
+		boolean importProjects = cloneDestination.isShowProjectImport()
+				&& Activator.getDefault().getPreferenceStore()
+						.getBoolean(UIPreferences.CLONE_WIZARD_IMPORT_PROJECTS);
+		return performClone(gitRepositoryInfo,
+				new CloneSettings(true, Collections.emptyList(),
+						TagOpt.AUTO_FOLLOW, workdir, null,
+						Constants.DEFAULT_REMOTE_NAME, false, importProjects,
+						new IWorkingSet[0]));
+	}
+
+	/**
+	 * Determines the directory the destination page suggests for a
+	 * repository.
+	 *
+	 * @param gitRepositoryInfo
+	 * @return the directory in the default repository folder named after the
+	 *         repository
+	 * @throws URISyntaxException
+	 */
+	protected static File getDefaultDestination(
+			GitRepositoryInfo gitRepositoryInfo) throws URISyntaxException {
+		String name = new URIish(gitRepositoryInfo.getCloneUri())
+				.getHumanishName();
+		return FileUtils.canonicalize(
+				new File(RepositoryUtil.getDefaultRepositoryDir(), name));
+	}
+
+	private boolean performClone(GitRepositoryInfo gitRepositoryInfo,
+			CloneSettings settings) throws URISyntaxException {
+		URIish uri = new URIish(gitRepositoryInfo.getCloneUri());
+		UserPasswordCredentials credentials = gitRepositoryInfo.getCredentials();
+		setWindowTitle(NLS.bind(UIText.GitCloneWizard_jobName, uri.toString()));
+		final File workdir = settings.workdir();
+		final String remoteName = settings.remoteName();
 
 		boolean created = workdir.exists();
 		if (!created)
@@ -257,9 +322,9 @@ public abstract class AbstractGitCloneWizard extends Wizard {
 		}
 
 		int timeout = GitSettings.getRemoteConnectionTimeout();
-		final CloneOperation op = new CloneOperation(uri, allSelected,
-				selectedBranches, workdir, ref != null ? ref.getName() : null,
-				remoteName, timeout);
+		final CloneOperation op = new CloneOperation(uri,
+				settings.allSelected(), settings.selectedBranches(), workdir,
+				settings.initialBranch(), remoteName, timeout);
 		CredentialsProvider credentialsProvider = null;
 		if (credentials != null) {
 			credentialsProvider = new EGitCredentialsProvider(
@@ -268,8 +333,8 @@ public abstract class AbstractGitCloneWizard extends Wizard {
 			credentialsProvider = new EGitCredentialsProvider();
 		}
 		op.setCredentialsProvider(credentialsProvider);
-		op.setCloneSubmodules(cloneDestination.isCloneSubmodules());
-		op.setTagOption(validSource.getTagOption());
+		op.setCloneSubmodules(settings.cloneSubmodules());
+		op.setTagOption(settings.tagOption());
 
 		rememberHttpHost(op, uri);
 		configureFetchSpec(op, gitRepositoryInfo, remoteName);
@@ -278,8 +343,8 @@ public abstract class AbstractGitCloneWizard extends Wizard {
 		configureGerrit(op, gitRepositoryInfo, credentialsProvider, remoteName,
 				timeout);
 
-		if (cloneDestination.isImportProjects()) {
-			final IWorkingSet[] sets = cloneDestination.getWorkingSets();
+		if (settings.importProjects()) {
+			final IWorkingSet[] sets = settings.workingSets();
 			op.addPostCloneTask(new PostCloneTask() {
 				@Override
 				public void execute(Repository repository,

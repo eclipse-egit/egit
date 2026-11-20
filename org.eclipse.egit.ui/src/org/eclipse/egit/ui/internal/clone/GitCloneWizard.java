@@ -19,14 +19,19 @@ import java.io.File;
 import java.io.IOException;
 import java.net.URISyntaxException;
 
+import org.eclipse.egit.core.internal.util.RepositoryPathChecker;
 import org.eclipse.egit.ui.Activator;
 import org.eclipse.egit.ui.internal.UIIcons;
 import org.eclipse.egit.ui.internal.UIText;
 import org.eclipse.egit.ui.internal.components.RepositorySelectionPage;
+import org.eclipse.egit.ui.internal.provisional.wizards.GitRepositoryInfo;
 import org.eclipse.egit.ui.internal.provisional.wizards.IRepositorySearchResult;
 import org.eclipse.egit.ui.internal.provisional.wizards.NoRepositoryInfoException;
 import org.eclipse.jface.dialogs.MessageDialog;
+import org.eclipse.jface.wizard.IWizardPage;
+import org.eclipse.jface.wizard.WizardPage;
 import org.eclipse.jgit.util.FileUtils;
+import org.eclipse.osgi.util.NLS;
 
 /**
  * Import Git Repository Wizard. A front end to a git clone operation.
@@ -118,12 +123,20 @@ public class GitCloneWizard extends AbstractGitCloneWizard {
 
 	@Override
 	public boolean canFinish() {
+		IWizardPage page = getRepositorySearchPage();
+		if (page != null) {
+			return page.isPageComplete();
+		}
 		return cloneDestination.isPageComplete();
 	}
 
 	@Override
 	public boolean performFinish() {
 		try {
+			IWizardPage page = getRepositorySearchPage();
+			if (page != null) {
+				return performFinishOnSearchPage(page);
+			}
 			return performClone(currentSearchResult.getGitRepositoryInfo());
 		} catch (URISyntaxException e) {
 			Activator.error(UIText.GitImportWizard_errorParsingURI, e);
@@ -135,5 +148,36 @@ public class GitCloneWizard extends AbstractGitCloneWizard {
 			setWindowTitle(UIText.GitCloneWizard_title);
 		}
 		return false;
+	}
+
+	// The current page if it is the one providing the repository
+	private IWizardPage getRepositorySearchPage() {
+		if (getContainer() == null) {
+			return null;
+		}
+		IWizardPage page = getContainer().getCurrentPage();
+		return page instanceof IRepositorySearchResult ? page : null;
+	}
+
+	private boolean performFinishOnSearchPage(IWizardPage page)
+			throws URISyntaxException, NoRepositoryInfoException {
+		currentSearchResult = (IRepositorySearchResult) page;
+		GitRepositoryInfo info = currentSearchResult.getGitRepositoryInfo();
+		File destination = getDefaultDestination(info);
+		RepositoryPathChecker checker = new RepositoryPathChecker();
+		String error = null;
+		if (!checker.check(destination.getPath())) {
+			error = checker.getErrorMessage();
+		} else if (checker.hasContent()) {
+			error = NLS.bind(UIText.CloneDestinationPage_errorNotEmptyDir,
+					destination.getPath());
+		}
+		if (error != null) {
+			if (page instanceof WizardPage wizardPage) {
+				wizardPage.setErrorMessage(error);
+			}
+			return false;
+		}
+		return performCloneWithDefaults(info, destination);
 	}
 }
