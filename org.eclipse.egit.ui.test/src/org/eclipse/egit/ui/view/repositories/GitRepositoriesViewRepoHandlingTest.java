@@ -17,6 +17,7 @@ package org.eclipse.egit.ui.view.repositories;
 import static org.eclipse.swtbot.swt.finder.waits.Conditions.widgetIsEnabled;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 
 import java.io.File;
@@ -32,6 +33,7 @@ import org.eclipse.egit.ui.test.TestUtil;
 import org.eclipse.jface.dialogs.IDialogConstants;
 import org.eclipse.jgit.api.Git;
 import org.eclipse.jgit.lib.Constants;
+import org.eclipse.jgit.lib.Repository;
 import org.eclipse.jgit.lib.RepositoryCache.FileKey;
 import org.eclipse.jgit.util.FS;
 import org.eclipse.swt.dnd.Clipboard;
@@ -345,6 +347,58 @@ public class GitRepositoriesViewRepoHandlingTest extends
 		TestUtil.joinJobs(JobFamilies.CLONE);
 		refreshAndWait();
 		assertHasClonedRepo();
+	}
+
+	@Test
+	public void testCloneFinishOnUriPage() throws Exception {
+		try (Git git = Git.open(repositoryFile)) {
+			git.branchCreate().setName("other").call();
+		}
+		File destination = new File(RepositoryUtil.getDefaultRepositoryDir(),
+				repositoryFile.getParentFile().getName());
+		SWTBotShell shell = openCloneWizardOnUriPage();
+		shell.bot().button(IDialogConstants.FINISH_LABEL).click();
+		TestUtil.joinJobs(JobFamilies.CLONE);
+		try (Git cloned = Git.open(destination)) {
+			Repository repository = cloned.getRepository();
+			assertEquals(Constants.MASTER, repository.getBranch());
+			assertNotNull(repository.exactRef(Constants.R_REMOTES
+					+ Constants.DEFAULT_REMOTE_NAME + "/" + Constants.MASTER));
+			assertNotNull(repository.exactRef(Constants.R_REMOTES
+					+ Constants.DEFAULT_REMOTE_NAME + "/other"));
+		}
+	}
+
+	@Test
+	public void testCloneFinishOnUriPageNeedsEmptyDestination()
+			throws Exception {
+		File destination = new File(RepositoryUtil.getDefaultRepositoryDir(),
+				repositoryFile.getParentFile().getName());
+		assertTrue(destination.mkdirs());
+		assertTrue(new File(destination, "existing.txt").createNewFile());
+		SWTBotShell shell = openCloneWizardOnUriPage();
+		shell.bot().button(IDialogConstants.FINISH_LABEL).click();
+		assertTrue(shell.isOpen());
+		assertFalse(new File(destination, Constants.DOT_GIT).exists());
+		shell.bot().button(IDialogConstants.CANCEL_LABEL).click();
+	}
+
+	private SWTBotShell openCloneWizardOnUriPage() throws Exception {
+		clearView();
+		refreshAndWait();
+		getOrOpenView()
+				.toolbarButton(myUtil
+						.getPluginLocalizedValue("RepoViewCloneRepository.tooltip"))
+				.click();
+		SWTBotShell shell = bot.shell(UIText.GitCloneWizard_title);
+		shell.bot().tree().select("Clone URI");
+		shell.bot().button(IDialogConstants.NEXT_LABEL).click();
+		shell.bot()
+				.textInGroup(UIText.RepositorySelectionPage_groupLocation, 0)
+				.setText(repositoryFile.getPath());
+		bot.waitUntil(widgetIsEnabled(
+				shell.bot().button(IDialogConstants.FINISH_LABEL)));
+		return shell;
 	}
 
 	@Test
