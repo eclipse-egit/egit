@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "3247d442_5e0a8e5f",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000671
+      },
+      "writtenOn": "2026-11-22T22:38:57Z",
+      "side": 1,
+      "message": "SubmoduleFolderTest is failing, will be fixed in a follow-up when the version bump is merged",
+      "revId": "a4e0c7e8660e38c2e49bcefb914465c1ecd160ed",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735"
+    }
+  ]
+}
