@@ -122,7 +122,8 @@ public class SubmoduleFolderTest extends LocalRepositoryTestCase {
 		addAndCommit(someFile, "Commit sub/dummy.txt");
 		childFolder = subfolder.getFolder(CHILD);
 		Git.wrap(parentRepository).submoduleAdd()
-				.setPath(childFolder.getFullPath().toPortableString())
+				.setPath(Repository.stripWorkDir(parentRepository.getWorkTree(),
+						childFolder.getLocation().toFile()))
 				.setURI(childRepository.getDirectory().toURI()
 						.toString())
 				.call();
