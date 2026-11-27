@@ -1,5 +1,5 @@
 /*******************************************************************************
- *  Copyright (c) 2011, 2021 GitHub Inc. and others.
+ *  Copyright (c) 2011, 2026 GitHub Inc. and others.
  *  All rights reserved. This program and the accompanying materials
  *  are made available under the terms of the Eclipse Public License 2.0
  *  which accompanies this distribution, and is available at
@@ -57,6 +57,7 @@ import org.eclipse.jgit.revwalk.RevCommit;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
+import org.eclipse.swt.widgets.Display;
 import org.eclipse.ui.IEditorActionBarContributor;
 import org.eclipse.ui.IEditorInput;
 import org.eclipse.ui.IEditorPart;
@@ -570,8 +571,19 @@ public class CommitEditor extends SharedHeaderFormEditor implements
 
 	@Override
 	public void onRefsChanged(RefsChangedEvent event) {
-		if (getCommit().getRepository().getDirectory()
+		if (!getCommit().getRepository().getDirectory()
 				.equals(event.getRepository().getDirectory())) {
+			return;
+		}
+		Display display = PlatformUI.getWorkbench().getDisplay();
+		if (display.isDisposed()) {
+			return;
+		}
+		// Refs change events may come from any thread
+		display.asyncExec(() -> {
+			if (getContainer() == null || getContainer().isDisposed()) {
+				return;
+			}
 			visibilityListener.runWhenVisible(() -> {
 				runRefresh.set(true);
 				if (getActivePageInstance() == commitPage) {
@@ -580,7 +592,7 @@ public class CommitEditor extends SharedHeaderFormEditor implements
 				// Otherwise the pageListener will run the refresh when the
 				// commitPage becomes active
 			});
-		}
+		});
 	}
 
 	private void refreshCommitPage() {
